@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Guids;
+using Tsi.Validation.Validations.FluentValidation.CrossCuttingConcerns;
+using TsiErp.Business.Entities.Period.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Period;
 using TsiErp.Entities.Entities.Period;
 using TsiErp.Entities.Entities.Period.Dtos;
 
-namespace TsiErp.Business.Entities.Period
+namespace TsiErp.Business.Entities.Period.Services
 {
     public class PeriodsAppService : IPeriodsAppService
     {
@@ -23,6 +25,7 @@ namespace TsiErp.Business.Entities.Period
             _guidGenerator = guidGenerator;
         }
 
+        [ValidationAspect(typeof(CreatePeriodsValidator), Priority = 1)]
         public async Task<SelectPeriodsDto> CreateAsync(CreatePeriodsDto input)
         {
             var entity = ObjectMapper.Map<CreatePeriodsDto, Periods>(input);
@@ -62,6 +65,7 @@ namespace TsiErp.Business.Entities.Period
             return mappedEntity;
         }
 
+        [ValidationAspect(typeof(UpdatePeriodsValidator), Priority = 1)]
         public async Task<SelectPeriodsDto> UpdateAsync(UpdatePeriodsDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);

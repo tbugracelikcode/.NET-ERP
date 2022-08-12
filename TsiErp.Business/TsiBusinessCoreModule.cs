@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using Tsi.IoC.IoC.Autofac;
 using TsiErp.Business.Entities.Branch.Services;
-using TsiErp.Business.Entities.Period;
+using TsiErp.Business.Entities.Period.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Business.MapperProfile;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
@@ -19,17 +19,13 @@ namespace TsiErp.Business
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            #region Business Serivice Registrations
-            services.AddScoped<IBranchesAppService, BranchesAppService>();
-            services.AddScoped<IBranchesRepository, EFCoreBranchesRepository>();
-
-            services.AddScoped<IPeriodsAppService, PeriodsAppService>();
-            services.AddScoped<IPeriodsRepository, EFCorePeriodsRepository>();
-            #endregion
+           
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             SetMapperToObjectMapper();
+
+            
 
         }
 

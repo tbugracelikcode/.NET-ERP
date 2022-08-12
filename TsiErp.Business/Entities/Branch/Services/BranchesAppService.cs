@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Guids;
+using Tsi.Validation.Validations.FluentValidation.CrossCuttingConcerns;
+using TsiErp.Business.Entities.Branch.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
 using TsiErp.Entities.Entities.Branch;
@@ -24,6 +26,7 @@ namespace TsiErp.Business.Entities.Branch.Services
             _guidGenerator = guidGenerator;
         }
 
+        [ValidationAspect(typeof(CreateBranchesValidator),Priority =1)]
         public async Task<SelectBranchesDto> CreateAsync(CreateBranchesDto input)
         {
             var entity = ObjectMapper.Map<CreateBranchesDto, Branches>(input);
@@ -63,6 +66,7 @@ namespace TsiErp.Business.Entities.Branch.Services
             return mappedEntity;
         }
 
+        [ValidationAspect(typeof(UpdateBranchesValidator), Priority = 1)]
         public async Task<SelectBranchesDto> UpdateAsync(UpdateBranchesDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);

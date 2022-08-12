@@ -27,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TsiErp.WebAPI", "TsiErp.Web
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tsi.Guids", "Tsi.Guids\Tsi.Guids.csproj", "{CE47F130-677B-4EDE-80BE-9B96A6C69C64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsi.Results", "Tsi.Results\Tsi.Results.csproj", "{2217B5E0-383E-4C00-87DB-1FD50ACF9A99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tsi.Results", "Tsi.Results\Tsi.Results.csproj", "{2217B5E0-383E-4C00-87DB-1FD50ACF9A99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsi.Validation", "Tsi.Validation\Tsi.Validation.csproj", "{4E5C6B25-A8B3-437A-A029-0EBD24AAE4CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +81,10 @@ Global
 		{2217B5E0-383E-4C00-87DB-1FD50ACF9A99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2217B5E0-383E-4C00-87DB-1FD50ACF9A99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2217B5E0-383E-4C00-87DB-1FD50ACF9A99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E5C6B25-A8B3-437A-A029-0EBD24AAE4CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E5C6B25-A8B3-437A-A029-0EBD24AAE4CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E5C6B25-A8B3-437A-A029-0EBD24AAE4CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E5C6B25-A8B3-437A-A029-0EBD24AAE4CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,6 +101,7 @@ Global
 		{5F83DF76-A615-4E26-A229-44D9C32EAF98} = {D8F4DE11-B727-4387-9269-AE98DAE90980}
 		{CE47F130-677B-4EDE-80BE-9B96A6C69C64} = {6E426DBA-9C12-4356-9AC7-1A54EE81C635}
 		{2217B5E0-383E-4C00-87DB-1FD50ACF9A99} = {6E426DBA-9C12-4356-9AC7-1A54EE81C635}
+		{4E5C6B25-A8B3-437A-A029-0EBD24AAE4CA} = {6E426DBA-9C12-4356-9AC7-1A54EE81C635}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {249F607F-1AF1-497A-ADFA-357532BFCABD}

@@ -10,6 +10,7 @@ using TsiErp.Business.Entities.Branch;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
 using Tsi.Guids;
 using TsiErp.DataAccess;
+using TsiErp.Business.DependencyResolvers.Autofac;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,10 +26,10 @@ builder.Services.AddSwaggerGen();
 //var connectionString = builder.Configuration.GetConnectionString("Default");
 //builder.Services.AddDbContext<TsiErpDbContext>(x => x.UseSqlServer(connectionString));
 
-//builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).ConfigureContainer<ContainerBuilder>(container =>
-//{
-//    container.RegisterModule(new AutofacBusinessModule());
-//});
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).ConfigureContainer<ContainerBuilder>(container =>
+{
+    container.RegisterModule(new AutofacBusinessModule());
+});
 
 builder.Services.AddDependencyResolvers(new ITsiCoreModule[]
 {
