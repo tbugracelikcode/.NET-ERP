@@ -1,0 +1,75 @@
+﻿using AutoMapper;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Tsi.Guids;
+using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
+using TsiErp.Entities.Entities.Branch;
+using TsiErp.Entities.Entities.Branch.Dtos;
+
+namespace TsiErp.Business.Entities.Branch.Services
+{
+    public class BranchesAppService : IBranchesAppService
+    {
+        private readonly IBranchesRepository _repository;
+
+        private readonly IGuidGenerator _guidGenerator;
+
+        public BranchesAppService(IBranchesRepository repository, IGuidGenerator guidGenerator)
+        {
+            _repository = repository;
+            _guidGenerator = guidGenerator;
+        }
+
+        public async Task<SelectBranchesDto> CreateAsync(CreateBranchesDto input)
+        {
+            var entity = ObjectMapper.Map<CreateBranchesDto, Branches>(input);
+
+            entity.Id = _guidGenerator.CreateGuid();
+            entity.CreatorId = Guid.NewGuid();
+            entity.CreationTime = DateTime.Now;
+            entity.IsDeleted = false;
+            entity.DeleterId = null;
+            entity.DeletionTime = null;
+            entity.LastModifierId = null;
+            entity.LastModificationTime = null;
+
+            var addedEntity = await _repository.InsertAsync(entity);
+
+            return ObjectMapper.Map<Branches, SelectBranchesDto>(addedEntity);
+        }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            await _repository.DeleteAsync(id);
+        }
+
+        public async Task<SelectBranchesDto> GetAsync(Guid id)
+        {
+            var entity = await _repository.GetAsync(t => t.Id == id, t => t.Periods);
+            var mappedEntity = ObjectMapper.Map<Branches, SelectBranchesDto>(entity);
+            return mappedEntity;
+        }
+
+        public async Task<IList<ListBranchesDto>> GetListAsync()
+        {
+            var list = await _repository.GetListAsync(null,t=>t.Periods);
+
+            var mappedEntity = ObjectMapper.Map<List<Branches>, List<ListBranchesDto>>(list.ToList());
+
+            return mappedEntity;
+        }
+
+        public async Task<SelectBranchesDto> UpdateAsync(UpdateBranchesDto input)
+        {
+            var entity = await _repository.GetAsync(x => x.Id == input.Id);
+
+            var mappedEntity = ObjectMapper.Map<UpdateBranchesDto,Branches>(input);
+            await _repository.UpdateAsync(mappedEntity);
+            return ObjectMapper.Map<Branches, SelectBranchesDto>(mappedEntity);
+        }
+    }
+}

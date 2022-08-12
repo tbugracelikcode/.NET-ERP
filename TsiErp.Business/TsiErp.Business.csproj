@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="DependencyResolvers\**" />
+    <EmbeddedResource Remove="DependencyResolvers\**" />
+    <None Remove="DependencyResolvers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.4.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tsi.Application.Contract\Tsi.Application.Contract.csproj" />
+    <ProjectReference Include="..\Tsi.Guids\Tsi.Guids.csproj" />
+    <ProjectReference Include="..\Tsi.IoC\Tsi.IoC.csproj" />
+    <ProjectReference Include="..\TsiErp.DataAccess\TsiErp.DataAccess.csproj" />
+    <ProjectReference Include="..\TsiErp.Entities\TsiErp.Entities.csproj" />
+  </ItemGroup>
+
+</Project>
