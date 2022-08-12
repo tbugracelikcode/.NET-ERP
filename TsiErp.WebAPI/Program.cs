@@ -33,8 +33,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDependencyResolvers(new ITsiCoreModule[]
 {
     new TsiBusinessCoreModule(),
-    new TsiGuidsCoreModule(),
-    new TsiDataAccessCoreModule()
+    new TsiGuidsCoreModule()
 });
 
 

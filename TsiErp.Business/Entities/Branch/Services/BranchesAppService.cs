@@ -56,7 +56,7 @@ namespace TsiErp.Business.Entities.Branch.Services
 
         public async Task<IList<ListBranchesDto>> GetListAsync()
         {
-            var list = await _repository.GetListAsync(null,t=>t.Periods);
+            var list = await _repository.GetListAsync(null, t => t.Periods);
 
             var mappedEntity = ObjectMapper.Map<List<Branches>, List<ListBranchesDto>>(list.ToList());
 
@@ -67,7 +67,17 @@ namespace TsiErp.Business.Entities.Branch.Services
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
 
-            var mappedEntity = ObjectMapper.Map<UpdateBranchesDto,Branches>(input);
+            var mappedEntity = ObjectMapper.Map<UpdateBranchesDto, Branches>(input);
+
+            mappedEntity.Id = input.Id;
+            mappedEntity.LastModifierId = Guid.NewGuid();
+            mappedEntity.LastModificationTime = DateTime.Now;
+            mappedEntity.CreatorId = entity.CreatorId;
+            mappedEntity.CreationTime = entity.CreationTime;
+            mappedEntity.IsDeleted = false;
+            mappedEntity.DeleterId = null;
+            mappedEntity.DeletionTime = null;
+
             await _repository.UpdateAsync(mappedEntity);
             return ObjectMapper.Map<Branches, SelectBranchesDto>(mappedEntity);
         }

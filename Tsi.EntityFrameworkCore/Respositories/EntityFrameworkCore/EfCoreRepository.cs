@@ -88,11 +88,14 @@ namespace Tsi.EntityFrameworkCore.Respositories.EntityFrameworkCore
             if (_dbContext == null)
                 _dbContext = GetDbContext();
 
+            _dbContext.ChangeTracker.Clear();
+
+            //var updatedEntity = _dbContext.Set<TEntity>().AsNoTracking().Single(t => t.Id == entity.Id);
+
             var updatedEntity = _dbContext.Entry(entity);
             updatedEntity.State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
             return updatedEntity.Entity;
-
         }
 
         public async Task DeleteAsync(Guid id)

@@ -67,6 +67,16 @@ namespace TsiErp.Business.Entities.Period
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
 
             var mappedEntity = ObjectMapper.Map<UpdatePeriodsDto, Periods>(input);
+
+            mappedEntity.Id = input.Id;
+            mappedEntity.LastModifierId = Guid.NewGuid();
+            mappedEntity.LastModificationTime = DateTime.Now;
+            mappedEntity.CreatorId = entity.CreatorId;
+            mappedEntity.CreationTime = entity.CreationTime;
+            mappedEntity.IsDeleted = false;
+            mappedEntity.DeleterId = null;
+            mappedEntity.DeletionTime = null;
+
             await _repository.UpdateAsync(mappedEntity);
             return ObjectMapper.Map<Periods, SelectPeriodsDto>(mappedEntity);
         }
