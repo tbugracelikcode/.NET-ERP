@@ -18,7 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Tsi.Results\Tsi.Results.csproj" />
     <ProjectReference Include="..\TsiErp.Business\TsiErp.Business.csproj" />
   </ItemGroup>
 

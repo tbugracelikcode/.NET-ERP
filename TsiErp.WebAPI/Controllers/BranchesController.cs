@@ -20,64 +20,68 @@ namespace TsiErp.WebAPI.Controllers
             _appService = appService;
         }
 
-        [HttpGet("getall")]
-        public async Task<IDataResult<List<ListBranchesDto>>> GetList()
+        [HttpGet("GetListAsync")]
+        public async Task<IActionResult> GetList()
         {
-            var result = new SuccessDataResult<List<ListBranchesDto>>((await _appService.GetListAsync()).ToList());
+            var result = await _appService.GetListAsync();
 
-            if (!result.Success)
+            if(result.Success)
             {
-                return new DataResult<List<ListBranchesDto>>(new List<ListBranchesDto>(), result.Success, "Hata Var");
+                return Ok(result.Data);
             }
 
-            return new DataResult<List<ListBranchesDto>>(result.Data, true, "Başarılı");
+            return BadRequest(result.Message);
         }
 
-        [HttpGet("getbyId")]
-        public async Task<IDataResult<SelectBranchesDto>> GetById(Guid id)
+        [HttpGet("GetAsync")]
+        public async Task<IActionResult> GetById(Guid id)
         {
-            var result = new SuccessDataResult<SelectBranchesDto>(await _appService.GetAsync(id));
-
-            if (!result.Success)
+            var result = await _appService.GetAsync(id);
+            if (result.Success)
             {
-                return new DataResult<SelectBranchesDto>(new SelectBranchesDto(), result.Success, "Hata Var");
+                return Ok(result.Data);
             }
 
-            return new DataResult<SelectBranchesDto>(result.Data, true, "Başarılı");
+            return BadRequest(result.Message);
         }
 
-        [HttpPost("insert")]
-        public async Task<IDataResult<SelectBranchesDto>> Insert(CreateBranchesDto branch)
+        [HttpPost("InsertAsync")]
+        public async Task<IActionResult> Insert(CreateBranchesDto branch)
         {
-            var result = new SuccessDataResult<SelectBranchesDto>(await _appService.CreateAsync(branch));
+            var result = await _appService.CreateAsync(branch);
 
-            if (!result.Success)
+            if (result.Success)
             {
-                return new DataResult<SelectBranchesDto>(new SelectBranchesDto(), result.Success, "Hata Var");
+                return Ok(result.Data);
             }
 
-            return new DataResult<SelectBranchesDto>(result.Data, true, "Başarılı");
+            return BadRequest(result.Message);
         }
 
-        [HttpPut("update")]
-        public async Task<IDataResult<SelectBranchesDto>> Update(UpdateBranchesDto branch)
+        [HttpPut("UpdateAsync")]
+        public async Task<IActionResult> Update(UpdateBranchesDto branch)
         {
-            var result = new SuccessDataResult<SelectBranchesDto>(await _appService.UpdateAsync(branch));
+            var result = await _appService.UpdateAsync(branch);
 
-            if (!result.Success)
+            if (result.Success)
             {
-                return new DataResult<SelectBranchesDto>(new SelectBranchesDto(), result.Success, "Hata Var");
+                return Ok(result.Data);
             }
 
-            return new DataResult<SelectBranchesDto>(result.Data, true, "Başarılı");
+            return BadRequest(result.Message);
         }
 
-        [HttpPost("delete")]
+        [HttpPost("DeleteAsync")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await _appService.DeleteAsync(id);
+            var result = await _appService.DeleteAsync(id);
 
-            return Ok();
+            if(result.Success)
+            {
+                return Ok(result.Message);
+            }
+
+            return BadRequest(result.Message);
         }
     }
 }

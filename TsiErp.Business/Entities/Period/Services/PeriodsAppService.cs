@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Guids;
+using Tsi.Results;
 using Tsi.Validation.Validations.FluentValidation.CrossCuttingConcerns;
 using TsiErp.Business.Entities.Period.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
@@ -26,7 +27,7 @@ namespace TsiErp.Business.Entities.Period.Services
         }
 
         [ValidationAspect(typeof(CreatePeriodsValidator), Priority = 1)]
-        public async Task<SelectPeriodsDto> CreateAsync(CreatePeriodsDto input)
+        public async Task<IDataResult<SelectPeriodsDto>> CreateAsync(CreatePeriodsDto input)
         {
             var entity = ObjectMapper.Map<CreatePeriodsDto, Periods>(input);
 
@@ -41,32 +42,33 @@ namespace TsiErp.Business.Entities.Period.Services
 
             var addedEntity = await _repository.InsertAsync(entity);
 
-            return ObjectMapper.Map<Periods, SelectPeriodsDto>(addedEntity);
+            return new SuccessDataResult<SelectPeriodsDto>(ObjectMapper.Map<Periods, SelectPeriodsDto>(addedEntity));
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task<IResult> DeleteAsync(Guid id)
         {
             await _repository.DeleteAsync(id);
+            return new SuccessResult("Silme işlemi başarılı.");
         }
 
-        public async Task<SelectPeriodsDto> GetAsync(Guid id)
+        public async Task<IDataResult<SelectPeriodsDto>> GetAsync(Guid id)
         {
             var entity = await _repository.GetAsync(t => t.Id == id,t=>t.Branches);
             var mappedEntity = ObjectMapper.Map<Periods, SelectPeriodsDto>(entity);
-            return mappedEntity;
+            return new SuccessDataResult<SelectPeriodsDto>(mappedEntity);
         }
 
-        public async Task<IList<ListPeriodsDto>> GetListAsync()
+        public async Task<IDataResult<IList<ListPeriodsDto>>> GetListAsync()
         {
             var list = await _repository.GetListAsync();
 
             var mappedEntity = ObjectMapper.Map<List<Periods>, List<ListPeriodsDto>>(list.ToList());
 
-            return mappedEntity;
+            return new SuccessDataResult<IList<ListPeriodsDto>>(mappedEntity);
         }
 
         [ValidationAspect(typeof(UpdatePeriodsValidator), Priority = 1)]
-        public async Task<SelectPeriodsDto> UpdateAsync(UpdatePeriodsDto input)
+        public async Task<IDataResult<SelectPeriodsDto>> UpdateAsync(UpdatePeriodsDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
 
@@ -82,7 +84,7 @@ namespace TsiErp.Business.Entities.Period.Services
             mappedEntity.DeletionTime = null;
 
             await _repository.UpdateAsync(mappedEntity);
-            return ObjectMapper.Map<Periods, SelectPeriodsDto>(mappedEntity);
+            return new SuccessDataResult<SelectPeriodsDto>(ObjectMapper.Map<Periods, SelectPeriodsDto>(mappedEntity));
         }
     }
 }

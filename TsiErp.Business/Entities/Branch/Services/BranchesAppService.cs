@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tsi.Application.Contract.Services.EntityFrameworkCore;
 using Tsi.Guids;
+using Tsi.Results;
 using Tsi.Validation.Validations.FluentValidation.CrossCuttingConcerns;
 using TsiErp.Business.Entities.Branch.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
@@ -26,8 +28,8 @@ namespace TsiErp.Business.Entities.Branch.Services
             _guidGenerator = guidGenerator;
         }
 
-        [ValidationAspect(typeof(CreateBranchesValidator),Priority =1)]
-        public async Task<SelectBranchesDto> CreateAsync(CreateBranchesDto input)
+        [ValidationAspect(typeof(CreateBranchesValidator), Priority = 1)]
+        public async Task<IDataResult<SelectBranchesDto>> CreateAsync(CreateBranchesDto input)
         {
             var entity = ObjectMapper.Map<CreateBranchesDto, Branches>(input);
 
@@ -42,32 +44,35 @@ namespace TsiErp.Business.Entities.Branch.Services
 
             var addedEntity = await _repository.InsertAsync(entity);
 
-            return ObjectMapper.Map<Branches, SelectBranchesDto>(addedEntity);
+            ObjectMapper.Map<Branches, SelectBranchesDto>(addedEntity);
+
+            return new SuccessDataResult<SelectBranchesDto>(ObjectMapper.Map<Branches, SelectBranchesDto>(addedEntity));
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task<IResult> DeleteAsync(Guid id)
         {
             await _repository.DeleteAsync(id);
+            return new SuccessResult("Silme işlemi başarılı.");
         }
 
-        public async Task<SelectBranchesDto> GetAsync(Guid id)
+        public async Task<IDataResult<SelectBranchesDto>> GetAsync(Guid id)
         {
             var entity = await _repository.GetAsync(t => t.Id == id, t => t.Periods);
             var mappedEntity = ObjectMapper.Map<Branches, SelectBranchesDto>(entity);
-            return mappedEntity;
+            return new SuccessDataResult<SelectBranchesDto>(mappedEntity);
         }
 
-        public async Task<IList<ListBranchesDto>> GetListAsync()
+        public async Task<IDataResult<IList<ListBranchesDto>>> GetListAsync()
         {
             var list = await _repository.GetListAsync(null, t => t.Periods);
 
             var mappedEntity = ObjectMapper.Map<List<Branches>, List<ListBranchesDto>>(list.ToList());
 
-            return mappedEntity;
+            return new SuccessDataResult<IList<ListBranchesDto>>(mappedEntity);
         }
 
         [ValidationAspect(typeof(UpdateBranchesValidator), Priority = 1)]
-        public async Task<SelectBranchesDto> UpdateAsync(UpdateBranchesDto input)
+        public async Task<IDataResult<SelectBranchesDto>> UpdateAsync(UpdateBranchesDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
 
@@ -83,7 +88,8 @@ namespace TsiErp.Business.Entities.Branch.Services
             mappedEntity.DeletionTime = null;
 
             await _repository.UpdateAsync(mappedEntity);
-            return ObjectMapper.Map<Branches, SelectBranchesDto>(mappedEntity);
+            return new SuccessDataResult<SelectBranchesDto>(ObjectMapper.Map<Branches, SelectBranchesDto>(mappedEntity));
         }
+
     }
 }
