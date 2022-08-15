@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Tsi.Application.Contract.Services.EntityFrameworkCore;
 using Tsi.Caching.Aspect;
 using Tsi.Guids;
+using Tsi.Logging.CrossCuttingConcerns.Aspect;
+using Tsi.Logging.CrossCuttingConcerns.Log4Net.Loggers;
 using Tsi.Results;
 using Tsi.Transaction.Aspect;
 using Tsi.Validation.Validations.FluentValidation.Aspect;
@@ -59,6 +61,7 @@ namespace TsiErp.Business.Entities.Branch.Services
             return new SuccessResult("Silme işlemi başarılı.");
         }
 
+        [LogAspect(typeof(FileLogger), Priority = 1)]
         public async Task<IDataResult<SelectBranchesDto>> GetAsync(Guid id)
         {
             var entity = await _repository.GetAsync(t => t.Id == id, t => t.Periods);
@@ -66,6 +69,7 @@ namespace TsiErp.Business.Entities.Branch.Services
             return new SuccessDataResult<SelectBranchesDto>(mappedEntity);
         }
 
+        
         [CacheAspect(duration:10)]
         public async Task<IDataResult<IList<ListBranchesDto>>> GetListAsync()
         {
