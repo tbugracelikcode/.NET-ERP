@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Tsi.Validation.Validations.FluentValidation.CrossCuttingConcerns
+namespace Tsi.Validation.Validations.FluentValidation.Aspect
 {
     public static class ValidationTool
     {

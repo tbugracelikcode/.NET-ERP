@@ -5,7 +5,7 @@ using System.Text;
 using System.Transactions;
 using Tsi.IoC.IoC.Autofac.Interceptors;
 
-namespace Tsi.Transaction.CrossCuttingConcerns
+namespace Tsi.Transaction.Aspect
 {
     public class TransactionScopeAspect : MethodInterception
     {
@@ -21,7 +21,7 @@ namespace Tsi.Transaction.CrossCuttingConcerns
             catch (System.Exception e)
             {
                 transactionScope.Dispose();
-                throw;
+                throw new Exception();
             }
 
         }

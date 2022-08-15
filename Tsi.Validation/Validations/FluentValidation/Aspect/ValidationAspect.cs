@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using Tsi.IoC.IoC.Autofac.Interceptors;
 
-namespace Tsi.Validation.Validations.FluentValidation.CrossCuttingConcerns
+namespace Tsi.Validation.Validations.FluentValidation.Aspect
 {
     public class ValidationAspect : MethodInterception
     {

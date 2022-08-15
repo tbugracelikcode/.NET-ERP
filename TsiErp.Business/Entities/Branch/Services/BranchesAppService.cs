@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using Tsi.Application.Contract.Services.EntityFrameworkCore;
 using Tsi.Guids;
 using Tsi.Results;
-using Tsi.Transaction.CrossCuttingConcerns;
-using Tsi.Validation.Validations.FluentValidation.CrossCuttingConcerns;
+using Tsi.Transaction.Aspect;
+using Tsi.Validation.Validations.FluentValidation.Aspect;
 using TsiErp.Business.Entities.Branch.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
@@ -29,7 +29,7 @@ namespace TsiErp.Business.Entities.Branch.Services
             _guidGenerator = guidGenerator;
         }
 
-        //[TransactionScopeAspect(Priority =2)]
+        //[TransactionScopeAspect(Priority = 2)]
         [ValidationAspect(typeof(CreateBranchesValidator), Priority = 1)]
         public async Task<IDataResult<SelectBranchesDto>> CreateAsync(CreateBranchesDto input)
         {

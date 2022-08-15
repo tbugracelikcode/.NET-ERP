@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Guids;
 using Tsi.Results;
-using Tsi.Validation.Validations.FluentValidation.CrossCuttingConcerns;
+using Tsi.Validation.Validations.FluentValidation.Aspect;
 using TsiErp.Business.Entities.Period.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Period;

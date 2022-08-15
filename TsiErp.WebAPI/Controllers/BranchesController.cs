@@ -1,10 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Tsi.Results;
-using Tsi.Validation.Validations.FluentValidation.CrossCuttingConcerns;
+﻿using Microsoft.AspNetCore.Mvc;
 using TsiErp.Business.Entities.Branch.Services;
-using TsiErp.Business.Entities.Branch.Validations;
-using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Branch.Dtos;
 
 namespace TsiErp.WebAPI.Controllers
