@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Application.Contract.Services.EntityFrameworkCore;
+using Tsi.Caching.Aspect;
 using Tsi.Guids;
 using Tsi.Results;
 using Tsi.Transaction.Aspect;
@@ -31,6 +32,7 @@ namespace TsiErp.Business.Entities.Branch.Services
 
         //[TransactionScopeAspect(Priority = 2)]
         [ValidationAspect(typeof(CreateBranchesValidator), Priority = 1)]
+        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBranchesDto>> CreateAsync(CreateBranchesDto input)
         {
             var entity = ObjectMapper.Map<CreateBranchesDto, Branches>(input);
@@ -64,6 +66,7 @@ namespace TsiErp.Business.Entities.Branch.Services
             return new SuccessDataResult<SelectBranchesDto>(mappedEntity);
         }
 
+        [CacheAspect(duration:10)]
         public async Task<IDataResult<IList<ListBranchesDto>>> GetListAsync()
         {
             var list = await _repository.GetListAsync(null, t => t.Periods);
@@ -74,6 +77,7 @@ namespace TsiErp.Business.Entities.Branch.Services
         }
 
         [ValidationAspect(typeof(UpdateBranchesValidator), Priority = 1)]
+        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBranchesDto>> UpdateAsync(UpdateBranchesDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);

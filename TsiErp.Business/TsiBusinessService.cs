@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Tsi.Caching;
+using Tsi.Caching.Microsoft;
 using Tsi.Guids;
 using Tsi.IoC.IoC.Autofac;
 using TsiErp.Business.Entities.Branch.Services;
@@ -18,6 +20,9 @@ namespace TsiErp.Business
     {
         public void RegisterService(IServiceCollection services)
         {
+            services.AddMemoryCache();
+            services.AddSingleton<ICacheManager, MemoryCacheManager>();
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddSingleton<IGuidGenerator, SequentialGuidGenerator>();

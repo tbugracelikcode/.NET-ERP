@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tsi.Application.Contract\Tsi.Application.Contract.csproj" />
+    <ProjectReference Include="..\Tsi.Caching\Tsi.Caching.csproj" />
     <ProjectReference Include="..\Tsi.Guids\Tsi.Guids.csproj" />
     <ProjectReference Include="..\Tsi.IoC\Tsi.IoC.csproj" />
     <ProjectReference Include="..\Tsi.Transaction\Tsi.Transaction.csproj" />
