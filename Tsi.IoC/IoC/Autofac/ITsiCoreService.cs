@@ -5,8 +5,8 @@ using System.Text;
 
 namespace Tsi.IoC.IoC.Autofac
 {
-    public interface ITsiCoreModule
+    public interface ITsiCoreService
     {
-        void Load(IServiceCollection services);
+        void RegisterService(IServiceCollection services);
     }
 }

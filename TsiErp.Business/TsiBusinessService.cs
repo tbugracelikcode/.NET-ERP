@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Tsi.Guids;
 using Tsi.IoC.IoC.Autofac;
 using TsiErp.Business.Entities.Branch.Services;
 using TsiErp.Business.Entities.Period.Services;
@@ -13,20 +14,17 @@ using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Period;
 namespace TsiErp.Business
 {
 
-    public class TsiBusinessCoreModule : ITsiCoreModule
+    public class TsiBusinessService : ITsiCoreService
     {
-        public void Load(IServiceCollection services)
+        public void RegisterService(IServiceCollection services)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-           
+            services.AddSingleton<IGuidGenerator, SequentialGuidGenerator>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             SetMapperToObjectMapper();
-
-            
-
         }
 
         private void SetMapperToObjectMapper()

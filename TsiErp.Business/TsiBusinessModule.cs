@@ -11,10 +11,11 @@ using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
 using TsiErp.Business.Entities.Period.Services;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Period;
 using Tsi.IoC.IoC.Autofac.Interceptors;
+using Tsi.IoC.IoC.Autofac;
 
-namespace TsiErp.Business.DependencyResolvers.Autofac
+namespace TsiErp.Business
 {
-    public class AutofacBusinessModule : Module
+    public class TsiBusinessModule : TsiModule
     {
         protected override void Load(ContainerBuilder builder)
         {
