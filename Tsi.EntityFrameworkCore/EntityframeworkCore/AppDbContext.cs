@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using Tsi.EntityFrameworkCore.Extensions;
+using Tsi.EntityFrameworkCore.Modeling;
 
 namespace Tsi.EntityFrameworkCore.EntityframeworkCore
 {
@@ -23,6 +24,7 @@ namespace Tsi.EntityFrameworkCore.EntityframeworkCore
         public virtual string SoftDeleteSectionName { get; set; }
 
         public virtual string SoftDeleteKey { get; set; }
+
         public virtual string ConnectionStringKey { get; set; }
 
 
@@ -59,8 +61,6 @@ namespace Tsi.EntityFrameworkCore.EntityframeworkCore
                     }
                 }
             }
-
-
         }
 
         public AppDbContext()

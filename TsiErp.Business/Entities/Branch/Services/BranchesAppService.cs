@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 using Tsi.Application.Contract.Services.EntityFrameworkCore;
 using Tsi.Caching.Aspect;
 using Tsi.Guids;
-using Tsi.Logging.CrossCuttingConcerns.Aspect;
-using Tsi.Logging.CrossCuttingConcerns.Log4Net.Loggers;
+using Tsi.Logging.Tsi.Services;
 using Tsi.Results;
 using Tsi.Transaction.Aspect;
 using Tsi.Validation.Validations.FluentValidation.Aspect;
@@ -26,10 +25,13 @@ namespace TsiErp.Business.Entities.Branch.Services
 
         private readonly IGuidGenerator _guidGenerator;
 
-        public BranchesAppService(IBranchesRepository repository, IGuidGenerator guidGenerator)
+        private readonly ILogsAppService _logger;
+
+        public BranchesAppService(IBranchesRepository repository, IGuidGenerator guidGenerator, ILogsAppService logger)
         {
             _repository = repository;
             _guidGenerator = guidGenerator;
+            _logger = logger;
         }
 
         //[TransactionScopeAspect(Priority = 2)]
@@ -61,7 +63,7 @@ namespace TsiErp.Business.Entities.Branch.Services
             return new SuccessResult("Silme işlemi başarılı.");
         }
 
-        [LogAspect(typeof(FileLogger), Priority = 1)]
+
         public async Task<IDataResult<SelectBranchesDto>> GetAsync(Guid id)
         {
             var entity = await _repository.GetAsync(t => t.Id == id, t => t.Periods);
@@ -69,8 +71,8 @@ namespace TsiErp.Business.Entities.Branch.Services
             return new SuccessDataResult<SelectBranchesDto>(mappedEntity);
         }
 
-        
-        [CacheAspect(duration:10)]
+
+        [CacheAspect(duration: 10)]
         public async Task<IDataResult<IList<ListBranchesDto>>> GetListAsync()
         {
             var list = await _repository.GetListAsync(null, t => t.Periods);
@@ -98,6 +100,17 @@ namespace TsiErp.Business.Entities.Branch.Services
             mappedEntity.DeletionTime = null;
 
             await _repository.UpdateAsync(mappedEntity);
+
+            await _logger.InsertAsync(new Tsi.Logging.Tsi.Dtos.CreateLogsDto
+            {
+                AfterValues = mappedEntity,
+                BeforeValues = entity,
+                Date_ = DateTime.Now,
+                LogLevel_ = "Update",
+                MethodName_ = "UpdateAsync",
+                UserId = Guid.NewGuid()
+            });
+
             return new SuccessDataResult<SelectBranchesDto>(ObjectMapper.Map<Branches, SelectBranchesDto>(mappedEntity));
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +27,28 @@ namespace Tsi.EntityFrameworkCore.Modeling
             b.TryConfigureDeletionTime();
             //b.TryConfigureSoftDelete();
         }
+
+        //public static void ConfigureLogs(this ModelBuilder builder)
+        //{
+        //    builder.Entity<Logs>(b =>
+        //    {
+        //        b.ToTable("Logs");
+
+
+        //        b.Property(t => t.Id).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+        //        b.Property(t => t.Date_).IsRequired().HasColumnType(SqlDbType.DateTime.ToString()).HasMaxLength(200);
+        //        b.Property(t => t.MethodName).IsRequired().HasColumnType("nvarchar(MAX)");
+        //        b.Property(t => t.BeforeValues).IsRequired().HasColumnType("nvarchar(MAX)");
+        //        b.Property(t => t.AfterValues).IsRequired().HasColumnType("nvarchar(MAX)");
+        //        b.Property(t => t.LogLevel).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+        //        b.Property(t => t.UserId).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+        //        b.HasIndex(x => x.MethodName);
+        //        b.HasIndex(x => x.LogLevel);
+        //        b.HasIndex(x => x.UserId);
+
+        //    });
+        //}
 
         public static void TryConfigureEntityId(this EntityTypeBuilder b)
         {

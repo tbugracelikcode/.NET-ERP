@@ -8,7 +8,7 @@ using TsiErp.Entities.Entities.Branch;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch
 {
-    public interface IBranchesRepository: IEfCoreRepository<Branches>
+    public interface IBranchesRepository : IEfCoreRepository<Branches>
     {
     }
 }
