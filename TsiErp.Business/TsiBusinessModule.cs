@@ -12,6 +12,7 @@ using TsiErp.Business.Entities.Period.Services;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Period;
 using Tsi.IoC.IoC.Autofac.Interceptors;
 using Tsi.IoC.IoC.Autofac;
+using Tsi.Guids;
 
 namespace TsiErp.Business
 {
@@ -19,16 +20,6 @@ namespace TsiErp.Business
     {
         protected override void Load(ContainerBuilder builder)
         {
-
-            #region Business Serivice Registrations
-            builder.RegisterType<BranchesAppService>().As<IBranchesAppService>();
-            builder.RegisterType<EFCoreBranchesRepository>().As<IBranchesRepository>();
-
-            builder.RegisterType<PeriodsAppService>().As<IPeriodsAppService>();
-            builder.RegisterType<EFCorePeriodsRepository>().As<IPeriodsRepository>();
-            #endregion
-
-
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
             builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()

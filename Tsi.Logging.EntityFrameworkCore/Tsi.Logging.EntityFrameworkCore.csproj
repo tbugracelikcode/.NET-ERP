@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Tsi.Core\Tsi.Core.csproj" />
     <ProjectReference Include="..\Tsi.EntityFrameworkCore\Tsi.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\Tsi.IoC\Tsi.IoC.csproj" />
   </ItemGroup>
 
   <ItemGroup>

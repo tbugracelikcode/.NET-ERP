@@ -10,6 +10,8 @@ using TsiErp.Business.Entities.Branch;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
 using Tsi.Guids;
 using TsiErp.DataAccess;
+using System.Reflection;
+using Tsi.IoC.Tsi.DependencyResolvers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +32,6 @@ builder.Services.AddDependencyResolvers(new ITsiCoreService[]
 {
     new TsiBusinessService()
 });
-
 
 var app = builder.Build();
 

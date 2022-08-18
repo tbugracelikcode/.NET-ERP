@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Tsi.Application.Contract\Tsi.Application.Contract.csproj" />
     <ProjectReference Include="..\Tsi.Guids\Tsi.Guids.csproj" />
     <ProjectReference Include="..\Tsi.Logging.EntityFrameworkCore\Tsi.Logging.EntityFrameworkCore.csproj" />
   </ItemGroup>

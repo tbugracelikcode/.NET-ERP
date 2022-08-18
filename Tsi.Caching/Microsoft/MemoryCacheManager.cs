@@ -6,9 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Tsi.IoC.IoC.Autofac.ServiceTools;
+using Tsi.IoC.Tsi.DependencyResolvers;
 
 namespace Tsi.Caching.Microsoft
 {
+    [ServiceRegistration(typeof(ICacheManager), DependencyInjectionType.Singleton)]
     public class MemoryCacheManager : ICacheManager
     {
         private IMemoryCache _cache;

@@ -1,15 +1,9 @@
-﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Application.Contract.Services.EntityFrameworkCore;
+﻿using Tsi.Application.Contract.Services.EntityFrameworkCore;
 using Tsi.Caching.Aspect;
 using Tsi.Guids;
+using Tsi.IoC.Tsi.DependencyResolvers;
 using Tsi.Logging.Tsi.Services;
 using Tsi.Results;
-using Tsi.Transaction.Aspect;
 using Tsi.Validation.Validations.FluentValidation.Aspect;
 using TsiErp.Business.Entities.Branch.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
@@ -19,18 +13,16 @@ using TsiErp.Entities.Entities.Branch.Dtos;
 
 namespace TsiErp.Business.Entities.Branch.Services
 {
-    public class BranchesAppService : IBranchesAppService
+    [ServiceRegistration(typeof(IBranchesAppService), DependencyInjectionType.Scoped)]
+    public class BranchesAppService : ApplicationService, IBranchesAppService
     {
         private readonly IBranchesRepository _repository;
 
-        private readonly IGuidGenerator _guidGenerator;
-
         private readonly ILogsAppService _logger;
 
-        public BranchesAppService(IBranchesRepository repository, IGuidGenerator guidGenerator, ILogsAppService logger)
+        public BranchesAppService(IBranchesRepository repository, ILogsAppService logger)
         {
             _repository = repository;
-            _guidGenerator = guidGenerator;
             _logger = logger;
         }
 
@@ -41,7 +33,7 @@ namespace TsiErp.Business.Entities.Branch.Services
         {
             var entity = ObjectMapper.Map<CreateBranchesDto, Branches>(input);
 
-            entity.Id = _guidGenerator.CreateGuid();
+            entity.Id = GuidGenerator.CreateGuid();
             entity.CreatorId = Guid.NewGuid();
             entity.CreationTime = DateTime.Now;
             entity.IsDeleted = false;

@@ -4,23 +4,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tsi.Application.Contract.Services.EntityFrameworkCore;
 using Tsi.Guids;
+using Tsi.IoC.Tsi.DependencyResolvers;
 using Tsi.Logging.EntityFrameworkCore.Entities;
 using Tsi.Logging.EntityFrameworkCore.Repositories.EntityFrameworkCore;
 using Tsi.Logging.Tsi.Dtos;
 
 namespace Tsi.Logging.Tsi.Services
 {
-    public class LogsAppService : ILogsAppService
+    [ServiceRegistration(typeof(ILogsAppService), DependencyInjectionType.Scoped)]
+    public class LogsAppService :ApplicationService, ILogsAppService
     {
         private readonly ILogsRepository _repository;
 
-        private readonly IGuidGenerator _guidGenerator;
-
-        public LogsAppService(ILogsRepository repository, IGuidGenerator guidGenerator)
+        public LogsAppService(ILogsRepository repository)
         {
             _repository = repository;
-            _guidGenerator = guidGenerator;
         }
 
         public async Task InsertAsync(CreateLogsDto input)
@@ -30,7 +30,7 @@ namespace Tsi.Logging.Tsi.Services
                 AfterValues = JsonConvert.SerializeObject(input.AfterValues, Formatting.Indented),
                 BeforeValues = JsonConvert.SerializeObject(input.BeforeValues, Formatting.Indented),
                 Date_ = DateTime.Now,
-                Id = _guidGenerator.CreateGuid(),
+                Id = GuidGenerator.CreateGuid(),
                 LogLevel_ = input.LogLevel_,
                 MethodName_ = input.MethodName_,
                 UserId = input.UserId

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tsi.Application.Contract.Services.EntityFrameworkCore;
 using Tsi.Guids;
+using Tsi.IoC.Tsi.DependencyResolvers;
 using Tsi.Results;
 using Tsi.Validation.Validations.FluentValidation.Aspect;
 using TsiErp.Business.Entities.Period.Validations;
@@ -14,16 +16,14 @@ using TsiErp.Entities.Entities.Period.Dtos;
 
 namespace TsiErp.Business.Entities.Period.Services
 {
-    public class PeriodsAppService : IPeriodsAppService
+    [ServiceRegistration(typeof(IPeriodsAppService), DependencyInjectionType.Scoped)]
+    public class PeriodsAppService : ApplicationService,IPeriodsAppService
     {
         private readonly IPeriodsRepository _repository;
 
-        private readonly IGuidGenerator _guidGenerator;
-
-        public PeriodsAppService(IPeriodsRepository repository, IGuidGenerator guidGenerator)
+        public PeriodsAppService(IPeriodsRepository repository)
         {
             _repository = repository;
-            _guidGenerator = guidGenerator;
         }
 
         [ValidationAspect(typeof(CreatePeriodsValidator), Priority = 1)]
@@ -31,7 +31,7 @@ namespace TsiErp.Business.Entities.Period.Services
         {
             var entity = ObjectMapper.Map<CreatePeriodsDto, Periods>(input);
 
-            entity.Id = _guidGenerator.CreateGuid();
+            entity.Id = GuidGenerator.CreateGuid();
             entity.CreatorId = Guid.NewGuid();
             entity.CreationTime = DateTime.Now;
             entity.IsDeleted = false;

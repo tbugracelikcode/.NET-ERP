@@ -1,19 +1,11 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using Tsi.Caching;
-using Tsi.Caching.Microsoft;
-using Tsi.Guids;
 using Tsi.IoC.IoC.Autofac;
-using Tsi.Logging.EntityFrameworkCore.Repositories.EntityFrameworkCore;
-using Tsi.Logging.Tsi.Services;
-using TsiErp.Business.Entities.Branch.Services;
-using TsiErp.Business.Entities.Period.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Business.MapperProfile;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Period;
+using Tsi.IoC.Tsi.DependencyResolvers;
+using Microsoft.AspNetCore.Http;
 
 namespace TsiErp.Business
 {
@@ -23,21 +15,22 @@ namespace TsiErp.Business
         public void RegisterService(IServiceCollection services)
         {
             services.AddMemoryCache();
-            services.AddSingleton<ICacheManager, MemoryCacheManager>();
-
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
-            services.AddSingleton<IGuidGenerator, SequentialGuidGenerator>();
 
-            services.AddScoped<ILogsAppService, LogsAppService>();
-            services.AddScoped<ILogsRepository, EfCoreLogsRepository>();
+            services.RegisterDependencies(Assembly.Load("Tsi.Guids"));
+            services.RegisterDependencies(Assembly.Load("Tsi.Caching"));
+            services.RegisterDependencies(Assembly.Load("TsiErp.Business"));
+            services.RegisterDependencies(Assembly.Load("TsiErp.DataAccess"));
+            services.RegisterDependencies(Assembly.Load("Tsi.Logging"));
+            services.RegisterDependencies(Assembly.Load("Tsi.Logging.EntityFrameworkCore"));
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             SetMapperToObjectMapper();
         }
 
-        private void SetMapperToObjectMapper()
+        static void SetMapperToObjectMapper()
         {
             var config = new MapperConfiguration(cfg =>
             {
