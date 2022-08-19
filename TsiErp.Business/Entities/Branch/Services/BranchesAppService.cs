@@ -1,10 +1,13 @@
-﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Tsi.Application.Contract.Services.EntityFrameworkCore;
+using Tsi.Caching.Aspect;
 using Tsi.Guids;
+using Tsi.IoC.Tsi.DependencyResolvers;
+using Tsi.Logging;
+using Tsi.Logging.Tsi.Dtos;
+using Tsi.Logging.Tsi.Services;
+using Tsi.Results;
+using Tsi.Validation.Validations.FluentValidation.Aspect;
+using TsiErp.Business.Entities.Branch.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
 using TsiErp.Entities.Entities.Branch;
@@ -12,23 +15,27 @@ using TsiErp.Entities.Entities.Branch.Dtos;
 
 namespace TsiErp.Business.Entities.Branch.Services
 {
-    public class BranchesAppService : IBranchesAppService
+    [ServiceRegistration(typeof(IBranchesAppService), DependencyInjectionType.Scoped)]
+    public class BranchesAppService : ApplicationService, IBranchesAppService
     {
         private readonly IBranchesRepository _repository;
 
-        private readonly IGuidGenerator _guidGenerator;
+        private readonly ILogsAppService _logger;
 
-        public BranchesAppService(IBranchesRepository repository, IGuidGenerator guidGenerator)
+        public BranchesAppService(IBranchesRepository repository, ILogsAppService logger)
         {
             _repository = repository;
-            _guidGenerator = guidGenerator;
+            _logger = logger;
         }
 
-        public async Task<SelectBranchesDto> CreateAsync(CreateBranchesDto input)
+        //[TransactionScopeAspect(Priority = 2)]
+        [ValidationAspect(typeof(CreateBranchesValidator), Priority = 1)]
+        [CacheRemoveAspect("Get")]
+        public async Task<IDataResult<SelectBranchesDto>> CreateAsync(CreateBranchesDto input)
         {
             var entity = ObjectMapper.Map<CreateBranchesDto, Branches>(input);
 
-            entity.Id = _guidGenerator.CreateGuid();
+            entity.Id = GuidGenerator.CreateGuid();
             entity.CreatorId = Guid.NewGuid();
             entity.CreationTime = DateTime.Now;
             entity.IsDeleted = false;
@@ -39,37 +46,66 @@ namespace TsiErp.Business.Entities.Branch.Services
 
             var addedEntity = await _repository.InsertAsync(entity);
 
-            return ObjectMapper.Map<Branches, SelectBranchesDto>(addedEntity);
+            ObjectMapper.Map<Branches, SelectBranchesDto>(addedEntity);
+
+            return new SuccessDataResult<SelectBranchesDto>(ObjectMapper.Map<Branches, SelectBranchesDto>(addedEntity));
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task<IResult> DeleteAsync(Guid id)
         {
             await _repository.DeleteAsync(id);
+            return new SuccessResult("Silme işlemi başarılı.");
         }
 
-        public async Task<SelectBranchesDto> GetAsync(Guid id)
+
+        public async Task<IDataResult<SelectBranchesDto>> GetAsync(Guid id)
         {
             var entity = await _repository.GetAsync(t => t.Id == id, t => t.Periods);
             var mappedEntity = ObjectMapper.Map<Branches, SelectBranchesDto>(entity);
-            return mappedEntity;
+            return new SuccessDataResult<SelectBranchesDto>(mappedEntity);
         }
 
-        public async Task<IList<ListBranchesDto>> GetListAsync()
+        [CacheAspect(duration: 10)]
+        public async Task<IDataResult<IList<ListBranchesDto>>> GetListAsync()
         {
-            var list = await _repository.GetListAsync(null,t=>t.Periods);
+            var list = await _repository.GetListAsync(null, t => t.Periods);
 
             var mappedEntity = ObjectMapper.Map<List<Branches>, List<ListBranchesDto>>(list.ToList());
 
-            return mappedEntity;
+            return new SuccessDataResult<IList<ListBranchesDto>>(mappedEntity);
         }
 
-        public async Task<SelectBranchesDto> UpdateAsync(UpdateBranchesDto input)
+        [ValidationAspect(typeof(UpdateBranchesValidator), Priority = 1)]
+        [CacheRemoveAspect("Get")]
+        public async Task<IDataResult<SelectBranchesDto>> UpdateAsync(UpdateBranchesDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
 
-            var mappedEntity = ObjectMapper.Map<UpdateBranchesDto,Branches>(input);
+            var mappedEntity = ObjectMapper.Map<UpdateBranchesDto, Branches>(input);
+
+            mappedEntity.Id = input.Id;
+            mappedEntity.LastModifierId = Guid.NewGuid();
+            mappedEntity.LastModificationTime = DateTime.Now;
+            mappedEntity.CreatorId = entity.CreatorId;
+            mappedEntity.CreationTime = entity.CreationTime;
+            mappedEntity.IsDeleted = false;
+            mappedEntity.DeleterId = null;
+            mappedEntity.DeletionTime = null;
+
             await _repository.UpdateAsync(mappedEntity);
-            return ObjectMapper.Map<Branches, SelectBranchesDto>(mappedEntity);
+
+            await _logger.InsertAsync(new Tsi.Logging.Tsi.Dtos.CreateLogsDto
+            {
+                AfterValues = mappedEntity,
+                BeforeValues = entity,
+                Date_ = DateTime.Now,
+                LogLevel_ = "Update",
+                MethodName_ = "UpdateAsync",
+                UserId = Guid.NewGuid()
+            });
+
+            return new SuccessDataResult<SelectBranchesDto>(ObjectMapper.Map<Branches, SelectBranchesDto>(mappedEntity));
         }
+
     }
 }

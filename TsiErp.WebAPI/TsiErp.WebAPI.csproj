@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="MicroKnights.Log4NetAdoNetAppender" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.5">
       <PrivateAssets>all</PrivateAssets>
@@ -18,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Tsi.Results\Tsi.Results.csproj" />
+    <ProjectReference Include="..\Tsi.Logging.EntityFrameworkCore\Tsi.Logging.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\TsiErp.Business\TsiErp.Business.csproj" />
   </ItemGroup>
 

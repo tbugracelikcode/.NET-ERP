@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 
-namespace TsiErp.DataAccess.EntityFrameworkCore.Extensions
+namespace Tsi.EntityFrameworkCore.Extensions
 {
     public static class SoftDeleteQueryExtension
     {

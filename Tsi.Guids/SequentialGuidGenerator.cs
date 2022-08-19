@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
+using Tsi.IoC.Tsi.DependencyResolvers;
 
 namespace Tsi.Guids
 {
+    [ServiceRegistration(typeof(IGuidGenerator), DependencyInjectionType.Transient)]
     public class SequentialGuidGenerator : IGuidGenerator
     {
         private static readonly RandomNumberGenerator RandomNumberGenerator = RandomNumberGenerator.Create();

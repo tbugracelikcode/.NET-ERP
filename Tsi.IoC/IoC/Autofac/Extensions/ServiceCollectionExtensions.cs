@@ -8,12 +8,11 @@ namespace Tsi.IoC.IoC.Autofac.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddDependencyResolvers(this IServiceCollection services,
-            ITsiCoreModule[] modules)
+        public static IServiceCollection AddDependencyResolvers(this IServiceCollection services, ITsiCoreService[] modules)
         {
             foreach (var module in modules)
             {
-                module.Load(services);
+                module.RegisterService(services);
             }
 
             return ServiceTool.Create(services);

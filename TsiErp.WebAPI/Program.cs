@@ -10,33 +10,28 @@ using TsiErp.Business.Entities.Branch;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
 using Tsi.Guids;
 using TsiErp.DataAccess;
+using System.Reflection;
+using Tsi.IoC.Tsi.DependencyResolvers;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-//var connectionString = builder.Configuration.GetConnectionString("Default");
-//builder.Services.AddDbContext<TsiErpDbContext>(x => x.UseSqlServer(connectionString));
-
-//builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).ConfigureContainer<ContainerBuilder>(container =>
-//{
-//    container.RegisterModule(new AutofacBusinessModule());
-//});
-
-builder.Services.AddDependencyResolvers(new ITsiCoreModule[]
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).ConfigureContainer<ContainerBuilder>(container =>
 {
-    new TsiBusinessCoreModule(),
-    new TsiGuidsCoreModule(),
-    new TsiDataAccessCoreModule()
+    container.RegisterModule(new TsiBusinessModule());
 });
 
+builder.Services.AddDependencyResolvers(new ITsiCoreService[]
+{
+    new TsiBusinessService()
+});
 
 var app = builder.Build();
 
