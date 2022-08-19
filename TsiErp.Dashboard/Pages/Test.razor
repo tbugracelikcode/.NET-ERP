@@ -1,0 +1,11 @@
+﻿@page "/test"
+@using TsiErp.Dashboard.Services
+@inject IstasyonService IstasyonService
+
+
+@code {
+    protected override void OnInitialized()
+    {
+        var list = IstasyonService.GetCodes();
+    }
+}
