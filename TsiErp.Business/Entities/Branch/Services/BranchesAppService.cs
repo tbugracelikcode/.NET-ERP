@@ -2,6 +2,8 @@
 using Tsi.Caching.Aspect;
 using Tsi.Guids;
 using Tsi.IoC.Tsi.DependencyResolvers;
+using Tsi.Logging;
+using Tsi.Logging.Tsi.Dtos;
 using Tsi.Logging.Tsi.Services;
 using Tsi.Results;
 using Tsi.Validation.Validations.FluentValidation.Aspect;
@@ -62,7 +64,6 @@ namespace TsiErp.Business.Entities.Branch.Services
             var mappedEntity = ObjectMapper.Map<Branches, SelectBranchesDto>(entity);
             return new SuccessDataResult<SelectBranchesDto>(mappedEntity);
         }
-
 
         [CacheAspect(duration: 10)]
         public async Task<IDataResult<IList<ListBranchesDto>>> GetListAsync()
