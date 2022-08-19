@@ -1,9 +1,16 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+<ContentHeader>
+    <Header>
+        <Microsoft.AspNetCore.Components.Web.PageTitle>Index</Microsoft.AspNetCore.Components.Web.PageTitle>
+    </Header>
+</ContentHeader>
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
+<ContentMain>
+    <Card>
+        <Title><CardTitle>Title</CardTitle></Title>
+        <Body>
+            Contents
+        </Body>
+    </Card>
+</ContentMain>

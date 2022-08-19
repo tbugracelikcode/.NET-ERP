@@ -6,4 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Blazorized.AdminLte" Version="0.1.8" />
+    <PackageReference Include="Blazorized.AdminLte.Content" Version="3.0.7" />
+  </ItemGroup>
+
 </Project>
