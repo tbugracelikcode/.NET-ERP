@@ -4,8 +4,13 @@
 
 
 @code {
+
+    DateTime date1;
+    DateTime date2;
+
     protected override void OnInitialized()
     {
-        var list = IstasyonService.GetCodes();
+
+        var list = IstasyonService.GetStationGeneralAnalyses(date1,date2);
     }
 }

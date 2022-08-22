@@ -1,4 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
+using TsiErp.Dashboard.Helpers;
+using TsiErp.Dashboard.Models;
 
 namespace TsiErp.Dashboard.Services
 {
@@ -8,30 +10,42 @@ namespace TsiErp.Dashboard.Services
 
         public IstasyonService()
         {
-            if(_connection == null)
-                _connection = new SqlConnection("Server=192.168.98.4;Database=TURERP;UID=sa;PWD=Logo1234567890;");
-                
-            if(_connection.State == System.Data.ConnectionState.Closed)
-                _connection.Open();
+            _connection = DBHelper.GetSqlConnection();
         }
 
-        public List<string> GetCodes()
+        public List<StationGeneralAnalysis> GetStationGeneralAnalyses(DateTime startDate, DateTime endDate)
         {
-            List<string> codes = new List<string>();
+            List<StationGeneralAnalysis> stationGeneralAnalyses = new List<StationGeneralAnalysis>();
 
-            SqlCommand command = new SqlCommand();
-            command.CommandText = "SELECT MAKINEKODU FROM TUR_IST";
-            command.Connection = _connection;
+            var stationList = DBHelper.GetStations();
 
-            SqlDataReader reader = command.ExecuteReader();
+            //var operationLines = DBHelper.GetOperationLines();
 
-            while(reader.Read())
+            if(stationList != null)
             {
-                codes.Add(reader["MAKINEKODU"].ToString());
+                foreach (var item in stationList)
+                {
+                    
+                    StationGeneralAnalysis analysis = new StationGeneralAnalysis
+                    {
+                          
+                    };
+                }
             }
 
-            return codes;
+            return stationGeneralAnalyses;
         }
 
+        //private decimal _MakineninAcikOlduguZaman(int? makineID)
+        //{
+           
+               
+        //            var toplamSure = operationLines.Where(t => t.ISTASYONID == makineID && t.TARIH > baslangic && t.TARIH < bitis).Sum(t => t.OPERASYONSURESI).GetValueOrDefault();
+
+        //            return toplamSure;                
+           
+
+
+        //}
     }
 }
