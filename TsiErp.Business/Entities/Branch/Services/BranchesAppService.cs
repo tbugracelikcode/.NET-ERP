@@ -1,12 +1,11 @@
 ﻿using Tsi.Application.Contract.Services.EntityFrameworkCore;
-using Tsi.Caching.Aspect;
-using Tsi.Guids;
-using Tsi.IoC.Tsi.DependencyResolvers;
+using Tsi.Core.Aspects.Autofac.Caching;
+using Tsi.Core.Aspects.Autofac.Validation;
+using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using Tsi.Logging;
 using Tsi.Logging.Tsi.Dtos;
 using Tsi.Logging.Tsi.Services;
-using Tsi.Results;
-using Tsi.Validation.Validations.FluentValidation.Aspect;
 using TsiErp.Business.Entities.Branch.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;

@@ -13,18 +13,19 @@ using Tsi.EntityFrameworkCore.Respositories.Extensions;
 
 namespace Tsi.EntityFrameworkCore.Respositories.EntityFrameworkCore
 {
-    public class EfCoreRepository<TDbContext, TEntity> : IEfCoreRepository<TEntity>
-        where TDbContext : DbContext, new()
+    public class EfCoreRepository<TEntity> : IEfCoreRepository<TEntity>
         where TEntity : class, IEntity, new()
     {
 
-        private DbContext _dbContext;
+        private readonly DbContext _dbContext;
+
+        public EfCoreRepository(DbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
 
         public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            if (_dbContext == null)
-                _dbContext = GetDbContext();
-
             var entity = await _dbContext.Set<TEntity>().SingleOrDefaultAsync(predicate);
 
             return entity;
@@ -32,12 +33,7 @@ namespace Tsi.EntityFrameworkCore.Respositories.EntityFrameworkCore
 
         public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            if (_dbContext == null)
-                _dbContext = GetDbContext();
-
             var queryable = await WithDetailsAsync(includeProperties);
-
-            TEntity entity;
 
             if (predicate != null)
             {
@@ -50,16 +46,11 @@ namespace Tsi.EntityFrameworkCore.Respositories.EntityFrameworkCore
 
         public async Task<IList<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> predicate = null)
         {
-            if (_dbContext == null)
-                _dbContext = GetDbContext();
-
             return predicate == null ? await _dbContext.Set<TEntity>().ToListAsync() : await _dbContext.Set<TEntity>().Where(predicate).ToListAsync();
         }
 
         public async Task<IList<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> predicate = null, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            if (_dbContext == null)
-                _dbContext = GetDbContext();
 
             var queryable = await WithDetailsAsync(includeProperties);
 
@@ -73,8 +64,6 @@ namespace Tsi.EntityFrameworkCore.Respositories.EntityFrameworkCore
 
         public async Task<TEntity> InsertAsync(TEntity entity)
         {
-            if (_dbContext == null)
-                _dbContext = GetDbContext();
 
             var addedEntity = _dbContext.Entry(entity);
             addedEntity.State = EntityState.Added;
@@ -85,8 +74,6 @@ namespace Tsi.EntityFrameworkCore.Respositories.EntityFrameworkCore
 
         public async Task<TEntity> UpdateAsync(TEntity entity)
         {
-            if (_dbContext == null)
-                _dbContext = GetDbContext();
 
             _dbContext.ChangeTracker.Clear();
 
@@ -100,8 +87,6 @@ namespace Tsi.EntityFrameworkCore.Respositories.EntityFrameworkCore
 
         public async Task DeleteAsync(Guid id)
         {
-            if (_dbContext == null)
-                _dbContext = GetDbContext();
 
             var entity = _dbContext.Set<TEntity>().Single(t => t.Id == id);
 
@@ -120,19 +105,9 @@ namespace Tsi.EntityFrameworkCore.Respositories.EntityFrameworkCore
 
         public async Task<DbSet<TEntity>> GetDbSetAsync()
         {
-            if (_dbContext == null)
-                _dbContext = GetDbContext();
-
             return _dbContext.Set<TEntity>();
 
         }
-
-
-        private DbContext GetDbContext()
-        {
-            return new TDbContext();
-        }
-
 
         private async Task<IQueryable<TEntity>> GetQueryableAsync()
         {
