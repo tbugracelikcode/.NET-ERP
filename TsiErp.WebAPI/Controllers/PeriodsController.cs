@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Tsi.Results;
 using TsiErp.Business.Entities.Period.Services;
 using TsiErp.Entities.Entities.Period.Dtos;
 
