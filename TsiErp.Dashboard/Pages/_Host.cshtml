@@ -2,8 +2,8 @@
 @namespace TsiErp.Dashboard.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
-    Layout = "_Layout";    
-}                          
+    Layout = "_Layout";
+}
 
 <component type="typeof(App)" render-mode="ServerPrerendered" />
 
@@ -25,14 +25,13 @@
     <link rel="stylesheet" href="~/plugins/daterangepicker/daterangepicker.css">
     <!-- overlay scrollbars -->
     <link type="text/css" href="~/plugins/overlayScrollbars/css/OverlayScrollbars.min.css" rel="stylesheet" />
-     <!-- erossini DataTable -->
-     <link href="/_content/PSC.Blazor.Components.DataTable/css/DataTable.css" rel="stylesheet" />
+    <link type="text/css" href="~/css/dx-blazor.bs5.css" rel="stylesheet" />
     <style>
         /* .carousel-inner > .item > img {
-                    min-height: 300px;
-                    max-height: 300px;
-                    width: 100%;
-                }*/
+                            min-height: 300px;
+                            max-height: 300px;
+                            width: 100%;
+                        }*/
     </style>
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse">
@@ -45,7 +44,6 @@
 
     <script src="_content/Blazorized.AdminLte/js/interop.js"></script>
     <script src="_framework/blazor.server.js"></script>
-    <script src="/_content/PSC.Blazor.Components.DataTable/js/DataTable.js"></script>
     <script src="~/dist/js/adminlte.min.js"></script>
     <script src="~/plugins/moment/moment-with-locales.js"></script>
     <script src="~/plugins/daterangepicker/daterangepicker.js"></script>

@@ -1,7 +1,7 @@
 ﻿@page "/employee-analysis-general"
 
-@using TsiErp.Dashboard.Data
-@inject WeatherForecastService ForecastService
+@using TsiErp.Dashboard.Data;
+
 
 <ContentHeader>
 </ContentHeader>
@@ -11,29 +11,12 @@
         <Body>
             İçerik
             <br />
-            <DataTable TModel="WeatherForecast"
-                       Items="forecasts">
-                <DataTableColumn TModel="WeatherForecast"
-                                 Property="(e) => e.Date" />
-                <DataTableColumn TModel="WeatherForecast"
-                                 Property="(e) => e.TemperatureC"
-                                 CustomTitle="Celsius" />
-                <DataTableColumn TModel="WeatherForecast"
-                                 Property="(e) => e.TemperatureF"
-                                 CustomTitle="Fahrenheit" />
-                <DataTableColumn TModel="WeatherForecast"
-                                 Property="(e) => e.Summary" />
-            </DataTable>
+            
         </Body>
     </Card>
 </ContentMain>
 
 
 @code {
-     private WeatherForecast[]? forecasts;
-
-    protected override async Task OnInitializedAsync()
-    {
-        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
-    }
+   
     }
