@@ -1,17 +1,11 @@
-using Microsoft.EntityFrameworkCore;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Tsi.Core.Extensions;
+using Tsi.Core.Modularity;
+using Tsi.Logging.EntityFrameworkCore.Repositories;
 using TsiErp.Business;
-using Tsi.IoC.IoC.Autofac.Extensions;
-using Tsi.IoC.IoC.Autofac;
+using TsiErp.Business.DependencyResolvers.Autofac;
 using TsiErp.DataAccess.EntityFrameworkCore;
-using TsiErp.Business.Entities.Branch;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
-using Tsi.Guids;
-using TsiErp.DataAccess;
-using System.Reflection;
-using Tsi.IoC.Tsi.DependencyResolvers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,14 +17,19 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
+builder.Services.AddDbContext<TsiErpDbContext>();
+builder.Services.AddDbContext<LogDbContext>();
+
+
+
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).ConfigureContainer<ContainerBuilder>(container =>
 {
-    container.RegisterModule(new TsiBusinessModule());
+    container.RegisterModule(new AutofacBusinessModule());
 });
 
-builder.Services.AddDependencyResolvers(new ITsiCoreService[]
+builder.Services.AddDependencyResolvers(new TsiModule[]
 {
-    new TsiBusinessService()
+    new TsiBusinessModule()
 });
 
 var app = builder.Build();
