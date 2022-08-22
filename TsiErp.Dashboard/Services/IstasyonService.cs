@@ -59,6 +59,7 @@ namespace TsiErp.Dashboard.Services
             return stationGeneralAnalyses;
         }
 
+
         //public IEnumerable<DateTime> EachDay(DateTime start, DateTime end)
         //{
         //    for (var day = start.Date; day.Date <= end.Date; day = day.AddDays(1))

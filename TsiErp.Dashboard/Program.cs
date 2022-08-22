@@ -1,6 +1,8 @@
 
 using Blazor.AdminLte;
 using TsiErp.Dashboard.Services;
+using TsiErp.Dashboard.Data;
+using DevExpress.Blazor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,13 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddAdminLte();
 
 builder.Services.AddScoped<IstasyonService>();
+builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services.AddSingleton<wet1Service>();
+builder.Services.AddDevExpressBlazor(opt => 
+{ 
+    opt.BootstrapVersion = BootstrapVersion.v5; 
+});
+
 
 var app = builder.Build();
 

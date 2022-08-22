@@ -1,0 +1,88 @@
+﻿@page "/machine-analysis-general"
+
+@inject wet1Service wet1Service
+
+
+<ContentHeader>
+</ContentHeader>
+<ContentMain>
+    <Card>
+        <Title><CardTitle>Makina Analizi > Genel</CardTitle></Title>
+        <Body>
+            İçerik
+            <DxGrid Data="@Data"
+                    ShowGroupPanel="true"
+                    ShowFilterRow="true"
+                   >
+                <Columns>
+                    <DxGridCommandColumn Width="120px" />
+                    <DxGridDataColumn FieldName="Date"
+                                      DisplayFormat="D" />
+                    <DxGridDataColumn FieldName="Forecast" />
+                    <DxGridDataColumn FieldName="CloudCover"
+                                      SortOrder="GridColumnSortOrder.Descending"
+                                      SortIndex="1" />
+                    <DxGridDataColumn FieldName="TemperatureC"
+                                      Caption="Temperature"
+                                      Width="120px"
+                                      SortOrder="GridColumnSortOrder.Ascending"
+                                      SortIndex="0" />
+                </Columns>
+                <TotalSummary>
+                    <DxGridSummaryItem FieldName="Date"
+                                       SummaryType=GridSummaryItemType.Min
+                                       ValueDisplayFormat="D" />
+                    <DxGridSummaryItem FooterColumnName="TemperatureC"
+                                       SummaryType=GridSummaryItemType.Count />
+                </TotalSummary>
+             @*   <EditFormTemplate Context="EditFormContext">
+                    @{
+                        var forecast = (WeatherForecast)EditFormContext.EditModel;
+                    }
+                    <DxFormLayout>
+                        <DxFormLayoutItem Caption="Date">
+                            <DxDateEdit @bind-Date="@forecast.Date" />
+                        </DxFormLayoutItem>
+                        <DxFormLayoutItem Caption="Forecast">
+                            <DxTextBox @bind-Text="@forecast.Forecast" />
+                        </DxFormLayoutItem>
+                        <DxFormLayoutItem Caption="Cloud Cover">
+                            <DxTextBox @bind-Text="@forecast.CloudCover" />
+                        </DxFormLayoutItem>
+                        <DxFormLayoutItem Caption="Temperature">
+                            <DxSpinEdit @bind-Value="@forecast.TemperatureC" />
+                        </DxFormLayoutItem>
+                    </DxFormLayout>
+                </EditFormTemplate>*@
+            </DxGrid>
+        </Body>
+    </Card>
+</ContentMain>
+
+@code {
+    List<wet1> Data { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Data = wet1Service.GetForecast();
+    }
+
+    //void OnDataItemDeleting(GridDataItemDeletingEventArgs e)
+    //{
+    //    Data.Remove(e.DataItem as wet1);
+    //}
+
+    //void OnEditModelSaving(GridEditModelSavingEventArgs e)
+    //{
+    //    var editModel = (wet1)e.EditModel;
+    //    var dataItem = e.IsNew ? new wet1() : (wet1)e.DataItem;
+
+    //    dataItem.Date = editModel.Date;
+    //    dataItem.TemperatureC = editModel.TemperatureC;
+    //    dataItem.CloudCover = editModel.CloudCover;
+
+    //    if (e.IsNew)
+    //        Data.Add(dataItem as wet1);
+    //}
+
+}
