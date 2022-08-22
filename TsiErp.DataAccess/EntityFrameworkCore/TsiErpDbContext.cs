@@ -13,7 +13,7 @@ using TsiErp.Entities.Entities.Period;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore
 {
-    public class TsiErpDbContext : AppDbContext
+    public class TsiErpDbContext : AppDbContext<TsiErpDbContext>
     {
         public TsiErpDbContext()
         {

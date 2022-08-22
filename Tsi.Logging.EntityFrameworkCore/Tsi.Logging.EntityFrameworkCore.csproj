@@ -3,13 +3,12 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Tsi.Core\Tsi.Core.csproj" />
     <ProjectReference Include="..\Tsi.EntityFrameworkCore\Tsi.EntityFrameworkCore.csproj" />
-    <ProjectReference Include="..\Tsi.IoC\Tsi.IoC.csproj" />
   </ItemGroup>
 
   <ItemGroup>

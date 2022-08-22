@@ -10,7 +10,7 @@ namespace Tsi.EntityFrameworkCore.Respositories.Extensions
 {
     public static class QueryableExtensions
     {
-        public static Task<T>? GetById<T>(this IQueryable<T> query, Guid id)
+        public static Task<T> GetById<T>(this IQueryable<T> query, Guid id)
         {
             var parameter = Expression.Parameter(typeof(T));
             var left = Expression.Property(parameter, "Id");
