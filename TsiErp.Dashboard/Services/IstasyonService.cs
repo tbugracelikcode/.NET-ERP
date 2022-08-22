@@ -42,8 +42,7 @@ namespace TsiErp.Dashboard.Services
                
         //            var toplamSure = operationLines.Where(t => t.ISTASYONID == makineID && t.TARIH > baslangic && t.TARIH < bitis).Sum(t => t.OPERASYONSURESI).GetValueOrDefault();
 
-        //            return toplamSure;
-                
+        //            return toplamSure;                
            
 
 
