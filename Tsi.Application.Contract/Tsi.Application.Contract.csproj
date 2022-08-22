@@ -6,8 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tsi.Core\Tsi.Core.csproj" />
-    <ProjectReference Include="..\Tsi.Guids\Tsi.Guids.csproj" />
-    <ProjectReference Include="..\Tsi.Results\Tsi.Results.csproj" />
   </ItemGroup>
 
 </Project>

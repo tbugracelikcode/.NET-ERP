@@ -10,7 +10,7 @@ using Tsi.Logging.EntityFrameworkCore.Entities;
 
 namespace Tsi.Logging.EntityFrameworkCore.Repositories
 {
-    public class LogDbContext : AppDbContext
+    public class LogDbContext : AppDbContext<LogDbContext>
     {
 
 

@@ -11,7 +11,8 @@ using Tsi.EntityFrameworkCore.Modeling;
 
 namespace Tsi.EntityFrameworkCore.EntityframeworkCore
 {
-    public abstract class AppDbContext : DbContext
+    public abstract class AppDbContext<TDbContext> : DbContext
+        where TDbContext : DbContext
     {
         public IConfigurationRoot _configuration;
 
@@ -67,7 +68,7 @@ namespace Tsi.EntityFrameworkCore.EntityframeworkCore
         {
         }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        public AppDbContext(DbContextOptions<TDbContext> options) : base(options)
         {
         }
 

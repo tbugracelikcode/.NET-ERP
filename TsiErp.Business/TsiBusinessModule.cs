@@ -1,32 +1,66 @@
-﻿using Autofac;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Castle.DynamicProxy;
-using Autofac.Extras.DynamicProxy;
-using TsiErp.Business.Entities.Branch.Services;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
-using TsiErp.Business.Entities.Period.Services;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Period;
-using Tsi.IoC.IoC.Autofac.Interceptors;
-using Tsi.IoC.IoC.Autofac;
-using Tsi.Guids;
+using Tsi.Core.CrossCuttingConcerns.Caching;
+using Tsi.Core.Extensions;
+using Tsi.Core.Modularity;
+using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.Business.MapperProfile;
 
 namespace TsiErp.Business
 {
+    [RelatedModules(typeof(TsiCachingModule))]
     public class TsiBusinessModule : TsiModule
     {
-        protected override void Load(ContainerBuilder builder)
-        {
-            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+        List<Type> dependencies = new List<Type>();
 
-            builder.RegisterAssemblyTypes(assembly).AsImplementedInterfaces()
-                .EnableInterfaceInterceptors(new ProxyGenerationOptions()
+        public TsiBusinessModule()
+        {
+            var dependencyDescriptors = this.GetType().GetCustomAttributes().OfType<IDependedTypesProvider>();
+
+            foreach (var descriptor in dependencyDescriptors)
+            {
+                foreach (var dependedModuleType in descriptor.GetDependedTypes())
                 {
-                    Selector = new AspectInterceptorSelector()
-                }).SingleInstance();
+                    dependencies.Add(dependedModuleType);
+                }
+            }
+        }
+
+        public override void ConfigureServices(IServiceCollection services)
+        {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+            SetMapperToObjectMapper();
+
+            foreach (var item in dependencies)
+            {
+                var instance = (TsiModule)Activator.CreateInstance(item);
+
+                services.AddDependencyResolvers(new TsiModule[] 
+                {
+                    instance
+                });
+            }
+        }
+
+        static void SetMapperToObjectMapper()
+        {
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<TsiErpMapperProfile>();
+            });
+
+            ObjectMapper.Mapper = new Mapper(config);
+
         }
     }
 }
