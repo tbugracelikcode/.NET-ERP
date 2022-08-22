@@ -15,7 +15,7 @@
   --indigo: #6610f2;
   --purple: #6f42c1;
   --pink: #e83e8c;
-  --red: #dc3545;
+  --red: #dc3545;f
   --orange: #fd7e14;
   --yellow: #ffc107;
   --green: #28a745;
@@ -12711,9 +12711,9 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 }
 
 .nav-sidebar .nav-treeview {
-  display: none;
-  list-style: none;
-  padding: 0;
+    display: none;
+    list-style: none;
+    padding: 0;
 }
 
 .nav-sidebar .nav-treeview > .nav-item > .nav-link > .nav-icon {
@@ -28782,10 +28782,10 @@ html.maximized-card {
 }
 
 .card-title {
-  float: left;
-  font-size: 1.1rem;
-  font-weight: 400;
-  margin: 0;
+    float: left;
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin: 0;
 }
 
 .card-text {

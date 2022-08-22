@@ -1,6 +1,7 @@
 
 using Blazor.AdminLte;
 using TsiErp.Dashboard.Services;
+using TsiErp.Dashboard.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddAdminLte();
 
 builder.Services.AddScoped<IstasyonService>();
+builder.Services.AddSingleton<WeatherForecastService>();
 
 var app = builder.Build();
 

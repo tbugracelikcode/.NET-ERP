@@ -11,6 +11,7 @@
     <PackageReference Include="Blazorized.AdminLte.Content" Version="3.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.5" />
+    <PackageReference Include="PSC.Blazor.Components.DataTable" Version="6.0.9" />
   </ItemGroup>
 
 </Project>
