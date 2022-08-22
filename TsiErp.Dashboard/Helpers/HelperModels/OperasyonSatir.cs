@@ -16,27 +16,27 @@
         public decimal OEE { get; set; }
         public decimal KALITE { get; set; }
         public int MESAI { get; set; }
-        public DateTime? TARIH { get; set; }
+        public DateTime TARIH { get; set; }
         public int ROTAID { get; set; }
         public int VARYANTID { get; set; }
         public int STOKID { get; set; }
         public int SIPARISID { get; set; }
         public int URETIMEMRIID { get; set; }
         public int OPERASYONID { get; set; }
-        public string? MAKINEKODU { get; set; }
+        public string MAKINEKODU { get; set; }
         public decimal BIRIMSURE { get; set; }
         public int ISEMRIID { get; set; }
-        public string? ACIKLAMA { get; set; }
+        public string ACIKLAMA { get; set; }
         public int VARDIYA { get; set; }
         public decimal VARDIYACALISMASURESI { get; set; }
-        public string? ISEMRINO { get; set; }
-        public string? URETIMEMRINUMARASI { get; set; }
+        public string ISEMRINO { get; set; }
+        public string URETIMEMRINUMARASI { get; set; }
         public decimal PLNMIKTAR { get; set; }
         public decimal AGIRLIK { get; set; }
-        public string? CALISAN { get; set; }
-        public string? STOKKODU { get; set; }
+        public string CALISAN { get; set; }
+        public string STOKKODU { get; set; }
         public int URUNGRPID { get; set; }
-        public string? URUNGRUBU { get; set; }
+        public string URUNGRUBU { get; set; }
         public int AYARVEKONTROLSURESI { get; set; }
         public int PLANLANANOPRSURESI { get; set; }
         public int OPRID { get; set; }
