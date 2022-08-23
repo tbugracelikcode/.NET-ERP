@@ -1,7 +1,6 @@
 
 using Blazor.AdminLte;
 using TsiErp.Dashboard.Services;
-using TsiErp.Dashboard.Data;
 using DevExpress.Blazor;
 
 var builder = WebApplication.CreateBuilder(args);

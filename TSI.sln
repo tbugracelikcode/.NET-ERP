@@ -29,6 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tsi.Logging.EntityFramework
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tsi.Logging", "Tsi.Logging\Tsi.Logging.csproj", "{B21F7D75-F069-4E80-BC6D-B52BADF86C06}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TsiErp.Shared", "TsiErp.Shared\TsiErp.Shared.csproj", "{CAD3BA0D-9DF9-498E-9335-B42A65E08AEB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{B21F7D75-F069-4E80-BC6D-B52BADF86C06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B21F7D75-F069-4E80-BC6D-B52BADF86C06}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B21F7D75-F069-4E80-BC6D-B52BADF86C06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAD3BA0D-9DF9-498E-9335-B42A65E08AEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAD3BA0D-9DF9-498E-9335-B42A65E08AEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAD3BA0D-9DF9-498E-9335-B42A65E08AEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAD3BA0D-9DF9-498E-9335-B42A65E08AEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +96,7 @@ Global
 		{873F6851-FEC0-48B2-8E16-122870CE7EF6} = {081DA52B-85E4-433C-95DB-D7E06E999208}
 		{86B785DB-1F16-45CE-89E4-BD25A62F17A7} = {6E426DBA-9C12-4356-9AC7-1A54EE81C635}
 		{B21F7D75-F069-4E80-BC6D-B52BADF86C06} = {6E426DBA-9C12-4356-9AC7-1A54EE81C635}
+		{CAD3BA0D-9DF9-498E-9335-B42A65E08AEB} = {D8F4DE11-B727-4387-9269-AE98DAE90980}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {249F607F-1AF1-497A-ADFA-357532BFCABD}
