@@ -214,9 +214,117 @@ namespace TsiErp.Dashboard.Helpers
                                   "OPRID, " +
                                   "PERFORMANS, " +
                                   "KULLANILABILIRLIK, " +
-                                  "ISLEMESURESI" +
+                                  "ISLEMESURESI," +
+                                  "GRCMIKTAR" +
                                   " FROM TUR_VW_EKR_OPERASYON " +
                                   "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "'";
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                operasyonlar.Add(new OperasyonSatir()
+                {
+                    ID = Convert.ToInt32(reader["ID"]),
+                    CALISANID = Convert.ToInt32(reader["CALISANID"]),
+                    VARDIYAID = Convert.ToInt32(reader["VARDIYAID"]),
+                    ISTASYONID = Convert.ToInt32(reader["ISTASYONID"]),
+                    URETILENADET = Convert.ToInt32(reader["URETILENADET"]),
+                    HURDAADET = Convert.ToDecimal(reader["HURDAADET"]),
+                    OPERASYONSURESI = Convert.ToDecimal(reader["OPERASYONSURESI"]),
+                    AYARSURESI = Convert.ToDecimal(reader["AYARSURESI"]),
+                    ATILSURE = Convert.ToDecimal(reader["ATILSURE"]),
+                    OPRBASLANGICTRH = Convert.ToDateTime(reader["OPRBASLANGICTRH"]),
+                    OPRBITISTRH = Convert.ToDateTime(reader["OPRBITISTRH"]),
+                    OEE = Convert.ToDecimal(reader["OEE"]),
+                    KALITE = Convert.ToDecimal(reader["KALITE"]),
+                    MESAI = Convert.ToInt32(reader["MESAI"]),
+                    TARIH = Convert.ToDateTime(reader["TARIH"]),
+                    ROTAID = Convert.ToInt32(reader["ROTAID"]),
+                    VARYANTID = Convert.ToInt32(reader["VARYANTID"]),
+                    STOKID = Convert.ToInt32(reader["STOKID"]),
+                    SIPARISID = Convert.ToInt32(reader["SIPARISID"]),
+                    URETIMEMRIID = Convert.ToInt32(reader["URETIMEMRIID"]),
+                    OPERASYONID = Convert.ToInt32(reader["OPERASYONID"]),
+                    MAKINEKODU = Convert.ToString(reader["MAKINEKODU"]),
+                    BIRIMSURE = Convert.ToDecimal(reader["BIRIMSURE"]),
+                    ISEMRIID = Convert.ToInt32(reader["ISEMRIID"]),
+                    ACIKLAMA = Convert.ToString(reader["ACIKLAMA"]),
+                    VARDIYA = Convert.ToInt32(reader["VARDIYA"]),
+                    VARDIYACALISMASURESI = Convert.ToDecimal(reader["VARDIYACALISMASURESI"]),
+                    ISEMRINO = Convert.ToString(reader["ISEMRINO"]),
+                    URETIMEMRINUMARASI = Convert.ToString(reader["URETIMEMRINUMARASI"]),
+                    PLNMIKTAR = Convert.ToDecimal(reader["PLNMIKTAR"]),
+                    AGIRLIK = Convert.ToDecimal(reader["AGIRLIK"]),
+                    CALISAN = Convert.ToString(reader["CALISAN"]),
+                    STOKKODU = Convert.ToString(reader["STOKKODU"]),
+                    URUNGRPID = Convert.ToInt32(reader["URUNGRPID"]),
+                    URUNGRUBU = Convert.ToString(reader["URUNGRUBU"]),
+                    AYARVEKONTROLSURESI = Convert.ToInt32(reader["AYARVEKONTROLSURESI"]),
+                    PLANLANANOPRSURESI = Convert.ToInt32(reader["PLANLANANOPRSURESI"]),
+                    OPRID = Convert.ToInt32(reader["OPRID"]),
+                    PERFORMANS = Convert.ToDecimal(reader["PERFORMANS"]),
+                    KULLANILABILIRLIK = Convert.ToDecimal(reader["KULLANILABILIRLIK"]),
+                    ISLEMESURESI = Convert.ToDecimal(reader["ISLEMESURESI"]),
+                    GRCMIKTAR = Convert.ToDecimal(reader["GRCMIKTAR"])
+                });
+            }
+
+            return operasyonlar;
+        }
+
+        public static List<OperasyonSatir> GetOperationLinesStationQuery(int stationID, DateTime startDate, DateTime endDate)
+        {
+            List<OperasyonSatir> operasyonlar = new List<OperasyonSatir>();
+
+            SqlConnection connection = GetSqlConnection();
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "ID," +
+                                  "CALISANID, " +
+                                  "VARDIYAID, " +
+                                  "ISTASYONID, " +
+                                  "URETILENADET, " +
+                                  "HURDAADET, " +
+                                  "OPERASYONSURESI, " +
+                                  "AYARSURESI, " +
+                                  "ATILSURE, " +
+                                  "OPRBASLANGICTRH, " +
+                                  "OPRBITISTRH, " +
+                                  "OEE, " +
+                                  "KALITE, " +
+                                  "MESAI, " +
+                                  "ROTAID, " +
+                                  "VARYANTID, " +
+                                  "STOKID, " +
+                                  "SIPARISID, " +
+                                  "URETIMEMRIID, " +
+                                  "OPERASYONID, " +
+                                  "MAKINEKODU, " +
+                                  "BIRIMSURE, " +
+                                  "ISEMRIID, " +
+                                  "ACIKLAMA, " +
+                                  "TARIH," +
+                                  "VARDIYA, " +
+                                  "VARDIYACALISMASURESI, " +
+                                  "ISEMRINO, " +
+                                  "URETIMEMRINUMARASI, " +
+                                  "PLNMIKTAR, " +
+                                  "AGIRLIK, " +
+                                  "CALISAN, " +
+                                  "STOKKODU, " +
+                                  "URUNGRPID, " +
+                                  "URUNGRUBU, " +
+                                  "AYARVEKONTROLSURESI, " +
+                                  "PLANLANANOPRSURESI, " +
+                                  "OPRID, " +
+                                  "PERFORMANS, " +
+                                  "KULLANILABILIRLIK, " +
+                                  "ISLEMESURESI" +
+                                  " FROM TUR_VW_EKR_OPERASYON " +
+                                  "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "' AND ISTASYONID = " + stationID.ToString();
             command.Connection = connection;
 
             SqlDataReader reader = command.ExecuteReader();
@@ -562,6 +670,305 @@ namespace TsiErp.Dashboard.Helpers
             return haltLines;
         }
 
+        public static List<Durus> GetHaltQueryStation(int stationID, DateTime startDate, DateTime endDate)
+        {
+            List<Durus> haltLines = new List<Durus>();
+
+            SqlConnection connection = GetSqlConnection();
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "ID, " +
+                                  "DURUSID, " +
+                                  "SEBEP, " +
+                                  "DURUSSURE, " +
+                                  "BASLANGIC, " +
+                                  "BITIS, " +
+                                  "CALISANID, " +
+                                  "OPERASYONID, " +
+                                  "ISTASYONID, " +
+                                  "UNUTULDU, " +
+                                  "TARIH, " +
+                                  "ISNULL(OPR_TOPLAM_DURUS,0) as OPR_TOPLAM_DURUS, " +
+                                  "ISNULL(MESAI,0) as MESAI, " +
+                                  "ISNULL(ISEMRINO,0) as ISEMRINO, " +
+                                  "ISNULL(OPERASYONACIKLAMASI,0) as OPERASYONACIKLAMASI, " +
+                                  "MAKINEKODU, " +
+                                  "ISNULL(STOKKODU,0) as STOKKODU, " +
+                                  "ISNULL(VARYANTKODU,0) as VARYANTKODU, " +
+                                  "ISNULL(URETIMEMRINUMARASI,0) as URETIMEMRINUMARASI, " +
+                                  "ISNULL(ISEMRIID,0) as ISEMRIID, " +
+                                  "ISNULL(URETIMEMRIID,0) as URETIMEMRIID, " +
+                                  "ISNULL(PLANLI,0) as PLANLI, " +
+                                  "ISNULL(CALISAN,0) as CALISAN, " +
+                                  "ISNULL(DURUS_ORANI,0) as  DURUS_ORANI," +
+                                  "ISNULL(YKK,0) as  YKK " +
+                                  "FROM TUR_VW_EKR_DURUS " +
+                                  "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "' AND ISTASYONID = " + stationID.ToString();
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                haltLines.Add(new Durus()
+                {
+                    ID = Convert.ToInt32(reader["ID"]),
+                    DURUSID = Convert.ToInt32(reader["DURUSID"]),
+                    SEBEP = Convert.ToString(reader["SEBEP"]),
+                    DURUSSURE = Convert.ToInt32(reader["DURUSSURE"]),
+                    BASLANGIC = Convert.ToDateTime(reader["BASLANGIC"]),
+                    BITIS = Convert.ToDateTime(reader["BITIS"]),
+                    CALISANID = Convert.ToInt32(reader["CALISANID"]),
+                    OPERASYONID = Convert.ToInt32(reader["OPERASYONID"]),
+                    ISTASYONID = Convert.ToInt32(reader["ISTASYONID"]),
+                    UNUTULDU = Convert.ToString(reader["UNUTULDU"]),
+                    TARIH = Convert.ToDateTime(reader["TARIH"]),
+                    OPR_TOPLAM_DURUS = Convert.ToDecimal(reader["OPR_TOPLAM_DURUS"]),
+                    MESAI = Convert.ToString(reader["MESAI"]),
+                    ISEMRINO = Convert.ToString(reader["ISEMRINO"]),
+                    OPERASYONACIKLAMASI = Convert.ToString(reader["OPERASYONACIKLAMASI"]),
+                    MAKINEKODU = Convert.ToString(reader["MAKINEKODU"]),
+                    STOKKODU = Convert.ToString(reader["STOKKODU"]),
+                    VARYANTKODU = Convert.ToString(reader["VARYANTKODU"]),
+                    URETIMEMRINUMARASI = Convert.ToString(reader["URETIMEMRINUMARASI"]),
+                    ISEMRIID = Convert.ToInt32(reader["ISEMRIID"]),
+                    URETIMEMRIID = Convert.ToInt32(reader["URETIMEMRIID"]),
+                    PLANLI = Convert.ToString(reader["PLANLI"]),
+                    CALISAN = Convert.ToString(reader["CALISAN"]),
+                    DURUS_ORANI = Convert.ToDecimal(reader["DURUS_ORANI"]),
+                    YKK = Convert.ToBoolean(reader["YKK"])
+                });
+            }
+
+            return haltLines;
+        }
+
+        public static List<KayipSureKodlari> GetHaltCodes()
+        {
+            List<KayipSureKodlari> haltCodes = new List<KayipSureKodlari>();
+
+            SqlConnection connection = GetSqlConnection();
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "ID, " +
+                                  "KOD, " +
+                                  "PLANLI, " +
+                                  "YKK " +
+                                  "FROM TUR_KAYIP_SURE_KODLARI";
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                haltCodes.Add(new KayipSureKodlari()
+                {
+                    ID = Convert.ToInt32(reader["ID"]),
+                    KOD = Convert.ToString(reader["KOD"]),
+                    PLANLI = Convert.ToBoolean(reader["PLANLI"]),
+                    YKK = Convert.ToBoolean(reader["YKK"])
+                });
+            }
+
+            return haltCodes;
+        }
+        public static List<Hurda> GetScrapLines()
+        {
+            List<Hurda> hurdalar = new List<Hurda>();
+
+            SqlConnection connection = GetSqlConnection();
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "HURDAID," +
+                                  "SEBEP, " +
+                                  "HURDAADET, " +
+                                  "OPERASYONID, " +
+                                  "CALISANID, " +
+                                  "ISEMRINO, " +
+                                  "OPERASYONACIKLAMASI, " +
+                                  "ISTASYONKODU, " +
+                                  "STOKKODU, " +
+                                  "VARYANTKODU, " +
+                                  "URETIMEMRINUMARASI, " +
+                                  "PLNMIKTAR, " +
+                                  "URUNGRUPADI, " +
+                                  "ID," +
+                                  "TARIH" +
+                                  " FROM TUR_VW_EKR_HURDA";
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                hurdalar.Add(new Hurda()
+                {
+                    HURDAID = Convert.ToInt32(reader["HURDAID"]),
+                    SEBEP = Convert.ToString(reader["SEBEP"]),
+                    HURDAADET = Convert.ToInt32(reader["HURDAADET"]),
+                    OPERASYONID = Convert.ToInt32(reader["OPERASYONID"]),
+                    CALISANID = Convert.ToInt32(reader["CALISANID"]),
+                    ISEMRINO = Convert.ToString(reader["ISEMRINO"]),
+                    OPERASYONACIKLAMASI = Convert.ToString(reader["OPERASYONACIKLAMASI"]),
+                    ISTASYONKODU = Convert.ToString(reader["ISTASYONKODU"]),
+                    STOKKODU = Convert.ToString(reader["STOKKODU"]),
+                    VARYANTKODU = Convert.ToString(reader["VARYANTKODU"]),
+                    URETIMEMRINUMARASI = Convert.ToString(reader["URETIMEMRINUMARASI"]),
+                    PLNMIKTAR = Convert.ToDecimal(reader["PLNMIKTAR"]),
+                    URUNGRUBU = Convert.ToString(reader["URUNGRUBU"]),
+                    ID = Convert.ToInt32(reader["ID"]),
+                    TARIH = Convert.ToDateTime(reader["TARIH"])
+                });
+            }
+
+            return hurdalar;
+        }
+
+        public static List<Hurda> GetScrapLinesQuery(DateTime startDate, DateTime endDate)
+        {
+            List<Hurda> hurdalar = new List<Hurda>();
+
+            SqlConnection connection = GetSqlConnection();
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "HURDAID," +
+                                  "SEBEP, " +
+                                  "HURDAADET, " +
+                                  "OPERASYONID, " +
+                                  "CALISANID, " +
+                                  "ISEMRINO, " +
+                                  "OPERASYONACIKLAMASI, " +
+                                  "ISTASYONKODU, " +
+                                  "STOKKODU, " +
+                                  "VARYANTKODU, " +
+                                  "URETIMEMRINUMARASI, " +
+                                  "PLNMIKTAR, " +
+                                  "URUNGRUPADI, " +
+                                  "ID," +
+                                  "ISNULL(URUNGRPID,0) as URUNGRPID," +
+                                  "ISNULL(URUNGRUBU,0) as URUNGRUBU," +
+                                  "TARIH" +
+                                  " FROM TUR_VW_EKR_HURDA " +
+                                  "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "'";
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                hurdalar.Add(new Hurda()
+                {
+                    HURDAID = Convert.ToInt32(reader["HURDAID"]),
+                    SEBEP = Convert.ToString(reader["SEBEP"]),
+                    HURDAADET = Convert.ToInt32(reader["HURDAADET"]),
+                    OPERASYONID = Convert.ToInt32(reader["OPERASYONID"]),
+                    CALISANID = Convert.ToInt32(reader["CALISANID"]),
+                    ISEMRINO = Convert.ToString(reader["ISEMRINO"]),
+                    OPERASYONACIKLAMASI = Convert.ToString(reader["OPERASYONACIKLAMASI"]),
+                    ISTASYONKODU = Convert.ToString(reader["ISTASYONKODU"]),
+                    STOKKODU = Convert.ToString(reader["STOKKODU"]),
+                    VARYANTKODU = Convert.ToString(reader["VARYANTKODU"]),
+                    URETIMEMRINUMARASI = Convert.ToString(reader["URETIMEMRINUMARASI"]),
+                    PLNMIKTAR = Convert.ToDecimal(reader["PLNMIKTAR"]),
+                    URUNGRUBU = Convert.ToString(reader["URUNGRUPADI"]),
+                    URUNGRPID = Convert.ToInt32(reader["URUNGRPID"]),
+                    ID = Convert.ToInt32(reader["ID"]),
+                    TARIH = Convert.ToDateTime(reader["TARIH"])
+                });
+            }
+
+            return hurdalar;
+        }
+
+        public static List<Hurda> GetScrapLinesGroupedQuery(int groupID, DateTime startDate, DateTime endDate)
+        {
+            List<Hurda> hurdalar = new List<Hurda>();
+
+            SqlConnection connection = GetSqlConnection();
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "HURDAID," +
+                                  "SEBEP, " +
+                                  "HURDAADET, " +
+                                  "OPERASYONID, " +
+                                  "CALISANID, " +
+                                  "ISEMRINO, " +
+                                  "OPERASYONACIKLAMASI, " +
+                                  "ISTASYONKODU, " +
+                                  "STOKKODU, " +
+                                  "VARYANTKODU, " +
+                                  "URETIMEMRINUMARASI, " +
+                                  "PLNMIKTAR, " +
+                                  "ID," +
+                                  "ISNULL(URUNGRPID,0) as URUNGRPID," +
+                                  "ISNULL(URUNGRUBU,0) as URUNGRUBU," +
+                                  "TARIH" +
+                                  " FROM TUR_VW_EKR_HURDA " +
+                                  "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "' AND URUNGRPID = " + groupID.ToString();
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                hurdalar.Add(new Hurda()
+                {
+                    HURDAID = Convert.ToInt32(reader["HURDAID"]),
+                    SEBEP = Convert.ToString(reader["SEBEP"]),
+                    HURDAADET = Convert.ToInt32(reader["HURDAADET"]),
+                    OPERASYONID = Convert.ToInt32(reader["OPERASYONID"]),
+                    CALISANID = Convert.ToInt32(reader["CALISANID"]),
+                    ISEMRINO = Convert.ToString(reader["ISEMRINO"]),
+                    OPERASYONACIKLAMASI = Convert.ToString(reader["OPERASYONACIKLAMASI"]),
+                    ISTASYONKODU = Convert.ToString(reader["ISTASYONKODU"]),
+                    STOKKODU = Convert.ToString(reader["STOKKODU"]),
+                    VARYANTKODU = Convert.ToString(reader["VARYANTKODU"]),
+                    URETIMEMRINUMARASI = Convert.ToString(reader["URETIMEMRINUMARASI"]),
+                    PLNMIKTAR = Convert.ToDecimal(reader["PLNMIKTAR"]),
+                    URUNGRUBU = Convert.ToString(reader["URUNGRUBU"]),
+                    URUNGRPID = Convert.ToInt32(reader["URUNGRPID"]),
+                    ID = Convert.ToInt32(reader["ID"]),
+                    TARIH = Convert.ToDateTime(reader["TARIH"])
+                });
+            }
+
+            return hurdalar;
+        }
+
+        public static List<UygunsuzlukBasliklari> GetScrapCauses()
+        {
+            List<UygunsuzlukBasliklari> hurdaSebepleri = new List<UygunsuzlukBasliklari>();
+
+            SqlConnection connection = GetSqlConnection();
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "ID," +
+                                  "ACIKLAMA, " +
+                                  "TUR" +
+                                  " FROM TUR_KK_UYGUNSUZLUK_BASLIKLARI" +
+                                  " WHERE TUR = 3";
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                hurdaSebepleri.Add(new UygunsuzlukBasliklari()
+                {
+                    ID = Convert.ToInt32(reader["ID"]),
+                    BASLIK = Convert.ToString(reader["ACIKLAMA"]),
+                    TUR = Convert.ToInt32(reader["TUR"])
+                });
+            }
+
+            return hurdaSebepleri;
+        }
         //public static IEnumerable<Dictionary<string, object>> GetStations2()
         //{
 
