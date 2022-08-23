@@ -9,7 +9,6 @@ namespace Tsi.Core.CrossCuttingConcerns.Caching
 {
     public class TsiCachingModule : TsiModule
     {
-
         public override void ConfigureServices(IServiceCollection services)
         {
             services.AddMemoryCache();

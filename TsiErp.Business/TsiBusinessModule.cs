@@ -12,44 +12,30 @@ using Tsi.Core.Extensions;
 using Tsi.Core.Modularity;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Business.MapperProfile;
+using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using Tsi.Core.Modularity.Extension;
+using TsiErp.Shared;
 
 namespace TsiErp.Business
 {
-    [RelatedModules(typeof(TsiCachingModule))]
+    [RelatedModules
+        (
+        typeof(TsiCachingModule),
+        typeof(TsiSharedModule)
+        )]
     public class TsiBusinessModule : TsiModule
     {
-        List<Type> dependencies = new List<Type>();
-
-        public TsiBusinessModule()
-        {
-            var dependencyDescriptors = this.GetType().GetCustomAttributes().OfType<IDependedTypesProvider>();
-
-            foreach (var descriptor in dependencyDescriptors)
-            {
-                foreach (var dependedModuleType in descriptor.GetDependedTypes())
-                {
-                    dependencies.Add(dependedModuleType);
-                }
-            }
-        }
-
         public override void ConfigureServices(IServiceCollection services)
         {
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             SetMapperToObjectMapper();
 
-            foreach (var item in dependencies)
-            {
-                var instance = (TsiModule)Activator.CreateInstance(item);
+            services.RegisterRelatedModuleAssemblies(typeof(TsiBusinessModule));
 
-                services.AddDependencyResolvers(new TsiModule[] 
-                {
-                    instance
-                });
-            }
         }
 
         static void SetMapperToObjectMapper()
