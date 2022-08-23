@@ -43,5 +43,7 @@
         public decimal PERFORMANS { get; set; }
         public decimal KULLANILABILIRLIK { get; set; }
         public decimal ISLEMESURESI { get; set; }
+        public decimal GRCMIKTAR { get; set; }
+
     }
 }

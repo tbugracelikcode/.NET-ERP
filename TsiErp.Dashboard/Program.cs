@@ -11,7 +11,12 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddAdminLte();
 
+builder.Services.AddScoped<IstasyonOEEService>();
+builder.Services.AddScoped<PersonelService>();
+builder.Services.AddScoped<StokDetayService>();
+builder.Services.AddScoped<StokService>();
 builder.Services.AddScoped<IstasyonService>();
+builder.Services.AddScoped<IstasyonDetayService>();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddSingleton<wet1Service>();
 builder.Services.AddDevExpressBlazor(opt => 

@@ -11,11 +11,10 @@ namespace TsiErp.Dashboard.Services
 
         public IstasyonService()
         {
-
             _connection = DBHelper.GetSqlConnection();
         }
-
-        public List<StationGeneralAnalysis> GetStationGeneralAnalyses(DateTime startDate, DateTime endDate)
+        #region Genel Analiz
+        public List<StationGeneralAnalysis> GetStationGeneralAnalyies(DateTime startDate, DateTime endDate)
         {
             startDate = new DateTime(2022, 06, 01);
             endDate = new DateTime(2022, 08, 22);
@@ -99,5 +98,6 @@ namespace TsiErp.Dashboard.Services
 
             return acikSure;
         }
+        #endregion
     }
 }

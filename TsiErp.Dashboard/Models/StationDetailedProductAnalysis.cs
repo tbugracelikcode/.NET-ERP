@@ -23,7 +23,7 @@ namespace TsiErp.Dashboard.Models
         /// <summary>
         /// Stok Açıklaması
         /// </summary>
-        public string ProductName { get; set; }
+        public string ProductGroup { get; set; }
         /// <summary>
         /// Üretilen Adet 
         /// </summary>
