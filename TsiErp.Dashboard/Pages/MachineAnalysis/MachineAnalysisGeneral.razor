@@ -1,88 +1,184 @@
 ﻿@page "/machine-analysis-general"
 
-@inject wet1Service wet1Service
+@inject IstasyonService istasyonService
+<style>
+    .GridZebra table tbody tr:nth-child(odd) {
+        background-color: #B5B5B5;
+    }
 
+    .GridZebra table tbody tr:nth-child(n) {
+        text-align: center;
+    }
 
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 80%;
+        
+    }
+
+   /* td, th {
+        border: 0px solid #dddddd;
+        text-align: center;
+        padding: 8px;
+    }*/
+    .DateTime {
+        width: 400px;
+    }
+
+</style>
 <ContentHeader>
 </ContentHeader>
+<Card>
+    <Body>
+        <table>
+            <tr> 
+                <td></td>
+                <td>
+                    <label>Başlangıç Tarihi:</label>
+                    <DxDateEdit CssClass="DateTime" @bind-Date="@startDate"></DxDateEdit>
+                </td>
+                <td>
+                    <label>Bitiş Tarihi:</label>
+                    <DxDateEdit CssClass="DateTime" @bind-Date="@endDate"></DxDateEdit>
+                </td>
+                <td> 
+                    <label></label>
+                    <Button Size="ButtonSize.Medium" OnClick="@OnDateButtonClicked">Filtrele</Button>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+       @* <Row>
+            <Column>
+                <label>Başlangıç Tarihi:</label>
+                    <DxDateEdit CssClass="DateTime" @bind-Date="@startDate"></DxDateEdit>
+            </Column>
+            <Column>
+                <label>Bitiş Tarihi:</label>
+                    <DxDateEdit CssClass="DateTime" @bind-Date="@endDate"></DxDateEdit>
+            </Column>
+            <Column>
+                <label></label>
+                    <Button Size="ButtonSize.Medium" OnClick="@OnDateButtonClicked">Filtrele</Button>
+            </Column>
+        </Row>*@
+
+    </Body>
+
+</Card>
 <ContentMain>
     <Card>
-        <Title><CardTitle>Makina Analizi > Genel</CardTitle></Title>
+        <Title><CardTitle><strong>Makina Analizi > Genel</strong></CardTitle></Title>
         <Body>
-            İçerik
-            <DxGrid Data="@Data"
+            <DxChart Data="@data" LabelOverlap="ChartLabelOverlap.Hide">
+                <DxChartTitle Text="Plansız Duruş Oran Grafiği">
+                </DxChartTitle>
+                <DxChartValueAxis>
+                    <DxChartAxisTitle Text="Plansız Duruş Oranı" />
+                </DxChartValueAxis>
+                <DxChartValueAxis Name="Makina Kodu">
+                </DxChartValueAxis>
+                <DxChartBarSeries Color="System.Drawing.Color.DarkRed"
+                                  ArgumentField="@((StationGeneralAnalysis i) => i.Code)"
+                                  ValueField="@((StationGeneralAnalysis i) => i.UnplannedPercentage)"
+                                  Name="Plansız Duruş Oranı">
+                    <DxChartSeriesLabel Format="ChartElementFormat.Percent()" Visible="true" BackgroundColor="System.Drawing.Color.DarkSlateGray" />
+                </DxChartBarSeries>
+                <DxChartLegend Orientation="Orientation.Horizontal"
+                               HorizontalAlignment="HorizontalAlignment.Right"
+                               Position="RelativePosition.Outside" />
+            </DxChart>
+
+        </Body>
+    </Card>
+    <Card>
+        <Body>
+            <DxGrid Data="@data"
+                    CssClass="GridZebra"
                     ShowGroupPanel="true"
-                    ShowFilterRow="true"
-                   >
+                    ShowFilterRow="true">
                 <Columns>
                     <DxGridCommandColumn Width="120px" />
-                    <DxGridDataColumn FieldName="Date"
-                                      DisplayFormat="D" />
-                    <DxGridDataColumn FieldName="Forecast" />
-                    <DxGridDataColumn FieldName="CloudCover"
+                    <DxGridDataColumn FieldName="Code"
+                                      Caption="Makina Kodu"
                                       SortOrder="GridColumnSortOrder.Descending"
                                       SortIndex="1" />
-                    <DxGridDataColumn FieldName="TemperatureC"
-                                      Caption="Temperature"
+                    <DxGridDataColumn FieldName="TheoreticalTime"
+                                      Caption="Teorik Süre"
                                       Width="120px"
                                       SortOrder="GridColumnSortOrder.Ascending"
-                                      SortIndex="0" />
+                                      SortIndex="0"
+                                      DisplayFormat="######" />
+                    <DxGridDataColumn FieldName="AvailableTime"
+                                      Caption="Kullanılabilir Zaman"
+                                      Width="120px"
+                                      SortOrder="GridColumnSortOrder.Ascending"
+                                      SortIndex="0"
+                                      DisplayFormat="######" />
+                    <DxGridDataColumn FieldName="StationOnTime"
+                                      Caption="Makina Açık Kalma Süresi"
+                                      SortOrder="GridColumnSortOrder.Descending"
+                                      SortIndex="1"
+                                      DisplayFormat="######" />
+                    <DxGridDataColumn FieldName="StationProductionTime"
+                                      Caption="Üretim Süresi"
+                                      Width="120px"
+                                      SortOrder="GridColumnSortOrder.Ascending"
+                                      SortIndex="0"
+                                      DisplayFormat="######" />
+                    <DxGridDataColumn FieldName="StationHaltTime"
+                                      Caption="Duruş Süresi"
+                                      SortOrder="GridColumnSortOrder.Descending"
+                                      SortIndex="1"
+                                      DisplayFormat="######" />
+                    <DxGridDataColumn FieldName="UnplannedHaltTime"
+                                      Caption="Plansız Duruş Süresi"
+                                      Width="120px"
+                                      SortOrder="GridColumnSortOrder.Ascending"
+                                      SortIndex="0"
+                                      DisplayFormat="######" />
+                    <DxGridDataColumn FieldName="PlannedHaltTime"
+                                      Caption="Planlı Duruş Süresi"
+                                      SortOrder="GridColumnSortOrder.Descending"
+                                      SortIndex="1"
+                                      DisplayFormat="######" />
+
+                    <DxGridDataColumn FieldName="UnplannedPercentage"
+                                      Caption="Plansız Duruş "
+                                      SortOrder="GridColumnSortOrder.Descending"
+                                      SortIndex="1"
+                                      DisplayFormat="@NumericMask.PercentageMultipliedBy100">
+                        @* <CellDisplayTemplate>
+                        @{
+                        StationGeneralAnalysis obj = context as StationGeneralAnalysis;
+                        <div class="@(obj.UnplannedPercentage >= Convert.ToDouble(0.90) ? "bg-success" : "bg-danger")" >
+                        </div>
+                        }
+                        </CellDisplayTemplate>*@
+                    </DxGridDataColumn>
                 </Columns>
-                <TotalSummary>
-                    <DxGridSummaryItem FieldName="Date"
-                                       SummaryType=GridSummaryItemType.Min
-                                       ValueDisplayFormat="D" />
-                    <DxGridSummaryItem FooterColumnName="TemperatureC"
-                                       SummaryType=GridSummaryItemType.Count />
-                </TotalSummary>
-             @*   <EditFormTemplate Context="EditFormContext">
-                    @{
-                        var forecast = (WeatherForecast)EditFormContext.EditModel;
-                    }
-                    <DxFormLayout>
-                        <DxFormLayoutItem Caption="Date">
-                            <DxDateEdit @bind-Date="@forecast.Date" />
-                        </DxFormLayoutItem>
-                        <DxFormLayoutItem Caption="Forecast">
-                            <DxTextBox @bind-Text="@forecast.Forecast" />
-                        </DxFormLayoutItem>
-                        <DxFormLayoutItem Caption="Cloud Cover">
-                            <DxTextBox @bind-Text="@forecast.CloudCover" />
-                        </DxFormLayoutItem>
-                        <DxFormLayoutItem Caption="Temperature">
-                            <DxSpinEdit @bind-Value="@forecast.TemperatureC" />
-                        </DxFormLayoutItem>
-                    </DxFormLayout>
-                </EditFormTemplate>*@
             </DxGrid>
         </Body>
     </Card>
 </ContentMain>
 
 @code {
-    List<wet1> Data { get; set; }
+    List<StationGeneralAnalysis> data = new List<StationGeneralAnalysis>();
+    DateTime startDate = DateTime.Today.AddDays(-60);
+    DateTime endDate = DateTime.Today;
+    DateTime date1 = new DateTime(2022, 06, 01);
+    DateTime date2 = new DateTime(2022, 06, 03);
 
     protected override void OnInitialized()
     {
-        Data = wet1Service.GetForecast();
+        data = istasyonService.GetStationGeneralAnalyses(date1, date2);
     }
 
-    //void OnDataItemDeleting(GridDataItemDeletingEventArgs e)
-    //{
-    //    Data.Remove(e.DataItem as wet1);
-    //}
-
-    //void OnEditModelSaving(GridEditModelSavingEventArgs e)
-    //{
-    //    var editModel = (wet1)e.EditModel;
-    //    var dataItem = e.IsNew ? new wet1() : (wet1)e.DataItem;
-
-    //    dataItem.Date = editModel.Date;
-    //    dataItem.TemperatureC = editModel.TemperatureC;
-    //    dataItem.CloudCover = editModel.CloudCover;
-
-    //    if (e.IsNew)
-    //        Data.Add(dataItem as wet1);
-    //}
+    void OnDateButtonClicked()
+    {
+        data = istasyonService.GetStationGeneralAnalyses(startDate, endDate);
+        StateHasChanged();
+    }
 
 }
