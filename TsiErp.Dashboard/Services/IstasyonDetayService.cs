@@ -8,7 +8,6 @@ namespace TsiErp.Dashboard.Services
     public class IstasyonDetayService
     {
         SqlConnection _connection;
-
         public IstasyonDetayService()
         {            
             _connection = DBHelper.GetSqlConnection();
@@ -17,9 +16,9 @@ namespace TsiErp.Dashboard.Services
         #region Duruş Analizi
         public List<StationDetailedHaltAnalysis> GetStationDetailedHaltAnalysis(int makineID,DateTime startDate, DateTime endDate)
         {
-            startDate = new DateTime(2022, 06, 01);
-            endDate = new DateTime(2022, 08, 22);
-            makineID = 8;
+            //startDate = new DateTime(2022, 06, 01);
+            //endDate = new DateTime(2022, 08, 22);
+            //makineID = 8;
             List<StationDetailedHaltAnalysis> stationDetailedHaltAnalysis = new List<StationDetailedHaltAnalysis>();
 
             var haltCodes = DBHelper.GetHaltCodes();
@@ -45,9 +44,9 @@ namespace TsiErp.Dashboard.Services
         #region Stok Analizi
         public List<StationDetailedProductAnalysis> GetStationDetailedProductAnalysis(int makineID, DateTime startDate, DateTime endDate)
         {
-            startDate = new DateTime(2022, 06, 01);
-            endDate = new DateTime(2022, 08, 22);
-            makineID = 8;
+            //startDate = new DateTime(2022, 06, 01);
+            //endDate = new DateTime(2022, 08, 22);
+            //makineID = 8;
 
             List<StationDetailedProductAnalysis> stationDetailedProductAnalysis = new List<StationDetailedProductAnalysis>();
 
@@ -79,9 +78,9 @@ namespace TsiErp.Dashboard.Services
         #region Personel Analizi
         public List<StationDetailedEmployeeAnalysis> GetStationDetailedEmployeeAnalysis(int makineID, DateTime startDate, DateTime endDate)
         {
-            startDate = new DateTime(2022, 06, 01);
-            endDate = new DateTime(2022, 08, 22);
-            makineID = 8;
+            //startDate = new DateTime(2022, 06, 01);
+            //endDate = new DateTime(2022, 08, 22);
+            //makineID = 8;
 
             List<StationDetailedEmployeeAnalysis> stationDetailedEmployeeAnalysis = new List<StationDetailedEmployeeAnalysis>();
 

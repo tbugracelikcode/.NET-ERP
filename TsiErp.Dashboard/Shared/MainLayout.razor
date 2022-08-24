@@ -6,10 +6,14 @@
 <NavBar>
     <NavBarLeft>
         @navBarLeftInjectableMenu.content <!-- Injectable for custom menu content per page -->
+
+       @* <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>*@
     </NavBarLeft>
 </NavBar>
 <SideBarContainer>
-    <BrandLogo Link="http://tsicenter.com/_demo/" ImageEffect="ImageEffect.Rounded" Logo="../dist/img/tsi-logo.png"> Dashboard</BrandLogo>
+    <BrandLogo  Elevation="Elevation.Three" Link="http://tsicenter.com/_demo/"  ImageEffect="ImageEffect.Rounded" Logo="../dist/img/tsi-logo.png"> Dashboard</BrandLogo>
     <br />
     <SideBar>
         <!-- Sidebar user panel (optional) -->
@@ -79,6 +83,18 @@
     <Right> </Right>
 </MainFooter>
 @code {
+
+    #region Custom Collapse
+    // private bool collapseNavMenu = true;
+
+    //private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    //private void ToggleNavMenu()
+    //{
+    //    collapseNavMenu = !collapseNavMenu;
+    //}
+    #endregion
+
     protected override void OnParametersSet()
     {
         // content = null; for refreshing custom menu injectables per page.

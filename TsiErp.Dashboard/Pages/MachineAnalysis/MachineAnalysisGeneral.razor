@@ -1,6 +1,7 @@
 ﻿@page "/machine-analysis-general"
 
-@inject IstasyonService istasyonService
+@inject IstasyonService IstasyonService
+@inject NavigationManager NavigationManager
 <style>
     .GridZebra table tbody tr:nth-child(odd) {
         background-color: #B5B5B5;
@@ -14,14 +15,13 @@
         font-family: arial, sans-serif;
         border-collapse: collapse;
         width: 80%;
-        
     }
 
-   /* td, th {
-        border: 0px solid #dddddd;
-        text-align: center;
-        padding: 8px;
-    }*/
+    /* td, th {
+                            border: 0px solid #dddddd;
+                            text-align: center;
+                            padding: 8px;
+                        }*/
     .DateTime {
         width: 400px;
     }
@@ -32,7 +32,7 @@
 <Card>
     <Body>
         <table>
-            <tr> 
+            <tr>
                 <td></td>
                 <td>
                     <label>Başlangıç Tarihi:</label>
@@ -42,27 +42,14 @@
                     <label>Bitiş Tarihi:</label>
                     <DxDateEdit CssClass="DateTime" @bind-Date="@endDate"></DxDateEdit>
                 </td>
-                <td> 
+                <td>
                     <label></label>
                     <Button Size="ButtonSize.Medium" OnClick="@OnDateButtonClicked">Filtrele</Button>
                 </td>
-                <td></td>
+                <td>
+                </td>
             </tr>
         </table>
-       @* <Row>
-            <Column>
-                <label>Başlangıç Tarihi:</label>
-                    <DxDateEdit CssClass="DateTime" @bind-Date="@startDate"></DxDateEdit>
-            </Column>
-            <Column>
-                <label>Bitiş Tarihi:</label>
-                    <DxDateEdit CssClass="DateTime" @bind-Date="@endDate"></DxDateEdit>
-            </Column>
-            <Column>
-                <label></label>
-                    <Button Size="ButtonSize.Medium" OnClick="@OnDateButtonClicked">Filtrele</Button>
-            </Column>
-        </Row>*@
 
     </Body>
 
@@ -157,6 +144,30 @@
                         }
                         </CellDisplayTemplate>*@
                     </DxGridDataColumn>
+                    <DxGridDataColumn FieldName="StationID"
+                                      Caption="Duruş Kodları Analizi"
+                                      SortOrder="GridColumnSortOrder.Descending"
+                                      SortIndex="1">
+                        <CellDisplayTemplate>
+                            <Button Size="ButtonSize.Small" OnClick="@(() => OnDetailButtonClicked((int)context.Value,startDate,endDate))">Detay</Button>
+                        </CellDisplayTemplate>
+                    </DxGridDataColumn>
+                    <DxGridDataColumn FieldName="StationID"
+                                      Caption="Stok Kodları Analizi"
+                                      SortOrder="GridColumnSortOrder.Descending"
+                                      SortIndex="1">
+                        <CellDisplayTemplate>
+                            <Button Size="ButtonSize.Small" OnClick="@(() => OnDetailButtonClicked((int)context.Value,startDate,endDate))">Detay</Button>
+                        </CellDisplayTemplate>
+                    </DxGridDataColumn>
+                    <DxGridDataColumn FieldName="StationID"
+                                      Caption="Personel Analizi"
+                                      SortOrder="GridColumnSortOrder.Descending"
+                                      SortIndex="1">
+                        <CellDisplayTemplate>
+                            <Button Size="ButtonSize.Small" OnClick="@(() => OnDetailButtonClicked((int)context.Value,startDate,endDate))">Detay</Button>
+                        </CellDisplayTemplate>
+                    </DxGridDataColumn>
                 </Columns>
             </DxGrid>
         </Body>
@@ -167,18 +178,25 @@
     List<StationGeneralAnalysis> data = new List<StationGeneralAnalysis>();
     DateTime startDate = DateTime.Today.AddDays(-60);
     DateTime endDate = DateTime.Today;
-    DateTime date1 = new DateTime(2022, 06, 01);
-    DateTime date2 = new DateTime(2022, 06, 03);
+    DateTime date1 = DateTime.Today.AddDays(-60);
+    DateTime date2 = DateTime.Today;
 
     protected override void OnInitialized()
     {
-        data = istasyonService.GetStationGeneralAnalyses(date1, date2);
+        data = IstasyonService.GetStationGeneralAnalyies(date1, date2);
     }
 
     void OnDateButtonClicked()
     {
-        data = istasyonService.GetStationGeneralAnalyses(startDate, endDate);
+        data = IstasyonService.GetStationGeneralAnalyies(startDate, endDate);
         StateHasChanged();
+    }
+    async void OnDetailButtonClicked(int stationId, DateTime startDate, DateTime endDate)
+    {
+       
+        //endDate = new DateTime(2022, 08, 22);
+        NavigationManager.NavigateTo("/machine-analysis-detail/" + stationId + "/" + startDate.ToString("yyyy,MM,dd") + "/" + endDate.ToString("yyyy,MM,dd"));
+        //NavigationManager.NavigateTo("/machine-analysis-detail");
     }
 
 }

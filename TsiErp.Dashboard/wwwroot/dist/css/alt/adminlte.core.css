@@ -10780,12 +10780,12 @@ body:not(.layout-fixed).layout-navbar-fixed.text-sm .wrapper .main-sidebar .side
 }
 
 .layout-navbar-fixed .wrapper .brand-link {
-  overflow: hidden;
-  position: fixed;
-  top: 0;
-  transition: width 0.3s ease-in-out;
-  width: 250px;
-  z-index: 1035;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    transition: width 0.3s ease-in-out;
+    width: 250px;
+    z-index: 1035;
 }
 
 .layout-navbar-fixed .wrapper .sidebar-dark-primary .brand-link:not([class*="navbar"]) {
@@ -11092,17 +11092,17 @@ body:not(.layout-fixed).layout-navbar-fixed.text-sm .wrapper .main-sidebar .side
 }
 
 .layout-navbar-fixed .wrapper.sidebar-collapse .main-sidebar:hover .brand-link {
-  transition: width 0.3s ease-in-out;
-  width: 250px;
+    transition: width 0.3s ease-in-out;
+    width: 250px;
 }
 
 .layout-navbar-fixed .wrapper .brand-link {
-  overflow: hidden;
-  position: fixed;
-  top: 0;
-  transition: width 0.3s ease-in-out;
-  width: 250px;
-  z-index: 1035;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    transition: width 0.3s ease-in-out;
+    width: 250px;
+    z-index: 1035;
 }
 
 .layout-navbar-fixed .wrapper .content-wrapper {
@@ -11188,18 +11188,18 @@ body:not(.layout-fixed).layout-navbar-fixed.text-sm .wrapper .main-sidebar .side
   .text-sm .layout-sm-navbar-fixed .wrapper.sidebar-collapse .brand-link, .layout-sm-navbar-fixed .wrapper.sidebar-collapse .brand-link.text-sm {
     height: calc(2.93725rem + 1px);
   }
-  .layout-sm-navbar-fixed .wrapper.sidebar-collapse .main-sidebar:hover .brand-link {
-    transition: width 0.3s ease-in-out;
-    width: 250px;
-  }
-  .layout-sm-navbar-fixed .wrapper .brand-link {
-    overflow: hidden;
-    position: fixed;
-    top: 0;
-    transition: width 0.3s ease-in-out;
-    width: 250px;
-    z-index: 1035;
-  }
+    .layout-sm-navbar-fixed .wrapper.sidebar-collapse .main-sidebar:hover .brand-link {
+        transition: width 0.3s ease-in-out;
+        width: 250px;
+    }
+    .layout-sm-navbar-fixed .wrapper .brand-link {
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        transition: width 0.3s ease-in-out;
+        width: 250px;
+        z-index: 1035;
+    }
   .layout-sm-navbar-fixed .wrapper .content-wrapper {
     margin-top: calc(3.5rem + 1px);
   }
@@ -11275,18 +11275,18 @@ body:not(.layout-fixed).layout-navbar-fixed.text-sm .wrapper .main-sidebar .side
   .text-sm .layout-md-navbar-fixed .wrapper.sidebar-collapse .brand-link, .layout-md-navbar-fixed .wrapper.sidebar-collapse .brand-link.text-sm {
     height: calc(2.93725rem + 1px);
   }
-  .layout-md-navbar-fixed .wrapper.sidebar-collapse .main-sidebar:hover .brand-link {
-    transition: width 0.3s ease-in-out;
-    width: 250px;
-  }
-  .layout-md-navbar-fixed .wrapper .brand-link {
-    overflow: hidden;
-    position: fixed;
-    top: 0;
-    transition: width 0.3s ease-in-out;
-    width: 250px;
-    z-index: 1035;
-  }
+    .layout-md-navbar-fixed .wrapper.sidebar-collapse .main-sidebar:hover .brand-link {
+        transition: width 0.3s ease-in-out;
+        width: 250px;
+    }
+    .layout-md-navbar-fixed .wrapper .brand-link {
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        transition: width 0.3s ease-in-out;
+        width: 250px;
+        z-index: 1035;
+    }
   .layout-md-navbar-fixed .wrapper .content-wrapper {
     margin-top: calc(3.5rem + 1px);
   }
@@ -11362,18 +11362,18 @@ body:not(.layout-fixed).layout-navbar-fixed.text-sm .wrapper .main-sidebar .side
   .text-sm .layout-lg-navbar-fixed .wrapper.sidebar-collapse .brand-link, .layout-lg-navbar-fixed .wrapper.sidebar-collapse .brand-link.text-sm {
     height: calc(2.93725rem + 1px);
   }
-  .layout-lg-navbar-fixed .wrapper.sidebar-collapse .main-sidebar:hover .brand-link {
-    transition: width 0.3s ease-in-out;
-    width: 250px;
-  }
-  .layout-lg-navbar-fixed .wrapper .brand-link {
-    overflow: hidden;
-    position: fixed;
-    top: 0;
-    transition: width 0.3s ease-in-out;
-    width: 250px;
-    z-index: 1035;
-  }
+    .layout-lg-navbar-fixed .wrapper.sidebar-collapse .main-sidebar:hover .brand-link {
+        transition: width 0.3s ease-in-out;
+        width: 250px;
+    }
+    .layout-lg-navbar-fixed .wrapper .brand-link {
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        transition: width 0.3s ease-in-out;
+        width: 250px;
+        z-index: 1035;
+    }
   .layout-lg-navbar-fixed .wrapper .content-wrapper {
     margin-top: calc(3.5rem + 1px);
   }
@@ -11449,18 +11449,18 @@ body:not(.layout-fixed).layout-navbar-fixed.text-sm .wrapper .main-sidebar .side
   .text-sm .layout-xl-navbar-fixed .wrapper.sidebar-collapse .brand-link, .layout-xl-navbar-fixed .wrapper.sidebar-collapse .brand-link.text-sm {
     height: calc(2.93725rem + 1px);
   }
-  .layout-xl-navbar-fixed .wrapper.sidebar-collapse .main-sidebar:hover .brand-link {
-    transition: width 0.3s ease-in-out;
-    width: 250px;
-  }
-  .layout-xl-navbar-fixed .wrapper .brand-link {
-    overflow: hidden;
-    position: fixed;
-    top: 0;
-    transition: width 0.3s ease-in-out;
-    width: 250px;
-    z-index: 1035;
-  }
+    .layout-xl-navbar-fixed .wrapper.sidebar-collapse .main-sidebar:hover .brand-link {
+        transition: width 0.3s ease-in-out;
+        width: 250px;
+    }
+    .layout-xl-navbar-fixed .wrapper .brand-link {
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        transition: width 0.3s ease-in-out;
+        width: 250px;
+        z-index: 1035;
+    }
   .layout-xl-navbar-fixed .wrapper .content-wrapper {
     margin-top: calc(3.5rem + 1px);
   }
@@ -11760,8 +11760,8 @@ body.sidebar-collapse:not(.sidebar-mini-xs):not(.sidebar-mini-md):not(.sidebar-m
 }
 
 .main-sidebar, .main-sidebar::before {
-  transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
-  width: 250px;
+    transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+    width: 250px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -11804,7 +11804,7 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 }
 
 .layout-fixed .brand-link {
-  width: 250px;
+    width: 250px;
 }
 
 .layout-fixed .main-sidebar {
@@ -15221,7 +15221,7 @@ body.text-sm .control-sidebar {
 
 .dropdown-menu-lg {
   max-width: 300px;
-  min-width: 280px;
+  min-width: 250px;
   padding: 0;
 }
 
@@ -15332,7 +15332,7 @@ body.text-sm .control-sidebar {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   padding: 0;
-  width: 280px;
+  width: 250px;
 }
 
 .navbar-nav > .user-menu > .dropdown-menu,
