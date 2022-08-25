@@ -7,7 +7,6 @@ using TsiErp.DataAccess.EntityFrameworkCore;
 using Tsi.Core.Modularity.Extension;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using System.Reflection;
-using TsiErp.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,7 +36,6 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).Conf
 ConfigureBusiness(builder);
 ConfigureDataAccess(builder);
 ConfigureLogging(builder);
-ConfigureShared(builder);
 
 var app = builder.Build();
 
@@ -62,13 +60,6 @@ static void ConfigureBusiness(WebApplicationBuilder builder)
     builder.Services.RegisterDependencies(Assembly.Load("TsiErp.Business"));
 
     var instance = (TsiBusinessModule)Activator.CreateInstance(typeof(TsiBusinessModule));
-
-    instance.ConfigureServices(builder.Services);
-}
-
-static void ConfigureShared(WebApplicationBuilder builder)
-{
-    var instance = (TsiSharedModule)Activator.CreateInstance(typeof(TsiSharedModule));
 
     instance.ConfigureServices(builder.Services);
 }
