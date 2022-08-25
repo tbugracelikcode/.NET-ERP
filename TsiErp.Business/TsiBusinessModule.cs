@@ -14,14 +14,12 @@ using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Business.MapperProfile;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using Tsi.Core.Modularity.Extension;
-using TsiErp.Shared;
 
 namespace TsiErp.Business
 {
     [RelatedModules
         (
-        typeof(TsiCachingModule),
-        typeof(TsiSharedModule)
+        typeof(TsiCachingModule)
         )]
     public class TsiBusinessModule : TsiModule
     {

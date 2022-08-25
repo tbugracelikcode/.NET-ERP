@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Localization;
-using Tsi.Application.Contract.Services.EntityFrameworkCore;
+﻿using Tsi.Application.Contract.Services.EntityFrameworkCore;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
@@ -12,7 +11,6 @@ using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Branch.Dtos;
-using TsiErp.Shared.Localization.Resources;
 
 namespace TsiErp.Business.Entities.Branch.Services
 {
@@ -23,13 +21,10 @@ namespace TsiErp.Business.Entities.Branch.Services
 
         private readonly ILogsAppService _logger;
 
-        private readonly IStringLocalizer<TsiResources> _L;
-
-        public BranchesAppService(IBranchesRepository repository, ILogsAppService logger, IStringLocalizer<TsiResources> l)
+        public BranchesAppService(IBranchesRepository repository, ILogsAppService logger)
         {
             _repository = repository;
             _logger = logger;
-            _L = l;
         }
 
         //[TransactionScopeAspect(Priority = 2)]
