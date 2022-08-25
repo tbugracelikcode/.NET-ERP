@@ -86,4 +86,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\AdminDashboard\" />
+  </ItemGroup>
+
 </Project>

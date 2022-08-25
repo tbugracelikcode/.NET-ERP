@@ -55,18 +55,20 @@ namespace TsiErp.Dashboard.Services
 
             foreach (var productID in productList)
             {
+                int planlananBirimSure = operationLines.Where(t => t.STOKID == productID).Sum(t => t.PLANLANANOPRSURESI);
+                int gerceklesenBirimSure = (int)operationLines.Where(t => t.STOKID == productID).Sum(t => t.BIRIMSURE);
 
                 StationDetailedProductAnalysis analysis = new StationDetailedProductAnalysis
                 {
                     ProductID = productID,
-                    ProductCode = operationLines.Where(t=>t.STOKID == productID).Select(t=>t.STOKKODU).FirstOrDefault(),
+                    ProductCode = operationLines.Where(t => t.STOKID == productID).Select(t => t.STOKKODU).FirstOrDefault(),
                     ProductGroup = operationLines.Where(t => t.STOKID == productID).Select(t => t.URUNGRUBU).FirstOrDefault(),
                     TotalProduction = (int)operationLines.Where(t => t.STOKID == productID).Sum(t => t.URETILENADET),
                     TotalScrap = (int)operationLines.Where(t => t.STOKID == productID).Sum(t => t.HURDAADET),
-                    PlannedUnitTime = operationLines.Where(t => t.STOKID == productID).Sum(t => t.PLANLANANOPRSURESI),
-                    OccuredUnitTime = (int)operationLines.Where(t => t.STOKID == productID).Sum(t => t.BIRIMSURE),
+                    PlannedUnitTime = planlananBirimSure,
+                    OccuredUnitTime = gerceklesenBirimSure,
                     PlannedQuantity = (int)operationLines.Where(t => t.STOKID == productID).Sum(t => t.PLNMIKTAR),
-                    Performance = operationLines.Where(t => t.STOKID == productID).Sum(t => t.PERFORMANS)
+                    Performance = (decimal)(gerceklesenBirimSure > 0 ? ((double)planlananBirimSure / (double)gerceklesenBirimSure) : 0)
                 };
 
                 stationDetailedProductAnalysis.Add(analysis);

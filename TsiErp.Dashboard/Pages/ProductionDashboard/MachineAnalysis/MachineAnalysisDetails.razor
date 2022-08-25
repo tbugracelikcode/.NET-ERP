@@ -18,11 +18,6 @@
         width: 80%;
     }
 
-    /* td, th {
-                                border: 0px solid #dddddd;
-                                text-align: center;
-                                padding: 8px;
-                            }*/
     .DateTime {
         width: 400px;
     }
@@ -73,7 +68,7 @@
                                           ArgumentField="@((StationDetailedHaltAnalysis i) => i.Code)"
                                           ValueField="@((StationDetailedHaltAnalysis i) => i.Time)"
                                           Name="Duruş Süresi">
-                            <DxChartSeriesLabel  Visible="true" BackgroundColor="System.Drawing.Color.DarkSlateGray" />
+                            <DxChartSeriesLabel Visible="true" BackgroundColor="System.Drawing.Color.DarkSlateGray" />
                         </DxChartBarSeries>
                         <DxChartLegend Orientation="Orientation.Horizontal"
                                        HorizontalAlignment="HorizontalAlignment.Right"
@@ -89,15 +84,15 @@
                             ShowGroupPanel="true"
                             ShowFilterRow="true">
                         <Columns>
-                            <DxGridCommandColumn Width="120px" />
+                            <DxGridCommandColumn Width="100px" />
                             <DxGridDataColumn FieldName="Code"
                                               Caption="Duruş Kodu"
                                               SortOrder="GridColumnSortOrder.Descending"
                                               SortIndex="1" />
                             <DxGridDataColumn FieldName="Time"
                                               Caption="Süre"
-                                              Width="120px"
-                                              SortOrder="GridColumnSortOrder.Ascending"
+                                              Width="800px"
+                                              SortOrder="GridColumnSortOrder.Descending"
                                               SortIndex="0"
                                               DisplayFormat="######" />
                         </Columns>
@@ -139,7 +134,7 @@
                 <Title><CardTitle><strong>Makina Analizi > Genel > Detaylar > Stok Kodları Analizi</strong></CardTitle></Title>
                 <Body>
                     <DxChart Data="@dataProduct" LabelOverlap="ChartLabelOverlap.ShowAll">
-                        <DxChartTitle Text=" Stok Kodları Grafiği">
+                        <DxChartTitle Text="Performans Grafiği">
                         </DxChartTitle>
                         <DxChartValueAxis>
                             <DxChartAxisTitle Text="" />
@@ -148,16 +143,16 @@
                         </DxChartValueAxis>
                         <DxChartBarSeries Color="System.Drawing.Color.DarkRed"
                                           ArgumentField="@((StationDetailedProductAnalysis i) => i.ProductCode)"
-                                          ValueField="@((StationDetailedProductAnalysis i) => i.PlannedUnitTime)"
-                                          Name="Planlanan Birim Süre">
-                            <DxChartSeriesLabel Position="RelativePosition.Inside"  Visible="true" BackgroundColor="System.Drawing.Color.DarkSlateGray" />
+                                          ValueField="@((StationDetailedProductAnalysis i) => i.Performance)"
+                                          Name="Performans">
+                            <DxChartSeriesLabel Format="ChartElementFormat.Percent()" Visible="true" BackgroundColor="System.Drawing.Color.DarkSlateGray" />
                         </DxChartBarSeries>
-                        <DxChartBarSeries Color="System.Drawing.Color.Gray"
+                       @* <DxChartBarSeries Color="System.Drawing.Color.Gray"
                                           ArgumentField="@((StationDetailedProductAnalysis i) => i.ProductCode)"
                                           ValueField="@((StationDetailedProductAnalysis i) => i.OccuredUnitTime)"
                                           Name="Gerçekleşen Birim Süre">
                             <DxChartSeriesLabel Position="RelativePosition.Outside" Visible="true" BackgroundColor="System.Drawing.Color.DarkSlateGray" />
-                        </DxChartBarSeries>
+                        </DxChartBarSeries>*@
                         <DxChartLegend Orientation="Orientation.Horizontal"
                                        HorizontalAlignment="HorizontalAlignment.Right"
                                        Position="RelativePosition.Outside" />
@@ -173,14 +168,10 @@
                             ShowFilterRow="true">
                         <Columns>
                             <DxGridCommandColumn Width="120px" />
-                            <DxGridDataColumn FieldName="WorkOrderID"
-                                              Caption="İş Emri ID "
-                                              SortOrder="GridColumnSortOrder.Descending"
-                                              SortIndex="1" />
                             <DxGridDataColumn FieldName="ProductCode"
                                               Caption="Stok Kodu"
                                               Width="120px"
-                                              SortOrder="GridColumnSortOrder.Ascending"
+                                              SortOrder="GridColumnSortOrder.Descending"
                                               SortIndex="0" />
                             <DxGridDataColumn FieldName="ProductGroup"
                                               Caption="Stok Açıklaması"
@@ -189,7 +180,7 @@
                             <DxGridDataColumn FieldName="TotalProduction"
                                               Caption="Üretilen Adet"
                                               Width="120px"
-                                              SortOrder="GridColumnSortOrder.Ascending"
+                                              SortOrder="GridColumnSortOrder.Descending"
                                               SortIndex="0"
                                               DisplayFormat="######" />
                             <DxGridDataColumn FieldName="TotalScrap"
@@ -200,7 +191,7 @@
                             <DxGridDataColumn FieldName="PlannedUnitTime"
                                               Caption="Planlanan Birim Süre "
                                               Width="120px"
-                                              SortOrder="GridColumnSortOrder.Ascending"
+                                              SortOrder="GridColumnSortOrder.Descending"
                                               SortIndex="0"
                                               DisplayFormat="######" />
                             <DxGridDataColumn FieldName="OccuredUnitTime"
@@ -210,14 +201,14 @@
                             <DxGridDataColumn FieldName="PlannedQuantity"
                                               Caption="Planlanan Adet"
                                               Width="120px"
-                                              SortOrder="GridColumnSortOrder.Ascending"
+                                              SortOrder="GridColumnSortOrder.Descending"
                                               SortIndex="0"
                                               DisplayFormat="######" />
                             <DxGridDataColumn FieldName="Performance"
                                               Caption="Performans"
                                               SortOrder="GridColumnSortOrder.Descending"
                                               SortIndex="1"
-                                              DisplayFormat="@NumericMask.PercentageMultipliedBy100" />
+                                              DisplayFormat="@NumericMask.Percentage" />
                         </Columns>
                     </DxGrid>
                 </Body>
@@ -268,7 +259,7 @@
                                           ArgumentField="@((StationDetailedEmployeeAnalysis i) => i.EmployeeName)"
                                           ValueField="@((StationDetailedEmployeeAnalysis i) => i.TotalScrap)"
                                           Name="Hurda Adet">
-                            <DxChartSeriesLabel  Visible="true" BackgroundColor="System.Drawing.Color.DarkSlateGray" />
+                            <DxChartSeriesLabel Visible="true" BackgroundColor="System.Drawing.Color.DarkSlateGray" />
                         </DxChartBarSeries>
                         <DxChartLegend Orientation="Orientation.Horizontal"
                                        HorizontalAlignment="HorizontalAlignment.Right"
@@ -292,19 +283,19 @@
                             <DxGridDataColumn FieldName="TotalProduction"
                                               Caption="Üretilen Adet"
                                               Width="120px"
-                                              SortOrder="GridColumnSortOrder.Ascending"
+                                              SortOrder="GridColumnSortOrder.Descending"
                                               SortIndex="0"
                                               DisplayFormat="######" />
                             <DxGridDataColumn FieldName="TotalScrap"
                                               Caption="Hurda Adet"
                                               Width="120px"
-                                              SortOrder="GridColumnSortOrder.Ascending"
+                                              SortOrder="GridColumnSortOrder.Descending"
                                               SortIndex="0"
                                               DisplayFormat="######" />
                             <DxGridDataColumn FieldName="OperationTime"
                                               Caption="Çalışma Süresi"
                                               Width="120px"
-                                              SortOrder="GridColumnSortOrder.Ascending"
+                                              SortOrder="GridColumnSortOrder.Descending"
                                               SortIndex="0"
                                               DisplayFormat="######" />
                         </Columns>
@@ -325,20 +316,19 @@
     List<StationDetailedProductAnalysis> dataProduct = new List<StationDetailedProductAnalysis>();
     DateTime startDate = DateTime.Today.AddDays(-60);
     DateTime endDate = DateTime.Today;
-    public int stationID;
 
     protected override void OnInitialized()
     {
-        dataEmployee = IstasyonDetayService.GetStationDetailedEmployeeAnalysis(stationID, StartDate, EndDate);
-        dataHalt = IstasyonDetayService.GetStationDetailedHaltAnalysis(stationID, StartDate, EndDate);
-        dataProduct = IstasyonDetayService.GetStationDetailedProductAnalysis(stationID, StartDate, EndDate);
+        dataEmployee = IstasyonDetayService.GetStationDetailedEmployeeAnalysis(StationId, StartDate, EndDate);
+        dataHalt = IstasyonDetayService.GetStationDetailedHaltAnalysis(StationId, StartDate, EndDate);
+        dataProduct = IstasyonDetayService.GetStationDetailedProductAnalysis(StationId, StartDate, EndDate);
     }
 
     void OnDateButtonClicked()
     {
-        dataEmployee = IstasyonDetayService.GetStationDetailedEmployeeAnalysis(stationID, startDate, endDate);
-        dataHalt = IstasyonDetayService.GetStationDetailedHaltAnalysis(stationID, startDate, endDate);
-        dataProduct = IstasyonDetayService.GetStationDetailedProductAnalysis(stationID, startDate, endDate);
+        dataEmployee = IstasyonDetayService.GetStationDetailedEmployeeAnalysis(StationId, startDate, endDate);
+        dataHalt = IstasyonDetayService.GetStationDetailedHaltAnalysis(StationId, startDate, endDate);
+        dataProduct = IstasyonDetayService.GetStationDetailedProductAnalysis(StationId, startDate, endDate);
         StateHasChanged();
     }
 
