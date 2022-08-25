@@ -1,4 +1,4 @@
-using Autofac;
+﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Tsi.Logging.EntityFrameworkCore.Repositories;
 using TsiErp.Business;
