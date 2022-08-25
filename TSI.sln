@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tsi.Logging", "Tsi.Logging\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TsiErp.Shared", "TsiErp.Shared\TsiErp.Shared.csproj", "{CAD3BA0D-9DF9-498E-9335-B42A65E08AEB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ui", "ui", "{4ED19450-DC44-4BFB-A308-D4C8F4A8A0DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
