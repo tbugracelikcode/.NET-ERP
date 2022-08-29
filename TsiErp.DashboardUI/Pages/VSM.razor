@@ -1,0 +1,314 @@
+﻿@page "/vsm"
+
+@using Syncfusion.Blazor.Diagrams
+@using Syncfusion.Blazor.Navigations
+@using System.Collections.ObjectModel
+@using Syncfusion.Blazor.Inputs
+@using DiagramShapes = Syncfusion.Blazor.Diagrams.Shapes
+@using DiagramSegments = Syncfusion.Blazor.Diagrams.Segments
+@using Syncfusion.Blazor.Popups
+@using Syncfusion.Blazor.Buttons
+
+<div style="width:240px;height:100%;float:left;">
+    <SfSymbolPalette id="symbolPalette" Width="100%" Height="700px"
+                     SymbolHeight="60"
+                     SymbolWidth="60"
+                     ExpandMode="@ExpandMode.Multiple"
+                     SymbolInfo="@SymbolInfo" Palettes="@Palettes">
+        <SymbolMargin Left="15" Right="15" Bottom="15" Top="15"></SymbolMargin>
+    </SfSymbolPalette>
+</div>
+
+<div style="width:calc(100% - 242px);height:100%;float:left;">
+    <SfDiagram Height="700px"
+               Nodes="@NodeCollection"
+               Connectors="@ConnectorCollection"
+               NodeDefaults="@NodeDefaults"
+               ConnectorDefaults="@ConnectorDefaults"
+               ModelType="@model">
+        <DiagramPageSettings>
+            <DiagramFitOptions CanFit="true" Mode="FitModes.Width"></DiagramFitOptions>
+        </DiagramPageSettings>
+        <DiagramSnapSettings>
+            <HorizontalGridlines LineColor="#e0e0e0 " LineIntervals="@GridLineIntervals">
+            </HorizontalGridlines>
+            <VerticalGridlines LineColor="#e0e0e0" LineIntervals="@GridLineIntervals">
+            </VerticalGridlines>
+        </DiagramSnapSettings>
+        <DiagramTemplates>
+            <NodeTemplate>
+                @{
+                    string tip = NodeCollection[NodeCollection.Count - 1].Tooltip.Content;
+                    switch (tip)
+                    {
+                        case "1":
+                            <div style="width:100%;height:100%">
+
+                                // HTML content 1
+
+                                <SfTextBox Placeholder="Node added 1"></SfTextBox>
+
+                            </div>
+                            break;
+                        case "2":
+                            <div style="width:100%;height:100%">
+
+                                // HTML content 2
+
+                                <SfTextBox Placeholder="Node added 2"></SfTextBox>
+
+                            </div>
+                            break;
+                        case "3":
+                            <div style="width:100%;height:100%">
+
+                                // HTML content 3
+
+                                <SfTextBox Placeholder="Node added 3"></SfTextBox>
+
+                            </div>
+                            break;
+                        default:
+                            <div style="width:100%;height:100%">
+
+                                // HTML content 3
+
+                                <SfTextBox Placeholder="Node added 3"></SfTextBox>
+
+                            </div>
+                            break;
+                    }
+                }
+            </NodeTemplate>
+        </DiagramTemplates>
+        <DiagramEvents OnDrop="@OnDrop"></DiagramEvents>
+
+    </SfDiagram>
+</div>
+
+@code
+{
+    int connectorCount = 0;
+    int portCount = 0;
+    public ObservableCollection<SymbolPalettePalette> Palettes;
+    public ObservableCollection<DiagramNode> NodeCollection { get; set; }
+    public ObservableCollection<DiagramConnector> ConnectorCollection { get; set; }
+    public DiagramNode NodeDefaults { get; set; }
+    public DiagramConnector ConnectorDefaults { get; set; }
+    public double[] GridLineIntervals { get; set; }
+    public ObservableCollection<object> ShapeList { get; set; }
+    public ObservableCollection<object> ConnectorList { get; set; }
+    public SymbolInfo SymbolInfo { get; set; }
+
+    public Type model = typeof(Node);
+    public class Node
+    {
+        public string Id { get; set; }
+        public string Tooltip { get; set; }
+    }
+
+    public void OnDrop(IBlazorDropEventArgs args)
+    {
+        args.Cancel = true;
+        var NewNode = args.Element.Node;
+        NodeCollection.Add(new DiagramNode()
+            {
+                OffsetX = NewNode.OffsetX,
+                OffsetY = NewNode.OffsetY,
+                Width = NewNode.Width,
+                Height = NewNode.Height,
+                Tooltip = NewNode.Tooltip,
+                Shape = new DiagramShape()
+                {
+                    Type = Shapes.HTML,
+                }
+
+            });
+
+        InvokeAsync(StateHasChanged);
+    }
+
+    protected override void OnInitialized()
+    {
+        InitDiagramModel();
+        InitPaletteModel();
+    }
+
+    private void InitDiagramModel()
+    {
+        InitDiagramDefaults();
+        GridLineIntervals = new double[] { 1, 9, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75 };
+
+        NodeCollection = new ObservableCollection<DiagramNode>();
+        ConnectorCollection = new ObservableCollection<DiagramConnector>();
+    }
+
+    private void InitDiagramDefaults()
+    {
+        NodeDefaults = new DiagramNode()
+            {
+                Width = 145,
+                Height = 60,
+                Annotations = new ObservableCollection<DiagramNodeAnnotation>() { },
+                Style = new NodeShapeStyle() { Fill = "#357BD2", StrokeColor = "white" }
+            };
+        ConnectorDefaults = new DiagramConnector()
+            {
+                Type = DiagramSegments.Orthogonal,
+                TargetDecorator = new ConnectorTargetDecorator() { Shape = DecoratorShapes.Arrow, Width = 10, Height = 10 }
+            };
+    }
+
+    private DiagramPort CreatePort(double x, double y)
+    {
+        return new DiagramPort()
+            {
+                Id = string.Format("port{0}", ++portCount),
+                Shape = PortShapes.Circle,
+                Offset = new NodePortOffset() { X = x, Y = y }
+            };
+    }
+
+    private void CreateNode(string id, double x, double y, string imgSrc, string label)
+    {
+        ObservableCollection<DiagramPort> defaultsPorts = new ObservableCollection<DiagramPort>();
+        defaultsPorts.Add(CreatePort(0, 0.5));
+        defaultsPorts.Add(CreatePort(0.5, 1));
+        defaultsPorts.Add(CreatePort(1, 0.5));
+        defaultsPorts.Add(CreatePort(0.5, 0));
+
+        DiagramNodeAnnotation annotation = new DiagramNodeAnnotation()
+            {
+                Content = label,
+                Style = new AnnotationStyle()
+                {
+                    Color = "white",
+                    Fill = "transparent"
+                }
+            };
+
+        DiagramNode diagramNode = new DiagramNode()
+            {
+                Id = id,
+                OffsetX = x,
+                OffsetY = y,
+                Ports = defaultsPorts,
+                Shape = new DiagramShape() { Type = DiagramShapes.Image, Source = imgSrc },
+                Annotations = new ObservableCollection<DiagramNodeAnnotation>() { annotation }
+            };
+        NodeCollection.Add(diagramNode);
+    }
+
+    private void CreateConnector(string sourceId, string targetId, string label = default(string), Syncfusion.Blazor.Diagrams.DiagramConnectorSegment segment = null, bool isDashLine = false)
+    {
+        DiagramConnector diagramConnector = new DiagramConnector()
+            {
+                Id = string.Format("connector{0}", ++connectorCount),
+                SourceID = sourceId,
+                TargetID = targetId
+            };
+
+        if (label != default(string))
+        {
+            var annotation = new DiagramConnectorAnnotation()
+                {
+                    Content = label,
+                    Style = new AnnotationStyle() { Fill = "white" }
+                };
+            diagramConnector.Annotations = new ObservableCollection<DiagramConnectorAnnotation>() { annotation };
+        }
+
+        if (segment != null)
+        {
+            diagramConnector.Segments = new ObservableCollection<Syncfusion.Blazor.Diagrams.DiagramConnectorSegment>() { segment };
+        }
+
+        if (isDashLine)
+        {
+            diagramConnector.Style = new ConnectorShapeStyle() { StrokeDashArray = "2,2" };
+        }
+
+        ConnectorCollection.Add(diagramConnector);
+    }
+
+    private void InitPaletteModel()
+    {
+        Palettes = new ObservableCollection<SymbolPalettePalette>();
+        SymbolInfo = new SymbolInfo() { Fit = true };
+        ShapeList = new ObservableCollection<object>();
+
+        CreatePaletteNode("images/VSM_Image.png", "1", "1");
+        CreatePaletteNode("images/VSM_Image2.png", "2", "2");
+        CreatePaletteNode("images/VSM_Image3.png", "3", "3");
+        CreatePaletteNode("images/VSM_Image4.png", "4", "4");
+        CreatePaletteNode("images/VSM_Image5.png", "5", "5");
+        CreatePaletteNode("images/VSM_Image6.png", "6", "6");
+        CreatePaletteNode("images/VSM_Image7.png", "7", "7");
+        CreatePaletteNode("images/VSM_Image8.png", "8", "8");
+        CreatePaletteNode("images/VSM_Image9.png", "9", "9");
+        CreatePaletteNode("images/VSM_Image10.png", "10", "10");
+        CreatePaletteNode("images/VSM_Image11.png", "11", "11");
+        CreatePaletteNode("images/VSM_Image12.png", "12", "12");
+        CreatePaletteNode("images/VSM_Image13.png", "13", "13");
+        CreatePaletteNode("images/VSM_Image14.png", "14", "14");
+        CreatePaletteNode("images/VSM_Image15.png", "15", "15");
+        CreatePaletteNode("images/VSM_Image16.png", "16", "16");
+        CreatePaletteNode("images/VSM_Image17.png", "17", "17");
+        Palettes.Add(
+            new SymbolPalettePalette()
+                {
+                    Id = "Shapes",
+                    Symbols = ShapeList,
+                    Expanded = true,
+                    Title = "Shapes"
+                });
+
+        ConnectorList = new ObservableCollection<object>();
+        CreatePaletteConnector("Link1", DiagramSegments.Orthogonal, DecoratorShapes.Arrow);
+        CreatePaletteConnector("Link2", DiagramSegments.Orthogonal, DecoratorShapes.None);
+        CreatePaletteConnector("Link3", DiagramSegments.Straight, DecoratorShapes.Arrow);
+        CreatePaletteConnector("Link4", DiagramSegments.Straight, DecoratorShapes.None);
+        CreatePaletteConnector("Link5", DiagramSegments.Bezier, DecoratorShapes.None);
+        Palettes.Add(
+            new SymbolPalettePalette()
+                {
+                    Id = "Connectors",
+                    Symbols = ConnectorList,
+                    Expanded = true,
+                    Title = "Connectors"
+                }
+        );
+    }
+
+    private void CreatePaletteNode(string imgSrc, string id, string tip)
+    {
+        DiagramNode diagramNode = new DiagramNode()
+            {
+                Id = id,
+                PreviewSize = new SymbolSizeModel() { Width = 100, Height = 100 },
+                Shape = new DiagramShape() { Type = DiagramShapes.Image, Source = imgSrc },
+                Style = new NodeShapeStyle() { StrokeColor = "#757575" },
+                Tooltip = new NodeTooltip() { Content = tip }
+            };
+        ShapeList.Add(diagramNode);
+    }
+
+    private void CreatePaletteConnector(string id, DiagramSegments type, DecoratorShapes decoratorShape)
+    {
+        DiagramConnector diagramConnector = new DiagramConnector()
+            {
+                Id = id,
+                PreviewSize = new SymbolSizeModel() { Width = 100, Height = 100 },
+                Type = type,
+                SourcePoint = new ConnectorSourcePoint() { X = 0, Y = 0 },
+                TargetPoint = new ConnectorTargetPoint() { X = 60, Y = 60 },
+                Style = new ConnectorShapeStyle() { StrokeWidth = 1, StrokeColor = "#757575" },
+                TargetDecorator = new ConnectorTargetDecorator()
+                {
+                    Shape = decoratorShape,
+                    Style = new DecoratorShapeStyle() { StrokeColor = "#757575", Fill = "#757575" }
+                }
+            };
+        ConnectorList.Add(diagramConnector);
+    }
+}
