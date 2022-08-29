@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tsi.Logging", "Tsi.Logging\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ui-dashboard", "ui-dashboard", "{8DC0381F-432B-4073-AE6E-5EADA46A0606}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TsiErp.DashboardUI", "TsiErp.DashboardUI\TsiErp.DashboardUI.csproj", "{5772DA56-F44D-4E9A-8B9F-3CB1E5F05288}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TsiErp.DashboardUI", "TsiErp.DashboardUI\TsiErp.DashboardUI.csproj", "{5772DA56-F44D-4E9A-8B9F-3CB1E5F05288}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
