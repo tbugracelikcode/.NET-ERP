@@ -34,7 +34,7 @@ namespace TsiErp.Business.Entities.Authentication.RolePermissions
         public async Task<IDataResult<SelectRolePermissionsDto>> CreateAsync(CreateRolePermissionsDto input)
         {
             object result = null;
-
+             
             input.Menus.ForEach(t =>
             {
                 var entity = ObjectMapper.Map<CreateRolePermissionsDto, TsiRolePermissions>(input);
