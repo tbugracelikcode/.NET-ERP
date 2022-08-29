@@ -1,4 +1,5 @@
-﻿using Tsi.Core.Utilities.Guids;
+﻿
+using Tsi.Core.Utilities.Guids;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 
 namespace Tsi.Application.Contract.Services.EntityFrameworkCore
@@ -7,5 +8,6 @@ namespace Tsi.Application.Contract.Services.EntityFrameworkCore
     public class ApplicationService : IApplicationService
     {
         public IGuidGenerator GuidGenerator { get; set; } = new SequentialGuidGenerator();
+
     }
 }

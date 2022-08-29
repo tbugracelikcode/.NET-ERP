@@ -45,7 +45,7 @@ namespace TsiErp.Business.Entities.Branch.Services
 
             var addedEntity = await _repository.InsertAsync(entity);
 
-            ObjectMapper.Map<Branches, SelectBranchesDto>(addedEntity);
+            //ObjectMapper.Map<Branches, SelectBranchesDto>(addedEntity);
 
             return new SuccessDataResult<SelectBranchesDto>(ObjectMapper.Map<Branches, SelectBranchesDto>(addedEntity));
         }

@@ -22,6 +22,245 @@ namespace TsiErp.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("Tsi.Authentication.Entities.Menus.TsiMenus", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<string>("MenuName")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("NVarChar(250)");
+
+                    b.Property<Guid>("ParentMenutId")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TsiMenus", (string)null);
+                });
+
+            modelBuilder.Entity("Tsi.Authentication.Entities.RolePermissions.TsiRolePermissions", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<DateTime?>("CreationTime")
+                        .IsRequired()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<Guid>("MenuId")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MenuId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("TsiRolePermissions", (string)null);
+                });
+
+            modelBuilder.Entity("Tsi.Authentication.Entities.Roles.TsiRoles", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<DateTime?>("CreationTime")
+                        .IsRequired()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("NVarChar(250)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TsiRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Tsi.Authentication.Entities.UserRoles.TsiUserRoles", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<DateTime?>("CreationTime")
+                        .IsRequired()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TsiUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Tsi.Authentication.Entities.Users.TsiUser", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<DateTime?>("CreationTime")
+                        .IsRequired()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("NVarChar(250)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("Bit");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("Bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("NVarChar(250)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(95)
+                        .HasColumnType("NVarChar(95)");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("NVarChar(250)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("NVarChar(250)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TsiUser", (string)null);
+                });
+
             modelBuilder.Entity("TsiErp.Entities.Entities.Branch.Branches", b =>
                 {
                     b.Property<Guid>("Id")
@@ -53,7 +292,6 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("DeletionTime");
 
                     b.Property<string>("Description_")
-                        .IsRequired()
                         .HasColumnType("nvarchar(MAX)");
 
                     b.Property<bool>("IsActive")
@@ -116,7 +354,6 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("DeletionTime");
 
                     b.Property<string>("Description_")
-                        .IsRequired()
                         .HasColumnType("nvarchar(MAX)");
 
                     b.Property<bool>("IsActive")
@@ -147,6 +384,25 @@ namespace TsiErp.DataAccess.Migrations
                     b.ToTable("Periods", (string)null);
                 });
 
+            modelBuilder.Entity("Tsi.Authentication.Entities.RolePermissions.TsiRolePermissions", b =>
+                {
+                    b.HasOne("Tsi.Authentication.Entities.Menus.TsiMenus", "TsiMenus")
+                        .WithMany("TsiRolePermissions")
+                        .HasForeignKey("MenuId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Tsi.Authentication.Entities.Roles.TsiRoles", "TsiRoles")
+                        .WithMany("TsiRolePermissions")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TsiMenus");
+
+                    b.Navigation("TsiRoles");
+                });
+
             modelBuilder.Entity("TsiErp.Entities.Entities.Period.Periods", b =>
                 {
                     b.HasOne("TsiErp.Entities.Entities.Branch.Branches", "Branches")
@@ -156,6 +412,16 @@ namespace TsiErp.DataAccess.Migrations
                         .IsRequired();
 
                     b.Navigation("Branches");
+                });
+
+            modelBuilder.Entity("Tsi.Authentication.Entities.Menus.TsiMenus", b =>
+                {
+                    b.Navigation("TsiRolePermissions");
+                });
+
+            modelBuilder.Entity("Tsi.Authentication.Entities.Roles.TsiRoles", b =>
+                {
+                    b.Navigation("TsiRolePermissions");
                 });
 
             modelBuilder.Entity("TsiErp.Entities.Entities.Branch.Branches", b =>

@@ -5,6 +5,11 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tsi.Authentication.Entities.Menus;
+using Tsi.Authentication.Entities.RolePermissions;
+using Tsi.Authentication.Entities.Roles;
+using Tsi.Authentication.Entities.UserRoles;
+using Tsi.Authentication.Entities.Users;
 using Tsi.EntityFrameworkCore.Modeling;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Period;
@@ -13,6 +18,78 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 {
     public static class TsiErpDbContextModelBuilderExtensions
     {
+        public static void ConfigureUsers(this ModelBuilder builder)
+        {
+            builder.Entity<TsiUser>(b =>
+            {
+                b.ToTable("TsiUser");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.UserName).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(250);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(250);
+                b.Property(t => t.Surname).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(250);
+                b.Property(t => t.Email).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(250);
+                b.Property(t => t.EmailConfirmed).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.PasswordHash).IsRequired().HasColumnType("nvarchar(max)");
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.PhoneNumber).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(95);
+
+            });
+        }
+
+        public static void ConfigureUserRoles(this ModelBuilder builder)
+        {
+            builder.Entity<TsiUserRoles>(b =>
+            {
+                b.ToTable("TsiUserRoles");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.UserId).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.RoleId).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+            });
+        }
+
+        public static void ConfigureRolePermissions(this ModelBuilder builder)
+        {
+            builder.Entity<TsiRolePermissions>(b =>
+            {
+                b.ToTable("TsiRolePermissions");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.RoleId).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.MenuId).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+                
+
+                b.HasOne(x=>x.TsiMenus).WithMany(x=>x.TsiRolePermissions).HasForeignKey(x=>x.MenuId);
+                b.HasOne(x=>x.TsiRoles).WithMany(x=>x.TsiRolePermissions).HasForeignKey(x=>x.RoleId);
+            });
+        }
+
+        public static void ConfigureRoles(this ModelBuilder builder)
+        {
+            builder.Entity<TsiRoles>(b =>
+            {
+                b.ToTable("TsiRoles");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.RoleName).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(250);
+
+            });
+        }
+
+        public static void ConfigureMenus(this ModelBuilder builder)
+        {
+            builder.Entity<TsiMenus>(b =>
+            {
+                b.ToTable("TsiMenus");
+
+                b.Property(t => t.Id).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ParentMenutId).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.MenuName).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(250);
+            });
+        }
+
         public static void ConfigureBranches(this ModelBuilder builder)
         {
             builder.Entity<Branches>(b =>

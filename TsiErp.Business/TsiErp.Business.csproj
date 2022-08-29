@@ -20,4 +20,9 @@
     <ProjectReference Include="..\TsiErp.Entities\TsiErp.Entities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Entities\Authentication\UserRoles\" />
+    <Folder Include="Entities\Authentication\Users\" />
+  </ItemGroup>
+
 </Project>

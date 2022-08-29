@@ -27,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tsi.Logging", "Tsi.Logging\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ui-dashboard", "ui-dashboard", "{8DC0381F-432B-4073-AE6E-5EADA46A0606}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TsiErp.DashboardUI", "TsiErp.DashboardUI\TsiErp.DashboardUI.csproj", "{5772DA56-F44D-4E9A-8B9F-3CB1E5F05288}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TsiErp.DashboardUI", "TsiErp.DashboardUI\TsiErp.DashboardUI.csproj", "{5772DA56-F44D-4E9A-8B9F-3CB1E5F05288}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsi.Authentication", "Tsi.Authentication\Tsi.Authentication.csproj", "{C4BD41BF-4E36-46C9-B56A-FB350797D65D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{5772DA56-F44D-4E9A-8B9F-3CB1E5F05288}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5772DA56-F44D-4E9A-8B9F-3CB1E5F05288}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5772DA56-F44D-4E9A-8B9F-3CB1E5F05288}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4BD41BF-4E36-46C9-B56A-FB350797D65D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4BD41BF-4E36-46C9-B56A-FB350797D65D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4BD41BF-4E36-46C9-B56A-FB350797D65D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4BD41BF-4E36-46C9-B56A-FB350797D65D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +96,7 @@ Global
 		{86B785DB-1F16-45CE-89E4-BD25A62F17A7} = {6E426DBA-9C12-4356-9AC7-1A54EE81C635}
 		{B21F7D75-F069-4E80-BC6D-B52BADF86C06} = {6E426DBA-9C12-4356-9AC7-1A54EE81C635}
 		{5772DA56-F44D-4E9A-8B9F-3CB1E5F05288} = {8DC0381F-432B-4073-AE6E-5EADA46A0606}
+		{C4BD41BF-4E36-46C9-B56A-FB350797D65D} = {6E426DBA-9C12-4356-9AC7-1A54EE81C635}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {249F607F-1AF1-497A-ADFA-357532BFCABD}

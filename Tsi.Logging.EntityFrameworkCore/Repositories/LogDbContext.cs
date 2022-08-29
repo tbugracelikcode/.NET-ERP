@@ -12,8 +12,6 @@ namespace Tsi.Logging.EntityFrameworkCore.Repositories
 {
     public class LogDbContext : AppDbContext<LogDbContext>
     {
-
-
         public LogDbContext()
         {
             base.BasePath = Directory.GetCurrentDirectory();

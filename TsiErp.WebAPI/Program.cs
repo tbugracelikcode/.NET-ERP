@@ -18,8 +18,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-builder.Services.AddDbContext<TsiErpDbContext>();
-builder.Services.AddDbContext<LogDbContext>();
+builder.Services.AddDbContext<TsiErpDbContext>(ServiceLifetime.Transient);
+builder.Services.AddDbContext<LogDbContext>(ServiceLifetime.Transient);
 
 
 
