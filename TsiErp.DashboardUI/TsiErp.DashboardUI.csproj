@@ -7,6 +7,7 @@
   </PropertyGroup>
   
   <ItemGroup>
+      <PackageReference Include="Syncfusion.Blazor.Diagram" Version="20.2.0.45" />
       <PackageReference Include="Syncfusion.Blazor.Grid" Version="20.2.0.45" />
     <PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="20.2.0.45" />
     <PackageReference Include="Syncfusion.Blazor.Charts" Version="20.2.0.45" />
