@@ -7,7 +7,6 @@ using TsiErp.DataAccess.EntityFrameworkCore;
 using Tsi.Core.Modularity.Extension;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using System.Reflection;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,8 +18,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-builder.Services.AddDbContext<TsiErpDbContext>();
-builder.Services.AddDbContext<LogDbContext>();
+builder.Services.AddDbContext<TsiErpDbContext>(ServiceLifetime.Transient);
+builder.Services.AddDbContext<LogDbContext>(ServiceLifetime.Transient);
+
 
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).ConfigureContainer<ContainerBuilder>(container =>
@@ -36,9 +36,6 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).Conf
 ConfigureBusiness(builder);
 ConfigureDataAccess(builder);
 ConfigureLogging(builder);
-
-
-
 
 var app = builder.Build();
 

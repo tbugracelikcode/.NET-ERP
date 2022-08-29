@@ -14,7 +14,6 @@ using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Business.MapperProfile;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using Tsi.Core.Modularity.Extension;
-using TsiErp.DataAccess.EntityFrameworkCore.UnitOfWork;
 
 namespace TsiErp.Business
 {
@@ -28,9 +27,6 @@ namespace TsiErp.Business
         {
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddSingleton<IUnitOfWork, UnitOfWork>();
-
-
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

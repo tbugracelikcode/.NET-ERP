@@ -11,10 +11,7 @@ using TsiErp.Entities.Entities.Branch;
 namespace TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch
 {
     [ServiceRegistration(typeof(IBranchesRepository), DependencyInjectionType.Scoped)]
-    public class EFCoreBranchesRepository : EfCoreRepository<Branches>, IBranchesRepository
+    public class EFCoreBranchesRepository : EfCoreRepository<TsiErpDbContext,Branches>, IBranchesRepository
     {
-        public EFCoreBranchesRepository(TsiErpDbContext context) : base(context)
-        {
-        }
     }
 }
