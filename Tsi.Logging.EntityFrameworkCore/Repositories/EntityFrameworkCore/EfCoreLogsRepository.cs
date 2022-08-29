@@ -10,7 +10,10 @@ using Tsi.Logging.EntityFrameworkCore.Entities;
 namespace Tsi.Logging.EntityFrameworkCore.Repositories.EntityFrameworkCore
 {
     [ServiceRegistration(typeof(ILogsRepository), DependencyInjectionType.Scoped)]
-    public class EfCoreLogsRepository : EfCoreRepository<LogDbContext, Logs>, ILogsRepository
+    public class EfCoreLogsRepository : EfCoreRepository<Logs>, ILogsRepository
     {
+        public EfCoreLogsRepository(LogDbContext context) : base(context)
+        {
+        }
     }
 }

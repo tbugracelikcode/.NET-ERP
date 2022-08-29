@@ -13,143 +13,59 @@ using Tsi.EntityFrameworkCore.Respositories.Extensions;
 
 namespace Tsi.EntityFrameworkCore.Respositories.EntityFrameworkCore
 {
-    public class EfCoreRepository<TDbContext, TEntity> : IEfCoreRepository<TEntity>
-        where TDbContext : DbContext, new()
-        where TEntity : class, IEntity, new()
+    public class EfCoreRepository<TEntity> : IEfCoreRepository<TEntity> where TEntity : class, IEntity
     {
 
-        private DbContext _dbContext;
+        private DbContext _context;
 
-        public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate)
+        private DbSet<TEntity> _dbset;
+
+        public EfCoreRepository(DbContext context)
         {
-            if (_dbContext == null)
-                _dbContext = GetDbContext();
-
-            var entity = await _dbContext.Set<TEntity>().SingleOrDefaultAsync(predicate);
-
-            return entity;
-        }
-
-        public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includeProperties)
-        {
-            if (_dbContext == null)
-                _dbContext = GetDbContext();
-
-            var queryable = await WithDetailsAsync(includeProperties);
-
-            TEntity entity;
-
-            if (predicate != null)
-            {
-                return await queryable.FirstOrDefaultAsync(predicate);
-            }
-
-            return await queryable.FirstOrDefaultAsync();
-
-        }
-
-        public async Task<IList<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> predicate = null)
-        {
-            if (_dbContext == null)
-                _dbContext = GetDbContext();
-
-            return predicate == null ? await _dbContext.Set<TEntity>().ToListAsync() : await _dbContext.Set<TEntity>().Where(predicate).ToListAsync();
-        }
-
-        public async Task<IList<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> predicate = null, params Expression<Func<TEntity, object>>[] includeProperties)
-        {
-            if (_dbContext == null)
-                _dbContext = GetDbContext();
-
-            var queryable = await WithDetailsAsync(includeProperties);
-
-            if (predicate != null)
-            {
-                queryable = queryable.Where(predicate);
-            }
-
-            return await queryable.ToListAsync();
-        }
-
-        public async Task<TEntity> InsertAsync(TEntity entity)
-        {
-            //if (_dbContext == null)
-                _dbContext = GetDbContext();
-
-            var addedEntity = _dbContext.Entry(entity);
-            addedEntity.State = EntityState.Added;
-            await _dbContext.SaveChangesAsync();
-            return addedEntity.Entity;
-
-        }
-
-        public async Task<TEntity> UpdateAsync(TEntity entity)
-        {
-            if (_dbContext == null)
-                _dbContext = GetDbContext();
-
-            _dbContext.ChangeTracker.Clear();
-
-            //var updatedEntity = _dbContext.Set<TEntity>().AsNoTracking().Single(t => t.Id == entity.Id);
-
-            var updatedEntity = _dbContext.Entry(entity);
-            updatedEntity.State = EntityState.Modified;
-            await _dbContext.SaveChangesAsync();
-            return updatedEntity.Entity;
+            _context = context;
+            _dbset = _context.Set<TEntity>();
         }
 
         public async Task DeleteAsync(Guid id)
         {
-            if (_dbContext == null)
-                _dbContext = GetDbContext();
-
-            var entity = _dbContext.Set<TEntity>().Single(t => t.Id == id);
-
-            if (entity != null)
-            {
-                var deletedEntity = _dbContext.Entry(entity);
-                deletedEntity.State = EntityState.Deleted;
-                await _dbContext.SaveChangesAsync();
-            }
+            _dbset.Remove(await GetAsync(t => t.Id == id));
         }
 
-        public async Task<IQueryable<TEntity>> WithDetailsAsync(params Expression<Func<TEntity, object>>[] propertySelectors)
+        public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return IncludeDetails(await GetQueryableAsync(), propertySelectors);
+            return await _dbset.FindAsync(predicate);
         }
 
-        public async Task<DbSet<TEntity>> GetDbSetAsync()
+        public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            if (_dbContext == null)
-                _dbContext = GetDbContext();
-
-            return _dbContext.Set<TEntity>();
-
+            return await _dbset.FindAsync(predicate);
         }
 
-
-        private DbContext GetDbContext()
+        public async Task<IList<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> predicate = null)
         {
-            return new TDbContext();
+            return predicate == null ? await _dbset.ToListAsync() : await _dbset.Where(predicate).ToListAsync();
         }
 
-
-        private async Task<IQueryable<TEntity>> GetQueryableAsync()
+        public async Task<IList<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> predicate = null, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            return (await GetDbSetAsync()).AsQueryable();
+            return predicate == null ? await _dbset.ToListAsync() : await _dbset.Where(predicate).ToListAsync();
         }
 
-        private static IQueryable<TEntity> IncludeDetails(IQueryable<TEntity> query, Expression<Func<TEntity, object>>[] propertySelectors)
+        public async Task<TEntity> InsertAsync(TEntity entity)
         {
-            if (propertySelectors != null)
-            {
-                foreach (var propertySelector in propertySelectors)
-                {
-                    query = query.Include(propertySelector);
-                }
-            }
+            await _dbset.AddAsync(entity);
+            return entity;
+        }
 
-            return query;
+        public async Task<TEntity> UpdateAsync(TEntity entity)
+        {
+            _dbset.Update(entity);
+            return entity;
+        }
+
+        public Task<IQueryable<TEntity>> WithDetailsAsync(params Expression<Func<TEntity, object>>[] propertySelectors)
+        {
+            throw new NotImplementedException();
         }
     }
 }

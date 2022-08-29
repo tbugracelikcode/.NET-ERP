@@ -14,26 +14,32 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using Tsi.Logging.Tsi.Services;
 using TsiErp.Business.Entities.Authentication.Menus;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.DataAccess.EntityFrameworkCore;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Authentication.RolePermissions;
+using TsiErp.DataAccess.EntityFrameworkCore.UnitOfWork;
 
 namespace TsiErp.Business.Entities.Authentication.RolePermissions
 {
     [ServiceRegistration(typeof(IRolePermissionsAppService), DependencyInjectionType.Singleton)]
     public class RolePermissionsAppService : ApplicationService, IRolePermissionsAppService
     {
-        private readonly IRolePermissionsRepository _repository;
+        //private readonly IRolePermissionsRepository _repository;
 
         private readonly ILogsAppService _logger;
 
-        public RolePermissionsAppService(IRolePermissionsRepository repository, ILogsAppService logger)
+        private readonly IUnitOfWork _uow;
+
+        public RolePermissionsAppService(ILogsAppService logger, IUnitOfWork uow)
         {
-            _repository = repository;
             _logger = logger;
+            _uow = uow;
+
         }
+
 
         public async Task<IDataResult<SelectRolePermissionsDto>> CreateAsync(CreateRolePermissionsDto input)
         {
-            object result = null;
+            var uow = _uow.GetRepository<TsiRolePermissions>();
 
             input.Menus.ForEach(t =>
             {
@@ -47,8 +53,11 @@ namespace TsiErp.Business.Entities.Authentication.RolePermissions
                 entity.LastModifierId = null;
                 entity.LastModificationTime = null;
                 entity.MenuId = t.Id;
-                result = _repository.InsertAsync(entity);
+                //_repository.InsertAsync(entity);
+                uow.InsertAsync(entity);
             });
+
+            _uow.SaveChanges();
 
             var completed = Task.CompletedTask;
 
@@ -62,7 +71,9 @@ namespace TsiErp.Business.Entities.Authentication.RolePermissions
 
         public async Task<IDataResult<SelectRolePermissionsDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id, t => t.TsiMenus);
+            var uow = _uow.GetRepository<TsiRolePermissions>();
+
+            var entity = await uow.GetAsync(t => t.Id == id, t => t.TsiMenus);
 
             var mappedEntity = ObjectMapper.Map<TsiRolePermissions, SelectRolePermissionsDto>(entity);
 
@@ -71,6 +82,8 @@ namespace TsiErp.Business.Entities.Authentication.RolePermissions
 
         public async Task<IDataResult<IList<ListRolePermissionsDto>>> GetListAsync()
         {
+            
+
             throw new NotImplementedException();
         }
 

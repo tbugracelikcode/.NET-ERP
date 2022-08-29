@@ -12,7 +12,5 @@ namespace Tsi.EntityFrameworkCore.Repositories.EntityFrameworkCore
     public interface IEfCoreRepository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
     {
         Task<IQueryable<TEntity>> WithDetailsAsync(params Expression<Func<TEntity, object>>[] propertySelectors);
-
-        Task<DbSet<TEntity>> GetDbSetAsync();
     }
 }

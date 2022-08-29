@@ -9,6 +9,7 @@ using Tsi.Logging.Tsi.Services;
 using TsiErp.Business.Entities.Branch.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
+using TsiErp.DataAccess.EntityFrameworkCore.UnitOfWork;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Branch.Dtos;
 
@@ -43,9 +44,11 @@ namespace TsiErp.Business.Entities.Branch.Services
             entity.LastModifierId = null;
             entity.LastModificationTime = null;
 
+            
+
             var addedEntity = await _repository.InsertAsync(entity);
 
-            //ObjectMapper.Map<Branches, SelectBranchesDto>(addedEntity);
+            
 
             return new SuccessDataResult<SelectBranchesDto>(ObjectMapper.Map<Branches, SelectBranchesDto>(addedEntity));
         }

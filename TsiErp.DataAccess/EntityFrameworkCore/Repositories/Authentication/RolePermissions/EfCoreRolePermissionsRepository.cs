@@ -13,7 +13,10 @@ using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Authentication.Menus;
 namespace TsiErp.DataAccess.EntityFrameworkCore.Repositories.Authentication.RolePermissions
 {
     [ServiceRegistration(typeof(IRolePermissionsRepository), DependencyInjectionType.Singleton)]
-    public class EfCoreRolePermissionsRepository : EfCoreRepository<TsiErpDbContext, TsiRolePermissions>, IRolePermissionsRepository
+    public class EfCoreRolePermissionsRepository : EfCoreRepository<TsiRolePermissions>, IRolePermissionsRepository
     {
+        public EfCoreRolePermissionsRepository(TsiErpDbContext context) : base(context)
+        {
+        }
     }
 }
