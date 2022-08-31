@@ -2,6 +2,7 @@
 @using Syncfusion.Blazor.Diagram
 @using Syncfusion.Blazor.Diagram.SymbolPalette
 @using System.Collections.ObjectModel
+@using Syncfusion.Blazor.Inputs
 
 <div style="width:240px;height:100%;float:left;">
     <div class="sb-mobile-palette-bar">
@@ -12,21 +13,51 @@
         </SfSymbolPaletteComponent>
     </div>
 </div>
+
 <div id="diagram-space" class="sb-mobile-diagram">
     <div class="content-wrapper" style="border: 1px solid #D7D7D7">
         <div style="width:calc(100% - 242px);height:100%;float:left;">
-            <SfDiagramComponent @ref="@Diagram" Connectors="@connectors" Created="OnCreated" SelectionChanged="@OnSelectionChanged" Height="687px" GetCustomTool="@GetCustomTool" Nodes="@nodes" SelectionSettings="@selectionSettings" NodeCreating="OnNodeCreating" ConnectorCreating="OnConnectorCreating">
+            <SfDiagramComponent @ref="@Diagram" Connectors="@connectors" Created="OnCreated" SelectionChanged="@OnSelectionChanged" Height="687px" GetCustomTool="@GetCustomTool" Nodes="@nodes" SelectionSettings="@selectionSettings" DragDrop="OnDrop" NodeCreating="OnNodeCreating" ConnectorCreating="OnConnectorCreating">
                 <SnapSettings>
                     <HorizontalGridLines LineColor="#e0e0e0 " LineIntervals="@GridLineIntervals">
                     </HorizontalGridLines>
                     <VerticalGridLines LineColor="#e0e0e0" LineIntervals="@GridLineIntervals">
                     </VerticalGridLines>
                 </SnapSettings>
-            </SfDiagramComponent>
+                <DiagramTemplates>
+                    <NodeTemplate>
+                        @{
+                                var node = (context as Node);
+                                switch (node.Annotations.ElementAt(0).Content)
+                                {
+                                    case "1":
+                                        <div>
+                                            <div class="e-card card">
+                                                <div class="e-card-content">
+                                                    <h3 class="card-value" id="tolbalance">$5,240</h3>
+                                                    <span class="card-text">Balance</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        break;
+                                    case "2":
+
+                                        break;
+                                    case "3":
+
+                                        break;
+                                    default:
+
+                                        break;
+                                }
+                            }
+                        </NodeTemplate>
+                    </DiagramTemplates>
+                </SfDiagramComponent>
+            </div>
         </div>
     </div>
-</div>
-@code {
+    @code {
     private int connectorCount = 0;
     DiagramSelectionSettings selectionSettings = new DiagramSelectionSettings();
     public DiagramSize SymbolPreview;
@@ -46,6 +77,125 @@
     public double[] GridLineIntervals { get; set; }
     // Defines palette's connector collection
     private DiagramObjectCollection<NodeBase> connectorSymbols = new DiagramObjectCollection<NodeBase>();
+
+    public void OnDrop(DropEventArgs args)
+    {
+        args.Cancel = true;
+        var NewNode = args.Element as Node;
+        var annot = NewNode.Annotations.ElementAt(0).Content;
+
+        switch (annot)
+        {
+            case "1":
+                nodes.Add(new Node()
+                    {
+                        OffsetX = NewNode.OffsetX,
+                        OffsetY = NewNode.OffsetY,
+                        Width = 200,
+                        Height = 200,
+                        Annotations = NewNode.Annotations,
+                        Shape = new Shape()
+                        {
+                            Type = NodeShapes.HTML,
+                        }
+                    });
+                break;
+                case "2":
+                nodes.Add(new Node()
+                    {
+                        OffsetX = NewNode.OffsetX,
+                        OffsetY = NewNode.OffsetY,
+                        Width = 200,
+                        Height = 200,
+                        Annotations = NewNode.Annotations,
+                        Shape = new Shape()
+                        {
+                            Type = NodeShapes.HTML,
+                        }
+
+                    });
+                break;
+                case "3":
+                nodes.Add(new Node()
+                    {
+                        OffsetX = NewNode.OffsetX,
+                        OffsetY = NewNode.OffsetY,
+                        Width = 200,
+                        Height = 200,
+                        Annotations = NewNode.Annotations,
+                        Shape = new Shape()
+                        {
+                            Type = NodeShapes.HTML,
+                        }
+
+                    });
+                break;
+                case "4":
+                nodes.Add(new Node()
+                    {
+                        OffsetX = NewNode.OffsetX,
+                        OffsetY = NewNode.OffsetY,
+                        Width = 200,
+                        Height = 200,
+                        Annotations = NewNode.Annotations,
+                        Shape = new Shape()
+                        {
+                            Type = NodeShapes.HTML,
+                        }
+
+                    });
+                break;
+                case "5":
+                nodes.Add(new Node()
+                    {
+                        OffsetX = NewNode.OffsetX,
+                        OffsetY = NewNode.OffsetY,
+                        Width = 200,
+                        Height = 200,
+                        Annotations = NewNode.Annotations,
+                        Shape = new Shape()
+                        {
+                            Type = NodeShapes.HTML,
+                        }
+
+                    });
+                break;
+                case "6":
+                nodes.Add(new Node()
+                    {
+                        OffsetX = NewNode.OffsetX,
+                        OffsetY = NewNode.OffsetY,
+                        Width = 200,
+                        Height = 200,
+                        Annotations = NewNode.Annotations,
+                        Shape = new Shape()
+                        {
+                            Type = NodeShapes.HTML,
+                        }
+
+                    });
+                break;
+                case "7":
+                nodes.Add(new Node()
+                    {
+                        OffsetX = NewNode.OffsetX,
+                        OffsetY = NewNode.OffsetY,
+                        Width = 200,
+                        Height = 200,
+                        Annotations = NewNode.Annotations,
+                        Shape = new Shape()
+                        {
+                            Type = NodeShapes.HTML,
+                        }
+
+                    });
+                break;
+            default:
+                break;
+        }
+
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
@@ -148,35 +298,6 @@
         GridLineIntervals = new double[] { 1, 9, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75 };
         InitPaletteModel();
     }
-    //public void OnDrop(DropEventArgs args)
-    //{
-    //    args.Cancel = true;
-    //    var NewNode = args.Element;
-    //    nodes.Add(new Node()
-    //        {
-    //            OffsetX = NewNode.OffsetX,
-    //            OffsetY = NewNode.OffsetY,
-    //            Width = NewNode.Width,
-    //            Height = NewNode.Height,
-    //            Annotations = new DiagramObjectCollection<ShapeAnnotation>
-    //        {
-    //            new ShapeAnnotation
-    //            {
-    //                Content = NewNode.,
-    //                Style = new TextStyle()
-    //                {
-    //                    Color="White", Fill = "transparent"
-    //                }
-    //            }
-    //        },
-    //            Shape = new Shape()
-    //            {
-    //                Type = NodeShapes.HTML,
-    //            }
-
-    //        });
-
-    //}
 
     // Create Nodes and Connectors for the Palette.
     private void InitPaletteModel()
