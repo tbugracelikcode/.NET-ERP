@@ -1,4 +1,4 @@
-﻿@page "/vsm2"
+﻿@page "/vsm"
 @using Syncfusion.Blazor.Diagram
 @using Syncfusion.Blazor.Diagram.SymbolPalette
 @using System.Collections.ObjectModel
@@ -9,20 +9,14 @@
         <div id="palette-icon" style="float: right;" role="button" class="e-ddb-icons1 e-toggle-palette"></div>
     </div>
     <div id="palette-space" class="sb-mobile-palette">
-        <SfSymbolPaletteComponent @ref="@PaletteInstance"  Height="700px" Palettes="@palettes" SymbolHeight="60" SymbolWidth="60" SymbolMargin="@SymbolMargin">
+        <SfSymbolPaletteComponent @ref="@PaletteInstance" Height="700px" Palettes="@palettes" SymbolHeight="60" SymbolWidth="60" SymbolMargin="@SymbolMargin">
         </SfSymbolPaletteComponent>
     </div>
 </div>
 <div id="diagram-space" class="sb-mobile-diagram">
     <div class="content-wrapper" style="border: 1px solid #D7D7D7">
         <div style="width:calc(100% - 242px);height:100%;float:left;">
-            <SfDiagramComponent @ref="@Diagram" Connectors="@connectors" Created="OnCreated" SelectionChanged="@OnSelectionChanged" Height="687px" Nodes="@nodes" DragDrop="OnDrop" NodeCreating="OnNodeCreating" ConnectorCreating="OnConnectorCreating" SelectionSettings="@selectionSettings" GetCustomTool="@GetCustomTool">
-                <SnapSettings>
-                    <HorizontalGridLines LineColor="#e0e0e0 " LineIntervals="@GridLineIntervals">
-                    </HorizontalGridLines>
-                    <VerticalGridLines LineColor="#e0e0e0" LineIntervals="@GridLineIntervals">
-                    </VerticalGridLines>
-                </SnapSettings>
+            <SfDiagramComponent Height="600px" @ref="Diagram" Nodes="@nodes" DragDrop="@OnDrop" SelectionSettings="@selectionSettings">
                 <DiagramTemplates>
                     <NodeTemplate>
                         @{
@@ -80,33 +74,24 @@
                                         break;
                                 }
                             }
-                        </NodeTemplate>
-                    </DiagramTemplates>
-                </SfDiagramComponent>
-            </div>
+                    </NodeTemplate>
+                </DiagramTemplates>
+            </SfDiagramComponent>
         </div>
     </div>
+</div>
 
-    @code {
-    private int connectorCount = 0;
-    DiagramSelectionSettings selectionSettings = new DiagramSelectionSettings();
-    public DiagramSize SymbolPreview;
-    public SymbolMargin SymbolMargin = new SymbolMargin { Left = 15, Right = 15, Top = 15, Bottom = 15 };
+@code {
+    private DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
     public SfDiagramComponent Diagram;
     public SfSymbolPaletteComponent PaletteInstance;
-    DiagramObjectCollection<UserHandle> handles = new DiagramObjectCollection<UserHandle>();
-    //Defines Diagram's nodes collection
-    private DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
-    //Defines Diagram's connectors collection
-    private DiagramObjectCollection<Connector> connectors = new DiagramObjectCollection<Connector>();
-    //Define palettes collection
     private DiagramObjectCollection<Palette> palettes = new DiagramObjectCollection<Palette>();
-    // Defines palette's flow-shape collection
+    public SymbolMargin SymbolMargin = new SymbolMargin { Left = 15, Right = 15, Top = 15, Bottom = 15 };
+    public DiagramSize SymbolPreview;
     private DiagramObjectCollection<NodeBase> ShapeSymbols = new DiagramObjectCollection<NodeBase>();
-    // Defines interval values for GridLines
-    public double[] GridLineIntervals { get; set; }
-    // Defines palette's connector collection
     private DiagramObjectCollection<NodeBase> connectorSymbols = new DiagramObjectCollection<NodeBase>();
+    DiagramObjectCollection<UserHandle> handles = new DiagramObjectCollection<UserHandle>();
+    DiagramSelectionSettings selectionSettings = new DiagramSelectionSettings();
 
     public void OnDrop(DropEventArgs args)
     {
@@ -238,95 +223,38 @@
         };
     }
 
-    private void OnSelectionChanged(SelectionChangedEventArgs args)
+    private void UpdateHandle()
     {
-        if (args.NewValue.Count > 0 && args.NewValue[0] is Node)
-        {
-            Diagram.SelectionSettings.Constraints = Diagram.SelectionSettings.Constraints | SelectorConstraints.UserHandle;
-        }
-        else if (args.NewValue.Count > 0)
-        {
-            Diagram.SelectionSettings.Constraints = Diagram.SelectionSettings.Constraints & ~SelectorConstraints.UserHandle;
-        }
+        //UserHandle deleteHandle = AddHandle("Delete", "delete", Direction.Bottom, 0.5);
+        //UserHandle drawHandle = AddHandle("Draw", "draw", Direction.Right, 0.5);
+        //handles.Add(deleteHandle);
+        //handles.Add(drawHandle);
+        selectionSettings.UserHandles = handles;
     }
 
-    private void OnCreated()
+    private UserHandle AddHandle(string name, string path, Direction direction, double offset)
     {
-        if (Diagram.Nodes.Count > 0)
-            Diagram.Select(new ObservableCollection<IDiagramObject>() { Diagram.Nodes[0] });
-    }
-    // Method to customize the tool
-    public InteractionControllerBase GetCustomTool(DiagramElementAction action, string id)
-    {
-        InteractionControllerBase tool = null;
-        if (id == "Draw")
+        UserHandle handle = new UserHandle()
+            {
+                Name = name,
+                Visible = true,
+                Offset = offset,
+                Side = direction,
+                Margin = new DiagramThickness() { Top = 0, Bottom = 0, Left = 0, Right = 0 }
+            };
+        if (path == "delete")
         {
-            tool = new DrawTool(Diagram);
+            handle.PathData = "M0.54700077,2.2130003 L7.2129992,2.2130003 7.2129992,8.8800011 C7.2129992,9.1920013 7.1049975,9.4570007 6.8879985,9.6739998 6.6709994,9.8910007 6.406,10 6.0939997,10 L1.6659999,10 C1.3539997,10 1.0890004,9.8910007 0.87200136,9.6739998 0.65500242,9.4570007 0.54700071,9.1920013 0.54700077,8.8800011 z M2.4999992,0 L5.2600006,0 5.8329986,0.54600048 7.7599996,0.54600048 7.7599996,1.6660004 0,1.6660004 0,0.54600048 1.9270014,0.54600048 z";
         }
         else
         {
-            tool = new AddDeleteTool(Diagram);
+            handle.PathData = "M3.9730001,0 L8.9730001,5.0000007 3.9730001,10.000001 3.9730001,7.0090005 0,7.0090005 0,2.9910006 3.9730001,2.9910006 z";
         }
-        return tool;
+        return handle;
     }
-    // Custom tool to delete the node.
-    public class AddDeleteTool : DragController
-    {
-        SfDiagramComponent sfDiagram;
-        Node deleteObject = null;
-        public AddDeleteTool(SfDiagramComponent Diagram) : base(Diagram)
-        {
-            sfDiagram = Diagram;
-        }
-        public override void OnMouseDown(DiagramMouseEventArgs args)
-        {
-            if (sfDiagram.SelectionSettings.Nodes.Count > 0 && ((sfDiagram.SelectionSettings.Nodes[0]) is Node))
-            {
-                deleteObject = (sfDiagram.SelectionSettings.Nodes[0]) as Node;
-            }
-        }
-        public override void OnMouseUp(DiagramMouseEventArgs args)
-        {
-            if (deleteObject != null)
-            {
-                sfDiagram.BeginUpdate();
-                sfDiagram.Nodes.Remove(deleteObject);
-                _ = sfDiagram.EndUpdate();
-            }
-            base.OnMouseUp(args);
-            this.InAction = true;
-        }
-    }
-    public class DrawTool : ConnectorDrawingController
-    {
-        SfDiagramComponent sfDiagram;
-        Connector newConnector = null;
-        public DrawTool(SfDiagramComponent Diagram) : base(Diagram, DiagramElementAction.ConnectorSourceEnd)
-        {
-            sfDiagram = Diagram;
-            newConnector = new Connector()
-                {
-                    ID = "OrthogonalConnector",
-                    SourceID = sfDiagram.SelectionSettings.Nodes[0].ID,
-                    Type = ConnectorSegmentType.Orthogonal,
-                };
-#pragma warning disable BL0005
-            Diagram.InteractionController = DiagramInteractions.DrawOnce;
-            Diagram.DrawingObject = newConnector;
-#pragma warning restore BL0005
-        }
-        public override void OnMouseDown(DiagramMouseEventArgs args)
-        {
-            base.OnMouseDown(args);
-        }
-        public override void OnMouseUp(DiagramMouseEventArgs args)
-        {
-            base.OnMouseUp(args);
-        }
-    }
+
     protected override void OnInitialized()
     {
-        GridLineIntervals = new double[] { 1, 9, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75 };
         InitPaletteModel();
     }
 
@@ -371,27 +299,6 @@
             #pragma warning restore BL0005
         };
     }
-
-    private void OnNodeCreating(IDiagramObject obj)
-    {
-        Node node = obj as Node;
-        node.Style.Fill = "#357BD2";
-        if (!(node.ID.StartsWith("Annotation") || node.ID.StartsWith("Sequential Data")))
-            node.Style.StrokeColor = "White";
-        node.Style.Opacity = 1;
-    }
-
-    private void OnConnectorCreating(IDiagramObject obj)
-    {
-        Connector node = obj as Connector;
-        node.Style.Fill = "black";
-        node.Style.StrokeColor = "black";
-        node.Style.Opacity = 1;
-        node.TargetDecorator.Style.Fill = "black";
-        node.TargetDecorator.Style.StrokeColor = "black";
-    }
-
-    // Method is used to create a node for the palette.
     private void CreatePaletteNode(string imgSrc, string id, string tip)
     {
         ShapeAnnotation shapeAnnotation = new ShapeAnnotation() { Content = tip };
@@ -411,75 +318,6 @@
         ShapeSymbols.Add(diagramNode);
     }
 
-    // used to create a Port.
-    private DiagramObjectCollection<PointPort> CreatePort()
-    {
-        DiagramObjectCollection<PointPort> defaultsPorts = new DiagramObjectCollection<PointPort>();
-        PointPort port1 = new PointPort()
-            {
-                ID = "port1",
-                Shape = PortShapes.Circle,
-                Offset = new DiagramPoint() { X = 0, Y = 0.5 }
-            };
-        PointPort port2 = new PointPort()
-            {
-                ID = "port2",
-                Shape = PortShapes.Circle,
-                Offset = new DiagramPoint() { X = 0.5, Y = 0 }
-            };
-        PointPort port3 = new PointPort()
-            {
-                ID = "port3",
-                Shape = PortShapes.Circle,
-                Offset = new DiagramPoint() { X = 1, Y = 0.5 }
-            };
-        PointPort port4 = new PointPort()
-            {
-                ID = "port4",
-                Shape = PortShapes.Circle,
-                Offset = new DiagramPoint() { X = 0.5, Y = 1 }
-            };
-        defaultsPorts.Add(port1);
-        defaultsPorts.Add(port2);
-        defaultsPorts.Add(port3);
-        defaultsPorts.Add(port4);
-        return defaultsPorts;
-    }
-
-    // Method is used to create a Connector for the diagram.
-    private void CreateConnector(string sourceId, string targetId, string label = default(string), bool isDashLine = false, string sport = "", string tport = "")
-    {
-        Connector diagramConnector = new Connector()
-            {
-                ID = string.Format("connector{0}", ++connectorCount),
-                SourceID = sourceId,
-                TargetID = targetId,
-                SourcePortID = sport,
-                TargetPortID = tport
-            };
-        if (isDashLine)
-        {
-            diagramConnector.Style = new ShapeStyle() { StrokeDashArray = "2,2" };
-        }
-        if (label != default(string))
-        {
-            var annotation = new PathAnnotation()
-                {
-                    Content = label,
-                    Style = new TextStyle() { Fill = "white" }
-                };
-            if ((sourceId == "node5" && targetId == "node6") || label == "Yes" || label == "No")
-            {
-                annotation.Height = 10;
-                annotation.Width = 15;
-            }
-            diagramConnector.Annotations = new DiagramObjectCollection<PathAnnotation>() { annotation };
-        }
-        diagramConnector.Type = ConnectorSegmentType.Orthogonal;
-        connectors.Add(diagramConnector);
-    }
-
-    // Method is used to create a Connector for the palette.
     private void CreatePaletteConnector(string id, ConnectorSegmentType type, DecoratorShape decoratorShape)
     {
         Connector diagramConnector = new Connector()
@@ -496,35 +334,5 @@
                 }
             };
         connectorSymbols.Add(diagramConnector);
-    }
-
-    private void UpdateHandle()
-    {
-        UserHandle deleteHandle = AddHandle("Delete", "delete", Direction.Bottom, 0.5);
-        UserHandle drawHandle = AddHandle("Draw", "draw", Direction.Right, 0.5);
-        handles.Add(deleteHandle);
-        handles.Add(drawHandle);
-        selectionSettings.UserHandles = handles;
-    }
-
-    private UserHandle AddHandle(string name, string path, Direction direction, double offset)
-    {
-        UserHandle handle = new UserHandle()
-            {
-                Name = name,
-                Visible = true,
-                Offset = offset,
-                Side = direction,
-                Margin = new DiagramThickness() { Top = 0, Bottom = 0, Left = 0, Right = 0 }
-            };
-        if (path == "delete")
-        {
-            handle.PathData = "M0.54700077,2.2130003 L7.2129992,2.2130003 7.2129992,8.8800011 C7.2129992,9.1920013 7.1049975,9.4570007 6.8879985,9.6739998 6.6709994,9.8910007 6.406,10 6.0939997,10 L1.6659999,10 C1.3539997,10 1.0890004,9.8910007 0.87200136,9.6739998 0.65500242,9.4570007 0.54700071,9.1920013 0.54700077,8.8800011 z M2.4999992,0 L5.2600006,0 5.8329986,0.54600048 7.7599996,0.54600048 7.7599996,1.6660004 0,1.6660004 0,0.54600048 1.9270014,0.54600048 z";
-        }
-        else
-        {
-            handle.PathData = "M3.9730001,0 L8.9730001,5.0000007 3.9730001,10.000001 3.9730001,7.0090005 0,7.0090005 0,2.9910006 3.9730001,2.9910006 z";
-        }
-        return handle;
     }
 }
