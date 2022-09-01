@@ -13,11 +13,10 @@
         </SfSymbolPaletteComponent>
     </div>
 </div>
-
 <div id="diagram-space" class="sb-mobile-diagram">
     <div class="content-wrapper" style="border: 1px solid #D7D7D7">
         <div style="width:calc(100% - 242px);height:100%;float:left;">
-            <SfDiagramComponent @ref="@Diagram" Connectors="@connectors" Created="OnCreated" SelectionChanged="@OnSelectionChanged" Height="687px" GetCustomTool="@GetCustomTool" Nodes="@nodes" SelectionSettings="@selectionSettings" DragDrop="OnDrop" NodeCreating="OnNodeCreating" ConnectorCreating="OnConnectorCreating">
+            <SfDiagramComponent @ref="@Diagram" Connectors="@connectors" Created="OnCreated" SelectionChanged="@OnSelectionChanged" Height="687px"  Nodes="@nodes" DragDrop="OnDrop" NodeCreating="OnNodeCreating" ConnectorCreating="OnConnectorCreating"  SelectionSettings="@selectionSettings"GetCustomTool="@GetCustomTool">
                 <SnapSettings>
                     <HorizontalGridLines LineColor="#e0e0e0 " LineIntervals="@GridLineIntervals">
                     </HorizontalGridLines>
@@ -28,17 +27,47 @@
                     <NodeTemplate>
                         @{
                                 var node = (context as Node);
+                                string id = node.ID;
                                 switch (node.Annotations.ElementAt(0).Content)
                                 {
                                     case "1":
-                                        <div>
-                                            <div class="e-card card">
-                                                <div class="e-card-content">
-                                                    <h3 class="card-value" id="tolbalance">$5,240</h3>
-                                                    <span class="card-text">Balance</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <style>
+                                            th {
+                                                border: 5px solid #c1dad7
+                                            }
+
+                                            td {
+                                                border: 5px solid #c1dad7
+                                            }
+
+                                            .c1 {
+                                                background: #4b8c74
+                                            }
+
+                                            .c2 {
+                                                background: #74c476
+                                            }
+
+                                            .c3 {
+                                                background: #a4e56d
+                                            }
+
+                                            .c4 {
+                                                background: #cffc83
+                                            }
+                                        </style>
+
+                                        <table style="width:100%;">
+                                            <tbody>
+                                                <tr> <th class="c1">ID</th> <th class="c2">offsetX</th> <th class="c3">offsetY</th></tr>
+                                                <tr>
+                                                    <td class="c1">@id</td>
+                                                    <td class="c2"><SfTextBox Enabled=true Readonly=false></SfTextBox></td>
+                                                    <td class="c3"><input type="text" placeholder="Veriii"/></td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
                                         break;
                                     case "2":
 
@@ -72,7 +101,7 @@
     //Define palettes collection
     private DiagramObjectCollection<Palette> palettes = new DiagramObjectCollection<Palette>();
     // Defines palette's flow-shape collection
-    private DiagramObjectCollection<NodeBase> flowShapeSymbols = new DiagramObjectCollection<NodeBase>();
+    private DiagramObjectCollection<NodeBase> ShapeSymbols = new DiagramObjectCollection<NodeBase>();
     // Defines interval values for GridLines
     public double[] GridLineIntervals { get; set; }
     // Defines palette's connector collection
@@ -100,7 +129,7 @@
                         }
                     });
                 break;
-                case "2":
+            case "2":
                 nodes.Add(new Node()
                     {
                         OffsetX = NewNode.OffsetX,
@@ -115,7 +144,7 @@
 
                     });
                 break;
-                case "3":
+            case "3":
                 nodes.Add(new Node()
                     {
                         OffsetX = NewNode.OffsetX,
@@ -130,7 +159,7 @@
 
                     });
                 break;
-                case "4":
+            case "4":
                 nodes.Add(new Node()
                     {
                         OffsetX = NewNode.OffsetX,
@@ -145,7 +174,7 @@
 
                     });
                 break;
-                case "5":
+            case "5":
                 nodes.Add(new Node()
                     {
                         OffsetX = NewNode.OffsetX,
@@ -160,7 +189,7 @@
 
                     });
                 break;
-                case "6":
+            case "6":
                 nodes.Add(new Node()
                     {
                         OffsetX = NewNode.OffsetX,
@@ -175,7 +204,7 @@
 
                     });
                 break;
-                case "7":
+            case "7":
                 nodes.Add(new Node()
                     {
                         OffsetX = NewNode.OffsetX,
@@ -193,7 +222,6 @@
             default:
                 break;
         }
-
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -208,6 +236,7 @@
             Diagram
         };
     }
+
     private void OnSelectionChanged(SelectionChangedEventArgs args)
     {
         if (args.NewValue.Count > 0 && args.NewValue[0] is Node)
@@ -219,6 +248,7 @@
             Diagram.SelectionSettings.Constraints = Diagram.SelectionSettings.Constraints & ~SelectorConstraints.UserHandle;
         }
     }
+
     private void OnCreated()
     {
         if (Diagram.Nodes.Count > 0)
@@ -300,7 +330,7 @@
     }
 
     // Create Nodes and Connectors for the Palette.
-    private void InitPaletteModel()
+    private void InitPaletteModel()    
     {
         palettes = new DiagramObjectCollection<Palette>();
         SymbolPreview = new DiagramSize
@@ -308,7 +338,7 @@
                 Width = 100,
                 Height = 100
             };
-        flowShapeSymbols = new DiagramObjectCollection<NodeBase>();
+        ShapeSymbols = new DiagramObjectCollection<NodeBase>();
         CreatePaletteNode("images/VSM_Image.png", "1", "1");
         CreatePaletteNode("images/VSM_Image2.png", "2", "2");
         CreatePaletteNode("images/VSM_Image3.png", "3", "3");
@@ -335,11 +365,12 @@
         palettes = new DiagramObjectCollection<Palette>()
         {
             #pragma warning disable BL0005
-            new Palette() {Symbols = flowShapeSymbols, Title = "VSM Shapes", ID = "VSM Shapes", IconCss = "e-ddb-icons e-flow"},
+            new Palette() {Symbols = ShapeSymbols, Title = "VSM Shapes", ID = "VSM Shapes", IconCss = "e-ddb-icons e-flow"},
             new Palette() {Symbols = connectorSymbols, Title = "Connectors", IsExpanded = true, IconCss = "e-ddb-icons e-connector"},
             #pragma warning restore BL0005
         };
     }
+
     private void OnNodeCreating(IDiagramObject obj)
     {
         Node node = obj as Node;
@@ -348,6 +379,7 @@
             node.Style.StrokeColor = "White";
         node.Style.Opacity = 1;
     }
+
     private void OnConnectorCreating(IDiagramObject obj)
     {
         Connector node = obj as Connector;
@@ -357,6 +389,7 @@
         node.TargetDecorator.Style.Fill = "black";
         node.TargetDecorator.Style.StrokeColor = "black";
     }
+
     // Method is used to create a node for the palette.
     private void CreatePaletteNode(string imgSrc, string id, string tip)
     {
@@ -374,8 +407,9 @@
         double ratio = 100 / oldWidth;
         diagramNode.Width = 100;
         diagramNode.Height *= ratio;
-        flowShapeSymbols.Add(diagramNode);
+        ShapeSymbols.Add(diagramNode);
     }
+
     // used to create a Port.
     private DiagramObjectCollection<PointPort> CreatePort()
     {
@@ -410,6 +444,7 @@
         defaultsPorts.Add(port4);
         return defaultsPorts;
     }
+
     // Method is used to create a Connector for the diagram.
     private void CreateConnector(string sourceId, string targetId, string label = default(string), bool isDashLine = false, string sport = "", string tport = "")
     {
@@ -442,33 +477,7 @@
         diagramConnector.Type = ConnectorSegmentType.Orthogonal;
         connectors.Add(diagramConnector);
     }
-    // Method is used to create a node for the diagram.
-    private void CreateNode(string id, double x, double y, string imgSrc, string label)
-    {
-        Node diagramNode = new Node()
-            {
-                ID = id,
-                OffsetX = x,
-                OffsetY = y,
-                Width = 145,
-                Ports = CreatePort(),
-                Height = 60,
-                Style = new ShapeStyle { Fill = "#357BD2", StrokeColor = "White" },
-                Shape = new ImageShape() { Type = NodeShapes.Image, Source = imgSrc },
-                Annotations = new DiagramObjectCollection<ShapeAnnotation>
-            {
-                new ShapeAnnotation
-                {
-                    Content = label,
-                    Style = new TextStyle()
-                    {
-                        Color="White", Fill = "transparent"
-                    }
-                }
-            }
-            };
-        nodes.Add(diagramNode);
-    }
+
     // Method is used to create a Connector for the palette.
     private void CreatePaletteConnector(string id, ConnectorSegmentType type, DecoratorShape decoratorShape)
     {
@@ -487,6 +496,7 @@
             };
         connectorSymbols.Add(diagramConnector);
     }
+
     private void UpdateHandle()
     {
         UserHandle deleteHandle = AddHandle("Delete", "delete", Direction.Bottom, 0.5);
@@ -495,6 +505,7 @@
         handles.Add(drawHandle);
         selectionSettings.UserHandles = handles;
     }
+
     private UserHandle AddHandle(string name, string path, Direction direction, double offset)
     {
         UserHandle handle = new UserHandle()
