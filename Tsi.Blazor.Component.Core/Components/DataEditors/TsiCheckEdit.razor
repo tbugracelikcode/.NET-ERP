@@ -7,6 +7,8 @@
                   RowSpan="RowSpan"
                   Visible="Visible">
     <Template>
+
+
         <SfCheckBox @ref="_CheckBox"
                     @bind-Checked="@Value"
                     CssClass="@EditorCssClass"
@@ -18,6 +20,11 @@
                 @(_value ? TrueCaption : FalseCaption)
             </ChildContent>
         </SfCheckBox>
+
+
+
+
+
     </Template>
 </DxGridLayoutItem>
 
@@ -40,7 +47,6 @@
 
     private SfCheckBox<bool> _CheckBox;
     private bool _value;
-
 
     [Parameter] public string TrueCaption { get; set; }
     [Parameter] public string FalseCaption { get; set; }
