@@ -51,6 +51,8 @@ namespace Tsi.Blazor.Component.Core.Components.DataEditors
         [Parameter] public bool Autofill { get; set; } = true;
         [Parameter] public bool AllowFiltering { get; set; } = true;
 
-
+        [Parameter] public string Format { get; set; }
+        [Parameter] public bool ShowSpinButton { get; set; }
+        [Parameter] public bool StrictMode { get; set; }
     }
 }
