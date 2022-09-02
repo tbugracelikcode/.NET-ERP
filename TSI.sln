@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TsiErp.ErpUI", "TsiErp.ErpU
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ui-core", "ui-core", "{AED827AF-E34A-4BCB-9A24-70E6FF1F21AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tsi.Blazor.Component.Core", "Tsi.Blazor.Component.Core\Tsi.Blazor.Component.Core.csproj", "{F24A0CD3-46CC-4C22-8B9B-0FA268F53F6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tsi.Blazor.Component.Core", "Tsi.Blazor.Component.Core\Tsi.Blazor.Component.Core.csproj", "{F24A0CD3-46CC-4C22-8B9B-0FA268F53F6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -46,5 +46,11 @@ namespace Tsi.Blazor.Component.Core.Components.DataEditors
 
 
         [Parameter] public LabelPosition LabelPosition { get; set; } = LabelPosition.Before;
+
+
+        [Parameter] public bool Autofill { get; set; } = true;
+        [Parameter] public bool AllowFiltering { get; set; } = true;
+
+
     }
 }
