@@ -16,7 +16,7 @@ using TsiErp.Entities.Entities.Period.Dtos;
 namespace TsiErp.Business.Entities.Period.Services
 {
     [ServiceRegistration(typeof(IPeriodsAppService), DependencyInjectionType.Scoped)]
-    public class PeriodsAppService : ApplicationService,IPeriodsAppService
+    public class PeriodsAppService :  IPeriodsAppService
     {
         private readonly IPeriodsRepository _repository;
 
@@ -29,15 +29,6 @@ namespace TsiErp.Business.Entities.Period.Services
         public async Task<IDataResult<SelectPeriodsDto>> CreateAsync(CreatePeriodsDto input)
         {
             var entity = ObjectMapper.Map<CreatePeriodsDto, Periods>(input);
-
-            entity.Id = GuidGenerator.CreateGuid();
-            entity.CreatorId = Guid.NewGuid();
-            entity.CreationTime = DateTime.Now;
-            entity.IsDeleted = false;
-            entity.DeleterId = null;
-            entity.DeletionTime = null;
-            entity.LastModifierId = null;
-            entity.LastModificationTime = null;
 
             var addedEntity = await _repository.InsertAsync(entity);
 
@@ -52,7 +43,7 @@ namespace TsiErp.Business.Entities.Period.Services
 
         public async Task<IDataResult<SelectPeriodsDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id,t=>t.Branches);
+            var entity = await _repository.GetAsync(t => t.Id == id,  t => t.Branches);
             var mappedEntity = ObjectMapper.Map<Periods, SelectPeriodsDto>(entity);
             return new SuccessDataResult<SelectPeriodsDto>(mappedEntity);
         }
@@ -72,15 +63,6 @@ namespace TsiErp.Business.Entities.Period.Services
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
 
             var mappedEntity = ObjectMapper.Map<UpdatePeriodsDto, Periods>(input);
-
-            mappedEntity.Id = input.Id;
-            mappedEntity.LastModifierId = Guid.NewGuid();
-            mappedEntity.LastModificationTime = DateTime.Now;
-            mappedEntity.CreatorId = entity.CreatorId;
-            mappedEntity.CreationTime = entity.CreationTime;
-            mappedEntity.IsDeleted = false;
-            mappedEntity.DeleterId = null;
-            mappedEntity.DeletionTime = null;
 
             await _repository.UpdateAsync(mappedEntity);
             return new SuccessDataResult<SelectPeriodsDto>(ObjectMapper.Map<Periods, SelectPeriodsDto>(mappedEntity));

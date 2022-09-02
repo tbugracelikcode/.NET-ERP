@@ -12,6 +12,7 @@ using Tsi.Authentication.Entities.UserRoles;
 using Tsi.Authentication.Entities.Users;
 using Tsi.EntityFrameworkCore.Modeling;
 using TsiErp.Entities.Entities.Branch;
+using TsiErp.Entities.Entities.Logging;
 using TsiErp.Entities.Entities.Period;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
@@ -128,5 +129,24 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
             });
         }
+
+        public static void ConfigureLogs(this ModelBuilder builder)
+        {
+            builder.Entity<Logs>(b =>
+            {
+                b.ToTable("Logs");
+
+
+                b.Property(t => t.Id).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.Date_).IsRequired().HasColumnType(SqlDbType.DateTime.ToString()).HasMaxLength(200);
+                b.Property(t => t.MethodName_).IsRequired().HasColumnType("nvarchar(MAX)");
+                b.Property(t => t.BeforeValues).IsRequired().HasColumnType("sql_variant").HasMaxLength(5000);
+                b.Property(t => t.AfterValues).IsRequired().HasColumnType("sql_variant").HasMaxLength(5000);
+                b.Property(t => t.LogLevel_).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.UserId).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            });
+        }
+
     }
 }

@@ -9,6 +9,8 @@ namespace Tsi.Core.Extensions
 {
     public static class ServiceCollectionExtensions
     {
+        public static IServiceProvider ServiceProvider { get; private set; }
+
         public static IServiceCollection AddDependencyResolvers(this IServiceCollection services,
             TsiModule[] modules)
         {

@@ -9,7 +9,10 @@ using TsiErp.Entities.Entities.Period;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Repositories.Period
 {
-    public class EFCorePeriodsRepository : EfCoreRepository<TsiErpDbContext,Periods>, IPeriodsRepository
+    public class EFCorePeriodsRepository : EfCoreRepository<Periods>, IPeriodsRepository
     {
+        public EFCorePeriodsRepository(TsiErpDbContext dbContext) : base(dbContext)
+        {
+        }
     }
 }

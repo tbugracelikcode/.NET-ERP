@@ -1,0 +1,62 @@
+﻿@inherits BaseEditorParameters
+
+<DxGridLayoutItem Column="ColumnIndex"
+                  ColumnSpan="ColumnSpan"
+                  CssClass="@LayoutItemCssClass"
+                  Row="RowIndex"
+                  RowSpan="RowSpan"
+                  Visible="Visible">
+    <Template>
+        <SfCheckBox @ref="_CheckBox"
+                    @bind-Checked="@Value"
+                    CssClass="@EditorCssClass"
+                    LabelPosition=@LabelPosition
+                    EnableRtl=@EnableRtl
+                    Disabled=@Enabled>
+
+            <ChildContent>
+                @(_value ? TrueCaption : FalseCaption)
+            </ChildContent>
+        </SfCheckBox>
+    </Template>
+</DxGridLayoutItem>
+
+<TsiLabel Caption="@Caption"
+          ColumnIndex=ColumnIndex-2
+          CssClass="@CaptionCssClass"
+          RowIndex="RowIndex"
+          Visible="Visible && CaptionVisible">
+</TsiLabel>
+
+
+<TsiLabel Caption="@SeparateCaption"
+          ColumnIndex=ColumnIndex-1
+          CssClass="@CaptionCssClass"
+          RowIndex="RowIndex"
+          Visible="Visible && SeparateCaptionVisible">
+</TsiLabel>
+
+@code {
+
+    private SfCheckBox<bool> _CheckBox;
+    private bool _value;
+
+
+    [Parameter] public string TrueCaption { get; set; }
+    [Parameter] public string FalseCaption { get; set; }
+
+
+    [Parameter] public EventCallback<bool> ValueChanged { get; set; }
+
+    [Parameter]
+    public bool Value
+    {
+        get => _value;
+        set
+        {
+            if (_value == value) return;
+            _value = value;
+            ValueChanged.InvokeAsync(value);
+        }
+    }
+}

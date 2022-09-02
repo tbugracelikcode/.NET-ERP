@@ -15,7 +15,7 @@ using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Authentication.Menus;
 
 namespace TsiErp.Business.Entities.Authentication.Menus
 {
-    [ServiceRegistration(typeof(IMenusAppService), DependencyInjectionType.Singleton)]
+    [ServiceRegistration(typeof(IMenusAppService), DependencyInjectionType.Transient)]
     public class MenusAppService : IMenusAppService
     {
         private readonly IMenusRepository _repository;

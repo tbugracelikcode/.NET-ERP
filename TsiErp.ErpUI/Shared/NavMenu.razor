@@ -1,0 +1,177 @@
+<div>
+    
+    <div class="sidebar">
+        <DxTreeView AllowSelectNodes="true"  CssClass=" app-sidebar" NodeExpandCollapseAction="TreeViewNodeExpandCollapseAction.NodeClick">
+           
+        <Nodes>
+
+            <DxTreeViewNode Visible="@collapsevisible" Text="Ana Sayfa" IconCssClass="fas fa-columns b-bar-icon" />
+
+            <DxTreeViewNode Visible="@collapsevisible"  Text="Stok Yönetimi" IconCssClass="">
+                <Nodes>
+                    <DxTreeViewNode Text="Ana Kayýtlar">
+                        <Nodes>
+                            <DxTreeViewNode NavigateUrl="/product-groups" Text="Ürün Gruplarý" />
+                            <DxTreeViewNode NavigateUrl="/unitsets" Text="Birim Setleri" />
+                            <DxTreeViewNode NavigateUrl="/warehouses" Text="Depo Kartlarý" />
+                            <DxTreeViewNode NavigateUrl="/products" Text="Stok Kartlarý" />
+                        </Nodes>
+                    </DxTreeViewNode>
+                    <DxTreeViewNode Text="Hareketler">
+                        <Nodes>
+                            <DxTreeViewNode Text="Stok Fiþleri" />
+                        </Nodes>
+                    </DxTreeViewNode>
+                </Nodes>
+            </DxTreeViewNode>
+
+
+
+                <DxTreeViewNode Visible="@collapsevisible" Text="Finans Yönetimi" IconCssClass="">
+                <Nodes>
+                    <DxTreeViewNode Text="Ana Kayýtlar">
+                        <Nodes>
+                            <DxTreeViewNode NavigateUrl="/current-account-cards" Text="Cari Hesap Kartlarý" />
+                            <DxTreeViewNode NavigateUrl="/payment-plans" Text="Ödeme Planlarý" />
+                            <DxTreeViewNode NavigateUrl="/shipping-adresses" Text="Sevkiyat Adresleri" />
+                        </Nodes>
+                    </DxTreeViewNode>
+                </Nodes>
+            </DxTreeViewNode>
+
+                <DxTreeViewNode Visible="@collapsevisible" Text="Satýþ Yönetimi" IconCssClass="">
+                <Nodes>
+                    <DxTreeViewNode Text="Teklif Yönetimi">
+                        <Nodes>
+                            <DxTreeViewNode NavigateUrl="/sales-propositions" Text="Verilen Teklifler" />
+                        </Nodes>
+                    </DxTreeViewNode>
+                </Nodes>
+            </DxTreeViewNode>
+
+
+                <DxTreeViewNode Visible="@collapsevisible" Text="Kaynak Yönetimi" IconCssClass="">
+                <Nodes>
+                    <DxTreeViewNode Text="Ana Kayýtlar">
+                        <Nodes>
+                            <DxTreeViewNode NavigateUrl="/stations" Text="Ýþ Ýstasyonlarý" />
+                            <DxTreeViewNode NavigateUrl="/station-groups" Text="Ýþ Ýstasyonu Gruplarý" />
+                            <DxTreeViewNode NavigateUrl="/employees" Text="Çalýþanlar" />
+                            <DxTreeViewNode NavigateUrl="/departments" Text="Departmanlar" />
+                        </Nodes>
+                    </DxTreeViewNode>
+                </Nodes>
+            </DxTreeViewNode>
+
+                <DxTreeViewNode Visible="@collapsevisible" Text="Kalite Kontrol" IconCssClass="">
+                <Nodes>
+                    <DxTreeViewNode Text="Ana Kayýtlar">
+                        <Nodes>
+                            <DxTreeViewNode Text="Uygunsuzluk Kayýtlarý Baþlýklarý">
+                                <Nodes>
+                                    <DxTreeViewNode NavigateUrl="/purchasing-unsuitability-items" Text="Satýn Alma Uygunsuzluk Baþlýklarý" />
+                                    <DxTreeViewNode NavigateUrl="/production-order-change-items" Text="Üretim Emri Deðiþiklik Baþlýklarý" />
+                                    <DxTreeViewNode NavigateUrl="/operation-unsuitability-items" Text="Operasyon Uygunsuzluk Baþlýklarý" />
+                                    <DxTreeViewNode NavigateUrl="/final-control-unsuitability-items" Text="Final Kontrol Uygunsuzluk Baþlýklarý" />
+                                    <DxTreeViewNode NavigateUrl="/contract-unsuitability-items" Text="Fason Uygunsuzluk Baþlýklarý" />
+                                    <DxTreeViewNode NavigateUrl="/customer-complaint-items" Text="Müþteri Þikayet Baþlýklarý" />
+                                </Nodes>
+                            </DxTreeViewNode>
+
+                            <DxTreeViewNode Text="Ekipmanlar">
+                                <Nodes>
+                                    <DxTreeViewNode NavigateUrl="/equipment-records" Text="Ekipman Kayýtlarý" />
+                                </Nodes>
+                            </DxTreeViewNode>
+
+                        </Nodes>
+                    </DxTreeViewNode>
+
+                    <DxTreeViewNode Text="Ýþlemler">
+                        <Nodes>
+                            <DxTreeViewNode Text="Ekipman Ýþlemleri">
+                                <Nodes>
+                                    <DxTreeViewNode NavigateUrl="/calibration-records" Text="Kalibrasyon Takip Kayýtlarý" />
+                                    <DxTreeViewNode NavigateUrl="/calibration-verifications" Text="Kalibrasyon Doðrulama Kayýtlarý" />
+                                </Nodes>
+                            </DxTreeViewNode>
+
+                        </Nodes>
+                    </DxTreeViewNode>
+
+                </Nodes>
+            </DxTreeViewNode>
+
+                <DxTreeViewNode Visible="@collapsevisible" Text="Genel Sistem Tanýmlamalarý" IconCssClass="">
+                <Nodes>
+                    <DxTreeViewNode NavigateUrl="/periods" Text="Dönemler" />
+                    <DxTreeViewNode NavigateUrl="/branches" Text="Þubeler" />
+                    <DxTreeViewNode NavigateUrl="/currencies" Text="Para Birimleri" />
+                </Nodes>
+            </DxTreeViewNode>
+        </Nodes>
+    </DxTreeView>
+</div>
+
+
+
+
+
+
+    @*<ul class="nav flex-column">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="/admin/machine-analysis" Match="NavLinkMatch.All">
+                <span class="oi oi-cog" aria-hidden="true"></span> <span class="displayText">Makina Analizi</span>
+            </NavLink>
+        </li>
+    </ul>*@
+    <div class="separator"></div>
+    <div class="scroller">
+        <ul class="nav flex-column">
+            <li class="nav-item px-3">
+
+            </li>
+
+        </ul>
+    </div>
+</div>
+<style>
+    .scroller {
+        height: calc(100vh - 160px) !important;
+        overflow-y: auto;
+        width: 287px;
+    }
+
+        .scroller::-webkit-scrollbar, scrollbar-thumb
+        .scroller::-webkit-scrollbar-thumb {
+            width: 8px;
+            height: 110px;
+            border-radius: 4px;
+            position: center;
+        }
+
+        .scroller::-webkit-scrollbar-thumb {
+            box-shadow: inset 0 0 0 10px #313C75;
+            border-radius: 4px;
+        }
+
+        .scroller::-webkit-scrollbar-track {
+            width: 28px;
+        }
+
+    .separator {
+        border: 1px solid #FFFFFF;
+        opacity: 0.14;
+        width: 247px;
+        margin: 1rem;
+        margin-top: 0px;
+    }
+</style>
+
+@code{
+    private bool collapsevisible = true;
+    public bool SidebarToggle = true;
+    public bool SidebarToggleFixed = true;
+
+  
+}

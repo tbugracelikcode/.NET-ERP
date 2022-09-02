@@ -8,6 +8,5 @@ namespace Tsi.Application.Contract.Services.EntityFrameworkCore
     public class ApplicationService : IApplicationService
     {
         public IGuidGenerator GuidGenerator { get; set; } = new SequentialGuidGenerator();
-
     }
 }

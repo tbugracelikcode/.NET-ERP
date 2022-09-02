@@ -17,6 +17,31 @@ namespace TsiErp.WebAPI.Controllers
             _appService = appService;
         }
 
+        [HttpGet("GetListAsync")]
+        public async Task<IActionResult> GetList()
+        {
+            var result = await _appService.GetListAsync();
+
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+
+            return BadRequest(result.Message);
+        }
+
+        [HttpGet("GetAsync")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var result = await _appService.GetAsync(id);
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+
+            return BadRequest(result.Message);
+        }
+
         [HttpPost("InsertAsync")]
         public async Task<IActionResult> Insert(CreateRolePermissionsDto rolePermissions)
         {
