@@ -1,4 +1,4 @@
-﻿@page "/vsm"
+﻿@page "/vsm3"
 @using Syncfusion.Blazor.Diagram
 @using Syncfusion.Blazor.Diagram.SymbolPalette
 @using System.Collections.ObjectModel
@@ -13,13 +13,13 @@
         </SfSymbolPaletteComponent>
     </div>
 </div>
-<div id="diagram-space" class="sb-mobile-diagram">
-    <div class="content-wrapper" style="border: 1px solid #D7D7D7">
-        <div style="width:calc(100% - 242px);height:100%;float:left;">
-            <SfDiagramComponent Height="600px" @ref="Diagram" Nodes="@nodes" DragDrop="@OnDrop" SelectionSettings="@selectionSettings">
-                <DiagramTemplates>
-                    <NodeTemplate>
-                        @{
+<div class="control-section" style="padding-bottom:0px">
+    <SfDiagramComponent Height="1060px" @ref="@Diagram" Connectors="@diagramConnectors" Nodes="@nodes" DragDrop="OnDrop">
+        <SnapSettings Constraints=SnapConstraints.ShowLines>
+        </SnapSettings>
+        <DiagramTemplates>
+            <NodeTemplate>
+                @{
                                 var node = (context as Node);
                                 string id = node.ID;
                                 switch (node.Annotations.ElementAt(0).Content)
@@ -56,7 +56,7 @@
                                                 <tr> <th class="c1">ID</th> <th class="c2">offsetX</th> <th class="c3">offsetY</th></tr>
                                                 <tr>
                                                     <td class="c1">@id</td>
-                                                    <td class="c2"><SfTextBox Enabled=true Readonly=false></SfTextBox></td>
+                                                    <td class="c2"><SfTextBox></SfTextBox></td>
                                                     <td class="c3"><input type="text" placeholder="Veriii" /></td>
                                                 </tr>
 
@@ -78,8 +78,6 @@
                 </DiagramTemplates>
             </SfDiagramComponent>
         </div>
-    </div>
-</div>
 
 @code {
     private DiagramObjectCollection<Node> nodes = new DiagramObjectCollection<Node>();
@@ -90,8 +88,7 @@
     public DiagramSize SymbolPreview;
     private DiagramObjectCollection<NodeBase> ShapeSymbols = new DiagramObjectCollection<NodeBase>();
     private DiagramObjectCollection<NodeBase> connectorSymbols = new DiagramObjectCollection<NodeBase>();
-    DiagramObjectCollection<UserHandle> handles = new DiagramObjectCollection<UserHandle>();
-    DiagramSelectionSettings selectionSettings = new DiagramSelectionSettings();
+    private DiagramObjectCollection<Connector> diagramConnectors = new DiagramObjectCollection<Connector>();
 
     public void OnDrop(DropEventArgs args)
     {
@@ -213,50 +210,18 @@
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
-        if (firstRender)
-        {
-            UpdateHandle();
-        }
         PaletteInstance.Targets = new DiagramObjectCollection<SfDiagramComponent>
         {
             Diagram
         };
     }
 
-    private void UpdateHandle()
-    {
-        //UserHandle deleteHandle = AddHandle("Delete", "delete", Direction.Bottom, 0.5);
-        //UserHandle drawHandle = AddHandle("Draw", "draw", Direction.Right, 0.5);
-        //handles.Add(deleteHandle);
-        //handles.Add(drawHandle);
-        selectionSettings.UserHandles = handles;
-    }
-
-    private UserHandle AddHandle(string name, string path, Direction direction, double offset)
-    {
-        UserHandle handle = new UserHandle()
-            {
-                Name = name,
-                Visible = true,
-                Offset = offset,
-                Side = direction,
-                Margin = new DiagramThickness() { Top = 0, Bottom = 0, Left = 0, Right = 0 }
-            };
-        if (path == "delete")
-        {
-            handle.PathData = "M0.54700077,2.2130003 L7.2129992,2.2130003 7.2129992,8.8800011 C7.2129992,9.1920013 7.1049975,9.4570007 6.8879985,9.6739998 6.6709994,9.8910007 6.406,10 6.0939997,10 L1.6659999,10 C1.3539997,10 1.0890004,9.8910007 0.87200136,9.6739998 0.65500242,9.4570007 0.54700071,9.1920013 0.54700077,8.8800011 z M2.4999992,0 L5.2600006,0 5.8329986,0.54600048 7.7599996,0.54600048 7.7599996,1.6660004 0,1.6660004 0,0.54600048 1.9270014,0.54600048 z";
-        }
-        else
-        {
-            handle.PathData = "M3.9730001,0 L8.9730001,5.0000007 3.9730001,10.000001 3.9730001,7.0090005 0,7.0090005 0,2.9910006 3.9730001,2.9910006 z";
-        }
-        return handle;
-    }
-
     protected override void OnInitialized()
     {
         InitPaletteModel();
     }
+
+    
 
     // Create Nodes and Connectors for the Palette.
     private void InitPaletteModel()
