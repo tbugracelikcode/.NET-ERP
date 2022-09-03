@@ -12,7 +12,7 @@ namespace TsiErp.DashboardUI.Services
         public PersonelService()
         {
             _connection = DBHelper.GetSqlConnection();
-        }
+        } 
 
         public List<AdminEmployeeChart> GetEmployeeChart(DateTime startDate, DateTime endDate, int frequency)
         {
