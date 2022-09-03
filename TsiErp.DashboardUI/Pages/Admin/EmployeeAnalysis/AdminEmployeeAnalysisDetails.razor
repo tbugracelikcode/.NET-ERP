@@ -1,0 +1,218 @@
+﻿@page "/admin/employee-analysis/details/{employeeID:int}/{startDate:datetime}/{endDate:datetime}"
+@layout AdminLayout
+
+@inject PersonelDetayService PersonelDetayService
+@inject NavigationManager NavigationManager
+
+@using Syncfusion.Blazor.Calendars
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Grids
+@using Syncfusion.Blazor.Cards
+@using Syncfusion.Blazor.Data
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Navigations
+@using Syncfusion.Blazor.Spinner
+@using Syncfusion.Blazor.Charts
+
+<style>
+    .GridZebra table tbody tr:nth-child(odd) {
+        background-color: #B5B5B5;
+    }
+
+    .GridZebra table tbody tr:nth-child(n) {
+        text-align: center;
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 0px solid #dddddd;
+        text-align: center;
+        padding: 8px;
+    }
+
+    .ulstyle {
+        margin: 0px;
+        padding-left: 20px;
+        display: inline-block;
+    }
+
+    .list {
+        float: left;
+        line-height: 20px;
+        font: 10px;
+        min-width: 280px;
+    }
+
+    .FilterCard {
+        background-color: #f7f7f7;
+        border: 1px solid #d6d5d5;
+    }
+
+    .Cards {
+        border: 1px solid #d6d5d5;
+    }
+
+    .e-checkbox-wrapper.e-customcheck:hover .e-frame.e-check {
+        background-color: #9C0D0D;
+        font: 600;
+        font-size: 16px;
+        font-weight: bold;
+    }
+     .FilterLabelTitle{
+        color:#830000;
+        font-size:18px;
+    }
+    .FilterLabelTitleValue{
+        font-size:18px;
+    }
+</style>
+
+<SfCard class="FilterCard">
+    <CardContent>
+        <table width="1000px">
+            <tr>
+                <td width="200px">
+                </td>
+                <td width="200px">
+                    <label class="FilterLabelTitle"><strong>Personel Adı:</strong></label><label class="FilterLabelTitleValue">&nbsp;@employeeName</label>
+                </td>
+                <td width="200px">
+                    <label class="FilterLabelTitle"><strong>Başlangıç Tarih:</strong></label><label class="FilterLabelTitleValue">&nbsp;@startDate.ToShortDateString()</label>
+                </td>
+                <td width="200px">
+                    <label class="FilterLabelTitle"><strong>Bitiş Tarih:</strong></label><label class="FilterLabelTitleValue">&nbsp;@endDate.ToShortDateString()</label>
+                </td>
+                <td width="200px">
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold" OnClick="@OnBackButtonClicked">Geri</SfButton> <SfSpinner @bind-Visible="VisibleSpinner"> </SfSpinner>
+                </td>
+            </tr>
+        </table>
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+<br />
+<br />
+
+<SfCard class="Cards">
+    <CardHeader>
+    </CardHeader>
+    <CardContent>
+        <SfTab CssClass="default-tab" OverflowMode="@OverflowMode.Scrollable" HeaderPlacement="HeaderPosition.Top" Width="100%">
+            <TabAnimationSettings>
+                <TabAnimationPrevious Effect="AnimationEffect.FadeIn"></TabAnimationPrevious>
+                <TabAnimationNext Effect="AnimationEffect.FadeOut"></TabAnimationNext>
+            </TabAnimationSettings>
+            <TabItems>
+                <TabItem>
+                    <ChildContent>
+                        <TabHeader Text="Personel Duruş Analizi"></TabHeader>
+                    </ChildContent>
+                    <ContentTemplate>
+                        <SfCard class="Cards" style="text-align:center">
+                            <CardContent>
+                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Duruş Analiz Grafiği">
+                                    <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
+                                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
+                                        <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
+                                    </ChartPrimaryXAxis>
+                                    <ChartPrimaryYAxis LabelFormat="#">
+                                        <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
+                                    </ChartPrimaryYAxis>
+                                    <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
+                                    <ChartSeriesCollection>
+                                        <ChartSeries DataSource="@dataemployeechart" Name="Duruş Süresi" XName="HaltName" YName="HaltTimeSecond" Width="1" Fill="darkred" Type="ChartSeriesType.Column">
+
+                                        </ChartSeries>
+                                    </ChartSeriesCollection>
+                                    <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
+                                    <ChartZoomSettings EnableSelectionZooming="true"></ChartZoomSettings>
+                                </SfChart>
+
+                            </CardContent>
+                            <CardFooter>
+                            </CardFooter>
+                        </SfCard>
+                        <SfCard class="Cards">
+
+                            <CardContent>
+                                <SfGrid ID="Grid" DataSource="@dataemployeehalt" @ref="EmployeeGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                                        AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                    <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                    <GridEvents TValue="EmployeeDetailedHaltAnalysis"></GridEvents>
+                                    <GridPageSettings PageSizes="true"></GridPageSettings>
+                                    <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                    <GridColumns>
+                                        <GridColumn Field=@nameof(EmployeeDetailedHaltAnalysis.HaltName) HeaderText="DURUŞ SEBEBİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(EmployeeDetailedHaltAnalysis.HaltTimeSecond) HeaderText="DURUŞ SÜRESİ (SN)" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(EmployeeDetailedHaltAnalysis.HaltTimeMinute) HeaderText="DURUŞ SÜRESİ (DK)" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    </GridColumns>
+                                </SfGrid>
+                            </CardContent>
+                            <CardFooter>
+                            </CardFooter>
+                        </SfCard>
+                    </ContentTemplate>
+                </TabItem>
+
+            </TabItems>
+        </SfTab>
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+
+@code {
+
+    List<EmployeeDetailedHaltAnalysis> dataemployeehalt = new List<EmployeeDetailedHaltAnalysis>();
+
+    List<EmployeeDetailedChart> dataemployeechart = new List<EmployeeDetailedChart>();
+
+    SfGrid<EmployeeDetailedHaltAnalysis> EmployeeGrid;
+
+    SfChart ChartInstance;
+
+    bool VisibleSpinner = false;
+    private bool isEmployeeChecked = false;
+    int employees = 1;
+    string employeeName = string.Empty;
+
+    [Parameter]
+    public DateTime startDate { get; set; }
+
+    [Parameter]
+    public DateTime endDate { get; set; }
+
+    [Parameter]
+    public int employeeID { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        dataemployeehalt = PersonelDetayService.GetStationDetailedHaltAnalysis(employeeID, startDate, endDate);
+        dataemployeechart = PersonelDetayService.GetEmployeeDetailedtChart(employeeID, startDate, endDate);
+        employeeName = dataemployeehalt.Select(t => t.EmployeeName).FirstOrDefault();
+    }
+
+    private void OnChangeProductCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+    {
+        if (isEmployeeChecked) { employees = 2; }
+        else { employees = 1; }
+        dataemployeechart = PersonelDetayService.GetEmployeeDetailedtChart(employeeID, startDate, endDate);
+        ChartInstance.RefreshAsync();
+    }
+
+    private void OnBackButtonClicked()
+    {
+        this.VisibleSpinner = true;
+
+        NavigationManager.NavigateTo("/admin/employee-analysis");
+    }
+
+}
