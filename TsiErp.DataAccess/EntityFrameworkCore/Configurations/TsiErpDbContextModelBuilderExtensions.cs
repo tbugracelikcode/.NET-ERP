@@ -14,6 +14,8 @@ using Tsi.EntityFrameworkCore.Modeling;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Logging;
 using TsiErp.Entities.Entities.Period;
+using TsiErp.Entities.Entities.Station;
+using TsiErp.Entities.Entities.StationGroup;
 using TsiErp.Entities.Entities.UnitSet;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
@@ -148,6 +150,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
             });
         }
+
         public static void ConfigureUnitSets(this ModelBuilder builder)
         {
             builder.Entity<UnitSets>(b =>
@@ -162,6 +165,55 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.Code);
 
 
+            });
+        }
+
+        public static void ConfigureStationGroups(this ModelBuilder builder)
+        {
+            builder.Entity<StationGroups>(b =>
+            {
+                b.ToTable("StationGroups");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.TotalEmployees).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+                b.HasIndex(x => x.Code);
+            });
+        }
+
+        public static void ConfigureStations(this ModelBuilder builder)
+        {
+            builder.Entity<Stations>(b =>
+            {
+                b.ToTable("Stations");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.Brand).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.Model).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.Capacity).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(85);
+                b.Property(t => t.KWA).HasColumnType("decimal(18, 2)");
+                b.Property(t => t.GroupID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.X).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.Y).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.AreaCovered).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.UsageArea).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.Amortization).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.MachineCost).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.Shift).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.ShiftWorkingTime).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.PowerFactor).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.WorkSafetyInstruction).HasColumnType("varbinary(MAX)");
+                b.Property(t => t.UsageInstruction).HasColumnType("varbinary(MAX)");
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+                b.HasIndex(x => x.Code);
+
+                b.HasOne(x => x.StationGroups).WithMany(x => x.Stations).HasForeignKey(x => x.GroupID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 

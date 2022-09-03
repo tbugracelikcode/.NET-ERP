@@ -17,6 +17,8 @@ using TsiErp.DataAccess.EntityFrameworkCore.Configurations;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Logging;
 using TsiErp.Entities.Entities.Period;
+using TsiErp.Entities.Entities.Station;
+using TsiErp.Entities.Entities.StationGroup;
 using TsiErp.Entities.Entities.UnitSet;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore
@@ -86,6 +88,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigureMenus();
             builder.ConfigureLogs();
             builder.ConfigureUnitSets();
+            builder.ConfigureStationGroups();
+            builder.ConfigureStations();
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -140,6 +144,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<Periods> Periods { get; set; }
         public DbSet<Logs> Logs { get; set; }
         public DbSet<UnitSets> UnitSets { get; set; }
+        public DbSet<StationGroups> StationGroups { get; set; }
+        public DbSet<Stations> Stations { get; set; }
         #endregion
     }
 }
