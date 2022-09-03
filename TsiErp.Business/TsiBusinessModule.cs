@@ -14,6 +14,7 @@ using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Business.MapperProfile;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using Tsi.Core.Modularity.Extension;
+using Autofac;
 
 namespace TsiErp.Business
 {

@@ -1,0 +1,60 @@
+﻿@inherits BaseEditorParameters
+
+<DxGridLayoutItem Column=ColumnIndex
+                  CssClass="@LayoutItemCssClass"
+                  ColumnSpan=ColumnSpan
+                  Row=RowIndex
+                  RowSpan=RowSpan
+                  Visible=Visible>
+    <Template>
+
+        <SfTextBox @ref="_TextBox"
+                   CssClass="@EditorCssClass"
+                   Placeholder=@Placeholder
+                   FloatLabelType=@FloatLabelType
+                   EnableRtl=@EnableRtl
+                   Enabled=@Enabled
+                   Type=@InputType
+                   @bind-Text="@Value"
+                   ShowClearButton=@ShowClearButton
+                   Readonly=@ReadOnly>
+        </SfTextBox>
+
+    </Template>
+</DxGridLayoutItem>
+
+<TsiLabel Caption="@Caption"
+          ColumnIndex=ColumnIndex-2
+          CssClass="@CaptionCssClass"
+          RowIndex="RowIndex"
+          Visible="Visible && CaptionVisible">
+</TsiLabel>
+
+
+<TsiLabel Caption="@SeparateCaption"
+          ColumnIndex=ColumnIndex-1
+          CssClass="@CaptionCssClass"
+          RowIndex="RowIndex"
+          Visible="Visible && SeparateCaptionVisible">
+</TsiLabel>
+
+@code {
+    private SfTextBox _TextBox;
+    private string _value;
+
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+
+    [Parameter]
+    public string Value
+    {
+        get => _value;
+        set
+        {
+            if (_value == value) return;
+
+            _value = value;
+            ValueChanged.InvokeAsync(value);
+        }
+    }
+}

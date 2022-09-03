@@ -4,6 +4,7 @@ using System.Text;
 using Tsi.Core.Entities;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
+using Tsi.Core.Entities.Auditing;
 
 namespace Tsi.EntityFrameworkCore.Repositories
 {
@@ -16,11 +17,15 @@ namespace Tsi.EntityFrameworkCore.Repositories
         Task<IList<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> predicate = null);
 
         Task<IList<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> predicate = null, params Expression<Func<TEntity, object>>[] includeProperties);
-        
-        Task<TEntity> InsertAsync(TEntity entity);
 
-        Task<TEntity> UpdateAsync(TEntity entity);
+        Task<TEntity> InsertAsync(TEntity entity, bool autoSave = true);
 
-        Task DeleteAsync(Guid id);
+        Task InsertManyAsync(IEnumerable<TEntity> entities, bool autoSave = true);
+
+        Task<TEntity> UpdateAsync(TEntity entity, bool autoSave = true);
+
+        Task UpdateManyAsync(IEnumerable<TEntity> entities, bool autoSave = true);
+
+        Task DeleteAsync(Guid id, bool autoSave = true);
     }
 }

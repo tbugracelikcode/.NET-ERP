@@ -1,0 +1,76 @@
+﻿@inherits BaseEditorParameters
+
+
+<DxGridLayoutItem Column=ColumnIndex
+                  CssClass="@LayoutItemCssClass"
+                  ColumnSpan=ColumnSpan
+                  Row=RowIndex
+                  RowSpan=RowSpan
+                  Visible=Visible>
+    <Template>
+        <SfNumericTextBox @ref="_NumericTextBox"
+                          @bind-Value="@Value"
+                          CssClass="@EditorCssClass"
+                          Enabled="Enabled"
+                          EnableRtl=@EnableRtl
+                          Max=@Max
+                          Min=@Min
+                          Format=@Format
+                          Placeholder="@Placeholder"
+                          Readonly=@ReadOnly 
+                          ShowClearButton=@ShowClearButton 
+                          ShowSpinButton=@ShowSpinButton 
+                          StrictMode=@StrictMode>
+        </SfNumericTextBox>
+    </Template>
+</DxGridLayoutItem>
+
+
+<TsiLabel Caption="@Caption"
+          ColumnIndex=ColumnIndex-2
+          CssClass="@CaptionCssClass"
+          RowIndex="RowIndex"
+          Visible="Visible && CaptionVisible">
+</TsiLabel>
+
+
+<TsiLabel Caption="@SeparateCaption"
+          ColumnIndex=ColumnIndex-1
+          CssClass="@CaptionCssClass"
+          RowIndex="RowIndex"
+          Visible="Visible && SeparateCaptionVisible">
+</TsiLabel>
+
+@code {
+    private SfNumericTextBox<int> _NumericTextBox;
+
+    private int _value;
+
+    [Parameter]
+    public override string EditorCssClass { get; set; } = "currency";
+
+    [Parameter]
+    public string DisplayFormat { get; set; } = "n0";
+
+    [Parameter]
+    public string Mask { get; set; } = "#,#";
+
+    [Parameter] public int Max { get; set; }
+    [Parameter] public int Min { get; set; }
+
+    [Parameter]
+    public EventCallback<int> ValueChanged { get; set; }
+
+    [Parameter]
+    public int Value
+    {
+        get => _value;
+        set
+        {
+            if (_value == value) return;
+
+            _value = value;
+            ValueChanged.InvokeAsync(value);
+        }
+    }
+}
