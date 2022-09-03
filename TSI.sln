@@ -29,6 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tsi.Authentication", "Tsi.A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TsiErp.DashboardUI", "TsiErp.DashboardUI\TsiErp.DashboardUI.csproj", "{5772DA56-F44D-4E9A-8B9F-3CB1E5F05288}"
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ui-erp", "ui-erp", "{1CF32D9B-7561-42F2-8668-4A61F458604D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TsiErp.DashboardUI", "TsiErp.DashboardUI\TsiErp.DashboardUI.csproj", "{5772DA56-F44D-4E9A-8B9F-3CB1E5F05288}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TsiErp.ErpUI", "TsiErp.ErpUI\TsiErp.ErpUI.csproj", "{097DAD31-0D25-4C46-9B0D-D742B46612D7}"
 EndProject

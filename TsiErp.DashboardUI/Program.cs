@@ -54,7 +54,6 @@ builder.Services.AddSingleton<WeatherForecastService>();
 var app = builder.Build();
 
 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NzA0MDk0QDMyMzAyZTMyMmUzMEVjb29PTkxlM3YvRVZwVTR5U0VCT2toK24vMEJlYmFVeFkwRlYrT1cwMzA9");
-
 // Configure the HTTP request pipeline.
 app.UseRequestLocalization(app.Services.GetService<IOptions<RequestLocalizationOptions>>().Value);
 if (!app.Environment.IsDevelopment())
