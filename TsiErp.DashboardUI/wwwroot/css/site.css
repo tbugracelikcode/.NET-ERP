@@ -31,7 +31,7 @@ app {
 }
 
     .main .top-row {
-        background-color: #f7f7f7;
+        background-color: #b9b7b7;
         border-bottom: 1px solid #d6d5d5;
         justify-content: flex-end;
     }
@@ -51,7 +51,7 @@ app {
 }
 
 .sidebar {
-    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+    background-image: linear-gradient(180deg, rgb(76 79 92) 0%, #201c1c 70%) !important;
 }
 
     .sidebar .top-row {
