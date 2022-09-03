@@ -748,6 +748,80 @@ namespace TsiErp.DashboardUI.Helpers
             return haltLines;
         }
 
+        public static List<Durus> GetHaltQueryEmployee(int employeeID, DateTime startDate, DateTime endDate)
+        {
+            List<Durus> haltLines = new List<Durus>();
+
+            SqlConnection connection = GetSqlConnection();
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "ID, " +
+                                  "DURUSID, " +
+                                  "SEBEP, " +
+                                  "DURUSSURE, " +
+                                  "BASLANGIC, " +
+                                  "BITIS, " +
+                                  "CALISANID, " +
+                                  "OPERASYONID, " +
+                                  "ISTASYONID, " +
+                                  "UNUTULDU, " +
+                                  "TARIH, " +
+                                  "ISNULL(OPR_TOPLAM_DURUS,0) as OPR_TOPLAM_DURUS, " +
+                                  "ISNULL(MESAI,0) as MESAI, " +
+                                  "ISNULL(ISEMRINO,0) as ISEMRINO, " +
+                                  "ISNULL(OPERASYONACIKLAMASI,0) as OPERASYONACIKLAMASI, " +
+                                  "MAKINEKODU, " +
+                                  "ISNULL(STOKKODU,0) as STOKKODU, " +
+                                  "ISNULL(VARYANTKODU,0) as VARYANTKODU, " +
+                                  "ISNULL(URETIMEMRINUMARASI,0) as URETIMEMRINUMARASI, " +
+                                  "ISNULL(ISEMRIID,0) as ISEMRIID, " +
+                                  "ISNULL(URETIMEMRIID,0) as URETIMEMRIID, " +
+                                  "ISNULL(PLANLI,0) as PLANLI, " +
+                                  "ISNULL(CALISAN,0) as CALISAN, " +
+                                  "ISNULL(DURUS_ORANI,0) as DURUS_ORANI," +
+                                  "ISNULL(YKK,0) as YKK " +
+                                  "FROM TUR_VW_EKR_DURUS " +
+                                  "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "' AND CALISANID = " + employeeID.ToString();
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                haltLines.Add(new Durus()
+                {
+                    ID = Convert.ToInt32(reader["ID"]),
+                    DURUSID = Convert.ToInt32(reader["DURUSID"]),
+                    SEBEP = Convert.ToString(reader["SEBEP"]),
+                    DURUSSURE = Convert.ToInt32(reader["DURUSSURE"]),
+                    BASLANGIC = Convert.ToDateTime(reader["BASLANGIC"]),
+                    BITIS = Convert.ToDateTime(reader["BITIS"]),
+                    CALISANID = Convert.ToInt32(reader["CALISANID"]),
+                    OPERASYONID = Convert.ToInt32(reader["OPERASYONID"]),
+                    ISTASYONID = Convert.ToInt32(reader["ISTASYONID"]),
+                    UNUTULDU = Convert.ToString(reader["UNUTULDU"]),
+                    TARIH = Convert.ToDateTime(reader["TARIH"]),
+                    OPR_TOPLAM_DURUS = Convert.ToDecimal(reader["OPR_TOPLAM_DURUS"]),
+                    MESAI = Convert.ToString(reader["MESAI"]),
+                    ISEMRINO = Convert.ToString(reader["ISEMRINO"]),
+                    OPERASYONACIKLAMASI = Convert.ToString(reader["OPERASYONACIKLAMASI"]),
+                    MAKINEKODU = Convert.ToString(reader["MAKINEKODU"]),
+                    STOKKODU = Convert.ToString(reader["STOKKODU"]),
+                    VARYANTKODU = Convert.ToString(reader["VARYANTKODU"]),
+                    URETIMEMRINUMARASI = Convert.ToString(reader["URETIMEMRINUMARASI"]),
+                    ISEMRIID = Convert.ToInt32(reader["ISEMRIID"]),
+                    URETIMEMRIID = Convert.ToInt32(reader["URETIMEMRIID"]),
+                    PLANLI = Convert.ToString(reader["PLANLI"]),
+                    CALISAN = Convert.ToString(reader["CALISAN"]),
+                    DURUS_ORANI = Convert.ToDecimal(reader["DURUS_ORANI"]),
+                    YKK = Convert.ToBoolean(reader["YKK"])
+                });
+            }
+
+            return haltLines;
+        }
+
         public static List<KayipSureKodlari> GetHaltCodes()
         {
             List<KayipSureKodlari> haltCodes = new List<KayipSureKodlari>();

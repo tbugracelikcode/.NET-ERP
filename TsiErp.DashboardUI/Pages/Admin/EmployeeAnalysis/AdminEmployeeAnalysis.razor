@@ -2,6 +2,7 @@
 @layout AdminLayout
 
 @inject PersonelService PersonelService
+@inject PersonelDetayService PersonelDetayService
 @inject NavigationManager NavigationManager
 @using Syncfusion.Blazor.Charts
 @using Syncfusion.Blazor.Calendars
@@ -179,6 +180,8 @@
 
     protected override void OnInitialized()
     {
+        //var a = PersonelDetayService.GetStationDetailedHaltAnalysis(1,startDate,endDate);
+
         dataemployee = PersonelService.GetEmployeeGeneralAnalysis(startDate, endDate);
         datachart = PersonelService.GetEmployeeChart(startDate, endDate, 3);
     }
@@ -238,7 +241,8 @@
 
     private void OnDetailButtonClicked(int stationID)
     {
-        //NavigationManager.NavigateTo("/admin/machine-analysis/details" + "/" + stationID.ToString() + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd")); ;
+        //NavigationManager.NavigateTo("/admin/machine-analysis/details" + "/" + stationID.ToString() + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd"));
+
     }
 
     private void OnChangeLabelCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
