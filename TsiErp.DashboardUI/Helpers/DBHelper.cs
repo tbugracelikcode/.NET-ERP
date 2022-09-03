@@ -1047,6 +1047,153 @@ namespace TsiErp.DashboardUI.Helpers
 
             return hurdaSebepleri;
         }
+
+        public static List<OperasyonUygunsuzluk> GetUnsuitabilityQuery(DateTime startDate, DateTime endDate)
+        {
+            List<OperasyonUygunsuzluk> unsuitabilityLines = new List<OperasyonUygunsuzluk>();
+
+            SqlConnection connection = GetSqlConnection();
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "ID, " +
+                                  "ISNULL(ISTASYONID,0) as ISTASYONID, " +
+                                  "ISNULL(URETIMEMRIID,0) as URETIMEMRIID, " +
+                                  "ISNULL(ISEMRIID,0) as ISEMRIID, " +
+                                  "ISNULL(CALISANID,0) as CALISANID, " +
+                                  "ISNULL(STOKID,0) as STOKID, " +
+                                  "TARIH, " +
+                                  "ISEMRINO, " +
+                                  "FISNO, " +
+                                  "CALISANAD, " +
+                                  "MAKINEADI, " +
+                                  "MAKINEKODU, " +
+                                  "ESKISTOKKODU, " +
+                                  "STOKACIKLAMASI, " +
+                                  "HATAACIKLAMA, " +
+                                  "ISNULL(OLCUKONTROLFORMBEYAN,0) as OLCUKONTROLFORMBEYAN, " +
+                                  "ISNULL(HURDA,0) as HURDA, " +
+                                  "ISNULL(DUZELTME,0) as DUZELTME, " +
+                                  "ISNULL(OLDUGUGIBIKULLANILACAK,0) as OLDUGUGIBIKULLANILACAK, " +
+                                  "RAPORNO, " +
+                                  "ACIKLAMADETAY, " +
+                                  "ISNULL(ISTVERIMLILIIKANALIZI,0) as ISTVERIMLILIIKANALIZI, " +
+                                  "ISNULL(PERVERIMLILIKANALIZI,0) as  PERVERIMLILIKANALIZI," +
+                                  "ISNULL(TUR,0) as  TUR," +
+                                  "KOD " +
+                                  "FROM TUR_VW_OPERASYON_UYGUNSUZLUK " +
+                                  "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "'";
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                unsuitabilityLines.Add(new OperasyonUygunsuzluk()
+                {
+                    ID = Convert.ToInt32(reader["ID"]),
+                    ISTASYONID = Convert.ToInt32(reader["ISTASYONID"]),
+                    URETIMEMRIID = Convert.ToInt32(reader["URETIMEMRIID"]),
+                    ISEMRIID = Convert.ToInt32(reader["ISEMRIID"]),
+                    CALISANID = Convert.ToInt32(reader["CALISANID"]),
+                    STOKID = Convert.ToInt32(reader["STOKID"]),
+                    ISEMRINO = Convert.ToString(reader["ISEMRINO"]),
+                    FISNO = Convert.ToString(reader["FISNO"]),
+                    TARIH = Convert.ToDateTime(reader["TARIH"]),
+                    MAKINEADI = Convert.ToString(reader["MAKINEADI"]),
+                    MAKINEKODU = Convert.ToString(reader["MAKINEKODU"]),
+                    ESKISTOKKODU = Convert.ToString(reader["ESKISTOKKODU"]),
+                    STOKACIKLAMASI = Convert.ToString(reader["STOKACIKLAMASI"]),
+                    HATAACIKLAMA = Convert.ToString(reader["HATAACIKLAMA"]),
+                    OLCUKONTROLFORMBEYAN = Convert.ToInt32(reader["OLCUKONTROLFORMBEYAN"]),
+                    HURDA = Convert.ToBoolean(reader["HURDA"]),
+                    DUZELTME = Convert.ToBoolean(reader["DUZELTME"]),
+                    OLDUGUGIBIKULLANILACAK = Convert.ToBoolean(reader["OLDUGUGIBIKULLANILACAK"]),
+                    RAPORNO = Convert.ToString(reader["RAPORNO"]),
+                    ACIKLAMADETAY = Convert.ToString(reader["ACIKLAMADETAY"]),
+                    ISTVERIMLILIIKANALIZI = Convert.ToBoolean(reader["ISTVERIMLILIIKANALIZI"]),
+                    PERVERIMLILIKANALIZI = Convert.ToBoolean(reader["PERVERIMLILIKANALIZI"]),
+                    TUR = Convert.ToInt32(reader["TUR"]),
+                    KOD = Convert.ToString(reader["KOD"])
+                });
+            }
+
+            return unsuitabilityLines;
+        }
+
+        public static List<OperasyonUygunsuzluk> GetUnsuitabilityEmployeeQuery(int calisanID,DateTime startDate, DateTime endDate)
+        {
+            List<OperasyonUygunsuzluk> unsuitabilityLines = new List<OperasyonUygunsuzluk>();
+
+            SqlConnection connection = GetSqlConnection();
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "ID, " +
+                                  "ISNULL(ISTASYONID,0) as ISTASYONID, " +
+                                  "ISNULL(URETIMEMRIID,0) as URETIMEMRIID, " +
+                                  "ISNULL(ISEMRIID,0) as ISEMRIID, " +
+                                  "ISNULL(CALISANID,0) as CALISANID, " +
+                                  "ISNULL(STOKID,0) as STOKID, " +
+                                  "TARIH, " +
+                                  "ISEMRINO, " +
+                                  "FISNO, " +
+                                  "CALISANAD, " +
+                                  "MAKINEADI, " +
+                                  "MAKINEKODU, " +
+                                  "ESKISTOKKODU, " +
+                                  "STOKACIKLAMASI, " +
+                                  "HATAACIKLAMA, " +
+                                  "ISNULL(OLCUKONTROLFORMBEYAN,0) as OLCUKONTROLFORMBEYAN, " +
+                                  "ISNULL(HURDA,0) as HURDA, " +
+                                  "ISNULL(DUZELTME,0) as DUZELTME, " +
+                                  "ISNULL(OLDUGUGIBIKULLANILACAK,0) as OLDUGUGIBIKULLANILACAK, " +
+                                  "RAPORNO, " +
+                                  "ACIKLAMADETAY, " +
+                                  "ISNULL(ISTVERIMLILIIKANALIZI,0) as ISTVERIMLILIIKANALIZI, " +
+                                  "ISNULL(PERVERIMLILIKANALIZI,0) as  PERVERIMLILIKANALIZI," +
+                                  "ISNULL(TUR,0) as  TUR," +
+                                  "KOD " +
+                                  "FROM TUR_VW_OPERASYON_UYGUNSUZLUK " +
+                                  "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "' AND CALISANID = " + calisanID.ToString();
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                unsuitabilityLines.Add(new OperasyonUygunsuzluk()
+                {
+                    ID = Convert.ToInt32(reader["ID"]),
+                    ISTASYONID = Convert.ToInt32(reader["ISTASYONID"]),
+                    URETIMEMRIID = Convert.ToInt32(reader["URETIMEMRIID"]),
+                    ISEMRIID = Convert.ToInt32(reader["ISEMRIID"]),
+                    CALISANID = Convert.ToInt32(reader["CALISANID"]),
+                    STOKID = Convert.ToInt32(reader["STOKID"]),
+                    ISEMRINO = Convert.ToString(reader["ISEMRINO"]),
+                    TARIH = Convert.ToDateTime(reader["TARIH"]),
+                    FISNO = Convert.ToString(reader["FISNO"]),
+                    MAKINEADI = Convert.ToString(reader["MAKINEADI"]),
+                    MAKINEKODU = Convert.ToString(reader["MAKINEKODU"]),
+                    ESKISTOKKODU = Convert.ToString(reader["ESKISTOKKODU"]),
+                    STOKACIKLAMASI = Convert.ToString(reader["STOKACIKLAMASI"]),
+                    HATAACIKLAMA = Convert.ToString(reader["HATAACIKLAMA"]),
+                    OLCUKONTROLFORMBEYAN = Convert.ToInt32(reader["OLCUKONTROLFORMBEYAN"]),
+                    HURDA = Convert.ToBoolean(reader["HURDA"]),
+                    DUZELTME = Convert.ToBoolean(reader["DUZELTME"]),
+                    OLDUGUGIBIKULLANILACAK = Convert.ToBoolean(reader["OLDUGUGIBIKULLANILACAK"]),
+                    RAPORNO = Convert.ToString(reader["RAPORNO"]),
+                    ACIKLAMADETAY = Convert.ToString(reader["ACIKLAMADETAY"]),
+                    ISTVERIMLILIIKANALIZI = Convert.ToBoolean(reader["ISTVERIMLILIIKANALIZI"]),
+                    PERVERIMLILIKANALIZI = Convert.ToBoolean(reader["PERVERIMLILIKANALIZI"]),
+                    TUR = Convert.ToInt32(reader["TUR"]),
+                    KOD = Convert.ToString(reader["KOD"])
+                });
+            }
+
+            return unsuitabilityLines;
+        }
+
         //public static IEnumerable<Dictionary<string, object>> GetStations2()
         //{
 

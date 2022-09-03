@@ -141,11 +141,11 @@
             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
             <GridColumns>
                 <GridColumn Field=@nameof(EmployeeGeneralAnalysis.EmployeeName) HeaderText="PERSONEL ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.OperationTime) Format="#######" HeaderText="ÇALIŞMA SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.OperationTime) Format="#######" HeaderText="ÇALIŞMA SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>                
+                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.PlannedOperationTime) Format="#######" HeaderText="PLANLANAN SÜRE" TextAlign="TextAlign.Center" Width="130"></GridColumn>
                 <GridColumn Field=@nameof(EmployeeGeneralAnalysis.HaltTime) Format="#######" HeaderText="DURUŞ SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.PlannedQuantity) Format="#######" HeaderText="PLANLANAN SÜRE" TextAlign="TextAlign.Center" Width="130"></GridColumn>
-                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.TotalProduction) HeaderText="ÜRETİM SÜRE" Format="#######" TextAlign="TextAlign.Center" Width="130"></GridColumn>
-                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.TotalScrap) Format="#######" HeaderText="HURDA SÜRE" TextAlign="TextAlign.Center" Width="80"/>
+                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.TotalProduction) HeaderText="ÜRETİM ADET" Format="#######" TextAlign="TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.TotalScrap) Format="#######" HeaderText="HURDA ADET" TextAlign="TextAlign.Center" Width="80"/>
                 <GridColumn Field=@nameof(EmployeeGeneralAnalysis.TotalScrap) HeaderText="DETAYLAR" TextAlign="TextAlign.Center" Width="80">
                     <Template>
                         @{
