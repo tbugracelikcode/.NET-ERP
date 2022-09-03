@@ -13,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IstasyonOEEService>();
 builder.Services.AddScoped<PersonelService>();
+builder.Services.AddScoped<PersonelDetayService>();
 builder.Services.AddScoped<StokDetayService>();
 builder.Services.AddScoped<StokService>();
 builder.Services.AddScoped<IstasyonService>();
