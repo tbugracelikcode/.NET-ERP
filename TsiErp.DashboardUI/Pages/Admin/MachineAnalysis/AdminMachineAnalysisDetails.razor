@@ -62,14 +62,32 @@
         font-size: 16px;
         font-weight: bold;
     }
+      .FilterLabelTitle{
+        color:#830000;
+        font-size:18px;
+    }
+    .FilterLabelTitleValue{
+        font-size:18px;
+    }
 </style>
 
 <SfCard class="FilterCard">
     <CardContent>
         <table width="1000px">
             <tr>
-                <td width="100%">
-                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" OnClick="@OnBackButtonClicked">Geri</SfButton> <SfSpinner @bind-Visible="VisibleSpinner"> </SfSpinner>
+                <td width="200px">
+                </td>
+                <td width="200px">
+                    <label class="FilterLabelTitle"><strong>Makina Adı:</strong></label><label class="FilterLabelTitleValue">&nbsp;@stationName</label>
+                </td>
+                <td width="200px">
+                    <label class="FilterLabelTitle"><strong>Başlangıç Tarih:</strong></label><label class="FilterLabelTitleValue">&nbsp;@startDate.ToShortDateString()</label>
+                </td>
+                <td width="200px">
+                    <label class="FilterLabelTitle"><strong>Bitiş Tarih:</strong></label><label class="FilterLabelTitleValue">&nbsp;@endDate.ToShortDateString()</label>
+                </td>
+                <td width="200px">
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold" OnClick="@OnBackButtonClicked">Geri</SfButton> <SfSpinner @bind-Visible="VisibleSpinner"> </SfSpinner>
                 </td>
             </tr>
         </table>
@@ -101,7 +119,7 @@
                             <CardContent>
                                 <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Duruş Kodu Analiz Grafiği">
                                     <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
-                                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate90">
+                                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
                                         <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
                                     </ChartPrimaryXAxis>
                                     <ChartPrimaryYAxis LabelFormat="#">
@@ -109,7 +127,7 @@
                                     </ChartPrimaryYAxis>
                                     <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
                                     <ChartSeriesCollection>
-                                        <ChartSeries DataSource="@datahalt" Name="Duruş Süresi" XName="Code" YName="Time" Width="1" Fill="darkred" Type="ChartSeriesType.Column">
+                                        <ChartSeries DataSource="@datahaltchart" Name="Duruş Süresi" XName="Code" YName="Time" Width="1" Fill="darkred" Type="ChartSeriesType.Column">
 
                                         </ChartSeries>
                                     </ChartSeriesCollection>
@@ -149,7 +167,9 @@
                     </ChildContent>
                     <ContentTemplate>
                         <br />
-                        <SfCheckBox @bind-Checked="isProductsChecked" Label="Yarı Mamülleri Göster" @onchange="OnChangeProductCheck" CssClass="e-customcheck"></SfCheckBox>
+                        &nbsp;<SfCheckBox @bind-Checked="isProductsChecked" @onchange="OnChangeProductCheck" CssClass="e-customcheck"></SfCheckBox>
+                        <label class=FilterLabelTitle><strong>Yarı Mamülleri Göster</strong></label>
+                        <br />
                         <br />
                         <SfCard class="Cards" style="text-align:center">
                             <CardContent>
@@ -270,6 +290,7 @@
     List<StationDetailedEmployeeAnalysis> dataemployee = new List<StationDetailedEmployeeAnalysis>();
     List<StationDetailedHaltAnalysis> datahalt = new List<StationDetailedHaltAnalysis>();
     List<StationDetailedProductChart> dataproductchart = new List<StationDetailedProductChart>();
+     List<StationDetailedHaltAnalysis> datahaltchart = new List<StationDetailedHaltAnalysis>();
 
     SfGrid<StationDetailedProductAnalysis> ProductGrid;
     SfGrid<StationDetailedEmployeeAnalysis> EmployeeGrid;
@@ -280,6 +301,7 @@
     bool VisibleSpinner = false;
     private bool isProductsChecked = false;
     int products = 1;
+    string stationName = string.Empty;
 
     [Parameter]
     public DateTime startDate { get; set; }
@@ -296,7 +318,9 @@
         dataproduct = IstasyonDetayService.GetStationDetailedProductAnalysis(stationID, startDate, endDate);
         dataemployee = IstasyonDetayService.GetStationDetailedEmployeeAnalysis(stationID, startDate, endDate);
         datahalt = IstasyonDetayService.GetStationDetailedHaltAnalysis(stationID, startDate, endDate);
+        datahaltchart = IstasyonDetayService.GetStationDetailedHaltAnalysisChart(stationID, startDate, endDate);
         dataproductchart = IstasyonDetayService.GetStationDetailedProductChart(stationID, startDate, endDate, 1);
+        stationName = datahalt.Select(t => t.StationName).FirstOrDefault();
     }
 
     private void OnChangeProductCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)

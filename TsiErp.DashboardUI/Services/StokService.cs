@@ -17,7 +17,6 @@ namespace TsiErp.DashboardUI.Services
         {
             List<AdminProductChart> adminProductChart = new List<AdminProductChart>();
             var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate);
-            var calenderLines = DBHelper.GetCalendarQuery(startDate, endDate);
 
 
 

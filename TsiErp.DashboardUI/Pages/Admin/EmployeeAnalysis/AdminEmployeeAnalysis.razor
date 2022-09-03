@@ -2,7 +2,6 @@
 @layout AdminLayout
 
 @inject PersonelService PersonelService
-@inject PersonelDetayService PersonelDetayService
 @inject NavigationManager NavigationManager
 @using Syncfusion.Blazor.Charts
 @using Syncfusion.Blazor.Calendars
@@ -64,6 +63,11 @@
         font-size: 16px;
         font-weight: bold;
     }
+     .FilterLabelTitle{
+        color:#830000;
+        font-size:18px;
+    }
+    
 </style>
 
 <SfCard class="FilterCard">
@@ -71,10 +75,12 @@
         <table width="1000px">
             <tr>
                 <td width="250px">
-                    <SfCheckBox @bind-Checked="isLabelsChecked" Label="Etiketleri Göster" @onchange="OnChangeLabelCheck" CssClass="e-customcheck"></SfCheckBox>
+                    <br />
+                    <SfCheckBox @bind-Checked="isLabelsChecked" @onchange="OnChangeLabelCheck" CssClass="e-customcheck"></SfCheckBox>
+                    <label class=FilterLabelTitle><strong>Etiketleri Göster</strong></label>
                 </td>
                 <td width="300px">
-                    <label><strong>Zaman Periyodu:</strong></label>
+                    <label class="FilterLabelTitle"><strong>Zaman Periyodu:</strong></label>
                     <SfComboBox TValue="int" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Seçiniz." DataSource="@timeperiods">
                         <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
                     </SfComboBox>
@@ -83,7 +89,7 @@
                 </td>
                 <td width="50px" align="right">
                     <br />
-                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
                     <SfSpinner @bind-Visible="VisibleSpinner">
                     </SfSpinner>
                 </td>
@@ -150,7 +156,7 @@
                     <Template>
                         @{
                             var row = (context as EmployeeGeneralAnalysis);
-                            <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.EmployeeID))"></SfButton>
+                            <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" style="background-color:#AD0000; " CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.EmployeeID))"></SfButton>
                         }
 
                     </Template>
@@ -239,9 +245,9 @@
         //VisibleSpinner = false;
     }
 
-    private void OnDetailButtonClicked(int stationID)
+    private void OnDetailButtonClicked(int employeeID)
     {
-        //NavigationManager.NavigateTo("/admin/machine-analysis/details" + "/" + stationID.ToString() + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd"));
+        NavigationManager.NavigateTo("/admin/employee-analysis/details" + "/" + employeeID.ToString() + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd"));
 
     }
 

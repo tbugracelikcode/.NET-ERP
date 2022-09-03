@@ -35,7 +35,7 @@ namespace TsiErp.DashboardUI.Services
                     ScrapCauseName = item.BASLIK,
                     TotalScrap = totalScrap,
                     TotalProduction = totalProduction,
-                    PPM = (totalScrap > 0 && totalProduction > 0 ? ((Convert.ToDecimal(totalScrap) / Convert.ToDecimal(totalProduction)) * 1000000) : 0)/causeList.Count()
+                    PPM = (totalScrap > 0 && totalProduction > 0 ? ((Convert.ToDecimal(totalScrap) / Convert.ToDecimal(totalProduction)) * 1000000) : 0)
                 };
                 if (analysis.PPM > 0)
                 {
@@ -48,10 +48,6 @@ namespace TsiErp.DashboardUI.Services
 
         public List<ProductScrapAnalysis> GetProductScrapAnalysis(int groupID, DateTime startDate, DateTime endDate)
         {
-            //startDate = new DateTime(2022, 06, 01);
-            //endDate = new DateTime(2022, 08, 22);
-            //groupID = 55;
-
             List<ProductScrapAnalysis> productScrapAnalysis = new List<ProductScrapAnalysis>();
 
             var scrapLines = DBHelper.GetScrapLinesGroupedQuery(groupID, startDate, endDate);
@@ -71,7 +67,8 @@ namespace TsiErp.DashboardUI.Services
                         ScrapCauseName = item.BASLIK,
                         TotalScrap = totalScrap,
                         TotalProduction = totalProduction,
-                        PPM = totalScrap > 0 && totalProduction > 0 ? ((Convert.ToDecimal(totalScrap) / Convert.ToDecimal(totalProduction)) * 1000000) : 0
+                        PPM = totalScrap > 0 && totalProduction > 0 ? ((Convert.ToDecimal(totalScrap) / Convert.ToDecimal(totalProduction)) * 1000000) : 0,
+                        ProductGroupName = scrapLines.Where(t=>t.HURDAID == causeID).Select(t=>t.URUNGRUBU).FirstOrDefault()
                     };
                     productScrapAnalysis.Add(analysis);
                 }

@@ -63,6 +63,10 @@
         font-size: 16px;
         font-weight: bold;
     }
+      .FilterLabelTitle{
+        color:#830000;
+        font-size:18px;
+    }
 </style>
 
 <SfCard class="FilterCard">
@@ -70,23 +74,25 @@
         <table width="1000px">
             <tr>
                 <td width="200px">
-                    <SfCheckBox @bind-Checked="isLabelsChecked" Label="Etiketleri Göster" @onchange="OnChangeLabelCheck" CssClass="e-customcheck"></SfCheckBox>
+                    <br />
+                    <SfCheckBox @bind-Checked="isLabelsChecked" @onchange="OnChangeLabelCheck" CssClass="e-customcheck"></SfCheckBox>
+                    <label class=FilterLabelTitle><strong>Etiketleri Göster</strong></label>
                 </td>
                 <td width="200px">
-                    <label><strong>Zaman Periyodu:</strong></label>
+                    <label class="FilterLabelTitle"><strong>Zaman Periyodu:</strong></label>
                     <SfComboBox TValue="int" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Seçiniz." DataSource="@timeperiods">
                         <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
                     </SfComboBox>
                 </td>
                 <td width="200px">
-                    <label><strong>Verim Değeri:</strong></label>
+                    <label class="FilterLabelTitle"><strong>Verim Değeri:</strong></label>
                     <SfNumericTextBox TValue="int" @bind-Value="threshold" Placeholder="Verim Değeri Yazınız."></SfNumericTextBox>
                 </td>
                 <td width="100px">
                 </td>
                 <td width="50px" align="right">
                     <br />
-                      <SfButton IsPrimary="true" CssClass="e-btn e-secondary" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
+                      <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
                     @*<SfProgressButton OnClick="@OnDateButtonClicked" Content="Filtrele" IsPrimary="true">
                         <ProgressButtonSpinSettings Position="SpinPosition.Right"></ProgressButtonSpinSettings>
                     </SfProgressButton>*@
@@ -156,7 +162,7 @@
                     <Template>
                         @{
                             var row = (context as StationOEEAnalysis);
-                            <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.StationID))"></SfButton>
+                                    <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" style="background-color:#AD0000;" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.StationID))"></SfButton>
                         }
 
                     </Template>
@@ -270,7 +276,7 @@
             }
             else
             {
-                Args.Cell.AddStyle(new string[] { "background-color: #35C930; color: white;" });
+                Args.Cell.AddStyle(new string[] { "background-color: #37CB00; color: white;" });
             }
         }
         StateHasChanged();

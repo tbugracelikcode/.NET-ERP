@@ -62,14 +62,32 @@
         font-size: 16px;
         font-weight: bold;
     }
+    .FilterLabelTitle{
+        color:#830000;
+        font-size:18px;
+    }
+    .FilterLabelTitleValue{
+        font-size:18px;
+    }
 </style>
 
 <SfCard class="FilterCard">
     <CardContent>
         <table width="1000px">
             <tr>
-                <td width="100%">
-                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" OnClick="@OnBackButtonClicked">Geri</SfButton> <SfSpinner @bind-Visible="VisibleSpinner"> </SfSpinner>
+                <td width="200px">
+                </td>
+                <td width="200px">
+                    <label class="FilterLabelTitle"><strong>Ürün Grubu Adı:</strong></label><label class="FilterLabelTitleValue">&nbsp;@productgroupName</label>
+                </td>
+                <td width="200px">
+                    <label class="FilterLabelTitle"><strong>Başlangıç Tarih:</strong></label><label class="FilterLabelTitleValue">&nbsp;@startDate.ToShortDateString()</label>
+                </td>
+                <td width="200px">
+                    <label class="FilterLabelTitle"><strong>Bitiş Tarih:</strong></label><label class="FilterLabelTitleValue">&nbsp;@endDate.ToShortDateString()</label>
+                </td>
+                <td width="200px">
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold" OnClick="@OnBackButtonClicked">Geri</SfButton> <SfSpinner @bind-Visible="VisibleSpinner"> </SfSpinner>
                 </td>
             </tr>
         </table>
@@ -164,6 +182,7 @@
     bool VisibleSpinner = false;
     private bool isProductGroupsChecked = false;
     int productgroups = 1;
+    string productgroupName = string.Empty;
 
     [Parameter]
     public DateTime startDate { get; set; }
@@ -179,6 +198,7 @@
     {
         dataproductscrap = StokDetayService.GetProductScrapAnalysis(productgroupID, startDate, endDate);
         dataproductgroupchart = StokDetayService.GetProductGroupDetailedtChart(productgroupID, startDate, endDate, 1);
+        productgroupName = dataproductscrap.Select(t => t.ProductGroupName).FirstOrDefault();
     }
 
     private void OnChangeProductCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)

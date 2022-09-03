@@ -16,8 +16,6 @@ namespace TsiErp.DashboardUI.Services
         #region Genel Analiz
         public List<StationGeneralAnalysis> GetStationGeneralAnalyies(DateTime startDate, DateTime endDate)
         {
-            //startDate = new DateTime(2022, 06, 01);
-            //endDate = new DateTime(2022, 08, 22);
 
             List<StationGeneralAnalysis> stationGeneralAnalyses = new List<StationGeneralAnalysis>();
 
