@@ -76,9 +76,6 @@ namespace TsiErp.DashboardUI.Services
         #region Stok Analizi
         public List<StationDetailedProductChart> GetStationDetailedProductChart(int makineID, DateTime startDate, DateTime endDate, int products)
         {
-            //startDate = new DateTime(2022, 06, 01);
-            //endDate = new DateTime(2022, 08, 22);
-            //makineID = 8;
 
             List<StationDetailedProductChart> stationDetailedProductChart = new List<StationDetailedProductChart>();
 

@@ -1,7 +1,7 @@
-﻿@page "/admin/employee-analysis"
+﻿@page "/admin/production-unsuitability-analysis"
 @layout AdminLayout
 
-@inject PersonelService PersonelService
+@inject UretimUygunsuzlukService UretimUygunsuzlukService
 @inject NavigationManager NavigationManager
 @using Syncfusion.Blazor.Charts
 @using Syncfusion.Blazor.Calendars
@@ -63,9 +63,10 @@
         font-size: 16px;
         font-weight: bold;
     }
-      .FilterLabelTitle{
-        color:#830000;
-        font-size:18px;
+
+    .FilterLabelTitle {
+        color: #830000;
+        font-size: 18px;
     }
 </style>
 
@@ -78,15 +79,11 @@
                     <SfCheckBox @bind-Checked="isLabelsChecked" @onchange="OnChangeLabelCheck" CssClass="e-customcheck"></SfCheckBox>
                     <label class=FilterLabelTitle><strong>Etiketleri Göster</strong></label>
                 </td>
-                <td width="200px">
+                <td width="400px">
                     <label class="FilterLabelTitle"><strong>Zaman Periyodu:</strong></label>
                     <SfComboBox TValue="int" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Seçiniz." DataSource="@timeperiods">
                         <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
                     </SfComboBox>
-                </td>
-                <td width="200px">
-                    <label class="FilterLabelTitle"><strong>Verim Değeri:</strong></label>
-                    <SfNumericTextBox TValue="int" @bind-Value="threshold" Placeholder="Verim Değeri Yazınız."></SfNumericTextBox>
                 </td>
                 <td width="100px">
                 </td>
@@ -108,17 +105,17 @@
 <br />
 <SfCard class="Cards" style="text-align:center">
     <CardContent>
-        <SfChart @ref="ChartInstance" Theme="Theme.Bootstrap5" Title="Personel Verimlilik Grafiği">
+        <SfChart @ref="ChartInstance" Theme="Theme.Bootstrap5" Title="Üretim Uygunsuzluk Grafiği">
             <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
             <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
                 <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
             </ChartPrimaryXAxis>
-            <ChartPrimaryYAxis LabelFormat="p2">
+            <ChartPrimaryYAxis LabelFormat="#">
                 <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
             </ChartPrimaryYAxis>
             <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
             <ChartSeriesCollection>
-                <ChartSeries DataSource="@datachart" Name="Verimlilik" XName="Ay" YName="Productivity" Width="3" Fill="darkred" Type="ChartSeriesType.Line">
+                <ChartSeries DataSource="@datachart" Name="Uygunsuzluk" XName="Ay" YName="Total" Width="3" Fill="darkred" Type="ChartSeriesType.Line">
                     <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
                         <ChartDataLabel Visible="@dataLabels">
                             <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
@@ -143,42 +140,39 @@
 <br />
 <SfCard class="Cards">
     <CardContent>
-        <SfGrid ID="Grid" DataSource="@dataemployee" @ref="Grid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+        <SfGrid ID="Grid" DataSource="@dataprodunsuitability" @ref="Grid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
             <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
             <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
-             <GridEvents QueryCellInfo="CellInfoHandler" TValue="EmployeeGeneralAnalysis"></GridEvents>
             <GridPageSettings PageSizes="true"></GridPageSettings>
             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
             <GridColumns>
-                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.EmployeeName) HeaderText="PERSONEL ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>                
-                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.PlannedOperationTime) Format="#######" HeaderText="PLANLANAN SÜRE" TextAlign="TextAlign.Center" Width="130"></GridColumn>
-                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.OperationTime) Format="#######" HeaderText="ÇALIŞMA SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.HaltTime) Format="#######" HeaderText="DURUŞ SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.TotalProduction) HeaderText="ÜRETİM ADET" Format="#######" TextAlign="TextAlign.Center" Width="130"></GridColumn>
-                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.TotalScrap) Format="#######" HeaderText="HURDA ADET" TextAlign="TextAlign.Center" Width="80"/>
-                 <GridColumn Field=@nameof(EmployeeGeneralAnalysis.Performance) HeaderText="VERİMLİLİK" Format="#%" TextAlign="TextAlign.Center" Width="130"></GridColumn>
-                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.TotalScrap) HeaderText="DETAYLAR" TextAlign="TextAlign.Center" Width="80">
+                <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.UnsuitabilityReason) HeaderText="UYGUNSUZLUK SEBEBİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.ScrapQuantity) HeaderText="HURDA ADET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.Correction)  HeaderText="DÜZELTME ADET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.ToBeUsedAs) HeaderText="OLDUĞU GİBİ KULLANILACAK" TextAlign="TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.Total) HeaderText="TOPLAM" TextAlign="TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.Total) HeaderText="DETAYLAR" TextAlign="TextAlign.Center" Width="80">
                     <Template>
                         @{
-                            var row = (context as EmployeeGeneralAnalysis);
-                            <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" style="background-color:#AD0000; " CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.EmployeeID))"></SfButton>
+                            var row = (context as ProductionUnsuitabilityAnalysis);
+                                    <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" style="background-color:#AD0000;" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.Code))"></SfButton>
                         }
 
                     </Template>
                 </GridColumn>
             </GridColumns>
         </SfGrid>
-
+        
     </CardContent>
     <CardFooter>
     </CardFooter>
 </SfCard>
 
 @code {
-    List<EmployeeGeneralAnalysis> dataemployee = new List<EmployeeGeneralAnalysis>();
-    List<AdminEmployeeChart> datachart = new List<AdminEmployeeChart>();
-    SfGrid<EmployeeGeneralAnalysis> Grid;
+    List<ProductionUnsuitabilityAnalysis> dataprodunsuitability = new List<ProductionUnsuitabilityAnalysis>();
+    List<AdminProductionUnsuitabilityAnalysisChart> datachart = new List<AdminProductionUnsuitabilityAnalysisChart>();
+    SfGrid<ProductionUnsuitabilityAnalysis> Grid;
     DateTime startDate = DateTime.Today.AddDays(-90);
     DateTime endDate = DateTime.Today;
     private int? selectedTimeIndex { get; set; }
@@ -192,10 +186,8 @@
 
     protected override void OnInitialized()
     {
-        //var a = PersonelDetayService.GetStationDetailedHaltAnalysis(1,startDate,endDate);
-
-        dataemployee = PersonelService.GetEmployeeGeneralAnalysis(startDate, endDate);
-        datachart = PersonelService.GetEmployeeChart(startDate, endDate, 3);
+        dataprodunsuitability = UretimUygunsuzlukService.GetProductionUnsuitabilityAnalysis(startDate, endDate);
+        datachart = UretimUygunsuzlukService.GetProductionUnsuitabilityChart(startDate, endDate, 3);
     }
 
     #region Component Metotları
@@ -245,16 +237,15 @@
         thresholddouble = Convert.ToDouble(threshold) / 100;
         Grid.Refresh();
         ChartInstance.RefreshAsync();
-        dataemployee = PersonelService.GetEmployeeGeneralAnalysis(startDate, endDate);
-        datachart = PersonelService.GetEmployeeChart(startDate, endDate, frequencyChart);
+        dataprodunsuitability = UretimUygunsuzlukService.GetProductionUnsuitabilityAnalysis(startDate, endDate);
+        datachart = UretimUygunsuzlukService.GetProductionUnsuitabilityChart(startDate, endDate, frequencyChart);
         StateHasChanged();
         //VisibleSpinner = false;
     }
 
-    private void OnDetailButtonClicked(int employeeID)
+    private void OnDetailButtonClicked(string unsuitabilityCode)
     {
-        NavigationManager.NavigateTo("/admin/employee-analysis/details" + "/" + employeeID.ToString() + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd"));
-
+        NavigationManager.NavigateTo("/admin/production-unsuitability-analysis/details" + "/" + unsuitabilityCode + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd")); ;
     }
 
     private void OnChangeLabelCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
@@ -265,22 +256,6 @@
     }
 
     #endregion
-
-     public void CellInfoHandler(QueryCellInfoEventArgs<EmployeeGeneralAnalysis> Args)
-    {
-        if (Args.Column.Field == "Performance")
-        {
-            if (Args.Data.Performance < Convert.ToDecimal(thresholddouble))
-            {
-                Args.Cell.AddStyle(new string[] { "background-color: #DF0000; color: white; " });
-            }
-            else
-            {
-                Args.Cell.AddStyle(new string[] { "background-color: #37CB00; color: white;" });
-            }
-        }
-        StateHasChanged();
-    }
 
 
     private List<ComboboxTimePeriods> timeperiods = new List<ComboboxTimePeriods>() {

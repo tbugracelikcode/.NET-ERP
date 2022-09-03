@@ -1,8 +1,9 @@
-﻿@page "/admin/machine-analysis/details/{stationID:int}/{startDate:datetime}/{endDate:datetime}"
+﻿@page "/admin/production-unsuitability-analysis/details/{unsuitabilityCode}/{startDate:datetime}/{endDate:datetime}"
 @layout AdminLayout
 
-@inject IstasyonDetayService IstasyonDetayService
+@inject UretimUygunsuzlukDetayService UretimUygunsuzlukDetayService
 @inject NavigationManager NavigationManager
+
 @using Syncfusion.Blazor.Calendars
 @using Syncfusion.Blazor.Buttons
 @using Syncfusion.Blazor.Grids
@@ -62,7 +63,7 @@
         font-size: 16px;
         font-weight: bold;
     }
-      .FilterLabelTitle{
+     .FilterLabelTitle{
         color:#830000;
         font-size:18px;
     }
@@ -71,6 +72,7 @@
     }
 </style>
 
+
 <SfCard class="FilterCard">
     <CardContent>
         <table width="1000px">
@@ -78,7 +80,7 @@
                 <td width="200px">
                 </td>
                 <td width="200px">
-                    <label class="FilterLabelTitle"><strong>Makina Adı:</strong></label><label class="FilterLabelTitleValue">&nbsp;@stationName</label>
+                    @*<label class="FilterLabelTitle"><strong>Uygunsuzluk Adı:</strong></label><label class="FilterLabelTitleValue">&nbsp;@unsuitabilityName</label>*@
                 </td>
                 <td width="200px">
                     <label class="FilterLabelTitle"><strong>Başlangıç Tarih:</strong></label><label class="FilterLabelTitleValue">&nbsp;@startDate.ToShortDateString()</label>
@@ -110,12 +112,12 @@
             <TabItems>
                 <TabItem>
                     <ChildContent>
-                        <TabHeader Text="Duruş Kodu Analizi"></TabHeader>
+                        <TabHeader Text="İstasyona Göre Analiz"></TabHeader>
                     </ChildContent>
                     <ContentTemplate>
                         <SfCard class="Cards" style="text-align:center">
                             <CardContent>
-                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Duruş Kodu Analiz Grafiği">
+                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="İstasyona Göre Analiz Grafiği">
                                     <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
                                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
                                         <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
@@ -125,7 +127,7 @@
                                     </ChartPrimaryYAxis>
                                     <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
                                     <ChartSeriesCollection>
-                                        <ChartSeries DataSource="@datahaltchart" Name="Duruş Süresi" XName="Code" YName="Time" Width="1" Fill="darkred" Type="ChartSeriesType.Column">
+                                        <ChartSeries DataSource="@dataunsuitabilitystation" Name="Uygunsuzluk" XName="Station" YName="Quantity" Width="1" Fill="darkred" Type="ChartSeriesType.Column">
 
                                         </ChartSeries>
                                     </ChartSeriesCollection>
@@ -140,16 +142,16 @@
                         <SfCard class="Cards">
 
                             <CardContent>
-                                <SfGrid ID="Grid" DataSource="@datahalt" @ref="HaltGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                                <SfGrid ID="Grid" DataSource="@dataunsuitabilitystation" @ref="StationGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
                                         AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
-                                    <GridEvents TValue="StationDetailedHaltAnalysis"></GridEvents>
+                                    <GridEvents TValue="ProductionUnsuitabilityDetailedStation"></GridEvents>
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(StationDetailedHaltAnalysis.Code) HeaderText="DURUŞ KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(StationDetailedHaltAnalysis.Time) Format="#######" HeaderText="SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedStation.Station) HeaderText="İSTASYON" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedStation.Quantity) HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     </GridColumns>
                                 </SfGrid>
                             </CardContent>
@@ -161,17 +163,14 @@
 
                 <TabItem>
                     <ChildContent>
-                        <TabHeader Text="Stok Analizi"></TabHeader>
+                        <TabHeader Text="Personele Göre Analiz"></TabHeader>
                     </ChildContent>
                     <ContentTemplate>
-                        <br />
-                        &nbsp;<SfCheckBox @bind-Checked="isProductsChecked" @onchange="OnChangeProductCheck" CssClass="e-customcheck"></SfCheckBox>
-                        <label class=FilterLabelTitle><strong>Yarı Mamülleri Göster</strong></label>
                         <br />
                         <br />
                         <SfCard class="Cards" style="text-align:center">
                             <CardContent>
-                                <SfChart @ref="ChartInstance" Width="90%" Theme="Theme.Bootstrap5" Title="Stok Analiz Grafiği">
+                                <SfChart @ref="ChartInstance" Width="90%" Theme="Theme.Bootstrap5" Title="Personele Göre Analiz Grafiği">
                                     <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
                                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate90">
                                         <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
@@ -181,7 +180,7 @@
                                     </ChartPrimaryYAxis>
                                     <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
                                     <ChartSeriesCollection>
-                                        <ChartSeries DataSource="@dataproductchart" Name="Performans" XName="ProductGroup" YName="Performance" Width="1" Fill="darkred" Type="ChartSeriesType.Column">
+                                        <ChartSeries DataSource="@dataunsuitabilityemployee" Name="Uygunsuzluk" XName="EmployeeName" YName="Quantity" Width="1" Fill="darkred" Type="ChartSeriesType.Column">
                                           
                                         </ChartSeries>
                                     </ChartSeriesCollection>
@@ -196,22 +195,16 @@
                         <SfCard class="Cards">
 
                             <CardContent>
-                                <SfGrid ID="Grid" DataSource="@dataproduct" @ref="ProductGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                                <SfGrid ID="Grid" DataSource="@dataunsuitabilityemployee" @ref="EmployeeGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
                                         AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
-                                    <GridEvents TValue="StationDetailedProductAnalysis"></GridEvents>
+                                    <GridEvents TValue="ProductionUnsuitabilityDetailedEmployee"></GridEvents>
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(StationDetailedProductAnalysis.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(StationDetailedProductAnalysis.ProductGroup) Format="#######" HeaderText="STOK GRUBU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(StationDetailedProductAnalysis.PlannedQuantity) Format="#######" HeaderText="PLANLANAN ADET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(StationDetailedProductAnalysis.TotalProduction) Format="#######" HeaderText="ÜRETİLEN ADET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(StationDetailedProductAnalysis.TotalScrap) Format="#######" HeaderText="HURDA ADET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(StationDetailedProductAnalysis.PlannedUnitTime) Format="#######" HeaderText="PLANLANAN BİRİM SÜRE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(StationDetailedProductAnalysis.OccuredUnitTime) Format="#######" HeaderText="GERÇEKLEŞEN BİRİM SÜRE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(StationDetailedProductAnalysis.Performance) Format="#%" HeaderText="PERFORMANS" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedEmployee.EmployeeName) HeaderText="PERSONEL ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedEmployee.Quantity) HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     </GridColumns>
                                 </SfGrid>
                             </CardContent>
@@ -223,12 +216,12 @@
 
                 <TabItem>
                     <ChildContent>
-                        <TabHeader Text="Personel Analizi"></TabHeader>
+                        <TabHeader Text="Stoğa Göre Analiz"></TabHeader>
                     </ChildContent>
                     <ContentTemplate>
                         <SfCard class="Cards" style="text-align:center">
                             <CardContent>
-                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Personel Analiz Grafiği">
+                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Stoğa Göre Analiz Grafiği">
                                     <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
                                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate90">
                                         <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
@@ -238,7 +231,7 @@
                                     </ChartPrimaryYAxis>
                                     <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
                                     <ChartSeriesCollection>
-                                        <ChartSeries DataSource="@dataemployee" Name="Çalışma Süresi" XName="EmployeeName" YName="OperationTime" Width="1" Fill="darkred" Type="ChartSeriesType.Column">
+                                        <ChartSeries DataSource="@dataunsuitabilityproduct" Name="Uygunsuzluk" XName="ProductCode" YName="Quantity" Width="1" Fill="darkred" Type="ChartSeriesType.Column">
 
                                         </ChartSeries>
                                     </ChartSeriesCollection>
@@ -253,18 +246,16 @@
                         <SfCard class="Cards">
 
                             <CardContent>
-                                <SfGrid ID="Grid" DataSource="@dataemployee" @ref="EmployeeGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                                <SfGrid ID="Grid" DataSource="@dataunsuitabilityproduct" @ref="ProductGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
                                         AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
-                                    <GridEvents TValue="StationDetailedEmployeeAnalysis"></GridEvents>
+                                    <GridEvents TValue="ProductionUnsuitabilityDetailedProduct"></GridEvents>
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(StationDetailedEmployeeAnalysis.EmployeeName) HeaderText="PERSONEL ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(StationDetailedEmployeeAnalysis.TotalProduction) Format="#######" HeaderText="ÜRETİLEN ADET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(StationDetailedEmployeeAnalysis.TotalScrap) Format="#######" HeaderText="HURDA ADET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(StationDetailedEmployeeAnalysis.OperationTime) Format="#######" HeaderText="ÇALIŞMA SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedProduct.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedProduct.Quantity) HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     </GridColumns>
                                 </SfGrid>
                             </CardContent>
@@ -280,26 +271,23 @@
     </CardFooter>
 </SfCard>
 
-
-
-
 @code {
-    List<StationDetailedProductAnalysis> dataproduct = new List<StationDetailedProductAnalysis>();
-    List<StationDetailedEmployeeAnalysis> dataemployee = new List<StationDetailedEmployeeAnalysis>();
-    List<StationDetailedHaltAnalysis> datahalt = new List<StationDetailedHaltAnalysis>();
-    List<StationDetailedProductChart> dataproductchart = new List<StationDetailedProductChart>();
-     List<StationDetailedHaltAnalysis> datahaltchart = new List<StationDetailedHaltAnalysis>();
 
-    SfGrid<StationDetailedProductAnalysis> ProductGrid;
-    SfGrid<StationDetailedEmployeeAnalysis> EmployeeGrid;
-    SfGrid<StationDetailedHaltAnalysis> HaltGrid;
+    List<ProductionUnsuitabilityDetailedStation> dataunsuitabilitystation= new List<ProductionUnsuitabilityDetailedStation>();
+    List<ProductionUnsuitabilityDetailedEmployee> dataunsuitabilityemployee= new List<ProductionUnsuitabilityDetailedEmployee>();
+    List<ProductionUnsuitabilityDetailedProduct> dataunsuitabilityproduct= new List<ProductionUnsuitabilityDetailedProduct>();
+
+
+    SfGrid<ProductionUnsuitabilityDetailedEmployee> EmployeeGrid;
+    SfGrid<ProductionUnsuitabilityDetailedStation> StationGrid;
+    SfGrid<ProductionUnsuitabilityDetailedProduct> ProductGrid;
 
     SfChart ChartInstance;
 
     bool VisibleSpinner = false;
-    private bool isProductsChecked = false;
-    int products = 1;
-    string stationName = string.Empty;
+    //private bool isEmployeeChecked = false;
+    //int employees = 1;
+    //string unsuitabilityName = string.Empty;
 
     [Parameter]
     public DateTime startDate { get; set; }
@@ -308,31 +296,30 @@
     public DateTime endDate { get; set; }
 
     [Parameter]
-    public int stationID { get; set; }
+    public string unsuitabilityCode { get; set; }
 
 
     protected override void OnInitialized()
     {
-        dataproduct = IstasyonDetayService.GetStationDetailedProductAnalysis(stationID, startDate, endDate);
-        dataemployee = IstasyonDetayService.GetStationDetailedEmployeeAnalysis(stationID, startDate, endDate);
-        datahalt = IstasyonDetayService.GetStationDetailedHaltAnalysis(stationID, startDate, endDate);
-        datahaltchart = IstasyonDetayService.GetStationDetailedHaltAnalysisChart(stationID, startDate, endDate);
-        dataproductchart = IstasyonDetayService.GetStationDetailedProductChart(stationID, startDate, endDate, 1);
-        stationName = datahalt.Select(t => t.StationName).FirstOrDefault();
+        dataunsuitabilitystation = UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedStationAnalysis(unsuitabilityCode, startDate, endDate);
+        dataunsuitabilityemployee = UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedEmployeeAnalysis(unsuitabilityCode, startDate, endDate);
+        dataunsuitabilityproduct = UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedProductAnalysis(unsuitabilityCode, startDate, endDate);
     }
 
-    private void OnChangeProductCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
-    {
-        if (isProductsChecked) { products = 2; }
-        else { products = 1; }
-        dataproductchart = IstasyonDetayService.GetStationDetailedProductChart(stationID, startDate, endDate, products);
-        ChartInstance.RefreshAsync();
-    }
+    //private void OnChangeProductCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+    //{
+    //    if (isEmployeeChecked) { employees = 2; }
+    //    else { employees = 1; }
+    //    dataemployeechart = PersonelDetayService.GetEmployeeDetailedtChart(employeeID, startDate, endDate);
+    //    ChartInstance.RefreshAsync();
+    //}
 
     private void OnBackButtonClicked()
     {
         this.VisibleSpinner = true;
 
-        NavigationManager.NavigateTo("/admin/machine-analysis");
+        NavigationManager.NavigateTo("/admin/employee-analysis");
     }
+
+
 }

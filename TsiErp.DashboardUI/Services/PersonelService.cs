@@ -20,21 +20,7 @@ namespace TsiErp.DashboardUI.Services
             var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate);
             var calenderLines = DBHelper.GetCalendarQuery(startDate, endDate);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate);
 
 
             if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
