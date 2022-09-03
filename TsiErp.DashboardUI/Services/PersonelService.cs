@@ -18,6 +18,11 @@ namespace TsiErp.DashboardUI.Services
         {
             List<AdminEmployeeChart> adminEmployeeChart = new List<AdminEmployeeChart>();
             var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate);
+            var calenderLines = DBHelper.GetCalendarQuery(startDate, endDate);
+
+
+
+
 
 
 
