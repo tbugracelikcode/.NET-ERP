@@ -20,6 +20,18 @@ using TsiErp.Entities.Entities.Station.Dtos;
 using TsiErp.Entities.Entities.Station;
 using TsiErp.Entities.Entities.StationGroup.Dtos;
 using TsiErp.Entities.Entities.StationGroup;
+using TsiErp.Entities.Entities.CalibrationRecord.Dtos;
+using TsiErp.Entities.Entities.CalibrationRecord;
+using TsiErp.Entities.Entities.CalibrationVerification.Dtos;
+using TsiErp.Entities.Entities.CalibrationVerification;
+using TsiErp.Entities.Entities.ContractUnsuitabilityItem.Dtos;
+using TsiErp.Entities.Entities.ContractUnsuitabilityItem;
+using TsiErp.Entities.Entities.Department.Dtos;
+using TsiErp.Entities.Entities.Department;
+using TsiErp.Entities.Entities.Employee.Dtos;
+using TsiErp.Entities.Entities.Employee;
+using TsiErp.Entities.Entities.EquipmentRecord.Dtos;
+using TsiErp.Entities.Entities.EquipmentRecord;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -70,6 +82,48 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectRolesDto, CreateRolesDto>();
             CreateMap<UpdateRolesDto, TsiRoles>();
             CreateMap<SelectRolesDto, UpdateRolesDto>();
+
+            CreateMap<CalibrationRecords, SelectCalibrationRecordsDto>().ForMember(x => x.Equipment, y => y.MapFrom(z => z.EquipmentRecords.Name));
+            CreateMap<CalibrationRecords, ListCalibrationRecordsDto>().ForMember(x => x.Equipment, y => y.MapFrom(z => z.EquipmentRecords.Name));
+            CreateMap<CreateCalibrationRecordsDto, CalibrationRecords>();
+            CreateMap<SelectCalibrationRecordsDto, CreateCalibrationRecordsDto>();
+            CreateMap<UpdateCalibrationRecordsDto, CalibrationRecords>();
+            CreateMap<SelectCalibrationRecordsDto, UpdateCalibrationRecordsDto>();
+
+            CreateMap<CalibrationVerifications, SelectCalibrationVerificationsDto>().ForMember(x => x.Equipment, y => y.MapFrom(z => z.EquipmentRecords.Name));
+            CreateMap<CalibrationVerifications, ListCalibrationVerificationsDto>().ForMember(x => x.Equipment, y => y.MapFrom(z => z.EquipmentRecords.Name));
+            CreateMap<CreateCalibrationVerificationsDto, CalibrationVerifications>();
+            CreateMap<SelectCalibrationVerificationsDto, CreateCalibrationVerificationsDto>();
+            CreateMap<UpdateCalibrationVerificationsDto, CalibrationVerifications>();
+            CreateMap<SelectCalibrationVerificationsDto, UpdateCalibrationVerificationsDto>();
+
+            CreateMap<ContractUnsuitabilityItems, SelectContractUnsuitabilityItemsDto>();
+            CreateMap<ContractUnsuitabilityItems, ListContractUnsuitabilityItemsDto>();
+            CreateMap<CreateContractUnsuitabilityItemsDto, ContractUnsuitabilityItems>();
+            CreateMap<SelectContractUnsuitabilityItemsDto, CreateContractUnsuitabilityItemsDto>();
+            CreateMap<UpdateContractUnsuitabilityItemsDto, ContractUnsuitabilityItems>();
+            CreateMap<SelectContractUnsuitabilityItemsDto, UpdateContractUnsuitabilityItemsDto>();
+
+            CreateMap<Departments, SelectDepartmentsDto>();
+            CreateMap<Departments, ListDepartmentsDto>();
+            CreateMap<CreateDepartmentsDto, Departments>();
+            CreateMap<SelectDepartmentsDto, CreateDepartmentsDto>();
+            CreateMap<UpdateDepartmentsDto, Departments>();
+            CreateMap<SelectDepartmentsDto, UpdateDepartmentsDto>();
+
+            CreateMap<Employees, SelectEmployeesDto>().ForMember(x => x.Department, y => y.MapFrom(z => z.Departments.Name));
+            CreateMap<Employees, ListEmployeesDto>().ForMember(x => x.Department, y => y.MapFrom(z => z.Departments.Name));
+            CreateMap<CreateEmployeesDto, Employees>();
+            CreateMap<SelectEmployeesDto, CreateEmployeesDto>();
+            CreateMap<UpdateEmployeesDto, Employees>();
+            CreateMap<SelectEmployeesDto, UpdateEmployeesDto>();
+
+            CreateMap<EquipmentRecords, SelectEquipmentRecordsDto>().ForMember(x => x.DepartmentName, y => y.MapFrom(z => z.Departments.Name));
+            CreateMap<EquipmentRecords, ListEquipmentRecordsDto>().ForMember(x => x.DepartmentName, y => y.MapFrom(z => z.Departments.Name));
+            CreateMap<CreateEquipmentRecordsDto, EquipmentRecords>();
+            CreateMap<SelectEquipmentRecordsDto, CreateEquipmentRecordsDto>();
+            CreateMap<UpdateEquipmentRecordsDto, EquipmentRecords>();
+            CreateMap<SelectEquipmentRecordsDto, UpdateEquipmentRecordsDto>();
 
 
             CreateMap<TsiMenus, ListMenusDto>();

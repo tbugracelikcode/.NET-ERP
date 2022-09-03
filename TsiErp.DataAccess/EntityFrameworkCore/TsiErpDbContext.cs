@@ -15,6 +15,12 @@ using Tsi.EntityFrameworkCore.EntityframeworkCore;
 using Tsi.EntityFrameworkCore.Extensions;
 using TsiErp.DataAccess.EntityFrameworkCore.Configurations;
 using TsiErp.Entities.Entities.Branch;
+using TsiErp.Entities.Entities.CalibrationRecord;
+using TsiErp.Entities.Entities.CalibrationVerification;
+using TsiErp.Entities.Entities.ContractUnsuitabilityItem;
+using TsiErp.Entities.Entities.Department;
+using TsiErp.Entities.Entities.Employee;
+using TsiErp.Entities.Entities.EquipmentRecord;
 using TsiErp.Entities.Entities.Logging;
 using TsiErp.Entities.Entities.Period;
 using TsiErp.Entities.Entities.Station;
@@ -90,6 +96,12 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigureUnitSets();
             builder.ConfigureStationGroups();
             builder.ConfigureStations();
+            builder.ConfigureEmployees();
+            builder.ConfigureEquipmentRecords();
+            builder.ConfigureDepartments();
+            builder.ConfigureContractUnsuitabilityItems();
+            builder.ConfigureCalibrationVerifications();
+            builder.ConfigureCalibrationRecords();
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -146,6 +158,12 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<UnitSets> UnitSets { get; set; }
         public DbSet<StationGroups> StationGroups { get; set; }
         public DbSet<Stations> Stations { get; set; }
+        public DbSet<Employees> Employees { get; set; }
+        public DbSet<Departments> Departments { get; set; }
+        public DbSet<EquipmentRecords> EquipmentRecords { get; set; }
+        public DbSet<ContractUnsuitabilityItems> ContractUnsuitabilityItems { get; set; }
+        public DbSet<CalibrationVerifications> CalibrationVerifications { get; set; }
+        public DbSet<CalibrationRecords> CalibrationRecords { get; set; }
         #endregion
     }
 }
