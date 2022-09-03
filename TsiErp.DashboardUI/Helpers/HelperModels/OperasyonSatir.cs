@@ -45,5 +45,8 @@
         public decimal ISLEMESURESI { get; set; }
         public decimal GRCMIKTAR { get; set; }
 
+        public string DEPARTMAN { get; set; }
+        public int STOKTURU { get; set; }
+
     }
 }

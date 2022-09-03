@@ -32,5 +32,9 @@ namespace TsiErp.DashboardUI.Models
         /// Hurda Adet 
         /// </summary>
         public decimal TotalScrap { get; set; }
+        /// <summary>
+        /// Planlanan Adet 
+        /// </summary>
+        public decimal PlannedQuantity { get; set; }
     }
 }

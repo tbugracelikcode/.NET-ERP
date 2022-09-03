@@ -56,5 +56,9 @@ namespace TsiErp.DashboardUI.Models
         /// Tarih
         /// </summary>
         public DateTime Date { get; set; }
+        /// <summary>
+        /// Departman
+        /// </summary>
+        public string Department { get; set; }
     }
 }

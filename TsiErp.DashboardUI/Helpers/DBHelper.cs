@@ -28,11 +28,11 @@ namespace TsiErp.DashboardUI.Helpers
                                   "ID, " +
                                   "MAKINEKODU, " +
                                   "MAKINEADI, " +
-                                  "VARDIYA, " +
-                                  "VARDIYACALISMASURESI, " +
-                                  "TEORIKSURE, " +
-                                  "MESAICALISMASURESI, " +
-                                  "PLANLIDURUSSURESI, " +
+                                  "ISNULL(VARDIYA,0) as VARDIYA, " +
+                                  "ISNULL(VARDIYACALISMASURESI,0) as VARDIYACALISMASURESI, " +
+                                  "ISNULL(TEORIKSURE,0) as TEORIKSURE, " +
+                                  "ISNULL(MESAICALISMASURESI,0) as MESAICALISMASURESI, " +
+                                  "ISNULL(PLANLIDURUSSURESI,0) as PLANLIDURUSSURESI, " +
                                   "FASON, " +
                                   "EKIPMAN FROM TUR_IST";
             command.Connection = connection;
@@ -73,17 +73,17 @@ namespace TsiErp.DashboardUI.Helpers
                                   "VARDIYAID, " +
                                   "MAKINEADI, " +
                                   "ISTASYONID, " +
-                                  "URETILENADET, " +
-                                  "HURDAADET, " +
-                                  "OPERASYONSURESI, " +
-                                  "AYARSURESI, " +
-                                  "ATILSURE, " +
+                                  "ISNULL(URETILENADET,0) as URETILENADET, " +
+                                  "ISNULL(HURDAADET,0) as HURDAADET, " +
+                                  "ISNULL(OPERASYONSURESI,0) as OPERASYONSURESI, " +
+                                  "ISNULL(AYARSURESI,0) as AYARSURESI, " +
+                                  "ISNULL(ATILSURE,0) as ATILSURE, " +
                                   "OPRBASLANGICTRH, " +
                                   "OPRBITISTRH, " +
-                                  "OEE, " +
+                                  "ISNULL(OEE,0) as OEE, " +
                                   "TARIH," +
-                                  "KALITE, " +
-                                  "MESAI, " +
+                                  "ISNULL(KALITE,0) as KALITE, " +
+                                  "ISNULL(MESAI,0) as MESAI, " +
                                   "ROTAID, " +
                                   "VARYANTID, " +
                                   "STOKID, " +
@@ -91,25 +91,25 @@ namespace TsiErp.DashboardUI.Helpers
                                   "URETIMEMRIID, " +
                                   "OPERASYONID, " +
                                   "MAKINEKODU, " +
-                                  "BIRIMSURE, " +
+                                  "ISNULL(BIRIMSURE,0) as BIRIMSURE, " +
                                   "ISEMRIID, " +
                                   "ACIKLAMA, " +
-                                  "VARDIYA, " +
-                                  "VARDIYACALISMASURESI, " +
+                                  "ISNULL(VARDIYA,0) as VARDIYA, " +
+                                  "ISNULL(VARDIYACALISMASURESI,0) as VARDIYACALISMASURESI, " +
                                   "ISEMRINO, " +
                                   "URETIMEMRINUMARASI, " +
-                                  "PLNMIKTAR, " +
-                                  "AGIRLIK, " +
+                                  "ISNULL(PLNMIKTAR,0) as PLNMIKTAR, " +
+                                  "ISNULL(AGIRLIK,0) as AGIRLIK, " +
                                   "CALISAN, " +
                                   "STOKKODU, " +
                                   "URUNGRPID, " +
                                   "URUNGRUBU, " +
-                                  "AYARVEKONTROLSURESI, " +
-                                  "PLANLANANOPRSURESI, " +
+                                  "ISNULL(AYARVEKONTROLSURESI,0) as AYARVEKONTROLSURESI, " +
+                                  "ISNULL(PLANLANANOPRSURESI,0) as PLANLANANOPRSURESI, " +
                                   "OPRID, " +
-                                  "PERFORMANS, " +
-                                  "KULLANILABILIRLIK, " +
-                                  "ISLEMESURESI" +
+                                  "ISNULL(PERFORMANS,0) as PERFORMANS, " +
+                                  "ISNULL(KULLANILABILIRLIK,0) as KULLANILABILIRLIK, " +
+                                  "ISNULL(ISLEMESURESI,0) as ISLEMESURESI" +
                                   " FROM TUR_VW_EKR_OPERASYON";
             command.Connection = connection;
 
@@ -215,6 +215,7 @@ namespace TsiErp.DashboardUI.Helpers
                                   "ISNULL(PERFORMANS,0) as PERFORMANS, " +
                                   "ISNULL(KULLANILABILIRLIK,0) as KULLANILABILIRLIK, " +
                                   "ISNULL(ISLEMESURESI,0) as ISLEMESURESI," +
+                                  "ISNULL(DEPARTMAN,0) as DEPARTMAN," +
                                   "ISNULL(GRCMIKTAR,0) as GRCMIKTAR" +
                                   " FROM TUR_VW_EKR_OPERASYON " +
                                   "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "'";
@@ -263,6 +264,7 @@ namespace TsiErp.DashboardUI.Helpers
                     URUNGRUBU = Convert.ToString(reader["URUNGRUBU"]),
                     AYARVEKONTROLSURESI = Convert.ToInt32(reader["AYARVEKONTROLSURESI"]),
                     PLANLANANOPRSURESI = Convert.ToInt32(reader["PLANLANANOPRSURESI"]),
+                    DEPARTMAN = Convert.ToString(reader["DEPARTMAN"]),
                     OPRID = Convert.ToInt32(reader["OPRID"]),
                     PERFORMANS = Convert.ToDecimal(reader["PERFORMANS"]),
                     KULLANILABILIRLIK = Convert.ToDecimal(reader["KULLANILABILIRLIK"]),
@@ -286,16 +288,16 @@ namespace TsiErp.DashboardUI.Helpers
                                   "CALISANID, " +
                                   "VARDIYAID, " +
                                   "ISTASYONID, " +
-                                  "URETILENADET, " +
-                                  "HURDAADET, " +
-                                  "OPERASYONSURESI, " +
-                                  "AYARSURESI, " +
-                                  "ATILSURE, " +
+                                  "ISNULL(URETILENADET,0) as URETILENADET, " +
+                                  "ISNULL(HURDAADET,0) as HURDAADET, " +
+                                  "ISNULL(OPERASYONSURESI,0) as OPERASYONSURESI, " +
+                                  "ISNULL(AYARSURESI,0) as AYARSURESI, " +
+                                  "ISNULL(ATILSURE,0) as ATILSURE, " +
                                   "OPRBASLANGICTRH, " +
                                   "OPRBITISTRH, " +
-                                  "OEE, " +
-                                  "KALITE, " +
-                                  "MESAI, " +
+                                  "ISNULL(OEE,0) as OEE, " +
+                                  "ISNULL(KALITE,0) as KALITE, " +
+                                  "ISNULL(MESAI,0) as MESAI, " +
                                   "ROTAID, " +
                                   "VARYANTID, " +
                                   "STOKID, " +
@@ -303,26 +305,27 @@ namespace TsiErp.DashboardUI.Helpers
                                   "URETIMEMRIID, " +
                                   "OPERASYONID, " +
                                   "MAKINEKODU, " +
-                                  "BIRIMSURE, " +
+                                  "ISNULL(BIRIMSURE,0) as BIRIMSURE, " +
                                   "ISEMRIID, " +
                                   "ACIKLAMA, " +
                                   "TARIH," +
-                                  "VARDIYA, " +
-                                  "VARDIYACALISMASURESI, " +
+                                  "ISNULL(VARDIYA,0) as VARDIYA, " +
+                                  "ISNULL(VARDIYACALISMASURESI,0) as VARDIYACALISMASURESI, " +
                                   "ISEMRINO, " +
                                   "URETIMEMRINUMARASI, " +
-                                  "PLNMIKTAR, " +
-                                  "AGIRLIK, " +
+                                  "ISNULL(PLNMIKTAR,0) as PLNMIKTAR, " +
+                                  "ISNULL(AGIRLIK,0) as AGIRLIK, " +
                                   "CALISAN, " +
                                   "STOKKODU, " +
                                   "URUNGRPID, " +
                                   "URUNGRUBU, " +
-                                  "AYARVEKONTROLSURESI, " +
-                                  "PLANLANANOPRSURESI, " +
+                                  "ISNULL(AYARVEKONTROLSURESI,0) as AYARVEKONTROLSURESI, " +
+                                  "ISNULL(PLANLANANOPRSURESI,0) as PLANLANANOPRSURESI, " +
                                   "OPRID, " +
-                                  "PERFORMANS, " +
-                                  "KULLANILABILIRLIK, " +
-                                  "ISLEMESURESI" +
+                                  "ISNULL(PERFORMANS,0) as PERFORMANS, " +
+                                  "ISNULL(KULLANILABILIRLIK,0) as KULLANILABILIRLIK, " +
+                                  "ISNULL(ISLEMESURESI,0) as ISLEMESURESI," +
+                                  "ISNULL(STOKTURU,0) as STOKTURU" +
                                   " FROM TUR_VW_EKR_OPERASYON " +
                                   "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "' AND ISTASYONID = " + stationID.ToString();
             command.Connection = connection;
@@ -373,7 +376,8 @@ namespace TsiErp.DashboardUI.Helpers
                     OPRID = Convert.ToInt32(reader["OPRID"]),
                     PERFORMANS = Convert.ToDecimal(reader["PERFORMANS"]),
                     KULLANILABILIRLIK = Convert.ToDecimal(reader["KULLANILABILIRLIK"]),
-                    ISLEMESURESI = Convert.ToDecimal(reader["ISLEMESURESI"])
+                    ISLEMESURESI = Convert.ToDecimal(reader["ISLEMESURESI"]),
+                    STOKTURU = Convert.ToInt32(reader["STOKTURU"])
                 });
             }
 
@@ -396,21 +400,21 @@ namespace TsiErp.DashboardUI.Helpers
                                   "GUNDUZYARIMGUN, " +
                                   "GUNDUZVARDIYASI, " +
                                   "GUNDUZFAZLAMESAI, " +
-                                  "GUNDUZMESAISURESI, " +
-                                  "GUNDUZFAZLAMESAISURESI, " +
-                                  "GUNDUZPLNDURUSSURESI, " +
+                                  "ISNULL(GUNDUZMESAISURESI,0) as GUNDUZMESAISURESI, " +
+                                  "ISNULL(GUNDUZFAZLAMESAISURESI,0) as GUNDUZFAZLAMESAISURESI, " +
+                                  "ISNULL(GUNDUZPLNDURUSSURESI,0) as GUNDUZPLNDURUSSURESI, " +
                                   "GECEYARIMGUN, " +
                                   "GECEVARDIYASI, " +
                                   "GECEFAZLAMESAI, " +
-                                  "GECEMESAISURESI, " +
-                                  "GECEFAZLAMESAISURESI, " +
-                                  "GECEPLNDURUSSURESI, " +
+                                  "ISNULL(GECEMESAISURESI,0) as GECEMESAISURESI, " +
+                                  "ISNULL(GECEFAZLAMESAISURESI,0) as GECEFAZLAMESAISURESI, " +
+                                  "ISNULL(GECEPLNDURUSSURESI,0) as GECEPLNDURUSSURESI, " +
                                   "BAKIMDURUMU, " +
                                   "PLANLIBAKIMVARDIYASI, " +
-                                  "BAKIMSURESI, " +
-                                  "GUNDUZTOPLAMCALISMAZAMANI, " +
-                                  "GECETOPLAMCALISMAZAMANI, " +
-                                  "TOPLAMCALISABILIRSURE, " +
+                                  "ISNULL(BAKIMSURESI,0) as BAKIMSURESI, " +
+                                  "ISNULL(GUNDUZTOPLAMCALISMAZAMANI,0) as GUNDUZTOPLAMCALISMAZAMANI, " +
+                                  "ISNULL(GECETOPLAMCALISMAZAMANI,0) as GECETOPLAMCALISMAZAMANI, " +
+                                  "ISNULL(TOPLAMCALISABILIRSURE,0) as TOPLAMCALISABILIRSURE, " +
                                   "PLANLANAN " +
                                   "FROM TUR_IST_CALISMA_TAKVIMI_SATIRLAR_YENI";
             command.Connection = connection;
@@ -467,21 +471,21 @@ namespace TsiErp.DashboardUI.Helpers
                                   "GUNDUZYARIMGUN, " +
                                   "GUNDUZVARDIYASI, " +
                                   "GUNDUZFAZLAMESAI, " +
-                                  "GUNDUZMESAISURESI, " +
-                                  "GUNDUZFAZLAMESAISURESI, " +
-                                  "GUNDUZPLNDURUSSURESI, " +
+                                  "ISNULL(GUNDUZMESAISURESI,0) as GUNDUZMESAISURESI, " +
+                                  "ISNULL(GUNDUZFAZLAMESAISURESI,0) as GUNDUZFAZLAMESAISURESI, " +
+                                  "ISNULL(GUNDUZPLNDURUSSURESI,0) as GUNDUZPLNDURUSSURESI, " +
                                   "GECEYARIMGUN, " +
                                   "GECEVARDIYASI, " +
                                   "GECEFAZLAMESAI, " +
-                                  "GECEMESAISURESI, " +
-                                  "GECEFAZLAMESAISURESI, " +
-                                  "GECEPLNDURUSSURESI, " +
+                                  "ISNULL(GECEMESAISURESI,0) as GECEMESAISURESI, " +
+                                  "ISNULL(GECEFAZLAMESAISURESI,0) as GECEFAZLAMESAISURESI, " +
+                                  "ISNULL(GECEPLNDURUSSURESI,0) as GECEPLNDURUSSURESI, " +
                                   "BAKIMDURUMU, " +
                                   "PLANLIBAKIMVARDIYASI, " +
-                                  "BAKIMSURESI, " +
-                                  "GUNDUZTOPLAMCALISMAZAMANI, " +
-                                  "GECETOPLAMCALISMAZAMANI, " +
-                                  "TOPLAMCALISABILIRSURE, " +
+                                  "ISNULL(BAKIMSURESI,0) as BAKIMSURESI, " +
+                                  "ISNULL(GUNDUZTOPLAMCALISMAZAMANI,0) as GUNDUZTOPLAMCALISMAZAMANI, " +
+                                  "ISNULL(GECETOPLAMCALISMAZAMANI,0) as GECETOPLAMCALISMAZAMANI, " +
+                                  "ISNULL(TOPLAMCALISABILIRSURE,0) as TOPLAMCALISABILIRSURE, " +
                                   "PLANLANAN " +
                                   "FROM TUR_IST_CALISMA_TAKVIMI_SATIRLAR_YENI " +
                                   "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "'";
@@ -534,7 +538,7 @@ namespace TsiErp.DashboardUI.Helpers
                                   "ID, " +
                                   "DURUSID, " +
                                   "SEBEP, " +
-                                  "DURUSSURE, " +
+                                  "ISNULL(DURUSSURE,0) as DURUSSURE, " +
                                   "BASLANGIC, " +
                                   "BITIS, " +
                                   "CALISANID, " +
@@ -542,7 +546,7 @@ namespace TsiErp.DashboardUI.Helpers
                                   "ISTASYONID, " +
                                   "UNUTULDU, " +
                                   "TARIH, " +
-                                  "OPR_TOPLAM_DURUS, " +
+                                  "ISNULL(OPR_TOPLAM_DURUS,0) as OPR_TOPLAM_DURUS, " +
                                   "MESAI, " +
                                   "ISEMRINO, " +
                                   "OPERASYONACIKLAMASI, " +
@@ -554,7 +558,7 @@ namespace TsiErp.DashboardUI.Helpers
                                   "URETIMEMRIID, " +
                                   "PLANLI, " +
                                   "CALISAN, " +
-                                  "DURUS_ORANI " +
+                                  "ISNULL(DURUS_ORANI,0) as DURUS_ORANI " +
                                   "YKK " +
                                   "FROM TUR_VW_EKR_DURUS";
             command.Connection = connection;
@@ -701,8 +705,8 @@ namespace TsiErp.DashboardUI.Helpers
                                   "ISNULL(URETIMEMRIID,0) as URETIMEMRIID, " +
                                   "ISNULL(PLANLI,0) as PLANLI, " +
                                   "ISNULL(CALISAN,0) as CALISAN, " +
-                                  "ISNULL(DURUS_ORANI,0) as  DURUS_ORANI," +
-                                  "ISNULL(YKK,0) as  YKK " +
+                                  "ISNULL(DURUS_ORANI,0) as DURUS_ORANI," +
+                                  "ISNULL(YKK,0) as YKK " +
                                   "FROM TUR_VW_EKR_DURUS " +
                                   "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "' AND ISTASYONID = " + stationID.ToString();
             command.Connection = connection;
@@ -784,7 +788,7 @@ namespace TsiErp.DashboardUI.Helpers
             command.CommandText = "SELECT " +
                                   "HURDAID," +
                                   "SEBEP, " +
-                                  "HURDAADET, " +
+                                  "ISNULL(HURDAADET,0) as HURDAADET, " +
                                   "OPERASYONID, " +
                                   "CALISANID, " +
                                   "ISEMRINO, " +
@@ -793,7 +797,7 @@ namespace TsiErp.DashboardUI.Helpers
                                   "STOKKODU, " +
                                   "VARYANTKODU, " +
                                   "URETIMEMRINUMARASI, " +
-                                  "PLNMIKTAR, " +
+                                  "ISNULL(PLNMIKTAR,0) as PLNMIKTAR, " +
                                   "URUNGRUPADI, " +
                                   "ID," +
                                   "TARIH" +
@@ -837,7 +841,7 @@ namespace TsiErp.DashboardUI.Helpers
             command.CommandText = "SELECT " +
                                   "HURDAID," +
                                   "SEBEP, " +
-                                  "HURDAADET, " +
+                                  "ISNULL(HURDAADET,0) as HURDAADET, " +
                                   "OPERASYONID, " +
                                   "CALISANID, " +
                                   "ISEMRINO, " +
@@ -846,7 +850,7 @@ namespace TsiErp.DashboardUI.Helpers
                                   "STOKKODU, " +
                                   "VARYANTKODU, " +
                                   "URETIMEMRINUMARASI, " +
-                                  "PLNMIKTAR, " +
+                                  "ISNULL(PLNMIKTAR,0) as PLNMIKTAR, " +
                                   "URUNGRUPADI, " +
                                   "ID," +
                                   "ISNULL(URUNGRPID,0) as URUNGRPID," +
@@ -894,7 +898,7 @@ namespace TsiErp.DashboardUI.Helpers
             command.CommandText = "SELECT " +
                                   "HURDAID," +
                                   "SEBEP, " +
-                                  "HURDAADET, " +
+                                  "ISNULL(HURDAADET,0) as HURDAADET, " +
                                   "OPERASYONID, " +
                                   "CALISANID, " +
                                   "ISEMRINO, " +
@@ -903,7 +907,7 @@ namespace TsiErp.DashboardUI.Helpers
                                   "STOKKODU, " +
                                   "VARYANTKODU, " +
                                   "URETIMEMRINUMARASI, " +
-                                  "PLNMIKTAR, " +
+                                  "ISNULL(PLNMIKTAR,0) as PLNMIKTAR, " +
                                   "ID," +
                                   "ISNULL(URUNGRPID,0) as URUNGRPID," +
                                   "ISNULL(URUNGRUBU,0) as URUNGRUBU," +
@@ -950,7 +954,7 @@ namespace TsiErp.DashboardUI.Helpers
             command.CommandText = "SELECT " +
                                   "ID," +
                                   "ACIKLAMA, " +
-                                  "TUR" +
+                                  "ISNULL(TUR,0) as TUR" +
                                   " FROM TUR_KK_UYGUNSUZLUK_BASLIKLARI" +
                                   " WHERE TUR = 3";
             command.Connection = connection;

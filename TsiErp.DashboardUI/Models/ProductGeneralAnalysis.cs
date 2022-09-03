@@ -25,7 +25,7 @@ namespace TsiErp.DashboardUI.Models
         /// </summary>
         public string ProductName { get; set; }
         /// <summary>
-        /// Üretilen Adet 
+        /// Planlanan Adet 
         /// </summary>
         public decimal PlannedQuantity { get; set; }
         /// <summary>

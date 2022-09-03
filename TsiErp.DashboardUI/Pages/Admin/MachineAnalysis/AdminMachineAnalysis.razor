@@ -2,6 +2,7 @@
 @layout AdminLayout
 
 @inject IstasyonOEEService IstasyonOEEService
+@inject NavigationManager NavigationManager
 @using Syncfusion.Blazor.Charts
 @using Syncfusion.Blazor.Calendars
 @using Syncfusion.Blazor.Buttons
@@ -10,6 +11,8 @@
 @using Syncfusion.Blazor.DropDowns
 @using Syncfusion.Blazor.Data
 @using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.SplitButtons
+@using Syncfusion.Blazor.Spinner
 
 <style>
     .GridZebra table tbody tr:nth-child(odd) {
@@ -41,53 +44,54 @@
     .list {
         float: left;
         line-height: 20px;
-        margin: 10px;
+        font: 10px;
         min-width: 280px;
+    }
+
+    .FilterCard {
+        background-color: #f7f7f7;
+        border: 1px solid #d6d5d5;
+    }
+
+    .Cards {
+        border: 1px solid #d6d5d5;
+    }
+
+    .e-checkbox-wrapper.e-customcheck:hover .e-frame.e-check {
+        background-color: #9C0D0D;
+        font: 600;
+        font-size: 16px;
+        font-weight: bold;
     }
 </style>
 
-<SfCard>
+<SfCard class="FilterCard">
     <CardContent>
-
-        @*  <table width="1000px">
-        <tr>
-        <td width="200px">
-        </td>
-        <td width="200px">
-        <label><strong>Zaman Periyodu:</strong></label>
-        <SfComboBox TValue="int" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Seçiniz." DataSource="@timeperiods">
-        <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
-        </SfComboBox>
-        </td>
-        <td width="200px">
-        <label><strong>Verim Değeri:</strong></label>
-        <SfNumericTextBox TValue="int" @bind-Value="threshold" Placeholder="Verim Değeri Yazınız."></SfNumericTextBox>
-        </td>
-        <td width="100px">
-        </td>
-        <td width="50px" align="right">
-        <label> </label>
-        <SfButton IsPrimary="true" CssClass="e-btn e-secondary" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
-        </td>
-        <td width="50px">
-        </td>
-        </tr>
-        </table>*@
         <table width="1000px">
             <tr>
                 <td width="200px">
+                    <SfCheckBox @bind-Checked="isLabelsChecked" Label="Etiketleri Göster" @onchange="OnChangeLabelCheck" CssClass="e-customcheck"></SfCheckBox>
                 </td>
-                <td width="400px">
+                <td width="200px">
                     <label><strong>Zaman Periyodu:</strong></label>
                     <SfComboBox TValue="int" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Seçiniz." DataSource="@timeperiods">
                         <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
                     </SfComboBox>
                 </td>
+                <td width="200px">
+                    <label><strong>Verim Değeri:</strong></label>
+                    <SfNumericTextBox TValue="int" @bind-Value="threshold" Placeholder="Verim Değeri Yazınız."></SfNumericTextBox>
+                </td>
                 <td width="100px">
                 </td>
                 <td width="50px" align="right">
-                    <label> </label>
-                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
+                    <br />
+                      <SfButton IsPrimary="true" CssClass="e-btn e-secondary" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
+                    @*<SfProgressButton OnClick="@OnDateButtonClicked" Content="Filtrele" IsPrimary="true">
+                        <ProgressButtonSpinSettings Position="SpinPosition.Right"></ProgressButtonSpinSettings>
+                    </SfProgressButton>*@
+                    <SfSpinner @bind-Visible="VisibleSpinner">
+                    </SfSpinner>
                 </td>
                 <td width="50px">
                 </td>
@@ -98,24 +102,28 @@
     </CardFooter>
 </SfCard>
 <br />
-<SfCard style="text-align:center">
+<SfCard class="Cards" style="text-align:center">
     <CardContent>
         <SfChart @ref="ChartInstance" Theme="Theme.Bootstrap5" Title="Makina Verimlilik Grafiği">
-            <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category">
+            <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
+            <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
+                <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
             </ChartPrimaryXAxis>
             <ChartPrimaryYAxis LabelFormat="p2">
-               @* <ChartStriplines>
-                    <ChartStripline Start="@thresholddouble" Size="0.05" Color="darkblue">
-                    </ChartStripline>
-                </ChartStriplines>*@
+                <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
             </ChartPrimaryYAxis>
             <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
             <ChartSeriesCollection>
                 <ChartSeries DataSource="@datachart" Name="Verimlilik" XName="AY" YName="KULLANILABILIRLIK" Width="3" Fill="darkred" Type="ChartSeriesType.Line">
                     <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
+                        <ChartDataLabel Visible="@dataLabels">
+                            <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
+                        </ChartDataLabel>
                     </ChartMarker>
                     <ChartTrendlines>
                         <ChartTrendline Type="TrendlineTypes.Linear" Width="3" Name="Trend" Fill="#3345A7">
+                            <ChartTrendlineMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Diamond">
+                            </ChartTrendlineMarker>
                         </ChartTrendline>
                     </ChartTrendlines>
                 </ChartSeries>
@@ -129,7 +137,7 @@
     </CardFooter>
 </SfCard>
 <br />
-<SfCard>
+<SfCard class="Cards">
     <CardContent>
         <SfGrid ID="Grid" DataSource="@dataoee" @ref="Grid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
@@ -139,12 +147,23 @@
             <GridPageSettings PageSizes="true"></GridPageSettings>
             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
             <GridColumns>
-                <GridColumn Field=@nameof(StationOEEAnalysis.Code) HeaderText="Makina Kodu" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(StationOEEAnalysis.OccuredOperationTime) Format="#######" HeaderText="Üretim Süresi" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(StationOEEAnalysis.HaltTime) HeaderText="Duruş Süresi" TextAlign="TextAlign.Center" Width="130"></GridColumn>
-                <GridColumn Field=@nameof(StationOEEAnalysis.Availability) HeaderText="Verimlilik" Format="#%" TextAlign="TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.Code) HeaderText="MAKİNA KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.Department) HeaderText="DEPARTMAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.OccuredOperationTime) Format="#######" HeaderText="ÜRETİM SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.HaltTime) HeaderText="DURUŞ SÜRESİ" TextAlign="TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.Availability) HeaderText="VERİMLİLİK" Format="#%" TextAlign="TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.HaltTime) HeaderText="DETAYLAR" TextAlign="TextAlign.Center" Width="80">
+                    <Template>
+                        @{
+                            var row = (context as StationOEEAnalysis);
+                            <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.StationID))"></SfButton>
+                        }
+
+                    </Template>
+                </GridColumn>
             </GridColumns>
         </SfGrid>
+        
     </CardContent>
     <CardFooter>
     </CardFooter>
@@ -163,21 +182,22 @@
     private int threshold;
     private double thresholddouble;
     private int frequencyChart;
-
     SfChart ChartInstance;
+    bool VisibleSpinner = false;
+    private bool isLabelsChecked = false;
+    private bool dataLabels = false;
 
     protected override void OnInitialized()
     {
         dataoee = IstasyonOEEService.GetStationOEEAnalysis(startDate, endDate);
-        datachart = IstasyonOEEService.GetAdminMachineChart(startDate, endDate, 2);
+        datachart = IstasyonOEEService.GetAdminMachineChart(startDate, endDate, 3);
     }
 
+    #region Component Metotları
 
-
-
-
-    void OnDateButtonClicked()
+    private void OnDateButtonClicked()
     {
+        //VisibleSpinner = true;
         endDate = DateTime.Today;
         #region Zaman Seçimi
         if (selectedTimeIndex == 0)
@@ -187,47 +207,64 @@
         }
         else if (selectedTimeIndex == 1)
         {
-            startDate = DateTime.Today.AddDays(-181);
+            startDate = DateTime.Today.AddDays(-273);
             frequencyChart = 1;
         }
         else if (selectedTimeIndex == 2)
         {
-            startDate = DateTime.Today.AddDays(-90);
+            startDate = DateTime.Today.AddDays(-181);
             frequencyChart = 2;
         }
         else if (selectedTimeIndex == 3)
         {
-            startDate = DateTime.Today.AddDays(-60);
+            startDate = DateTime.Today.AddDays(-90);
             frequencyChart = 3;
         }
         else if (selectedTimeIndex == 4)
         {
-            startDate = DateTime.Today.AddDays(-30);
+            startDate = DateTime.Today.AddDays(-60);
             frequencyChart = 4;
         }
         else if (selectedTimeIndex == 5)
         {
-            startDate = DateTime.Today.AddDays(-7);
+            startDate = DateTime.Today.AddDays(-30);
             frequencyChart = 5;
+        }
+        else if (selectedTimeIndex == 6)
+        {
+            startDate = DateTime.Today.AddDays(-7);
+            frequencyChart = 6;
         }
         #endregion
 
         thresholddouble = Convert.ToDouble(threshold) / 100;
-
-        ChartInstance.Refresh();
+        Grid.Refresh();
+        ChartInstance.RefreshAsync();
         dataoee = IstasyonOEEService.GetStationOEEAnalysis(startDate, endDate);
         datachart = IstasyonOEEService.GetAdminMachineChart(startDate, endDate, frequencyChart);
         StateHasChanged();
-        //threshold = 0;
-        selectedTimeIndex = -1;
+        //VisibleSpinner = false;
     }
 
+    private void OnDetailButtonClicked(int stationID)
+    {
+        NavigationManager.NavigateTo("/admin/machine-analysis/details" + "/" + stationID.ToString() + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd")); ;
+    }
+
+    private void OnChangeLabelCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+    {
+        ChartInstance.RefreshAsync();
+        if (isLabelsChecked) { dataLabels = true; }
+        else { dataLabels = false; }
+    }
+
+    #endregion
 
     public void CellInfoHandler(QueryCellInfoEventArgs<StationOEEAnalysis> Args)
     {
         if (Args.Column.Field == "Availability")
         {
-            if (Args.Data.Availability < 0.4m)
+            if (Args.Data.Availability < Convert.ToDecimal(thresholddouble))
             {
                 Args.Cell.AddStyle(new string[] { "background-color: #DF0000; color: white; " });
             }
@@ -236,14 +273,16 @@
                 Args.Cell.AddStyle(new string[] { "background-color: #35C930; color: white;" });
             }
         }
+        StateHasChanged();
     }
 
     private List<ComboboxTimePeriods> timeperiods = new List<ComboboxTimePeriods>() {
         new ComboboxTimePeriods(){ TimeID= 1, TimeText= "Yıllık" },
-        new ComboboxTimePeriods(){ TimeID= 2, TimeText= "Son 6 Ay" },
-        new ComboboxTimePeriods(){ TimeID= 3, TimeText= "Son 3 Ay" },
-        new ComboboxTimePeriods(){ TimeID= 4, TimeText= "Son 2 Ay" },
-        new ComboboxTimePeriods(){ TimeID= 5, TimeText= "Son 1 Ay" },
+        new ComboboxTimePeriods(){ TimeID= 2, TimeText= "Son 9 Ay" },
+        new ComboboxTimePeriods(){ TimeID= 3, TimeText= "Son 6 Ay" },
+        new ComboboxTimePeriods(){ TimeID= 4, TimeText= "Son 3 Ay" },
+        new ComboboxTimePeriods(){ TimeID= 5, TimeText= "Son 2 Ay" },
+        new ComboboxTimePeriods(){ TimeID= 6, TimeText= "Son 1 Ay" },
         new ComboboxTimePeriods(){ TimeID= 6, TimeText= "Son 1 Hafta" }
      };
 
