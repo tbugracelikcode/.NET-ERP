@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Tsi.Logging.EntityFrameworkCore\Tsi.Logging.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\TsiErp.Business\TsiErp.Business.csproj" />
   </ItemGroup>
 

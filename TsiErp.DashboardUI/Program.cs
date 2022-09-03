@@ -7,8 +7,16 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Localization;
  using Newtonsoft.Json.Serialization;
 using TsiErp.DashboardUI.Data;
+using TsiErp.DashboardUI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddScoped<IstasyonOEEService>();
+builder.Services.AddScoped<PersonelService>();
+builder.Services.AddScoped<StokDetayService>();
+builder.Services.AddScoped<StokService>();
+builder.Services.AddScoped<IstasyonService>();
+builder.Services.AddScoped<IstasyonDetayService>();
 
 // Add services to the container.
 builder.Services.AddSyncfusionBlazor();

@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Tsi.Application.Contract": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:55604;http://localhost:55605"
+    }
+  }
+}

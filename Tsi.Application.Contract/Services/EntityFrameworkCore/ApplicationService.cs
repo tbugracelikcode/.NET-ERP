@@ -1,4 +1,5 @@
-﻿using Tsi.Core.Utilities.Guids;
+﻿
+using Tsi.Core.Utilities.Guids;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 
 namespace Tsi.Application.Contract.Services.EntityFrameworkCore

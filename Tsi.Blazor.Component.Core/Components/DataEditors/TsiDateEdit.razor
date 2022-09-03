@@ -1,0 +1,63 @@
+﻿@inherits BaseEditorParameters
+
+
+<DxGridLayoutItem Column=ColumnIndex
+                  CssClass="@LayoutItemCssClass"
+                  ColumnSpan=ColumnSpan
+                  Row=RowIndex
+                  RowSpan=RowSpan
+                  Visible=Visible>
+    <Template>
+        <SfDatePicker TValue="DateTime?"
+                      CssClass="@EditorCssClass"
+                      Enabled="@Enabled"
+                      EnableRtl=@EnableRtl
+                      Readonly=@ReadOnly
+                      ShowClearButton=@ShowClearButton
+                      Placeholder="@Placeholder"
+                      Format="@FormatString">
+        </SfDatePicker>
+    </Template>
+</DxGridLayoutItem>
+
+<TsiLabel Caption="@Caption"
+          ColumnIndex=ColumnIndex-2
+          CssClass="@CaptionCssClass"
+          RowIndex="RowIndex"
+          Visible="Visible && CaptionVisible">
+</TsiLabel>
+
+
+<TsiLabel Caption="@SeparateCaption"
+          ColumnIndex=ColumnIndex-1
+          CssClass="@CaptionCssClass"
+          RowIndex="RowIndex"
+          Visible="Visible && SeparateCaptionVisible">
+</TsiLabel>
+
+
+@code {
+    private SfDatePicker<DateTime> _DateEdit;
+
+    private DateTime _value;
+
+    [Parameter]
+    public EventCallback<DateTime> ValueChanged { get; set; }
+
+
+    [Parameter]
+    public string FormatString { get; set; }
+
+    [Parameter]
+    public DateTime Value
+    {
+        get => _value;
+        set
+        {
+            if (_value == value) return;
+
+            _value = value;
+            ValueChanged.InvokeAsync(value);
+        }
+    }
+}
