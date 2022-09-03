@@ -53,9 +53,9 @@ namespace TsiErp.Business.Entities.Branch.Services
 
 
         [CacheAspect(duration: 60)]
-        public async Task<IDataResult<IList<ListBranchesDto>>> GetListAsync()
+        public async Task<IDataResult<IList<ListBranchesDto>>> GetListAsync(ListBranchesParameterDto input)
         {
-            var list = await _repository.GetListAsync(null,  t => t.Periods);
+            var list = await _repository.GetListAsync(t=>t.IsActive == input.IsActive,  t => t.Periods);
 
             var mappedEntity = ObjectMapper.Map<List<Branches>, List<ListBranchesDto>>(list.ToList());
 

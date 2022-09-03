@@ -58,9 +58,9 @@ namespace TsiErp.Business.Entities.StationGroup.Services
         }
 
         [CacheAspect(duration: 60)]
-        public async Task<IDataResult<IList<ListStationGroupsDto>>> GetListAsync()
+        public async Task<IDataResult<IList<ListStationGroupsDto>>> GetListAsync(ListStationGroupsParameterDto input)
         {
-            var list = await _repository.GetListAsync(null, t => t.Stations);
+            var list = await _repository.GetListAsync(t=>t.IsActive==input.IsActive, t => t.Stations);
 
             var mappedEntity = ObjectMapper.Map<List<StationGroups>, List<ListStationGroupsDto>>(list.ToList());
 

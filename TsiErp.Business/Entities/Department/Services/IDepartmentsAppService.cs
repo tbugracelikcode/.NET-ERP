@@ -11,7 +11,7 @@ using TsiErp.Entities.Entities.Department.Dtos;
 
 namespace TsiErp.Business.Entities.Department.Services
 {
-    public interface IDepartmentsAppService : ICrudAppService<Departments, SelectDepartmentsDto, ListDepartmentsDto, CreateDepartmentsDto, UpdateDepartmentsDto>
+    public interface IDepartmentsAppService : ICrudAppService<Departments, SelectDepartmentsDto, ListDepartmentsDto, CreateDepartmentsDto, UpdateDepartmentsDto, ListDepartmentsParameterDto>
     {
     }
 }

@@ -9,7 +9,7 @@ using TsiErp.Entities.Entities.Period.Dtos;
 
 namespace TsiErp.Business.Entities.Period.Services
 {
-    public interface IPeriodsAppService : ICrudAppService<Periods, SelectPeriodsDto, ListPeriodsDto, CreatePeriodsDto, UpdatePeriodsDto>
+    public interface IPeriodsAppService : ICrudAppService<Periods, SelectPeriodsDto, ListPeriodsDto, CreatePeriodsDto, UpdatePeriodsDto, ListPeriodsParameterDto>
     {
     }
 }

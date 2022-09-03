@@ -18,9 +18,9 @@ namespace TsiErp.WebAPI.Controllers
         }
 
         [HttpGet("GetListAsync")]
-        public async Task<IActionResult> GetList()
+        public async Task<IActionResult> GetList(ListRolePermissionsParameterDto input)
         {
-            var result = await _appService.GetListAsync();
+            var result = await _appService.GetListAsync(input);
 
             if (result.Success)
             {

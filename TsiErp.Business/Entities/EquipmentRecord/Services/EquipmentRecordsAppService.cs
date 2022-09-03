@@ -61,9 +61,9 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
 
 
         [CacheAspect(duration: 60)]
-        public async Task<IDataResult<IList<ListEquipmentRecordsDto>>> GetListAsync()
+        public async Task<IDataResult<IList<ListEquipmentRecordsDto>>> GetListAsync(ListEquipmentRecordsParameterDto input)
         {
-            var list = await _repository.GetListAsync(null, t => t.Departments, t => t.CalibrationRecords, t => t.CalibrationVerifications);
+            var list = await _repository.GetListAsync(t => t.IsActive == input.IsActive, t => t.Departments, t => t.CalibrationRecords, t => t.CalibrationVerifications);
 
             var mappedEntity = ObjectMapper.Map<List<EquipmentRecords>, List<ListEquipmentRecordsDto>>(list.ToList());
 

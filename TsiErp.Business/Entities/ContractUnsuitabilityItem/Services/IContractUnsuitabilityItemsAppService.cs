@@ -11,7 +11,7 @@ using TsiErp.Entities.Entities.ContractUnsuitabilityItem.Dtos;
 
 namespace TsiErp.Business.Entities.ContractUnsuitabilityItem.Services
 {
-    public interface IContractUnsuitabilityItemsAppService : ICrudAppService<ContractUnsuitabilityItems, SelectContractUnsuitabilityItemsDto, ListContractUnsuitabilityItemsDto, CreateContractUnsuitabilityItemsDto, UpdateContractUnsuitabilityItemsDto>
+    public interface IContractUnsuitabilityItemsAppService : ICrudAppService<ContractUnsuitabilityItems, SelectContractUnsuitabilityItemsDto, ListContractUnsuitabilityItemsDto, CreateContractUnsuitabilityItemsDto, UpdateContractUnsuitabilityItemsDto, ListContractUnsuitabilityItemsParameterDto>
     {
     }
 }

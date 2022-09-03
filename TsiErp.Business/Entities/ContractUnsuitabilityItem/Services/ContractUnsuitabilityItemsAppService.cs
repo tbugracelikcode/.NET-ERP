@@ -61,7 +61,7 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityItem.Services
 
 
         [CacheAspect(duration: 60)]
-        public async Task<IDataResult<IList<ListContractUnsuitabilityItemsDto>>> GetListAsync()
+        public async Task<IDataResult<IList<ListContractUnsuitabilityItemsDto>>> GetListAsync(ListContractUnsuitabilityItemsParameterDto input)
         {
             var list = await _repository.GetListAsync(null);
 

@@ -61,7 +61,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
 
 
         [CacheAspect(duration: 60)]
-        public async Task<IDataResult<IList<ListCalibrationVerificationsDto>>> GetListAsync()
+        public async Task<IDataResult<IList<ListCalibrationVerificationsDto>>> GetListAsync(ListCalibrationVerificationsParameterDto input)
         {
             var list = await _repository.GetListAsync(null, t => t.EquipmentRecords);
 
