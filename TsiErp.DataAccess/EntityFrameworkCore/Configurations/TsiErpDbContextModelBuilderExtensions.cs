@@ -14,6 +14,7 @@ using Tsi.EntityFrameworkCore.Modeling;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Logging;
 using TsiErp.Entities.Entities.Period;
+using TsiErp.Entities.Entities.UnitSet;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 {
@@ -144,6 +145,22 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.AfterValues).IsRequired().HasColumnType("sql_variant").HasMaxLength(5000);
                 b.Property(t => t.LogLevel_).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
                 b.Property(t => t.UserId).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+            });
+        }
+        public static void ConfigureUnitSets(this ModelBuilder builder)
+        {
+            builder.Entity<UnitSets>(b =>
+            {
+                b.ToTable("UnitSets");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+                b.HasIndex(x => x.Code);
+
 
             });
         }
