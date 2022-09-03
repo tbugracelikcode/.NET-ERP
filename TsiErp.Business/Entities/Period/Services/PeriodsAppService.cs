@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Application.Contract.Services.EntityFrameworkCore;
+using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
@@ -25,7 +26,9 @@ namespace TsiErp.Business.Entities.Period.Services
             _repository = repository;
         }
 
+
         [ValidationAspect(typeof(CreatePeriodsValidator), Priority = 1)]
+        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPeriodsDto>> CreateAsync(CreatePeriodsDto input)
         {
             var entity = ObjectMapper.Map<CreatePeriodsDto, Periods>(input);
@@ -35,6 +38,7 @@ namespace TsiErp.Business.Entities.Period.Services
             return new SuccessDataResult<SelectPeriodsDto>(ObjectMapper.Map<Periods, SelectPeriodsDto>(addedEntity));
         }
 
+        [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
             await _repository.DeleteAsync(id);
@@ -48,6 +52,7 @@ namespace TsiErp.Business.Entities.Period.Services
             return new SuccessDataResult<SelectPeriodsDto>(mappedEntity);
         }
 
+        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPeriodsDto>>> GetListAsync()
         {
             var list = await _repository.GetListAsync();
@@ -58,6 +63,7 @@ namespace TsiErp.Business.Entities.Period.Services
         }
 
         [ValidationAspect(typeof(UpdatePeriodsValidator), Priority = 1)]
+        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPeriodsDto>> UpdateAsync(UpdatePeriodsDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);

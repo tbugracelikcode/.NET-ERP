@@ -23,7 +23,7 @@ namespace TsiErp.Business.Entities.Branch.Services
             _repository = repository;
         }
 
-        //[TransactionScopeAspect(Priority = 2)]
+
         [ValidationAspect(typeof(CreateBranchesValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBranchesDto>> CreateAsync(CreateBranchesDto input)
@@ -34,7 +34,6 @@ namespace TsiErp.Business.Entities.Branch.Services
 
             return new SuccessDataResult<SelectBranchesDto>(ObjectMapper.Map<Branches, SelectBranchesDto>(addedEntity));
         }
-
 
 
         [CacheRemoveAspect("Get")]
@@ -52,7 +51,8 @@ namespace TsiErp.Business.Entities.Branch.Services
             return new SuccessDataResult<SelectBranchesDto>(mappedEntity);
         }
 
-        [CacheAspect(duration: 10)]
+
+        [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListBranchesDto>>> GetListAsync()
         {
             var list = await _repository.GetListAsync(null,  t => t.Periods);
@@ -61,6 +61,7 @@ namespace TsiErp.Business.Entities.Branch.Services
 
             return new SuccessDataResult<IList<ListBranchesDto>>(mappedEntity);
         }
+
 
         [ValidationAspect(typeof(UpdateBranchesValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
