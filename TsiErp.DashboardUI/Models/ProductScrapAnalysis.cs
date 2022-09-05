@@ -28,5 +28,9 @@ namespace TsiErp.DashboardUI.Models
         /// PPM
         /// </summary>
         public decimal PPM { get; set; }
+        /// <summary>
+        /// Ürün Grubu Adı
+        /// </summary>
+        public string ProductGroupName { get; set; }
     }
 }

@@ -33,21 +33,49 @@ namespace TsiErp.DashboardUI.Services
                 {
                     Code = code.KOD,
                     HaltID = durusID,
-                    Time = haltLines.Where(t => t.DURUSID == durusID).Sum(t => t.DURUSSURE)
+                    Time = haltLines.Where(t => t.DURUSID == durusID).Sum(t => t.DURUSSURE),
+                    StationName = haltLines.Where(t=>t.DURUSID == durusID).Select(t=>t.MAKINEKODU).FirstOrDefault()
                 };
 
                 stationDetailedHaltAnalysis.Add(analysis);
             }
             return stationDetailedHaltAnalysis;
         }
+        public List<StationDetailedHaltAnalysis> GetStationDetailedHaltAnalysisChart(int makineID, DateTime startDate, DateTime endDate)
+        {
+            //startDate = new DateTime(2022, 06, 01);
+            //endDate = new DateTime(2022, 08, 22);
+            //makineID = 8;
+            List<StationDetailedHaltAnalysis> stationDetailedHaltAnalysisChart = new List<StationDetailedHaltAnalysis>();
+
+            var haltCodes = DBHelper.GetHaltCodes();
+            var haltLines = DBHelper.GetHaltQueryStation(makineID, startDate, endDate);
+
+            foreach (var code in haltCodes)
+            {
+                int durusID = code.ID;
+
+                StationDetailedHaltAnalysis analysis = new StationDetailedHaltAnalysis
+                {
+                    Code = code.KOD,
+                    HaltID = durusID,
+                    Time = haltLines.Where(t => t.DURUSID == durusID).Sum(t => t.DURUSSURE),
+                    StationName = haltLines.Where(t => t.DURUSID == durusID).Select(t => t.MAKINEKODU).FirstOrDefault()
+                };
+                if(analysis.Time >0)
+                {
+                    stationDetailedHaltAnalysisChart.Add(analysis);
+                }
+
+                
+            }
+            return stationDetailedHaltAnalysisChart;
+        }
         #endregion
 
         #region Stok Analizi
         public List<StationDetailedProductChart> GetStationDetailedProductChart(int makineID, DateTime startDate, DateTime endDate, int products)
         {
-            //startDate = new DateTime(2022, 06, 01);
-            //endDate = new DateTime(2022, 08, 22);
-            //makineID = 8;
 
             List<StationDetailedProductChart> stationDetailedProductChart = new List<StationDetailedProductChart>();
 
@@ -59,8 +87,8 @@ namespace TsiErp.DashboardUI.Services
                     var productList = operationLines.Where(t => t.STOKTURU == 12).Select(t => t.STOKID).Distinct().ToList();
                     foreach (var productID in productList)
                     {
-                        int planlananBirimSure = operationLines.Where(t => t.STOKID == productID).Sum(t => t.PLANLANANOPRSURESI);
-                        int gerceklesenBirimSure = (int)operationLines.Where(t => t.STOKID == productID).Sum(t => t.BIRIMSURE);
+                        int planlananBirimSure = (int)operationLines.Where(t => t.STOKID == productID).Average(t => t.PLANLANANOPRSURESI);
+                        int gerceklesenBirimSure = (int)operationLines.Where(t => t.STOKID == productID).Average(t => t.BIRIMSURE);
 
                         StationDetailedProductChart analysis = new StationDetailedProductChart
                         {
@@ -79,8 +107,8 @@ namespace TsiErp.DashboardUI.Services
                     productList = operationLines.Select(t => t.STOKID).Distinct().ToList();
                     foreach (var productID in productList)
                     {
-                        int planlananBirimSure = operationLines.Where(t => t.STOKID == productID).Sum(t => t.PLANLANANOPRSURESI);
-                        int gerceklesenBirimSure = (int)operationLines.Where(t => t.STOKID == productID).Sum(t => t.BIRIMSURE);
+                        int planlananBirimSure = (int)operationLines.Where(t => t.STOKID == productID).Average(t => t.PLANLANANOPRSURESI);
+                        int gerceklesenBirimSure = (int)operationLines.Where(t => t.STOKID == productID).Average(t => t.BIRIMSURE);
 
                         StationDetailedProductChart analysis = new StationDetailedProductChart
                         {

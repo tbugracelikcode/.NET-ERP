@@ -71,7 +71,6 @@ namespace TsiErp.DashboardUI.Helpers
                                   "ID," +
                                   "CALISANID, " +
                                   "VARDIYAID, " +
-                                  "MAKINEADI, " +
                                   "ISTASYONID, " +
                                   "ISNULL(URETILENADET,0) as URETILENADET, " +
                                   "ISNULL(HURDAADET,0) as HURDAADET, " +
@@ -748,6 +747,80 @@ namespace TsiErp.DashboardUI.Helpers
             return haltLines;
         }
 
+        public static List<Durus> GetHaltQueryEmployee(int employeeID, DateTime startDate, DateTime endDate)
+        {
+            List<Durus> haltLines = new List<Durus>();
+
+            SqlConnection connection = GetSqlConnection();
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "ID, " +
+                                  "DURUSID, " +
+                                  "SEBEP, " +
+                                  "DURUSSURE, " +
+                                  "BASLANGIC, " +
+                                  "BITIS, " +
+                                  "CALISANID, " +
+                                  "OPERASYONID, " +
+                                  "ISTASYONID, " +
+                                  "UNUTULDU, " +
+                                  "TARIH, " +
+                                  "ISNULL(OPR_TOPLAM_DURUS,0) as OPR_TOPLAM_DURUS, " +
+                                  "ISNULL(MESAI,0) as MESAI, " +
+                                  "ISNULL(ISEMRINO,0) as ISEMRINO, " +
+                                  "ISNULL(OPERASYONACIKLAMASI,0) as OPERASYONACIKLAMASI, " +
+                                  "MAKINEKODU, " +
+                                  "ISNULL(STOKKODU,0) as STOKKODU, " +
+                                  "ISNULL(VARYANTKODU,0) as VARYANTKODU, " +
+                                  "ISNULL(URETIMEMRINUMARASI,0) as URETIMEMRINUMARASI, " +
+                                  "ISNULL(ISEMRIID,0) as ISEMRIID, " +
+                                  "ISNULL(URETIMEMRIID,0) as URETIMEMRIID, " +
+                                  "ISNULL(PLANLI,0) as PLANLI, " +
+                                  "ISNULL(CALISAN,0) as CALISAN, " +
+                                  "ISNULL(DURUS_ORANI,0) as DURUS_ORANI," +
+                                  "ISNULL(YKK,0) as YKK " +
+                                  "FROM TUR_VW_EKR_DURUS " +
+                                  "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "' AND CALISANID = " + employeeID.ToString();
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                haltLines.Add(new Durus()
+                {
+                    ID = Convert.ToInt32(reader["ID"]),
+                    DURUSID = Convert.ToInt32(reader["DURUSID"]),
+                    SEBEP = Convert.ToString(reader["SEBEP"]),
+                    DURUSSURE = Convert.ToInt32(reader["DURUSSURE"]),
+                    BASLANGIC = Convert.ToDateTime(reader["BASLANGIC"]),
+                    BITIS = Convert.ToDateTime(reader["BITIS"]),
+                    CALISANID = Convert.ToInt32(reader["CALISANID"]),
+                    OPERASYONID = Convert.ToInt32(reader["OPERASYONID"]),
+                    ISTASYONID = Convert.ToInt32(reader["ISTASYONID"]),
+                    UNUTULDU = Convert.ToString(reader["UNUTULDU"]),
+                    TARIH = Convert.ToDateTime(reader["TARIH"]),
+                    OPR_TOPLAM_DURUS = Convert.ToDecimal(reader["OPR_TOPLAM_DURUS"]),
+                    MESAI = Convert.ToString(reader["MESAI"]),
+                    ISEMRINO = Convert.ToString(reader["ISEMRINO"]),
+                    OPERASYONACIKLAMASI = Convert.ToString(reader["OPERASYONACIKLAMASI"]),
+                    MAKINEKODU = Convert.ToString(reader["MAKINEKODU"]),
+                    STOKKODU = Convert.ToString(reader["STOKKODU"]),
+                    VARYANTKODU = Convert.ToString(reader["VARYANTKODU"]),
+                    URETIMEMRINUMARASI = Convert.ToString(reader["URETIMEMRINUMARASI"]),
+                    ISEMRIID = Convert.ToInt32(reader["ISEMRIID"]),
+                    URETIMEMRIID = Convert.ToInt32(reader["URETIMEMRIID"]),
+                    PLANLI = Convert.ToString(reader["PLANLI"]),
+                    CALISAN = Convert.ToString(reader["CALISAN"]),
+                    DURUS_ORANI = Convert.ToDecimal(reader["DURUS_ORANI"]),
+                    YKK = Convert.ToBoolean(reader["YKK"])
+                });
+            }
+
+            return haltLines;
+        }
+
         public static List<KayipSureKodlari> GetHaltCodes()
         {
             List<KayipSureKodlari> haltCodes = new List<KayipSureKodlari>();
@@ -973,6 +1046,225 @@ namespace TsiErp.DashboardUI.Helpers
 
             return hurdaSebepleri;
         }
+
+        public static List<OperasyonUygunsuzluk> GetUnsuitabilityQuery(DateTime startDate, DateTime endDate)
+        {
+            List<OperasyonUygunsuzluk> unsuitabilityLines = new List<OperasyonUygunsuzluk>();
+
+            SqlConnection connection = GetSqlConnection();
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "ID, " +
+                                  "ISNULL(ISTASYONID,0) as ISTASYONID, " +
+                                  "ISNULL(URETIMEMRIID,0) as URETIMEMRIID, " +
+                                  "ISNULL(ISEMRIID,0) as ISEMRIID, " +
+                                  "ISNULL(CALISANID,0) as CALISANID, " +
+                                  "ISNULL(STOKID,0) as STOKID, " +
+                                  "TARIH, " +
+                                  "ISEMRINO, " +
+                                  "FISNO, " +
+                                  "CALISANAD, " +
+                                  "MAKINEADI, " +
+                                  "MAKINEKODU, " +
+                                  "ESKISTOKKODU, " +
+                                  "STOKACIKLAMASI, " +
+                                  "HATAACIKLAMA, " +
+                                  "ISNULL(OLCUKONTROLFORMBEYAN,0) as OLCUKONTROLFORMBEYAN, " +
+                                  "ISNULL(HURDA,0) as HURDA, " +
+                                  "ISNULL(DUZELTME,0) as DUZELTME, " +
+                                  "ISNULL(OLDUGUGIBIKULLANILACAK,0) as OLDUGUGIBIKULLANILACAK, " +
+                                  "RAPORNO, " +
+                                  "ACIKLAMADETAY, " +
+                                  "ISNULL(ISTVERIMLILIIKANALIZI,0) as ISTVERIMLILIIKANALIZI, " +
+                                  "ISNULL(PERVERIMLILIKANALIZI,0) as  PERVERIMLILIKANALIZI," +
+                                  "ISNULL(TUR,0) as  TUR," +
+                                  "KOD " +
+                                  "FROM TUR_VW_OPERASYON_UYGUNSUZLUK " +
+                                  "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "'";
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                unsuitabilityLines.Add(new OperasyonUygunsuzluk()
+                {
+                    ID = Convert.ToInt32(reader["ID"]),
+                    ISTASYONID = Convert.ToInt32(reader["ISTASYONID"]),
+                    URETIMEMRIID = Convert.ToInt32(reader["URETIMEMRIID"]),
+                    ISEMRIID = Convert.ToInt32(reader["ISEMRIID"]),
+                    CALISANID = Convert.ToInt32(reader["CALISANID"]),
+                    CALISANAD = Convert.ToString(reader["CALISANAD"]),
+                    STOKID = Convert.ToInt32(reader["STOKID"]),
+                    ISEMRINO = Convert.ToString(reader["ISEMRINO"]),
+                    FISNO = Convert.ToString(reader["FISNO"]),
+                    TARIH = Convert.ToDateTime(reader["TARIH"]),
+                    MAKINEADI = Convert.ToString(reader["MAKINEADI"]),
+                    MAKINEKODU = Convert.ToString(reader["MAKINEKODU"]),
+                    ESKISTOKKODU = Convert.ToString(reader["ESKISTOKKODU"]),
+                    STOKACIKLAMASI = Convert.ToString(reader["STOKACIKLAMASI"]),
+                    HATAACIKLAMA = Convert.ToString(reader["HATAACIKLAMA"]),
+                    OLCUKONTROLFORMBEYAN = Convert.ToInt32(reader["OLCUKONTROLFORMBEYAN"]),
+                    HURDA = Convert.ToBoolean(reader["HURDA"]),
+                    DUZELTME = Convert.ToBoolean(reader["DUZELTME"]),
+                    OLDUGUGIBIKULLANILACAK = Convert.ToBoolean(reader["OLDUGUGIBIKULLANILACAK"]),
+                    RAPORNO = Convert.ToString(reader["RAPORNO"]),
+                    ACIKLAMADETAY = Convert.ToString(reader["ACIKLAMADETAY"]),
+                    ISTVERIMLILIIKANALIZI = Convert.ToBoolean(reader["ISTVERIMLILIIKANALIZI"]),
+                    PERVERIMLILIKANALIZI = Convert.ToBoolean(reader["PERVERIMLILIKANALIZI"]),
+                    TUR = Convert.ToInt32(reader["TUR"]),
+                    KOD = Convert.ToString(reader["KOD"])
+                });
+            }
+
+            return unsuitabilityLines;
+        }
+
+        public static List<OperasyonUygunsuzluk> GetUnsuitabilityEmployeeQuery(int calisanID,DateTime startDate, DateTime endDate)
+        {
+            List<OperasyonUygunsuzluk> unsuitabilityLines = new List<OperasyonUygunsuzluk>();
+
+            SqlConnection connection = GetSqlConnection();
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "ID, " +
+                                  "ISNULL(ISTASYONID,0) as ISTASYONID, " +
+                                  "ISNULL(URETIMEMRIID,0) as URETIMEMRIID, " +
+                                  "ISNULL(ISEMRIID,0) as ISEMRIID, " +
+                                  "ISNULL(CALISANID,0) as CALISANID, " +
+                                  "ISNULL(STOKID,0) as STOKID, " +
+                                  "TARIH, " +
+                                  "ISEMRINO, " +
+                                  "FISNO, " +
+                                  "CALISANAD, " +
+                                  "MAKINEADI, " +
+                                  "MAKINEKODU, " +
+                                  "ESKISTOKKODU, " +
+                                  "STOKACIKLAMASI, " +
+                                  "HATAACIKLAMA, " +
+                                  "ISNULL(OLCUKONTROLFORMBEYAN,0) as OLCUKONTROLFORMBEYAN, " +
+                                  "ISNULL(HURDA,0) as HURDA, " +
+                                  "ISNULL(DUZELTME,0) as DUZELTME, " +
+                                  "ISNULL(OLDUGUGIBIKULLANILACAK,0) as OLDUGUGIBIKULLANILACAK, " +
+                                  "RAPORNO, " +
+                                  "ACIKLAMADETAY, " +
+                                  "ISNULL(ISTVERIMLILIIKANALIZI,0) as ISTVERIMLILIIKANALIZI, " +
+                                  "ISNULL(PERVERIMLILIKANALIZI,0) as  PERVERIMLILIKANALIZI," +
+                                  "ISNULL(TUR,0) as  TUR," +
+                                  "KOD " +
+                                  "FROM TUR_VW_OPERASYON_UYGUNSUZLUK " +
+                                  "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "' AND CALISANID = " + calisanID.ToString();
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                unsuitabilityLines.Add(new OperasyonUygunsuzluk()
+                {
+                    ID = Convert.ToInt32(reader["ID"]),
+                    ISTASYONID = Convert.ToInt32(reader["ISTASYONID"]),
+                    URETIMEMRIID = Convert.ToInt32(reader["URETIMEMRIID"]),
+                    ISEMRIID = Convert.ToInt32(reader["ISEMRIID"]),
+                    CALISANID = Convert.ToInt32(reader["CALISANID"]),
+                    CALISANAD = Convert.ToString(reader["CALISANAD"]),
+                    STOKID = Convert.ToInt32(reader["STOKID"]),
+                    ISEMRINO = Convert.ToString(reader["ISEMRINO"]),
+                    TARIH = Convert.ToDateTime(reader["TARIH"]),
+                    FISNO = Convert.ToString(reader["FISNO"]),
+                    MAKINEADI = Convert.ToString(reader["MAKINEADI"]),
+                    MAKINEKODU = Convert.ToString(reader["MAKINEKODU"]),
+                    ESKISTOKKODU = Convert.ToString(reader["ESKISTOKKODU"]),
+                    STOKACIKLAMASI = Convert.ToString(reader["STOKACIKLAMASI"]),
+                    HATAACIKLAMA = Convert.ToString(reader["HATAACIKLAMA"]),
+                    OLCUKONTROLFORMBEYAN = Convert.ToInt32(reader["OLCUKONTROLFORMBEYAN"]),
+                    HURDA = Convert.ToBoolean(reader["HURDA"]),
+                    DUZELTME = Convert.ToBoolean(reader["DUZELTME"]),
+                    OLDUGUGIBIKULLANILACAK = Convert.ToBoolean(reader["OLDUGUGIBIKULLANILACAK"]),
+                    RAPORNO = Convert.ToString(reader["RAPORNO"]),
+                    ACIKLAMADETAY = Convert.ToString(reader["ACIKLAMADETAY"]),
+                    ISTVERIMLILIIKANALIZI = Convert.ToBoolean(reader["ISTVERIMLILIIKANALIZI"]),
+                    PERVERIMLILIKANALIZI = Convert.ToBoolean(reader["PERVERIMLILIKANALIZI"]),
+                    TUR = Convert.ToInt32(reader["TUR"]),
+                    KOD = Convert.ToString(reader["KOD"])
+                });
+            }
+
+            return unsuitabilityLines;
+        }
+
+        public static List<FasonUygunsuzluk> GetContractUnsuitabilityQuery(DateTime startDate, DateTime endDate)
+        {
+            List<FasonUygunsuzluk> unsuitabilityLines = new List<FasonUygunsuzluk>();
+
+            SqlConnection connection = GetSqlConnection();
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "ID, " +
+                                  "ISNULL(URETIMEMRIID,0) as URETIMEMRIID, " +
+                                  "ISNULL(ISEMRIID,0) as ISEMRIID, " +
+                                  "ISNULL(CARIID,0) as CARIID, " +
+                                  "ISNULL(STOKID,0) as STOKID, " +
+                                  "TARIH, " +
+                                  "ISEMRINO, " +
+                                  "ACIKLAMA, " +
+                                  "FISNO, " +
+                                  "CARIKOD, " +
+                                  "CARIUNVAN, " +
+                                  "ESKISTOKKODU, " +
+                                  "STOKACIKLAMASI, " +
+                                  "HATAACIKLAMA, " +
+                                  "ISNULL(UYGUNOLMAYANMIKTAR,0) as UYGUNOLMAYANMIKTAR, " +
+                                  "ISNULL(RED,0) as RED, " +
+                                  "ISNULL(DUZELTME,0) as DUZELTME, " +
+                                  "ISNULL(HURDA,0) as HURDA, " +
+                                  "ISNULL(OLDUGUGIBIKULLANILACAK,0) as OLDUGUGIBIKULLANILACAK, " +
+                                  "RAPORNO, " +
+                                  "RAPORACIKLAMA," +
+                                  "ISNULL(HATAID,0) as HATAID," +
+                                  "URETIMEMRINO " +
+                                  "FROM TUR_VW_FASON_UYGUNSUZLUK " +
+                                  "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "'";
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                unsuitabilityLines.Add(new FasonUygunsuzluk()
+                {
+                    ID = Convert.ToInt32(reader["ID"]),
+                    URETIMEMRIID = Convert.ToInt32(reader["URETIMEMRIID"]),
+                    ISEMRIID = Convert.ToInt32(reader["ISEMRIID"]),
+                    CARIID = Convert.ToInt32(reader["CARIID"]),
+                    STOKID = Convert.ToInt32(reader["STOKID"]),
+                    TARIH = Convert.ToDateTime(reader["TARIH"]),
+                    ISEMRINO = Convert.ToString(reader["ISEMRINO"]),
+                    ACIKLAMA = Convert.ToString(reader["ACIKLAMA"]),
+                    FISNO = Convert.ToString(reader["FISNO"]),
+                    CARIKOD = Convert.ToString(reader["CARIKOD"]),
+                    CARIUNVAN = Convert.ToString(reader["CARIUNVAN"]),
+                    ESKISTOKKODU = Convert.ToString(reader["ESKISTOKKODU"]),
+                    HATAACIKLAMA = Convert.ToString(reader["HATAACIKLAMA"]),
+                    STOKACIKLAMASI = Convert.ToString(reader["STOKACIKLAMASI"]),
+                    UYGUNOLMAYANMIKTAR = Convert.ToBoolean(reader["UYGUNOLMAYANMIKTAR"]),
+                    RED = Convert.ToBoolean(reader["RED"]),
+                    HURDA = Convert.ToBoolean(reader["HURDA"]),
+                    DUZELTME = Convert.ToBoolean(reader["DUZELTME"]),
+                    OLDUGUGIBIKULLANILACAK = Convert.ToBoolean(reader["OLDUGUGIBIKULLANILACAK"]),
+                    RAPORNO = Convert.ToString(reader["RAPORNO"]),
+                    RAPORACIKLAMA = Convert.ToString(reader["RAPORACIKLAMA"]),
+                    HATAID = Convert.ToInt32(reader["HATAID"]),
+                    URETIMEMRINO = Convert.ToString(reader["URETIMEMRINO"])
+                });
+            }
+
+            return unsuitabilityLines;
+        }
+
         //public static IEnumerable<Dictionary<string, object>> GetStations2()
         //{
 

@@ -13,10 +13,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IstasyonOEEService>();
 builder.Services.AddScoped<PersonelService>();
+builder.Services.AddScoped<PersonelDetayService>();
 builder.Services.AddScoped<StokDetayService>();
 builder.Services.AddScoped<StokService>();
 builder.Services.AddScoped<IstasyonService>();
 builder.Services.AddScoped<IstasyonDetayService>();
+builder.Services.AddScoped<UretimUygunsuzlukService>();
+builder.Services.AddScoped<UretimUygunsuzlukDetayService>();
 
 // Add services to the container.
 builder.Services.AddSyncfusionBlazor();

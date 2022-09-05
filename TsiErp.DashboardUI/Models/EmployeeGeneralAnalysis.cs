@@ -33,8 +33,20 @@ namespace TsiErp.DashboardUI.Models
         /// </summary>
         public decimal TotalScrap { get; set; }
         /// <summary>
+        /// Gerçekleşen Birim Süre
+        /// </summary>
+        public decimal OccuredUnitTime { get; set; }
+        /// <summary>
         /// Planlanan Adet 
         /// </summary>
         public decimal PlannedQuantity { get; set; }
+        /// <summary>
+        /// Planlanan Birim Süre
+        /// </summary>
+        public decimal PlannedOperationTime { get; set; }
+        /// <summary>
+        /// Performans 
+        /// </summary>
+        public decimal Performance { get; set; }
     }
 }

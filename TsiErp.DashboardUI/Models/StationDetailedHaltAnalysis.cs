@@ -20,5 +20,9 @@ namespace TsiErp.DashboardUI.Models
         /// Süre
         /// </summary>
         public int Time { get; set; }
+        /// <summary>
+        /// İstasyon Adı
+        /// </summary>
+        public string StationName { get; set; }
     }
 }

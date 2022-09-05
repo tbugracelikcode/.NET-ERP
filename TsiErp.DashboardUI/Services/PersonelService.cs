@@ -12,7 +12,7 @@ namespace TsiErp.DashboardUI.Services
         public PersonelService()
         {
             _connection = DBHelper.GetSqlConnection();
-        } 
+        }
 
         public List<AdminEmployeeChart> GetEmployeeChart(DateTime startDate, DateTime endDate, int frequency)
         {
@@ -20,6 +20,7 @@ namespace TsiErp.DashboardUI.Services
             var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate);
             var calenderLines = DBHelper.GetCalendarQuery(startDate, endDate);
 
+            var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate);
 
 
             if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
@@ -27,22 +28,26 @@ namespace TsiErp.DashboardUI.Services
                 var gList = operationLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month }).Select(t => new AdminEmployeeChart
                 {
                     Ay = GetMonth(t.Key.Ay),
-                    PlannedQuantity = t.Select(x => x.PLNMIKTAR).FirstOrDefault(),
-                    TotalProduction = t.Select(x => x.URETILENADET).FirstOrDefault(),
-                    TotalScrap = t.Select(x => x.HURDAADET).FirstOrDefault(),
-                    Productivity = (t.Average(x => x.URETILENADET) - t.Average(x => x.HURDAADET)) / t.Average(x => x.PLNMIKTAR)
+                    PlannedQuantity = t.Sum(t => t.PLNMIKTAR),
+                    TotalProduction = t.Sum(x => x.URETILENADET),
+                    TotalScrap = (decimal)unsuitabilityLines.Where(x => x.TARIH.Month == t.Key.Ay).Sum(t => t.OLCUKONTROLFORMBEYAN),
+                    OccuredUnitTime = (int)t.Sum(t => t.BIRIMSURE),
+                    PlannedUnitTime = (int)t.Sum(t => t.PLANLANANOPRSURESI),
+                    Productivity = unsuitabilityLines.Where(x => x.TARIH.Month == t.Key.Ay).Count() > 0 ? ((t.Sum(t => t.URETILENADET)) * ((decimal)(t.Sum(t => t.PLANLANANOPRSURESI)) / (((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)) - ((decimal)(unsuitabilityLines.Where(x => x.TARIH.Month == t.Key.Ay).Sum(t => t.OLCUKONTROLFORMBEYAN)) * t.Sum(t => t.BIRIMSURE)))))) : ((t.Sum(t => t.URETILENADET)) * ((decimal)(t.Sum(t => t.PLANLANANOPRSURESI)) / (((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE))))))
                 }).ToList();
                 adminEmployeeChart = gList;
             }
             else if (frequency == 5 || frequency == 6)
             {
-                var gList = operationLines.GroupBy(t => new { HAFTA = t.TARIH.Date }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminEmployeeChart
+                var gList = operationLines.OrderBy(t => t.TARIH).GroupBy(t => new { HAFTA = t.TARIH.Date }).Select(t => new AdminEmployeeChart
                 {
                     Ay = t.Key.HAFTA.ToString("dd MMM yy"),
-                    PlannedQuantity = t.Select(x => x.PLNMIKTAR).FirstOrDefault(),
-                    TotalProduction = t.Select(x => x.URETILENADET).FirstOrDefault(),
-                    TotalScrap = t.Select(x => x.HURDAADET).FirstOrDefault(),
-                    Productivity =( t.Average(x => x.URETILENADET) - t.Average(x => x.HURDAADET) )/ t.Average(x => x.PLNMIKTAR)
+                    PlannedQuantity = t.Sum(t => t.PLNMIKTAR),
+                    TotalProduction = t.Sum(x => x.URETILENADET),
+                    TotalScrap = unsuitabilityLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Count() > 0 ? (decimal)unsuitabilityLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Sum(t => t.OLCUKONTROLFORMBEYAN) : 0,
+                    OccuredUnitTime = (int)t.Sum(t => t.BIRIMSURE),
+                    PlannedUnitTime = (int)t.Sum(t => t.PLANLANANOPRSURESI),
+                    Productivity = unsuitabilityLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Count() > 0 ? ((t.Sum(t => t.URETILENADET)) * ((decimal)(t.Sum(t => t.PLANLANANOPRSURESI)) / (((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)) - ((decimal)(unsuitabilityLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Sum(t => t.OLCUKONTROLFORMBEYAN)) * t.Sum(t => t.BIRIMSURE)))))) : ((t.Sum(t => t.URETILENADET)) * ((decimal)(t.Sum(t => t.PLANLANANOPRSURESI)) / (((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE))))))
                 }).ToList();
                 adminEmployeeChart = gList;
             }
@@ -53,8 +58,6 @@ namespace TsiErp.DashboardUI.Services
 
         public List<EmployeeGeneralAnalysis> GetEmployeeGeneralAnalysis(DateTime startDate, DateTime endDate)
         {
-           
-
             List<EmployeeGeneralAnalysis> employeeGeneralAnalysis = new List<EmployeeGeneralAnalysis>();
 
             var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate);
@@ -68,11 +71,13 @@ namespace TsiErp.DashboardUI.Services
                     {
                         EmployeeID = employeeID,
                         EmployeeName = operationLines.Where(t => t.CALISANID == employeeID).Select(t => t.CALISAN).FirstOrDefault(),
-                        OperationTime = operationLines.Where(t => t.CALISANID == employeeID).Sum(t => t.OPERASYONSURESI),
+                        OperationTime = operationLines.Where(t => t.CALISANID == employeeID).Sum(t => t.BIRIMSURE) * operationLines.Where(t => t.CALISANID == employeeID).Sum(t => t.URETILENADET),
+                        PlannedOperationTime = operationLines.Where(t => t.CALISANID == employeeID).Sum(t => t.URETILENADET) * operationLines.Where(t => t.CALISANID == employeeID).Sum(t => t.PLANLANANOPRSURESI),
                         HaltTime = operationLines.Where(t => t.CALISANID == employeeID).Sum(t => t.ATILSURE),
                         TotalProduction = operationLines.Where(t => t.CALISANID == employeeID).Sum(t => t.URETILENADET),
                         TotalScrap = operationLines.Where(t => t.CALISANID == employeeID).Sum(t => t.HURDAADET),
-                        PlannedQuantity = operationLines.Where(t => t.CALISANID == employeeID).Sum(t => t.PLNMIKTAR)
+                        Performance = operationLines.Where(t => t.CALISANID == employeeID).Sum(t => t.BIRIMSURE) / operationLines.Where(t => t.CALISANID == employeeID).Sum(t => t.PLANLANANOPRSURESI)
+
                     };
                     employeeGeneralAnalysis.Add(analysis);
                 }
