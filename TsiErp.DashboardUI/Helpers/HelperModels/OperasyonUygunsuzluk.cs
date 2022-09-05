@@ -10,7 +10,6 @@
         public int CALISANID { get; set; }
         public int STOKID { get; set; }
         public string ISEMRINO { get; set; }
-        public string FISNO { get; set; }
         public string CALISANAD { get; set; }
         public string MAKINEADI { get; set; }
         public string MAKINEKODU { get; set; }
@@ -27,5 +26,6 @@
         public bool PERVERIMLILIKANALIZI { get; set; }
         public string KOD { get; set; }
         public int TUR { get; set; }
+        public string? FISNO { get; internal set; }
     }
 }

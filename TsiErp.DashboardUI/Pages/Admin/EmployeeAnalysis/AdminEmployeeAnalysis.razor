@@ -2,7 +2,6 @@
 @layout AdminLayout
 
 @inject PersonelService PersonelService
-@inject PersonelDetayService PersonelDetayService
 @inject NavigationManager NavigationManager
 @using Syncfusion.Blazor.Charts
 @using Syncfusion.Blazor.Calendars
@@ -64,30 +63,41 @@
         font-size: 16px;
         font-weight: bold;
     }
+      .FilterLabelTitle{
+        color:#830000;
+        font-size:18px;
+    }
 </style>
 
 <SfCard class="FilterCard">
     <CardContent>
         <table width="1000px">
             <tr>
-                <td width="250px">
-                    <SfCheckBox @bind-Checked="isLabelsChecked" Label="Etiketleri Göster" @onchange="OnChangeLabelCheck" CssClass="e-customcheck"></SfCheckBox>
+                <td width="200px">
+                    <br />
+                    <SfCheckBox @bind-Checked="isLabelsChecked" @onchange="OnChangeLabelCheck" CssClass="e-customcheck"></SfCheckBox>
+                    <label class=FilterLabelTitle><strong>Etiketleri Göster</strong></label>
                 </td>
-                <td width="300px">
-                    <label><strong>Zaman Periyodu:</strong></label>
+                <td width="200px">
+                    <label class="FilterLabelTitle"><strong>Zaman Periyodu:</strong></label>
                     <SfComboBox TValue="int" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Seçiniz." DataSource="@timeperiods">
                         <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
                     </SfComboBox>
+                </td>
+                <td width="200px">
+                    <label class="FilterLabelTitle"><strong>Verim Değeri:</strong></label>
+                    <SfNumericTextBox TValue="int" @bind-Value="threshold" Placeholder="Verim Değeri Yazınız."></SfNumericTextBox>
                 </td>
                 <td width="100px">
                 </td>
                 <td width="50px" align="right">
                     <br />
-                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
+                      <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
+                   
                     <SfSpinner @bind-Visible="VisibleSpinner">
                     </SfSpinner>
                 </td>
-                <td width="100px">
+                <td width="50px">
                 </td>
             </tr>
         </table>
@@ -137,20 +147,22 @@
                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
             <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
             <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+             <GridEvents QueryCellInfo="CellInfoHandler" TValue="EmployeeGeneralAnalysis"></GridEvents>
             <GridPageSettings PageSizes="true"></GridPageSettings>
             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
             <GridColumns>
-                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.EmployeeName) HeaderText="PERSONEL ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.OperationTime) Format="#######" HeaderText="ÇALIŞMA SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>                
+                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.EmployeeName) HeaderText="PERSONEL ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>                
                 <GridColumn Field=@nameof(EmployeeGeneralAnalysis.PlannedOperationTime) Format="#######" HeaderText="PLANLANAN SÜRE" TextAlign="TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.OperationTime) Format="#######" HeaderText="ÇALIŞMA SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                 <GridColumn Field=@nameof(EmployeeGeneralAnalysis.HaltTime) Format="#######" HeaderText="DURUŞ SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                 <GridColumn Field=@nameof(EmployeeGeneralAnalysis.TotalProduction) HeaderText="ÜRETİM ADET" Format="#######" TextAlign="TextAlign.Center" Width="130"></GridColumn>
                 <GridColumn Field=@nameof(EmployeeGeneralAnalysis.TotalScrap) Format="#######" HeaderText="HURDA ADET" TextAlign="TextAlign.Center" Width="80"/>
+                 <GridColumn Field=@nameof(EmployeeGeneralAnalysis.Performance) HeaderText="VERİMLİLİK" Format="#%" TextAlign="TextAlign.Center" Width="130"></GridColumn>
                 <GridColumn Field=@nameof(EmployeeGeneralAnalysis.TotalScrap) HeaderText="DETAYLAR" TextAlign="TextAlign.Center" Width="80">
                     <Template>
                         @{
                             var row = (context as EmployeeGeneralAnalysis);
-                            <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.EmployeeID))"></SfButton>
+                            <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" style="background-color:#AD0000; " CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.EmployeeID))"></SfButton>
                         }
 
                     </Template>
@@ -239,9 +251,9 @@
         //VisibleSpinner = false;
     }
 
-    private void OnDetailButtonClicked(int stationID)
+    private void OnDetailButtonClicked(int employeeID)
     {
-        //NavigationManager.NavigateTo("/admin/machine-analysis/details" + "/" + stationID.ToString() + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd"));
+        NavigationManager.NavigateTo("/admin/employee-analysis/details" + "/" + employeeID.ToString() + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd"));
 
     }
 
@@ -254,6 +266,21 @@
 
     #endregion
 
+     public void CellInfoHandler(QueryCellInfoEventArgs<EmployeeGeneralAnalysis> Args)
+    {
+        if (Args.Column.Field == "Performance")
+        {
+            if (Args.Data.Performance < Convert.ToDecimal(thresholddouble))
+            {
+                Args.Cell.AddStyle(new string[] { "background-color: #DF0000; color: white; " });
+            }
+            else
+            {
+                Args.Cell.AddStyle(new string[] { "background-color: #37CB00; color: white;" });
+            }
+        }
+        StateHasChanged();
+    }
 
 
     private List<ComboboxTimePeriods> timeperiods = new List<ComboboxTimePeriods>() {

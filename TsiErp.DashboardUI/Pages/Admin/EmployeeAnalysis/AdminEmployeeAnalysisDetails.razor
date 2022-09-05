@@ -1,8 +1,9 @@
-﻿@page "/admin/product-group-analysis/details/{productgroupID:int}/{startDate:datetime}/{endDate:datetime}"
+﻿@page "/admin/employee-analysis/details/{employeeID:int}/{startDate:datetime}/{endDate:datetime}"
 @layout AdminLayout
 
-@inject StokDetayService StokDetayService
+@inject PersonelDetayService PersonelDetayService
 @inject NavigationManager NavigationManager
+
 @using Syncfusion.Blazor.Calendars
 @using Syncfusion.Blazor.Buttons
 @using Syncfusion.Blazor.Grids
@@ -62,7 +63,7 @@
         font-size: 16px;
         font-weight: bold;
     }
-    .FilterLabelTitle{
+     .FilterLabelTitle{
         color:#830000;
         font-size:18px;
     }
@@ -78,7 +79,7 @@
                 <td width="200px">
                 </td>
                 <td width="200px">
-                    <label class="FilterLabelTitle"><strong>Ürün Grubu Adı:</strong></label><label class="FilterLabelTitleValue">&nbsp;@productgroupName</label>
+                    <label class="FilterLabelTitle"><strong>Personel Adı:</strong></label><label class="FilterLabelTitleValue">&nbsp;@employeeName</label>
                 </td>
                 <td width="200px">
                     <label class="FilterLabelTitle"><strong>Başlangıç Tarih:</strong></label><label class="FilterLabelTitleValue">&nbsp;@startDate.ToShortDateString()</label>
@@ -96,8 +97,6 @@
     </CardFooter>
 </SfCard>
 <br />
-
-
 <br />
 
 <SfCard class="Cards">
@@ -112,12 +111,12 @@
             <TabItems>
                 <TabItem>
                     <ChildContent>
-                        <TabHeader Text="Hurda Analizi"></TabHeader>
+                        <TabHeader Text="Personel Duruş Analizi"></TabHeader>
                     </ChildContent>
                     <ContentTemplate>
                         <SfCard class="Cards" style="text-align:center">
                             <CardContent>
-                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Hurda Analiz Grafiği">
+                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Duruş Analiz Grafiği">
                                     <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
                                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
                                         <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
@@ -127,7 +126,7 @@
                                     </ChartPrimaryYAxis>
                                     <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
                                     <ChartSeriesCollection>
-                                        <ChartSeries DataSource="@dataproductgroupchart" Name="PPM" XName="ScrapCauseName" YName="PPM" Width="1" Fill="darkred" Type="ChartSeriesType.Column">
+                                        <ChartSeries DataSource="@dataemployeechart" Name="Duruş Süresi" XName="HaltName" YName="HaltTimeSecond" Width="1" Fill="darkred" Type="ChartSeriesType.Column">
 
                                         </ChartSeries>
                                     </ChartSeriesCollection>
@@ -142,18 +141,17 @@
                         <SfCard class="Cards">
 
                             <CardContent>
-                                <SfGrid ID="Grid" DataSource="@dataproductscrap" @ref="ProductGroupGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                                <SfGrid ID="Grid" DataSource="@dataemployeehalt" @ref="EmployeeGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
                                         AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
-                                    <GridEvents TValue="ProductScrapAnalysis"></GridEvents>
+                                    <GridEvents TValue="EmployeeDetailedHaltAnalysis"></GridEvents>
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(ProductScrapAnalysis.ScrapCauseName) HeaderText="HURDA SEBEBİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ProductScrapAnalysis.TotalScrap) HeaderText="HURDA ADETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ProductScrapAnalysis.TotalProduction) HeaderText="ÜRETİLEN ADET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ProductScrapAnalysis.PPM) Format="#" HeaderText="PPM" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(EmployeeDetailedHaltAnalysis.HaltName) HeaderText="DURUŞ SEBEBİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(EmployeeDetailedHaltAnalysis.HaltTimeSecond) HeaderText="DURUŞ SÜRESİ (SN)" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(EmployeeDetailedHaltAnalysis.HaltTimeMinute) HeaderText="DURUŞ SÜRESİ (DK)" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     </GridColumns>
                                 </SfGrid>
                             </CardContent>
@@ -171,18 +169,19 @@
 </SfCard>
 
 @code {
-    List<ProductScrapAnalysis> dataproductscrap = new List<ProductScrapAnalysis>();
 
-    List<ProductGroupDetailedChart> dataproductgroupchart = new List<ProductGroupDetailedChart>();
+    List<EmployeeDetailedHaltAnalysis> dataemployeehalt = new List<EmployeeDetailedHaltAnalysis>();
 
-    SfGrid<ProductScrapAnalysis> ProductGroupGrid;
+    List<EmployeeDetailedChart> dataemployeechart = new List<EmployeeDetailedChart>();
+
+    SfGrid<EmployeeDetailedHaltAnalysis> EmployeeGrid;
 
     SfChart ChartInstance;
 
     bool VisibleSpinner = false;
-    private bool isProductGroupsChecked = false;
-    int productgroups = 1;
-    string productgroupName = string.Empty;
+    private bool isEmployeeChecked = false;
+    int employees = 1;
+    string employeeName = string.Empty;
 
     [Parameter]
     public DateTime startDate { get; set; }
@@ -191,21 +190,21 @@
     public DateTime endDate { get; set; }
 
     [Parameter]
-    public int productgroupID { get; set; }
+    public int employeeID { get; set; }
 
 
     protected override void OnInitialized()
     {
-        dataproductscrap = StokDetayService.GetProductScrapAnalysis(productgroupID, startDate, endDate);
-        dataproductgroupchart = StokDetayService.GetProductGroupDetailedtChart(productgroupID, startDate, endDate, 1);
-        productgroupName = dataproductscrap.Select(t => t.ProductGroupName).FirstOrDefault();
+        dataemployeehalt = PersonelDetayService.GetStationDetailedHaltAnalysis(employeeID, startDate, endDate);
+        dataemployeechart = PersonelDetayService.GetEmployeeDetailedtChart(employeeID, startDate, endDate);
+        employeeName = dataemployeehalt.Select(t => t.EmployeeName).FirstOrDefault();
     }
 
     private void OnChangeProductCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
     {
-        if (isProductGroupsChecked) { productgroups = 2; }
-        else { productgroups = 1; }
-        dataproductgroupchart = StokDetayService.GetProductGroupDetailedtChart(productgroupID, startDate, endDate, productgroups);
+        if (isEmployeeChecked) { employees = 2; }
+        else { employees = 1; }
+        dataemployeechart = PersonelDetayService.GetEmployeeDetailedtChart(employeeID, startDate, endDate);
         ChartInstance.RefreshAsync();
     }
 
@@ -213,7 +212,7 @@
     {
         this.VisibleSpinner = true;
 
-        NavigationManager.NavigateTo("/admin/product-group-analysis");
+        NavigationManager.NavigateTo("/admin/employee-analysis");
     }
 
 }

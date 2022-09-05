@@ -13,6 +13,34 @@ namespace TsiErp.DashboardUI.Services
             _connection = DBHelper.GetSqlConnection();
         }
 
+        public List<EmployeeDetailedChart> GetEmployeeDetailedtChart(int calisanID, DateTime startDate, DateTime endDate)
+        {
+
+
+            List<EmployeeDetailedChart> employeeDetailedChart = new List<EmployeeDetailedChart>();
+
+            var haltCodes = DBHelper.GetHaltCodes();
+            var haltLines = DBHelper.GetHaltQueryEmployee(calisanID, startDate, endDate);
+
+            foreach (var code in haltCodes)
+            {
+                int durusID = code.ID;
+
+                EmployeeDetailedChart analysis = new EmployeeDetailedChart
+                {
+                    HaltName = code.KOD,
+                    HaltTimeSecond = haltLines.Where(t => t.DURUSID == durusID).Sum(t => t.DURUSSURE)
+                };
+                
+                if (analysis.HaltTimeSecond > 0)
+                {
+                    employeeDetailedChart.Add(analysis);
+                }
+
+            };
+            return employeeDetailedChart;
+        }
+
         public List<EmployeeDetailedHaltAnalysis> GetStationDetailedHaltAnalysis(int calisanID, DateTime startDate, DateTime endDate)
         {
             //startDate = new DateTime(2022, 06, 01);
@@ -32,7 +60,8 @@ namespace TsiErp.DashboardUI.Services
                     HaltName = code.KOD,
                     HaltID = durusID,
                     HaltTimeSecond = haltLines.Where(t => t.DURUSID == durusID).Sum(t => t.DURUSSURE),
-                    HaltTimeMinute = haltLines.Where(t => t.DURUSID == durusID).Sum(t => t.DURUSSURE) / 60
+                    HaltTimeMinute = haltLines.Where(t => t.DURUSID == durusID).Sum(t => t.DURUSSURE) / 60,
+                    EmployeeName = haltLines.Where(t=>t.DURUSID == durusID).Select(t=>t.CALISAN).FirstOrDefault()
                 };
 
                 employeeDetailedHaltAnalysis.Add(analysis);

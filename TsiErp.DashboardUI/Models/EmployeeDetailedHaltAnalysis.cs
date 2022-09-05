@@ -6,6 +6,7 @@
         public string HaltName { get; set; }
         public int HaltTimeSecond { get; set; }
         public int HaltTimeMinute { get; set; }
+        public string EmployeeName { get; set; }
     }
 }
 

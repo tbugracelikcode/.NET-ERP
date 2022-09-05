@@ -17,7 +17,6 @@ namespace TsiErp.DashboardUI.Services
         {
             List<AdminProductChart> adminProductChart = new List<AdminProductChart>();
             var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate);
-            var calenderLines = DBHelper.GetCalendarQuery(startDate, endDate);
 
 
 
@@ -46,8 +45,6 @@ namespace TsiErp.DashboardUI.Services
 
         public List<ProductGroupsAnalysis> GetProductGroupsAnalysis(DateTime startDate, DateTime endDate)
         {
-            startDate = new DateTime(2022, 06, 01);
-            endDate = new DateTime(2022, 08, 22);
 
             List<ProductGroupsAnalysis> productGroupsAnalysis = new List<ProductGroupsAnalysis>();
 

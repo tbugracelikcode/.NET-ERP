@@ -18,7 +18,10 @@ namespace TsiErp.DashboardUI.Services
         {
             List<AdminEmployeeChart> adminEmployeeChart = new List<AdminEmployeeChart>();
             var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate);
-            var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate).Where(t => t.TUR == 3 && (t.DUZELTME == true || t.HURDA == true)).ToList();
+            var calenderLines = DBHelper.GetCalendarQuery(startDate, endDate);
+
+            var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate);
+
 
             if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
             {
