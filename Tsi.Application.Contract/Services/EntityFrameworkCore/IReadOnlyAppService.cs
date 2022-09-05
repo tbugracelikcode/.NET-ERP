@@ -6,10 +6,10 @@ using Tsi.Core.Utilities.Results;
 
 namespace Tsi.Application.Contract.Services.EntityFrameworkCore
 {
-    public interface IReadOnlyAppService<TGetOutputDto, TGetListOutputDto>
+    public interface IReadOnlyAppService<TGetOutputDto, TGetListOutputDto, in TGetListInput>
     {
         Task<IDataResult<TGetOutputDto>> GetAsync(Guid id);
 
-        Task<IDataResult<IList<TGetListOutputDto>>> GetListAsync();
+        Task<IDataResult<IList<TGetListOutputDto>>> GetListAsync(TGetListInput input);
     }
 }
