@@ -1298,7 +1298,7 @@ namespace TsiErp.DashboardUI.Helpers
         //public static IEnumerable<Dictionary<string, object>> GetStations2()
         //{
 
-        //    SqlConnection connection = GetSqlConnection();
+        //    SqlConnection connection =  GetSqlConnection();
 
         //    SqlCommand command = new SqlCommand();
         //    command.CommandText = "SELECT " +
