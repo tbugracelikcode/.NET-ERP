@@ -4,11 +4,11 @@ using System.Text;
 
 namespace Tsi.Application.Contract.Services.EntityFrameworkCore
 {
-    public interface ICrudAppService<TEntity, TGetOutputDto, TGetListOutputDto, in TCreateInput, in TUpdateInput> :
+    public interface ICrudAppService<TEntity, TGetOutputDto, TGetListOutputDto, in TCreateInput, in TUpdateInput, in TGetListInput> :
         ICreateAppService<TGetOutputDto, TCreateInput>,
         IUpdateAppService<TGetOutputDto, TUpdateInput>,
         IDeleteAppService,
-        IReadOnlyAppService<TGetOutputDto,TGetListOutputDto>
+        IReadOnlyAppService<TGetOutputDto,TGetListOutputDto,TGetListInput>
     {
     }
 }

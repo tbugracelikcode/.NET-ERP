@@ -15,12 +15,12 @@ namespace TsiErp.WebAPI.Controllers
             _appService = appService;
         }
 
-        [HttpGet("GetListAsync")]
-        public async Task<IActionResult> GetList()
+        [HttpPost("GetListAsync")]
+        public async Task<IActionResult> GetList(ListBranchesParameterDto input)
         {
-            var result = await _appService.GetListAsync();
+            var result = await _appService.GetListAsync(input);
 
-            if(result.Success)
+            if (result.Success)
             {
                 return Ok(result.Data);
             }
@@ -71,7 +71,7 @@ namespace TsiErp.WebAPI.Controllers
         {
             var result = await _appService.DeleteAsync(id);
 
-            if(result.Success)
+            if (result.Success)
             {
                 return Ok(result.Message);
             }
