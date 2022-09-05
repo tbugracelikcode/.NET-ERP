@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Localization;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddSingleton<HttpClient>();
+
 builder.Services.AddSyncfusionBlazor();
             builder.Services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(SyncfusionLocalizer));
             builder.Services.Configure<RequestLocalizationOptions>(options =>

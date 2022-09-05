@@ -53,9 +53,9 @@ namespace TsiErp.Business.Entities.Period.Services
         }
 
         [CacheAspect(duration: 60)]
-        public async Task<IDataResult<IList<ListPeriodsDto>>> GetListAsync()
+        public async Task<IDataResult<IList<ListPeriodsDto>>> GetListAsync(ListPeriodsParameterDto input)
         {
-            var list = await _repository.GetListAsync();
+            var list = await _repository.GetListAsync(t=>t.IsActive==input.IsActive);
 
             var mappedEntity = ObjectMapper.Map<List<Periods>, List<ListPeriodsDto>>(list.ToList());
 

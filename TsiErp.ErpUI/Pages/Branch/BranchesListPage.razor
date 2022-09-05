@@ -1,0 +1,23 @@
+﻿@page "/branches"
+@using Syncfusion.Blazor.Buttons
+@using TsiErp.Entities.Entities.Branch.Dtos
+@using TsiErp.ErpUI.Pages.Base
+
+@inject HttpClient HttpClient
+
+@inherits BaseListPage<SelectBranchesDto,ListBranchesDto,CreateBranchesDto,UpdateBranchesDto,ListBranchesParameterDto>
+
+
+<SfButton OnClick="@Click"></SfButton>
+
+@code {
+    protected override void OnInitialized()
+    {
+        base.HttpClient = this.HttpClient;
+    }
+
+    private async void Click()
+    {
+        var list = await GetListAsync(new ListBranchesParameterDto() { IsActive = true });
+    }
+}

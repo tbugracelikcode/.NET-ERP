@@ -57,9 +57,9 @@ namespace TsiErp.Business.Entities.Authentication.RolePermissions
             return new SuccessDataResult<SelectRolePermissionsDto>(mappedEntity);
         }
 
-        public async Task<IDataResult<IList<ListRolePermissionsDto>>> GetListAsync()
+        public async Task<IDataResult<IList<ListRolePermissionsDto>>> GetListAsync(ListRolePermissionsParameterDto input)
         {
-            var list = await _repository.GetListAsync(null);
+            var list = await _repository.GetListAsync();
 
             var mappedEntity = ObjectMapper.Map<List<TsiRolePermissions>, List<ListRolePermissionsDto>>(list.ToList());
 
