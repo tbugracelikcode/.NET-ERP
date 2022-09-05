@@ -71,7 +71,6 @@ namespace TsiErp.DashboardUI.Helpers
                                   "ID," +
                                   "CALISANID, " +
                                   "VARDIYAID, " +
-                                  "MAKINEADI, " +
                                   "ISTASYONID, " +
                                   "ISNULL(URETILENADET,0) as URETILENADET, " +
                                   "ISNULL(HURDAADET,0) as HURDAADET, " +
@@ -1096,6 +1095,7 @@ namespace TsiErp.DashboardUI.Helpers
                     URETIMEMRIID = Convert.ToInt32(reader["URETIMEMRIID"]),
                     ISEMRIID = Convert.ToInt32(reader["ISEMRIID"]),
                     CALISANID = Convert.ToInt32(reader["CALISANID"]),
+                    CALISANAD = Convert.ToString(reader["CALISANAD"]),
                     STOKID = Convert.ToInt32(reader["STOKID"]),
                     ISEMRINO = Convert.ToString(reader["ISEMRINO"]),
                     FISNO = Convert.ToString(reader["FISNO"]),
@@ -1169,6 +1169,7 @@ namespace TsiErp.DashboardUI.Helpers
                     URETIMEMRIID = Convert.ToInt32(reader["URETIMEMRIID"]),
                     ISEMRIID = Convert.ToInt32(reader["ISEMRIID"]),
                     CALISANID = Convert.ToInt32(reader["CALISANID"]),
+                    CALISANAD = Convert.ToString(reader["CALISANAD"]),
                     STOKID = Convert.ToInt32(reader["STOKID"]),
                     ISEMRINO = Convert.ToString(reader["ISEMRINO"]),
                     TARIH = Convert.ToDateTime(reader["TARIH"]),
