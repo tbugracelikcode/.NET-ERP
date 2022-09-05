@@ -1265,6 +1265,68 @@ namespace TsiErp.DashboardUI.Helpers
             return unsuitabilityLines;
         }
 
+        public static List<TederikciUygunsuzluk> GetSuppliertUnsuitabilityQuery(DateTime startDate, DateTime endDate)
+        {
+            List<TederikciUygunsuzluk> unsuitabilityLines = new List<TederikciUygunsuzluk>();
+
+            SqlConnection connection = GetSqlConnection();
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "ID, " +
+                                  "ISNULL(CARIID,0) as CARIID, " +
+                                  "ISNULL(STOKID,0) as STOKID, " +
+                                  "ISNULL(SIPARISID,0) as SIPARISID, " +
+                                  "TARIH, " +
+                                  "ACIKLAMA, " +
+                                  "FISNO, " +
+                                  "CARIKOD, " +
+                                  "CARIUNVAN, " +
+                                  "ESKISTOKKODU, " +
+                                  "STOKACIKLAMASI, " +
+                                  "HATAACIKLAMA, " +
+                                  "ISNULL(UYGUNOLMAYANMIKTAR,0) as UYGUNOLMAYANMIKTAR, " +
+                                  "ISNULL(RED,0) as RED, " +
+                                  "ISNULL(DUZELTME,0) as DUZELTME, " +
+                                  "ISNULL(TEDARIKCIIRTIBAT,0) as TEDARIKCIIRTIBAT, " +
+                                  "ISNULL(OLDUGUGIBIKULLANILACAK,0) as OLDUGUGIBIKULLANILACAK, " +
+                                  "RAPORNO, " +
+                                  "ISNULL(HATAID,0) as HATAID " +
+                                  "FROM TUR_VW_HM_UYGUNSUZLUK " +
+                                  "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "'";
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                unsuitabilityLines.Add(new TederikciUygunsuzluk()
+                {
+                    ID = Convert.ToInt32(reader["ID"]),
+                    SIPARISID = Convert.ToInt32(reader["SIPARISID"]),
+                    CARIID = Convert.ToInt32(reader["CARIID"]),
+                    STOKID = Convert.ToInt32(reader["STOKID"]),
+                    TARIH = Convert.ToDateTime(reader["TARIH"]),
+                    ACIKLAMA = Convert.ToString(reader["ACIKLAMA"]),
+                    FISNO = Convert.ToString(reader["FISNO"]),
+                    CARIKOD = Convert.ToString(reader["CARIKOD"]),
+                    CARIUNVAN = Convert.ToString(reader["CARIUNVAN"]),
+                    ESKISTOKKODU = Convert.ToString(reader["ESKISTOKKODU"]),
+                    HATAACIKLAMA = Convert.ToString(reader["HATAACIKLAMA"]),
+                    STOKACIKLAMASI = Convert.ToString(reader["STOKACIKLAMASI"]),
+                    UYGUNOLMAYANMIKTAR = Convert.ToInt32(reader["UYGUNOLMAYANMIKTAR"]),
+                    RED = Convert.ToBoolean(reader["RED"]),
+                    TEDARIKCIIRTIBAT = Convert.ToBoolean(reader["TEDARIKCIIRTIBAT"]),
+                    DUZELTME = Convert.ToBoolean(reader["DUZELTME"]),
+                    OLDUGUGIBIKULLANILACAK = Convert.ToBoolean(reader["OLDUGUGIBIKULLANILACAK"]),
+                    RAPORNO = Convert.ToString(reader["RAPORNO"]),
+                    HATAID = Convert.ToInt32(reader["HATAID"])
+                });
+            }
+
+            return unsuitabilityLines;
+        }
+
         public static List<UygunsuzlukBasliklari> GetContractCauses()
         {
             List<UygunsuzlukBasliklari> hurdaSebepleri = new List<UygunsuzlukBasliklari>();
