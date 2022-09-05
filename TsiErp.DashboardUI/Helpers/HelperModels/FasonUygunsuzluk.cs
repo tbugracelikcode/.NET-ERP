@@ -16,7 +16,7 @@
         public string ESKISTOKKODU { get; set; }
         public string STOKACIKLAMASI { get; set; }
         public string HATAACIKLAMA { get; set; }
-        public bool UYGUNOLMAYANMIKTAR { get; set; }
+        public int UYGUNOLMAYANMIKTAR { get; set; }
         public bool RED { get; set; }
         public bool DUZELTME { get; set; }
         public bool HURDA { get; set; }

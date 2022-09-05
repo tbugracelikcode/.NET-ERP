@@ -20,6 +20,8 @@ builder.Services.AddScoped<IstasyonService>();
 builder.Services.AddScoped<IstasyonDetayService>();
 builder.Services.AddScoped<UretimUygunsuzlukService>();
 builder.Services.AddScoped<UretimUygunsuzlukDetayService>();
+builder.Services.AddScoped<FasonUygunsuzlukService>();
+builder.Services.AddScoped<FasonUygunsuzlukDetayService>();
 
 // Add services to the container.
 builder.Services.AddSyncfusionBlazor();

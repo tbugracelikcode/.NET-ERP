@@ -1250,7 +1250,7 @@ namespace TsiErp.DashboardUI.Helpers
                     ESKISTOKKODU = Convert.ToString(reader["ESKISTOKKODU"]),
                     HATAACIKLAMA = Convert.ToString(reader["HATAACIKLAMA"]),
                     STOKACIKLAMASI = Convert.ToString(reader["STOKACIKLAMASI"]),
-                    UYGUNOLMAYANMIKTAR = Convert.ToBoolean(reader["UYGUNOLMAYANMIKTAR"]),
+                    UYGUNOLMAYANMIKTAR = Convert.ToInt32(reader["UYGUNOLMAYANMIKTAR"]),
                     RED = Convert.ToBoolean(reader["RED"]),
                     HURDA = Convert.ToBoolean(reader["HURDA"]),
                     DUZELTME = Convert.ToBoolean(reader["DUZELTME"]),
@@ -1265,10 +1265,40 @@ namespace TsiErp.DashboardUI.Helpers
             return unsuitabilityLines;
         }
 
+        public static List<UygunsuzlukBasliklari> GetContractCauses()
+        {
+            List<UygunsuzlukBasliklari> hurdaSebepleri = new List<UygunsuzlukBasliklari>();
+
+            SqlConnection connection = GetSqlConnection();
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "ID," +
+                                  "ACIKLAMA, " +
+                                  "ISNULL(TUR,0) as TUR" +
+                                  " FROM TUR_KK_UYGUNSUZLUK_BASLIKLARI" +
+                                  " WHERE TUR = 2";
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                hurdaSebepleri.Add(new UygunsuzlukBasliklari()
+                {
+                    ID = Convert.ToInt32(reader["ID"]),
+                    BASLIK = Convert.ToString(reader["ACIKLAMA"]),
+                    TUR = Convert.ToInt32(reader["TUR"])
+                });
+            }
+
+            return hurdaSebepleri;
+        }
+
         //public static IEnumerable<Dictionary<string, object>> GetStations2()
         //{
 
-        //    SqlConnection connection = GetSqlConnection();
+        //    SqlConnection connection =  GetSqlConnection();
 
         //    SqlCommand command = new SqlCommand();
         //    command.CommandText = "SELECT " +
