@@ -2,6 +2,7 @@
 @layout AdminLayout
 
 @inject UretimUygunsuzlukDetayService UretimUygunsuzlukDetayService
+@inject UretimUygunsuzlukService UretimUygunsuzlukService
 @inject NavigationManager NavigationManager
 
 @using Syncfusion.Blazor.Calendars
@@ -80,7 +81,7 @@
                 <td width="200px">
                 </td>
                 <td width="200px">
-                    @*<label class="FilterLabelTitle"><strong>Uygunsuzluk Adı:</strong></label><label class="FilterLabelTitleValue">&nbsp;@unsuitabilityName</label>*@
+                    <label class="FilterLabelTitle"><strong>Uygunsuzluk Adı:</strong></label><label class="FilterLabelTitleValue">&nbsp;@unsuitabilityName</label>
                 </td>
                 <td width="200px">
                     <label class="FilterLabelTitle"><strong>Başlangıç Tarih:</strong></label><label class="FilterLabelTitleValue">&nbsp;@startDate.ToShortDateString()</label>
@@ -170,7 +171,7 @@
                         <br />
                         <SfCard class="Cards" style="text-align:center">
                             <CardContent>
-                                <SfChart @ref="ChartInstance" Width="90%" Theme="Theme.Bootstrap5" Title="Personele Göre Analiz Grafiği">
+                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Personele Göre Analiz Grafiği">
                                     <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
                                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate90">
                                         <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
@@ -276,18 +277,17 @@
     List<ProductionUnsuitabilityDetailedStation> dataunsuitabilitystation= new List<ProductionUnsuitabilityDetailedStation>();
     List<ProductionUnsuitabilityDetailedEmployee> dataunsuitabilityemployee= new List<ProductionUnsuitabilityDetailedEmployee>();
     List<ProductionUnsuitabilityDetailedProduct> dataunsuitabilityproduct= new List<ProductionUnsuitabilityDetailedProduct>();
-
+    AdminProductionUnsuitabilityAnalysis _labelreason = new AdminProductionUnsuitabilityAnalysis();
 
     SfGrid<ProductionUnsuitabilityDetailedEmployee> EmployeeGrid;
     SfGrid<ProductionUnsuitabilityDetailedStation> StationGrid;
     SfGrid<ProductionUnsuitabilityDetailedProduct> ProductGrid;
 
-    SfChart ChartInstance;
 
     bool VisibleSpinner = false;
     //private bool isEmployeeChecked = false;
     //int employees = 1;
-    //string unsuitabilityName = string.Empty;
+    string unsuitabilityName = string.Empty;
 
     [Parameter]
     public DateTime startDate { get; set; }
@@ -304,15 +304,10 @@
         dataunsuitabilitystation = UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedStationAnalysis(unsuitabilityCode, startDate, endDate);
         dataunsuitabilityemployee = UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedEmployeeAnalysis(unsuitabilityCode, startDate, endDate);
         dataunsuitabilityproduct = UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedProductAnalysis(unsuitabilityCode, startDate, endDate);
+        unsuitabilityName = UretimUygunsuzlukService.GetProductionUnsuitabilityAnalysis(startDate, endDate).Where(t => t.Code == unsuitabilityCode).Select(t => t.UnsuitabilityReason).FirstOrDefault();
     }
 
-    //private void OnChangeProductCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
-    //{
-    //    if (isEmployeeChecked) { employees = 2; }
-    //    else { employees = 1; }
-    //    dataemployeechart = PersonelDetayService.GetEmployeeDetailedtChart(employeeID, startDate, endDate);
-    //    ChartInstance.RefreshAsync();
-    //}
+  
 
     private void OnBackButtonClicked()
     {

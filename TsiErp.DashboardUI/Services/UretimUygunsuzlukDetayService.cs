@@ -51,19 +51,20 @@ namespace TsiErp.DashboardUI.Services
 
             List<ProductionUnsuitabilityDetailedEmployee> productionUnsuitabilityDetailedEmployeeAnalysis = new List<ProductionUnsuitabilityDetailedEmployee>();
 
-            var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate).Where(t => t.KOD == unsuitabilityCode).Distinct().ToList();
+            var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate).Where(t => t.KOD == unsuitabilityCode).ToList();
+            var employeeList = unsuitabilityLines.Select(t => t.CALISANID).Distinct().ToList();
 
             if (unsuitabilityLines != null)
             {
-                foreach (var unsuitability in unsuitabilityLines)
+                foreach (var unsuitability in employeeList)
                 {
-                    var scrap = unsuitabilityLines.Where(t => t.HURDA == true && t.CALISANID == unsuitability.CALISANID).Sum(t => t.OLCUKONTROLFORMBEYAN);
-                    var tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.CALISANID == unsuitability.CALISANID).Sum(t => t.OLCUKONTROLFORMBEYAN);
-                    var correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.CALISANID == unsuitability.CALISANID).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                    var scrap = unsuitabilityLines.Where(t => t.HURDA == true && t.CALISANID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                    var tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.CALISANID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                    var correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.CALISANID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
 
                     ProductionUnsuitabilityDetailedEmployee analysis = new ProductionUnsuitabilityDetailedEmployee
                     {
-                        EmployeeName = unsuitability.CALISANAD,
+                        EmployeeName = unsuitabilityLines.Where(t=>t.CALISANID == unsuitability).Select(t=>t.CALISANAD).FirstOrDefault(),
                         Quantity = scrap + tobeused + correction
                     };
                     if (analysis.Quantity > 0)
@@ -83,18 +84,19 @@ namespace TsiErp.DashboardUI.Services
             List<ProductionUnsuitabilityDetailedProduct> productionUnsuitabilityDetailedProductAnalysis = new List<ProductionUnsuitabilityDetailedProduct>();
 
             var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate).Where(t => t.KOD == unsuitabilityCode).Distinct().ToList();
+            var productList = unsuitabilityLines.Select(t => t.STOKID).Distinct().ToList();
 
             if (unsuitabilityLines != null)
             {
-                foreach (var unsuitability in unsuitabilityLines)
+                foreach (var unsuitability in productList)
                 {
-                    var scrap = unsuitabilityLines.Where(t => t.HURDA == true && t.STOKID == unsuitability.STOKID).Sum(t => t.OLCUKONTROLFORMBEYAN);
-                    var tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.STOKID == unsuitability.STOKID).Sum(t => t.OLCUKONTROLFORMBEYAN);
-                    var correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.STOKID == unsuitability.STOKID).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                    var scrap = unsuitabilityLines.Where(t => t.HURDA == true && t.STOKID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                    var tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.STOKID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                    var correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.STOKID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
 
                     ProductionUnsuitabilityDetailedProduct analysis = new ProductionUnsuitabilityDetailedProduct
                     {
-                        ProductCode = unsuitability.STOKACIKLAMASI,
+                        ProductCode = unsuitabilityLines.Where(t=>t.STOKID == unsuitability).Select(t=>t.STOKACIKLAMASI).FirstOrDefault(),
                         Quantity = scrap + tobeused + correction
                     };
                     if (analysis.Quantity > 0)
