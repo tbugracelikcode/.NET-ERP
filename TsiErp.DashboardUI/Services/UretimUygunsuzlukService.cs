@@ -47,23 +47,24 @@ namespace TsiErp.DashboardUI.Services
             List<ProductionUnsuitabilityAnalysis> productionUnsuitabilityAnalysis = new List<ProductionUnsuitabilityAnalysis>();
 
             var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate);
+            var list = unsuitabilityLines.Select(t => t.KOD).Distinct().ToList();
 
             if (unsuitabilityLines != null)
             {
-                foreach (var unsuitability in unsuitabilityLines)
+                foreach (var unsuitability in list)
                 {
-                    var scrap = unsuitabilityLines.Where(t => t.HURDA == true && t.HATAACIKLAMA == unsuitability.HATAACIKLAMA).Sum(t => t.OLCUKONTROLFORMBEYAN);
-                    var tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.HATAACIKLAMA == unsuitability.HATAACIKLAMA).Sum(t => t.OLCUKONTROLFORMBEYAN);
-                    var correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.HATAACIKLAMA == unsuitability.HATAACIKLAMA).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                    var scrap = unsuitabilityLines.Where(t => t.HURDA == true && t.KOD == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                    var tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.KOD == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                    var correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.KOD == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
                     ProductionUnsuitabilityAnalysis analysis = new ProductionUnsuitabilityAnalysis
                     {
-                        ProductionUnsuitabilityID = unsuitability.ID,
+                        ProductionUnsuitabilityID = unsuitabilityLines.Where(t => t.KOD == unsuitability).Select(t => t.ID).FirstOrDefault(),
                         ScrapQuantity = scrap,
                         ToBeUsedAs = tobeused,
                         Correction = correction,
                         Total = scrap + tobeused + correction,
-                        UnsuitabilityReason = unsuitability.HATAACIKLAMA,
-                         Code = unsuitability.KOD
+                        UnsuitabilityReason = unsuitabilityLines.Where(t=>t.KOD == unsuitability).Select(t=>t.HATAACIKLAMA).FirstOrDefault(),
+                         Code = unsuitability
 
                     };
                     productionUnsuitabilityAnalysis.Add(analysis);
