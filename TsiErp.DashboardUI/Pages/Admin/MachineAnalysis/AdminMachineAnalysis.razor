@@ -120,7 +120,7 @@
             </ChartPrimaryYAxis>
             <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
             <ChartSeriesCollection>
-                <ChartSeries DataSource="@datachart" Name="Verimlilik" XName="AY" YName="KULLANILABILIRLIK" Width="3" Fill="darkred" Type="ChartSeriesType.Line">
+                <ChartSeries DataSource="@datachart" Name="Verimlilik" XName="AY" YName="KULLANILABILIRLIK" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
                     <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
                         <ChartDataLabel Visible="@dataLabels">
                             <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
@@ -189,7 +189,7 @@
     private double thresholddouble;
     private int frequencyChart;
     SfChart ChartInstance;
-    bool VisibleSpinner = false;
+    bool VisibleSpinner { get; set; } = false;
     private bool isLabelsChecked = false;
     private bool dataLabels = false;
 
@@ -203,7 +203,7 @@
 
     private void OnDateButtonClicked()
     {
-        //VisibleSpinner = true;
+        this.VisibleSpinner = true;
         endDate = DateTime.Today;
         #region Zaman Seçimi
         if (selectedTimeIndex == 0)
@@ -248,8 +248,8 @@
         ChartInstance.RefreshAsync();
         dataoee = IstasyonOEEService.GetStationOEEAnalysis(startDate, endDate);
         datachart = IstasyonOEEService.GetAdminMachineChart(startDate, endDate, frequencyChart);
+        this.VisibleSpinner = false;
         StateHasChanged();
-        //VisibleSpinner = false;
     }
 
     private void OnDetailButtonClicked(int stationID)

@@ -13,5 +13,6 @@
         public decimal PLANLIDURUSSURESI { get; set; }
         public bool FASON { get; set; }
         public bool EKIPMAN { get; set; }
+        public bool VERITOPLAMA { get; set; }
     }
 }

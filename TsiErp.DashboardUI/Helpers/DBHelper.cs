@@ -33,7 +33,8 @@ namespace TsiErp.DashboardUI.Helpers
                                   "ISNULL(TEORIKSURE,0) as TEORIKSURE, " +
                                   "ISNULL(MESAICALISMASURESI,0) as MESAICALISMASURESI, " +
                                   "ISNULL(PLANLIDURUSSURESI,0) as PLANLIDURUSSURESI, " +
-                                  "FASON, " +
+                                  "FASON," +
+                                  "ISNULL(VERITOPLAMA,0) as VERITOPLAMA " +
                                   "EKIPMAN FROM TUR_IST";
             command.Connection = connection;
 
@@ -53,6 +54,7 @@ namespace TsiErp.DashboardUI.Helpers
                     PLANLIDURUSSURESI = Convert.ToDecimal(reader["PLANLIDURUSSURESI"]),
                     TEORIKSURE = Convert.ToDecimal(reader["TEORIKSURE"]),
                     VARDIYA = Convert.ToInt32(reader["VARDIYA"]),
+                    VERITOPLAMA = Convert.ToBoolean(reader["VERITOPLAMA"]),
                     VARDIYACALISMASURESI = Convert.ToDecimal(reader["VARDIYACALISMASURESI"])
                 });
             }
@@ -1357,77 +1359,129 @@ namespace TsiErp.DashboardUI.Helpers
             return hurdaSebepleri;
         }
 
-        //public static IEnumerable<Dictionary<string, object>> GetStations2()
-        //{
+        public static List<BakimKayitlari> GetMaintenanceRecords()
+        {
+            List<BakimKayitlari> bakimKayitlari = new List<BakimKayitlari>();
 
-        //    SqlConnection connection =  GetSqlConnection();
+            SqlConnection connection = GetSqlConnection();
 
-        //    SqlCommand command = new SqlCommand();
-        //    command.CommandText = "SELECT " +
-        //                          "ID, " +
-        //                          "MAKINEKODU, " +
-        //                          "MAKINEADI, " +
-        //                          "VARDIYA, " +
-        //                          "VARDIYACALISMASURESI, " +
-        //                          "TEORIKSURE, " +
-        //                          "MESAICALISMASURESI, " +
-        //                          "PLANLIDURUSSURESI, " +
-        //                          "FASON, " +
-        //                          "EKIPMAN FROM TUR_IST";
-        //    command.Connection = connection;
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "ISNULL(ID,0) as ID," +
+                                  "KAYITNO, " +
+                                  "BAKIMTURU, " +
+                                  "ISNULL(PLANLANANTARIH,'1999-01-01') as PLANLANANTARIH, " +
+                                  "ISNULL(PLANLANANBAKIMSURESI,0) as PLANLANANBAKIMSURESI, " +
+                                  "ISNULL(BASLANGICTARIHI,'1999-01-01') as BASLANGICTARIHI, " +
+                                  "ISNULL(TAMAMLANMATARIHI,'1999-01-01') as TAMAMLANMATARIHI, " +
+                                  "ISNULL(ISTID,0) as ISTID, " +
+                                  "ISNULL(PERIYOT,0) as PERIYOT, " +
+                                  "ISNULL(KALANSURE,0) as KALANSURE, " +
+                                  "DURUM, " +
+                                  "BAKIMIYAPAN, " +
+                                  "ISNULL(BAKIMSURESI,0) as BAKIMSURESI, " +
+                                  "NOT_, " +
+                                  "ISNULL(GUNLUK,0) as GUNLUK" +
+                                  " FROM TUR_ISTASYON_BAKIM_KAYITLARI";
+            command.Connection = connection;
 
-        //    IDataReader reader = command.ExecuteReader();
+            SqlDataReader reader = command.ExecuteReader();
 
-        //    while (reader.Read())
-        //    {
-        //        Dictionary<string, object> result = new Dictionary<string, object>();
-        //        for (int column = 0; column < reader.FieldCount; column++)
-        //            result.Add(reader.GetName(column), reader.GetValue(column));
-        //        yield return result;
-        //    }
-        //}
+            while (reader.Read())
+            {
+                bakimKayitlari.Add(new BakimKayitlari()
+                {
+                    ID = Convert.ToInt32(reader["ID"]),
+                    KAYITNO = Convert.ToString(reader["KAYITNO"]),
+                    BAKIMTURU = Convert.ToString(reader["BAKIMTURU"]),
+                    PLANLANANTARIH = Convert.ToDateTime(reader["PLANLANANTARIH"]),
+                    PLANLANANBAKIMSURESI = Convert.ToInt32(reader["PLANLANANBAKIMSURESI"]),
+                    BASLANGICTARIHI = Convert.ToDateTime(reader["BASLANGICTARIHI"]),
+                    TAMAMLANMATARIHI = Convert.ToDateTime(reader["TAMAMLANMATARIHI"]),
+                    ISTID = Convert.ToInt32(reader["ISTID"]),
+                    PERIYOT = Convert.ToInt32(reader["PERIYOT"]),
+                    KALANSURE = Convert.ToInt32(reader["KALANSURE"]),
+                    DURUM = Convert.ToString(reader["DURUM"]),
+                    BAKIMIYAPAN = Convert.ToString(reader["BAKIMIYAPAN"]),
+                    BAKIMSURESI = Convert.ToInt32(reader["BAKIMSURESI"]),
+                    NOT_ = Convert.ToString(reader["NOT_"]),
+                    GUNLUK = Convert.ToBoolean(reader["GUNLUK"])
+                });
+            }
 
-        //public static List<Istasyon> GetStations3()
-        //{
+            return bakimKayitlari;
+        }
 
-        //    SqlConnection connection = GetSqlConnection();
+        public static List<BakimView> GetMaintenanceRecordsView()
+        {
+            List<BakimView> bakimView = new List<BakimView>();
 
-        //    SqlCommand command = new SqlCommand();
-        //    command.CommandText = "SELECT " +
-        //                          "ID, " +
-        //                          "MAKINEKODU, " +
-        //                          "MAKINEADI, " +
-        //                          "VARDIYA, " +
-        //                          "ISNULL(VARDIYACALISMASURESI,0) as VARDIYACALISMASURESI, " +
-        //                          "ISNULL(TEORIKSURE,0) as TEORIKSURE, " +
-        //                          "ISNULL(MESAICALISMASURESI,0) as MESAICALISMASURESI, " +
-        //                          "ISNULL(PLANLIDURUSSURESI,0) as PLANLIDURUSSURESI, " +
-        //                          "FASON, " +
-        //                          "EKIPMAN FROM TUR_IST";
-        //    command.Connection = connection;
+            SqlConnection connection = GetSqlConnection();
 
-        //    SqlDataReader reader = command.ExecuteReader();
-        //    List<Istasyon> stations = new List<Istasyon>();
-        //    while (reader.Read())
-        //    {
-        //        stations.Add(new Istasyon()
-        //        {
-        //            BOLUMID = 0,
-        //            EKIPMAN = Convert.ToBoolean(reader["EKIPMAN"]),
-        //            FASON = Convert.ToBoolean(reader["FASON"]),
-        //            ID = Convert.ToInt32(reader["ID"]),
-        //            MAKINEADI = Convert.ToString(reader["MAKINEADI"]),
-        //            MAKINEKODU = Convert.ToString(reader["MAKINEKODU"]),
-        //            MESAICALISMASURESI = Convert.ToDecimal(reader["MESAICALISMASURESI"]),
-        //            PLANLIDURUSSURESI = Convert.ToDecimal(reader["PLANLIDURUSSURESI"]),
-        //            TEORIKSURE = Convert.ToDecimal(reader["TEORIKSURE"]),
-        //            VARDIYA = Convert.ToInt32(reader["VARDIYA"]),
-        //            VARDIYACALISMASURESI = Convert.ToDecimal(reader["VARDIYACALISMASURESI"])
-        //        });
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "ISNULL(ID,0) as ID," +
+                                  "KAYITNO, " +
+                                  "BAKIMTURU, " +
+                                  "ISNULL(PLANLANANTARIH,'1999-01-01') as PLANLANANTARIH, " +
+                                  "ISNULL(PLANLANANBAKIMSURESI,0) as PLANLANANBAKIMSURESI, " +
+                                  "ISNULL(BASLANGICTARIHI,'1999-01-01') as BASLANGICTARIHI, " +
+                                  "ISNULL(TAMAMLANMATARIHI,'1999-01-01') as TAMAMLANMATARIHI, " +
+                                  "ISNULL(ISTID,0) as ISTID, " +
+                                  "ISNULL(PERIYOT,0) as PERIYOT, " +
+                                  "ISNULL(KALANSURE,0) as KALANSURE, " +
+                                  "DURUM, " +
+                                  "BAKIMIYAPAN, " +
+                                  "ISNULL(BAKIMSURESI,0) as BAKIMSURESI, " +
+                                  "NOT_, " +
+                                  "ISNULL(SIPARISID,0) as SIPARISID, " +
+                                  "MUSTERISIPARISNO, " +
+                                  "ISNULL(URETILENADET,0) as URETILENADET, " +
+                                  "ISNULL(HURDAADET,0) as HURDAADET, " +
+                                  "ISNULL(KALITE,0) as KALITE, " +
+                                  "ISNULL(CALISMABILGISI,0) as CALISMABILGISI, " +
+                                  "CARIUNVAN, " +
+                                  "ISNULL(TARIH,'1999-01-01') as TARIH, " +
+                                  "ISNULL(SIPARISDURUM,0) as SIPARISDURUM, " +
+                                  "ISNULL(KAT,0) as KAT " +
+                                  "FROM TUR_VW_DASHBOARD_BAKIM ORDER BY CANLI.TARIH DESC";
+            command.Connection = connection;
 
-        //    }
+            SqlDataReader reader = command.ExecuteReader();
 
-        //    return stations;
-        //}
+            while (reader.Read())
+            {
+                bakimView.Add(new BakimView()
+                {
+                    ID = Convert.ToInt32(reader["ID"]),
+                    KAYITNO = Convert.ToString(reader["KAYITNO"]),
+                    BAKIMTURU = Convert.ToString(reader["BAKIMTURU"]),
+                    PLANLANANTARIH = Convert.ToDateTime(reader["PLANLANANTARIH"]),
+                    PLANLANANBAKIMSURESI = Convert.ToInt32(reader["PLANLANANBAKIMSURESI"]),
+                    BASLANGICTARIHI = Convert.ToDateTime(reader["BASLANGICTARIHI"]),
+                    TAMAMLANMATARIHI = Convert.ToDateTime(reader["TAMAMLANMATARIHI"]),
+                    ISTID = Convert.ToInt32(reader["ISTID"]),
+                    PERIYOT = Convert.ToInt32(reader["PERIYOT"]),
+                    KALANSURE = Convert.ToInt32(reader["KALANSURE"]),
+                    DURUM = Convert.ToString(reader["DURUM"]),
+                    BAKIMIYAPAN = Convert.ToString(reader["BAKIMIYAPAN"]),
+                    BAKIMSURESI = Convert.ToInt32(reader["BAKIMSURESI"]),
+                    NOT_ = Convert.ToString(reader["NOT_"]),
+                    SIPARISID = Convert.ToInt32(reader["SIPARISID"]),
+                    MUSTERISIPARISNO = Convert.ToString(reader["MUSTERISIPARISNO"]),
+                    URETILENADET = Convert.ToDecimal(reader["URETILENADET"]),
+                    HURDAADET = Convert.ToDecimal(reader["HURDAADET"]),
+                    KALITE = Convert.ToInt32(reader["KALITE"]),
+                    CALISMABILGISI = Convert.ToInt32(reader["CALISMABILGISI"]),
+                    CARIUNVAN = Convert.ToString(reader["CARIUNVAN"]),
+                    TARIH = Convert.ToDateTime(reader["TARIH"]),
+                    SIPARISDURUM = Convert.ToInt32(reader["SIPARISDURUM"]),
+                    KAT = Convert.ToInt32(reader["KAT"])
+
+                });
+            }
+
+            return bakimView;
+        }
     }
 }

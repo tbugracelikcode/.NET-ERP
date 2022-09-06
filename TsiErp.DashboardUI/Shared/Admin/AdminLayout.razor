@@ -3,13 +3,14 @@
 @using Syncfusion.Blazor.Navigations
 <PageTitle>TSI Dashboard</PageTitle>
 <SfSidebar ID="Sidebar" Type="SidebarType.Push" Width="300px" DockSize="65px" EnableDock="true" @ref="Sidebar" @bind-IsOpen="SidebarToggle">
-    <div class="sidebar" style="position:fixed;z-index:1200">
+        <div class="sidebar" style="position:fixed;z-index:1200">
         <div class="topnav navbar navbar-dark">
-            <button class="navbar-toggler" @onclick="ToggleNavMenu" />
-            <img src="tsi-logo.png" />
-            <a class="navbar-brand" href=""><span class="displayText" style="margin-right:30px">Dashboard</span></a>
+          @*  <button class="navbar-toggler" @onclick="ToggleNavMenu" />*@
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="tsi-logo.png" />
+            <a class="navbar-brand" href=""><span class="displayText" style="margin-right:40px">Dashboard</span></a>
         </div>
-        <div @onmouseover="MouseIn" @onmouseout="MouseOut">
+        @*<div @onmouseover="MouseIn" @onmouseout="MouseOut">*@
+            <div>
             <AdminNavMenu />
         </div>
     </div>

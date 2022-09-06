@@ -25,6 +25,7 @@ builder.Services.AddScoped<FasonUygunsuzlukDetayService>();
 
 // Add services to the container.
 builder.Services.AddSyncfusionBlazor();
+builder.Services.AddDevExpressBlazor();
             builder.Services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(SyncfusionLocalizer));
             builder.Services.Configure<RequestLocalizationOptions>(options =>
             {
