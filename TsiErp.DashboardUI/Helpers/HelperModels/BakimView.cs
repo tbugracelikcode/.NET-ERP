@@ -26,6 +26,8 @@
         public DateTime TARIH { get; set; }
         public int SIPARISDURUM { get; set; }
         public int KAT { get; set; }
+        public string BOLUM { get; set; }
+        public int BOLUMID { get; set; }
 
     }
 }

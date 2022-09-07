@@ -34,8 +34,9 @@ namespace TsiErp.DashboardUI.Helpers
                                   "ISNULL(MESAICALISMASURESI,0) as MESAICALISMASURESI, " +
                                   "ISNULL(PLANLIDURUSSURESI,0) as PLANLIDURUSSURESI, " +
                                   "FASON," +
-                                  "ISNULL(VERITOPLAMA,0) as VERITOPLAMA " +
-                                  "EKIPMAN FROM TUR_IST";
+                                  "ISNULL(VERITOPLAMA,0) as VERITOPLAMA, " +
+                                  "EKIPMAN" +
+                                  " FROM TUR_IST";
             command.Connection = connection;
 
             SqlDataReader reader = command.ExecuteReader();
@@ -1123,7 +1124,7 @@ namespace TsiErp.DashboardUI.Helpers
             return unsuitabilityLines;
         }
 
-        public static List<OperasyonUygunsuzluk> GetUnsuitabilityEmployeeQuery(int calisanID,DateTime startDate, DateTime endDate)
+        public static List<OperasyonUygunsuzluk> GetUnsuitabilityEmployeeQuery(int calisanID, DateTime startDate, DateTime endDate)
         {
             List<OperasyonUygunsuzluk> unsuitabilityLines = new List<OperasyonUygunsuzluk>();
 
@@ -1443,8 +1444,10 @@ namespace TsiErp.DashboardUI.Helpers
                                   "CARIUNVAN, " +
                                   "ISNULL(TARIH,'1999-01-01') as TARIH, " +
                                   "ISNULL(SIPARISDURUM,0) as SIPARISDURUM, " +
-                                  "ISNULL(KAT,0) as KAT " +
-                                  "FROM TUR_VW_DASHBOARD_BAKIM ORDER BY CANLI.TARIH DESC";
+                                  "ISNULL(KAT,0) as KAT," +
+                                  "BOLUM," +
+                                  "BOLUMID " +
+                                  "FROM TUR_VW_DASHBOARD_BAKIM ORDER BY TARIH DESC";
             command.Connection = connection;
 
             SqlDataReader reader = command.ExecuteReader();
@@ -1476,12 +1479,53 @@ namespace TsiErp.DashboardUI.Helpers
                     CARIUNVAN = Convert.ToString(reader["CARIUNVAN"]),
                     TARIH = Convert.ToDateTime(reader["TARIH"]),
                     SIPARISDURUM = Convert.ToInt32(reader["SIPARISDURUM"]),
-                    KAT = Convert.ToInt32(reader["KAT"])
-
+                    KAT = Convert.ToInt32(reader["KAT"]),
+                    BOLUM = Convert.ToString(reader["BOLUM"]),
+                    BOLUMID = Convert.ToInt32(reader["BOLUMID"])
                 });
             }
 
             return bakimView;
+        }
+
+        public static List<BakimSatirlari> GetMaintenanceLineRecords()
+        {
+            List<BakimSatirlari> bakimKayitlari = new List<BakimSatirlari>();
+
+            SqlConnection connection = GetSqlConnection();
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT YP.ID," +
+                                   "YP.STOKID," +
+                                   "YP.KAYITID as BAKIMID," +
+                                   "YP.BAKIMTALIMATI," +
+                                   "STOK.ESKISTOKKODU," +
+                                   "STOK.STOKACIKLAMASI," +
+                                   "STOK.BIRIMSETKOD," +
+                                   "YP.MIKTAR as IHTIYACMIKTARI," +
+                                   "(ISNULL(STOK.ADET, 0) - ISNULL(STOK.REZERVE, 0)) as STOKMIKTARI " +
+                                   "FROM dbo.TUR_ISTASYON_BAKIM_YEDEK_PARCALAR as YP LEFT JOIN " +
+                                   "TUR_VW_STOK_BROWSER as STOK ON YP.STOKID = STOK.ID";
+                                                      command.Connection = connection;
+                                          
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                bakimKayitlari.Add(new BakimSatirlari()
+                {
+                    STOKID = Convert.ToInt32(reader["STOKID"]),
+                    BAKIMID = Convert.ToInt32(reader["BAKIMID"]),
+                    BAKIMTALIMATI = Convert.ToString(reader["BAKIMTALIMATI"]),
+                    ESKISTOKKODU = Convert.ToString(reader["ESKISTOKKODU"]),
+                    STOKACIKLAMASI = Convert.ToString(reader["STOKACIKLAMASI"]),
+                    BIRIMSETKOD = Convert.ToString(reader["BIRIMSETKOD"]),
+                    IHTIYACMIKTARI = Convert.ToDecimal(reader["IHTIYACMIKTARI"]),
+                    STOKMIKTARI = Convert.ToDecimal(reader["STOKMIKTARI"])
+                });
+            }
+
+            return bakimKayitlari;
         }
     }
 }
