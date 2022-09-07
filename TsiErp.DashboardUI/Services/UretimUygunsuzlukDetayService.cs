@@ -21,6 +21,7 @@ namespace TsiErp.DashboardUI.Services
 
             var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery( startDate, endDate).Where(t=>t.KOD == unsuitabilityCode).ToList();
             var stationList = DBHelper.GetStations();
+            var total = (int)unsuitabilityLines.Sum(t => t.OLCUKONTROLFORMBEYAN);
 
             if(unsuitabilityLines != null)
             {
@@ -33,7 +34,8 @@ namespace TsiErp.DashboardUI.Services
                     ProductionUnsuitabilityDetailedStation analysis = new ProductionUnsuitabilityDetailedStation
                     {
                          Station = station.MAKINEKODU,
-                          Quantity = scrap + tobeused+ correction
+                          Quantity = scrap + tobeused+ correction,
+                          Percent= (double)(scrap+tobeused+correction)/(double)total
                     };
                     if (analysis.Quantity > 0 )
                     {
@@ -53,6 +55,7 @@ namespace TsiErp.DashboardUI.Services
 
             var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate).Where(t => t.KOD == unsuitabilityCode).ToList();
             var employeeList = unsuitabilityLines.Select(t => t.CALISANID).Distinct().ToList();
+            var total = unsuitabilityLines.Sum(t => t.OLCUKONTROLFORMBEYAN);
 
             if (unsuitabilityLines != null)
             {
@@ -65,7 +68,8 @@ namespace TsiErp.DashboardUI.Services
                     ProductionUnsuitabilityDetailedEmployee analysis = new ProductionUnsuitabilityDetailedEmployee
                     {
                         EmployeeName = unsuitabilityLines.Where(t=>t.CALISANID == unsuitability).Select(t=>t.CALISANAD).FirstOrDefault(),
-                        Quantity = scrap + tobeused + correction
+                        Quantity = scrap + tobeused + correction,
+                        Percent = (double)(scrap + tobeused + correction) / (double)total
                     };
                     if (analysis.Quantity > 0)
                     {
@@ -85,6 +89,7 @@ namespace TsiErp.DashboardUI.Services
 
             var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate).Where(t => t.KOD == unsuitabilityCode).Distinct().ToList();
             var productList = unsuitabilityLines.Select(t => t.STOKID).Distinct().ToList();
+            var total = unsuitabilityLines.Sum(t => t.OLCUKONTROLFORMBEYAN);
 
             if (unsuitabilityLines != null)
             {
@@ -97,7 +102,8 @@ namespace TsiErp.DashboardUI.Services
                     ProductionUnsuitabilityDetailedProduct analysis = new ProductionUnsuitabilityDetailedProduct
                     {
                         ProductCode = unsuitabilityLines.Where(t=>t.STOKID == unsuitability).Select(t=>t.STOKACIKLAMASI).FirstOrDefault(),
-                        Quantity = scrap + tobeused + correction
+                        Quantity = scrap + tobeused + correction,
+                        Percent = (double)(scrap + tobeused + correction) / (double)total
                     };
                     if (analysis.Quantity > 0)
                     {

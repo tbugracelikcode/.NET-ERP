@@ -32,5 +32,10 @@ namespace TsiErp.DashboardUI.Models
         /// Oran 
         /// </summary>
         public double Quality { get; set; }
+        /// <summary>
+        /// OEE 
+        /// </summary>
+        public decimal OEE { get; set; }
+        
     }
 }

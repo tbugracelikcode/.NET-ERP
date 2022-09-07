@@ -1,8 +1,8 @@
-﻿@page "/admin/production-unsuitability-analysis/details/{unsuitabilityCode}/{startDate:datetime}/{endDate:datetime}"
+﻿@page "/admin/supplier-unsuitability-analysis/details/{errorID:int}/{startDate:datetime}/{endDate:datetime}"
 @layout AdminLayout
 
-@inject UretimUygunsuzlukDetayService UretimUygunsuzlukDetayService
-@inject UretimUygunsuzlukService UretimUygunsuzlukService
+@inject TedarikciUygunsuzlukDetayService TedarikciUygunsuzlukDetayService
+@inject TedarikciUygunsuzlukService TedarikciUygunsuzlukService
 @inject NavigationManager NavigationManager
 
 @using Syncfusion.Blazor.Calendars
@@ -65,15 +65,16 @@
         font-size: 16px;
         font-weight: bold;
     }
-     .FilterLabelTitle{
-        color:#830000;
-        font-size:18px;
+
+    .FilterLabelTitle {
+        color: #830000;
+        font-size: 18px;
     }
-    .FilterLabelTitleValue{
-        font-size:18px;
+
+    .FilterLabelTitleValue {
+        font-size: 18px;
     }
 </style>
-
 
 <SfCard class="FilterCard">
     <CardContent>
@@ -114,12 +115,12 @@
             <TabItems>
                 <TabItem>
                     <ChildContent>
-                        <TabHeader Text="Makinalara Göre Uygunsuzluk Analizi Detayı"></TabHeader>
+                        <TabHeader Text="Müşteriye Göre Uygunsuzluk Analizi Detayı"></TabHeader>
                     </ChildContent>
                     <ContentTemplate>
                         <SfCard class="Cards" style="text-align:center">
                             <CardContent>
-                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Makinalara Göre Uygunsuzluk Analizi Detay Grafiği">
+                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Müşteriye Göre Uygunsuzluk Analizi Detay Grafiği">
                                     <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
                                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
                                         <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
@@ -129,61 +130,7 @@
                                     </ChartPrimaryYAxis>
                                     <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
                                     <ChartSeriesCollection>
-                                        <ChartSeries DataSource="@dataunsuitabilitystation" ColumnWidth="@columnwidth1" Name="Uygunsuzluk" XName="Station" YName="Percent" Width="1" Fill="darkred" Type="ChartSeriesType.Column">
-
-                                        </ChartSeries>
-                                    </ChartSeriesCollection>
-                                    <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
-                                    <ChartZoomSettings EnableSelectionZooming="true"></ChartZoomSettings>
-                                </SfChart>
-
-                            </CardContent>
-                            <CardFooter>
-                            </CardFooter>
-                        </SfCard>
-                        <SfCard class="Cards">
-
-                            <CardContent>
-                                <SfGrid ID="Grid" DataSource="@dataunsuitabilitystation" @ref="StationGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
-                                        AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
-                                    <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
-                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
-                                    <GridEvents TValue="ProductionUnsuitabilityDetailedStation"></GridEvents>
-                                    <GridPageSettings PageSizes="true"></GridPageSettings>
-                                    <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
-                                    <GridColumns>
-                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedStation.Station) HeaderText="İSTASYON" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedStation.Quantity) HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedStation.Percent) HeaderText="UYGUNSUZLUK ORANI" Format="p2" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    </GridColumns>
-                                </SfGrid>
-                            </CardContent>
-                            <CardFooter>
-                            </CardFooter>
-                        </SfCard>
-                    </ContentTemplate>
-                </TabItem>
-
-                <TabItem>
-                    <ChildContent>
-                        <TabHeader Text="Personel Adına Göre Uygunsuzluk Analizi Detayı"></TabHeader>
-                    </ChildContent>
-                    <ContentTemplate>
-                        <br />
-                        <br />
-                        <SfCard class="Cards" style="text-align:center">
-                            <CardContent>
-                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Personel Adına Göre Uygunsuzluk Analizi Detay Grafiği">
-                                    <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
-                                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate90">
-                                        <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
-                                    </ChartPrimaryXAxis>
-                                    <ChartPrimaryYAxis LabelFormat="p2">
-                                        <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
-                                    </ChartPrimaryYAxis>
-                                    <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
-                                    <ChartSeriesCollection>
-                                        <ChartSeries DataSource="@dataunsuitabilityemployee" ColumnWidth="@columnwidth2" Name="Uygunsuzluk" XName="EmployeeName" YName="Percent" Width="1" Fill="darkred" Type="ChartSeriesType.Column">
+                                        <ChartSeries DataSource="@dataunsuitabilitycustomer" Name="Uygunsuzluk" XName="Customer" YName="Percent" Width="1" Fill="darkred" ColumnWidth="@columnwidth1" Type="ChartSeriesType.Column">
                                           
                                         </ChartSeries>
                                     </ChartSeriesCollection>
@@ -198,17 +145,17 @@
                         <SfCard class="Cards">
 
                             <CardContent>
-                                <SfGrid ID="Grid" DataSource="@dataunsuitabilityemployee" @ref="EmployeeGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                                <SfGrid ID="Grid" DataSource="@dataunsuitabilitycustomer" @ref="CustomerGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
                                         AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
-                                    <GridEvents TValue="ProductionUnsuitabilityDetailedEmployee"></GridEvents>
+                                    <GridEvents TValue="SupplierUnsuitabilityDetailedCustomer"></GridEvents>
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedEmployee.EmployeeName) HeaderText="PERSONEL ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedEmployee.Quantity) HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedEmployee.Percent) HeaderText="UYGUNSUZLUK ORANI" Format="p2" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedCustomer.Customer) HeaderText="MÜŞTERİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedCustomer.Quantity) HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedCustomer.Percent) Format = "p2" HeaderText="UYGUNSUZLUK ORANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     </GridColumns>
                                 </SfGrid>
                             </CardContent>
@@ -235,7 +182,7 @@
                                     </ChartPrimaryYAxis>
                                     <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
                                     <ChartSeriesCollection>
-                                        <ChartSeries DataSource="@dataunsuitabilityproduct" ColumnWidth="@columnwidth3" Name="Uygunsuzluk" XName="ProductCode" YName="Percent" Width="1" Fill="darkred" Type="ChartSeriesType.Column">
+                                        <ChartSeries DataSource="@dataunsuitabilityproduct" Name="Uygunsuzluk" XName="ProductCode" YName="Percent" ColumnWidth="@columnwidth2" Width="1" Fill="darkred" Type="ChartSeriesType.Column">
 
                                         </ChartSeries>
                                     </ChartSeriesCollection>
@@ -254,13 +201,13 @@
                                         AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
-                                    <GridEvents TValue="ProductionUnsuitabilityDetailedProduct"></GridEvents>
+                                    <GridEvents TValue="SupplierUnsuitabilityDetailedProduct"></GridEvents>
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedProduct.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedProduct.Quantity) HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedProduct.Percent) HeaderText="UYGUNSUZLUK ORANI" Format="p2" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.Quantity) HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.Percent) Format = "p2" HeaderText="UYGUNSUZLUK ORANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     </GridColumns>
                                 </SfGrid>
                             </CardContent>
@@ -276,25 +223,19 @@
     </CardFooter>
 </SfCard>
 
+
 @code {
+    List<SupplierUnsuitabilityDetailedCustomer> dataunsuitabilitycustomer = new List<SupplierUnsuitabilityDetailedCustomer>();
+    List<SupplierUnsuitabilityDetailedProduct> dataunsuitabilityproduct = new List<SupplierUnsuitabilityDetailedProduct>();
 
-    List<ProductionUnsuitabilityDetailedStation> dataunsuitabilitystation= new List<ProductionUnsuitabilityDetailedStation>();
-    List<ProductionUnsuitabilityDetailedEmployee> dataunsuitabilityemployee= new List<ProductionUnsuitabilityDetailedEmployee>();
-    List<ProductionUnsuitabilityDetailedProduct> dataunsuitabilityproduct= new List<ProductionUnsuitabilityDetailedProduct>();
-    AdminProductionUnsuitabilityAnalysis _labelreason = new AdminProductionUnsuitabilityAnalysis();
-
-    SfGrid<ProductionUnsuitabilityDetailedEmployee> EmployeeGrid;
-    SfGrid<ProductionUnsuitabilityDetailedStation> StationGrid;
-    SfGrid<ProductionUnsuitabilityDetailedProduct> ProductGrid;
+    SfGrid<SupplierUnsuitabilityDetailedCustomer> CustomerGrid;
+    SfGrid<SupplierUnsuitabilityDetailedProduct> ProductGrid;
 
 
     bool VisibleSpinner = false;
-    //private bool isEmployeeChecked = false;
-    //int employees = 1;
     string unsuitabilityName = string.Empty;
     double columnwidth1;
     double columnwidth2;
-    double columnwidth3;
 
     [Parameter]
     public DateTime startDate { get; set; }
@@ -303,37 +244,31 @@
     public DateTime endDate { get; set; }
 
     [Parameter]
-    public string unsuitabilityCode { get; set; }
+    public int errorID { get; set; }
 
 
     protected override void OnInitialized()
     {
-        dataunsuitabilitystation = UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedStationAnalysis(unsuitabilityCode, startDate, endDate);
-        dataunsuitabilityemployee = UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedEmployeeAnalysis(unsuitabilityCode, startDate, endDate);
-        dataunsuitabilityproduct = UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedProductAnalysis(unsuitabilityCode, startDate, endDate);
-        unsuitabilityName = UretimUygunsuzlukService.GetProductionUnsuitabilityAnalysis(startDate, endDate).Where(t => t.Code == unsuitabilityCode).Select(t => t.UnsuitabilityReason).FirstOrDefault();
-        if(dataunsuitabilitystation.Count()<=3)
+        dataunsuitabilitycustomer = TedarikciUygunsuzlukDetayService.GetSupplierUnsuitabilityDetailedCustomerAnalysis(errorID, startDate, endDate);
+        dataunsuitabilityproduct = TedarikciUygunsuzlukDetayService.GetSupplierUnsuitabilityDetailedProductAnalysis(errorID, startDate, endDate);
+        unsuitabilityName = TedarikciUygunsuzlukService.GetSupplierUnsuitabilityAnalysis(startDate, endDate).Where(t => t.ErrorID == errorID).Select(t => t.UnsuitabilityReason).FirstOrDefault();
+        if(dataunsuitabilitycustomer.Count()<=3)
         {
             columnwidth1 = 0.1;
         }
-         if(dataunsuitabilityemployee.Count()<=3)
+         if(dataunsuitabilityproduct.Count()<=3)
         {
             columnwidth2 = 0.1;
         }
-         if(dataunsuitabilityproduct.Count()<=3)
-        {
-            columnwidth3 = 0.1;
-        }
     }
 
-  
+
 
     private void OnBackButtonClicked()
     {
         this.VisibleSpinner = true;
 
-        NavigationManager.NavigateTo("/admin/production-unsuitability-analysis");
+        NavigationManager.NavigateTo("/admin/supplier-unsuitability-analysis");
     }
-
 
 }

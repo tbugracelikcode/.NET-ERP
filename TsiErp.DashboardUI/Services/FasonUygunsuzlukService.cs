@@ -13,62 +13,35 @@ namespace TsiErp.DashboardUI.Services
             _connection = DBHelper.GetSqlConnection();
         }
 
-        public List<AdminContractUnsuitabilityAnalysisChart> GetContractUnsuitabilityChart(DateTime startDate, DateTime endDate, int frequency)
-        {
-            List<AdminContractUnsuitabilityAnalysisChart> adminContractUnsuitabilityChart = new List<AdminContractUnsuitabilityAnalysisChart>();
-            var unsuitabilityLines = DBHelper.GetContractUnsuitabilityQuery(startDate, endDate);
-
-
-            if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
-            {
-                var gList = unsuitabilityLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month }).Select(t => new AdminContractUnsuitabilityAnalysisChart
-                {
-                    Ay = GetMonth(t.Key.Ay),
-                    Total = t.Where(t => t.HURDA == true).Sum(t => t.UYGUNOLMAYANMIKTAR) + t.Where(t => t.OLDUGUGIBIKULLANILACAK == true).Sum(t => t.UYGUNOLMAYANMIKTAR) + t.Where(t => t.DUZELTME == true).Sum(t => t.UYGUNOLMAYANMIKTAR)
-                }).ToList();
-                adminContractUnsuitabilityChart = gList;
-            }
-            else if (frequency == 5 || frequency == 6)
-            {
-                var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminContractUnsuitabilityAnalysisChart
-                {
-                    Ay = t.Key.HAFTA.ToString("dd MMM yy"),
-                    Total = t.Where(t => t.HURDA == true).Sum(t => t.UYGUNOLMAYANMIKTAR) + t.Where(t => t.OLDUGUGIBIKULLANILACAK == true).Sum(t => t.UYGUNOLMAYANMIKTAR) + t.Where(t => t.DUZELTME == true).Sum(t => t.UYGUNOLMAYANMIKTAR)
-                }).ToList();
-                adminContractUnsuitabilityChart = gList;
-            }
-
-            return adminContractUnsuitabilityChart;
-
-        }
-
         public List<ContractUnsuitabilityAnalysis> GetContractUnsuitabilityAnalysis(DateTime startDate, DateTime endDate)
         {
             List<ContractUnsuitabilityAnalysis> contractUnsuitabilityAnalysis = new List<ContractUnsuitabilityAnalysis>();
 
+            var generalList = DBHelper.GetContractUnsuitabilityQueryGeneral(startDate, endDate);
             var unsuitabilityLines = DBHelper.GetContractUnsuitabilityQuery(startDate, endDate);
             var list = unsuitabilityLines.Select(t => t.HATAID).Distinct().ToList();
-            //var deneme = DBHelper.GetContractCauses();
+            var fasonList = unsuitabilityLines.Select(t => t.CARIID).Distinct().ToList();
 
             if (unsuitabilityLines != null)
             {
-                foreach (var unsuitability in list)
+                foreach (var fasontedarikci in fasonList)
                 {
-                    var scrap = unsuitabilityLines.Where(t => t.HURDA == true && t.HATAID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
-                    var tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.HATAID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
-                    var correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.HATAID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
+                    var total = generalList.Where(t => t.CariID == fasontedarikci).Sum(t => t.Miktar);
+                    var receipt = generalList.Where(t => t.CariID == fasontedarikci).Sum(t => t.FasonFisiAdeti);
+
                     ContractUnsuitabilityAnalysis analysis = new ContractUnsuitabilityAnalysis
                     {
-                        ContractUnsuitabilityID = unsuitabilityLines.Where(t => t.HATAID == unsuitability).Select(t=>t.ID).FirstOrDefault(),
-                        ScrapQuantity = scrap,
-                        ToBeUsedAs = tobeused,
-                        Correction = correction,
-                        Total = scrap + tobeused + correction,
-                        UnsuitabilityReason = unsuitabilityLines.Where(t=>t.HATAID == unsuitability).Select(t=>t.HATAACIKLAMA).FirstOrDefault(),
-                        ErrorID = unsuitability
-
+                        ContractSupplierID = fasontedarikci,
+                        ContractSupplier = unsuitabilityLines.Where(t => t.CARIID == fasontedarikci).Select(t => t.CARIUNVAN).FirstOrDefault(),
+                        Total =total,
+                        ContractReceiptQuantity = receipt,
+                        ProductionOrderID = unsuitabilityLines.Where(t => t.CARIID == fasontedarikci).Select(t => t.URETIMEMRIID).FirstOrDefault(),
+                        Percent = (double)total/ (double)receipt
                     };
-                    contractUnsuitabilityAnalysis.Add(analysis);
+                    if(analysis.Total > 0)
+                    {
+                        contractUnsuitabilityAnalysis.Add(analysis);
+                    }
                 }
             }
             return contractUnsuitabilityAnalysis;

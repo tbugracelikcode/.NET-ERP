@@ -24,5 +24,13 @@ namespace TsiErp.DashboardUI.Models
         /// İstasyon Adı
         /// </summary>
         public string StationName { get; set; }
+        /// <summary>
+        /// Yüzde
+        /// </summary>
+        public double? Percent { get; set; }
+        /// <summary>
+        /// Toplam
+        /// </summary>
+        public int Total { get; set; }
     }
 }

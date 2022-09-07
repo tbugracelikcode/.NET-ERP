@@ -28,5 +28,29 @@ namespace TsiErp.DashboardUI.Models
         /// Çalışma Süresi
         /// </summary>
         public int OperationTime { get; set; }
+        /// <summary>
+        /// Toplam Çalışma Süresi
+        /// </summary>
+        public int TotalTime { get; set; }
+        /// <summary>
+        /// Toplam Çalışma Süresi
+        /// </summary>
+        public double Percent { get; set; }
+        /// <summary>
+        /// Kullanılabilirlik
+        /// </summary>
+        public decimal Availability { get; set; }
+        /// <summary>
+        /// Performans
+        /// </summary>
+        public decimal Performance { get; set; }
+        /// <summary>
+        /// Kalite
+        /// </summary>
+        public decimal Quality { get; set; }
+        /// <summary>
+        /// OEE
+        /// </summary>
+        public decimal OEE { get; set; }
     }
 }

@@ -21,6 +21,7 @@
 
     .GridZebra table tbody tr:nth-child(n) {
         text-align: center;
+        font-weight: bold;
     }
 
     table {
@@ -121,12 +122,12 @@
                                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
                                         <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
                                     </ChartPrimaryXAxis>
-                                    <ChartPrimaryYAxis LabelFormat="#">
+                                    <ChartPrimaryYAxis LabelFormat="p2">
                                         <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
                                     </ChartPrimaryYAxis>
                                     <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
                                     <ChartSeriesCollection>
-                                        <ChartSeries DataSource="@dataemployeechart" Name="Duruş Süresi" XName="HaltName" YName="HaltTimeSecond" Width="1" Fill="darkred" Type="ChartSeriesType.Column">
+                                        <ChartSeries DataSource="@dataemployeechart" ColumnWidth="@columnwidth" Name="Duruş Süresi" XName="HaltName" YName="Percent" Width="1" Fill="darkred" Type="ChartSeriesType.Column">
 
                                         </ChartSeries>
                                     </ChartSeriesCollection>
@@ -179,6 +180,7 @@
     SfChart ChartInstance;
 
     bool VisibleSpinner = false;
+    double columnwidth;
     private bool isEmployeeChecked = false;
     int employees = 1;
     string employeeName = string.Empty;
@@ -198,6 +200,10 @@
         dataemployeehalt = PersonelDetayService.GetStationDetailedHaltAnalysis(employeeID, startDate, endDate);
         dataemployeechart = PersonelDetayService.GetEmployeeDetailedtChart(employeeID, startDate, endDate);
         employeeName = dataemployeehalt.Select(t => t.EmployeeName).FirstOrDefault();
+        if(dataemployeechart.Count()<=3)
+        {
+            columnwidth = 0.1;
+        }
     }
 
     private void OnChangeProductCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)

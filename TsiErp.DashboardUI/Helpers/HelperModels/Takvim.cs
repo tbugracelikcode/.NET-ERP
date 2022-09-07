@@ -26,6 +26,7 @@
         public int? GECETOPLAMCALISMAZAMANI { get; set; }
         public int? TOPLAMCALISABILIRSURE { get; set; }
         public string PLANLANAN { get; set; }
+        public bool VERITOPLAMA { get; set; }
 
 
     }

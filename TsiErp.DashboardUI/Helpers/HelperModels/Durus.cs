@@ -27,7 +27,9 @@
         public string CALISAN { get; set; }
         public decimal DURUS_ORANI { get; set; }
         public bool? YKK { get; set; }
-        
+        public bool? MKD { get; set; }
+        public bool? PKD { get; set; }
+
 
     }
 }

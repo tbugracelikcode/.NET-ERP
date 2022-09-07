@@ -5,5 +5,7 @@
         public int Quantity { get; set; }
 
         public string EmployeeName { get; set; }
+
+        public double Percent { get; set; }
     }
 }

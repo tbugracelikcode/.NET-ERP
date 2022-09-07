@@ -1,18 +1,18 @@
 ﻿namespace TsiErp.DashboardUI.Models
 {
-    public class AdminProductChart
+    public class AdminSupplierUnsuitabilityAnalysisChart
     {
         /// <summary>
-        /// Verimlilik
+        /// Toplam 
         /// </summary>
-        public decimal OEE { get; set; }
+        public int Total { get; set; }
         /// <summary>
-        /// Ay
+        /// Ay 
         /// </summary>
         public string Ay { get; set; }
         /// <summary>
-        /// Hurda Yüzde 
+        /// Oran 
         /// </summary>
-        public double ScrapPercent { get; set; }
+        public double Percent { get; set; }
     }
 }

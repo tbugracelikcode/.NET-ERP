@@ -5,5 +5,6 @@
         public int Quantity { get; set; }
 
         public string Customer { get; set; }
+        public double Percent { get; set; }
     }
 }
