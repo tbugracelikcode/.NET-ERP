@@ -20,6 +20,7 @@
 
     .GridZebra table tbody tr:nth-child(n) {
         text-align: center;
+        font-weight: bold;
     }
 
     table {
@@ -81,10 +82,10 @@
                     <label class="FilterLabelTitle"><strong>Ürün Grubu Adı:</strong></label><label class="FilterLabelTitleValue">&nbsp;@productgroupName</label>
                 </td>
                 <td width="200px">
-                    <label class="FilterLabelTitle"><strong>Başlangıç Tarih:</strong></label><label class="FilterLabelTitleValue">&nbsp;@startDate.ToShortDateString()</label>
+                    <label class="FilterLabelTitle"><strong>Başlangıç Tarih:</strong></label><label class="FilterLabelTitleValue">&nbsp;@startDate.ToString("dd/MM/yyyy")</label>
                 </td>
                 <td width="200px">
-                    <label class="FilterLabelTitle"><strong>Bitiş Tarih:</strong></label><label class="FilterLabelTitleValue">&nbsp;@endDate.ToShortDateString()</label>
+                    <label class="FilterLabelTitle"><strong>Bitiş Tarih:</strong></label><label class="FilterLabelTitleValue">&nbsp;@endDate.ToString("dd/MM/yyyy")</label>
                 </td>
                 <td width="200px">
                     <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold" OnClick="@OnBackButtonClicked">Geri</SfButton> <SfSpinner @bind-Visible="VisibleSpinner"> </SfSpinner>
@@ -117,7 +118,7 @@
                     <ContentTemplate>
                         <SfCard class="Cards" style="text-align:center">
                             <CardContent>
-                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Hurda Analiz Grafiği">
+                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Hurda PPM Analiz Grafiği">
                                     <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
                                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
                                         <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
@@ -127,7 +128,7 @@
                                     </ChartPrimaryYAxis>
                                     <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
                                     <ChartSeriesCollection>
-                                        <ChartSeries DataSource="@dataproductgroupchart" Name="PPM" XName="ScrapCauseName" YName="PPM" Width="1" Fill="darkred" Type="ChartSeriesType.Column">
+                                        <ChartSeries DataSource="@dataproductgroupchart" ColumnWidth="@columnwidth" Name="PPM" XName="ScrapCauseName" YName="PPM" Width="1" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column">
 
                                         </ChartSeries>
                                     </ChartSeriesCollection>
@@ -182,6 +183,7 @@
     bool VisibleSpinner = false;
     private bool isProductGroupsChecked = false;
     int productgroups = 1;
+    double columnwidth;
     string productgroupName = string.Empty;
 
     [Parameter]
@@ -199,6 +201,10 @@
         dataproductscrap = StokDetayService.GetProductScrapAnalysis(productgroupID, startDate, endDate);
         dataproductgroupchart = StokDetayService.GetProductGroupDetailedtChart(productgroupID, startDate, endDate, 1);
         productgroupName = dataproductscrap.Select(t => t.ProductGroupName).FirstOrDefault();
+        if(dataproductgroupchart.Count()<3)
+        {
+            columnwidth = 0.1;
+        }
     }
 
     private void OnChangeProductCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)

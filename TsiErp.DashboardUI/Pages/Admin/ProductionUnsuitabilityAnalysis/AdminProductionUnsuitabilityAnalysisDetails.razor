@@ -22,6 +22,7 @@
 
     .GridZebra table tbody tr:nth-child(n) {
         text-align: center;
+        font-weight: bold;
     }
 
     table {
@@ -84,10 +85,10 @@
                     <label class="FilterLabelTitle"><strong>Uygunsuzluk Adı:</strong></label><label class="FilterLabelTitleValue">&nbsp;@unsuitabilityName</label>
                 </td>
                 <td width="200px">
-                    <label class="FilterLabelTitle"><strong>Başlangıç Tarih:</strong></label><label class="FilterLabelTitleValue">&nbsp;@startDate.ToShortDateString()</label>
+                    <label class="FilterLabelTitle"><strong>Başlangıç Tarih:</strong></label><label class="FilterLabelTitleValue">&nbsp;@startDate.ToString("dd/MM/yyyy")</label>
                 </td>
                 <td width="200px">
-                    <label class="FilterLabelTitle"><strong>Bitiş Tarih:</strong></label><label class="FilterLabelTitleValue">&nbsp;@endDate.ToShortDateString()</label>
+                    <label class="FilterLabelTitle"><strong>Bitiş Tarih:</strong></label><label class="FilterLabelTitleValue">&nbsp;@endDate.ToString("dd/MM/yyyy")</label>
                 </td>
                 <td width="200px">
                     <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold" OnClick="@OnBackButtonClicked">Geri</SfButton> <SfSpinner @bind-Visible="VisibleSpinner"> </SfSpinner>
@@ -113,22 +114,22 @@
             <TabItems>
                 <TabItem>
                     <ChildContent>
-                        <TabHeader Text="İstasyona Göre Analiz"></TabHeader>
+                        <TabHeader Text="Makinalara Göre Uygunsuzluk Analizi Detayı"></TabHeader>
                     </ChildContent>
                     <ContentTemplate>
                         <SfCard class="Cards" style="text-align:center">
                             <CardContent>
-                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="İstasyona Göre Analiz Grafiği">
+                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Makinalara Göre Uygunsuzluk Analizi Detay Grafiği">
                                     <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
                                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
                                         <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
                                     </ChartPrimaryXAxis>
-                                    <ChartPrimaryYAxis LabelFormat="#">
+                                    <ChartPrimaryYAxis LabelFormat="p2">
                                         <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
                                     </ChartPrimaryYAxis>
                                     <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
                                     <ChartSeriesCollection>
-                                        <ChartSeries DataSource="@dataunsuitabilitystation" Name="Uygunsuzluk" XName="Station" YName="Quantity" Width="1" Fill="darkred" Type="ChartSeriesType.Column">
+                                        <ChartSeries DataSource="@dataunsuitabilitystation" ColumnWidth="@columnwidth1" Name="Uygunsuzluk" XName="Station" YName="Percent" Width="1" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column">
 
                                         </ChartSeries>
                                     </ChartSeriesCollection>
@@ -153,6 +154,7 @@
                                     <GridColumns>
                                         <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedStation.Station) HeaderText="İSTASYON" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedStation.Quantity) HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedStation.Percent) HeaderText="UYGUNSUZLUK ORANI" Format="p2" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     </GridColumns>
                                 </SfGrid>
                             </CardContent>
@@ -164,14 +166,14 @@
 
                 <TabItem>
                     <ChildContent>
-                        <TabHeader Text="Personele Göre Analiz"></TabHeader>
+                        <TabHeader Text="Personel Adına Göre Uygunsuzluk Analizi Detayı"></TabHeader>
                     </ChildContent>
                     <ContentTemplate>
                         <br />
                         <br />
                         <SfCard class="Cards" style="text-align:center">
                             <CardContent>
-                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Personele Göre Analiz Grafiği">
+                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Personel Adına Göre Uygunsuzluk Analizi Detay Grafiği">
                                     <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
                                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate90">
                                         <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
@@ -181,7 +183,7 @@
                                     </ChartPrimaryYAxis>
                                     <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
                                     <ChartSeriesCollection>
-                                        <ChartSeries DataSource="@dataunsuitabilityemployee" Name="Uygunsuzluk" XName="EmployeeName" YName="Quantity" Width="1" Fill="darkred" Type="ChartSeriesType.Column">
+                                        <ChartSeries DataSource="@dataunsuitabilityemployee" ColumnWidth="@columnwidth2" Name="Uygunsuzluk" XName="EmployeeName" YName="Percent" Width="1" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column">
                                           
                                         </ChartSeries>
                                     </ChartSeriesCollection>
@@ -206,6 +208,7 @@
                                     <GridColumns>
                                         <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedEmployee.EmployeeName) HeaderText="PERSONEL ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedEmployee.Quantity) HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedEmployee.Percent) HeaderText="UYGUNSUZLUK ORANI" Format="p2" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     </GridColumns>
                                 </SfGrid>
                             </CardContent>
@@ -217,22 +220,22 @@
 
                 <TabItem>
                     <ChildContent>
-                        <TabHeader Text="Stoğa Göre Analiz"></TabHeader>
+                        <TabHeader Text="Ürün Koduna Göre Uygunsuzluk Analizi Detayı"></TabHeader>
                     </ChildContent>
                     <ContentTemplate>
                         <SfCard class="Cards" style="text-align:center">
                             <CardContent>
-                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Stoğa Göre Analiz Grafiği">
+                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Ürün Koduna Göre Uygunsuzluk Analizi Detay Grafiği">
                                     <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
                                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate90">
                                         <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
                                     </ChartPrimaryXAxis>
-                                    <ChartPrimaryYAxis LabelFormat="#">
+                                    <ChartPrimaryYAxis LabelFormat="p2">
                                         <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
                                     </ChartPrimaryYAxis>
                                     <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
                                     <ChartSeriesCollection>
-                                        <ChartSeries DataSource="@dataunsuitabilityproduct" Name="Uygunsuzluk" XName="ProductCode" YName="Quantity" Width="1" Fill="darkred" Type="ChartSeriesType.Column">
+                                        <ChartSeries DataSource="@dataunsuitabilityproduct" ColumnWidth="@columnwidth3" Name="Uygunsuzluk" XName="ProductCode" YName="Percent" Width="1" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column">
 
                                         </ChartSeries>
                                     </ChartSeriesCollection>
@@ -257,6 +260,7 @@
                                     <GridColumns>
                                         <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedProduct.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedProduct.Quantity) HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedProduct.Percent) HeaderText="UYGUNSUZLUK ORANI" Format="p2" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     </GridColumns>
                                 </SfGrid>
                             </CardContent>
@@ -288,6 +292,9 @@
     //private bool isEmployeeChecked = false;
     //int employees = 1;
     string unsuitabilityName = string.Empty;
+    double columnwidth1;
+    double columnwidth2;
+    double columnwidth3;
 
     [Parameter]
     public DateTime startDate { get; set; }
@@ -305,6 +312,18 @@
         dataunsuitabilityemployee = UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedEmployeeAnalysis(unsuitabilityCode, startDate, endDate);
         dataunsuitabilityproduct = UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedProductAnalysis(unsuitabilityCode, startDate, endDate);
         unsuitabilityName = UretimUygunsuzlukService.GetProductionUnsuitabilityAnalysis(startDate, endDate).Where(t => t.Code == unsuitabilityCode).Select(t => t.UnsuitabilityReason).FirstOrDefault();
+        if(dataunsuitabilitystation.Count()<=3)
+        {
+            columnwidth1 = 0.1;
+        }
+         if(dataunsuitabilityemployee.Count()<=3)
+        {
+            columnwidth2 = 0.1;
+        }
+         if(dataunsuitabilityproduct.Count()<=3)
+        {
+            columnwidth3 = 0.1;
+        }
     }
 
   
@@ -313,7 +332,7 @@
     {
         this.VisibleSpinner = true;
 
-        NavigationManager.NavigateTo("/admin/employee-analysis");
+        NavigationManager.NavigateTo("/admin/production-unsuitability-analysis");
     }
 
 

@@ -1,0 +1,274 @@
+﻿@page "/admin/supplier-unsuitability-analysis/details/{errorID:int}/{startDate:datetime}/{endDate:datetime}"
+@layout AdminLayout
+
+@inject TedarikciUygunsuzlukDetayService TedarikciUygunsuzlukDetayService
+@inject TedarikciUygunsuzlukService TedarikciUygunsuzlukService
+@inject NavigationManager NavigationManager
+
+@using Syncfusion.Blazor.Calendars
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Grids
+@using Syncfusion.Blazor.Cards
+@using Syncfusion.Blazor.Data
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Navigations
+@using Syncfusion.Blazor.Spinner
+@using Syncfusion.Blazor.Charts
+
+<style>
+    .GridZebra table tbody tr:nth-child(odd) {
+        background-color: #B5B5B5;
+    }
+
+    .GridZebra table tbody tr:nth-child(n) {
+        text-align: center;
+        font-weight: bold;
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 0px solid #dddddd;
+        text-align: center;
+        padding: 8px;
+    }
+
+    .ulstyle {
+        margin: 0px;
+        padding-left: 20px;
+        display: inline-block;
+    }
+
+    .list {
+        float: left;
+        line-height: 20px;
+        font: 10px;
+        min-width: 280px;
+    }
+
+    .FilterCard {
+        background-color: #f7f7f7;
+        border: 1px solid #d6d5d5;
+    }
+
+    .Cards {
+        border: 1px solid #d6d5d5;
+    }
+
+    .e-checkbox-wrapper.e-customcheck:hover .e-frame.e-check {
+        background-color: #9C0D0D;
+        font: 600;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .FilterLabelTitle {
+        color: #830000;
+        font-size: 18px;
+    }
+
+    .FilterLabelTitleValue {
+        font-size: 18px;
+    }
+</style>
+
+<SfCard class="FilterCard">
+    <CardContent>
+        <table width="1000px">
+            <tr>
+                <td width="200px">
+                </td>
+                <td width="200px">
+                    <label class="FilterLabelTitle"><strong>Uygunsuzluk Adı:</strong></label><label class="FilterLabelTitleValue">&nbsp;@unsuitabilityName</label>
+                </td>
+                <td width="200px">
+                    <label class="FilterLabelTitle"><strong>Başlangıç Tarih:</strong></label><label class="FilterLabelTitleValue">&nbsp;@startDate.ToString("dd/MM/yyyy")</label>
+                </td>
+                <td width="200px">
+                    <label class="FilterLabelTitle"><strong>Bitiş Tarih:</strong></label><label class="FilterLabelTitleValue">&nbsp;@endDate.ToString("dd/MM/yyyy")</label>
+                </td>
+                <td width="200px">
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold" OnClick="@OnBackButtonClicked">Geri</SfButton> <SfSpinner @bind-Visible="VisibleSpinner"> </SfSpinner>
+                </td>
+            </tr>
+        </table>
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+<br />
+<br />
+
+<SfCard class="Cards">
+    <CardHeader>
+    </CardHeader>
+    <CardContent>
+        <SfTab CssClass="default-tab" OverflowMode="@OverflowMode.Scrollable" HeaderPlacement="HeaderPosition.Top" Width="100%">
+            <TabAnimationSettings>
+                <TabAnimationPrevious Effect="AnimationEffect.FadeIn"></TabAnimationPrevious>
+                <TabAnimationNext Effect="AnimationEffect.FadeOut"></TabAnimationNext>
+            </TabAnimationSettings>
+            <TabItems>
+                <TabItem>
+                    <ChildContent>
+                        <TabHeader Text="Müşteriye Göre Uygunsuzluk Analizi Detayı"></TabHeader>
+                    </ChildContent>
+                    <ContentTemplate>
+                        <SfCard class="Cards" style="text-align:center">
+                            <CardContent>
+                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Müşteriye Göre Uygunsuzluk Analizi Detay Grafiği">
+                                    <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
+                                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
+                                        <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
+                                    </ChartPrimaryXAxis>
+                                    <ChartPrimaryYAxis LabelFormat="p2">
+                                        <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
+                                    </ChartPrimaryYAxis>
+                                    <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
+                                    <ChartSeriesCollection>
+                                        <ChartSeries DataSource="@dataunsuitabilitycustomer" Name="Uygunsuzluk" XName="Customer" YName="Percent" Width="1" Fill="darkred" ColumnWidth="@columnwidth1" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column">
+                                          
+                                        </ChartSeries>
+                                    </ChartSeriesCollection>
+                                    <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
+                                    <ChartZoomSettings EnableSelectionZooming="true"></ChartZoomSettings>
+                                </SfChart>
+
+                            </CardContent>
+                            <CardFooter>
+                            </CardFooter>
+                        </SfCard>
+                        <SfCard class="Cards">
+
+                            <CardContent>
+                                <SfGrid ID="Grid" DataSource="@dataunsuitabilitycustomer" @ref="CustomerGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                                        AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                    <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                    <GridEvents TValue="SupplierUnsuitabilityDetailedCustomer"></GridEvents>
+                                    <GridPageSettings PageSizes="true"></GridPageSettings>
+                                    <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                    <GridColumns>
+                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedCustomer.Customer) HeaderText="MÜŞTERİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedCustomer.Quantity) HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedCustomer.Percent) Format = "p2" HeaderText="UYGUNSUZLUK ORANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    </GridColumns>
+                                </SfGrid>
+                            </CardContent>
+                            <CardFooter>
+                            </CardFooter>
+                        </SfCard>
+                    </ContentTemplate>
+                </TabItem>
+
+                <TabItem>
+                    <ChildContent>
+                        <TabHeader Text="Ürün Koduna Göre Uygunsuzluk Analizi Detayı"></TabHeader>
+                    </ChildContent>
+                    <ContentTemplate>
+                        <SfCard class="Cards" style="text-align:center">
+                            <CardContent>
+                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Ürün Koduna Göre Uygunsuzluk Analizi Detay Grafiği">
+                                    <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
+                                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate90">
+                                        <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
+                                    </ChartPrimaryXAxis>
+                                    <ChartPrimaryYAxis LabelFormat="p2">
+                                        <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
+                                    </ChartPrimaryYAxis>
+                                    <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
+                                    <ChartSeriesCollection>
+                                        <ChartSeries DataSource="@dataunsuitabilityproduct" Name="Uygunsuzluk" XName="ProductCode" YName="Percent" ColumnWidth="@columnwidth2" Width="1" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column">
+
+                                        </ChartSeries>
+                                    </ChartSeriesCollection>
+                                    <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
+                                    <ChartZoomSettings EnableSelectionZooming="true"></ChartZoomSettings>
+                                </SfChart>
+
+                            </CardContent>
+                            <CardFooter>
+                            </CardFooter>
+                        </SfCard>
+                        <SfCard class="Cards">
+
+                            <CardContent>
+                                <SfGrid ID="Grid" DataSource="@dataunsuitabilityproduct" @ref="ProductGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                                        AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                    <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                    <GridEvents TValue="SupplierUnsuitabilityDetailedProduct"></GridEvents>
+                                    <GridPageSettings PageSizes="true"></GridPageSettings>
+                                    <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                    <GridColumns>
+                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.Quantity) HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.Percent) Format = "p2" HeaderText="UYGUNSUZLUK ORANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    </GridColumns>
+                                </SfGrid>
+                            </CardContent>
+                            <CardFooter>
+                            </CardFooter>
+                        </SfCard>
+                    </ContentTemplate>
+                </TabItem>
+            </TabItems>
+        </SfTab>
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+
+
+@code {
+    List<SupplierUnsuitabilityDetailedCustomer> dataunsuitabilitycustomer = new List<SupplierUnsuitabilityDetailedCustomer>();
+    List<SupplierUnsuitabilityDetailedProduct> dataunsuitabilityproduct = new List<SupplierUnsuitabilityDetailedProduct>();
+
+    SfGrid<SupplierUnsuitabilityDetailedCustomer> CustomerGrid;
+    SfGrid<SupplierUnsuitabilityDetailedProduct> ProductGrid;
+
+
+    bool VisibleSpinner = false;
+    string unsuitabilityName = string.Empty;
+    double columnwidth1;
+    double columnwidth2;
+
+    [Parameter]
+    public DateTime startDate { get; set; }
+
+    [Parameter]
+    public DateTime endDate { get; set; }
+
+    [Parameter]
+    public int errorID { get; set; }
+
+
+    protected override void OnInitialized()
+    {
+        dataunsuitabilitycustomer = TedarikciUygunsuzlukDetayService.GetSupplierUnsuitabilityDetailedCustomerAnalysis(errorID, startDate, endDate);
+        dataunsuitabilityproduct = TedarikciUygunsuzlukDetayService.GetSupplierUnsuitabilityDetailedProductAnalysis(errorID, startDate, endDate);
+        unsuitabilityName = TedarikciUygunsuzlukService.GetSupplierUnsuitabilityAnalysis(startDate, endDate).Where(t => t.ErrorID == errorID).Select(t => t.UnsuitabilityReason).FirstOrDefault();
+        if(dataunsuitabilitycustomer.Count()<=3)
+        {
+            columnwidth1 = 0.1;
+        }
+         if(dataunsuitabilityproduct.Count()<=3)
+        {
+            columnwidth2 = 0.1;
+        }
+    }
+
+
+
+    private void OnBackButtonClicked()
+    {
+        this.VisibleSpinner = true;
+
+        NavigationManager.NavigateTo("/admin/supplier-unsuitability-analysis");
+    }
+
+}

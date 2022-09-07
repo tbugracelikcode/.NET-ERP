@@ -13,30 +13,106 @@ namespace TsiErp.DashboardUI.Services
             _connection = DBHelper.GetSqlConnection();
         }
 
-        public List<AdminProductionUnsuitabilityAnalysisChart> GetProductionUnsuitabilityChart(DateTime startDate, DateTime endDate, int frequency)
+        public List<AdminProductionUnsuitabilityAnalysisChart> GetProductionUnsuitabilityChart(DateTime startDate, DateTime endDate, int frequency, int? action)
         {
             List<AdminProductionUnsuitabilityAnalysisChart> adminProductionUnsuitabilityChart = new List<AdminProductionUnsuitabilityAnalysisChart>();
             var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate);
+            var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate);
+
+            if (action == 1) //Hurda
+            {
+                if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
+                {
+                    var gList = unsuitabilityLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month }).Select(t => new AdminProductionUnsuitabilityAnalysisChart
+                    {
+                        Ay = GetMonth(t.Key.Ay),
+                        Total = t.Where(t => t.HURDA == true).Sum(t => t.OLCUKONTROLFORMBEYAN) ,
+                        Percent = (decimal)((double)t.Where(t => t.HURDA == true).Sum(t => t.OLCUKONTROLFORMBEYAN)/ (double)operationLines.Where(x => x.TARIH.Month == t.Key.Ay).Sum(x => x.URETILENADET))
+                    }).ToList();
+                    adminProductionUnsuitabilityChart = gList;
+                }
+                else if (frequency == 5 || frequency == 6)
+                {
+                    var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminProductionUnsuitabilityAnalysisChart
+                    {
+                        Ay = t.Key.HAFTA.ToString("dd MMM yy"),
+                        Total = t.Where(t => t.HURDA == true).Sum(t => t.OLCUKONTROLFORMBEYAN) ,
+                        Percent = (decimal)((double)t.Where(t => t.HURDA == true).Sum(t => t.OLCUKONTROLFORMBEYAN) / (double)operationLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Sum(x => x.URETILENADET))
+                    }).ToList();
+                    adminProductionUnsuitabilityChart = gList;
+                }
+            }
+            else if ( action == 2) // Düzeltme
+            {
+                if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
+                {
+                    var gList = unsuitabilityLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month }).Select(t => new AdminProductionUnsuitabilityAnalysisChart
+                    {
+                        Ay = GetMonth(t.Key.Ay),
+                        Total =  t.Where(t => t.DUZELTME == true).Sum(t => t.OLCUKONTROLFORMBEYAN),
+                        Percent = (decimal)((double)t.Where(t => t.DUZELTME == true).Sum(t => t.OLCUKONTROLFORMBEYAN) / (double)operationLines.Where(x => x.TARIH.Month == t.Key.Ay).Sum(x => x.URETILENADET))
+                    }).ToList();
+                    adminProductionUnsuitabilityChart = gList;
+                }
+                else if (frequency == 5 || frequency == 6)
+                {
+                    var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminProductionUnsuitabilityAnalysisChart
+                    {
+                        Ay = t.Key.HAFTA.ToString("dd MMM yy"),
+                        Total =  t.Where(t => t.DUZELTME == true).Sum(t => t.OLCUKONTROLFORMBEYAN),
+                        Percent = (decimal)((double)t.Where(t => t.DUZELTME == true).Sum(t => t.OLCUKONTROLFORMBEYAN) / (double)operationLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Sum(x => x.URETILENADET))
+                    }).ToList();
+                    adminProductionUnsuitabilityChart = gList;
+                }
+            }
+            else if ( action == 3) //Olduğu Gibi Kalacak
+            {
+                if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
+                {
+                    var gList = unsuitabilityLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month }).Select(t => new AdminProductionUnsuitabilityAnalysisChart
+                    {
+                        Ay = GetMonth(t.Key.Ay),
+                        Total = t.Where(t => t.OLDUGUGIBIKULLANILACAK == true).Sum(t => t.OLCUKONTROLFORMBEYAN) ,
+                        Percent = (decimal)((double)t.Where(t => t.OLDUGUGIBIKULLANILACAK == true).Sum(t => t.OLCUKONTROLFORMBEYAN) / (double)operationLines.Where(x => x.TARIH.Month == t.Key.Ay).Sum(x => x.URETILENADET))
+                    }).ToList();
+                    adminProductionUnsuitabilityChart = gList;
+                }
+                else if (frequency == 5 || frequency == 6)
+                {
+                    var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminProductionUnsuitabilityAnalysisChart
+                    {
+                        Ay = t.Key.HAFTA.ToString("dd MMM yy"),
+                        Total = t.Where(t => t.OLDUGUGIBIKULLANILACAK == true).Sum(t => t.OLCUKONTROLFORMBEYAN),
+                        Percent = (decimal)((double)t.Where(t => t.OLDUGUGIBIKULLANILACAK == true).Sum(t => t.OLCUKONTROLFORMBEYAN) / (double)operationLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Sum(x => x.URETILENADET))
+                    }).ToList();
+                    adminProductionUnsuitabilityChart = gList;
+                }
+            }
+            else if (action == 4) //Hepsini Göster
+            {
+                if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
+                {
+                    var gList = unsuitabilityLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month }).Select(t => new AdminProductionUnsuitabilityAnalysisChart
+                    {
+                        Ay = GetMonth(t.Key.Ay),
+                        Total = t.Sum(t => t.OLCUKONTROLFORMBEYAN),
+                        Percent = (decimal)((double)t.Sum(t => t.OLCUKONTROLFORMBEYAN) / (double)operationLines.Where(x => x.TARIH.Month == t.Key.Ay).Sum(x => x.URETILENADET))
+                    }).ToList();
+                    adminProductionUnsuitabilityChart = gList;
+                }
+                else if (frequency == 5 || frequency == 6)
+                {
+                    var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminProductionUnsuitabilityAnalysisChart
+                    {
+                        Ay = t.Key.HAFTA.ToString("dd MMM yy"),
+                        Total = t.Sum(t => t.OLCUKONTROLFORMBEYAN),
+                        Percent = (decimal)((double)t.Sum(t => t.OLCUKONTROLFORMBEYAN) / (double)operationLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Sum(x => x.URETILENADET))
+                    }).ToList();
+                    adminProductionUnsuitabilityChart = gList;
+                }
+            }
 
 
-            if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
-            {
-                var gList = unsuitabilityLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month }).Select(t => new AdminProductionUnsuitabilityAnalysisChart
-                {
-                    Ay = GetMonth(t.Key.Ay),
-                    Total = t.Where(t => t.HURDA == true).Sum(t => t.OLCUKONTROLFORMBEYAN) + t.Where(t => t.OLDUGUGIBIKULLANILACAK == true).Sum(t => t.OLCUKONTROLFORMBEYAN) + t.Where(t => t.DUZELTME == true).Sum(t => t.OLCUKONTROLFORMBEYAN)
-                }).ToList();
-                adminProductionUnsuitabilityChart = gList;
-            }
-            else if (frequency == 5 || frequency == 6)
-            {
-                var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminProductionUnsuitabilityAnalysisChart
-                {
-                    Ay = t.Key.HAFTA.ToString("dd MMM yy"),
-                    Total = t.Where(t => t.HURDA == true).Sum(t => t.OLCUKONTROLFORMBEYAN) + t.Where(t => t.OLDUGUGIBIKULLANILACAK == true).Sum(t => t.OLCUKONTROLFORMBEYAN) + t.Where(t => t.DUZELTME == true).Sum(t => t.OLCUKONTROLFORMBEYAN)
-                }).ToList();
-                adminProductionUnsuitabilityChart = gList;
-            }
 
             return adminProductionUnsuitabilityChart;
 
@@ -47,23 +123,24 @@ namespace TsiErp.DashboardUI.Services
             List<ProductionUnsuitabilityAnalysis> productionUnsuitabilityAnalysis = new List<ProductionUnsuitabilityAnalysis>();
 
             var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate);
+            var list = unsuitabilityLines.Select(t => t.KOD).Distinct().ToList();
 
             if (unsuitabilityLines != null)
             {
-                foreach (var unsuitability in unsuitabilityLines)
+                foreach (var unsuitability in list)
                 {
-                    var scrap = unsuitabilityLines.Where(t => t.HURDA == true && t.HATAACIKLAMA == unsuitability.HATAACIKLAMA).Sum(t => t.OLCUKONTROLFORMBEYAN);
-                    var tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.HATAACIKLAMA == unsuitability.HATAACIKLAMA).Sum(t => t.OLCUKONTROLFORMBEYAN);
-                    var correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.HATAACIKLAMA == unsuitability.HATAACIKLAMA).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                    var scrap = unsuitabilityLines.Where(t => t.HURDA == true && t.KOD == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                    var tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.KOD == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                    var correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.KOD == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
                     ProductionUnsuitabilityAnalysis analysis = new ProductionUnsuitabilityAnalysis
                     {
-                        ProductionUnsuitabilityID = unsuitability.ID,
+                        ProductionUnsuitabilityID = unsuitabilityLines.Where(t => t.KOD == unsuitability).Select(t => t.ID).FirstOrDefault(),
                         ScrapQuantity = scrap,
                         ToBeUsedAs = tobeused,
                         Correction = correction,
                         Total = scrap + tobeused + correction,
-                        UnsuitabilityReason = unsuitability.HATAACIKLAMA,
-                         Code = unsuitability.KOD
+                        UnsuitabilityReason = unsuitabilityLines.Where(t=>t.KOD == unsuitability).Select(t=>t.HATAACIKLAMA).FirstOrDefault(),
+                         Code = unsuitability
 
                     };
                     productionUnsuitabilityAnalysis.Add(analysis);

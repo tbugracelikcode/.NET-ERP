@@ -3,12 +3,16 @@
     public class AdminProductChart
     {
         /// <summary>
-        /// Kalite
+        /// Verimlilik
         /// </summary>
-        public decimal Quality { get; set; }
+        public decimal OEE { get; set; }
         /// <summary>
         /// Ay
         /// </summary>
         public string Ay { get; set; }
+        /// <summary>
+        /// Hurda Yüzde 
+        /// </summary>
+        public double ScrapPercent { get; set; }
     }
 }

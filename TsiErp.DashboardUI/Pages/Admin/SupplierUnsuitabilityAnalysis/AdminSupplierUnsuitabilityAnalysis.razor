@@ -1,0 +1,320 @@
+﻿@page "/admin/supplier-unsuitability-analysis"
+@layout AdminLayout
+
+@inject TedarikciUygunsuzlukService TedarikciUygunsuzlukService
+@inject NavigationManager NavigationManager
+@using Syncfusion.Blazor.Charts
+@using Syncfusion.Blazor.Calendars
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Grids
+@using Syncfusion.Blazor.Cards
+@using Syncfusion.Blazor.DropDowns
+@using Syncfusion.Blazor.Data
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.SplitButtons
+@using Syncfusion.Blazor.Spinner
+
+<style>
+    .GridZebra table tbody tr:nth-child(odd) {
+        background-color: #B5B5B5;
+    }
+
+    .GridZebra table tbody tr:nth-child(n) {
+        text-align: center;
+        font-weight: bold;
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 0px solid #dddddd;
+        text-align: center;
+        padding: 8px;
+    }
+
+    .ulstyle {
+        margin: 0px;
+        padding-left: 20px;
+        display: inline-block;
+    }
+
+    .list {
+        float: left;
+        line-height: 20px;
+        font: 10px;
+        min-width: 280px;
+    }
+
+    .FilterCard {
+        background-color: #f7f7f7;
+        border: 1px solid #d6d5d5;
+    }
+
+    .Cards {
+        border: 1px solid #d6d5d5;
+    }
+
+    .e-checkbox-wrapper.e-customcheck:hover .e-frame.e-check {
+        background-color: #9C0D0D;
+        font: 600;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .FilterLabelTitle {
+        color: #830000;
+        font-size: 18px;
+    }
+</style>
+
+<SfCard class="FilterCard">
+    <CardContent>
+        <table width="1000px">
+            <tr>
+                <td width="200px">
+                    <br />
+                    <SfCheckBox @bind-Checked="isLabelsChecked" @onchange="OnChangeLabelCheck" CssClass="e-customcheck"></SfCheckBox>
+                    <label class=FilterLabelTitle><strong>Etiketleri Göster</strong></label>
+                </td>
+                <td width="200px">
+                    <label class="FilterLabelTitle"><strong>Zaman Periyodu:</strong></label>
+                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Son 3 Ay" DataSource="@timeperiods">
+                        <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
+                    </SfComboBox>
+                </td>
+                 <td width="200px">
+                    <label class="FilterLabelTitle"><strong>Aksiyon:</strong></label>
+                    <SfComboBox TValue="int?" TItem="ComboboxUnsuitability" @bind-Index="@selectedActionIndex" PopupHeight="230px" Placeholder="Tedarikçi ile İrtibat" DataSource="@unsuitabilities">
+                        <ComboBoxEvents TItem="ComboboxUnsuitability" TValue="int?" ValueChange="onChange"></ComboBoxEvents>
+                        <ComboBoxFieldSettings Text="TypeText" Value="TypeID"></ComboBoxFieldSettings>
+                    </SfComboBox>
+                </td>
+                <td width="100px">
+                </td>
+                <td width="50px" align="right">
+                    <br />
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
+
+                    <SfSpinner @bind-Visible="VisibleSpinner">
+                    </SfSpinner>
+                </td>
+                <td width="50px">
+                </td>
+            </tr>
+        </table>
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+<br />
+<SfCard class="Cards" style="text-align:center">
+    <CardContent>
+        <SfChart @ref="ChartInstance" Theme="Theme.Bootstrap5" Title="@chartTitle">
+            <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
+            <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
+                <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
+            </ChartPrimaryXAxis>
+            <ChartPrimaryYAxis LabelFormat="p2">
+                <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
+            </ChartPrimaryYAxis>
+            <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
+            <ChartSeriesCollection>
+                <ChartSeries DataSource="@datachart" Name="Uygunsuzluk" XName="Ay" YName="Percent" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
+                    <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
+                        <ChartDataLabel Visible="@dataLabels">
+                            <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
+                        </ChartDataLabel>
+                    </ChartMarker>
+                    <ChartTrendlines>
+                        <ChartTrendline Type="TrendlineTypes.Linear" Width="3" Name="Trend" Fill="#3345A7">
+                            <ChartTrendlineMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Diamond">
+                            </ChartTrendlineMarker>
+                        </ChartTrendline>
+                    </ChartTrendlines>
+                </ChartSeries>
+            </ChartSeriesCollection>
+            <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
+            <ChartZoomSettings EnableSelectionZooming="true"></ChartZoomSettings>
+        </SfChart>
+
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+<br />
+<SfCard class="Cards">
+    <CardContent>
+        <SfGrid ID="Grid" DataSource="@datasuppunsuitability" @ref="Grid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+            <GridPageSettings PageSizes="true"></GridPageSettings>
+            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+            <GridColumns>
+                <GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.UnsuitabilityReason) HeaderText="UYGUNSUZLUK SEBEBİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.RefuseQuantity) HeaderText="RED" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.Correction) HeaderText="DÜZELTME" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.ContactWithSupplier) HeaderText="TEDARİKÇİ İLE İRTİBAT" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.ToBeUsedAs) HeaderText="OLDUĞU GİBİ KULLANILACAK" TextAlign="TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.Total) HeaderText="TOPLAM" TextAlign="TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.Total) HeaderText="DETAYLAR" TextAlign="TextAlign.Center" Width="80">
+                    <Template>
+                        @{
+                            var row = (context as SupplierUnsuitabilityAnalysis);
+                            <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" style="background-color:#AD0000;" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.ErrorID))"></SfButton>
+                        }
+
+                    </Template>
+                </GridColumn>
+            </GridColumns>
+        </SfGrid>
+
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+
+@code {
+    List<SupplierUnsuitabilityAnalysis> datasuppunsuitability = new List<SupplierUnsuitabilityAnalysis>();
+    List<AdminSupplierUnsuitabilityAnalysisChart> datachart = new List<AdminSupplierUnsuitabilityAnalysisChart>();
+    SfGrid<SupplierUnsuitabilityAnalysis> Grid;
+    DateTime startDate = DateTime.Today.AddDays(-90);
+    DateTime endDate = DateTime.Today;
+    private int? selectedTimeIndex { get; set; }
+    private int threshold;
+    private double thresholddouble;
+     private int? selectedActionIndex { get; set; }
+    int? selectedactionID = 1;
+    private int frequencyChart;
+     string chartTitle = "Tedarikçi ile İrtibat Sayısı Grafiği";
+    SfChart ChartInstance;
+    bool VisibleSpinner = false;
+    private bool isLabelsChecked = true;
+    private bool dataLabels = true;
+
+    protected override void OnInitialized()
+    {
+        datasuppunsuitability = TedarikciUygunsuzlukService.GetSupplierUnsuitabilityAnalysis(startDate, endDate);
+        datachart = TedarikciUygunsuzlukService.GetSupplierUnsuitabilityChart(startDate, endDate, 3, 1);
+    }
+
+    private void onChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?, ComboboxUnsuitability> args) 
+    { 
+        selectedactionID = args.Value; 
+        StateHasChanged(); 
+    }
+
+    #region Component Metotları
+
+    private void OnDateButtonClicked()
+    {
+        //VisibleSpinner = true;
+        endDate = DateTime.Today;
+        #region Zaman Seçimi
+        if (selectedTimeIndex == 0)
+        {
+            startDate = DateTime.Today.AddDays(-365);
+            frequencyChart = 0;
+        }
+        else if (selectedTimeIndex == 1)
+        {
+            startDate = DateTime.Today.AddDays(-273);
+            frequencyChart = 1;
+        }
+        else if (selectedTimeIndex == 2)
+        {
+            startDate = DateTime.Today.AddDays(-181);
+            frequencyChart = 2;
+        }
+        else if (selectedTimeIndex == 3)
+        {
+            startDate = DateTime.Today.AddDays(-90);
+            frequencyChart = 3;
+        }
+        else if (selectedTimeIndex == 4)
+        {
+            startDate = DateTime.Today.AddDays(-60);
+            frequencyChart = 4;
+        }
+        else if (selectedTimeIndex == 5)
+        {
+            startDate = DateTime.Today.AddDays(-30);
+            frequencyChart = 5;
+        }
+        else if (selectedTimeIndex == 6)
+        {
+            startDate = DateTime.Today.AddDays(-7);
+            frequencyChart = 6;
+        }
+        #endregion
+
+         #region Aksiyon Seçimi
+        if(selectedactionID == 1)
+        {
+            chartTitle = "Tedarikçi ile İrtibat Sayısı Grafiği";
+        }
+        else if(selectedactionID == 2)
+        {
+            chartTitle = "Düzeltme Grafiği";
+        }
+        else if(selectedactionID == 3)
+        {
+            chartTitle = "Olduğu Gibi Kullanılacak Grafiği";
+        }
+         else if(selectedactionID == 4)
+        {
+            chartTitle = "Red Grafiği";
+        }
+         else if(selectedactionID == 5)
+        {
+            chartTitle = "Toplu Uygunsuzluk Grafiği";
+        }
+        #endregion
+
+        thresholddouble = Convert.ToDouble(threshold) / 100;
+        Grid.Refresh();
+        ChartInstance.RefreshAsync();
+        datasuppunsuitability = TedarikciUygunsuzlukService.GetSupplierUnsuitabilityAnalysis(startDate, endDate);
+        datachart = TedarikciUygunsuzlukService.GetSupplierUnsuitabilityChart(startDate, endDate, frequencyChart, selectedactionID);
+        StateHasChanged();
+        //VisibleSpinner = false;
+    }
+
+    private void OnDetailButtonClicked(int errorID)
+    {
+        NavigationManager.NavigateTo("/admin/supplier-unsuitability-analysis/details" + "/" + errorID.ToString() + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd")); ;
+    }
+
+    private void OnChangeLabelCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+    {
+        ChartInstance.RefreshAsync();
+        if (isLabelsChecked) { dataLabels = true; }
+        else { dataLabels = false; }
+    }
+
+    #endregion
+
+
+    private List<ComboboxTimePeriods> timeperiods = new List<ComboboxTimePeriods>() {
+        new ComboboxTimePeriods(){ TimeID= 1, TimeText= "Yıllık" },
+        new ComboboxTimePeriods(){ TimeID= 2, TimeText= "Son 9 Ay" },
+        new ComboboxTimePeriods(){ TimeID= 3, TimeText= "Son 6 Ay" },
+        new ComboboxTimePeriods(){ TimeID= 4, TimeText= "Son 3 Ay" },
+        new ComboboxTimePeriods(){ TimeID= 5, TimeText= "Son 2 Ay" },
+        new ComboboxTimePeriods(){ TimeID= 6, TimeText= "Son 1 Ay" },
+        new ComboboxTimePeriods(){ TimeID= 6, TimeText= "Son 1 Hafta" }
+     };
+
+      private List<ComboboxUnsuitability> unsuitabilities = new List<ComboboxUnsuitability>() {
+        new ComboboxUnsuitability(){ TypeID= 1, TypeText= "Tedarikçi ile İrtibat" },
+        new ComboboxUnsuitability(){ TypeID= 2, TypeText= "Düzeltme" },
+        new ComboboxUnsuitability(){ TypeID= 3, TypeText= "Olduğu Gibi Kullanılacak" },
+        new ComboboxUnsuitability(){ TypeID= 4, TypeText= "Red" },
+        new ComboboxUnsuitability(){ TypeID= 5, TypeText= "Hepsini Göster" }
+     };
+
+}

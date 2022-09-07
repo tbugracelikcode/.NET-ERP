@@ -21,6 +21,7 @@
 
     .GridZebra table tbody tr:nth-child(n) {
         text-align: center;
+        font-weight: bold;
     }
 
     table {
@@ -63,9 +64,10 @@
         font-size: 16px;
         font-weight: bold;
     }
-      .FilterLabelTitle{
-        color:#830000;
-        font-size:18px;
+
+    .FilterLabelTitle {
+        color: #830000;
+        font-size: 18px;
     }
 </style>
 
@@ -75,12 +77,17 @@
             <tr>
                 <td width="200px">
                     <br />
+                    <SfCheckBox @bind-Checked="isGridChecked" @onchange="OnCheckedChanged" CssClass="e-customcheck"></SfCheckBox>
+                    <label class=FilterLabelTitle><strong>Detay Tablosunu Gizle</strong></label>
+                </td>
+                <td width="200px">
+                    <br />
                     <SfCheckBox @bind-Checked="isLabelsChecked" @onchange="OnChangeLabelCheck" CssClass="e-customcheck"></SfCheckBox>
                     <label class=FilterLabelTitle><strong>Etiketleri Göster</strong></label>
                 </td>
                 <td width="200px">
                     <label class="FilterLabelTitle"><strong>Zaman Periyodu:</strong></label>
-                    <SfComboBox TValue="int" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Seçiniz." DataSource="@timeperiods">
+                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Son 3 Ay" DataSource="@timeperiods">
                         <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
                     </SfComboBox>
                 </td>
@@ -92,9 +99,9 @@
                 </td>
                 <td width="50px" align="right">
                     <br />
-                      <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
                     @*<SfProgressButton OnClick="@OnDateButtonClicked" Content="Filtrele" IsPrimary="true">
-                        <ProgressButtonSpinSettings Position="SpinPosition.Right"></ProgressButtonSpinSettings>
+                    <ProgressButtonSpinSettings Position="SpinPosition.Right"></ProgressButtonSpinSettings>
                     </SfProgressButton>*@
                     <SfSpinner @bind-Visible="VisibleSpinner">
                     </SfSpinner>
@@ -110,7 +117,7 @@
 <br />
 <SfCard class="Cards" style="text-align:center">
     <CardContent>
-        <SfChart @ref="ChartInstance" Theme="Theme.Bootstrap5" Title="Makina Verimlilik Grafiği">
+        <SfChart @ref="ChartInstance" Theme="Theme.Bootstrap5" Title="Makina OEE Grafiği">
             <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
             <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
                 <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
@@ -120,7 +127,7 @@
             </ChartPrimaryYAxis>
             <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
             <ChartSeriesCollection>
-                <ChartSeries DataSource="@datachart" Name="Verimlilik" XName="AY" YName="KULLANILABILIRLIK" Width="3" Fill="darkred" Type="ChartSeriesType.Line">
+                <ChartSeries DataSource="@datachart" Name="OEE" XName="AY" YName="OEE" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
                     <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
                         <ChartDataLabel Visible="@dataLabels">
                             <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
@@ -135,7 +142,6 @@
                 </ChartSeries>
             </ChartSeriesCollection>
             <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
-            <ChartZoomSettings EnableSelectionZooming="true"></ChartZoomSettings>
         </SfChart>
 
     </CardContent>
@@ -143,9 +149,9 @@
     </CardFooter>
 </SfCard>
 <br />
-<SfCard class="Cards">
+<SfCard class="Cards" hidden="@isGridChecked">
     <CardContent>
-        <SfGrid ID="Grid" DataSource="@dataoee" @ref="Grid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+        <SfGrid ID="Grid" DataSource="@dataoee" @ref="Grid" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
             <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
             <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
@@ -155,21 +161,22 @@
             <GridColumns>
                 <GridColumn Field=@nameof(StationOEEAnalysis.Code) HeaderText="MAKİNA KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                 <GridColumn Field=@nameof(StationOEEAnalysis.Department) HeaderText="DEPARTMAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(StationOEEAnalysis.OccuredOperationTime) Format="#######" HeaderText="ÜRETİM SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(StationOEEAnalysis.HaltTime) HeaderText="DURUŞ SÜRESİ" TextAlign="TextAlign.Center" Width="130"></GridColumn>
-                <GridColumn Field=@nameof(StationOEEAnalysis.Availability) HeaderText="VERİMLİLİK" Format="#%" TextAlign="TextAlign.Center" Width="130"></GridColumn>
-                <GridColumn Field=@nameof(StationOEEAnalysis.HaltTime) HeaderText="DETAYLAR" TextAlign="TextAlign.Center" Width="80">
+                <GridColumn Field=@nameof(StationOEEAnalysis.Availability) Format="#%" HeaderText="KULLANILABİLİRLİK" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.Performance) Format="#%" HeaderText="PERFORMANS" TextAlign="TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.Quality) HeaderText="KALİTE" Format="#%" TextAlign="TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.OEE) HeaderText="OEE" Format="p2" TextAlign="TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.Code) HeaderText="DETAYLAR" TextAlign="TextAlign.Center" Width="80">
                     <Template>
                         @{
                             var row = (context as StationOEEAnalysis);
-                                    <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" style="background-color:#AD0000;" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.StationID))"></SfButton>
+                            <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" style="background-color:#AD0000;" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.StationID))"></SfButton>
                         }
 
                     </Template>
                 </GridColumn>
             </GridColumns>
         </SfGrid>
-        
+
     </CardContent>
     <CardFooter>
     </CardFooter>
@@ -185,13 +192,15 @@
     DateTime startDate = DateTime.Today.AddDays(-90);
     DateTime endDate = DateTime.Today;
     private int? selectedTimeIndex { get; set; }
-    private int threshold;
-    private double thresholddouble;
+    private int? selectedProductIndex { get; set; }
+    private int threshold=75 ;
+    private double thresholddouble = 0.75;
     private int frequencyChart;
     SfChart ChartInstance;
     bool VisibleSpinner = false;
-    private bool isLabelsChecked = false;
-    private bool dataLabels = false;
+    private bool isLabelsChecked = true;
+    private bool isGridChecked = true;
+    private bool dataLabels = true;
 
     protected override void OnInitialized()
     {
@@ -201,14 +210,16 @@
 
     #region Component Metotları
 
+
+
     private void OnDateButtonClicked()
     {
-        //VisibleSpinner = true;
+        this.VisibleSpinner = true;
         endDate = DateTime.Today;
         #region Zaman Seçimi
         if (selectedTimeIndex == 0)
         {
-            startDate = DateTime.Today.AddDays(-365);
+            startDate = DateTime.Today.AddDays(-330);
             frequencyChart = 0;
         }
         else if (selectedTimeIndex == 1)
@@ -248,8 +259,8 @@
         ChartInstance.RefreshAsync();
         dataoee = IstasyonOEEService.GetStationOEEAnalysis(startDate, endDate);
         datachart = IstasyonOEEService.GetAdminMachineChart(startDate, endDate, frequencyChart);
+        this.VisibleSpinner = false;
         StateHasChanged();
-        //VisibleSpinner = false;
     }
 
     private void OnDetailButtonClicked(int stationID)
@@ -264,13 +275,22 @@
         else { dataLabels = false; }
     }
 
+    private void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+    {
+        bool argsValue = Convert.ToBoolean(args.Value);
+        isGridChecked = argsValue;
+
+        StateHasChanged();
+    }
+
     #endregion
+
 
     public void CellInfoHandler(QueryCellInfoEventArgs<StationOEEAnalysis> Args)
     {
-        if (Args.Column.Field == "Availability")
+        if (Args.Column.Field == "OEE")
         {
-            if (Args.Data.Availability < Convert.ToDecimal(thresholddouble))
+            if (Args.Data.OEE < Convert.ToDecimal(thresholddouble))
             {
                 Args.Cell.AddStyle(new string[] { "background-color: #DF0000; color: white; " });
             }

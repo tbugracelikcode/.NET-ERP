@@ -21,15 +21,17 @@ namespace TsiErp.DashboardUI.Services
 
             var haltCodes = DBHelper.GetHaltCodes();
             var haltLines = DBHelper.GetHaltQueryEmployee(calisanID, startDate, endDate);
+            var totaltime = haltLines.Sum(t => t.DURUSSURE);
 
             foreach (var code in haltCodes)
             {
                 int durusID = code.ID;
-
+                var time = haltLines.Where(t => t.DURUSID == durusID).Sum(t => t.DURUSSURE);
                 EmployeeDetailedChart analysis = new EmployeeDetailedChart
                 {
                     HaltName = code.KOD,
-                    HaltTimeSecond = haltLines.Where(t => t.DURUSID == durusID).Sum(t => t.DURUSSURE)
+                    HaltTimeSecond = time,
+                    Percent = (double)time / (double)totaltime
                 };
                 
                 if (analysis.HaltTimeSecond > 0)

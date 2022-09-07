@@ -13,7 +13,7 @@ namespace TsiErp.DashboardUI.Services
             _connection = DBHelper.GetSqlConnection();
         }
 
-        public List<AdminProductChart> GetProductChart(DateTime startDate, DateTime endDate, int frequency)
+        public List<AdminProductChart> GetProductChart(DateTime startDate, DateTime endDate, int frequency, int? productionSelection)
         {
             List<AdminProductChart> adminProductChart = new List<AdminProductChart>();
             var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate);
@@ -22,10 +22,11 @@ namespace TsiErp.DashboardUI.Services
 
             if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
             {
-                var gList = operationLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month }).Select(t => new AdminProductChart
+                var gList = operationLines.Where(t => t.URUNGRPID == productionSelection).OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month }).Select(t => new AdminProductChart
                 {
                     Ay = GetMonth(t.Key.Ay),
-                    Quality = t.Average(x => x.KALITE)
+                    OEE = t.Average(x => x.OEE),
+                    ScrapPercent = (double)t.Sum(t=>t.HURDAADET)/ (double)t.Sum(t=>t.URETILENADET)
                 }).ToList();
                 adminProductChart = gList;
             }
@@ -34,7 +35,8 @@ namespace TsiErp.DashboardUI.Services
                 var gList = operationLines.GroupBy(t => new { HAFTA = t.TARIH.Date }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminProductChart
                 {
                     Ay = t.Key.HAFTA.ToString("dd MMM yy"),
-                    Quality = t.Average(x => x.KALITE)
+                    OEE = t.Average(x => x.OEE),
+                    ScrapPercent = (double)t.Sum(t => t.HURDAADET) / (double)t.Sum(t => t.URETILENADET)
                 }).ToList();
                 adminProductChart = gList;
             }
@@ -63,8 +65,38 @@ namespace TsiErp.DashboardUI.Services
                         PlannedQuantity = tuple.Item1,
                         TotalProduction = tuple.Item2,
                         TotalScrap = Convert.ToInt32(operationLines.Where(t => t.URUNGRPID == groupID).Sum(t => t.HURDAADET)),
-                        Quality = tuple.Item1 > 0 && tuple.Item2 > 0 ? ((double)tuple.Item2 / (double)tuple.Item1) : 0
-                };
+                        Quality = tuple.Item1 > 0 && tuple.Item2 > 0 ? ((double)tuple.Item2 / (double)tuple.Item1) : 0,
+                        OEE = operationLines.Where(t=>t.URUNGRPID == groupID).Average(t=>t.OEE),
+                    };
+                    productGroupsAnalysis.Add(analysis);
+                }
+            }
+            return productGroupsAnalysis;
+        }
+
+        public List<ProductGroupsAnalysis> GetProductGroupsComboboxAnalysis(DateTime startDate, DateTime endDate)
+        {
+
+            List<ProductGroupsAnalysis> productGroupsAnalysis = new List<ProductGroupsAnalysis>();
+
+            var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate).Where(t=>t.STOKTURU == 12).ToList();
+
+            var groupList = operationLines.Select(t => t.URUNGRPID).Distinct().ToList();
+            if (groupList != null)
+            {
+                foreach (var groupID in groupList)
+                {
+                    Tuple<int, int> tuple = _PlanlananAdetHesapla(groupID, operationLines);
+                    ProductGroupsAnalysis analysis = new ProductGroupsAnalysis
+                    {
+                        ProductGroupID = groupID,
+                        ProductGroupName = operationLines.Where(t => t.URUNGRPID == groupID).Select(t => t.URUNGRUBU).FirstOrDefault(),
+                        PlannedQuantity = tuple.Item1,
+                        TotalProduction = tuple.Item2,
+                        TotalScrap = Convert.ToInt32(operationLines.Where(t => t.URUNGRPID == groupID).Sum(t => t.HURDAADET)),
+                        Quality = tuple.Item1 > 0 && tuple.Item2 > 0 ? ((double)tuple.Item2 / (double)tuple.Item1) : 0,
+                        OEE = operationLines.Where(t => t.URUNGRPID == groupID).Average(t => t.OEE),
+                    };
                     productGroupsAnalysis.Add(analysis);
                 }
             }

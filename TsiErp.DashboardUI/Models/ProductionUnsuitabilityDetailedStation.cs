@@ -6,5 +6,6 @@
         public string Station { get; set; }
 
         public int Quantity { get; set; }
+        public double Percent { get; set; }
     }
 }

@@ -20,9 +20,14 @@ builder.Services.AddScoped<IstasyonService>();
 builder.Services.AddScoped<IstasyonDetayService>();
 builder.Services.AddScoped<UretimUygunsuzlukService>();
 builder.Services.AddScoped<UretimUygunsuzlukDetayService>();
+builder.Services.AddScoped<FasonUygunsuzlukService>();
+builder.Services.AddScoped<FasonUygunsuzlukDetayService>();
+builder.Services.AddScoped<TedarikciUygunsuzlukService>();
+builder.Services.AddScoped<TedarikciUygunsuzlukDetayService>();
 
 // Add services to the container.
 builder.Services.AddSyncfusionBlazor();
+builder.Services.AddDevExpressBlazor();
             builder.Services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(SyncfusionLocalizer));
             builder.Services.Configure<RequestLocalizationOptions>(options =>
             {
