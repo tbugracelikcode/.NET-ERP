@@ -1,23 +1,38 @@
 ﻿@page "/branches"
 @using Syncfusion.Blazor.Buttons
+@using TsiErp.Business.Entities.Branch.Services
+@using TsiErp.Entities.Entities.Branch
 @using TsiErp.Entities.Entities.Branch.Dtos
 @using TsiErp.ErpUI.Pages.Base
+@using Tsi.Blazor.Component.Core.Components.Layouts
 
 @inject HttpClient HttpClient
 
-@inherits BaseListPage<SelectBranchesDto,ListBranchesDto,CreateBranchesDto,UpdateBranchesDto,ListBranchesParameterDto>
+@inherits BaseListPage<Branches,SelectBranchesDto,ListBranchesDto,CreateBranchesDto,UpdateBranchesDto,ListBranchesParameterDto>
+
+@inject IBranchesAppService Service
 
 
-<SfButton OnClick="@Click"></SfButton>
+<PageLayout ColumnCount="5" RowCount="2">
+    <PageLayoutItems>
+        <DxGridLayoutItem Column="2" Row="0">
+            <Template>
+                @*<SfButton OnClick="Click" IsPrimary=tr>Tıkla</SfButton>*@
+
+                <Tsi.Blazor.Component.Core.Components.DataEditors.TsiDateEdit Caption="Tarih"></Tsi.Blazor.Component.Core.Components.DataEditors.TsiDateEdit>
+            </Template>
+        </DxGridLayoutItem>
+    </PageLayoutItems>
+</PageLayout>
 
 @code {
     protected override void OnInitialized()
     {
-        base.HttpClient = this.HttpClient;
+        BaseCrudService = Service;
     }
 
     private async void Click()
     {
-        var list = await GetListAsync(new ListBranchesParameterDto() { IsActive = true });
+        var list = (await GetListAsync(new ListBranchesParameterDto())).Data;
     }
 }

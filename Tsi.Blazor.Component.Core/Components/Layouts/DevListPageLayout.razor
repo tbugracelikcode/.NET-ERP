@@ -1,0 +1,56 @@
+﻿@typeparam TDataGridItem
+
+
+
+    <DevGridLayout ColumnCount=ColumnCount
+               ColumnSpacing="@ColumnSpacing"
+               ColumnWidths="@ColumnWidths"
+               RowCount="RowCount"
+               RowHeights="@RowHeights"
+               RowSpacing="@RowSpacing">
+
+               <GridLayoutItems>
+                   @ListPageContent
+               </GridLayoutItems>
+
+    </DevGridLayout>
+
+
+    @*@if(ListPageService.EditPageVisible)
+    {
+        @EditPageContent
+    }*@
+
+
+
+
+@code {
+
+    [Parameter]
+    public string Caption { get; set; }
+
+    [Parameter]
+    public int ColumnCount { get; set; } = 1;
+
+    [Parameter]
+    public string ColumnSpacing { get; set; }
+
+    [Parameter]
+    public string[] ColumnWidths { get; set; }
+
+    [Parameter]
+    public int RowCount { get; set; } = 1;
+
+    [Parameter]
+    public string RowSpacing { get; set; }
+
+    [Parameter]
+    public string[] RowHeights { get; set; }
+
+    [Parameter,EditorRequired]
+    public RenderFragment ListPageContent { get; set; }
+
+    [Parameter]
+    public RenderFragment EditPageContent { get; set; }
+
+}
