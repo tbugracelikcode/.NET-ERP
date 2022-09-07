@@ -13,6 +13,26 @@ namespace TsiErp.DashboardUI.Models
         /// </summary>
         public int ContractUnsuitabilityID { get; set; }
         /// <summary>
+        /// Ay 
+        /// </summary>
+        public string Ay { get; set; }
+        /// <summary>
+        /// Üretim Emri ID 
+        /// </summary>
+        public int ProductionOrderID { get; set; }
+        /// <summary>
+        /// Fason Tedarikçi
+        /// </summary>
+        public string ContractSupplier { get; set; }
+        /// <summary>
+        /// Fason Tedarikçi ID
+        /// </summary>
+        public int ContractSupplierID { get; set; }
+        /// <summary>
+        /// Fason Fiş Adet
+        /// </summary>
+        public int ContractReceiptQuantity { get; set; }
+        /// <summary>
         /// Red Miktar 
         /// </summary>
         public int RefuseQuantity { get; set; }
@@ -40,5 +60,9 @@ namespace TsiErp.DashboardUI.Models
         /// Hata ID 
         /// </summary>
         public int ErrorID { get; set; }
+        /// <summary>
+        /// Oran 
+        /// </summary>
+        public double Percent { get; set; }
     }
 }

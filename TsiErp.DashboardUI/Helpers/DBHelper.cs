@@ -218,6 +218,7 @@ namespace TsiErp.DashboardUI.Helpers
                                   "ISNULL(KULLANILABILIRLIK,0) as KULLANILABILIRLIK, " +
                                   "ISNULL(ISLEMESURESI,0) as ISLEMESURESI," +
                                   "ISNULL(DEPARTMAN,0) as DEPARTMAN," +
+                                  "ISNULL(STOKTURU,0) as STOKTURU," +
                                   "ISNULL(GRCMIKTAR,0) as GRCMIKTAR" +
                                   " FROM TUR_VW_EKR_OPERASYON " +
                                   "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "'";
@@ -262,6 +263,7 @@ namespace TsiErp.DashboardUI.Helpers
                     AGIRLIK = Convert.ToDecimal(reader["AGIRLIK"]),
                     CALISAN = Convert.ToString(reader["CALISAN"]),
                     STOKKODU = Convert.ToString(reader["STOKKODU"]),
+                    STOKTURU = Convert.ToInt32(reader["STOKTURU"]),
                     URUNGRPID = Convert.ToInt32(reader["URUNGRPID"]),
                     URUNGRUBU = Convert.ToString(reader["URUNGRUBU"]),
                     AYARVEKONTROLSURESI = Convert.ToInt32(reader["AYARVEKONTROLSURESI"]),
@@ -488,8 +490,9 @@ namespace TsiErp.DashboardUI.Helpers
                                   "ISNULL(GUNDUZTOPLAMCALISMAZAMANI,0) as GUNDUZTOPLAMCALISMAZAMANI, " +
                                   "ISNULL(GECETOPLAMCALISMAZAMANI,0) as GECETOPLAMCALISMAZAMANI, " +
                                   "ISNULL(TOPLAMCALISABILIRSURE,0) as TOPLAMCALISABILIRSURE, " +
-                                  "PLANLANAN " +
-                                  "FROM TUR_IST_CALISMA_TAKVIMI_SATIRLAR_YENI " +
+                                  "PLANLANAN," +
+                                  "ISNULL(VERITOPLAMA,0) as VERITOPLAMA " +
+                                  "FROM TUR_VW_IST_CALIS_TAKVIMI_SATIRLAR_YENI " +
                                   "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "'";
             command.Connection = connection;
 
@@ -522,7 +525,8 @@ namespace TsiErp.DashboardUI.Helpers
                     GUNDUZTOPLAMCALISMAZAMANI = Convert.ToInt32(reader["GUNDUZTOPLAMCALISMAZAMANI"]),
                     GECETOPLAMCALISMAZAMANI = Convert.ToInt32(reader["GECETOPLAMCALISMAZAMANI"]),
                     TOPLAMCALISABILIRSURE = Convert.ToInt32(reader["TOPLAMCALISABILIRSURE"]),
-                    PLANLANAN = Convert.ToString(reader["PLANLANAN"])
+                    PLANLANAN = Convert.ToString(reader["PLANLANAN"]),
+                    VERITOPLAMA = Convert.ToBoolean(reader["VERITOPLAMA"])
                 });
             }
 
@@ -634,7 +638,9 @@ namespace TsiErp.DashboardUI.Helpers
                                   "ISNULL(PLANLI,0) as PLANLI, " +
                                   "ISNULL(CALISAN,0) as CALISAN, " +
                                   "ISNULL(DURUS_ORANI,0) as  DURUS_ORANI," +
-                                  "ISNULL(YKK,0) as  YKK " +
+                                  "ISNULL(YKK,0) as  YKK," +
+                                  "ISNULL(MKD,0) as  MKD," +
+                                  "ISNULL(PKD,0) as PKD  " +
                                   "FROM TUR_VW_EKR_DURUS " +
                                   "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "'";
             command.Connection = connection;
@@ -669,7 +675,9 @@ namespace TsiErp.DashboardUI.Helpers
                     PLANLI = Convert.ToString(reader["PLANLI"]),
                     CALISAN = Convert.ToString(reader["CALISAN"]),
                     DURUS_ORANI = Convert.ToDecimal(reader["DURUS_ORANI"]),
-                    YKK = Convert.ToBoolean(reader["YKK"])
+                    YKK = Convert.ToBoolean(reader["YKK"]),
+                    MKD = Convert.ToBoolean(reader["MKD"]),
+                    PKD = Convert.ToBoolean(reader["PKD"])
                 });
             }
 
@@ -708,7 +716,9 @@ namespace TsiErp.DashboardUI.Helpers
                                   "ISNULL(PLANLI,0) as PLANLI, " +
                                   "ISNULL(CALISAN,0) as CALISAN, " +
                                   "ISNULL(DURUS_ORANI,0) as DURUS_ORANI," +
-                                  "ISNULL(YKK,0) as YKK " +
+                                  "ISNULL(YKK,0) as YKK, " +
+                                  "ISNULL(MKD,0) as  MKD," +
+                                  "ISNULL(PKD,0) as PKD  " +
                                   "FROM TUR_VW_EKR_DURUS " +
                                   "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "' AND ISTASYONID = " + stationID.ToString();
             command.Connection = connection;
@@ -743,7 +753,9 @@ namespace TsiErp.DashboardUI.Helpers
                     PLANLI = Convert.ToString(reader["PLANLI"]),
                     CALISAN = Convert.ToString(reader["CALISAN"]),
                     DURUS_ORANI = Convert.ToDecimal(reader["DURUS_ORANI"]),
-                    YKK = Convert.ToBoolean(reader["YKK"])
+                    YKK = Convert.ToBoolean(reader["YKK"]),
+                    MKD = Convert.ToBoolean(reader["MKD"]),
+                    PKD = Convert.ToBoolean(reader["PKD"])
                 });
             }
 
@@ -782,7 +794,9 @@ namespace TsiErp.DashboardUI.Helpers
                                   "ISNULL(PLANLI,0) as PLANLI, " +
                                   "ISNULL(CALISAN,0) as CALISAN, " +
                                   "ISNULL(DURUS_ORANI,0) as DURUS_ORANI," +
-                                  "ISNULL(YKK,0) as YKK " +
+                                  "ISNULL(YKK,0) as YKK, " +
+                                  "ISNULL(MKD,0) as  MKD," +
+                                  "ISNULL(PKD,0) as PKD  " +
                                   "FROM TUR_VW_EKR_DURUS " +
                                   "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "' AND CALISANID = " + employeeID.ToString();
             command.Connection = connection;
@@ -817,7 +831,9 @@ namespace TsiErp.DashboardUI.Helpers
                     PLANLI = Convert.ToString(reader["PLANLI"]),
                     CALISAN = Convert.ToString(reader["CALISAN"]),
                     DURUS_ORANI = Convert.ToDecimal(reader["DURUS_ORANI"]),
-                    YKK = Convert.ToBoolean(reader["YKK"])
+                    YKK = Convert.ToBoolean(reader["YKK"]),
+                    MKD = Convert.ToBoolean(reader["MKD"]),
+                    PKD = Convert.ToBoolean(reader["PKD"])
                 });
             }
 
@@ -1262,6 +1278,43 @@ namespace TsiErp.DashboardUI.Helpers
                     RAPORACIKLAMA = Convert.ToString(reader["RAPORACIKLAMA"]),
                     HATAID = Convert.ToInt32(reader["HATAID"]),
                     URETIMEMRINO = Convert.ToString(reader["URETIMEMRINO"])
+                });
+            }
+
+            return unsuitabilityLines;
+        }
+
+        public static List<FasonUygunsuzlukCari> GetContractUnsuitabilityQueryGeneral(DateTime startDate, DateTime endDate)
+        {
+            List<FasonUygunsuzlukCari> unsuitabilityLines = new List<FasonUygunsuzlukCari>();
+
+            SqlConnection connection = GetSqlConnection();
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "UYGUNSUZLUK.URETIMEMRIID, " +
+                                  "UYGUNSUZLUK.TARIH ," +
+                                  "UYGUNSUZLUK.CARIID, " +
+                                  "SUM(UYGUNSUZLUK.UYGUNOLMAYANMIKTAR) as MIKTAR, " +
+                                  "UYGUNSUZLUK.CARIUNVAN," +
+                                  "UYGUNSUZLUK.FASONFISIADETI " +
+                                  "FROM TUR_VW_FASON_UYGUNSUZLUK as UYGUNSUZLUK " +
+                                  "WHERE UYGUNSUZLUK.UYGUNOLMAYANMIKTAR > 0 AND UYGUNSUZLUK.TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND UYGUNSUZLUK.TARIH < '" + endDate.ToString("yyyy-MM-dd") + "'" +
+                                  " GROUP BY UYGUNSUZLUK.URETIMEMRIID,UYGUNSUZLUK.CARIID,UYGUNSUZLUK.CARIUNVAN,UYGUNSUZLUK.FASONFISIADETI,UYGUNSUZLUK.TARIH";
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                unsuitabilityLines.Add(new FasonUygunsuzlukCari()
+                {
+                    CariID = Convert.ToInt32(reader["CARIID"]),
+                    UretimEmriID = Convert.ToInt32(reader["URETIMEMRIID"]),
+                    CariUnvan = Convert.ToString(reader["CARIUNVAN"]),
+                    FasonFisiAdeti = Convert.ToInt32(reader["FASONFISIADETI"]),
+                    Miktar = Convert.ToInt32(reader["MIKTAR"]),
+                    TARIH = Convert.ToDateTime(reader["TARIH"]),
                 });
             }
 

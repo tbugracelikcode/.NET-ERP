@@ -21,6 +21,7 @@
 
     .GridZebra table tbody tr:nth-child(n) {
         text-align: center;
+        font-weight: bold;
     }
 
     table {
@@ -79,10 +80,17 @@
                     <SfCheckBox @bind-Checked="isLabelsChecked" @onchange="OnChangeLabelCheck" CssClass="e-customcheck"></SfCheckBox>
                     <label class=FilterLabelTitle><strong>Etiketleri Göster</strong></label>
                 </td>
-                <td width="400px">
+                <td width="200px">
                     <label class="FilterLabelTitle"><strong>Zaman Periyodu:</strong></label>
-                    <SfComboBox TValue="int" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Seçiniz." DataSource="@timeperiods">
+                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Son 3 Ay" DataSource="@timeperiods">
                         <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
+                    </SfComboBox>
+                </td>
+                 <td width="200px">
+                    <label class="FilterLabelTitle"><strong>Aksiyon:</strong></label>
+                    <SfComboBox TValue="int?" TItem="ComboboxUnsuitability" @bind-Index="@selectedActionIndex" PopupHeight="230px" Placeholder="Hurda" DataSource="@unsuitabilities">
+                        <ComboBoxEvents TItem="ComboboxUnsuitability" TValue="int?" ValueChange="onChange"></ComboBoxEvents>
+                        <ComboBoxFieldSettings Text="TypeText" Value="TypeID"></ComboBoxFieldSettings>
                     </SfComboBox>
                 </td>
                 <td width="100px">
@@ -105,17 +113,17 @@
 <br />
 <SfCard class="Cards" style="text-align:center">
     <CardContent>
-        <SfChart @ref="ChartInstance" Theme="Theme.Bootstrap5" Title="Üretim Uygunsuzluk Grafiği">
+        <SfChart @ref="ChartInstance" Theme="Theme.Bootstrap5" Title="@chartTitle">
             <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
             <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
                 <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
             </ChartPrimaryXAxis>
-            <ChartPrimaryYAxis LabelFormat="#">
+            <ChartPrimaryYAxis LabelFormat="p2">
                 <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
             </ChartPrimaryYAxis>
             <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
             <ChartSeriesCollection>
-                <ChartSeries DataSource="@datachart" Name="Uygunsuzluk" XName="Ay" YName="Total" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
+                <ChartSeries DataSource="@datachart" Name="Uygunsuzluk" XName="Ay" YName="Percent" Width="3" Fill="darkred" Type="ChartSeriesType.Line">
                     <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
                         <ChartDataLabel Visible="@dataLabels">
                             <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
@@ -148,8 +156,8 @@
             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
             <GridColumns>
                 <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.UnsuitabilityReason) HeaderText="UYGUNSUZLUK SEBEBİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.ScrapQuantity) HeaderText="HURDA ADET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.Correction)  HeaderText="DÜZELTME ADET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.ScrapQuantity) HeaderText="HURDA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.Correction)  HeaderText="DÜZELTME" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                 <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.ToBeUsedAs) HeaderText="OLDUĞU GİBİ KULLANILACAK" TextAlign="TextAlign.Center" Width="130"></GridColumn>
                 <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.Total) HeaderText="TOPLAM" TextAlign="TextAlign.Center" Width="130"></GridColumn>
                 <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.Total) HeaderText="DETAYLAR" TextAlign="TextAlign.Center" Width="80">
@@ -176,18 +184,27 @@
     DateTime startDate = DateTime.Today.AddDays(-90);
     DateTime endDate = DateTime.Today;
     private int? selectedTimeIndex { get; set; }
+    private int? selectedActionIndex { get; set; }
+    int? selectedactionID = 1;
     private int threshold;
     private double thresholddouble;
+    string chartTitle = "Hurda Grafiği";
     private int frequencyChart;
     SfChart ChartInstance;
     bool VisibleSpinner = false;
-    private bool isLabelsChecked = false;
-    private bool dataLabels = false;
+    private bool isLabelsChecked = true;
+    private bool dataLabels = true;
 
     protected override void OnInitialized()
     {
         dataprodunsuitability = UretimUygunsuzlukService.GetProductionUnsuitabilityAnalysis(startDate, endDate);
-        datachart = UretimUygunsuzlukService.GetProductionUnsuitabilityChart(startDate, endDate, 3);
+        datachart = UretimUygunsuzlukService.GetProductionUnsuitabilityChart(startDate, endDate, 3, 1);
+    }
+    private void onChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?, ComboboxUnsuitability> args) 
+    { 
+        selectedactionID = args.Value; 
+
+        StateHasChanged(); 
     }
 
     #region Component Metotları
@@ -234,11 +251,30 @@
         }
         #endregion
 
+        #region Aksiyon Seçimi
+        if(selectedactionID == 1)
+        {
+            chartTitle = "Hurda Grafiği";
+        }
+        else if(selectedactionID == 2)
+        {
+            chartTitle = "Düzeltme Grafiği";
+        }
+        else if(selectedactionID == 3)
+        {
+            chartTitle = "Olduğu Gibi Kullanılacak Grafiği";
+        }
+        else if(selectedactionID == 4)
+        {
+            chartTitle = "Toplu Uygunsuzluk Grafiği";
+        }
+        #endregion
+
         thresholddouble = Convert.ToDouble(threshold) / 100;
         Grid.Refresh();
         ChartInstance.RefreshAsync();
         dataprodunsuitability = UretimUygunsuzlukService.GetProductionUnsuitabilityAnalysis(startDate, endDate);
-        datachart = UretimUygunsuzlukService.GetProductionUnsuitabilityChart(startDate, endDate, frequencyChart);
+        datachart = UretimUygunsuzlukService.GetProductionUnsuitabilityChart(startDate, endDate, frequencyChart, selectedactionID);
         StateHasChanged();
         //VisibleSpinner = false;
     }
@@ -266,6 +302,13 @@
         new ComboboxTimePeriods(){ TimeID= 5, TimeText= "Son 2 Ay" },
         new ComboboxTimePeriods(){ TimeID= 6, TimeText= "Son 1 Ay" },
         new ComboboxTimePeriods(){ TimeID= 6, TimeText= "Son 1 Hafta" }
+     };
+
+     private List<ComboboxUnsuitability> unsuitabilities = new List<ComboboxUnsuitability>() {
+        new ComboboxUnsuitability(){ TypeID= 1, TypeText= "Hurda" },
+        new ComboboxUnsuitability(){ TypeID= 2, TypeText= "Düzeltme" },
+        new ComboboxUnsuitability(){ TypeID= 3, TypeText= "Olduğu Gibi Kullanılacak" },
+        new ComboboxUnsuitability(){ TypeID= 4, TypeText= "Hepsini Göster" }
      };
 
 }
