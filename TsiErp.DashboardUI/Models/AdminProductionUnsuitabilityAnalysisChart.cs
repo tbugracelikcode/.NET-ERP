@@ -11,5 +11,9 @@
         /// Ay 
         /// </summary>
         public string Ay { get; set; }
+        /// <summary>
+        /// Oran 
+        /// </summary>
+        public decimal Percent { get; set; }
     }
 }

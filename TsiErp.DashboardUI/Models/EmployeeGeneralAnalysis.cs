@@ -48,5 +48,17 @@ namespace TsiErp.DashboardUI.Models
         /// Performans 
         /// </summary>
         public decimal Performance { get; set; }
+        /// <summary>
+        /// Kullanılabilirlik 
+        /// </summary>
+        public decimal Availability { get; set; }
+        /// <summary>
+        /// Kalite 
+        /// </summary>
+        public decimal Quality { get; set; }
+        /// <summary>
+        /// OEE
+        /// </summary>
+        public decimal OEE { get; set; }
     }
 }

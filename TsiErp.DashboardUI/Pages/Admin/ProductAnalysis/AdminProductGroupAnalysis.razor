@@ -21,6 +21,7 @@
 
     .GridZebra table tbody tr:nth-child(n) {
         text-align: center;
+        font-weight: bold;
     }
 
     table {
@@ -74,14 +75,14 @@
     <CardContent>
         <table width="1000px">
             <tr>
-                <td width="200px">
+                <td width="100px">
                      <br />
                     <SfCheckBox @bind-Checked="isLabelsChecked" @onchange="OnChangeLabelCheck" CssClass="e-customcheck"></SfCheckBox>
                     <label class=FilterLabelTitle><strong>Etiketleri Göster</strong></label>
                 </td>
                 <td width="200px">
                     <label class="FilterLabelTitle"><strong>Zaman Periyodu:</strong></label>
-                    <SfComboBox TValue="int" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Seçiniz." DataSource="@timeperiods">
+                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Son 3 Ay" DataSource="@timeperiods">
                         <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
                     </SfComboBox>
                 </td>
@@ -89,7 +90,12 @@
                     <label class=FilterLabelTitle><strong>Verim Değeri:</strong></label>
                     <SfNumericTextBox TValue="int" @bind-Value="threshold" Placeholder="Verim Değeri Yazınız."></SfNumericTextBox>
                 </td>
-                <td width="100px">
+                <td width="200px">
+                    <label class="FilterLabelTitle"><strong>Ürün Grubu:</strong></label>
+                    <SfComboBox TValue="int?" TItem="ProductGroupsAnalysis" @bind-Index="@selectedProductIndex" PopupHeight="230px" Placeholder="ROT BAŞI" DataSource="@dataproductgroupcombobox">
+                        <ComboBoxEvents TItem="ProductGroupsAnalysis" TValue="int?" ValueChange="onChange"></ComboBoxEvents> 
+                        <ComboBoxFieldSettings Text="ProductGroupName" Value="ProductGroupID"></ComboBoxFieldSettings>
+                    </SfComboBox>
                 </td>
                 <td width="50px" align="right">
                     <br />
@@ -111,17 +117,17 @@
 <br />
 <SfCard class="Cards" style="text-align:center">
     <CardContent>
-        <SfChart @ref="ChartInstance" Theme="Theme.Bootstrap5" Title="Ürün Grubu Kalite Grafiği">
+        <SfChart @ref="ChartInstance" Theme="Theme.Bootstrap5" Title="@chartTitle">
             <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
             <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
                 <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
             </ChartPrimaryXAxis>
-            <ChartPrimaryYAxis LabelFormat="p2">
+            <ChartPrimaryYAxis LabelFormat="p3">
                 <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
             </ChartPrimaryYAxis>
             <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
             <ChartSeriesCollection>
-                <ChartSeries DataSource="@datachart" Name="Kalite" XName="Ay" YName="Quality" Width="3" Fill="darkred" Type="ChartSeriesType.Line">
+                <ChartSeries DataSource="@datachart" Name="Kalite" XName="Ay" YName="ScrapPercent" Width="3" Fill="darkred" Type="ChartSeriesType.Line">
                     <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
                         <ChartDataLabel Visible="@dataLabels">
                             <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
@@ -158,7 +164,7 @@
                 <GridColumn Field=@nameof(ProductGroupsAnalysis.PlannedQuantity) HeaderText="PLANLANAN ADET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                 <GridColumn Field=@nameof(ProductGroupsAnalysis.TotalProduction)  HeaderText="ÜRETİLEN ADET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                 <GridColumn Field=@nameof(ProductGroupsAnalysis.TotalScrap) HeaderText="HURDA ADET" TextAlign="TextAlign.Center" Width="130"></GridColumn>
-                <GridColumn Field=@nameof(ProductGroupsAnalysis.Quality) HeaderText="KALİTE" Format="#%" TextAlign="TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(ProductGroupsAnalysis.OEE) HeaderText="OEE" Format="#%" TextAlign="TextAlign.Center" Width="130"></GridColumn>
                 <GridColumn Field=@nameof(ProductGroupsAnalysis.TotalScrap) HeaderText="DETAYLAR" TextAlign="TextAlign.Center" Width="80">
                     <Template>
                         @{
@@ -178,23 +184,35 @@
 
 @code {
     List<ProductGroupsAnalysis> dataproductgroup = new List<ProductGroupsAnalysis>();
+    List<ProductGroupsAnalysis> dataproductgroupcombobox = new List<ProductGroupsAnalysis>();
     List<AdminProductChart> datachart = new List<AdminProductChart>();
     SfGrid<ProductGroupsAnalysis> Grid;
     DateTime startDate = DateTime.Today.AddDays(-90);
     DateTime endDate = DateTime.Today;
     private int? selectedTimeIndex { get; set; }
+    private int? selectedProductIndex { get; set; }
     private int threshold;
+    int? selectedproductID;
+    string chartTitle = string.Empty;
     private double thresholddouble;
     private int frequencyChart;
     SfChart ChartInstance;
     bool VisibleSpinner = false;
-    private bool isLabelsChecked = false;
-    private bool dataLabels = false;
+    private bool isLabelsChecked = true;
+    private bool dataLabels = true;
 
     protected override void OnInitialized()
     {
         dataproductgroup = StokService.GetProductGroupsAnalysis(startDate, endDate);
-        datachart = StokService.GetProductChart(startDate, endDate, 3);
+        dataproductgroupcombobox = StokService.GetProductGroupsComboboxAnalysis(startDate, endDate);
+        chartTitle = dataproductgroup.Where(t=>t.ProductGroupID == 9).Select(t=>t.ProductGroupName).FirstOrDefault()+ " HURDA GRAFİĞİ";
+        datachart = StokService.GetProductChart(startDate, endDate, 3, 9);
+    }
+     private void onChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?, ProductGroupsAnalysis> args) 
+    { 
+        selectedproductID = args.Value; 
+        
+        StateHasChanged(); 
     }
 
     #region Component Metotları
@@ -245,7 +263,9 @@
         Grid.Refresh();
         ChartInstance.RefreshAsync();
         dataproductgroup = StokService.GetProductGroupsAnalysis(startDate, endDate);
-        datachart = StokService.GetProductChart(startDate, endDate, frequencyChart);
+        dataproductgroupcombobox = StokService.GetProductGroupsComboboxAnalysis(startDate, endDate);
+        datachart = StokService.GetProductChart(startDate, endDate, frequencyChart, selectedproductID);
+        chartTitle = dataproductgroup.Where(t=>t.ProductGroupID == selectedproductID).Select(t=>t.ProductGroupName).FirstOrDefault()+ " HURDA GRAFİĞİ";
         StateHasChanged();
         //VisibleSpinner = false;
     }
@@ -264,11 +284,14 @@
 
     #endregion
 
+    
+
+
     public void CellInfoHandler(QueryCellInfoEventArgs<ProductGroupsAnalysis> Args)
     {
-        if (Args.Column.Field == "Quality")
+        if (Args.Column.Field == "OEE")
         {
-            if (Args.Data.Quality < thresholddouble)
+            if (Args.Data.OEE < (decimal)thresholddouble)
             {
                 Args.Cell.AddStyle(new string[] { "background-color: #DF0000; color: white; " });
             }

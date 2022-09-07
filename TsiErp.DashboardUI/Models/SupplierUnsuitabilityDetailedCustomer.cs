@@ -1,11 +1,10 @@
 ﻿namespace TsiErp.DashboardUI.Models
 {
-    public class ProductionUnsuitabilityDetailedStation
+    public class SupplierUnsuitabilityDetailedCustomer
     {
-
-        public string Station { get; set; }
-
         public int Quantity { get; set; }
+
+        public string Customer { get; set; }
         public double Percent { get; set; }
     }
 }
