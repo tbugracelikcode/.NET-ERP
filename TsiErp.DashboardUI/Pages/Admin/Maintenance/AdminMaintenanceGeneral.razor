@@ -3,80 +3,397 @@
 
 @inject NavigationManager NavigationManager
 @using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Popups
 @using Syncfusion.Blazor.Cards
 @using Syncfusion.Blazor.Data
 @using Syncfusion.Blazor.DropDowns
 @using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Calendars
+@using Syncfusion.Blazor.Grids
+@using Syncfusion.Blazor.Navigations
+@using System.Timers
+@using TsiErp.DashboardUI.Helpers.HelperModels
+
+<SfCard class="e-card">
+    <CardContent>
+        <table width="1000px">
+            <tr>
+                <td width="50px" align="center">
+                    <br />
+                   <center> <SfButton CssClass="e-btn e-secondary" style="background-color:#474747; font-size:18px; font-weight:bold" IsPrimary="true" Content="Toplu Malzeme İhtiyaç Listesi Oluştur" OnClick="@(() => OnClickAllMaintenance())">
+
+                    </SfButton></center>
+                </td>
+                <td width="20px">
+                </td>
+            </tr>
+        </table>
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+<DxPopup Visible="@PopupVisibleAll"
+         ShowFooter="true"
+         HeaderText="Toplu Malzeme İhtiyaç Listesi"
+         Width="1500px"
+         Height="800px"
+         Closing="MaintenancePopupClosing"
+         HeaderCssClass="HeaderTitleCss">
+    <BodyTemplate>
+        <SfCard class="Cards">
+            <CardHeader>
+            </CardHeader>
+            <CardContent>
+                <SfGrid DataSource="@topluIhtiyacList" AllowPaging="false" Toolbar="@(new List<string>() { "Print" })" Height="573px" style="padding-left:20px; padding-right:20px;">
+                    <GridColumns>
+                        <GridColumn Visible="false" Field=@nameof(BakimIhtiyacListesi.STOKID) HeaderText="STOK ID" TextAlign="TextAlign.Right"
+                                    Width="120"></GridColumn>
+                        <GridColumn Field=@nameof(BakimIhtiyacListesi.ESKISTOKKODU) HeaderText="STOK KODU" TextAlign="TextAlign.Left" Width="150">
+                        </GridColumn>
+                        <GridColumn Visible="false" Field=@nameof(BakimIhtiyacListesi.STOKACIKLAMASI) HeaderText="STOK AÇIKLAMASI" TextAlign="TextAlign.Right" Width="130">
+                        </GridColumn>
+                        <GridColumn Field=@nameof(BakimIhtiyacListesi.BIRIMSETKOD) HeaderText="BİRİM SET" TextAlign="TextAlign.Center"
+                                    Width="120"></GridColumn>
+                        <GridColumn Field=@nameof(BakimIhtiyacListesi.BAKIMMIKTARI) Format="n2" HeaderText="BAKIM MİKTARI" TextAlign="TextAlign.Center" Width="150">
+                        </GridColumn>
+                        <GridColumn Field=@nameof(BakimIhtiyacListesi.STOKMIKTARI) Format="n2" HeaderText="STOK MİKTARI" TextAlign="TextAlign.Center" Width="150">
+                        </GridColumn>
+                        <GridColumn Field=@nameof(BakimIhtiyacListesi.IHTIYACMIKTARI) Format="n2" HeaderText="İHTİYAÇ MİKTARI" TextAlign="TextAlign.Center" Width="150">
+                        </GridColumn>
+                    </GridColumns>
+                    <GridEvents QueryCellInfo="CellInfoHandler" TValue="BakimIhtiyacListesi"></GridEvents>
+                </SfGrid>
+            </CardContent>
+            <CardFooter>
+            </CardFooter>
+        </SfCard>
+    </BodyTemplate>
+    <FooterContentTemplate>
+    <DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Success" Text="Satın alma talep fişi oluştur" />
+    @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Secondary" Text="Cancel" Click="@(() => PopupVisible = false)" />*@
+    </FooterContentTemplate>
+</DxPopup>
+<SfCard class="FilterCard">
+    <CardContent>
+        <table width="1000px">
+            <tr>
+                <td width="70px">
+                </td>
+                <td width="220px">
+                    <label class=FilterLabelTitle><strong>Aranacak Kelime : </strong></label>
+                    <SfTextBox Placeholder="Aranacak kelimeyi yazınız..." ShowClearButton="true" Width="200px" ValueChange="OnSearch" @bind-Value="SearchValue"></SfTextBox>
+                </td>
+                <td width="220px">
+                    <label class=FilterLabelTitle><strong>Kalan Süre : </strong></label><br />
+                    <SfDropDownList TValue="string" TItem="string" DataSource="@SortingType" Placeholder="Kalan Süre" Width="200px" @bind-Value="SortingValue">
+                        <DropDownListEvents TValue="string" TItem="string" ValueChange="OnSorting"></DropDownListEvents>
+                    </SfDropDownList>
+                </td>
+                <td width="220px">
+                    <label class=FilterLabelTitle><strong>Kat : </strong></label><br />
+                    <SfMultiSelect Mode="VisualMode.Default" AllowFiltering="true" DataSource="@FilteringType" Placeholder="Kat" ShowClearButton="true" Width="200px" @bind-Value="FilteringValue">
+                        <MultiSelectEvents TValue="string[]" TItem="string" ValueChange="OnFiltering"></MultiSelectEvents>
+                    </SfMultiSelect>
+                </td>
+                <td width="220px">
+                    <label class=FilterLabelTitle><strong>Bakıma Kalan Süre : </strong></label><br />
+                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" PopupHeight="230px" @bind-Value="selectedTimeIndex" Placeholder="Son 2 Ay" DataSource="@timeperiods">
+                        <ComboBoxEvents TItem="ComboboxTimePeriods" TValue="int?" ValueChange="@ValueChangeHandler"></ComboBoxEvents>
+                        <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
+                    </SfComboBox>
+                </td>
+                <td width="20px">
+                </td>
+                <td width="50px" align="right">
+                    <br />
+                    <SfButton CssClass="e-btn e-secondary" style="background-color:#474747; font-size:18px; font-weight:bold" IsPrimary="true" Content="Filtreyi Temizle" OnClick="OnReset"></SfButton>
+                </td>
+                <td width="20px">
+                </td>
+            </tr>
+        </table>
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+
 <div class="row">
-    <div class="control-section col-lg-9 card-control-section tile_layout">
-        <div class="e-card-layout">
-            @if (this.CardDatas.Count == 0)
-            {
-                <div class="e-error">
-                    <div class="e-error-content">Sonuç bulunamadı</div>
-                </div>
-            }
-            else
-            {
-                @foreach (CardDataModel card in CardDatas)
+    <center>
+        <div class="control-section col-lg-9 card-control-section tile_layout">
+            <div class="row e-card-layout">
+                @if (this.CardDatas.Count == 0)
                 {
-                    <div class="col-lg-4 col-md-4 col-sm-6" style="padding: 15px;">
-                        <div id="card_sample_1" class="card_sample">
-                            <SfCard>
-                                <CardImage Image="@card.ImageUrl" />
-                                <CardHeader Title="@card.Title" SubTitle="@card.SubTitle" />
-                                <CardContent Content="@card.Content" />
-                                <CardFooter>
-                                    <CardFooterContent>
-                                        <SfButton CssClass="e-btn e-outline e-primary" @onclick="@(e => NavigateToUrlAsync(@card.NavUrl))">Read More</SfButton>
-                                    </CardFooterContent>
-                                </CardFooter>
-                            </SfCard>
-                        </div>
+                    <div class="e-error">
+                        <div class="e-error-content">Sonuç bulunamadı</div>
                     </div>
                 }
-            }
-        </div>
-    </div>
-    <div class="col-lg-3 property-section">
-        <div class="property-panel-section">
-            <div class="property-panel-header">Properties</div>
-            <div class="property-panel-content">
-                <table class="table">
-                    <tr>
-                        <td>
-                            <SfTextBox Placeholder="Search book" ShowClearButton="true" Width="200px" ValueChange="OnSearch" @bind-Value="SearchValue"></SfTextBox>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <SfDropDownList TValue="string" TItem="string" DataSource="@SortingType" Placeholder="Sorting order" Width="200px" @bind-Value="SortingValue">
-                                <DropDownListEvents TValue="string" TItem="string" ValueChange="OnSorting"></DropDownListEvents>
-                            </SfDropDownList>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <SfMultiSelect Mode="VisualMode.Default" AllowFiltering="true" DataSource="@FilteringType" Placeholder="Book category" ShowClearButton="true" Width="200px" @bind-Value="FilteringValue">
-                                <MultiSelectEvents TValue="string[]" TItem="string" ValueChange="OnFiltering"></MultiSelectEvents>
-                            </SfMultiSelect>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <SfButton Content="Reset" OnClick="OnReset"></SfButton>
-                        </td>
-                    </tr>
-                </table>
+                else
+                {
+                    @foreach (StationCards card in CardDatas)
+                    {
+                        if (card.TimeLeft < selectedTimeIndex)
+                        {
+                            <div class="col-lg-2 col-md-2 col-sm-4" style="padding: 10px;text-align:left;">
+                                <div id="card_sample_1" class="card_sample">
+                                    <SfCard style="height :500px;border: 5px solid #9F0303 ;border-radius:30px;">
+                                        <center><CardImage Image="@card.ImageUrl" /></center>
+                                        <center> <CardHeader Title="@card.StationCode" /></center>
+                                        <CardContent>
+                                            <ChildContent>
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            @*<th scope="col" style="text-align:center">Bakım </th>
+                                                <th scope="col" style="text-align:left"> &nbsp;Detayları</th>*@
+                                                            <th scope="col" style="text-align:left"> </th>
+                                                            <th scope="col" style="text-align:left"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><strong>Departman : @card.StationDepartment</strong></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Planlanan Bakım Tarihi : @card.PlannedMaintenanceDate.ToString("dd-MM-yyyy")</strong></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Bakım Türü : @card.MaintenanceType</strong></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Bakıma Kalan Süre : @card.TimeLeft İş Günü</strong></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </ChildContent>
+                                        </CardContent>
+                                        <CardFooter>
+                                            <CardFooterContent>
+                                                <div style="margin-top:16px">
+                                                    <center> <SfButton style="background-color:#AD0000; font-size:18px; font-weight:bold" CssClass="e-btn e-secondary" OnClick="@(() => OnClickMaintenance(card.StationCode, card.PlannedMaintenanceDate,card.MaintenanceID))">Bakım Detaylarını Göster</SfButton></center>
+                                                </div>
+                                            </CardFooterContent>
+                                        </CardFooter>
+                                    </SfCard>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-lg-2 col-md-2 col-sm-4" style="padding: 10px;text-align:left;">
+                                <div id="card_sample_1" class="card_sample">
+                                    <SfCard style="height :500px;border: 5px solid #878787 !important;border-radius:30px !important">
+                                        <center><CardImage Image="@card.ImageUrl" /></center>
+                                        <center> <CardHeader Title="@card.StationCode" /></center>
+                                        <CardContent>
+                                            <ChildContent>
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            @*<th scope="col" style="text-align:center">Bakım </th>
+                                                <th scope="col" style="text-align:left"> &nbsp;Detayları</th>*@
+                                                            <th scope="col" style="text-align:left"> </th>
+                                                            <th scope="col" style="text-align:left"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><strong>Departman : @card.StationDepartment</strong></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Planlanan Bakım Tarihi : @card.PlannedMaintenanceDate.ToString("dd-MM-yyyy")</strong></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Bakım Türü : @card.MaintenanceType</strong></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Bakıma Kalan Süre : @card.TimeLeft İş Günü</strong></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </ChildContent>
+                                        </CardContent>
+                                        <CardFooter>
+                                            <CardFooterContent>
+                                                <div style="margin-top:16px">
+                                                    <center><SfButton style="background-color:#565555; font-size:18px; font-weight:bold" CssClass="e-btn e-secondary" OnClick="@(() => OnClickMaintenance(card.StationCode, card.PlannedMaintenanceDate,card.MaintenanceID))">Bakım Detaylarını Göster</SfButton></center>
+                                                </div>
+                                            </CardFooterContent>
+                                        </CardFooter>
+                                    </SfCard>
+                                </div>
+                            </div>
+                        }
+
+                    }
+                }
             </div>
         </div>
-    </div>
+    </center>
 </div>
-<div id="source_link">
-    Source:
-    <a href="https://www.syncfusion.com/ebooks/" target="_blank">https://www.syncfusion.com/ebooks</a>
-</div>
+
+<DxPopup Visible="@PopupVisible"
+         ShowFooter="true"
+         HeaderText="@TitleStation"
+         Width="1500px"
+         Height="800px"
+         Closing="MaintenancePopupClosing"
+         HeaderCssClass="HeaderTitleCss">
+    <BodyTemplate>
+        <SfCard class="Cards">
+            <CardHeader>
+            </CardHeader>
+            <CardContent>
+                <SfTab CssClass="default-tab" OverflowMode="@OverflowMode.Scrollable" HeaderPlacement="HeaderPosition.Top" Width="100%">
+                    <TabAnimationSettings>
+                        <TabAnimationPrevious Effect="AnimationEffect.FadeIn"></TabAnimationPrevious>
+                        <TabAnimationNext Effect="AnimationEffect.FadeOut"></TabAnimationNext>
+                    </TabAnimationSettings>
+                    <TabItems>
+                        <TabItem>
+                            <ChildContent>
+                                <TabHeader Text="İhtiyaç Listesi"></TabHeader>
+                            </ChildContent>
+                            <ContentTemplate>
+                                <SfCard class="Cards" style="text-align:center">
+                                    <CardContent>
+                                        <SfGrid DataSource="@ihtiyacList" AllowPaging="false" Toolbar="@(new List<string>() { "Print" })" Height="573px" style="padding-left:20px; padding-right:20px;">
+                                            <GridColumns>
+                                                <GridColumn Visible="false" Field=@nameof(BakimIhtiyacListesi.STOKID) HeaderText="STOK ID" TextAlign="TextAlign.Right"
+                                                            Width="120"></GridColumn>
+                                                <GridColumn Field=@nameof(BakimIhtiyacListesi.ESKISTOKKODU) HeaderText="STOK KODU" TextAlign="TextAlign.Left" Width="150">
+                                                </GridColumn>
+                                                <GridColumn Visible="false" Field=@nameof(BakimIhtiyacListesi.STOKACIKLAMASI) HeaderText="STOK AÇIKLAMASI" TextAlign="TextAlign.Right" Width="130">
+                                                </GridColumn>
+                                                <GridColumn Field=@nameof(BakimIhtiyacListesi.BIRIMSETKOD) HeaderText="BİRİM SET" TextAlign="TextAlign.Center"
+                                                            Width="120"></GridColumn>
+                                                <GridColumn Field=@nameof(BakimIhtiyacListesi.BAKIMMIKTARI) Format="n2" HeaderText="BAKIM MİKTARI" TextAlign="TextAlign.Center" Width="150">
+                                                </GridColumn>
+                                                <GridColumn Field=@nameof(BakimIhtiyacListesi.STOKMIKTARI) Format="n2" HeaderText="STOK MİKTARI" TextAlign="TextAlign.Center" Width="150">
+                                                </GridColumn>
+                                                <GridColumn Field=@nameof(BakimIhtiyacListesi.IHTIYACMIKTARI) Format="n2" HeaderText="İHTİYAÇ MİKTARI" TextAlign="TextAlign.Center" Width="150">
+                                                </GridColumn>
+                                            </GridColumns>
+                                            <GridEvents QueryCellInfo="CellInfoHandler" TValue="BakimIhtiyacListesi"></GridEvents>
+                                        </SfGrid>
+                                    </CardContent>
+                                    <CardFooter>
+                                    </CardFooter>
+                                </SfCard>
+                                <SfCard class="Cards">
+
+                                    <CardFooter>
+                                    </CardFooter>
+                                </SfCard>
+                            </ContentTemplate>
+                        </TabItem>
+
+                        <TabItem>
+                            <ChildContent>
+                                <TabHeader Text="Talimatlar"></TabHeader>
+                            </ChildContent>
+                            <ContentTemplate>
+                                <SfCard class="Cards" style="text-align:center">
+                                    <CardContent>
+                                        <SfGrid DataSource="@talimatList" AllowPaging="false" Toolbar="@(new List<string>() { "Print" })" style="padding-right:20px; padding-left:20px;">
+                                            <GridColumns>
+                                                <GridColumn Visible="false" Field=@nameof(BakimTalimatlar.BAKIMID) HeaderText="BAKIM ID" TextAlign="TextAlign.Right"
+                                                            Width="120"></GridColumn>
+                                                <GridColumn Field=@nameof(BakimTalimatlar.TALIMAT) HeaderText="TALİMAT" Width="150">
+                                                </GridColumn>
+                                            </GridColumns>
+                                        </SfGrid>
+                                    </CardContent>
+                                    <CardFooter>
+                                    </CardFooter>
+                                </SfCard>
+                                <SfCard class="Cards">
+
+                                    <CardContent>
+                                    </CardContent>
+                                    <CardFooter>
+                                    </CardFooter>
+                                </SfCard>
+                            </ContentTemplate>
+                        </TabItem>
+
+                    </TabItems>
+                </SfTab>
+            </CardContent>
+            <CardFooter>
+            </CardFooter>
+        </SfCard>
+    </BodyTemplate>
+    <FooterContentTemplate>
+    <DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Success" Text="Satın alma talep fişi oluştur"/>
+    @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Secondary" Text="Cancel" Click="@(() => PopupVisible = false)" />*@
+    </FooterContentTemplate>
+</DxPopup>
+
 <style>
+    .GridZebra table tbody tr:nth-child(odd) {
+        background-color: #B5B5B5;
+    }
+
+    .GridZebra table tbody tr:nth-child(n) {
+        text-align: center;
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 0px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    .ulstyle {
+        margin: 0px;
+        padding-left: 20px;
+        display: inline-block;
+    }
+
+    .list {
+        float: left;
+        line-height: 20px;
+        font: 10px;
+        min-width: 280px;
+    }
+
+    .FilterCard {
+        background-color: #f7f7f7;
+        border: 3px solid #d6d5d5;
+    }
+
+    .Cards {
+        border: 1px solid #d6d5d5;
+    }
+
+    .e-checkbox-wrapper.e-customcheck:hover .e-frame.e-check {
+        background-color: #9C0D0D;
+        font: 600;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    .FilterLabelTitle {
+        color: #830000;
+        font-size: 18px;
+    }
+
+    .FilterLabelTitleValue {
+        font-size: 18px;
+    }
+
+    .HeaderTitleCss {
+        font-weight: bold;
+        font-size: 24px;
+        text-align: center;
+    }
+
     .property-panel-section .property-panel-content td {
         padding: 0 0 15px 0;
     }
@@ -93,8 +410,10 @@
         }
 
     .tile_layout.card-control-section .e-card .e-card-image {
-        height: 180px;
-        width: inherit;
+        background-size: cover;
+        height: 157px;
+        position: inherit;
+        width: 182px;
     }
 
     .tile_layout.card-control-section .e-card .e-card-header .e-card-header-caption .e-card-header-title {
@@ -109,74 +428,333 @@
 
     .tile_layout.card-control-section .e-card .e-card-content {
         padding-top: 0px;
-        height: 110px;
+        height: 175px;
     }
 
     #source_link {
         float: right;
         margin-right: 10px;
     }
+
+    .e-tab .e-tab-header .e-toolbar-item .e-tab-text,
+    .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap .e-tab-icon {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap,
+    .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap .e-tab-icon {
+        color: black;
+    }
+
+    /*.e-tab .e-tab-header .e-toolbar-items {
+                        color:black;
+                        font-weight:bold;
+                    }
+
+
+
+                    .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap:hover {
+                        color:green;
+                    }
+
+                    .e-tab .e-tab-header .e-toolbar-item.e-active {
+                        color:crimson;
+                    }*/
 </style>
 @code {
+
     [Inject] public IJSRuntime JsRuntime { get; set; }
     public string SearchValue { get; set; }
     public string SortingValue { get; set; }
     public string[] FilteringValue { get; set; }
-    protected override void OnInitialized()
-    {
-        _cardDatas = this.GetCardDatas();
-        base.OnInitialized();
-    }
-    public class CardDataModel
-    {
-        public string ImageUrl { get; set; }
-        public string Title { get; set; }
-        public string SubTitle { get; set; }
-        public string Content { get; set; }
-        public string NavUrl { get; set; }
-        public string Tag { get; set; }
-    }
-    public List<CardDataModel> GetCardDatas()
-    {
-        var assetpath = "images/";
-        List<CardDataModel> CardData = new List<CardDataModel>();
-        CardData.Add(new CardDataModel { ImageUrl = assetpath + "VSM_Image.png", Title = "ASP.NET MVC", SubTitle = "Nick Harrison", Content = "ASP.NET Model View Controller design pattern to keep the data, views, and logic clearly separated in apps.", NavUrl = "https://www.syncfusion.com/ebooks/ASPNET_MVC_Succinctly", Tag = "Server-side" });
-        CardData.Add(new CardDataModel { ImageUrl = assetpath + "VSM_Image12.png", Title = "Node.js", SubTitle = "Emanuele DelBono", Content = "Node.js is a wildly popular platform for writing web applications that has revolutionized web development in many ways.", NavUrl = "https://www.syncfusion.com/ebooks/nodejs", Tag = "Client-side" });
-        CardData.Add(new CardDataModel { ImageUrl = assetpath + "VSM_Image2.png", Title = "React.js", SubTitle = "Dmitri Nesteruk", Content = "React is a JavaScript library that has revolutionized how developers design and think about views in web applications.", NavUrl = "https://www.syncfusion.com/ebooks/reactjs_succinctly", Tag = "Client-side" });
-        CardData.Add(new CardDataModel { ImageUrl = assetpath + "VSM_Image3.png", Title = "TypeScript", SubTitle = "Steve Fenton", Content = "Microsoft TypeScript extends many familiar features of .NET programming to JavaScript.", NavUrl = "https://www.syncfusion.com/ebooks/typescript", Tag = "Client-side" });
-        CardData.Add(new CardDataModel { ImageUrl = assetpath + "VSM_Image4.png", Title = "PHP", SubTitle = "Jose Roberto Olivas Mendoza", Content = "Known for its straightforward simplicity, PHP is an open source, general-purpose scripting language oriented for web development.", NavUrl = "https://www.syncfusion.com/ebooks/php_succinctly", Tag = "Server-side" });
-        CardData.Add(new CardDataModel { ImageUrl = assetpath + "VSM_Image5.png", Title = "CSS3", SubTitle = "Peter Shaw", Content = "In CSS3 Succinctly, author Peter Shaw provides an overview of the latest features available for custom cascading style sheets.", NavUrl = "https://www.syncfusion.com/ebooks/css3", Tag = "Front-end" });
-        CardData.Add(new CardDataModel { ImageUrl = assetpath + "VSM_Image6.png", Title = "ASP.NET Core", SubTitle = "Simone Chiaretta and Ugo Lattanzi", Content = "In ASP.NET Core Succinctly, seasoned authors Simone Chiaretta and Ugo Lattanzi update you on all the advances provided by Microsoft’s landmark framework.", NavUrl = "https://www.syncfusion.com/ebooks/asp_net_core_succinctly", Tag = "Server-side" });
-        CardData.Add(new CardDataModel { ImageUrl = assetpath + "VSM_Image7.png", Title = "Aurelia", SubTitle = "Matthew Duffield", Content = "Aurelia is a relatively new, open-source JavaScript library/framework that simplifies the creation of web-based applications.", NavUrl = "https://www.syncfusion.com/ebooks/aurelia_succinctly", Tag = "Client-side" });
-        CardData.Add(new CardDataModel { ImageUrl = assetpath + "VSM_Image8.png", Title = "ECMAScript 6", SubTitle = "Matthew Duffield", Content = "ECMAScript 6 (ES6), also known as ECMAScript 2015, brings new functionality and features to the table that developers have been wanting for a long time.", NavUrl = "https://www.syncfusion.com/ebooks/ecmascript_6_succinctly", Tag = "Client-side" });
-        CardData.Add(new CardDataModel { ImageUrl = assetpath + "VSM_Image9.png", Title = "JavaScript", SubTitle = "Cody Lindley", Content = "JavaScript Succinctly was written to give readers an accurate, concise examination of JavaScript objects and their supporting nuances.", NavUrl = "https://www.syncfusion.com/ebooks/javascript", Tag = "Client-side" });
-        CardData.Add(new CardDataModel { ImageUrl = assetpath + "VSM_Image10.png", Title = "Knockout.js", SubTitle = "Ryan Hodson", Content = "Knockout.js Succinctly is intended for professional web developers who need to build dynamic, scalable user interfaces with minimal code.", NavUrl = "https://www.syncfusion.com/ebooks/knockoutjs", Tag = "Client-side" });
-        CardData.Add(new CardDataModel { ImageUrl = assetpath + "VSM_Image11.png", Title = "Angular 2", SubTitle = "Joseph D.Booth", Content = "Angular 2 is a massively popular JavaScript framework built to take advantage of component development in web apps.", NavUrl = "https://www.syncfusion.com/ebooks/angular2_succinctly", Tag = "Client-side" });
-        return CardData;
-    }
-    private List<CardDataModel> _cardDatas;
-    public List<CardDataModel> CardDatas
+    string TitleStation = string.Empty;
+    private System.Timers.Timer _timer;
+
+
+    public List<int> topluBakimIDList = new();
+    List<BakimIhtiyacListesi> ihtiyacList = new();
+    List<BakimIhtiyacListesi> topluIhtiyacList = new();
+    List<BakimTalimatlar> talimatList = new();
+
+    bool PopupVisible { get; set; } = false;
+    bool PopupVisibleAll { get; set; } = false;
+
+
+    private List<StationCards> _cardDatas;
+    public List<StationCards> CardDatas
     {
         get { return _cardDatas; }
         set { _cardDatas = value; }
     }
-    public List<string> SortingType = new List<string>() { "Ascending", "Descending" };
-    public List<string> FilteringType = new List<string>() { "Client-side", "Server-side", "Front-end" };
+    private int? selectedTimeIndex { get; set; } = 61;
+    private List<ComboboxTimePeriods> timeperiods = new List<ComboboxTimePeriods>() {
+        new ComboboxTimePeriods(){ TimeID= 121, TimeText= "Son 4 Ay" },
+        new ComboboxTimePeriods(){ TimeID= 91, TimeText= "Son 3 Ay" },
+        new ComboboxTimePeriods(){ TimeID= 61, TimeText= "Son 2 Ay" },
+        new ComboboxTimePeriods(){ TimeID= 31, TimeText= "Son 1 Ay" },
+        new ComboboxTimePeriods(){ TimeID= 8, TimeText= "Son 1 Hafta" }
+    };
+
+
+    protected override void OnInitialized()
+    {
+        _cardDatas = this.GetCardDatas();
+        base.OnInitialized();
+
+        var list = DBHelper.GetMaintenanceRecords();
+        _timer = new();
+        _timer.Interval = 500000;
+        _timer.Elapsed += async (object? sender, ElapsedEventArgs e) =>
+        {
+            timerEvent();
+            await InvokeAsync(StateHasChanged);
+        };
+        _timer.Enabled = true;
+    }
+
+    void MaintenancePopupClosing(PopupClosingEventArgs args)
+    {
+        PopupVisible = false;
+        PopupVisibleAll = false;
+    }
+
+    private void ValueChangeHandler(ChangeEventArgs<int?, ComboboxTimePeriods> args)
+    {
+        if (args.Value != null)
+        {
+            selectedTimeIndex = args.Value;
+            StateHasChanged();
+        }
+        else
+        {
+            selectedTimeIndex = 61;
+            StateHasChanged();
+        }
+    }
+
+    public void CellInfoHandler(QueryCellInfoEventArgs<BakimIhtiyacListesi>
+    Args)
+    {
+        var value = Args.Data.IHTIYACMIKTARI;
+        //if (Args.Column.Field == "IHTIYACMIKTARI")
+        //{
+        if (value > 0)
+        {
+            Args.Cell.AddStyle(new string[] { "background-color: #DF2C2C; color: white; " });
+        }
+        //}
+        StateHasChanged();
+    }
+
+
+    public void timerEvent()
+    {
+        _cardDatas = this.GetCardDatas();
+    }
+
+    public void OnClickMaintenance(string stationCode, DateTime maintenanceDate, int maintenanceID)
+    {
+        ihtiyacList.Clear();
+        talimatList.Clear();
+        PopupVisible = true;
+        TitleStation = stationCode + " - " + maintenanceDate.ToString("dd.MM.yyyy") + " Tarihli Planlanan Bakım Detayları";
+        var list = DBHelper.GetMaintenanceLineRecords().Where(t => t.BAKIMID == maintenanceID).ToList();
+
+        foreach (var item in list.Where(t => t.IHTIYACMIKTARI > 0).ToList())
+        {
+            BakimIhtiyacListesi satir = new BakimIhtiyacListesi
+                {
+                    STOKID = item.STOKID,
+                    ESKISTOKKODU = item.ESKISTOKKODU,
+                    STOKACIKLAMASI = item.STOKACIKLAMASI,
+                    BIRIMSETKOD = item.BIRIMSETKOD,
+                    BAKIMMIKTARI = item.IHTIYACMIKTARI,
+                    STOKMIKTARI = item.STOKMIKTARI,
+                    IHTIYACMIKTARI = item.IHTIYACMIKTARI - item.STOKMIKTARI < 0 ? 0 : item.IHTIYACMIKTARI - item.STOKMIKTARI
+                };
+            ihtiyacList.Add(satir);
+        }
+
+        foreach (var item in list)
+        {
+            BakimTalimatlar talimat = new BakimTalimatlar
+                {
+                    BAKIMID = item.BAKIMID,
+                    TALIMAT = item.BAKIMTALIMATI
+                };
+            talimatList.Add(talimat);
+        }
+
+    }
+    public void OnClickAllMaintenance()
+    {
+        topluIhtiyacList.Clear();
+        PopupVisibleAll = true;
+        List<BakimSatirlari> list = new();
+        foreach (var bakimID in topluBakimIDList.Distinct())
+        {
+            list.AddRange(DBHelper.GetMaintenanceLineRecords().Where(t => t.BAKIMID == bakimID).ToList());
+        }
+
+        foreach (var item in list.Where(t => t.IHTIYACMIKTARI > 0).ToList())
+        {
+            if (topluIhtiyacList.Any(x => x.STOKID == item.STOKID))
+            {
+                var satir = topluIhtiyacList.Find(t => t.STOKID == item.STOKID);
+
+                if (satir != null)
+                {
+                    satir.BAKIMMIKTARI = satir.BAKIMMIKTARI + item.IHTIYACMIKTARI;
+                    satir.IHTIYACMIKTARI = satir.BAKIMMIKTARI - item.STOKMIKTARI < 0 ? 0 : satir.BAKIMMIKTARI - item.STOKMIKTARI;
+                }
+            }
+            else
+            {
+                BakimIhtiyacListesi satir = new BakimIhtiyacListesi
+                    {
+                        STOKID = item.STOKID,
+                        ESKISTOKKODU = item.ESKISTOKKODU,
+                        STOKACIKLAMASI = item.STOKACIKLAMASI,
+                        BIRIMSETKOD = item.BIRIMSETKOD,
+                        BAKIMMIKTARI = item.IHTIYACMIKTARI,
+                        STOKMIKTARI = item.STOKMIKTARI,
+                        IHTIYACMIKTARI = item.IHTIYACMIKTARI - item.STOKMIKTARI < 0 ? 0 : item.IHTIYACMIKTARI - item.STOKMIKTARI
+                    };
+                topluIhtiyacList.Add(satir);
+            }
+
+        }
+
+    }
+
+    public class StationCards
+    {
+        public string ImageUrl { get; set; }
+        public string StationCode { get; set; }
+        public int TimeLeft { get; set; }
+        public DateTime PlannedMaintenanceDate { get; set; }
+        public string Period { get; set; }
+        public string StationDepartment { get; set; }
+        public string MaintenanceType { get; set; }
+        public string Floor { get; set; }
+        public int MaintenanceID { get; set; }
+    }
+
+    public List<StationCards> GetCardDatas()
+    {
+        topluBakimIDList.Clear();
+        var assetpath = "images/Maintenance/";
+        List<StationCards>
+            CardData = new List<StationCards>
+                ();
+
+        var stations = DBHelper.GetStations().Where(t => t.VERITOPLAMA == true).ToList();
+        var canli = DBHelper.GetMaintenanceRecordsView().OrderByDescending(t => t.TARIH).ToList();
+        if (stations != null)
+        {
+            foreach (var item in stations)
+            {
+                var tempCanli = canli.Where(t => t.ISTID == item.ID).ToList();
+                int kalanSure = tempCanli.Where(t => t.DURUM == "Yapılmadı").OrderBy(t => t.KALANSURE).Select(t => t.KALANSURE).FirstOrDefault();
+                StationCards stationCards = new StationCards
+                    {
+                        ImageUrl = tempCanli.Select(t => t.CALISMABILGISI).FirstOrDefault() != 0 && tempCanli.Select(t => t.CALISMABILGISI).FirstOrDefault() != 8 ? assetpath + item.MAKINEKODU.Trim() + "on.gif" : assetpath + item.MAKINEKODU.Trim() + "off.png",
+                        StationCode = item.MAKINEKODU,
+                        StationDepartment = tempCanli.Select(t => t.BOLUM).FirstOrDefault(),
+                        Period = tempCanli.Where(t => t.KALANSURE <= kalanSure && t.DURUM == "Yapılmadı").Select(t => t.PERIYOT).FirstOrDefault().ToString(),
+                        PlannedMaintenanceDate = tempCanli.Where(t => t.KALANSURE <= kalanSure && t.DURUM == "Yapılmadı").Select(t => t.PLANLANANTARIH).FirstOrDefault(),
+                        TimeLeft = kalanSure / 22500,
+                        MaintenanceType = tempCanli.Where(t => t.KALANSURE <= kalanSure && t.DURUM == "Yapılmadı").Select(t => t.BAKIMTURU).FirstOrDefault(),
+                        Floor = GetFloor(tempCanli.Select(t => t.KAT).FirstOrDefault()),
+                        MaintenanceID = tempCanli.Where(t => t.KALANSURE <= kalanSure && t.DURUM == "Yapılmadı").Select(t => t.ID).FirstOrDefault()
+                    };
+                if (stationCards.PlannedMaintenanceDate != DateTime.MinValue)
+                {
+                    CardData.Add(stationCards);
+                    topluBakimIDList.Add(stationCards.MaintenanceID);
+                }
+            }
+        }
+        return CardData.OrderBy(t => t.TimeLeft).ToList();
+    }
+
+    private string GetFloor(int floor)
+    {
+        switch (floor)
+        {
+            case 1:
+                return "-1. Kat";
+                break;
+            case 2:
+                return "Zemin Kat";
+                break;
+            case 3:
+                return "1.Kat";
+                break;
+            default:
+                return "Zemin Kat";
+                break;
+        }
+
+
+    }
+
+    public List<string>
+        SortingType = new List<string>
+            () { "Artan", "Azalan" };
+    public List<string>
+        FilteringType = new List<string>
+            () { "1.Kat", "Zemin Kat", "-1. Kat" };
     public async Task NavigateToUrlAsync(string url)
     {
-        await JsRuntime.InvokeAsync<object>("open", url, "_blank");
+        await JsRuntime.InvokeAsync
+        <object>
+            ("open", url, "_blank");
     }
-    public List<CardDataModel> GetCardDatas(string[] values)
+
+    public List
+    <StationCards>
+        GetSortedCardDatas(List<StationCards>
+            sortingCards)
+    {
+        if (this.SortingValue != null)
+        {
+            sortingCards.Sort((x, y) => x.TimeLeft.CompareTo(y.TimeLeft));
+            if (this.SortingValue == "Azalan")
+            {
+                sortingCards.Reverse();
+            }
+        }
+        return sortingCards;
+    }
+
+    public void OnSearch(ChangedEventArgs args)
+    {
+        if (args.Value != null)
+        {
+            string value = args.Value.ToUpper();
+            this.CardDatas = this.CardDatas.FindAll(e => e.StationCode.Contains(value) || e.StationDepartment.Contains(value) || e.MaintenanceType.Contains(value));
+        }
+        else
+        {
+            this.CardDatas = this.GetCardDatas(this.FilteringValue);
+        }
+    }
+
+    public List<StationCards>
+        GetCardDatas(string[] values)
     {
         var cardDatas = GetCardDatas();
         if (values == null)
         {
             return this.GetSortedCardDatas(cardDatas);
         }
-        var filterCards = new List<CardDataModel>();
+        var filterCards = new List<StationCards>
+            ();
         foreach (string value in values)
         {
-            var cards = cardDatas.Where(e => e.Tag == value);
+            var cards = cardDatas.Where(e => e.Floor == value);
             foreach (var card in cards)
             {
                 filterCards.Add(card);
@@ -184,42 +762,25 @@
         }
         return this.GetSortedCardDatas(filterCards);
     }
-    public List<CardDataModel> GetSortedCardDatas(List<CardDataModel> sortingCards)
-    {
-        if (this.SortingValue != null)
-        {
-            sortingCards.Sort((x, y) => x.Title.CompareTo(y.Title));
-            if (this.SortingValue == "Descending")
-            {
-                sortingCards.Reverse();
-            }
-        }
-        return sortingCards;
-    }
-    public void OnSearch(ChangedEventArgs args)
-    {
-        if (args.Value != null)
-        {
-            this.CardDatas = this.CardDatas.FindAll(e => (e.Title.Contains(args.Value) || e.SubTitle.Contains(args.Value) || e.Content.Contains(args.Value) || e.Title.ToLower().Contains(args.Value) || e.SubTitle.ToLower().Contains(args.Value) || e.Content.ToLower().Contains(args.Value)));
-        }
-        else
-        {
-            this.CardDatas = this.GetCardDatas(this.FilteringValue);
-        }
-    }
-    public void OnSorting(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, string> args)
+
+    public void OnSorting(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, string>
+        args)
     {
         this.CardDatas = this.GetSortedCardDatas(this.CardDatas);
     }
-    public void OnFiltering(MultiSelectChangeEventArgs<string[]> args)
+
+    public void OnFiltering(MultiSelectChangeEventArgs<string[]>
+        args)
     {
         this.CardDatas = this.GetCardDatas(args.Value);
     }
+
     public void OnReset()
     {
         this.SearchValue = null;
         this.SortingValue = null;
         this.FilteringValue = null;
         this.CardDatas = this.GetCardDatas();
+        this.selectedTimeIndex = 61;
     }
-}
+                                                            }

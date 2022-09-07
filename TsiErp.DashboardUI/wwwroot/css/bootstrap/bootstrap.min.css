@@ -1301,12 +1301,12 @@ progress {
 
     .col-lg-2 {
         flex: 0 0 auto;
-        width: 16.66666667%
+        width: 25%
     }
 
     .col-lg-3 {
         flex: 0 0 auto;
-        width: 25%
+        width: 15%
     }
 
     .col-lg-4 {
@@ -1336,7 +1336,7 @@ progress {
 
     .col-lg-9 {
         flex: 0 0 auto;
-        width: 75%
+        width: 85%
     }
 
     .col-lg-10 {
@@ -5812,7 +5812,7 @@ textarea.form-control-lg {
 
 .modal-title {
     margin-bottom: 0;
-    line-height: 1.5
+    line-height: 1.5;
 }
 
 .modal-body {

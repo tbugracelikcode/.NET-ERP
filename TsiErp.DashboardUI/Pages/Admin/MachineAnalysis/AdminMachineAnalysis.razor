@@ -127,7 +127,7 @@
             </ChartPrimaryYAxis>
             <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
             <ChartSeriesCollection>
-                <ChartSeries DataSource="@datachart" Name="OEE" XName="AY" YName="OEE" Width="3" Fill="darkred" Type="ChartSeriesType.Line">
+                <ChartSeries DataSource="@datachart" Name="OEE" XName="AY" YName="OEE" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
                     <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
                         <ChartDataLabel Visible="@dataLabels">
                             <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
@@ -214,7 +214,7 @@
 
     private void OnDateButtonClicked()
     {
-        //VisibleSpinner = true;
+        this.VisibleSpinner = true;
         endDate = DateTime.Today;
         #region Zaman Seçimi
         if (selectedTimeIndex == 0)
@@ -259,8 +259,8 @@
         ChartInstance.RefreshAsync();
         dataoee = IstasyonOEEService.GetStationOEEAnalysis(startDate, endDate);
         datachart = IstasyonOEEService.GetAdminMachineChart(startDate, endDate, frequencyChart);
+        this.VisibleSpinner = false;
         StateHasChanged();
-        //VisibleSpinner = false;
     }
 
     private void OnDetailButtonClicked(int stationID)
