@@ -1,4 +1,4 @@
-﻿@page "/admin/production-unsuitability-analysis/details/{unsuitabilityCode}/{startDate:datetime}/{endDate:datetime}"
+﻿@page "/admin/production-unsuitability-analysis/details/{unsuitabilityCode}/{startDate:datetime}/{endDate:datetime}/{selectedActionID:int}"
 @layout AdminLayout
 
 @inject UretimUygunsuzlukDetayService UretimUygunsuzlukDetayService
@@ -80,6 +80,7 @@
         <table width="1000px">
             <tr>
                 <td width="200px">
+                    <label class="FilterLabelTitle"><strong>Aksiyon:</strong></label><label class="FilterLabelTitleValue">&nbsp;@actionName</label>
                 </td>
                 <td width="200px">
                     <label class="FilterLabelTitle"><strong>Uygunsuzluk Adı:</strong></label><label class="FilterLabelTitleValue">&nbsp;@unsuitabilityName</label>
@@ -227,7 +228,7 @@
                             <CardContent>
                                 <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Ürün Koduna Göre Uygunsuzluk Analizi Detay Grafiği">
                                     <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
-                                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate90">
+                                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Wrap">
                                         <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
                                     </ChartPrimaryXAxis>
                                     <ChartPrimaryYAxis LabelFormat="p2">
@@ -295,6 +296,7 @@
     double columnwidth1;
     double columnwidth2;
     double columnwidth3;
+    string actionName = string.Empty;
 
     [Parameter]
     public DateTime startDate { get; set; }
@@ -305,25 +307,46 @@
     [Parameter]
     public string unsuitabilityCode { get; set; }
 
+    [Parameter]
+    public int selectedActionID { get; set; }
+
 
     protected override void OnInitialized()
     {
-        dataunsuitabilitystation = UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedStationAnalysis(unsuitabilityCode, startDate, endDate);
-        dataunsuitabilityemployee = UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedEmployeeAnalysis(unsuitabilityCode, startDate, endDate);
-        dataunsuitabilityproduct = UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedProductAnalysis(unsuitabilityCode, startDate, endDate);
+        dataunsuitabilitystation = UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedStationAnalysis(unsuitabilityCode, startDate, endDate,selectedActionID );
+        dataunsuitabilityemployee = UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedEmployeeAnalysis(unsuitabilityCode, startDate, endDate,selectedActionID);
+        dataunsuitabilityproduct = UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedProductAnalysis(unsuitabilityCode, startDate, endDate,selectedActionID);
         unsuitabilityName = UretimUygunsuzlukService.GetProductionUnsuitabilityAnalysis(startDate, endDate).Where(t => t.Code == unsuitabilityCode).Select(t => t.UnsuitabilityReason).FirstOrDefault();
         if(dataunsuitabilitystation.Count()<=3)
         {
             columnwidth1 = 0.1;
         }
-         if(dataunsuitabilityemployee.Count()<=3)
+        if(dataunsuitabilityemployee.Count()<=3)
         {
             columnwidth2 = 0.1;
         }
-         if(dataunsuitabilityproduct.Count()<=3)
+        if(dataunsuitabilityproduct.Count()<=3)
         {
             columnwidth3 = 0.1;
         }
+        #region Aksiyon Başlık
+        if(selectedActionID == 1)
+        {
+            actionName = "Hurda";
+        }
+        else if(selectedActionID == 2)
+        {
+            actionName = "Düzeltme";
+        }
+        else if(selectedActionID == 3)
+        {
+            actionName = "Olduğu Gibi Kullanılacak";
+        }
+        else if(selectedActionID == 4)
+        {
+            actionName = "Toplu Uygunsuzluk";
+        }
+        #endregion
     }
 
   
