@@ -3,7 +3,15 @@
     public class SupplierUnsuitabilityAnalysis
     {
         /// <summary>
-        /// Fason Uygunsuzluk ID 
+        /// Tedarikçi ID
+        /// </summary>
+        public int SupplierID { get; set; }
+        /// <summary>
+        /// Tedarikçi
+        /// </summary>
+        public string SupplierName { get; set; }
+        /// <summary>
+        /// Tedarikçi Uygunsuzluk ID 
         /// </summary>
         public int SupplierUnsuitabilityID { get; set; }
         /// <summary>
@@ -31,8 +39,16 @@
         /// </summary>
         public int Total { get; set; }
         /// <summary>
+        /// Toplam Sipariş
+        /// </summary>
+        public int TotalOrder { get; set; }
+        /// <summary>
         /// Hata ID 
         /// </summary>
         public int ErrorID { get; set; }
+        /// <summary>
+        /// Oran 
+        /// </summary>
+        public double Percent { get; set; }
     }
 }
