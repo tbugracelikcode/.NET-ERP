@@ -1383,6 +1383,127 @@ namespace TsiErp.DashboardUI.Helpers
             return unsuitabilityLines;
         }
 
+        public static List<TedarikciUygunsuzlukSatir> GetSuppliertUnsuitabilityLinesQuery()
+        {
+            List<TedarikciUygunsuzlukSatir> unsuitabilityLines = new List<TedarikciUygunsuzlukSatir>();
+
+            SqlConnection connection = GetSqlConnection();
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "ID, " +
+                                  "ISNULL(CARIID,0) as CARIID, " +
+                                  "ISNULL(STOKID,0) as STOKID, " +
+                                  "ISNULL(SIPARISID,0) as SIPARISID, " +
+                                  "ISNULL(SATIRTURU,0) as SATIRTURU, " +
+                                  "ISNULL(SATIRNR,0) as SATIRNR, " +
+                                  "ISNULL(STOKID,0) as STOKID, " +
+                                  "ISNULL(VARYANTID,0) as VARYANTID, " +
+                                  "ISNULL(DEPOID,0) as DEPOID, " +
+                                  "ISNULL(TUR,0) as TUR, " +
+                                  "FISNO, " +
+                                  "TARIH, " +
+                                  "TEMINTARIHI, " +
+                                  "ISNULL(BIRIMSETID,0) as BIRIMSETID, " +
+                                  "ISNULL(PARABIRIMID,0) as PARABIRIMID, " +
+                                  "ISNULL(ADET,0) as ADET, " +
+                                  "ISNULL(DEPOADET,0) as DEPOADET, " +
+                                  "ISNULL(DURUM,0) as DURUM, " +
+                                  "ISNULL(SIPARISKABULSATIRID,0) as SIPARISKABULSATIRID " +
+                                  "FROM TUR_SIPARIS_SATIR";
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                unsuitabilityLines.Add(new TedarikciUygunsuzlukSatir()
+                {
+                    ID = Convert.ToInt32(reader["ID"]),
+                    SIPARISID = Convert.ToInt32(reader["SIPARISID"]),
+                    CARIID = Convert.ToInt32(reader["CARIID"]),
+                    SATIRTURU = Convert.ToInt32(reader["SATIRTURU"]),
+                    SATIRNR = Convert.ToInt32(reader["SATIRNR"]),
+                    STOKID = Convert.ToInt32(reader["STOKID"]),
+                    VARYANTID = Convert.ToInt32(reader["VARYANTID"]),
+                    DEPOID = Convert.ToInt32(reader["DEPOID"]),
+                    TUR = Convert.ToInt32(reader["TUR"]),
+                    FISNO = Convert.ToString(reader["FISNO"]),
+                    TARIH = Convert.ToDateTime(reader["TARIH"]),
+                    TEMINTARIHI = Convert.ToDateTime(reader["TEMINTARIHI"]),
+                    BIRIMSETID = Convert.ToInt32(reader["BIRIMSETID"]),
+                    PARABIRIMID = Convert.ToInt32(reader["PARABIRIMID"]),
+                    ADET = Convert.ToDecimal(reader["ADET"]),
+                    DEPOADET = Convert.ToDecimal(reader["DEPOADET"]),
+                    DURUM = Convert.ToInt32(reader["DURUM"]),
+                    SIPARISKABULSATIRID = Convert.ToInt32(reader["SIPARISKABULSATIRID"])
+                });
+            }
+
+            return unsuitabilityLines;
+        }
+
+        public static List<TedarikciUygunsuzlukSatir> GetSuppliertUnsuitabilityLinesQueryWithID(int SiparisID)
+        {
+            List<TedarikciUygunsuzlukSatir> unsuitabilityLines = new List<TedarikciUygunsuzlukSatir>();
+
+            SqlConnection connection = GetSqlConnection();
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "ID, " +
+                                  "ISNULL(CARIID,0) as CARIID, " +
+                                  "ISNULL(STOKID,0) as STOKID, " +
+                                  "ISNULL(SIPARISID,0) as SIPARISID, " +
+                                  "ISNULL(SATIRTURU,0) as SATIRTURU, " +
+                                  "ISNULL(SATIRNR,0) as SATIRNR, " +
+                                  "ISNULL(STOKID,0) as STOKID, " +
+                                  "ISNULL(VARYANTID,0) as VARYANTID, " +
+                                  "ISNULL(DEPOID,0) as DEPOID, " +
+                                  "ISNULL(TUR,0) as TUR, " +
+                                  "FISNO, " +
+                                  "TARIH, " +
+                                  "TEMINTARIHI, " +
+                                  "ISNULL(BIRIMSETID,0) as BIRIMSETID, " +
+                                  "ISNULL(PARABIRIMID,0) as PARABIRIMID, " +
+                                  "ISNULL(ADET,0) as ADET, " +
+                                  "ISNULL(DEPOADET,0) as DEPOADET, " +
+                                  "ISNULL(DURUM,0) as DURUM, " +
+                                  "ISNULL(SIPARISKABULSATIRID,0) as SIPARISKABULSATIRID " +
+                                  "FROM TUR_SIPARIS_SATIR" +
+                                  " WHERE SIPARISID = " + SiparisID.ToString();
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                unsuitabilityLines.Add(new TedarikciUygunsuzlukSatir()
+                {
+                    ID = Convert.ToInt32(reader["ID"]),
+                    SIPARISID = Convert.ToInt32(reader["SIPARISID"]),
+                    CARIID = Convert.ToInt32(reader["CARIID"]),
+                    SATIRTURU = Convert.ToInt32(reader["SATIRTURU"]),
+                    SATIRNR = Convert.ToInt32(reader["SATIRNR"]),
+                    STOKID = Convert.ToInt32(reader["STOKID"]),
+                    VARYANTID = Convert.ToInt32(reader["VARYANTID"]),
+                    DEPOID = Convert.ToInt32(reader["DEPOID"]),
+                    TUR = Convert.ToInt32(reader["TUR"]),
+                    FISNO = Convert.ToString(reader["FISNO"]),
+                    TARIH = Convert.ToDateTime(reader["TARIH"]),
+                    TEMINTARIHI = Convert.ToDateTime(reader["TEMINTARIHI"]),
+                    BIRIMSETID = Convert.ToInt32(reader["BIRIMSETID"]),
+                    PARABIRIMID = Convert.ToInt32(reader["PARABIRIMID"]),
+                    ADET = Convert.ToDecimal(reader["ADET"]),
+                    DEPOADET = Convert.ToDecimal(reader["DEPOADET"]),
+                    DURUM = Convert.ToInt32(reader["DURUM"]),
+                    SIPARISKABULSATIRID = Convert.ToInt32(reader["SIPARISKABULSATIRID"])
+                });
+            }
+
+            return unsuitabilityLines;
+        }
+
         public static List<UygunsuzlukBasliklari> GetContractCauses()
         {
             List<UygunsuzlukBasliklari> hurdaSebepleri = new List<UygunsuzlukBasliklari>();

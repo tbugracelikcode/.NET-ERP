@@ -24,6 +24,8 @@ builder.Services.AddScoped<FasonUygunsuzlukService>();
 builder.Services.AddScoped<FasonUygunsuzlukDetayService>();
 builder.Services.AddScoped<TedarikciUygunsuzlukService>();
 builder.Services.AddScoped<TedarikciUygunsuzlukDetayService>();
+builder.Services.AddScoped<GenelOEEService>();
+builder.Services.AddScoped<GenelOEEDetayService>();
 
 // Add services to the container.
 builder.Services.AddSyncfusionBlazor();

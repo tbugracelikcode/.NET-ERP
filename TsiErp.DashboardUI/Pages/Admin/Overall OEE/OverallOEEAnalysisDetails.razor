@@ -1,7 +1,7 @@
-﻿@page "/admin/machine-analysis/details/{stationID:int}/{startDate:datetime}/{endDate:datetime}"
+﻿@page "/admin/overall-oee/details/{stationID:int}/{startDate:datetime}/{endDate:datetime}"
 @layout AdminLayout
 
-@inject GenelOEEDetayService GenelOEEDetayService
+@inject IstasyonDetayService IstasyonDetayService
 @inject NavigationManager NavigationManager
 @using Syncfusion.Blazor.Calendars
 @using Syncfusion.Blazor.Buttons
@@ -340,11 +340,11 @@
 
     protected override void OnInitialized()
     {
-        dataproduct = GenelOEEDetayService.GetStationDetailedProductAnalysis(stationID, startDate, endDate);
-        dataemployee = GenelOEEDetayService.GetStationDetailedEmployeeAnalysis(stationID, startDate, endDate);
-        datahalt = GenelOEEDetayService.GetStationDetailedHaltAnalysis(stationID, startDate, endDate);
-        datahaltchart = GenelOEEDetayService.GetStationDetailedHaltAnalysisChart(stationID, startDate, endDate);
-        dataproductchart = GenelOEEDetayService.GetStationDetailedProductChart(stationID, startDate, endDate, 1);
+        dataproduct = IstasyonDetayService.GetStationDetailedProductAnalysis(stationID, startDate, endDate);
+        dataemployee = IstasyonDetayService.GetStationDetailedEmployeeAnalysis(stationID, startDate, endDate);
+        datahalt = IstasyonDetayService.GetStationDetailedHaltAnalysis(stationID, startDate, endDate);
+        datahaltchart = IstasyonDetayService.GetStationDetailedHaltAnalysisChart(stationID, startDate, endDate);
+        dataproductchart = IstasyonDetayService.GetStationDetailedProductChart(stationID, startDate, endDate, 1);
         stationName = datahalt.Select(t => t.StationName).FirstOrDefault();
         if (dataemployee.Count() <= 3)
         {
@@ -361,7 +361,7 @@
     {
         if (isProductsChecked) { products = 2; }
         else { products = 1; }
-        dataproductchart = GenelOEEDetayService.GetStationDetailedProductChart(stationID, startDate, endDate, products);
+        dataproductchart = IstasyonDetayService.GetStationDetailedProductChart(stationID, startDate, endDate, products);
         ChartInstance.RefreshAsync();
     }
 
@@ -369,6 +369,6 @@
     {
         this.VisibleSpinner = true;
 
-        NavigationManager.NavigateTo("/admin/overall-oee");
+        NavigationManager.NavigateTo("/admin/machine-analysis");
     }
 }

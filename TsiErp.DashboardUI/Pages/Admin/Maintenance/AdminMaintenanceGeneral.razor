@@ -20,9 +20,11 @@
             <tr>
                 <td width="50px" align="center">
                     <br />
-                   <center> <SfButton CssClass="e-btn e-secondary" style="background-color:#474747; font-size:18px; font-weight:bold" IsPrimary="true" Content="Toplu Malzeme İhtiyaç Listesi Oluştur" OnClick="@(() => OnClickAllMaintenance())">
+                    <center>
+                        <SfButton CssClass="e-btn e-secondary" style="background-color:#474747; font-size:18px; font-weight:bold" IsPrimary="true" Content="Toplu Malzeme İhtiyaç Listesi Oluştur" OnClick="@(() => OnClickAllMaintenance())">
 
-                    </SfButton></center>
+                        </SfButton>
+                    </center>
                 </td>
                 <td width="20px">
                 </td>
@@ -69,8 +71,8 @@
         </SfCard>
     </BodyTemplate>
     <FooterContentTemplate>
-    <DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Success" Text="Satın alma talep fişi oluştur" />
-    @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Secondary" Text="Cancel" Click="@(() => PopupVisible = false)" />*@
+        <DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Success" Text="Satın alma talep fişi oluştur" />
+        @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Secondary" Text="Cancel" Click="@(() => PopupVisible = false)" />*@
     </FooterContentTemplate>
 </DxPopup>
 <SfCard class="FilterCard">
@@ -324,8 +326,8 @@
         </SfCard>
     </BodyTemplate>
     <FooterContentTemplate>
-    <DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Success" Text="Satın alma talep fişi oluştur"/>
-    @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Secondary" Text="Cancel" Click="@(() => PopupVisible = false)" />*@
+        <DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Success" Text="Satın alma talep fişi oluştur" />
+        @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Secondary" Text="Cancel" Click="@(() => PopupVisible = false)" />*@
     </FooterContentTemplate>
 </DxPopup>
 
@@ -448,19 +450,19 @@
     }
 
     /*.e-tab .e-tab-header .e-toolbar-items {
-                        color:black;
-                        font-weight:bold;
-                    }
+                            color:black;
+                            font-weight:bold;
+                        }
 
 
 
-                    .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap:hover {
-                        color:green;
-                    }
+                        .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap:hover {
+                            color:green;
+                        }
 
-                    .e-tab .e-tab-header .e-toolbar-item.e-active {
-                        color:crimson;
-                    }*/
+                        .e-tab .e-tab-header .e-toolbar-item.e-active {
+                            color:crimson;
+                        }*/
 </style>
 @code {
 
@@ -504,7 +506,7 @@
 
         var list = DBHelper.GetMaintenanceRecords();
         _timer = new();
-        _timer.Interval = 500000;
+        _timer.Interval = 10000;
         _timer.Elapsed += async (object? sender, ElapsedEventArgs e) =>
         {
             timerEvent();
@@ -550,7 +552,10 @@
 
     public void timerEvent()
     {
-        _cardDatas = this.GetCardDatas();
+        if  (SearchValue == null && SortingValue == null && FilteringValue == null)        
+        {
+                _cardDatas = this.GetCardDatas();        
+        }
     }
 
     public void OnClickMaintenance(string stationCode, DateTime maintenanceDate, int maintenanceID)

@@ -1,7 +1,7 @@
-﻿@page "/admin/supplier-unsuitability-analysis"
+﻿@page "/admin/overall-oee"
 @layout AdminLayout
 
-@inject TedarikciUygunsuzlukService TedarikciUygunsuzlukService
+@inject GenelOEEService GenelOEEService
 @inject NavigationManager NavigationManager
 @using Syncfusion.Blazor.Charts
 @using Syncfusion.Blazor.Calendars
@@ -77,6 +77,11 @@
             <tr>
                 <td width="200px">
                     <br />
+                    <SfCheckBox @bind-Checked="isGridChecked" @onchange="OnCheckedChanged" CssClass="e-customcheck"></SfCheckBox>
+                    <label class=FilterLabelTitle><strong>Detay Tablosunu Gizle</strong></label>
+                </td>
+                <td width="200px">
+                    <br />
                     <SfCheckBox @bind-Checked="isLabelsChecked" @onchange="OnChangeLabelCheck" CssClass="e-customcheck"></SfCheckBox>
                     <label class=FilterLabelTitle><strong>Etiketleri Göster</strong></label>
                 </td>
@@ -86,19 +91,18 @@
                         <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
                     </SfComboBox>
                 </td>
-                @*<td width="200px">
-                <label class="FilterLabelTitle"><strong>Aksiyon:</strong></label>
-                <SfComboBox TValue="int?" TItem="ComboboxUnsuitability" @bind-Index="@selectedActionIndex" PopupHeight="230px" Placeholder="Tedarikçi ile İrtibat" DataSource="@unsuitabilities">
-                <ComboBoxEvents TItem="ComboboxUnsuitability" TValue="int?" ValueChange="onChange"></ComboBoxEvents>
-                <ComboBoxFieldSettings Text="TypeText" Value="TypeID"></ComboBoxFieldSettings>
-                </SfComboBox>
-                </td>*@
+                <td width="200px">
+                    <label class="FilterLabelTitle"><strong>Verim Değeri:</strong></label>
+                    <SfNumericTextBox TValue="int" @bind-Value="threshold" Placeholder="Verim Değeri Yazınız."></SfNumericTextBox>
+                </td>
                 <td width="100px">
                 </td>
                 <td width="50px" align="right">
                     <br />
                     <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
-
+                    @*<SfProgressButton OnClick="@OnDateButtonClicked" Content="Filtrele" IsPrimary="true">
+                    <ProgressButtonSpinSettings Position="SpinPosition.Right"></ProgressButtonSpinSettings>
+                    </SfProgressButton>*@
                     <SfSpinner @bind-Visible="VisibleSpinner">
                     </SfSpinner>
                 </td>
@@ -113,22 +117,31 @@
 <br />
 <SfCard class="Cards" style="text-align:center">
     <CardContent>
-        <SfChart Width="90%" @ref="ChartInstance" Theme="Theme.Bootstrap5" Title="Tedarikçi Uygunsuzluk Analizi Grafiği">
+        <SfChart @ref="ChartInstance" Theme="Theme.Bootstrap5" Title="Genel Fabrika OEE Grafiği">
             <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
-            <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Wrap">
-                <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
+            <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
+                <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
             </ChartPrimaryXAxis>
             <ChartPrimaryYAxis LabelFormat="p2">
-                <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
+                <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
             </ChartPrimaryYAxis>
             <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
             <ChartSeriesCollection>
-                <ChartSeries DataSource="@datasuppunsuitability" Name="Tedarikçi" XName="SupplierName" YName="Percent" Width="1" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column">
-
+                <ChartSeries DataSource="@datachart" Name="OEE" XName="AY" YName="OEE" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
+                    <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
+                        <ChartDataLabel Visible="@dataLabels">
+                            <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
+                        </ChartDataLabel>
+                    </ChartMarker>
+                    <ChartTrendlines>
+                        <ChartTrendline Type="TrendlineTypes.Linear" Width="3" Name="Trend" Fill="#3345A7">
+                            <ChartTrendlineMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Diamond">
+                            </ChartTrendlineMarker>
+                        </ChartTrendline>
+                    </ChartTrendlines>
                 </ChartSeries>
             </ChartSeriesCollection>
             <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
-            <ChartZoomSettings EnableSelectionZooming="true"></ChartZoomSettings>
         </SfChart>
 
     </CardContent>
@@ -136,27 +149,31 @@
     </CardFooter>
 </SfCard>
 <br />
-<SfCard class="Cards">
+<SfCard class="Cards" hidden="@isGridChecked">
     <CardContent>
-        <SfGrid ID="Grid" DataSource="@datasuppunsuitability" @ref="Grid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+        <SfGrid ID="Grid" DataSource="@dataoee" @ref="Grid" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
             <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
             <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+            <GridEvents QueryCellInfo="CellInfoHandler" TValue="StationOEEAnalysis"></GridEvents>
             <GridPageSettings PageSizes="true"></GridPageSettings>
             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
             <GridColumns>
-                <GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.SupplierName) HeaderText="TEDARİKÇİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.Total) HeaderText="UYGUNSUZLUK MİKTARI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.TotalOrder) HeaderText="SİPARİŞ ADETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                @*<GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.TotalOrder) HeaderText="DETAYLAR" TextAlign="TextAlign.Center" Width="80">*@
-                    @*<Template>
+                <GridColumn Field=@nameof(StationOEEAnalysis.Code) HeaderText="MAKİNA KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.Department) HeaderText="DEPARTMAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.Availability) Format="#%" HeaderText="KULLANILABİLİRLİK" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.Performance) Format="#%" HeaderText="PERFORMANS" TextAlign="TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.Quality) HeaderText="KALİTE" Format="#%" TextAlign="TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.OEE) HeaderText="OEE" Format="p2" TextAlign="TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.Code) HeaderText="DETAYLAR" TextAlign="TextAlign.Center" Width="80">
+                    <Template>
                         @{
-                            var row = (context as SupplierUnsuitabilityAnalysis);
-                            <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" style="background-color:#AD0000;" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.SupplierID,row.TotalOrder))"></SfButton>
+                            var row = (context as StationOEEAnalysis);
+                            <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" style="background-color:#AD0000;" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.StationID))"></SfButton>
                         }
 
-                    </Template>*@
-                @*</GridColumn>*@
+                    </Template>
+                </GridColumn>
             </GridColumns>
         </SfGrid>
 
@@ -165,46 +182,44 @@
     </CardFooter>
 </SfCard>
 
+
+
+
 @code {
-    List<SupplierUnsuitabilityAnalysis> datasuppunsuitability = new List<SupplierUnsuitabilityAnalysis>();
-    List<AdminSupplierUnsuitabilityAnalysisChart> datachart = new List<AdminSupplierUnsuitabilityAnalysisChart>();
-    SfGrid<SupplierUnsuitabilityAnalysis> Grid;
+    List<StationOEEAnalysis> dataoee = new List<StationOEEAnalysis>();
+    List<AdminMachineChart> datachart = new List<AdminMachineChart>();
+    SfGrid<StationOEEAnalysis> Grid;
     DateTime startDate = DateTime.Today.AddDays(-90);
     DateTime endDate = DateTime.Today;
     private int? selectedTimeIndex { get; set; }
-    private int threshold;
-    private double thresholddouble;
-    private int? selectedActionIndex { get; set; }
-    int? selectedactionID = 1;
+    private int? selectedProductIndex { get; set; }
+    private int threshold=75 ;
+    private double thresholddouble = 0.75;
     private int frequencyChart;
-    string chartTitle = "Tedarikçi ile İrtibat Sayısı Grafiği";
     SfChart ChartInstance;
     bool VisibleSpinner = false;
     private bool isLabelsChecked = true;
+    private bool isGridChecked = true;
     private bool dataLabels = true;
 
     protected override void OnInitialized()
     {
-        datasuppunsuitability = TedarikciUygunsuzlukService.GetSupplierUnsuitabilityAnalysis(startDate, endDate);
-        //datachart = TedarikciUygunsuzlukService.GetSupplierUnsuitabilityChart(startDate, endDate, 3, 1);
-    }
-
-    private void onChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?, ComboboxUnsuitability> args)
-    {
-        selectedactionID = args.Value;
-        StateHasChanged();
+        dataoee = GenelOEEService.GetStationOEEAnalysis(startDate, endDate);
+        datachart = GenelOEEService.GetAdminMachineChart(startDate, endDate, 3);
     }
 
     #region Component Metotları
 
+
+
     private void OnDateButtonClicked()
     {
-        //VisibleSpinner = true;
+        this.VisibleSpinner = true;
         endDate = DateTime.Today;
         #region Zaman Seçimi
         if (selectedTimeIndex == 0)
         {
-            startDate = DateTime.Today.AddDays(-365);
+            startDate = DateTime.Today.AddDays(-330);
             frequencyChart = 0;
         }
         else if (selectedTimeIndex == 1)
@@ -239,41 +254,18 @@
         }
         #endregion
 
-        #region Aksiyon Seçimi
-        if (selectedactionID == 1)
-        {
-            chartTitle = "Tedarikçi ile İrtibat Sayısı Grafiği";
-        }
-        else if (selectedactionID == 2)
-        {
-            chartTitle = "Düzeltme Grafiği";
-        }
-        else if (selectedactionID == 3)
-        {
-            chartTitle = "Olduğu Gibi Kullanılacak Grafiği";
-        }
-        else if (selectedactionID == 4)
-        {
-            chartTitle = "Red Grafiği";
-        }
-        else if (selectedactionID == 5)
-        {
-            chartTitle = "Toplu Uygunsuzluk Grafiği";
-        }
-        #endregion
-
         thresholddouble = Convert.ToDouble(threshold) / 100;
         Grid.Refresh();
         ChartInstance.RefreshAsync();
-        datasuppunsuitability = TedarikciUygunsuzlukService.GetSupplierUnsuitabilityAnalysis(startDate, endDate);
-        //datachart = TedarikciUygunsuzlukService.GetSupplierUnsuitabilityChart(startDate, endDate, frequencyChart, selectedactionID);
+        dataoee = GenelOEEService.GetStationOEEAnalysis(startDate, endDate);
+        datachart = GenelOEEService.GetAdminMachineChart(startDate, endDate, frequencyChart);
+        this.VisibleSpinner = false;
         StateHasChanged();
-        //VisibleSpinner = false;
     }
 
-    private void OnDetailButtonClicked(int errorID, int totalOrder)
+    private void OnDetailButtonClicked(int stationID)
     {
-        NavigationManager.NavigateTo("/admin/supplier-unsuitability-analysis/details" + "/" + errorID.ToString() + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd") + "/" + totalOrder.ToString());
+        NavigationManager.NavigateTo("/admin/machine-analysis/details" + "/" + stationID.ToString() + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd")); ;
     }
 
     private void OnChangeLabelCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
@@ -283,8 +275,32 @@
         else { dataLabels = false; }
     }
 
+    private void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+    {
+        bool argsValue = Convert.ToBoolean(args.Value);
+        isGridChecked = argsValue;
+
+        StateHasChanged();
+    }
+
     #endregion
 
+
+    public void CellInfoHandler(QueryCellInfoEventArgs<StationOEEAnalysis> Args)
+    {
+        if (Args.Column.Field == "OEE")
+        {
+            if (Args.Data.OEE < Convert.ToDecimal(thresholddouble))
+            {
+                Args.Cell.AddStyle(new string[] { "background-color: #DF0000; color: white; " });
+            }
+            else
+            {
+                Args.Cell.AddStyle(new string[] { "background-color: #37CB00; color: white;" });
+            }
+        }
+        StateHasChanged();
+    }
 
     private List<ComboboxTimePeriods> timeperiods = new List<ComboboxTimePeriods>() {
         new ComboboxTimePeriods(){ TimeID= 1, TimeText= "Yıllık" },
@@ -294,14 +310,6 @@
         new ComboboxTimePeriods(){ TimeID= 5, TimeText= "Son 2 Ay" },
         new ComboboxTimePeriods(){ TimeID= 6, TimeText= "Son 1 Ay" },
         new ComboboxTimePeriods(){ TimeID= 6, TimeText= "Son 1 Hafta" }
-     };
-
-    private List<ComboboxUnsuitability> unsuitabilities = new List<ComboboxUnsuitability>() {
-        new ComboboxUnsuitability(){ TypeID= 1, TypeText= "Tedarikçi ile İrtibat" },
-        new ComboboxUnsuitability(){ TypeID= 2, TypeText= "Düzeltme" },
-        new ComboboxUnsuitability(){ TypeID= 3, TypeText= "Olduğu Gibi Kullanılacak" },
-        new ComboboxUnsuitability(){ TypeID= 4, TypeText= "Red" },
-        new ComboboxUnsuitability(){ TypeID= 5, TypeText= "Hepsini Göster" }
      };
 
 }
