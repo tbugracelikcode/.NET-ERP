@@ -71,7 +71,7 @@
         </SfCard>
     </BodyTemplate>
     <FooterContentTemplate>
-        <DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Success" Text="Satın alma talep fişi oluştur" />
+        <DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Success" Text="Satın alma talep fişi oluştur" Click="@OnPurchaseReceiptClicked" />
         @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Secondary" Text="Cancel" Click="@(() => PopupVisible = false)" />*@
     </FooterContentTemplate>
 </DxPopup>
@@ -326,11 +326,63 @@
         </SfCard>
     </BodyTemplate>
     <FooterContentTemplate>
-        <DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Success" Text="Satın alma talep fişi oluştur" />
+        <DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Success" @onclick="@OnPurchaseReceiptClicked" Text="Satın alma talep fişi oluştur" />
         @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Secondary" Text="Cancel" Click="@(() => PopupVisible = false)" />*@
     </FooterContentTemplate>
 </DxPopup>
 
+<DxPopup Visible="@PopupVisible2"
+         ShowFooter="true"
+         HeaderText="Satın Alma Bilgileri"
+         Width="1500px"
+         Height="800px"
+         Closing="MaintenancePopupClosing2"
+         HeaderCssClass="HeaderTitleCss">
+    <BodyTemplate>
+        <SfCard class="Cards">
+            <CardHeader>
+            </CardHeader>
+            <CardContent>
+                <SfCard class="Cards" style="text-align:center">
+
+                    <CardContent>
+                        <SfGrid DataSource="@satinAlmaList" AllowSelection="true" AllowPaging="false" Toolbar="@(new List<string>() { "Print" })" Height="573px" style="padding-left:20px; padding-right:20px;">
+                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                            <GridColumns>
+                                <GridColumn Visible="false" Field=@nameof(SatinAlmaDetaylari.STOKID) HeaderText="STOK ID" TextAlign="TextAlign.Right"
+                                            Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(SatinAlmaDetaylari.STOKKODU) HeaderText="STOK KODU" TextAlign="TextAlign.Left" Width="250">
+                                </GridColumn>
+                                <GridColumn Field=@nameof(SatinAlmaDetaylari.CARIUNVAN) HeaderText="TEDARİKÇİ" TextAlign="TextAlign.Left" Width="350">
+                                </GridColumn>
+                                <GridColumn Field=@nameof(SatinAlmaDetaylari.IHTIYACMIKTARI) Format="n2" HeaderText="İHTİYAÇ MİKTARI" TextAlign="TextAlign.Center" Width="150">
+                                </GridColumn>
+                                <GridColumn Field=@nameof(SatinAlmaDetaylari.BIRIMSETKOD) HeaderText="BİRİM SET" TextAlign="TextAlign.Center"
+                                            Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(SatinAlmaDetaylari.BIRIMFIYATDECIMAL) Format="n2"  HeaderText="BİRİM FİYAT" TextAlign="TextAlign.Right" Width="100">
+                                </GridColumn>
+                                <GridColumn Field=@nameof(SatinAlmaDetaylari.PARABIRIMI) HeaderText="PARA BİRİMİ" TextAlign="TextAlign.Left" Width="100">
+                                </GridColumn>
+                                <GridColumn Field=@nameof(SatinAlmaDetaylari.TOPLAMFIYAT) Format="n2" HeaderText="TOPLAM FİYAT" TextAlign="TextAlign.Right" Width="110">
+                                </GridColumn>
+                                <GridColumn Field=@nameof(SatinAlmaDetaylari.PARABIRIMI) HeaderText="PARA BİRİMİ" TextAlign="TextAlign.Left" Width="100">
+                                </GridColumn>
+                            </GridColumns>
+                        </SfGrid>
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </CardContent>
+            <CardFooter>
+            </CardFooter>
+        </SfCard>
+    </BodyTemplate>
+    <FooterContentTemplate>
+        <DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Success" Text="Satın alma talep fişini gerçekleştir" />
+        @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Secondary" Text="Cancel" Click="@(() => PopupVisible = false)" />*@
+    </FooterContentTemplate>
+</DxPopup>
 <style>
     .GridZebra table tbody tr:nth-child(odd) {
         background-color: #B5B5B5;
@@ -450,19 +502,19 @@
     }
 
     /*.e-tab .e-tab-header .e-toolbar-items {
-                            color:black;
-                            font-weight:bold;
-                        }
+                                            color:black;
+                                            font-weight:bold;
+                                        }
 
 
 
-                        .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap:hover {
-                            color:green;
-                        }
+                                        .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap:hover {
+                                            color:green;
+                                        }
 
-                        .e-tab .e-tab-header .e-toolbar-item.e-active {
-                            color:crimson;
-                        }*/
+                                        .e-tab .e-tab-header .e-toolbar-item.e-active {
+                                            color:crimson;
+                                        }*/
 </style>
 @code {
 
@@ -478,13 +530,15 @@
     List<BakimIhtiyacListesi> ihtiyacList = new();
     List<BakimIhtiyacListesi> topluIhtiyacList = new();
     List<BakimTalimatlar> talimatList = new();
-
+    public List<SatinAlmaDetaylari> satinAlmaList = new();
     bool PopupVisible { get; set; } = false;
+    bool PopupVisible2 { get; set; } = false;
     bool PopupVisibleAll { get; set; } = false;
 
 
     private List<StationCards> _cardDatas;
     public List<StationCards> CardDatas
+
     {
         get { return _cardDatas; }
         set { _cardDatas = value; }
@@ -506,7 +560,7 @@
 
         var list = DBHelper.GetMaintenanceRecords();
         _timer = new();
-        _timer.Interval = 10000;
+        _timer.Interval = 6000000;
         _timer.Elapsed += async (object? sender, ElapsedEventArgs e) =>
         {
             timerEvent();
@@ -515,10 +569,69 @@
         _timer.Enabled = true;
     }
 
+    void MaintenancePopupClosing2(PopupClosingEventArgs args)
+    {
+        PopupVisible = false;
+        PopupVisibleAll = false;
+        PopupVisible2 = false;
+    }
+
     void MaintenancePopupClosing(PopupClosingEventArgs args)
     {
         PopupVisible = false;
         PopupVisibleAll = false;
+    }
+
+    private void OnPurchaseReceiptClicked()
+    {
+        var satinAlmaListVT = DBHelper.GetPurchaseDetails().OrderByDescending(t => t.TARIH).ToList();
+        if (PopupVisibleAll)
+        {
+            foreach (var item in topluIhtiyacList.Where(t => t.IHTIYACMIKTARI > 0))
+            {
+                int stokID = item.STOKID;
+                SatinAlmaDetaylari satir = new SatinAlmaDetaylari
+                    {
+                        STOKID = stokID,
+                        STOKKODU = item.ESKISTOKKODU,
+                        CARIUNVAN = satinAlmaListVT.Where(t => t.STOKID == stokID).Select(t => t.CARIUNVAN).FirstOrDefault(),
+                        BIRIMFIYATDECIMAL = Convert.ToDecimal(satinAlmaListVT.Where(t => t.STOKID == stokID).Select(t => t.BIRIMFIYAT).FirstOrDefault()),
+                        BIRIMSETKOD = item.BIRIMSETKOD,
+                        IHTIYACMIKTARI = item.IHTIYACMIKTARI,
+                        PARABIRIMI = satinAlmaListVT.Where(t => t.STOKID == stokID).Select(t => t.PARABIRIMI).FirstOrDefault(),
+                        PARABIRIMIID = satinAlmaListVT.Where(t => t.STOKID == stokID).Select(t => t.PARABIRIMIID).FirstOrDefault(),
+                        TOPLAMFIYAT = Convert.ToDecimal(satinAlmaListVT.Where(t => t.STOKID == stokID).Select(t => t.BIRIMFIYAT).FirstOrDefault()) * item.IHTIYACMIKTARI
+                    };
+                satinAlmaList.Add(satir);
+            }
+            PopupVisible = false;
+            PopupVisibleAll = false;
+            PopupVisible2 = true;
+        }
+        else if  (PopupVisible)
+        
+        {
+            foreach (var item in ihtiyacList.Where(t => t.IHTIYACMIKTARI > 0))
+            {
+                int stokID = item.STOKID;
+                SatinAlmaDetaylari satir = new SatinAlmaDetaylari
+                    {
+                        STOKID = stokID,
+                        STOKKODU = item.ESKISTOKKODU,
+                        CARIUNVAN = satinAlmaListVT.Where(t => t.STOKID == stokID).Select(t => t.CARIUNVAN).FirstOrDefault(),
+                        BIRIMFIYATDECIMAL = Convert.ToDecimal(satinAlmaListVT.Where(t => t.STOKID == stokID).Select(t => t.BIRIMFIYAT).FirstOrDefault()),
+                        BIRIMSETKOD = item.BIRIMSETKOD,
+                        IHTIYACMIKTARI = item.IHTIYACMIKTARI,
+                        PARABIRIMI = satinAlmaListVT.Where(t => t.STOKID == stokID).Select(t => t.PARABIRIMI).FirstOrDefault(),
+                        PARABIRIMIID = satinAlmaListVT.Where(t => t.STOKID == stokID).Select(t => t.PARABIRIMIID).FirstOrDefault(),
+                        TOPLAMFIYAT = Convert.ToDecimal(satinAlmaListVT.Where(t => t.STOKID == stokID).Select(t => t.BIRIMFIYAT).FirstOrDefault()) * item.IHTIYACMIKTARI
+                    };
+                satinAlmaList.Add(satir);
+            }
+            PopupVisible = false;
+            PopupVisibleAll = false;
+            PopupVisible2 = true;
+        }
     }
 
     private void ValueChangeHandler(ChangeEventArgs<int?, ComboboxTimePeriods> args)
@@ -552,9 +665,9 @@
 
     public void timerEvent()
     {
-        if  (SearchValue == null && SortingValue == null && FilteringValue == null)        
+        if (SearchValue == null && SortingValue == null && FilteringValue == null)
         {
-                _cardDatas = this.GetCardDatas();        
+            _cardDatas = this.GetCardDatas();
         }
     }
 
@@ -594,6 +707,7 @@
     }
     public void OnClickAllMaintenance()
     {
+        _timer.Enabled = false;
         topluIhtiyacList.Clear();
         PopupVisibleAll = true;
         List<BakimSatirlari> list = new();
@@ -630,6 +744,8 @@
             }
 
         }
+        _timer.Enabled = true;
+
 
     }
 

@@ -1098,7 +1098,8 @@ namespace TsiErp.DashboardUI.Helpers
                                   "ISNULL(ISTVERIMLILIIKANALIZI,0) as ISTVERIMLILIIKANALIZI, " +
                                   "ISNULL(PERVERIMLILIKANALIZI,0) as  PERVERIMLILIKANALIZI," +
                                   "ISNULL(TUR,0) as  TUR," +
-                                  "KOD " +
+                                  "KOD, " +
+                                  "ISNULL(URUNGRPID,0) as URUNGRPID " +
                                   "FROM TUR_VW_OPERASYON_UYGUNSUZLUK " +
                                   "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "'";
             command.Connection = connection;
@@ -1133,6 +1134,7 @@ namespace TsiErp.DashboardUI.Helpers
                     ISTVERIMLILIIKANALIZI = Convert.ToBoolean(reader["ISTVERIMLILIIKANALIZI"]),
                     PERVERIMLILIKANALIZI = Convert.ToBoolean(reader["PERVERIMLILIKANALIZI"]),
                     TUR = Convert.ToInt32(reader["TUR"]),
+                    URUNGRUPID = Convert.ToInt32(reader["URUNGRPID"]),
                     KOD = Convert.ToString(reader["KOD"])
                 });
             }
@@ -1700,6 +1702,52 @@ namespace TsiErp.DashboardUI.Helpers
             }
 
             return bakimKayitlari;
+        }
+         public static List<SatinAlmaDetaylari> GetPurchaseDetails()
+        {
+            List<SatinAlmaDetaylari> purchaseLines = new List<SatinAlmaDetaylari>();
+
+            SqlConnection connection = GetSqlConnection();
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "SIPARISSATIR.ID, " +
+                                  "SIPARISSATIR.STOKID, " +
+                                  "STOK.ESKISTOKKODU, " +
+                                  "STOK.BIRIMSETKOD, " +
+                                  "SIPARISSATIR.PARABIRIMID," +
+                                  "PARABIRIMI.CurrencyCode AS PARABIRIMI, " +
+                                  "CARI.CARIUNVAN, " +
+                                  "SIPARISSATIR.TARIH, " +
+                                  "SIPARISSATIR.BIRIMFIYAT " +
+                                  "FROM TUR_SIPARIS_SATIR AS SIPARISSATIR " +
+                                  "LEFT JOIN TUR_VW_STOK_BROWSER AS STOK ON SIPARISSATIR.STOKID = STOK.ID " +
+                                  "LEFT JOIN TUR_CARI AS CARI ON SIPARISSATIR.CARIID = CARI.ID " +
+                                  "LEFT JOIN TUR_DOVIZ AS PARABIRIMI ON SIPARISSATIR.PARABIRIMID = PARABIRIMI.ID " +
+                                  "WHERE STOK.URUNGRPID IN (64) "
+
+                                  ;
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                purchaseLines.Add(new SatinAlmaDetaylari()
+                {
+                    ID = Convert.ToInt32(reader["ID"]),
+                    STOKID = Convert.ToInt32(reader["STOKID"]),
+                    STOKKODU = Convert.ToString(reader["ESKISTOKKODU"]),
+                    BIRIMSETKOD = Convert.ToString(reader["BIRIMSETKOD"]),
+                    PARABIRIMIID = Convert.ToInt32(reader["PARABIRIMID"]),
+                    PARABIRIMI = Convert.ToString(reader["PARABIRIMI"]),
+                    CARIUNVAN = Convert.ToString(reader["CARIUNVAN"]),
+                    TARIH = Convert.ToDateTime(reader["TARIH"]),
+                    BIRIMFIYAT = Convert.ToString(reader["BIRIMFIYAT"])
+                });
+            }
+
+            return purchaseLines;
         }
     }
 }

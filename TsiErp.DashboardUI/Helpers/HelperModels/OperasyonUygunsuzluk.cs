@@ -27,5 +27,7 @@
         public string KOD { get; set; }
         public int TUR { get; set; }
         public string? FISNO { get; internal set; }
+        public int URUNGRUPID { get; set; }
+
     }
 }
