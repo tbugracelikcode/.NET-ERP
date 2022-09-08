@@ -17,8 +17,8 @@ namespace TsiErp.DashboardUI.Services
         {
             List<AdminProductChart> adminProductChart = new List<AdminProductChart>();
             var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate);
-
-
+            var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate);
+            Tuple<int, int> tuple = _PlanlananAdetHesapla(productionSelection, operationLines);
 
             if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
             {
@@ -26,7 +26,7 @@ namespace TsiErp.DashboardUI.Services
                 {
                     Ay = GetMonth(t.Key.Ay),
                     OEE = t.Average(x => x.OEE),
-                    ScrapPercent = (double)t.Sum(t=>t.HURDAADET)/ (double)t.Sum(t=>t.URETILENADET)
+                    ScrapPercent = (double)unsuitabilityLines.Where(x=>x.URUNGRUPID==productionSelection && x.HURDA==true && x.TARIH.Month == t.Key.Ay).Sum(x=>x.OLCUKONTROLFORMBEYAN)/ (double)t.Sum(t=>t.URETILENADET)
                 }).ToList();
                 adminProductChart = gList;
             }
@@ -36,7 +36,7 @@ namespace TsiErp.DashboardUI.Services
                 {
                     Ay = t.Key.HAFTA.ToString("dd MMM yy"),
                     OEE = t.Average(x => x.OEE),
-                    ScrapPercent = (double)t.Sum(t => t.HURDAADET) / (double)t.Sum(t => t.URETILENADET)
+                    ScrapPercent = (double)unsuitabilityLines.Where(x => x.URUNGRUPID == productionSelection && x.HURDA == true && x.TARIH.Date == t.Key.HAFTA).Sum(x => x.OLCUKONTROLFORMBEYAN) / (double)t.Sum(t => t.URETILENADET)
                 }).ToList();
                 adminProductChart = gList;
             }
@@ -51,12 +51,13 @@ namespace TsiErp.DashboardUI.Services
             List<ProductGroupsAnalysis> productGroupsAnalysis = new List<ProductGroupsAnalysis>();
 
             var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate);
-
+            var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate);
             var groupList = operationLines.Select(t => t.URUNGRPID).Distinct().ToList();
             if (groupList != null)
             {
                 foreach (var groupID in groupList)
                 {
+                    var tempUnsuitability = unsuitabilityLines.Where(t => t.URUNGRUPID == groupID).ToList();
                     Tuple<int, int> tuple = _PlanlananAdetHesapla(groupID, operationLines);
                     ProductGroupsAnalysis analysis = new ProductGroupsAnalysis
                     {
@@ -64,7 +65,7 @@ namespace TsiErp.DashboardUI.Services
                         ProductGroupName = operationLines.Where(t => t.URUNGRPID == groupID).Select(t => t.URUNGRUBU).FirstOrDefault(),
                         PlannedQuantity = tuple.Item1,
                         TotalProduction = tuple.Item2,
-                        TotalScrap = Convert.ToInt32(operationLines.Where(t => t.URUNGRPID == groupID).Sum(t => t.HURDAADET)),
+                        TotalScrap = Convert.ToInt32(tempUnsuitability.Sum(t => t.OLCUKONTROLFORMBEYAN)),
                         Quality = tuple.Item1 > 0 && tuple.Item2 > 0 ? ((double)tuple.Item2 / (double)tuple.Item1) : 0,
                         OEE = operationLines.Where(t=>t.URUNGRPID == groupID).Average(t=>t.OEE),
                     };
@@ -80,6 +81,7 @@ namespace TsiErp.DashboardUI.Services
             List<ProductGroupsAnalysis> productGroupsAnalysis = new List<ProductGroupsAnalysis>();
 
             var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate).Where(t=>t.STOKTURU == 12).ToList();
+
 
             var groupList = operationLines.Select(t => t.URUNGRPID).Distinct().ToList();
             if (groupList != null)

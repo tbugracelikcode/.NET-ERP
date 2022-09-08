@@ -1098,7 +1098,8 @@ namespace TsiErp.DashboardUI.Helpers
                                   "ISNULL(ISTVERIMLILIIKANALIZI,0) as ISTVERIMLILIIKANALIZI, " +
                                   "ISNULL(PERVERIMLILIKANALIZI,0) as  PERVERIMLILIKANALIZI," +
                                   "ISNULL(TUR,0) as  TUR," +
-                                  "KOD " +
+                                  "KOD, " +
+                                  "ISNULL(URUNGRPID,0) as URUNGRPID " +
                                   "FROM TUR_VW_OPERASYON_UYGUNSUZLUK " +
                                   "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "'";
             command.Connection = connection;
@@ -1133,6 +1134,7 @@ namespace TsiErp.DashboardUI.Helpers
                     ISTVERIMLILIIKANALIZI = Convert.ToBoolean(reader["ISTVERIMLILIIKANALIZI"]),
                     PERVERIMLILIKANALIZI = Convert.ToBoolean(reader["PERVERIMLILIKANALIZI"]),
                     TUR = Convert.ToInt32(reader["TUR"]),
+                    URUNGRUPID = Convert.ToInt32(reader["URUNGRPID"]),
                     KOD = Convert.ToString(reader["KOD"])
                 });
             }
