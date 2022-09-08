@@ -1,4 +1,17 @@
-﻿@page "/login"
+﻿@page "/"
+
+@inject NavigationManager NavigationManager
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Popups
+@using Syncfusion.Blazor.Cards
+@using Syncfusion.Blazor.Data
+@using Syncfusion.Blazor.DropDowns
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Calendars
+@using Syncfusion.Blazor.Grids
+@using Syncfusion.Blazor.Navigations
+@using System.Timers
+@using TsiErp.DashboardUI.Helpers.HelperModels
 
 <style>
     body,
@@ -8,6 +21,15 @@
         height: 100%;
         /*background: #60a3bc !important;*/
         background-image: linear-gradient(360deg, rgb(80 81 86) 0%, #393b3c 70%) !important;
+    }
+    .PopUpCss{
+       background-image: linear-gradient(356deg, rgb(255 19 19) 0%, #ad0303 70%) !important;
+    }
+    .Cards{
+        background-image: linear-gradient(356deg, rgb(255 19 19) 0%, #ad0303 70%) !important;
+        width:600px;
+        height:300px;
+        border: 7px solid #ad0303 ;
     }
 
     .user_card {
@@ -95,6 +117,7 @@
     <title>TSI Dashboard Giriş</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+   
 </head>
 <body>
     <div class="container h-100">
@@ -111,38 +134,38 @@
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" name="" class="form-control input_user" value="" placeholder="Kullanıcı Adı">
+                            <input type="text" name="" class="form-control input_user" @bind="@User" placeholder="Kullanıcı Adı">
                         </div>
                         <div class="input-group mb-2">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-                            <input type="password" name="" class="form-control input_pass" value="" placeholder="Şifre">
+                            <input type="password" name="" @bind="@Password" class="form-control input_pass" placeholder="Şifre">
                         </div>
                         <br />
 
-                      @*  <div class="form-group">
-                            <div class="custom-control custom-checkbox" style="font-size:14px !important;">
-                                <table style="width:100%">
-                                    <tr>
-                                        <td style="text-align:left">
-                                            <input type="checkbox" class="custom-control-input" id="customControlInline">
-                                <label class="custom-control-label" style="font-size:14px !important;" for="customControlInline">Beni Hatırla</label>
-                                        </td>
-                                        <td style="text-align:right">
-                                            <a href="#">Şifremi unuttum</a>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
+                        @*  <div class="form-group">
+                        <div class="custom-control custom-checkbox" style="font-size:14px !important;">
+                        <table style="width:100%">
+                        <tr>
+                        <td style="text-align:left">
+                        <input type="checkbox" class="custom-control-input" id="customControlInline">
+                        <label class="custom-control-label" style="font-size:14px !important;" for="customControlInline">Beni Hatırla</label>
+                        </td>
+                        <td style="text-align:right">
+                        <a href="#">Şifremi unuttum</a>
+                        </td>
+                        </tr>
+                        </table>
+                        </div>
                         </div>*@
                         @*<div class="mt-4">
-                            <div class="d-flex justify-content-center links" style="font-size:14px !important;">
-                                <a href="#">Şifremi unuttum</a>
-                            </div>
+                        <div class="d-flex justify-content-center links" style="font-size:14px !important;">
+                        <a href="#">Şifremi unuttum</a>
+                        </div>
                         </div>*@
                         <div class="d-flex justify-content-center mt-3 login_container">
-                            <button type="button" name="button" class="btn login_btn">Giriş</button>
+                            <button type="button" name="button" onclick="@OnLoginButtonClicked" class="btn login_btn">Giriş</button>
                         </div>
                     </form>
                 </div>
@@ -151,9 +174,64 @@
             </div>
         </div>
     </div>
+
+    <!---page load popup_content---->
+  
 </body>
 </html>
+<DxPopup CssClass="PopUpCss" Visible="@vispopup"
+         ShowFooter="false"
+         ShowHeader="false"
+         Width="600px"
+         Height="300px"
+         Closing="LoginPopupClosing">
+    <BodyTemplate>
+        <SfCard class="Cards">
+            <CardContent>
+                <br />
+               <center><h1 style="color:white">Hatalı Kullanıcı Girişi</h1></center>	<br /><br />
+               <center><span style="font-size:16px; font-weight:bold; color:white">Kullanıcı adı veya şifre hatalı. Lütfen tekrar deneyiniz.</span></center>
+               <br /><br /><br />
+            </CardContent>
+            <CardFooter>
+                 @*<center><DxButton  CssClass="e-btn e-secondary" style="background-color:#1E1E1E; font-size:18px; font-weight:bold;" Click="@OnOkButtonClicked" Text="Kapat" /></center>*@
+                 <center><DxButton  class="btn login_btn" style="width:75px" Click="@OnOkButtonClicked" Text="Kapat" /></center>
+            </CardFooter>
+        </SfCard>
+    </BodyTemplate>
+    <FooterContentTemplate>
+        @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Secondary" Text="Cancel" Click="@(() => PopupVisible = false)" />*@
+    </FooterContentTemplate>
+</DxPopup>
 
 @code {
+
+    string User = string.Empty;
+    string Password = string.Empty;
+    bool vispopup = false;
+
+    void LoginPopupClosing(PopupClosingEventArgs args)
+    {
+        vispopup = false;
+    }
+
+    private void OnLoginButtonClicked()
+    {
+        if (User == "admin" && Password == "admin")
+        {
+            NavigationManager.NavigateTo("/admin/index");
+        }
+        else
+        {
+            vispopup = true;
+        }
+
+    }
+    private void OnOkButtonClicked()
+    {
+        vispopup = false;
+        NavigationManager.NavigateTo("/admin/loading");
+        NavigationManager.NavigateTo("/");
+    }
 
 }

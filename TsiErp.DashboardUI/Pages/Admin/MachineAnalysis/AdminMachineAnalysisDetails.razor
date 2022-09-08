@@ -1,7 +1,7 @@
 ﻿@page "/admin/machine-analysis/details/{stationID:int}/{startDate:datetime}/{endDate:datetime}"
 @layout AdminLayout
 
-@inject IstasyonDetayService IstasyonDetayService
+@inject GenelOEEDetayService GenelOEEDetayService
 @inject NavigationManager NavigationManager
 @using Syncfusion.Blazor.Calendars
 @using Syncfusion.Blazor.Buttons
@@ -113,12 +113,12 @@
             <TabItems>
                 <TabItem>
                     <ChildContent>
-                        <TabHeader Text="Duruş Kodlarına Göre Makina Analiz Detayları"></TabHeader>
+                        <TabHeader Text="Duruş Kodlarına Göre Genel OEE Analiz Detayları"></TabHeader>
                     </ChildContent>
                     <ContentTemplate>
                         <SfCard class="Cards" style="text-align:center">
                             <CardContent>
-                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Duruş Kodlarına Göre Makina Analiz Detayları Grafiği">
+                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Duruş Kodlarına Göre Genel OEE Analiz Detayları Grafiği">
                                     <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
                                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
                                         <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
@@ -182,7 +182,7 @@
 
                 <TabItem>
                     <ChildContent>
-                        <TabHeader Text="Ürün Gruplarına/Kodlarına Göre Makina Analiz Detayları"></TabHeader>
+                        <TabHeader Text="Ürün Gruplarına/Kodlarına Göre Genel OEE Analiz Detayları"></TabHeader>
                     </ChildContent>
                     <ContentTemplate>
                         <br />
@@ -194,7 +194,7 @@
                         <br />
                         <SfCard class="Cards" style="text-align:center">
                             <CardContent>
-                                <SfChart @ref="ChartInstance" Width="90%" Theme="Theme.Bootstrap5" Title="Ürün Gruplarına/Kodlarına Göre Makina Analiz Detayları Grafiği">
+                                <SfChart @ref="ChartInstance" Width="90%" Theme="Theme.Bootstrap5" Title="Ürün Gruplarına/Kodlarına Göre Genel OEE Analiz Detayları Grafiği">
                                     <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
                                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate90">
                                         <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
@@ -246,12 +246,12 @@
 
                 <TabItem>
                     <ChildContent>
-                        <TabHeader Text="Personel İsimlerine Göre Makina Analizi Detayları"></TabHeader>
+                        <TabHeader Text="Personel İsimlerine Göre Genel OEE Analizi Detayları"></TabHeader>
                     </ChildContent>
                     <ContentTemplate>
                         <SfCard class="Cards" style="text-align:center">
                             <CardContent>
-                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Personel İsimlerine Göre Makina Analizi Detayları Grafiği">
+                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Personel İsimlerine Göre Genel OEE Analizi Detayları Grafiği">
                                     <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
                                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate90">
                                         <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
@@ -340,11 +340,11 @@
 
     protected override void OnInitialized()
     {
-        dataproduct = IstasyonDetayService.GetStationDetailedProductAnalysis(stationID, startDate, endDate);
-        dataemployee = IstasyonDetayService.GetStationDetailedEmployeeAnalysis(stationID, startDate, endDate);
-        datahalt = IstasyonDetayService.GetStationDetailedHaltAnalysis(stationID, startDate, endDate);
-        datahaltchart = IstasyonDetayService.GetStationDetailedHaltAnalysisChart(stationID, startDate, endDate);
-        dataproductchart = IstasyonDetayService.GetStationDetailedProductChart(stationID, startDate, endDate, 1);
+        dataproduct = GenelOEEDetayService.GetStationDetailedProductAnalysis(stationID, startDate, endDate);
+        dataemployee = GenelOEEDetayService.GetStationDetailedEmployeeAnalysis(stationID, startDate, endDate);
+        datahalt = GenelOEEDetayService.GetStationDetailedHaltAnalysis(stationID, startDate, endDate);
+        datahaltchart = GenelOEEDetayService.GetStationDetailedHaltAnalysisChart(stationID, startDate, endDate);
+        dataproductchart = GenelOEEDetayService.GetStationDetailedProductChart(stationID, startDate, endDate, 1);
         stationName = datahalt.Select(t => t.StationName).FirstOrDefault();
         if (dataemployee.Count() <= 3)
         {
@@ -361,7 +361,7 @@
     {
         if (isProductsChecked) { products = 2; }
         else { products = 1; }
-        dataproductchart = IstasyonDetayService.GetStationDetailedProductChart(stationID, startDate, endDate, products);
+        dataproductchart = GenelOEEDetayService.GetStationDetailedProductChart(stationID, startDate, endDate, products);
         ChartInstance.RefreshAsync();
     }
 
@@ -369,6 +369,6 @@
     {
         this.VisibleSpinner = true;
 
-        NavigationManager.NavigateTo("/admin/machine-analysis");
+        NavigationManager.NavigateTo("/admin/overall-oee");
     }
 }

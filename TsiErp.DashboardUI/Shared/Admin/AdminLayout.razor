@@ -1,11 +1,12 @@
 ﻿@inherits LayoutComponentBase
 @inject IJSRuntime JS
+@inject NavigationManager NavigationManager
 @using Syncfusion.Blazor.Navigations
 <PageTitle>TSI Dashboard</PageTitle>
 <SfSidebar ID="Sidebar" Type="SidebarType.Push" Width="320px" DockSize="65px" EnableDock="true" @ref="Sidebar" @bind-IsOpen="SidebarToggle">
     <div class="sidebar" style="position:fixed;z-index:1200">
         <div class="topnav navbar navbar-dark">
-          @*  <button class="navbar-toggler" @onclick="ToggleNavMenu" />*@
+            <button class="navbar-toggler" @onclick="ToggleNavMenu" />
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="tsi-logo.png" />
             <a class="navbar-brand" href=""><span class="displayText" style="margin-right:40px">Dashboard</span></a>
         </div>
@@ -19,6 +20,7 @@
 <div class="main">
     <div class="top-row px-4" style="z-index:1111;padding-top:0px">
        @* <CultureSwitcher />*@
+       <DxButton  CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold;" Click="@OnExitButtonClicked" Text="Çıkış" />
     </div>
 
     <div class="content px-4">
@@ -208,6 +210,10 @@
         {
             SidebarToggle = true;
         }
+    }
+    private void OnExitButtonClicked()
+    {
+        NavigationManager.NavigateTo("/");
     }
     public async Task MouseOut(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
     {

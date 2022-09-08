@@ -146,26 +146,26 @@ namespace TsiErp.DashboardUI.Services
             List<SupplierUnsuitabilityAnalysis> supplierUnsuitabilityAnalysis = new List<SupplierUnsuitabilityAnalysis>();
 
             var unsuitabilityLines = DBHelper.GetSuppliertUnsuitabilityQuery(startDate, endDate);
-            var list = unsuitabilityLines.Select(t => t.HATAID).Distinct().ToList();
+            var Carilist = unsuitabilityLines.Select(t => t.CARIID).Distinct().ToList();
 
             if (unsuitabilityLines != null)
             {
-                foreach (var unsuitability in list)
+                foreach (var cari in Carilist)
                 {
-                    var contact = unsuitabilityLines.Where(t => t.TEDARIKCIIRTIBAT == true && t.HATAID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
-                    var refuse = unsuitabilityLines.Where(t => t.RED == true && t.HATAID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
-                    var tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.HATAID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
-                    var correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.HATAID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
+                    var tempList = unsuitabilityLines.Where(t => t.CARIID == cari).ToList();
+                    var siparisList = tempList.Select(t => t.SIPARISID).Distinct().ToList();
+                    var siparisMiktar = 0;
+                    foreach (var siparisID in siparisList)
+                    {
+                        siparisMiktar += (int)DBHelper.GetSuppliertUnsuitabilityLinesQuery().Where(t => t.SIPARISID == siparisID).Sum(t => t.ADET);
+                    }
                     SupplierUnsuitabilityAnalysis analysis = new SupplierUnsuitabilityAnalysis
                     {
-                        SupplierUnsuitabilityID = unsuitabilityLines.Where(t => t.HATAID == unsuitability).Select(t => t.ID).FirstOrDefault(),
-                        ContactWithSupplier = contact,
-                        ToBeUsedAs = tobeused,
-                        Correction = correction,
-                        Total = contact + tobeused + correction+refuse,
-                        UnsuitabilityReason = unsuitabilityLines.Where(t => t.HATAID == unsuitability).Select(t => t.HATAACIKLAMA).FirstOrDefault(),
-                        ErrorID = unsuitability,
-                        RefuseQuantity = refuse
+                        SupplierID = cari,
+                        SupplierName = tempList.Select(t => t.CARIUNVAN).FirstOrDefault(),
+                        Total = tempList.Sum(t=>t.UYGUNOLMAYANMIKTAR),
+                        TotalOrder = (int)siparisMiktar,
+                        Percent = (double)tempList.Sum(t => t.UYGUNOLMAYANMIKTAR) / (double)siparisMiktar
 
                     };
                     supplierUnsuitabilityAnalysis.Add(analysis);
@@ -173,6 +173,39 @@ namespace TsiErp.DashboardUI.Services
             }
             return supplierUnsuitabilityAnalysis;
         }
+
+        //public List<SupplierUnsuitabilityAnalysis> GetSupplierUnsuitabilityAnalysis(DateTime startDate, DateTime endDate)
+        //{
+        //    List<SupplierUnsuitabilityAnalysis> supplierUnsuitabilityAnalysis = new List<SupplierUnsuitabilityAnalysis>();
+
+        //    var unsuitabilityLines = DBHelper.GetSuppliertUnsuitabilityQuery(startDate, endDate);
+        //    var list = unsuitabilityLines.Select(t => t.HATAID).Distinct().ToList();
+
+        //    if (unsuitabilityLines != null)
+        //    {
+        //        foreach (var unsuitability in list)
+        //        {
+        //            var contact = unsuitabilityLines.Where(t => t.TEDARIKCIIRTIBAT == true && t.HATAID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
+        //            var refuse = unsuitabilityLines.Where(t => t.RED == true && t.HATAID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
+        //            var tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.HATAID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
+        //            var correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.HATAID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
+        //            SupplierUnsuitabilityAnalysis analysis = new SupplierUnsuitabilityAnalysis
+        //            {
+        //                SupplierUnsuitabilityID = unsuitabilityLines.Where(t => t.HATAID == unsuitability).Select(t => t.ID).FirstOrDefault(),
+        //                ContactWithSupplier = contact,
+        //                ToBeUsedAs = tobeused,
+        //                Correction = correction,
+        //                Total = contact + tobeused + correction + refuse,
+        //                UnsuitabilityReason = unsuitabilityLines.Where(t => t.HATAID == unsuitability).Select(t => t.HATAACIKLAMA).FirstOrDefault(),
+        //                ErrorID = unsuitability,
+        //                RefuseQuantity = refuse
+
+        //            };
+        //            supplierUnsuitabilityAnalysis.Add(analysis);
+        //        }
+        //    }
+        //    return supplierUnsuitabilityAnalysis;
+        //}
 
         private string GetMonth(int ay)
         {
