@@ -1,4 +1,4 @@
-﻿@page "/admin/supplier-unsuitability-analysis/details/{errorID:int}/{startDate:datetime}/{endDate:datetime}"
+﻿@page "/admin/supplier-unsuitability-analysis/details/{cariID:int}/{startDate:datetime}/{endDate:datetime}/{total:int}"
 @layout AdminLayout
 
 @inject TedarikciUygunsuzlukDetayService TedarikciUygunsuzlukDetayService
@@ -197,19 +197,26 @@
                         <SfCard class="Cards">
 
                             <CardContent>
-                                <SfGrid ID="Grid" DataSource="@dataunsuitabilityproduct" @ref="ProductGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
-                                        AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
-                                    <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
-                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
-                                    <GridEvents TValue="SupplierUnsuitabilityDetailedProduct"></GridEvents>
-                                    <GridPageSettings PageSizes="true"></GridPageSettings>
-                                    <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
-                                    <GridColumns>
-                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.Quantity) HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.Percent) Format = "p2" HeaderText="UYGUNSUZLUK ORANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    </GridColumns>
-                                </SfGrid>
+                                <SfGrid ID="Grid" DataSource="@dataunsuitabilityproduct" @ref="ProductGrid" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+            <GridPageSettings PageSizes="true"></GridPageSettings>
+            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+            <GridColumns>
+                <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.ContractSupplier) HeaderText="TEDARİKÇİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.RefuseQuantity) HeaderText="RED" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.ScrapQuantity) HeaderText="HURDA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.Correction) HeaderText="DÜZELTME" TextAlign="TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.ToBeUsedAs) HeaderText="OLDUĞU GİBİ KULLANILACAK" TextAlign="TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.Total) HeaderText="TOPLAM UYGUNSUZLUK MİKTARI" TextAlign="TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.ContractReceiptQuantity) HeaderText="TOPLAM SİPARİŞ ADEDİ" TextAlign="TextAlign.Center" Width="130">
+                    <Template>
+                        @total
+                    </Template>
+                </GridColumn>
+            </GridColumns>
+        </SfGrid>
                             </CardContent>
                             <CardFooter>
                             </CardFooter>
@@ -245,6 +252,9 @@
 
     [Parameter]
     public int errorID { get; set; }
+
+    [Parameter]
+    public int total { get; set; }
 
 
     protected override void OnInitialized()
