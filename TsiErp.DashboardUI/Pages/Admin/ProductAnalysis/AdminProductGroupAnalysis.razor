@@ -156,7 +156,7 @@
                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
             <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
             <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
-            <GridEvents QueryCellInfo="CellInfoHandler" TValue="ProductGroupsAnalysis"></GridEvents>
+            @*<GridEvents QueryCellInfo="CellInfoHandler" TValue="ProductGroupsAnalysis"></GridEvents>*@
             <GridPageSettings PageSizes="true"></GridPageSettings>
             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
             <GridColumns>
@@ -164,7 +164,7 @@
                 <GridColumn Field=@nameof(ProductGroupsAnalysis.PlannedQuantity) HeaderText="PLANLANAN ADET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                 <GridColumn Field=@nameof(ProductGroupsAnalysis.TotalProduction)  HeaderText="ÜRETİLEN ADET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                 <GridColumn Field=@nameof(ProductGroupsAnalysis.TotalScrap) HeaderText="HURDA ADET" TextAlign="TextAlign.Center" Width="130"></GridColumn>
-                <GridColumn Field=@nameof(ProductGroupsAnalysis.OEE) HeaderText="OEE" Format="#%" TextAlign="TextAlign.Center" Width="130"></GridColumn>
+               @* <GridColumn Field=@nameof(ProductGroupsAnalysis.OEE) HeaderText="OEE" Format="#%" TextAlign="TextAlign.Center" Width="130"></GridColumn>*@
                 <GridColumn Field=@nameof(ProductGroupsAnalysis.TotalScrap) HeaderText="DETAYLAR" TextAlign="TextAlign.Center" Width="80">
                     <Template>
                         @{
@@ -287,21 +287,21 @@
     
 
 
-    public void CellInfoHandler(QueryCellInfoEventArgs<ProductGroupsAnalysis> Args)
-    {
-        if (Args.Column.Field == "OEE")
-        {
-            if (Args.Data.OEE < (decimal)thresholddouble)
-            {
-                Args.Cell.AddStyle(new string[] { "background-color: #DF0000; color: white; " });
-            }
-            else
-            {
-                Args.Cell.AddStyle(new string[] { "background-color: #37CB00; color: white;" });
-            }
-        }
-        StateHasChanged();
-    }
+    //public void CellInfoHandler(QueryCellInfoEventArgs<ProductGroupsAnalysis> Args)
+    //{
+    //    if (Args.Column.Field == "OEE")
+    //    {
+    //        if (Args.Data.OEE < (decimal)thresholddouble)
+    //        {
+    //            Args.Cell.AddStyle(new string[] { "background-color: #DF0000; color: white; " });
+    //        }
+    //        else
+    //        {
+    //            Args.Cell.AddStyle(new string[] { "background-color: #37CB00; color: white;" });
+    //        }
+    //    }
+    //    StateHasChanged();
+    //}
 
     private List<ComboboxTimePeriods> timeperiods = new List<ComboboxTimePeriods>() {
         new ComboboxTimePeriods(){ TimeID= 1, TimeText= "Yıllık" },
