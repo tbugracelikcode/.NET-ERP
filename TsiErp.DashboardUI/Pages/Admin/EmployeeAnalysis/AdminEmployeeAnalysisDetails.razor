@@ -103,54 +103,5 @@
 
 @code {
 
-    List<EmployeeDetailedHaltAnalysis> dataemployeehalt = new List<EmployeeDetailedHaltAnalysis>();
-
-    List<EmployeeDetailedChart> dataemployeechart = new List<EmployeeDetailedChart>();
-
-    SfGrid<EmployeeDetailedHaltAnalysis> EmployeeGrid;
-
-    SfChart ChartInstance;
-
-    bool VisibleSpinner = false;
-    double columnwidth;
-    private bool isEmployeeChecked = false;
-    int employees = 1;
-    string employeeName = string.Empty;
-
-    [Parameter]
-    public DateTime startDate { get; set; }
-
-    [Parameter]
-    public DateTime endDate { get; set; }
-
-    [Parameter]
-    public int employeeID { get; set; }
-
-
-    protected override void OnInitialized()
-    {
-        dataemployeehalt = PersonelDetayService.GetStationDetailedHaltAnalysis(employeeID, startDate, endDate);
-        dataemployeechart = PersonelDetayService.GetEmployeeDetailedtChart(employeeID, startDate, endDate);
-        employeeName = dataemployeehalt.Select(t => t.EmployeeName).FirstOrDefault();
-        if(dataemployeechart.Count()<=3)
-        {
-            columnwidth = 0.1;
-        }
-    }
-
-    private void OnChangeProductCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
-    {
-        if (isEmployeeChecked) { employees = 2; }
-        else { employees = 1; }
-        dataemployeechart = PersonelDetayService.GetEmployeeDetailedtChart(employeeID, startDate, endDate);
-        ChartInstance.RefreshAsync();
-    }
-
-    private void OnBackButtonClicked()
-    {
-        this.VisibleSpinner = true;
-
-        NavigationManager.NavigateTo("/admin/employee-analysis");
-    }
-
+  
 }

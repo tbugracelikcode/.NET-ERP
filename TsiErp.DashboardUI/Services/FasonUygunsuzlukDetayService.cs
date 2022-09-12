@@ -13,11 +13,15 @@ namespace TsiErp.DashboardUI.Services
             _connection = DBHelper.GetSqlConnection();
         }
 
+        #region Chart
+
         public List<ContractUnsuitabilityAnalysis> GetContractUnsuitabilityDetailedChart(DateTime startDate, DateTime endDate, int frequency, int? action, int cariID,int total)
         {
             List<ContractUnsuitabilityAnalysis> adminContractUnsuitabilityDetailedChart = new List<ContractUnsuitabilityAnalysis>();
             var unsuitabilityLines = DBHelper.GetContractUnsuitabilityQuery(startDate, endDate).Where(t => t.CARIID == cariID);
             var operationLines = DBHelper.GetContractUnsuitabilityQueryGeneral(startDate, endDate).Where(t => t.CariID == cariID);
+
+            #region Hurda
 
             if (action == 1) //Hurda
             {
@@ -43,6 +47,11 @@ namespace TsiErp.DashboardUI.Services
                     adminContractUnsuitabilityDetailedChart = gList;
                 }
             }
+
+            #endregion
+
+            #region Red
+
             else if (action == 2) //Red
             {
                 if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
@@ -68,6 +77,11 @@ namespace TsiErp.DashboardUI.Services
                 }
 
             }
+
+            #endregion
+
+            #region Olduğu Gibi Kullanılacak
+
             else if (action == 3) //Olduğu Gibi
             {
                 if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
@@ -93,6 +107,11 @@ namespace TsiErp.DashboardUI.Services
                 }
 
             }
+
+            #endregion
+
+            #region Düzeltme
+
             else if (action == 4) //Düzeltme
             {
                 if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
@@ -117,6 +136,11 @@ namespace TsiErp.DashboardUI.Services
                     adminContractUnsuitabilityDetailedChart = gList;
                 }
             }
+
+            #endregion
+
+            #region Toplam Uygunsuzluk
+
             else if (action == 5) //Toplam
             {
                 if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
@@ -142,9 +166,15 @@ namespace TsiErp.DashboardUI.Services
                 }
             }
 
+            #endregion
+
             return adminContractUnsuitabilityDetailedChart;
 
         }
+
+        #endregion
+
+        #region Grid
 
         public List<ContractUnsuitabilityAnalysis> GetContractUnsuitabilityDetailed(DateTime startDate, DateTime endDate, int cariID)
         {
@@ -180,6 +210,8 @@ namespace TsiErp.DashboardUI.Services
             }
             return contractUnsuitabilityAnalysis;
         }
+
+        #endregion
 
         private string GetMonth(int ay)
         {

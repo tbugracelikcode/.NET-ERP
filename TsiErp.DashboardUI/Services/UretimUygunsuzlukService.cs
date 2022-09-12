@@ -13,11 +13,15 @@ namespace TsiErp.DashboardUI.Services
             _connection = DBHelper.GetSqlConnection();
         }
 
+        #region Chart
+
         public List<AdminProductionUnsuitabilityAnalysisChart> GetProductionUnsuitabilityChart(DateTime startDate, DateTime endDate, int frequency, int? action)
         {
             List<AdminProductionUnsuitabilityAnalysisChart> adminProductionUnsuitabilityChart = new List<AdminProductionUnsuitabilityAnalysisChart>();
             var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate);
             var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate);
+
+            #region Hurda
 
             if (action == 1) //Hurda
             {
@@ -42,6 +46,11 @@ namespace TsiErp.DashboardUI.Services
                     adminProductionUnsuitabilityChart = gList;
                 }
             }
+
+            #endregion
+
+            #region Düzeltme
+
             else if ( action == 2) // Düzeltme
             {
                 if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
@@ -65,6 +74,10 @@ namespace TsiErp.DashboardUI.Services
                     adminProductionUnsuitabilityChart = gList;
                 }
             }
+
+            #endregion
+
+            #region Olduğu Gibi Kalacak
             else if ( action == 3) //Olduğu Gibi Kalacak
             {
                 if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
@@ -88,6 +101,10 @@ namespace TsiErp.DashboardUI.Services
                     adminProductionUnsuitabilityChart = gList;
                 }
             }
+
+            #endregion
+
+            #region Toplam Uygunsuzluk
             else if (action == 4) //Hepsini Göster
             {
                 if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
@@ -112,11 +129,18 @@ namespace TsiErp.DashboardUI.Services
                 }
             }
 
+            #endregion
+
 
 
             return adminProductionUnsuitabilityChart;
 
         }
+
+
+        #endregion
+
+        #region Grid
 
         public List<ProductionUnsuitabilityAnalysis> GetProductionUnsuitabilityAnalysis(DateTime startDate, DateTime endDate)
         {
@@ -148,6 +172,8 @@ namespace TsiErp.DashboardUI.Services
             }
             return productionUnsuitabilityAnalysis;
         }
+
+        #endregion
 
         private string GetMonth(int ay)
         {

@@ -14,6 +14,9 @@ namespace TsiErp.DashboardUI.Services
         }
 
         #region Müşteriye Göre Analiz
+
+        #region Chart-Grid
+
         public List<SupplierUnsuitabilityDetailedCustomer> GetSupplierUnsuitabilityDetailedCustomerAnalysis(int errorID, DateTime startDate, DateTime endDate)
         {
 
@@ -46,9 +49,14 @@ namespace TsiErp.DashboardUI.Services
             }
             return supplierUnsuitabilityDetailedCustomerAnalysis;
         }
+
+        #endregion
+
         #endregion
 
         #region Stoğa Göre Analiz
+
+        #region Chart-Grid
         public List<SupplierUnsuitabilityDetailedProduct> GetSupplierUnsuitabilityDetailedProductAnalysis(int errorID, DateTime startDate, DateTime endDate)
         {
 
@@ -81,6 +89,9 @@ namespace TsiErp.DashboardUI.Services
             }
             return supplierUnsuitabilityDetailedProductAnalysis;
         }
+
+        #endregion
+
         #endregion
     }
 }

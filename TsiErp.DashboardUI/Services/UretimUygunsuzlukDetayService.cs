@@ -14,6 +14,8 @@ namespace TsiErp.DashboardUI.Services
         }
 
         #region İstasyona Göre Analiz
+
+        #region Chart-Grid
         public List<ProductionUnsuitabilityDetailedStation> GetProductionUnsuitabilityDetailedStationAnalysis(string unsuitabilityCode, DateTime startDate, DateTime endDate, int selectedActionID)
         {
 
@@ -104,9 +106,14 @@ namespace TsiErp.DashboardUI.Services
             }
             return productionUnsuitabilityDetailedStationAnalysis;
         }
+
+        #endregion
+
         #endregion
 
         #region Çalışana Göre Analiz
+
+        #region Chart-Grid
         public List<ProductionUnsuitabilityDetailedEmployee> GetProductionUnsuitabilityDetailedEmployeeAnalysis(string unsuitabilityCode, DateTime startDate, DateTime endDate, int selectedActionID)
         {
 
@@ -196,9 +203,14 @@ namespace TsiErp.DashboardUI.Services
             }
             return productionUnsuitabilityDetailedEmployeeAnalysis;
         }
+
+        #endregion
         #endregion
 
         #region Stoğa Göre Analiz
+
+        #region Chart-Grid
+
         public List<ProductionUnsuitabilityDetailedProduct> GetProductionUnsuitabilityDetailedProductAnalysis(string unsuitabilityCode, DateTime startDate, DateTime endDate, int selectedActionID)
         {
 
@@ -288,6 +300,9 @@ namespace TsiErp.DashboardUI.Services
             }
             return productionUnsuitabilityDetailedProductAnalysis;
         }
+
+        #endregion
+
         #endregion
 
     }

@@ -13,6 +13,7 @@ namespace TsiErp.DashboardUI.Services
         {
             _connection = DBHelper.GetSqlConnection();
         }
+
         #region Genel Analiz
         public List<StationGeneralAnalysis> GetStationGeneralAnalyies(DateTime startDate, DateTime endDate)
         {
@@ -60,11 +61,6 @@ namespace TsiErp.DashboardUI.Services
         }
 
 
-        //public IEnumerable<DateTime> EachDay(DateTime start, DateTime end)
-        //{
-        //    for (var day = start.Date; day.Date <= end.Date; day = day.AddDays(1))
-        //        yield return day;
-        //}
 
         private decimal _KullanilabilirZaman(List<Takvim> calenderLines)
         {

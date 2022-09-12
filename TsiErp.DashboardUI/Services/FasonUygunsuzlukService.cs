@@ -13,6 +13,8 @@ namespace TsiErp.DashboardUI.Services
             _connection = DBHelper.GetSqlConnection();
         }
 
+        #region Grid-Chart
+
         public List<ContractUnsuitabilityAnalysis> GetContractUnsuitabilityAnalysis(DateTime startDate, DateTime endDate)
         {
             List<ContractUnsuitabilityAnalysis> contractUnsuitabilityAnalysis = new List<ContractUnsuitabilityAnalysis>();
@@ -46,6 +48,8 @@ namespace TsiErp.DashboardUI.Services
             }
             return contractUnsuitabilityAnalysis;
         }
+
+        #endregion
 
     }
 }

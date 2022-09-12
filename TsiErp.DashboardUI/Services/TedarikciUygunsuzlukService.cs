@@ -13,12 +13,16 @@ namespace TsiErp.DashboardUI.Services
             _connection = DBHelper.GetSqlConnection();
         }
 
+        #region Chart
+
         public List<AdminSupplierUnsuitabilityAnalysisChart> GetSupplierUnsuitabilityChart(DateTime startDate, DateTime endDate, int frequency, int? action)
         {
             List<AdminSupplierUnsuitabilityAnalysisChart> adminSupplierUnsuitabilityChart = new List<AdminSupplierUnsuitabilityAnalysisChart>();
             var unsuitabilityLines = DBHelper.GetSuppliertUnsuitabilityQuery(startDate, endDate);
             var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate);
             var percenttotal = (double)operationLines.Sum(t => t.PLNMIKTAR);
+
+            #region Tedarikçi ile İrtibat
 
             if (action ==1) // Tedarikçi ile İrtibat
             {
@@ -43,6 +47,11 @@ namespace TsiErp.DashboardUI.Services
                     adminSupplierUnsuitabilityChart = gList;
                 }
             }
+
+            #endregion
+
+            #region Düzeltme
+
             else if (action == 2) //Düzeltme
             {
                 if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
@@ -66,6 +75,12 @@ namespace TsiErp.DashboardUI.Services
                     adminSupplierUnsuitabilityChart = gList;
                 }
             }
+
+            #endregion
+
+            #region Olduğu Gibi Kullanılacak
+
+
             else if (action ==3) //Olduğu Gibi Kullanılacak
             {
                 if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
@@ -89,6 +104,11 @@ namespace TsiErp.DashboardUI.Services
                     adminSupplierUnsuitabilityChart = gList;
                 }
             }
+
+            #endregion
+
+            #region Red
+
             else if (action == 4) //Red
             {
                 if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
@@ -112,6 +132,11 @@ namespace TsiErp.DashboardUI.Services
                     adminSupplierUnsuitabilityChart = gList;
                 }
             }
+
+            #endregion
+
+            #region Toplam Uygunsuzluk
+
             else if (action == 5) //Hepsini Göster
             {
                 if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
@@ -136,10 +161,15 @@ namespace TsiErp.DashboardUI.Services
                 }
             }
 
+            #endregion
 
             return adminSupplierUnsuitabilityChart;
 
         }
+
+        #endregion
+
+        #region Grid
 
         public List<SupplierUnsuitabilityAnalysis> GetSupplierUnsuitabilityAnalysis(DateTime startDate, DateTime endDate)
         {
@@ -174,38 +204,7 @@ namespace TsiErp.DashboardUI.Services
             return supplierUnsuitabilityAnalysis;
         }
 
-        //public List<SupplierUnsuitabilityAnalysis> GetSupplierUnsuitabilityAnalysis(DateTime startDate, DateTime endDate)
-        //{
-        //    List<SupplierUnsuitabilityAnalysis> supplierUnsuitabilityAnalysis = new List<SupplierUnsuitabilityAnalysis>();
-
-        //    var unsuitabilityLines = DBHelper.GetSuppliertUnsuitabilityQuery(startDate, endDate);
-        //    var list = unsuitabilityLines.Select(t => t.HATAID).Distinct().ToList();
-
-        //    if (unsuitabilityLines != null)
-        //    {
-        //        foreach (var unsuitability in list)
-        //        {
-        //            var contact = unsuitabilityLines.Where(t => t.TEDARIKCIIRTIBAT == true && t.HATAID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
-        //            var refuse = unsuitabilityLines.Where(t => t.RED == true && t.HATAID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
-        //            var tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.HATAID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
-        //            var correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.HATAID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
-        //            SupplierUnsuitabilityAnalysis analysis = new SupplierUnsuitabilityAnalysis
-        //            {
-        //                SupplierUnsuitabilityID = unsuitabilityLines.Where(t => t.HATAID == unsuitability).Select(t => t.ID).FirstOrDefault(),
-        //                ContactWithSupplier = contact,
-        //                ToBeUsedAs = tobeused,
-        //                Correction = correction,
-        //                Total = contact + tobeused + correction + refuse,
-        //                UnsuitabilityReason = unsuitabilityLines.Where(t => t.HATAID == unsuitability).Select(t => t.HATAACIKLAMA).FirstOrDefault(),
-        //                ErrorID = unsuitability,
-        //                RefuseQuantity = refuse
-
-        //            };
-        //            supplierUnsuitabilityAnalysis.Add(analysis);
-        //        }
-        //    }
-        //    return supplierUnsuitabilityAnalysis;
-        //}
+        #endregion
 
         private string GetMonth(int ay)
         {

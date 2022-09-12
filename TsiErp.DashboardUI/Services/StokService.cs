@@ -13,6 +13,8 @@ namespace TsiErp.DashboardUI.Services
             _connection = DBHelper.GetSqlConnection();
         }
 
+        #region Chart
+
         public List<AdminProductChart> GetProductChart(DateTime startDate, DateTime endDate, int frequency, int? productionSelection)
         {
             List<AdminProductChart> adminProductChart = new List<AdminProductChart>();
@@ -45,6 +47,10 @@ namespace TsiErp.DashboardUI.Services
 
         }
 
+        #endregion
+
+        #region Grid
+
         public List<ProductGroupsAnalysis> GetProductGroupsAnalysis(DateTime startDate, DateTime endDate)
         {
 
@@ -75,6 +81,10 @@ namespace TsiErp.DashboardUI.Services
             return productGroupsAnalysis;
         }
 
+        #endregion
+
+        #region Combobox
+
         public List<ProductGroupsAnalysis> GetProductGroupsComboboxAnalysis(DateTime startDate, DateTime endDate)
         {
 
@@ -104,6 +114,8 @@ namespace TsiErp.DashboardUI.Services
             }
             return productGroupsAnalysis;
         }
+
+        #endregion
 
         private Tuple<int, int> _PlanlananAdetHesapla(int? urunGrupID, List<OperasyonSatir> opr)
         {

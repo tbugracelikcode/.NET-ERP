@@ -15,6 +15,7 @@ namespace TsiErp.DashboardUI.Services
             _connection = DBHelper.GetSqlConnection();
         }
 
+        #region Chart
 
         public List<AdminMachineChart> GetAdminMachineChart(DateTime startDate, DateTime endDate)
         {
@@ -39,6 +40,9 @@ namespace TsiErp.DashboardUI.Services
 
         }
 
+        #endregion
+
+        #region Grid
 
         public List<StationOEEAnalysis> GetStationOEEAnalysis(DateTime startDate, DateTime endDate)
         {
@@ -91,6 +95,8 @@ namespace TsiErp.DashboardUI.Services
             }
             return stationOEEAnalysis;
         }
+
+        #endregion
 
         private string GetMonth(int ay)
         {

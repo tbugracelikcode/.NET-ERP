@@ -15,6 +15,8 @@ namespace TsiErp.DashboardUI.Services
 
         #region Hurda Analizi
 
+        #region Chart
+
         public List<ProductGroupDetailedChart> GetProductGroupDetailedtChart(int productgroupID, DateTime startDate, DateTime endDate, int products)
         {
 
@@ -46,6 +48,10 @@ namespace TsiErp.DashboardUI.Services
             return productgroupDetailedChart;
         }
 
+        #endregion
+
+        #region Grid
+
         public List<ProductScrapAnalysis> GetProductScrapAnalysis(int groupID, DateTime startDate, DateTime endDate)
         {
             List<ProductScrapAnalysis> productScrapAnalysis = new List<ProductScrapAnalysis>();
@@ -76,6 +82,8 @@ namespace TsiErp.DashboardUI.Services
 
             return productScrapAnalysis.OrderByDescending(t => t.PPM).ToList();
         }
+
+        #endregion
 
 
         #endregion

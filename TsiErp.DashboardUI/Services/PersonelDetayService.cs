@@ -13,6 +13,8 @@ namespace TsiErp.DashboardUI.Services
             _connection = DBHelper.GetSqlConnection();
         }
 
+        #region Chart
+
         public List<EmployeeDetailedChart> GetEmployeeDetailedtChart(int calisanID, DateTime startDate, DateTime endDate)
         {
 
@@ -43,11 +45,12 @@ namespace TsiErp.DashboardUI.Services
             return employeeDetailedChart;
         }
 
+        #endregion
+
+        #region Grid
+
         public List<EmployeeDetailedHaltAnalysis> GetStationDetailedHaltAnalysis(int calisanID, DateTime startDate, DateTime endDate)
         {
-            //startDate = new DateTime(2022, 06, 01);
-            //endDate = new DateTime(2022, 08, 22);
-            //calisanID = 109;
             List<EmployeeDetailedHaltAnalysis> employeeDetailedHaltAnalysis = new List<EmployeeDetailedHaltAnalysis>();
 
             var haltCodes = DBHelper.GetHaltCodes();
@@ -70,5 +73,7 @@ namespace TsiErp.DashboardUI.Services
             }
             return employeeDetailedHaltAnalysis;
         }
+
+        #endregion
     }
 }

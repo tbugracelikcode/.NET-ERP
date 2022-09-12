@@ -15,6 +15,8 @@ namespace TsiErp.DashboardUI.Services
         }
 
         #region Duruş Analizi
+
+        #region Grid
         public List<StationDetailedHaltAnalysis> GetStationDetailedHaltAnalysis(int makineID, DateTime startDate, DateTime endDate)
         {
             //startDate = new DateTime(2022, 06, 01);
@@ -44,6 +46,11 @@ namespace TsiErp.DashboardUI.Services
             }
             return stationDetailedHaltAnalysis;
         }
+
+        #endregion
+
+        #region Chart
+
         public List<StationDetailedHaltAnalysis> GetStationDetailedHaltAnalysisChart(int makineID, DateTime startDate, DateTime endDate)
         {
             //startDate = new DateTime(2022, 06, 01);
@@ -81,7 +88,12 @@ namespace TsiErp.DashboardUI.Services
         }
         #endregion
 
+        #endregion
+
         #region Stok Analizi
+
+        #region Chart
+
         public List<StationDetailedProductChart> GetStationDetailedProductChart(int makineID, DateTime startDate, DateTime endDate, int products)
         {
 
@@ -134,6 +146,10 @@ namespace TsiErp.DashboardUI.Services
             }
             return stationDetailedProductChart;
         }
+
+        #endregion
+
+        #region Grid
         public List<StationDetailedProductAnalysis> GetStationDetailedProductAnalysis(int makineID, DateTime startDate, DateTime endDate)
         {
 
@@ -169,14 +185,16 @@ namespace TsiErp.DashboardUI.Services
 
             return stationDetailedProductAnalysis;
         }
+
+        #endregion
+
         #endregion
 
         #region Personel Analizi
+
+        #region Chart-Grid
         public List<StationDetailedEmployeeAnalysis> GetStationDetailedEmployeeAnalysis(int makineID, DateTime startDate, DateTime endDate)
         {
-            //startDate = new DateTime(2022, 06, 01);
-            //endDate = new DateTime(2022, 08, 22);
-            //makineID = 8;
 
             List<StationDetailedEmployeeAnalysis> stationDetailedEmployeeAnalysis = new List<StationDetailedEmployeeAnalysis>();
 
@@ -214,6 +232,9 @@ namespace TsiErp.DashboardUI.Services
             }
             return stationDetailedEmployeeAnalysis;
         }
+
+        #endregion
+
         #endregion
     }
 }

@@ -15,6 +15,8 @@ namespace TsiErp.DashboardUI.Services
             _connection = DBHelper.GetSqlConnection();
         }
 
+        #region Chart
+
         public List<AdminEmployeeChart> GetEmployeeChart(DateTime startDate, DateTime endDate, int frequency)
         {
             List<AdminEmployeeChart> adminEmployeeChart = new List<AdminEmployeeChart>();
@@ -54,7 +56,9 @@ namespace TsiErp.DashboardUI.Services
             return adminEmployeeChart;
         }
 
-           
+        #endregion
+
+        #region Grid
 
         public List<EmployeeGeneralAnalysis> GetEmployeeGeneralAnalysis(DateTime startDate, DateTime endDate)
         {
@@ -99,6 +103,8 @@ namespace TsiErp.DashboardUI.Services
             }
             return employeeGeneralAnalysis;
         }
+
+        #endregion
 
         private string GetMonth(int ay)
         {
