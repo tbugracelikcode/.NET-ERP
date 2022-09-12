@@ -47,27 +47,5 @@ namespace TsiErp.DashboardUI.Services
             return contractUnsuitabilityAnalysis;
         }
 
-        private string GetMonth(int ay)
-        {
-            string aystr = string.Empty;
-            switch (ay)
-            {
-                case 1: aystr = "Ocak"; break;
-                case 2: aystr = "Şubat"; break;
-                case 3: aystr = "Mart"; break;
-                case 4: aystr = "Nisan"; break;
-                case 5: aystr = "Mayıs"; break;
-                case 6: aystr = "Haziran"; break;
-                case 7: aystr = "Temmuz"; break;
-                case 8: aystr = "Ağustos"; break;
-                case 9: aystr = "Eylül"; break;
-                case 10: aystr = "Ekim"; break;
-                case 11: aystr = "Kasım"; break;
-                case 12: aystr = "Aralık"; break;
-                default: break;
-
-            }
-            return aystr;
-        }
     }
 }

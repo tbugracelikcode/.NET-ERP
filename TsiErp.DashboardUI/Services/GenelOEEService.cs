@@ -16,7 +16,7 @@ namespace TsiErp.DashboardUI.Services
         }
 
 
-        public List<AdminMachineChart> GetAdminMachineChart(DateTime startDate, DateTime endDate, int frequency)
+        public List<AdminMachineChart> GetAdminMachineChart(DateTime startDate, DateTime endDate)
         {
             List<AdminMachineChart> adminMachineChart = new List<AdminMachineChart>();
             var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate);
@@ -24,81 +24,16 @@ namespace TsiErp.DashboardUI.Services
             var haltLines = DBHelper.GetHaltQuery(startDate, endDate);
             var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate);
 
-            //var list = (from a in calenderLines
-            //            join
-            //            b in operationLines.DefaultIfEmpty() on a.ISTASYONID equals b.ISTASYONID
-            //            select new AdminCommonOEEMachineAnalysisChart
-            //            {
-            //                ISTASYONID = (int)a.ISTASYONID,
-            //                TARIH = b.TARIH,
-            //                BAKIMDURUMU = a.BAKIMDURUMU,
-            //                ATILSURE = b.ATILSURE,
-            //                CALISMADURUMU = a.CALISMADURUMU,
-            //                AYARSURESI = b.AYARSURESI,
-            //                BAKIMSURESI = a.BAKIMSURESI,
-            //                GECEPLNDURUSSURESI = a.GECEPLNDURUSSURESI,
-            //                GECEVARDIYASI = a.GECEVARDIYASI,
-            //                GUNDUZFAZLAMESAI = a.GUNDUZFAZLAMESAI,
-            //                GUNDUZFAZLAMESAISURESI = a.GUNDUZFAZLAMESAISURESI,
-            //                GUNDUZMESAISURESI = a.GUNDUZMESAISURESI,
-            //                HURDAADET = b.HURDAADET,
-            //                GUNDUZPLNDURUSSURESI = a.GUNDUZPLNDURUSSURESI,
-            //                GECEFAZLAMESAI = a.GECEFAZLAMESAI,
-            //                BIRIMSURE = b.BIRIMSURE,
-            //                GECEFAZLAMESAISURESI = a.GECEFAZLAMESAISURESI,
-            //                PERFORMANS = b.PERFORMANS,
-            //                GECEMESAISURESI = a.GECEMESAISURESI,
-            //                GECETOPLAMCALISMAZAMANI = a.GECETOPLAMCALISMAZAMANI,
-            //                GUNDUZTOPLAMCALISMAZAMANI = a.GUNDUZTOPLAMCALISMAZAMANI,
-            //                GUNDUZVARDIYASI = a.GUNDUZVARDIYASI,
-            //                GUNDUZYARIMGUN = a.GUNDUZYARIMGUN,
-            //                ID = (int)a.ID,
-            //                MAKINEKODU = b.MAKINEKODU,
-            //                OPERASYONID = b.OPERASYONID,
-            //                OPRID = b.OPRID,
-            //                PLANLIBAKIMVARDIYASI = a.PLANLIBAKIMVARDIYASI,
-            //                ROTAID = b.ROTAID,
-            //                TAKVIMID = a.TAKVIMID,
-            //                URETILENADET = b.URETILENADET,
-            //                VARDIYACALISMASURESI = b.VARDIYACALISMASURESI,
-            //                GECEYARIMGUN = a.GECEYARIMGUN,
-            //                GRCMIKTAR = b.GRCMIKTAR,
-            //                ISLEMESURESI = b.ISLEMESURESI,
-            //                OPERASYONSURESI = b.OPERASYONSURESI,
-            //                KALITE = b.KALITE,
-            //                KULLANILABILIRLIK = b.KULLANILABILIRLIK,
-            //                OEE = b.OEE,
-            //                PLANLANAN = a.PLANLANAN,
-            //                PLANLANANOPRSURESI = b.PLANLANANOPRSURESI,
-            //                PLNMIKTAR = b.PLNMIKTAR,
-            //                TOPLAMCALISABILIRSURE = a.TOPLAMCALISABILIRSURE
-            //            }).ToList();
-            if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
+            var gList = operationLines.OrderBy(t => t.TARIH).GroupBy(t => new { AY = t.TARIH.Month, YIL = t.TARIH.Year }).Select(t => new AdminMachineChart
             {
-                var gList = operationLines.OrderBy(t => t.TARIH).GroupBy(t => new { AY = t.TARIH.Month, YIL = t.TARIH.Year }).Select(t => new AdminMachineChart
-                {
-                    AY = GetMonth(t.Key.AY) + " " + t.Key.YIL.ToString(),
-                    ISTASYONLAR = t.Select(t => t.MAKINEKODU).Distinct().ToList(),
-                    KULLANILABILIRLIK = (decimal)(calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE)) > 0 ? ((decimal)t.Sum(t => t.OPERASYONSURESI) / (decimal)(calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE))) : 0,
-                    PERFORMANS = t.Sum(t => t.BIRIMSURE) > 0 ? (t.Sum(t => t.PLANLANANOPRSURESI) / t.Sum(t => t.BIRIMSURE)) : 0,
-                    KALITE = ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)) - (t.Sum(t => t.BIRIMSURE) * (unsuitabilityLines.Where(b => b.TARIH.Month == t.Key.AY).Sum(t => t.OLCUKONTROLFORMBEYAN)))) / ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE))),
-                    OEE = ((calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE)) > 0) && (t.Sum(t => t.BIRIMSURE) > 0) && ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)) > 0) ? ((decimal)t.Sum(t => t.OPERASYONSURESI) / (decimal)(calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE))) * (t.Sum(t => t.PLANLANANOPRSURESI) / t.Sum(t => t.BIRIMSURE)) * (((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)) - (t.Sum(t => t.BIRIMSURE) * (unsuitabilityLines.Where(b => b.TARIH.Month == t.Key.AY).Sum(t => t.OLCUKONTROLFORMBEYAN)))) / ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)))) : 0
-                }).ToList();
-                adminMachineChart = gList;
-            }
-            else if (frequency == 5 || frequency == 6)
-            {
-                var gList = operationLines.GroupBy(t => new { HAFTA = t.TARIH.Date, YIL = t.TARIH.Year }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminMachineChart
-                {
-                    AY = t.Key.HAFTA.ToString("dd MMM yy", new CultureInfo("tr-TR")) + " " + t.Key.YIL.ToString(),
-                    ISTASYONLAR = t.Select(x => x.MAKINEKODU).Distinct().ToList(),
-                    KULLANILABILIRLIK = ((decimal)t.Sum(t => t.OPERASYONSURESI) / (decimal)(calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Date == t.Key.HAFTA && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE))),
-                    PERFORMANS = (t.Sum(t => t.PLANLANANOPRSURESI) / t.Sum(t => t.BIRIMSURE)),
-                    KALITE = ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)) - (t.Sum(t => t.BIRIMSURE) * (unsuitabilityLines.Where(b => b.TARIH.Date == t.Key.HAFTA ).Sum(t => t.OLCUKONTROLFORMBEYAN)))) / ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE))),
-                    OEE = ((decimal)t.Sum(t => t.OPERASYONSURESI) / (decimal)(calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Date == t.Key.HAFTA && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE))) * (t.Sum(t => t.PLANLANANOPRSURESI) / t.Sum(t => t.BIRIMSURE)) * (((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)) - (t.Sum(t => t.BIRIMSURE) * (unsuitabilityLines.Where(b => b.TARIH.Date == t.Key.HAFTA ).Sum(t => t.OLCUKONTROLFORMBEYAN)))) / ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE))))
-                }).ToList();
-                adminMachineChart = gList;
-            }
+                AY = GetMonth(t.Key.AY) + " " + t.Key.YIL.ToString(),
+                ISTASYONLAR = t.Select(t => t.MAKINEKODU).Distinct().ToList(),
+                KULLANILABILIRLIK = (decimal)(calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE)) > 0 ? ((decimal)t.Sum(t => t.OPERASYONSURESI) / (decimal)(calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE))) : 0,
+                PERFORMANS = t.Sum(t => t.BIRIMSURE) > 0 ? (t.Sum(t => t.PLANLANANOPRSURESI) / t.Sum(t => t.BIRIMSURE)) : 0,
+                KALITE = ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)) - (t.Sum(t => t.BIRIMSURE) * (unsuitabilityLines.Where(b => b.TARIH.Month == t.Key.AY).Sum(t => t.OLCUKONTROLFORMBEYAN)))) / ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE))),
+                OEE = ((calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE)) > 0) && (t.Sum(t => t.BIRIMSURE) > 0) && ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)) > 0) ? ((decimal)t.Sum(t => t.OPERASYONSURESI) / (decimal)(calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE))) * (t.Sum(t => t.PLANLANANOPRSURESI) / t.Sum(t => t.BIRIMSURE)) * (((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)) - (t.Sum(t => t.BIRIMSURE) * (unsuitabilityLines.Where(b => b.TARIH.Month == t.Key.AY).Sum(t => t.OLCUKONTROLFORMBEYAN)))) / ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)))) : 0
+            }).ToList();
+            adminMachineChart = gList;
 
             return adminMachineChart;
 

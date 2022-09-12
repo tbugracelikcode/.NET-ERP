@@ -4,15 +4,6 @@
 @inject PersonelDetayService PersonelDetayService
 @inject NavigationManager NavigationManager
 
-@using Syncfusion.Blazor.Calendars
-@using Syncfusion.Blazor.Buttons
-@using Syncfusion.Blazor.Grids
-@using Syncfusion.Blazor.Cards
-@using Syncfusion.Blazor.Data
-@using Syncfusion.Blazor.Inputs
-@using Syncfusion.Blazor.Navigations
-@using Syncfusion.Blazor.Spinner
-@using Syncfusion.Blazor.Charts
 
 <style>
     .GridZebra table tbody tr:nth-child(odd) {
@@ -106,8 +97,8 @@
     <CardContent>
         <SfTab CssClass="default-tab" OverflowMode="@OverflowMode.Scrollable" HeaderPlacement="HeaderPosition.Top" Width="100%">
             <TabAnimationSettings>
-                <TabAnimationPrevious Effect="AnimationEffect.FadeIn"></TabAnimationPrevious>
-                <TabAnimationNext Effect="AnimationEffect.FadeOut"></TabAnimationNext>
+                <TabAnimationPrevious Effect="Syncfusion.Blazor.AnimationEffect.FadeIn"></TabAnimationPrevious>
+                <TabAnimationNext Effect="Syncfusion.Blazor.AnimationEffect.FadeOut"></TabAnimationNext>
             </TabAnimationSettings>
             <TabItems>
                 <TabItem>
