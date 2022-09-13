@@ -14,6 +14,8 @@ namespace TsiErp.DashboardUI.Services
         }
 
         #region İstasyona Göre Analiz
+
+        #region Chart-Grid
         public List<ProductionUnsuitabilityDetailedStation> GetProductionUnsuitabilityDetailedStationAnalysis(string unsuitabilityCode, DateTime startDate, DateTime endDate, int selectedActionID)
         {
 
@@ -21,92 +23,121 @@ namespace TsiErp.DashboardUI.Services
 
             var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery( startDate, endDate).Where(t=>t.KOD == unsuitabilityCode).ToList();
             var stationList = DBHelper.GetStations();
-            var total = (int)unsuitabilityLines.Sum(t => t.OLCUKONTROLFORMBEYAN);
+            int total = (int)unsuitabilityLines.Sum(t => t.OLCUKONTROLFORMBEYAN);
 
             if(unsuitabilityLines != null)
             {
-                if(selectedActionID == 1)
+                switch(selectedActionID)
                 {
-                    foreach (var station in stationList)
-                    {
-                        var scrap = unsuitabilityLines.Where(t => t.HURDA == true && t.ISTASYONID == station.ID).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                    #region Hurda
 
-                        ProductionUnsuitabilityDetailedStation analysis = new ProductionUnsuitabilityDetailedStation
-                        {
-                            Station = station.MAKINEKODU,
-                            Quantity = scrap,
-                            Percent = (double)(scrap) / (double)total
-                        };
-                        if (analysis.Quantity > 0)
-                        {
-                            productionUnsuitabilityDetailedStationAnalysis.Add(analysis);
-                        }
-                    }
-                }
-                else if (selectedActionID == 2)
-                {
-                    foreach (var station in stationList)
-                    {
-                        
-                        var correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.ISTASYONID == station.ID).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                    case 1:
 
-                        ProductionUnsuitabilityDetailedStation analysis = new ProductionUnsuitabilityDetailedStation
+                        foreach (var station in stationList)
                         {
-                            Station = station.MAKINEKODU,
-                            Quantity = correction,
-                            Percent = (double)(correction) / (double)total
-                        };
-                        if (analysis.Quantity > 0)
-                        {
-                            productionUnsuitabilityDetailedStationAnalysis.Add(analysis);
-                        }
-                    }
-                }
-                else if (selectedActionID == 3)
-                {
-                    foreach (var station in stationList)
-                    {
-                        var tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.ISTASYONID == station.ID).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                            int scrap = unsuitabilityLines.Where(t => t.HURDA == true && t.ISTASYONID == station.ID).Sum(t => t.OLCUKONTROLFORMBEYAN);
 
-                        ProductionUnsuitabilityDetailedStation analysis = new ProductionUnsuitabilityDetailedStation
-                        {
-                            Station = station.MAKINEKODU,
-                            Quantity = tobeused ,
-                            Percent = (double)(tobeused) / (double)total
-                        };
-                        if (analysis.Quantity > 0)
-                        {
-                            productionUnsuitabilityDetailedStationAnalysis.Add(analysis);
+                            ProductionUnsuitabilityDetailedStation analysis = new ProductionUnsuitabilityDetailedStation
+                            {
+                                Station = station.MAKINEKODU,
+                                Quantity = scrap,
+                                Percent = (double)(scrap) / (double)total
+                            };
+                            if (analysis.Quantity > 0)
+                            {
+                                productionUnsuitabilityDetailedStationAnalysis.Add(analysis);
+                            }
                         }
-                    }
-                }
-                else if (selectedActionID == 4)
-                {
-                    foreach (var station in stationList)
-                    {
-                        var scrap = unsuitabilityLines.Where(t => t.HURDA == true && t.ISTASYONID == station.ID).Sum(t => t.OLCUKONTROLFORMBEYAN);
-                        var tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.ISTASYONID == station.ID).Sum(t => t.OLCUKONTROLFORMBEYAN);
-                        var correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.ISTASYONID == station.ID).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                        break;
 
-                        ProductionUnsuitabilityDetailedStation analysis = new ProductionUnsuitabilityDetailedStation
+                    #endregion
+
+                    #region Düzeltme
+
+                    case 2:
+
+                        foreach (var station in stationList)
                         {
-                            Station = station.MAKINEKODU,
-                            Quantity = scrap + tobeused + correction,
-                            Percent = (double)(scrap + tobeused + correction) / (double)total
-                        };
-                        if (analysis.Quantity > 0)
-                        {
-                            productionUnsuitabilityDetailedStationAnalysis.Add(analysis);
+
+                            int correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.ISTASYONID == station.ID).Sum(t => t.OLCUKONTROLFORMBEYAN);
+
+                            ProductionUnsuitabilityDetailedStation analysis = new ProductionUnsuitabilityDetailedStation
+                            {
+                                Station = station.MAKINEKODU,
+                                Quantity = correction,
+                                Percent = (double)(correction) / (double)total
+                            };
+                            if (analysis.Quantity > 0)
+                            {
+                                productionUnsuitabilityDetailedStationAnalysis.Add(analysis);
+                            }
                         }
-                    }
+                        break;
+
+                    #endregion
+
+                    #region Olduğu Gibi Kullanılacak
+
+                    case 3:
+
+                        foreach (var station in stationList)
+                        {
+                            int tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.ISTASYONID == station.ID).Sum(t => t.OLCUKONTROLFORMBEYAN);
+
+                            ProductionUnsuitabilityDetailedStation analysis = new ProductionUnsuitabilityDetailedStation
+                            {
+                                Station = station.MAKINEKODU,
+                                Quantity = tobeused,
+                                Percent = (double)(tobeused) / (double)total
+                            };
+                            if (analysis.Quantity > 0)
+                            {
+                                productionUnsuitabilityDetailedStationAnalysis.Add(analysis);
+                            }
+                        }
+                        break;
+
+                    #endregion
+
+                    #region Toplam Uygunsuzluk
+
+                    case 4:
+
+                        foreach (var station in stationList)
+                        {
+                            int scrap = unsuitabilityLines.Where(t => t.HURDA == true && t.ISTASYONID == station.ID).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                            int tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.ISTASYONID == station.ID).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                            int correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.ISTASYONID == station.ID).Sum(t => t.OLCUKONTROLFORMBEYAN);
+
+                            ProductionUnsuitabilityDetailedStation analysis = new ProductionUnsuitabilityDetailedStation
+                            {
+                                Station = station.MAKINEKODU,
+                                Quantity = scrap + tobeused + correction,
+                                Percent = (double)(scrap + tobeused + correction) / (double)total
+                            };
+                            if (analysis.Quantity > 0)
+                            {
+                                productionUnsuitabilityDetailedStationAnalysis.Add(analysis);
+                            }
+                        }
+                        break;
+
+                    #endregion
+
+                    default: break;
                 }
 
             }
             return productionUnsuitabilityDetailedStationAnalysis;
         }
+
+        #endregion
+
         #endregion
 
         #region Çalışana Göre Analiz
+
+        #region Chart-Grid
         public List<ProductionUnsuitabilityDetailedEmployee> GetProductionUnsuitabilityDetailedEmployeeAnalysis(string unsuitabilityCode, DateTime startDate, DateTime endDate, int selectedActionID)
         {
 
@@ -114,91 +145,140 @@ namespace TsiErp.DashboardUI.Services
 
             var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate).Where(t => t.KOD == unsuitabilityCode).ToList();
             var employeeList = unsuitabilityLines.Select(t => t.CALISANID).Distinct().ToList();
-            var total = unsuitabilityLines.Sum(t => t.OLCUKONTROLFORMBEYAN);
+            int total = unsuitabilityLines.Sum(t => t.OLCUKONTROLFORMBEYAN);
 
             if (unsuitabilityLines != null)
             {
-                if(selectedActionID == 1)
+                switch(selectedActionID)
                 {
-                    foreach (var unsuitability in employeeList)
-                    {
-                        var scrap = unsuitabilityLines.Where(t => t.HURDA == true && t.CALISANID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                    #region Hurda
 
-                        ProductionUnsuitabilityDetailedEmployee analysis = new ProductionUnsuitabilityDetailedEmployee
+                    case 1:
+
+                        foreach (var unsuitability in employeeList)
                         {
-                            EmployeeName = unsuitabilityLines.Where(t => t.CALISANID == unsuitability).Select(t => t.CALISANAD).FirstOrDefault(),
-                            Quantity = scrap,
-                            Percent = (double)(scrap) / (double)total
-                        };
-                        if (analysis.Quantity > 0)
-                        {
-                            productionUnsuitabilityDetailedEmployeeAnalysis.Add(analysis);
+                            #region Değişkenler
+
+                            int scrap = unsuitabilityLines.Where(t => t.HURDA == true && t.CALISANID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                            string employeeName = unsuitabilityLines.Where(t => t.CALISANID == unsuitability).Select(t => t.CALISANAD).FirstOrDefault();
+
+                            #endregion
+
+                            ProductionUnsuitabilityDetailedEmployee analysis = new ProductionUnsuitabilityDetailedEmployee
+                            {
+                                EmployeeName = employeeName,
+                                Quantity = scrap,
+                                Percent = (double)(scrap) / (double)total
+                            };
+                            if (analysis.Quantity > 0)
+                            {
+                                productionUnsuitabilityDetailedEmployeeAnalysis.Add(analysis);
+                            }
                         }
-                    }
-                }
-                else if (selectedActionID == 2)
-                {
-                    foreach (var unsuitability in employeeList)
-                    {
-                        var correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.CALISANID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                        break;
 
-                        ProductionUnsuitabilityDetailedEmployee analysis = new ProductionUnsuitabilityDetailedEmployee
+                    #endregion
+
+                    #region Düzeltme
+
+                    case 2:
+
+                        foreach (var unsuitability in employeeList)
                         {
-                            EmployeeName = unsuitabilityLines.Where(t => t.CALISANID == unsuitability).Select(t => t.CALISANAD).FirstOrDefault(),
-                            Quantity =  correction,
-                            Percent = (double)(correction) / (double)total
-                        };
-                        if (analysis.Quantity > 0)
-                        {
-                            productionUnsuitabilityDetailedEmployeeAnalysis.Add(analysis);
+                            #region Değişkenler
+
+                            int correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.CALISANID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                            string employeeName = unsuitabilityLines.Where(t => t.CALISANID == unsuitability).Select(t => t.CALISANAD).FirstOrDefault();
+
+                            #endregion
+
+                            ProductionUnsuitabilityDetailedEmployee analysis = new ProductionUnsuitabilityDetailedEmployee
+                            {
+                                EmployeeName = employeeName,
+                                Quantity = correction,
+                                Percent = (double)(correction) / (double)total
+                            };
+                            if (analysis.Quantity > 0)
+                            {
+                                productionUnsuitabilityDetailedEmployeeAnalysis.Add(analysis);
+                            }
                         }
-                    }
-                }
-                if (selectedActionID == 3)
-                {
-                    foreach (var unsuitability in employeeList)
-                    {
-                        var tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.CALISANID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                        break;
 
-                        ProductionUnsuitabilityDetailedEmployee analysis = new ProductionUnsuitabilityDetailedEmployee
+                    #endregion
+
+                    #region Olduğu Gibi Kullanılacak
+
+                    case 3:
+
+                        foreach (var unsuitability in employeeList)
                         {
-                            EmployeeName = unsuitabilityLines.Where(t => t.CALISANID == unsuitability).Select(t => t.CALISANAD).FirstOrDefault(),
-                            Quantity = tobeused ,
-                            Percent = (double)(tobeused) / (double)total
-                        };
-                        if (analysis.Quantity > 0)
-                        {
-                            productionUnsuitabilityDetailedEmployeeAnalysis.Add(analysis);
+                            #region Değişkenler
+
+                            int tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.CALISANID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                            string employeeName = unsuitabilityLines.Where(t => t.CALISANID == unsuitability).Select(t => t.CALISANAD).FirstOrDefault();
+
+                            #endregion
+
+                            ProductionUnsuitabilityDetailedEmployee analysis = new ProductionUnsuitabilityDetailedEmployee
+                            {
+                                EmployeeName = employeeName,
+                                Quantity = tobeused,
+                                Percent = (double)(tobeused) / (double)total
+                            };
+                            if (analysis.Quantity > 0)
+                            {
+                                productionUnsuitabilityDetailedEmployeeAnalysis.Add(analysis);
+                            }
                         }
-                    }
-                }
-                if (selectedActionID == 4)
-                {
-                    foreach (var unsuitability in employeeList)
-                    {
-                        var scrap = unsuitabilityLines.Where(t => t.HURDA == true && t.CALISANID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
-                        var tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.CALISANID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
-                        var correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.CALISANID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                        break;
 
-                        ProductionUnsuitabilityDetailedEmployee analysis = new ProductionUnsuitabilityDetailedEmployee
+                    #endregion
+
+                    #region Toplam Uygunsuzluk
+
+                    case 4:
+
+                        foreach (var unsuitability in employeeList)
                         {
-                            EmployeeName = unsuitabilityLines.Where(t => t.CALISANID == unsuitability).Select(t => t.CALISANAD).FirstOrDefault(),
-                            Quantity = scrap + tobeused + correction,
-                            Percent = (double)(scrap + tobeused + correction) / (double)total
-                        };
-                        if (analysis.Quantity > 0)
-                        {
-                            productionUnsuitabilityDetailedEmployeeAnalysis.Add(analysis);
+                            #region Değişkenler
+
+                            int scrap = unsuitabilityLines.Where(t => t.HURDA == true && t.CALISANID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                            int tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.CALISANID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                            int correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.CALISANID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                            string employeeName = unsuitabilityLines.Where(t => t.CALISANID == unsuitability).Select(t => t.CALISANAD).FirstOrDefault();
+
+                            #endregion
+
+                            ProductionUnsuitabilityDetailedEmployee analysis = new ProductionUnsuitabilityDetailedEmployee
+                            {
+                                EmployeeName = employeeName,
+                                Quantity = scrap + tobeused + correction,
+                                Percent = (double)(scrap + tobeused + correction) / (double)total
+                            };
+                            if (analysis.Quantity > 0)
+                            {
+                                productionUnsuitabilityDetailedEmployeeAnalysis.Add(analysis);
+                            }
                         }
-                    }
-                }
+                        break;
 
+                    #endregion
+
+                    default: break;
+                }
             }
             return productionUnsuitabilityDetailedEmployeeAnalysis;
         }
+
+        #endregion
+
         #endregion
 
         #region Stoğa Göre Analiz
+
+        #region Chart-Grid
+
         public List<ProductionUnsuitabilityDetailedProduct> GetProductionUnsuitabilityDetailedProductAnalysis(string unsuitabilityCode, DateTime startDate, DateTime endDate, int selectedActionID)
         {
 
@@ -206,88 +286,135 @@ namespace TsiErp.DashboardUI.Services
 
             var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate).Where(t => t.KOD == unsuitabilityCode).Distinct().ToList();
             var productList = unsuitabilityLines.Select(t => t.STOKID).Distinct().ToList();
-            var total = unsuitabilityLines.Sum(t => t.OLCUKONTROLFORMBEYAN);
+            int total = unsuitabilityLines.Sum(t => t.OLCUKONTROLFORMBEYAN);
 
             if (unsuitabilityLines != null)
             {
-                if(selectedActionID == 1)
+                switch (selectedActionID)
                 {
-                    foreach (var unsuitability in productList)
-                    {
-                        var scrap = unsuitabilityLines.Where(t => t.HURDA == true && t.STOKID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                    #region Hurda
 
-                        ProductionUnsuitabilityDetailedProduct analysis = new ProductionUnsuitabilityDetailedProduct
-                        {
-                            ProductCode = unsuitabilityLines.Where(t => t.STOKID == unsuitability).Select(t => t.STOKACIKLAMASI).FirstOrDefault(),
-                            Quantity = scrap ,
-                            Percent = (double)(scrap) / (double)total
-                        };
-                        if (analysis.Quantity > 0)
-                        {
-                            productionUnsuitabilityDetailedProductAnalysis.Add(analysis);
-                        }
-                    }
-                }
-                if (selectedActionID == 2)
-                {
-                    foreach (var unsuitability in productList)
-                    {
-                        var correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.STOKID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                    case 1:
 
-                        ProductionUnsuitabilityDetailedProduct analysis = new ProductionUnsuitabilityDetailedProduct
+                        foreach (var unsuitability in productList)
                         {
-                            ProductCode = unsuitabilityLines.Where(t => t.STOKID == unsuitability).Select(t => t.STOKACIKLAMASI).FirstOrDefault(),
-                            Quantity =  correction,
-                            Percent = (double)(correction) / (double)total
-                        };
-                        if (analysis.Quantity > 0)
-                        {
-                            productionUnsuitabilityDetailedProductAnalysis.Add(analysis);
-                        }
-                    }
-                }
-                if (selectedActionID == 3)
-                {
-                    foreach (var unsuitability in productList)
-                    {
-                        var tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.STOKID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                            #region Değişkenler
 
-                        ProductionUnsuitabilityDetailedProduct analysis = new ProductionUnsuitabilityDetailedProduct
-                        {
-                            ProductCode = unsuitabilityLines.Where(t => t.STOKID == unsuitability).Select(t => t.STOKACIKLAMASI).FirstOrDefault(),
-                            Quantity =  tobeused ,
-                            Percent = (double)(tobeused) / (double)total
-                        };
-                        if (analysis.Quantity > 0)
-                        {
-                            productionUnsuitabilityDetailedProductAnalysis.Add(analysis);
-                        }
-                    }
-                }
-                if (selectedActionID == 4)
-                {
-                    foreach (var unsuitability in productList)
-                    {
-                        var scrap = unsuitabilityLines.Where(t => t.HURDA == true && t.STOKID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
-                        var tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.STOKID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
-                        var correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.STOKID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                            int scrap = unsuitabilityLines.Where(t => t.HURDA == true && t.STOKID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                            string productCode = unsuitabilityLines.Where(t => t.STOKID == unsuitability).Select(t => t.STOKACIKLAMASI).FirstOrDefault();
 
-                        ProductionUnsuitabilityDetailedProduct analysis = new ProductionUnsuitabilityDetailedProduct
-                        {
-                            ProductCode = unsuitabilityLines.Where(t => t.STOKID == unsuitability).Select(t => t.STOKACIKLAMASI).FirstOrDefault(),
-                            Quantity = scrap + tobeused + correction,
-                            Percent = (double)(scrap + tobeused + correction) / (double)total
-                        };
-                        if (analysis.Quantity > 0)
-                        {
-                            productionUnsuitabilityDetailedProductAnalysis.Add(analysis);
+                            #endregion
+
+                            ProductionUnsuitabilityDetailedProduct analysis = new ProductionUnsuitabilityDetailedProduct
+                            {
+                                ProductCode = productCode,
+                                Quantity = scrap,
+                                Percent = (double)(scrap) / (double)total
+                            };
+                            if (analysis.Quantity > 0)
+                            {
+                                productionUnsuitabilityDetailedProductAnalysis.Add(analysis);
+                            }
                         }
-                    }
+                        break;
+
+                    #endregion
+
+                    #region Düzeltme
+
+                    case 2:
+
+                        foreach (var unsuitability in productList)
+                        {
+                            #region Değişkenler
+
+                            int correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.STOKID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                            string productCode = unsuitabilityLines.Where(t => t.STOKID == unsuitability).Select(t => t.STOKACIKLAMASI).FirstOrDefault();
+
+                            #endregion
+
+                            ProductionUnsuitabilityDetailedProduct analysis = new ProductionUnsuitabilityDetailedProduct
+                            {
+                                ProductCode = productCode,
+                                Quantity = correction,
+                                Percent = (double)(correction) / (double)total
+                            };
+                            if (analysis.Quantity > 0)
+                            {
+                                productionUnsuitabilityDetailedProductAnalysis.Add(analysis);
+                            }
+                        }
+                        break;
+
+                    #endregion
+
+                    #region Olduğu Gibi Kullanılacak
+
+                    case 3:
+
+                        foreach (var unsuitability in productList)
+                        {
+                            #region Değişkenler
+
+                            int tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.STOKID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                            string productCode = unsuitabilityLines.Where(t => t.STOKID == unsuitability).Select(t => t.STOKACIKLAMASI).FirstOrDefault();
+
+                            #endregion
+
+                            ProductionUnsuitabilityDetailedProduct analysis = new ProductionUnsuitabilityDetailedProduct
+                            {
+                                ProductCode = productCode,
+                                Quantity = tobeused,
+                                Percent = (double)(tobeused) / (double)total
+                            };
+                            if (analysis.Quantity > 0)
+                            {
+                                productionUnsuitabilityDetailedProductAnalysis.Add(analysis);
+                            }
+                        }
+                        break;
+
+                    #endregion
+
+                    #region Toplam Uygunsuzluk
+
+                    case 4:
+
+                        foreach (var unsuitability in productList)
+                        {
+                            #region Değişkenler
+
+                            int scrap = unsuitabilityLines.Where(t => t.HURDA == true && t.STOKID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                            int tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.STOKID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                            int correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.STOKID == unsuitability).Sum(t => t.OLCUKONTROLFORMBEYAN);
+                            string productCode = unsuitabilityLines.Where(t => t.STOKID == unsuitability).Select(t => t.STOKACIKLAMASI).FirstOrDefault();
+
+                            #endregion
+
+                            ProductionUnsuitabilityDetailedProduct analysis = new ProductionUnsuitabilityDetailedProduct
+                            {
+                                ProductCode = productCode,
+                                Quantity = scrap + tobeused + correction,
+                                Percent = (double)(scrap + tobeused + correction) / (double)total
+                            };
+                            if (analysis.Quantity > 0)
+                            {
+                                productionUnsuitabilityDetailedProductAnalysis.Add(analysis);
+                            }
+                        }
+                        break;
+
+                    #endregion
+
+                    default: break;
                 }
 
             }
             return productionUnsuitabilityDetailedProductAnalysis;
         }
+
+        #endregion
+
         #endregion
 
     }
