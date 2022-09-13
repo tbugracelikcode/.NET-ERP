@@ -1,48 +1,54 @@
 ﻿using Microsoft.Data.SqlClient;
+using Syncfusion.DocIO.DLS;
 using System.Globalization;
 using TsiErp.DashboardUI.Helpers;
 using TsiErp.DashboardUI.Helpers.HelperModels;
 using TsiErp.DashboardUI.Models;
+using TsiErp.DashboardUI.Services.Interfaces;
+using System.Linq;
 
 namespace TsiErp.DashboardUI.Services
 {
-    public class IstasyonOEEService
+    public class IstasyonOEEService : IIstasyonOEEService
     {
-        SqlConnection _connection;
-
-        public IstasyonOEEService()
-        {
-            _connection = DBHelper.GetSqlConnection();
-        }
-
         #region Chart
-
-        public List<AdminMachineChart> GetAdminMachineChart(DateTime startDate, DateTime endDate, int frequency)
+        public async Task<List<AdminMachineChart>> GetAdminMachineChart(DateTime startDate, DateTime endDate, int frequency)
         {
             List<AdminMachineChart> adminMachineChart = new List<AdminMachineChart>();
-            var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate);
-            var calenderLines = DBHelper.GetCalendarQuery(startDate, endDate);
-            var haltLines = DBHelper.GetHaltQuery(startDate, endDate);
-            var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate);
 
-         
+           var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate);
+           var calenderLines = DBHelper.GetCalendarQuery(startDate, endDate);
+           var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate);
+
             if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
             {
-                var gList = operationLines.OrderBy(t => t.TARIH).GroupBy(t => new { AY = t.TARIH.Month, YIL = t.TARIH.Year }).Select(t => new AdminMachineChart
+                var gList = operationLines.OrderBy(t => t.TARIH).GroupBy(t => new { AY = t.TARIH.Month, YIL = t.TARIH.Year }).Select(t =>
                 {
-                    AY = GetMonth(t.Key.AY) + " " + t.Key.YIL.ToString(),
+                    decimal kullanilabilirlik = (decimal)(calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE)) > 0
 
-                    ISTASYONLAR = t.Select(t => t.MAKINEKODU).Distinct().ToList(),
+                    ? ((decimal)t.Sum(t => t.OPERASYONSURESI) / (decimal)(calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE)))
 
-                    KULLANILABILIRLIK = (decimal)(calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE)) > 0 ? ((decimal)t.Sum(t=>t.OPERASYONSURESI) / (decimal)(calenderLines.Where(c =>c.CALISMADURUMU=="ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE))) : 0,
+                    : 0;
 
-                    PERFORMANS = t.Sum(t => t.BIRIMSURE) > 0 ? (t.Sum(t => t.PLANLANANOPRSURESI) / t.Sum(t => t.BIRIMSURE)) : 0,
+                    decimal oee = ((calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE)) > 0) && (t.Sum(t => t.BIRIMSURE) > 0) && ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)) > 0) ? ((decimal)t.Sum(t => t.OPERASYONSURESI) / (decimal)(calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE))) * (t.Sum(t => t.PLANLANANOPRSURESI) / t.Sum(t => t.BIRIMSURE)) * (((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)) - (t.Sum(t => t.BIRIMSURE) * (unsuitabilityLines.Where(b => b.TARIH.Month == t.Key.AY && b.ISTVERIMLILIIKANALIZI == true).Sum(t => t.OLCUKONTROLFORMBEYAN)))) / ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)))) : 0;
 
-                    KALITE = ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)) - (t.Sum(t => t.BIRIMSURE) * (unsuitabilityLines.Where(b => b.TARIH.Month == t.Key.AY && b.ISTVERIMLILIIKANALIZI == true).Sum(t => t.OLCUKONTROLFORMBEYAN)))) / ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE))),
+                    return new AdminMachineChart
+                    {
+                        AY = GetMonth(t.Key.AY) + " " + t.Key.YIL.ToString(),
 
-                    OEE = ((calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE)) > 0) && ( t.Sum(t => t.BIRIMSURE) > 0) && ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE))>0) ? ((decimal)t.Sum(t => t.OPERASYONSURESI) / (decimal)(calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE))) * (t.Sum(t => t.PLANLANANOPRSURESI) / t.Sum(t => t.BIRIMSURE)) * (((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)) - (t.Sum(t => t.BIRIMSURE) * (unsuitabilityLines.Where(b => b.TARIH.Month == t.Key.AY && b.ISTVERIMLILIIKANALIZI == true).Sum(t => t.OLCUKONTROLFORMBEYAN)))) / ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)))) : 0
+                        ISTASYONLAR = t.Select(t => t.MAKINEKODU).Distinct().ToList(),
 
+                        KULLANILABILIRLIK = kullanilabilirlik,
+
+                        PERFORMANS = t.Sum(t => t.BIRIMSURE) > 0 ? (t.Sum(t => t.PLANLANANOPRSURESI) / t.Sum(t => t.BIRIMSURE)) : 0,
+
+                        KALITE = ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)) - (t.Sum(t => t.BIRIMSURE) * (unsuitabilityLines.Where(b => b.TARIH.Month == t.Key.AY && b.ISTVERIMLILIIKANALIZI == true).Sum(t => t.OLCUKONTROLFORMBEYAN)))) / ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE))),
+
+                        OEE = oee
+
+                    };
                 }).ToList();
+
                 adminMachineChart = gList;
             }
 
@@ -66,7 +72,7 @@ namespace TsiErp.DashboardUI.Services
                 adminMachineChart = gList;
             }
 
-            return adminMachineChart;
+            return await Task.FromResult(adminMachineChart);
 
         }
 
@@ -74,7 +80,7 @@ namespace TsiErp.DashboardUI.Services
 
         #region Grid
 
-        public List<StationOEEAnalysis> GetStationOEEAnalysis(DateTime startDate, DateTime endDate)
+        public async Task<List<StationOEEAnalysis>> GetStationOEEAnalysis(DateTime startDate, DateTime endDate)
         {
 
             List<StationOEEAnalysis> stationOEEAnalysis = new List<StationOEEAnalysis>();
@@ -118,7 +124,8 @@ namespace TsiErp.DashboardUI.Services
                     stationOEEAnalysis.Add(analysis);
                 }
             }
-            return stationOEEAnalysis;
+
+            return await Task.FromResult(stationOEEAnalysis);
         }
 
         #endregion

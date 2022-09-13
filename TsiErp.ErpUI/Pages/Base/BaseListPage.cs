@@ -1,16 +1,17 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Tsi.Application.Contract.Services.EntityFrameworkCore;
+using Tsi.Core.Utilities.Results;
+using TsiErp.Entities.Entities.Branch.Dtos;
 
 namespace TsiErp.ErpUI.Pages.Base
 {
-    public class BaseListPage<TGetOutputDto, TGetListOutputDto, TCreateInput, TUpdateInput, TGetListInput> : ComponentBase
+    public class BaseListPage<TEntity, TGetOutputDto, TGetListOutputDto, TCreateInput, TUpdateInput, TGetListInput> : ComponentBase
     {
-        public HttpClient HttpClient { get; set; }
+        public ICrudAppService<TEntity, TGetOutputDto, TGetListOutputDto, TCreateInput, TUpdateInput, TGetListInput> BaseCrudService { get; set; }
 
-        public virtual async Task<List<TGetListOutputDto>> GetListAsync(TGetListInput input)
+        public virtual async Task<IDataResult<IList<TGetListOutputDto>>> GetListAsync(TGetListInput input)
         {
-            var list = await HttpClient.GetFromJsonAsync<List<TGetListOutputDto>>("https://localhost:7258/Branches/GetListAsync/" + input);
-
-            return list;
+            return await BaseCrudService.GetListAsync(input);
         }
     }
 }

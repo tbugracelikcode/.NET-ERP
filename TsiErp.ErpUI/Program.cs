@@ -6,12 +6,27 @@ using TsiErp.ErpUI.Shared;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Localization;
  using Newtonsoft.Json.Serialization;
+using Autofac.Extensions.DependencyInjection;
+using TsiErp.Business.DependencyResolvers.Autofac;
+using Autofac;
+using System.Reflection;
+using TsiErp.Business;
+using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TsiErp.Business.Entities.Branch.Services;
+using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
+using TsiErp.DataAccess.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContextFactory<TsiErpDbContext>();
+ConfigureBusiness(builder);
+ConfigureDataAccess(builder);
 
-builder.Services.AddSingleton<HttpClient>();
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).ConfigureContainer<ContainerBuilder>(container =>
+{
+    container.RegisterModule(new AutofacBusinessModule());
+});
 
 builder.Services.AddSyncfusionBlazor();
             builder.Services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(SyncfusionLocalizer));
@@ -41,7 +56,10 @@ builder.Services.AddServerSideBlazor().AddHubOptions(o=>
                 o.MaximumReceiveMessageSize=102400000;
             });
 
+
+
 builder.Services.AddDevExpressBlazor();
+
 
 var app = builder.Build();
 
@@ -69,3 +87,18 @@ app.MapDefaultControllerRoute();
 app.MapFallbackToPage("/_Host");
 
 app.Run();
+
+
+static void ConfigureBusiness(WebApplicationBuilder builder)
+{
+    builder.Services.RegisterDependencies(Assembly.Load("TsiErp.Business"));
+
+    var instance = (TsiBusinessModule)Activator.CreateInstance(typeof(TsiBusinessModule));
+
+    instance.ConfigureServices(builder.Services);
+}
+
+static void ConfigureDataAccess(WebApplicationBuilder builder)
+{
+    builder.Services.RegisterDependencies(Assembly.Load("TsiErp.DataAccess"));
+}
