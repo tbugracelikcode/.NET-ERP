@@ -13,29 +13,36 @@ namespace TsiErp.DashboardUI.Services
             _connection = DBHelper.GetSqlConnection();
         }
 
+        #region Grid-Chart
+
         public List<ContractUnsuitabilityAnalysis> GetContractUnsuitabilityAnalysis(DateTime startDate, DateTime endDate)
         {
             List<ContractUnsuitabilityAnalysis> contractUnsuitabilityAnalysis = new List<ContractUnsuitabilityAnalysis>();
 
             var generalList = DBHelper.GetContractUnsuitabilityQueryGeneral(startDate, endDate);
             var unsuitabilityLines = DBHelper.GetContractUnsuitabilityQuery(startDate, endDate);
-            var list = unsuitabilityLines.Select(t => t.HATAID).Distinct().ToList();
-            var fasonList = unsuitabilityLines.Select(t => t.CARIID).Distinct().ToList();
+            var contractList = unsuitabilityLines.Select(t => t.CARIID).Distinct().ToList();
 
             if (unsuitabilityLines != null)
             {
-                foreach (var fasontedarikci in fasonList)
+                foreach (var contractSupplierID in contractList)
                 {
-                    var total = generalList.Where(t => t.CariID == fasontedarikci).Sum(t => t.Miktar);
-                    var receipt = generalList.Where(t => t.CariID == fasontedarikci).Sum(t => t.FasonFisiAdeti);
+                    #region Değişkenler
+
+                    int total = generalList.Where(t => t.CariID == contractSupplierID).Sum(t => t.Miktar);
+                    int receipt = generalList.Where(t => t.CariID == contractSupplierID).Sum(t => t.FasonFisiAdeti);
+                    string supplierTitle = unsuitabilityLines.Where(t => t.CARIID == contractSupplierID).Select(t => t.CARIUNVAN).FirstOrDefault();
+                    int productionOrderID = unsuitabilityLines.Where(t => t.CARIID == contractSupplierID).Select(t => t.URETIMEMRIID).FirstOrDefault();
+
+                    #endregion
 
                     ContractUnsuitabilityAnalysis analysis = new ContractUnsuitabilityAnalysis
                     {
-                        ContractSupplierID = fasontedarikci,
-                        ContractSupplier = unsuitabilityLines.Where(t => t.CARIID == fasontedarikci).Select(t => t.CARIUNVAN).FirstOrDefault(),
+                        ContractSupplierID = contractSupplierID,
+                        ContractSupplier = supplierTitle,
                         Total =total,
                         ContractReceiptQuantity = receipt,
-                        ProductionOrderID = unsuitabilityLines.Where(t => t.CARIID == fasontedarikci).Select(t => t.URETIMEMRIID).FirstOrDefault(),
+                        ProductionOrderID = productionOrderID,
                         Percent = (double)total/ (double)receipt
                     };
                     if(analysis.Total > 0)
@@ -47,27 +54,7 @@ namespace TsiErp.DashboardUI.Services
             return contractUnsuitabilityAnalysis;
         }
 
-        private string GetMonth(int ay)
-        {
-            string aystr = string.Empty;
-            switch (ay)
-            {
-                case 1: aystr = "Ocak"; break;
-                case 2: aystr = "Şubat"; break;
-                case 3: aystr = "Mart"; break;
-                case 4: aystr = "Nisan"; break;
-                case 5: aystr = "Mayıs"; break;
-                case 6: aystr = "Haziran"; break;
-                case 7: aystr = "Temmuz"; break;
-                case 8: aystr = "Ağustos"; break;
-                case 9: aystr = "Eylül"; break;
-                case 10: aystr = "Ekim"; break;
-                case 11: aystr = "Kasım"; break;
-                case 12: aystr = "Aralık"; break;
-                default: break;
+        #endregion
 
-            }
-            return aystr;
-        }
     }
 }

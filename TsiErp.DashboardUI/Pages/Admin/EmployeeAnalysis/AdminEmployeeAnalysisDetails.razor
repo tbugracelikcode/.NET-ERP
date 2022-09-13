@@ -4,74 +4,6 @@
 @inject PersonelDetayService PersonelDetayService
 @inject NavigationManager NavigationManager
 
-@using Syncfusion.Blazor.Calendars
-@using Syncfusion.Blazor.Buttons
-@using Syncfusion.Blazor.Grids
-@using Syncfusion.Blazor.Cards
-@using Syncfusion.Blazor.Data
-@using Syncfusion.Blazor.Inputs
-@using Syncfusion.Blazor.Navigations
-@using Syncfusion.Blazor.Spinner
-@using Syncfusion.Blazor.Charts
-
-<style>
-    .GridZebra table tbody tr:nth-child(odd) {
-        background-color: #B5B5B5;
-    }
-
-    .GridZebra table tbody tr:nth-child(n) {
-        text-align: center;
-        font-weight: bold;
-    }
-
-    table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    td, th {
-        border: 0px solid #dddddd;
-        text-align: center;
-        padding: 8px;
-    }
-
-    .ulstyle {
-        margin: 0px;
-        padding-left: 20px;
-        display: inline-block;
-    }
-
-    .list {
-        float: left;
-        line-height: 20px;
-        font: 10px;
-        min-width: 280px;
-    }
-
-    .FilterCard {
-        background-color: #f7f7f7;
-        border: 1px solid #d6d5d5;
-    }
-
-    .Cards {
-        border: 1px solid #d6d5d5;
-    }
-
-    .e-checkbox-wrapper.e-customcheck:hover .e-frame.e-check {
-        background-color: #9C0D0D;
-        font: 600;
-        font-size: 16px;
-        font-weight: bold;
-    }
-     .FilterLabelTitle{
-        color:#830000;
-        font-size:18px;
-    }
-    .FilterLabelTitleValue{
-        font-size:18px;
-    }
-</style>
 
 <SfCard class="FilterCard">
     <CardContent>
@@ -106,8 +38,8 @@
     <CardContent>
         <SfTab CssClass="default-tab" OverflowMode="@OverflowMode.Scrollable" HeaderPlacement="HeaderPosition.Top" Width="100%">
             <TabAnimationSettings>
-                <TabAnimationPrevious Effect="AnimationEffect.FadeIn"></TabAnimationPrevious>
-                <TabAnimationNext Effect="AnimationEffect.FadeOut"></TabAnimationNext>
+                <TabAnimationPrevious Effect="Syncfusion.Blazor.AnimationEffect.FadeIn"></TabAnimationPrevious>
+                <TabAnimationNext Effect="Syncfusion.Blazor.AnimationEffect.FadeOut"></TabAnimationNext>
             </TabAnimationSettings>
             <TabItems>
                 <TabItem>
@@ -171,54 +103,5 @@
 
 @code {
 
-    List<EmployeeDetailedHaltAnalysis> dataemployeehalt = new List<EmployeeDetailedHaltAnalysis>();
-
-    List<EmployeeDetailedChart> dataemployeechart = new List<EmployeeDetailedChart>();
-
-    SfGrid<EmployeeDetailedHaltAnalysis> EmployeeGrid;
-
-    SfChart ChartInstance;
-
-    bool VisibleSpinner = false;
-    double columnwidth;
-    private bool isEmployeeChecked = false;
-    int employees = 1;
-    string employeeName = string.Empty;
-
-    [Parameter]
-    public DateTime startDate { get; set; }
-
-    [Parameter]
-    public DateTime endDate { get; set; }
-
-    [Parameter]
-    public int employeeID { get; set; }
-
-
-    protected override void OnInitialized()
-    {
-        dataemployeehalt = PersonelDetayService.GetStationDetailedHaltAnalysis(employeeID, startDate, endDate);
-        dataemployeechart = PersonelDetayService.GetEmployeeDetailedtChart(employeeID, startDate, endDate);
-        employeeName = dataemployeehalt.Select(t => t.EmployeeName).FirstOrDefault();
-        if(dataemployeechart.Count()<=3)
-        {
-            columnwidth = 0.1;
-        }
-    }
-
-    private void OnChangeProductCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
-    {
-        if (isEmployeeChecked) { employees = 2; }
-        else { employees = 1; }
-        dataemployeechart = PersonelDetayService.GetEmployeeDetailedtChart(employeeID, startDate, endDate);
-        ChartInstance.RefreshAsync();
-    }
-
-    private void OnBackButtonClicked()
-    {
-        this.VisibleSpinner = true;
-
-        NavigationManager.NavigateTo("/admin/employee-analysis");
-    }
-
+  
 }

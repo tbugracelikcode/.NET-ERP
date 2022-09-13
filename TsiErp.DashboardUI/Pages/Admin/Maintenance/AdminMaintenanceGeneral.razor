@@ -2,17 +2,7 @@
 @layout AdminLayout
 
 @inject NavigationManager NavigationManager
-@using Syncfusion.Blazor.Buttons
-@using Syncfusion.Blazor.Popups
-@using Syncfusion.Blazor.Cards
-@using Syncfusion.Blazor.Data
-@using Syncfusion.Blazor.DropDowns
-@using Syncfusion.Blazor.Inputs
-@using Syncfusion.Blazor.Calendars
-@using Syncfusion.Blazor.Grids
-@using Syncfusion.Blazor.Navigations
-@using System.Timers
-@using TsiErp.DashboardUI.Helpers.HelperModels
+
 
 <SfCard class="e-card">
     <CardContent>
@@ -71,7 +61,7 @@
         </SfCard>
     </BodyTemplate>
     <FooterContentTemplate>
-        <DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Success" Text="Satın alma talep fişi oluştur" />
+        <DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Success" Text="Satın alma talep fişi oluştur" Click="@OnPurchaseReceiptClicked" />
         @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Secondary" Text="Cancel" Click="@(() => PopupVisible = false)" />*@
     </FooterContentTemplate>
 </DxPopup>
@@ -247,8 +237,8 @@
             <CardContent>
                 <SfTab CssClass="default-tab" OverflowMode="@OverflowMode.Scrollable" HeaderPlacement="HeaderPosition.Top" Width="100%">
                     <TabAnimationSettings>
-                        <TabAnimationPrevious Effect="AnimationEffect.FadeIn"></TabAnimationPrevious>
-                        <TabAnimationNext Effect="AnimationEffect.FadeOut"></TabAnimationNext>
+                        <TabAnimationPrevious Effect="Syncfusion.Blazor.AnimationEffect.FadeIn"></TabAnimationPrevious>
+                        <TabAnimationNext Effect="Syncfusion.Blazor.AnimationEffect.FadeOut"></TabAnimationNext>
                     </TabAnimationSettings>
                     <TabItems>
                         <TabItem>
@@ -326,466 +316,64 @@
         </SfCard>
     </BodyTemplate>
     <FooterContentTemplate>
-        <DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Success" Text="Satın alma talep fişi oluştur" />
+        <DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Success" @onclick="@OnPurchaseReceiptClicked" Text="Satın alma talep fişi oluştur" />
         @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Secondary" Text="Cancel" Click="@(() => PopupVisible = false)" />*@
     </FooterContentTemplate>
 </DxPopup>
 
-<style>
-    .GridZebra table tbody tr:nth-child(odd) {
-        background-color: #B5B5B5;
-    }
+<DxPopup Visible="@PopupVisible2"
+         ShowFooter="true"
+         HeaderText="Satın Alma Bilgileri"
+         Width="1500px"
+         Height="800px"
+         Closing="MaintenancePopupClosing2"
+         HeaderCssClass="HeaderTitleCss">
+    <BodyTemplate>
+        <SfCard class="Cards">
+            <CardHeader>
+            </CardHeader>
+            <CardContent>
+                <SfCard class="Cards" style="text-align:center">
 
-    .GridZebra table tbody tr:nth-child(n) {
-        text-align: center;
-    }
+                    <CardContent>
+                        <SfGrid DataSource="@satinAlmaList" AllowSelection="true" AllowPaging="false" Toolbar="@(new List<string>() { "Print" })" Height="573px" style="padding-left:20px; padding-right:20px;">
+                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                            <GridColumns>
+                                <GridColumn Visible="false" Field=@nameof(SatinAlmaDetaylari.STOKID) HeaderText="STOK ID" TextAlign="TextAlign.Right"
+                                            Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(SatinAlmaDetaylari.STOKKODU) HeaderText="STOK KODU" TextAlign="TextAlign.Left" Width="250">
+                                </GridColumn>
+                                <GridColumn Field=@nameof(SatinAlmaDetaylari.CARIUNVAN) HeaderText="TEDARİKÇİ" TextAlign="TextAlign.Left" Width="350">
+                                </GridColumn>
+                                <GridColumn Field=@nameof(SatinAlmaDetaylari.IHTIYACMIKTARI) Format="n2" HeaderText="İHTİYAÇ MİKTARI" TextAlign="TextAlign.Center" Width="150">
+                                </GridColumn>
+                                <GridColumn Field=@nameof(SatinAlmaDetaylari.BIRIMSETKOD) HeaderText="BİRİM SET" TextAlign="TextAlign.Center"
+                                            Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(SatinAlmaDetaylari.BIRIMFIYATDECIMAL) Format="n2"  HeaderText="BİRİM FİYAT" TextAlign="TextAlign.Right" Width="100">
+                                </GridColumn>
+                                <GridColumn Field=@nameof(SatinAlmaDetaylari.PARABIRIMI) HeaderText="PARA BİRİMİ" TextAlign="TextAlign.Left" Width="100">
+                                </GridColumn>
+                                <GridColumn Field=@nameof(SatinAlmaDetaylari.TOPLAMFIYAT) Format="n2" HeaderText="TOPLAM FİYAT" TextAlign="TextAlign.Right" Width="110">
+                                </GridColumn>
+                                <GridColumn Field=@nameof(SatinAlmaDetaylari.PARABIRIMI) HeaderText="PARA BİRİMİ" TextAlign="TextAlign.Left" Width="100">
+                                </GridColumn>
+                            </GridColumns>
+                        </SfGrid>
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </CardContent>
+            <CardFooter>
+            </CardFooter>
+        </SfCard>
+    </BodyTemplate>
+    <FooterContentTemplate>
+        <DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Success" Text="Satın alma talep fişini gerçekleştir" />
+        @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Secondary" Text="Cancel" Click="@(() => PopupVisible = false)" />*@
+    </FooterContentTemplate>
+</DxPopup>
 
-    table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    td, th {
-        border: 0px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-
-    .ulstyle {
-        margin: 0px;
-        padding-left: 20px;
-        display: inline-block;
-    }
-
-    .list {
-        float: left;
-        line-height: 20px;
-        font: 10px;
-        min-width: 280px;
-    }
-
-    .FilterCard {
-        background-color: #f7f7f7;
-        border: 3px solid #d6d5d5;
-    }
-
-    .Cards {
-        border: 1px solid #d6d5d5;
-    }
-
-    .e-checkbox-wrapper.e-customcheck:hover .e-frame.e-check {
-        background-color: #9C0D0D;
-        font: 600;
-        font-size: 16px;
-        font-weight: bold;
-    }
-
-    .FilterLabelTitle {
-        color: #830000;
-        font-size: 18px;
-    }
-
-    .FilterLabelTitleValue {
-        font-size: 18px;
-    }
-
-    .HeaderTitleCss {
-        font-weight: bold;
-        font-size: 24px;
-        text-align: center;
-    }
-
-    .property-panel-section .property-panel-content td {
-        padding: 0 0 15px 0;
-    }
-
-    .tile_layout.card-control-section .e-error {
-        height: 100px;
-        width: 100%;
-    }
-
-        .tile_layout.card-control-section .e-error .e-error-content {
-            color: red;
-            line-height: 100px;
-            text-align: center;
-        }
-
-    .tile_layout.card-control-section .e-card .e-card-image {
-        background-size: cover;
-        height: 157px;
-        position: inherit;
-        width: 182px;
-    }
-
-    .tile_layout.card-control-section .e-card .e-card-header .e-card-header-caption .e-card-header-title {
-        font-size: 20px;
-        font-family: Helvetica, 'Segoe UI';
-        font-weight: bold;
-    }
-
-    .tile_layout.card-control-section .e-card .e-card-header .e-card-header-caption .e-card-sub-title {
-        padding-top: 5px;
-    }
-
-    .tile_layout.card-control-section .e-card .e-card-content {
-        padding-top: 0px;
-        height: 175px;
-    }
-
-    #source_link {
-        float: right;
-        margin-right: 10px;
-    }
-
-    .e-tab .e-tab-header .e-toolbar-item .e-tab-text,
-    .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap .e-tab-icon {
-        font-size: 20px;
-        font-weight: bold;
-    }
-
-    .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap,
-    .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap .e-tab-icon {
-        color: black;
-    }
-
-    /*.e-tab .e-tab-header .e-toolbar-items {
-                            color:black;
-                            font-weight:bold;
-                        }
-
-
-
-                        .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap:hover {
-                            color:green;
-                        }
-
-                        .e-tab .e-tab-header .e-toolbar-item.e-active {
-                            color:crimson;
-                        }*/
-</style>
 @code {
 
-    [Inject] public IJSRuntime JsRuntime { get; set; }
-    public string SearchValue { get; set; }
-    public string SortingValue { get; set; }
-    public string[] FilteringValue { get; set; }
-    string TitleStation = string.Empty;
-    private System.Timers.Timer _timer;
-
-
-    public List<int> topluBakimIDList = new();
-    List<BakimIhtiyacListesi> ihtiyacList = new();
-    List<BakimIhtiyacListesi> topluIhtiyacList = new();
-    List<BakimTalimatlar> talimatList = new();
-
-    bool PopupVisible { get; set; } = false;
-    bool PopupVisibleAll { get; set; } = false;
-
-
-    private List<StationCards> _cardDatas;
-    public List<StationCards> CardDatas
-    {
-        get { return _cardDatas; }
-        set { _cardDatas = value; }
-    }
-    private int? selectedTimeIndex { get; set; } = 61;
-    private List<ComboboxTimePeriods> timeperiods = new List<ComboboxTimePeriods>() {
-        new ComboboxTimePeriods(){ TimeID= 121, TimeText= "Son 4 Ay" },
-        new ComboboxTimePeriods(){ TimeID= 91, TimeText= "Son 3 Ay" },
-        new ComboboxTimePeriods(){ TimeID= 61, TimeText= "Son 2 Ay" },
-        new ComboboxTimePeriods(){ TimeID= 31, TimeText= "Son 1 Ay" },
-        new ComboboxTimePeriods(){ TimeID= 8, TimeText= "Son 1 Hafta" }
-    };
-
-
-    protected override void OnInitialized()
-    {
-        _cardDatas = this.GetCardDatas();
-        base.OnInitialized();
-
-        var list = DBHelper.GetMaintenanceRecords();
-        _timer = new();
-        _timer.Interval = 10000;
-        _timer.Elapsed += async (object? sender, ElapsedEventArgs e) =>
-        {
-            timerEvent();
-            await InvokeAsync(StateHasChanged);
-        };
-        _timer.Enabled = true;
-    }
-
-    void MaintenancePopupClosing(PopupClosingEventArgs args)
-    {
-        PopupVisible = false;
-        PopupVisibleAll = false;
-    }
-
-    private void ValueChangeHandler(ChangeEventArgs<int?, ComboboxTimePeriods> args)
-    {
-        if (args.Value != null)
-        {
-            selectedTimeIndex = args.Value;
-            StateHasChanged();
-        }
-        else
-        {
-            selectedTimeIndex = 61;
-            StateHasChanged();
-        }
-    }
-
-    public void CellInfoHandler(QueryCellInfoEventArgs<BakimIhtiyacListesi>
-    Args)
-    {
-        var value = Args.Data.IHTIYACMIKTARI;
-        //if (Args.Column.Field == "IHTIYACMIKTARI")
-        //{
-        if (value > 0)
-        {
-            Args.Cell.AddStyle(new string[] { "background-color: #DF2C2C; color: white; " });
-        }
-        //}
-        StateHasChanged();
-    }
-
-
-    public void timerEvent()
-    {
-        if  (SearchValue == null && SortingValue == null && FilteringValue == null)        
-        {
-                _cardDatas = this.GetCardDatas();        
-        }
-    }
-
-    public void OnClickMaintenance(string stationCode, DateTime maintenanceDate, int maintenanceID)
-    {
-        ihtiyacList.Clear();
-        talimatList.Clear();
-        PopupVisible = true;
-        TitleStation = stationCode + " - " + maintenanceDate.ToString("dd.MM.yyyy") + " Tarihli Planlanan Bakım Detayları";
-        var list = DBHelper.GetMaintenanceLineRecords().Where(t => t.BAKIMID == maintenanceID).ToList();
-
-        foreach (var item in list.Where(t => t.IHTIYACMIKTARI > 0).ToList())
-        {
-            BakimIhtiyacListesi satir = new BakimIhtiyacListesi
-                {
-                    STOKID = item.STOKID,
-                    ESKISTOKKODU = item.ESKISTOKKODU,
-                    STOKACIKLAMASI = item.STOKACIKLAMASI,
-                    BIRIMSETKOD = item.BIRIMSETKOD,
-                    BAKIMMIKTARI = item.IHTIYACMIKTARI,
-                    STOKMIKTARI = item.STOKMIKTARI,
-                    IHTIYACMIKTARI = item.IHTIYACMIKTARI - item.STOKMIKTARI < 0 ? 0 : item.IHTIYACMIKTARI - item.STOKMIKTARI
-                };
-            ihtiyacList.Add(satir);
-        }
-
-        foreach (var item in list)
-        {
-            BakimTalimatlar talimat = new BakimTalimatlar
-                {
-                    BAKIMID = item.BAKIMID,
-                    TALIMAT = item.BAKIMTALIMATI
-                };
-            talimatList.Add(talimat);
-        }
-
-    }
-    public void OnClickAllMaintenance()
-    {
-        topluIhtiyacList.Clear();
-        PopupVisibleAll = true;
-        List<BakimSatirlari> list = new();
-        foreach (var bakimID in topluBakimIDList.Distinct())
-        {
-            list.AddRange(DBHelper.GetMaintenanceLineRecords().Where(t => t.BAKIMID == bakimID).ToList());
-        }
-
-        foreach (var item in list.Where(t => t.IHTIYACMIKTARI > 0).ToList())
-        {
-            if (topluIhtiyacList.Any(x => x.STOKID == item.STOKID))
-            {
-                var satir = topluIhtiyacList.Find(t => t.STOKID == item.STOKID);
-
-                if (satir != null)
-                {
-                    satir.BAKIMMIKTARI = satir.BAKIMMIKTARI + item.IHTIYACMIKTARI;
-                    satir.IHTIYACMIKTARI = satir.BAKIMMIKTARI - item.STOKMIKTARI < 0 ? 0 : satir.BAKIMMIKTARI - item.STOKMIKTARI;
-                }
-            }
-            else
-            {
-                BakimIhtiyacListesi satir = new BakimIhtiyacListesi
-                    {
-                        STOKID = item.STOKID,
-                        ESKISTOKKODU = item.ESKISTOKKODU,
-                        STOKACIKLAMASI = item.STOKACIKLAMASI,
-                        BIRIMSETKOD = item.BIRIMSETKOD,
-                        BAKIMMIKTARI = item.IHTIYACMIKTARI,
-                        STOKMIKTARI = item.STOKMIKTARI,
-                        IHTIYACMIKTARI = item.IHTIYACMIKTARI - item.STOKMIKTARI < 0 ? 0 : item.IHTIYACMIKTARI - item.STOKMIKTARI
-                    };
-                topluIhtiyacList.Add(satir);
-            }
-
-        }
-
-    }
-
-    public class StationCards
-    {
-        public string ImageUrl { get; set; }
-        public string StationCode { get; set; }
-        public int TimeLeft { get; set; }
-        public DateTime PlannedMaintenanceDate { get; set; }
-        public string Period { get; set; }
-        public string StationDepartment { get; set; }
-        public string MaintenanceType { get; set; }
-        public string Floor { get; set; }
-        public int MaintenanceID { get; set; }
-    }
-
-    public List<StationCards> GetCardDatas()
-    {
-        topluBakimIDList.Clear();
-        var assetpath = "images/Maintenance/";
-        List<StationCards>
-            CardData = new List<StationCards>
-                ();
-
-        var stations = DBHelper.GetStations().Where(t => t.VERITOPLAMA == true).ToList();
-        var canli = DBHelper.GetMaintenanceRecordsView().OrderByDescending(t => t.TARIH).ToList();
-        if (stations != null)
-        {
-            foreach (var item in stations)
-            {
-                var tempCanli = canli.Where(t => t.ISTID == item.ID).ToList();
-                int kalanSure = tempCanli.Where(t => t.DURUM == "Yapılmadı").OrderBy(t => t.KALANSURE).Select(t => t.KALANSURE).FirstOrDefault();
-                StationCards stationCards = new StationCards
-                    {
-                        ImageUrl = tempCanli.Select(t => t.CALISMABILGISI).FirstOrDefault() != 0 && tempCanli.Select(t => t.CALISMABILGISI).FirstOrDefault() != 8 ? assetpath + item.MAKINEKODU.Trim() + "on.gif" : assetpath + item.MAKINEKODU.Trim() + "off.png",
-                        StationCode = item.MAKINEKODU,
-                        StationDepartment = tempCanli.Select(t => t.BOLUM).FirstOrDefault(),
-                        Period = tempCanli.Where(t => t.KALANSURE <= kalanSure && t.DURUM == "Yapılmadı").Select(t => t.PERIYOT).FirstOrDefault().ToString(),
-                        PlannedMaintenanceDate = tempCanli.Where(t => t.KALANSURE <= kalanSure && t.DURUM == "Yapılmadı").Select(t => t.PLANLANANTARIH).FirstOrDefault(),
-                        TimeLeft = kalanSure / 22500,
-                        MaintenanceType = tempCanli.Where(t => t.KALANSURE <= kalanSure && t.DURUM == "Yapılmadı").Select(t => t.BAKIMTURU).FirstOrDefault(),
-                        Floor = GetFloor(tempCanli.Select(t => t.KAT).FirstOrDefault()),
-                        MaintenanceID = tempCanli.Where(t => t.KALANSURE <= kalanSure && t.DURUM == "Yapılmadı").Select(t => t.ID).FirstOrDefault()
-                    };
-                if (stationCards.PlannedMaintenanceDate != DateTime.MinValue)
-                {
-                    CardData.Add(stationCards);
-                    topluBakimIDList.Add(stationCards.MaintenanceID);
-                }
-            }
-        }
-        return CardData.OrderBy(t => t.TimeLeft).ToList();
-    }
-
-    private string GetFloor(int floor)
-    {
-        switch (floor)
-        {
-            case 1:
-                return "-1. Kat";
-                break;
-            case 2:
-                return "Zemin Kat";
-                break;
-            case 3:
-                return "1.Kat";
-                break;
-            default:
-                return "Zemin Kat";
-                break;
-        }
-
-
-    }
-
-    public List<string>
-        SortingType = new List<string>
-            () { "Artan", "Azalan" };
-    public List<string>
-        FilteringType = new List<string>
-            () { "1.Kat", "Zemin Kat", "-1. Kat" };
-    public async Task NavigateToUrlAsync(string url)
-    {
-        await JsRuntime.InvokeAsync
-        <object>
-            ("open", url, "_blank");
-    }
-
-    public List
-    <StationCards>
-        GetSortedCardDatas(List<StationCards>
-            sortingCards)
-    {
-        if (this.SortingValue != null)
-        {
-            sortingCards.Sort((x, y) => x.TimeLeft.CompareTo(y.TimeLeft));
-            if (this.SortingValue == "Azalan")
-            {
-                sortingCards.Reverse();
-            }
-        }
-        return sortingCards;
-    }
-
-    public void OnSearch(ChangedEventArgs args)
-    {
-        if (args.Value != null)
-        {
-            string value = args.Value.ToUpper();
-            this.CardDatas = this.CardDatas.FindAll(e => e.StationCode.Contains(value) || e.StationDepartment.Contains(value) || e.MaintenanceType.Contains(value));
-        }
-        else
-        {
-            this.CardDatas = this.GetCardDatas(this.FilteringValue);
-        }
-    }
-
-    public List<StationCards>
-        GetCardDatas(string[] values)
-    {
-        var cardDatas = GetCardDatas();
-        if (values == null)
-        {
-            return this.GetSortedCardDatas(cardDatas);
-        }
-        var filterCards = new List<StationCards>
-            ();
-        foreach (string value in values)
-        {
-            var cards = cardDatas.Where(e => e.Floor == value);
-            foreach (var card in cards)
-            {
-                filterCards.Add(card);
-            }
-        }
-        return this.GetSortedCardDatas(filterCards);
-    }
-
-    public void OnSorting(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, string>
-        args)
-    {
-        this.CardDatas = this.GetSortedCardDatas(this.CardDatas);
-    }
-
-    public void OnFiltering(MultiSelectChangeEventArgs<string[]>
-        args)
-    {
-        this.CardDatas = this.GetCardDatas(args.Value);
-    }
-
-    public void OnReset()
-    {
-        this.SearchValue = null;
-        this.SortingValue = null;
-        this.FilteringValue = null;
-        this.CardDatas = this.GetCardDatas();
-        this.selectedTimeIndex = 61;
-    }
-                                                            }
+  }

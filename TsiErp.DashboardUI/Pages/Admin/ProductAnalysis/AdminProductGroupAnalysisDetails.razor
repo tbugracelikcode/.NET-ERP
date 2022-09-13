@@ -3,74 +3,7 @@
 
 @inject StokDetayService StokDetayService
 @inject NavigationManager NavigationManager
-@using Syncfusion.Blazor.Calendars
-@using Syncfusion.Blazor.Buttons
-@using Syncfusion.Blazor.Grids
-@using Syncfusion.Blazor.Cards
-@using Syncfusion.Blazor.Data
-@using Syncfusion.Blazor.Inputs
-@using Syncfusion.Blazor.Navigations
-@using Syncfusion.Blazor.Spinner
-@using Syncfusion.Blazor.Charts
 
-<style>
-    .GridZebra table tbody tr:nth-child(odd) {
-        background-color: #B5B5B5;
-    }
-
-    .GridZebra table tbody tr:nth-child(n) {
-        text-align: center;
-        font-weight: bold;
-    }
-
-    table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    td, th {
-        border: 0px solid #dddddd;
-        text-align: center;
-        padding: 8px;
-    }
-
-    .ulstyle {
-        margin: 0px;
-        padding-left: 20px;
-        display: inline-block;
-    }
-
-    .list {
-        float: left;
-        line-height: 20px;
-        font: 10px;
-        min-width: 280px;
-    }
-
-    .FilterCard {
-        background-color: #f7f7f7;
-        border: 1px solid #d6d5d5;
-    }
-
-    .Cards {
-        border: 1px solid #d6d5d5;
-    }
-
-    .e-checkbox-wrapper.e-customcheck:hover .e-frame.e-check {
-        background-color: #9C0D0D;
-        font: 600;
-        font-size: 16px;
-        font-weight: bold;
-    }
-    .FilterLabelTitle{
-        color:#830000;
-        font-size:18px;
-    }
-    .FilterLabelTitleValue{
-        font-size:18px;
-    }
-</style>
 
 <SfCard class="FilterCard">
     <CardContent>
@@ -107,8 +40,8 @@
     <CardContent>
         <SfTab CssClass="default-tab" OverflowMode="@OverflowMode.Scrollable" HeaderPlacement="HeaderPosition.Top" Width="100%">
             <TabAnimationSettings>
-                <TabAnimationPrevious Effect="AnimationEffect.FadeIn"></TabAnimationPrevious>
-                <TabAnimationNext Effect="AnimationEffect.FadeOut"></TabAnimationNext>
+                <TabAnimationPrevious Effect="Syncfusion.Blazor.AnimationEffect.FadeIn"></TabAnimationPrevious>
+                <TabAnimationNext Effect="Syncfusion.Blazor.AnimationEffect.FadeOut"></TabAnimationNext>
             </TabAnimationSettings>
             <TabItems>
                 <TabItem>
@@ -172,54 +105,6 @@
 </SfCard>
 
 @code {
-    List<ProductScrapAnalysis> dataproductscrap = new List<ProductScrapAnalysis>();
-
-    List<ProductGroupDetailedChart> dataproductgroupchart = new List<ProductGroupDetailedChart>();
-
-    SfGrid<ProductScrapAnalysis> ProductGroupGrid;
-
-    SfChart ChartInstance;
-
-    bool VisibleSpinner = false;
-    private bool isProductGroupsChecked = false;
-    int productgroups = 1;
-    double columnwidth;
-    string productgroupName = string.Empty;
-
-    [Parameter]
-    public DateTime startDate { get; set; }
-
-    [Parameter]
-    public DateTime endDate { get; set; }
-
-    [Parameter]
-    public int productgroupID { get; set; }
-
-
-    protected override void OnInitialized()
-    {
-        dataproductscrap = StokDetayService.GetProductScrapAnalysis(productgroupID, startDate, endDate);
-        dataproductgroupchart = StokDetayService.GetProductGroupDetailedtChart(productgroupID, startDate, endDate, 1);
-        productgroupName = dataproductscrap.Select(t => t.ProductGroupName).FirstOrDefault();
-        if(dataproductgroupchart.Count()<3)
-        {
-            columnwidth = 0.1;
-        }
-    }
-
-    private void OnChangeProductCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
-    {
-        if (isProductGroupsChecked) { productgroups = 2; }
-        else { productgroups = 1; }
-        dataproductgroupchart = StokDetayService.GetProductGroupDetailedtChart(productgroupID, startDate, endDate, productgroups);
-        ChartInstance.RefreshAsync();
-    }
-
-    private void OnBackButtonClicked()
-    {
-        this.VisibleSpinner = true;
-
-        NavigationManager.NavigateTo("/admin/product-group-analysis");
-    }
+  
 
 }
