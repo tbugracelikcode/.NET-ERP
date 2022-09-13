@@ -45,6 +45,7 @@ namespace TsiErp.DashboardUI.Services
                 }).ToList();
                 adminMachineChart = gList;
             }
+
             else if (frequency == 5 || frequency == 6)
             {
                 var gList = operationLines.GroupBy(t => new { HAFTA = t.TARIH.Date, YIL = t.TARIH.Year }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminMachineChart
