@@ -1,7 +1,10 @@
 ﻿@page "/admin/machine-analysis"
 @layout AdminLayout
 
-@inject IstasyonOEEService IstasyonOEEService
+
+@using TsiErp.DashboardUI.Services.Interfaces
+
+@inject IIstasyonOEEService IstasyonOEEService
 @inject NavigationManager NavigationManager
 
 
@@ -114,10 +117,3 @@
     <CardFooter>
     </CardFooter>
 </SfCard>
-
-
-
-
-@code {
-   
-}

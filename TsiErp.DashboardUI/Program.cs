@@ -8,10 +8,11 @@ using Microsoft.AspNetCore.Localization;
  using Newtonsoft.Json.Serialization;
 using TsiErp.DashboardUI.Data;
 using TsiErp.DashboardUI.Services;
+using TsiErp.DashboardUI.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<IstasyonOEEService>();
+builder.Services.AddScoped<IIstasyonOEEService,IstasyonOEEService>();
 builder.Services.AddScoped<PersonelService>();
 builder.Services.AddScoped<PersonelDetayService>();
 builder.Services.AddScoped<StokDetayService>();

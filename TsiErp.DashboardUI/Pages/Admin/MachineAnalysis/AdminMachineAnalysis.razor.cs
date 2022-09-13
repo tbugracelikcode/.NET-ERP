@@ -27,15 +27,16 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
 
         #endregion
 
-        protected override void OnInitialized()
+        protected async override void OnInitialized()
         {
-            dataoee = IstasyonOEEService.GetStationOEEAnalysis(startDate, endDate);
-            datachart = IstasyonOEEService.GetAdminMachineChart(startDate, endDate, 3);
+
+            dataoee = await IstasyonOEEService.GetStationOEEAnalysis(startDate,endDate);
+            datachart =await IstasyonOEEService.GetAdminMachineChart(startDate,endDate,3);
         }
 
         #region Component Metotları
 
-        private void OnDateButtonClicked()
+        private async void OnDateButtonClicked()
         {
             this.VisibleSpinner = true;
             endDate = DateTime.Today;
@@ -81,10 +82,11 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
             #endregion
 
             thresholddouble = Convert.ToDouble(threshold) / 100;
-            Grid.Refresh();
-            ChartInstance.RefreshAsync();
-            dataoee = IstasyonOEEService.GetStationOEEAnalysis(startDate, endDate);
-            datachart = IstasyonOEEService.GetAdminMachineChart(startDate, endDate, frequencyChart);
+
+            dataoee = await IstasyonOEEService.GetStationOEEAnalysis(startDate,endDate);
+            datachart =await IstasyonOEEService.GetAdminMachineChart(startDate,endDate, frequencyChart);
+            await Grid.Refresh();
+            await ChartInstance.RefreshAsync();
             this.VisibleSpinner = false;
             StateHasChanged();
         }
@@ -114,17 +116,17 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
 
         public void CellInfoHandler(QueryCellInfoEventArgs<StationOEEAnalysis> Args)
         {
-            if (Args.Column.Field == "OEE")
-            {
-                if (Args.Data.OEE < Convert.ToDecimal(thresholddouble))
-                {
-                    Args.Cell.AddStyle(new string[] { "background-color: #DF0000; color: white; " });
-                }
-                else
-                {
-                    Args.Cell.AddStyle(new string[] { "background-color: #37CB00; color: white;" });
-                }
-            }
+            //if (Args.Column.Field == "OEE")
+            //{
+            //    if (Args.Data.OEE < Convert.ToDecimal(thresholddouble))
+            //    {
+            //        Args.Cell.AddStyle(new string[] { "background-color: #DF0000; color: white; " });
+            //    }
+            //    else
+            //    {
+            //        Args.Cell.AddStyle(new string[] { "background-color: #37CB00; color: white;" });
+            //    }
+            //}
             StateHasChanged();
         }
 

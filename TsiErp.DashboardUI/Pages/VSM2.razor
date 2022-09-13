@@ -63,7 +63,7 @@
                                                 <tr> <th class="c1">ID</th> <th class="c2">offsetX</th> <th class="c3">offsetY</th></tr>
                                                 <tr>
                                                     <td class="c1"><Syncfusion.Blazor.DropDowns.SfComboBox  TValue="Node" TItem="DiagramObjectCollection<Node>"></Syncfusion.Blazor.DropDowns.SfComboBox></td>
-                                                    <td class="c2"><SfTextBox Enabled=true Readonly=false></SfTextBox></td>
+                                                    <td class="c2"><SfTextBox Enabled=true Readonly=false @bind-Value=txtText></SfTextBox></td>
                                                     <td class="c3"><input type="text" placeholder="Veriii" /></td>
                                                 </tr>
 
@@ -90,6 +90,7 @@
 
     @code {
     private int connectorCount = 0;
+    public string txtText { get; set; }
     DiagramSelectionSettings selectionSettings = new DiagramSelectionSettings();
     public DiagramSize SymbolPreview;
     public SymbolMargin SymbolMargin = new SymbolMargin { Left = 15, Right = 15, Top = 15, Bottom = 15 };
@@ -327,6 +328,7 @@
     }
     protected override void OnInitialized()
     {
+        txtText = "Fikri";
         GridLineIntervals = new double[] { 1, 9, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75 };
         InitPaletteModel();
     }
@@ -341,23 +343,23 @@
                 Height = 100
             };
         ShapeSymbols = new DiagramObjectCollection<NodeBase>();
-        CreatePaletteNode("images/VSM_Image.png", "1", "1");
-        CreatePaletteNode("images/VSM_Image2.png", "2", "2");
-        CreatePaletteNode("images/VSM_Image3.png", "3", "3");
-        CreatePaletteNode("images/VSM_Image4.png", "4", "4");
-        CreatePaletteNode("images/VSM_Image5.png", "5", "5");
-        CreatePaletteNode("images/VSM_Image6.png", "6", "6");
-        CreatePaletteNode("images/VSM_Image7.png", "7", "7");
-        CreatePaletteNode("images/VSM_Image8.png", "8", "8");
-        CreatePaletteNode("images/VSM_Image9.png", "9", "9");
-        CreatePaletteNode("images/VSM_Image10.png", "10", "10");
-        CreatePaletteNode("images/VSM_Image11.png", "11", "11");
-        CreatePaletteNode("images/VSM_Image12.png", "12", "12");
-        CreatePaletteNode("images/VSM_Image13.png", "13", "13");
-        CreatePaletteNode("images/VSM_Image14.png", "14", "14");
-        CreatePaletteNode("images/VSM_Image15.png", "15", "15");
-        CreatePaletteNode("images/VSM_Image16.png", "16", "16");
-        CreatePaletteNode("images/VSM_Image17.png", "17", "17");
+        CreatePaletteNode("images/VSM/VSM_Image.png", "1", "1");
+        CreatePaletteNode("images/VSM/VSM_Image2.png", "2", "2");
+        CreatePaletteNode("images/VSM/VSM_Image3.png", "3", "3");
+        CreatePaletteNode("images/VSM/VSM_Image4.png", "4", "4");
+        CreatePaletteNode("images/VSM/VSM_Image5.png", "5", "5");
+        CreatePaletteNode("images/VSM/VSM_Image6.png", "6", "6");
+        CreatePaletteNode("images/VSM/VSM_Image7.png", "7", "7");
+        CreatePaletteNode("images/VSM/VSM_Image8.png", "8", "8");
+        CreatePaletteNode("images/VSM/VSM_Image9.png", "9", "9");
+        CreatePaletteNode("images/VSM/VSM_Image10.png", "10", "10");
+        CreatePaletteNode("images/VSM/VSM_Image11.png", "11", "11");
+        CreatePaletteNode("images/VSM/VSM_Image12.png", "12", "12");
+        CreatePaletteNode("images/VSM/VSM_Image13.png", "13", "13");
+        CreatePaletteNode("images/VSM/VSM_Image14.png", "14", "14");
+        CreatePaletteNode("images/VSM/VSM_Image15.png", "15", "15");
+        CreatePaletteNode("images/VSM/VSM_Image16.png", "16", "16");
+        CreatePaletteNode("images/VSM/VSM_Image17.png", "17", "17");
         connectorSymbols = new DiagramObjectCollection<NodeBase>();
         CreatePaletteConnector("Link1", ConnectorSegmentType.Orthogonal, DecoratorShape.Arrow);
         CreatePaletteConnector("Link2", ConnectorSegmentType.Orthogonal, DecoratorShape.None);
