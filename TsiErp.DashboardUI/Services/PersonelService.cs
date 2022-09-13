@@ -15,12 +15,13 @@ namespace TsiErp.DashboardUI.Services
             _connection = DBHelper.GetSqlConnection();
         }
 
+        #region Chart
+
         public List<AdminEmployeeChart> GetEmployeeChart(DateTime startDate, DateTime endDate, int frequency)
         {
             List<AdminEmployeeChart> adminEmployeeChart = new List<AdminEmployeeChart>();
             var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate);
             var calenderLines = DBHelper.GetCalendarQuery(startDate, endDate);
-            var haltLines = DBHelper.GetHaltQuery(startDate, endDate);
             var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate);
 
 
@@ -29,11 +30,17 @@ namespace TsiErp.DashboardUI.Services
                 var gList = operationLines.OrderBy(t => t.TARIH).GroupBy(t => new { AY = t.TARIH.Month, YIL = t.TARIH.Year }).Select(t => new AdminEmployeeChart
                 {
                     AY = GetMonth(t.Key.AY) + " " + t.Key.YIL.ToString(),
+
                     PERSONELLER = t.Select(t => t.CALISAN).Distinct().ToList(),
+
                     KULLANILABILIRLIK = (decimal)(calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE)) > 0 ? ((decimal)t.Sum(t => t.OPERASYONSURESI) / (decimal)(calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE))) : 0,
+
                     PERFORMANS = t.Sum(t => t.BIRIMSURE) > 0 ? (t.Sum(t => t.PLANLANANOPRSURESI) / t.Sum(t => t.BIRIMSURE)) : 0,
+
                     KALITE = ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)) - (t.Sum(t => t.BIRIMSURE) * (unsuitabilityLines.Where(b => b.TARIH.Month == t.Key.AY && b.PERVERIMLILIKANALIZI == true).Sum(t => t.OLCUKONTROLFORMBEYAN)))) / ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE))),
+
                     OEE = ((calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE)) > 0) && (t.Sum(t => t.BIRIMSURE) > 0) && ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)) > 0) ? ((decimal)t.Sum(t => t.OPERASYONSURESI) / (decimal)(calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE))) * (t.Sum(t => t.PLANLANANOPRSURESI) / t.Sum(t => t.BIRIMSURE)) * (((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)) - (t.Sum(t => t.BIRIMSURE) * (unsuitabilityLines.Where(b => b.TARIH.Month == t.Key.AY && b.PERVERIMLILIKANALIZI == true).Sum(t => t.OLCUKONTROLFORMBEYAN)))) / ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)))) : 0
+
                 }).ToList();
                 adminEmployeeChart = gList;
             }
@@ -42,19 +49,27 @@ namespace TsiErp.DashboardUI.Services
                 var gList = operationLines.GroupBy(t => new { HAFTA = t.TARIH.Date, YIL = t.TARIH.Year }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminEmployeeChart
                 {
                     AY = t.Key.HAFTA.ToString("dd MMM yy", new CultureInfo("tr-TR")) + " " + t.Key.YIL.ToString(),
+
                     PERSONELLER = t.Select(x => x.MAKINEKODU).Distinct().ToList(),
+
                     KULLANILABILIRLIK = (decimal)(calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Date == t.Key.HAFTA && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE)) == 0 ? 0 :((decimal)t.Sum(t => t.OPERASYONSURESI) / (decimal)(calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Date == t.Key.HAFTA && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE))),
+
                     PERFORMANS = t.Sum(t => t.BIRIMSURE) == 0 ? 0 : (t.Sum(t => t.PLANLANANOPRSURESI) / t.Sum(t => t.BIRIMSURE)),
+
                     KALITE = ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE))) == 0 ? 0 : ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)) - (t.Sum(t => t.BIRIMSURE) * (unsuitabilityLines.Where(b => b.TARIH.Date == t.Key.HAFTA && b.PERVERIMLILIKANALIZI == true).Sum(t => t.OLCUKONTROLFORMBEYAN)))) / ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE))),
+
                     OEE = (decimal)(calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Date == t.Key.HAFTA && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE)) == 0 || t.Sum(t => t.BIRIMSURE) == 0 || ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE))) == 0 ? 0 : 
                     ((decimal)t.Sum(t => t.OPERASYONSURESI) / (decimal)(calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Date == t.Key.HAFTA && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE))) * (t.Sum(t => t.PLANLANANOPRSURESI) / t.Sum(t => t.BIRIMSURE)) * (((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)) - (t.Sum(t => t.BIRIMSURE) * (unsuitabilityLines.Where(b => b.TARIH.Date == t.Key.HAFTA && b.PERVERIMLILIKANALIZI == true).Sum(t => t.OLCUKONTROLFORMBEYAN)))) / ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE))))
+
                 }).ToList();
                 adminEmployeeChart = gList;
             }
             return adminEmployeeChart;
         }
 
-           
+        #endregion
+
+        #region Grid
 
         public List<EmployeeGeneralAnalysis> GetEmployeeGeneralAnalysis(DateTime startDate, DateTime endDate)
         {
@@ -73,25 +88,23 @@ namespace TsiErp.DashboardUI.Services
                     var tempOperationLines = operationLines.Where(t => t.CALISANID == employeeID).ToList();
                     var tempUnsuitabilityLines = unsuitabilityLines.Where(t => t.CALISANID == employeeID && t.PERVERIMLILIKANALIZI == true).ToList();
 
-                    decimal kull = (decimal)(tempOperationLines.Sum(t => t.OPERASYONSURESI) / vardiyaSure);
+                    #region Değişkenler
+
+                    decimal availability = (decimal)(tempOperationLines.Sum(t => t.OPERASYONSURESI) / vardiyaSure);
                     decimal perf = tempOperationLines.Sum(t => t.BIRIMSURE) == 0 ? 0 : tempOperationLines.Sum(t => t.PLANLANANOPRSURESI) / tempOperationLines.Sum(t => t.BIRIMSURE) ;
-                    decimal kalite = tempOperationLines.Sum(t => t.BIRIMSURE) == 0 ? 0 : ((((tempOperationLines.Sum(t => t.URETILENADET) * tempOperationLines.Sum(t => t.BIRIMSURE)) - (tempUnsuitabilityLines.Sum(t => t.OLCUKONTROLFORMBEYAN) * tempOperationLines.Sum(t => t.BIRIMSURE)))) / (tempOperationLines.Sum(t => t.URETILENADET) * tempOperationLines.Sum(t => t.BIRIMSURE)));
+                    decimal quality = tempOperationLines.Sum(t => t.BIRIMSURE) == 0 ? 0 : ((((tempOperationLines.Sum(t => t.URETILENADET) * tempOperationLines.Sum(t => t.BIRIMSURE)) - (tempUnsuitabilityLines.Sum(t => t.OLCUKONTROLFORMBEYAN) * tempOperationLines.Sum(t => t.BIRIMSURE)))) / (tempOperationLines.Sum(t => t.URETILENADET) * tempOperationLines.Sum(t => t.BIRIMSURE)));
+                    string employeeName = operationLines.Where(t => t.CALISANID == employeeID).Select(t => t.CALISAN).FirstOrDefault();
+
+                    #endregion
 
                     EmployeeGeneralAnalysis analysis = new EmployeeGeneralAnalysis
                     {
                         EmployeeID = employeeID,
-                        EmployeeName = operationLines.Where(t => t.CALISANID == employeeID).Select(t => t.CALISAN).FirstOrDefault(),
+                        EmployeeName = employeeName,
                         Performance = perf,
-                        Quality = kalite,
-                        Availability = kull,
-                        OEE = perf*kalite*kull
-                        //OperationTime = operationLines.Where(t => t.CALISANID == employeeID).Sum(t => t.BIRIMSURE) * operationLines.Where(t => t.CALISANID == employeeID).Sum(t => t.URETILENADET),
-                        //PlannedOperationTime = operationLines.Where(t => t.CALISANID == employeeID).Sum(t => t.URETILENADET) * operationLines.Where(t => t.CALISANID == employeeID).Sum(t => t.PLANLANANOPRSURESI),
-                        //HaltTime = operationLines.Where(t => t.CALISANID == employeeID).Sum(t => t.ATILSURE),
-                        //TotalProduction = operationLines.Where(t => t.CALISANID == employeeID).Sum(t => t.URETILENADET),
-                        //TotalScrap = operationLines.Where(t => t.CALISANID == employeeID).Sum(t => t.HURDAADET),
-                        //Performance = operationLines.Where(t => t.CALISANID == employeeID).Sum(t => t.BIRIMSURE) / operationLines.Where(t => t.CALISANID == employeeID).Sum(t => t.PLANLANANOPRSURESI),
-                        //OEE = operationLines.Where(t=>t.CALISANID == employeeID).Average(t=>t.OEE)
+                        Quality = quality,
+                        Availability = availability,
+                        OEE = perf* quality * availability
 
                     };
                     employeeGeneralAnalysis.Add(analysis);
@@ -99,6 +112,8 @@ namespace TsiErp.DashboardUI.Services
             }
             return employeeGeneralAnalysis;
         }
+
+        #endregion
 
         private string GetMonth(int ay)
         {
