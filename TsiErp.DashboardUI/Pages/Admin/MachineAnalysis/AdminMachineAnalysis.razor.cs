@@ -12,10 +12,10 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
         SfGrid<StationOEEAnalysis> Grid;
 
         #region Değişkenler
+
         DateTime startDate = DateTime.Today.AddDays(-90);
         DateTime endDate = DateTime.Today;
         private int? selectedTimeIndex { get; set; }
-        private int? selectedProductIndex { get; set; }
         private int threshold = 75;
         private double thresholddouble = 0.75;
         private int frequencyChart;
@@ -24,6 +24,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
         private bool isLabelsChecked = true;
         private bool isGridChecked = true;
         private bool dataLabels = true;
+
         #endregion
 
         protected override void OnInitialized()
@@ -34,14 +35,13 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
 
         #region Component Metotları
 
-
-
         private void OnDateButtonClicked()
         {
             this.VisibleSpinner = true;
             endDate = DateTime.Today;
 
             #region Zaman Seçimi
+
             if (selectedTimeIndex == 0)
             {
                 startDate = DateTime.Today.AddDays(-330);
@@ -77,6 +77,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
                 startDate = DateTime.Today.AddDays(-7);
                 frequencyChart = 6;
             }
+
             #endregion
 
             thresholddouble = Convert.ToDouble(threshold) / 100;

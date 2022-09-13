@@ -24,20 +24,25 @@ namespace TsiErp.DashboardUI.Services
 
             var unsuitabilityLines = DBHelper.GetSuppliertUnsuitabilityQuery(startDate, endDate).Where(t => t.HATAID == errorID).ToList();
             var customerList = unsuitabilityLines.Select(t => t.CARIID).Distinct().ToList();
-            var total = unsuitabilityLines.Sum(t => t.UYGUNOLMAYANMIKTAR);
+            int total = unsuitabilityLines.Sum(t => t.UYGUNOLMAYANMIKTAR);
 
             if (unsuitabilityLines != null)
             {
                 foreach (var unsuitability in customerList)
                 {
-                    var refuse = unsuitabilityLines.Where(t => t.RED == true && t.CARIID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
-                    var contact = unsuitabilityLines.Where(t => t.TEDARIKCIIRTIBAT == true && t.CARIID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
-                    var tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.CARIID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
-                    var correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.CARIID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
+                    #region Değişkenler
+
+                    int refuse = unsuitabilityLines.Where(t => t.RED == true && t.CARIID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
+                    int contact = unsuitabilityLines.Where(t => t.TEDARIKCIIRTIBAT == true && t.CARIID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
+                    int tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.CARIID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
+                    int correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.CARIID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
+                    string customer = unsuitabilityLines.Where(t => t.CARIID == unsuitability).Select(t => t.CARIUNVAN).FirstOrDefault();
+
+                    #endregion
 
                     SupplierUnsuitabilityDetailedCustomer analysis = new SupplierUnsuitabilityDetailedCustomer
                     {
-                        Customer = unsuitabilityLines.Where(t => t.CARIID == unsuitability).Select(t => t.CARIUNVAN).FirstOrDefault(),
+                        Customer = customer,
                         Quantity = contact + tobeused + correction+refuse,
                         Percent = (double)(contact + tobeused + correction + refuse) / (double)total
                     };
@@ -64,20 +69,25 @@ namespace TsiErp.DashboardUI.Services
 
             var unsuitabilityLines = DBHelper.GetSuppliertUnsuitabilityQuery(startDate, endDate).Where(t => t.HATAID == errorID).ToList();
             var productList = unsuitabilityLines.Select(t => t.STOKID).Distinct().ToList();
-            var total = unsuitabilityLines.Sum(t => t.UYGUNOLMAYANMIKTAR);
+            int total = unsuitabilityLines.Sum(t => t.UYGUNOLMAYANMIKTAR);
 
             if (unsuitabilityLines != null)
             {
                 foreach (var unsuitability in productList)
                 {
-                    var refuse = unsuitabilityLines.Where(t => t.RED == true && t.STOKID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
-                    var contact = unsuitabilityLines.Where(t => t.TEDARIKCIIRTIBAT == true && t.STOKID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
-                    var tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.STOKID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
-                    var correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.STOKID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
+                    #region Değişkenler
+
+                    int refuse = unsuitabilityLines.Where(t => t.RED == true && t.STOKID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
+                    int contact = unsuitabilityLines.Where(t => t.TEDARIKCIIRTIBAT == true && t.STOKID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
+                    int tobeused = unsuitabilityLines.Where(t => t.OLDUGUGIBIKULLANILACAK == true && t.STOKID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
+                    int correction = unsuitabilityLines.Where(t => t.DUZELTME == true && t.STOKID == unsuitability).Sum(t => t.UYGUNOLMAYANMIKTAR);
+                    string productCode = unsuitabilityLines.Where(t => t.STOKID == unsuitability).Select(t => t.STOKACIKLAMASI).FirstOrDefault();
+
+                    #endregion
 
                     SupplierUnsuitabilityDetailedProduct analysis = new SupplierUnsuitabilityDetailedProduct
                     {
-                        ProductCode = unsuitabilityLines.Where(t => t.STOKID == unsuitability).Select(t => t.STOKACIKLAMASI).FirstOrDefault(),
+                        ProductCode = productCode,
                         Quantity = contact + tobeused + correction,
                         Percent = (double)(contact + tobeused + correction + refuse) / (double)total
                     };

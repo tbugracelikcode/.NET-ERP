@@ -50,6 +50,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.SupplierUnsuitabilityAnalysis
             {
                 columnwidth2 = 0.1;
             }
+
             #endregion
         }
 

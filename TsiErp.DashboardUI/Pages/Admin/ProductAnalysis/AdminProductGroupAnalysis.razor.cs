@@ -20,7 +20,6 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
         private int threshold;
         int? selectedproductID;
         string chartTitle = string.Empty;
-        private double thresholddouble;
         private int frequencyChart;
         SfChart ChartInstance;
         bool VisibleSpinner = false;
@@ -47,10 +46,10 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
 
         private void OnDateButtonClicked()
         {
-            //VisibleSpinner = true;
             endDate = DateTime.Today;
 
             #region Zaman Seçimi
+
             if (selectedTimeIndex == 0)
             {
                 startDate = DateTime.Today.AddDays(-365);
@@ -86,9 +85,9 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
                 startDate = DateTime.Today.AddDays(-7);
                 frequencyChart = 6;
             }
+
             #endregion
 
-            thresholddouble = Convert.ToDouble(threshold) / 100;
             Grid.Refresh();
             ChartInstance.RefreshAsync();
             dataproductgroup = StokService.GetProductGroupsAnalysis(startDate, endDate);
@@ -96,7 +95,6 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
             datachart = StokService.GetProductChart(startDate, endDate, frequencyChart, selectedproductID);
             chartTitle = dataproductgroup.Where(t => t.ProductGroupID == selectedproductID).Select(t => t.ProductGroupName).FirstOrDefault() + " HURDA GRAFİĞİ";
             StateHasChanged();
-            //VisibleSpinner = false;
         }
 
         private void OnDetailButtonClicked(int stationID)

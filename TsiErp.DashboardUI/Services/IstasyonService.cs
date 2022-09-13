@@ -35,22 +35,28 @@ namespace TsiErp.DashboardUI.Services
                     var tempOperationLines = operationLines.Where(t => t.ISTASYONID == item).ToList();
                     var tempHaltLines = haltLines.Where(t => t.ISTASYONID == item).ToList();
 
+                    #region Değişkenler
+
                     int unplannedHaltTime = tempHaltLines.Where(t => t.PLANLI == "PLANSIZ").Sum(t => t.DURUSSURE);
                     int stationHaltTime = tempHaltLines.Sum(t => t.DURUSSURE);
+                    string machineCode = tempOperationLines.Where(t => t.ISTASYONID == item).Select(t => t.MAKINEKODU).FirstOrDefault();
+                    decimal stationProductionTime = tempOperationLines.Sum(t => t.OPERASYONSURESI) + tempOperationLines.Sum(t => t.AYARSURESI);
+                    int plannedHaltTime = tempHaltLines.Where(t => t.PLANLI == "PLANLI").Sum(t => t.DURUSSURE);
+
+                    #endregion
+
                     StationGeneralAnalysis analysis = new StationGeneralAnalysis
                     {
                         AvailableTime = _KullanilabilirZaman(tempCalendarLines),
                         StationID = item,
-                        Code = tempOperationLines.Where(t=>t.ISTASYONID == item).Select(t=>t.MAKINEKODU).FirstOrDefault(),
+                        Code = machineCode,
                         TheoreticalTime = _TeorikSure(tempCalendarLines),
                         StationOnTime = _MakineninAcikOlduguSure(tempOperationLines, tempHaltLines),
-                        StationProductionTime = tempOperationLines.Sum(t => t.OPERASYONSURESI) + tempOperationLines.Sum(t=>t.AYARSURESI),
+                        StationProductionTime = stationProductionTime,
                         StationHaltTime = stationHaltTime,
-                        PlannedHaltTime = tempHaltLines.Where(t=>t.PLANLI == "PLANLI").Sum(t=>t.DURUSSURE),
+                        PlannedHaltTime = plannedHaltTime,
                         UnplannedHaltTime = unplannedHaltTime,
-                        UnplannedPercentage = unplannedHaltTime > 0 && stationHaltTime > 0 ? ((double)unplannedHaltTime / (double)stationHaltTime) : 0,
-                        //Time = endDate.Subtract(startDate),
-                        //Productivity = 
+                        UnplannedPercentage = unplannedHaltTime > 0 && stationHaltTime > 0 ? ((double)unplannedHaltTime / (double)stationHaltTime) : 0
 
                     };
                     stationGeneralAnalyses.Add(analysis);

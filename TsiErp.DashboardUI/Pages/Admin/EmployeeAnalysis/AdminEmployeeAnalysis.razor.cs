@@ -12,6 +12,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.EmployeeAnalysis
         SfGrid<EmployeeGeneralAnalysis> Grid;
 
         #region Değişkenler
+
         DateTime startDate = DateTime.Today.AddDays(-90);
         DateTime endDate = DateTime.Today;
         private int? selectedTimeIndex { get; set; }
@@ -22,6 +23,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.EmployeeAnalysis
         bool VisibleSpinner = false;
         private bool isLabelsChecked = true;
         private bool dataLabels = true;
+
         #endregion
 
         protected override void OnInitialized()
@@ -36,10 +38,10 @@ namespace TsiErp.DashboardUI.Pages.Admin.EmployeeAnalysis
 
         private void OnDateButtonClicked()
         {
-            //VisibleSpinner = true;
             endDate = DateTime.Today;
 
             #region Zaman Seçimi
+
             if (selectedTimeIndex == 0)
             {
                 startDate = DateTime.Today.AddDays(-365);
@@ -75,6 +77,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.EmployeeAnalysis
                 startDate = DateTime.Today.AddDays(-7);
                 frequencyChart = 6;
             }
+
             #endregion
 
             thresholddouble = Convert.ToDouble(threshold) / 100;
@@ -83,7 +86,6 @@ namespace TsiErp.DashboardUI.Pages.Admin.EmployeeAnalysis
             dataemployee = PersonelService.GetEmployeeGeneralAnalysis(startDate, endDate);
             datachart = PersonelService.GetEmployeeChart(startDate, endDate, frequencyChart);
             StateHasChanged();
-            //VisibleSpinner = false;
         }
 
         private void OnDetailButtonClicked(int employeeID)

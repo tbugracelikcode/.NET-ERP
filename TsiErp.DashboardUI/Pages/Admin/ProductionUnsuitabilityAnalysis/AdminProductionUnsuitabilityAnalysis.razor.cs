@@ -19,7 +19,6 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
         private int? selectedActionIndex { get; set; }
         int? selectedactionID = 4;
         private int threshold;
-        private double thresholddouble;
         string chartTitle = "Toplu Uygunsuzluk Grafiği";
         private int frequencyChart;
         SfChart ChartInstance;
@@ -47,7 +46,9 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
         {
             //VisibleSpinner = true;
             endDate = DateTime.Today;
+
             #region Zaman Seçimi
+
             if (selectedTimeIndex == 0)
             {
                 startDate = DateTime.Today.AddDays(-365);
@@ -83,9 +84,11 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
                 startDate = DateTime.Today.AddDays(-7);
                 frequencyChart = 6;
             }
+
             #endregion
 
             #region Aksiyon Seçimi
+
             if (selectedactionID == 1)
             {
                 chartTitle = "Hurda Grafiği";
@@ -102,9 +105,9 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
             {
                 chartTitle = "Toplu Uygunsuzluk Grafiği";
             }
+
             #endregion
 
-            thresholddouble = Convert.ToDouble(threshold) / 100;
             Grid.Refresh();
             ChartInstance.RefreshAsync();
             dataprodunsuitability = UretimUygunsuzlukService.GetProductionUnsuitabilityAnalysis(startDate, endDate);

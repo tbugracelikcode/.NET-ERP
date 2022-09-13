@@ -85,12 +85,6 @@ namespace TsiErp.DashboardUI.Pages.Admin.ContractUnsuitabilityAnalysis
             NavigationManager.NavigateTo("/admin/contract-unsuitability-analysis/details" + "/" + cariID.ToString() + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd") + "/" + selectedTimeIndex.ToString() + "/" + total.ToString()); ;
         }
 
-        private void OnChangeLabelCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
-        {
-            ChartInstance.RefreshAsync();
-            if (isLabelsChecked) { dataLabels = true; }
-            else { dataLabels = false; }
-        }
 
         #endregion
 

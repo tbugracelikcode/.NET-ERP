@@ -2,6 +2,7 @@
 using TsiErp.DashboardUI.Helpers;
 using TsiErp.DashboardUI.Helpers.HelperModels;
 using TsiErp.DashboardUI.Models;
+using System.Globalization;
 
 namespace TsiErp.DashboardUI.Services
 {
@@ -20,148 +21,161 @@ namespace TsiErp.DashboardUI.Services
             List<AdminSupplierUnsuitabilityAnalysisChart> adminSupplierUnsuitabilityChart = new List<AdminSupplierUnsuitabilityAnalysisChart>();
             var unsuitabilityLines = DBHelper.GetSuppliertUnsuitabilityQuery(startDate, endDate);
             var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate);
-            var percenttotal = (double)operationLines.Sum(t => t.PLNMIKTAR);
 
-            #region Tedarikçi ile İrtibat
-
-            if (action ==1) // Tedarikçi ile İrtibat
+            switch(action)
             {
-                if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
-                {
-                    var gList = unsuitabilityLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month }).Select(t => new AdminSupplierUnsuitabilityAnalysisChart
+                #region Tedarikçi ile İrtibat
+
+                case 1:
+
+                    if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
                     {
-                        Ay = GetMonth(t.Key.Ay),
-                        Total = t.Where(t => t.TEDARIKCIIRTIBAT == true).Sum(t => t.UYGUNOLMAYANMIKTAR) ,
-                        Percent = (double)t.Where(t => t.TEDARIKCIIRTIBAT == true).Sum(t => t.UYGUNOLMAYANMIKTAR) / (double)operationLines.Where(x => x.TARIH.Month == t.Key.Ay).Sum(x => x.URETILENADET) * 100
-                    }).ToList();
-                    adminSupplierUnsuitabilityChart = gList;
-                }
-                else if (frequency == 5 || frequency == 6)
-                {
-                    var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminSupplierUnsuitabilityAnalysisChart
+                        var gList = unsuitabilityLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month, YIL = t.TARIH.Year }).Select(t => new AdminSupplierUnsuitabilityAnalysisChart
+                        {
+                            Ay = GetMonth(t.Key.Ay) + " " + t.Key.YIL.ToString(),
+                            Total = t.Where(t => t.TEDARIKCIIRTIBAT == true).Sum(t => t.UYGUNOLMAYANMIKTAR),
+                            Percent = (double)t.Where(t => t.TEDARIKCIIRTIBAT == true).Sum(t => t.UYGUNOLMAYANMIKTAR) / (double)operationLines.Where(x => x.TARIH.Month == t.Key.Ay).Sum(x => x.URETILENADET) * 100
+                        }).ToList();
+
+                        adminSupplierUnsuitabilityChart = gList;
+                    }
+                    else if (frequency == 5 || frequency == 6)
                     {
-                        Ay = t.Key.HAFTA.ToString("dd MMM yy"),
-                        Total = t.Where(t => t.TEDARIKCIIRTIBAT == true).Sum(t => t.UYGUNOLMAYANMIKTAR),
-                        Percent = (double)t.Where(t => t.TEDARIKCIIRTIBAT == true).Sum(t => t.UYGUNOLMAYANMIKTAR) / (double)operationLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Sum(x => x.URETILENADET) * 100
-                    }).ToList();
-                    adminSupplierUnsuitabilityChart = gList;
-                }
+                        var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date, YIL = t.TARIH.Year }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminSupplierUnsuitabilityAnalysisChart
+                        {
+                            Ay = t.Key.HAFTA.ToString("dd MMM yy", new CultureInfo("tr-TR")) + " " + t.Key.YIL.ToString(),
+                            Total = t.Where(t => t.TEDARIKCIIRTIBAT == true).Sum(t => t.UYGUNOLMAYANMIKTAR),
+                            Percent = (double)t.Where(t => t.TEDARIKCIIRTIBAT == true).Sum(t => t.UYGUNOLMAYANMIKTAR) / (double)operationLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Sum(x => x.URETILENADET) * 100
+                        }).ToList();
+
+                        adminSupplierUnsuitabilityChart = gList;
+                    }
+                    break;
+
+                #endregion
+
+                #region Düzeltme
+
+                case 2:
+
+                    if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
+                    {
+                        var gList = unsuitabilityLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month, YIL = t.TARIH.Year }).Select(t => new AdminSupplierUnsuitabilityAnalysisChart
+                        {
+                            Ay = GetMonth(t.Key.Ay) + " " + t.Key.YIL.ToString(),
+                            Total = t.Where(t => t.DUZELTME == true).Sum(t => t.UYGUNOLMAYANMIKTAR),
+                            Percent = (double)t.Where(t => t.DUZELTME == true).Sum(t => t.UYGUNOLMAYANMIKTAR) / (double)operationLines.Where(x => x.TARIH.Month == t.Key.Ay).Sum(x => x.URETILENADET) * 100
+                        }).ToList();
+
+                        adminSupplierUnsuitabilityChart = gList;
+                    }
+                    else if (frequency == 5 || frequency == 6)
+                    {
+                        var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date, YIL = t.TARIH.Year }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminSupplierUnsuitabilityAnalysisChart
+                        {
+                            Ay = t.Key.HAFTA.ToString("dd MMM yy", new CultureInfo("tr-TR")) + " " + t.Key.YIL.ToString(),
+                            Total = t.Where(t => t.DUZELTME == true).Sum(t => t.UYGUNOLMAYANMIKTAR),
+                            Percent = (double)t.Where(t => t.DUZELTME == true).Sum(t => t.UYGUNOLMAYANMIKTAR) / (double)operationLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Sum(x => x.URETILENADET) * 100
+                        }).ToList();
+
+                        adminSupplierUnsuitabilityChart = gList;
+                    }
+                    break;
+
+                #endregion
+
+                #region Olduğu Gibi Kullanılacak
+
+                case 3:
+
+                    if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
+                    {
+                        var gList = unsuitabilityLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month, YIL = t.TARIH.Year }).Select(t => new AdminSupplierUnsuitabilityAnalysisChart
+                        {
+                            Ay = GetMonth(t.Key.Ay) + " " + t.Key.YIL.ToString(),
+                            Total = t.Where(t => t.OLDUGUGIBIKULLANILACAK == true).Sum(t => t.UYGUNOLMAYANMIKTAR),
+                            Percent = (double)t.Where(t => t.OLDUGUGIBIKULLANILACAK == true).Sum(t => t.UYGUNOLMAYANMIKTAR) / (double)operationLines.Where(x => x.TARIH.Month == t.Key.Ay).Sum(x => x.URETILENADET) * 100
+                        }).ToList();
+
+                        adminSupplierUnsuitabilityChart = gList;
+                    }
+                    else if (frequency == 5 || frequency == 6)
+                    {
+                        var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date, YIL = t.TARIH.Year }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminSupplierUnsuitabilityAnalysisChart
+                        {
+                            Ay = t.Key.HAFTA.ToString("dd MMM yy", new CultureInfo("tr-TR")) + " " + t.Key.YIL.ToString(),
+                            Total = t.Where(t => t.OLDUGUGIBIKULLANILACAK == true).Sum(t => t.UYGUNOLMAYANMIKTAR),
+                            Percent = (double)t.Where(t => t.OLDUGUGIBIKULLANILACAK == true).Sum(t => t.UYGUNOLMAYANMIKTAR) / (double)operationLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Sum(x => x.URETILENADET) * 100
+                        }).ToList();
+
+                        adminSupplierUnsuitabilityChart = gList;
+                    }
+                    break;
+
+                #endregion
+
+                #region Red
+
+                case 4:
+
+                    if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
+                    {
+                        var gList = unsuitabilityLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month, YIL = t.TARIH.Year }).Select(t => new AdminSupplierUnsuitabilityAnalysisChart
+                        {
+                            Ay = GetMonth(t.Key.Ay) + " " + t.Key.YIL.ToString(),
+                            Total = t.Where(t => t.RED == true).Sum(t => t.UYGUNOLMAYANMIKTAR),
+                            Percent = (double)t.Where(t => t.RED == true).Sum(t => t.UYGUNOLMAYANMIKTAR) / (double)operationLines.Where(x => x.TARIH.Month == t.Key.Ay).Sum(x => x.URETILENADET) * 100
+                        }).ToList();
+
+                        adminSupplierUnsuitabilityChart = gList;
+                    }
+                    else if (frequency == 5 || frequency == 6)
+                    {
+                        var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date, YIL = t.TARIH.Year }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminSupplierUnsuitabilityAnalysisChart
+                        {
+                            Ay = t.Key.HAFTA.ToString("dd MMM yy", new CultureInfo("tr-TR")) + " " + t.Key.YIL.ToString(),
+                            Total = t.Where(t => t.RED == true).Sum(t => t.UYGUNOLMAYANMIKTAR),
+                            Percent = (double)t.Where(t => t.RED == true).Sum(t => t.UYGUNOLMAYANMIKTAR) / (double)operationLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Sum(x => x.URETILENADET) * 100
+                        }).ToList();
+
+                        adminSupplierUnsuitabilityChart = gList;
+                    }
+                    break;
+
+                #endregion
+
+                #region Toplam Uygunsuzluk
+
+                case 5:
+
+                    if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
+                    {
+                        var gList = unsuitabilityLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month, YIL = t.TARIH.Year }).Select(t => new AdminSupplierUnsuitabilityAnalysisChart
+                        {
+                            Ay = GetMonth(t.Key.Ay) + " " + t.Key.YIL.ToString(),
+                            Total = t.Sum(t => t.UYGUNOLMAYANMIKTAR),
+                            Percent = (double)t.Sum(t => t.UYGUNOLMAYANMIKTAR) / (double)operationLines.Where(x => x.TARIH.Month == t.Key.Ay).Sum(x => x.URETILENADET) * 100
+                        }).ToList();
+
+                        adminSupplierUnsuitabilityChart = gList;
+                    }
+                    else if (frequency == 5 || frequency == 6)
+                    {
+                        var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date, YIL = t.TARIH.Year }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminSupplierUnsuitabilityAnalysisChart
+                        {
+                            Ay = t.Key.HAFTA.ToString("dd MMM yy", new CultureInfo("tr-TR")) + " " + t.Key.YIL.ToString(),
+                            Total = t.Sum(t => t.UYGUNOLMAYANMIKTAR),
+                            Percent = (double)t.Sum(t => t.UYGUNOLMAYANMIKTAR) / (double)operationLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Sum(x => x.URETILENADET) * 100
+                        }).ToList();
+
+                        adminSupplierUnsuitabilityChart = gList;
+                    }
+                    break;
+
+                #endregion
+
+                default: break;
             }
-
-            #endregion
-
-            #region Düzeltme
-
-            else if (action == 2) //Düzeltme
-            {
-                if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
-                {
-                    var gList = unsuitabilityLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month }).Select(t => new AdminSupplierUnsuitabilityAnalysisChart
-                    {
-                        Ay = GetMonth(t.Key.Ay),
-                        Total = t.Where(t => t.DUZELTME == true).Sum(t => t.UYGUNOLMAYANMIKTAR),
-                        Percent = (double)t.Where(t => t.DUZELTME == true).Sum(t => t.UYGUNOLMAYANMIKTAR) / (double)operationLines.Where(x => x.TARIH.Month == t.Key.Ay).Sum(x => x.URETILENADET) * 100
-                    }).ToList();
-                    adminSupplierUnsuitabilityChart = gList;
-                }
-                else if (frequency == 5 || frequency == 6)
-                {
-                    var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminSupplierUnsuitabilityAnalysisChart
-                    {
-                        Ay = t.Key.HAFTA.ToString("dd MMM yy"),
-                        Total = t.Where(t => t.DUZELTME == true).Sum(t => t.UYGUNOLMAYANMIKTAR),
-                        Percent = (double)t.Where(t => t.DUZELTME == true).Sum(t => t.UYGUNOLMAYANMIKTAR) / (double)operationLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Sum(x => x.URETILENADET) * 100
-                    }).ToList();
-                    adminSupplierUnsuitabilityChart = gList;
-                }
-            }
-
-            #endregion
-
-            #region Olduğu Gibi Kullanılacak
-
-
-            else if (action ==3) //Olduğu Gibi Kullanılacak
-            {
-                if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
-                {
-                    var gList = unsuitabilityLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month }).Select(t => new AdminSupplierUnsuitabilityAnalysisChart
-                    {
-                        Ay = GetMonth(t.Key.Ay),
-                        Total =  t.Where(t => t.OLDUGUGIBIKULLANILACAK == true).Sum(t => t.UYGUNOLMAYANMIKTAR) ,
-                        Percent = (double)t.Where(t => t.OLDUGUGIBIKULLANILACAK == true).Sum(t => t.UYGUNOLMAYANMIKTAR) / (double)operationLines.Where(x => x.TARIH.Month == t.Key.Ay).Sum(x => x.URETILENADET) * 100
-                    }).ToList();
-                    adminSupplierUnsuitabilityChart = gList;
-                }
-                else if (frequency == 5 || frequency == 6)
-                {
-                    var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminSupplierUnsuitabilityAnalysisChart
-                    {
-                        Ay = t.Key.HAFTA.ToString("dd MMM yy"),
-                        Total =  t.Where(t => t.OLDUGUGIBIKULLANILACAK == true).Sum(t => t.UYGUNOLMAYANMIKTAR),
-                        Percent = (double)t.Where(t => t.OLDUGUGIBIKULLANILACAK == true).Sum(t => t.UYGUNOLMAYANMIKTAR) / (double)operationLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Sum(x => x.URETILENADET) * 100
-                    }).ToList();
-                    adminSupplierUnsuitabilityChart = gList;
-                }
-            }
-
-            #endregion
-
-            #region Red
-
-            else if (action == 4) //Red
-            {
-                if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
-                {
-                    var gList = unsuitabilityLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month }).Select(t => new AdminSupplierUnsuitabilityAnalysisChart
-                    {
-                        Ay = GetMonth(t.Key.Ay),
-                        Total = t.Where(t => t.RED == true).Sum(t => t.UYGUNOLMAYANMIKTAR),
-                        Percent = (double)t.Where(t => t.RED == true).Sum(t => t.UYGUNOLMAYANMIKTAR) / (double)operationLines.Where(x => x.TARIH.Month == t.Key.Ay).Sum(x => x.URETILENADET) * 100
-                    }).ToList();
-                    adminSupplierUnsuitabilityChart = gList;
-                }
-                else if (frequency == 5 || frequency == 6)
-                {
-                    var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminSupplierUnsuitabilityAnalysisChart
-                    {
-                        Ay = t.Key.HAFTA.ToString("dd MMM yy"),
-                        Total = t.Where(t => t.RED == true).Sum(t => t.UYGUNOLMAYANMIKTAR),
-                        Percent = (double)t.Where(t => t.RED == true).Sum(t => t.UYGUNOLMAYANMIKTAR) / (double)operationLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Sum(x => x.URETILENADET) * 100
-                    }).ToList();
-                    adminSupplierUnsuitabilityChart = gList;
-                }
-            }
-
-            #endregion
-
-            #region Toplam Uygunsuzluk
-
-            else if (action == 5) //Hepsini Göster
-            {
-                if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
-                {
-                    var gList = unsuitabilityLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month }).Select(t => new AdminSupplierUnsuitabilityAnalysisChart
-                    {
-                        Ay = GetMonth(t.Key.Ay),
-                        Total = t.Sum(t => t.UYGUNOLMAYANMIKTAR),
-                        Percent = (double)t.Sum(t => t.UYGUNOLMAYANMIKTAR) / (double)operationLines.Where(x => x.TARIH.Month == t.Key.Ay).Sum(x => x.URETILENADET) * 100
-                    }).ToList();
-                    adminSupplierUnsuitabilityChart = gList;
-                }
-                else if (frequency == 5 || frequency == 6)
-                {
-                    var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminSupplierUnsuitabilityAnalysisChart
-                    {
-                        Ay = t.Key.HAFTA.ToString("dd MMM yy"),
-                        Total = t.Sum(t => t.UYGUNOLMAYANMIKTAR),
-                        Percent = (double)t.Sum(t => t.UYGUNOLMAYANMIKTAR) / (double)operationLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Sum(x => x.URETILENADET)*100
-                    }).ToList();
-                    adminSupplierUnsuitabilityChart = gList;
-                }
-            }
-
-            #endregion
 
             return adminSupplierUnsuitabilityChart;
 
@@ -183,19 +197,28 @@ namespace TsiErp.DashboardUI.Services
                 foreach (var cari in Carilist)
                 {
                     var tempList = unsuitabilityLines.Where(t => t.CARIID == cari).ToList();
-                    var siparisList = tempList.Select(t => t.SIPARISID).Distinct().ToList();
-                    var siparisMiktar = 0;
-                    foreach (var siparisID in siparisList)
+                    var orderList = tempList.Select(t => t.SIPARISID).Distinct().ToList();
+
+                    #region Değişkenler
+
+                    int totalOrder = 0;
+                    int total = tempList.Sum(t => t.UYGUNOLMAYANMIKTAR);
+                    string supplierName = tempList.Select(t => t.CARIUNVAN).FirstOrDefault();
+
+                    #endregion
+
+                    foreach (var orderID in orderList)
                     {
-                        siparisMiktar += (int)DBHelper.GetSuppliertUnsuitabilityLinesQuery().Where(t => t.SIPARISID == siparisID).Sum(t => t.ADET);
+                        totalOrder += (int)DBHelper.GetSuppliertUnsuitabilityLinesQuery().Where(t => t.SIPARISID == orderID).Sum(t => t.ADET);
                     }
+
                     SupplierUnsuitabilityAnalysis analysis = new SupplierUnsuitabilityAnalysis
                     {
                         SupplierID = cari,
-                        SupplierName = tempList.Select(t => t.CARIUNVAN).FirstOrDefault(),
-                        Total = tempList.Sum(t=>t.UYGUNOLMAYANMIKTAR),
-                        TotalOrder = (int)siparisMiktar,
-                        Percent = (double)tempList.Sum(t => t.UYGUNOLMAYANMIKTAR) / (double)siparisMiktar
+                        SupplierName = supplierName,
+                        Total = total,
+                        TotalOrder = (int)totalOrder,
+                        Percent = (double)total / (double)totalOrder
 
                     };
                     supplierUnsuitabilityAnalysis.Add(analysis);

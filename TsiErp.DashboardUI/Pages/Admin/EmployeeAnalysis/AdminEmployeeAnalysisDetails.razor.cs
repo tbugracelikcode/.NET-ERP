@@ -19,7 +19,6 @@ namespace TsiErp.DashboardUI.Pages.Admin.EmployeeAnalysis
         bool VisibleSpinner = false;
         double columnwidth;
         private bool isEmployeeChecked = false;
-        int employees = 1;
         string employeeName = string.Empty;
 
         [Parameter]
@@ -50,13 +49,6 @@ namespace TsiErp.DashboardUI.Pages.Admin.EmployeeAnalysis
             #endregion
         }
 
-        private void OnChangeProductCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
-        {
-            if (isEmployeeChecked) { employees = 2; }
-            else { employees = 1; }
-            dataemployeechart = PersonelDetayService.GetEmployeeDetailedtChart(employeeID, startDate, endDate);
-            ChartInstance.RefreshAsync();
-        }
 
         private void OnBackButtonClicked()
         {

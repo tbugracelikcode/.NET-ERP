@@ -21,23 +21,28 @@ namespace TsiErp.DashboardUI.Services
 
             var generalList = DBHelper.GetContractUnsuitabilityQueryGeneral(startDate, endDate);
             var unsuitabilityLines = DBHelper.GetContractUnsuitabilityQuery(startDate, endDate);
-            var list = unsuitabilityLines.Select(t => t.HATAID).Distinct().ToList();
-            var fasonList = unsuitabilityLines.Select(t => t.CARIID).Distinct().ToList();
+            var contractList = unsuitabilityLines.Select(t => t.CARIID).Distinct().ToList();
 
             if (unsuitabilityLines != null)
             {
-                foreach (var fasontedarikci in fasonList)
+                foreach (var contractSupplierID in contractList)
                 {
-                    var total = generalList.Where(t => t.CariID == fasontedarikci).Sum(t => t.Miktar);
-                    var receipt = generalList.Where(t => t.CariID == fasontedarikci).Sum(t => t.FasonFisiAdeti);
+                    #region Değişkenler
+
+                    int total = generalList.Where(t => t.CariID == contractSupplierID).Sum(t => t.Miktar);
+                    int receipt = generalList.Where(t => t.CariID == contractSupplierID).Sum(t => t.FasonFisiAdeti);
+                    string supplierTitle = unsuitabilityLines.Where(t => t.CARIID == contractSupplierID).Select(t => t.CARIUNVAN).FirstOrDefault();
+                    int productionOrderID = unsuitabilityLines.Where(t => t.CARIID == contractSupplierID).Select(t => t.URETIMEMRIID).FirstOrDefault();
+
+                    #endregion
 
                     ContractUnsuitabilityAnalysis analysis = new ContractUnsuitabilityAnalysis
                     {
-                        ContractSupplierID = fasontedarikci,
-                        ContractSupplier = unsuitabilityLines.Where(t => t.CARIID == fasontedarikci).Select(t => t.CARIUNVAN).FirstOrDefault(),
+                        ContractSupplierID = contractSupplierID,
+                        ContractSupplier = supplierTitle,
                         Total =total,
                         ContractReceiptQuantity = receipt,
-                        ProductionOrderID = unsuitabilityLines.Where(t => t.CARIID == fasontedarikci).Select(t => t.URETIMEMRIID).FirstOrDefault(),
+                        ProductionOrderID = productionOrderID,
                         Percent = (double)total/ (double)receipt
                     };
                     if(analysis.Total > 0)

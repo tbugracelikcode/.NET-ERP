@@ -27,10 +27,15 @@ namespace TsiErp.DashboardUI.Services
             var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate);
             var causeList = DBHelper.GetScrapCauses();
             int totalProduction = (int)operationLines.Where(t => t.URUNGRPID == productgroupID).Sum(t => t.URETILENADET);
+
             foreach (var item in causeList)
             {
+                #region Değişkenler
+
                 int causeID = item.ID;
                 int totalScrap = scrapLines.Where(t => t.HURDAID == causeID).Sum(t => t.HURDAADET);
+
+                #endregion
 
                 ProductGroupDetailedChart analysis = new ProductGroupDetailedChart
                 {
@@ -60,12 +65,18 @@ namespace TsiErp.DashboardUI.Services
             var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate);
             var causeList = DBHelper.GetScrapCauses();
             int totalProduction = (int)operationLines.Where(t => t.URUNGRPID == groupID).Sum(t => t.URETILENADET);
+
             if (causeList != null)
             {
                 foreach (var item in causeList)
                 {
+                    #region Değişkenler
+
                     int causeID = item.ID;
                     int totalScrap = scrapLines.Where(t => t.HURDAID == causeID).Sum(t => t.HURDAADET);
+                    string productGroupName = scrapLines.Where(t => t.HURDAID == causeID).Select(t => t.URUNGRUBU).FirstOrDefault();
+
+                    #endregion
 
                     ProductScrapAnalysis analysis = new ProductScrapAnalysis
                     {
@@ -74,7 +85,7 @@ namespace TsiErp.DashboardUI.Services
                         TotalScrap = totalScrap,
                         TotalProduction = totalProduction,
                         PPM = totalScrap > 0 && totalProduction > 0 ? ((Convert.ToDecimal(totalScrap) / Convert.ToDecimal(totalProduction)) * 1000000) : 0,
-                        ProductGroupName = scrapLines.Where(t=>t.HURDAID == causeID).Select(t=>t.URUNGRUBU).FirstOrDefault()
+                        ProductGroupName = productGroupName
                     };
                     productScrapAnalysis.Add(analysis);
                 }

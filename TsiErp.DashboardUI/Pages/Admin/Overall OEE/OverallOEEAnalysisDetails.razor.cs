@@ -24,7 +24,6 @@ namespace TsiErp.DashboardUI.Pages.Admin.Overall_OEE
         private bool isProductsChecked = false;
         int products = 1;
         string stationName = string.Empty;
-        double columnwidth1;
         double columnwidth2;
         double columnwidth3;
 
