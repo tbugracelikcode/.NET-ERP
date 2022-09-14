@@ -6,7 +6,6 @@
 <SfSidebar ID="Sidebar" Type="SidebarType.Push" Width="320px" DockSize="65px" EnableDock="true" @ref="Sidebar" @bind-IsOpen="SidebarToggle">
     <div class="sidebar" style="position:fixed;z-index:1200">
         <div class="topnav navbar navbar-dark">
-            @* <button class="navbar-toggler" @onclick="ToggleNavMenu" ><span class="oi oi-menu" aria-hidden="true"/></button>*@
             <button class="navbar-toggler"  @onclick="ToggleNavMenu">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -23,13 +22,14 @@
 <div class="main">
     <div class="top-row px-4" style="z-index:1111;padding-top:0px">
         @* <CultureSwitcher />*@
-        <DxButton CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold;" Click="@OnExitButtonClicked" Text="Çıkış" />
+        <DxButton CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px;text-shadow: 6px 3px 4px black; font-weight:bold;" Click="@OnExitButtonClicked" Text="Çıkış" />
     </div>
 
     <div class="content px-4">
         @Body
     </div>
 </div>
+
 <style>
     img {
         border-radius: 10%;

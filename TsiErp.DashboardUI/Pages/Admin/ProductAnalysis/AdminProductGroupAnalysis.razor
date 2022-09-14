@@ -39,7 +39,7 @@
                 </td>
                 <td width="50px" align="right">
                     <br />
-                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
                 
                     <SfSpinner @bind-Visible="VisibleSpinner">
                     </SfSpinner>
@@ -107,7 +107,7 @@
                     <Template>
                         @{
                             var row = (context as ProductGroupsAnalysis);
-                                <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" style="background-color:#AD0000;" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.ProductGroupID))"></SfButton>
+                                <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" style="background-color:#AD0000;text-shadow: 6px 3px 4px black;" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.ProductGroupID))"></SfButton>
                         }
 
                     </Template>

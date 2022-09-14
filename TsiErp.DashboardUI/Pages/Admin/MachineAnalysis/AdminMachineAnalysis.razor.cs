@@ -64,6 +64,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
 
             dataoee = await IstasyonOEEService.GetStationOEEAnalysis(startDate,endDate);
             datachart =await IstasyonOEEService.GetAdminMachineChart(startDate,endDate, frequencyChart);
+
             await Grid.Refresh();
             await ChartInstance.RefreshAsync();
             VisibleSpinner = false;
