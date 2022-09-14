@@ -1,11 +1,11 @@
-﻿@page "/vsm-designer"
+﻿@page "/"
 
 <div style="width:240px;height:100%;float:left;">
     <div class="sb-mobile-palette-bar">
         <div id="palette-icon" style="float: right;" role="button" class="e-ddb-icons1 e-toggle-palette"></div>
     </div>
     <div id="palette-space" class="sb-mobile-palette">
-        <SfSymbolPaletteComponent @ref="@PaletteInstance" Height="700px" Palettes="@palettes" SymbolHeight="98" SymbolWidth="98" SymbolMargin="@SymbolMargin">
+        <SfSymbolPaletteComponent @ref="@PaletteInstance" Height="700px" Palettes="@palettes" SymbolHeight="150" SymbolWidth="150" SymbolMargin="@SymbolMargin" GetSymbolInfo="GetSymbolInfo" SymbolDiagramPreviewSize="new DiagramSize(){ Width=100,Height=100}">
         </SfSymbolPaletteComponent>
     </div>
 </div>
@@ -32,7 +32,7 @@
                                         <table class="tg">
                                             <thead>
                                                 <tr>
-                                                    <td class="tg-0lax" colspan="3"><SfTextBox CssClass="e-small" Placeholder="Çalışan Sayısı"></SfTextBox></td>
+                                                    <td class="tg-0lax" colspan="3"><SfTextBox CssClass="e-small" Placeholder="Departman"></SfTextBox></td>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -63,8 +63,223 @@
                                         </table>
                                         break;
 
-                                    default:
+                                    case "2":
+                                        <table class="tg" style="undefined;table-layout: fixed; width: 100px">
+                                            <colgroup>
+                                                <col style="width: 100px">
+                                            </colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="tg-0lax"><center><img src="/images/VSM/Operator.png" width="65" height="65" /></center></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="tg-0lax"><SfTextBox CssClass="e-small" Placeholder="Çalışan Sayısı"></SfTextBox></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        break;
 
+                                    case "3":
+                                        <table class="tg" style="undefined;table-layout: fixed; width: 77px; border:none !important;">
+                                            <colgroup>
+                                                <col style="width: 77px">
+                                            </colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="tg-0lax" style="border:none !important;"><center><img src="/images/VSM/Itme_Hareketi.png" width="75" height="20" /></center></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        break;
+
+                                    case "4":
+                                        <table class="tg" style="undefined;table-layout: fixed; width: 108px; border:none !important;">
+                                            <colgroup>
+                                                <col style="width: 53px">
+                                                <col style="width: 53px">
+                                            </colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="2" style="border:none !important;"><center><img src="/images/VSM/Stok_Isareti.png" width="70" height="60" /></center></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="tg-0lax" style="border:none !important;"><SfTextBox CssClass="e-small" Placeholder="Ad."></SfTextBox></td>
+                                                    <td class="tg-0lax" style="border:none !important;"><SfTextBox CssClass="e-small" Placeholder="Gün"></SfTextBox></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        break;
+
+                                    case "5":
+                                        <table class="tg" style="undefined;table-layout: fixed; width: 32px; border:none !important;">
+                                            <colgroup>
+                                                <col style="width: 32px">
+                                            </colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="border:none !important;"><center><img src="/images/VSM/Emniyet_Stogu.png" width="30" height="70" /></center></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        break;
+
+                                    case "6":
+                                        <table class="tg" style="undefined;table-layout: fixed; width: 32px; border:none !important;">
+                                            <colgroup>
+                                                <col style="width: 32px">
+                                            </colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="border:none !important;"><center><img src="/images/VSM/Kontrollu_Parca_Stogu.png" width="30" height="70" /></center></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        break;
+
+                                    case "7":
+                                        <table class="tg" style="undefined;table-layout: fixed; width: 80px; border:none !important;">
+                                            <colgroup>
+                                                <col style="width: 80px">
+                                            </colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="border:none !important;"><center><img src="/images/VSM/Fifo_Transferi.png" width="75" height="70" /></center></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        break;
+
+                                    case "8":
+                                        <table class="tg" style="undefined;table-layout: fixed; width: 130px; border:none !important;">
+                                            <colgroup>
+                                                <col style="width: 130px">
+                                            </colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="border:none !important;"><center><img src="/images/VSM/Lojistik_Sevkiyat.png" width="130" height="70" /></center></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        break;
+
+                                    case "9":
+                                        <table class="tg" style="undefined;table-layout: fixed; width: 130px; border:none !important;">
+                                            <colgroup>
+                                                <col style="width: 130px">
+                                            </colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="border:none !important;"><center><img src="/images/VSM/Cekme_Kanbani.png" width="130" height="70" /></center></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        break;
+
+                                    case "10":
+                                        <table class="tg" style="undefined;table-layout: fixed; width: 130px; border:none !important;">
+                                            <colgroup>
+                                                <col style="width: 130px">
+                                            </colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="border:none !important;"><center><img src="/images/VSM/Uretim_Kanbani.png" width="130" height="70" /></center></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        break;
+
+                                    case "11":
+                                        <table class="tg" style="undefined;table-layout: fixed; width: 108px; border:none !important;">
+                                            <colgroup>
+                                                <col style="width: 108px">
+                                            </colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="border:none !important;"><center><img src="/images/VSM/Sinyal_Kanbani.png" width="70" height="60" /></center></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        break;
+
+                                    case "12":
+                                        <table class="tg" style="undefined;table-layout: fixed; width: 108px; border:none !important;">
+                                            <colgroup>
+                                                <col style="width: 108px">
+                                            </colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="border:none !important;"><center><img src="/images/VSM/Dis_Kaynaklar.png" width="90" height="50" /></center></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        break;
+
+                                    case "13":
+                                        <table class="tg" style="undefined;table-layout: fixed; width: 65px; border:none !important;">
+                                            <colgroup>
+                                                <col style="width: 65x">
+                                            </colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="border:none !important;"><center><img src="/images/VSM/Kanban_Kutusu.png" width="60" height="70" /></center></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        break;
+
+                                    case "14":
+                                        <table class="tg" style="undefined;table-layout: fixed; width: 90px; border:none !important;">
+                                            <colgroup>
+                                                <col style="width: 90px">
+                                            </colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="border:none !important;"><center><img src="/images/VSM/Konveyor.png" width="90" height="45" /></center></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        break;
+
+                                    case "15":
+                                        <table class="tg" style="undefined;table-layout: fixed; width: 95px; border:none !important;">
+                                            <colgroup>
+                                                <col style="width: 95px">
+                                            </colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="tg-0lax" style="border:none !important;"><center><img src="/images/VSM/Bitmis_Urun.png" width="95" height="35" /></center></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        break;
+
+                                    case "16":
+                                        <table class="tg" style="undefined;table-layout: fixed; width: 90px; border:none !important;">
+                                            <colgroup>
+                                                <col style="width: 90px">
+                                            </colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="border:none !important;"><center><img src="/images/VSM/Yuk_Seviyelendirme.png" width="90" height="45" /></center></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        break;
+
+                                    case "17":
+                                        <table class="tg" style="undefined;table-layout: fixed; width: 90px; border:none !important;">
+                                            <colgroup>
+                                                <col style="width: 90px">
+                                            </colgroup>
+                                            <tbody>
+                                                <tr>
+                                                    <td style="border:none !important;"><center><img src="/images/VSM/Iyilestirme_Calismasi.png" width="90" height="45" /></center></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        break;
+
+                                    default:
                                         break;
                                 }
                             }

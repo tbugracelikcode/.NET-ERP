@@ -1,13 +1,13 @@
-﻿using Syncfusion.Blazor.Diagram;
-using Syncfusion.Blazor.Diagram.SymbolPalette;
+﻿using Syncfusion.Blazor.Diagram.SymbolPalette;
+using Syncfusion.Blazor.Diagram;
 using System.Collections.ObjectModel;
 
 namespace TsiErp.DashboardUI.Pages.Vsm
 {
     public partial class VsmDesigner
     {
+        #region Diagram
         private int connectorCount = 0;
-
         DiagramSelectionSettings selectionSettings = new DiagramSelectionSettings();
 
         public DiagramSize SymbolPreview;
@@ -38,12 +38,6 @@ namespace TsiErp.DashboardUI.Pages.Vsm
         // Defines palette's connector collection
         private DiagramObjectCollection<NodeBase> connectorSymbols = new DiagramObjectCollection<NodeBase>();
 
-        protected override void OnInitialized()
-        {
-            GridLineIntervals = new double[] { 1, 9, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75 };
-            InitPaletteModel();
-        }
-
         public void OnDrop(DropEventArgs args)
         {
             args.Cancel = true;
@@ -64,7 +58,7 @@ namespace TsiErp.DashboardUI.Pages.Vsm
                         {
                             Type = NodeShapes.HTML,
                         },
-                         AdditionalInfo=NewNode.AdditionalInfo
+                        AdditionalInfo = NewNode.AdditionalInfo
                     });
                     break;
                 case "2":
@@ -72,34 +66,275 @@ namespace TsiErp.DashboardUI.Pages.Vsm
                     {
                         OffsetX = NewNode.OffsetX,
                         OffsetY = NewNode.OffsetY,
-                        Width = 80,
-                        Height = 80,
+                        Width = 100,
+                        Height = 100,
                         Annotations = NewNode.Annotations,
-                        Shape = new Syncfusion.Blazor.Diagram.ImageShape()
+                        Shape = new Syncfusion.Blazor.Diagram.Shape()
                         {
-                            Type = NodeShapes.Image,
-                            Source = "images/VSM/VSM_Image3.png"
+                            Type = NodeShapes.HTML
                         },
                         AdditionalInfo = NewNode.AdditionalInfo
+                    });
+                    break;
+                case "3":
+                    nodes.Add(new Node()
+                    {
+                        OffsetX = NewNode.OffsetX,
+                        OffsetY = NewNode.OffsetY,
+                        Width = 80,
+                        Height = 30,
+                        Annotations = NewNode.Annotations,
+                        Shape = new Syncfusion.Blazor.Diagram.Shape()
+                        {
+                            Type = NodeShapes.HTML
+                        },
+                        AdditionalInfo = NewNode.AdditionalInfo
+                    });
+                    break;
+                case "4":
+                    nodes.Add(new Node()
+                    {
+                        OffsetX = NewNode.OffsetX,
+                        OffsetY = NewNode.OffsetY,
+                        Width = 119,
+                        Height = 100,
+                        Annotations = NewNode.Annotations,
+                        Shape = new Syncfusion.Blazor.Diagram.Shape()
+                        {
+                            Type = NodeShapes.HTML
+                        },
+                        AdditionalInfo = NewNode.AdditionalInfo
+                    });
+                    break;
+                case "5":
+                    nodes.Add(new Node()
+                    {
+                        OffsetX = NewNode.OffsetX,
+                        OffsetY = NewNode.OffsetY,
+                        Width = 35,
+                        Height = 80,
+                        Annotations = NewNode.Annotations,
+                        Shape = new Syncfusion.Blazor.Diagram.Shape()
+                        {
+                            Type = NodeShapes.HTML
+                        },
+                        AdditionalInfo = NewNode.AdditionalInfo
+                    });
+                    break;
+                case "6":
+                    nodes.Add(new Node()
+                    {
+                        OffsetX = NewNode.OffsetX,
+                        OffsetY = NewNode.OffsetY,
+                        Width = 35,
+                        Height = 80,
+                        Annotations = NewNode.Annotations,
+                        Shape = new Syncfusion.Blazor.Diagram.Shape()
+                        {
+                            Type = NodeShapes.HTML
+                        },
+                        AdditionalInfo = NewNode.AdditionalInfo
+                    });
+                    break;
+                case "7":
+                    nodes.Add(new Node()
+                    {
+                        OffsetX = NewNode.OffsetX,
+                        OffsetY = NewNode.OffsetY,
+                        Width = 82,
+                        Height = 80,
+                        Annotations = NewNode.Annotations,
+                        Shape = new Syncfusion.Blazor.Diagram.Shape()
+                        {
+                            Type = NodeShapes.HTML
+                        },
+                        AdditionalInfo = NewNode.AdditionalInfo
+                    });
+                    break;
+                case "8":
+                    nodes.Add(new Node()
+                    {
+                        OffsetX = NewNode.OffsetX,
+                        OffsetY = NewNode.OffsetY,
+                        Width = 132,
+                        Height = 72,
+                        Annotations = NewNode.Annotations,
+                        Shape = new Syncfusion.Blazor.Diagram.Shape()
+                        {
+                            Type = NodeShapes.HTML
+                        },
+                        AdditionalInfo = NewNode.AdditionalInfo
+
+
+
+                    });
+                    break;
+                case "9":
+                    nodes.Add(new Node()
+                    {
+                        OffsetX = NewNode.OffsetX,
+                        OffsetY = NewNode.OffsetY,
+                        Width = 132,
+                        Height = 72,
+                        Annotations = NewNode.Annotations,
+                        Shape = new Syncfusion.Blazor.Diagram.Shape()
+                        {
+                            Type = NodeShapes.HTML
+                        },
+                        AdditionalInfo = NewNode.AdditionalInfo
+
+
+
+                    });
+                    break;
+                case "10":
+                    nodes.Add(new Node()
+                    {
+                        OffsetX = NewNode.OffsetX,
+                        OffsetY = NewNode.OffsetY,
+                        Width = 132,
+                        Height = 72,
+                        Annotations = NewNode.Annotations,
+                        Shape = new Syncfusion.Blazor.Diagram.Shape()
+                        {
+                            Type = NodeShapes.HTML
+                        },
+                        AdditionalInfo = NewNode.AdditionalInfo
+
+
+
+                    });
+                    break;
+                case "11":
+                    nodes.Add(new Node()
+                    {
+                        OffsetX = NewNode.OffsetX,
+                        OffsetY = NewNode.OffsetY,
+                        Width = 100,
+                        Height = 75,
+                        Annotations = NewNode.Annotations,
+                        Shape = new Syncfusion.Blazor.Diagram.Shape()
+                        {
+                            Type = NodeShapes.HTML
+                        },
+                        AdditionalInfo = NewNode.AdditionalInfo
+
+
+
+                    });
+                    break;
+                case "12":
+                    nodes.Add(new Node()
+                    {
+                        OffsetX = NewNode.OffsetX,
+                        OffsetY = NewNode.OffsetY,
+                        Width = 100,
+                        Height = 75,
+                        Annotations = NewNode.Annotations,
+                        Shape = new Syncfusion.Blazor.Diagram.Shape()
+                        {
+                            Type = NodeShapes.HTML
+                        },
+                        AdditionalInfo = NewNode.AdditionalInfo
+
+
+
+                    });
+                    break;
+                case "13":
+                    nodes.Add(new Node()
+                    {
+                        OffsetX = NewNode.OffsetX,
+                        OffsetY = NewNode.OffsetY,
+                        Width = 62,
+                        Height = 72,
+                        Annotations = NewNode.Annotations,
+                        Shape = new Syncfusion.Blazor.Diagram.Shape()
+                        {
+                            Type = NodeShapes.HTML
+                        },
+                        AdditionalInfo = NewNode.AdditionalInfo
+
+
+
+                    });
+                    break;
+                case "14":
+                    nodes.Add(new Node()
+                    {
+                        OffsetX = NewNode.OffsetX,
+                        OffsetY = NewNode.OffsetY,
+                        Width = 93,
+                        Height = 48,
+                        Annotations = NewNode.Annotations,
+                        Shape = new Syncfusion.Blazor.Diagram.Shape()
+                        {
+                            Type = NodeShapes.HTML
+                        },
+                        AdditionalInfo = NewNode.AdditionalInfo
+
+
+
+                    });
+                    break;
+                case "15":
+                    nodes.Add(new Node()
+                    {
+                        OffsetX = NewNode.OffsetX,
+                        OffsetY = NewNode.OffsetY,
+                        Width = 97,
+                        Height = 37,
+                        Annotations = NewNode.Annotations,
+                        Shape = new Syncfusion.Blazor.Diagram.Shape()
+                        {
+                            Type = NodeShapes.HTML
+                        },
+                        AdditionalInfo = NewNode.AdditionalInfo
+
+
+
+                    });
+                    break;
+                case "16":
+                    nodes.Add(new Node()
+                    {
+                        OffsetX = NewNode.OffsetX,
+                        OffsetY = NewNode.OffsetY,
+                        Width = 93,
+                        Height = 48,
+                        Annotations = NewNode.Annotations,
+                        Shape = new Syncfusion.Blazor.Diagram.Shape()
+                        {
+                            Type = NodeShapes.HTML
+                        },
+                        AdditionalInfo = NewNode.AdditionalInfo
+
+
+
+                    });
+                    break;
+                case "17":
+                    nodes.Add(new Node()
+                    {
+                        OffsetX = NewNode.OffsetX,
+                        OffsetY = NewNode.OffsetY,
+                        Width = 93,
+                        Height = 48,
+                        Annotations = NewNode.Annotations,
+                        Shape = new Syncfusion.Blazor.Diagram.Shape()
+                        {
+                            Type = NodeShapes.HTML
+                        },
+                        AdditionalInfo = NewNode.AdditionalInfo
+
+
+
                     });
                     break;
 
                 default:
                     break;
             }
-        }
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
-        {
-            await base.OnAfterRenderAsync(firstRender);
-            if (firstRender)
-            {
-                UpdateHandle();
-            }
-            PaletteInstance.Targets = new DiagramObjectCollection<SfDiagramComponent>
-        {
-            Diagram
-        };
         }
 
         private void OnSelectionChanged(SelectionChangedEventArgs args)
@@ -190,46 +425,63 @@ namespace TsiErp.DashboardUI.Pages.Vsm
             }
         }
 
+        private SymbolInfo GetSymbolInfo(IDiagramObject symbol)
+        {
+            if (symbol is Node)
+            {
+                SymbolInfo SymbolInfo = new SymbolInfo();
+                string text = null;
+                text = (symbol as Node).AdditionalInfo.Where(t => t.Key == "toolTips").Select(t => t.Value).FirstOrDefault().ToString();
+                SymbolInfo.Description = new SymbolDescription() { Text = text };
+                return SymbolInfo;
+            }
+            else
+            {
+                SymbolInfo SymbolInfo = new SymbolInfo();
+                string text = null;
+                text = (symbol as Connector).AdditionalInfo.Where(t => t.Key == "toolTips").Select(t => t.Value).FirstOrDefault().ToString();
+                SymbolInfo.Description = new SymbolDescription() { Text = text };
+                return SymbolInfo;
+            }
+        }
+
         private void InitPaletteModel()
         {
             palettes = new DiagramObjectCollection<Palette>();
 
             //SymbolPreview = new DiagramSize
             //{
-            //    Width = 100,
-            //    Height = 100
+            //    Width = 150,
+            //    Height = 150
             //};
-
-
 
             ShapeSymbols = new DiagramObjectCollection<NodeBase>();
 
-
-            CreatePaletteNode("images/VSM/Bilgi_Kutusu.png", "1", "1");
-            CreatePaletteNode("images/VSM/Stok_Isareti.png", "2", "2");
-            CreatePaletteNode("images/VSM/Fifo_Transferi.png", "3", "3");
-            CreatePaletteNode("images/VSM/Operator.png", "4", "4");
-            CreatePaletteNode("images/VSM/Iyilestirme_Calismasi.png", "5", "5");
-            CreatePaletteNode("images/VSM/Dis_Kaynaklar.png", "6", "6");
-            CreatePaletteNode("images/VSM/Lojistik_Sevkiyat.png", "7", "7");
-            CreatePaletteNode("images/VSM/Cekme_Kanbani.png", "8", "8");
-            CreatePaletteNode("images/VSM/Uretim_Kanbani.png", "9", "9");
-            CreatePaletteNode("images/VSM/Emniyet_Stogu.png", "10", "10");
-            CreatePaletteNode("images/VSM/Sinyal_Kanbani.png", "11", "11");
-            CreatePaletteNode("images/VSM/Itme_Hareketi.png", "12", "12");
-            CreatePaletteNode("images/VSM/Bitmis_Urun.png", "13", "13");
-            CreatePaletteNode("images/VSM/Kanban_Kutusu.png", "14", "14");
-            CreatePaletteNode("images/VSM/Konveyor.png", "15", "15");
-            CreatePaletteNode("images/VSM/Yuk_Seviyelendirme.png", "16", "16");
-            CreatePaletteNode("images/VSM/Kontrollu_Parca_Stogu.png", "17", "17");
+            CreatePaletteNode("images/VSM/Bilgi_Kutusu.png", "1", "1", "Bilgi Kutusu");
+            CreatePaletteNode("images/VSM/Operator.png", "2", "2", "Operatör");
+            CreatePaletteNode("images/VSM/Itme_Hareketi.png", "3", "3", "İtme Hareketi");
+            CreatePaletteNode("images/VSM/Stok_Isareti.png", "4", "4", "Stok İşareti");
+            CreatePaletteNode("images/VSM/Emniyet_Stogu.png", "5", "5", "Emniyet Stoğu");
+            CreatePaletteNode("images/VSM/Kontrollu_Parca_Stogu.png", "6", "6", "Kontrollü Parça Stoğu");
+            CreatePaletteNode("images/VSM/Fifo_Transferi.png", "7", "7", "FİFO Transferi");
+            CreatePaletteNode("images/VSM/Lojistik_Sevkiyat.png", "8", "8", "Lojistik/Sevkiyat");
+            CreatePaletteNode("images/VSM/Cekme_Kanbani.png", "9", "9", "Çekme Kanbanı");
+            CreatePaletteNode("images/VSM/Uretim_Kanbani.png", "10", "10", "Üretim Kanbanı");
+            CreatePaletteNode("images/VSM/Sinyal_Kanbani.png", "11", "11", "Sinyal Kanbanı");
+            CreatePaletteNode("images/VSM/Dis_Kaynaklar.png", "12", "12", "Dış Kaynaklar");
+            CreatePaletteNode("images/VSM/Kanban_Kutusu.png", "13", "13", "Kanban Kutusu");
+            CreatePaletteNode("images/VSM/Konveyor.png", "14", "14", "Konveyör");
+            CreatePaletteNode("images/VSM/Bitmis_Urun.png", "15", "15", "Bitmiş Ürün");
+            CreatePaletteNode("images/VSM/Yuk_Seviyelendirme.png", "16", "16", "Yük Seviyelendirme");
+            CreatePaletteNode("images/VSM/Iyilestirme_Calismasi.png", "17", "17", "İyileştirme Çalışması");
 
             connectorSymbols = new DiagramObjectCollection<NodeBase>();
 
-            CreatePaletteConnector("Link1", ConnectorSegmentType.Orthogonal, DecoratorShape.Arrow);
-            CreatePaletteConnector("Link2", ConnectorSegmentType.Orthogonal, DecoratorShape.None);
-            CreatePaletteConnector("Link3", ConnectorSegmentType.Straight, DecoratorShape.Arrow);
-            CreatePaletteConnector("Link4", ConnectorSegmentType.Straight, DecoratorShape.None);
-            CreatePaletteConnector("Link5", ConnectorSegmentType.Bezier, DecoratorShape.None);
+            CreatePaletteConnector("Link1", ConnectorSegmentType.Orthogonal, DecoratorShape.Arrow, "");
+            CreatePaletteConnector("Link2", ConnectorSegmentType.Orthogonal, DecoratorShape.None, "");
+            CreatePaletteConnector("Link3", ConnectorSegmentType.Straight, DecoratorShape.Arrow, "");
+            CreatePaletteConnector("Link4", ConnectorSegmentType.Straight, DecoratorShape.None, "");
+            CreatePaletteConnector("Link5", ConnectorSegmentType.Bezier, DecoratorShape.None, "");
 
             palettes = new DiagramObjectCollection<Palette>()
             {
@@ -240,10 +492,11 @@ namespace TsiErp.DashboardUI.Pages.Vsm
             };
         }
 
-        private void CreatePaletteNode(string imgSrc, string id, string tip)
+        private void CreatePaletteNode(string imgSrc, string id, string tip, string tooltip)
         {
             Dictionary<string, object> NodeInfo = new Dictionary<string, object>();
             NodeInfo.Add("nodeInfo", tip);
+            NodeInfo.Add("toolTips", tooltip);
 
             ShapeAnnotation shapeAnnotation = new ShapeAnnotation() { Content = string.Empty };
             Node diagramNode = new Node()
@@ -353,8 +606,10 @@ namespace TsiErp.DashboardUI.Pages.Vsm
         }
 
         // Method is used to create a Connector for the palette.
-        private void CreatePaletteConnector(string id, ConnectorSegmentType type, DecoratorShape decoratorShape)
+        private void CreatePaletteConnector(string id, ConnectorSegmentType type, DecoratorShape decoratorShape, string tooltip)
         {
+            Dictionary<string, object> NodeInfo = new Dictionary<string, object>();
+            NodeInfo.Add("toolTips", tooltip);
             Connector diagramConnector = new Connector()
             {
                 ID = id,
@@ -366,7 +621,8 @@ namespace TsiErp.DashboardUI.Pages.Vsm
                 {
                     Shape = decoratorShape,
                     Style = new ShapeStyle() { StrokeWidth = 1, StrokeColor = "#757575", Fill = "#757575" }
-                }
+                },
+                AdditionalInfo = NodeInfo
             };
             connectorSymbols.Add(diagramConnector);
         }
@@ -400,5 +656,28 @@ namespace TsiErp.DashboardUI.Pages.Vsm
             }
             return handle;
         }
+        #endregion
+
+
+        protected override void OnInitialized()
+        {
+            GridLineIntervals = new double[] { 1, 9, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75, 0.25, 9.75 };
+            InitPaletteModel();
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            await base.OnAfterRenderAsync(firstRender);
+            if (firstRender)
+            {
+                UpdateHandle();
+            }
+            PaletteInstance.Targets = new DiagramObjectCollection<SfDiagramComponent>
+        {
+            Diagram
+        };
+        }
+
+       
     }
 }
