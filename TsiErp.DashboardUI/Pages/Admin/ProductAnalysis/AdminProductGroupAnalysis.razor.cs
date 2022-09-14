@@ -20,6 +20,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
         private int threshold;
         int? selectedproductID;
         string chartTitle = string.Empty;
+        private bool isGridChecked = true;
         private int frequencyChart;
         SfChart ChartInstance;
         bool VisibleSpinner = false;
@@ -28,12 +29,14 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
 
         #endregion
 
-        protected override void OnInitialized()
+        protected override async void OnInitialized()
         {
-            dataproductgroup = StokService.GetProductGroupsAnalysis(startDate, endDate);
-            dataproductgroupcombobox = StokService.GetProductGroupsComboboxAnalysis(startDate, endDate);
-            chartTitle = dataproductgroup.Where(t => t.ProductGroupID == 9).Select(t => t.ProductGroupName).FirstOrDefault() + " HURDA GRAFİĞİ";
-            datachart = StokService.GetProductChart(startDate, endDate, 3, 9);
+
+            dataproductgroup = await StokService.GetProductGroupsAnalysis(startDate, endDate);
+            dataproductgroupcombobox = await StokService.GetProductGroupsComboboxAnalysis(startDate, endDate);
+            chartTitle =  dataproductgroup.Where(t => t.ProductGroupID == 9).Select(t => t.ProductGroupName).FirstOrDefault() + " HURDA GRAFİĞİ";
+            datachart = await StokService.GetProductChart(startDate, endDate, 3, 9);
+
         }
         private void onChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?, ProductGroupsAnalysis> args)
         {
@@ -44,61 +47,52 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
 
         #region Component Metotları
 
-        private void OnDateButtonClicked()
+        private async void OnDateButtonClicked()
         {
+            VisibleSpinner = true;
+            await Task.Delay(1);
+            StateHasChanged();
+
             endDate = DateTime.Today;
 
             #region Zaman Seçimi
-
-            if (selectedTimeIndex == 0)
+            switch (selectedTimeIndex)
             {
-                startDate = DateTime.Today.AddDays(-365);
-                frequencyChart = 0;
-            }
-            else if (selectedTimeIndex == 1)
-            {
-                startDate = DateTime.Today.AddDays(-273);
-                frequencyChart = 1;
-            }
-            else if (selectedTimeIndex == 2)
-            {
-                startDate = DateTime.Today.AddDays(-181);
-                frequencyChart = 2;
-            }
-            else if (selectedTimeIndex == 3)
-            {
-                startDate = DateTime.Today.AddDays(-90);
-                frequencyChart = 3;
-            }
-            else if (selectedTimeIndex == 4)
-            {
-                startDate = DateTime.Today.AddDays(-60);
-                frequencyChart = 4;
-            }
-            else if (selectedTimeIndex == 5)
-            {
-                startDate = DateTime.Today.AddDays(-30);
-                frequencyChart = 5;
-            }
-            else if (selectedTimeIndex == 6)
-            {
-                startDate = DateTime.Today.AddDays(-7);
-                frequencyChart = 6;
+                case 0: startDate = DateTime.Today.AddDays(-365); ; break;
+                case 1: startDate = DateTime.Today.AddDays(-273); ; break;
+                case 2: startDate = DateTime.Today.AddDays(-181); ; break;
+                case 3: startDate = DateTime.Today.AddDays(-90); ; break;
+                case 4: startDate = DateTime.Today.AddDays(-60); ; break;
+                case 5: startDate = DateTime.Today.AddDays(-30); ; break;
+                case 6: startDate = DateTime.Today.AddDays(-7); ; break;
+                default: break;
             }
 
             #endregion
 
-            Grid.Refresh();
-            ChartInstance.RefreshAsync();
-            dataproductgroup = StokService.GetProductGroupsAnalysis(startDate, endDate);
-            dataproductgroupcombobox = StokService.GetProductGroupsComboboxAnalysis(startDate, endDate);
-            datachart = StokService.GetProductChart(startDate, endDate, frequencyChart, selectedproductID);
+
+            dataproductgroup = await StokService.GetProductGroupsAnalysis(startDate, endDate);
+            dataproductgroupcombobox = await StokService.GetProductGroupsComboboxAnalysis(startDate, endDate);
+            datachart = await StokService.GetProductChart(startDate, endDate, frequencyChart, selectedproductID);
             chartTitle = dataproductgroup.Where(t => t.ProductGroupID == selectedproductID).Select(t => t.ProductGroupName).FirstOrDefault() + " HURDA GRAFİĞİ";
+            await Grid.Refresh();
+            await ChartInstance.RefreshAsync();
+            VisibleSpinner = false;
+            StateHasChanged();
+        }
+
+        private void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+        {
+            bool argsValue = Convert.ToBoolean(args.Value);
+            isGridChecked = argsValue;
+
             StateHasChanged();
         }
 
         private void OnDetailButtonClicked(int stationID)
         {
+            VisibleSpinner = true;
+
             NavigationManager.NavigateTo("/admin/product-group-analysis/details" + "/" + stationID.ToString() + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd")); ;
         }
 

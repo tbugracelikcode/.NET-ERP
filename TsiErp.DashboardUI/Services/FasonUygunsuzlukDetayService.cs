@@ -3,20 +3,17 @@ using TsiErp.DashboardUI.Helpers;
 using TsiErp.DashboardUI.Helpers.HelperModels;
 using TsiErp.DashboardUI.Models;
 using System.Globalization;
+using TsiErp.DashboardUI.Services.Interfaces;
 
 namespace TsiErp.DashboardUI.Services
 {
-    public class FasonUygunsuzlukDetayService
+    public class FasonUygunsuzlukDetayService : IFasonUygunsuzlukDetayService
     {
-        SqlConnection _connection;
-        public FasonUygunsuzlukDetayService()
-        {
-            _connection = DBHelper.GetSqlConnection();
-        }
+        
 
         #region Chart
 
-        public List<ContractUnsuitabilityAnalysis> GetContractUnsuitabilityDetailedChart(DateTime startDate, DateTime endDate, int frequency, int? action, int cariID, int total)
+        public async Task< List<ContractUnsuitabilityAnalysis>> GetContractUnsuitabilityDetailedChart(DateTime startDate, DateTime endDate, int frequency, int? action, int cariID, int total)
         {
             List<ContractUnsuitabilityAnalysis> adminContractUnsuitabilityDetailedChart = new List<ContractUnsuitabilityAnalysis>();
             var unsuitabilityLines = DBHelper.GetContractUnsuitabilityQuery(startDate, endDate).Where(t => t.CARIID == cariID);
@@ -172,7 +169,7 @@ namespace TsiErp.DashboardUI.Services
 
             }
 
-            return adminContractUnsuitabilityDetailedChart;
+            return await Task.FromResult(adminContractUnsuitabilityDetailedChart);
 
         }
 
@@ -180,7 +177,7 @@ namespace TsiErp.DashboardUI.Services
 
         #region Grid
 
-        public List<ContractUnsuitabilityAnalysis> GetContractUnsuitabilityDetailed(DateTime startDate, DateTime endDate, int cariID)
+        public async Task<List<ContractUnsuitabilityAnalysis>> GetContractUnsuitabilityDetailed(DateTime startDate, DateTime endDate, int cariID)
         {
 
             List<ContractUnsuitabilityAnalysis> contractUnsuitabilityAnalysis = new List<ContractUnsuitabilityAnalysis>();
@@ -213,7 +210,7 @@ namespace TsiErp.DashboardUI.Services
                 contractUnsuitabilityAnalysis.Add(analysis);
 
             }
-            return contractUnsuitabilityAnalysis;
+            return await Task.FromResult(contractUnsuitabilityAnalysis);
         }
 
         #endregion

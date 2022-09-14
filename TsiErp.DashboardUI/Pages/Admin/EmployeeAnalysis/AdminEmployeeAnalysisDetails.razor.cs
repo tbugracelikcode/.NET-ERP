@@ -18,6 +18,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.EmployeeAnalysis
 
         bool VisibleSpinner = false;
         double columnwidth;
+        private bool isGridChecked = true;
         private bool isEmployeeChecked = false;
         string employeeName = string.Empty;
 
@@ -33,10 +34,11 @@ namespace TsiErp.DashboardUI.Pages.Admin.EmployeeAnalysis
         #endregion
 
 
-        protected override void OnInitialized()
+        protected override async void OnInitialized()
         {
-            dataemployeehalt = PersonelDetayService.GetStationDetailedHaltAnalysis(employeeID, startDate, endDate);
-            dataemployeechart = PersonelDetayService.GetEmployeeDetailedtChart(employeeID, startDate, endDate);
+
+            dataemployeehalt = await PersonelDetayService.GetStationDetailedHaltAnalysis(employeeID, startDate, endDate);
+            dataemployeechart = await PersonelDetayService.GetEmployeeDetailedtChart(employeeID, startDate, endDate);
             employeeName = dataemployeehalt.Select(t => t.EmployeeName).FirstOrDefault();
 
             #region Sütun Genişlikleri
@@ -49,6 +51,13 @@ namespace TsiErp.DashboardUI.Pages.Admin.EmployeeAnalysis
             #endregion
         }
 
+        private void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+        {
+            bool argsValue = Convert.ToBoolean(args.Value);
+            isGridChecked = argsValue;
+
+            StateHasChanged();
+        }
 
         private void OnBackButtonClicked()
         {

@@ -1,9 +1,6 @@
 ﻿@page "/admin/machine-analysis"
 @layout AdminLayout
 
-
-@using TsiErp.DashboardUI.Services.Interfaces
-
 @inject IIstasyonOEEService IstasyonOEEService
 @inject NavigationManager NavigationManager
 
@@ -38,7 +35,6 @@
                 <td width="50px" align="right">
                     <br />
                     <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
-                   
                     <SfSpinner @bind-Visible="VisibleSpinner">
                     </SfSpinner>
                 </td>
@@ -117,3 +113,5 @@
     <CardFooter>
     </CardFooter>
 </SfCard>
+
+

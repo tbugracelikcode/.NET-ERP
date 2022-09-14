@@ -32,51 +32,30 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
 
             dataoee = await IstasyonOEEService.GetStationOEEAnalysis(startDate,endDate);
             datachart =await IstasyonOEEService.GetAdminMachineChart(startDate,endDate,3);
+
         }
 
         #region Component Metotları
 
         private async void OnDateButtonClicked()
         {
-            this.VisibleSpinner = true;
+            VisibleSpinner = true;
+            await Task.Delay(1);
+            StateHasChanged();
+
             endDate = DateTime.Today;
 
             #region Zaman Seçimi
-
-            if (selectedTimeIndex == 0)
+            switch (selectedTimeIndex)
             {
-                startDate = DateTime.Today.AddDays(-330);
-                frequencyChart = 0;
-            }
-            else if (selectedTimeIndex == 1)
-            {
-                startDate = DateTime.Today.AddDays(-273);
-                frequencyChart = 1;
-            }
-            else if (selectedTimeIndex == 2)
-            {
-                startDate = DateTime.Today.AddDays(-181);
-                frequencyChart = 2;
-            }
-            else if (selectedTimeIndex == 3)
-            {
-                startDate = DateTime.Today.AddDays(-90);
-                frequencyChart = 3;
-            }
-            else if (selectedTimeIndex == 4)
-            {
-                startDate = DateTime.Today.AddDays(-60);
-                frequencyChart = 4;
-            }
-            else if (selectedTimeIndex == 5)
-            {
-                startDate = DateTime.Today.AddDays(-30);
-                frequencyChart = 5;
-            }
-            else if (selectedTimeIndex == 6)
-            {
-                startDate = DateTime.Today.AddDays(-7);
-                frequencyChart = 6;
+                case 0: startDate = DateTime.Today.AddDays(-365); ; break;
+                case 1: startDate = DateTime.Today.AddDays(-273); ; break;
+                case 2: startDate = DateTime.Today.AddDays(-181); ; break;
+                case 3: startDate = DateTime.Today.AddDays(-90); ; break;
+                case 4: startDate = DateTime.Today.AddDays(-60); ; break;
+                case 5: startDate = DateTime.Today.AddDays(-30); ; break;
+                case 6: startDate = DateTime.Today.AddDays(-7); ; break;
+                default: break;
             }
 
             #endregion
@@ -87,12 +66,14 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
             datachart =await IstasyonOEEService.GetAdminMachineChart(startDate,endDate, frequencyChart);
             await Grid.Refresh();
             await ChartInstance.RefreshAsync();
-            this.VisibleSpinner = false;
+            VisibleSpinner = false;
             StateHasChanged();
         }
 
         private void OnDetailButtonClicked(int stationID)
         {
+            VisibleSpinner = true;
+
             NavigationManager.NavigateTo("/admin/machine-analysis/details" + "/" + stationID.ToString() + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd")); ;
         }
 
@@ -113,20 +94,19 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
 
         #endregion
 
-
         public void CellInfoHandler(QueryCellInfoEventArgs<StationOEEAnalysis> Args)
         {
-            //if (Args.Column.Field == "OEE")
-            //{
-            //    if (Args.Data.OEE < Convert.ToDecimal(thresholddouble))
-            //    {
-            //        Args.Cell.AddStyle(new string[] { "background-color: #DF0000; color: white; " });
-            //    }
-            //    else
-            //    {
-            //        Args.Cell.AddStyle(new string[] { "background-color: #37CB00; color: white;" });
-            //    }
-            //}
+            if (Args.Column.Field == "OEE")
+            {
+                if (Args.Data.OEE < Convert.ToDecimal(thresholddouble))
+                {
+                    Args.Cell.AddStyle(new string[] { "background-color: #DF0000; color: white; " });
+                }
+                else
+                {
+                    Args.Cell.AddStyle(new string[] { "background-color: #37CB00; color: white;" });
+                }
+            }
             StateHasChanged();
         }
 

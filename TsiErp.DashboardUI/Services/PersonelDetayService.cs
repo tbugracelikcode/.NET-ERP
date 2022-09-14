@@ -2,20 +2,16 @@
 using TsiErp.DashboardUI.Helpers;
 using TsiErp.DashboardUI.Helpers.HelperModels;
 using TsiErp.DashboardUI.Models;
+using TsiErp.DashboardUI.Services.Interfaces;
 
 namespace TsiErp.DashboardUI.Services
 {
-    public class PersonelDetayService
+    public class PersonelDetayService : IPersonelDetayService
     {
-        SqlConnection _connection;
-        public PersonelDetayService()
-        {
-            _connection = DBHelper.GetSqlConnection();
-        }
 
         #region Chart
 
-        public List<EmployeeDetailedChart> GetEmployeeDetailedtChart(int calisanID, DateTime startDate, DateTime endDate)
+        public async Task < List<EmployeeDetailedChart>> GetEmployeeDetailedtChart(int calisanID, DateTime startDate, DateTime endDate)
         {
 
 
@@ -47,14 +43,14 @@ namespace TsiErp.DashboardUI.Services
                 }
 
             };
-            return employeeDetailedChart;
+            return await Task.FromResult(employeeDetailedChart);
         }
 
         #endregion
 
         #region Grid
 
-        public List<EmployeeDetailedHaltAnalysis> GetStationDetailedHaltAnalysis(int calisanID, DateTime startDate, DateTime endDate)
+        public async Task< List<EmployeeDetailedHaltAnalysis>> GetStationDetailedHaltAnalysis(int calisanID, DateTime startDate, DateTime endDate)
         {
             List<EmployeeDetailedHaltAnalysis> employeeDetailedHaltAnalysis = new List<EmployeeDetailedHaltAnalysis>();
 
@@ -83,7 +79,7 @@ namespace TsiErp.DashboardUI.Services
 
                 employeeDetailedHaltAnalysis.Add(analysis);
             }
-            return employeeDetailedHaltAnalysis;
+            return await Task.FromResult(employeeDetailedHaltAnalysis);
         }
 
         #endregion

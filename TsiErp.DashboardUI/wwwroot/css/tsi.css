@@ -35,10 +35,13 @@ td, th {
 .FilterCard {
     background-color: #f7f7f7;
     border: 1px solid #d6d5d5;
+    box-shadow: rgb(0 0 0 / 35%) 0px 3px 10px;
 }
 
 .Cards {
     border: 1px solid #d6d5d5;
+    background-color: #fff;
+    box-shadow: rgb(0 0 0 / 35%) 0px 3px 10px;
 }
 
 .e-checkbox-wrapper.e-customcheck:hover .e-frame.e-check {
@@ -204,3 +207,4 @@ html {
     font-size: 14px !important;
     font-weight: bold;
 }
+

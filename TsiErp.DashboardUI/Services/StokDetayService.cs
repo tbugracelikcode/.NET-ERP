@@ -2,22 +2,19 @@
 using TsiErp.DashboardUI.Helpers;
 using TsiErp.DashboardUI.Helpers.HelperModels;
 using TsiErp.DashboardUI.Models;
+using TsiErp.DashboardUI.Services.Interfaces;
 
 namespace TsiErp.DashboardUI.Services
 {
-    public class StokDetayService
+    public class StokDetayService : IStokDetayService
     {
-        SqlConnection _connection;
-        public StokDetayService()
-        {
-            _connection = DBHelper.GetSqlConnection();
-        }
+       
 
         #region Hurda Analizi
 
         #region Chart
 
-        public List<ProductGroupDetailedChart> GetProductGroupDetailedtChart(int productgroupID, DateTime startDate, DateTime endDate, int products)
+        public async Task< List<ProductGroupDetailedChart>> GetProductGroupDetailedtChart(int productgroupID, DateTime startDate, DateTime endDate, int products)
         {
 
 
@@ -50,14 +47,14 @@ namespace TsiErp.DashboardUI.Services
                 }
                 
             }
-            return productgroupDetailedChart;
+            return await Task.FromResult(productgroupDetailedChart);
         }
 
         #endregion
 
         #region Grid
 
-        public List<ProductScrapAnalysis> GetProductScrapAnalysis(int groupID, DateTime startDate, DateTime endDate)
+        public async Task< List<ProductScrapAnalysis>> GetProductScrapAnalysis(int groupID, DateTime startDate, DateTime endDate)
         {
             List<ProductScrapAnalysis> productScrapAnalysis = new List<ProductScrapAnalysis>();
 
@@ -91,7 +88,7 @@ namespace TsiErp.DashboardUI.Services
                 }
             }
 
-            return productScrapAnalysis.OrderByDescending(t => t.PPM).ToList();
+            return await Task.FromResult(productScrapAnalysis.OrderByDescending(t => t.PPM).ToList());
         }
 
         #endregion

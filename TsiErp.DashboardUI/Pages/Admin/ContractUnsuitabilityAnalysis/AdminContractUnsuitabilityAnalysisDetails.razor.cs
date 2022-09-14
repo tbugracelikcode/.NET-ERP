@@ -8,9 +8,10 @@ namespace TsiErp.DashboardUI.Pages.Admin.ContractUnsuitabilityAnalysis
 {
     public partial class AdminContractUnsuitabilityAnalysisDetails
     {
-        List<TsiErp.DashboardUI.Models.ContractUnsuitabilityAnalysis> datacontract = new List<TsiErp.DashboardUI.Models.ContractUnsuitabilityAnalysis>();
-        List<TsiErp.DashboardUI.Models.ContractUnsuitabilityAnalysis> datachart = new List<TsiErp.DashboardUI.Models.ContractUnsuitabilityAnalysis>();
-        SfGrid<TsiErp.DashboardUI.Models.ContractUnsuitabilityAnalysis> Grid;
+        List<Models.ContractUnsuitabilityAnalysis> datacontract = new List<Models.ContractUnsuitabilityAnalysis>();
+        List<Models.ContractUnsuitabilityAnalysis> datachart = new List<Models.ContractUnsuitabilityAnalysis>();
+        List<Models.ContractUnsuitabilityAnalysis> dataconuns = new List<Models.ContractUnsuitabilityAnalysis>();
+        SfGrid<Models.ContractUnsuitabilityAnalysis> Grid;
 
         #region Değişkenler
 
@@ -31,6 +32,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ContractUnsuitabilityAnalysis
         private int? selectedActionIndex { get; set; }
         int? selectedactionID = 5;
         private int frequencyChart;
+        private bool isGridChecked = true;
         SfChart ChartInstance;
         string chartTitle = "Toplu Uygunsuzluk Analizi Grafiği";
         bool VisibleSpinner = false;
@@ -39,11 +41,13 @@ namespace TsiErp.DashboardUI.Pages.Admin.ContractUnsuitabilityAnalysis
 
         #endregion
 
-        protected override void OnInitialized()
+        protected async override void OnInitialized()
         {
-            datacontract = FasonUygunsuzlukDetayService.GetContractUnsuitabilityDetailed(dateStart, dateEnd, cariID);
-            datachart = FasonUygunsuzlukDetayService.GetContractUnsuitabilityDetailedChart(dateStart, dateEnd, timeIndex, 5, cariID, total);
+
+            datacontract = await FasonUygunsuzlukDetayService.GetContractUnsuitabilityDetailed(dateStart, dateEnd, cariID);
+            datachart = await FasonUygunsuzlukDetayService.GetContractUnsuitabilityDetailedChart(dateStart, dateEnd, timeIndex, 5, cariID, total);
             selectedTimeIndex = timeIndex;
+
         }
 
         private void onChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?, ComboboxUnsuitability> args)
@@ -55,81 +59,59 @@ namespace TsiErp.DashboardUI.Pages.Admin.ContractUnsuitabilityAnalysis
 
         #region Component Metotları
 
-        private void OnDateButtonClicked()
+        private async void OnDateButtonClicked()
         {
+            VisibleSpinner = true;
+            await Task.Delay(1);
+            StateHasChanged();
+
             endDate = DateTime.Today;
 
             #region Zaman Seçimi
-
-            if (selectedTimeIndex == 0)
+            switch(selectedTimeIndex)
             {
-                startDate = DateTime.Today.AddDays(-330);
-                frequencyChart = 0;
+                case 0:startDate = DateTime.Today.AddDays(-330); frequencyChart = 0;break;
+                case 1: startDate = DateTime.Today.AddDays(-273); frequencyChart = 1; break;
+                case 2: startDate = DateTime.Today.AddDays(-181); frequencyChart = 2; break;
+                case 3: startDate = DateTime.Today.AddDays(-90); frequencyChart = 3; break;
+                case 4: startDate = DateTime.Today.AddDays(-60); frequencyChart = 4; break;
+                case 5: startDate = DateTime.Today.AddDays(-30); frequencyChart = 5; break;
+                case 6: startDate = DateTime.Today.AddDays(-7); frequencyChart = 6; break;
+                default:break;
             }
-            else if (selectedTimeIndex == 1)
-            {
-                startDate = DateTime.Today.AddDays(-273);
-                frequencyChart = 1;
-            }
-            else if (selectedTimeIndex == 2)
-            {
-                startDate = DateTime.Today.AddDays(-181);
-                frequencyChart = 2;
-            }
-            else if (selectedTimeIndex == 3)
-            {
-                startDate = DateTime.Today.AddDays(-90);
-                frequencyChart = 3;
-            }
-            else if (selectedTimeIndex == 4)
-            {
-                startDate = DateTime.Today.AddDays(-60);
-                frequencyChart = 4;
-            }
-            else if (selectedTimeIndex == 5)
-            {
-                startDate = DateTime.Today.AddDays(-30);
-                frequencyChart = 5;
-            }
-            else if (selectedTimeIndex == 6)
-            {
-                startDate = DateTime.Today.AddDays(-7);
-                frequencyChart = 6;
-            }
+           
 
             #endregion
 
             #region Aksiyon Seçimi
-            if (selectedactionID == 1)
+            switch(selectedactionID)
             {
-                chartTitle = "Hurda Analizi Grafiği";
+                case 1: chartTitle = "Hurda Analizi Grafiği";break;
+                case 2: chartTitle = "Red Analizi Grafiği"; ; break;
+                case 3: chartTitle = "Olduğu Gibi Kullanılacak Analizi Grafiği"; break;
+                case 4: chartTitle = "Düzeltilecek Analizi Grafiği"; break;
+                case 5: chartTitle = "Toplu Uygunsuzluk Grafiği"; break;
             }
-            else if (selectedactionID == 2)
-            {
-                chartTitle = "Red Analizi Grafiği";
-            }
-            else if (selectedactionID == 3)
-            {
-                chartTitle = "Olduğu Gibi Kullanılacak Analizi Grafiği";
-            }
-            else if (selectedactionID == 4)
-            {
-                chartTitle = "Düzeltilecek Analizi Grafiği";
-            }
-            else if (selectedactionID == 5)
-            {
-                chartTitle = "Toplu Uygunsuzluk Grafiği";
-            }
+            
             #endregion
 
-            Grid.Refresh();
-            ChartInstance.RefreshAsync();
-            datacontract = FasonUygunsuzlukDetayService.GetContractUnsuitabilityDetailed(startDate, endDate, cariID);
-            total = FasonUygunsuzlukService.GetContractUnsuitabilityAnalysis(startDate, endDate).Where(t => t.ContractSupplierID == cariID).Select(t => t.ContractReceiptQuantity).FirstOrDefault();
-            datachart = FasonUygunsuzlukDetayService.GetContractUnsuitabilityDetailedChart(startDate, endDate, frequencyChart, selectedactionID, cariID, total);
+            datacontract = await FasonUygunsuzlukDetayService.GetContractUnsuitabilityDetailed(startDate, endDate, cariID);
+            dataconuns = await FasonUygunsuzlukService.GetContractUnsuitabilityAnalysis(startDate, endDate);
+            total = dataconuns.Where(t => t.ContractSupplierID == cariID).Select(t => t.ContractReceiptQuantity).FirstOrDefault();
+            datachart = await FasonUygunsuzlukDetayService.GetContractUnsuitabilityDetailedChart(startDate, endDate, frequencyChart, selectedactionID, cariID, total);
+            await Grid.Refresh();
+            await ChartInstance.RefreshAsync();
+            VisibleSpinner = false;
             StateHasChanged();
         }
 
+        private void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+        {
+            bool argsValue = Convert.ToBoolean(args.Value);
+            isGridChecked = argsValue;
+
+            StateHasChanged();
+        }
         private void OnBackButtonClicked()
         {
             NavigationManager.NavigateTo("/admin/contract-unsuitability-analysis"); ;

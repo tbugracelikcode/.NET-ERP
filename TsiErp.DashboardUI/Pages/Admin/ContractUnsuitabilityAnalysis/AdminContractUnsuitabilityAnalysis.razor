@@ -1,7 +1,7 @@
 ﻿@page "/admin/contract-unsuitability-analysis"
 @layout AdminLayout
 
-@inject FasonUygunsuzlukService FasonUygunsuzlukService
+@inject IFasonUygunsuzlukService FasonUygunsuzlukService
 @inject NavigationManager NavigationManager
 
 
@@ -10,6 +10,9 @@
         <table width="1000px">
             <tr>
                 <td width="200px">
+                     <br />
+                    <SfCheckBox @bind-Checked="isGridChecked" @onchange="OnCheckedChanged" CssClass="e-customcheck"></SfCheckBox>
+                    <label class=FilterLabelTitle><strong>Detay Tablosunu Gizle</strong></label>
                 </td>
                 <td width="400px">
                     <label class="FilterLabelTitle"><strong>Zaman Periyodu:</strong></label>
@@ -60,9 +63,9 @@
     </CardFooter>
 </SfCard>
 <br />
-<SfCard class="Cards">
+<SfCard class="Cards" hidden="@isGridChecked">
     <CardContent>
-        <SfGrid ID="Grid" DataSource="@datacontunsuitability" @ref="Grid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+        <SfGrid ID="Grid" DataSource="@datacontunsuitability" @ref="Grid" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
             <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
             <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>

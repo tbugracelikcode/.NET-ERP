@@ -1,8 +1,8 @@
 ﻿@page "/admin/contract-unsuitability-analysis/details/{cariID:int}/{dateStart:datetime}/{dateEnd:datetime}/{timeIndex:int}/{total:int}"
 @layout AdminLayout
 
-@inject FasonUygunsuzlukDetayService FasonUygunsuzlukDetayService
-@inject FasonUygunsuzlukService FasonUygunsuzlukService
+@inject IFasonUygunsuzlukDetayService FasonUygunsuzlukDetayService
+@inject IFasonUygunsuzlukService FasonUygunsuzlukService
 @inject NavigationManager NavigationManager
 
 
@@ -11,7 +11,10 @@
     <CardContent>
         <table width="1000px">
             <tr>
-                <td width="100px">
+                <td width="200px">
+                    <br />
+                    <SfCheckBox @bind-Checked="isGridChecked" @onchange="OnCheckedChanged" CssClass="e-customcheck"></SfCheckBox>
+                    <label class=FilterLabelTitle><strong>Detay Tablosunu Gizle</strong></label>
                 </td>
                 <td width="200px">
                     <br />
@@ -31,10 +34,10 @@
                         <ComboBoxFieldSettings Text="TypeText" Value="TypeID"></ComboBoxFieldSettings>
                     </SfComboBox>
                 </td>
-                <td width="100px">
+                <td width="50px">
                     <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
                 </td>
-                <td width="100px" align="right">
+                <td width="50px" align="right">
                     <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold" OnClick="@OnBackButtonClicked">Geri</SfButton> <SfSpinner @bind-Visible="VisibleSpinner"> </SfSpinner>
                 </td>
                 <td width="50px">
@@ -117,7 +120,7 @@
 }
 
 <br />
-<SfCard class="Cards">
+<SfCard class="Cards" hidden="@isGridChecked">
     <CardContent>
         <SfGrid ID="Grid" DataSource="@datacontract" @ref="Grid" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra">

@@ -6,12 +6,15 @@
 <SfSidebar ID="Sidebar" Type="SidebarType.Push" Width="320px" DockSize="65px" EnableDock="true" @ref="Sidebar" @bind-IsOpen="SidebarToggle">
     <div class="sidebar" style="position:fixed;z-index:1200">
         <div class="topnav navbar navbar-dark">
-            <button class="navbar-toggler" @onclick="ToggleNavMenu" />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="tsi-logo.png" />
+            @* <button class="navbar-toggler" @onclick="ToggleNavMenu" ><span class="oi oi-menu" aria-hidden="true"/></button>*@
+            <button class="navbar-toggler"  @onclick="ToggleNavMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            &nbsp;&nbsp;&nbsp;<img src="tsi-logo.png" />&nbsp;&nbsp;&nbsp;
             <a class="navbar-brand" href=""><span class="displayText" style="margin-right:40px">Dashboard</span></a>
         </div>
         @*<div @onmouseover="MouseIn" @onmouseout="MouseOut">*@
-            <div>
+        <div>
             <AdminNavMenu />
         </div>
     </div>
@@ -19,8 +22,8 @@
 
 <div class="main">
     <div class="top-row px-4" style="z-index:1111;padding-top:0px">
-       @* <CultureSwitcher />*@
-       <DxButton  CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold;" Click="@OnExitButtonClicked" Text="Çıkış" />
+        @* <CultureSwitcher />*@
+        <DxButton CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold;" Click="@OnExitButtonClicked" Text="Çıkış" />
     </div>
 
     <div class="content px-4">
@@ -30,7 +33,7 @@
 <style>
     img {
         border-radius: 10%;
-        width:71px;
+        width: 71px;
         height: 33px;
     }
 
@@ -42,13 +45,12 @@
     .navbar-toggler {
         display: inline-block;
         border: none;
-        width: 24px;
-        height: 24px;
+        width: 52px;
+        height: 37px;
         margin-left: 30px;
-        background-image: url('images/ToggleButton.png');
-        background-color: #05163C;
+        background-color: rgb(0 0 0 / 40%)!important;
         transform: scale(0.75);
-        transform-origin: left;
+        transform-origin: center;
         color: #ffffff;
     }
 
@@ -104,7 +106,7 @@
     }
 
     .e-sidebar.e-dock.e-close .navbar-toggler {
-        margin-left: 21px;
+        margin-left: 5px;
     }
 
     .e-sidebar.e-dock.e-close .nav.flex-column {
@@ -196,7 +198,7 @@
     public bool SidebarToggle = true;
     public bool SidebarToggleFixed = true;
 
-  
+
 
     public void ToggleNavMenu()
     {

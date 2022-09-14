@@ -1,7 +1,7 @@
 ﻿@page "/admin/product-group-analysis"
 @layout AdminLayout
 
-@inject StokService StokService
+@inject IStokService StokService
 @inject NavigationManager NavigationManager
 
 
@@ -10,6 +10,11 @@
     <CardContent>
         <table width="1000px">
             <tr>
+                <td width="200px">
+                    <br />
+                    <SfCheckBox @bind-Checked="isGridChecked" @onchange="OnCheckedChanged" CssClass="e-customcheck"></SfCheckBox>
+                    <label class=FilterLabelTitle><strong>Detay Tablosunu Gizle</strong></label>
+                </td>
                 <td width="100px">
                      <br />
                     <SfCheckBox @bind-Checked="isLabelsChecked" @onchange="OnChangeLabelCheck" CssClass="e-customcheck"></SfCheckBox>
@@ -83,9 +88,9 @@
     </CardFooter>
 </SfCard>
 <br />
-<SfCard class="Cards">
+<SfCard class="Cards" hidden="@isGridChecked">
     <CardContent>
-        <SfGrid ID="Grid" DataSource="@dataproductgroup" @ref="Grid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+        <SfGrid ID="Grid" DataSource="@dataproductgroup" @ref="Grid" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
             <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
             <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>

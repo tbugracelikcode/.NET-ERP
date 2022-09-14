@@ -16,80 +16,72 @@ namespace TsiErp.DashboardUI.Pages.Admin.EmployeeAnalysis
         DateTime startDate = DateTime.Today.AddDays(-90);
         DateTime endDate = DateTime.Today;
         private int? selectedTimeIndex { get; set; }
-        private int threshold;
-        private double thresholddouble;
+        private int threshold = 75;
+        private double thresholddouble = 0.75;
         private int frequencyChart;
         SfChart ChartInstance;
+        private bool isGridChecked = true;
         bool VisibleSpinner = false;
         private bool isLabelsChecked = true;
         private bool dataLabels = true;
 
         #endregion
 
-        protected override void OnInitialized()
+        protected override async void OnInitialized()
         {
             //var a = PersonelDetayService.GetStationDetailedHaltAnalysis(1,startDate,endDate);
+            
 
-            dataemployee = PersonelService.GetEmployeeGeneralAnalysis(startDate, endDate);
-            datachart = PersonelService.GetEmployeeChart(startDate, endDate, 3);
+            dataemployee = await PersonelService.GetEmployeeGeneralAnalysis(startDate, endDate);
+            datachart = await PersonelService.GetEmployeeChart(startDate, endDate, 3);
+
         }
 
         #region Component Metotları
 
-        private void OnDateButtonClicked()
+        private async void OnDateButtonClicked()
         {
+            VisibleSpinner = true;
+            await Task.Delay(1);
+            StateHasChanged();
+
             endDate = DateTime.Today;
 
             #region Zaman Seçimi
-
-            if (selectedTimeIndex == 0)
+            switch (selectedTimeIndex)
             {
-                startDate = DateTime.Today.AddDays(-365);
-                frequencyChart = 0;
-            }
-            else if (selectedTimeIndex == 1)
-            {
-                startDate = DateTime.Today.AddDays(-273);
-                frequencyChart = 1;
-            }
-            else if (selectedTimeIndex == 2)
-            {
-                startDate = DateTime.Today.AddDays(-181);
-                frequencyChart = 2;
-            }
-            else if (selectedTimeIndex == 3)
-            {
-                startDate = DateTime.Today.AddDays(-90);
-                frequencyChart = 3;
-            }
-            else if (selectedTimeIndex == 4)
-            {
-                startDate = DateTime.Today.AddDays(-60);
-                frequencyChart = 4;
-            }
-            else if (selectedTimeIndex == 5)
-            {
-                startDate = DateTime.Today.AddDays(-30);
-                frequencyChart = 5;
-            }
-            else if (selectedTimeIndex == 6)
-            {
-                startDate = DateTime.Today.AddDays(-7);
-                frequencyChart = 6;
+                case 0: startDate = DateTime.Today.AddDays(-365); ; break;
+                case 1: startDate = DateTime.Today.AddDays(-273); ; break;
+                case 2: startDate = DateTime.Today.AddDays(-181); ; break;
+                case 3: startDate = DateTime.Today.AddDays(-90); ; break;
+                case 4: startDate = DateTime.Today.AddDays(-60); ; break;
+                case 5: startDate = DateTime.Today.AddDays(-30); ; break;
+                case 6: startDate = DateTime.Today.AddDays(-7); ; break;
+                default: break;
             }
 
             #endregion
 
             thresholddouble = Convert.ToDouble(threshold) / 100;
-            Grid.Refresh();
-            ChartInstance.RefreshAsync();
-            dataemployee = PersonelService.GetEmployeeGeneralAnalysis(startDate, endDate);
-            datachart = PersonelService.GetEmployeeChart(startDate, endDate, frequencyChart);
+            dataemployee = await PersonelService.GetEmployeeGeneralAnalysis(startDate, endDate);
+            datachart = await PersonelService.GetEmployeeChart(startDate, endDate, frequencyChart);
+            await Grid.Refresh();
+            await ChartInstance.RefreshAsync();
+            VisibleSpinner = false;
             StateHasChanged();
         }
 
+        private void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+        {
+            bool argsValue = Convert.ToBoolean(args.Value);
+            isGridChecked = argsValue;
+
+            StateHasChanged();
+        }
         private void OnDetailButtonClicked(int employeeID)
         {
+            VisibleSpinner = true;
+
             NavigationManager.NavigateTo("/admin/employee-analysis/details" + "/" + employeeID.ToString() + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd"));
 
         }

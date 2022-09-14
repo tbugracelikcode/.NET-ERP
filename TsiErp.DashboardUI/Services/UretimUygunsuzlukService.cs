@@ -2,11 +2,12 @@
 using TsiErp.DashboardUI.Helpers;
 using TsiErp.DashboardUI.Helpers.HelperModels;
 using TsiErp.DashboardUI.Models;
+using TsiErp.DashboardUI.Services.Interfaces;
 using System.Globalization;
 
 namespace TsiErp.DashboardUI.Services
 {
-    public class UretimUygunsuzlukService
+    public class UretimUygunsuzlukService : IUretimUygunsuzlukService
     {
         SqlConnection _connection;
         public UretimUygunsuzlukService()
@@ -16,7 +17,7 @@ namespace TsiErp.DashboardUI.Services
 
         #region Chart
 
-        public List<AdminProductionUnsuitabilityAnalysisChart> GetProductionUnsuitabilityChart(DateTime startDate, DateTime endDate, int frequency, int? action)
+        public async Task< List<AdminProductionUnsuitabilityAnalysisChart>> GetProductionUnsuitabilityChart(DateTime startDate, DateTime endDate, int frequency, int? action)
         {
             List<AdminProductionUnsuitabilityAnalysisChart> adminProductionUnsuitabilityChart = new List<AdminProductionUnsuitabilityAnalysisChart>();
             var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate);
@@ -151,7 +152,7 @@ namespace TsiErp.DashboardUI.Services
 
 
 
-            return adminProductionUnsuitabilityChart;
+            return await Task.FromResult(adminProductionUnsuitabilityChart);
 
         }
 
@@ -160,7 +161,7 @@ namespace TsiErp.DashboardUI.Services
 
         #region Grid
 
-        public List<ProductionUnsuitabilityAnalysis> GetProductionUnsuitabilityAnalysis(DateTime startDate, DateTime endDate)
+        public async Task< List<ProductionUnsuitabilityAnalysis>> GetProductionUnsuitabilityAnalysis(DateTime startDate, DateTime endDate)
         {
             List<ProductionUnsuitabilityAnalysis> productionUnsuitabilityAnalysis = new List<ProductionUnsuitabilityAnalysis>();
 
@@ -195,7 +196,7 @@ namespace TsiErp.DashboardUI.Services
                     productionUnsuitabilityAnalysis.Add(analysis);
                 }
             }
-            return productionUnsuitabilityAnalysis;
+            return await Task.FromResult(productionUnsuitabilityAnalysis);
         }
 
         #endregion
