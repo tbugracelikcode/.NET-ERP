@@ -69,10 +69,10 @@
             <GridPageSettings PageSizes="true"></GridPageSettings>
             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
             <GridColumns>
-                <GridColumn Field=@nameof(ContractUnsuitabilityAnalysis.ContractSupplier) HeaderText="FASON TEDARİKÇİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(ContractUnsuitabilityAnalysis.Total) HeaderText="UYGUNSUZLUK MİKTARI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(ContractUnsuitabilityAnalysis.ContractReceiptQuantity) HeaderText="SİPARİŞ ADETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(ContractUnsuitabilityAnalysis.Total) HeaderText="DETAYLAR" TextAlign="TextAlign.Center" Width="80">
+                <GridColumn Field=@nameof(ContractUnsuitabilityAnalysis.ContractSupplier) HeaderText="FASON TEDARİKÇİ" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(ContractUnsuitabilityAnalysis.Total) HeaderText="UYGUNSUZLUK MİKTARI" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(ContractUnsuitabilityAnalysis.ContractReceiptQuantity) HeaderText="SİPARİŞ ADETİ" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(ContractUnsuitabilityAnalysis.Total) HeaderText="DETAYLAR" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="80">
                     <Template>
                         @{
                             var row = (context as ContractUnsuitabilityAnalysis);

@@ -1,9 +1,5 @@
 ﻿@page "/vsm"
-@using Syncfusion.Blazor.Diagram
-@using Syncfusion.Blazor.Diagram.SymbolPalette
-@using System.Collections.ObjectModel
-@using Syncfusion.Blazor.Inputs
-@using Microsoft.AspNetCore.Components.Web
+
 
 <div style="width:240px;height:100%;float:left;">
     <div class="sb-mobile-palette-bar">
@@ -299,6 +295,7 @@
             this.InAction = true;
         }
     }
+
     public class DrawTool : ConnectorDrawingController
     {
         SfDiagramComponent sfDiagram;
@@ -326,6 +323,7 @@
             base.OnMouseUp(args);
         }
     }
+
     protected override void OnInitialized()
     {
         txtText = "Fikri";
