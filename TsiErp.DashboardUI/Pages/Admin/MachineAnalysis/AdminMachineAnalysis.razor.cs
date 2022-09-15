@@ -29,10 +29,8 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
 
         protected async override void OnInitialized()
         {
-
-            dataoee = await IstasyonOEEService.GetStationOEEAnalysis(startDate,endDate);
+            dataoee = await IstasyonOEEService.GetStationOEEAnalysis(startDate, endDate);
             datachart =await IstasyonOEEService.GetAdminMachineChart(startDate,endDate,3);
-
         }
 
         #region Component Metotları
@@ -40,21 +38,22 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
         private async void OnDateButtonClicked()
         {
             VisibleSpinner = true;
-            await Task.Delay(1);
+            await Task.Delay(100);
             StateHasChanged();
+            
 
             endDate = DateTime.Today;
 
             #region Zaman Seçimi
             switch (selectedTimeIndex)
             {
-                case 0: startDate = DateTime.Today.AddDays(-365); ; break;
-                case 1: startDate = DateTime.Today.AddDays(-273); ; break;
-                case 2: startDate = DateTime.Today.AddDays(-181); ; break;
-                case 3: startDate = DateTime.Today.AddDays(-90); ; break;
-                case 4: startDate = DateTime.Today.AddDays(-60); ; break;
-                case 5: startDate = DateTime.Today.AddDays(-30); ; break;
-                case 6: startDate = DateTime.Today.AddDays(-7); ; break;
+                case 0: startDate = DateTime.Today.AddDays(-365); frequencyChart =0; break;
+                case 1: startDate = DateTime.Today.AddDays(-273); frequencyChart = 1; break;
+                case 2: startDate = DateTime.Today.AddDays(-181); frequencyChart = 2; break;
+                case 3: startDate = DateTime.Today.AddDays(-90); frequencyChart = 3; break;
+                case 4: startDate = DateTime.Today.AddDays(-60); frequencyChart = 4; break;
+                case 5: startDate = DateTime.Today.AddDays(-30); frequencyChart = 5; break;
+                case 6: startDate = DateTime.Today.AddDays(-7); frequencyChart = 6; break;
                 default: break;
             }
 
@@ -62,10 +61,9 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
 
             thresholddouble = Convert.ToDouble(threshold) / 100;
 
-            dataoee = await IstasyonOEEService.GetStationOEEAnalysis(startDate,endDate);
             datachart =await IstasyonOEEService.GetAdminMachineChart(startDate,endDate, frequencyChart);
+            dataoee = await IstasyonOEEService.GetStationOEEAnalysis(startDate, endDate);
 
-            await Grid.Refresh();
             await ChartInstance.RefreshAsync();
             VisibleSpinner = false;
             StateHasChanged();
@@ -85,11 +83,11 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
             else { dataLabels = false; }
         }
 
-        private void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+        private async void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
         {
+            
             bool argsValue = Convert.ToBoolean(args.Value);
             isGridChecked = argsValue;
-
             StateHasChanged();
         }
 

@@ -208,3 +208,10 @@ html {
     font-weight: bold;
 }
 
+.TSITxtBox {
+    min-height: 30px !important;
+}
+.TSIMemoBox {
+    min-height: 160px !important;
+}
+
