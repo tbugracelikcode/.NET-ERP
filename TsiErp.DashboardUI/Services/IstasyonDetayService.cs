@@ -2,22 +2,19 @@
 using TsiErp.DashboardUI.Helpers;
 using TsiErp.DashboardUI.Helpers.HelperModels;
 using TsiErp.DashboardUI.Models;
+using TsiErp.DashboardUI.Services.Interfaces;
 
 namespace TsiErp.DashboardUI.Services
 {
-    public class IstasyonDetayService
+    public class IstasyonDetayService : IIstasyonDetayService
     {
 
-        SqlConnection _connection;
-        public IstasyonDetayService()
-        {
-            _connection = DBHelper.GetSqlConnection();
-        }
+      
 
         #region Duruş Analizi
 
         #region Grid
-        public List<StationDetailedHaltAnalysis> GetStationDetailedHaltAnalysis(int makineID, DateTime startDate, DateTime endDate)
+        public async Task< List<StationDetailedHaltAnalysis>> GetStationDetailedHaltAnalysis(int makineID, DateTime startDate, DateTime endDate)
         {
             List<StationDetailedHaltAnalysis> stationDetailedHaltAnalysis = new List<StationDetailedHaltAnalysis>();
 
@@ -47,13 +44,13 @@ namespace TsiErp.DashboardUI.Services
 
                 stationDetailedHaltAnalysis.Add(analysis);
             }
-            return stationDetailedHaltAnalysis;
+            return await Task.FromResult(stationDetailedHaltAnalysis);
         }
 
         #endregion
 
         #region Chart
-        public List<StationDetailedHaltAnalysis> GetStationDetailedHaltAnalysisChart(int makineID, DateTime startDate, DateTime endDate)
+        public async Task < List<StationDetailedHaltAnalysis>> GetStationDetailedHaltAnalysisChart(int makineID, DateTime startDate, DateTime endDate)
         {
             List<StationDetailedHaltAnalysis> stationDetailedHaltAnalysisChart = new List<StationDetailedHaltAnalysis>();
 
@@ -88,7 +85,7 @@ namespace TsiErp.DashboardUI.Services
 
                 
             }
-            return stationDetailedHaltAnalysisChart;
+            return await Task.FromResult(stationDetailedHaltAnalysisChart);
         }
 
         #endregion
@@ -98,7 +95,7 @@ namespace TsiErp.DashboardUI.Services
         #region Stok Analizi
 
         #region Chart
-        public List<StationDetailedProductChart> GetStationDetailedProductChart(int makineID, DateTime startDate, DateTime endDate, int products)
+        public async Task< List<StationDetailedProductChart>> GetStationDetailedProductChart(int makineID, DateTime startDate, DateTime endDate, int products)
         {
 
             List<StationDetailedProductChart> stationDetailedProductChart = new List<StationDetailedProductChart>();
@@ -160,13 +157,13 @@ namespace TsiErp.DashboardUI.Services
 
                 default: break;
             }
-            return stationDetailedProductChart;
+            return await Task.FromResult(stationDetailedProductChart);
         }
 
         #endregion
 
         #region Grid
-        public List<StationDetailedProductAnalysis> GetStationDetailedProductAnalysis(int makineID, DateTime startDate, DateTime endDate)
+        public async Task< List<StationDetailedProductAnalysis>> GetStationDetailedProductAnalysis(int makineID, DateTime startDate, DateTime endDate)
         {
 
             List<StationDetailedProductAnalysis> stationDetailedProductAnalysis = new List<StationDetailedProductAnalysis>();
@@ -207,8 +204,7 @@ namespace TsiErp.DashboardUI.Services
 
             }
 
-
-            return stationDetailedProductAnalysis;
+            return await Task.FromResult(stationDetailedProductAnalysis);
         }
 
         #endregion
@@ -218,7 +214,7 @@ namespace TsiErp.DashboardUI.Services
         #region Personel Analizi
 
         #region Grid-Chart
-        public List<StationDetailedEmployeeAnalysis> GetStationDetailedEmployeeAnalysis(int makineID, DateTime startDate, DateTime endDate)
+        public async Task< List<StationDetailedEmployeeAnalysis>> GetStationDetailedEmployeeAnalysis(int makineID, DateTime startDate, DateTime endDate)
         {
 
             List<StationDetailedEmployeeAnalysis> stationDetailedEmployeeAnalysis = new List<StationDetailedEmployeeAnalysis>();
@@ -254,7 +250,7 @@ namespace TsiErp.DashboardUI.Services
 
                 stationDetailedEmployeeAnalysis.Add(analysis);
             }
-            return stationDetailedEmployeeAnalysis;
+            return await Task.FromResult(stationDetailedEmployeeAnalysis);
         }
 
         #endregion

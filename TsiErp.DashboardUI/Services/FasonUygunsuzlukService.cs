@@ -2,20 +2,17 @@
 using TsiErp.DashboardUI.Helpers;
 using TsiErp.DashboardUI.Helpers.HelperModels;
 using TsiErp.DashboardUI.Models;
+using TsiErp.DashboardUI.Services.Interfaces;
 
 namespace TsiErp.DashboardUI.Services
 {
-    public class FasonUygunsuzlukService
+    public class FasonUygunsuzlukService : IFasonUygunsuzlukService
     {
-        SqlConnection _connection;
-        public FasonUygunsuzlukService()
-        {
-            _connection = DBHelper.GetSqlConnection();
-        }
+        
 
         #region Grid-Chart
 
-        public List<ContractUnsuitabilityAnalysis> GetContractUnsuitabilityAnalysis(DateTime startDate, DateTime endDate)
+        public async Task< List<ContractUnsuitabilityAnalysis>> GetContractUnsuitabilityAnalysis(DateTime startDate, DateTime endDate)
         {
             List<ContractUnsuitabilityAnalysis> contractUnsuitabilityAnalysis = new List<ContractUnsuitabilityAnalysis>();
 
@@ -51,7 +48,7 @@ namespace TsiErp.DashboardUI.Services
                     }
                 }
             }
-            return contractUnsuitabilityAnalysis;
+            return await Task.FromResult(contractUnsuitabilityAnalysis);
         }
 
         #endregion

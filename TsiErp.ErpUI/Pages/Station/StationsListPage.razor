@@ -1,0 +1,248 @@
+﻿@page "/stations"
+@using Syncfusion.Blazor.Buttons
+@using TsiErp.Business.Entities.Station.Services
+@using TsiErp.Entities.Entities.Station
+@using TsiErp.Entities.Entities.Station.Dtos
+@using TsiErp.ErpUI.Pages.Base
+@using Tsi.Blazor.Component.Core.Components.Layouts
+
+
+@inject IStationsAppService StationsService
+
+
+<DxGridLayout CssClass="w-100 ch-480">
+    <Rows>
+        <DxGridLayoutRow Height="50px" />
+        <DxGridLayoutRow Height="50px" />
+        <DxGridLayoutRow />
+    </Rows>
+    <Columns>
+        <DxGridLayoutColumn />
+    </Columns>
+    <Items>
+        <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="FilterCard">
+                    <CardContent>
+                        <table width="1000px">
+                            <tr>
+                                <td width="800px">
+                                    <span style="float:left">
+                                        <label class="FilterLabelTitle"><strong>Kaynak Yönetimi > Ana Kayıtlar ></strong></label><label class="FilterLabelTitleValue">&nbsp;İş İstasyonları</label>
+                                    </span>
+                                </td>
+                                <td width="200px">
+                                </td>
+                              
+                            </tr>
+                        </table>
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+        <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="Cards">
+                    <CardHeader>
+                        <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnPopupButtonClicked">Filtrele</SfButton>
+                    </CardHeader>
+                    <CardContent>
+                        <SfGrid ID="Grid" DataSource="@Gridlist" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                            <GridPageSettings PageSizes="true"></GridPageSettings>
+                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                            <GridColumns>
+                                <GridColumn Field=@nameof(ListStationsDto.Code) HeaderText="MAKİNA KOD" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListStationsDto.Name) HeaderText="MAKİNA AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListStationsDto.Brand) HeaderText="MARKA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListStationsDto.Model) HeaderText="MODEL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListStationsDto.Capacity) HeaderText="KAPASİTE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListStationsDto.KWA) HeaderText="KWA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListStationsDto.StationGroup) HeaderText="İŞ İSTASYONU GRUBU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListStationsDto.X) HeaderText="X" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListStationsDto.Y) HeaderText="Y" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListStationsDto.AreaCovered) HeaderText="KAPLADIĞI ALAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListStationsDto.UsageArea) HeaderText="KULLANIM ALANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListStationsDto.Amortization) HeaderText="AMORTİSMAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListStationsDto.MachineCost) HeaderText="MAKİNA MALİYETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                 <GridColumn Field=@nameof(ListStationsDto.Shift) HeaderText="VARDİYA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListStationsDto.ShiftWorkingTime) HeaderText="VARDİYA ÇALIŞMA SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListStationsDto.PowerFactor) HeaderText="GÜÇ FAKTÖRÜ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListStationsDto.WorkSafetyInstruction) HeaderText="İŞ GÜVENLİĞİ TALİMATI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListStationsDto.UsageInstruction) HeaderText="KULLANIM TALİMATI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                            </GridColumns>
+                        </SfGrid>
+
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+    </Items>
+</DxGridLayout>
+
+<DxPopup Visible="@PopupVisible"
+         ShowFooter="true"
+         HeaderText="İş İstasyonları"
+         Width="1480px"
+         Height="690px"
+         Closing="StationsPopupClosing"
+         HeaderCssClass="HeaderTitleCss">
+    <BodyTemplate>
+
+        <DxGridLayout>
+            <Rows>
+                <DxGridLayoutRow Height="120px" />
+                <DxGridLayoutRow Height="120px" />
+                <DxGridLayoutRow Height="120px" />
+                <DxGridLayoutRow Height="120px" />
+                <DxGridLayoutRow Height="100px" />
+            </Rows>
+            <Columns>
+               <DxGridLayoutColumn Width="40px" />
+               <DxGridLayoutColumn Width="300px" />
+               <DxGridLayoutColumn Width="40px" />
+               <DxGridLayoutColumn Width="300px" />
+               <DxGridLayoutColumn Width="40px" />
+               <DxGridLayoutColumn Width="300px" />
+               <DxGridLayoutColumn Width="40px" />
+                <DxGridLayoutColumn Width="300px" />
+               <DxGridLayoutColumn Width="40px" />
+            </Columns>
+            <Items>
+                <DxGridLayoutItem Row="0" Column="1">
+                    <Template>
+                        <br />
+                        <label class="FilterLabelTitle"><strong>Makina Kodu: </strong></label>
+                        <SfTextBox CssClass="TSITxtBox" Placeholder="Makina Kodunu Yazınız."></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                <DxGridLayoutItem Row="0" Column="3">
+                    <Template>
+                        <br />
+                        <label class="FilterLabelTitle"><strong>Makina Açıklaması: </strong></label>
+                        <SfTextBox CssClass="TSITxtBox" Placeholder="İsim Yazınız."></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                 <DxGridLayoutItem Row="0" Column="5">
+                    <Template>
+                        <br />
+                         <label class="FilterLabelTitle"><strong>Marka: </strong></label>
+                         <SfTextBox CssClass="TSITxtBox" Placeholder="Markayı Yazınız."></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                <DxGridLayoutItem Row="0" Column="7">
+                    <Template>
+                        <br />
+                       <label class="FilterLabelTitle"><strong>Model: </strong></label>
+                        <SfNumericTextBox TValue="int" CssClass="TSITxtBox"></SfNumericTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                <DxGridLayoutItem Row="1" Column="1" >
+                    <Template>
+                        <label class="FilterLabelTitle"><strong>Kapasite: </strong></label>
+                        <SfTextBox Placeholder="Kapasiteyi Yazınız." CssClass="TSITxtBox"></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                 <DxGridLayoutItem Row="1" Column="3">
+                    <Template>
+                         <label class="FilterLabelTitle"><strong>KWA: </strong></label><br />
+                          <SfTextBox Placeholder="TC No Yazınız." CssClass="TSITxtBox"></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                  <DxGridLayoutItem Row="1" Column="5" >
+                    <Template>
+                          <label class="FilterLabelTitle"><strong>İş İstasyonu Grubu: </strong></label><br />
+                         <SfComboBox TValue="int" TItem="ListStationsDto"></SfComboBox>
+                    </Template>
+                </DxGridLayoutItem>
+                 <DxGridLayoutItem Row="1" Column="7" >
+                    <Template>
+                      <label class="FilterLabelTitle"><strong>Amortisman: </strong></label>
+                          <SfNumericTextBox TValue="int"></SfNumericTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                 <DxGridLayoutItem Row="2" Column="1">
+                    <Template>
+                         <label class="FilterLabelTitle"><strong>X: </strong></label>
+                          <SfNumericTextBox TValue="decimal"></SfNumericTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                  <DxGridLayoutItem Row="2" Column="3" >
+                    <Template>
+                        <label class="FilterLabelTitle"><strong>Y: </strong></label>
+                          <SfNumericTextBox TValue="decimal"></SfNumericTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                 <DxGridLayoutItem Row="2" Column="5" >
+                    <Template>
+                     <label class="FilterLabelTitle"><strong>Kapladığı Alan: </strong></label>
+                          <SfNumericTextBox TValue="decimal"></SfNumericTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                 <DxGridLayoutItem Row="2" Column="7">
+                    <Template>
+                         <label class="FilterLabelTitle"><strong>Kullanım Alanı: </strong></label>
+                          <SfNumericTextBox TValue="decimal"></SfNumericTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                  <DxGridLayoutItem Row="3" Column="1" >
+                    <Template>
+                         <label class="FilterLabelTitle"><strong>Makina Maliyeti: </strong></label>
+                          <SfNumericTextBox TValue="decimal"></SfNumericTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                 <DxGridLayoutItem Row="3" Column="3" >
+                    <Template>
+                      <label class="FilterLabelTitle"><strong>Vardiya: </strong></label>
+                          <SfNumericTextBox TValue="int"></SfNumericTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                 <DxGridLayoutItem Row="3" Column="5">
+                    <Template>
+                       
+                        <label class="FilterLabelTitle"><strong>Vardiya Çalışma Süresi: </strong></label><br />
+                          <SfNumericTextBox TValue="decimal"></SfNumericTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                  <DxGridLayoutItem Row="3" Column="7">
+                    <Template>
+                       
+                        <label class="FilterLabelTitle"><strong>Güç Faktörü: </strong></label><br />
+                          <SfNumericTextBox TValue="decimal"></SfNumericTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                 <DxGridLayoutItem Row="4" Column="1" >
+                    <Template>
+                         <label class="FilterLabelTitle"><strong>İş Güvenliği Talimatı: </strong></label>
+                          <SfTextBox Placeholder="İş Güvenliği Talimatı Yazınız." CssClass="TSITxtBox"></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                 <DxGridLayoutItem Row="4" Column="3" >
+                    <Template>
+                      <label class="FilterLabelTitle"><strong>Kullanım Talimatı: </strong></label>
+                      <SfTextBox Placeholder="Kullanım Talimatı Yazınız." CssClass="TSITxtBox"></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                 <DxGridLayoutItem Row="4" Column="5">
+                    <Template>
+                         <label class="FilterLabelTitle"><strong>Aktiflik: </strong></label><br />
+                        <SfSwitch @bind-Checked="@isActiveButton"></SfSwitch>
+                    </Template>
+                </DxGridLayoutItem>
+             
+            </Items>
+        </DxGridLayout>
+    </BodyTemplate>
+    <FooterContentTemplate>
+        @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Success" Text="Satın alma talep fişi oluştur" Click="@OnPurchaseReceiptClicked" />*@
+        <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#686868;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@(() => PopupVisible = false)">Kapat</SfButton>
+        @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Secondary" Text="Cancel" Click="@(() => PopupVisible = false)" />*@
+    </FooterContentTemplate>
+</DxPopup>

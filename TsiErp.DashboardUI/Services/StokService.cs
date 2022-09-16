@@ -3,20 +3,17 @@ using TsiErp.DashboardUI.Helpers;
 using TsiErp.DashboardUI.Helpers.HelperModels;
 using TsiErp.DashboardUI.Models;
 using System.Globalization;
+using TsiErp.DashboardUI.Services.Interfaces;
 
 namespace TsiErp.DashboardUI.Services
 {
-    public class StokService
+    public class StokService : IStokService
     {
-        SqlConnection _connection;
-        public StokService()
-        {
-            _connection = DBHelper.GetSqlConnection();
-        }
+        
 
         #region Chart
 
-        public List<AdminProductChart> GetProductChart(DateTime startDate, DateTime endDate, int frequency, int? productionSelection)
+        public async Task< List<AdminProductChart>> GetProductChart(DateTime startDate, DateTime endDate, int frequency, int? productionSelection)
         {
             List<AdminProductChart> adminProductChart = new List<AdminProductChart>();
             var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate);
@@ -45,7 +42,7 @@ namespace TsiErp.DashboardUI.Services
                 adminProductChart = gList;
             }
 
-            return adminProductChart;
+            return await Task.FromResult(adminProductChart);
 
         }
 
@@ -53,7 +50,7 @@ namespace TsiErp.DashboardUI.Services
 
         #region Grid
 
-        public List<ProductGroupsAnalysis> GetProductGroupsAnalysis(DateTime startDate, DateTime endDate)
+        public async Task< List<ProductGroupsAnalysis>> GetProductGroupsAnalysis(DateTime startDate, DateTime endDate)
         {
 
             List<ProductGroupsAnalysis> productGroupsAnalysis = new List<ProductGroupsAnalysis>();
@@ -88,14 +85,14 @@ namespace TsiErp.DashboardUI.Services
                     productGroupsAnalysis.Add(analysis);
                 }
             }
-            return productGroupsAnalysis;
+            return await Task.FromResult(productGroupsAnalysis);
         }
 
         #endregion
 
         #region Combobox
 
-        public List<ProductGroupsAnalysis> GetProductGroupsComboboxAnalysis(DateTime startDate, DateTime endDate)
+        public async Task< List<ProductGroupsAnalysis>> GetProductGroupsComboboxAnalysis(DateTime startDate, DateTime endDate)
         {
 
             List<ProductGroupsAnalysis> productGroupsAnalysis = new List<ProductGroupsAnalysis>();
@@ -129,7 +126,7 @@ namespace TsiErp.DashboardUI.Services
                     productGroupsAnalysis.Add(analysis);
                 }
             }
-            return productGroupsAnalysis;
+            return await Task.FromResult(productGroupsAnalysis);
         }
 
         #endregion

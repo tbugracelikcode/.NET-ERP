@@ -1,0 +1,162 @@
+﻿@page "/contract-unsuitability-items"
+@using Syncfusion.Blazor.Buttons
+@using TsiErp.Business.Entities.ContractUnsuitabilityItem.Services
+@using TsiErp.Entities.Entities.ContractUnsuitabilityItem
+@using TsiErp.Entities.Entities.ContractUnsuitabilityItem.Dtos
+@using TsiErp.ErpUI.Pages.Base
+@using Tsi.Blazor.Component.Core.Components.Layouts
+
+
+@inject IContractUnsuitabilityItemsAppService ContractUnsuitabilityItemsService
+
+<DxGridLayout CssClass="w-100 ch-480">
+    <Rows>
+        <DxGridLayoutRow Height="50px" />
+        <DxGridLayoutRow Height="50px" />
+        <DxGridLayoutRow />
+    </Rows>
+    <Columns>
+        <DxGridLayoutColumn />
+    </Columns>
+    <Items>
+        <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="FilterCard">
+                    <CardContent>
+                        <table width="1000px">
+                            <tr>
+                                <td width="800px">
+                                    <span style="float:left">
+                                        <label class="FilterLabelTitle"><strong>Kalite Kontrol > Ana Kayıtlar > Uygunsuzluk Kayıtları Başlıkları ></strong></label><label class="FilterLabelTitleValue">&nbsp;Fason Uygunsuzluk Başlıkları</label>
+                                    </span>
+                                </td>
+                                <td width="200px">
+                                </td>
+                            </tr>
+                        </table>
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+        <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="Cards">
+                    <CardHeader>
+                        <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnPopupButtonClicked">Filtrele</SfButton>
+                    </CardHeader>
+                    <CardContent>
+                        <SfGrid ID="Grid" DataSource="@Gridlist" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                            <GridPageSettings PageSizes="true"></GridPageSettings>
+                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                            <GridColumns>
+                                <GridColumn Field=@nameof(ListContractUnsuitabilityItemsDto.Code) HeaderText="KOD" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListContractUnsuitabilityItemsDto.Name) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListContractUnsuitabilityItemsDto.Detection) HeaderText="TESPİT" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListContractUnsuitabilityItemsDto.Severity) HeaderText="ŞİDDET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListContractUnsuitabilityItemsDto.StaProductivityAnalysis) HeaderText="İSTASYON VERİMLİLİK ANALİZİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListContractUnsuitabilityItemsDto.PerProductivityAnalysis) HeaderText="PERSONEL VERİMLİLİK ANALİZİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListContractUnsuitabilityItemsDto.Image) HeaderText="RESİM" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                            </GridColumns>
+                        </SfGrid>
+
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+    </Items>
+</DxGridLayout>
+
+<DxPopup Visible="@PopupVisible"
+         ShowFooter="true"
+         HeaderText="Fason Uygunsuzluk Başlıkları"
+         Width="980px"
+         Height="480px"
+         Closing="ContractUnsuitabilityItemsPopupClosing"
+         HeaderCssClass="HeaderTitleCss">
+    <BodyTemplate>
+
+        <DxGridLayout>
+            <Rows>
+                <DxGridLayoutRow Height="120px" />
+                <DxGridLayoutRow Height="120px" />
+                <DxGridLayoutRow Height="100px" />
+            </Rows>
+            <Columns>
+                <DxGridLayoutColumn Width="40px" />
+                <DxGridLayoutColumn Width="300px" />
+                <DxGridLayoutColumn Width="30px" />
+                <DxGridLayoutColumn Width="300px" />
+                <DxGridLayoutColumn Width="40px" />
+                <DxGridLayoutColumn Width="200px" />
+                <DxGridLayoutColumn Width="20px" />
+            </Columns>
+            <Items>
+                <DxGridLayoutItem Row="0" Column="1">
+                    <Template>
+                        <br />
+                        <label class="FilterLabelTitle"><strong>Kod: </strong></label>
+                        <SfTextBox CssClass="TSITxtBox" Placeholder="Kodu Yazınız."></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                <DxGridLayoutItem Row="0" Column="3">
+                    <Template>
+                        <br />
+                        <label class="FilterLabelTitle"><strong>Açıklama: </strong></label>
+                        <SfTextBox CssClass="TSITxtBox" Placeholder="Açıklama Yazınız."></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                 <DxGridLayoutItem Row="0" Column="5" RowSpan="1">
+                    <Template>
+                        <br />
+                         <label class="FilterLabelTitle"><strong>Resim: </strong></label>
+                        <DxImage></DxImage>
+                    </Template>
+                </DxGridLayoutItem>
+                <DxGridLayoutItem Row="1" Column="1">
+                    <Template>
+                       <label class="FilterLabelTitle"><strong>Şiddet: </strong></label>
+                        <SfNumericTextBox TValue="int" CssClass="TSITxtBox"></SfNumericTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                <DxGridLayoutItem Row="1" Column="3" >
+                    <Template>
+                        <label class="FilterLabelTitle"><strong>Tespit: </strong></label>
+                        <SfNumericTextBox TValue="int" CssClass="TSITxtBox"></SfNumericTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                 <DxGridLayoutItem Row="2" Column="1">
+                    <Template>
+                         <label class="FilterLabelTitle"><strong>İstasyon Verimlilik Analizi: </strong></label><br />
+                        <SfSwitch @bind-Checked="@isStationProductivityButton"></SfSwitch>
+                    </Template>
+                </DxGridLayoutItem>
+                  <DxGridLayoutItem Row="2" Column="3" >
+                    <Template>
+                          <label class="FilterLabelTitle"><strong>Personel Verimlilik Analizi: </strong></label><br />
+                        <SfSwitch @bind-Checked="@isEmployeeProductivityButton"></SfSwitch>
+                    </Template>
+                </DxGridLayoutItem>
+                 <DxGridLayoutItem Row="2" Column="5" >
+                    <Template>
+                      <label class="FilterLabelTitle"><strong>Aktiflik: </strong></label><br />
+                        <SfSwitch @bind-Checked="@isActiveButton"></SfSwitch>
+                    </Template>
+                </DxGridLayoutItem>
+
+            </Items>
+        </DxGridLayout>
+    </BodyTemplate>
+    <FooterContentTemplate>
+        @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Success" Text="Satın alma talep fişi oluştur" Click="@OnPurchaseReceiptClicked" />*@
+        <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#686868;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@(() => PopupVisible = false)">Kapat</SfButton>
+        @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Secondary" Text="Cancel" Click="@(() => PopupVisible = false)" />*@
+    </FooterContentTemplate>
+</DxPopup>

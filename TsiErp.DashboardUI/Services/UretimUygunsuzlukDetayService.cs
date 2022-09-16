@@ -2,10 +2,11 @@
 using TsiErp.DashboardUI.Helpers;
 using TsiErp.DashboardUI.Helpers.HelperModels;
 using TsiErp.DashboardUI.Models;
+using TsiErp.DashboardUI.Services.Interfaces;
 
 namespace TsiErp.DashboardUI.Services
 {
-    public class UretimUygunsuzlukDetayService
+    public class UretimUygunsuzlukDetayService : IUretimUygunsuzlukDetayService
     {
         SqlConnection _connection;
         public UretimUygunsuzlukDetayService()
@@ -16,7 +17,7 @@ namespace TsiErp.DashboardUI.Services
         #region İstasyona Göre Analiz
 
         #region Chart-Grid
-        public List<ProductionUnsuitabilityDetailedStation> GetProductionUnsuitabilityDetailedStationAnalysis(string unsuitabilityCode, DateTime startDate, DateTime endDate, int selectedActionID)
+        public async Task< List<ProductionUnsuitabilityDetailedStation>> GetProductionUnsuitabilityDetailedStationAnalysis(string unsuitabilityCode, DateTime startDate, DateTime endDate, int selectedActionID)
         {
 
             List<ProductionUnsuitabilityDetailedStation> productionUnsuitabilityDetailedStationAnalysis = new List<ProductionUnsuitabilityDetailedStation>();
@@ -128,7 +129,7 @@ namespace TsiErp.DashboardUI.Services
                 }
 
             }
-            return productionUnsuitabilityDetailedStationAnalysis;
+            return await Task.FromResult(productionUnsuitabilityDetailedStationAnalysis);
         }
 
         #endregion
@@ -138,7 +139,7 @@ namespace TsiErp.DashboardUI.Services
         #region Çalışana Göre Analiz
 
         #region Chart-Grid
-        public List<ProductionUnsuitabilityDetailedEmployee> GetProductionUnsuitabilityDetailedEmployeeAnalysis(string unsuitabilityCode, DateTime startDate, DateTime endDate, int selectedActionID)
+        public async Task< List<ProductionUnsuitabilityDetailedEmployee>> GetProductionUnsuitabilityDetailedEmployeeAnalysis(string unsuitabilityCode, DateTime startDate, DateTime endDate, int selectedActionID)
         {
 
             List<ProductionUnsuitabilityDetailedEmployee> productionUnsuitabilityDetailedEmployeeAnalysis = new List<ProductionUnsuitabilityDetailedEmployee>();
@@ -268,7 +269,7 @@ namespace TsiErp.DashboardUI.Services
                     default: break;
                 }
             }
-            return productionUnsuitabilityDetailedEmployeeAnalysis;
+            return await Task.FromResult(productionUnsuitabilityDetailedEmployeeAnalysis);
         }
 
         #endregion
@@ -279,7 +280,7 @@ namespace TsiErp.DashboardUI.Services
 
         #region Chart-Grid
 
-        public List<ProductionUnsuitabilityDetailedProduct> GetProductionUnsuitabilityDetailedProductAnalysis(string unsuitabilityCode, DateTime startDate, DateTime endDate, int selectedActionID)
+        public async Task< List<ProductionUnsuitabilityDetailedProduct>> GetProductionUnsuitabilityDetailedProductAnalysis(string unsuitabilityCode, DateTime startDate, DateTime endDate, int selectedActionID)
         {
 
             List<ProductionUnsuitabilityDetailedProduct> productionUnsuitabilityDetailedProductAnalysis = new List<ProductionUnsuitabilityDetailedProduct>();
@@ -410,7 +411,7 @@ namespace TsiErp.DashboardUI.Services
                 }
 
             }
-            return productionUnsuitabilityDetailedProductAnalysis;
+            return await Task.FromResult(productionUnsuitabilityDetailedProductAnalysis);
         }
 
         #endregion

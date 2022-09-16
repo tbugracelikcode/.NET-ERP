@@ -8,6 +8,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.SupplierUnsuitabilityAnalysis
     {
         List<SupplierUnsuitabilityDetailedCustomer> dataunsuitabilitycustomer = new List<SupplierUnsuitabilityDetailedCustomer>();
         List<SupplierUnsuitabilityDetailedProduct> dataunsuitabilityproduct = new List<SupplierUnsuitabilityDetailedProduct>();
+        List<Models.SupplierUnsuitabilityAnalysis> datasuppuns = new List<Models.SupplierUnsuitabilityAnalysis>();
 
         SfGrid<SupplierUnsuitabilityDetailedCustomer> CustomerGrid;
         SfGrid<SupplierUnsuitabilityDetailedProduct> ProductGrid;
@@ -17,6 +18,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.SupplierUnsuitabilityAnalysis
         bool VisibleSpinner = false;
         string unsuitabilityName = string.Empty;
         double columnwidth1;
+        private bool isGridChecked = true;
         double columnwidth2;
 
         [Parameter]
@@ -34,11 +36,13 @@ namespace TsiErp.DashboardUI.Pages.Admin.SupplierUnsuitabilityAnalysis
         #endregion
 
 
-        protected override void OnInitialized()
+        protected override async void OnInitialized()
         {
-            dataunsuitabilitycustomer = TedarikciUygunsuzlukDetayService.GetSupplierUnsuitabilityDetailedCustomerAnalysis(errorID, startDate, endDate);
-            dataunsuitabilityproduct = TedarikciUygunsuzlukDetayService.GetSupplierUnsuitabilityDetailedProductAnalysis(errorID, startDate, endDate);
-            unsuitabilityName = TedarikciUygunsuzlukService.GetSupplierUnsuitabilityAnalysis(startDate, endDate).Where(t => t.ErrorID == errorID).Select(t => t.UnsuitabilityReason).FirstOrDefault();
+
+            dataunsuitabilitycustomer = await TedarikciUygunsuzlukDetayService.GetSupplierUnsuitabilityDetailedCustomerAnalysis(errorID, startDate, endDate);
+            dataunsuitabilityproduct = await TedarikciUygunsuzlukDetayService.GetSupplierUnsuitabilityDetailedProductAnalysis(errorID, startDate, endDate);
+            datasuppuns = await TedarikciUygunsuzlukService.GetSupplierUnsuitabilityAnalysis(startDate, endDate);
+            unsuitabilityName = datasuppuns.Where(t => t.ErrorID == errorID).Select(t => t.UnsuitabilityReason).FirstOrDefault();
 
             #region Sütun Genişlikleri
 
@@ -52,6 +56,15 @@ namespace TsiErp.DashboardUI.Pages.Admin.SupplierUnsuitabilityAnalysis
             }
 
             #endregion
+
+        }
+
+        private void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+        {
+            bool argsValue = Convert.ToBoolean(args.Value);
+            isGridChecked = argsValue;
+
+            StateHasChanged();
         }
 
         private void OnBackButtonClicked()

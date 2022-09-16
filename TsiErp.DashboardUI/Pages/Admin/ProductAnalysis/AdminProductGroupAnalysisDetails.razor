@@ -1,7 +1,7 @@
 ﻿@page "/admin/product-group-analysis/details/{productgroupID:int}/{startDate:datetime}/{endDate:datetime}"
 @layout AdminLayout
 
-@inject StokDetayService StokDetayService
+@inject IStokDetayService StokDetayService
 @inject NavigationManager NavigationManager
 
 
@@ -10,6 +10,8 @@
         <table width="1000px">
             <tr>
                 <td width="200px">
+                    <SfCheckBox @bind-Checked="isGridChecked" @onchange="OnCheckedChanged" CssClass="e-customcheck"></SfCheckBox>
+                    <label class=FilterLabelTitle><strong>Detay Tablosunu Gizle</strong></label>
                 </td>
                 <td width="200px">
                     <label class="FilterLabelTitle"><strong>Ürün Grubu Adı:</strong></label><label class="FilterLabelTitleValue">&nbsp;@productgroupName</label>
@@ -21,7 +23,7 @@
                     <label class="FilterLabelTitle"><strong>Bitiş Tarih:</strong></label><label class="FilterLabelTitleValue">&nbsp;@endDate.ToString("dd/MM/yyyy")</label>
                 </td>
                 <td width="200px">
-                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold" OnClick="@OnBackButtonClicked">Geri</SfButton> <SfSpinner @bind-Visible="VisibleSpinner"> </SfSpinner>
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnBackButtonClicked">Geri</SfButton> <SfSpinner @bind-Visible="VisibleSpinner"> </SfSpinner>
                 </td>
             </tr>
         </table>
@@ -73,10 +75,10 @@
                             <CardFooter>
                             </CardFooter>
                         </SfCard>
-                        <SfCard class="Cards">
+                        <SfCard class="Cards" hidden="@isGridChecked">
 
                             <CardContent>
-                                <SfGrid ID="Grid" DataSource="@dataproductscrap" @ref="ProductGroupGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                                <SfGrid ID="Grid" DataSource="@dataproductscrap" @ref="ProductGroupGrid" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
                                         AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>

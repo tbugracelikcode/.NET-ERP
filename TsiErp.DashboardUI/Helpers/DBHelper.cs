@@ -174,55 +174,60 @@ namespace TsiErp.DashboardUI.Helpers
 
             SqlConnection connection = GetSqlConnection();
 
-            SqlCommand command = new SqlCommand();
-            command.CommandText = "SELECT " +
-                                  "ID," +
-                                  "ISNULL(CALISANID,0) as CALISANID, " +
-                                  "ISNULL(VARDIYAID,0) as VARDIYAID, " +
-                                  "ISNULL(ISTASYONID,0) as ISTASYONID, " +
-                                  "ISNULL(URETILENADET,0) as URETILENADET, " +
-                                   "ISNULL(HURDAADET,0) as HURDAADET, " +
-                                  "ISNULL(OPERASYONSURESI,0) as OPERASYONSURESI, " +
-                                  "ISNULL(AYARSURESI,0) as AYARSURESI, " +
-                                  "ISNULL(ATILSURE,0) as ATILSURE, " +
-                                  "OPRBASLANGICTRH, " +
-                                  "OPRBITISTRH, " +
-                                  "ISNULL(OEE,0) as OEE, " +
-                                  "ISNULL(KALITE,0) as KALITE, " +
-                                  "ISNULL(MESAI,0) as MESAI, " +
-                                  "ISNULL(ROTAID,0) as ROTAID, " +
-                                  "ISNULL(VARYANTID,0) as VARYANTID, " +
-                                  "ISNULL(STOKID,0) as STOKID, " +
-                                  "ISNULL(SIPARISID,0) as SIPARISID, " +
-                                  "ISNULL(URETIMEMRIID,0) as URETIMEMRIID, " +
-                                  "ISNULL(OPERASYONID,0) as OPERASYONID, " +
-                                  "MAKINEKODU, " +
-                                  "ISNULL(BIRIMSURE,0) as BIRIMSURE, " +
-                                  "ISNULL(ISEMRIID,0) as ISEMRIID, " +
-                                  "ACIKLAMA, " +
-                                  "TARIH," +
-                                  "ISNULL(VARDIYA,0) as VARDIYA, " +
-                                  "ISNULL(VARDIYACALISMASURESI,0) as VARDIYACALISMASURESI, " +
-                                  "ISEMRINO, " +
-                                  "URETIMEMRINUMARASI, " +
-                                  "ISNULL(PLNMIKTAR,0) as PLNMIKTAR, " +
-                                  "ISNULL(AGIRLIK,0) as AGIRLIK, " +
-                                  "CALISAN, " +
-                                  "STOKKODU, " +
-                                  "ISNULL(URUNGRPID,0) as URUNGRPID, " +
-                                  "URUNGRUBU, " +
-                                  "ISNULL(AYARVEKONTROLSURESI,0) as AYARVEKONTROLSURESI, " +
-                                  "ISNULL(PLANLANANOPRSURESI,0) as PLANLANANOPRSURESI, " +
-                                  "ISNULL(AGIRLIK,0) as OPRID, " +
-                                  "ISNULL(PERFORMANS,0) as PERFORMANS, " +
-                                  "ISNULL(KULLANILABILIRLIK,0) as KULLANILABILIRLIK, " +
-                                  "ISNULL(ISLEMESURESI,0) as ISLEMESURESI," +
-                                  "ISNULL(DEPARTMAN,0) as DEPARTMAN," +
-                                  "ISNULL(STOKTURU,0) as STOKTURU," +
-                                  "ISNULL(GRCMIKTAR,0) as GRCMIKTAR" +
-                                  " FROM TUR_VW_EKR_OPERASYON " +
-                                  "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "'";
+            SqlCommand command = new SqlCommand("sp_OperasyonSatirlari");
+            #region eski
+            //command.CommandText = "SELECT " +
+            //                      "ID," +
+            //                      "ISNULL(CALISANID,0) as CALISANID, " +
+            //                      "ISNULL(VARDIYAID,0) as VARDIYAID, " +
+            //                      "ISNULL(ISTASYONID,0) as ISTASYONID, " +
+            //                      "ISNULL(URETILENADET,0) as URETILENADET, " +
+            //                       "ISNULL(HURDAADET,0) as HURDAADET, " +
+            //                      "ISNULL(OPERASYONSURESI,0) as OPERASYONSURESI, " +
+            //                      "ISNULL(AYARSURESI,0) as AYARSURESI, " +
+            //                      "ISNULL(ATILSURE,0) as ATILSURE, " +
+            //                      "OPRBASLANGICTRH, " +
+            //                      "OPRBITISTRH, " +
+            //                      "ISNULL(OEE,0) as OEE, " +
+            //                      "ISNULL(KALITE,0) as KALITE, " +
+            //                      "ISNULL(MESAI,0) as MESAI, " +
+            //                      "ISNULL(ROTAID,0) as ROTAID, " +
+            //                      "ISNULL(VARYANTID,0) as VARYANTID, " +
+            //                      "ISNULL(STOKID,0) as STOKID, " +
+            //                      "ISNULL(SIPARISID,0) as SIPARISID, " +
+            //                      "ISNULL(URETIMEMRIID,0) as URETIMEMRIID, " +
+            //                      "ISNULL(OPERASYONID,0) as OPERASYONID, " +
+            //                      "MAKINEKODU, " +
+            //                      "ISNULL(BIRIMSURE,0) as BIRIMSURE, " +
+            //                      "ISNULL(ISEMRIID,0) as ISEMRIID, " +
+            //                      "ACIKLAMA, " +
+            //                      "TARIH," +
+            //                      "ISNULL(VARDIYA,0) as VARDIYA, " +
+            //                      "ISNULL(VARDIYACALISMASURESI,0) as VARDIYACALISMASURESI, " +
+            //                      "ISEMRINO, " +
+            //                      "URETIMEMRINUMARASI, " +
+            //                      "ISNULL(PLNMIKTAR,0) as PLNMIKTAR, " +
+            //                      "ISNULL(AGIRLIK,0) as AGIRLIK, " +
+            //                      "CALISAN, " +
+            //                      "STOKKODU, " +
+            //                      "ISNULL(URUNGRPID,0) as URUNGRPID, " +
+            //                      "URUNGRUBU, " +
+            //                      "ISNULL(AYARVEKONTROLSURESI,0) as AYARVEKONTROLSURESI, " +
+            //                      "ISNULL(PLANLANANOPRSURESI,0) as PLANLANANOPRSURESI, " +
+            //                      "ISNULL(AGIRLIK,0) as OPRID, " +
+            //                      "ISNULL(PERFORMANS,0) as PERFORMANS, " +
+            //                      "ISNULL(KULLANILABILIRLIK,0) as KULLANILABILIRLIK, " +
+            //                      "ISNULL(ISLEMESURESI,0) as ISLEMESURESI," +
+            //                      "ISNULL(DEPARTMAN,0) as DEPARTMAN," +
+            //                      "ISNULL(STOKTURU,0) as STOKTURU," +
+            //                      "ISNULL(GRCMIKTAR,0) as GRCMIKTAR" +
+            //                      " FROM TUR_VW_EKR_OPERASYON " +
+            //                      "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "'"; 
+            #endregion
             command.Connection = connection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@startDate",startDate);
+            command.Parameters.AddWithValue("@endDate", endDate);
 
             SqlDataReader reader = command.ExecuteReader();
 
@@ -465,36 +470,41 @@ namespace TsiErp.DashboardUI.Helpers
 
             SqlConnection connection = GetSqlConnection();
 
-            SqlCommand command = new SqlCommand();
-            command.CommandText = "SELECT " +
-                                  "ID, " +
-                                  "TAKVIMID, " +
-                                  "ISTASYONID, " +
-                                  "TARIH, " +
-                                  "CALISMADURUMU, " +
-                                  "GUNDUZYARIMGUN, " +
-                                  "GUNDUZVARDIYASI, " +
-                                  "GUNDUZFAZLAMESAI, " +
-                                  "ISNULL(GUNDUZMESAISURESI,0) as GUNDUZMESAISURESI, " +
-                                  "ISNULL(GUNDUZFAZLAMESAISURESI,0) as GUNDUZFAZLAMESAISURESI, " +
-                                  "ISNULL(GUNDUZPLNDURUSSURESI,0) as GUNDUZPLNDURUSSURESI, " +
-                                  "GECEYARIMGUN, " +
-                                  "GECEVARDIYASI, " +
-                                  "GECEFAZLAMESAI, " +
-                                  "ISNULL(GECEMESAISURESI,0) as GECEMESAISURESI, " +
-                                  "ISNULL(GECEFAZLAMESAISURESI,0) as GECEFAZLAMESAISURESI, " +
-                                  "ISNULL(GECEPLNDURUSSURESI,0) as GECEPLNDURUSSURESI, " +
-                                  "BAKIMDURUMU, " +
-                                  "PLANLIBAKIMVARDIYASI, " +
-                                  "ISNULL(BAKIMSURESI,0) as BAKIMSURESI, " +
-                                  "ISNULL(GUNDUZTOPLAMCALISMAZAMANI,0) as GUNDUZTOPLAMCALISMAZAMANI, " +
-                                  "ISNULL(GECETOPLAMCALISMAZAMANI,0) as GECETOPLAMCALISMAZAMANI, " +
-                                  "ISNULL(TOPLAMCALISABILIRSURE,0) as TOPLAMCALISABILIRSURE, " +
-                                  "PLANLANAN," +
-                                  "ISNULL(VERITOPLAMA,0) as VERITOPLAMA " +
-                                  "FROM TUR_VW_IST_CALIS_TAKVIMI_SATIRLAR_YENI " +
-                                  "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "'";
+            SqlCommand command = new SqlCommand("sp_GetCalendarQuery");
+            #region eski
+            //command.CommandText = "SELECT " +
+            //                      "ID, " +
+            //                      "TAKVIMID, " +
+            //                      "ISTASYONID, " +
+            //                      "TARIH, " +
+            //                      "CALISMADURUMU, " +
+            //                      "GUNDUZYARIMGUN, " +
+            //                      "GUNDUZVARDIYASI, " +
+            //                      "GUNDUZFAZLAMESAI, " +
+            //                      "ISNULL(GUNDUZMESAISURESI,0) as GUNDUZMESAISURESI, " +
+            //                      "ISNULL(GUNDUZFAZLAMESAISURESI,0) as GUNDUZFAZLAMESAISURESI, " +
+            //                      "ISNULL(GUNDUZPLNDURUSSURESI,0) as GUNDUZPLNDURUSSURESI, " +
+            //                      "GECEYARIMGUN, " +
+            //                      "GECEVARDIYASI, " +
+            //                      "GECEFAZLAMESAI, " +
+            //                      "ISNULL(GECEMESAISURESI,0) as GECEMESAISURESI, " +
+            //                      "ISNULL(GECEFAZLAMESAISURESI,0) as GECEFAZLAMESAISURESI, " +
+            //                      "ISNULL(GECEPLNDURUSSURESI,0) as GECEPLNDURUSSURESI, " +
+            //                      "BAKIMDURUMU, " +
+            //                      "PLANLIBAKIMVARDIYASI, " +
+            //                      "ISNULL(BAKIMSURESI,0) as BAKIMSURESI, " +
+            //                      "ISNULL(GUNDUZTOPLAMCALISMAZAMANI,0) as GUNDUZTOPLAMCALISMAZAMANI, " +
+            //                      "ISNULL(GECETOPLAMCALISMAZAMANI,0) as GECETOPLAMCALISMAZAMANI, " +
+            //                      "ISNULL(TOPLAMCALISABILIRSURE,0) as TOPLAMCALISABILIRSURE, " +
+            //                      "PLANLANAN," +
+            //                      "ISNULL(VERITOPLAMA,0) as VERITOPLAMA " +
+            //                      "FROM TUR_VW_IST_CALIS_TAKVIMI_SATIRLAR_YENI " +
+            //                      "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "'"; 
+            #endregion
             command.Connection = connection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@startDate", startDate);
+            command.Parameters.AddWithValue("@endDate", endDate);
 
             SqlDataReader reader = command.ExecuteReader();
 
@@ -1072,37 +1082,42 @@ namespace TsiErp.DashboardUI.Helpers
 
             SqlConnection connection = GetSqlConnection();
 
-            SqlCommand command = new SqlCommand();
-            command.CommandText = "SELECT " +
-                                  "ID, " +
-                                  "ISNULL(ISTASYONID,0) as ISTASYONID, " +
-                                  "ISNULL(URETIMEMRIID,0) as URETIMEMRIID, " +
-                                  "ISNULL(ISEMRIID,0) as ISEMRIID, " +
-                                  "ISNULL(CALISANID,0) as CALISANID, " +
-                                  "ISNULL(STOKID,0) as STOKID, " +
-                                  "TARIH, " +
-                                  "ISEMRINO, " +
-                                  "FISNO, " +
-                                  "CALISANAD, " +
-                                  "MAKINEADI, " +
-                                  "MAKINEKODU, " +
-                                  "ESKISTOKKODU, " +
-                                  "STOKACIKLAMASI, " +
-                                  "HATAACIKLAMA, " +
-                                  "ISNULL(OLCUKONTROLFORMBEYAN,0) as OLCUKONTROLFORMBEYAN, " +
-                                  "ISNULL(HURDA,0) as HURDA, " +
-                                  "ISNULL(DUZELTME,0) as DUZELTME, " +
-                                  "ISNULL(OLDUGUGIBIKULLANILACAK,0) as OLDUGUGIBIKULLANILACAK, " +
-                                  "RAPORNO, " +
-                                  "ACIKLAMADETAY, " +
-                                  "ISNULL(ISTVERIMLILIIKANALIZI,0) as ISTVERIMLILIIKANALIZI, " +
-                                  "ISNULL(PERVERIMLILIKANALIZI,0) as  PERVERIMLILIKANALIZI," +
-                                  "ISNULL(TUR,0) as  TUR," +
-                                  "KOD, " +
-                                  "ISNULL(URUNGRPID,0) as URUNGRPID " +
-                                  "FROM TUR_VW_OPERASYON_UYGUNSUZLUK " +
-                                  "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "'";
+            SqlCommand command = new SqlCommand("sp_GetUnsuitabilityQuery");
+            #region eski
+            //command.CommandText = "SELECT " +
+            //                      "ID, " +
+            //                      "ISNULL(ISTASYONID,0) as ISTASYONID, " +
+            //                      "ISNULL(URETIMEMRIID,0) as URETIMEMRIID, " +
+            //                      "ISNULL(ISEMRIID,0) as ISEMRIID, " +
+            //                      "ISNULL(CALISANID,0) as CALISANID, " +
+            //                      "ISNULL(STOKID,0) as STOKID, " +
+            //                      "TARIH, " +
+            //                      "ISEMRINO, " +
+            //                      "FISNO, " +
+            //                      "CALISANAD, " +
+            //                      "MAKINEADI, " +
+            //                      "MAKINEKODU, " +
+            //                      "ESKISTOKKODU, " +
+            //                      "STOKACIKLAMASI, " +
+            //                      "HATAACIKLAMA, " +
+            //                      "ISNULL(OLCUKONTROLFORMBEYAN,0) as OLCUKONTROLFORMBEYAN, " +
+            //                      "ISNULL(HURDA,0) as HURDA, " +
+            //                      "ISNULL(DUZELTME,0) as DUZELTME, " +
+            //                      "ISNULL(OLDUGUGIBIKULLANILACAK,0) as OLDUGUGIBIKULLANILACAK, " +
+            //                      "RAPORNO, " +
+            //                      "ACIKLAMADETAY, " +
+            //                      "ISNULL(ISTVERIMLILIIKANALIZI,0) as ISTVERIMLILIIKANALIZI, " +
+            //                      "ISNULL(PERVERIMLILIKANALIZI,0) as  PERVERIMLILIKANALIZI," +
+            //                      "ISNULL(TUR,0) as  TUR," +
+            //                      "KOD, " +
+            //                      "ISNULL(URUNGRPID,0) as URUNGRPID " +
+            //                      "FROM TUR_VW_OPERASYON_UYGUNSUZLUK " +
+            //                      "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "'"; 
+            #endregion
             command.Connection = connection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@startDate", startDate);
+            command.Parameters.AddWithValue("@endDate", endDate);
 
             SqlDataReader reader = command.ExecuteReader();
 

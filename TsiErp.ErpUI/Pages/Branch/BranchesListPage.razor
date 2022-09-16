@@ -6,33 +6,136 @@
 @using TsiErp.ErpUI.Pages.Base
 @using Tsi.Blazor.Component.Core.Components.Layouts
 
-@inject HttpClient HttpClient
 
-@inherits BaseListPage<Branches,SelectBranchesDto,ListBranchesDto,CreateBranchesDto,UpdateBranchesDto,ListBranchesParameterDto>
-
-@inject IBranchesAppService Service
+@inject IBranchesAppService BranchesService
 
 
-<PageLayout ColumnCount="5" RowCount="2">
-    <PageLayoutItems>
-        <DxGridLayoutItem Column="2" Row="0">
+<DxGridLayout CssClass="w-100 ch-480">
+    <Rows>
+        <DxGridLayoutRow Height="50px" />
+        <DxGridLayoutRow Height="50px" />
+        <DxGridLayoutRow />
+    </Rows>
+    <Columns>
+        <DxGridLayoutColumn />
+    </Columns>
+    <Items>
+        <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
             <Template>
-                @*<SfButton OnClick="Click" IsPrimary=tr>Tıkla</SfButton>*@
-
-                <Tsi.Blazor.Component.Core.Components.DataEditors.TsiDateEdit Caption="Tarih"></Tsi.Blazor.Component.Core.Components.DataEditors.TsiDateEdit>
+                <SfCard class="FilterCard">
+                    <CardContent>
+                        <table width="1000px">
+                            <tr>
+                                <td width="400px">
+                                    <span style="float:left">
+                                        <label class="FilterLabelTitle"><strong>Genel Sistem Tanımlamaları ></strong></label><label class="FilterLabelTitleValue">&nbsp;Şubeler</label>
+                                    </span>
+                                </td>
+                                <td width="200px">
+                                </td>
+                                <td width="200px">
+                                </td>
+                                <td width="100px">
+                                </td>
+                                <td width="100px">
+                                </td>
+                            </tr>
+                        </table>
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
             </Template>
         </DxGridLayoutItem>
-    </PageLayoutItems>
-</PageLayout>
+        <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="Cards">
+                    <CardHeader>
+                        <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnPopupButtonClicked">Filtrele</SfButton>
+                    </CardHeader>
+                    <CardContent>
+                        <SfGrid ID="Grid" DataSource="@Gridlist" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                            <GridPageSettings PageSizes="true"></GridPageSettings>
+                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                            <GridColumns>
+                                <GridColumn Field=@nameof(ListBranchesDto.Code) HeaderText="ŞUBE KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListBranchesDto.Name) HeaderText="ŞUBE ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListBranchesDto.Description_) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
-@code {
-    protected override void OnInitialized()
-    {
-        BaseCrudService = Service;
-    }
+                            </GridColumns>
+                        </SfGrid>
 
-    private async void Click()
-    {
-        var list = (await GetListAsync(new ListBranchesParameterDto())).Data;
-    }
-}
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+    </Items>
+</DxGridLayout>
+
+<DxPopup Visible="@PopupVisible"
+         ShowFooter="true"
+         HeaderText="Şubeler"
+         Width="760px"
+         Height="550px"
+         Closing="BranchesPopupClosing"
+         HeaderCssClass="HeaderTitleCss">
+    <BodyTemplate>
+
+        <DxGridLayout>
+            <Rows>
+                <DxGridLayoutRow Height="130px" />
+                <DxGridLayoutRow Height="1px" />
+                <DxGridLayoutRow Height="50px" />
+                <DxGridLayoutRow Height="1px" />
+                <DxGridLayoutRow Height="100px" />
+            </Rows>
+            <Columns>
+               <DxGridLayoutColumn Width="40px" />
+               <DxGridLayoutColumn Width="300px" />
+               <DxGridLayoutColumn Width="40px" />
+               <DxGridLayoutColumn Width="300px" />
+               <DxGridLayoutColumn Width="40px" />
+            </Columns>
+            <Items>
+                <DxGridLayoutItem Row="0" Column="1">
+                    <Template>
+                        <br />
+                        <label class="FilterLabelTitle"><strong>Şube Adı: </strong></label>
+                        <SfTextBox CssClass="TSITxtBox" Placeholder="Şube Adını Yazınız."></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                <DxGridLayoutItem Row="0" Column="3">
+                    <Template>
+                        <br />
+                        <label class="FilterLabelTitle"><strong>Şube Kodu: </strong></label>
+                        <SfTextBox CssClass="TSITxtBox" Placeholder="Şube Kodunu Yazınız."></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                <DxGridLayoutItem Row="2" Column="1">
+                    <Template>
+                        <label class="FilterLabelTitle"><strong>Aktiflik: </strong></label><br />
+                        <SfSwitch @bind-Checked="@isActiveButton"></SfSwitch>
+                    </Template>
+                </DxGridLayoutItem>
+                <DxGridLayoutItem Row="4" Column="1" ColumnSpan="4">
+                    <Template>
+                       <label class="FilterLabelTitle"><strong>Açıklama: </strong></label><br />
+                       <SfTextBox  CssClass="TSIMemoBox" Placeholder="Açıklama Yazınız."  Multiline="true"></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+             
+            </Items>
+        </DxGridLayout>
+    </BodyTemplate>
+    <FooterContentTemplate>
+        @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Success" Text="Satın alma talep fişi oluştur" Click="@OnPurchaseReceiptClicked" />*@
+        <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#686868;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@(() => PopupVisible = false)">Kapat</SfButton>
+        @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Secondary" Text="Cancel" Click="@(() => PopupVisible = false)" />*@
+    </FooterContentTemplate>
+</DxPopup>
+

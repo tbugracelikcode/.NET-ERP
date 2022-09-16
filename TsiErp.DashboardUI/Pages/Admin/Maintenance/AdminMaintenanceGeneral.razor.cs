@@ -36,6 +36,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.Maintenance
         string TitleStation = string.Empty;
         private System.Timers.Timer _timer;
 
+        bool VisibleSpinner = false;
         bool PopupVisible { get; set; } = false;
         bool PopupVisible2 { get; set; } = false;
         bool PopupVisibleAll { get; set; } = false;
@@ -43,8 +44,10 @@ namespace TsiErp.DashboardUI.Pages.Admin.Maintenance
 
         #endregion
 
-        protected override void OnInitialized()
+        protected override async void OnInitialized()
         {
+           
+
             _cardDatas = this.GetCardDatas();
             base.OnInitialized();
 
@@ -72,8 +75,10 @@ namespace TsiErp.DashboardUI.Pages.Admin.Maintenance
             PopupVisibleAll = false;
         }
 
-        private void OnPurchaseReceiptClicked()
+        private async void OnPurchaseReceiptClicked()
         {
+            
+
             var satinAlmaListVT = DBHelper.GetPurchaseDetails().OrderByDescending(t => t.TARIH).ToList();
             if (PopupVisibleAll)
             {
@@ -122,6 +127,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.Maintenance
                 PopupVisibleAll = false;
                 PopupVisible2 = true;
             }
+
         }
 
         private void ValueChangeHandler(ChangeEventArgs<int?, ComboboxTimePeriods> args)
@@ -163,6 +169,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.Maintenance
 
         public void OnClickMaintenance(string stationCode, DateTime maintenanceDate, int maintenanceID)
         {
+
             ihtiyacList.Clear();
             talimatList.Clear();
             PopupVisible = true;
@@ -195,6 +202,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.Maintenance
             }
 
         }
+
         public void OnClickAllMaintenance()
         {
             _timer.Enabled = false;
@@ -235,7 +243,6 @@ namespace TsiErp.DashboardUI.Pages.Admin.Maintenance
 
             }
             _timer.Enabled = true;
-
 
         }
 

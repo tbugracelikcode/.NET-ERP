@@ -2,22 +2,17 @@
 using TsiErp.DashboardUI.Helpers;
 using TsiErp.DashboardUI.Helpers.HelperModels;
 using TsiErp.DashboardUI.Models;
+using TsiErp.DashboardUI.Services.Interfaces;
 using System.Globalization;
 
 namespace TsiErp.DashboardUI.Services
 {
-    public class PersonelService
+    public class PersonelService : IPersonelService
     {
-        SqlConnection _connection;
-
-        public PersonelService()
-        {
-            _connection = DBHelper.GetSqlConnection();
-        }
 
         #region Chart
 
-        public List<AdminEmployeeChart> GetEmployeeChart(DateTime startDate, DateTime endDate, int frequency)
+        public async Task< List<AdminEmployeeChart>> GetEmployeeChart(DateTime startDate, DateTime endDate, int frequency)
         {
             List<AdminEmployeeChart> adminEmployeeChart = new List<AdminEmployeeChart>();
             var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate);
@@ -64,14 +59,15 @@ namespace TsiErp.DashboardUI.Services
                 }).ToList();
                 adminEmployeeChart = gList;
             }
-            return adminEmployeeChart;
+
+            return await Task.FromResult(adminEmployeeChart);
         }
 
         #endregion
 
         #region Grid
 
-        public List<EmployeeGeneralAnalysis> GetEmployeeGeneralAnalysis(DateTime startDate, DateTime endDate)
+        public async Task<List<EmployeeGeneralAnalysis>> GetEmployeeGeneralAnalysis(DateTime startDate, DateTime endDate)
         {
             List<EmployeeGeneralAnalysis> employeeGeneralAnalysis = new List<EmployeeGeneralAnalysis>();
 
@@ -110,7 +106,7 @@ namespace TsiErp.DashboardUI.Services
                     employeeGeneralAnalysis.Add(analysis);
                 }
             }
-            return employeeGeneralAnalysis;
+            return await Task.FromResult(employeeGeneralAnalysis);
         }
 
         #endregion
