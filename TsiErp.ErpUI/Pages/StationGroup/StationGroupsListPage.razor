@@ -13,7 +13,7 @@
 <DxGridLayout CssClass="w-100 ch-480">
     <Rows>
         <DxGridLayoutRow Height="50px" />
-        <DxGridLayoutRow Height="50px" />
+       <DxGridLayoutRow Height="1px" />
         <DxGridLayoutRow />
     </Rows>
     <Columns>
@@ -28,7 +28,7 @@
                             <tr>
                                 <td width="800px">
                                     <span style="float:left">
-                                        <label class="FilterLabelTitle"><strong>Kaynak Yönetimi > Ana Kayıtlar ></strong></label><label class="FilterLabelTitleValue">&nbsp;İş İstasyonu Grupları</label>
+                                        <label class="FilterLabelTitle" style="color:#9C0000"><strong>Kaynak Yönetimi > Ana Kayıtlar ></strong></label><label class="FilterLabelTitle">&nbsp;İş İstasyonu Grupları</label>
                                     </span>
                                 </td>
                                 <td width="200px">
@@ -45,7 +45,7 @@
             <Template>
                 <SfCard class="Cards">
                     <CardHeader>
-                        <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnPopupButtonClicked">Filtrele</SfButton>
+                        <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 1px 3px 4px black;; font-size:18px; font-weight:bold" OnClick="@OnPopupButtonClicked">Filtrele</SfButton>
                     </CardHeader>
                     <CardContent>
                         <SfGrid ID="Grid" DataSource="@Gridlist" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
@@ -96,7 +96,7 @@
                 <DxGridLayoutItem Row="0" Column="1">
                     <Template>
                         <br />
-                        <label class="FilterLabelTitle"><strong>Kod: </strong></label>
+                        <label class="FilterLabelTitle" ><strong>Kod: </strong></label>
                         <SfTextBox CssClass="TSITxtBox" Placeholder="Kodu Yazınız."></SfTextBox>
                     </Template>
                 </DxGridLayoutItem>
@@ -125,7 +125,7 @@
     </BodyTemplate>
     <FooterContentTemplate>
         @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Success" Text="Satın alma talep fişi oluştur" Click="@OnPurchaseReceiptClicked" />*@
-        <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#686868;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@(() => PopupVisible = false)">Kapat</SfButton>
+        <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#686868;text-shadow: 1px 3px 4px black;; font-size:18px; font-weight:bold" OnClick="@(() => PopupVisible = false)">Kapat</SfButton>
         @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Secondary" Text="Cancel" Click="@(() => PopupVisible = false)" />*@
     </FooterContentTemplate>
 </DxPopup>

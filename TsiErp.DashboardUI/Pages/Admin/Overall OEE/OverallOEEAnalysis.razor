@@ -97,7 +97,7 @@
                 <GridColumn Field=@nameof(StationOEEAnalysis.Performance) Format="#%" HeaderText="PERFORMANS" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="130"></GridColumn>
                 <GridColumn Field=@nameof(StationOEEAnalysis.Quality) HeaderText="KALİTE" Format="#%" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="130"></GridColumn>
                 <GridColumn Field=@nameof(StationOEEAnalysis.OEE) HeaderText="OEE" Format="p2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="130"></GridColumn>
-                <GridColumn Field=@nameof(StationOEEAnalysis.Code) HeaderText="DETAYLAR" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="80">
+             @*   <GridColumn Field=@nameof(StationOEEAnalysis.Code) HeaderText="DETAYLAR" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="80">
                     <Template>
                         @{
                             var row = (context as StationOEEAnalysis);
