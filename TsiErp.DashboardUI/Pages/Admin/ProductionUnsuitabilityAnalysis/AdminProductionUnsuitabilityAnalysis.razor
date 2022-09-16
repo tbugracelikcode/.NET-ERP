@@ -93,12 +93,12 @@
             <GridPageSettings PageSizes="true"></GridPageSettings>
             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
             <GridColumns>
-                <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.UnsuitabilityReason) HeaderText="UYGUNSUZLUK SEBEBİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.ScrapQuantity) HeaderText="HURDA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.Correction)  HeaderText="DÜZELTME" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.ToBeUsedAs) HeaderText="OLDUĞU GİBİ KULLANILACAK" TextAlign="TextAlign.Center" Width="130"></GridColumn>
-                <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.Total) HeaderText="TOPLAM UYGUNSUZLUK ADEDİ" TextAlign="TextAlign.Center" Width="130"></GridColumn>
-                <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.Total) HeaderText="DETAYLAR" TextAlign="TextAlign.Center" Width="80">
+                <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.UnsuitabilityReason) HeaderText="UYGUNSUZLUK SEBEBİ" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.ScrapQuantity) HeaderText="HURDA" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.Correction)  HeaderText="DÜZELTME" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.ToBeUsedAs) HeaderText="OLDUĞU GİBİ KULLANILACAK" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.Total) HeaderText="TOPLAM UYGUNSUZLUK ADEDİ" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(ProductionUnsuitabilityAnalysis.Total) HeaderText="DETAYLAR" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="80">
                     <Template>
                         @{
                             var row = (context as ProductionUnsuitabilityAnalysis);

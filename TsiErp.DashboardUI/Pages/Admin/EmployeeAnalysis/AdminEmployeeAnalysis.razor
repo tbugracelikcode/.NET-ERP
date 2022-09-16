@@ -91,12 +91,12 @@
             <GridPageSettings PageSizes="true"></GridPageSettings>
             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
             <GridColumns>
-                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.EmployeeName) HeaderText="PERSONEL ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>                
-                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.Availability) Format="p2" HeaderText="KULLANILABİLİRLİK" TextAlign="TextAlign.Center" Width="130"></GridColumn>
-                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.Performance) Format="p2" HeaderText="PERFORMANS" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.Quality) Format="p2" HeaderText="KALİTE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.OEE) HeaderText="OEE" Format="p2" TextAlign="TextAlign.Center" Width="130"></GridColumn>
-                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.Availability) HeaderText="DETAYLAR" TextAlign="TextAlign.Center" Width="80">
+                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.EmployeeName) HeaderText="PERSONEL ADI" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>                
+                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.Availability) Format="p2" HeaderText="KULLANILABİLİRLİK" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.Performance) Format="p2" HeaderText="PERFORMANS" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.Quality) Format="p2" HeaderText="KALİTE" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.OEE) HeaderText="OEE" Format="p2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.Availability) HeaderText="DETAYLAR" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="80">
                     <Template>
                         @{
                             var row = (context as EmployeeGeneralAnalysis);

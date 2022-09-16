@@ -42,19 +42,19 @@
             <CardContent>
                 <SfGrid DataSource="@topluIhtiyacList" AllowPaging="false" Toolbar="@(new List<string>() { "Print" })" Height="573px" style="padding-left:20px; padding-right:20px;">
                     <GridColumns>
-                        <GridColumn Visible="false" Field=@nameof(BakimIhtiyacListesi.STOKID) HeaderText="STOK ID" TextAlign="TextAlign.Right"
+                        <GridColumn Visible="false" Field=@nameof(BakimIhtiyacListesi.STOKID) HeaderText="STOK ID" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"
                                     Width="120"></GridColumn>
-                        <GridColumn Field=@nameof(BakimIhtiyacListesi.ESKISTOKKODU) HeaderText="STOK KODU" TextAlign="TextAlign.Left" Width="150">
+                        <GridColumn Field=@nameof(BakimIhtiyacListesi.ESKISTOKKODU) HeaderText="STOK KODU" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="150">
                         </GridColumn>
-                        <GridColumn Visible="false" Field=@nameof(BakimIhtiyacListesi.STOKACIKLAMASI) HeaderText="STOK AÇIKLAMASI" TextAlign="TextAlign.Right" Width="130">
+                        <GridColumn Visible="false" Field=@nameof(BakimIhtiyacListesi.STOKACIKLAMASI) HeaderText="STOK AÇIKLAMASI" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Width="130">
                         </GridColumn>
-                        <GridColumn Field=@nameof(BakimIhtiyacListesi.BIRIMSETKOD) HeaderText="BİRİM SET" TextAlign="TextAlign.Center"
+                        <GridColumn Field=@nameof(BakimIhtiyacListesi.BIRIMSETKOD) HeaderText="BİRİM SET" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"
                                     Width="120"></GridColumn>
-                        <GridColumn Field=@nameof(BakimIhtiyacListesi.BAKIMMIKTARI) Format="n2" HeaderText="BAKIM MİKTARI" TextAlign="TextAlign.Center" Width="150">
+                        <GridColumn Field=@nameof(BakimIhtiyacListesi.BAKIMMIKTARI) Format="n2" HeaderText="BAKIM MİKTARI" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150">
                         </GridColumn>
-                        <GridColumn Field=@nameof(BakimIhtiyacListesi.STOKMIKTARI) Format="n2" HeaderText="STOK MİKTARI" TextAlign="TextAlign.Center" Width="150">
+                        <GridColumn Field=@nameof(BakimIhtiyacListesi.STOKMIKTARI) Format="n2" HeaderText="STOK MİKTARI" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150">
                         </GridColumn>
-                        <GridColumn Field=@nameof(BakimIhtiyacListesi.IHTIYACMIKTARI) Format="n2" HeaderText="İHTİYAÇ MİKTARI" TextAlign="TextAlign.Center" Width="150">
+                        <GridColumn Field=@nameof(BakimIhtiyacListesi.IHTIYACMIKTARI) Format="n2" HeaderText="İHTİYAÇ MİKTARI" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150">
                         </GridColumn>
                     </GridColumns>
                     <GridEvents QueryCellInfo="CellInfoHandler" TValue="BakimIhtiyacListesi"></GridEvents>
@@ -254,19 +254,19 @@
                                     <CardContent>
                                         <SfGrid DataSource="@ihtiyacList" AllowPaging="false" Toolbar="@(new List<string>() { "Print" })" Height="573px" style="padding-left:20px; padding-right:20px;">
                                             <GridColumns>
-                                                <GridColumn Visible="false" Field=@nameof(BakimIhtiyacListesi.STOKID) HeaderText="STOK ID" TextAlign="TextAlign.Right"
+                                                <GridColumn Visible="false" Field=@nameof(BakimIhtiyacListesi.STOKID) HeaderText="STOK ID" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"
                                                             Width="120"></GridColumn>
-                                                <GridColumn Field=@nameof(BakimIhtiyacListesi.ESKISTOKKODU) HeaderText="STOK KODU" TextAlign="TextAlign.Left" Width="150">
+                                                <GridColumn Field=@nameof(BakimIhtiyacListesi.ESKISTOKKODU) HeaderText="STOK KODU" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="150">
                                                 </GridColumn>
-                                                <GridColumn Visible="false" Field=@nameof(BakimIhtiyacListesi.STOKACIKLAMASI) HeaderText="STOK AÇIKLAMASI" TextAlign="TextAlign.Right" Width="130">
+                                                <GridColumn Visible="false" Field=@nameof(BakimIhtiyacListesi.STOKACIKLAMASI) HeaderText="STOK AÇIKLAMASI" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Width="130">
                                                 </GridColumn>
-                                                <GridColumn Field=@nameof(BakimIhtiyacListesi.BIRIMSETKOD) HeaderText="BİRİM SET" TextAlign="TextAlign.Center"
+                                                <GridColumn Field=@nameof(BakimIhtiyacListesi.BIRIMSETKOD) HeaderText="BİRİM SET" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"
                                                             Width="120"></GridColumn>
-                                                <GridColumn Field=@nameof(BakimIhtiyacListesi.BAKIMMIKTARI) Format="n2" HeaderText="BAKIM MİKTARI" TextAlign="TextAlign.Center" Width="150">
+                                                <GridColumn Field=@nameof(BakimIhtiyacListesi.BAKIMMIKTARI) Format="n2" HeaderText="BAKIM MİKTARI" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150">
                                                 </GridColumn>
-                                                <GridColumn Field=@nameof(BakimIhtiyacListesi.STOKMIKTARI) Format="n2" HeaderText="STOK MİKTARI" TextAlign="TextAlign.Center" Width="150">
+                                                <GridColumn Field=@nameof(BakimIhtiyacListesi.STOKMIKTARI) Format="n2" HeaderText="STOK MİKTARI" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150">
                                                 </GridColumn>
-                                                <GridColumn Field=@nameof(BakimIhtiyacListesi.IHTIYACMIKTARI) Format="n2" HeaderText="İHTİYAÇ MİKTARI" TextAlign="TextAlign.Center" Width="150">
+                                                <GridColumn Field=@nameof(BakimIhtiyacListesi.IHTIYACMIKTARI) Format="n2" HeaderText="İHTİYAÇ MİKTARI" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150">
                                                 </GridColumn>
                                             </GridColumns>
                                             <GridEvents QueryCellInfo="CellInfoHandler" TValue="BakimIhtiyacListesi"></GridEvents>
@@ -292,7 +292,7 @@
                                     <CardContent>
                                         <SfGrid DataSource="@talimatList" AllowPaging="false" Toolbar="@(new List<string>() { "Print" })" style="padding-right:20px; padding-left:20px;">
                                             <GridColumns>
-                                                <GridColumn Visible="false" Field=@nameof(BakimTalimatlar.BAKIMID) HeaderText="BAKIM ID" TextAlign="TextAlign.Right"
+                                                <GridColumn Visible="false" Field=@nameof(BakimTalimatlar.BAKIMID) HeaderText="BAKIM ID" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"
                                                             Width="120"></GridColumn>
                                                 <GridColumn Field=@nameof(BakimTalimatlar.TALIMAT) HeaderText="TALİMAT" Width="150">
                                                 </GridColumn>
@@ -343,23 +343,23 @@
                         <SfGrid DataSource="@satinAlmaList" AllowSelection="true" AllowPaging="false" Toolbar="@(new List<string>() { "Print" })" Height="573px" style="padding-left:20px; padding-right:20px;">
                             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                             <GridColumns>
-                                <GridColumn Visible="false" Field=@nameof(SatinAlmaDetaylari.STOKID) HeaderText="STOK ID" TextAlign="TextAlign.Right"
+                                <GridColumn Visible="false" Field=@nameof(SatinAlmaDetaylari.STOKID) HeaderText="STOK ID" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right"
                                             Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(SatinAlmaDetaylari.STOKKODU) HeaderText="STOK KODU" TextAlign="TextAlign.Left" Width="250">
+                                <GridColumn Field=@nameof(SatinAlmaDetaylari.STOKKODU) HeaderText="STOK KODU" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="250">
                                 </GridColumn>
-                                <GridColumn Field=@nameof(SatinAlmaDetaylari.CARIUNVAN) HeaderText="TEDARİKÇİ" TextAlign="TextAlign.Left" Width="350">
+                                <GridColumn Field=@nameof(SatinAlmaDetaylari.CARIUNVAN) HeaderText="TEDARİKÇİ" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="350">
                                 </GridColumn>
-                                <GridColumn Field=@nameof(SatinAlmaDetaylari.IHTIYACMIKTARI) Format="n2" HeaderText="İHTİYAÇ MİKTARI" TextAlign="TextAlign.Center" Width="150">
+                                <GridColumn Field=@nameof(SatinAlmaDetaylari.IHTIYACMIKTARI) Format="n2" HeaderText="İHTİYAÇ MİKTARI" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="150">
                                 </GridColumn>
-                                <GridColumn Field=@nameof(SatinAlmaDetaylari.BIRIMSETKOD) HeaderText="BİRİM SET" TextAlign="TextAlign.Center"
+                                <GridColumn Field=@nameof(SatinAlmaDetaylari.BIRIMSETKOD) HeaderText="BİRİM SET" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"
                                             Width="120"></GridColumn>
                                 <GridColumn Field=@nameof(SatinAlmaDetaylari.BIRIMFIYATDECIMAL) Format="n2" HeaderText="BİRİM FİYAT" TextAlign="TextAlign.Right" Width="100">
                                 </GridColumn>
-                                <GridColumn Field=@nameof(SatinAlmaDetaylari.PARABIRIMI) HeaderText="PARA BİRİMİ" TextAlign="TextAlign.Left" Width="100">
+                                <GridColumn Field=@nameof(SatinAlmaDetaylari.PARABIRIMI) HeaderText="PARA BİRİMİ" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="100">
                                 </GridColumn>
-                                <GridColumn Field=@nameof(SatinAlmaDetaylari.TOPLAMFIYAT) Format="n2" HeaderText="TOPLAM FİYAT" TextAlign="TextAlign.Right" Width="110">
+                                <GridColumn Field=@nameof(SatinAlmaDetaylari.TOPLAMFIYAT) Format="n2" HeaderText="TOPLAM FİYAT" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Width="110">
                                 </GridColumn>
-                                <GridColumn Field=@nameof(SatinAlmaDetaylari.PARABIRIMI) HeaderText="PARA BİRİMİ" TextAlign="TextAlign.Left" Width="100">
+                                <GridColumn Field=@nameof(SatinAlmaDetaylari.PARABIRIMI) HeaderText="PARA BİRİMİ" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="100">
                                 </GridColumn>
                             </GridColumns>
                         </SfGrid>

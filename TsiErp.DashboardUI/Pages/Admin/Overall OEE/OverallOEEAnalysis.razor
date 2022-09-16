@@ -91,13 +91,13 @@
             <GridPageSettings PageSizes="true"></GridPageSettings>
             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
             <GridColumns>
-                <GridColumn Field=@nameof(StationOEEAnalysis.Code) HeaderText="MAKİNA KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(StationOEEAnalysis.Department) HeaderText="DEPARTMAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(StationOEEAnalysis.Availability) Format="#%" HeaderText="KULLANILABİLİRLİK" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(StationOEEAnalysis.Performance) Format="#%" HeaderText="PERFORMANS" TextAlign="TextAlign.Center" Width="130"></GridColumn>
-                <GridColumn Field=@nameof(StationOEEAnalysis.Quality) HeaderText="KALİTE" Format="#%" TextAlign="TextAlign.Center" Width="130"></GridColumn>
-                <GridColumn Field=@nameof(StationOEEAnalysis.OEE) HeaderText="OEE" Format="p2" TextAlign="TextAlign.Center" Width="130"></GridColumn>
-                @*<GridColumn Field=@nameof(StationOEEAnalysis.Code) HeaderText="DETAYLAR" TextAlign="TextAlign.Center" Width="80">
+                <GridColumn Field=@nameof(StationOEEAnalysis.Code) HeaderText="MAKİNA KODU" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.Department) HeaderText="DEPARTMAN" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.Availability) Format="#%" HeaderText="KULLANILABİLİRLİK" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.Performance) Format="#%" HeaderText="PERFORMANS" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.Quality) HeaderText="KALİTE" Format="#%" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.OEE) HeaderText="OEE" Format="p2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.Code) HeaderText="DETAYLAR" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="80">
                     <Template>
                         @{
                             var row = (context as StationOEEAnalysis);
