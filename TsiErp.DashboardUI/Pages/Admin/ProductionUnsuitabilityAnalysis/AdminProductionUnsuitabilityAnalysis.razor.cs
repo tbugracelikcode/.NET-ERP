@@ -18,7 +18,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
         private int? selectedTimeIndex { get; set; }
         private int? selectedActionIndex { get; set; }
         int? selectedactionID = 4;
-        private int threshold;
+        private bool isGridChecked = true;
         string chartTitle = "Toplu Uygunsuzluk Grafiği";
         private int frequencyChart;
         SfChart ChartInstance;
@@ -28,10 +28,12 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
 
         #endregion
 
-        protected override void OnInitialized()
+        protected override async void OnInitialized()
         {
-            dataprodunsuitability = UretimUygunsuzlukService.GetProductionUnsuitabilityAnalysis(startDate, endDate);
-            datachart = UretimUygunsuzlukService.GetProductionUnsuitabilityChart(startDate, endDate, 3, 4);
+
+            dataprodunsuitability =await UretimUygunsuzlukService.GetProductionUnsuitabilityAnalysis(startDate, endDate);
+            datachart = await UretimUygunsuzlukService.GetProductionUnsuitabilityChart(startDate, endDate, 3, 4);
+
         }
         private void onChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?, ComboboxUnsuitability> args)
         {
@@ -42,82 +44,62 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
 
         #region Component Metotları
 
-        private void OnDateButtonClicked()
+        private async void OnDateButtonClicked()
         {
-            //VisibleSpinner = true;
+            VisibleSpinner = true;
+            await Task.Delay(1);
+            StateHasChanged();
+
             endDate = DateTime.Today;
 
             #region Zaman Seçimi
-
-            if (selectedTimeIndex == 0)
+            switch (selectedTimeIndex)
             {
-                startDate = DateTime.Today.AddDays(-365);
-                frequencyChart = 0;
-            }
-            else if (selectedTimeIndex == 1)
-            {
-                startDate = DateTime.Today.AddDays(-273);
-                frequencyChart = 1;
-            }
-            else if (selectedTimeIndex == 2)
-            {
-                startDate = DateTime.Today.AddDays(-181);
-                frequencyChart = 2;
-            }
-            else if (selectedTimeIndex == 3)
-            {
-                startDate = DateTime.Today.AddDays(-90);
-                frequencyChart = 3;
-            }
-            else if (selectedTimeIndex == 4)
-            {
-                startDate = DateTime.Today.AddDays(-60);
-                frequencyChart = 4;
-            }
-            else if (selectedTimeIndex == 5)
-            {
-                startDate = DateTime.Today.AddDays(-30);
-                frequencyChart = 5;
-            }
-            else if (selectedTimeIndex == 6)
-            {
-                startDate = DateTime.Today.AddDays(-7);
-                frequencyChart = 6;
+                case 0: startDate = DateTime.Today.AddDays(-365); frequencyChart = 0; break;
+                case 1: startDate = DateTime.Today.AddDays(-273); frequencyChart = 1; break;
+                case 2: startDate = DateTime.Today.AddDays(-181); frequencyChart = 2; break;
+                case 3: startDate = DateTime.Today.AddDays(-90); frequencyChart = 3; break;
+                case 4: startDate = DateTime.Today.AddDays(-60); frequencyChart = 4; break;
+                case 5: startDate = DateTime.Today.AddDays(-30); frequencyChart = 5; break;
+                case 6: startDate = DateTime.Today.AddDays(-7); frequencyChart = 6; break;
+                default: break;
             }
 
             #endregion
 
             #region Aksiyon Seçimi
-
-            if (selectedactionID == 1)
+            switch(selectedactionID)
             {
-                chartTitle = "Hurda Grafiği";
-            }
-            else if (selectedactionID == 2)
-            {
-                chartTitle = "Düzeltme Grafiği";
-            }
-            else if (selectedactionID == 3)
-            {
-                chartTitle = "Olduğu Gibi Kullanılacak Grafiği";
-            }
-            else if (selectedactionID == 4)
-            {
-                chartTitle = "Toplu Uygunsuzluk Grafiği";
+                case 1: chartTitle = "Hurda Grafiği";break;
+                case 2: chartTitle = "Düzeltme Grafiği"; break;
+                case 3: chartTitle = "Olduğu Gibi Kullanılacak Grafiği"; break;
+                case 4: chartTitle = "Toplu Uygunsuzluk Grafiği"; break;
             }
 
             #endregion
 
-            Grid.Refresh();
-            ChartInstance.RefreshAsync();
-            dataprodunsuitability = UretimUygunsuzlukService.GetProductionUnsuitabilityAnalysis(startDate, endDate);
-            datachart = UretimUygunsuzlukService.GetProductionUnsuitabilityChart(startDate, endDate, frequencyChart, selectedactionID);
+            
+            dataprodunsuitability = await UretimUygunsuzlukService.GetProductionUnsuitabilityAnalysis(startDate, endDate);
+            datachart = await UretimUygunsuzlukService.GetProductionUnsuitabilityChart(startDate, endDate, frequencyChart, selectedactionID);
+            await Grid.Refresh();
+            await ChartInstance.RefreshAsync();
+            VisibleSpinner = false;
             StateHasChanged();
-            //VisibleSpinner = false;
+            
+        }
+
+        private void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+        {
+            bool argsValue = Convert.ToBoolean(args.Value);
+            isGridChecked = argsValue;
+
+            StateHasChanged();
         }
 
         private void OnDetailButtonClicked(string unsuitabilityCode)
         {
+            VisibleSpinner = true;
+
             if (selectedactionID == null) { selectedactionID = 4; }
             NavigationManager.NavigateTo("/admin/production-unsuitability-analysis/details" + "/" + unsuitabilityCode + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd") + "/" + selectedactionID.ToString()); ;
         }

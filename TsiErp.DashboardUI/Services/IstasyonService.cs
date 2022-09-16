@@ -2,20 +2,15 @@
 using TsiErp.DashboardUI.Helpers;
 using TsiErp.DashboardUI.Helpers.HelperModels;
 using TsiErp.DashboardUI.Models;
+using TsiErp.DashboardUI.Services.Interfaces;
 
 namespace TsiErp.DashboardUI.Services
 {
-    public class IstasyonService
+    public class IstasyonService : IIstasyonService
     {
-        SqlConnection _connection;
-
-        public IstasyonService()
-        {
-            _connection = DBHelper.GetSqlConnection();
-        }
 
         #region Genel Analiz
-        public List<StationGeneralAnalysis> GetStationGeneralAnalyies(DateTime startDate, DateTime endDate)
+        public async Task< List<StationGeneralAnalysis>> GetStationGeneralAnalyies(DateTime startDate, DateTime endDate)
         {
 
             List<StationGeneralAnalysis> stationGeneralAnalyses = new List<StationGeneralAnalysis>();
@@ -63,7 +58,7 @@ namespace TsiErp.DashboardUI.Services
                 }
             }
 
-            return stationGeneralAnalyses;
+            return await Task.FromResult(stationGeneralAnalyses);
         }
 
 

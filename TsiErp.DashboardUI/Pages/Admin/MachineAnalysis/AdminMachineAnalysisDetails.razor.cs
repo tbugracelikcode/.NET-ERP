@@ -26,7 +26,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
         private bool isProductsChecked = false;
         int products = 1;
         string stationName = string.Empty;
-        double columnwidth1;
+        private bool isGridChecked = true;
         double columnwidth2;
         double columnwidth3;
 
@@ -42,13 +42,14 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
         #endregion
 
 
-        protected override void OnInitialized()
+        protected override async void OnInitialized()
         {
-            dataproduct = GenelOEEDetayService.GetStationDetailedProductAnalysis(stationID, startDate, endDate);
-            dataemployee = GenelOEEDetayService.GetStationDetailedEmployeeAnalysis(stationID, startDate, endDate);
-            datahalt = GenelOEEDetayService.GetStationDetailedHaltAnalysis(stationID, startDate, endDate);
-            datahaltchart = GenelOEEDetayService.GetStationDetailedHaltAnalysisChart(stationID, startDate, endDate);
-            dataproductchart = GenelOEEDetayService.GetStationDetailedProductChart(stationID, startDate, endDate, 1);
+
+            dataproduct = await IstasyonDetayService.GetStationDetailedProductAnalysis(stationID, startDate, endDate);
+            dataemployee = await IstasyonDetayService.GetStationDetailedEmployeeAnalysis(stationID, startDate, endDate);
+            datahalt = await IstasyonDetayService.GetStationDetailedHaltAnalysis(stationID, startDate, endDate);
+            datahaltchart = await IstasyonDetayService.GetStationDetailedHaltAnalysisChart(stationID, startDate, endDate);
+            dataproductchart = await IstasyonDetayService.GetStationDetailedProductChart(stationID, startDate, endDate, 1);
             stationName = datahalt.Select(t => t.StationName).FirstOrDefault();
 
             #region Sütun Genişlikleri
@@ -64,14 +65,23 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
             }
 
             #endregion
+
         }
 
-        private void OnChangeProductCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+        private async void OnChangeProductCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
         {
             if (isProductsChecked) { products = 2; }
             else { products = 1; }
-            dataproductchart = GenelOEEDetayService.GetStationDetailedProductChart(stationID, startDate, endDate, products);
-            ChartInstance.RefreshAsync();
+            dataproductchart = await IstasyonDetayService.GetStationDetailedProductChart(stationID, startDate, endDate, products);
+            await ChartInstance.RefreshAsync();
+        }
+
+        private void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+        {
+            bool argsValue = Convert.ToBoolean(args.Value);
+            isGridChecked = argsValue;
+
+            StateHasChanged();
         }
 
         private void OnBackButtonClicked()

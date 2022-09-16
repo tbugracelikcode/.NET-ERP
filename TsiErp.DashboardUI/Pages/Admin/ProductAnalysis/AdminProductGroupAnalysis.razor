@@ -1,7 +1,7 @@
 ﻿@page "/admin/product-group-analysis"
 @layout AdminLayout
 
-@inject StokService StokService
+@inject IStokService StokService
 @inject NavigationManager NavigationManager
 
 
@@ -10,7 +10,12 @@
     <CardContent>
         <table width="1000px">
             <tr>
-                <td width="100px">
+                <td width="200px">
+                    <br />
+                    <SfCheckBox @bind-Checked="isGridChecked" @onchange="OnCheckedChanged" CssClass="e-customcheck"></SfCheckBox>
+                    <label class=FilterLabelTitle><strong>Detay Tablosunu Gizle</strong></label>
+                </td>
+                <td width="200px">
                      <br />
                     <SfCheckBox @bind-Checked="isLabelsChecked" @onchange="OnChangeLabelCheck" CssClass="e-customcheck"></SfCheckBox>
                     <label class=FilterLabelTitle><strong>Etiketleri Göster</strong></label>
@@ -21,10 +26,10 @@
                         <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
                     </SfComboBox>
                 </td>
-                <td width="200px">
+              @*<td width="200px">
                     <label class=FilterLabelTitle><strong>Verim Değeri:</strong></label>
                     <SfNumericTextBox TValue="int" @bind-Value="threshold" Placeholder="Verim Değeri Yazınız."></SfNumericTextBox>
-                </td>
+                </td>*@
                 <td width="200px">
                     <label class="FilterLabelTitle"><strong>Ürün Grubu:</strong></label>
                     <SfComboBox TValue="int?" TItem="ProductGroupsAnalysis" @bind-Index="@selectedProductIndex" PopupHeight="230px" Placeholder="ROT BAŞI" DataSource="@dataproductgroupcombobox">
@@ -32,14 +37,14 @@
                         <ComboBoxFieldSettings Text="ProductGroupName" Value="ProductGroupID"></ComboBoxFieldSettings>
                     </SfComboBox>
                 </td>
-                <td width="50px" align="right">
+                <td width="100px" align="right">
                     <br />
-                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
                 
                     <SfSpinner @bind-Visible="VisibleSpinner">
                     </SfSpinner>
                 </td>
-                <td width="50px">
+                <td width="100px">
                 </td>
             </tr>
         </table>
@@ -83,9 +88,9 @@
     </CardFooter>
 </SfCard>
 <br />
-<SfCard class="Cards">
+<SfCard class="Cards" hidden="@isGridChecked">
     <CardContent>
-        <SfGrid ID="Grid" DataSource="@dataproductgroup" @ref="Grid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+        <SfGrid ID="Grid" DataSource="@dataproductgroup" @ref="Grid" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
             <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
             <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
@@ -102,7 +107,7 @@
                     <Template>
                         @{
                             var row = (context as ProductGroupsAnalysis);
-                                <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" style="background-color:#AD0000;" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.ProductGroupID))"></SfButton>
+                                <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" style="background-color:#AD0000;text-shadow: 6px 3px 4px black;" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.ProductGroupID))"></SfButton>
                         }
 
                     </Template>

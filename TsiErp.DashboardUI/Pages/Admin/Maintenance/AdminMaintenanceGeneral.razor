@@ -11,7 +11,7 @@
                 <td width="50px" align="center">
                     <br />
                     <center>
-                        <SfButton CssClass="e-btn e-secondary" style="background-color:#474747; font-size:18px; font-weight:bold" IsPrimary="true" Content="Toplu Malzeme İhtiyaç Listesi Oluştur" OnClick="@(() => OnClickAllMaintenance())">
+                        <SfButton CssClass="e-btn e-secondary" style="background-color:#474747;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" IsPrimary="true" Content="Toplu Malzeme İhtiyaç Listesi Oluştur" OnClick="@(() => OnClickAllMaintenance())">
 
                         </SfButton>
                     </center>
@@ -24,6 +24,10 @@
     <CardFooter>
     </CardFooter>
 </SfCard>
+
+<SfSpinner @bind-Visible="VisibleSpinner">
+</SfSpinner>
+
 <DxPopup Visible="@PopupVisibleAll"
          ShowFooter="true"
          HeaderText="Toplu Malzeme İhtiyaç Listesi"
@@ -98,7 +102,7 @@
                 </td>
                 <td width="50px" align="right">
                     <br />
-                    <SfButton CssClass="e-btn e-secondary" style="background-color:#474747; font-size:18px; font-weight:bold" IsPrimary="true" Content="Filtreyi Temizle" OnClick="OnReset"></SfButton>
+                    <SfButton CssClass="e-btn e-secondary" style="background-color:#474747;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" IsPrimary="true" Content="Filtreyi Temizle" OnClick="OnReset"></SfButton>
                 </td>
                 <td width="20px">
                 </td>
@@ -127,7 +131,7 @@
                         {
                             <div class="col-lg-2 col-md-2 col-sm-4" style="padding: 10px;text-align:left;">
                                 <div id="card_sample_1" class="card_sample">
-                                    <SfCard style="height :500px;border: 5px solid #9F0303 ;border-radius:30px;">
+                                    <SfCard style="height :500px;border: 5px solid #9F0303 ;border-radius:30px;box-shadow: rgb(8 8 8 / 85%) 0px 5px 15px !important;">
                                         <center><CardImage Image="@card.ImageUrl" /></center>
                                         <center> <CardHeader Title="@card.StationCode" /></center>
                                         <CardContent>
@@ -161,7 +165,7 @@
                                         <CardFooter>
                                             <CardFooterContent>
                                                 <div style="margin-top:16px">
-                                                    <center> <SfButton style="background-color:#AD0000; font-size:18px; font-weight:bold" CssClass="e-btn e-secondary" OnClick="@(() => OnClickMaintenance(card.StationCode, card.PlannedMaintenanceDate,card.MaintenanceID))">Bakım Detaylarını Göster</SfButton></center>
+                                                    <center> <SfButton style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" CssClass="e-btn e-secondary" OnClick="@(() => OnClickMaintenance(card.StationCode, card.PlannedMaintenanceDate,card.MaintenanceID))">Bakım Detaylarını Göster</SfButton></center>
                                                 </div>
                                             </CardFooterContent>
                                         </CardFooter>
@@ -173,7 +177,7 @@
                         {
                             <div class="col-lg-2 col-md-2 col-sm-4" style="padding: 10px;text-align:left;">
                                 <div id="card_sample_1" class="card_sample">
-                                    <SfCard style="height :500px;border: 5px solid #878787 !important;border-radius:30px !important">
+                                    <SfCard style="height :500px;border: 5px solid #646363 !important;border-radius:30px !important;box-shadow: rgb(8 8 8 / 85%) 0px 5px 15px !important;">
                                         <center><CardImage Image="@card.ImageUrl" /></center>
                                         <center> <CardHeader Title="@card.StationCode" /></center>
                                         <CardContent>
@@ -207,7 +211,7 @@
                                         <CardFooter>
                                             <CardFooterContent>
                                                 <div style="margin-top:16px">
-                                                    <center><SfButton style="background-color:#565555; font-size:18px; font-weight:bold" CssClass="e-btn e-secondary" OnClick="@(() => OnClickMaintenance(card.StationCode, card.PlannedMaintenanceDate,card.MaintenanceID))">Bakım Detaylarını Göster</SfButton></center>
+                                                    <center><SfButton style="background-color:#565555;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" CssClass="e-btn e-secondary" OnClick="@(() => OnClickMaintenance(card.StationCode, card.PlannedMaintenanceDate,card.MaintenanceID))">Bakım Detaylarını Göster</SfButton></center>
                                                 </div>
                                             </CardFooterContent>
                                         </CardFooter>
@@ -349,7 +353,7 @@
                                 </GridColumn>
                                 <GridColumn Field=@nameof(SatinAlmaDetaylari.BIRIMSETKOD) HeaderText="BİRİM SET" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center"
                                             Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(SatinAlmaDetaylari.BIRIMFIYATDECIMAL) Format="n2"  HeaderText="BİRİM FİYAT" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Right" Width="100">
+                                <GridColumn Field=@nameof(SatinAlmaDetaylari.BIRIMFIYATDECIMAL) Format="n2" HeaderText="BİRİM FİYAT" TextAlign="TextAlign.Right" Width="100">
                                 </GridColumn>
                                 <GridColumn Field=@nameof(SatinAlmaDetaylari.PARABIRIMI) HeaderText="PARA BİRİMİ" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Left" Width="100">
                                 </GridColumn>

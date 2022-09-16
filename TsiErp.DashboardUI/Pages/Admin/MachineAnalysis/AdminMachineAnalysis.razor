@@ -1,9 +1,6 @@
 ﻿@page "/admin/machine-analysis"
 @layout AdminLayout
 
-
-@using TsiErp.DashboardUI.Services.Interfaces
-
 @inject IIstasyonOEEService IstasyonOEEService
 @inject NavigationManager NavigationManager
 
@@ -37,10 +34,8 @@
                 </td>
                 <td width="50px" align="right">
                     <br />
-                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
-                   
-                    <SfSpinner @bind-Visible="VisibleSpinner">
-                    </SfSpinner>
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
+                    <SfSpinner @bind-Visible="VisibleSpinner"></SfSpinner> 
                 </td>
                 <td width="50px">
                 </td>
@@ -105,7 +100,7 @@
                     <Template>
                         @{
                             var row = (context as StationOEEAnalysis);
-                            <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" style="background-color:#AD0000;" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.StationID))"></SfButton>
+                            <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" style="background-color:#AD0000;text-shadow: 6px 3px 4px black;" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.StationID))"></SfButton>
                         }
 
                     </Template>
@@ -117,3 +112,25 @@
     <CardFooter>
     </CardFooter>
 </SfCard>
+
+@*
+<DxPopup Visible="@VisibleSpinner"
+         ShowFooter="false"
+         ShowHeader="false"
+         Width="400px"
+         Height="250px">
+    <BodyTemplate>
+         
+               
+        <SfCard >
+            <CardContent>
+                 
+            </CardContent>
+        </SfCard>
+    </BodyTemplate>
+    <FooterContentTemplate>
+      
+    </FooterContentTemplate>
+</DxPopup>*@
+
+

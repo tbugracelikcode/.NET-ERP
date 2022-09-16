@@ -29,7 +29,8 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).Conf
 });
 
 builder.Services.AddSyncfusionBlazor();
-            builder.Services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(SyncfusionLocalizer));
+builder.Services.AddDevExpressBlazor();
+builder.Services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(SyncfusionLocalizer));
             builder.Services.Configure<RequestLocalizationOptions>(options =>
             {
                 // Define the list of cultures your app will support

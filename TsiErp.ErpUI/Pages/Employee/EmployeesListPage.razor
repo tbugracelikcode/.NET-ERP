@@ -1,0 +1,221 @@
+﻿@page "/employees"
+@using Syncfusion.Blazor.Buttons
+@using TsiErp.Business.Entities.Employee.Services
+@using TsiErp.Entities.Entities.Employee
+@using TsiErp.Entities.Entities.Employee.Dtos
+@using TsiErp.ErpUI.Pages.Base
+@using Tsi.Blazor.Component.Core.Components.Layouts
+
+
+@inject IEmployeesAppService EmployeesService
+
+
+<DxGridLayout CssClass="w-100 ch-480">
+    <Rows>
+        <DxGridLayoutRow Height="50px" />
+        <DxGridLayoutRow Height="50px" />
+        <DxGridLayoutRow />
+    </Rows>
+    <Columns>
+        <DxGridLayoutColumn />
+    </Columns>
+    <Items>
+        <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="FilterCard">
+                    <CardContent>
+                        <table width="1000px">
+                            <tr>
+                                <td width="400px">
+                                    <span style="float:left">
+                                        <label class="FilterLabelTitle"><strong>Kaynak Yönetimi > Ana Kayıtlar ></strong></label><label class="FilterLabelTitleValue">&nbsp;Çalışanlar</label>
+                                    </span>
+                                </td>
+                                <td width="200px">
+                                </td>
+                                <td width="200px">
+                                </td>
+                                <td width="100px">
+                                </td>
+                                <td width="100px">
+                                </td>
+                            </tr>
+                        </table>
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+        <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="Cards">
+                    <CardHeader>
+                        <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnPopupButtonClicked">Filtrele</SfButton>
+                    </CardHeader>
+                    <CardContent>
+                        <SfGrid ID="Grid" DataSource="@Gridlist" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                            <GridPageSettings PageSizes="true"></GridPageSettings>
+                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                            <GridColumns>
+                                <GridColumn Field=@nameof(ListEmployeesDto.Code) HeaderText="KOD" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListEmployeesDto.Name) HeaderText="ÇALIŞAN ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListEmployeesDto.Surname) HeaderText="ÇALIŞAN SOYADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListEmployeesDto.Department) HeaderText="DEPARTMAN ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListEmployeesDto.IDnumber) HeaderText="TC KİMLİK NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListEmployeesDto.Birthday) HeaderText="DOĞUM GÜNÜ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListEmployeesDto.BloodType) HeaderText="KAN GRUBU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListEmployeesDto.Address) HeaderText="ADRES" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListEmployeesDto.District) HeaderText="İLÇE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListEmployeesDto.City) HeaderText="İL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListEmployeesDto.HomePhone) HeaderText="EV TELEFONU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListEmployeesDto.CellPhone) HeaderText="CEP TELEFONU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListEmployeesDto.Email) HeaderText="E-POSTA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                            </GridColumns>
+                        </SfGrid>
+
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+    </Items>
+</DxGridLayout>
+
+<DxPopup Visible="@PopupVisible"
+         ShowFooter="true"
+         HeaderText="Çalışanlar"
+         Width="1100px"
+         Height="810px"
+         Closing="EmployeesPopupClosing"
+         HeaderCssClass="HeaderTitleCss">
+    <BodyTemplate>
+
+        <DxGridLayout>
+            <Rows>
+                <DxGridLayoutRow Height="120px" />
+                <DxGridLayoutRow Height="120px" />
+                <DxGridLayoutRow Height="120px" />
+                <DxGridLayoutRow Height="120px" />
+                <DxGridLayoutRow Height="120px" />
+                <DxGridLayoutRow Height="100px" />
+            </Rows>
+            <Columns>
+               <DxGridLayoutColumn Width="40px" />
+               <DxGridLayoutColumn Width="300px" />
+               <DxGridLayoutColumn Width="40px" />
+               <DxGridLayoutColumn Width="300px" />
+               <DxGridLayoutColumn Width="40px" />
+               <DxGridLayoutColumn Width="300px" />
+               <DxGridLayoutColumn Width="40px" />
+            </Columns>
+            <Items>
+                <DxGridLayoutItem Row="0" Column="1">
+                    <Template>
+                        <br />
+                        <label class="FilterLabelTitle"><strong>Kod: </strong></label>
+                        <SfTextBox CssClass="TSITxtBox" Placeholder="Kodu Yazınız."></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                <DxGridLayoutItem Row="0" Column="3">
+                    <Template>
+                        <br />
+                        <label class="FilterLabelTitle"><strong>İsim: </strong></label>
+                        <SfTextBox CssClass="TSITxtBox" Placeholder="İsim Yazınız."></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                 <DxGridLayoutItem Row="0" Column="5" RowSpan="1">
+                    <Template>
+                        <br />
+                         <label class="FilterLabelTitle"><strong>Resim: </strong></label>
+                        <DxImage></DxImage>
+                    </Template>
+                </DxGridLayoutItem>
+                <DxGridLayoutItem Row="1" Column="1">
+                    <Template>
+                       <label class="FilterLabelTitle"><strong>Soyisim: </strong></label>
+                        <SfTextBox Placeholder="Soyisim Yazınız." CssClass="TSITxtBox"></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                <DxGridLayoutItem Row="1" Column="3" >
+                    <Template>
+                        <label class="FilterLabelTitle"><strong>Departman: </strong></label>
+                        <SfComboBox TValue="int" TItem="ListEmployeesDto"></SfComboBox>
+                    </Template>
+                </DxGridLayoutItem>
+                 <DxGridLayoutItem Row="2" Column="1">
+                    <Template>
+                         <label class="FilterLabelTitle"><strong>TC Kimlik No: </strong></label><br />
+                          <SfTextBox Placeholder="TC No Yazınız." CssClass="TSITxtBox"></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                  <DxGridLayoutItem Row="2" Column="3" >
+                    <Template>
+                          <label class="FilterLabelTitle"><strong>Doğum Günü: </strong></label><br />
+                        <SfDatePicker @bind-Value="@tarih"></SfDatePicker>
+                    </Template>
+                </DxGridLayoutItem>
+                 <DxGridLayoutItem Row="2" Column="5" >
+                    <Template>
+                      <label class="FilterLabelTitle"><strong>Kan Grubu: </strong></label>
+                        <SfComboBox TValue="int" TItem="ListEmployeesDto"></SfComboBox>
+                    </Template>
+                </DxGridLayoutItem>
+                 <DxGridLayoutItem Row="3" Column="1">
+                    <Template>
+                         <label class="FilterLabelTitle"><strong>Aktiflik: </strong></label><br />
+                        <SfSwitch @bind-Checked="@isActiveButton"></SfSwitch>
+                    </Template>
+                </DxGridLayoutItem>
+                  <DxGridLayoutItem Row="3" Column="3" >
+                    <Template>
+                         <label class="FilterLabelTitle"><strong>İl: </strong></label><br />
+                          <SfTextBox Placeholder="İli Yazınız." CssClass="TSITxtBox"></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                 <DxGridLayoutItem Row="3" Column="5" >
+                    <Template>
+                      <label class="FilterLabelTitle"><strong>İlçe: </strong></label><br />
+                          <SfTextBox Placeholder="İlçe Yazınız." CssClass="TSITxtBox"></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                 <DxGridLayoutItem Row="4" Column="1">
+                    <Template>
+                         <label class="FilterLabelTitle"><strong>Ev Telefonu: </strong></label><br />
+                          <SfTextBox Placeholder="Ev Telefonu Numarasını Yazınız." CssClass="TSITxtBox"></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                  <DxGridLayoutItem Row="4" Column="3" >
+                    <Template>
+                         <label class="FilterLabelTitle"><strong>Cep Telefonu: </strong></label><br />
+                          <SfTextBox Placeholder="Cep Telefonu Numarasını Yazınız." CssClass="TSITxtBox"></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                 <DxGridLayoutItem Row="4" Column="5" >
+                    <Template>
+                      <label class="FilterLabelTitle"><strong>E-Posta: </strong></label><br />
+                          <SfTextBox Placeholder="E-Postayı Yazınız." CssClass="TSITxtBox"></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                 <DxGridLayoutItem Row="5" Column="1" ColumnSpan="5">
+                    <Template>
+                       
+                        <label class="FilterLabelTitle"><strong>Adres: </strong></label><br />
+                          <SfTextBox Placeholder="Adres Yazınız." CssClass="TSITxtBox" Multiline=true></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+             
+            </Items>
+        </DxGridLayout>
+    </BodyTemplate>
+    <FooterContentTemplate>
+        @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Success" Text="Satın alma talep fişi oluştur" Click="@OnPurchaseReceiptClicked" />*@
+        <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#686868;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@(() => PopupVisible = false)">Kapat</SfButton>
+        @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Secondary" Text="Cancel" Click="@(() => PopupVisible = false)" />*@
+    </FooterContentTemplate>
+</DxPopup>

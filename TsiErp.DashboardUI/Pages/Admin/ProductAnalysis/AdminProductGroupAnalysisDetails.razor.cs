@@ -18,6 +18,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
         private bool isProductGroupsChecked = false;
         int productgroups = 1;
         double columnwidth;
+        private bool isGridChecked = true;
         string productgroupName = string.Empty;
 
         [Parameter]
@@ -31,10 +32,11 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
         #endregion
 
 
-        protected override void OnInitialized()
+        protected override async void OnInitialized()
         {
-            dataproductscrap = StokDetayService.GetProductScrapAnalysis(productgroupID, startDate, endDate);
-            dataproductgroupchart = StokDetayService.GetProductGroupDetailedtChart(productgroupID, startDate, endDate, 1);
+
+            dataproductscrap = await StokDetayService.GetProductScrapAnalysis(productgroupID, startDate, endDate);
+            dataproductgroupchart = await StokDetayService.GetProductGroupDetailedtChart(productgroupID, startDate, endDate, 1);
             productgroupName = dataproductscrap.Select(t => t.ProductGroupName).FirstOrDefault();
             if (dataproductgroupchart.Count() < 3)
             {
@@ -42,14 +44,21 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
             }
         }
 
-        private void OnChangeProductCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+        private async void OnChangeProductCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
         {
             if (isProductGroupsChecked) { productgroups = 2; }
             else { productgroups = 1; }
-            dataproductgroupchart = StokDetayService.GetProductGroupDetailedtChart(productgroupID, startDate, endDate, productgroups);
-            ChartInstance.RefreshAsync();
+            dataproductgroupchart = await StokDetayService.GetProductGroupDetailedtChart(productgroupID, startDate, endDate, productgroups);
+            await ChartInstance.RefreshAsync();
         }
 
+        private void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+        {
+            bool argsValue = Convert.ToBoolean(args.Value);
+            isGridChecked = argsValue;
+
+            StateHasChanged();
+        }
         private void OnBackButtonClicked()
         {
             this.VisibleSpinner = true;

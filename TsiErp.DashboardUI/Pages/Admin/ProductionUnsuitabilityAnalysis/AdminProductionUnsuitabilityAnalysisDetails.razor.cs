@@ -9,6 +9,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
         List<ProductionUnsuitabilityDetailedStation> dataunsuitabilitystation = new List<ProductionUnsuitabilityDetailedStation>();
         List<ProductionUnsuitabilityDetailedEmployee> dataunsuitabilityemployee = new List<ProductionUnsuitabilityDetailedEmployee>();
         List<ProductionUnsuitabilityDetailedProduct> dataunsuitabilityproduct = new List<ProductionUnsuitabilityDetailedProduct>();
+        List<Models.ProductionUnsuitabilityAnalysis> dataprouns = new List<Models.ProductionUnsuitabilityAnalysis>();
         AdminProductionUnsuitabilityAnalysis _labelreason = new AdminProductionUnsuitabilityAnalysis();
 
         SfGrid<ProductionUnsuitabilityDetailedEmployee> EmployeeGrid;
@@ -21,6 +22,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
         string unsuitabilityName = string.Empty;
         double columnwidth1;
         double columnwidth2;
+        private bool isGridChecked = true;
         double columnwidth3;
         string actionName = string.Empty;
         [Parameter]
@@ -38,14 +40,15 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
         #endregion
 
 
-
-
-        protected override void OnInitialized()
+        protected override async void OnInitialized()
         {
-            dataunsuitabilitystation = UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedStationAnalysis(unsuitabilityCode, startDate, endDate, selectedActionID);
-            dataunsuitabilityemployee = UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedEmployeeAnalysis(unsuitabilityCode, startDate, endDate, selectedActionID);
-            dataunsuitabilityproduct = UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedProductAnalysis(unsuitabilityCode, startDate, endDate, selectedActionID);
-            unsuitabilityName = UretimUygunsuzlukService.GetProductionUnsuitabilityAnalysis(startDate, endDate).Where(t => t.Code == unsuitabilityCode).Select(t => t.UnsuitabilityReason).FirstOrDefault();
+
+            dataunsuitabilitystation =await UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedStationAnalysis(unsuitabilityCode, startDate, endDate, selectedActionID);
+            dataunsuitabilityemployee = await UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedEmployeeAnalysis(unsuitabilityCode, startDate, endDate, selectedActionID);
+            dataunsuitabilityproduct = await UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedProductAnalysis(unsuitabilityCode, startDate, endDate, selectedActionID);
+            dataprouns = await UretimUygunsuzlukService.GetProductionUnsuitabilityAnalysis(startDate, endDate);
+
+            unsuitabilityName =   dataprouns.Where(t => t.Code == unsuitabilityCode).Select(t => t.UnsuitabilityReason).FirstOrDefault();
 
             #region Sütun Genişlikleri
             if (dataunsuitabilitystation.Count() <= 3)
@@ -80,8 +83,16 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
                 actionName = "Toplu Uygunsuzluk";
             }
             #endregion
+
         }
 
+        private void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+        {
+            bool argsValue = Convert.ToBoolean(args.Value);
+            isGridChecked = argsValue;
+
+            StateHasChanged();
+        }
 
 
         private void OnBackButtonClicked()

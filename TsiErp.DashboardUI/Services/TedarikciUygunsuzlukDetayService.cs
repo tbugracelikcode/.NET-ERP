@@ -2,22 +2,19 @@
 using TsiErp.DashboardUI.Helpers;
 using TsiErp.DashboardUI.Helpers.HelperModels;
 using TsiErp.DashboardUI.Models;
+using TsiErp.DashboardUI.Services.Interfaces;
 
 namespace TsiErp.DashboardUI.Services
 {
-    public class TedarikciUygunsuzlukDetayService
+    public class TedarikciUygunsuzlukDetayService :ITedarikciUygunsuzlukDetayService
     {
-        SqlConnection _connection;
-        public TedarikciUygunsuzlukDetayService()
-        {
-            _connection = DBHelper.GetSqlConnection();
-        }
+        
 
         #region Müşteriye Göre Analiz
 
         #region Chart-Grid
 
-        public List<SupplierUnsuitabilityDetailedCustomer> GetSupplierUnsuitabilityDetailedCustomerAnalysis(int errorID, DateTime startDate, DateTime endDate)
+        public async Task< List<SupplierUnsuitabilityDetailedCustomer>> GetSupplierUnsuitabilityDetailedCustomerAnalysis(int errorID, DateTime startDate, DateTime endDate)
         {
 
             List<SupplierUnsuitabilityDetailedCustomer> supplierUnsuitabilityDetailedCustomerAnalysis = new List<SupplierUnsuitabilityDetailedCustomer>();
@@ -52,7 +49,7 @@ namespace TsiErp.DashboardUI.Services
                     }
                 }
             }
-            return supplierUnsuitabilityDetailedCustomerAnalysis;
+            return await Task.FromResult(supplierUnsuitabilityDetailedCustomerAnalysis);
         }
 
         #endregion
@@ -62,7 +59,7 @@ namespace TsiErp.DashboardUI.Services
         #region Stoğa Göre Analiz
 
         #region Chart-Grid
-        public List<SupplierUnsuitabilityDetailedProduct> GetSupplierUnsuitabilityDetailedProductAnalysis(int errorID, DateTime startDate, DateTime endDate)
+        public async Task< List<SupplierUnsuitabilityDetailedProduct>> GetSupplierUnsuitabilityDetailedProductAnalysis(int errorID, DateTime startDate, DateTime endDate)
         {
 
             List<SupplierUnsuitabilityDetailedProduct> supplierUnsuitabilityDetailedProductAnalysis = new List<SupplierUnsuitabilityDetailedProduct>();
@@ -97,7 +94,7 @@ namespace TsiErp.DashboardUI.Services
                     }
                 }
             }
-            return supplierUnsuitabilityDetailedProductAnalysis;
+            return await Task.FromResult(supplierUnsuitabilityDetailedProductAnalysis);
         }
 
         #endregion
