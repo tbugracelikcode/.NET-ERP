@@ -1,13 +1,13 @@
-﻿@page "/branches"
+﻿@page "/departments"
 @using Syncfusion.Blazor.Buttons
-@using TsiErp.Business.Entities.Branch.Services
-@using TsiErp.Entities.Entities.Branch
-@using TsiErp.Entities.Entities.Branch.Dtos
+@using TsiErp.Business.Entities.Department.Services
+@using TsiErp.Entities.Entities.Department
+@using TsiErp.Entities.Entities.Department.Dtos
 @using TsiErp.ErpUI.Pages.Base
 @using Tsi.Blazor.Component.Core.Components.Layouts
 
 
-@inject IBranchesAppService BranchesService
+@inject IDepartmentsAppService DepartmentsService
 
 
 <DxGridLayout CssClass="w-100 ch-480">
@@ -28,7 +28,7 @@
                             <tr>
                                 <td width="400px">
                                     <span style="float:left">
-                                        <label class="FilterLabelTitle"><strong>Genel Sistem Tanımlamaları ></strong></label><label class="FilterLabelTitleValue">&nbsp;Şubeler</label>
+                                        <label class="FilterLabelTitle"><strong>Kaynak Yönetimi > Ana Kayıtlar ></strong></label><label class="FilterLabelTitleValue">&nbsp;Departmanlar</label>
                                     </span>
                                 </td>
                                 <td width="200px">
@@ -61,9 +61,8 @@
                             <GridPageSettings PageSizes="true"></GridPageSettings>
                             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                             <GridColumns>
-                                <GridColumn Field=@nameof(ListBranchesDto.Code) HeaderText="ŞUBE KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ListBranchesDto.Name) HeaderText="ŞUBE ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ListBranchesDto.Description_) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListDepartmentsDto.Code) HeaderText="DEPARTMAN KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListDepartmentsDto.Name) HeaderText="DEPARTMAN ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                             </GridColumns>
                         </SfGrid>
@@ -79,19 +78,16 @@
 
 <DxPopup Visible="@PopupVisible"
          ShowFooter="true"
-         HeaderText="Şubeler"
+         HeaderText="Departmanlar"
          Width="760px"
-         Height="550px"
-         Closing="BranchesPopupClosing"
+         Height="330px"
+         Closing="DepartmentsPopupClosing"
          HeaderCssClass="HeaderTitleCss">
     <BodyTemplate>
 
         <DxGridLayout>
             <Rows>
-                <DxGridLayoutRow Height="130px" />
-                <DxGridLayoutRow Height="1px" />
-                <DxGridLayoutRow Height="50px" />
-                <DxGridLayoutRow Height="1px" />
+                <DxGridLayoutRow Height="120px" />
                 <DxGridLayoutRow Height="100px" />
             </Rows>
             <Columns>
@@ -105,27 +101,21 @@
                 <DxGridLayoutItem Row="0" Column="1">
                     <Template>
                         <br />
-                        <label class="FilterLabelTitle"><strong>Şube Adı: </strong></label>
-                        <SfTextBox CssClass="TSITxtBox" Placeholder="Şube Adını Yazınız."></SfTextBox>
+                        <label class="FilterLabelTitle"><strong>Departman Kodu: </strong></label>
+                        <SfTextBox CssClass="TSITxtBox" Placeholder="Departman Kodunu Yazınız."></SfTextBox>
                     </Template>
                 </DxGridLayoutItem>
                 <DxGridLayoutItem Row="0" Column="3">
                     <Template>
                         <br />
-                        <label class="FilterLabelTitle"><strong>Şube Kodu: </strong></label>
-                        <SfTextBox CssClass="TSITxtBox" Placeholder="Şube Kodunu Yazınız."></SfTextBox>
+                        <label class="FilterLabelTitle"><strong>Departman Adı: </strong></label>
+                        <SfTextBox CssClass="TSITxtBox" Placeholder="Departman Adını Yazınız."></SfTextBox>
                     </Template>
                 </DxGridLayoutItem>
-                <DxGridLayoutItem Row="2" Column="1">
+                <DxGridLayoutItem Row="1" Column="1">
                     <Template>
                         <label class="FilterLabelTitle"><strong>Aktiflik: </strong></label><br />
                         <SfSwitch @bind-Checked="@isActiveButton"></SfSwitch>
-                    </Template>
-                </DxGridLayoutItem>
-                <DxGridLayoutItem Row="4" Column="1" ColumnSpan="4">
-                    <Template>
-                       <label class="FilterLabelTitle"><strong>Açıklama: </strong></label><br />
-                       <SfTextBox  CssClass="TSIMemoBox" Placeholder="Açıklama Yazınız."  Multiline="true"></SfTextBox>
                     </Template>
                 </DxGridLayoutItem>
              
@@ -138,4 +128,3 @@
         @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Secondary" Text="Cancel" Click="@(() => PopupVisible = false)" />*@
     </FooterContentTemplate>
 </DxPopup>
-

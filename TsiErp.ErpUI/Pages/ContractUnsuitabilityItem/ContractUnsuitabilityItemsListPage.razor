@@ -77,8 +77,8 @@
 <DxPopup Visible="@PopupVisible"
          ShowFooter="true"
          HeaderText="Fason Uygunsuzluk Başlıkları"
-         Width="1300px"
-         Height="500px"
+         Width="980px"
+         Height="480px"
          Closing="ContractUnsuitabilityItemsPopupClosing"
          HeaderCssClass="HeaderTitleCss">
     <BodyTemplate>
@@ -86,18 +86,16 @@
         <DxGridLayout>
             <Rows>
                 <DxGridLayoutRow Height="120px" />
-                <DxGridLayoutRow Height="15px" />
                 <DxGridLayoutRow Height="120px" />
-                <DxGridLayoutRow Height="15px" />
-                <DxGridLayoutRow Height="120px" />
+                <DxGridLayoutRow Height="100px" />
             </Rows>
             <Columns>
-                <DxGridLayoutColumn Width="20px" />
-                <DxGridLayoutColumn Width="400px" />
-                <DxGridLayoutColumn Width="20px" />
-                <DxGridLayoutColumn Width="400px" />
-                <DxGridLayoutColumn Width="20px" />
-                <DxGridLayoutColumn Width="400px" />
+                <DxGridLayoutColumn Width="40px" />
+                <DxGridLayoutColumn Width="300px" />
+                <DxGridLayoutColumn Width="30px" />
+                <DxGridLayoutColumn Width="300px" />
+                <DxGridLayoutColumn Width="40px" />
+                <DxGridLayoutColumn Width="200px" />
                 <DxGridLayoutColumn Width="20px" />
             </Columns>
             <Items>
@@ -115,46 +113,41 @@
                         <SfTextBox CssClass="TSITxtBox" Placeholder="Açıklama Yazınız."></SfTextBox>
                     </Template>
                 </DxGridLayoutItem>
-                 <DxGridLayoutItem Row="0" Column="5">
+                 <DxGridLayoutItem Row="0" Column="5" RowSpan="1">
                     <Template>
                         <br />
-                         <label class="FilterLabelTitle"><strong>Aktiflik: </strong></label><br />
-                        <SfSwitch @bind-Checked="@isActiveButton"></SfSwitch>
+                         <label class="FilterLabelTitle"><strong>Resim: </strong></label>
+                        <DxImage></DxImage>
                     </Template>
                 </DxGridLayoutItem>
-                <DxGridLayoutItem Row="2" Column="1">
+                <DxGridLayoutItem Row="1" Column="1">
                     <Template>
                        <label class="FilterLabelTitle"><strong>Şiddet: </strong></label>
                         <SfNumericTextBox TValue="int" CssClass="TSITxtBox"></SfNumericTextBox>
                     </Template>
                 </DxGridLayoutItem>
-                <DxGridLayoutItem Row="2" Column="3" >
+                <DxGridLayoutItem Row="1" Column="3" >
                     <Template>
                         <label class="FilterLabelTitle"><strong>Tespit: </strong></label>
                         <SfNumericTextBox TValue="int" CssClass="TSITxtBox"></SfNumericTextBox>
                     </Template>
                 </DxGridLayoutItem>
-                  <DxGridLayoutItem Row="2" Column="5" >
-                    <Template>
-                          <label class="FilterLabelTitle"><strong>Resim: </strong></label>
-                        <SfTextBox CssClass="TSITxtBox" Placeholder="Deneme Resim."></SfTextBox>
-                    </Template>
-                </DxGridLayoutItem>
-                 <DxGridLayoutItem Row="4" Column="1">
+                 <DxGridLayoutItem Row="2" Column="1">
                     <Template>
                          <label class="FilterLabelTitle"><strong>İstasyon Verimlilik Analizi: </strong></label><br />
                         <SfSwitch @bind-Checked="@isStationProductivityButton"></SfSwitch>
                     </Template>
                 </DxGridLayoutItem>
-                  <DxGridLayoutItem Row="4" Column="3" >
+                  <DxGridLayoutItem Row="2" Column="3" >
                     <Template>
                           <label class="FilterLabelTitle"><strong>Personel Verimlilik Analizi: </strong></label><br />
                         <SfSwitch @bind-Checked="@isEmployeeProductivityButton"></SfSwitch>
                     </Template>
                 </DxGridLayoutItem>
-                 <DxGridLayoutItem Row="4" Column="5" >
+                 <DxGridLayoutItem Row="2" Column="5" >
                     <Template>
-                      
+                      <label class="FilterLabelTitle"><strong>Aktiflik: </strong></label><br />
+                        <SfSwitch @bind-Checked="@isActiveButton"></SfSwitch>
                     </Template>
                 </DxGridLayoutItem>
 

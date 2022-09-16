@@ -8,7 +8,6 @@ namespace TsiErp.ErpUI.Pages.CalibrationRecord
         List<ListCalibrationRecordsDto> Gridlist = new List<ListCalibrationRecordsDto>();
 
         bool PopupVisible = false;
-        bool isActiveButton = false;
         DateTime tarih = DateTime.Today;
 
         protected override async void OnInitialized()

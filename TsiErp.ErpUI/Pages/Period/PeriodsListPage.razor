@@ -1,13 +1,13 @@
-﻿@page "/branches"
+﻿@page "/periods"
 @using Syncfusion.Blazor.Buttons
-@using TsiErp.Business.Entities.Branch.Services
-@using TsiErp.Entities.Entities.Branch
-@using TsiErp.Entities.Entities.Branch.Dtos
+@using TsiErp.Business.Entities.Period.Services
+@using TsiErp.Entities.Entities.Period
+@using TsiErp.Entities.Entities.Period.Dtos
 @using TsiErp.ErpUI.Pages.Base
 @using Tsi.Blazor.Component.Core.Components.Layouts
 
 
-@inject IBranchesAppService BranchesService
+@inject IPeriodsAppService PeriodsService
 
 
 <DxGridLayout CssClass="w-100 ch-480">
@@ -28,7 +28,7 @@
                             <tr>
                                 <td width="400px">
                                     <span style="float:left">
-                                        <label class="FilterLabelTitle"><strong>Genel Sistem Tanımlamaları ></strong></label><label class="FilterLabelTitleValue">&nbsp;Şubeler</label>
+                                        <label class="FilterLabelTitle"><strong>Genel Sistem Tanımlamaları ></strong></label><label class="FilterLabelTitleValue">&nbsp;Dönemler</label>
                                     </span>
                                 </td>
                                 <td width="200px">
@@ -61,10 +61,10 @@
                             <GridPageSettings PageSizes="true"></GridPageSettings>
                             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                             <GridColumns>
-                                <GridColumn Field=@nameof(ListBranchesDto.Code) HeaderText="ŞUBE KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ListBranchesDto.Name) HeaderText="ŞUBE ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ListBranchesDto.Description_) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-
+                                <GridColumn Field=@nameof(ListPeriodsDto.Code) HeaderText="DÖNEM KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListPeriodsDto.Name) HeaderText="DÖNEM ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListPeriodsDto.Description_) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListPeriodsDto.BranchName) HeaderText="ŞUBE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                             </GridColumns>
                         </SfGrid>
 
@@ -79,19 +79,17 @@
 
 <DxPopup Visible="@PopupVisible"
          ShowFooter="true"
-         HeaderText="Şubeler"
+         HeaderText="Dönemler"
          Width="760px"
          Height="550px"
-         Closing="BranchesPopupClosing"
+         Closing="PeriodsPopupClosing"
          HeaderCssClass="HeaderTitleCss">
     <BodyTemplate>
 
         <DxGridLayout>
             <Rows>
                 <DxGridLayoutRow Height="130px" />
-                <DxGridLayoutRow Height="1px" />
                 <DxGridLayoutRow Height="50px" />
-                <DxGridLayoutRow Height="1px" />
                 <DxGridLayoutRow Height="100px" />
             </Rows>
             <Columns>
@@ -105,24 +103,30 @@
                 <DxGridLayoutItem Row="0" Column="1">
                     <Template>
                         <br />
-                        <label class="FilterLabelTitle"><strong>Şube Adı: </strong></label>
-                        <SfTextBox CssClass="TSITxtBox" Placeholder="Şube Adını Yazınız."></SfTextBox>
+                        <label class="FilterLabelTitle"><strong>Dönem Adı: </strong></label>
+                        <SfTextBox CssClass="TSITxtBox" Placeholder="Dönem Adını Yazınız."></SfTextBox>
                     </Template>
                 </DxGridLayoutItem>
                 <DxGridLayoutItem Row="0" Column="3">
                     <Template>
                         <br />
-                        <label class="FilterLabelTitle"><strong>Şube Kodu: </strong></label>
-                        <SfTextBox CssClass="TSITxtBox" Placeholder="Şube Kodunu Yazınız."></SfTextBox>
+                        <label class="FilterLabelTitle"><strong>Dönem Kodu: </strong></label>
+                        <SfTextBox CssClass="TSITxtBox" Placeholder="Dönem Kodunu Yazınız."></SfTextBox>
                     </Template>
                 </DxGridLayoutItem>
-                <DxGridLayoutItem Row="2" Column="1">
+                <DxGridLayoutItem Row="1" Column="1">
                     <Template>
                         <label class="FilterLabelTitle"><strong>Aktiflik: </strong></label><br />
                         <SfSwitch @bind-Checked="@isActiveButton"></SfSwitch>
                     </Template>
                 </DxGridLayoutItem>
-                <DxGridLayoutItem Row="4" Column="1" ColumnSpan="4">
+                <DxGridLayoutItem Row="1" Column="3">
+                    <Template>
+                        <label class="FilterLabelTitle"><strong>Şube : </strong></label><br />
+                         <SfComboBox TValue="int" TItem="ListPeriodsDto"></SfComboBox>
+                    </Template>
+                </DxGridLayoutItem>
+                <DxGridLayoutItem Row="2" Column="1" ColumnSpan="4">
                     <Template>
                        <label class="FilterLabelTitle"><strong>Açıklama: </strong></label><br />
                        <SfTextBox  CssClass="TSIMemoBox" Placeholder="Açıklama Yazınız."  Multiline="true"></SfTextBox>
