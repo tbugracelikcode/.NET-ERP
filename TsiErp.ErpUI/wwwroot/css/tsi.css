@@ -24,6 +24,19 @@ td, th {
     padding-left: 20px;
     display: inline-block;
 }
+.e-switch-wrapper .e-switch-on,
+.e-css.e-switch-wrapper .e-switch-on {
+    background-color: #AD0000 !important;
+    color: #fff;
+    border-color: #AD0000 !important;
+}
+.cancelimage {
+    background-image: url("../images/Cancel.svg");
+}
+
+.saveimage {
+    background-image: url("../images/Save.svg")
+}
 
 .list {
     float: left;
@@ -52,7 +65,7 @@ td, th {
 }
 
 .FilterLabelTitle {
-    color: #830000;
+    color: black;
     font-size: 18px;
 }
 .FilterLabelTitleValue {
@@ -62,6 +75,9 @@ td, th {
     font-weight: bold;
     font-size: 24px;
     text-align: center;
+    color: white;
+    background-image: linear-gradient(356deg, rgb(255 19 19) 0%, #ad0303 70%) !important;
+    text-shadow: 1px 3px 4px black !important;
 }
 
 .property-panel-section .property-panel-content td {
