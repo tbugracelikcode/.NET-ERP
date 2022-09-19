@@ -21,9 +21,9 @@ else
         <GridLayoutItems>
             <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
                 <Template>
-                    <SfCard class="FilterCard">
+                    <SfCard class="TSIListPageTitleCard">
                         <CardContent>
-                            <TsiBreadCrumb PreviousMenus="Genel Sistem Tanımlamarı/ " CurrentMenu="Şubeler" />
+                            <TsiBreadCrumb PreviousMenus="Genel Sistem Tanımlamarı" CurrentMenu="Şubeler" />
                         </CardContent>
                         <CardFooter>
                         </CardFooter>
@@ -65,17 +65,17 @@ else
          Width="760px"
          Height="550px"
          HeaderCssClass="HeaderTitleCss">
-        
-    <BodyTemplate>
-        <DxGridLayout>
 
-            <Rows>
-                <DxGridLayoutRow Height="130px" />
-                <DxGridLayoutRow Height="1px" />
-                <DxGridLayoutRow Height="50px" />
-                <DxGridLayoutRow Height="1px" />
-                <DxGridLayoutRow Height="100px" />
-            </Rows>
+        <BodyTemplate>
+            <DxGridLayout>
+
+                <Rows>
+                    <DxGridLayoutRow Height="130px" />
+                    <DxGridLayoutRow Height="1px" />
+                    <DxGridLayoutRow Height="50px" />
+                    <DxGridLayoutRow Height="1px" />
+                    <DxGridLayoutRow Height="100px" />
+                </Rows>
 
                 <Columns>
                     <DxGridLayoutColumn Width="40px" />
@@ -118,10 +118,10 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton  CssClass="TSISaveButton"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-        <SfButton CssClass="TSICancelButton"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+            <SfButton CssClass="TSISaveButton"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+            <SfButton CssClass="TSICancelButton"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 }
-            
+
 
