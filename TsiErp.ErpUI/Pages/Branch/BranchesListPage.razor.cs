@@ -1,36 +1,22 @@
 ﻿using DevExpress.Blazor;
 using Microsoft.AspNetCore.Components;
+using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
+using Tsi.Core.Utilities.Results;
 using TsiErp.Entities.Entities.Branch.Dtos;
 
 namespace TsiErp.ErpUI.Pages.Branch
 {
     public partial class BranchesListPage
     {
-        List<ListBranchesDto> Gridlist = new List<ListBranchesDto>();
-        SfGrid<ListBranchesDto> Grid;
-
-        bool PopupVisible = false;
-        bool isActiveButton = false;
-
         protected override async void OnInitialized()
         {
-            Gridlist = (await BranchesService.GetListAsync(new ListBranchesParameterDto() { IsActive = true })).Data.ToList();
+            BaseCrudService = BranchesService;
         }
 
-        void BranchesPopupClosing(PopupClosingEventArgs args)
+        public override void OnContextMenuClick(ContextMenuClickEventArgs<ListBranchesDto> args)
         {
-            PopupVisible = false;
+            base.OnContextMenuClick(args);
         }
-
-        public void OnPopupButtonClicked()
-        {
-            PopupVisible = true;
-        }
-
-        //private async void Click()
-        //{
-
-        //}
     }
 }
