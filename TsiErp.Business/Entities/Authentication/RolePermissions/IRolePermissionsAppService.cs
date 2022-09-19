@@ -11,7 +11,7 @@ using Tsi.Authentication.Entities.Roles;
 
 namespace TsiErp.Business.Entities.Authentication.RolePermissions
 {
-    public interface IRolePermissionsAppService : ICrudAppService<TsiRolePermissions, SelectRolePermissionsDto, ListRolePermissionsDto, CreateRolePermissionsDto, UpdateRolePermissionsDto,ListRolePermissionsParameterDto>
+    public interface IRolePermissionsAppService : ICrudAppService< SelectRolePermissionsDto, ListRolePermissionsDto, CreateRolePermissionsDto, UpdateRolePermissionsDto,ListRolePermissionsParameterDto>
     { 
     }
 }

@@ -11,7 +11,7 @@ using TsiErp.Entities.Entities.UnitSet.Dtos;
 
 namespace TsiErp.Business.Entities.UnitSet.Services
 {
-    public interface IUnitSetsAppService : ICrudAppService<UnitSets, SelectUnitSetsDto, ListUnitSetsDto, CreateUnitSetsDto, UpdateUnitSetsDto, ListUnitSetsParameterDto>
+    public interface IUnitSetsAppService : ICrudAppService<SelectUnitSetsDto, ListUnitSetsDto, CreateUnitSetsDto, UpdateUnitSetsDto, ListUnitSetsParameterDto>
     {
     }
 }

@@ -11,7 +11,7 @@ using TsiErp.Entities.Entities.EquipmentRecord.Dtos;
 
 namespace TsiErp.Business.Entities.EquipmentRecord.Services
 {
-    public interface IEquipmentRecordsAppService : ICrudAppService<EquipmentRecords, SelectEquipmentRecordsDto, ListEquipmentRecordsDto, CreateEquipmentRecordsDto, UpdateEquipmentRecordsDto, ListEquipmentRecordsParameterDto>
+    public interface IEquipmentRecordsAppService : ICrudAppService<SelectEquipmentRecordsDto, ListEquipmentRecordsDto, CreateEquipmentRecordsDto, UpdateEquipmentRecordsDto, ListEquipmentRecordsParameterDto>
     {
     }
 }

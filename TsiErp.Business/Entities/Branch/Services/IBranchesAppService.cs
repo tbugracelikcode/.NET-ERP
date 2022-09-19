@@ -10,7 +10,7 @@ using TsiErp.Entities.Entities.Branch.Dtos;
 
 namespace TsiErp.Business.Entities.Branch.Services
 {
-    public interface IBranchesAppService : ICrudAppService<Branches, SelectBranchesDto, ListBranchesDto, CreateBranchesDto, UpdateBranchesDto,ListBranchesParameterDto>
+    public interface IBranchesAppService : ICrudAppService<SelectBranchesDto, ListBranchesDto, CreateBranchesDto, UpdateBranchesDto,ListBranchesParameterDto>
     {
     }
 }
