@@ -6,6 +6,6 @@ namespace Tsi.Core.Entities
 {
     public interface IEntityDto
     {
-        Guid Id { get; }
+        Guid Id { get; set; }
     }
 }

@@ -1,18 +1,21 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Blazored.Modal.Services;
+using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.HeatMap.Internal;
 using Syncfusion.Blazor.Navigations;
 using Tsi.Application.Contract.Services.EntityFrameworkCore;
 using Tsi.Core.Entities;
 using Tsi.Core.Utilities.Results;
-using TsiErp.Entities.Entities.Branch.Dtos;
+using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.ErpUI.Helpers;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 using IResult = Tsi.Core.Utilities.Results.IResult;
 
 namespace TsiErp.ErpUI.Pages.Base
 {
     public abstract class BaseListPage<TGetOutputDto, TGetListOutputDto, TCreateInput, TUpdateInput, TGetListInput> : ComponentBase
-         where TGetOutputDto : class, new()
-         where TGetListOutputDto : class, IEntityDto,new()
+         where TGetOutputDto : class, IEntityDto, new()
+         where TGetListOutputDto : class, IEntityDto, new()
          where TGetListInput : class, new()
     {
         public string LoadingCaption { get; set; } = "Lütfen Bekleyin..";
@@ -23,6 +26,9 @@ namespace TsiErp.ErpUI.Pages.Base
 
         public TGetListOutputDto SelectedItem { get; set; }
 
+        [Inject]
+        ModalManager ModalManager { get; set; }
+
         public TGetOutputDto DataSource { get; set; }
         public IList<TGetListOutputDto> ListDataSource { get; set; }
 
@@ -32,11 +38,16 @@ namespace TsiErp.ErpUI.Pages.Base
 
         protected async override Task OnParametersSetAsync()
         {
-            GridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle",Id="new" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir",Id="changed" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = "Sil",Id="delete" });
+            CreateContextMenu();
             await GetListDataSourceAsync();
             await InvokeAsync(StateHasChanged);
+        }
+
+        protected virtual void CreateContextMenu()
+        {
+            GridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle", Id = "new" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
         }
 
         #region Crud Operations
@@ -75,6 +86,45 @@ namespace TsiErp.ErpUI.Pages.Base
             IsLoaded = true;
         }
 
+        protected virtual async Task OnSubmit()
+        {
+            TGetOutputDto result;
+
+            if (DataSource.Id == Guid.Empty)
+            {
+                var createInput = ObjectMapper.Map<TGetOutputDto, TCreateInput>(DataSource);
+
+                result = (await CreateAsync(createInput)).Data;
+
+                if (result != null)
+                    DataSource.Id = result.Id;
+            }
+            else
+            {
+                var updateInput = ObjectMapper.Map<TGetOutputDto, TUpdateInput>(DataSource);
+
+                result = (await UpdateAsync(updateInput)).Data;
+            }
+
+            if (result == null) return;
+
+            await GetListDataSourceAsync();
+
+            var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
+
+            HideEditPage();
+
+            if (DataSource.Id == Guid.Empty)
+            {
+                DataSource.Id = result.Id;
+            }
+
+            if (savedEntityIndex > -1)
+                SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
+            else
+                SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
+        }
+
         public void HideEditPage()
         {
             EditPageVisible = false;
@@ -101,6 +151,16 @@ namespace TsiErp.ErpUI.Pages.Base
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
                     EditPageVisible = true;
                     await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "delete":
+
+                    var res = await ModalManager.ConfirmationAsync("Confirmations", "Are you sure that it will be deleted?");
+
+                    //SelectFirstDataRow = false;
+                    //await DeleteAsync(args.RowInfo.RowData.Id);
+                    //await GetListDataSourceAsync();
+                    //await InvokeAsync(StateHasChanged);
                     break;
 
                 default:

@@ -14,8 +14,26 @@ namespace TsiErp.ErpUI.Pages.Branch
             BaseCrudService = BranchesService;
         }
 
-        public override void OnContextMenuClick(ContextMenuClickEventArgs<ListBranchesDto> args)
+        protected override void CreateContextMenu()
         {
+            base.CreateContextMenu();
+
+            base.GridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
+        }
+
+        public async override void OnContextMenuClick(ContextMenuClickEventArgs<ListBranchesDto> args)
+        {
+
+            switch (args.Item.Id)
+            {
+                case "refresh":
+                    ListDataSource = (await GetListAsync(new ListBranchesParameterDto { IsActive = true })).Data.ToList();
+                    break;
+
+                default:
+                    break;
+            }
+
             base.OnContextMenuClick(args);
         }
     }
