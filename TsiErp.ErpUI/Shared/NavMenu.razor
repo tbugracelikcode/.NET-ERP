@@ -1,12 +1,12 @@
 <div>
     
     <div class="sidebar">
-        <DxTreeView  AllowSelectNodes="true"  CssClass=" app-sidebar" NodeExpandCollapseAction="TreeViewNodeExpandCollapseAction.NodeClick">
+        <DxTreeView  AllowSelectNodes="true" style="min-height: 90vh;"  CssClass=" app-sidebar" NodeExpandCollapseAction="TreeViewNodeExpandCollapseAction.NodeClick">
            
         <Nodes>
 
-            <DxTreeViewNode Visible="@collapsevisible" Text="Ana Sayfa" IconCssClass="fas fa-columns b-bar-icon" />
-
+         @*   <DxTreeViewNode Visible="@collapsevisible" Text="Ana Sayfa" IconCssClass="fas fa-columns b-bar-icon" />*@
+            
             <DxTreeViewNode Visible="@collapsevisible"  Text="Stok Yönetimi" IconCssClass="">
                 <Nodes>
                     <DxTreeViewNode Text="Ana Kayýtlar">
@@ -24,8 +24,6 @@
                     </DxTreeViewNode>
                 </Nodes>
             </DxTreeViewNode>
-
-
 
                 <DxTreeViewNode Visible="@collapsevisible" Text="Finans Yönetimi" IconCssClass="">
                 <Nodes>
@@ -48,7 +46,6 @@
                     </DxTreeViewNode>
                 </Nodes>
             </DxTreeViewNode>
-
 
                 <DxTreeViewNode Visible="@collapsevisible" Text="Kaynak Yönetimi" IconCssClass="">
                 <Nodes>
@@ -109,32 +106,13 @@
                     <DxTreeViewNode NavigateUrl="/currencies" Text="Para Birimleri" />
                 </Nodes>
             </DxTreeViewNode>
+
         </Nodes>
     </DxTreeView>
 </div>
 
-
-
-
-
-
-    @*<ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="/admin/machine-analysis" Match="NavLinkMatch.All">
-                <span class="oi oi-cog" aria-hidden="true"></span> <span class="displayText">Makina Analizi</span>
-            </NavLink>
-        </li>
-    </ul>*@
-    <div class="separator"></div>
-    <div class="scroller">
-        <ul class="nav flex-column">
-            <li class="nav-item px-3">
-
-            </li>
-
-        </ul>
-    </div>
 </div>
+
 <style>
     .scroller {
         height: calc(100vh - 160px) !important;

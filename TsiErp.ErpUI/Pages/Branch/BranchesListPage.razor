@@ -33,9 +33,6 @@ else
             <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
                 <Template>
                     <SfCard class="Cards">
-                        <CardHeader>
-                            <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 1px 3px 4px black;; font-size:18px; font-weight:bold" OnClick="@base.ShowEditPage">Filtrele</SfButton>
-                        </CardHeader>
                         <CardContent>
                             <SfGrid ID="Grid" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@base.GridContextMenu">
                                 <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListBranchesDto"></GridEvents>
@@ -58,6 +55,8 @@ else
         </GridLayoutItems>
     </DevGridLayout>
 
+
+
     <DxPopup @bind-Visible="base.EditPageVisible"
          ShowFooter="true"
          CloseOnEscape="false"
@@ -66,16 +65,17 @@ else
          Width="760px"
          Height="550px"
          HeaderCssClass="HeaderTitleCss">
-        <BodyTemplate>
+        
+    <BodyTemplate>
+        <DxGridLayout>
 
-            <DxGridLayout>
-                <Rows>
-                    <DxGridLayoutRow Height="130px" />
-                    <DxGridLayoutRow Height="1px" />
-                    <DxGridLayoutRow Height="50px" />
-                    <DxGridLayoutRow Height="1px" />
-                    <DxGridLayoutRow Height="100px" />
-                </Rows>
+            <Rows>
+                <DxGridLayoutRow Height="130px" />
+                <DxGridLayoutRow Height="1px" />
+                <DxGridLayoutRow Height="50px" />
+                <DxGridLayoutRow Height="1px" />
+                <DxGridLayoutRow Height="100px" />
+            </Rows>
 
                 <Columns>
                     <DxGridLayoutColumn Width="40px" />
@@ -118,8 +118,10 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#686868;text-shadow: 1px 3px 4px black;; font-size:18px; font-weight:bold" OnClick="@base.HideEditPage">Kapat</SfButton>
-
+            <SfButton  CssClass="TSISaveButton"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+        <SfButton CssClass="TSICancelButton"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 }
+            
+

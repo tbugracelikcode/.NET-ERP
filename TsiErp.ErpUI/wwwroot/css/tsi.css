@@ -230,4 +230,30 @@ html {
 .TSIMemoBox {
     min-height: 160px !important;
 }
+.TSISaveButton {
+    border-color: #565656 !important;
+    background-color: white !important;
+    color: #878787 !important;
+    font-size: 18px !important;
+    font-weight: bold !important
+}
+.TSICancelButton {
+    border-color: #565656 !important;
+    background-color: white !important;
+    color: #AD0000 !important;
+    font-size: 18px !important;
+    font-weight: bold !important
+}
+.TSIGeneralBTNRed {
+    background-color: #AD0000 !important;
+    text-shadow: 1px 3px 4px black !important;
+    font-size: 18px !important;
+    font-weight: bold !important
+}
+.TSIGenerakBTNGray {
+    background-color: #474747 !important;
+    text-shadow: 6px 3px 4px black !important;
+    font-size: 18px !important;
+    font-weight: bold !important
+}
 

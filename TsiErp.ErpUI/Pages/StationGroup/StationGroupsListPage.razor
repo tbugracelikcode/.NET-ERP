@@ -45,7 +45,7 @@
             <Template>
                 <SfCard class="Cards">
                     <CardHeader>
-                        <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 1px 3px 4px black;; font-size:18px; font-weight:bold" OnClick="@OnPopupButtonClicked">Filtrele</SfButton>
+                        <SfButton CssClass="TSIGeneralBTNRed" OnClick="@OnPopupButtonClicked">Filtrele</SfButton>
                     </CardHeader>
                     <CardContent>
                         <SfGrid ID="Grid" DataSource="@Gridlist" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
@@ -126,9 +126,8 @@
         </DxGridLayout>
     </BodyTemplate>
     <FooterContentTemplate>
-        @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Success" Text="Satın alma talep fişi oluştur" Click="@OnPurchaseReceiptClicked" />*@
-        <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#686868;text-shadow: 1px 3px 4px black;; font-size:18px; font-weight:bold" OnClick="@(() => PopupVisible = false)">Kapat</SfButton>
-        @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Secondary" Text="Cancel" Click="@(() => PopupVisible = false)" />*@
+       <SfButton  CssClass="TSISaveButton"  OnClick="@(() => PopupVisible = false)"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+        <SfButton CssClass="TSICancelButton" OnClick="@(() => PopupVisible = false)"><SfIcon Size="IconSize.Medium" Name="IconName.Close"></SfIcon>&nbsp;Kapat</SfButton>
     </FooterContentTemplate>
 </DxPopup>
 
