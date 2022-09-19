@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Tsi.Application.Contract.Services.EntityFrameworkCore
 {
-    public interface ICrudAppService<TEntity, TGetOutputDto, TGetListOutputDto, in TCreateInput, in TUpdateInput, in TGetListInput> :
+    public interface ICrudAppService< TGetOutputDto, TGetListOutputDto, in TCreateInput, in TUpdateInput, in TGetListInput> :
         ICreateAppService<TGetOutputDto, TCreateInput>,
         IUpdateAppService<TGetOutputDto, TUpdateInput>,
         IDeleteAppService,
