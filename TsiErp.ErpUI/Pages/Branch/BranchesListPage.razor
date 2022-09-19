@@ -55,8 +55,6 @@ else
         </GridLayoutItems>
     </DevGridLayout>
 
-
-
     <DxPopup @bind-Visible="base.EditPageVisible"
          ShowFooter="true"
          CloseOnEscape="false"
@@ -65,17 +63,17 @@ else
          Width="760px"
          Height="550px"
          HeaderCssClass="HeaderTitleCss">
-        
-    <BodyTemplate>
-        <DxGridLayout>
 
-            <Rows>
-                <DxGridLayoutRow Height="130px" />
-                <DxGridLayoutRow Height="1px" />
-                <DxGridLayoutRow Height="50px" />
-                <DxGridLayoutRow Height="1px" />
-                <DxGridLayoutRow Height="100px" />
-            </Rows>
+        <BodyTemplate>
+            <DxGridLayout>
+
+                <Rows>
+                    <DxGridLayoutRow Height="130px" />
+                    <DxGridLayoutRow Height="1px" />
+                    <DxGridLayoutRow Height="50px" />
+                    <DxGridLayoutRow Height="1px" />
+                    <DxGridLayoutRow Height="100px" />
+                </Rows>
 
                 <Columns>
                     <DxGridLayoutColumn Width="40px" />
@@ -118,10 +116,8 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton  CssClass="TSISaveButton"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-        <SfButton CssClass="TSICancelButton"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+            <SfButton CssClass="TSISaveButton" OnClick="@OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="@HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 }
-            
-

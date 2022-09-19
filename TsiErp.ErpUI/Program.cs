@@ -15,6 +15,9 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.Entities.Branch.Services;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
 using TsiErp.DataAccess.EntityFrameworkCore;
+using Blazored.Modal;
+using Blazored.Modal.Services;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -58,9 +61,10 @@ builder.Services.AddServerSideBlazor().AddHubOptions(o=>
             });
 
 
-
+builder.Services.AddBlazoredModal();
 builder.Services.AddDevExpressBlazor();
 
+builder.Services.AddScoped<ModalManager>();
 
 var app = builder.Build();
 
