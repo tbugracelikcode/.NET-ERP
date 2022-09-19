@@ -48,6 +48,7 @@ namespace TsiErp.ErpUI.Pages.Base
             GridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle", Id = "new" });
             GridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
             GridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
         }
 
         #region Crud Operations
@@ -161,6 +162,11 @@ namespace TsiErp.ErpUI.Pages.Base
                     //await DeleteAsync(args.RowInfo.RowData.Id);
                     //await GetListDataSourceAsync();
                     //await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "refresh":
+                    await GetListDataSourceAsync();
+                    await InvokeAsync(StateHasChanged);
                     break;
 
                 default:
