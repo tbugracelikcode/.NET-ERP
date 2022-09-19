@@ -79,6 +79,8 @@
 
 <DxPopup Visible="@PopupVisible"
          ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
          HeaderText="Şubeler"
          Width="760px"
          Height="550px"
@@ -95,11 +97,11 @@
                 <DxGridLayoutRow Height="100px" />
             </Rows>
             <Columns>
-               <DxGridLayoutColumn Width="40px" />
-               <DxGridLayoutColumn Width="300px" />
-               <DxGridLayoutColumn Width="40px" />
-               <DxGridLayoutColumn Width="300px" />
-               <DxGridLayoutColumn Width="40px" />
+                <DxGridLayoutColumn Width="40px" />
+                <DxGridLayoutColumn Width="300px" />
+                <DxGridLayoutColumn Width="40px" />
+                <DxGridLayoutColumn Width="300px" />
+                <DxGridLayoutColumn Width="40px" />
             </Columns>
             <Items>
                 <DxGridLayoutItem Row="0" Column="1">
@@ -124,11 +126,11 @@
                 </DxGridLayoutItem>
                 <DxGridLayoutItem Row="4" Column="1" ColumnSpan="4">
                     <Template>
-                       <label class="FilterLabelTitle"><strong>Açıklama: </strong></label><br />
-                       <SfTextBox  CssClass="TSIMemoBox" Placeholder="Açıklama Yazınız."  Multiline="true"></SfTextBox>
+                        <label class="FilterLabelTitle"><strong>Açıklama: </strong></label><br />
+                        <SfTextBox CssClass="TSIMemoBox" Placeholder="Açıklama Yazınız." Multiline="true"></SfTextBox>
                     </Template>
                 </DxGridLayoutItem>
-             
+
             </Items>
         </DxGridLayout>
     </BodyTemplate>
