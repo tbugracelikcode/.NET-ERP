@@ -1,200 +1,191 @@
 ﻿@page "/equipment-records"
 @using Syncfusion.Blazor.Buttons
+@using Tsi.Blazor.Component.Core.Components.Commons.Loadings
 @using TsiErp.Business.Entities.EquipmentRecord.Services
 @using TsiErp.Entities.Entities.EquipmentRecord
 @using TsiErp.Entities.Entities.EquipmentRecord.Dtos
 @using TsiErp.ErpUI.Pages.Base
 @using Tsi.Blazor.Component.Core.Components.Layouts
 
+@inherits BaseListPage<SelectEquipmentRecordsDto, ListEquipmentRecordsDto, CreateEquipmentRecordsDto, UpdateEquipmentRecordsDto, ListEquipmentRecordsParameterDto>
 
-@inject IEquipmentRecordsAppService IEquipmentRecordsService
 
+@inject IEquipmentRecordsAppService EquipmentRecordsService
 
-<DxGridLayout CssClass="w-100 ch-480">
-    <Rows>
-        <DxGridLayoutRow Height="50px" />
-      <DxGridLayoutRow Height="1px" />
-        <DxGridLayoutRow />
-    </Rows>
-    <Columns>
-        <DxGridLayoutColumn />
-    </Columns>
-    <Items>
-        <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
-            <Template>
-                <SfCard class="FilterCard">
-                    <CardContent>
-                        <table width="1000px">
-                            <tr>
-                                <td width="400px">
-                                    <span style="float:left">
-                                        <label class="FilterLabelTitle" style="color:#9C0000"><strong>Kaynak Yönetimi > Ekipmanlar ></strong></label><label class="FilterLabelTitle">&nbsp;Ekipman Kayıtları</label>
-                                    </span>
-                                </td>
-                                <td width="200px">
-                                </td>
-                                <td width="200px">
-                                </td>
-                                <td width="100px">
-                                </td>
-                                <td width="100px">
-                                </td>
-                            </tr>
-                        </table>
-                    </CardContent>
-                    <CardFooter>
-                    </CardFooter>
-                </SfCard>
-            </Template>
-        </DxGridLayoutItem>
-        <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
-            <Template>
-                <SfCard class="Cards">
-                    <CardHeader>
-                        <SfButton CssClass="TSIGeneralBTNRed" OnClick="@OnPopupButtonClicked">Filtrele</SfButton>
-                    </CardHeader>
-                    <CardContent>
-                        <SfGrid ID="Grid" DataSource="@Gridlist" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
-                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
-                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
-                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
-                            <GridPageSettings PageSizes="true"></GridPageSettings>
-                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
-                            <GridColumns>
-                                <GridColumn Field=@nameof(ListEquipmentRecordsDto.Code) HeaderText="EKİPMAN KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ListEquipmentRecordsDto.Name) HeaderText="EKİPMAN ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ListEquipmentRecordsDto.MeasuringRange) HeaderText="ÖLÇME ARALIĞI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ListEquipmentRecordsDto.MeasuringAccuracy) HeaderText="ÖLÇME HASSASİYETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ListEquipmentRecordsDto.DepartmentName) HeaderText="DEPARTMAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ListEquipmentRecordsDto.Responsible) HeaderText="SORUMLU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ListEquipmentRecordsDto.Frequency) HeaderText="SIKLIK" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ListEquipmentRecordsDto.EquipmentSerialNo) HeaderText="EKİPMAN SERİ NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ListEquipmentRecordsDto.RecordDate) HeaderText="KAYIT TARİHİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ListEquipmentRecordsDto.Cancel) HeaderText="İPTAL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ListEquipmentRecordsDto.CancellationDate) HeaderText="İPTAL TARİHİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ListEquipmentRecordsDto.CancellationReason) HeaderText="İPTAL NEDENİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                             
-                            </GridColumns>
-                        </SfGrid>
+@if (!base.IsLoaded)
+{
+    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+}
+else
+{
+    <DevGridLayout ColumnCount="1" RowCount="3">
+        <GridLayoutItems>
+            <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIListPageTitleCard">
+                        <CardContent>
+                            <TsiBreadCrumb PreviousMenus="Kalite Kontrol > Ekipmanlar" CurrentMenu="Şubeler" />
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+            <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="Cards">
+                        <CardContent>
+                            <SfGrid ID="Grid" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                <GridPageSettings PageSizes="true"></GridPageSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.Code) HeaderText="EKİPMAN KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.Name) HeaderText="EKİPMAN ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.MeasuringRange) HeaderText="ÖLÇME ARALIĞI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.MeasuringAccuracy) HeaderText="ÖLÇME HASSASİYETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.DepartmentName) HeaderText="DEPARTMAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.Responsible) HeaderText="SORUMLU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.Frequency) HeaderText="SIKLIK" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.EquipmentSerialNo) HeaderText="EKİPMAN SERİ NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.RecordDate) HeaderText="KAYIT TARİHİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.Cancel) HeaderText="İPTAL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.CancellationDate) HeaderText="İPTAL TARİHİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.CancellationReason) HeaderText="İPTAL NEDENİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
-                    </CardContent>
-                    <CardFooter>
-                    </CardFooter>
-                </SfCard>
-            </Template>
-        </DxGridLayoutItem>
-    </Items>
-</DxGridLayout>
+                                </GridColumns>
+                            </SfGrid>
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+        </GridLayoutItems>
+    </DevGridLayout>
 
-<DxPopup Visible="@PopupVisible"
+    <DxPopup @bind-Visible="base.EditPageVisible"
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="Ekipman Kayıtları"
          Width="1100px"
          Height="570px"
-         Closing="EquipmentRecordsPopupClosing"
          HeaderCssClass="HeaderTitleCss">
-    <BodyTemplate>
+        <BodyTemplate>
 
-        <DxGridLayout>
-            <Rows>
-                <DxGridLayoutRow Height="120px" />
-                <DxGridLayoutRow Height="120px" />
-                <DxGridLayoutRow Height="120px" />
-                <DxGridLayoutRow Height="100px" />
-            </Rows>
-            <Columns>
-               <DxGridLayoutColumn Width="40px" />
-               <DxGridLayoutColumn Width="300px" />
-               <DxGridLayoutColumn Width="40px" />
-               <DxGridLayoutColumn Width="300px" />
-               <DxGridLayoutColumn Width="40px" />
-               <DxGridLayoutColumn Width="300px" />
-               <DxGridLayoutColumn Width="40px" />
-            </Columns>
-            <Items>
-                <DxGridLayoutItem Row="0" Column="1">
-                    <Template>
-                        <br />
-                        <label class="FilterLabelTitle"><strong>Ekipman Kodu: </strong></label>
-                        <SfTextBox CssClass="TSITxtBox" Placeholder="Ekipman Kodunu Yazınız."></SfTextBox>
-                    </Template>
-                </DxGridLayoutItem>
-                <DxGridLayoutItem Row="0" Column="3">
-                    <Template>
-                        <br />
-                        <label class="FilterLabelTitle"><strong>Ekipman Adı: </strong></label>
-                        <SfTextBox CssClass="TSITxtBox" Placeholder="Ekipman Adını Yazınız."></SfTextBox>
-                    </Template>
-                </DxGridLayoutItem>
-                 <DxGridLayoutItem Row="0" Column="5">
-                    <Template>
-                        <br />
-                         <label class="FilterLabelTitle"><strong>Ölçme Aralığı: </strong></label>
-                        <SfTextBox CssClass="TSITxtBox" Placeholder="Ölçme Aralığını Yazınız."></SfTextBox>
-                    </Template>
-                </DxGridLayoutItem>
-                <DxGridLayoutItem Row="1" Column="1">
-                    <Template>
-                       <label class="FilterLabelTitle"><strong>Ölçme Hassasiyeti: </strong></label>
-                        <SfTextBox Placeholder="Ölçme Hassasiyetini Yazınız." CssClass="TSITxtBox"></SfTextBox>
-                    </Template>
-                </DxGridLayoutItem>
-                <DxGridLayoutItem Row="1" Column="3" >
-                    <Template>
-                        <label class="FilterLabelTitle"><strong>Departman: </strong></label>
-                        <SfComboBox TValue="int" TItem="ListEquipmentRecordsDto"></SfComboBox>
-                    </Template>
-                </DxGridLayoutItem>
-                  <DxGridLayoutItem Row="1" Column="5" >
-                    <Template>
-                        <label class="FilterLabelTitle"><strong>Sorumlu: </strong></label>
-                         <SfTextBox Placeholder="Sorumluyu Yazınız." CssClass="TSITxtBox"></SfTextBox>
-                    </Template>
-                </DxGridLayoutItem>
-                 <DxGridLayoutItem Row="2" Column="1">
-                    <Template>
-                         <label class="FilterLabelTitle"><strong>Sıklık: </strong></label><br />
-                          <SfTextBox Placeholder="Sıklık Yazınız." CssClass="TSITxtBox"></SfTextBox>
-                    </Template>
-                </DxGridLayoutItem>
-                  <DxGridLayoutItem Row="2" Column="3" >
-                    <Template>
-                          <label class="FilterLabelTitle"><strong>Ekipman Seri No: </strong></label><br />
-                        <SfTextBox Placeholder="Ekipman Seri Numarasını Yazınız." CssClass="TSITxtBox"></SfTextBox>
-                    </Template>
-                </DxGridLayoutItem>
-                 <DxGridLayoutItem Row="2" Column="5" >
-                    <Template>
-                      <label class="FilterLabelTitle"><strong>Kayıt Tarihi: </strong></label>
-                          <SfDatePicker @bind-Value="@tarih"></SfDatePicker>
-                    </Template>
-                </DxGridLayoutItem>
-                 <DxGridLayoutItem Row="3" Column="1">
-                    <Template>
-                         <label class="FilterLabelTitle"><strong>Aktiflik: </strong></label><br />
-                        <SfSwitch @bind-Checked="@isActiveButton"></SfSwitch>
-                    </Template>
-                </DxGridLayoutItem>
-                  <DxGridLayoutItem Row="3" Column="3" >
-                    <Template>
-                           <label class="FilterLabelTitle"><strong>İptal: </strong></label><br />
-                        <SfSwitch @bind-Checked="@isCanceled"></SfSwitch>
-                    </Template>
-                </DxGridLayoutItem>
-                 <DxGridLayoutItem Row="3" Column="5" >
-                    <Template>
-                      <label class="FilterLabelTitle"><strong>İptal Nedeni: </strong></label><br />
-                          <SfTextBox Placeholder="İptal Nedeni Yazınız." CssClass="TSITxtBox" Multiline=true></SfTextBox>
-                    </Template>
-                </DxGridLayoutItem>
-                
-            </Items>
-        </DxGridLayout>
-    </BodyTemplate>
-    <FooterContentTemplate>
-       <SfButton  CssClass="TSISaveButton"  OnClick="@(() => PopupVisible = false)"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-        <SfButton CssClass="TSICancelButton" OnClick="@(() => PopupVisible = false)"><SfIcon Size="IconSize.Medium" Name="IconName.Close"></SfIcon>&nbsp;Kapat</SfButton>
-    </FooterContentTemplate>
-</DxPopup>
+            <DxGridLayout>
+                <Rows>
+                    <DxGridLayoutRow Height="120px" />
+                    <DxGridLayoutRow Height="120px" />
+                    <DxGridLayoutRow Height="120px" />
+                    <DxGridLayoutRow Height="100px" />
+                </Rows>
+                <Columns>
+                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="40px" />
+                </Columns>
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="FilterLabelTitle"><strong>Ekipman Kodu: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Ekipman Kodunu Yazınız."></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <br />
+                            <label class="FilterLabelTitle"><strong>Ekipman Adı: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="Ekipman Adını Yazınız."></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="0" Column="5">
+                        <Template>
+                            <br />
+                            <label class="FilterLabelTitle"><strong>Ölçme Aralığı: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.MeasuringRange" Placeholder="Ölçme Aralığını Yazınız."></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <label class="FilterLabelTitle"><strong>Ölçme Hassasiyeti: </strong></label>
+                            <SfTextBox Placeholder="Ölçme Hassasiyetini Yazınız." @bind-Value="DataSource.MeasuringAccuracy" CssClass="TSITxtBox"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="1" Column="3">
+                        <Template>
+                            <label class="FilterLabelTitle"><strong>Departman: </strong></label>
+                            @*<SfComboBox TValue="int" TItem="ListEquipmentRecordsDto"></SfComboBox>*@
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="1" Column="5">
+                        <Template>
+                            <label class="FilterLabelTitle"><strong>Sorumlu: </strong></label>
+                            <SfTextBox Placeholder="Sorumluyu Yazınız." @bind-Value="DataSource.Responsible" CssClass="TSITxtBox"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <label class="FilterLabelTitle"><strong>Sıklık: </strong></label><br />
+                            <SfTextBox Placeholder="Sıklık Yazınız." @bind-Value="DataSource.Frequency" CssClass="TSITxtBox"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="2" Column="3">
+                        <Template>
+                            <label class="FilterLabelTitle"><strong>Ekipman Seri No: </strong></label><br />
+                            <SfTextBox Placeholder="Ekipman Seri Numarasını Yazınız." @bind-Value="DataSource.EquipmentSerialNo" CssClass="TSITxtBox"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="2" Column="5">
+                        <Template>
+                            <label class="FilterLabelTitle"><strong>Kayıt Tarihi: </strong></label>
+                            <SfDatePicker @bind-Value="DataSource.RecordDate"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="3" Column="1">
+                        <Template>
+                            <label class="FilterLabelTitle"><strong>Aktiflik: </strong></label><br />
+                            <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="3" Column="3">
+                        <Template>
+                            <label class="FilterLabelTitle"><strong>İptal: </strong></label><br />
+                            <SfSwitch @bind-Checked="DataSource.Cancel" @onchange="CheckValueChanged"></SfSwitch>
+                        </Template>
+                    </DxGridLayoutItem>
+                    @{
+                        if (cancelReasonVisible)
+                        {
+                            <DxGridLayoutItem Row="3" Column="5">
+                                <Template>
+                                    <label class="FilterLabelTitle"><strong>İptal Nedeni: </strong></label><br />
+                                    <SfTextBox Placeholder="İptal Nedeni Yazınız." @bind-Value="DataSource.CancellationReason" CssClass="TSITxtBox" Multiline=true></SfTextBox>
+                                </Template>
+                            </DxGridLayoutItem>
+                        }
+                    }
+
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+}
+
+
+
+

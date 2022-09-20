@@ -1,30 +1,34 @@
 ﻿using DevExpress.Blazor;
+using Microsoft.AspNetCore.Components;
+using Syncfusion.Blazor.Gantt;
+using Syncfusion.Blazor.Grids;
+using Tsi.Core.Utilities.Results;
 using TsiErp.Entities.Entities.EquipmentRecord.Dtos;
 
 namespace TsiErp.ErpUI.Pages.EquipmentRecord
 {
     public partial class EquipmentRecordsListPage
     {
-        List<ListEquipmentRecordsDto> Gridlist = new List<ListEquipmentRecordsDto>();
-
-        bool PopupVisible = false;
-        bool isActiveButton = false;
-        DateTime tarih = DateTime.Today;
-        bool isCanceled = false;
-
+        bool cancelReasonVisible = false;
         protected override async void OnInitialized()
         {
-            //Gridlist = (await EquipmentRecordsService.GetListAsync(new ListEquipmentRecordsParameterDto() { IsActive = true })).Data.ToList();
+            BaseCrudService = EquipmentRecordsService;
         }
 
-        void EquipmentRecordsPopupClosing(PopupClosingEventArgs args)
+        void CheckValueChanged(ChangeEventArgs args)
         {
-            PopupVisible = false;
-        }
+            bool argsValue = Convert.ToBoolean(args.Value);
 
-        public void OnPopupButtonClicked()
-        {
-            PopupVisible = true;
+            if (argsValue)
+            {
+                DataSource.CancellationDate = DateTime.Today;
+                cancelReasonVisible = true;
+            }
+            else
+            {
+                DataSource.CancellationDate = null;
+                cancelReasonVisible = false;
+            }
         }
     }
 }
