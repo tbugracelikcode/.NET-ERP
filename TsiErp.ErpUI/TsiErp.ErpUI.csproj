@@ -9,6 +9,10 @@
   <ItemGroup>
       <PackageReference Include="Blazored.Modal" Version="7.0.0" />
       <PackageReference Include="DevExpress.Blazor" Version="21.1.9" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.5">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
       <PackageReference Include="Syncfusion.Blazor.Grid" Version="20.2.0.46" />
     <PackageReference Include="Syncfusion.Blazor.TreeGrid" Version="20.2.0.46" />
     <PackageReference Include="Syncfusion.Blazor.Charts" Version="20.2.0.46" />
