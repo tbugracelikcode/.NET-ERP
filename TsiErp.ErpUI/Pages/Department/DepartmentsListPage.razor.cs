@@ -1,28 +1,17 @@
 ﻿using DevExpress.Blazor;
+using Microsoft.AspNetCore.Components;
+using Syncfusion.Blazor.Gantt;
+using Syncfusion.Blazor.Grids;
+using Tsi.Core.Utilities.Results;
 using TsiErp.Entities.Entities.Department.Dtos;
 
 namespace TsiErp.ErpUI.Pages.Department
 {
     public partial class DepartmentsListPage
     {
-        List<ListDepartmentsDto> Gridlist = new List<ListDepartmentsDto>();
-
-        bool PopupVisible = false;
-        bool isActiveButton = false;
-
         protected override async void OnInitialized()
         {
-            //Gridlist = (await DepartmentsService.GetListAsync(new ListDepartmentsParameterDto() { IsActive = true })).Data.ToList();
-        }
-
-        void DepartmentsPopupClosing(PopupClosingEventArgs args)
-        {
-            PopupVisible = false;
-        }
-
-        public void OnPopupButtonClicked()
-        {
-            PopupVisible = true;
+            BaseCrudService = DepartmentsService;
         }
     }
 }

@@ -1,28 +1,17 @@
 ﻿using DevExpress.Blazor;
+using Microsoft.AspNetCore.Components;
+using Syncfusion.Blazor.Gantt;
+using Syncfusion.Blazor.Grids;
+using Tsi.Core.Utilities.Results;
 using TsiErp.Entities.Entities.StationGroup.Dtos;
 
 namespace TsiErp.ErpUI.Pages.StationGroup
 {
     public partial class StationGroupsListPage
     {
-        List<ListStationGroupsDto> Gridlist = new List<ListStationGroupsDto>();
-
-        bool PopupVisible = false;
-        bool isActiveButton = false;
-
         protected override async void OnInitialized()
         {
-            //Gridlist = (await StationGroupsService.GetListAsync(new ListStationGroupsParameterDto() { IsActive = true })).Data.ToList();
-        }
-
-        void StationGroupsPopupClosing(PopupClosingEventArgs args)
-        {
-            PopupVisible = false;
-        }
-
-        public void OnPopupButtonClicked()
-        {
-            PopupVisible = true;
+            BaseCrudService = StationGroupsService;
         }
     }
 }

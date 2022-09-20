@@ -1,28 +1,17 @@
 ﻿using DevExpress.Blazor;
+using Microsoft.AspNetCore.Components;
+using Syncfusion.Blazor.Gantt;
+using Syncfusion.Blazor.Grids;
+using Tsi.Core.Utilities.Results;
 using TsiErp.Entities.Entities.CalibrationRecord.Dtos;
 
 namespace TsiErp.ErpUI.Pages.CalibrationRecord
 {
     public partial class CalibrationRecordsListPage
     {
-        List<ListCalibrationRecordsDto> Gridlist = new List<ListCalibrationRecordsDto>();
-
-        bool PopupVisible = false;
-        DateTime tarih = DateTime.Today;
-
         protected override async void OnInitialized()
         {
-            //Gridlist = (await CalibrationRecordsService.GetListAsync(new ListCalibrationRecordsParameterDto() { IsActive = true })).Data.ToList();
-        }
-
-        void CalibrationRecordsPopupClosing(PopupClosingEventArgs args)
-        {
-            PopupVisible = false;
-        }
-
-        public void OnPopupButtonClicked()
-        {
-            PopupVisible = true;
+            BaseCrudService = CalibrationRecordsService;
         }
     }
 }
