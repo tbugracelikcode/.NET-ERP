@@ -45,5 +45,15 @@
 
             return -1;
         }
+
+        public static string[] RowHeights(params string[] rowHeights)
+        {
+            return rowHeights;
+        }
+
+        public static string[] ColumnWidths(params string[] columnWidths)
+        {
+            return columnWidths;
+        }
     }
 }
