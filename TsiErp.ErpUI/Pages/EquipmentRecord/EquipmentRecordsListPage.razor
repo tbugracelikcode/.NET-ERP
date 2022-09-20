@@ -96,69 +96,69 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <br />
-                            <label class="FilterLabelTitle"><strong>Ekipman Kodu: </strong></label>
+                            <label class="TSIModalLabel"><strong>Ekipman Kodu: </strong></label>
                             <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Ekipman Kodunu Yazınız."></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <br />
-                            <label class="FilterLabelTitle"><strong>Ekipman Adı: </strong></label>
+                            <label class="TSIModalLabel"><strong>Ekipman Adı: </strong></label>
                             <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="Ekipman Adını Yazınız."></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="5">
                         <Template>
                             <br />
-                            <label class="FilterLabelTitle"><strong>Ölçme Aralığı: </strong></label>
+                            <label class="TSIModalLabel"><strong>Ölçme Aralığı: </strong></label>
                             <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.MeasuringRange" Placeholder="Ölçme Aralığını Yazınız."></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <label class="FilterLabelTitle"><strong>Ölçme Hassasiyeti: </strong></label>
+                            <label class="TSIModalLabel"><strong>Ölçme Hassasiyeti: </strong></label>
                             <SfTextBox Placeholder="Ölçme Hassasiyetini Yazınız." @bind-Value="DataSource.MeasuringAccuracy" CssClass="TSITxtBox"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
-                            <label class="FilterLabelTitle"><strong>Departman: </strong></label>
+                            <label class="TSIModalLabel"><strong>Departman: </strong></label>
                             @*<SfComboBox TValue="int" TItem="ListEquipmentRecordsDto"></SfComboBox>*@
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="5">
                         <Template>
-                            <label class="FilterLabelTitle"><strong>Sorumlu: </strong></label>
+                            <label class="TSIModalLabel"><strong>Sorumlu: </strong></label>
                             <SfTextBox Placeholder="Sorumluyu Yazınız." @bind-Value="DataSource.Responsible" CssClass="TSITxtBox"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
-                            <label class="FilterLabelTitle"><strong>Sıklık: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>Sıklık: </strong></label><br />
                             <SfTextBox Placeholder="Sıklık Yazınız." @bind-Value="DataSource.Frequency" CssClass="TSITxtBox"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
-                            <label class="FilterLabelTitle"><strong>Ekipman Seri No: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>Ekipman Seri No: </strong></label><br />
                             <SfTextBox Placeholder="Ekipman Seri Numarasını Yazınız." @bind-Value="DataSource.EquipmentSerialNo" CssClass="TSITxtBox"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="2" Column="5">
                         <Template>
-                            <label class="FilterLabelTitle"><strong>Kayıt Tarihi: </strong></label>
+                            <label class="TSIModalLabel"><strong>Kayıt Tarihi: </strong></label>
                             <SfDatePicker @bind-Value="DataSource.RecordDate"></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="3" Column="1">
                         <Template>
-                            <label class="FilterLabelTitle"><strong>Aktiflik: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
                             <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="3" Column="3">
                         <Template>
-                            <label class="FilterLabelTitle"><strong>İptal: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>İptal: </strong></label><br />
                             <SfSwitch @bind-Checked="DataSource.Cancel" @onchange="CheckValueChanged"></SfSwitch>
                         </Template>
                     </DxGridLayoutItem>
@@ -167,7 +167,7 @@ else
                         {
                             <DxGridLayoutItem Row="3" Column="5">
                                 <Template>
-                                    <label class="FilterLabelTitle"><strong>İptal Nedeni: </strong></label><br />
+                                    <label class="TSIModalLabel"><strong>İptal Nedeni: </strong></label><br />
                                     <SfTextBox Placeholder="İptal Nedeni Yazınız." @bind-Value="DataSource.CancellationReason" CssClass="TSITxtBox" Multiline=true></SfTextBox>
                                 </Template>
                             </DxGridLayoutItem>

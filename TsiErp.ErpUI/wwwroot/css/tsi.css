@@ -73,7 +73,7 @@ td, th {
 }
 .HeaderTitleCss {
     font-weight: bold;
-    font-size: 24px;
+    font-size: 16px;
     text-align: center;
     color: white;
     background-image: linear-gradient(356deg, rgb(255 19 19) 0%, #ad0303 70%) !important;
@@ -234,26 +234,26 @@ html {
     border-color: #565656 !important;
     background-color: white !important;
     color: #878787 !important;
-    font-size: 18px !important;
+    font-size: 14px !important;
     font-weight: bold !important
 }
 .TSICancelButton {
     border-color: #565656 !important;
     background-color: white !important;
     color: #AD0000 !important;
-    font-size: 18px !important;
+    font-size: 14px !important;
     font-weight: bold !important
 }
 .TSIGeneralBTNRed {
     background-color: #AD0000 !important;
     text-shadow: 1px 3px 4px black !important;
-    font-size: 18px !important;
+    font-size: 14px !important;
     font-weight: bold !important
 }
-.TSIGenerakBTNGray {
+.TSIGeneralBTNGray {
     background-color: #474747 !important;
     text-shadow: 6px 3px 4px black !important;
-    font-size: 18px !important;
+    font-size: 14px !important;
     font-weight: bold !important
 }
 .TSIListPageTitleCard {
@@ -264,5 +264,9 @@ html {
     text-shadow: 1px 3px 4px black !important;
     box-shadow: rgb(0 0 0 / 60%) 0px 3px 10px;
     height: 40px;
+}
+.TSIModalLabel {
+    color: black;
+    font-size: 14px;
 }
 
