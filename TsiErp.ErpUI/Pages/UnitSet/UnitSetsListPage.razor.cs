@@ -13,5 +13,17 @@ namespace TsiErp.ErpUI.Pages.UnitSet
         {
             BaseCrudService = UnitSetsService;
         }
+
+        protected override Task BeforeInsertAsync()
+        {
+            DataSource = new SelectUnitSetsDto()
+            {
+                IsActive = true
+            };
+
+            ShowEditPage();
+
+            return Task.CompletedTask;
+        }
     }
 }

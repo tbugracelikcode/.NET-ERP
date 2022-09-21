@@ -6680,8 +6680,8 @@ body:not(.modal-open) .dxbs-dropdown-modal .modal-dialog {
 }
 
     .dxbs-tree .expand-btn.btn, .dxbs-tree .expand-btn.btn > span {
-        min-height: .7em;
-        min-width: .7em
+        min-height: .7em ;
+        min-width: .7em 
     }
 
         .dxbs-tree .expand-btn.btn, .dxbs-tree .expand-btn.btn:hover, .dxbs-tree .expand-btn.btn:focus, .dxbs-tree .expand-btn.btn:active {
@@ -9678,7 +9678,6 @@ html.dxTouchUI .dxbs-tabs-scrollable.has-overflow .nav {
 .dx-image.dx-image-rotate-270 {
     transform: rotate(270deg)
 }
-
 .dx-image.dx-image-size-07em {
     width: .7em;
     height: .7em

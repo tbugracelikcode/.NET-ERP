@@ -14,5 +14,17 @@ namespace TsiErp.ErpUI.Pages.Period
             BaseCrudService = PeriodsService;
         }
 
+        protected override Task BeforeInsertAsync()
+        {
+            DataSource = new SelectPeriodsDto()
+            {
+                IsActive = true
+            };
+
+            ShowEditPage();
+
+            return Task.CompletedTask;
+        }
+
     }
 }

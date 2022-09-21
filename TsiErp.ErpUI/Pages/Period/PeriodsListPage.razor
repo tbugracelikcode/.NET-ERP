@@ -24,7 +24,7 @@ else
                 <Template>
                     <SfCard class="TSIListPageTitleCard">
                         <CardContent>
-                            <TsiBreadCrumb PreviousMenus="Genel Sistem Tanımlamarı" CurrentMenu="Şubeler" />
+                            <TsiBreadCrumb PreviousMenus="Genel Sistem Tanımlamarı" CurrentMenu="Dönemler" />
                         </CardContent>
                         <CardFooter>
                         </CardFooter>
@@ -33,7 +33,7 @@ else
             </DxGridLayoutItem>
             <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
                 <Template>
-                    <SfCard class="Cards">
+                    <SfCard class="TSIGridCards">
                         <CardContent>
                             <SfGrid ID="Grid" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
                                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
@@ -65,15 +65,15 @@ else
          CloseOnOutsideClick="false"
          HeaderText="Dönemler"
          Width="760px"
-         Height="550px"
+         Height="480px"
          HeaderCssClass="HeaderTitleCss">
     <BodyTemplate>
 
         <DxGridLayout>
             <Rows>
-                <DxGridLayoutRow Height="130px" />
-                <DxGridLayoutRow Height="50px" />
                 <DxGridLayoutRow Height="100px" />
+                <DxGridLayoutRow Height="50px" />
+                <DxGridLayoutRow Height="70px" />
             </Rows>
             <Columns>
                 <DxGridLayoutColumn Width="40px" />
