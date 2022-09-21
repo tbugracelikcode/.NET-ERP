@@ -112,45 +112,47 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <br />
-                            <label class="FilterLabelTitle"><strong>Makina Kodu: </strong></label>
+                            <label class="TSIModalLabel"><strong>Makina Kodu: </strong></label>
                             <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Makina Kodunu Yazınız."></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <br />
-                            <label class="FilterLabelTitle"><strong>Makina Açıklaması: </strong></label>
+                            <label class="TSIModalLabel"><strong>Makina Açıklaması: </strong></label>
                             <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="İsim Yazınız."></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="5">
                         <Template>
                             <br />
-                            <label class="FilterLabelTitle"><strong>Marka: </strong></label>
+                            <label class="TSIModalLabel"><strong>Marka: </strong></label>
                             <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Brand" Placeholder="Markayı Yazınız."></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="7">
                         <Template>
                             <br />
-                            <label class="FilterLabelTitle"><strong>Model: </strong></label>
+                            <label class="TSIModalLabel"><strong>Model: </strong></label>
                             <SfNumericTextBox TValue="int" @bind-Value="DataSource.Model" CssClass="TSITxtBox"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <label class="FilterLabelTitle"><strong>Kapasite: </strong></label>
+                            <label class="TSIModalLabel"><strong>Kapasite: </strong></label>
                             <SfTextBox Placeholder="Kapasiteyi Yazınız." @bind-Value="DataSource.Capacity" CssClass="TSITxtBox"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
-                            <label class="FilterLabelTitle"><strong>KWA: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>KWA: </strong></label><br />
                             <SfNumericTextBox Placeholder="KWA" @bind-Value="DataSource.KWA" CssClass="TSITxtBox"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="5">
                         <Template>
+                            <label class="TSIModalLabel"><strong>İş İstasyonu Grubu: </strong></label><br />
+                           @* <SfComboBox TValue="int" TItem="ListStationsDto"></SfComboBox>*@
                             <label class="FilterLabelTitle"><strong>İş İstasyonu Grubu: </strong></label><br />
                             <TsiButtonEdit @bind-Value="DataSource.StationGroup" ButtonClick="(()=>Clicked())"></TsiButtonEdit>
 
@@ -158,75 +160,75 @@ else
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="7">
                         <Template>
-                            <label class="FilterLabelTitle"><strong>Amortisman: </strong></label>
+                            <label class="TSIModalLabel"><strong>Amortisman: </strong></label>
                             <SfNumericTextBox @bind-Value="DataSource.Amortization" TValue="int"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
-                            <label class="FilterLabelTitle"><strong>X: </strong></label>
+                            <label class="TSIModalLabel"><strong>X: </strong></label>
                             <SfNumericTextBox @bind-Value="DataSource.X" TValue="decimal"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
-                            <label class="FilterLabelTitle"><strong>Y: </strong></label>
+                            <label class="TSIModalLabel"><strong>Y: </strong></label>
                             <SfNumericTextBox @bind-Value="DataSource.Y" TValue="decimal"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="2" Column="5">
                         <Template>
-                            <label class="FilterLabelTitle"><strong>Kapladığı Alan: </strong></label>
+                            <label class="TSIModalLabel"><strong>Kapladığı Alan: </strong></label>
                             <SfNumericTextBox @bind-Value="DataSource.AreaCovered" TValue="decimal"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="2" Column="7">
                         <Template>
-                            <label class="FilterLabelTitle"><strong>Kullanım Alanı: </strong></label>
+                            <label class="TSIModalLabel"><strong>Kullanım Alanı: </strong></label>
                             <SfNumericTextBox @bind-Value="DataSource.UsageArea" TValue="decimal"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="3" Column="1">
                         <Template>
-                            <label class="FilterLabelTitle"><strong>Makina Maliyeti: </strong></label>
+                            <label class="TSIModalLabel"><strong>Makina Maliyeti: </strong></label>
                             <SfNumericTextBox @bind-Value="DataSource.MachineCost" TValue="decimal"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="3" Column="3">
                         <Template>
-                            <label class="FilterLabelTitle"><strong>Vardiya: </strong></label>
+                            <label class="TSIModalLabel"><strong>Vardiya: </strong></label>
                             <SfNumericTextBox @bind-Value="DataSource.Shift" TValue="int"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="3" Column="5">
                         <Template>
 
-                            <label class="FilterLabelTitle"><strong>Vardiya Çalışma Süresi: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>Vardiya Çalışma Süresi: </strong></label><br />
                             <SfNumericTextBox @bind-Value="DataSource.ShiftWorkingTime" TValue="decimal"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="3" Column="7">
                         <Template>
 
-                            <label class="FilterLabelTitle"><strong>Güç Faktörü: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>Güç Faktörü: </strong></label><br />
                             <SfNumericTextBox @bind-Value="DataSource.PowerFactor" TValue="decimal"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="4" Column="1">
                         <Template>
-                            <label class="FilterLabelTitle"><strong>İş Güvenliği Talimatı: </strong></label>
-                            @* <SfTextBox Placeholder="İş Güvenliği Talimatı Yazınız." CssClass="TSITxtBox"></SfTextBox>*@
+                            <label class="TSIModalLabel"><strong>İş Güvenliği Talimatı: </strong></label>
+                           @* <SfTextBox Placeholder="İş Güvenliği Talimatı Yazınız." CssClass="TSITxtBox"></SfTextBox>*@
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="4" Column="3">
                         <Template>
-                            <label class="FilterLabelTitle"><strong>Kullanım Talimatı: </strong></label>
-                            @* <SfTextBox Placeholder="Kullanım Talimatı Yazınız." CssClass="TSITxtBox"></SfTextBox>*@
+                            <label class="TSIModalLabel"><strong>Kullanım Talimatı: </strong></label>
+                           @* <SfTextBox Placeholder="Kullanım Talimatı Yazınız." CssClass="TSITxtBox"></SfTextBox>*@
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="4" Column="5">
                         <Template>
-                            <label class="FilterLabelTitle"><strong>Aktiflik: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
                             <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
                         </Template>
                     </DxGridLayoutItem>

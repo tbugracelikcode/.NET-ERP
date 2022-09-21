@@ -63,8 +63,8 @@ builder.Services.AddServerSideBlazor().AddHubOptions(o=>
 
 builder.Services.AddBlazoredModal();
 builder.Services.AddDevExpressBlazor();
-
 builder.Services.AddScoped<ModalManager>();
+
 
 var app = builder.Build();
 

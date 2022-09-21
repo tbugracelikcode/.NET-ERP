@@ -86,32 +86,32 @@ else
                 <DxGridLayoutItem Row="0" Column="1">
                     <Template>
                         <br />
-                        <label class="FilterLabelTitle"><strong>Dönem Adı: </strong></label>
+                        <label class="TSIModalLabel"><strong>Dönem Adı: </strong></label>
                         <SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.Name" Placeholder="Dönem Adını Yazınız."></SfTextBox>
                     </Template>
                 </DxGridLayoutItem>
                 <DxGridLayoutItem Row="0" Column="3">
                     <Template>
                         <br />
-                        <label class="FilterLabelTitle"><strong>Dönem Kodu: </strong></label>
+                        <label class="TSIModalLabel"><strong>Dönem Kodu: </strong></label>
                         <SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.Code" Placeholder="Dönem Kodunu Yazınız."></SfTextBox>
                     </Template>
                 </DxGridLayoutItem>
                 <DxGridLayoutItem Row="1" Column="1">
                     <Template>
-                        <label class="FilterLabelTitle"><strong>Aktiflik: </strong></label><br />
+                        <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
                         <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
                     </Template>
                 </DxGridLayoutItem>
                 <DxGridLayoutItem Row="1" Column="3">
                     <Template>
-                        <label class="FilterLabelTitle"><strong>Şube : </strong></label><br />
+                        <label class="TSIModalLabel"><strong>Şube : </strong></label><br />
                        @* <SfComboBox TValue="int" TItem="ListPeriodsDto"></SfComboBox>*@
                     </Template>
                 </DxGridLayoutItem>
                 <DxGridLayoutItem Row="2" Column="1" ColumnSpan="4">
                     <Template>
-                        <label class="FilterLabelTitle"><strong>Açıklama: </strong></label><br />
+                        <label class="TSIModalLabel"><strong>Açıklama: </strong></label><br />
                         <SfTextBox CssClass="TSIMemoBox"  @bind-Value="DataSource.Description_" Placeholder="Açıklama Yazınız." Multiline="true"></SfTextBox>
                     </Template>
                 </DxGridLayoutItem>

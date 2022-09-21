@@ -1,8 +1,9 @@
 ﻿@inherits LayoutComponentBase
 @inject IJSRuntime JS
 @using Syncfusion.Blazor.Navigations
+
 <PageTitle>TSI ERP</PageTitle>
-<SfSidebar ID="Sidebar" Type="SidebarType.Push" Width="370px"  DockSize="65px" EnableDock="true" @ref="Sidebar" @bind-IsOpen="SidebarToggle">
+<SfSidebar ID="Sidebar" ZIndex="0" Type="SidebarType.Push" Width="340px" DockSize="65px" EnableDock="true" @ref="Sidebar" @bind-IsOpen="SidebarToggle">
     <div class="sidebar" style="position:fixed;z-index:1200">
         <div class="topnav navbar navbar-dark">
             <button class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -37,6 +38,7 @@
     .sidebar {
         width: 300px;
         min-width: 355px;
+
     }
 
     .navbar-toggler {
@@ -142,12 +144,10 @@
     .e-sidebar li {
         list-style-type: none;
         cursor: pointer;
-        
     }
 
     .e-sidebar ul {
         padding: 0px;
-       
     }
 
     .e-sidebar span.e-icons {
@@ -177,13 +177,13 @@
 
     .e-sidebar {
         background: #2d323e;
-        overflow-x:hidden;
+        overflow-x: hidden;
         overflow-y: scroll;
     }
 
     /*.e-menu-wrapper.e-hamburger ul.e-menu {
-        overflow-y: hidden !important;
-    }*/
+                overflow-y: hidden !important;
+            }*/
 
     @@font-face {
         font-family: 'e-icons';
@@ -201,7 +201,7 @@
     SfSidebar Sidebar;
     public bool SidebarToggle = true;
     public bool SidebarToggleFixed = true;
-
+    
 
     public void ToggleNavMenu()
     {

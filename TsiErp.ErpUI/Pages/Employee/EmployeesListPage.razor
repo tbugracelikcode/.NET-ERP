@@ -101,33 +101,33 @@ else
                         <DxGridLayoutItem Row="0" Column="1">
                             <Template>
                                 <br />
-                                <label class="FilterLabelTitle"><strong>Kod: </strong></label>
+                                <label class="TSIModalLabel"><strong>Kod: </strong></label>
                                 <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Kodu Yazınız."></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="0" Column="3">
                             <Template>
                                 <br />
-                                <label class="FilterLabelTitle"><strong>İsim: </strong></label>
+                                <label class="TSIModalLabel"><strong>İsim: </strong></label>
                                 <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="İsim Yazınız."></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="0" Column="5" RowSpan="1">
                             <Template>
                                 <br />
-                                <label class="FilterLabelTitle"><strong>Resim: </strong></label>
+                                <label class="TSIModalLabel"><strong>Resim: </strong></label>
                                 <DxImage></DxImage>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="1" Column="1">
                             <Template>
-                                <label class="FilterLabelTitle"><strong>Soyisim: </strong></label>
+                                <label class="TSIModalLabel"><strong>Soyisim: </strong></label>
                                 <SfTextBox Placeholder="Soyisim Yazınız." @bind-Value="DataSource.Surname" CssClass="TSITxtBox"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="1" Column="3">
                             <Template>
-                                <label class="FilterLabelTitle"><strong>Departman: </strong></label>
+                                <label class="TSIModalLabel"><strong>Departman: </strong></label>
                                @* <SfComboBox TValue="int" TItem="ListEmployeesDto"></SfComboBox>*@
                             </Template>
                         </DxGridLayoutItem>
@@ -139,56 +139,56 @@ else
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="2" Column="3">
                             <Template>
-                                <label class="FilterLabelTitle"><strong>Doğum Günü: </strong></label><br />
+                                <label class="TSIModalLabel"><strong>Doğum Günü: </strong></label><br />
                                 <SfDatePicker @bind-Value="DataSource.Birthday"></SfDatePicker>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="2" Column="5">
                             <Template>
-                                <label class="FilterLabelTitle"><strong>Kan Grubu: </strong></label>
+                                <label class="TSIModalLabel"><strong>Kan Grubu: </strong></label>
                               @*  <SfComboBox TValue="int" TItem="ListEmployeesDto"></SfComboBox>*@
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="3" Column="1">
                             <Template>
-                                <label class="FilterLabelTitle"><strong>Aktiflik: </strong></label><br />
+                                <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
                                 <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="3" Column="3">
                             <Template>
-                                <label class="FilterLabelTitle"><strong>İl: </strong></label><br />
+                                <label class="TSIModalLabel"><strong>İl: </strong></label><br />
                                 <SfTextBox Placeholder="İli Yazınız." @bind-Value="DataSource.City" CssClass="TSITxtBox"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="3" Column="5">
                             <Template>
-                                <label class="FilterLabelTitle"><strong>İlçe: </strong></label><br />
+                                <label class="TSIModalLabel"><strong>İlçe: </strong></label><br />
                                 <SfTextBox Placeholder="İlçe Yazınız." @bind-Value="DataSource.District" CssClass="TSITxtBox"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="4" Column="1">
                             <Template>
-                                <label class="FilterLabelTitle"><strong>Ev Telefonu: </strong></label><br />
+                                <label class="TSIModalLabel"><strong>Ev Telefonu: </strong></label><br />
                                 <SfTextBox Placeholder="Ev Telefonu Numarasını Yazınız." @bind-Value="DataSource.HomePhone" CssClass="TSITxtBox"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="4" Column="3">
                             <Template>
-                                <label class="FilterLabelTitle"><strong>Cep Telefonu: </strong></label><br />
+                                <label class="TSIModalLabel"><strong>Cep Telefonu: </strong></label><br />
                                 <SfTextBox Placeholder="Cep Telefonu Numarasını Yazınız." @bind-Value="DataSource.CellPhone" CssClass="TSITxtBox"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="4" Column="5">
                             <Template>
-                                <label class="FilterLabelTitle"><strong>E-Posta: </strong></label><br />
+                                <label class="TSIModalLabel"><strong>E-Posta: </strong></label><br />
                                 <SfTextBox Placeholder="E-Postayı Yazınız." @bind-Value="DataSource.Email" CssClass="TSITxtBox"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="5" Column="1" ColumnSpan="5">
                             <Template>
 
-                                <label class="FilterLabelTitle"><strong>Adres: </strong></label><br />
+                                <label class="TSIModalLabel"><strong>Adres: </strong></label><br />
                                 <SfTextBox Placeholder="Adres Yazınız." @bind-Value="DataSource.Address" CssClass="TSITxtBox" Multiline=true></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
