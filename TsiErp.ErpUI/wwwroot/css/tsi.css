@@ -24,12 +24,14 @@ td, th {
     padding-left: 20px;
     display: inline-block;
 }
+
 .e-switch-wrapper .e-switch-on,
 .e-css.e-switch-wrapper .e-switch-on {
     background-color: #AD0000 !important;
     color: #fff;
     border-color: #AD0000 !important;
 }
+
 .cancelimage {
     background-image: url("../images/Cancel.svg");
 }
@@ -68,9 +70,11 @@ td, th {
     color: black;
     font-size: 18px;
 }
+
 .FilterLabelTitleValue {
     font-size: 18px;
 }
+
 .HeaderTitleCss {
     font-weight: bold;
     font-size: 16px;
@@ -132,6 +136,7 @@ td, th {
 .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap .e-tab-icon {
     color: black;
 }
+
 body,
 html {
     background: #EAEAEA;
@@ -230,9 +235,11 @@ html {
 .TSITxtBox {
     min-height: 30px !important;
 }
+
 .TSIMemoBox {
     min-height: 160px !important;
 }
+
 .TSISaveButton {
     border-color: #565656 !important;
     background-color: white !important;
@@ -241,6 +248,7 @@ html {
     font-weight: bold !important;
     width: 100px;
 }
+
 .TSICancelButton {
     border-color: #565656 !important;
     background-color: white !important;
@@ -249,6 +257,7 @@ html {
     font-weight: bold !important;
     width: 100px;
 }
+
 .TSIGeneralBTNRed {
     background-color: #AD0000 !important;
     text-shadow: 1px 3px 4px black !important;
@@ -263,6 +272,7 @@ html {
     font-weight: bold !important;
     width: 100px;
 }
+
 .TSIListPageTitleCard {
     font-weight: bold;
     font-size: 16px;
@@ -287,3 +297,9 @@ html {
     margin-right: auto !important;
 }
 
+
+.button-edit {
+    background-image: url("../images/buttonedit.svg") !important;
+    width: 10px !important;
+    height: 10px !important;
+}

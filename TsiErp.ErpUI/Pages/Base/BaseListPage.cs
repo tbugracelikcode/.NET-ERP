@@ -1,9 +1,12 @@
 ﻿using Blazored.Modal.Services;
+using DevExpress.Blazor;
 using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.HeatMap.Internal;
+using Syncfusion.Blazor.Lists;
 using Syncfusion.Blazor.Navigations;
 using Tsi.Application.Contract.Services.EntityFrameworkCore;
+using Tsi.Blazor.Component.Core.Services;
 using Tsi.Core.Entities;
 using Tsi.Core.Utilities.Results;
 using TsiErp.Business.Extensions.ObjectMapping;
@@ -14,7 +17,7 @@ using IResult = Tsi.Core.Utilities.Results.IResult;
 
 namespace TsiErp.ErpUI.Pages.Base
 {
-    public abstract class BaseListPage<TGetOutputDto, TGetListOutputDto, TCreateInput, TUpdateInput, TGetListInput> : ComponentBase
+    public abstract class BaseListPage<TGetOutputDto, TGetListOutputDto, TCreateInput, TUpdateInput, TGetListInput> : ComponentBase,ICoreCommonService
          where TGetOutputDto : class, IEntityDto, new()
          where TGetListOutputDto : class, IEntityDto, new()
          where TGetListInput : class, new()
@@ -36,14 +39,18 @@ namespace TsiErp.ErpUI.Pages.Base
 
         protected ICrudAppService<TGetOutputDto, TGetListOutputDto, TCreateInput, TUpdateInput, TGetListInput> BaseCrudService { get; set; }
 
+        public ComponentBase ActiveEditComponent { get ; set ; }
+        public bool IsPopupListPage { get; set; }
+        public Guid PopupListPageFocusedRowId { get; set; }
+
         protected async override Task OnParametersSetAsync()
         {
-            CreateContextMenu();
+            CreateContextMenuItems();
             await GetListDataSourceAsync();
             await InvokeAsync(StateHasChanged);
         }
 
-        protected virtual void CreateContextMenu()
+        protected virtual void CreateContextMenuItems()
         {
             GridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle", Id = "new" });
             GridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
@@ -57,9 +64,9 @@ namespace TsiErp.ErpUI.Pages.Base
             return await BaseCrudService.GetAsync(id);
         }
 
-        protected async virtual Task<IDataResult<IList<TGetListOutputDto>>> GetListAsync(TGetListInput input)
+        protected async virtual Task<IList<TGetListOutputDto>> GetListAsync(TGetListInput input)
         {
-            return await BaseCrudService.GetListAsync(input);
+            return (await BaseCrudService.GetListAsync(input)).Data.ToList();
         }
 
         protected async virtual Task<IDataResult<TGetOutputDto>> CreateAsync(TCreateInput input)
@@ -82,7 +89,8 @@ namespace TsiErp.ErpUI.Pages.Base
         {
             ListDataSource = (await GetListAsync(new TGetListInput
             {
-            })).Data.ToList();
+                
+            })).ToList();
 
             IsLoaded = true;
         }
@@ -138,13 +146,26 @@ namespace TsiErp.ErpUI.Pages.Base
             InvokeAsync(StateHasChanged);
         }
 
+        public virtual void BeforeShowPopupListPage(params object[] prm)
+        {
+            IsPopupListPage = true;
+
+            if (prm.Length > 0)
+                PopupListPageFocusedRowId = prm[0] == null ? Guid.Empty : (Guid)prm[0];
+        }
+
+        public void HideListPage()
+        {
+            IsPopupListPage = false;
+            ((DxTextBox)ActiveEditComponent)?.FocusAsync();
+        }
+
         public async virtual void OnContextMenuClick(ContextMenuClickEventArgs<TGetListOutputDto> args)
         {
             switch (args.Item.Id)
             {
                 case "new":
-                    DataSource = new TGetOutputDto();
-                    ShowEditPage();
+                    BeforeInsertAsync();
                     break;
 
                 case "changed":
@@ -176,6 +197,21 @@ namespace TsiErp.ErpUI.Pages.Base
                 default:
                     break;
             }
+        }
+
+        protected virtual async Task BeforeInsertAsync()
+        {
+            DataSource = new TGetOutputDto();
+
+            ShowEditPage();
+        }
+
+        public virtual void ButtonEditDeleteKeyDown(IEntityDto entity, string fieldName)
+        {
+        }
+
+        public virtual void SelectEntity(IEntityDto targetEntity)
+        {
         }
     }
 }

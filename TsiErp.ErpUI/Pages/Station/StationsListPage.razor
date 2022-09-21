@@ -1,16 +1,21 @@
 ﻿@page "/stations"
 @using Syncfusion.Blazor.Buttons
 @using Tsi.Blazor.Component.Core.Components.Commons.Loadings
+@using Tsi.Blazor.Component.Core.Components.DataEditors
 @using TsiErp.Business.Entities.Station.Services
+@using TsiErp.Business.Entities.StationGroup.Services
 @using TsiErp.Entities.Entities.Station
 @using TsiErp.Entities.Entities.Station.Dtos
 @using TsiErp.ErpUI.Pages.Base
 @using Tsi.Blazor.Component.Core.Components.Layouts
+@using TsiErp.ErpUI.Pages.StationGroup
+
 
 @inherits BaseListPage<SelectStationsDto, ListStationsDto, CreateStationsDto, UpdateStationsDto, ListStationsParameterDto>
 
 
 @inject IStationsAppService StationsService
+@inject IStationGroupsAppService StationGroupsService
 
 @if (!base.IsLoaded)
 {
@@ -148,6 +153,9 @@ else
                         <Template>
                             <label class="TSIModalLabel"><strong>İş İstasyonu Grubu: </strong></label><br />
                            @* <SfComboBox TValue="int" TItem="ListStationsDto"></SfComboBox>*@
+                            <label class="FilterLabelTitle"><strong>İş İstasyonu Grubu: </strong></label><br />
+                            <TsiButtonEdit @bind-Value="DataSource.StationGroup" ButtonClick="(()=>Clicked())"></TsiButtonEdit>
+
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="7">
@@ -234,6 +242,31 @@ else
         </FooterContentTemplate>
     </DxPopup>
 
+    <DevPopupListPageLayout 
+                        CancelButtonText="Vazgeç"
+                        Caption="İş İstasyonu Grupları"
+                        Closed="HideListPage"
+                        SelectButtonInvokeFunction="(()=>{})"
+                        SelectButtonText="Seç"
+                        Visible=stationGroupsListPageVisible
+                        Width="1000px">
+
+        <ListPageContent>
+            <StationGroupsListPage />
+        </ListPageContent>
+
+    </DevPopupListPageLayout>
+
 }
 
 
+@code {
+    bool stationGroupsListPageVisible = false;
+
+    private async void Clicked()
+    {
+        stationGroupsListPageVisible = true;
+        await InvokeAsync(StateHasChanged);
+    }
+
+}

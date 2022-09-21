@@ -13,5 +13,17 @@ namespace TsiErp.ErpUI.Pages.StationGroup
         {
             BaseCrudService = StationGroupsService;
         }
+
+        protected override Task BeforeInsertAsync()
+        {
+            DataSource= new SelectStationGroupsDto()
+            { 
+                IsActive = true 
+            };
+
+            ShowEditPage();
+
+            return Task.CompletedTask;
+        }
     }
 }
