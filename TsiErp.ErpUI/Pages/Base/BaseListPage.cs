@@ -9,6 +9,7 @@ using Tsi.Core.Utilities.Results;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
+using TsiErp.ErpUI.Utilities.ModalUtilities.ModalComponents;
 using IResult = Tsi.Core.Utilities.Results.IResult;
 
 namespace TsiErp.ErpUI.Pages.Base
@@ -28,7 +29,6 @@ namespace TsiErp.ErpUI.Pages.Base
 
         [Inject]
         ModalManager ModalManager { get; set; }
-
         public TGetOutputDto DataSource { get; set; }
         public IList<TGetListOutputDto> ListDataSource { get; set; }
 
@@ -156,12 +156,16 @@ namespace TsiErp.ErpUI.Pages.Base
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync("Confirmations", "Are you sure that it will be deleted?");
+                    var res = await ModalManager.ConfirmationAsync("Onay", "Silmek istediğinize emin misiniz ?");
 
-                    //SelectFirstDataRow = false;
-                    //await DeleteAsync(args.RowInfo.RowData.Id);
-                    //await GetListDataSourceAsync();
-                    //await InvokeAsync(StateHasChanged);
+                    if (res == true)
+                    {
+                        SelectFirstDataRow = false;
+                        await DeleteAsync(args.RowInfo.RowData.Id);
+                        await GetListDataSourceAsync();
+                        await InvokeAsync(StateHasChanged);
+                    }
+
                     break;
 
                 case "refresh":

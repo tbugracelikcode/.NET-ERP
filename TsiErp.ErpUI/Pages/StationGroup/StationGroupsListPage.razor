@@ -85,26 +85,26 @@ else
                 <DxGridLayoutItem Row="0" Column="1">
                     <Template>
                         <br />
-                        <label class="FilterLabelTitle"><strong>Kod: </strong></label>
+                        <label class="TSIModalLabel"><strong>Kod: </strong></label>
                         <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Kodu Yazınız."></SfTextBox>
                     </Template>
                 </DxGridLayoutItem>
                 <DxGridLayoutItem Row="0" Column="3">
                     <Template>
                         <br />
-                        <label class="FilterLabelTitle"><strong>Açıklama: </strong></label>
+                        <label class="TSIModalLabel"><strong>Açıklama: </strong></label>
                         <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="Açıklamayı Yazınız."></SfTextBox>
                     </Template>
                 </DxGridLayoutItem>
                 <DxGridLayoutItem Row="2" Column="1">
                     <Template>
-                        <label class="FilterLabelTitle"><strong>Toplam Çalışan: </strong></label><br />
+                        <label class="TSIModalLabel"><strong>Toplam Çalışan: </strong></label><br />
                         <SfNumericTextBox @bind-Value="DataSource.TotalEmployees" TValue="int"></SfNumericTextBox>
                     </Template>
                 </DxGridLayoutItem>
                 <DxGridLayoutItem Row="2" Column="3">
                     <Template>
-                        <label class="FilterLabelTitle"><strong>Aktiflik: </strong></label><br />
+                        <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
                         <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
                     </Template>
                 </DxGridLayoutItem>
