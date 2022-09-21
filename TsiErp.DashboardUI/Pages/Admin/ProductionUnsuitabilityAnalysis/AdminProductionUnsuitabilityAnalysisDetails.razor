@@ -1,8 +1,8 @@
 ﻿@page "/admin/production-unsuitability-analysis/details/{unsuitabilityCode}/{startDate:datetime}/{endDate:datetime}/{selectedActionID:int}"
 @layout AdminLayout
 
-@inject UretimUygunsuzlukDetayService UretimUygunsuzlukDetayService
-@inject UretimUygunsuzlukService UretimUygunsuzlukService
+@inject IUretimUygunsuzlukDetayService UretimUygunsuzlukDetayService
+@inject IUretimUygunsuzlukService UretimUygunsuzlukService
 @inject NavigationManager NavigationManager
 
 
@@ -12,19 +12,23 @@
         <table width="1000px">
             <tr>
                 <td width="200px">
+                    <SfCheckBox @bind-Checked="isGridChecked" @onchange="OnCheckedChanged" CssClass="e-customcheck"></SfCheckBox>
+                    <label class=FilterLabelTitle><strong>Detay Tablosunu Gizle</strong></label>
+                </td>
+                <td width="200px">
                     <label class="FilterLabelTitle"><strong>Aksiyon:</strong></label><label class="FilterLabelTitleValue">&nbsp;@actionName</label>
                 </td>
-                <td width="200px">
+                <td width="150px">
                     <label class="FilterLabelTitle"><strong>Uygunsuzluk Adı:</strong></label><label class="FilterLabelTitleValue">&nbsp;@unsuitabilityName</label>
                 </td>
-                <td width="200px">
+                <td width="150px">
                     <label class="FilterLabelTitle"><strong>Başlangıç Tarih:</strong></label><label class="FilterLabelTitleValue">&nbsp;@startDate.ToString("dd/MM/yyyy")</label>
                 </td>
                 <td width="200px">
                     <label class="FilterLabelTitle"><strong>Bitiş Tarih:</strong></label><label class="FilterLabelTitleValue">&nbsp;@endDate.ToString("dd/MM/yyyy")</label>
                 </td>
-                <td width="200px">
-                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold" OnClick="@OnBackButtonClicked">Geri</SfButton> <SfSpinner @bind-Visible="VisibleSpinner"> </SfSpinner>
+                <td width="100px">
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px;text-shadow: 6px 3px 4px black; font-weight:bold" OnClick="@OnBackButtonClicked">Geri</SfButton> <SfSpinner @bind-Visible="VisibleSpinner"> </SfSpinner>
                 </td>
             </tr>
         </table>
@@ -74,10 +78,10 @@
                             <CardFooter>
                             </CardFooter>
                         </SfCard>
-                        <SfCard class="Cards">
+                        <SfCard class="Cards" hidden="@isGridChecked">
 
                             <CardContent>
-                                <SfGrid ID="Grid" DataSource="@dataunsuitabilitystation" @ref="StationGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                                <SfGrid ID="Grid" DataSource="@dataunsuitabilitystation" @ref="StationGrid" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
                                         AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
@@ -85,9 +89,9 @@
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedStation.Station) HeaderText="İSTASYON" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedStation.Quantity) HeaderText="UYGUNSUZLUK ADEDİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedStation.Percent) HeaderText="UYGUNSUZLUK ORANI" Format="p2" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedStation.Station) HeaderText="İSTASYON" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedStation.Quantity) HeaderText="UYGUNSUZLUK ADEDİ" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedStation.Percent) HeaderText="UYGUNSUZLUK ORANI" Format="p2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
                                     </GridColumns>
                                 </SfGrid>
                             </CardContent>
@@ -128,7 +132,7 @@
                             <CardFooter>
                             </CardFooter>
                         </SfCard>
-                        <SfCard class="Cards">
+                        <SfCard class="Cards" hidden="@isGridChecked">
 
                             <CardContent>
                                 <SfGrid ID="Grid" DataSource="@dataunsuitabilityemployee" @ref="EmployeeGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
@@ -139,9 +143,9 @@
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedEmployee.EmployeeName) HeaderText="PERSONEL ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedEmployee.Quantity) HeaderText="UYGUNSUZLUK ADEDİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedEmployee.Percent) HeaderText="UYGUNSUZLUK ORANI" Format="p2" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedEmployee.EmployeeName) HeaderText="PERSONEL ADI" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedEmployee.Quantity) HeaderText="UYGUNSUZLUK ADEDİ" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedEmployee.Percent) HeaderText="UYGUNSUZLUK ORANI" Format="p2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
                                     </GridColumns>
                                 </SfGrid>
                             </CardContent>
@@ -180,7 +184,7 @@
                             <CardFooter>
                             </CardFooter>
                         </SfCard>
-                        <SfCard class="Cards">
+                        <SfCard class="Cards" hidden="@isGridChecked">
 
                             <CardContent>
                                 <SfGrid ID="Grid" DataSource="@dataunsuitabilityproduct" @ref="ProductGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
@@ -191,9 +195,9 @@
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedProduct.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedProduct.Quantity) HeaderText="UYGUNSUZLUK ADEDİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedProduct.Percent) HeaderText="UYGUNSUZLUK ORANI" Format="p2" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedProduct.ProductCode) HeaderText="STOK KODU" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedProduct.Quantity) HeaderText="UYGUNSUZLUK ADEDİ" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ProductionUnsuitabilityDetailedProduct.Percent) HeaderText="UYGUNSUZLUK ORANI" Format="p2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
                                     </GridColumns>
                                 </SfGrid>
                             </CardContent>

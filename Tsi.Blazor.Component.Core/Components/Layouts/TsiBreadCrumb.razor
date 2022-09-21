@@ -1,0 +1,17 @@
+﻿<table width="1000px">
+    <tr>
+        <td width="1000px">
+            <span style="float:left">
+                <label >@PreviousMenus&nbsp;>&nbsp;@CurrentMenu</label>
+            </span>
+        </td>
+      
+    </tr>
+</table>
+
+@code {
+
+    [Parameter, EditorRequired] public string PreviousMenus { get; set; }
+
+    [Parameter, EditorRequired] public string CurrentMenu { get; set; }
+}

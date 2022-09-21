@@ -1,0 +1,47 @@
+﻿@inherits BaseEditorParameters
+
+<SfTextBox @ref="@ButtonEdit"
+           @bind-Value="@Value"
+           Created="@onCreateButtonEdit"
+           @ondblclick="@ClickAsync"
+           Enabled=@Enabled></SfTextBox>
+
+@code {
+    SfTextBox ButtonEdit;
+
+    [Parameter]
+    public EventCallback ButtonClick { get; set; }
+
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+
+    private string _value;
+
+    [Parameter]
+    public string Value
+    {
+        get => _value;
+        set
+        {
+            if (_value == value) return;
+
+            _value = value;
+            ValueChanged.InvokeAsync(value);
+        }
+    }
+
+    public async Task onCreateButtonEdit()
+    {
+        var eventdoubleClick = EventCallback.Factory.Create<MouseEventArgs>(this, ClickAsync);
+
+        await ButtonEdit.AddIconAsync("append", "button-edit", new Dictionary<string, object>() { { "onclick", eventdoubleClick } });
+    }
+
+    private async Task ClickAsync()
+    {
+        if (Enabled)
+        {
+            await ButtonClick.InvokeAsync();
+        }
+    }
+}

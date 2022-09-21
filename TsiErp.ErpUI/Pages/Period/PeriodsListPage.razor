@@ -1,0 +1,131 @@
+﻿@page "/periods"
+@using Syncfusion.Blazor.Buttons
+@using Tsi.Blazor.Component.Core.Components.Commons.Loadings
+@using TsiErp.Business.Entities.Period.Services
+@using TsiErp.Entities.Entities.Period
+@using TsiErp.Entities.Entities.Period.Dtos
+@using TsiErp.ErpUI.Pages.Base
+@using Tsi.Blazor.Component.Core.Components.Layouts
+
+@inherits BaseListPage<SelectPeriodsDto, ListPeriodsDto, CreatePeriodsDto, UpdatePeriodsDto, ListPeriodsParameterDto>
+
+
+@inject IPeriodsAppService PeriodsService
+
+@if (!base.IsLoaded)
+{
+    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+}
+else
+{
+    <DevGridLayout ColumnCount="1" RowCount="3">
+        <GridLayoutItems>
+            <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIListPageTitleCard">
+                        <CardContent>
+                            <TsiBreadCrumb PreviousMenus="Genel Sistem Tanımlamarı" CurrentMenu="Dönemler" />
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+            <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIGridCards">
+                        <CardContent>
+                            <SfGrid ID="Grid" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListPeriodsDto"></GridEvents>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                <GridPageSettings PageSizes="true"></GridPageSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(ListPeriodsDto.Code) HeaderText="DÖNEM KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPeriodsDto.Name) HeaderText="DÖNEM ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPeriodsDto.Description_) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPeriodsDto.BranchName) HeaderText="ŞUBE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+        </GridLayoutItems>
+    </DevGridLayout>
+
+    
+<DxPopup @bind-Visible="base.EditPageVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Dönemler"
+         Width="760px"
+         Height="480px"
+         HeaderCssClass="HeaderTitleCss">
+    <BodyTemplate>
+
+        <DxGridLayout>
+            <Rows>
+                <DxGridLayoutRow Height="100px" />
+                <DxGridLayoutRow Height="50px" />
+                <DxGridLayoutRow Height="70px" />
+            </Rows>
+            <Columns>
+                <DxGridLayoutColumn Width="40px" />
+                <DxGridLayoutColumn Width="300px" />
+                <DxGridLayoutColumn Width="40px" />
+                <DxGridLayoutColumn Width="300px" />
+                <DxGridLayoutColumn Width="40px" />
+            </Columns>
+            <Items>
+                <DxGridLayoutItem Row="0" Column="1">
+                    <Template>
+                        <br />
+                        <label class="TSIModalLabel"><strong>Dönem Adı: </strong></label>
+                        <SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.Name" Placeholder="Dönem Adını Yazınız."></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                <DxGridLayoutItem Row="0" Column="3">
+                    <Template>
+                        <br />
+                        <label class="TSIModalLabel"><strong>Dönem Kodu: </strong></label>
+                        <SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.Code" Placeholder="Dönem Kodunu Yazınız."></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+                <DxGridLayoutItem Row="1" Column="1">
+                    <Template>
+                        <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
+                        <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                    </Template>
+                </DxGridLayoutItem>
+                <DxGridLayoutItem Row="1" Column="3">
+                    <Template>
+                        <label class="TSIModalLabel"><strong>Şube : </strong></label><br />
+                       @* <SfComboBox TValue="int" TItem="ListPeriodsDto"></SfComboBox>*@
+                    </Template>
+                </DxGridLayoutItem>
+                <DxGridLayoutItem Row="2" Column="1" ColumnSpan="4">
+                    <Template>
+                        <label class="TSIModalLabel"><strong>Açıklama: </strong></label><br />
+                        <SfTextBox CssClass="TSIMemoBox"  @bind-Value="DataSource.Description_" Placeholder="Açıklama Yazınız." Multiline="true"></SfTextBox>
+                    </Template>
+                </DxGridLayoutItem>
+
+            </Items>
+        </DxGridLayout>
+    </BodyTemplate>
+    <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+    </FooterContentTemplate>
+</DxPopup>
+
+}
+
+
+

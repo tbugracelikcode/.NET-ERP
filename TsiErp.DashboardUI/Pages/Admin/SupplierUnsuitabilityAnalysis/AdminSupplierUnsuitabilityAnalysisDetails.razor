@@ -1,8 +1,8 @@
 ﻿@page "/admin/supplier-unsuitability-analysis/details/{cariID:int}/{startDate:datetime}/{endDate:datetime}/{total:int}"
 @layout AdminLayout
 
-@inject TedarikciUygunsuzlukDetayService TedarikciUygunsuzlukDetayService
-@inject TedarikciUygunsuzlukService TedarikciUygunsuzlukService
+@inject ITedarikciUygunsuzlukDetayService TedarikciUygunsuzlukDetayService
+@inject ITedarikciUygunsuzlukService TedarikciUygunsuzlukService
 @inject NavigationManager NavigationManager
 
 
@@ -12,6 +12,8 @@
         <table width="1000px">
             <tr>
                 <td width="200px">
+                    <SfCheckBox @bind-Checked="isGridChecked" @onchange="OnCheckedChanged" CssClass="e-customcheck"></SfCheckBox>
+                    <label class=FilterLabelTitle><strong>Detay Tablosunu Gizle</strong></label>
                 </td>
                 <td width="200px">
                     <label class="FilterLabelTitle"><strong>Uygunsuzluk Adı:</strong></label><label class="FilterLabelTitleValue">&nbsp;@unsuitabilityName</label>
@@ -23,7 +25,7 @@
                     <label class="FilterLabelTitle"><strong>Bitiş Tarih:</strong></label><label class="FilterLabelTitleValue">&nbsp;@endDate.ToString("dd/MM/yyyy")</label>
                 </td>
                 <td width="200px">
-                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold" OnClick="@OnBackButtonClicked">Geri</SfButton> <SfSpinner @bind-Visible="VisibleSpinner"> </SfSpinner>
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px;text-shadow: 6px 3px 4px black; font-weight:bold" OnClick="@OnBackButtonClicked">Geri</SfButton> <SfSpinner @bind-Visible="VisibleSpinner"> </SfSpinner>
                 </td>
             </tr>
         </table>
@@ -34,7 +36,7 @@
 <br />
 <br />
 
-<SfCard class="Cards">
+<SfCard class="Cards" hidden="@isGridChecked">
     <CardHeader>
     </CardHeader>
     <CardContent>
@@ -76,7 +78,7 @@
                         <SfCard class="Cards">
 
                             <CardContent>
-                                <SfGrid ID="Grid" DataSource="@dataunsuitabilitycustomer" @ref="CustomerGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                                <SfGrid ID="Grid" DataSource="@dataunsuitabilitycustomer" @ref="CustomerGrid" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
                                         AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
@@ -84,9 +86,9 @@
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedCustomer.Customer) HeaderText="MÜŞTERİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedCustomer.Quantity) HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedCustomer.Percent) Format="p2" HeaderText="UYGUNSUZLUK ORANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedCustomer.Customer) HeaderText="MÜŞTERİ" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedCustomer.Quantity) HeaderText="MİKTAR" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedCustomer.Percent) Format="p2" HeaderText="UYGUNSUZLUK ORANI" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
                                     </GridColumns>
                                 </SfGrid>
                             </CardContent>
@@ -135,13 +137,13 @@
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.ContractSupplier) HeaderText="TEDARİKÇİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.RefuseQuantity) HeaderText="RED" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.ScrapQuantity) HeaderText="HURDA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.Correction) HeaderText="DÜZELTME" TextAlign="TextAlign.Center" Width="130"></GridColumn>
-                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.ToBeUsedAs) HeaderText="OLDUĞU GİBİ KULLANILACAK" TextAlign="TextAlign.Center" Width="130"></GridColumn>
-                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.Total) HeaderText="TOPLAM UYGUNSUZLUK MİKTARI" TextAlign="TextAlign.Center" Width="130"></GridColumn>
-                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.ContractReceiptQuantity) HeaderText="TOPLAM SİPARİŞ ADEDİ" TextAlign="TextAlign.Center" Width="130">
+                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.ContractSupplier) HeaderText="TEDARİKÇİ" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.RefuseQuantity) HeaderText="RED" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.ScrapQuantity) HeaderText="HURDA" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.Correction) HeaderText="DÜZELTME" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="130"></GridColumn>
+                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.ToBeUsedAs) HeaderText="OLDUĞU GİBİ KULLANILACAK" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="130"></GridColumn>
+                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.Total) HeaderText="TOPLAM UYGUNSUZLUK MİKTARI" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="130"></GridColumn>
+                                        <GridColumn Field=@nameof(SupplierUnsuitabilityDetailedProduct.ContractReceiptQuantity) HeaderText="TOPLAM SİPARİŞ ADEDİ" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="130">
                                             <Template>
                                                 @total
                                             </Template>

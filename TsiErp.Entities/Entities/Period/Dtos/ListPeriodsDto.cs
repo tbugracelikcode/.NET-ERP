@@ -26,7 +26,7 @@ namespace TsiErp.Entities.Entities.Period.Dtos
         /// </summary>
         public bool IsActive { get; set; }
         /// <summary>
-        /// Şube ID
+        /// Şube
         /// </summary>
         public string BranchName { get; set; }
     }

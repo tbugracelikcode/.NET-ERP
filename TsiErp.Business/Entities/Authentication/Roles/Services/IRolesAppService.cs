@@ -9,7 +9,7 @@ using Tsi.Authentication.Entities.Roles;
 
 namespace TsiErp.Business.Entities.Authentication.Roles.Services
 {
-    public interface IRolesAppService : ICrudAppService<TsiRoles, SelectRolesDto, ListRolesDto, CreateRolesDto, UpdateRolesDto,ListRolesParameterDto>
+    public interface IRolesAppService : ICrudAppService< SelectRolesDto, ListRolesDto, CreateRolesDto, UpdateRolesDto,ListRolesParameterDto>
     {
 
     }

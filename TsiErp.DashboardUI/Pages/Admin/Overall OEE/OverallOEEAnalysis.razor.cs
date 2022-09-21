@@ -25,56 +25,57 @@ namespace TsiErp.DashboardUI.Pages.Admin.Overall_OEE
 
         #endregion
 
-        protected override void OnInitialized()
+        protected override async void OnInitialized()
         {
-            dataoee = GenelOEEService.GetStationOEEAnalysis(startDate, endDate);
-            datachart = GenelOEEService.GetAdminMachineChart(startDate, endDate);
+
+            dataoee = await GenelOEEService.GetStationOEEAnalysis(startDate, endDate);
+            datachart = await GenelOEEService.GetAdminMachineChart(startDate, endDate);
+
         }
 
         #region Component Metotları
-        private void OnDateButtonClicked()
+        private async void OnDateButtonClicked()
         {
-            this.VisibleSpinner = true;
+            VisibleSpinner = true;
+            await Task.Delay(1);
+            StateHasChanged();
+
             endDate = DateTime.Today;
 
             #region Zaman Seçimi
-
-            if (selectedTimeIndex == 0)
+            switch (selectedTimeIndex)
             {
-                startDate = DateTime.Today.AddDays(-330);
-            }
-            else if (selectedTimeIndex == 1)
-            {
-                startDate = DateTime.Today.AddDays(-273);
-            }
-            else if (selectedTimeIndex == 2)
-            {
-                startDate = DateTime.Today.AddDays(-181);
-            }
-            else if (selectedTimeIndex == 3)
-            {
-                startDate = DateTime.Today.AddDays(-90);
+                case 0: startDate = DateTime.Today.AddDays(-365); ; break;
+                case 1: startDate = DateTime.Today.AddDays(-273); ; break;
+                case 2: startDate = DateTime.Today.AddDays(-181); ; break;
+                case 3: startDate = DateTime.Today.AddDays(-90); ; break;
+                default: break;
             }
 
             #endregion
+            
 
             thresholddouble = Convert.ToDouble(threshold) / 100;
-            Grid.Refresh();
-            ChartInstance.RefreshAsync();
-            dataoee = GenelOEEService.GetStationOEEAnalysis(startDate, endDate);
-            datachart = GenelOEEService.GetAdminMachineChart(startDate, endDate);
-            this.VisibleSpinner = false;
+            dataoee = await GenelOEEService.GetStationOEEAnalysis(startDate, endDate);
+            datachart = await GenelOEEService.GetAdminMachineChart(startDate, endDate);
+            await Grid.Refresh();
+            await ChartInstance.RefreshAsync();
+            VisibleSpinner = false;
             StateHasChanged();
         }
 
-        private void OnDetailButtonClicked(int stationID)
-        {
-            NavigationManager.NavigateTo("/admin/machine-analysis/details" + "/" + stationID.ToString() + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd")); ;
-        }
+       
 
-        private void OnChangeLabelCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+        //private void OnDetailButtonClicked(int stationID)
+        //{
+        //    VisibleSpinner = true;
+
+        //    NavigationManager.NavigateTo("/admin/machine-analysis/details" + "/" + stationID.ToString() + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd")); ;
+        //}
+
+        private async void OnChangeLabelCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
         {
-            ChartInstance.RefreshAsync();
+            await ChartInstance.RefreshAsync();
             if (isLabelsChecked) { dataLabels = true; }
             else { dataLabels = false; }
         }

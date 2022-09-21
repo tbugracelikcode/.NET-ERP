@@ -3,20 +3,17 @@ using TsiErp.DashboardUI.Helpers;
 using TsiErp.DashboardUI.Helpers.HelperModels;
 using TsiErp.DashboardUI.Models;
 using System.Globalization;
+using TsiErp.DashboardUI.Services.Interfaces;
 
 namespace TsiErp.DashboardUI.Services
 {
-    public class TedarikciUygunsuzlukService
+    public class TedarikciUygunsuzlukService : ITedarikciUygunsuzlukService
     {
-        SqlConnection _connection;
-        public TedarikciUygunsuzlukService()
-        {
-            _connection = DBHelper.GetSqlConnection();
-        }
+       
 
         #region Chart
 
-        public List<AdminSupplierUnsuitabilityAnalysisChart> GetSupplierUnsuitabilityChart(DateTime startDate, DateTime endDate, int frequency, int? action)
+        public async Task< List<AdminSupplierUnsuitabilityAnalysisChart>> GetSupplierUnsuitabilityChart(DateTime startDate, DateTime endDate, int frequency, int? action)
         {
             List<AdminSupplierUnsuitabilityAnalysisChart> adminSupplierUnsuitabilityChart = new List<AdminSupplierUnsuitabilityAnalysisChart>();
             var unsuitabilityLines = DBHelper.GetSuppliertUnsuitabilityQuery(startDate, endDate);
@@ -177,7 +174,7 @@ namespace TsiErp.DashboardUI.Services
                 default: break;
             }
 
-            return adminSupplierUnsuitabilityChart;
+            return await Task.FromResult(adminSupplierUnsuitabilityChart);
 
         }
 
@@ -185,7 +182,7 @@ namespace TsiErp.DashboardUI.Services
 
         #region Grid
 
-        public List<SupplierUnsuitabilityAnalysis> GetSupplierUnsuitabilityAnalysis(DateTime startDate, DateTime endDate)
+        public async Task< List<SupplierUnsuitabilityAnalysis>> GetSupplierUnsuitabilityAnalysis(DateTime startDate, DateTime endDate)
         {
             List<SupplierUnsuitabilityAnalysis> supplierUnsuitabilityAnalysis = new List<SupplierUnsuitabilityAnalysis>();
 
@@ -224,7 +221,7 @@ namespace TsiErp.DashboardUI.Services
                     supplierUnsuitabilityAnalysis.Add(analysis);
                 }
             }
-            return supplierUnsuitabilityAnalysis;
+            return await Task.FromResult(supplierUnsuitabilityAnalysis);
         }
 
         #endregion

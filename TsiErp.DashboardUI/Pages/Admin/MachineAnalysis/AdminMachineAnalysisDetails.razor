@@ -1,7 +1,7 @@
 ﻿@page "/admin/machine-analysis/details/{stationID:int}/{startDate:datetime}/{endDate:datetime}"
 @layout AdminLayout
 
-@inject GenelOEEDetayService GenelOEEDetayService
+@inject IIstasyonDetayService IstasyonDetayService
 @inject NavigationManager NavigationManager
 
 
@@ -10,6 +10,8 @@
         <table width="1000px">
             <tr>
                 <td width="200px">
+                    <SfCheckBox @bind-Checked="isGridChecked" @onchange="OnCheckedChanged" CssClass="e-customcheck"></SfCheckBox>
+                    <label class=FilterLabelTitle><strong>Detay Tablosunu Gizle</strong></label>
                 </td>
                 <td width="200px">
                     <label class="FilterLabelTitle"><strong>Makina Adı:</strong></label><label class="FilterLabelTitleValue">&nbsp;@stationName</label>
@@ -21,7 +23,7 @@
                     <label class="FilterLabelTitle"><strong>Bitiş Tarih:</strong></label><label class="FilterLabelTitleValue">&nbsp;@endDate.ToString("dd/MM/yyyy")</label>
                 </td>
                 <td width="200px">
-                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold" OnClick="@OnBackButtonClicked">Geri</SfButton> <SfSpinner @bind-Visible="VisibleSpinner"> </SfSpinner>
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnBackButtonClicked">Geri</SfButton> <SfSpinner @bind-Visible="VisibleSpinner"> </SfSpinner>
                 </td>
             </tr>
         </table>
@@ -71,7 +73,7 @@
                             <CardFooter>
                             </CardFooter>
                         </SfCard>
-                        <SfCard class="Cards">
+                        <SfCard class="Cards" hidden="@isGridChecked">
 
                             <CardContent>
                                 <SfGrid ID="Grid" DataSource="@datahalt" @ref="HaltGrid" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
@@ -99,8 +101,8 @@
 
                                     </GridAggregates>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(StationDetailedHaltAnalysis.Code) HeaderText="DURUŞ KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(StationDetailedHaltAnalysis.Time) Format="n0" HeaderText="DURUŞ SÜRESİ (SN.)" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(StationDetailedHaltAnalysis.Code) HeaderText="DURUŞ KODU" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(StationDetailedHaltAnalysis.Time) Format="n0" HeaderText="DURUŞ SÜRESİ (SN.)" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
                                         @*<GridColumn Field=@nameof(StationDetailedHaltAnalysis.Total) Format="#######" HeaderText="TOPLAM DURUŞ SÜRESİ (SN.)" TextAlign="TextAlign.Center" Width="120" ></GridColumn>*@
                                     </GridColumns>
                                 </SfGrid>
@@ -147,7 +149,7 @@
                             <CardFooter>
                             </CardFooter>
                         </SfCard>
-                        <SfCard class="Cards">
+                        <SfCard class="Cards" hidden="@isGridChecked">
 
                             <CardContent>
                                 <SfGrid ID="Grid" DataSource="@dataproduct" @ref="ProductGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
@@ -158,14 +160,14 @@
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(StationDetailedProductAnalysis.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(StationDetailedProductAnalysis.ProductGroup) Format="#######" HeaderText="STOK GRUBU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(StationDetailedProductAnalysis.ProductCode) HeaderText="STOK KODU" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(StationDetailedProductAnalysis.ProductGroup) Format="#######" HeaderText="STOK GRUBU" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
                                         @*<GridColumn Field=@nameof(StationDetailedProductAnalysis.PlannedQuantity) Format="#######" HeaderText="PLANLANAN ADET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         <GridColumn Field=@nameof(StationDetailedProductAnalysis.TotalProduction) Format="#######" HeaderText="ÜRETİLEN ADET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         <GridColumn Field=@nameof(StationDetailedProductAnalysis.TotalScrap) Format="#######" HeaderText="HURDA ADET" TextAlign="TextAlign.Center" Width="120"></GridColumn>*@
-                                        <GridColumn Field=@nameof(StationDetailedProductAnalysis.PlannedUnitTime) Format="#######" HeaderText="PLANLANAN BİRİM SÜRE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(StationDetailedProductAnalysis.OccuredUnitTime) Format="#######" HeaderText="GERÇEKLEŞEN BİRİM SÜRE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(StationDetailedProductAnalysis.Performance) Format="#%" HeaderText="PERFORMANS" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(StationDetailedProductAnalysis.PlannedUnitTime) Format="#######" HeaderText="PLANLANAN BİRİM SÜRE" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(StationDetailedProductAnalysis.OccuredUnitTime) Format="#######" HeaderText="GERÇEKLEŞEN BİRİM SÜRE" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(StationDetailedProductAnalysis.Performance) Format="#%" HeaderText="PERFORMANS" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
                                     </GridColumns>
                                 </SfGrid>
                             </CardContent>
@@ -204,7 +206,7 @@
                             <CardFooter>
                             </CardFooter>
                         </SfCard>
-                        <SfCard class="Cards">
+                        <SfCard class="Cards" hidden="@isGridChecked">
 
                             <CardContent>
                                 <SfGrid ID="Grid" DataSource="@dataemployee" @ref="EmployeeGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
@@ -215,11 +217,11 @@
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(StationDetailedEmployeeAnalysis.EmployeeName) HeaderText="PERSONEL ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(StationDetailedEmployeeAnalysis.Availability) Format="p2" HeaderText="KULLANILABİLİRLİK" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(StationDetailedEmployeeAnalysis.Performance) Format="p2" HeaderText="PERFORMANS" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(StationDetailedEmployeeAnalysis.Quality) Format="p2" HeaderText="KALİTE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(StationDetailedEmployeeAnalysis.OEE) Format="p2" HeaderText="OEE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(StationDetailedEmployeeAnalysis.EmployeeName) HeaderText="PERSONEL ADI" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(StationDetailedEmployeeAnalysis.Availability) Format="p2" HeaderText="KULLANILABİLİRLİK" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(StationDetailedEmployeeAnalysis.Performance) Format="p2" HeaderText="PERFORMANS" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(StationDetailedEmployeeAnalysis.Quality) Format="p2" HeaderText="KALİTE" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(StationDetailedEmployeeAnalysis.OEE) Format="p2" HeaderText="OEE" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
                                     </GridColumns>
                                 </SfGrid>
                             </CardContent>

@@ -1,4 +1,5 @@
-﻿<DxGridLayout RowSpacing="@RowSpacing"
+﻿
+<DxGridLayout RowSpacing="@RowSpacing"
               ColumnSpacing="@ColumnSpacing" style="height:auto">
 
     <Rows>
@@ -7,15 +8,15 @@
             {
                 if (RowHeights == null)
                 {
-                        <DxGridLayoutRow Height="@DefaultRowHeights" />
+                    <DxGridLayoutRow Height="@DefaultRowHeights" />
                 }
                 else if (i < RowHeights.Length)
                 {
-                        <DxGridLayoutRow Height="@RowHeights[i]" />
+                    <DxGridLayoutRow Height="@RowHeights[i]" />
                 }
                 else
                 {
-                        <DxGridLayoutRow Height="@DefaultRowHeights" />
+                    <DxGridLayoutRow Height="@DefaultRowHeights" />
                 }
             }
         }
@@ -27,22 +28,22 @@
             {
                 if (ColumnWidths == null)
                 {
-                        <DxGridLayoutColumn Width="*" />
+                    <DxGridLayoutColumn Width="*" />
                 }
                 else if (i < ColumnWidths.Length)
                 {
-                        <DxGridLayoutColumn Width="@ColumnWidths[i]" />
+                    <DxGridLayoutColumn Width="@ColumnWidths[i]" />
                 }
                 else
                 {
-                        <DxGridLayoutColumn Width="@ColumnWidths[^1]" />
+                    <DxGridLayoutColumn Width="@ColumnWidths[^1]" />
                 }
             }
         }
     </Columns>
 
     <Items>
-        @PageLayoutItems
+        @GridLayoutItems
     </Items>
 
 </DxGridLayout>
@@ -71,5 +72,5 @@
     public string[] ColumnWidths { get; set; }
 
     [Parameter,EditorRequired] 
-    public RenderFragment PageLayoutItems { get; set; }
- }
+    public RenderFragment GridLayoutItems { get; set; }
+}

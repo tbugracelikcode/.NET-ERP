@@ -33,6 +33,7 @@ namespace Tsi.Blazor.Component.Core.Components.DataEditors
         [Parameter] public string CaptionCssClass { get; set; } = "caption";
 
         [Parameter] public bool Visible { get; set; } = true;
+        [Parameter] public string InputCssClass { get; set; }
 
 
         [Parameter] public string Placeholder { get; set; }

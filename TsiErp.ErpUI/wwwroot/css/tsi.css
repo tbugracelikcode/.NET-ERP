@@ -1,0 +1,311 @@
+﻿.GridZebra table tbody tr:nth-child(odd) {
+    background-color: #B5B5B5;
+}
+
+.GridZebra table tbody tr:nth-child(n) {
+    text-align: center;
+    font-weight: bold;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 0px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+}
+
+.ulstyle {
+    margin: 0px;
+    padding-left: 20px;
+    display: inline-block;
+}
+
+.e-switch-wrapper .e-switch-on,
+.e-css.e-switch-wrapper .e-switch-on {
+    background-color: #AD0000 !important;
+    color: #fff;
+    border-color: #AD0000 !important;
+}
+
+.cancelimage {
+    background-image: url("../images/Cancel.svg");
+}
+
+.saveimage {
+    background-image: url("../images/Save.svg")
+}
+
+.list {
+    float: left;
+    line-height: 20px;
+    font: 10px;
+    min-width: 280px;
+}
+
+.FilterCard {
+    background-color: #f7f7f7;
+    border: 1px solid #d6d5d5;
+    box-shadow: rgb(0 0 0 / 35%) 0px 3px 10px;
+}
+
+.Cards {
+    border: 1px solid #d6d5d5;
+    background-color: #fff;
+    box-shadow: rgb(0 0 0 / 35%) 0px 3px 10px;
+}
+.TSIGridCards {
+    border: 1px solid #d6d5d5;
+    background-color: #fff;
+    box-shadow: rgb(0 0 0 / 35%) 0px 3px 10px;
+    height: 800px;
+}
+
+.e-checkbox-wrapper.e-customcheck:hover .e-frame.e-check {
+    background-color: #9C0D0D;
+    font: 600;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.FilterLabelTitle {
+    color: black;
+    font-size: 18px;
+}
+
+.FilterLabelTitleValue {
+    font-size: 18px;
+}
+
+.HeaderTitleCss {
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    color: white;
+    background-image: linear-gradient(356deg, rgb(255 19 19) 0%, #ad0303 70%) !important;
+    text-shadow: 1px 3px 4px black !important;
+}
+
+.property-panel-section .property-panel-content td {
+    padding: 0 0 15px 0;
+}
+
+.tile_layout.card-control-section .e-error {
+    height: 100px;
+    width: 100%;
+}
+
+    .tile_layout.card-control-section .e-error .e-error-content {
+        color: red;
+        line-height: 100px;
+        text-align: center;
+    }
+
+.tile_layout.card-control-section .e-card .e-card-image {
+    background-size: cover;
+    height: 157px;
+    position: inherit;
+    width: 182px;
+}
+
+.tile_layout.card-control-section .e-card .e-card-header .e-card-header-caption .e-card-header-title {
+    font-size: 20px;
+    font-family: Helvetica, 'Segoe UI';
+    font-weight: bold;
+}
+
+.tile_layout.card-control-section .e-card .e-card-header .e-card-header-caption .e-card-sub-title {
+    padding-top: 5px;
+}
+
+.tile_layout.card-control-section .e-card .e-card-content {
+    padding-top: 0px;
+    height: 175px;
+}
+
+#source_link {
+    float: right;
+    margin-right: 10px;
+}
+
+.e-tab .e-tab-header .e-toolbar-item .e-tab-text,
+.e-tab .e-tab-header .e-toolbar-item .e-tab-wrap .e-tab-icon {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.e-tab .e-tab-header .e-toolbar-item .e-tab-wrap,
+.e-tab .e-tab-header .e-toolbar-item .e-tab-wrap .e-tab-icon {
+    color: black;
+}
+
+body,
+html {
+    background: #EAEAEA;
+    /* background-image: linear-gradient(360deg, rgb(171 171 171) 0%, #E0DBDB 70%) !important;*/
+}
+
+.PopUpCss {
+    background-image: linear-gradient(356deg, rgb(255 19 19) 0%, #ad0303 70%) !important;
+}
+
+.CardsLogin {
+    background-image: linear-gradient(356deg, rgb(255 19 19) 0%, #ad0303 70%) !important;
+    width: 600px;
+    height: 300px;
+    border: 7px solid #ad0303;
+}
+
+.user_card {
+    height: 440px;
+    width: 400px;
+    margin-top: auto;
+    margin-bottom: auto;
+    /*background: #C30000;*/
+    background-image: linear-gradient(356deg, rgb(255 19 19) 0%, #ad0303 70%) !important;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    /*box-shadow: 0 7px 18px 0 rgb(255 255 255 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%) !important;*/
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+}
+
+.brand_logo_container {
+    position: absolute;
+    height: 170px;
+    width: 170px;
+    top: -75px;
+    border-radius: 50%;
+    background-image: linear-gradient(350deg, rgb(129 129 129) -333%, #282b2c 70%) !important;
+    padding: 10px;
+    text-align: center;
+}
+
+.brand_logo {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.form_container {
+    margin-top: 100px;
+}
+
+.login_btn {
+    width: 100%;
+    background: #1E1E1E !important;
+    color: white !important;
+    font-size: 1.2rem !important;
+}
+
+    .login_btn:focus {
+        box-shadow: none !important;
+        outline: 0px !important;
+    }
+
+.login_container {
+    padding: 0 2rem;
+}
+
+.input-group-text {
+    background: #1E1E1E !important;
+    color: white !important;
+    border: 0 !important;
+    border-radius: 0.25rem 0 0 0.25rem !important;
+}
+.e-grid .e-headercelldiv{
+    font-size:12px !important;
+}
+
+.input_user,
+.input_pass:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #c0392b !important;
+    font-size: 14px !important;
+    font-weight: bold;
+}
+
+.TSITxtBox {
+    min-height: 30px !important;
+}
+
+.TSIMemoBox {
+    min-height: 160px !important;
+}
+
+.TSISaveButton {
+    border-color: #565656 !important;
+    background-color: white !important;
+    color: #878787 !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    width: 100px;
+}
+
+.TSICancelButton {
+    border-color: #565656 !important;
+    background-color: white !important;
+    color: #AD0000 !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    width: 100px;
+}
+
+.TSIGeneralBTNRed {
+    background-color: #AD0000 !important;
+    text-shadow: 1px 3px 4px black !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    width: 100px;
+}
+.TSIGeneralBTNGray {
+    background-color: #474747 !important;
+    text-shadow: 6px 3px 4px black !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    width: 100px;
+}
+
+.TSIListPageTitleCard {
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+    background-image: linear-gradient(356deg, rgb(255 19 19) 0%, #ad0303 70%) !important;
+    text-shadow: 1px 3px 4px black !important;
+    box-shadow: rgb(0 0 0 / 60%) 0px 3px 10px;
+    height: 40px;
+
+}
+.TSIModalLabel {
+    color: black;
+    font-size: 14px;
+}
+.TSIConfirmModalFooter{
+    text-align:end;
+    padding-right: 20px;
+}
+.TSIModalLocation {
+    margin-top: 15% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+
+.button-edit {
+    background-image: url("../images/buttonedit.svg") !important;
+    width: 10px !important;
+    height: 10px !important;
+}

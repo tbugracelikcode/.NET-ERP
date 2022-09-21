@@ -8,24 +8,24 @@ using Microsoft.AspNetCore.Localization;
  using Newtonsoft.Json.Serialization;
 using TsiErp.DashboardUI.Data;
 using TsiErp.DashboardUI.Services;
+using TsiErp.DashboardUI.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<IstasyonOEEService>();
-builder.Services.AddScoped<PersonelService>();
-builder.Services.AddScoped<PersonelDetayService>();
-builder.Services.AddScoped<StokDetayService>();
-builder.Services.AddScoped<StokService>();
-builder.Services.AddScoped<IstasyonService>();
-builder.Services.AddScoped<IstasyonDetayService>();
-builder.Services.AddScoped<UretimUygunsuzlukService>();
-builder.Services.AddScoped<UretimUygunsuzlukDetayService>();
-builder.Services.AddScoped<FasonUygunsuzlukService>();
-builder.Services.AddScoped<FasonUygunsuzlukDetayService>();
-builder.Services.AddScoped<TedarikciUygunsuzlukService>();
-builder.Services.AddScoped<TedarikciUygunsuzlukDetayService>();
-builder.Services.AddScoped<GenelOEEService>();
-builder.Services.AddScoped<GenelOEEDetayService>();
+builder.Services.AddScoped<IIstasyonOEEService,IstasyonOEEService>();
+builder.Services.AddScoped< IPersonelService, PersonelService >();
+builder.Services.AddScoped<IPersonelDetayService, PersonelDetayService>();
+builder.Services.AddScoped<IStokDetayService, StokDetayService>();
+builder.Services.AddScoped<IStokService, StokService>();
+builder.Services.AddScoped<IIstasyonService, IstasyonService>();
+builder.Services.AddScoped<IIstasyonDetayService, IstasyonDetayService>();
+builder.Services.AddScoped<IUretimUygunsuzlukService, UretimUygunsuzlukService>();
+builder.Services.AddScoped<IUretimUygunsuzlukDetayService,UretimUygunsuzlukDetayService>();
+builder.Services.AddScoped<IFasonUygunsuzlukService, FasonUygunsuzlukService>();
+builder.Services.AddScoped<IFasonUygunsuzlukDetayService, FasonUygunsuzlukDetayService>();
+builder.Services.AddScoped<ITedarikciUygunsuzlukService, TedarikciUygunsuzlukService>();
+builder.Services.AddScoped<ITedarikciUygunsuzlukDetayService, TedarikciUygunsuzlukDetayService>();
+builder.Services.AddScoped<IGenelOEEService, GenelOEEService>();
 
 // Add services to the container.
 builder.Services.AddSyncfusionBlazor();

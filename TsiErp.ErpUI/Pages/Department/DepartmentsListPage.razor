@@ -1,0 +1,115 @@
+﻿@page "/departments"
+@using Syncfusion.Blazor.Buttons
+@using Tsi.Blazor.Component.Core.Components.Commons.Loadings
+@using TsiErp.Business.Entities.Department.Services
+@using TsiErp.Entities.Entities.Department
+@using TsiErp.Entities.Entities.Department.Dtos
+@using TsiErp.ErpUI.Pages.Base
+@using Tsi.Blazor.Component.Core.Components.Layouts
+
+@inherits BaseListPage<SelectDepartmentsDto, ListDepartmentsDto, CreateDepartmentsDto, UpdateDepartmentsDto, ListDepartmentsParameterDto>
+
+
+@inject IDepartmentsAppService DepartmentsService
+
+@{if (!base.IsLoaded)
+{
+    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+}
+else
+{
+    <DevGridLayout ColumnCount="1" RowCount="3">
+            <GridLayoutItems>
+                <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+                    <Template>
+                        <SfCard class="TSIListPageTitleCard">
+                            <CardContent>
+                                <TsiBreadCrumb PreviousMenus="Kaynak Yönetimi > Ana Kayıtlar" CurrentMenu="Departmanlar" />
+                            </CardContent>
+                            <CardFooter>
+                            </CardFooter>
+                        </SfCard>
+                    </Template>
+                </DxGridLayoutItem>
+                <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+                    <Template>
+                        <SfCard class="TSIGridCards">
+                            <CardContent>
+                                <SfGrid ID="Grid" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                    <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                     <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListDepartmentsDto"></GridEvents>
+                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                    <GridPageSettings PageSizes="true"></GridPageSettings>
+                                    <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                    <GridColumns>
+                                        <GridColumn Field=@nameof(ListDepartmentsDto.Code) HeaderText="DEPARTMAN KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListDepartmentsDto.Name) HeaderText="DEPARTMAN ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    </GridColumns>
+                                </SfGrid>
+                            </CardContent>
+                            <CardFooter>
+                            </CardFooter>
+                        </SfCard>
+                    </Template>
+                </DxGridLayoutItem>
+            </GridLayoutItems>
+    </DevGridLayout>
+
+    <DxPopup @bind-Visible="base.EditPageVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Departmanlar"
+         Width="760px"
+         Height="260px"
+         HeaderCssClass="HeaderTitleCss">
+            <BodyTemplate>
+
+                <DxGridLayout>
+                    <Rows>
+                        <DxGridLayoutRow Height="100px" />
+                        <DxGridLayoutRow Height="50px" />
+                    </Rows>
+                    <Columns>
+                        <DxGridLayoutColumn Width="40px" />
+                        <DxGridLayoutColumn Width="300px" />
+                        <DxGridLayoutColumn Width="40px" />
+                        <DxGridLayoutColumn Width="300px" />
+                        <DxGridLayoutColumn Width="40px" />
+                    </Columns>
+                    <Items>
+                        <DxGridLayoutItem Row="0" Column="1">
+                            <Template>
+                                <br />
+                                <label class="TSIModalLabel"><strong>Departman Kodu: </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Departman Kodunu Yazınız."></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="0" Column="3">
+                            <Template>
+                                <br />
+                                <label class="TSIModalLabel"><strong>Departman Adı: </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="Departman Adını Yazınız."></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="1" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
+                                <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                    </Items>
+                </DxGridLayout>
+            </BodyTemplate>
+            <FooterContentTemplate>
+                <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+            </FooterContentTemplate>
+    </DxPopup>
+
+}
+}
+

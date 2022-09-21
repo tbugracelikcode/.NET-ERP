@@ -6680,8 +6680,8 @@ body:not(.modal-open) .dxbs-dropdown-modal .modal-dialog {
 }
 
     .dxbs-tree .expand-btn.btn, .dxbs-tree .expand-btn.btn > span {
-        min-height: .7em;
-        min-width: .7em
+        min-height: .7em ;
+        min-width: .7em 
     }
 
         .dxbs-tree .expand-btn.btn, .dxbs-tree .expand-btn.btn:hover, .dxbs-tree .expand-btn.btn:focus, .dxbs-tree .expand-btn.btn:active {
@@ -9023,7 +9023,8 @@ button.dxbs-edit-btn.dxbs-clear-btn {
         width: 100%;
         height: 100%;
         display: grid;
-        display: -ms-grid
+        display: -ms-grid;
+        grid-row-gap: 0px !important;
     }
 
 .dx-stacklayout > .dx-stacklayout-root {
@@ -9032,7 +9033,7 @@ button.dxbs-edit-btn.dxbs-clear-btn {
     width: 100%;
     height: 100%;
     display: grid;
-    display: -ms-grid
+    display: -ms-grid;
 }
 
 .dxbs-menu .dx-menu-item > a:not(disabled):hover:before, .dxbs-menu .dx-menu-item > a:not(disabled):focus:before, .dxbs-menu .dx-menu-item > a:not(disabled):hover.selected:not(.mute-selection):before, .dxbs-menu .dx-menu-item > a:not(disabled):active:before, .dxbs-menu .dx-menu-item > a:not(disabled):active.selected:not(.mute-selection):before, .dxbs-menu .dx-menu-item > a:not(disabled).selected:not(.mute-selection):before, .dxbs-menu div.nav .dx-nav-menu-bar > a.nav-link:hover:before, .dxbs-menu div.nav .dx-nav-menu-bar > a.nav-link:focus:before, .dxbs-menu div.nav .dx-nav-menu-bar > a.nav-link:hover.selected:before, .dxbs-menu div.nav .dx-nav-menu-bar > a.nav-link:active:before, .dxbs-menu div.nav .dx-nav-menu-bar > a.nav-link:active.selected:before, .dxbs-menu div.nav .dx-nav-menu-bar > a.nav-link.selected:before, .dxbs-menu .dx-menu-title.nav-link:hover:before, .dxbs-menu .dx-menu-title.nav-link:active:before, .dxbs-calendar.card .btn.dx-calendar-header-btn:hover:before, .dxbs-calendar.card .btn.dx-calendar-header-btn:focus:before, .btn.dx-btn.dxbs-tag-remove-btn:hover:before, .btn.dx-btn.dxbs-tag-remove-btn:focus:before, .btn.dxbs-cmd-btn:hover:before, .btn.dxbs-cmd-btn:focus:before, .dxbs-tree ul.nav > li > a:not(.disabled):not(.active):hover:before, .dxbs-listbox .list-group-item-action:not(.disabled):not(.dxbs-listbox-active):not(.active):hover:before, .dx-r-toolbar.dxbs-toolbar.dxbs-ta-nib .dx-toolbar-edit .dxbs-combobox:not(.dx-blazor-disabled-editor) .input-group:hover:before, .dx-r-toolbar.dxbs-toolbar.dxbs-ta-nib .dx-toolbar-edit .dxbs-combobox.show .input-group:before, .dx-r-toolbar.dxbs-toolbar.dxbs-ta-nib .dx-toolbar-edit .dxbs-combobox:not(.dx-blazor-disabled-editor):active .input-group:before, .dxbs-toolbar.dxbs-ta-nib.dx-r-toolbar > .btn-toolbar > .btn-group .dxbs-toolbar-btn.btn:hover:not(:disabled):not(.active):not(:active):before, .dxbs-toolbar.dxbs-ta-nib.dx-r-toolbar > .btn-toolbar > .btn-group .dxbs-toolbar-btn > .btn:hover:not(:disabled):not(.active):not(:active):before, .dxbs-toolbar.dxbs-ta-nib.dx-r-toolbar .dxbs-ta-ag > .btn:hover:not(:disabled):not(.active):not(:active):before, .dxbs-toolbar .dxbs-toolbar-dropdown-item > .dropdown-item:not(:disabled):hover:not(:disabled):not(.active):not(:active):before, .dxbs-toolbar.dxbs-ta-nib.dx-r-toolbar > .btn-toolbar > .btn-group .dxbs-toolbar-btn.btn:active:not(:disabled):before, .dxbs-toolbar.dxbs-ta-nib.dx-r-toolbar > .btn-toolbar > .btn-group .dxbs-toolbar-btn > .btn:active:not(:disabled):before, .dxbs-toolbar.dxbs-ta-nib.dx-r-toolbar .dxbs-ta-ag > .btn:active:not(:disabled):before, .dxbs-toolbar .dxbs-toolbar-dropdown-item > .dropdown-item:not(:disabled):active:not(:disabled):before, .dxbs-toolbar.dxbs-ta-nib.dx-r-toolbar > .btn-toolbar > .btn-group .dxbs-toolbar-btn.btn.active:before, .dxbs-toolbar.dxbs-ta-nib.dx-r-toolbar > .btn-toolbar > .btn-group .dxbs-toolbar-btn > .btn.active:before, .dxbs-toolbar.dxbs-ta-nib.dx-r-toolbar .dxbs-ta-ag > .btn.active:before, .dxbs-toolbar .dxbs-toolbar-dropdown-item > .dropdown-item:not(:disabled).active:before, .dxbs-toolbar.dx-r-toolbar .btn-group.dx-toolbar-split-btn:not(.disabled):hover > button.dx-toolbar-split-subbtn:not(.active):not(:active):before, .dxbs-toolbar.dx-r-toolbar .btn-group.dx-toolbar-split-btn:not(.disabled):hover > a.dx-toolbar-split-subbtn:not(.active):not(:active):before, .dxbs-toolbar .dxbs-tb-dropdown-item-list > .dxbs-toolbar-dropdown-item.dx-toolbar-split-btn:not(.disabled):hover > button.dx-toolbar-split-subbtn:not(.active):not(:active):before, .dxbs-toolbar .dxbs-tb-dropdown-item-list > .dxbs-toolbar-dropdown-item.dx-toolbar-split-btn:not(.disabled):hover > a.dx-toolbar-split-subbtn:not(.active):not(:active):before {
@@ -9677,7 +9678,6 @@ html.dxTouchUI .dxbs-tabs-scrollable.has-overflow .nav {
 .dx-image.dx-image-rotate-270 {
     transform: rotate(270deg)
 }
-
 .dx-image.dx-image-size-07em {
     width: .7em;
     height: .7em

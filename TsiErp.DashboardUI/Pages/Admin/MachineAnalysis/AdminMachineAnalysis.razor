@@ -1,7 +1,7 @@
 ﻿@page "/admin/machine-analysis"
 @layout AdminLayout
 
-@inject IstasyonOEEService IstasyonOEEService
+@inject IIstasyonOEEService IstasyonOEEService
 @inject NavigationManager NavigationManager
 
 
@@ -34,10 +34,8 @@
                 </td>
                 <td width="50px" align="right">
                     <br />
-                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
-                   
-                    <SfSpinner @bind-Visible="VisibleSpinner">
-                    </SfSpinner>
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
+                    <SfSpinner @bind-Visible="VisibleSpinner"></SfSpinner> 
                 </td>
                 <td width="50px">
                 </td>
@@ -92,17 +90,17 @@
             <GridPageSettings PageSizes="true"></GridPageSettings>
             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
             <GridColumns>
-                <GridColumn Field=@nameof(StationOEEAnalysis.Code) HeaderText="MAKİNA KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(StationOEEAnalysis.Department) HeaderText="DEPARTMAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(StationOEEAnalysis.Availability) Format="#%" HeaderText="KULLANILABİLİRLİK" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(StationOEEAnalysis.Performance) Format="#%" HeaderText="PERFORMANS" TextAlign="TextAlign.Center" Width="130"></GridColumn>
-                <GridColumn Field=@nameof(StationOEEAnalysis.Quality) HeaderText="KALİTE" Format="#%" TextAlign="TextAlign.Center" Width="130"></GridColumn>
-                <GridColumn Field=@nameof(StationOEEAnalysis.OEE) HeaderText="OEE" Format="p2" TextAlign="TextAlign.Center" Width="130"></GridColumn>
-                <GridColumn Field=@nameof(StationOEEAnalysis.Code) HeaderText="DETAYLAR" TextAlign="TextAlign.Center" Width="80">
+                <GridColumn Field=@nameof(StationOEEAnalysis.Code) HeaderText="MAKİNA KODU" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.Department) HeaderText="DEPARTMAN" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.Availability) Format="#%" HeaderText="KULLANILABİLİRLİK" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.Performance) Format="#%" HeaderText="PERFORMANS" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.Quality) HeaderText="KALİTE" Format="#%" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.OEE) HeaderText="OEE" Format="p2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(StationOEEAnalysis.Code) HeaderText="DETAYLAR" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="80">
                     <Template>
                         @{
                             var row = (context as StationOEEAnalysis);
-                            <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" style="background-color:#AD0000;" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.StationID))"></SfButton>
+                            <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" style="background-color:#AD0000;text-shadow: 6px 3px 4px black;" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.StationID))"></SfButton>
                         }
 
                     </Template>
@@ -115,9 +113,24 @@
     </CardFooter>
 </SfCard>
 
+@*
+<DxPopup Visible="@VisibleSpinner"
+         ShowFooter="false"
+         ShowHeader="false"
+         Width="400px"
+         Height="250px">
+    <BodyTemplate>
+         
+               
+        <SfCard >
+            <CardContent>
+                 
+            </CardContent>
+        </SfCard>
+    </BodyTemplate>
+    <FooterContentTemplate>
+      
+    </FooterContentTemplate>
+</DxPopup>*@
 
 
-
-@code {
-   
-}

@@ -11,7 +11,7 @@ using TsiErp.Entities.Entities.Employee.Dtos;
 
 namespace TsiErp.Business.Entities.Employee.Services
 {
-    public interface IEmployeesAppService : ICrudAppService<Employees, SelectEmployeesDto, ListEmployeesDto, CreateEmployeesDto, UpdateEmployeesDto, ListEmployeesParameterDto>
+    public interface IEmployeesAppService : ICrudAppService<SelectEmployeesDto, ListEmployeesDto, CreateEmployeesDto, UpdateEmployeesDto, ListEmployeesParameterDto>
     {
     }
 }

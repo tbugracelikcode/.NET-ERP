@@ -3,21 +3,17 @@ using System.Globalization;
 using TsiErp.DashboardUI.Helpers;
 using TsiErp.DashboardUI.Helpers.HelperModels;
 using TsiErp.DashboardUI.Models;
+using TsiErp.DashboardUI.Services.Interfaces;
 
 namespace TsiErp.DashboardUI.Services
 {
-    public class GenelOEEService
+    public class GenelOEEService : IGenelOEEService
     {
-        SqlConnection _connection;
-
-        public GenelOEEService()
-        {
-            _connection = DBHelper.GetSqlConnection();
-        }
+        
 
         #region Chart
 
-        public List<AdminMachineChart> GetAdminMachineChart(DateTime startDate, DateTime endDate)
+        public async Task< List<AdminMachineChart>> GetAdminMachineChart(DateTime startDate, DateTime endDate)
         {
             List<AdminMachineChart> adminMachineChart = new List<AdminMachineChart>();
 
@@ -41,7 +37,7 @@ namespace TsiErp.DashboardUI.Services
             }).ToList();
             adminMachineChart = gList;
 
-            return adminMachineChart;
+            return await Task.FromResult(adminMachineChart);
 
         }
 
@@ -49,7 +45,7 @@ namespace TsiErp.DashboardUI.Services
 
         #region Grid
 
-        public List<StationOEEAnalysis> GetStationOEEAnalysis(DateTime startDate, DateTime endDate)
+        public async Task< List<StationOEEAnalysis>> GetStationOEEAnalysis(DateTime startDate, DateTime endDate)
         {
 
             List<StationOEEAnalysis> stationOEEAnalysis = new List<StationOEEAnalysis>();
@@ -90,7 +86,7 @@ namespace TsiErp.DashboardUI.Services
                     stationOEEAnalysis.Add(analysis);
                 }
             }
-            return stationOEEAnalysis;
+            return await Task.FromResult(stationOEEAnalysis);
         }
 
         #endregion

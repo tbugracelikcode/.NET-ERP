@@ -27,70 +27,52 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
 
         #endregion
 
-        protected override void OnInitialized()
+        protected async override void OnInitialized()
         {
-            dataoee = IstasyonOEEService.GetStationOEEAnalysis(startDate, endDate);
-            datachart = IstasyonOEEService.GetAdminMachineChart(startDate, endDate, 3);
+            dataoee = await IstasyonOEEService.GetStationOEEAnalysis(startDate, endDate);
+            datachart =await IstasyonOEEService.GetAdminMachineChart(startDate,endDate,3);
         }
 
         #region Component Metotları
 
-        private void OnDateButtonClicked()
+        private async void OnDateButtonClicked()
         {
-            this.VisibleSpinner = true;
+            VisibleSpinner = true;
+            await Task.Delay(100);
+            StateHasChanged();
+            
+
             endDate = DateTime.Today;
 
             #region Zaman Seçimi
-
-            if (selectedTimeIndex == 0)
+            switch (selectedTimeIndex)
             {
-                startDate = DateTime.Today.AddDays(-330);
-                frequencyChart = 0;
-            }
-            else if (selectedTimeIndex == 1)
-            {
-                startDate = DateTime.Today.AddDays(-273);
-                frequencyChart = 1;
-            }
-            else if (selectedTimeIndex == 2)
-            {
-                startDate = DateTime.Today.AddDays(-181);
-                frequencyChart = 2;
-            }
-            else if (selectedTimeIndex == 3)
-            {
-                startDate = DateTime.Today.AddDays(-90);
-                frequencyChart = 3;
-            }
-            else if (selectedTimeIndex == 4)
-            {
-                startDate = DateTime.Today.AddDays(-60);
-                frequencyChart = 4;
-            }
-            else if (selectedTimeIndex == 5)
-            {
-                startDate = DateTime.Today.AddDays(-30);
-                frequencyChart = 5;
-            }
-            else if (selectedTimeIndex == 6)
-            {
-                startDate = DateTime.Today.AddDays(-7);
-                frequencyChart = 6;
+                case 0: startDate = DateTime.Today.AddDays(-365); frequencyChart =0; break;
+                case 1: startDate = DateTime.Today.AddDays(-273); frequencyChart = 1; break;
+                case 2: startDate = DateTime.Today.AddDays(-181); frequencyChart = 2; break;
+                case 3: startDate = DateTime.Today.AddDays(-90); frequencyChart = 3; break;
+                case 4: startDate = DateTime.Today.AddDays(-60); frequencyChart = 4; break;
+                case 5: startDate = DateTime.Today.AddDays(-30); frequencyChart = 5; break;
+                case 6: startDate = DateTime.Today.AddDays(-7); frequencyChart = 6; break;
+                default: break;
             }
 
             #endregion
 
             thresholddouble = Convert.ToDouble(threshold) / 100;
-            Grid.Refresh();
-            ChartInstance.RefreshAsync();
-            dataoee = IstasyonOEEService.GetStationOEEAnalysis(startDate, endDate);
-            datachart = IstasyonOEEService.GetAdminMachineChart(startDate, endDate, frequencyChart);
-            this.VisibleSpinner = false;
+
+            datachart =await IstasyonOEEService.GetAdminMachineChart(startDate,endDate, frequencyChart);
+            dataoee = await IstasyonOEEService.GetStationOEEAnalysis(startDate, endDate);
+
+            await ChartInstance.RefreshAsync();
+            VisibleSpinner = false;
             StateHasChanged();
         }
 
         private void OnDetailButtonClicked(int stationID)
         {
+            VisibleSpinner = true;
+
             NavigationManager.NavigateTo("/admin/machine-analysis/details" + "/" + stationID.ToString() + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd")); ;
         }
 
@@ -101,16 +83,15 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
             else { dataLabels = false; }
         }
 
-        private void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+        private async void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
         {
+            
             bool argsValue = Convert.ToBoolean(args.Value);
             isGridChecked = argsValue;
-
             StateHasChanged();
         }
 
         #endregion
-
 
         public void CellInfoHandler(QueryCellInfoEventArgs<StationOEEAnalysis> Args)
         {

@@ -1,0 +1,163 @@
+﻿@page "/calibration-verifications"
+@using Syncfusion.Blazor.Buttons
+@using Tsi.Blazor.Component.Core.Components.Commons.Loadings
+@using TsiErp.Business.Entities.CalibrationVerification.Services
+@using TsiErp.Entities.Entities.CalibrationVerification
+@using TsiErp.Entities.Entities.CalibrationVerification.Dtos
+@using TsiErp.ErpUI.Pages.Base
+@using Tsi.Blazor.Component.Core.Components.Layouts
+
+@inherits BaseListPage<SelectCalibrationVerificationsDto, ListCalibrationVerificationsDto, CreateCalibrationVerificationsDto, UpdateCalibrationVerificationsDto, ListCalibrationVerificationsParameterDto>
+
+
+@inject ICalibrationVerificationsAppService CalibrationVerificationsService
+
+@{if (!base.IsLoaded)
+{
+    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+}
+else
+{
+    <DevGridLayout ColumnCount="1" RowCount="3">
+            <GridLayoutItems>
+                <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+                    <Template>
+                        <SfCard class="TSIListPageTitleCard">
+                            <CardContent>
+                                <TsiBreadCrumb PreviousMenus="GKalite Kontrol > İşlemler > Ekipman İşlemleri" CurrentMenu="Kalibrasyon Doğrulama Kayıtları" />
+                            </CardContent>
+                            <CardFooter>
+                            </CardFooter>
+                        </SfCard>
+                    </Template>
+                </DxGridLayoutItem>
+                <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+                    <Template>
+                        <SfCard class="TSIGridCards">
+                            <CardContent>
+                                <SfGrid ID="Grid" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                                AllowSorting="true"  ContextMenuItems="@GridContextMenu" Height="100%" Width="100%" class="GridZebra">
+                                    <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                      <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListCalibrationVerificationsDto"></GridEvents>
+                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                    <GridPageSettings PageSizes="true"></GridPageSettings>
+                                    <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                    <GridColumns>
+                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Code) HeaderText="KALİBRASYON DOĞRULAMA KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Name) HeaderText="KALİBRASYON DOĞRULAMA AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.ReceiptNo) HeaderText="FİŞ NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Equipment) HeaderText="EKİPMAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Date) HeaderText="TARİH" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.NextControl) HeaderText="SONRAKİ KONTROL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.InfinitiveCertificateNo) HeaderText="MASTAR SERTİFİKA NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Result) HeaderText="SONUÇ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    </GridColumns>
+                                </SfGrid>
+                            </CardContent>
+                            <CardFooter>
+                            </CardFooter>
+                        </SfCard>
+                    </Template>
+                </DxGridLayoutItem>
+            </GridLayoutItems>
+    </DevGridLayout>
+
+    <DxPopup  @bind-Visible="base.EditPageVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Kalibrasyon Doğrulama Kayıtları"
+         Width="1160px"
+         Height="410px"
+         HeaderCssClass="HeaderTitleCss">
+            <BodyTemplate>
+
+                <DxGridLayout>
+                    <Rows>
+                         <DxGridLayoutRow Height="100px" />
+                        <DxGridLayoutRow Height="1px" />
+                        <DxGridLayoutRow Height="80px" />
+                        <DxGridLayoutRow Height="1px" />
+                        <DxGridLayoutRow Height="70px" />
+                    </Rows>
+                    <Columns>
+                        <DxGridLayoutColumn Width="40px" />
+                        <DxGridLayoutColumn Width="300px" />
+                        <DxGridLayoutColumn Width="40px" />
+                        <DxGridLayoutColumn Width="380px" />
+                        <DxGridLayoutColumn Width="40px" />
+                        <DxGridLayoutColumn Width="300px" />
+                        <DxGridLayoutColumn Width="40px" />
+                    </Columns>
+                    <Items>
+                        <DxGridLayoutItem Row="0" Column="1">
+                            <Template>
+                                <br />
+                                <label class="TSIModalLabel"><strong>Kalibrasyon Doğrulama Kodu: </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Kalibrasyon Takip Kodunu Yazınız."></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="0" Column="3">
+                            <Template>
+                                <br />
+                                <label class="TSIModalLabel"><strong>Kalibrasyon Doğrulama Açıklaması: </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="Kalibrasyon Takip Açıklamasını Yazınız."></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="0" Column="5">
+                            <Template>
+                                <br />
+                                <label class="TSIModalLabel"><strong>Fiş No: </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.ReceiptNo" Placeholder="Fiş Numarasını Yazınız."></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="2" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>Mastar Sertifika No: </strong></label><br />
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.InfinitiveCertificateNo" Placeholder="Mastar Sertifika Numarasını Yazınız."></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="2" Column="3">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>Ekipman: </strong></label><br />
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Equipment" Placeholder="Ekipmanı Yazınız."></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="2" Column="5">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>Tarih: </strong></label><br />
+                                <SfDatePicker @bind-Value="DataSource.Date"></SfDatePicker>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="4" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>Bir Sonraki Kontrol: </strong></label>
+                                <SfDatePicker @bind-Value="DataSource.NextControl"></SfDatePicker>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="4" Column="3">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>Sonuç: </strong></label><br />
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Result" Placeholder="Sonucu Yazınız."></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="4" Column="5">
+                            <Template>
+
+                            </Template>
+                        </DxGridLayoutItem>
+
+                    </Items>
+                </DxGridLayout>
+            </BodyTemplate>
+            <FooterContentTemplate>
+                <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+            </FooterContentTemplate>
+    </DxPopup>
+}
+}
+
+
+

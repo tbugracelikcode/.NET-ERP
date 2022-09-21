@@ -6,9 +6,8 @@ namespace TsiErp.DashboardUI.Pages.Admin.SupplierUnsuitabilityAnalysis
 {
     public partial class AdminSupplierUnsuitabilityAnalysis
     {
-        List<TsiErp.DashboardUI.Models.SupplierUnsuitabilityAnalysis> datasuppunsuitability = new List<TsiErp.DashboardUI.Models.SupplierUnsuitabilityAnalysis>();
-        List<TsiErp.DashboardUI.Models.AdminSupplierUnsuitabilityAnalysisChart> datachart = new List<TsiErp.DashboardUI.Models.AdminSupplierUnsuitabilityAnalysisChart>();
-        SfGrid<TsiErp.DashboardUI.Models.SupplierUnsuitabilityAnalysis> Grid;
+        List<Models.SupplierUnsuitabilityAnalysis> datasuppunsuitability = new List<Models.SupplierUnsuitabilityAnalysis>();
+        SfGrid<Models.SupplierUnsuitabilityAnalysis> Grid;
 
         #region Değişkenler
 
@@ -16,88 +15,84 @@ namespace TsiErp.DashboardUI.Pages.Admin.SupplierUnsuitabilityAnalysis
         DateTime endDate = DateTime.Today;
         private int? selectedTimeIndex { get; set; }
         int? selectedactionID = 1;
+        private bool isGridChecked = true;
         string chartTitle = "Tedarikçi ile İrtibat Sayısı Grafiği";
         SfChart ChartInstance;
         bool VisibleSpinner = false;
 
         #endregion
 
-        protected override void OnInitialized()
+        protected override async void OnInitialized()
         {
-            datasuppunsuitability = TedarikciUygunsuzlukService.GetSupplierUnsuitabilityAnalysis(startDate, endDate);
+            
+
+            datasuppunsuitability = await TedarikciUygunsuzlukService.GetSupplierUnsuitabilityAnalysis(startDate, endDate);
+
         }
 
 
         #region Component Metotları
 
-        private void OnDateButtonClicked()
+        private async void OnDateButtonClicked()
         {
+
+            VisibleSpinner = true;
+            await Task.Delay(1);
+            StateHasChanged();
+
             endDate = DateTime.Today;
 
             #region Zaman Seçimi
 
-            if (selectedTimeIndex == 0)
+            switch (selectedTimeIndex)
             {
-                startDate = DateTime.Today.AddDays(-365);
-            }
-            else if (selectedTimeIndex == 1)
-            {
-                startDate = DateTime.Today.AddDays(-273);
-            }
-            else if (selectedTimeIndex == 2)
-            {
-                startDate = DateTime.Today.AddDays(-181);
-            }
-            else if (selectedTimeIndex == 3)
-            {
-                startDate = DateTime.Today.AddDays(-90);
-            }
-            else if (selectedTimeIndex == 4)
-            {
-                startDate = DateTime.Today.AddDays(-60);
-            }
-            else if (selectedTimeIndex == 5)
-            {
-                startDate = DateTime.Today.AddDays(-30);
-            }
-            else if (selectedTimeIndex == 6)
-            {
-                startDate = DateTime.Today.AddDays(-7);
+                case 0: startDate = DateTime.Today.AddDays(-365); ; break;
+                case 1: startDate = DateTime.Today.AddDays(-273); ; break;
+                case 2: startDate = DateTime.Today.AddDays(-181); ; break;
+                case 3: startDate = DateTime.Today.AddDays(-90); ; break;
+                case 4: startDate = DateTime.Today.AddDays(-60); ; break;
+                case 5: startDate = DateTime.Today.AddDays(-30); ; break;
+                case 6: startDate = DateTime.Today.AddDays(-7); ; break;
+                default: break;
             }
 
             #endregion
 
             #region Aksiyon Seçimi
-            if (selectedactionID == 1)
+
+            switch (selectedactionID)
             {
-                chartTitle = "Tedarikçi ile İrtibat Sayısı Grafiği";
+                case 1: chartTitle = "Tedarikçi ile İrtibat Sayısı Grafiği"; break;
+                case 2: chartTitle = "Düzeltme Grafiği"; break;
+                case 3: chartTitle = "Olduğu Gibi Kullanılacak Grafiği"; break;
+                case 4: chartTitle = "Red Grafiği"; break;
+                case 5: chartTitle = "Toplu Uygunsuzluk Grafiği"; break;
             }
-            else if (selectedactionID == 2)
-            {
-                chartTitle = "Düzeltme Grafiği";
-            }
-            else if (selectedactionID == 3)
-            {
-                chartTitle = "Olduğu Gibi Kullanılacak Grafiği";
-            }
-            else if (selectedactionID == 4)
-            {
-                chartTitle = "Red Grafiği";
-            }
-            else if (selectedactionID == 5)
-            {
-                chartTitle = "Toplu Uygunsuzluk Grafiği";
-            }
+
             #endregion
 
-            Grid.Refresh();
-            ChartInstance.RefreshAsync();
-            datasuppunsuitability = TedarikciUygunsuzlukService.GetSupplierUnsuitabilityAnalysis(startDate, endDate);
+            datasuppunsuitability = await TedarikciUygunsuzlukService.GetSupplierUnsuitabilityAnalysis(startDate, endDate);
+
+
+            VisibleSpinner = false;
+            StateHasChanged();
+            await Grid.Refresh();
+            await ChartInstance.RefreshAsync();
+        }
+
+
+        private void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+        {
+            bool argsValue = Convert.ToBoolean(args.Value);
+            isGridChecked = argsValue;
+
             StateHasChanged();
         }
 
         //private void OnDetailButtonClicked(int errorID, int totalOrder)
         //{
+        //    VisibleSpinner = true;
+
         //    NavigationManager.NavigateTo("/admin/supplier-unsuitability-analysis/details" + "/" + errorID.ToString() + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd") + "/" + totalOrder.ToString());
         //}
 

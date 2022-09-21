@@ -1,0 +1,40 @@
+﻿@inherits BaseModalComponent
+
+<div class="separatorConfirm"></div>
+<div class="card-body">
+    <p>@Message</p>
+</div>
+<br />
+
+<div class="row justify-content-center">
+
+    <div class="TSIConfirmModalFooter">
+        <SfButton CssClass="TSISaveButton" @onclick="@ConfirmClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Check"></SfIcon>&nbsp;@YesText</SfButton>&nbsp;
+        <SfButton CssClass="TSICancelButton" @onclick="@CancelClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Close"></SfIcon>&nbsp;@CancelText</SfButton>
+        @*<button class="btn btn-danger" @onclick="@ConfirmClicked">@YesText</button>
+        <button class="btn btn-light" @onclick="@CancelClicked">@CancelText</button>*@
+    </div>
+
+</div>
+<style>
+    .separatorConfirm {
+        border: 1px solid #A50000;
+        opacity: 0.74;
+        width: 92%;
+        margin: 1rem;
+        margin-top: 0px;
+    }
+</style>
+
+
+@code {
+
+    public async override Task SetParametersAsync(ParameterView parameters)
+    {
+        Message = parameters.GetValueOrDefault<String>("Message") ?? "No message found";
+        YesText = parameters.GetValueOrDefault<String>("YesText") ?? "Evet";
+        CancelText = parameters.GetValueOrDefault<String>("CancelText") ?? "Vazgeç";
+
+        await base.SetParametersAsync(parameters);
+    }
+}

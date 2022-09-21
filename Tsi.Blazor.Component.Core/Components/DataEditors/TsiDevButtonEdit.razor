@@ -1,0 +1,117 @@
+﻿
+@inherits BaseEditorParameters
+
+<DxGridLayoutItem Column=ColumnIndex
+                  CssClass="@LayoutItemCssClass"
+                  ColumnSpan=ColumnSpan
+                  Row=RowIndex
+                  RowSpan=RowSpan
+                  Visible=Visible>
+    <Template>
+
+        <div class="dxbs-input-group input-group input-group-sm">
+            <DxTextBox @ref="_dxTextBox"
+                       @bind-Text="@Value"
+                       CssClass="@EditorCssClass"
+                       Enabled="Enabled"
+                       InputCssClass="@InputCssClass"
+                       NullText="@NullText"
+                       ReadOnly=ReadOnly
+                       @onkeydown="@KeyDownAsync"
+                       @ondblclick="@ClickAsync">
+            </DxTextBox>
+            <div class="form-control form-control-sm dxbs-btn-group dxbs-input-group-append dxbs-focus-hidden">
+                <button class="btn btn-sm dx-btn btn-secondary" tabindex="-1" @onclick="@ClickAsync" @attributes="@Attributes">
+                    <svg class="button-edit" role="img" />
+                </button>
+            </div>
+        </div>
+
+
+    </Template>
+</DxGridLayoutItem>
+
+<TsiLabel Caption="@Caption"
+          ColumnIndex=ColumnIndex-2
+          CssClass="@CaptionCssClass"
+          RowIndex="RowIndex"
+          Visible="Visible && CaptionVisible">
+</TsiLabel>
+
+
+<TsiLabel Caption="@SeparateCaption"
+          ColumnIndex=ColumnIndex-1
+          CssClass="@CaptionCssClass"
+          RowIndex="RowIndex"
+          Visible="Visible && SeparateCaptionVisible">
+</TsiLabel>
+
+@code {
+    private DxTextBox _dxTextBox;
+    private string _value;
+    private Dictionary<string, object> Attributes;
+
+    [Parameter]
+    public ICoreCommonService Service { get; set; }
+
+    [Parameter]
+    public EventCallback ButtonClickInvokeFunction { get; set; }
+
+    [Parameter]
+    public EventCallback DeleteButtonKeyDownInvokeFunction { get; set; }
+
+
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+
+    [Parameter]
+    public string Value
+    {
+        get => _value;
+        set
+        {
+            if (_value == value) return;
+
+            _value = value;
+            ValueChanged.InvokeAsync(value);
+        }
+    }
+
+    private async Task ClickAsync()
+    {
+        if (Enabled)
+        {
+            Service.ActiveEditComponent = _dxTextBox;
+            await ButtonClickInvokeFunction.InvokeAsync();
+        }
+    }
+
+    private async Task KeyDownAsync(KeyboardEventArgs arg)
+    {
+        switch (arg.Key)
+        {
+            case "F2":
+                await ClickAsync();
+                break;
+            case "Delete":
+                await DeleteAsync();
+                break;
+        }
+    }
+
+    private async Task DeleteAsync()
+    {
+        if (!DeleteButtonKeyDownInvokeFunction.HasDelegate) return;
+        Value = null;
+        await DeleteButtonKeyDownInvokeFunction.InvokeAsync();
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (!Enabled)
+        {
+            Attributes = new Dictionary<string, object>();
+            Attributes.Add("disabled", "disabled");
+        }
+    }
+}
