@@ -14,6 +14,18 @@ namespace TsiErp.ErpUI.Pages.Branch
             BaseCrudService = BranchesService;
         }
 
+        protected override Task BeforeInsertAsync()
+        {
+            DataSource = new SelectBranchesDto()
+            {
+                IsActive = true
+            };
+
+            ShowEditPage();
+
+            return Task.CompletedTask;
+        }
+
         //protected override void CreateContextMenu()
         //{
         //    base.CreateContextMenu();

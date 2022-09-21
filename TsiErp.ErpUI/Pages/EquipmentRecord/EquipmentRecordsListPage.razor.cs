@@ -30,5 +30,17 @@ namespace TsiErp.ErpUI.Pages.EquipmentRecord
                 cancelReasonVisible = false;
             }
         }
+
+        protected override Task BeforeInsertAsync()
+        {
+            DataSource = new SelectEquipmentRecordsDto()
+            {
+                IsActive = true
+            };
+
+            ShowEditPage();
+
+            return Task.CompletedTask;
+        }
     }
 }

@@ -13,5 +13,17 @@ namespace TsiErp.ErpUI.Pages.Department
         {
             BaseCrudService = DepartmentsService;
         }
+
+        protected override Task BeforeInsertAsync()
+        {
+            DataSource = new SelectDepartmentsDto()
+            {
+                IsActive = true
+            };
+
+            ShowEditPage();
+
+            return Task.CompletedTask;
+        }
     }
 }

@@ -14,6 +14,17 @@ namespace TsiErp.ErpUI.Pages.Employee
             BaseCrudService = EmployeesService;
         }
 
+        protected override Task BeforeInsertAsync()
+        {
+            DataSource = new SelectEmployeesDto()
+            {
+                IsActive = true
+            };
+
+            ShowEditPage();
+
+            return Task.CompletedTask;
+        }
 
     }
 }

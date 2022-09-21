@@ -24,7 +24,7 @@ else
                 <Template>
                     <SfCard class="TSIListPageTitleCard">
                         <CardContent>
-                            <TsiBreadCrumb PreviousMenus="Genel Sistem Tanımlamarı" CurrentMenu="Şubeler" />
+                            <TsiBreadCrumb PreviousMenus="Kaynak Yönetimi > Ana Kayıtlar" CurrentMenu="İş İstasyonu Grupları" />
                         </CardContent>
                         <CardFooter>
                         </CardFooter>
@@ -33,7 +33,7 @@ else
             </DxGridLayoutItem>
             <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
                 <Template>
-                    <SfCard class="Cards">
+                    <SfCard class="TSIGridCards">
                         <CardContent>
                             <SfGrid ID="Grid" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
                                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
@@ -58,65 +58,65 @@ else
         </GridLayoutItems>
     </DevGridLayout>
 
-    
-<DxPopup @bind-Visible="base.EditPageVisible"
+
+    <DxPopup @bind-Visible="base.EditPageVisible"
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="İş İstasyonu Grupları"
          Width="770px"
-         Height="330px"
+         Height="260px"
          HeaderCssClass="HeaderTitleCss">
-    <BodyTemplate>
+        <BodyTemplate>
 
-        <DxGridLayout>
-            <Rows>
-                <DxGridLayoutRow Height="120px" />
-                <DxGridLayoutRow Height="100px" />
-            </Rows>
-            <Columns>
-                <DxGridLayoutColumn Width="40px" />
-                <DxGridLayoutColumn Width="300px" />
-                <DxGridLayoutColumn Width="40px" />
-                <DxGridLayoutColumn Width="300px" />
-                <DxGridLayoutColumn Width="40px" />
-            </Columns>
-            <Items>
-                <DxGridLayoutItem Row="0" Column="1">
-                    <Template>
-                        <br />
-                        <label class="TSIModalLabel"><strong>Kod: </strong></label>
-                        <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Kodu Yazınız."></SfTextBox>
-                    </Template>
-                </DxGridLayoutItem>
-                <DxGridLayoutItem Row="0" Column="3">
-                    <Template>
-                        <br />
-                        <label class="TSIModalLabel"><strong>Açıklama: </strong></label>
-                        <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="Açıklamayı Yazınız."></SfTextBox>
-                    </Template>
-                </DxGridLayoutItem>
-                <DxGridLayoutItem Row="2" Column="1">
-                    <Template>
-                        <label class="TSIModalLabel"><strong>Toplam Çalışan: </strong></label><br />
-                        <SfNumericTextBox @bind-Value="DataSource.TotalEmployees" TValue="int"></SfNumericTextBox>
-                    </Template>
-                </DxGridLayoutItem>
-                <DxGridLayoutItem Row="2" Column="3">
-                    <Template>
-                        <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
-                        <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
-                    </Template>
-                </DxGridLayoutItem>
+            <DxGridLayout>
+                <Rows>
+                    <DxGridLayoutRow Height="100px" />
+                    <DxGridLayoutRow Height="50px" />
+                </Rows>
+                <Columns>
+                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="40px" />
+                </Columns>
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>Kod: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Kodu Yazınız."></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>Açıklama: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="Açıklamayı Yazınız."></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Toplam Çalışan: </strong></label><br />
+                            <SfNumericTextBox @bind-Value="DataSource.TotalEmployees" TValue="int"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="2" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
+                            <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                        </Template>
+                    </DxGridLayoutItem>
 
-            </Items>
-        </DxGridLayout>
-    </BodyTemplate>
-    <FooterContentTemplate>
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
             <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
-    </FooterContentTemplate>
-</DxPopup>
+        </FooterContentTemplate>
+    </DxPopup>
 
 }
 

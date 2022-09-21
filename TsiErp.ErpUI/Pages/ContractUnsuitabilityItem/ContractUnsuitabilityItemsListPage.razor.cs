@@ -13,5 +13,17 @@ namespace TsiErp.ErpUI.Pages.ContractUnsuitabilityItem
         {
             BaseCrudService = ContractUnsuitabilityItemsService;
         }
+
+        protected override Task BeforeInsertAsync()
+        {
+            DataSource = new SelectContractUnsuitabilityItemsDto()
+            {
+                IsActive = true
+            };
+
+            ShowEditPage();
+
+            return Task.CompletedTask;
+        }
     }
 }

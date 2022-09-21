@@ -9,5 +9,6 @@ namespace TsiErp.Entities.Entities.ContractUnsuitabilityItem.Dtos
 {
     public class ListContractUnsuitabilityItemsParameterDto : FullAuditedEntityDto
     {
+        public bool IsActive { get; set; } = true;
     }
 }
