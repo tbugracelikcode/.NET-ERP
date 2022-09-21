@@ -211,6 +211,9 @@ html {
     border: 0 !important;
     border-radius: 0.25rem 0 0 0.25rem !important;
 }
+.e-grid .e-headercelldiv{
+    font-size:12px !important;
+}
 
 .input_user,
 .input_pass:focus {
@@ -235,26 +238,30 @@ html {
     background-color: white !important;
     color: #878787 !important;
     font-size: 14px !important;
-    font-weight: bold !important
+    font-weight: bold !important;
+    width: 100px;
 }
 .TSICancelButton {
     border-color: #565656 !important;
     background-color: white !important;
     color: #AD0000 !important;
     font-size: 14px !important;
-    font-weight: bold !important
+    font-weight: bold !important;
+    width: 100px;
 }
 .TSIGeneralBTNRed {
     background-color: #AD0000 !important;
     text-shadow: 1px 3px 4px black !important;
     font-size: 14px !important;
-    font-weight: bold !important
+    font-weight: bold !important;
+    width: 100px;
 }
 .TSIGeneralBTNGray {
     background-color: #474747 !important;
     text-shadow: 6px 3px 4px black !important;
     font-size: 14px !important;
-    font-weight: bold !important
+    font-weight: bold !important;
+    width: 100px;
 }
 .TSIListPageTitleCard {
     font-weight: bold;
@@ -264,9 +271,19 @@ html {
     text-shadow: 1px 3px 4px black !important;
     box-shadow: rgb(0 0 0 / 60%) 0px 3px 10px;
     height: 40px;
+
 }
 .TSIModalLabel {
     color: black;
     font-size: 14px;
+}
+.TSIConfirmModalFooter{
+    text-align:end;
+    padding-right: 20px;
+}
+.TSIModalLocation {
+    margin-top: 15% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
 
