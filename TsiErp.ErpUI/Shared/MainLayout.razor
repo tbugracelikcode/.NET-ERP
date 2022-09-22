@@ -3,16 +3,15 @@
 @using Syncfusion.Blazor.Navigations
 
 <PageTitle>TSI ERP</PageTitle>
-<SfSidebar ID="Sidebar" ZIndex="0" Type="SidebarType.Push" Width="340px" DockSize="65px" EnableDock="true" @ref="Sidebar" @bind-IsOpen="SidebarToggle">
+<SfSidebar ID="Sidebar" ZIndex="0" Type="SidebarType.Push" Width="340px" DockSize="65px" EnableDock="true" @ref="Sidebar" IsOpen="true" >
     <div class="sidebar" style="position:fixed;z-index:1200">
         <div class="topnav navbar navbar-dark">
-            <button class="navbar-toggler" @onclick="ToggleNavMenu">
+            @*<button class="navbar-toggler" @onclick="ToggleNavMenu">
                 <span class="navbar-toggler-icon"></span>
-            </button>
+            </button>*@
             <img src="tsi-logo.png" />
             <a class="navbar-brand" href=""><span class="displayText" style="margin-right:30px;font-size: 20px;">ERP</span></a>
         </div>
-        @*<div @onmouseover="MouseIn" @onmouseout="MouseOut">*@
         <div>
             <NavMenu />
         </div>
@@ -33,6 +32,7 @@
         border-radius: 10%;
         width: 71px;
         height: 33px;
+        margin-left: 25%;
     }
 
     .sidebar {
@@ -199,32 +199,4 @@
 @code
 {
     SfSidebar Sidebar;
-    public bool SidebarToggle = true;
-    public bool SidebarToggleFixed = true;
-    
-
-    public void ToggleNavMenu()
-    {
-        SidebarToggle = !SidebarToggle;
-        SidebarToggleFixed = !SidebarToggleFixed;
-    }
-    public async Task MouseIn(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
-    {
-        var isSidebar = await JS.InvokeAsync<bool>("isSidebar", args.ClientX, args.ClientY);
-        if (!SidebarToggle && isSidebar)
-        {
-            SidebarToggle = true;
-        }
-    }
-    public async Task MouseOut(Microsoft.AspNetCore.Components.Web.MouseEventArgs args)
-    {
-        var isSidebar = await JS.InvokeAsync<bool>("isSidebar", args.ClientX, args.ClientY);
-        if (SidebarToggle && !isSidebar)
-        {
-            if (!SidebarToggleFixed)
-            {
-                SidebarToggle = false;
-            }
-        }
-    }
 }
