@@ -9,6 +9,7 @@
 @using TsiErp.ErpUI.Pages.Base
 @using Tsi.Blazor.Component.Core.Components.Layouts
 @using TsiErp.ErpUI.Pages.StationGroup
+@using TsiErp.Entities.Entities.StationGroup.Dtos
 
 
 @inherits BaseListPage<SelectStationsDto, ListStationsDto, CreateStationsDto, UpdateStationsDto, ListStationsParameterDto>
@@ -152,8 +153,48 @@ else
                     <DxGridLayoutItem Row="1" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>İş İstasyonu Grubu: </strong></label><br />
-                            <TsiButtonEdit @bind-Value="DataSource.StationGroup" ButtonClick="(()=>Clicked())"></TsiButtonEdit>
 
+                            <SfComboBox @ref="StationGroupComboBox"
+                                    TValue="string"
+                                    TItem="ListStationGroupsDto"
+                                    Placeholder="İstasyon Grubu"
+                                    CssClass="e-multi-column"
+                                    @bind-Value="@DataSource.StationGroup"
+                                    DataSource="@StationGroupList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500">
+
+                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+
+                                <ComboBoxTemplates TItem="ListStationGroupsDto">
+                                    <HeaderTemplate>
+                                        <table>
+                                            <tr>
+                                                <th class="e-text-center">Account Number</th>
+                                                <th class="e-text-center">Name</th>
+                                            </tr>
+                                        </table>
+                                    </HeaderTemplate>
+                                    <ItemTemplate Context="cmbContext">
+
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="e-text-center">@((cmbContext as ListStationGroupsDto).Code)</td>
+                                                    <td class="e-text-center">@((cmbContext as ListStationGroupsDto).Name)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </ItemTemplate>
+                                </ComboBoxTemplates>
+
+                                <ComboBoxEvents 
+                                    TValue="string" 
+                                    TItem="ListStationGroupsDto" 
+                                    Filtering="StationGroupFiltering" 
+                                    Opened="StationGroupOpened"></ComboBoxEvents>
+                            </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="7">
@@ -215,13 +256,13 @@ else
                     <DxGridLayoutItem Row="4" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>İş Güvenliği Talimatı: </strong></label>
-                           @* <SfTextBox Placeholder="İş Güvenliği Talimatı Yazınız." CssClass="TSITxtBox"></SfTextBox>*@
+                            @* <SfTextBox Placeholder="İş Güvenliği Talimatı Yazınız." CssClass="TSITxtBox"></SfTextBox>*@
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="4" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>Kullanım Talimatı: </strong></label>
-                           @* <SfTextBox Placeholder="Kullanım Talimatı Yazınız." CssClass="TSITxtBox"></SfTextBox>*@
+                            @* <SfTextBox Placeholder="Kullanım Talimatı Yazınız." CssClass="TSITxtBox"></SfTextBox>*@
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="4" Column="5">
@@ -239,32 +280,10 @@ else
             <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
         </FooterContentTemplate>
     </DxPopup>
-
-    <DevPopupListPageLayout 
-                        CancelButtonText="Vazgeç"
-                        Caption="İş İstasyonu Grupları"
-                        Closed="HideListPage"
-                        SelectButtonInvokeFunction="(()=>{})"
-                        SelectButtonText="Seç"
-                        Visible=stationGroupsListPageVisible
-                        Width="1000px">
-
-        <ListPageContent>
-            <StationGroupsListPage />
-        </ListPageContent>
-
-    </DevPopupListPageLayout>
-
 }
 
-
-@code {
-    bool stationGroupsListPageVisible = false;
-
-    private async void Clicked()
-    {
-        stationGroupsListPageVisible = true;
-        await InvokeAsync(StateHasChanged);
+<style>
+    .e-multi-column.e-ddl.e-popup.e-popup-open td {
+        border: 1px solid rgba(0, 0, 0, 0.125);
     }
-
-}
+</style>
