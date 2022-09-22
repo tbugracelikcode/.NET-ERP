@@ -1,81 +1,52 @@
 ﻿@inherits BaseEditorParameters
 @typeparam TItem
+@typeparam TValue
 
-<DxGridLayoutItem Column="ColumnIndex"
-                  ColumnSpan="ColumnSpan"
-                  CssClass="@LayoutItemCssClass"
-                  Row="RowIndex"
-                  RowSpan="RowSpan"
-                  Visible="Visible">
-    <Template>
-        @*<DxComboBox @ref="_dxComboBox"
-        @bind-Value="@Value"
-        CssClass="@EditorCssClass"
-        Data="DataSource"
-        Enabled="Enabled"
-        InputCssClass="@InputCssClass"
-        ReadOnly="ReadOnly"
-        TextFieldName="@TextFieldName"
-        SelectedItemChanged="SelectedItemChanged">
-        </DxComboBox>*@
+<SfComboBox @ref="_ComboBox"
+            TValue="TValue"
+            TItem="TItem"
+            Placeholder=@Placeholder
+            CssClass="e-multi-column"
+            @bind-Value="@Value"
+            DataSource="@DataSource"
+            AllowFiltering="@AllowFiltering"
+            Query="@Query"
+            PopupWidth="@PopupWidth"
+            PopupHeight="@PopupHeight" Enabled=@Enabled EnableRtl=@EnableRtl Autofill=@Autofill>
 
-        <SfComboBox Placeholder=@Placeholder
-                    DataSource="@DataSource"
-                    @bind-Value="@Value"
-                    CssClass="@EditorCssClass"
-                    Enabled="@Enabled"
-                    EnableRtl=@EnableRtl
-                    Readonly=@ReadOnly
-                    Autofill=@Autofill
-                    ShowClearButton=@ShowClearButton
-                    AllowFiltering=@AllowFiltering>
+    <ComboBoxFieldSettings Text="@TextFieldName" Value="@TextValueName"></ComboBoxFieldSettings>
+    <ComboBoxTemplates TItem="TItem">
+        <HeaderTemplate>
+            @HeaderTemplateContent
+        </HeaderTemplate>
+        <ItemTemplate Context="context">
+            @ItemTemplateContent
+        </ItemTemplate>
+        <FooterTemplate>
+            @FooterTemplateContent
+        </FooterTemplate>
+    </ComboBoxTemplates>
+    <ComboBoxEvents TValue="string" TItem="TItem" Filtering="OnFiltering"></ComboBoxEvents>
 
-            <ComboBoxTemplates TItem="TItem">
-                <HeaderTemplate>
-                    @HeaderTemplate
-                </HeaderTemplate>
+</SfComboBox>
 
-                <ItemTemplate>
-                    @ItemTemplate
-                </ItemTemplate>
-
-                <FooterTemplate>
-                    @FooterTemplate
-                </FooterTemplate>
-            </ComboBoxTemplates>
-
-            <ComboBoxFieldSettings Text="@TextFieldName" Value="@ValueFieldName" />
-
-        </SfComboBox>
-
-    </Template>
-</DxGridLayoutItem>
-
-<TsiLabel Caption="@Caption"
-          ColumnIndex="ColumnIndex-2"
-          CssClass="@CaptionCssClass"
-          RowIndex="RowIndex"
-          Visible="Visible && CaptionVisible">
-</TsiLabel>
-
-<TsiLabel Caption="@SeparateCaption"
-          ColumnIndex="ColumnIndex-1"
-          CssClass="@CaptionCssClass"
-          RowIndex="RowIndex"
-          Visible="Visible && SeparateCaptionVisible">
-</TsiLabel>
 
 @code {
 
-    private SfComboBox<TItem, TItem> _ComboBox;
+    private SfComboBox<TValue, TItem> _ComboBox;
 
     [Parameter, EditorRequired] public IEnumerable<TItem> DataSource { get; set; }
-    [Parameter] public RenderFragment ItemTemplate { get; set; }
-    [Parameter] public RenderFragment HeaderTemplate { get; set; }
-    [Parameter] public RenderFragment FooterTemplate { get; set; }
+    [Parameter, EditorRequired] public TValue Value { get; set; }
+    [Parameter] public EventCallback<TValue> ValueChanged { get; set; }
+    [Parameter] public EventCallback<FilteringEventArgs> OnFiltering { get; set; }
+    [Parameter] public Query Query { get; set; }
+    [Parameter] public string PopupWidth { get; set; }
+    [Parameter] public string PopupHeight { get; set; }
+    [Parameter] public string HeaderTemplateContent { get; set; }
+    [Parameter] public string ItemTemplateContent { get; set; }
+    [Parameter] public string FooterTemplateContent { get; set; }
     [Parameter] public string TextFieldName { get; set; }
-    [Parameter] public string ValueFieldName { get; set; }
-    [Parameter, EditorRequired] public TItem Value { get; set; }
-    [Parameter] public EventCallback<TItem> ValueChanged { get; set; }
+    [Parameter] public string TextValueName { get; set; }
+    [Parameter] public bool AllowFiltering { get; set; }
 
 }
