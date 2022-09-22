@@ -26,6 +26,7 @@ using TsiErp.Entities.Entities.Period;
 using TsiErp.Entities.Entities.Station;
 using TsiErp.Entities.Entities.StationGroup;
 using TsiErp.Entities.Entities.UnitSet;
+using TsiErp.Entities.Entities.Vsm;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore
 {
@@ -102,6 +103,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigureContractUnsuitabilityItems();
             builder.ConfigureCalibrationVerifications();
             builder.ConfigureCalibrationRecords();
+            builder.ConfigureVsmSchemas();
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -164,6 +166,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<ContractUnsuitabilityItems> ContractUnsuitabilityItems { get; set; }
         public DbSet<CalibrationVerifications> CalibrationVerifications { get; set; }
         public DbSet<CalibrationRecords> CalibrationRecords { get; set; }
+        public DbSet<VsmSchemas> VsmSchemas { get; set; }
         #endregion
     }
 }
