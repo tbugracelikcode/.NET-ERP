@@ -4,7 +4,22 @@
 @inject IIstasyonDetayService IstasyonDetayService
 @inject NavigationManager NavigationManager
 
-
+<SfCard class="TSIPageTitleCard">
+    <CardContent>
+        <table width="1000px">
+            <tr>
+                <td width="1000px">
+                    <span style="float:left">
+                        <label>Makina Analizi > @tabHeader</label>
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+<br />
 <SfCard class="FilterCard">
     <CardContent>
         <table width="1000px">
@@ -39,6 +54,7 @@
     </CardHeader>
     <CardContent>
         <SfTab CssClass="default-tab" OverflowMode="@OverflowMode.Scrollable" HeaderPlacement="HeaderPosition.Top" Width="100%">
+             <TabEvents Selected="Selected"> </TabEvents>
             <TabAnimationSettings>
                 <TabAnimationPrevious Effect="Syncfusion.Blazor.AnimationEffect.FadeIn"></TabAnimationPrevious>
                 <TabAnimationNext Effect="Syncfusion.Blazor.AnimationEffect.FadeOut"></TabAnimationNext>
@@ -241,5 +257,25 @@
 
 
 @code {
+    string tabHeader = "Duruş Kodlarına Göre Genel OEE Analiz Detayları";
+
+    public void Selected(Syncfusion.Blazor.Navigations.SelectEventArgs args)
+    {
+        //  this.EventLog = args.IsInteracted ? "Tab Item selected by user interaction"
+        //: "Tab Item selected by programmatically";
+
+        var a = args;
+
+        if(a.IsInteracted)
+        {
+            switch(a.SelectedIndex)
+            {
+                case 0: tabHeader = "Duruş Kodlarına Göre Genel OEE Analiz Detayları";break;
+                case 1: tabHeader = "Ürün Gruplarına / Kodlarına Göre Genel OEE Analiz Detayları";break;
+                case 2: tabHeader = "Personel İsimlerine Göre Genel OEE Analizi Detayları";break;
+                default:break;
+            }
+        }
+    }
     
 }

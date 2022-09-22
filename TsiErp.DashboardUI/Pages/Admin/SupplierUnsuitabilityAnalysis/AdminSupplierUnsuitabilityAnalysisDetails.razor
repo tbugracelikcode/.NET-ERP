@@ -6,7 +6,22 @@
 @inject NavigationManager NavigationManager
 
 
-
+<SfCard class="TSIPageTitleCard">
+    <CardContent>
+        <table width="1000px">
+            <tr>
+                <td width="1000px">
+                    <span style="float:left">
+                        <label>Satın Alma Uygunsuzluk Analizi > @tabHeader</label>
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+<br />
 <SfCard class="FilterCard">
     <CardContent>
         <table width="1000px">
@@ -166,4 +181,24 @@
 
 @code {
 
+    string tabHeader = "Müşteriye Göre Uygunsuzluk Analizi Detayı";
+
+    public void Selected(Syncfusion.Blazor.Navigations.SelectEventArgs args)
+    {
+        //  this.EventLog = args.IsInteracted ? "Tab Item selected by user interaction"
+        //: "Tab Item selected by programmatically";
+
+        var a = args;
+
+        if(a.IsInteracted)
+        {
+            switch(a.SelectedIndex)
+            {
+                case 0: tabHeader = "Müşteriye Göre Uygunsuzluk Analizi Detayı";break;
+                case 1: tabHeader = "Ürün Koduna Göre Uygunsuzluk Analizi Detayı";break;
+                default:break;
+            }
+        }
+    }
+    
 }

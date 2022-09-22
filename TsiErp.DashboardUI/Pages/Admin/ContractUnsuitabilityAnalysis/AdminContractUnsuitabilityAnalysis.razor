@@ -4,13 +4,29 @@
 @inject IFasonUygunsuzlukService FasonUygunsuzlukService
 @inject NavigationManager NavigationManager
 
+<SfCard class="TSIPageTitleCard">
+    <CardContent>
+        <table width="1000px">
+            <tr>
+                <td width="1000px">
+                    <span style="float:left">
+                        <label>Fason Tedarikçi Uygunsuzluk Analizi</label>
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+<br />
 
 <SfCard class="FilterCard">
     <CardContent>
         <table width="1000px">
             <tr>
                 <td width="200px">
-                     <br />
+                    <br />
                     <SfCheckBox @bind-Checked="isGridChecked" @onchange="OnCheckedChanged" CssClass="e-customcheck"></SfCheckBox>
                     <label class=FilterLabelTitle><strong>Detay Tablosunu Gizle</strong></label>
                 </td>
@@ -45,7 +61,7 @@
             <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Wrap">
                 <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
             </ChartPrimaryXAxis>
-            <ChartPrimaryYAxis LabelFormat="p2" >
+            <ChartPrimaryYAxis LabelFormat="p2">
                 <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
             </ChartPrimaryYAxis>
             <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
@@ -93,6 +109,6 @@
 </SfCard>
 
 @code {
-  
+
 
 }
