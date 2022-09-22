@@ -32,6 +32,16 @@ using TsiErp.Entities.Entities.Employee.Dtos;
 using TsiErp.Entities.Entities.Employee;
 using TsiErp.Entities.Entities.EquipmentRecord.Dtos;
 using TsiErp.Entities.Entities.EquipmentRecord;
+using TsiErp.Entities.Entities.Currency;
+using TsiErp.Entities.Entities.Currency.Dtos;
+using TsiErp.Entities.Entities.PaymentPlan;
+using TsiErp.Entities.Entities.PaymentPlan.Dtos;
+using TsiErp.Entities.Entities.WareHouse;
+using TsiErp.Entities.Entities.WareHouse.Dtos;
+using TsiErp.Entities.Entities.OperationUnsuitabilityItem;
+using TsiErp.Entities.Entities.OperationUnsuitabilityItem.Dtos;
+using TsiErp.Entities.Entities.FinalControlUnsuitabilityItem;
+using TsiErp.Entities.Entities.FinalControlUnsuitabilityItem.Dtos;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -140,6 +150,41 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectRolePermissionsDto, CreateRolePermissionsDto>();
             CreateMap<UpdateRolePermissionsDto, TsiRolePermissions>();
             CreateMap<SelectRolePermissionsDto, UpdateRolePermissionsDto>();
+
+            CreateMap<Currencies, SelectCurrenciesDto>();
+            CreateMap<Currencies, ListCurrenciesDto>();
+            CreateMap<CreateCurrenciesDto, Currencies>();
+            CreateMap<SelectCurrenciesDto, CreateCurrenciesDto>();
+            CreateMap<UpdateCurrenciesDto, Currencies>();
+            CreateMap<SelectCurrenciesDto, UpdateCurrenciesDto>();
+
+            CreateMap<PaymentPlans, SelectPaymentPlansDto>();
+            CreateMap<PaymentPlans, ListPaymentPlansDto>();
+            CreateMap<CreatePaymentPlansDto, PaymentPlans>();
+            CreateMap<SelectPaymentPlansDto, CreatePaymentPlansDto>();
+            CreateMap<UpdatePaymentPlansDto, PaymentPlans>();
+            CreateMap<SelectPaymentPlansDto, UpdatePaymentPlansDto>();
+
+            CreateMap<Warehouses, SelectWarehousesDto>();
+            CreateMap<Warehouses, ListWarehousesDto>();
+            CreateMap<CreateWarehousesDto, Warehouses>();
+            CreateMap<SelectWarehousesDto, CreateWarehousesDto>();
+            CreateMap<UpdateWarehousesDto, Warehouses>();
+            CreateMap<SelectWarehousesDto, UpdateWarehousesDto>();
+
+            CreateMap<OperationUnsuitabilityItems, SelectOperationUnsuitabilityItemsDto>();
+            CreateMap<OperationUnsuitabilityItems, ListOperationUnsuitabilityItemsDto>();
+            CreateMap<CreateOperationUnsuitabilityItemsDto, OperationUnsuitabilityItems>();
+            CreateMap<SelectOperationUnsuitabilityItemsDto, CreateOperationUnsuitabilityItemsDto>();
+            CreateMap<UpdateOperationUnsuitabilityItemsDto, OperationUnsuitabilityItems>();
+            CreateMap<SelectOperationUnsuitabilityItemsDto, UpdateOperationUnsuitabilityItemsDto>();
+
+            CreateMap<FinalControlUnsuitabilityItems, SelectFinalControlUnsuitabilityItemsDto>();
+            CreateMap<FinalControlUnsuitabilityItems, ListFinalControlUnsuitabilityItemsDto>();
+            CreateMap<CreateFinalControlUnsuitabilityItemsDto, FinalControlUnsuitabilityItems>();
+            CreateMap<SelectFinalControlUnsuitabilityItemsDto, CreateFinalControlUnsuitabilityItemsDto>();
+            CreateMap<UpdateFinalControlUnsuitabilityItemsDto, FinalControlUnsuitabilityItems>();
+            CreateMap<SelectFinalControlUnsuitabilityItemsDto, UpdateFinalControlUnsuitabilityItemsDto>();
         }
     }
 }

@@ -27,6 +27,11 @@ using TsiErp.Entities.Entities.Station;
 using TsiErp.Entities.Entities.StationGroup;
 using TsiErp.Entities.Entities.UnitSet;
 using TsiErp.Entities.Entities.Vsm;
+using TsiErp.Entities.Entities.Currency;
+using TsiErp.Entities.Entities.PaymentPlan;
+using TsiErp.Entities.Entities.WareHouse;
+using TsiErp.Entities.Entities.OperationUnsuitabilityItem;
+using TsiErp.Entities.Entities.FinalControlUnsuitabilityItem;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore
 {
@@ -104,6 +109,11 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigureCalibrationVerifications();
             builder.ConfigureCalibrationRecords();
             builder.ConfigureVsmSchemas();
+            builder.ConfigureCurrencies();
+            builder.ConfigurePaymentPlans();
+            builder.ConfigureWarehouses();
+            builder.ConfigureOperationUnsuitabilityItems();
+            builder.ConfigureFinalControlUnsuitabilityItems();
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -167,6 +177,11 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<CalibrationVerifications> CalibrationVerifications { get; set; }
         public DbSet<CalibrationRecords> CalibrationRecords { get; set; }
         public DbSet<VsmSchemas> VsmSchemas { get; set; }
+        public DbSet<Currencies> Currencies { get; set; }
+        public DbSet<PaymentPlans> PaymentPlans { get; set; }
+        public DbSet<Warehouses> Warehouses { get; set; }
+        public DbSet<OperationUnsuitabilityItems> OperationUnsuitabilityItems { get; set; }
+        public DbSet<FinalControlUnsuitabilityItems> FinalControlUnsuitabilityItems { get; set; }
         #endregion
     }
 }
