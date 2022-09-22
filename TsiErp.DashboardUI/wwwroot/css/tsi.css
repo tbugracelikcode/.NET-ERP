@@ -208,3 +208,43 @@ html {
     font-weight: bold;
 }
 
+.TSIPageTitleCard {
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+    background-image: linear-gradient(356deg, rgb(255 19 19) 0%, #ad0303 70%) !important;
+    text-shadow: 1px 3px 4px black !important;
+    box-shadow: rgb(0 0 0 / 60%) 0px 3px 10px;
+    height: 40px;
+    border: 1px solid #585858;
+}
+.TSIModalLabel {
+    color: black;
+    font-size: 14px;
+}
+.HeaderTitleCss {
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    color: white;
+    background-image: linear-gradient(356deg, rgb(255 19 19) 0%, #ad0303 70%) !important;
+    text-shadow: 1px 3px 4px black !important;
+}
+.TSISaveButton {
+    border-color: #565656 !important;
+    background-color: white !important;
+    color: #878787 !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    width: 100px;
+}
+
+.TSICancelButton {
+    border-color: #565656 !important;
+    background-color: white !important;
+    color: #AD0000 !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    width: 100px;
+}
+
