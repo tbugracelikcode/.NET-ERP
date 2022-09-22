@@ -1,0 +1,116 @@
+﻿@page "/admin/vsm-list-page"
+@layout AdminLayout
+
+@inject IPersonelService PersonelService
+
+<SfCard class="TSIPageTitleCard">
+    <CardContent>
+        <table width="1000px">
+            <tr>
+                <td width="1000px">
+                    <span style="float:left">
+                        <label>VSM Diyagram Listesi</label>
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+<br />
+
+<SfCard class="Cards">
+    <CardContent>
+        <SfGrid ID="Grid" DataSource="@dataemployee" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                AllowSorting="true" Height="100%" Width="100%" class="GridZebra"  ContextMenuItems="@GridContextMenu">
+                  <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="EmployeeGeneralAnalysis"></GridEvents>
+            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+            <GridPageSettings PageSizes="true"></GridPageSettings>
+            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+            <GridColumns>
+                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.EmployeeName) HeaderText="PERSONEL ADI" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>                
+                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.Availability) Format="p2" HeaderText="KULLANILABİLİRLİK" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="130"></GridColumn>
+                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.Performance) Format="p2" HeaderText="PERFORMANS" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                <GridColumn Field=@nameof(EmployeeGeneralAnalysis.Quality) Format="p2" HeaderText="KALİTE" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+               
+            </GridColumns>
+        </SfGrid>
+
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+
+<DxPopup Visible="@popupVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Şubeler"
+         Width="760px"
+         Height="480px"
+         HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout>
+
+                <Rows>
+                    <DxGridLayoutRow Height="100px" />
+                    <DxGridLayoutRow Height="1px" />
+                    <DxGridLayoutRow Height="50px" />
+                    <DxGridLayoutRow Height="1px" />
+                    <DxGridLayoutRow Height="80px" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="40px" />
+                </Columns>
+
+                <Items>
+                     <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>DENEME </strong></label>
+                        </Template>
+                    </DxGridLayoutItem>
+                  @*  <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>Şube Kodu: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" Placeholder="Şube Kodunu Yazınız." @bind-Value="DataSource.Code"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>Şube Adı: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" Placeholder="Şube Adını Yazınız." @bind-Value="DataSource.Name"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
+                            <SfSwitch @bind-Checked="@DataSource.IsActive"></SfSwitch>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="4" Column="1" ColumnSpan="4">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Açıklama: </strong></label><br />
+                            <SfTextBox CssClass="TSIMemoBox" Placeholder="Açıklama Yazınız." Multiline="true" @bind-Value="DataSource.Description_"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>*@
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
