@@ -1,6 +1,11 @@
 ﻿using Syncfusion.Blazor.Diagram.SymbolPalette;
 using Syncfusion.Blazor.Diagram;
 using System.Collections.ObjectModel;
+using DevExpress.Utils;
+using Microsoft.JSInterop;
+using System.Reflection.Metadata;
+using TsiErp.DashboardUI.Data;
+using System.Text.Json;
 
 namespace TsiErp.DashboardUI.Pages.Vsm
 {
@@ -37,6 +42,33 @@ namespace TsiErp.DashboardUI.Pages.Vsm
 
         // Defines palette's connector collection
         private DiagramObjectCollection<NodeBase> connectorSymbols = new DiagramObjectCollection<NodeBase>();
+
+        public async void SaveDiagramClick()
+        {
+            //string data = Diagram.SaveDiagram();
+
+            //await Diagram.LoadDiagram(data);
+
+            SaveDiagram();
+        }
+        string nodesJson = "";
+
+        public void SaveDiagram()
+        {
+            nodesJson = new string(JsonSerializer.Serialize(nodes.Select(i => (Node)i.Clone())));
+        }
+
+        //public async Task DiagramLoadJson(string diagramId = "")
+        //{
+        //    nodes.Clear();
+        //    nodes = new DiagramObjectCollection(JsonSerializer.Deserialize(nodesJson));
+        //    foreach (Node vnode in nodes)
+        //    {
+        //        var origAnnotation = new DiagramObjectCollection(vnode.Annotations.Select(i => (ShapeAnnotation)i.Clone()));
+        //        vnode.Annotations.Clear();
+        //        vnode.Annotations = new DiagramObjectCollection(origAnnotation);
+        //    }
+        //}
 
         public void OnDrop(DropEventArgs args)
         {
