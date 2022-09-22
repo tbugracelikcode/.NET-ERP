@@ -23,6 +23,7 @@ using TsiErp.Entities.Entities.Period;
 using TsiErp.Entities.Entities.Station;
 using TsiErp.Entities.Entities.StationGroup;
 using TsiErp.Entities.Entities.UnitSet;
+using TsiErp.Entities.Entities.Vsm;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 {
@@ -363,6 +364,22 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.Code);
 
                 b.HasOne(x => x.EquipmentRecords).WithMany(x => x.CalibrationRecords).HasForeignKey(x => x.EquipmentID).OnDelete(DeleteBehavior.NoAction);
+
+            });
+        }
+
+        public static void ConfigureVsmSchemas(this ModelBuilder builder)
+        {
+            builder.Entity<VsmSchemas>(b =>
+            {
+                
+                b.ToTable("VsmSchemas");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(250);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(250);
+                b.Property(t => t.VSMSchema).IsRequired().HasColumnType("sql_variant").HasMaxLength(25000000);
+                b.Property(t => t.Name).IsRequired().HasColumnType("nvarchar(max)");
 
             });
         }
