@@ -14,16 +14,6 @@ namespace TsiErp.ErpUI.Pages.ShippingAdress
             BaseCrudService = ShippingAdressesAppService;
         }
 
-        protected override Task BeforeInsertAsync()
-        {
-            DataSource = new SelectShippingAdressesDto()
-            {
-                IsActive = true
-            };
-
-            ShowEditPage();
-
-            return Task.CompletedTask;
-        }
+      
     }
 }
