@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TsiErp.Entities.Entities.Currency;
-//using TsiErp.Entities.Entities.SalesProposition;
+using TsiErp.Entities.Entities.SalesProposition;
 using TsiErp.Entities.Entities.ShippingAdress;
 using Tsi.Core.Entities.Auditing;
 
@@ -150,7 +150,7 @@ namespace TsiErp.Entities.Entities.CurrentAccountCard
 
         public Currencies Currencies { get; set; }
 
-        //public ICollection<SalesPropositions> SalesPropositions { get; set; }
+        public ICollection<SalesPropositions> SalesPropositions { get; set; }
 
         public ICollection<ShippingAdresses> ShippingAdresses { get; set; }
     }
