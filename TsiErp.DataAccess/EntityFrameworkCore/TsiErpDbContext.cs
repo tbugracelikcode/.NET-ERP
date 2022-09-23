@@ -23,10 +23,25 @@ using TsiErp.Entities.Entities.Employee;
 using TsiErp.Entities.Entities.EquipmentRecord;
 using TsiErp.Entities.Entities.Logging;
 using TsiErp.Entities.Entities.Period;
+using TsiErp.Entities.Entities.SalesProposition;
+using TsiErp.Entities.Entities.SalesPropositionLine;
 using TsiErp.Entities.Entities.Station;
 using TsiErp.Entities.Entities.StationGroup;
 using TsiErp.Entities.Entities.UnitSet;
 using TsiErp.Entities.Entities.Vsm;
+using TsiErp.Entities.Entities.Currency;
+using TsiErp.Entities.Entities.PaymentPlan;
+using TsiErp.Entities.Entities.WareHouse;
+using TsiErp.Entities.Entities.OperationUnsuitabilityItem;
+using TsiErp.Entities.Entities.FinalControlUnsuitabilityItem;
+using TsiErp.Entities.Entities.ExchangeRate;
+using TsiErp.Entities.Entities.CurrentAccountCard;
+using TsiErp.Entities.Entities.ProductGroup;
+using TsiErp.Entities.Entities.Product;
+using TsiErp.Entities.Entities.CustomerComplaintItem;
+using TsiErp.Entities.Entities.ProductionOrderChangeItem;
+using TsiErp.Entities.Entities.PurchasingUnsuitabilityItem;
+using TsiErp.Entities.Entities.ShippingAdress;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore
 {
@@ -104,6 +119,19 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigureCalibrationVerifications();
             builder.ConfigureCalibrationRecords();
             builder.ConfigureVsmSchemas();
+            builder.ConfigureCurrencies();
+            builder.ConfigurePaymentPlans();
+            builder.ConfigureWarehouses();
+            builder.ConfigureOperationUnsuitabilityItems();
+            builder.ConfigureFinalControlUnsuitabilityItems();
+            builder.ConfigureExchangeRates();
+            builder.ConfigureCurrentAccountCards();
+            builder.ConfigureProductCodes();
+            builder.ConfigureProductGroups();
+            builder.ConfigureProductionOrderChangeItems();
+            builder.ConfigurePurchasingUnsuitabilityItems();
+            builder.ConfigureCustomerComplaintItems();
+            builder.ConfigureShippingAdresses();
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -167,6 +195,20 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<CalibrationVerifications> CalibrationVerifications { get; set; }
         public DbSet<CalibrationRecords> CalibrationRecords { get; set; }
         public DbSet<VsmSchemas> VsmSchemas { get; set; }
+        public DbSet<Currencies> Currencies { get; set; }
+        public DbSet<PaymentPlans> PaymentPlans { get; set; }
+        public DbSet<Warehouses> Warehouses { get; set; }
+        public DbSet<OperationUnsuitabilityItems> OperationUnsuitabilityItems { get; set; }
+        public DbSet<FinalControlUnsuitabilityItems> FinalControlUnsuitabilityItems { get; set; }
+        public DbSet<ExchangeRates> ExchangeRates { get; set; }
+        public DbSet<CurrentAccountCards> CurrentAccountCards { get; set; }
+        public DbSet<ProductGroups> ProductGroups { get; set; }
+        public DbSet<Products> Products { get; set; }
+        public DbSet<ProductionOrderChangeItems> ProductionOrderChangeItems { get; set; }
+        public DbSet<CustomerComplaintItems> CustomerComplaintItems { get; set; }
+        public DbSet<PurchasingUnsuitabilityItems> PurchasingUnsuitabilityItems { get; set; }
+        public DbSet<ShippingAdresses> ShippingAdresses { get; set; }
+
         #endregion
     }
 }

@@ -20,10 +20,25 @@ using TsiErp.Entities.Entities.Employee;
 using TsiErp.Entities.Entities.EquipmentRecord;
 using TsiErp.Entities.Entities.Logging;
 using TsiErp.Entities.Entities.Period;
+using TsiErp.Entities.Entities.SalesProposition;
+using TsiErp.Entities.Entities.SalesPropositionLine;
 using TsiErp.Entities.Entities.Station;
 using TsiErp.Entities.Entities.StationGroup;
 using TsiErp.Entities.Entities.UnitSet;
 using TsiErp.Entities.Entities.Vsm;
+using TsiErp.Entities.Entities.Currency;
+using TsiErp.Entities.Entities.PaymentPlan;
+using TsiErp.Entities.Entities.WareHouse;
+using TsiErp.Entities.Entities.OperationUnsuitabilityItem;
+using TsiErp.Entities.Entities.FinalControlUnsuitabilityItem;
+using TsiErp.Entities.Entities.ExchangeRate;
+using TsiErp.Entities.Entities.CurrentAccountCard;
+using TsiErp.Entities.Entities.Product;
+using TsiErp.Entities.Entities.ProductGroup;
+using TsiErp.Entities.Entities.CustomerComplaintItem;
+using TsiErp.Entities.Entities.ProductionOrderChangeItem;
+using TsiErp.Entities.Entities.PurchasingUnsuitabilityItem;
+using TsiErp.Entities.Entities.ShippingAdress;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 {
@@ -383,6 +398,410 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
             });
         }
+
+        public static void ConfigureSalesPropositions(this ModelBuilder builder)
+        {
+            builder.Entity<SalesPropositions>(b =>
+            {
+                b.ToTable("SalesPropositions");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.FicheNo).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Description_).HasColumnType("nvarchar(max)");
+                b.Property(t => t.Date_).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.Time_).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(8);
+                b.Property(t => t.ExchangeRate).IsRequired().HasColumnType("decimal(18, 6)");
+                b.Property(t => t.SpecialCode).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(201);
+                b.Property(t => t.PropositionRevisionNo).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.RevisionDate).HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.RevisionTime).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(8);
+                b.Property(t => t.SalesPropositionState).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.CurrencyID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.WarehouseID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.LinkedSalesPropositionID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.PaymentPlanID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.BranchID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.CurrentAccountCardID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.GrossAmount).IsRequired().HasColumnType("decimal(18, 6)");
+                b.Property(t => t.TotalVatExcludedAmount).IsRequired().HasColumnType("decimal(18, 6)");
+                b.Property(t => t.TotalVatAmount).IsRequired().HasColumnType("decimal(18, 6)");
+                b.Property(t => t.TotalDiscountAmount).IsRequired().HasColumnType("decimal(18, 6)");
+                b.Property(t => t.NetAmount).IsRequired().HasColumnType("decimal(18, 6)");
+                b.Property(t => t.ValidityDate_).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.ShippingAdressID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+
+
+                b.HasIndex(x => x.FicheNo);
+                b.HasIndex(x => x.CurrentAccountCardID);
+                b.HasIndex(x => x.BranchID);
+                b.HasIndex(x => x.WarehouseID);
+
+                b.HasOne(x => x.CurrentAccountCards).WithMany(x => x.SalesPropositions).HasForeignKey(x => x.CurrentAccountCardID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Currencies).WithMany(x => x.SalesPropositions).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Warehouses).WithMany(x => x.SalesPropositions).HasForeignKey(x => x.WarehouseID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.PaymentPlan).WithMany(x => x.SalesPropositions).HasForeignKey(x => x.PaymentPlanID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Branches).WithMany(x => x.SalesPropositions).HasForeignKey(x => x.BranchID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.ShippingAdresses).WithMany(x => x.SalesPropositions).HasForeignKey(x => x.ShippingAdressID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+
+        public static void ConfigureSalesPropositionLines(this ModelBuilder builder)
+        {
+            builder.Entity<SalesPropositionLines>(b =>
+            {
+                b.ToTable("SalesPropositionLines");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.SalesPropositionID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.LineNr).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.UnitSetID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.BranchID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.Quantity).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.UnitPrice).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.DiscountRate).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.DiscountAmount).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.LineAmount).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.LineTotalAmount).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.LineDescription).HasColumnType("nvarchar(MAX)");
+                b.Property(t => t.VATrate).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.VATamount).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.PaymentPlanID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ExchangeRate).IsRequired().HasColumnType("decimal(18, 6)");
+                b.Property(t => t.SalesPropositionLineState).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.OrderConversionDate).HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.WarehouseID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.HasIndex(x => x.SalesPropositionID);
+                b.HasIndex(x => x.ProductID);
+                b.HasIndex(x => x.BranchID);
+                b.HasIndex(x => x.WarehouseID);
+
+                b.HasOne(x => x.Products).WithMany(x => x.SalesPropositionLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.SalesPropositions).WithMany(x => x.SalesPropositionLines).HasForeignKey(x => x.SalesPropositionID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.UnitSets).WithMany(x => x.SalesPropositionLines).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Warehouses).WithMany(x => x.SalesPropositionLines).HasForeignKey(x => x.WarehouseID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.PaymentPlans).WithMany(x => x.SalesPropositionLines).HasForeignKey(x => x.PaymentPlanID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Branches).WithMany(x => x.SalesPropositionLines).HasForeignKey(x => x.BranchID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+
+        public static void ConfigureExchangeRates(this ModelBuilder builder)
+        {
+            builder.Entity<ExchangeRates>(b =>
+            {
+                b.ToTable("ExchangeRates");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.CurrencyID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.Date).HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.BuyingRate).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.SaleRate).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.EffectiveBuyingRate).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.EffectiveSaleRate).HasColumnType("decimal(18, 6)");
+
+                b.HasIndex(x => x.CurrencyID);
+                b.HasIndex(x => x.Date);
+
+                b.HasOne(x => x.Currencies).WithMany(x => x.ExchangeRates).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
+
+            });
+        }
+
+        public static void ConfigureCurrentAccountCards(this ModelBuilder builder)
+        {
+            builder.Entity<CurrentAccountCards>(b =>
+            {
+                b.ToTable("CurrentAccountCards");
+                b.ConfigureByConvention();
+
+
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.SupplierNo).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.ShippingAddress).HasColumnType("nvarchar(MAX)");
+                b.Property(t => t.Type).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.Address1).HasColumnType("nvarchar(MAX)");
+                b.Property(t => t.Address2).HasColumnType("nvarchar(MAX)");
+                b.Property(t => t.District).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.City).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.Country).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.PostCode).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.Tel1).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.Tel2).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.Fax).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.Responsible).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.Email).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.Web).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.PrivateCode1).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.PrivateCode2).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.PrivateCode3).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.PrivateCode4).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.PrivateCode5).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.SoleProprietorship).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IDnumber).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(11);
+                b.Property(t => t.TaxAdministration).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(75);
+                b.Property(t => t.TaxNumber).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(10);
+                b.Property(t => t.CoatingCustomer).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.SaleContract).HasColumnType("nvarchar(MAX)");
+                b.Property(t => t.PlusPercentage).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.CurrencyID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.Supplier).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.ContractSupplier).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+                b.HasIndex(x => x.Code);
+
+                b.HasOne(x => x.Currencies).WithMany(x => x.CurrentAccountCards).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
+
+            });
+        }
+
+        public static void ConfigureProductCodes(this ModelBuilder builder)
+        {
+            builder.Entity<Products>(b =>
+            {
+                b.ToTable("Products");
+                b.ConfigureByConvention();
+
+
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.SupplyForm).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.ProductSize).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.GTIP).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.SawWastage).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.Confirmation).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.TechnicalConfirmation).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.ProductType).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.ProductDescription).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(500);
+                b.Property(t => t.ProductGrpID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ManufacturerCode).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.SaleVAT).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.PurchaseVAT).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.UnitSetID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.FeatureSetID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.EnglishDefinition).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(201);
+                b.Property(t => t.ExportCatNo).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.OemRefNo).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.OemRefNo2).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.OemRefNo3).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.PlannedWastage).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.CoatingWeight).HasColumnType("decimal(18, 6)");
+
+
+                b.HasIndex(x => x.Code);
+
+
+                b.HasOne(x => x.UnitSets).WithMany(x => x.Products).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.ProductGroups).WithMany(x => x.Products).HasForeignKey(x => x.ProductGrpID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+
+        public static void ConfigureProductGroups(this ModelBuilder builder)
+        {
+            builder.Entity<ProductGroups>(b =>
+            {
+                b.ToTable("ProductGroups");
+                b.ConfigureByConvention();
+
+
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+                b.HasIndex(x => x.Code);
+
+            });
+        }
+        public static void ConfigureCustomerComplaintItems(this ModelBuilder builder)
+        {
+            builder.Entity<CustomerComplaintItems>(b =>
+            {
+                b.ToTable("CustomerComplaintItems");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.Image).HasColumnType("varbinary(max)");
+                b.Property(t => t.Detection).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.Severity).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.StaProductivityAnalysis).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.PerProductivityAnalysis).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+
+                b.HasIndex(x => x.Code);
+            });
+        }
+
+        public static void ConfigureProductionOrderChangeItems(this ModelBuilder builder)
+        {
+            builder.Entity<ProductionOrderChangeItems>(b =>
+            {
+                b.ToTable("ProductionOrderChangeItems");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.Image).HasColumnType("varbinary(max)");
+                b.Property(t => t.Detection).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.Severity).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.StaProductivityAnalysis).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.PerProductivityAnalysis).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+
+                b.HasIndex(x => x.Code);
+            });
+        }
+
+        public static void ConfigurePurchasingUnsuitabilityItems(this ModelBuilder builder)
+        {
+            builder.Entity<PurchasingUnsuitabilityItems>(b =>
+            {
+                b.ToTable("PurchasingUnsuitabilityItems");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.Image).HasColumnType("varbinary(max)");
+                b.Property(t => t.Detection).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.Severity).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.StaProductivityAnalysis).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.PerProductivityAnalysis).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+
+                b.HasIndex(x => x.Code);
+            });
+        }
+
+        public static void ConfigureShippingAdresses(this ModelBuilder builder)
+        {
+            builder.Entity<ShippingAdresses>(b =>
+            {
+                b.ToTable("ShippingAdresses");
+                b.ConfigureByConvention();
+
+
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.CustomerCardID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.Adress1).IsRequired().HasColumnType("nvarchar(MAX)");
+                b.Property(t => t.Adress2).HasColumnType("nvarchar(MAX)");
+                b.Property(t => t.District).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.City).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.Country).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.Phone).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(100);
+                b.Property(t => t.EMail).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.Fax).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(100);
+                b.Property(t => t.PostCode).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t._Default).HasColumnType("decimal(18, 6)");
+
+                b.HasIndex(x => x.Code);
+
+                b.HasOne(x => x.CurrentAccountCards).WithMany(x => x.ShippingAdresses).HasForeignKey(x => x.CustomerCardID).OnDelete(DeleteBehavior.NoAction);
+
+            });
+        }
+
+        public static void ConfigureCurrencies(this ModelBuilder builder)
+        {
+            builder.Entity<Currencies>(b =>
+            {
+                b.ToTable("Currencies");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+                b.HasIndex(x => x.Code);
+
+
+            });
+        }
+
+        public static void ConfigurePaymentPlans(this ModelBuilder builder)
+        {
+            builder.Entity<PaymentPlans>(b =>
+            {
+                b.ToTable("PaymentPlans");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.Days_).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.DelayMaturityDifference).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+                b.HasIndex(x => x.Code);
+            });
+        }
+
+        public static void ConfigureWarehouses(this ModelBuilder builder)
+        {
+            builder.Entity<Warehouses>(b =>
+            {
+                b.ToTable("Warehouses");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+                b.HasIndex(x => x.Code);
+
+            });
+        }
+
+        public static void ConfigureOperationUnsuitabilityItems(this ModelBuilder builder)
+        {
+            builder.Entity<OperationUnsuitabilityItems>(b =>
+            {
+                b.ToTable("OperationUnsuitabilityItems");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.Image).HasColumnType("varbinary(max)");
+                b.Property(t => t.Detection).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.Severity).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.StaProductivityAnalysis).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.PerProductivityAnalysis).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+
+                b.HasIndex(x => x.Code);
+            });
+        }
+        public static void ConfigureFinalControlUnsuitabilityItems(this ModelBuilder builder)
+        {
+            builder.Entity<FinalControlUnsuitabilityItems>(b =>
+            {
+                b.ToTable("FinalControlUnsuitabilityItems");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.Image).HasColumnType("varbinary(max)");
+                b.Property(t => t.Detection).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.Severity).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.StaProductivityAnalysis).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.PerProductivityAnalysis).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+
+                b.HasIndex(x => x.Code);
+            });
+        }
+
 
     }
 }

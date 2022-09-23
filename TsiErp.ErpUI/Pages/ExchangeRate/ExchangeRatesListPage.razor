@@ -1,0 +1,144 @@
+﻿@page "/exchange-rates"
+@using Syncfusion.Blazor.Buttons
+@using Tsi.Blazor.Component.Core.Components.Commons.Loadings
+@using TsiErp.Business.Entities.ExchangeRate.Services
+@using TsiErp.Entities.Entities.ExchangeRate
+@using TsiErp.Entities.Entities.ExchangeRate.Dtos
+@using TsiErp.ErpUI.Pages.Base
+@using Tsi.Blazor.Component.Core.Components.Layouts
+
+@inherits BaseListPage<SelectExchangeRatesDto, ListExchangeRatesDto, CreateExchangeRatesDto, UpdateExchangeRatesDto, ListExchangeRatesParameterDto>
+
+@inject IExchangeRatesAppService ExchangeRatesService
+
+@if (!base.IsLoaded)
+{
+    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+}
+else
+{
+    <DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+        <GridLayoutItems>
+            <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIListPageTitleCard">
+                        <CardContent>
+                            <TsiBreadCrumb PreviousMenus="Genel Sistem Tanımlamarı" CurrentMenu="Kurlar" />
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+            <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIGridCards">
+                        <CardContent>
+                            <SfGrid ID="Grid" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                AllowExcelExport="true" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListExchangeRatesDto"></GridEvents>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                <GridPageSettings PageSizes="true"></GridPageSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(ListExchangeRatesDto.CurrencyCode) HeaderText="PARA BİRİMİ KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListExchangeRatesDto.Date) HeaderText="TARİH" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListExchangeRatesDto.BuyingRate) HeaderText="ALIŞ KURU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListExchangeRatesDto.EffectiveBuyingRate) HeaderText="EFEKTİF ALIŞ KURU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListExchangeRatesDto.SaleRate) HeaderText="SATIŞ KURU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListExchangeRatesDto.EffectiveSaleRate) HeaderText="EFEKTİF SATIŞ KURU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+        </GridLayoutItems>
+    </DevGridLayout>
+
+    <DxPopup @bind-Visible="base.EditPageVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Kurlar"
+         Width="760px"
+         Height="330px"
+         HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout>
+
+                <Rows>
+                    <DxGridLayoutRow Height="100px" />
+                    <DxGridLayoutRow Height="1px" />
+                    <DxGridLayoutRow Height="50px" />
+                    <DxGridLayoutRow Height="1px" />
+                    <DxGridLayoutRow Height="50px" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="40px" />
+                </Columns>
+
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>Para Birimi Kodu: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" Placeholder="Para Birimi Kodunu Yazınız." @bind-Value="DataSource.CurrencyCode"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>Tarih: </strong></label>
+                           <SfDatePicker @bind-Value="DataSource.Date"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Alış Kuru: </strong></label><br />
+                            <SfNumericTextBox TValue="decimal" Placeholder="Alış Kurunu Yazınız." @bind-Value="DataSource.BuyingRate"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Satış Kuru: </strong></label><br />
+                            <SfNumericTextBox TValue="decimal" Placeholder="Satış Kurunu Yazınız." @bind-Value="DataSource.SaleRate"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                     <DxGridLayoutItem Row="4" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Efektif Alış Kuru: </strong></label><br />
+                            <SfNumericTextBox TValue="decimal" Placeholder="Alış Kurunu Yazınız." @bind-Value="DataSource.EffectiveBuyingRate"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="4" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Efektif Satış Kuru: </strong></label><br />
+                            <SfNumericTextBox TValue="decimal" Placeholder="Satış Kurunu Yazınız." @bind-Value="DataSource.EffectiveSaleRate"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+

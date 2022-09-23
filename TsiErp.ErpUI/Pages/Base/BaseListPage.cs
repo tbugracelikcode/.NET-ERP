@@ -134,31 +134,19 @@ namespace TsiErp.ErpUI.Pages.Base
                 SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
         }
 
-        public void HideEditPage()
+        public virtual void HideEditPage()
         {
             EditPageVisible = false;
             InvokeAsync(StateHasChanged);
         }
 
-        public void ShowEditPage()
+        public virtual void ShowEditPage()
         {
             EditPageVisible = true;
             InvokeAsync(StateHasChanged);
         }
 
-        public virtual void BeforeShowPopupListPage(params object[] prm)
-        {
-            IsPopupListPage = true;
 
-            if (prm.Length > 0)
-                PopupListPageFocusedRowId = prm[0] == null ? Guid.Empty : (Guid)prm[0];
-        }
-
-        public void HideListPage()
-        {
-            IsPopupListPage = false;
-            ((DxTextBox)ActiveEditComponent)?.FocusAsync();
-        }
 
         public async virtual void OnContextMenuClick(ContextMenuClickEventArgs<TGetListOutputDto> args)
         {
@@ -206,12 +194,5 @@ namespace TsiErp.ErpUI.Pages.Base
             ShowEditPage();
         }
 
-        public virtual void ButtonEditDeleteKeyDown(IEntityDto entity, string fieldName)
-        {
-        }
-
-        public virtual void SelectEntity(IEntityDto targetEntity)
-        {
-        }
     }
 }
