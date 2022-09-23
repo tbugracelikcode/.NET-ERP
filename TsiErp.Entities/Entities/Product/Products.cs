@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TsiErp.Entities.Entities.ProductGroup;
 using TsiErp.Entities.Entities.UnitSet;
-//using TsiErp.Entities.Entities.SalesPropositionLine;
+using TsiErp.Entities.Entities.SalesPropositionLine;
 using Tsi.Core.Entities.Auditing;
 
 namespace TsiErp.Entities.Entities.Product
@@ -117,6 +117,6 @@ namespace TsiErp.Entities.Entities.Product
 
         public ProductGroups ProductGroups { get; set; }
 
-        //public ICollection<SalesPropositionLines> SalesPropositionLines { get; set; }
+        public ICollection<SalesPropositionLines> SalesPropositionLines { get; set; }
     }
 }

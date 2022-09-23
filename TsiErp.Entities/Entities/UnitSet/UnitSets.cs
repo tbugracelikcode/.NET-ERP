@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.Product;
-//using TsiErp.Entities.Entities.SalesPropositionLine;
+using TsiErp.Entities.Entities.SalesPropositionLine;
 
 namespace TsiErp.Entities.Entities.UnitSet
 {
@@ -33,9 +33,9 @@ namespace TsiErp.Entities.Entities.UnitSet
         /// Stoklar
         /// </summary>
         public ICollection<Products> Products { get; set; }
-        ///// <summary>
-        ///// Satış Teklifleri
-        ///// </summary>
-        //public ICollection<SalesPropositionLines> SalesPropositionLines { get; set; }
+        /// <summary>
+        /// Satış Teklifleri
+        /// </summary>
+        public ICollection<SalesPropositionLines> SalesPropositionLines { get; set; }
     }
 }

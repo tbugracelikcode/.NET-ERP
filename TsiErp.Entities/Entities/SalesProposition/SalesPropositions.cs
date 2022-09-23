@@ -5,7 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.Branch;
+using TsiErp.Entities.Entities.Currency;
+using TsiErp.Entities.Entities.CurrentAccountCard;
+using TsiErp.Entities.Entities.PaymentPlan;
 using TsiErp.Entities.Entities.SalesPropositionLine;
+using TsiErp.Entities.Entities.ShippingAdress;
+using TsiErp.Entities.Entities.WareHouse;
 using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.SalesProposition
@@ -108,30 +113,30 @@ namespace TsiErp.Entities.Entities.SalesProposition
 
 
 
-        ///// <summary>
-        ///// Ödeme Planı
-        ///// </summary>
-        //public PaymentPlans PaymentPlan { get; set; }
-        ///// <summary>
-        ///// Şube
-        ///// </summary>
-        //public Branches Branches { get; set; }
-        ///// <summary>
-        ///// Depo
-        ///// </summary>        
-        //public Warehouses Warehouses { get; set; }
-        ///// <summary>
-        ///// Para Birimi
-        ///// </summary>
-        //public Currencies Currencies { get; set; }
-        ///// <summary>
-        ///// Cari Hesap Kartları
-        ///// </summary>
-        //public CurrentAccountCards CurrentAccountCards { get; set; }
-        ///// <summary>
-        ///// Sevkiyat Adresleri
-        ///// </summary>
-        //public ShippingAdresses ShippingAdresses { get; set; }
+        /// <summary>
+        /// Ödeme Planı
+        /// </summary>
+        public PaymentPlans PaymentPlan { get; set; }
+        /// <summary>
+        /// Şube
+        /// </summary>
+        public Branches Branches { get; set; }
+        /// <summary>
+        /// Depo
+        /// </summary>        
+        public Warehouses Warehouses { get; set; }
+        /// <summary>
+        /// Para Birimi
+        /// </summary>
+        public Currencies Currencies { get; set; }
+        /// <summary>
+        /// Cari Hesap Kartları
+        /// </summary>
+        public CurrentAccountCards CurrentAccountCards { get; set; }
+        /// <summary>
+        /// Sevkiyat Adresleri
+        /// </summary>
+        public ShippingAdresses ShippingAdresses { get; set; }
 
         public ICollection<SalesPropositionLines> SalesPropositionLines { get; set; }
     }
