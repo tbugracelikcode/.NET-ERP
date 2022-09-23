@@ -10,8 +10,4 @@
     <ProjectReference Include="..\Tsi.Core\Tsi.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Entities\SalesPropositionLine\Dtos\" />
-  </ItemGroup>
-
 </Project>

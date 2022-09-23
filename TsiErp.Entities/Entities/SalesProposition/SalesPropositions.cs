@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.Branch;
+using TsiErp.Entities.Entities.SalesPropositionLine;
 using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.SalesProposition
@@ -132,6 +133,6 @@ namespace TsiErp.Entities.Entities.SalesProposition
         ///// </summary>
         //public ShippingAdresses ShippingAdresses { get; set; }
 
-        //public ICollection<SalesPropositionLines> SalesPropositionLines { get; set; }
+        public ICollection<SalesPropositionLines> SalesPropositionLines { get; set; }
     }
 }
