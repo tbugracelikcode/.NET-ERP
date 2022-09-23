@@ -60,6 +60,8 @@ using TsiErp.Entities.Entities.ProductGroup;
 using TsiErp.Entities.Entities.ProductGroup.Dtos;
 using TsiErp.Entities.Entities.ShippingAdress;
 using TsiErp.Entities.Entities.ShippingAdress.Dtos;
+using TsiErp.Entities.Entities.SalesPropositionLine.Dtos;
+using TsiErp.Entities.Entities.SalesPropositionLine;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -228,7 +230,7 @@ namespace TsiErp.Business.MapperProfile
                 .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Name))
                 .ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Name))
                 .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name))
-               /* .ForMember(x => x.PaymentPlanDay, y => y.MapFrom(z => z.PaymentPlan.Days_))*/;
+               .ForMember(x => x.PaymentPlanCode, y => y.MapFrom(z => z.PaymentPlan.Code));
 
             CreateMap<SalesPropositions, ListSalesPropositionsDto>()
                 .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Name))
@@ -244,6 +246,26 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<CreateSalesPropositionsDto, SalesPropositions>();
             CreateMap<SelectSalesPropositionsDto, CreateSalesPropositionsDto>();
             CreateMap<SelectSalesPropositionsDto, UpdateSalesPropositionsDto>();
+
+
+            CreateMap<SalesPropositionLines, SelectSalesPropositionLinesDto>()
+                .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Name))
+                .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Name))
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name))
+                .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code))
+               .ForMember(x => x.PaymentPlanCode, y => y.MapFrom(z => z.PaymentPlans.Code));
+            CreateMap<SalesPropositionLines, ListSalesPropositionLinesDto>()
+                .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Name))
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name))
+                .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code))
+               .ForMember(x => x.PaymentPlanCode, y => y.MapFrom(z => z.PaymentPlans.Code));
+            CreateMap<CreateSalesPropositionLinesDto, SalesPropositionLines>();
+            CreateMap<SelectSalesPropositionLinesDto, CreateSalesPropositionLinesDto>();
+            CreateMap<UpdateSalesPropositionLinesDto, SalesPropositionLines>();
+            CreateMap<SelectSalesPropositionLinesDto, UpdateSalesPropositionLinesDto>();
+
 
             CreateMap<ProductGroups, SelectProductGroupsDto>();
             CreateMap<ProductGroups, ListProductGroupsDto>();

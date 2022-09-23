@@ -14,32 +14,57 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         [Inject]
         ModalManager ModalManager { get; set; }
 
-        List<SelectSalesPropositionLinesDto> LineList = new List<SelectSalesPropositionLinesDto>();
+        public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+
         List<ListSalesPropositionLinesDto> GridLineList = new List<ListSalesPropositionLinesDto>();
 
-        private bool LineEditPageVisible = false;
+        private bool LineCrudPopup = false;
 
         protected override async void OnInitialized()
         {
             BaseCrudService = SalesPropositionsAppService;
         }
 
+        protected override async Task BeforeInsertAsync()
+        {
+            DataSource = new SelectSalesPropositionsDto()
+            {
+                Date_ = DateTime.Today,
+                ValidityDate_ = DateTime.Today.AddDays(15)
+            };
 
-        public async override void OnContextMenuClick(ContextMenuClickEventArgs<ListSalesPropositionsDto> args)
+            DataSource.SelectSalesPropositionLines = new List<SelectSalesPropositionLinesDto>();
+
+            ShowEditPage();
+
+            CreateLineContextMenuItems();
+
+            await Task.CompletedTask;
+        }
+
+        protected void CreateLineContextMenuItems()
+        {
+            LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle", Id = "new" });
+            LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
+            LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
+            LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
+        }
+
+        public async void OnListContextMenuClick(ContextMenuClickEventArgs<ListSalesPropositionLinesDto> args)
         {
             switch (args.Item.Id)
             {
                 case "new":
-                    DataSource = new SelectSalesPropositionsDto();
-                    DataSource.SelectSalesPropositionLines = new List<SelectSalesPropositionLinesDto>();
-                    ShowEditPage();
+                    //BeforeInsertAsync();
+                    LineCrudPopup = true;
+                    await InvokeAsync(StateHasChanged);
                     break;
 
                 case "changed":
-                    SelectFirstDataRow = false;
-                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
-
-                    EditPageVisible = true;
+                    //SelectFirstDataRow = false;
+                    //DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    //EditPageVisible = true;
+                    LineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -49,16 +74,16 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
 
                     if (res == true)
                     {
-                        SelectFirstDataRow = false;
-                        await DeleteAsync(args.RowInfo.RowData.Id);
-                        await GetListDataSourceAsync();
+                        //SelectFirstDataRow = false;
+                        //await DeleteAsync(args.RowInfo.RowData.Id);
+                        //await GetListDataSourceAsync();
                         await InvokeAsync(StateHasChanged);
                     }
 
                     break;
 
                 case "refresh":
-                    await GetListDataSourceAsync();
+                    //await GetListDataSourceAsync();
                     await InvokeAsync(StateHasChanged);
                     break;
 
