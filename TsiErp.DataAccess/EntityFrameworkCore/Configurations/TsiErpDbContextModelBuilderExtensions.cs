@@ -711,5 +711,97 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             });
         }
 
+        public static void ConfigureCurrencies(this ModelBuilder builder)
+        {
+            builder.Entity<Currencies>(b =>
+            {
+                b.ToTable("Currencies");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+                b.HasIndex(x => x.Code);
+
+
+            });
+        }
+
+        public static void ConfigurePaymentPlans(this ModelBuilder builder)
+        {
+            builder.Entity<PaymentPlans>(b =>
+            {
+                b.ToTable("PaymentPlans");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.Days_).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.DelayMaturityDifference).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+                b.HasIndex(x => x.Code);
+            });
+        }
+
+        public static void ConfigureWarehouses(this ModelBuilder builder)
+        {
+            builder.Entity<Warehouses>(b =>
+            {
+                b.ToTable("Warehouses");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+                b.HasIndex(x => x.Code);
+
+            });
+        }
+
+        public static void ConfigureOperationUnsuitabilityItems(this ModelBuilder builder)
+        {
+            builder.Entity<OperationUnsuitabilityItems>(b =>
+            {
+                b.ToTable("OperationUnsuitabilityItems");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.Image).HasColumnType("varbinary(max)");
+                b.Property(t => t.Detection).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.Severity).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.StaProductivityAnalysis).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.PerProductivityAnalysis).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+
+                b.HasIndex(x => x.Code);
+            });
+        }
+        public static void ConfigureFinalControlUnsuitabilityItems(this ModelBuilder builder)
+        {
+            builder.Entity<FinalControlUnsuitabilityItems>(b =>
+            {
+                b.ToTable("FinalControlUnsuitabilityItems");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.Image).HasColumnType("varbinary(max)");
+                b.Property(t => t.Detection).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.Severity).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.StaProductivityAnalysis).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.PerProductivityAnalysis).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+
+                b.HasIndex(x => x.Code);
+            });
+        }
+
+
     }
 }

@@ -1,0 +1,152 @@
+﻿@page "/final-control-unsuitability-items"
+@using Syncfusion.Blazor.Buttons
+@using Tsi.Blazor.Component.Core.Components.Commons.Loadings
+@using TsiErp.Business.Entities.FinalControlUnsuitabilityItem.Services
+@using TsiErp.Entities.Entities.FinalControlUnsuitabilityItem
+@using TsiErp.Entities.Entities.FinalControlUnsuitabilityItem.Dtos
+@using TsiErp.ErpUI.Pages.Base
+@using Tsi.Blazor.Component.Core.Components.Layouts
+
+@inherits BaseListPage<SelectFinalControlUnsuitabilityItemsDto, ListFinalControlUnsuitabilityItemsDto, CreateFinalControlUnsuitabilityItemsDto, UpdateFinalControlUnsuitabilityItemsDto, ListFinalControlUnsuitabilityItemsParameterDto>
+
+@inject IFinalControlUnsuitabilityItemsAppService FinalControlUnsuitabilityItemsService
+
+@{if (!base.IsLoaded)
+{
+    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+}
+else
+{
+    <DevGridLayout ColumnCount="1" RowCount="3">
+            <GridLayoutItems>
+                <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+                    <Template>
+                        <SfCard class="TSIListPageTitleCard">
+                            <CardContent>
+                                <TsiBreadCrumb PreviousMenus="Kalite Kontrol > Ana Kayıtlar > Uygunsuzluk Kayıtları Başlıkları" CurrentMenu="Final Kontrol Uygunsuzluk Başlıkları" />
+                            </CardContent>
+                            <CardFooter>
+                            </CardFooter>
+                        </SfCard>
+                    </Template>
+                </DxGridLayoutItem>
+                <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+                    <Template>
+                        <SfCard class="TSIGridCards">
+                            <CardContent>
+                                <SfGrid ID="Grid" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                                AllowSorting="true" Height="100%" Width="100%"  ContextMenuItems="@GridContextMenu" class="GridZebra">
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListFinalControlUnsuitabilityItemsDto"></GridEvents>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                <GridPageSettings PageSizes="true"></GridPageSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(ListFinalControlUnsuitabilityItemsDto.Code) HeaderText="KOD" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListFinalControlUnsuitabilityItemsDto.Name) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListFinalControlUnsuitabilityItemsDto.Detection) HeaderText="TESPİT" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListFinalControlUnsuitabilityItemsDto.Severity) HeaderText="ŞİDDET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListFinalControlUnsuitabilityItemsDto.StaProductivityAnalysis) HeaderText="İSTASYON VERİMLİLİK ANALİZİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListFinalControlUnsuitabilityItemsDto.PerProductivityAnalysis) HeaderText="PERSONEL VERİMLİLİK ANALİZİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListFinalControlUnsuitabilityItemsDto.Image) HeaderText="RESİM" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                </GridColumns>
+                            </SfGrid>
+                            </CardContent>
+                            <CardFooter>
+                            </CardFooter>
+                        </SfCard>
+                    </Template>
+                </DxGridLayoutItem>
+            </GridLayoutItems>
+    </DevGridLayout>
+
+    <DxPopup @bind-Visible="base.EditPageVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Final Kontrol Uygunsuzluk Başlıkları"
+         Width="980px"
+         Height="350px"
+         HeaderCssClass="HeaderTitleCss">
+            <BodyTemplate>
+
+                <DxGridLayout>
+                    <Rows>
+                        <DxGridLayoutRow Height="100px" />
+                        <DxGridLayoutRow Height="70px" />
+                        <DxGridLayoutRow Height="70px" />
+                    </Rows>
+                    <Columns>
+                        <DxGridLayoutColumn Width="40px" />
+                        <DxGridLayoutColumn Width="300px" />
+                        <DxGridLayoutColumn Width="30px" />
+                        <DxGridLayoutColumn Width="300px" />
+                        <DxGridLayoutColumn Width="40px" />
+                        <DxGridLayoutColumn Width="200px" />
+                        <DxGridLayoutColumn Width="20px" />
+                    </Columns>
+                    <Items>
+                        <DxGridLayoutItem Row="0" Column="1">
+                            <Template>
+                                <br />
+                                <label class="TSIModalLabel"><strong>Kod: </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="@DataSource.Code" Placeholder="Kodu Yazınız."></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="0" Column="3">
+                            <Template>
+                                <br />
+                                <label class="TSIModalLabel"><strong>Açıklama: </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="@DataSource.Name" Placeholder="Açıklama Yazınız."></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="0" Column="5" RowSpan="1">
+                            <Template>
+                                <br />
+                                <label class="TSIModalLabel"><strong>Resim: </strong></label>
+                                <DxImage></DxImage>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="1" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>Şiddet: </strong></label>
+                                <SfNumericTextBox Min="0" TValue="int" @bind-Value="@DataSource.Severity" CssClass="TSITxtBox"></SfNumericTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="1" Column="3">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>Tespit: </strong></label>
+                                <SfNumericTextBox Min="0" TValue="int" @bind-Value="@DataSource.Detection" CssClass="TSITxtBox"></SfNumericTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="2" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>İstasyon Verimlilik Analizi: </strong></label><br />
+                                <SfSwitch @bind-Checked="DataSource.StaProductivityAnalysis"></SfSwitch>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="2" Column="3">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>Personel Verimlilik Analizi: </strong></label><br />
+                                <SfSwitch @bind-Checked="DataSource.PerProductivityAnalysis"></SfSwitch>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="2" Column="5">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
+                                <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                    </Items>
+                </DxGridLayout>
+            </BodyTemplate>
+            <FooterContentTemplate>
+                <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+            </FooterContentTemplate>
+    </DxPopup>
+
+}
+}

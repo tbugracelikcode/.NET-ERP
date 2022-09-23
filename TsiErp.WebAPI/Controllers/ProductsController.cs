@@ -1,0 +1,82 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using TsiErp.Business.Entities.Product.Services;
+using TsiErp.Entities.Entities.Product.Dtos;
+
+namespace TsiErp.WebAPI.Controllers
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class ProductsController : ControllerBase
+    {
+        private IProductsAppService _appService;
+
+        public ProductsController(IProductsAppService appService)
+        {
+            _appService = appService;
+        }
+
+        [HttpPost("GetListAsync")]
+        public async Task<IActionResult> GetList(ListProductsParameterDto input)
+        {
+            var result = await _appService.GetListAsync(input);
+
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+
+            return BadRequest(result.Message);
+        }
+
+        [HttpGet("GetAsync")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var result = await _appService.GetAsync(id);
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+
+            return BadRequest(result.Message);
+        }
+
+        [HttpPost("InsertAsync")]
+        public async Task<IActionResult> Insert(CreateProductsDto branch)
+        {
+            var result = await _appService.CreateAsync(branch);
+
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+
+            return BadRequest(result.Message);
+        }
+
+        [HttpPut("UpdateAsync")]
+        public async Task<IActionResult> Update(UpdateProductsDto branch)
+        {
+            var result = await _appService.UpdateAsync(branch);
+
+            if (result.Success)
+            {
+                return Ok(result.Data);
+            }
+
+            return BadRequest(result.Message);
+        }
+
+        [HttpPost("DeleteAsync")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var result = await _appService.DeleteAsync(id);
+
+            if (result.Success)
+            {
+                return Ok(result.Message);
+            }
+
+            return BadRequest(result.Message);
+        }
+    }
+}
