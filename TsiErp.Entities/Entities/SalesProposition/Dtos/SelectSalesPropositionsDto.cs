@@ -124,7 +124,7 @@ namespace TsiErp.Entities.Entities.SalesProposition.Dtos
         /// <summary>
         /// Geçerlilik Tarihi
         /// </summary>
-        public DateTime ValidityDate_ { get; set; }
+        public DateTime? ValidityDate_ { get; set; }
         /// <summary>
         /// Sevkiyat Adresi ID
         /// </summary>
