@@ -1,5 +1,6 @@
 ﻿@page "/"
 
+<SfButton OnClick="SaveDiagramClick"></SfButton>
 <div style="width:240px;height:100%;float:left;">
     <div class="sb-mobile-palette-bar">
         <div id="palette-icon" style="float: right;" role="button" class="e-ddb-icons1 e-toggle-palette"></div>
@@ -12,7 +13,7 @@
 <div id="diagram-space" class="sb-mobile-diagram">
     <div class="content-wrapper" style="border: 1px solid #D7D7D7">
         <div style="width:calc(100% - 242px);height:100%;float:left;">
-            <SfDiagramComponent @ref="@Diagram" Connectors="@connectors" Created="OnCreated" SelectionChanged="@OnSelectionChanged" Height="687px" Nodes="@nodes" DragDrop="OnDrop" NodeCreating="OnNodeCreating" ConnectorCreating="OnConnectorCreating" GetCustomTool="@GetCustomTool" SelectionSettings="@selectionSettings">
+            <SfDiagramComponent @ref="@Diagram" @bind-Connectors="@connectors" Created="OnCreated" SelectionChanged="@OnSelectionChanged" Height="687px" @bind-Nodes="@nodes" DragDrop="OnDrop" NodeCreating="OnNodeCreating" ConnectorCreating="OnConnectorCreating" GetCustomTool="@GetCustomTool"  SelectionSettings="@selectionSettings">
                 <SnapSettings>
                     <HorizontalGridLines LineColor="#e0e0e0 " LineIntervals="@GridLineIntervals">
                     </HorizontalGridLines>
@@ -21,7 +22,7 @@
                 </SnapSettings>
                 <DiagramTemplates>
                     <NodeTemplate>
-                        @{
+                        @*@{
                                 var node = (context as Node);
                                 string id = node.ID;
                                 var nodeInfo = node.AdditionalInfo.Where(t => t.Key == "nodeInfo").Select(t => t.Value).FirstOrDefault();
@@ -282,7 +283,7 @@
                                     default:
                                         break;
                                 }
-                            }
+                            }*@
                         </NodeTemplate>
                     </DiagramTemplates>
                 </SfDiagramComponent>
