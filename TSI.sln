@@ -35,6 +35,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ui-core", "ui-core", "{AED8
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tsi.Blazor.Component.Core", "Tsi.Blazor.Component.Core\Tsi.Blazor.Component.Core.csproj", "{F24A0CD3-46CC-4C22-8B9B-0FA268F53F6A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ui-diagram", "ui-diagram", "{03F701A0-8D06-4C31-8106-EC6CC301B048}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TsiErp.VsmBuilder", "TsiErp.VsmBuilder\TsiErp.VsmBuilder.csproj", "{C3F041A6-4D36-4411-AD11-0A95FEFE6C50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +89,10 @@ Global
 		{F24A0CD3-46CC-4C22-8B9B-0FA268F53F6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F24A0CD3-46CC-4C22-8B9B-0FA268F53F6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F24A0CD3-46CC-4C22-8B9B-0FA268F53F6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3F041A6-4D36-4411-AD11-0A95FEFE6C50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3F041A6-4D36-4411-AD11-0A95FEFE6C50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3F041A6-4D36-4411-AD11-0A95FEFE6C50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3F041A6-4D36-4411-AD11-0A95FEFE6C50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -101,6 +109,7 @@ Global
 		{C4BD41BF-4E36-46C9-B56A-FB350797D65D} = {6E426DBA-9C12-4356-9AC7-1A54EE81C635}
 		{097DAD31-0D25-4C46-9B0D-D742B46612D7} = {1CF32D9B-7561-42F2-8668-4A61F458604D}
 		{F24A0CD3-46CC-4C22-8B9B-0FA268F53F6A} = {AED827AF-E34A-4BCB-9A24-70E6FF1F21AB}
+		{C3F041A6-4D36-4411-AD11-0A95FEFE6C50} = {03F701A0-8D06-4C31-8106-EC6CC301B048}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {249F607F-1AF1-497A-ADFA-357532BFCABD}
