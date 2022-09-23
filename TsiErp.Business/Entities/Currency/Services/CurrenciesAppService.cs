@@ -49,7 +49,7 @@ namespace TsiErp.Business.Entities.Currency.Services
 
         public async Task<IDataResult<SelectCurrenciesDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id/*,*/ /*x => x.CurrentAccountCards, y => y.ExchangeRates*/);
+            var entity = await _repository.GetAsync(t => t.Id == id, t => t.CurrentAccountCards, y => y.ExchangeRates);
             var mappedEntity = ObjectMapper.Map<Currencies, SelectCurrenciesDto>(entity);
             return new SuccessDataResult<SelectCurrenciesDto>(mappedEntity);
         }
@@ -58,7 +58,7 @@ namespace TsiErp.Business.Entities.Currency.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCurrenciesDto>>> GetListAsync(ListCurrenciesParameterDto input)
         {
-            var list = await _repository.GetListAsync(t => t.IsActive == input.IsActive /*,*/ /*x => x.CurrentAccountCards, y => y.ExchangeRates*/);
+            var list = await _repository.GetListAsync(t => t.IsActive == input.IsActive, x => x.CurrentAccountCards, y => y.ExchangeRates);
 
             var mappedEntity = ObjectMapper.Map<List<Currencies>, List<ListCurrenciesDto>>(list.ToList());
 

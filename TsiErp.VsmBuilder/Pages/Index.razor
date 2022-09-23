@@ -1,0 +1,56 @@
+﻿@page "/deneme"
+@using System.Text.Json
+@using Newtonsoft.Json
+
+<input type="button" @onclick="Tikla" />
+
+<div style="width:900px !important;height:900px !important">
+    <CascadingValue Value="Diagram">
+        <DiagramCanvas Class="grid">
+            <Widgets>
+                <NavigatorWidget Width="100" Height="70" DefaultStyle="true"></NavigatorWidget>
+            </Widgets>
+        </DiagramCanvas>
+    </CascadingValue>
+</div>
+@code {
+    private Diagram Diagram { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        Diagram = new Diagram();
+
+        Diagram.RegisterModelComponent<BotAnswerNode, BotAnswerWidget>();
+
+        //var node = new NodeModel(new Point(20, 20));
+        //node.AddPort(PortAlignment.Top);
+        //node.AddPort(PortAlignment.Right);
+        //node.AddPort(PortAlignment.Bottom);
+        //node.AddPort(PortAlignment.Left);
+
+        Diagram.Nodes.Add(new[] { NewNode(100, 100), NewNode(300, 300) });
+    }
+
+    private BotAnswerNode NewNode(double x, double y)
+    {
+        var node = new BotAnswerNode();
+        node.X = x;
+        node.Y = y;
+        var position = new Point(node.X, node.Y);
+        node.Position = position;
+        node.AddPort(PortAlignment.Top);
+        node.AddPort(PortAlignment.Bottom);
+        return node;
+    }
+
+    void Tikla()
+    {
+        var list = Diagram.Nodes.ToList();
+
+        string s = JsonConvert.SerializeObject(list, Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
+
+
+    }
+}
