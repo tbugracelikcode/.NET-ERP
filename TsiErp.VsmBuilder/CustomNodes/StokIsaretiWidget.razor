@@ -1,0 +1,50 @@
+﻿
+<div class="custom-node @(Node.Selected ? " selected" : "")">
+    <div class="card" style="width: 190px;">
+        <div class="card-body">
+            <div class="form-group">
+                <table class="tg">
+                    <thead>
+                        <tr>
+                            <td class="tg-0lax" colspan="3">
+                                <img class="d-block m-auto" src="/images/Stok_Isareti.png" />
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="tg-0lax">
+                                <input type="text" class="form-control"
+                                       @bind-value="Node.Adet"
+                                       @onmousedown:stopPropagation
+                                       @onmouseup:stopPropagation
+                                       @onmousemove:stopPropagation />
+                            </td>
+                            <td class="tg-0lax">
+                                <input type="text" class="form-control"
+                                       @bind-value="Node.Gun"
+                                       @onmousedown:stopPropagation
+                                       @onmouseup:stopPropagation
+                                       @onmousemove:stopPropagation />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tg-0lax" style="text-align: center;">Adet</td>
+                            <td class="tg-0lax" style="text-align: center;">Gün</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    @foreach (var port in Node.Ports)
+    {
+        <PortRenderer Port="port"></PortRenderer>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public StokIsaretiNode Node { get; set; }
+}

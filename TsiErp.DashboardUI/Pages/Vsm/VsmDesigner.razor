@@ -22,7 +22,7 @@
                 </SnapSettings>
                 <DiagramTemplates>
                     <NodeTemplate>
-                        @{
+                        @*@{
                                 var node = (context as Node);
                                 string id = node.ID;
                                 var nodeInfo = node.AdditionalInfo.Where(t => t.Key == "nodeInfo").Select(t => t.Value).FirstOrDefault();
@@ -283,7 +283,7 @@
                                     default:
                                         break;
                                 }
-                            }
+                            }*@
                         </NodeTemplate>
                     </DiagramTemplates>
                 </SfDiagramComponent>

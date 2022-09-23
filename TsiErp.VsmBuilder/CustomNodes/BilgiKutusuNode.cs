@@ -21,6 +21,8 @@ namespace TsiErp.VsmBuilder.CustomNodes
         [DataMember]
         public string FireOrani { get; set; }
         [DataMember]
+        public string ClassName { get; set; } = "BilgiKutusuNode";
+        [DataMember]
         public double X { get; set; }
         [DataMember]
         public double Y { get; set; }
