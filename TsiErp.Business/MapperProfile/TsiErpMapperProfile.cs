@@ -223,23 +223,23 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateWarehousesDto, Warehouses>();
             CreateMap<SelectWarehousesDto, UpdateWarehousesDto>();
 
-            //CreateMap<SalesPropositions, SelectSalesPropositionsDto>()
-            //    .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Name))
-            //    .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Name))
-            //    .ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Name))
-            //    .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name))
-            //    .ForMember(x => x.PaymentPlanDay, y => y.MapFrom(z => z.PaymentPlan.Days_));
+            CreateMap<SalesPropositions, SelectSalesPropositionsDto>()
+                .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Name))
+                .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Name))
+                .ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Name))
+                .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name))
+               /* .ForMember(x => x.PaymentPlanDay, y => y.MapFrom(z => z.PaymentPlan.Days_))*/;
 
-            //CreateMap<SalesPropositions, ListSalesPropositionsDto>()
-            //    .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Name))
-            //    .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Name))
-            //    .ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Name))
-            //    .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name))
-            //    .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
-            //    .ForMember(x => x.PaymentPlanDay, y => y.MapFrom(z => z.PaymentPlan.Days_));
+            CreateMap<SalesPropositions, ListSalesPropositionsDto>()
+                .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Name))
+                .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Name))
+                .ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Name))
+                .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name))
+                .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
+                .ForMember(x => x.PaymentPlanDay, y => y.MapFrom(z => z.PaymentPlan.Days_));
 
-            //CreateMap<UpdateSalesPropositionsDto, SalesPropositions>()
-            //    .ForMember(x => x.SalesPropositionLines, y => y.Ignore());
+            CreateMap<UpdateSalesPropositionsDto, SalesPropositions>()
+                .ForMember(x => x.SalesPropositionLines, y => y.Ignore());
 
             CreateMap<CreateSalesPropositionsDto, SalesPropositions>();
             CreateMap<SelectSalesPropositionsDto, CreateSalesPropositionsDto>();
