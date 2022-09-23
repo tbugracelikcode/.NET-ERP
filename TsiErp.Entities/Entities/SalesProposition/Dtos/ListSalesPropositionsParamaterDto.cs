@@ -7,9 +7,5 @@ namespace TsiErp.Entities.Entities.SalesProposition.Dtos
 {
     public class ListSalesPropositionsParamaterDto : FullAuditedEntityDto
     {
-        /// <summary>
-        /// Aktiflik
-        /// </summary>
-        public bool IsActive { get; set; } = true;
     }
 }

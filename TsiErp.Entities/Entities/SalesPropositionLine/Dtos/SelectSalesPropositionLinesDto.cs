@@ -4,19 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
-using TsiErp.Entities.Entities.Branch;
-using TsiErp.Entities.Entities.SalesProposition;
-using TsiErp.Entities.Entities.UnitSet;
 using TsiErp.Entities.Enums;
 
-namespace TsiErp.Entities.Entities.SalesPropositionLine
+namespace TsiErp.Entities.Entities.SalesPropositionLine.Dtos
 {
-    public class SalesPropositionLines : FullAuditedEntity
+    public class SelectSalesPropositionLinesDto : FullAuditedEntityDto
     {
         /// <summary>
         /// Satış Teklif ID
         /// </summary>
         public Guid SalesPropositionID { get; set; }
+
         /// <summary>
         /// Satır Nr
         /// </summary>
@@ -24,15 +22,31 @@ namespace TsiErp.Entities.Entities.SalesPropositionLine
         /// <summary>
         /// Stok ID
         /// </summary>
-        public Guid ProductID { get; set; }
+        public Guid? ProductID { get; set; }
+        /// <summary>
+        /// Stok Kodu
+        /// </summary>
+        public string ProductCode { get; set; }
+        /// <summary>
+        /// Stok Adı
+        /// </summary>
+        public string ProductName { get; set; }
         /// <summary>
         /// Birim Set ID
         /// </summary>
-        public Guid UnitSetID { get; set; }
+        public Guid? UnitSetID { get; set; }
+        /// <summary>
+        /// Birim Set Kodu
+        /// </summary>
+        public string UnitSetCode { get; set; }
         /// <summary>
         /// Şube ID
         /// </summary>
-        public Guid BranchID { get; set; }
+        public Guid? BranchID { get; set; }
+        /// <summary>
+        /// Şube Kodu
+        /// </summary>
+        public string BranchCode { get; set; }
         /// <summary>
         /// Miktar
         /// </summary>
@@ -72,7 +86,11 @@ namespace TsiErp.Entities.Entities.SalesPropositionLine
         /// <summary>
         /// Ödeme Planı ID
         /// </summary>
-        public Guid PaymentPlanID { get; set; }
+        public Guid? PaymentPlanID { get; set; }
+        /// <summary>
+        /// Ödeme Planı Kodu
+        /// </summary>
+        public string PaymentPlanCode { get; set; }
         /// <summary>
         /// Satış Teklif Satırı Durumu
         /// </summary>
@@ -84,39 +102,14 @@ namespace TsiErp.Entities.Entities.SalesPropositionLine
         /// <summary>
         /// Depo ID
         /// </summary>
-        public Guid WarehouseID { get; set; }
+        public Guid? WarehouseID { get; set; }
+        /// <summary>
+        /// Depo Kodu
+        /// </summary>
+        public string WarehouseCode { get; set; }
         /// <summary>
         /// Kur Turarı
         /// </summary>
         public decimal ExchangeRate { get; set; }
-
-
-
-
-
-        ///// <summary>
-        ///// Stoklar
-        ///// </summary>
-        //public Products Products { get; set; }
-        ///// <summary>
-        ///// Birim Setleri
-        ///// </summary>
-        //public UnitSets UnitSets { get; set; }
-        ///// <summary>
-        ///// Şubeler
-        ///// </summary>
-        //public Branches Branches { get; set; }
-        ///// <summary>
-        ///// Ödeme Planları
-        ///// </summary>
-        //public PaymentPlans PaymentPlans { get; set; }
-        ///// <summary>
-        ///// Depolar
-        ///// </summary>
-        //public Warehouses Warehouses { get; set; }
-        ///// <summary>
-        ///// Satış Teklifi
-        ///// </summary>
-        public SalesPropositions SalesPropositions { get; set; }
     }
 }

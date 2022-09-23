@@ -4,14 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
-using TsiErp.Entities.Entities.Branch;
-using TsiErp.Entities.Entities.SalesProposition;
-using TsiErp.Entities.Entities.UnitSet;
 using TsiErp.Entities.Enums;
 
-namespace TsiErp.Entities.Entities.SalesPropositionLine
+namespace TsiErp.Entities.Entities.SalesPropositionLine.Dtos
 {
-    public class SalesPropositionLines : FullAuditedEntity
+    public class CreateSalesPropositionLinesDto : FullAuditedEntityDto
     {
         /// <summary>
         /// Satış Teklif ID
@@ -89,34 +86,5 @@ namespace TsiErp.Entities.Entities.SalesPropositionLine
         /// Kur Turarı
         /// </summary>
         public decimal ExchangeRate { get; set; }
-
-
-
-
-
-        ///// <summary>
-        ///// Stoklar
-        ///// </summary>
-        //public Products Products { get; set; }
-        ///// <summary>
-        ///// Birim Setleri
-        ///// </summary>
-        //public UnitSets UnitSets { get; set; }
-        ///// <summary>
-        ///// Şubeler
-        ///// </summary>
-        //public Branches Branches { get; set; }
-        ///// <summary>
-        ///// Ödeme Planları
-        ///// </summary>
-        //public PaymentPlans PaymentPlans { get; set; }
-        ///// <summary>
-        ///// Depolar
-        ///// </summary>
-        //public Warehouses Warehouses { get; set; }
-        ///// <summary>
-        ///// Satış Teklifi
-        ///// </summary>
-        public SalesPropositions SalesPropositions { get; set; }
     }
 }

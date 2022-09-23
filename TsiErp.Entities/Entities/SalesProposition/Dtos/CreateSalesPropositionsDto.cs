@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Entities.SalesPropositionLine.Dtos;
 using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.SalesProposition.Dtos
@@ -101,5 +102,10 @@ namespace TsiErp.Entities.Entities.SalesProposition.Dtos
         /// Sevkiyat Adresi ID
         /// </summary>
         public Guid? ShippingAdressID { get; set; }
+
+        /// <summary>
+        /// Teklif Satırları
+        /// </summary>
+        public List<SelectSalesPropositionLinesDto> SelectSalesPropositionLines { get; set; }
     }
 }
