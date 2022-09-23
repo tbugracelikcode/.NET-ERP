@@ -1,0 +1,89 @@
+﻿
+<div class="custom-node @(Node.Selected ? " selected" : "")">
+    <div class="card" style="width: 250px;">
+        <div class="card-body">
+            <div class="form-group">
+                <table class="tg">
+                    <thead>
+                        <tr>
+                            <td class="tg-0lax" colspan="3">
+                                <input type="text" class="form-control"
+                                       @bind-value="Node.Departman"
+                                       placeholder="Departman"
+                                       @onmousedown:stopPropagation
+                                       @onmouseup:stopPropagation
+                                       @onmousemove:stopPropagation />
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="tg-0lax" colspan="3">
+                                <input type="text" class="form-control"
+                                       @bind-value="Node.Istasyon"
+                                       placeholder="İş İstasyonu"
+                                       @onmousedown:stopPropagation
+                                       @onmouseup:stopPropagation
+                                       @onmousemove:stopPropagation />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="tg-0lax">C/T</td>
+                            <td class="tg-0lax">
+                                <input type="text" class="form-control"
+                                       @bind-value="Node.IslemeZamani"
+                                       @onmousedown:stopPropagation
+                                       @onmouseup:stopPropagation
+                                       @onmousemove:stopPropagation />
+                            </td>
+                            <td class="tg-0lax">Sn.</td>
+                        </tr>
+                        <tr>
+                            <td class="tg-0lax">C/O</td>
+                            <td class="tg-0lax">
+                                <input type="text" class="form-control"
+                                       @bind-value="Node.CevrimZamani"
+                                       @onmousedown:stopPropagation
+                                       @onmouseup:stopPropagation
+                                       @onmousemove:stopPropagation />
+                            </td>
+                            <td class="tg-0lax">Dk.</td>
+                        </tr>
+                        <tr>
+                            <td class="tg-0lax">Vardiya</td>
+                            <td class="tg-0lax">
+                                <input type="text" class="form-control"
+                                       @bind-value="Node.VardiyaSayisi"
+                                       @onmousedown:stopPropagation
+                                       @onmouseup:stopPropagation
+                                       @onmousemove:stopPropagation />
+                            </td>
+                            <td class="tg-0lax"></td>
+                        </tr>
+                        <tr>
+                            <td class="tg-0lax">Fire</td>
+                            <td class="tg-0lax">
+                                <input type="text" class="form-control"
+                                       @bind-value="Node.FireOrani"
+                                       @onmousedown:stopPropagation
+                                       @onmouseup:stopPropagation
+                                       @onmousemove:stopPropagation />
+                            </td>
+                            <td class="tg-0lax">%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    @foreach (var port in Node.Ports)
+    {
+        <PortRenderer Port="port"></PortRenderer>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public BilgiKutusuNode Node { get; set; }
+}
