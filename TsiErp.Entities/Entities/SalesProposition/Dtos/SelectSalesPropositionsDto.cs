@@ -94,6 +94,10 @@ namespace TsiErp.Entities.Entities.SalesProposition.Dtos
         /// </summary>
         public Guid CurrentAccountCardID { get; set; }
         /// <summary>
+        /// Cari Hesap Kartı Kodu
+        /// </summary>
+        public string CurrentAccountCardCode { get; set; }
+        /// <summary>
         /// Cari Hesap Kartı Ünvanı
         /// </summary>
         public string CurrentAccountCardName { get; set; }
