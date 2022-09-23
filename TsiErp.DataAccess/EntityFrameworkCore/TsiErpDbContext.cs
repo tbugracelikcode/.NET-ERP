@@ -23,6 +23,8 @@ using TsiErp.Entities.Entities.Employee;
 using TsiErp.Entities.Entities.EquipmentRecord;
 using TsiErp.Entities.Entities.Logging;
 using TsiErp.Entities.Entities.Period;
+using TsiErp.Entities.Entities.SalesProposition;
+using TsiErp.Entities.Entities.SalesPropositionLine;
 using TsiErp.Entities.Entities.Station;
 using TsiErp.Entities.Entities.StationGroup;
 using TsiErp.Entities.Entities.UnitSet;
@@ -104,6 +106,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigureCalibrationVerifications();
             builder.ConfigureCalibrationRecords();
             builder.ConfigureVsmSchemas();
+            builder.ConfigureSalesPropositions();
+            builder.ConfigureSalesPropositionLines();
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -167,6 +171,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<CalibrationVerifications> CalibrationVerifications { get; set; }
         public DbSet<CalibrationRecords> CalibrationRecords { get; set; }
         public DbSet<VsmSchemas> VsmSchemas { get; set; }
+        public DbSet<SalesPropositions> SalesPropositions { get; set; }
+        public DbSet<SalesPropositionLines> SalesPropositionLines { get; set; }
         #endregion
     }
 }
