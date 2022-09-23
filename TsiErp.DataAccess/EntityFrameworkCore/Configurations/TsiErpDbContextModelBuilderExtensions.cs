@@ -437,12 +437,12 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.BranchID);
                 b.HasIndex(x => x.WarehouseID);
 
-                //b.HasOne(x => x.CurrentAccountCards).WithMany(x => x.SalesPropositions).HasForeignKey(x => x.CurrentAccountCardID).OnDelete(DeleteBehavior.NoAction);
-                //b.HasOne(x => x.Currencies).WithMany(x => x.SalesPropositions).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
-                //b.HasOne(x => x.Warehouses).WithMany(x => x.SalesPropositions).HasForeignKey(x => x.WarehouseID).OnDelete(DeleteBehavior.NoAction);
-                //b.HasOne(x => x.PaymentPlan).WithMany(x => x.SalesPropositions).HasForeignKey(x => x.PaymentPlanID).OnDelete(DeleteBehavior.NoAction);
-                //b.HasOne(x => x.Branches).WithMany(x => x.SalesPropositions).HasForeignKey(x => x.BranchID).OnDelete(DeleteBehavior.NoAction);
-                //b.HasOne(x => x.ShippingAdresses).WithMany(x => x.SalesPropositions).HasForeignKey(x => x.ShippingAdressID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.CurrentAccountCards).WithMany(x => x.SalesPropositions).HasForeignKey(x => x.CurrentAccountCardID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Currencies).WithMany(x => x.SalesPropositions).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Warehouses).WithMany(x => x.SalesPropositions).HasForeignKey(x => x.WarehouseID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.PaymentPlan).WithMany(x => x.SalesPropositions).HasForeignKey(x => x.PaymentPlanID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Branches).WithMany(x => x.SalesPropositions).HasForeignKey(x => x.BranchID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.ShippingAdresses).WithMany(x => x.SalesPropositions).HasForeignKey(x => x.ShippingAdressID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
