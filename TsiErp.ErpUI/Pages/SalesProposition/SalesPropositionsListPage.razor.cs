@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
 using Tsi.Core.Utilities.Results;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.SalesProposition.Dtos;
 using TsiErp.Entities.Entities.SalesPropositionLine.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
@@ -13,6 +14,8 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
     {
         [Inject]
         ModalManager ModalManager { get; set; }
+
+        SelectSalesPropositionLinesDto LineDataSource = new SelectSalesPropositionLinesDto();
 
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
@@ -44,10 +47,14 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
 
         protected void CreateLineContextMenuItems()
         {
-            LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle", Id = "new" });
-            LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
-            LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
-            LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
+            if(LineGridContextMenu.Count() == 0)
+            {
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle", Id = "new" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
+            }
+           
         }
 
         public async void OnListContextMenuClick(ContextMenuClickEventArgs<ListSalesPropositionLinesDto> args)
@@ -89,6 +96,26 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
 
                 default:
                     break;
+            }
+        }
+
+        public void HideLinesPopup()
+        {
+            LineCrudPopup = false;
+        }
+
+        protected async Task OnLineSubmit()
+        {
+            SelectSalesPropositionLinesDto result;
+
+            if(LineDataSource.Id == Guid.Empty)
+            {
+                var createInput = ObjectMapper.Map<SelectSalesPropositionLinesDto, CreateSalesPropositionLinesDto>(LineDataSource);
+
+                result = (await CreateAsync(createInput)).Data;
+
+                if (result != null)
+                    LineDataSource.Id = result.Id;
             }
         }
 
