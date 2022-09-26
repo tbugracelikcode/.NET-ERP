@@ -106,17 +106,17 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
 
         protected async Task OnLineSubmit()
         {
-            SelectSalesPropositionLinesDto result;
+            //SelectSalesPropositionLinesDto result;
 
-            if(LineDataSource.Id == Guid.Empty)
-            {
-                var createInput = ObjectMapper.Map<SelectSalesPropositionLinesDto, CreateSalesPropositionLinesDto>(LineDataSource);
+            //if(LineDataSource.Id == Guid.Empty)
+            //{
+            //    var createInput = ObjectMapper.Map<SelectSalesPropositionLinesDto, CreateSalesPropositionLinesDto>(LineDataSource);
 
-                result = (await CreateAsync(createInput)).Data;
+            //    result = (await CreateAsync(createInput)).Data;
 
-                if (result != null)
-                    LineDataSource.Id = result.Id;
-            }
+            //    if (result != null)
+            //        LineDataSource.Id = result.Id;
+            //}
         }
 
     }
