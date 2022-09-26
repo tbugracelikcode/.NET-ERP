@@ -10,14 +10,46 @@ using System.Runtime.Serialization;
 using Blazor.Diagrams.Core.Geometry;
 using Microsoft.AspNetCore.Components;
 using Blazor.Diagrams.Core.Behaviors;
+using TsiErp.VsmBuilder.Entities;
+using Syncfusion.Blazor.Data;
+using Syncfusion.Blazor.DropDowns;
+using System.Collections.Immutable;
 
 namespace TsiErp.VsmBuilder.VSM
 {
+
     public partial class VsmDesigner
     {
         private int? _draggedType;
         private readonly Diagram _diagram = new Diagram();
-
+        public bool enableUrunCombobox;
+        public List<ProductGroup> productGroupList = new List<ProductGroup>()
+        {
+            new ProductGroup(){ GroupID = 1, Name = "Viraj Rotu"},
+            new ProductGroup(){ GroupID = 2, Name = "Rot Mili"},
+            new ProductGroup(){ GroupID = 3, Name = "Oynar Burç"},
+            new ProductGroup(){ GroupID = 4, Name = "Rotil"},
+            new ProductGroup(){ GroupID = 5, Name = "Aşık"}
+        };
+        public List<Product> productList = new List<Product>()
+        {
+            new Product(){ ProductID = 1, GroupID = 1, Name = "3389"},
+            new Product(){ ProductID = 2, GroupID = 1, Name = "8809-1"},
+            new Product(){ ProductID = 3, GroupID = 1, Name = "3346"},
+            new Product(){ ProductID = 4, GroupID = 2, Name = "2256"},
+            new Product(){ ProductID = 5, GroupID = 2, Name = "3369-2"},
+            new Product(){ ProductID = 5, GroupID = 2, Name = "3369-2"},
+            new Product(){ ProductID = 5, GroupID = 3, Name = "3369-2"},
+            new Product(){ ProductID = 5, GroupID = 3, Name = "3369-2"},
+            new Product(){ ProductID = 5, GroupID = 4, Name = "3369-2"},
+            new Product(){ ProductID = 5, GroupID = 4, Name = "3369-2"},
+            new Product(){ ProductID = 5, GroupID = 5, Name = "3369-2"},
+            new Product(){ ProductID = 5, GroupID = 5, Name = "3369-2"},
+            new Product(){ ProductID = 5, GroupID = 5, Name = "3369-2"}
+        };
+        public Query urunQuery { get; set; } = null;
+        public string urunValue { get; set; } = null;
+        public string grupValue { get; set; } = null;
 
         protected override void OnInitialized()
         {
@@ -41,7 +73,7 @@ namespace TsiErp.VsmBuilder.VSM
             _diagram.RegisterModelComponent<SinyalKanbaniNode, SinyalKanbaniWidget>();
             _diagram.RegisterModelComponent<UretimKanbaniNode, UretimKanbaniWidget>();
             _diagram.RegisterModelComponent<YukSeviyelendirmeNode, YukSeviyelendirmeWidget>();
-            
+
             #endregion
         }
 
@@ -124,12 +156,15 @@ namespace TsiErp.VsmBuilder.VSM
 
         void Tikla()
         {
-
             string serializedString = JsonConvert.SerializeObject(_diagram.Nodes.ToList(), Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
+
             var serializedNodeList = JsonConvert.DeserializeObject<List<SerializedNode>>(serializedString, new JsonSerializerSettings { ObjectCreationHandling = ObjectCreationHandling.Auto });
+
             var nodeList = _diagram.Nodes.ToList();
             _diagram.Nodes.Clear();
+
             int i = 0;
+
             foreach (var item in serializedNodeList)
             {
                 Blazor.Diagrams.Core.Geometry.Point position = nodeList[i].Position;
@@ -269,6 +304,13 @@ namespace TsiErp.VsmBuilder.VSM
                 i++;
             }
 
+        }
+
+        public void ChangeGroup(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, ProductGroup> args)
+        {
+            this.enableUrunCombobox = !string.IsNullOrEmpty(args.Value);
+            this.urunQuery = new Query().Where(new WhereFilter() { Field = "GroupID", Operator = "equal", value = args.Value, IgnoreCase = false, IgnoreAccent = false });
+            this.urunValue = null;
         }
     }
 }

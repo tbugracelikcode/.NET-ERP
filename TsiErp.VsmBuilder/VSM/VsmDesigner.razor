@@ -1,147 +1,191 @@
 ﻿@page "/"
-@*<input type="button" @onclick="Tikla" />*@
-    <div class="row h-100">
-        <div class="col-4">
-            <div class="row h-100 p-4 no-gutters" style="background: #eee;">
+<style>
+    .e-ddl .e-input-group-icon.e-ddl-icon.e-icons, .e-ddl .e-input-group-icon.e-ddl-icon.e-icons:hover {
+        color: #bb233d !important;
+        font-size: 13px !important;
+    }
 
-                <div class="col-6">
+    .e-ddl.e-input-group.e-control-wrapper .e-input {
+        font-size: 20px;
+        font-family: emoji;
+        color: #ab3243;
+        background: #32a5ab;
+    }
+    </style>
+<div class="row h-100">
+    <div class="col-4" style="padding-right:unset !important;">
+        <div class="row h-100 p-4 no-gutters" style="background: #eee;">
+
+            <div class="col-6">
                 <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(0)">
-                        <img class="d-block m-auto" src="/images/DefaultNodeWidget.png" />
-                        <span>Default Node</span>
-                    </div>
+                    <img class="d-block m-auto" src="/images/DefaultNodeWidget.png" />
+                    <span>Default Node</span>
                 </div>
+            </div>
 
-                <div class="col-6">
+            <div class="col-6">
                 <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(1)">
-                        <img class="d-block m-auto" src="/images/Bilgi_Kutusu.png" />
-                        <span>Bilgi Kutusu</span>
-                    </div>
+                    <img class="d-block m-auto" src="/images/Bilgi_Kutusu.png" />
+                    <span>Bilgi Kutusu</span>
                 </div>
+            </div>
 
-                <div class="col-6">
+            <div class="col-6">
                 <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(2)">
-                        <img class="d-block m-auto" src="/images/Stok_Isareti.png" />
-                        <span>Stok İşareti</span>
-                    </div>
+                    <img class="d-block m-auto" src="/images/Stok_Isareti.png" />
+                    <span>Stok İşareti</span>
                 </div>
+            </div>
 
-                <div class="col-6">
-                    <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(3)">
-                        <img class="d-block m-auto" src="/images/Operator.png" />
-                        <span>Operatör</span>
-                    </div>
+            <div class="col-6">
+                <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(3)">
+                    <img class="d-block m-auto" src="/images/Operator.png" />
+                    <span>Operatör</span>
                 </div>
+            </div>
 
-                <div class="col-6">
+            <div class="col-6">
                 <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(4)">
-                        <img class="d-block m-auto" src="/images/Itme_Hareketi.png" />
-                        <span>İtme Hareketi</span>
-                    </div>
+                    <img class="d-block m-auto" src="/images/Itme_Hareketi.png" />
+                    <span>İtme Hareketi</span>
                 </div>
+            </div>
 
-                <div class="col-6">
+            <div class="col-6">
                 <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(5)">
-                        <img class="d-block m-auto" src="/images/Emniyet_Stogu.png" />
-                        <span>Emniyet Stoğu</span>
-                    </div>
+                    <img class="d-block m-auto" src="/images/Emniyet_Stogu.png" />
+                    <span>Emniyet Stoğu</span>
                 </div>
+            </div>
 
-                <div class="col-6">
+            <div class="col-6">
                 <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(6)">
-                        <img class="d-block m-auto" src="/images/Kontrollu_Parca_Stogu.png" />
-                        <span>Kontrollü Parça Stoğu</span>
-                    </div>
+                    <img class="d-block m-auto" src="/images/Kontrollu_Parca_Stogu.png" />
+                    <span>Kontrollü Parça Stoğu</span>
                 </div>
+            </div>
 
-                <div class="col-6">
+            <div class="col-6">
                 <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(7)">
-                        <img class="d-block m-auto" src="/images/Lojistik_Sevkiyat.png" />
-                        <span>Lojistik Sevkiyat</span>
-                    </div>
+                    <img class="d-block m-auto" src="/images/Lojistik_Sevkiyat.png" />
+                    <span>Lojistik Sevkiyat</span>
                 </div>
+            </div>
 
-                <div class="col-6">
+            <div class="col-6">
                 <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(8)">
-                        <img class="d-block m-auto" src="/images/Fifo_Transferi.png" />
-                        <span>FIFO Transferi</span>
-                    </div>
+                    <img class="d-block m-auto" src="/images/Fifo_Transferi.png" />
+                    <span>FIFO Transferi</span>
                 </div>
+            </div>
 
-                <div class="col-6">
+            <div class="col-6">
                 <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(9)">
-                        <img class="d-block m-auto" src="/images/Dis_Kaynaklar.png" />
-                        <span>Dış Kaynaklar</span>
-                    </div>
+                    <img class="d-block m-auto" src="/images/Dis_Kaynaklar.png" />
+                    <span>Dış Kaynaklar</span>
                 </div>
+            </div>
 
-                <div class="col-6">
+            <div class="col-6">
                 <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(10)">
-                        <img class="d-block m-auto" src="/images/Bitmis_Urun.png" />
-                        <span>Bitmiş Ürün</span>
-                    </div>
+                    <img class="d-block m-auto" src="/images/Bitmis_Urun.png" />
+                    <span>Bitmiş Ürün</span>
                 </div>
+            </div>
 
-                <div class="col-6">
+            <div class="col-6">
                 <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(11)">
-                        <img class="d-block m-auto" src="/images/Cekme_Kanbani.png" />
-                        <span>Çekme Kanbanı</span>
-                    </div>
+                    <img class="d-block m-auto" src="/images/Cekme_Kanbani.png" />
+                    <span>Çekme Kanbanı</span>
                 </div>
+            </div>
 
-                <div class="col-6">
-                    <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(12)">
-                        <img class="d-block m-auto" src="/images/Iyilestirme_Calismasi.png" />
-                        <span>İyilestirme Çalışması</span>
-                    </div>
+            <div class="col-6">
+                <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(12)">
+                    <img class="d-block m-auto" src="/images/Iyilestirme_Calismasi.png" />
+                    <span>İyilestirme Çalışması</span>
                 </div>
+            </div>
 
-                <div class="col-6">
-                    <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(13)">
-                        <img class="d-block m-auto" src="/images/Kanban_Kutusu.png" />
-                        <span>Kanban Kutusu</span>
-                    </div>
+            <div class="col-6">
+                <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(13)">
+                    <img class="d-block m-auto" src="/images/Kanban_Kutusu.png" />
+                    <span>Kanban Kutusu</span>
                 </div>
+            </div>
 
-                <div class="col-6">
-                    <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(14)">
-                        <img class="d-block m-auto" src="/images/Konveyor.png" />
-                        <span>Konveyör</span>
-                    </div>
+            <div class="col-6">
+                <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(14)">
+                    <img class="d-block m-auto" src="/images/Konveyor.png" />
+                    <span>Konveyör</span>
                 </div>
+            </div>
 
-                <div class="col-6">
-                    <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(15)">
-                        <img class="d-block m-auto" src="/images/Sinyal_Kanbani.png" />
-                        <span>Sinyal Kanbanı</span>
-                    </div>
+            <div class="col-6">
+                <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(15)">
+                    <img class="d-block m-auto" src="/images/Sinyal_Kanbani.png" />
+                    <span>Sinyal Kanbanı</span>
                 </div>
+            </div>
 
-                <div class="col-6">
-                    <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(16)">
-                        <img class="d-block m-auto" src="/images/Uretim_Kanbani.png" />
-                        <span>Üretim Kanbanı</span>
-                    </div>
+            <div class="col-6">
+                <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(16)">
+                    <img class="d-block m-auto" src="/images/Uretim_Kanbani.png" />
+                    <span>Üretim Kanbanı</span>
                 </div>
+            </div>
 
-                <div class="col-6">
-                    <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(17)">
-                        <img class="d-block m-auto" src="/images/Yuk_Seviyelendirme.png" />
-                        <span>Yük Seviyelendirme</span>
-                    </div>
+            <div class="col-6">
+                <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(17)">
+                    <img class="d-block m-auto" src="/images/Yuk_Seviyelendirme.png" />
+                    <span>Yük Seviyelendirme</span>
                 </div>
             </div>
         </div>
-    <div class="col-8" ondragover="event.preventDefault();" @ondragover:preventDefault @ondrop="OnDrop" style="width:800px !important;height:800px !important">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-            <button class="btn btn-primary" id="menu-toggle" @onclick="Tikla">Kaydet</button>
-        </nav>
-            <CascadingValue Value="_diagram">
-                <DiagramCanvas>
-                </DiagramCanvas>
-            </CascadingValue>
-        </div>
     </div>
+    <div class="col-8" ondragover="event.preventDefault();" @ondragover:preventDefault @ondrop="OnDrop" style="padding-left:unset !important; height:800px !important;">
 
+        <div class="col-lg-12 control-section">
+            <div class="control-wrapper">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    <table class="tg">
+                        <tbody>
+                            <tr>
+                                <td class="tg-0lax" colspan="3">
+                                    <div class="cascading">
+                                        <label class="example-label">Ürün Grubu</label>
+                                        <SfComboBox TValue="string" TItem="ProductGroup" Placeholder="Ürün Grubu Seçiniz..." PopupHeight="auto" DataSource="@productGroupList">
+                                            <ComboBoxEvents TValue="string" TItem="ProductGroup" ValueChange="ChangeGroup"></ComboBoxEvents>
+                                            <ComboBoxFieldSettings Text="Name" Value="GroupID" />
+                                        </SfComboBox>
+
+                                    </div>
+                                </td>
+                                <td class="tg-0lax" colspan="3">
+                                    <div class="cascading">
+                                        <label class="example-label">Ürün</label>
+                                        <Syncfusion.Blazor.DropDowns.SfComboBox TValue="string" TItem="Product" Placeholder="Ürün Seçiniz..." Enabled="@enableUrunCombobox" @bind-Value="@urunValue" Query="@urunQuery" AllowCustom="false" PopupHeight="auto" DataSource="@productList">
+                                            <ComboBoxFieldSettings Text="Name" Value="ProductID" />
+                                        </Syncfusion.Blazor.DropDowns.SfComboBox>
+                                    </div>
+                                </td>
+                                <td class="tg-0lax" colspan="3">
+                                    <button class="btn btn-primary" id="menu-toggle" @onclick="Tikla" style="float:right !important;">Kaydet</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </nav>
+            </div>
+        </div>
+        <CascadingValue Value="_diagram">
+            <DiagramCanvas>
+            </DiagramCanvas>
+        </CascadingValue>
+    </div>
+</div>
+
+<SfComboBox TItem="ProductGroup" TValue="string" DataSource="@productGroupList"></SfComboBox>
 @code {
 
 }
