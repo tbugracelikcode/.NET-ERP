@@ -1,7 +1,9 @@
 ﻿@page "/equipment-records"
 @using Syncfusion.Blazor.Buttons
 @using Tsi.Blazor.Component.Core.Components.Commons.Loadings
+@using TsiErp.Business.Entities.Department.Services
 @using TsiErp.Business.Entities.EquipmentRecord.Services
+@using TsiErp.Entities.Entities.Department.Dtos
 @using TsiErp.Entities.Entities.EquipmentRecord
 @using TsiErp.Entities.Entities.EquipmentRecord.Dtos
 @using TsiErp.ErpUI.Pages.Base
@@ -11,6 +13,8 @@
 
 
 @inject IEquipmentRecordsAppService EquipmentRecordsService
+@inject IDepartmentsAppService DepartmentsAppService
+
 
 @if (!base.IsLoaded)
 {
@@ -124,7 +128,47 @@ else
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>Departman: </strong></label>
-                            @*<SfComboBox TValue="int" TItem="ListEquipmentRecordsDto"></SfComboBox>*@
+                            <SfComboBox @ref="DepartmentsComboBox"
+                                    TValue="string"
+                                    TItem="ListDepartmentsDto"
+                                    Placeholder="Departman Seçin"
+                                    CssClass="e-multi-column"
+                                    @bind-Value="@DataSource.DepartmentName"
+                                    DataSource="@DepartmentsList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500">
+
+                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+
+                                <ComboBoxTemplates TItem="ListDepartmentsDto">
+                                    <HeaderTemplate>
+                                        <table>
+                                            <tr>
+                                                <th class="e-text-center">Departman Kodu</th>
+                                                <th class="e-text-center">Departman Adı</th>
+                                            </tr>
+                                        </table>
+                                    </HeaderTemplate>
+                                    <ItemTemplate Context="cmbContext">
+
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="e-text-center">@((cmbContext as ListDepartmentsDto).Code)</td>
+                                                    <td class="e-text-center">@((cmbContext as ListDepartmentsDto).Name)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </ItemTemplate>
+                                </ComboBoxTemplates>
+
+                                <ComboBoxEvents TValue="string"
+                                            TItem="ListDepartmentsDto"
+                                            Filtering="DepartmentFiltering"
+                                            Opened="DepartmentGroupOpened"
+                                            ValueChange="DepartmentValueChanged"></ComboBoxEvents>
+                            </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="5">

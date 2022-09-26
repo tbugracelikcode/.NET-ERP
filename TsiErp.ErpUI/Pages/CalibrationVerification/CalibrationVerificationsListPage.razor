@@ -2,8 +2,10 @@
 @using Syncfusion.Blazor.Buttons
 @using Tsi.Blazor.Component.Core.Components.Commons.Loadings
 @using TsiErp.Business.Entities.CalibrationVerification.Services
+@using TsiErp.Business.Entities.EquipmentRecord.Services
 @using TsiErp.Entities.Entities.CalibrationVerification
 @using TsiErp.Entities.Entities.CalibrationVerification.Dtos
+@using TsiErp.Entities.Entities.EquipmentRecord.Dtos
 @using TsiErp.ErpUI.Pages.Base
 @using Tsi.Blazor.Component.Core.Components.Layouts
 
@@ -11,14 +13,16 @@
 
 
 @inject ICalibrationVerificationsAppService CalibrationVerificationsService
+@inject IEquipmentRecordsAppService EquipmentRecordsService
 
-@{if (!base.IsLoaded)
-{
-    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
-}
-else
-{
-    <DevGridLayout ColumnCount="1" RowCount="3">
+@{
+    if (!base.IsLoaded)
+    {
+        <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+    }
+    else
+    {
+        <DevGridLayout ColumnCount="1" RowCount="3">
             <GridLayoutItems>
                 <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
                     <Template>
@@ -36,9 +40,9 @@ else
                         <SfCard class="TSIGridCards">
                             <CardContent>
                                 <SfGrid ID="Grid" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
-                                AllowSorting="true"  ContextMenuItems="@GridContextMenu" Height="100%" Width="100%" class="GridZebra">
+                                AllowSorting="true" ContextMenuItems="@GridContextMenu" Height="100%" Width="100%" class="GridZebra">
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
-                                      <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListCalibrationVerificationsDto"></GridEvents>
+                                    <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListCalibrationVerificationsDto"></GridEvents>
                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
@@ -61,9 +65,9 @@ else
                     </Template>
                 </DxGridLayoutItem>
             </GridLayoutItems>
-    </DevGridLayout>
+        </DevGridLayout>
 
-    <DxPopup  @bind-Visible="base.EditPageVisible"
+        <DxPopup @bind-Visible="base.EditPageVisible"
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
@@ -75,7 +79,7 @@ else
 
                 <DxGridLayout>
                     <Rows>
-                         <DxGridLayoutRow Height="100px" />
+                        <DxGridLayoutRow Height="100px" />
                         <DxGridLayoutRow Height="1px" />
                         <DxGridLayoutRow Height="80px" />
                         <DxGridLayoutRow Height="1px" />
@@ -121,7 +125,50 @@ else
                         <DxGridLayoutItem Row="2" Column="3">
                             <Template>
                                 <label class="TSIModalLabel"><strong>Ekipman: </strong></label><br />
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Equipment" Placeholder="Ekipmanı Yazınız."></SfTextBox>
+
+                                <SfComboBox @ref="EquipmentRecordsComboBox"
+                                    TValue="string"
+                                    TItem="ListEquipmentRecordsDto"
+                                    Placeholder="Ekipman Seçin"
+                                    CssClass="e-multi-column"
+                                        @bind-Value="@DataSource.Equipment"
+                                    DataSource="@EquipmentRecordsList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500">
+
+                                    <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+
+                                    <ComboBoxTemplates TItem="ListEquipmentRecordsDto">
+                                        <HeaderTemplate>
+                                            <table>
+                                                <tr>
+                                                    <th class="e-text-center">Ekipman Kodu</th>
+                                                    <th class="e-text-center">Ekipman Adı</th>
+                                                </tr>
+                                            </table>
+                                        </HeaderTemplate>
+                                        <ItemTemplate Context="cmbContext">
+
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="e-text-center">@((cmbContext as ListEquipmentRecordsDto).Code)</td>
+                                                        <td class="e-text-center">@((cmbContext as ListEquipmentRecordsDto).Name)</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ItemTemplate>
+                                    </ComboBoxTemplates>
+
+                                    <ComboBoxEvents TValue="string"
+                                            TItem="ListEquipmentRecordsDto"
+                                            Filtering="EquipmentFiltering"
+                                            Opened="EquipmentGroupOpened"
+                                            ValueChange="EquipmentValueChanged"></ComboBoxEvents>
+                                </SfComboBox>
+
+
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="2" Column="5">
@@ -155,8 +202,8 @@ else
                 <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
                 <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
             </FooterContentTemplate>
-    </DxPopup>
-}
+        </DxPopup>
+    }
 }
 
 

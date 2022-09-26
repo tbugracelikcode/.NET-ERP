@@ -1,4 +1,7 @@
-﻿namespace TsiErp.ErpUI.Helpers
+﻿using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+
+namespace TsiErp.ErpUI.Helpers
 {
     public static class ExtensionFunctions
     {
@@ -55,5 +58,29 @@
         {
             return columnWidths;
         }
+
+        public static List<ComboBoxEnumItem<TEnum>> FillEnumToComboBox<TEnum>() where TEnum : Enum
+        {
+            return Enum.GetValues(typeof(TEnum)).OfType<TEnum>().Select(t => new ComboBoxEnumItem<TEnum>
+            {
+                Value = t,
+                DisplayName = GetDisplayName(t)
+            }).ToList();
+        }
+
+        public static string GetDisplayName(Enum enumValue)
+        {
+            return enumValue.GetType()
+                            .GetMember(enumValue.ToString())
+                            .First()
+                            .GetCustomAttribute<DisplayAttribute>()
+                            .GetName();
+        }
+    }
+
+    public class ComboBoxEnumItem<TEnum> where TEnum : Enum
+    {
+        public TEnum Value { get; set; }
+        public string DisplayName { get; set; }
     }
 }

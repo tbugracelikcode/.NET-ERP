@@ -6,11 +6,17 @@
 @using TsiErp.Entities.Entities.Product.Dtos
 @using TsiErp.ErpUI.Pages.Base
 @using Tsi.Blazor.Component.Core.Components.Layouts
+@using TsiErp.Entities.Entities.ProductGroup.Dtos
+@using TsiErp.Entities.Entities.UnitSet.Dtos
+@using TsiErp.Business.Entities.ProductGroup.Services
+@using TsiErp.Business.Entities.UnitSet.Services
 
 @inherits BaseListPage<SelectProductsDto, ListProductsDto, CreateProductsDto, UpdateProductsDto, ListProductsParameterDto>
 
 
 @inject IProductsAppService ProductService
+@inject IUnitSetsAppService UnitSetsAppService
+@inject IProductGroupsAppService ProductGroupsAppService
 
 @if (!base.IsLoaded)
 {
@@ -181,7 +187,47 @@ else
                     <DxGridLayoutItem Row="2" Column="7">
                         <Template>
                             <label class="TSIModalLabel"><strong>Ürün Grup : </strong></label><br />
-                            <SfTextBox @bind-Value="DataSource.ProductGrp" Placeholder=" Ürün Grup Yazınız."></SfTextBox>
+                            <SfComboBox @ref="ProductGroupsComboBox"
+                                    TValue="string"
+                                    TItem="ListProductGroupsDto"
+                                    Placeholder="Ürün Grubu Seçin"
+                                    CssClass="e-multi-column"
+                                        @bind-Value="@DataSource.ProductGrp"
+                                    DataSource="@ProductGroupsList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500">
+
+                                    <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+
+                                    <ComboBoxTemplates TItem="ListProductGroupsDto">
+                                        <HeaderTemplate>
+                                            <table>
+                                                <tr>
+                                                    <th class="e-text-center">Ürün Grubu Kodu</th>
+                                                    <th class="e-text-center">Ürün Grubu Adı</th>
+                                                </tr>
+                                            </table>
+                                        </HeaderTemplate>
+                                        <ItemTemplate Context="cmbContext">
+
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="e-text-center">@((cmbContext as ListProductGroupsDto).Code)</td>
+                                                        <td class="e-text-center">@((cmbContext as ListProductGroupsDto).Name)</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ItemTemplate>
+                                    </ComboBoxTemplates>
+
+                                    <ComboBoxEvents TValue="string"
+                                            TItem="ListProductGroupsDto"
+                                            Filtering="ProductGroupFiltering"
+                                            Opened="ProductGroupOpened"
+                                            ValueChange="ProductGroupValueChanged"></ComboBoxEvents>
+                                </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -206,7 +252,47 @@ else
                     <DxGridLayoutItem Row="3" Column="7">
                         <Template>
                             <label class="TSIModalLabel"><strong>Birim Seti : </strong></label><br />
-                            <SfTextBox @bind-Value="DataSource.UnitSet" Placeholder=" Birim Set Yazınız."></SfTextBox>
+                            <SfComboBox @ref="UnitSetsComboBox"
+                                    TValue="string"
+                                    TItem="ListUnitSetsDto"
+                                    Placeholder="Birim Seti Seçin"
+                                    CssClass="e-multi-column"
+                                        @bind-Value="@DataSource.UnitSet"
+                                    DataSource="@UnitSetsList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500">
+
+                                    <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+
+                                    <ComboBoxTemplates TItem="ListUnitSetsDto">
+                                        <HeaderTemplate>
+                                            <table>
+                                                <tr>
+                                                    <th class="e-text-center">Birim Seti Kodu</th>
+                                                    <th class="e-text-center">Birim Seti Adı</th>
+                                                </tr>
+                                            </table>
+                                        </HeaderTemplate>
+                                        <ItemTemplate Context="cmbContext">
+
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="e-text-center">@((cmbContext as ListUnitSetsDto).Code)</td>
+                                                        <td class="e-text-center">@((cmbContext as ListUnitSetsDto).Name)</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ItemTemplate>
+                                    </ComboBoxTemplates>
+
+                                    <ComboBoxEvents TValue="string"
+                                            TItem="ListUnitSetsDto"
+                                            Filtering="UnitSetFiltering"
+                                            Opened="UnitSetOpened"
+                                            ValueChange="UnitSetValueChanged"></ComboBoxEvents>
+                                </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
 

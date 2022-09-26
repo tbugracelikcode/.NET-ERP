@@ -4,12 +4,18 @@
 @using TsiErp.Business.Entities.CurrentAccountCard.Services
 @using TsiErp.Entities.Entities.CurrentAccountCard
 @using TsiErp.Entities.Entities.CurrentAccountCard.Dtos
+@using TsiErp.Entities.Entities.Currency.Dtos
+@using TsiErp.Business.Entities.Currency.Services
+@using TsiErp.Entities.Entities.ShippingAdress.Dtos
+@using TsiErp.Business.Entities.ShippingAdress.Services
 @using TsiErp.ErpUI.Pages.Base
 @using Tsi.Blazor.Component.Core.Components.Layouts
 
 @inherits BaseListPage<SelectCurrentAccountCardsDto, ListCurrentAccountCardsDto, CreateCurrentAccountCardsDto, UpdateCurrentAccountCardsDto, ListCurrentAccountCardsParameterDto>
 
 @inject ICurrentAccountCardsAppService CurrentAccountCardsService
+@inject ICurrenciesAppService CurrenciesAppService
+@inject IShippingAdressesAppService ShippingAdressesAppService
 
 @if (!base.IsLoaded)
 {
@@ -87,8 +93,8 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="Cari Hesap Kartları"
-         Width="1040px"
-         Height="550px"
+         Width="1020px"
+         Height="820px"
          HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
@@ -97,14 +103,15 @@ else
                 <Rows>
                     <DxGridLayoutRow Height="100px" />
                     <DxGridLayoutRow Height="1px" />
-                    <DxGridLayoutRow Height="50px" />
+                    <DxGridLayoutRow Height="90px" />
                     <DxGridLayoutRow Height="1px" />
-                    <DxGridLayoutRow Height="50px" />
-                    <DxGridLayoutRow Height="50px" />
-                    <DxGridLayoutRow Height="50px" />
-                    <DxGridLayoutRow Height="50px" />
-                    <DxGridLayoutRow Height="50px" />
-                     <DxGridLayoutRow Height="50px" />
+                    <DxGridLayoutRow Height="70px" />
+                    <DxGridLayoutRow Height="70px" />
+                    <DxGridLayoutRow Height="70px" />
+                    <DxGridLayoutRow Height="70px" />
+                    <DxGridLayoutRow Height="70px" />
+                     <DxGridLayoutRow Height="70px" />
+                     <DxGridLayoutRow Height="70px" />
                 </Rows>
 
                 <Columns>
@@ -309,7 +316,7 @@ else
                      <DxGridLayoutItem Row="8" Column="7">
                         <Template>
                                 <label class="TSIModalLabel"><strong>Kaplama Müşterisi: </strong></label><br />
-                            <SfSwitch @bind-Checked="@DataSource.CoatingCustomer"></SfSwitch>
+                            <SfSwitch @bind-Checked="DataSource.CoatingCustomer"></SfSwitch>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -321,15 +328,107 @@ else
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="9" Column="3">
                         <Template>
-                             <label class="TSIModalLabel"><strong>Tedarikçi: </strong></label>
+                             <label class="TSIModalLabel"><strong>Tedarikçi: </strong></label><br />
                             <SfSwitch @bind-Checked="@DataSource.Supplier"></SfSwitch>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="9" Column="5">
                         <Template>
-                             <label class="TSIModalLabel"><strong>Fason Tedarikçi: </strong></label>
+                            <label class="TSIModalLabel"><strong>Fason Tedarikçi: </strong></label><br />
                             <SfSwitch @bind-Checked="@DataSource.ContractSupplier"></SfSwitch>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="9" Column="7">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Para Birimi: </strong></label><br />
+                             <SfComboBox @ref="CurrenciesComboBox"
+                                    TValue="string"
+                                    TItem="ListCurrenciesDto"
+                                    Placeholder="Para Birimi Seçin"
+                                    CssClass="e-multi-column"
+                                    @bind-Value="DataSource.Currency"
+                                    DataSource="@CurrenciesList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500">
+
+                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+
+                                <ComboBoxTemplates TItem="ListCurrenciesDto">
+                                    <HeaderTemplate>
+                                        <table>
+                                            <tr>
+                                                <th class="e-text-center">Para Birimi Kodu</th>
+                                                <th class="e-text-center">Para Birimi Adı</th>
+                                            </tr>
+                                        </table>
+                                    </HeaderTemplate>
+                                    <ItemTemplate Context="cmbContext">
+
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="e-text-center">@((cmbContext as ListCurrenciesDto).Code)</td>
+                                                    <td class="e-text-center">@((cmbContext as ListCurrenciesDto).Name)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </ItemTemplate>
+                                </ComboBoxTemplates>
+
+                                <ComboBoxEvents TValue="string"
+                                            TItem="ListCurrenciesDto"
+                                            Filtering="CurrencyFiltering"
+                                            Opened="CurrencyOpened"
+                                            ValueChange="CurrencyValueChanged"></ComboBoxEvents>
+                            </SfComboBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                     <DxGridLayoutItem Row="10" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Sevkiyat Adresi: </strong></label><br />
+                             <SfComboBox @ref="ShippingAdressesComboBox"
+                                    TValue="string"
+                                    TItem="ListShippingAdressesDto"
+                                    Placeholder="Sevkiyat Adresi Seçin"
+                                    CssClass="e-multi-column"
+                                    @bind-Value="DataSource.ShippingAddress"
+                                    DataSource="@ShippingAdressesList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500">
+
+                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+
+                                <ComboBoxTemplates TItem="ListShippingAdressesDto">
+                                    <HeaderTemplate>
+                                        <table>
+                                            <tr>
+                                                <th class="e-text-center">Sevkiyat Adresi Kodu</th>
+                                                <th class="e-text-center">Sevkiyat Adresi Adı</th>
+                                            </tr>
+                                        </table>
+                                    </HeaderTemplate>
+                                    <ItemTemplate Context="cmbContext">
+
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="e-text-center">@((cmbContext as ListShippingAdressesDto).Code)</td>
+                                                    <td class="e-text-center">@((cmbContext as ListShippingAdressesDto).Name)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </ItemTemplate>
+                                </ComboBoxTemplates>
+
+                                <ComboBoxEvents TValue="string"
+                                            TItem="ListShippingAdressesDto"
+                                            Filtering="ShippingAdressFiltering"
+                                            Opened="ShippingAdressOpened"
+                                            ValueChange="ShippingAdressValueChanged"></ComboBoxEvents>
+                            </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
 
