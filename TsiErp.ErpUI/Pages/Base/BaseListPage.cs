@@ -146,8 +146,6 @@ namespace TsiErp.ErpUI.Pages.Base
             InvokeAsync(StateHasChanged);
         }
 
-
-
         public async virtual void OnContextMenuClick(ContextMenuClickEventArgs<TGetListOutputDto> args)
         {
             switch (args.Item.Id)
