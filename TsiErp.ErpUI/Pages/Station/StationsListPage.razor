@@ -49,7 +49,7 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ListStationsDto.Code) HeaderText="MAKİNA KOD" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationsDto.Code) HeaderText="MAKİNA KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListStationsDto.Name) HeaderText="MAKİNA AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListStationsDto.Brand) HeaderText="MARKA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListStationsDto.Model) HeaderText="MODEL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
@@ -85,7 +85,7 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="İş İstasyonları"
-         Width="1480px"
+         Width="1450px"
          Height="470px"
          HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
@@ -254,18 +254,6 @@ else
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="4" Column="1">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>İş Güvenliği Talimatı: </strong></label>
-                            @* <SfTextBox Placeholder="İş Güvenliği Talimatı Yazınız." CssClass="TSITxtBox"></SfTextBox>*@
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="4" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>Kullanım Talimatı: </strong></label>
-                            @* <SfTextBox Placeholder="Kullanım Talimatı Yazınız." CssClass="TSITxtBox"></SfTextBox>*@
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="4" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
                             <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>

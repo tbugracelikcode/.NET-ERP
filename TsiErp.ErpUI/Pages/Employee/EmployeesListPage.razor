@@ -43,7 +43,7 @@ else
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(ListEmployeesDto.Code) HeaderText="KOD" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListEmployeesDto.Code) HeaderText="ÇALIŞAN KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         <GridColumn Field=@nameof(ListEmployeesDto.Name) HeaderText="ÇALIŞAN ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         <GridColumn Field=@nameof(ListEmployeesDto.Surname) HeaderText="ÇALIŞAN SOYADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         <GridColumn Field=@nameof(ListEmployeesDto.Department) HeaderText="DEPARTMAN ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
@@ -74,7 +74,7 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="Çalışanlar"
-         Width="1100px"
+         Width="1080px"
          Height="620px"
          HeaderCssClass="HeaderTitleCss">
             <BodyTemplate>
@@ -101,15 +101,15 @@ else
                         <DxGridLayoutItem Row="0" Column="1">
                             <Template>
                                 <br />
-                                <label class="TSIModalLabel"><strong>Kod: </strong></label>
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Kodu Yazınız."></SfTextBox>
+                                <label class="TSIModalLabel"><strong>Çalışan Kodu: </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Çalışan Kodu Yazınız."></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="0" Column="3">
                             <Template>
                                 <br />
-                                <label class="TSIModalLabel"><strong>İsim: </strong></label>
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="İsim Yazınız."></SfTextBox>
+                                <label class="TSIModalLabel"><strong>Çalışan Adı: </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="Çalışan Adı Yazınız."></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="0" Column="5" RowSpan="1">
@@ -121,8 +121,8 @@ else
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="1" Column="1">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Soyisim: </strong></label>
-                                <SfTextBox Placeholder="Soyisim Yazınız." @bind-Value="DataSource.Surname" CssClass="TSITxtBox"></SfTextBox>
+                                <label class="TSIModalLabel"><strong>Çalışan Soyadı: </strong></label>
+                                <SfTextBox Placeholder="Çalışan Soyadı Yazınız." @bind-Value="DataSource.Surname" CssClass="TSITxtBox"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="1" Column="3">
