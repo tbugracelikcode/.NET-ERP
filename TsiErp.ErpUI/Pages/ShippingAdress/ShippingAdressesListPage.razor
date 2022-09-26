@@ -4,6 +4,8 @@
 @using TsiErp.Business.Entities.ShippingAdress.Services
 @using TsiErp.Entities.Entities.ShippingAdress
 @using TsiErp.Entities.Entities.ShippingAdress.Dtos
+@using TsiErp.Entities.Entities.CurrentAccountCard.Dtos
+@using TsiErp.Business.Entities.CurrentAccountCard.Services
 @using TsiErp.ErpUI.Pages.Base
 @using Tsi.Blazor.Component.Core.Components.Layouts
 
@@ -11,6 +13,7 @@
 
 
 @inject IShippingAdressesAppService ShippingAdressesAppService
+@inject ICurrentAccountCardsAppService CurrentAccountCardsAppService
 
 @if (!base.IsLoaded)
 {
@@ -73,7 +76,7 @@ else
          CloseOnOutsideClick="false"
          HeaderText="Sevkiyat Adresleri"
          Width="1100px"
-         Height="410px"
+         Height="480px"
          HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
@@ -113,7 +116,47 @@ else
                         <Template>
                               <br />
                             <label class="TSIModalLabel"><strong>Müşteri Kartı: </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.CustomerCard" Placeholder="Müşteri Kartını Yazınız."></SfTextBox>
+                            <SfComboBox @ref="CurrentAccountCardsComboBox"
+                                    TValue="string"
+                                    TItem="ListCurrentAccountCardsDto"
+                                    Placeholder="Müşteri Kartı Seçin"
+                                    CssClass="e-multi-column"
+                                    @bind-Value="DataSource.CustomerCard"
+                                    DataSource="@CurrentAccountCardsList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500">
+
+                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+
+                                <ComboBoxTemplates TItem="ListCurrentAccountCardsDto">
+                                    <HeaderTemplate>
+                                        <table>
+                                            <tr>
+                                                <th class="e-text-center">Müşteri Kartı Kodu</th>
+                                                <th class="e-text-center">Müşteri Kartı Adı</th>
+                                            </tr>
+                                        </table>
+                                    </HeaderTemplate>
+                                    <ItemTemplate Context="cmbContext">
+
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="e-text-center">@((cmbContext as ListCurrentAccountCardsDto).Code)</td>
+                                                    <td class="e-text-center">@((cmbContext as ListCurrentAccountCardsDto).Name)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </ItemTemplate>
+                                </ComboBoxTemplates>
+
+                                <ComboBoxEvents TValue="string"
+                                            TItem="ListCurrentAccountCardsDto"
+                                            Filtering="CurrentAccountCardFiltering"
+                                            Opened="CurrentAccountCardOpened"
+                                            ValueChange="CurrentAccountCardValueChanged"></ComboBoxEvents>
+                            </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="1">
