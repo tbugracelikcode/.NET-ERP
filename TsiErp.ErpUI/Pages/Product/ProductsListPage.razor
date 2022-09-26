@@ -81,19 +81,19 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="Stok Kartları"
-         Width="1060px"
-         Height="610px"
+         Width="1030px"
+         Height="560px"
          HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DxGridLayout>
                 <Rows>
                     <DxGridLayoutRow Height="100px" />
-                    <DxGridLayoutRow Height="50px" />
-                    <DxGridLayoutRow Height="50px" />
-                    <DxGridLayoutRow Height="50px" />
-                    <DxGridLayoutRow Height="50px" />
-                    <DxGridLayoutRow Height="50px" />
+                    <DxGridLayoutRow Height="60px" />
+                    <DxGridLayoutRow Height="60px" />
+                    <DxGridLayoutRow Height="60px" />
+                    <DxGridLayoutRow Height="60px" />
+                    <DxGridLayoutRow Height="60px" />
                 </Rows>
                 <Columns>
                     <DxGridLayoutColumn Width="40px" />
@@ -110,15 +110,15 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>Açıklama: </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="Açıklamayı Yazınız."></SfTextBox>
+                            <label class="TSIModalLabel"><strong>Stok Kodu: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Stok Kodu Yazınız."></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>Kod: </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Kodu Yazınız."></SfTextBox>
+                            <label class="TSIModalLabel"><strong>Stok Açıklaması: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="Stok Açıklaması Yazınız."></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="5">
@@ -143,7 +143,6 @@ else
                     </DxGridLayoutItem>
                      <DxGridLayoutItem Row="1" Column="3">
                         <Template>
-                            <br />
                             <label class="TSIModalLabel"><strong>GTIP: </strong></label>
                             <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.GTIP" Placeholder="GTIP Yazınız."></SfTextBox>
                         </Template>

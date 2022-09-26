@@ -42,10 +42,10 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ListPaymentPlansDto.Code) HeaderText="KOD" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPaymentPlansDto.Name) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPaymentPlansDto.Days_) HeaderText="GÜNLER" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPaymentPlansDto.DelayMaturityDifference) HeaderText="GECİKME VADE FARKI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPaymentPlansDto.Code) HeaderText="ÖDEME PLANI KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPaymentPlansDto.Name) HeaderText="ÖDEME PLANI AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPaymentPlansDto.Days_) HeaderText="VADE GÜNÜ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPaymentPlansDto.DelayMaturityDifference) HeaderText="GECİKME VADE FARKI ORANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </CardContent>
@@ -70,7 +70,7 @@ else
             <DxGridLayout>
 
                 <Rows>
-                    <DxGridLayoutRow Height="100px" />
+                    <DxGridLayoutRow Height="90px" />
                     <DxGridLayoutRow Height="1px" />
                     <DxGridLayoutRow Height="50px" />
                     <DxGridLayoutRow Height="1px" />
@@ -89,15 +89,15 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>Kod: </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" Placeholder="Kodu Yazınız." @bind-Value="DataSource.Code"></SfTextBox>
+                            <label class="TSIModalLabel"><strong>Ödeme Planı Kodu: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" Placeholder="Ödeme Planı Kodu Yazınız." @bind-Value="DataSource.Code"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>Açıklama: </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" Placeholder="Açıklamayı Yazınız." @bind-Value="DataSource.Name"></SfTextBox>
+                            <label class="TSIModalLabel"><strong>Ödeme Planı Açıklaması: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" Placeholder="Ödeme Planı Açıklaması Yazınız." @bind-Value="DataSource.Name"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -109,14 +109,14 @@ else
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Kalan Gün: </strong></label><br />
-                            <SfNumericTextBox  Placeholder="Kalan Gün Yazınız." @bind-Value="DataSource.Days_"></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>Vade Günü: </strong></label><br />
+                            <SfNumericTextBox  Placeholder="Vade Günü Yazınız." @bind-Value="DataSource.Days_"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="4" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Gecikme Vade Farkı: </strong></label><br />
-                            <SfNumericTextBox TValue="decimal"  Placeholder="Gecikme Vade Farkını Yazınız." @bind-Value="DataSource.DelayMaturityDifference"></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>Gecikme Vade Farkı Oranı: </strong></label><br />
+                            <SfNumericTextBox TValue="decimal"  Placeholder="Gecikme Vade Farkı Oranını Yazınız." @bind-Value="DataSource.DelayMaturityDifference"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
