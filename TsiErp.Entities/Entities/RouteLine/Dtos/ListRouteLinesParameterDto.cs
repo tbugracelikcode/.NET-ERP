@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 
-namespace TsiErp.Entities.Entities.OperationLine.Dtos
+namespace TsiErp.Entities.Entities.RouteLine.Dtos
 {
-    public class ListOperationLinesParameterDto : FullAuditedEntityDto
+    public class ListRouteLinesParameterDto : FullAuditedEntityDto
     {
         /// <summary>
-        /// Operasyon ID
+        /// Rota ID
         /// </summary>
-        public Guid OperationID { get; set; }
+        public Guid RouteID { get; set; }
     }
 }

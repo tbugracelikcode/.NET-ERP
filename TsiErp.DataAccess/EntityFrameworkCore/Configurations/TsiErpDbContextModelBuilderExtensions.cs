@@ -41,6 +41,8 @@ using TsiErp.Entities.Entities.PurchasingUnsuitabilityItem;
 using TsiErp.Entities.Entities.ShippingAdress;
 using TsiErp.Entities.Entities.Operation;
 using TsiErp.Entities.Entities.Route;
+using TsiErp.Entities.Entities.OperationLine;
+using TsiErp.Entities.Entities.RouteLine;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 {
@@ -845,6 +847,52 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
                 b.HasIndex(x => x.Code);
 
+            });
+        }
+
+        public static void ConfigureOperationLines(this ModelBuilder builder)
+        {
+            builder.Entity<OperationLines>(b =>
+            {
+                b.ToTable("OperationLines");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.StationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.OperationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.Priority).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.ProcessQuantity).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.AdjustmentAndControlTime).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.LineNr).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.Alternative).HasColumnType(SqlDbType.Bit.ToString());
+
+                b.HasIndex(x => x.Code);
+            });
+        }
+
+        public static void ConfigureRouteLines(this ModelBuilder builder)
+        {
+            builder.Entity<RouteLines>(b =>
+            {
+                b.ToTable("RouteLines");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.RouteID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.OperationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductionPoolID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductionPoolDescription).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.AdjustmentAndControlTime).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.OperationTime).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.Priority).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.LineNr).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.OperationPicture).HasColumnType("varbinary(max)");
+
+
+                b.HasIndex(x => x.Code);
             });
         }
 

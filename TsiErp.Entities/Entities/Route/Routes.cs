@@ -7,6 +7,9 @@ using Tsi.Core.Entities.Auditing;
 
 namespace TsiErp.Entities.Entities.Route
 {
+    /// <summary>
+    /// Rotalar
+    /// </summary>
     public class Routes : FullAuditedEntity
     {
         /// <summary>
