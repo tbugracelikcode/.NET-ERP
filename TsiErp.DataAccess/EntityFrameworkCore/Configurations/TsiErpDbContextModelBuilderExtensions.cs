@@ -39,6 +39,8 @@ using TsiErp.Entities.Entities.CustomerComplaintItem;
 using TsiErp.Entities.Entities.ProductionOrderChangeItem;
 using TsiErp.Entities.Entities.PurchasingUnsuitabilityItem;
 using TsiErp.Entities.Entities.ShippingAdress;
+using TsiErp.Entities.Entities.Operation;
+using TsiErp.Entities.Entities.Route;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 {
@@ -232,6 +234,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.WorkSafetyInstruction).HasColumnType("varbinary(MAX)");
                 b.Property(t => t.UsageInstruction).HasColumnType("varbinary(MAX)");
                 b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsContract).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsFixtures).HasColumnType(SqlDbType.Bit.ToString());
 
                 b.HasIndex(x => x.Code);
 
@@ -745,21 +749,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             });
         }
 
-        public static void ConfigureWarehouses(this ModelBuilder builder)
-        {
-            builder.Entity<Warehouses>(b =>
-            {
-                b.ToTable("Warehouses");
-                b.ConfigureByConvention();
-
-                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
-                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
-                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
-
-                b.HasIndex(x => x.Code);
-
-            });
-        }
 
         public static void ConfigureOperationUnsuitabilityItems(this ModelBuilder builder)
         {
@@ -799,6 +788,63 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
 
                 b.HasIndex(x => x.Code);
+            });
+        }
+
+        public static void ConfigureWarehouses(this ModelBuilder builder)
+        {
+            builder.Entity<Warehouses>(b =>
+            {
+                b.ToTable("Warehouses");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+                b.HasIndex(x => x.Code);
+
+            });
+        }
+
+        public static void ConfigureOperations(this ModelBuilder builder)
+        {
+            builder.Entity<Operations>(b =>
+            {
+                b.ToTable("Operations");
+                b.ConfigureByConvention();
+
+                //b.HasQueryFilter(x => !x.IsDeleted);
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.ProductionPoolID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+                b.HasIndex(x => x.Code);
+
+            });
+        }
+
+        public static void ConfigureRoutes(this ModelBuilder builder)
+        {
+            builder.Entity<Routes>(b =>
+            {
+                b.ToTable("Routes");
+                b.ConfigureByConvention();
+
+                //b.HasQueryFilter(x => !x.IsDeleted);
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductionStart).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.Approval).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.TechnicalApproval).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+                b.HasIndex(x => x.Code);
+
             });
         }
 
