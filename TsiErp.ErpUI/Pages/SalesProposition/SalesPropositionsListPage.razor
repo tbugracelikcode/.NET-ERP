@@ -137,7 +137,6 @@ else
                                     TItem="ListCurrentAccountCardsDto"
                                     Placeholder="Cari Hesap Kartı Seçin"
                                     CssClass="e-multi-column"
-                                    @bind-Value="DataSource.CurrentAccountCardCode"
                                     DataSource="@CurrentAccountCardsList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
@@ -241,7 +240,6 @@ else
                                     TItem="ListBranchesDto"
                                     Placeholder="Şube Seçin"
                                     CssClass="e-multi-column"
-                                    @bind-Value="DataSource.BranchCode"
                                     DataSource="@BranchesList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
@@ -293,7 +291,6 @@ else
                                     TItem="ListWarehousesDto"
                                     Placeholder="Depo Seçin"
                                     CssClass="e-multi-column"
-                                    @bind-Value="DataSource.WarehouseCode"
                                     DataSource="@WarehousesList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
@@ -339,7 +336,6 @@ else
                                     TItem="ListCurrenciesDto"
                                     Placeholder="Para Birimi Seçin"
                                     CssClass="e-multi-column"
-                                    @bind-Value="DataSource.CurrencyCode"
                                     DataSource="@CurrenciesList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
@@ -494,7 +490,6 @@ else
                                     TItem="ListWarehousesDto"
                                     Placeholder="Depo Seçin"
                                     CssClass="e-multi-column"
-                                    @bind-Value="LineDataSource.WarehouseCode"
                                     DataSource="@LineWarehousesList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
@@ -541,7 +536,6 @@ else
                                     TItem="ListProductsDto"
                                     Placeholder="Stok Seçin"
                                     CssClass="e-multi-column"
-                                    @bind-Value="LineDataSource.ProductCode"
                                     DataSource="@ProductsList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
@@ -588,7 +582,6 @@ else
                                     TItem="ListProductsDto"
                                     Placeholder="Stok Seçin"
                                     CssClass="e-multi-column"
-                                    @bind-Value="LineDataSource.ProductName"
                                     DataSource="@ProductsList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
@@ -635,7 +628,6 @@ else
                                     TItem="ListUnitSetsDto"
                                     Placeholder="Birim Seti Seçin"
                                     CssClass="e-multi-column"
-                                    @bind-Value="LineDataSource.UnitSetCode"
                                     DataSource="@UnitSetsList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
@@ -682,7 +674,6 @@ else
                                     TItem="ListBranchesDto"
                                     Placeholder="Şube Seçin"
                                     CssClass="e-multi-column"
-                                    @bind-Value="DataSource.BranchCode"
                                     DataSource="@BranchesList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
@@ -788,7 +779,6 @@ else
                                     TItem="ListPaymentPlansDto"
                                     Placeholder="Ödeme Planı Seçin"
                                     CssClass="e-multi-column"
-                                    @bind-Value="LineDataSource.PaymentPlanCode"
                                     DataSource="@LinePaymentPlansList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
@@ -826,10 +816,6 @@ else
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
-                   
-
-                  
-                  
 
                 </Items>
 
@@ -842,5 +828,3 @@ else
     </DxPopup>
 
 }
-
-

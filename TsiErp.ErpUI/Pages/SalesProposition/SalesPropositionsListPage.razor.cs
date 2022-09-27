@@ -96,7 +96,6 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
             }
-
         }
 
         public async void OnListContextMenuClick(ContextMenuClickEventArgs<ListSalesPropositionLinesDto> args)
@@ -148,17 +147,7 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
 
         protected async Task OnLineSubmit()
         {
-            //SelectSalesPropositionLinesDto result;
-
-            //if(LineDataSource.Id == Guid.Empty)
-            //{
-            //    var createInput = ObjectMapper.Map<SelectSalesPropositionLinesDto, CreateSalesPropositionLinesDto>(LineDataSource);
-
-            //    result = (await CreateAsync(createInput)).Data;
-
-            //    if (result != null)
-            //        LineDataSource.Id = result.Id;
-            //}
+            
         }
         #endregion
 
