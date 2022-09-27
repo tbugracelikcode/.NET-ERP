@@ -7,5 +7,6 @@ namespace TsiErp.Entities.Entities.SalesProposition.Dtos
 {
     public class ListSalesPropositionsParamaterDto : FullAuditedEntityDto
     {
+        
     }
 }

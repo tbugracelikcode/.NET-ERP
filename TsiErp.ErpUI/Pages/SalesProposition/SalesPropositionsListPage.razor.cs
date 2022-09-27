@@ -17,6 +17,7 @@ using TsiErp.Entities.Entities.Product.Dtos;
 using TsiErp.Entities.Entities.SalesProposition.Dtos;
 using TsiErp.Entities.Entities.SalesPropositionLine.Dtos;
 using TsiErp.Entities.Entities.WareHouse.Dtos;
+using TsiErp.Entities.Entities.PaymentPlan.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.SalesProposition
@@ -25,8 +26,11 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
     {
         #region ComboBox Listeleri
 
-        SfComboBox<string, ListBranchesDto> LineBranchesComboBox;
-        List<ListBranchesDto> LineBranchesList = new List<ListBranchesDto>();
+        SfComboBox<string, ListPaymentPlansDto> LinePaymentPlansComboBox;
+        List<ListPaymentPlansDto> LinePaymentPlansList = new List<ListPaymentPlansDto>();
+
+        SfComboBox<string, ListWarehousesDto> LineWarehousesComboBox;
+        List<ListWarehousesDto> LineWarehousesList = new List<ListWarehousesDto>();
 
         SfComboBox<string, ListUnitSetsDto> UnitSetsComboBox;
         List<ListUnitSetsDto> UnitSetsList = new List<ListUnitSetsDto>();
@@ -388,8 +392,8 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         }
         #endregion
 
-        #region Şubeler - Teklif Satırları
-        public async Task LineBranchFiltering(FilteringEventArgs args)
+        #region Depolar - Teklif Satırları
+        public async Task LineWareHouseFiltering(FilteringEventArgs args)
         {
 
             args.PreventDefaultAction = true;
@@ -403,26 +407,64 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             var query = new Query();
             query = args.Text == "" ? new Query() : new Query().Where(pre);
 
-            await LineBranchesComboBox.FilterAsync(LineBranchesList, query);
+            await LineWarehousesComboBox.FilterAsync(LineWarehousesList, query);
         }
 
-        private async Task GetLineBranchesList()
+        private async Task GetLineWareHousesList()
         {
-            LineBranchesList = (await BranchesAppService.GetListAsync(new ListBranchesParameterDto())).Data.ToList();
+            LineWarehousesList = (await WarehousesAppService.GetListAsync(new ListWarehousesParameterDto())).Data.ToList();
         }
 
-        public async Task LineBranchOpened(PopupEventArgs args)
+        public async Task LineWareHouseOpened(PopupEventArgs args)
         {
-            if (LineBranchesList.Count == 0)
+            if (LineWarehousesList.Count == 0)
             {
-                await GetLineBranchesList();
+                await GetLineWareHousesList();
             }
         }
 
-        private void LineBranchValueChanged(ChangeEventArgs<string, ListBranchesDto> args)
+        private void LineWareHouseValueChanged(ChangeEventArgs<string, ListWarehousesDto> args)
         {
-            LineDataSource.BranchID = args.ItemData.Id;
-            LineDataSource.BranchCode = args.ItemData.Code;
+            LineDataSource.WarehouseID = args.ItemData.Id;
+            LineDataSource.WarehouseCode = args.ItemData.Code;
+        }
+        #endregion
+
+        #region Ödeme Planları - Teklif Satırları
+        public async Task LinePaymentPlanFiltering(FilteringEventArgs args)
+        {
+
+            args.PreventDefaultAction = true;
+
+            var pre = new WhereFilter();
+            var predicate = new List<WhereFilter>();
+            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
+            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
+            pre = WhereFilter.Or(predicate);
+
+            var query = new Query();
+            query = args.Text == "" ? new Query() : new Query().Where(pre);
+
+            await LinePaymentPlansComboBox.FilterAsync(LinePaymentPlansList, query);
+        }
+
+        private async Task GetLinePaymentPlansList()
+        {
+            LinePaymentPlansList = (await PaymentPlansAppService.GetListAsync(new ListPaymentPlansParameterDto())).Data.ToList();
+        }
+
+        public async Task LinePaymentPlanOpened(PopupEventArgs args)
+        {
+            if (LinePaymentPlansList.Count == 0)
+            {
+                await GetLinePaymentPlansList();
+            }
+        }
+
+        private void LinePaymentPlanValueChanged(ChangeEventArgs<string, ListPaymentPlansDto> args)
+        {
+            LineDataSource.PaymentPlanID = args.ItemData.Id;
+            LineDataSource.PaymentPlanCode = args.ItemData.Code;
         }
         #endregion
 

@@ -62,6 +62,10 @@ using TsiErp.Entities.Entities.ShippingAdress;
 using TsiErp.Entities.Entities.ShippingAdress.Dtos;
 using TsiErp.Entities.Entities.SalesPropositionLine.Dtos;
 using TsiErp.Entities.Entities.SalesPropositionLine;
+using TsiErp.Entities.Entities.Operation.Dtos;
+using TsiErp.Entities.Entities.Operation;
+using TsiErp.Entities.Entities.Route.Dtos;
+using TsiErp.Entities.Entities.Route;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -218,22 +222,16 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateStationGroupsDto, StationGroups>();
             CreateMap<SelectStationGroupsDto, UpdateStationGroupsDto>();
 
-            CreateMap<Warehouses, SelectWarehousesDto>();
-            CreateMap<Warehouses, ListWarehousesDto>();
-            CreateMap<CreateWarehousesDto, Warehouses>();
-            CreateMap<SelectWarehousesDto, CreateWarehousesDto>();
-            CreateMap<UpdateWarehousesDto, Warehouses>();
-            CreateMap<SelectWarehousesDto, UpdateWarehousesDto>();
 
             CreateMap<SalesPropositions, SelectSalesPropositionsDto>()
-                .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Name))
+                .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Code))
                 .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Name))
                 .ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Name))
                 .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name))
                .ForMember(x => x.PaymentPlanCode, y => y.MapFrom(z => z.PaymentPlan.Code));
 
             CreateMap<SalesPropositions, ListSalesPropositionsDto>()
-                .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Name))
+                .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Code))
                 .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Name))
                 .ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Name))
                 .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name))
@@ -249,14 +247,14 @@ namespace TsiErp.Business.MapperProfile
 
 
             CreateMap<SalesPropositionLines, SelectSalesPropositionLinesDto>()
-                .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Name))
+                .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Code))
                 .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Name))
                 .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
                 .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name))
                 .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code))
                .ForMember(x => x.PaymentPlanCode, y => y.MapFrom(z => z.PaymentPlans.Code));
             CreateMap<SalesPropositionLines, ListSalesPropositionLinesDto>()
-                .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Name))
+                .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Code))
                 .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
                 .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name))
                 .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code))
@@ -280,6 +278,27 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectShippingAdressesDto, CreateShippingAdressesDto>();
             CreateMap<UpdateShippingAdressesDto, ShippingAdresses>();
             CreateMap<SelectShippingAdressesDto, UpdateShippingAdressesDto>();
+
+            CreateMap<Warehouses, SelectWarehousesDto>();
+            CreateMap<Warehouses, ListWarehousesDto>();
+            CreateMap<CreateWarehousesDto, Warehouses>();
+            CreateMap<SelectWarehousesDto, CreateWarehousesDto>();
+            CreateMap<UpdateWarehousesDto, Warehouses>();
+            CreateMap<SelectWarehousesDto, UpdateWarehousesDto>();
+
+            CreateMap<Operations, SelectOperationsDto>();
+            CreateMap<Operations, ListOperationsDto>();
+            CreateMap<CreateOperationsDto, Operations>();
+            CreateMap<SelectOperationsDto, CreateOperationsDto>();
+            CreateMap<UpdateOperationsDto, Operations>();
+            CreateMap<SelectOperationsDto, UpdateOperationsDto>();
+
+            CreateMap<Routes, SelectRoutesDto>();
+            CreateMap<Routes, ListRoutesDto>();
+            CreateMap<CreateRoutesDto, Routes>();
+            CreateMap<SelectRoutesDto, CreateRoutesDto>();
+            CreateMap<UpdateRoutesDto, Routes>();
+            CreateMap<SelectRoutesDto, UpdateRoutesDto>();
         }
     }
 }

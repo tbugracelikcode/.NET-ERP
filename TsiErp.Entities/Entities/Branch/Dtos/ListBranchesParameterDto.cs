@@ -7,7 +7,7 @@ using Tsi.Core.Entities.Auditing;
 
 namespace TsiErp.Entities.Entities.Branch.Dtos
 {
-    public class ListBranchesParameterDto
+    public class ListBranchesParameterDto : FullAuditedEntityDto
     {
         /// <summary>
         /// Aktiflik

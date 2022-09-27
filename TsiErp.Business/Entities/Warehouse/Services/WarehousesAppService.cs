@@ -1,15 +1,19 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Tsi.Application.Contract.Services.EntityFrameworkCore;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
-using TsiErp.Business.DependencyResolvers.Autofac;
+using TsiErp.Business.Entities.Warehouse.Services;
 using TsiErp.Business.Entities.Warehouse.Validations;
-using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Warehouse;
-using TsiErp.Entities.Entities.WareHouse;
 using TsiErp.Entities.Entities.WareHouse.Dtos;
+using TsiErp.Entities.Entities.WareHouse;
+using TsiErp.Business.Extensions.ObjectMapping;
 
 namespace TsiErp.Business.Entities.Warehouse.Services
 {
@@ -23,7 +27,6 @@ namespace TsiErp.Business.Entities.Warehouse.Services
             _repository = repository;
         }
 
-
         [ValidationAspect(typeof(CreateWarehousesValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectWarehousesDto>> CreateAsync(CreateWarehousesDto input)
@@ -35,7 +38,6 @@ namespace TsiErp.Business.Entities.Warehouse.Services
             return new SuccessDataResult<SelectWarehousesDto>(ObjectMapper.Map<Warehouses, SelectWarehousesDto>(addedEntity));
         }
 
-
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
@@ -43,19 +45,17 @@ namespace TsiErp.Business.Entities.Warehouse.Services
             return new SuccessResult("Silme işlemi başarılı.");
         }
 
-
         public async Task<IDataResult<SelectWarehousesDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id, null);
+            var entity = await _repository.GetAsync(t => t.Id == id, t=>t.SalesPropositions, y=>y.SalesPropositionLines);
             var mappedEntity = ObjectMapper.Map<Warehouses, SelectWarehousesDto>(entity);
             return new SuccessDataResult<SelectWarehousesDto>(mappedEntity);
         }
 
-
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListWarehousesDto>>> GetListAsync(ListWarehousesParameterDto input)
         {
-            var list = await _repository.GetListAsync(t => t.IsActive == input.IsActive, null);
+            var list = await _repository.GetListAsync(t => t.IsActive == input.IsActive, t => t.SalesPropositions, y => y.SalesPropositionLines);
 
             var mappedEntity = ObjectMapper.Map<List<Warehouses>, List<ListWarehousesDto>>(list.ToList());
 
