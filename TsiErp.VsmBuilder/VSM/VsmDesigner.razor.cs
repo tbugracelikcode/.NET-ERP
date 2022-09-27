@@ -14,6 +14,7 @@ using TsiErp.VsmBuilder.Entities;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using System.Collections.Immutable;
+using System.Security.Cryptography;
 
 namespace TsiErp.VsmBuilder.VSM
 {
@@ -47,6 +48,8 @@ namespace TsiErp.VsmBuilder.VSM
             new Product(){ ProductID = 5, GroupID = 5, Name = "3369-2"},
             new Product(){ ProductID = 5, GroupID = 5, Name = "3369-2"}
         };
+        public List<object> globalList = new List<object>();
+        public bool modalPopup { get; set; } = false;
         public Query urunQuery { get; set; } = null;
         public string urunValue { get; set; } = null;
         public string grupValue { get; set; } = null;
@@ -73,6 +76,7 @@ namespace TsiErp.VsmBuilder.VSM
             _diagram.RegisterModelComponent<SinyalKanbaniNode, SinyalKanbaniWidget>();
             _diagram.RegisterModelComponent<UretimKanbaniNode, UretimKanbaniWidget>();
             _diagram.RegisterModelComponent<YukSeviyelendirmeNode, YukSeviyelendirmeWidget>();
+            _diagram.RegisterModelComponent<ZamanCizgisiNode, ZamanCizgisiWidget>();
 
             #endregion
         }
@@ -142,6 +146,9 @@ namespace TsiErp.VsmBuilder.VSM
                 case 17:
                     node = new YukSeviyelendirmeNode() { Position = position, X = position.X, Y = position.Y };
                     break;
+                case 18:
+                    node = new ZamanCizgisiNode() { Position = position, X = position.X, Y = position.Y };
+                    break;
                 default:
                     break;
             }
@@ -149,9 +156,8 @@ namespace TsiErp.VsmBuilder.VSM
             node.AddPort(PortAlignment.Top);
             node.AddPort(PortAlignment.Bottom);
             _diagram.Nodes.Add(node);
+            globalList.Add(node);
             _draggedType = null;
-
-
         }
 
         void Tikla()

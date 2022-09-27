@@ -7,7 +7,8 @@ namespace TsiErp.VsmBuilder.CustomNodes
     [DataContract]
     public class BilgiKutusuNode : NodeModel
     {
-
+        [DataMember]
+        public string Name { get; set; }
         [DataMember]
         public string Departman { get; set; }
         [DataMember]
@@ -26,6 +27,8 @@ namespace TsiErp.VsmBuilder.CustomNodes
         public double X { get; set; }
         [DataMember]
         public double Y { get; set; }
+        [DataMember]
+        public string ParentID { get; set; }
 
     }
 }

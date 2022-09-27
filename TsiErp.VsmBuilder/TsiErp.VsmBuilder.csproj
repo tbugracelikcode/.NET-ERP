@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DevExpress.Blazor" Version="19.1.10" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="3.1.25" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Syncfusion.Blazor.Core" Version="20.2.0.49" />

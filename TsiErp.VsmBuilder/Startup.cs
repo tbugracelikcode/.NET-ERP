@@ -1,3 +1,4 @@
+using DevExpress.Blazor;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -29,6 +30,7 @@ namespace TsiErp.VsmBuilder
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddDevExpressBlazor();
             services.AddSingleton<WeatherForecastService>();
             services.AddSyncfusionBlazor(options => { options.IgnoreScriptIsolation = true; });
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NzA0MDk0QDMyMzAyZTMyMmUzMEVjb29PTkxlM3YvRVZwVTR5U0VCT2toK24vMEJlYmFVeFkwRlYrT1cwMzA9");

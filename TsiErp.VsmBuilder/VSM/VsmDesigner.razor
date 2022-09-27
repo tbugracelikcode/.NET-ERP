@@ -11,7 +11,7 @@
         color: #ab3243;
         background: #32a5ab;
     }
-    </style>
+</style>
 <div class="row h-100">
     <div class="col-4" style="padding-right:unset !important;">
         <div class="row h-100 p-4 no-gutters" style="background: #eee;">
@@ -43,7 +43,12 @@
                     <span>Operatör</span>
                 </div>
             </div>
-
+            <div class="col-6">
+                <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(18)">
+                    <img class="d-block m-auto" src="/images/Zaman_Cizgisi.png" />
+                    <span>Zaman Çizgisi</span>
+                </div>
+            </div>
             <div class="col-6">
                 <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(4)">
                     <img class="d-block m-auto" src="/images/Itme_Hareketi.png" />
@@ -141,6 +146,7 @@
                     <span>Yük Seviyelendirme</span>
                 </div>
             </div>
+
         </div>
     </div>
     <div class="col-8" ondragover="event.preventDefault();" @ondragover:preventDefault @ondrop="OnDrop" style="padding-left:unset !important; height:800px !important;">
@@ -185,7 +191,27 @@
     </div>
 </div>
 
-<SfComboBox TItem="ProductGroup" TValue="string" DataSource="@productGroupList"></SfComboBox>
+<DxPopup Visible="@modalPopup"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="İlişkilendirme"
+         Width="1100px"
+         Height="620px"
+         HeaderCssClass="HeaderTitleCss">
+    <BodyTemplate>
+
+        @*<SfComboBox TValue="string" TItem="ProductGroup" Placeholder="Bilgi Kutusu Seçiniz..." PopupHeight="auto" DataSource="@globalList">
+            <ComboBoxEvents TValue="string" TItem="ProductGroup" ValueChange="ChangeGroup"></ComboBoxEvents>
+            <ComboBoxFieldSettings Text="Name" Value="GroupID" />
+        </SfComboBox>*@
+
+    </BodyTemplate>
+    <FooterContentTemplate>
+        <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+    </FooterContentTemplate>
+</DxPopup>
 @code {
 
 }
