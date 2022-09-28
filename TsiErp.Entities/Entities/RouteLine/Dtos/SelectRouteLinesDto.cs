@@ -52,19 +52,19 @@ namespace TsiErp.Entities.Entities.RouteLine.Dtos
         /// <summary>
         /// Ayar ve Kontrol Süresi
         /// </summary>
-        public string AdjustmentAndControlTime { get; set; }
+        public int AdjustmentAndControlTime { get; set; }
         /// <summary>
         /// Operasyon Süresi
         /// </summary>
-        public string OperationTime { get; set; }
+        public int OperationTime { get; set; }
         /// <summary>
         /// Öncelik
         /// </summary>
-        public string Priority { get; set; }
+        public int Priority { get; set; }
         /// <summary>
         /// Satır Numarası
         /// </summary>
-        public string LineNr { get; set; }
+        public int LineNr { get; set; }
         /// <summary>
         /// Operasyon Resmi
         /// </summary>

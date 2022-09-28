@@ -21,7 +21,7 @@ namespace TsiErp.Entities.Entities.OperationLine.Dtos
         /// </summary>
         public string OperationName { get; set; }
         /// <summary>
-        /// İstasyon 
+        /// İstasyon Kodu
         /// </summary>
         public string StationCode { get; set; }
         /// <summary>
