@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tsi.Application.Contract.Services.EntityFrameworkCore;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
-using TsiErp.Business.Entities.Operation.Validations;
-using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Operation;
-using TsiErp.Entities.Entities.Operation;
 using TsiErp.Entities.Entities.Operation.Dtos;
+using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.Entities.Entities.Operation;
+using TsiErp.Business.Entities.Operation.Validations;
+using TsiErp.DataAccess.EntityFrameworkCore.Repositories.OperationLine;
+using TsiErp.Entities.Entities.OperationLine.Dtos;
+using TsiErp.Entities.Entities.OperationLine;
+using Tsi.Core.Entities;
 
 namespace TsiErp.Business.Entities.Operation.Services
 {
@@ -21,10 +24,12 @@ namespace TsiErp.Business.Entities.Operation.Services
     {
 
         private readonly IOperationsRepository _repository;
+        private readonly IOperationLinesRepository _lineRepository;
 
-        public OperationsAppService(IOperationsRepository repository)
+        public OperationsAppService(IOperationsRepository repository, IOperationLinesRepository lineRepository)
         {
             _repository = repository;
+            _lineRepository = lineRepository;
         }
 
 
@@ -36,6 +41,13 @@ namespace TsiErp.Business.Entities.Operation.Services
 
             var addedEntity = await _repository.InsertAsync(entity);
 
+            foreach (var item in input.SelectOperationLines)
+            {
+                var lineEntity = ObjectMapper.Map<SelectOperationLinesDto, OperationLines>(item);
+                lineEntity.OperationID = addedEntity.Id;
+                await _lineRepository.InsertAsync(lineEntity);
+            }
+
             return new SuccessDataResult<SelectOperationsDto>(ObjectMapper.Map<Operations, SelectOperationsDto>(addedEntity));
         }
 
@@ -43,20 +55,32 @@ namespace TsiErp.Business.Entities.Operation.Services
         public async Task<IResult> DeleteAsync(Guid id)
         {
             await _repository.DeleteAsync(id);
+
+            var lines = (await _lineRepository.GetListAsync(t => t.OperationID == id)).ToList();
+
+            foreach (var line in lines)
+            {
+                await _lineRepository.DeleteAsync(line.Id);
+            }
+
             return new SuccessResult("Silme işlemi başarılı.");
         }
 
         public async Task<IDataResult<SelectOperationsDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id);
+            var entity = await _repository.GetAsync(t => t.Id == id, t => t.OperationLines, y=>y.RouteLines);
             var mappedEntity = ObjectMapper.Map<Operations, SelectOperationsDto>(entity);
+
+            //var lines = (await _lineRepository.GetListAsync(t => t.SalesPropositionID == id)).ToList();
+            mappedEntity.SelectOperationLines = ObjectMapper.Map<List<OperationLines>, List<SelectOperationLinesDto>>(entity.OperationLines.ToList());
+
             return new SuccessDataResult<SelectOperationsDto>(mappedEntity);
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListOperationsDto>>> GetListAsync(ListOperationsParameterDto input)
         {
-            var list = await _repository.GetListAsync(t => t.IsActive == input.IsActive);
+            var list = await _repository.GetListAsync(null, t => t.OperationLines, y => y.RouteLines);
 
             var mappedEntity = ObjectMapper.Map<List<Operations>, List<ListOperationsDto>>(list.ToList());
 
@@ -72,6 +96,14 @@ namespace TsiErp.Business.Entities.Operation.Services
             var mappedEntity = ObjectMapper.Map<UpdateOperationsDto, Operations>(input);
 
             await _repository.UpdateAsync(mappedEntity);
+
+            foreach (var item in input.SelectOperationLines)
+            {
+                var lineEntity = ObjectMapper.Map<SelectOperationLinesDto, OperationLines>(item);
+                lineEntity.OperationID = mappedEntity.Id;
+                await _lineRepository.UpdateAsync(lineEntity);
+            }
+
             return new SuccessDataResult<SelectOperationsDto>(ObjectMapper.Map<Operations, SelectOperationsDto>(mappedEntity));
         }
     }

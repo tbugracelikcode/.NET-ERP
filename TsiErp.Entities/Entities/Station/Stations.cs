@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Entities.OperationLine;
 using TsiErp.Entities.Entities.StationGroup;
 
 namespace TsiErp.Entities.Entities.Station
@@ -99,5 +100,7 @@ namespace TsiErp.Entities.Entities.Station
         public bool IsContract { get; set; }
 
         public StationGroups StationGroups { get; set; }
+
+        public ICollection<OperationLines> OperationLines { get; set; }
     }
 }

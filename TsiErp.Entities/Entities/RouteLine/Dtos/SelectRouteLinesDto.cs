@@ -22,13 +22,25 @@ namespace TsiErp.Entities.Entities.RouteLine.Dtos
         /// </summary>
         public Guid RouteID { get; set; }
         /// <summary>
+        /// Rota Kodu
+        /// </summary>
+        public string RouteCode { get; set; }
+        /// <summary>
         /// Ana Ürün ID
         /// </summary>
         public Guid ProductID { get; set; }
         /// <summary>
+        /// Ana Ürün Kodu
+        /// </summary>
+        public string ProductCode { get; set; }
+        /// <summary>
         /// Operasyon ID
         /// </summary>
         public Guid OperationID { get; set; }
+        /// <summary>
+        /// Operasyon Adı
+        /// </summary>
+        public string OperationName { get; set; }
         /// <summary>
         /// Üretim Havuz ID
         /// </summary>

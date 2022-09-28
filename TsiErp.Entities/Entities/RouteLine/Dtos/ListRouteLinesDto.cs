@@ -18,17 +18,17 @@ namespace TsiErp.Entities.Entities.RouteLine.Dtos
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// Rota 
+        /// Rota Kodu
         /// </summary>
-        public string Route { get; set; }
+        public string RouteCode { get; set; }
         /// <summary>
-        /// Ana Ürün 
+        /// Ana Ürün Kodu
         /// </summary>
-        public string Product { get; set; }
+        public string ProductCode { get; set; }
         /// <summary>
-        /// Operasyon
+        /// Operasyon Adı
         /// </summary>
-        public string Operation { get; set; }
+        public string OperationName { get; set; }
         /// <summary>
         /// Üretim Havuzu 
         /// </summary>

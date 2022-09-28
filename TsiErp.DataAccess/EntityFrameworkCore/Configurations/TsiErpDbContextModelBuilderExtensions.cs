@@ -847,6 +847,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
                 b.HasIndex(x => x.Code);
 
+                b.HasOne(x => x.Products).WithOne(x => x.Routes).HasForeignKey<Routes>(x=>x.ProductID).OnDelete(DeleteBehavior.NoAction);
+
             });
         }
 
@@ -868,6 +870,9 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.Alternative).HasColumnType(SqlDbType.Bit.ToString());
 
                 b.HasIndex(x => x.Code);
+
+                b.HasOne(x => x.Operations).WithMany(x => x.OperationLines).HasForeignKey(x => x.OperationID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Stations).WithMany(x => x.OperationLines).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -893,6 +898,10 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
 
                 b.HasIndex(x => x.Code);
+
+                b.HasOne(x => x.Routes).WithMany(x => x.RouteLines).HasForeignKey(x => x.RouteID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Operations).WithMany(x => x.RouteLines).HasForeignKey(x => x.OperationID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Products).WithMany(x => x.RouteLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
