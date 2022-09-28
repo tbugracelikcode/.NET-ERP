@@ -23,7 +23,6 @@ namespace TsiErp.VsmBuilder.VSM
     {
         private int? _draggedType;
         private readonly Diagram _diagram = new Diagram();
-        public bool enableUrunCombobox;
         public List<ProductGroup> productGroupList = new List<ProductGroup>()
         {
             new ProductGroup(){ GroupID = 1, Name = "Viraj Rotu"},
@@ -48,8 +47,10 @@ namespace TsiErp.VsmBuilder.VSM
             new Product(){ ProductID = 5, GroupID = 5, Name = "3369-2"},
             new Product(){ ProductID = 5, GroupID = 5, Name = "3369-2"}
         };
-        public List<object> globalList = new List<object>();
-        public bool modalPopup { get; set; } = false;
+        public List<SerializedNode> globalList = new List<SerializedNode>();
+        public List<SerializedNode> serializedNodeList = new List<SerializedNode>();
+        public bool modalPopup = false;
+        public int bilgiKutusuSayisi = 1;
         public Query urunQuery { get; set; } = null;
         public string urunValue { get; set; } = null;
         public string grupValue { get; set; } = null;
@@ -93,61 +94,112 @@ namespace TsiErp.VsmBuilder.VSM
 
             var position = _diagram.GetRelativeMousePoint(e.ClientX, e.ClientY);
             NodeModel node = new NodeModel(position);
+            SerializedNode globalNode = new SerializedNode();
             switch (_draggedType)
             {
                 case 1:
-                    node = new BilgiKutusuNode() { Position = position, X = position.X, Y = position.Y };
+                    node = new BilgiKutusuNode() { Position = position, X = position.X, Y = position.Y, Name = "Bilgi Kutusu " + bilgiKutusuSayisi.ToString() };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.Name = "Bilgi Kutusu " + bilgiKutusuSayisi.ToString();
+                    globalNode.ClassName = "BilgiKutusuNode";
+                    bilgiKutusuSayisi++;
                     break;
                 case 2:
-                    node = new StokIsaretiNode() { Position = position, X = position.X, Y = position.Y };
+                    if (bilgiKutusuSayisi > 0)
+                    {
+                        node = new StokIsaretiNode() { Position = position, X = position.X, Y = position.Y };
+                        globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                        DialogIsOpen = true;
+                        globalNode.ClassName = "StokIsaretiNode";
+                    }
                     break;
                 case 3:
-                    node = new OperatorNode() { Position = position, X = position.X, Y = position.Y };
+                    if (bilgiKutusuSayisi > 0)
+                    {
+                        node = new OperatorNode() { Position = position, X = position.X, Y = position.Y };
+                        globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                        DialogIsOpen = true;
+                        globalNode.ClassName = "OperatorNode";
+                    }
                     break;
                 case 4:
                     node = new ItmeHareketiNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "ItmeHareketiNode";
                     break;
                 case 5:
                     node = new EmniyetStoguNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "EmniyetStoguNode";
                     break;
                 case 6:
                     node = new KontrolluParcaStoguNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "KontrolluParcaStoguNode";
                     break;
                 case 7:
                     node = new LojistikSevkiyatNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "LojistikSevkiyatNode";
                     break;
                 case 8:
                     node = new FifoTransferiNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "FifoTransferiNode";
                     break;
                 case 9:
                     node = new DisKaynaklarNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "DisKaynaklarNode";
                     break;
                 case 10:
                     node = new BitmisUrunNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "BitmisUrunNode";
                     break;
                 case 11:
                     node = new CekmeKanbaniNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "CekmeKanbaniNode";
                     break;
                 case 12:
                     node = new IyilestirmeCalismasiNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "IyilestirmeCalismasiNode";
                     break;
                 case 13:
                     node = new KanbanKutusuNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "KanbanKutusuNode";
                     break;
                 case 14:
                     node = new KonveyorNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "KonveyorNode";
                     break;
                 case 15:
                     node = new SinyalKanbaniNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "SinyalKanbaniNode";
                     break;
                 case 16:
                     node = new UretimKanbaniNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "UretimKanbaniNode";
                     break;
                 case 17:
                     node = new YukSeviyelendirmeNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "YukSeviyelendirmeNode";
                     break;
                 case 18:
-                    node = new ZamanCizgisiNode() { Position = position, X = position.X, Y = position.Y };
+                    if (bilgiKutusuSayisi > 0)
+                    {
+                        node = new ZamanCizgisiNode() { Position = position, X = position.X, Y = position.Y };
+                        globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                        globalNode.ClassName = "ZamanCizgisiNode";
+                        DialogIsOpen = true;
+                    }
                     break;
                 default:
                     break;
@@ -156,8 +208,13 @@ namespace TsiErp.VsmBuilder.VSM
             node.AddPort(PortAlignment.Top);
             node.AddPort(PortAlignment.Bottom);
             _diagram.Nodes.Add(node);
-            globalList.Add(node);
+            globalList.Add(globalNode);
             _draggedType = null;
+        }
+
+        private void modalClosing()
+        {
+            this.modalPopup = false;
         }
 
         void Tikla()
@@ -314,7 +371,7 @@ namespace TsiErp.VsmBuilder.VSM
 
         public void ChangeGroup(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, ProductGroup> args)
         {
-            this.enableUrunCombobox = !string.IsNullOrEmpty(args.Value);
+            //this.enableUrunCombobox = !string.IsNullOrEmpty(args.Value);
             this.urunQuery = new Query().Where(new WhereFilter() { Field = "GroupID", Operator = "equal", value = args.Value, IgnoreCase = false, IgnoreAccent = false });
             this.urunValue = null;
         }

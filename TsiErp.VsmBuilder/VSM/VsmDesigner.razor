@@ -1,23 +1,15 @@
 ﻿@page "/"
-<style>
-    .e-ddl .e-input-group-icon.e-ddl-icon.e-icons, .e-ddl .e-input-group-icon.e-ddl-icon.e-icons:hover {
-        color: #bb233d !important;
-        font-size: 13px !important;
-    }
 
-    .e-ddl.e-input-group.e-control-wrapper .e-input {
-        font-size: 20px;
-        font-family: emoji;
-        color: #ab3243;
-        background: #32a5ab;
-    }
-</style>
+<button type="button" class="btn btn-primary" @onclick="() => OpenDialog()">
+    Launch demo modal
+</button>
+
 <div class="row h-100">
     <div class="col-4" style="padding-right:unset !important;">
         <div class="row h-100 p-4 no-gutters" style="background: #eee;">
 
             <div class="col-6">
-                <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(0)">
+                <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(0)" data-toggle="modal" data-target="#exampleModal">
                     <img class="d-block m-auto" src="/images/DefaultNodeWidget.png" />
                     <span>Default Node</span>
                 </div>
@@ -170,9 +162,9 @@
                                 <td class="tg-0lax" colspan="3">
                                     <div class="cascading">
                                         <label class="example-label">Ürün</label>
-                                        <Syncfusion.Blazor.DropDowns.SfComboBox TValue="string" TItem="Product" Placeholder="Ürün Seçiniz..." Enabled="@enableUrunCombobox" @bind-Value="@urunValue" Query="@urunQuery" AllowCustom="false" PopupHeight="auto" DataSource="@productList">
+                                        @*<Syncfusion.Blazor.DropDowns.SfComboBox TValue="string" TItem="Product" Placeholder="Ürün Seçiniz..." Enabled="@enableUrunCombobox" @bind-Value="@urunValue" Query="@urunQuery" AllowCustom="false" PopupHeight="auto" DataSource="@productList">
                                             <ComboBoxFieldSettings Text="Name" Value="ProductID" />
-                                        </Syncfusion.Blazor.DropDowns.SfComboBox>
+                                        </Syncfusion.Blazor.DropDowns.SfComboBox>*@
                                     </div>
                                 </td>
                                 <td class="tg-0lax" colspan="3">
@@ -189,29 +181,28 @@
             </DiagramCanvas>
         </CascadingValue>
     </div>
+    @if (DialogIsOpen)
+    {
+        <TsiErp.VsmBuilder.Components.Dialog Caption="Bilgi Kusu Seçiniz"
+            Message="@message"
+            OnClose="OnDialogClose"
+            Type="Dialog.Category.SaveNot" Data="globalList" SelectedNode="Lütfen bir node seçiniz">            
+        </TsiErp.VsmBuilder.Components.Dialog>
+    }
 </div>
 
-<DxPopup Visible="@modalPopup"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="İlişkilendirme"
-         Width="1100px"
-         Height="620px"
-         HeaderCssClass="HeaderTitleCss">
-    <BodyTemplate>
 
-        @*<SfComboBox TValue="string" TItem="ProductGroup" Placeholder="Bilgi Kutusu Seçiniz..." PopupHeight="auto" DataSource="@globalList">
-            <ComboBoxEvents TValue="string" TItem="ProductGroup" ValueChange="ChangeGroup"></ComboBoxEvents>
-            <ComboBoxFieldSettings Text="Name" Value="GroupID" />
-        </SfComboBox>*@
-
-    </BodyTemplate>
-    <FooterContentTemplate>
-        <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
-    </FooterContentTemplate>
-</DxPopup>
 @code {
+    private string message;
+    private bool DialogIsOpen = false;
 
+    private void OpenDialog()
+    {
+        DialogIsOpen = true;
+        message = "Seçtiğiniz nesneyi bir bilgi kutusu ile eşleştiriniz.";
+    }
+    private void OnDialogClose()
+    {        
+        DialogIsOpen = false;
+    }
 }

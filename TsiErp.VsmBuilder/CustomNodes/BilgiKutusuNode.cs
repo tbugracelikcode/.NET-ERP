@@ -3,7 +3,7 @@ using Blazor.Diagrams.Core.Models;
 using System.Runtime.Serialization;
 
 namespace TsiErp.VsmBuilder.CustomNodes
-{
+{    
     [DataContract]
     public class BilgiKutusuNode : NodeModel
     {
