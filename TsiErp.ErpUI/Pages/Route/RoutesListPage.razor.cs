@@ -15,6 +15,9 @@ namespace TsiErp.ErpUI.Pages.Route
 {
     public partial class RoutesListPage
     {
+        private SfGrid<ListRoutesDto> _grid;
+
+
         #region ComboBox Listeleri
 
         SfComboBox<string, ListProductsDto> ProductsComboBox;
@@ -44,6 +47,11 @@ namespace TsiErp.ErpUI.Pages.Route
         protected override async void OnInitialized()
         {
             BaseCrudService = RoutesAppService;
+        }
+
+        public void ShowColumns()
+        {
+            this._grid.OpenColumnChooserAsync(200, 50);
         }
 
         #region Rota Satır Modalı İşlemleri

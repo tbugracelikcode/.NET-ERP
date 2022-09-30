@@ -17,6 +17,9 @@ namespace TsiErp.ErpUI.Pages.Period
     {
         SfComboBox<string, ListBranchesDto> BranchesComboBox;
         List<ListBranchesDto> BranchesList = new List<ListBranchesDto>();
+
+        private SfGrid<ListPeriodsDto> _grid;
+
         protected override async void OnInitialized()
         {
             BaseCrudService = PeriodsService;
@@ -32,6 +35,11 @@ namespace TsiErp.ErpUI.Pages.Period
             ShowEditPage();
 
             return Task.CompletedTask;
+        }
+
+        public void ShowColumns()
+        {
+            this._grid.OpenColumnChooserAsync(200, 50);
         }
 
         public async Task BranchFiltering(FilteringEventArgs args)

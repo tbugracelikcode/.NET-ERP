@@ -9,6 +9,9 @@ namespace TsiErp.ErpUI.Pages.PaymentPlan
 {
     public partial class PaymentPlansListPage
     {
+
+        private SfGrid<ListPaymentPlansDto> _grid;
+
         protected override async void OnInitialized()
         {
             BaseCrudService = PaymentPlansService;
@@ -24,6 +27,11 @@ namespace TsiErp.ErpUI.Pages.PaymentPlan
             ShowEditPage();
 
             return Task.CompletedTask;
+        }
+
+        public void ShowColumns()
+        {
+            this._grid.OpenColumnChooserAsync(200, 50);
         }
     }
 }

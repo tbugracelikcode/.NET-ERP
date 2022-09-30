@@ -15,6 +15,8 @@ namespace TsiErp.ErpUI.Pages.Operation
 {
     public partial class OperationsListPage
     {
+        private SfGrid<ListOperationsDto> _grid;
+
 
         #region Combobox Listeleri
 
@@ -40,6 +42,12 @@ namespace TsiErp.ErpUI.Pages.Operation
         {
             BaseCrudService = OperationsAppService;
         }
+
+        public void ShowColumns()
+        {
+            this._grid.OpenColumnChooserAsync(200, 50);
+        }
+
 
         #region Operasyon Satır Modalı İşlemleri
         protected override async Task BeforeInsertAsync()

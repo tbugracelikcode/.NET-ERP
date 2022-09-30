@@ -9,6 +9,9 @@ namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityItem
 {
     public partial class OperationUnsuitabilityItemsListPage
     {
+
+        private SfGrid<ListOperationUnsuitabilityItemsDto> _grid;
+
         protected override async void OnInitialized()
         {
             BaseCrudService = OperationUnsuitabilityItemsService;
@@ -24,6 +27,11 @@ namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityItem
             ShowEditPage();
 
             return Task.CompletedTask;
+        }
+
+        public void ShowColumns()
+        {
+            this._grid.OpenColumnChooserAsync(200, 50);
         }
     }
 }

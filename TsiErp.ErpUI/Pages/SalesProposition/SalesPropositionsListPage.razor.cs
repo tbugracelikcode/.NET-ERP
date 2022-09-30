@@ -52,6 +52,7 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
 
         #endregion
 
+        private SfGrid<ListSalesPropositionsDto> _grid;
 
 
         [Inject]
@@ -67,6 +68,11 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         protected override async void OnInitialized()
         {
             BaseCrudService = SalesPropositionsAppService;
+        }
+
+        public void ShowColumns()
+        {
+            this._grid.OpenColumnChooserAsync(200, 50);
         }
 
         #region Teklif Satır Modalı İşlemleri

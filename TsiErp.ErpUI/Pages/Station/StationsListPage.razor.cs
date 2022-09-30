@@ -18,6 +18,9 @@ namespace TsiErp.ErpUI.Pages.Station
         SfComboBox<string, ListStationGroupsDto> StationGroupComboBox;
         List<ListStationGroupsDto> StationGroupList = new List<ListStationGroupsDto>();
 
+        private SfGrid<ListStationsDto> _grid;
+
+
         protected override async void OnInitialized()
         {
             BaseCrudService = StationsService;
@@ -63,6 +66,11 @@ namespace TsiErp.ErpUI.Pages.Station
             {
                 await GetStationGroupsList();
             }
+        }
+
+        public void ShowColumns()
+        {
+            this._grid.OpenColumnChooserAsync(200, 50);
         }
     }
 }

@@ -9,6 +9,8 @@ namespace TsiErp.ErpUI.Pages.Warehouse
 {
     public partial class WarehousesListPage
     {
+        private SfGrid<ListWarehousesDto> _grid;
+
         protected override async void OnInitialized()
         {
             BaseCrudService = WarehousesService;
@@ -24,6 +26,11 @@ namespace TsiErp.ErpUI.Pages.Warehouse
             ShowEditPage();
 
             return Task.CompletedTask;
+        }
+
+        public void ShowColumns()
+        {
+            this._grid.OpenColumnChooserAsync(200, 50);
         }
     }
 }

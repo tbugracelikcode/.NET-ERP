@@ -15,7 +15,10 @@ namespace TsiErp.ErpUI.Pages.CalibrationVerification
     public partial class CalibrationVerificationsListPage
     {
         SfComboBox<string, ListEquipmentRecordsDto> EquipmentRecordsComboBox;
+
         List<ListEquipmentRecordsDto> EquipmentRecordsList = new List<ListEquipmentRecordsDto>();
+
+        private SfGrid<ListCalibrationVerificationsDto> _grid;
 
         protected override async void OnInitialized()
         {
@@ -58,6 +61,11 @@ namespace TsiErp.ErpUI.Pages.CalibrationVerification
         {
             DataSource.EquipmentID = args.ItemData.Id;
             DataSource.Equipment = args.ItemData.Name;
+        }
+
+        public void ShowColumns()
+        {
+            this._grid.OpenColumnChooserAsync(200, 50);
         }
     }
 }
