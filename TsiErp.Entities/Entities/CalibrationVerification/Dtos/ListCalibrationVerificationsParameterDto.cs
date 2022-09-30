@@ -9,5 +9,9 @@ namespace TsiErp.Entities.Entities.CalibrationVerification.Dtos
 {
     public class ListCalibrationVerificationsParameterDto : FullAuditedEntityDto
     {
+        /// <summary>
+        /// Aktiflik
+        /// </summary>
+        public bool IsActive { get; set; } = true;
     }
 }

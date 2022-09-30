@@ -42,6 +42,8 @@ using TsiErp.Entities.Entities.CustomerComplaintItem;
 using TsiErp.Entities.Entities.ProductionOrderChangeItem;
 using TsiErp.Entities.Entities.PurchasingUnsuitabilityItem;
 using TsiErp.Entities.Entities.ShippingAdress;
+using TsiErp.Entities.Entities.Operation;
+using TsiErp.Entities.Entities.Route;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore
 {
@@ -121,7 +123,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigureVsmSchemas();
             builder.ConfigureCurrencies();
             builder.ConfigurePaymentPlans();
-            builder.ConfigureWarehouses();
             builder.ConfigureOperationUnsuitabilityItems();
             builder.ConfigureFinalControlUnsuitabilityItems();
             builder.ConfigureExchangeRates();
@@ -132,6 +133,9 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigurePurchasingUnsuitabilityItems();
             builder.ConfigureCustomerComplaintItems();
             builder.ConfigureShippingAdresses();
+            builder.ConfigureWarehouses();
+            builder.ConfigureOperations();
+            builder.ConfigureRoutes();
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -197,7 +201,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<VsmSchemas> VsmSchemas { get; set; }
         public DbSet<Currencies> Currencies { get; set; }
         public DbSet<PaymentPlans> PaymentPlans { get; set; }
-        public DbSet<Warehouses> Warehouses { get; set; }
         public DbSet<OperationUnsuitabilityItems> OperationUnsuitabilityItems { get; set; }
         public DbSet<FinalControlUnsuitabilityItems> FinalControlUnsuitabilityItems { get; set; }
         public DbSet<ExchangeRates> ExchangeRates { get; set; }
@@ -208,6 +211,9 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<CustomerComplaintItems> CustomerComplaintItems { get; set; }
         public DbSet<PurchasingUnsuitabilityItems> PurchasingUnsuitabilityItems { get; set; }
         public DbSet<ShippingAdresses> ShippingAdresses { get; set; }
+        public DbSet<Warehouses> Warehouses { get; set; }
+        public DbSet<Operations> Operations { get; set; }
+        public DbSet<Routes> Routes { get; set; }
 
         #endregion
     }

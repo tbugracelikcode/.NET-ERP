@@ -43,8 +43,8 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ListProductGroupsDto.Code) HeaderText="KOD" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductGroupsDto.Name) HeaderText="AD" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductGroupsDto.Code) HeaderText="ÜRÜN GRUBU KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductGroupsDto.Name) HeaderText="ÜRÜN GRUBU ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </CardContent>
@@ -63,7 +63,7 @@ else
          CloseOnOutsideClick="false"
          HeaderText="Ürün Grupları"
          Width="760px"
-         Height="410px"
+         Height="290px"
          HeaderCssClass="HeaderTitleCss">
     <BodyTemplate>
 
@@ -83,15 +83,15 @@ else
                 <DxGridLayoutItem Row="0" Column="1">
                     <Template>
                         <br />
-                        <label class="TSIModalLabel"><strong>Dönem Adı: </strong></label>
-                        <SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.Name" Placeholder="Dönem Adını Yazınız."></SfTextBox>
+                        <label class="TSIModalLabel"><strong>Ürün Grubu Kodu: </strong></label>
+                        <SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.Code" Placeholder="Ürün Grubu Kodunu Yazınız."></SfTextBox>
                     </Template>
                 </DxGridLayoutItem>
                 <DxGridLayoutItem Row="0" Column="3">
                     <Template>
                         <br />
-                        <label class="TSIModalLabel"><strong>Dönem Kodu: </strong></label>
-                        <SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.Code" Placeholder="Dönem Kodunu Yazınız."></SfTextBox>
+                        <label class="TSIModalLabel"><strong>Ürün Grubu Açıklaması: </strong></label>
+                        <SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.Name" Placeholder="Ürün Grubu Açıklaması Yazınız."></SfTextBox>
                     </Template>
                 </DxGridLayoutItem>
                 <DxGridLayoutItem Row="1" Column="1">

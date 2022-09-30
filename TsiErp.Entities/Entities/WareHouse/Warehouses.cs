@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TsiErp.Entities.Entities.SalesPropositionLine;
-using TsiErp.Entities.Entities.SalesProposition;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Entities.SalesProposition;
+using TsiErp.Entities.Entities.SalesPropositionLine;
 
 namespace TsiErp.Entities.Entities.WareHouse
 {

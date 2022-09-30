@@ -2,14 +2,17 @@
 @using Syncfusion.Blazor.Buttons
 @using Tsi.Blazor.Component.Core.Components.Commons.Loadings
 @using TsiErp.Business.Entities.CalibrationRecord.Services
+@using TsiErp.Business.Entities.EquipmentRecord.Services
 @using TsiErp.Entities.Entities.CalibrationRecord
 @using TsiErp.Entities.Entities.CalibrationRecord.Dtos
+@using TsiErp.Entities.Entities.EquipmentRecord.Dtos
 @using TsiErp.ErpUI.Pages.Base
 @using Tsi.Blazor.Component.Core.Components.Layouts
 
 @inherits BaseListPage<SelectCalibrationRecordsDto, ListCalibrationRecordsDto, CreateCalibrationRecordsDto, UpdateCalibrationRecordsDto, ListCalibrationRecordsParameterDto>
 
 @inject ICalibrationRecordsAppService CalibrationRecordsService
+@inject IEquipmentRecordsAppService EquipmentRecordsService
 
 @{
     if (!base.IsLoaded)
@@ -69,7 +72,7 @@
          CloseOnOutsideClick="false"
          HeaderText="Kalibrasyon Takip Kayıtları"
          Width="1080px"
-         Height="410px"
+         Height="390px"
          HeaderCssClass="HeaderTitleCss">
             <BodyTemplate>
 
@@ -124,7 +127,47 @@
                         <DxGridLayoutItem Row="2" Column="3">
                             <Template>
                                 <label class="TSIModalLabel"><strong>Ekipman: </strong></label><br />
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Equipment" Placeholder="Ekipmanı Yazınız."></SfTextBox>
+                                <SfComboBox @ref="EquipmentRecordsComboBox"
+                                    TValue="string"
+                                    TItem="ListEquipmentRecordsDto"
+                                    Placeholder="Ekipman Seçin"
+                                    CssClass="e-multi-column"
+                                        @bind-Value="@DataSource.Equipment"
+                                    DataSource="@EquipmentRecordsList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500">
+
+                                    <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+
+                                    <ComboBoxTemplates TItem="ListEquipmentRecordsDto">
+                                        <HeaderTemplate>
+                                            <table>
+                                                <tr>
+                                                    <th class="e-text-center">Ekipman Kodu</th>
+                                                    <th class="e-text-center">Ekipman Adı</th>
+                                                </tr>
+                                            </table>
+                                        </HeaderTemplate>
+                                        <ItemTemplate Context="cmbContext">
+
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="e-text-center">@((cmbContext as ListEquipmentRecordsDto).Code)</td>
+                                                        <td class="e-text-center">@((cmbContext as ListEquipmentRecordsDto).Name)</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ItemTemplate>
+                                    </ComboBoxTemplates>
+
+                                    <ComboBoxEvents TValue="string"
+                                            TItem="ListEquipmentRecordsDto"
+                                            Filtering="EquipmentFiltering"
+                                            Opened="EquipmentGroupOpened"
+                                            ValueChange="EquipmentValueChanged"></ComboBoxEvents>
+                                </SfComboBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="2" Column="5">

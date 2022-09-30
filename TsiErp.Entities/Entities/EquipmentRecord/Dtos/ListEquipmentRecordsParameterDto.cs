@@ -9,6 +9,6 @@ namespace TsiErp.Entities.Entities.EquipmentRecord.Dtos
 {
     public class ListEquipmentRecordsParameterDto : FullAuditedEntityDto
     {
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
     }
 }

@@ -2,6 +2,8 @@
 @using Syncfusion.Blazor.Buttons
 @using Tsi.Blazor.Component.Core.Components.Commons.Loadings
 @using TsiErp.Business.Entities.Period.Services
+@using TsiErp.Business.Entities.Branch.Services
+@using TsiErp.Entities.Entities.Branch.Dtos
 @using TsiErp.Entities.Entities.Period
 @using TsiErp.Entities.Entities.Period.Dtos
 @using TsiErp.ErpUI.Pages.Base
@@ -11,6 +13,7 @@
 
 
 @inject IPeriodsAppService PeriodsService
+@inject IBranchesAppService BranchesAppService
 
 @if (!base.IsLoaded)
 {
@@ -106,7 +109,47 @@ else
                 <DxGridLayoutItem Row="1" Column="3">
                     <Template>
                         <label class="TSIModalLabel"><strong>Şube : </strong></label><br />
-                       @* <SfComboBox TValue="int" TItem="ListPeriodsDto"></SfComboBox>*@
+                       <SfComboBox @ref="BranchesComboBox"
+                                    TValue="string"
+                                    TItem="ListBranchesDto"
+                                    Placeholder="Şube Seçin"
+                                    CssClass="e-multi-column"
+                                        @bind-Value="DataSource.BranchName"
+                                    DataSource="@BranchesList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500">
+
+                                    <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+
+                                    <ComboBoxTemplates TItem="ListBranchesDto">
+                                        <HeaderTemplate>
+                                            <table>
+                                                <tr>
+                                                    <th class="e-text-center">Şube Kodu</th>
+                                                    <th class="e-text-center">Şube Adı</th>
+                                                </tr>
+                                            </table>
+                                        </HeaderTemplate>
+                                        <ItemTemplate Context="cmbContext">
+
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="e-text-center">@((cmbContext as ListBranchesDto).Code)</td>
+                                                    <td class="e-text-center">@((cmbContext as ListBranchesDto).Name)</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ItemTemplate>
+                                    </ComboBoxTemplates>
+
+                                    <ComboBoxEvents TValue="string"
+                                            TItem="ListBranchesDto"
+                                            Filtering="BranchFiltering"
+                                            Opened="BranchGroupOpened"
+                                            ValueChange="BranchValueChanged"></ComboBoxEvents>
+                                </SfComboBox>
                     </Template>
                 </DxGridLayoutItem>
                 <DxGridLayoutItem Row="2" Column="1" ColumnSpan="4">

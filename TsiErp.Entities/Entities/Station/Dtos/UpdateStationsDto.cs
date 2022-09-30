@@ -84,5 +84,13 @@ namespace TsiErp.Entities.Entities.Station.Dtos
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
+        /// <summary>
+        /// Demir Başlar
+        /// </summary>
+        public bool IsFixtures { get; set; }
+        /// <summary>
+        /// Fason
+        /// </summary>
+        public bool IsContract { get; set; }
     }
 }
