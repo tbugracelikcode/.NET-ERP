@@ -18,11 +18,14 @@ using TsiErp.DataAccess.EntityFrameworkCore;
 using Blazored.Modal;
 using Blazored.Modal.Services;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContextFactory<TsiErpDbContext>();
+builder.Services.AddDbContextFactory<TsiErpDbContext>(
+        options =>
+            options.UseSqlServer(@"Server=192.168.98.4;Database=TsiErpYeni;UID=sa;PWD=Logo1234567890;"), ServiceLifetime.Transient);
 ConfigureBusiness(builder);
 ConfigureDataAccess(builder);
 
