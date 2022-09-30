@@ -14,12 +14,19 @@ namespace TsiErp.ErpUI.Pages.EquipmentRecord
     {
         bool cancelReasonVisible = false;
 
+        private SfGrid<ListEquipmentRecordsDto> _grid;
+
         SfComboBox<string, ListDepartmentsDto> DepartmentsComboBox;
         List<ListDepartmentsDto> DepartmentsList = new List<ListDepartmentsDto>();
 
         protected override async void OnInitialized()
         {
             BaseCrudService = EquipmentRecordsService;
+        }
+
+        public void ShowColumns()
+        {
+            this._grid.OpenColumnChooserAsync(200, 50);
         }
 
         void CheckValueChanged(ChangeEventArgs args)

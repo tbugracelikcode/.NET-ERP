@@ -9,6 +9,8 @@ namespace TsiErp.ErpUI.Pages.StationGroup
 {
     public partial class StationGroupsListPage
     {
+        private SfGrid<ListStationGroupsDto> _grid;
+
         protected override async void OnInitialized()
         {
             BaseCrudService = StationGroupsService;
@@ -24,6 +26,11 @@ namespace TsiErp.ErpUI.Pages.StationGroup
             ShowEditPage();
 
             return Task.CompletedTask;
+        }
+
+        public void ShowColumns()
+        {
+            this._grid.OpenColumnChooserAsync(200, 50);
         }
     }
 }

@@ -8,8 +8,12 @@ using TsiErp.Entities.Entities.Currency.Dtos;
 
 namespace TsiErp.ErpUI.Pages.Currency
 {
+
     public partial class CurrenciesListPage
     {
+
+        private SfGrid<ListCurrenciesDto> _grid;
+
         protected override async void OnInitialized()
         {
             BaseCrudService = CurrenciesService;
@@ -25,6 +29,11 @@ namespace TsiErp.ErpUI.Pages.Currency
             ShowEditPage();
 
             return Task.CompletedTask;
+        }
+
+        public void ShowColumns()
+        {
+            this._grid.OpenColumnChooserAsync(200, 50);
         }
     }
 }

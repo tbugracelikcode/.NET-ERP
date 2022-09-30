@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Entities.OperationLine.Dtos;
 
 namespace TsiErp.Entities.Entities.Operation.Dtos
 {
@@ -23,5 +24,7 @@ namespace TsiErp.Entities.Entities.Operation.Dtos
         /// Üretim Havuz ID
         /// </summary>
         public Guid ProductionPoolID { get; set; }
+
+        public List<SelectOperationLinesDto> SelectOperationLines { get; set; }
     }
 }

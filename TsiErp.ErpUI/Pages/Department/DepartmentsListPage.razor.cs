@@ -9,6 +9,9 @@ namespace TsiErp.ErpUI.Pages.Department
 {
     public partial class DepartmentsListPage
     {
+        private SfGrid<ListDepartmentsDto> _grid;
+
+
         protected override async void OnInitialized()
         {
             BaseCrudService = DepartmentsService;
@@ -24,6 +27,11 @@ namespace TsiErp.ErpUI.Pages.Department
             ShowEditPage();
 
             return Task.CompletedTask;
+        }
+
+        public void ShowColumns()
+        {
+            this._grid.OpenColumnChooserAsync(200, 50);
         }
     }
 }

@@ -15,15 +15,18 @@ namespace TsiErp.ErpUI.Pages.Employee
     public partial class EmployeesListPage
     {
         SfComboBox<string, ListDepartmentsDto> DepartmentsComboBox;
+
         List<ListDepartmentsDto> DepartmentsList = new List<ListDepartmentsDto>();
 
+        private SfGrid<ListEmployeesDto> _grid;
 
         List<ComboBoxEnumItem<BloodTypeEnum>> BloodTypesList = new List<ComboBoxEnumItem<BloodTypeEnum>>();
+
 
         protected override async void OnInitialized()
         {
             BaseCrudService = EmployeesService;
-        }   
+        }
 
         protected override Task BeforeInsertAsync()
         {
@@ -36,6 +39,12 @@ namespace TsiErp.ErpUI.Pages.Employee
 
             return Task.CompletedTask;
         }
+
+        public void ShowColumns()
+        {
+            this._grid.OpenColumnChooserAsync(200, 50);
+        }
+
         #region Departmanlar
         public async Task DepartmentFiltering(FilteringEventArgs args)
         {
@@ -54,7 +63,7 @@ namespace TsiErp.ErpUI.Pages.Employee
             await DepartmentsComboBox.FilterAsync(DepartmentsList, query);
         }
 
-        private async Task GetEquipmentRecordsList()
+        private async Task GetDepartmentsList()
         {
             DepartmentsList = (await DepartmentsAppService.GetListAsync(new ListDepartmentsParameterDto())).Data.ToList();
         }
@@ -63,7 +72,7 @@ namespace TsiErp.ErpUI.Pages.Employee
         {
             if (DepartmentsList.Count == 0)
             {
-                await GetEquipmentRecordsList();
+                await GetDepartmentsList();
             }
         }
 

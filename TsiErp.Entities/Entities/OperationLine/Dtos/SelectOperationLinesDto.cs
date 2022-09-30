@@ -22,9 +22,17 @@ namespace TsiErp.Entities.Entities.OperationLine.Dtos
         /// </summary>
         public Guid OperationID { get; set; }
         /// <summary>
+        /// Operasyon 
+        /// </summary>
+        public string OperationName { get; set; }
+        /// <summary>
         /// İstasyon ID
         /// </summary>
         public Guid StationID { get; set; }
+        /// <summary>
+        /// İstasyon Kodu
+        /// </summary>
+        public string StationCode { get; set; }
         /// <summary>
         /// Öncelik
         /// </summary>

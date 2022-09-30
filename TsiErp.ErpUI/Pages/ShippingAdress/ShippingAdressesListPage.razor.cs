@@ -18,10 +18,16 @@ namespace TsiErp.ErpUI.Pages.ShippingAdress
         SfComboBox<string, ListCurrentAccountCardsDto> CurrentAccountCardsComboBox;
         List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
 
+        private SfGrid<ListShippingAdressesDto> _grid;
 
         protected override async void OnInitialized()
         {
             BaseCrudService = ShippingAdressesAppService;
+        }
+
+        public void ShowColumns()
+        {
+            this._grid.OpenColumnChooserAsync(200, 50);
         }
 
         public async Task CurrentAccountCardFiltering(FilteringEventArgs args)

@@ -14,6 +14,9 @@ namespace TsiErp.ErpUI.Pages.CurrentAccountCard
 {
     public partial class CurrentAccountCardsListPage
     {
+
+        private SfGrid<ListCurrentAccountCardsDto> _grid;
+
         SfComboBox<string, ListShippingAdressesDto> ShippingAdressesComboBox;
         List<ListShippingAdressesDto> ShippingAdressesList = new List<ListShippingAdressesDto>();
 
@@ -34,6 +37,11 @@ namespace TsiErp.ErpUI.Pages.CurrentAccountCard
             ShowEditPage();
 
             return Task.CompletedTask;
+        }
+
+        public void ShowColumns()
+        {
+            this._grid.OpenColumnChooserAsync(200, 50);
         }
 
         #region Para Birimleri
