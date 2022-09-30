@@ -4,14 +4,14 @@ using System.Runtime.Serialization;
 namespace TsiErp.VsmBuilder.CustomNodes
 {
     [DataContract]
-    public class OperatorNode : NodeModel
+    public class ZamanCizgisiNode : NodeModel
     {
         [DataMember]
         public string Name { get; set; }
         [DataMember]
-        public string Sayi { get; set; }
+        public string GunSayisi { get; set; }
         [DataMember]
-        public string ClassName { get; set; } = "OperatorNode";
+        public string ClassName { get; set; } = "ZamanCizgisiNode";
         [DataMember]
         public double X { get; set; }
         [DataMember]

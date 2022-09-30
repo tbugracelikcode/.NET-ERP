@@ -13,7 +13,7 @@
 <div id="diagram-space" class="sb-mobile-diagram">
     <div class="content-wrapper" style="border: 1px solid #D7D7D7">
         <div style="width:calc(100% - 242px);height:100%;float:left;">
-            <SfDiagramComponent @ref="@Diagram" @bind-Connectors="@connectors" Created="OnCreated" SelectionChanged="@OnSelectionChanged" Height="687px" @bind-Nodes="@nodes" DragDrop="OnDrop" NodeCreating="OnNodeCreating" ConnectorCreating="OnConnectorCreating" GetCustomTool="@GetCustomTool"  SelectionSettings="@selectionSettings">
+            <SfDiagramComponent @ref="@Diagram" @bind-Connectors="@connectors" Created="OnCreated" SelectionChanged="@OnSelectionChanged" Height="687px" @bind-Nodes="@nodes" DragDrop="OnDrop" NodeCreating="OnNodeCreating" ConnectorCreating="OnConnectorCreating" GetCustomTool="@GetCustomTool" SelectionSettings="@selectionSettings">
                 <SnapSettings>
                     <HorizontalGridLines LineColor="#e0e0e0 " LineIntervals="@GridLineIntervals">
                     </HorizontalGridLines>
@@ -22,13 +22,26 @@
                 </SnapSettings>
                 <DiagramTemplates>
                     <NodeTemplate>
-                        @*@{
+                        @{
+
                                 var node = (context as Node);
                                 string id = node.ID;
                                 var nodeInfo = node.AdditionalInfo.Where(t => t.Key == "nodeInfo").Select(t => t.Value).FirstOrDefault();
                                 switch (nodeInfo)
                                 {
                                     case "1":
+                                        if (!node.AdditionalInfo.ContainsKey("FirstTextBox"))
+                                        {
+                                            node.AdditionalInfo.Add("FirstTextBox", firstTextValue);
+                                            node.AdditionalInfo.Add("SecondTextBox", secondTextValue);
+                                            node.AdditionalInfo.Add("ThirdTextBox", thirdTextValue);
+                                            node.AdditionalInfo.Add("ForuthTextBox", fourthTextValue);
+                                        }
+                                        firstTextValue = !(string.IsNullOrEmpty((context as Node).AdditionalInfo["FirstTextBox"].ToString())) ? (context as Node).AdditionalInfo["FirstTextBox"].ToString() : firstTextValue;
+                                        secondTextValue = !(string.IsNullOrEmpty((context as Node).AdditionalInfo["SecondTextBox"].ToString())) ? (context as Node).AdditionalInfo["SecondTextBox"].ToString() : secondTextValue;
+                                        thirdTextValue = !(string.IsNullOrEmpty((context as Node).AdditionalInfo["ThirdTextBox"].ToString())) ? (context as Node).AdditionalInfo["ThirdTextBox"].ToString() : thirdTextValue;
+                                        fourthTextValue = !(string.IsNullOrEmpty((context as Node).AdditionalInfo["ForuthTextBox"].ToString())) ? (context as Node).AdditionalInfo["ForuthTextBox"].ToString() : fourthTextValue;
+
 
                                         <table class="tg">
                                             <thead>
@@ -283,7 +296,7 @@
                                     default:
                                         break;
                                 }
-                            }*@
+                            }
                         </NodeTemplate>
                     </DiagramTemplates>
                 </SfDiagramComponent>

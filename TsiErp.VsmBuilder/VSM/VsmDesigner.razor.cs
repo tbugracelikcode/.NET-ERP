@@ -10,14 +10,107 @@ using System.Runtime.Serialization;
 using Blazor.Diagrams.Core.Geometry;
 using Microsoft.AspNetCore.Components;
 using Blazor.Diagrams.Core.Behaviors;
+using TsiErp.VsmBuilder.Entities;
+using Syncfusion.Blazor.Data;
+using Syncfusion.Blazor.DropDowns;
+using System.Collections.Immutable;
+using System.Security.Cryptography;
+using TsiErp.VsmBuilder.Components;
+using DevExpress.Blazor.ComboBox.Internal;
+using Blazor.Diagrams.Core.Models.Base;
 
 namespace TsiErp.VsmBuilder.VSM
 {
+
     public partial class VsmDesigner
     {
         private int? _draggedType;
         private readonly Diagram _diagram = new Diagram();
+        public List<ProductGroup> productGroupList = new List<ProductGroup>()
+        {
+            new ProductGroup(){ GroupID = 1, Name = "Viraj Rotu"},
+            new ProductGroup(){ GroupID = 2, Name = "Rot Mili"},
+            new ProductGroup(){ GroupID = 3, Name = "Oynar Burç"},
+            new ProductGroup(){ GroupID = 4, Name = "Rotil"},
+            new ProductGroup(){ GroupID = 5, Name = "Aşık"}
+        };
+        public List<Product> productList = new List<Product>()
+        {
+            new Product(){ ProductID = 1, GroupID = 1, Name = "3389"},
+            new Product(){ ProductID = 2, GroupID = 1, Name = "8809-1"},
+            new Product(){ ProductID = 3, GroupID = 1, Name = "3346"},
+            new Product(){ ProductID = 4, GroupID = 2, Name = "2256"},
+            new Product(){ ProductID = 5, GroupID = 2, Name = "3369-2"},
+            new Product(){ ProductID = 5, GroupID = 2, Name = "3369-2"},
+            new Product(){ ProductID = 5, GroupID = 3, Name = "3369-2"},
+            new Product(){ ProductID = 5, GroupID = 3, Name = "3369-2"},
+            new Product(){ ProductID = 5, GroupID = 4, Name = "3369-2"},
+            new Product(){ ProductID = 5, GroupID = 4, Name = "3369-2"},
+            new Product(){ ProductID = 5, GroupID = 5, Name = "3369-2"},
+            new Product(){ ProductID = 5, GroupID = 5, Name = "3369-2"},
+            new Product(){ ProductID = 5, GroupID = 5, Name = "3369-2"}
+        };
+        public List<SerializedNode> globalList = new List<SerializedNode>();
+        public List<SerializedNode> serializedNodeList = new List<SerializedNode>();
+        public bool modalPopup = false;
+        public int bilgiKutusuSayisi = 1;
+        public NodeModel selectedNode = new NodeModel();
+        public string parentIDseysi = "";
+        public Query urunQuery { get; set; } = null;
+        public string urunValue { get; set; } = null;
+        public string grupValue { get; set; } = null;
+        private Dialog.Category category = new Dialog.Category();
+        private string message;
+        private bool DialogIsOpen = false;
 
+        private void OpenDialog()
+        {
+            if (globalList.Where(t => t.ClassName == "BilgiKutusuNode").Count() > 0)
+            {
+                category = Dialog.Category.SaveNot;
+                message = "Seçtiğiniz nesneyi bir bilgi kutusu ile eşleştiriniz.";
+            }
+            else
+            {
+                category = Dialog.Category.Okay;
+                message = "Bu nesneyi eklemeden önce diagrama bir Bilgi Kutusu ekleyiniz.";
+            }
+            DialogIsOpen = true;
+        }
+        private void OnDialogClose(bool ok)
+        {
+            if (category == Dialog.Category.SaveNot && !ok)
+            {
+                globalList.RemoveAt(globalList.Count - 1);
+                _diagram.Nodes.Remove(_diagram.Nodes.Last());
+            }
+            else if (category == Dialog.Category.SaveNot && ok)
+            {
+                //var s = parentID;
+                //parentID bağla
+            }
+            if (category == Dialog.Category.DeleteNot && ok)
+            {
+                _diagram.Nodes.Remove(selectedNode);
+                globalList.Remove(globalList.Where(t => t.mirrorID == selectedNode.Id).FirstOrDefault());
+            }
+            DialogIsOpen = false;
+            StateHasChanged();
+
+        }
+
+        private void _diagram_KeyDown(KeyboardEventArgs args)
+        {
+            if (args.Key == "Delete")
+            {
+                category = Dialog.Category.DeleteNot;
+                message = "Bu nesneyi silmek istediğinize emin misiniz ?";
+                selectedNode = _diagram.Nodes.Where(t => t.Selected == true).FirstOrDefault();
+                DialogIsOpen = true;
+                StateHasChanged();
+            }
+
+        }
 
         protected override void OnInitialized()
         {
@@ -41,8 +134,13 @@ namespace TsiErp.VsmBuilder.VSM
             _diagram.RegisterModelComponent<SinyalKanbaniNode, SinyalKanbaniWidget>();
             _diagram.RegisterModelComponent<UretimKanbaniNode, UretimKanbaniWidget>();
             _diagram.RegisterModelComponent<YukSeviyelendirmeNode, YukSeviyelendirmeWidget>();
+            _diagram.RegisterModelComponent<ZamanCizgisiNode, ZamanCizgisiWidget>();
+
             #endregion
+            _diagram.Options.DeleteKey = "Delete butonunu manuel kontrol etmek için yazıldı bu";
+            _diagram.KeyDown += _diagram_KeyDown;
         }
+
 
         private void OnDragStart(int key)
         {
@@ -56,88 +154,162 @@ namespace TsiErp.VsmBuilder.VSM
 
             var position = _diagram.GetRelativeMousePoint(e.ClientX, e.ClientY);
             NodeModel node = new NodeModel(position);
+            SerializedNode globalNode = new SerializedNode();
             switch (_draggedType)
             {
                 case 1:
-                    node = new BilgiKutusuNode() { Position = position, X = position.X, Y = position.Y };
+                    node = new BilgiKutusuNode() { Position = position, X = position.X, Y = position.Y, Name = "Bilgi Kutusu " + bilgiKutusuSayisi.ToString() };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.Name = "Bilgi Kutusu " + bilgiKutusuSayisi.ToString();
+                    globalNode.ClassName = "BilgiKutusuNode";
+                    globalNode.mirrorID = node.Id;
+                    bilgiKutusuSayisi++;
                     break;
                 case 2:
-                    node = new StokIsaretiNode() { Position = position, X = position.X, Y = position.Y };
+                    if (bilgiKutusuSayisi > 1)
+                    {
+                        node = new StokIsaretiNode() { Position = position, X = position.X, Y = position.Y };
+                        globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                        OpenDialog();
+                        globalNode.ClassName = "StokIsaretiNode";
+                        globalNode.mirrorID = node.Id;
+                    }
+                    else { OpenDialog(); node = null; }
                     break;
                 case 3:
-                    node = new OperatorNode() { Position = position, X = position.X, Y = position.Y };
+                    if (bilgiKutusuSayisi > 1)
+                    {
+                        node = new OperatorNode() { Position = position, X = position.X, Y = position.Y };
+                        globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                        OpenDialog();
+                        globalNode.ClassName = "OperatorNode";
+                        globalNode.mirrorID = node.Id;
+                    }
+                    else { OpenDialog(); node = null; }
                     break;
                 case 4:
                     node = new ItmeHareketiNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "ItmeHareketiNode";
+                    globalNode.mirrorID = node.Id;
                     break;
                 case 5:
                     node = new EmniyetStoguNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "EmniyetStoguNode";
+                    globalNode.mirrorID = node.Id;
                     break;
                 case 6:
                     node = new KontrolluParcaStoguNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "KontrolluParcaStoguNode";
+                    globalNode.mirrorID = node.Id;
                     break;
                 case 7:
                     node = new LojistikSevkiyatNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "LojistikSevkiyatNode";
+                    globalNode.mirrorID = node.Id;
                     break;
                 case 8:
                     node = new FifoTransferiNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "FifoTransferiNode";
+                    globalNode.mirrorID = node.Id;
                     break;
                 case 9:
                     node = new DisKaynaklarNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "DisKaynaklarNode";
+                    globalNode.mirrorID = node.Id;
                     break;
                 case 10:
                     node = new BitmisUrunNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "BitmisUrunNode";
+                    globalNode.mirrorID = node.Id;
                     break;
                 case 11:
                     node = new CekmeKanbaniNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "CekmeKanbaniNode";
+                    globalNode.mirrorID = node.Id;
                     break;
                 case 12:
                     node = new IyilestirmeCalismasiNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "IyilestirmeCalismasiNode";
+                    globalNode.mirrorID = node.Id;
                     break;
                 case 13:
                     node = new KanbanKutusuNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "KanbanKutusuNode";
+                    globalNode.mirrorID = node.Id;
                     break;
                 case 14:
                     node = new KonveyorNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "KonveyorNode";
+                    globalNode.mirrorID = node.Id;
                     break;
                 case 15:
                     node = new SinyalKanbaniNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "SinyalKanbaniNode";
+                    globalNode.mirrorID = node.Id;
                     break;
                 case 16:
                     node = new UretimKanbaniNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "UretimKanbaniNode";
+                    globalNode.mirrorID = node.Id;
                     break;
                 case 17:
                     node = new YukSeviyelendirmeNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                    globalNode.ClassName = "YukSeviyelendirmeNode";
+                    globalNode.mirrorID = node.Id;
+                    break;
+                case 18:
+                    if (bilgiKutusuSayisi > 1)
+                    {
+                        node = new ZamanCizgisiNode() { Position = position, X = position.X, Y = position.Y };
+                        globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
+                        globalNode.ClassName = "ZamanCizgisiNode";
+                        globalNode.mirrorID = node.Id;
+                        OpenDialog();
+                    }
+                    else { OpenDialog(); node = null; }
                     break;
                 default:
                     break;
             }
-
-            node.AddPort(PortAlignment.Top);
-            node.AddPort(PortAlignment.Bottom);
-            _diagram.Nodes.Add(node);
+            if (node != null)
+            {
+                node.AddPort(PortAlignment.Top);
+                node.AddPort(PortAlignment.Bottom);
+                _diagram.Nodes.Add(node);
+                globalList.Add(globalNode);
+            }
+            else { node = null; }
             _draggedType = null;
-
-
-        }
-
-        private void OnDragEnd(DragEventArgs e)
-        {
-
-            _diagram.Nodes.ToList()[0].Position = new Blazor.Diagrams.Core.Geometry.Point(e.ClientX, e.ClientY);
         }
 
         void Tikla()
         {
-
             string serializedString = JsonConvert.SerializeObject(_diagram.Nodes.ToList(), Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
+
             var serializedNodeList = JsonConvert.DeserializeObject<List<SerializedNode>>(serializedString, new JsonSerializerSettings { ObjectCreationHandling = ObjectCreationHandling.Auto });
 
+            var nodeList = _diagram.Nodes.ToList();
             _diagram.Nodes.Clear();
+
+            int i = 0;
 
             foreach (var item in serializedNodeList)
             {
-                Blazor.Diagrams.Core.Geometry.Point position = new Blazor.Diagrams.Core.Geometry.Point(item.X, item.Y);
+                Blazor.Diagrams.Core.Geometry.Point position = nodeList[i].Position;
                 switch (item.ClassName)
                 {
                     case "BilgiKutusuNode":
@@ -149,100 +321,100 @@ namespace TsiErp.VsmBuilder.VSM
                         bilgiKutusuNode.IslemeZamani = item.IslemeZamani;
                         bilgiKutusuNode.Istasyon = item.Istasyon;
                         bilgiKutusuNode.VardiyaSayisi = item.VardiyaSayisi;
-                        bilgiKutusuNode.X = item.X;
-                        bilgiKutusuNode.Y = item.Y;
+                        bilgiKutusuNode.X = position.X;
+                        bilgiKutusuNode.Y = position.Y;
                         _diagram.Nodes.Add(bilgiKutusuNode);
                         break;
                     case "BitmisUrunNode":
                         BitmisUrunNode bitmisUrunNode = new BitmisUrunNode() { Position = position, X = position.X, Y = position.Y };
                         bitmisUrunNode.ClassName = item.ClassName;
-                        bitmisUrunNode.X = item.X;
-                        bitmisUrunNode.Y = item.Y;
+                        bitmisUrunNode.X = position.X;
+                        bitmisUrunNode.Y = position.Y;
                         _diagram.Nodes.Add(bitmisUrunNode);
                         break;
                     case "CekmeKanbaniNode":
                         CekmeKanbaniNode cekmeKanbaniNode = new CekmeKanbaniNode() { Position = position, X = position.X, Y = position.Y };
                         cekmeKanbaniNode.ClassName = item.ClassName;
-                        cekmeKanbaniNode.X = item.X;
-                        cekmeKanbaniNode.Y = item.Y;
+                        cekmeKanbaniNode.X = position.X;
+                        cekmeKanbaniNode.Y = position.Y;
                         _diagram.Nodes.Add(cekmeKanbaniNode);
                         break;
                     case "DisKaynaklarNode":
                         DisKaynaklarNode disKaynaklarNode = new DisKaynaklarNode() { Position = position, X = position.X, Y = position.Y };
                         disKaynaklarNode.ClassName = item.ClassName;
-                        disKaynaklarNode.X = item.X;
-                        disKaynaklarNode.Y = item.Y;
+                        disKaynaklarNode.X = position.X;
+                        disKaynaklarNode.Y = position.Y;
                         _diagram.Nodes.Add(disKaynaklarNode);
                         break;
                     case "EmniyetStoguNode":
                         EmniyetStoguNode emniyetStoguNode = new EmniyetStoguNode() { Position = position, X = position.X, Y = position.Y };
                         emniyetStoguNode.ClassName = item.ClassName;
-                        emniyetStoguNode.X = item.X;
-                        emniyetStoguNode.Y = item.Y;
+                        emniyetStoguNode.X = position.X;
+                        emniyetStoguNode.Y = position.Y;
                         _diagram.Nodes.Add(emniyetStoguNode);
                         break;
                     case "FifoTransferiNode":
                         FifoTransferiNode fifoTransferiNode = new FifoTransferiNode() { Position = position, X = position.X, Y = position.Y };
                         fifoTransferiNode.ClassName = item.ClassName;
-                        fifoTransferiNode.X = item.X;
-                        fifoTransferiNode.Y = item.Y;
+                        fifoTransferiNode.X = position.X;
+                        fifoTransferiNode.Y = position.Y;
                         _diagram.Nodes.Add(fifoTransferiNode);
                         break;
                     case "ItmeHareketiNode":
                         ItmeHareketiNode itmeHareketiNode = new ItmeHareketiNode() { Position = position, X = position.X, Y = position.Y };
                         itmeHareketiNode.ClassName = item.ClassName;
-                        itmeHareketiNode.X = item.X;
-                        itmeHareketiNode.Y = item.Y;
+                        itmeHareketiNode.X = position.X;
+                        itmeHareketiNode.Y = position.Y;
                         _diagram.Nodes.Add(itmeHareketiNode);
                         break;
                     case "IyilestirmeCalismasiNode":
                         IyilestirmeCalismasiNode iyilestirmeCalismasiNode = new IyilestirmeCalismasiNode() { Position = position, X = position.X, Y = position.Y };
                         iyilestirmeCalismasiNode.ClassName = item.ClassName;
-                        iyilestirmeCalismasiNode.X = item.X;
-                        iyilestirmeCalismasiNode.Y = item.Y;
+                        iyilestirmeCalismasiNode.X = position.X;
+                        iyilestirmeCalismasiNode.Y = position.Y;
                         _diagram.Nodes.Add(iyilestirmeCalismasiNode);
                         break;
                     case "KanbanKutusuNode":
                         KanbanKutusuNode kanbanKutusuNode = new KanbanKutusuNode() { Position = position, X = position.X, Y = position.Y };
                         kanbanKutusuNode.ClassName = item.ClassName;
-                        kanbanKutusuNode.X = item.X;
-                        kanbanKutusuNode.Y = item.Y;
+                        kanbanKutusuNode.X = position.X;
+                        kanbanKutusuNode.Y = position.Y;
                         _diagram.Nodes.Add(kanbanKutusuNode);
                         break;
                     case "KontrolluParcaStoguNode":
                         KontrolluParcaStoguNode kontrolluParcaStoguNode = new KontrolluParcaStoguNode() { Position = position, X = position.X, Y = position.Y };
                         kontrolluParcaStoguNode.ClassName = item.ClassName;
-                        kontrolluParcaStoguNode.X = item.X;
-                        kontrolluParcaStoguNode.Y = item.Y;
+                        kontrolluParcaStoguNode.X = position.X;
+                        kontrolluParcaStoguNode.Y = position.Y;
                         _diagram.Nodes.Add(kontrolluParcaStoguNode);
                         break;
                     case "KonveyorNode":
                         KonveyorNode konveyorNode = new KonveyorNode() { Position = position, X = position.X, Y = position.Y };
                         konveyorNode.ClassName = item.ClassName;
-                        konveyorNode.X = item.X;
-                        konveyorNode.Y = item.Y;
+                        konveyorNode.X = position.X;
+                        konveyorNode.Y = position.Y;
                         _diagram.Nodes.Add(konveyorNode);
                         break;
                     case "LojistikSevkiyatNode":
                         LojistikSevkiyatNode lojistikSevkiyatNode = new LojistikSevkiyatNode() { Position = position, X = position.X, Y = position.Y };
                         lojistikSevkiyatNode.ClassName = item.ClassName;
-                        lojistikSevkiyatNode.X = item.X;
-                        lojistikSevkiyatNode.Y = item.Y;
+                        lojistikSevkiyatNode.X = position.X;
+                        lojistikSevkiyatNode.Y = position.Y;
                         _diagram.Nodes.Add(lojistikSevkiyatNode);
                         break;
                     case "OperatorNode":
                         OperatorNode operatorNode = new OperatorNode() { Position = position, X = position.X, Y = position.Y };
                         operatorNode.ClassName = item.ClassName;
                         operatorNode.Sayi = item.Sayi;
-                        operatorNode.X = item.X;
-                        operatorNode.Y = item.Y;
+                        operatorNode.X = position.X;
+                        operatorNode.Y = position.Y;
                         _diagram.Nodes.Add(operatorNode);
                         break;
                     case "SinyalKanbaniNode":
                         SinyalKanbaniNode sinyalKanbaniNode = new SinyalKanbaniNode() { Position = position, X = position.X, Y = position.Y };
                         sinyalKanbaniNode.ClassName = item.ClassName;
-                        sinyalKanbaniNode.X = item.X;
-                        sinyalKanbaniNode.Y = item.Y;
+                        sinyalKanbaniNode.X = position.X;
+                        sinyalKanbaniNode.Y = position.Y;
                         _diagram.Nodes.Add(sinyalKanbaniNode);
                         break;
                     case "StokIsaretiNode":
@@ -250,29 +422,37 @@ namespace TsiErp.VsmBuilder.VSM
                         stokIsaretiNode.ClassName = item.ClassName;
                         stokIsaretiNode.Adet = item.Adet;
                         stokIsaretiNode.Gun = item.Gun;
-                        stokIsaretiNode.X = item.X;
-                        stokIsaretiNode.Y = item.Y;
+                        stokIsaretiNode.X = position.X;
+                        stokIsaretiNode.Y = position.Y;
                         _diagram.Nodes.Add(stokIsaretiNode);
                         break;
                     case "UretimKanbaniNode":
                         UretimKanbaniNode uretimKanbaniNode = new UretimKanbaniNode() { Position = position, X = position.X, Y = position.Y };
                         uretimKanbaniNode.ClassName = item.ClassName;
-                        uretimKanbaniNode.X = item.X;
-                        uretimKanbaniNode.Y = item.Y;
+                        uretimKanbaniNode.X = position.X;
+                        uretimKanbaniNode.Y = position.Y;
                         _diagram.Nodes.Add(uretimKanbaniNode);
                         break;
                     case "YukSeviyelendirmeNode":
                         YukSeviyelendirmeNode yukSeviyelendirmeNode = new YukSeviyelendirmeNode() { Position = position, X = position.X, Y = position.Y };
                         yukSeviyelendirmeNode.ClassName = item.ClassName;
-                        yukSeviyelendirmeNode.X = item.X;
-                        yukSeviyelendirmeNode.Y = item.Y;
+                        yukSeviyelendirmeNode.X = position.X;
+                        yukSeviyelendirmeNode.Y = position.Y;
                         _diagram.Nodes.Add(yukSeviyelendirmeNode);
                         break;
                     default:
                         break;
                 }
+                i++;
             }
 
+        }
+
+        public void ChangeGroup(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, ProductGroup> args)
+        {
+            //this.enableUrunCombobox = !string.IsNullOrEmpty(args.Value);
+            this.urunQuery = new Query().Where(new WhereFilter() { Field = "GroupID", Operator = "equal", value = args.Value, IgnoreCase = false, IgnoreAccent = false });
+            this.urunValue = null;
         }
     }
 }
