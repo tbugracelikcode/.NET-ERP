@@ -182,8 +182,7 @@
         <TsiErp.VsmBuilder.Components.Dialog Caption="Bilgi Kusu Seçiniz"
                                          Message="@message"
                                          OnClose="OnDialogClose"
-                                         @*SelectedNodeID="@parentID"*@
-                                         Type="Dialog.Category.SaveNot" Data="globalList" SelectedNode="Lütfen bir node seçiniz">
+                                         Type="Dialog.Category.SaveNot" Data="globalList">
         </TsiErp.VsmBuilder.Components.Dialog>
     }
     else if (DialogIsOpen && category == Dialog.Category.Okay)
@@ -191,16 +190,14 @@
         <TsiErp.VsmBuilder.Components.Dialog Caption="Uyarı"        
                                          Message="@message"
                                          OnClose="OnDialogClose"
-                                         @*SelectedNodeID="@parentID"*@
-                                         Type="Dialog.Category.Okay" Data="globalList" SelectedNode="Lütfen bir node seçiniz">
+                                         Type="Dialog.Category.Okay" Data="globalList">
         </TsiErp.VsmBuilder.Components.Dialog>
     }else if (DialogIsOpen && category == Dialog.Category.DeleteNot)
     {
         <TsiErp.VsmBuilder.Components.Dialog Caption="Uyarı"        
                                          Message="@message"
                                          OnClose="OnDialogClose"
-                                         @*SelectedNodeID="@parentID"*@
-                                         Type="Dialog.Category.DeleteNot" Data="globalList" SelectedNode="Lütfen bir node seçiniz">
+                                         Type="Dialog.Category.DeleteNot" Data="globalList">
         </TsiErp.VsmBuilder.Components.Dialog>
     }
 </div>
