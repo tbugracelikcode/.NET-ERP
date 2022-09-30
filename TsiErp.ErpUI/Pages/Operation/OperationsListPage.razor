@@ -1,0 +1,358 @@
+﻿@page "/operations"
+@using Syncfusion.Blazor.Buttons
+@using Tsi.Blazor.Component.Core.Components.Commons.Loadings
+@using TsiErp.Business.Entities.Station.Services
+@using TsiErp.Entities.Entities.Operation
+@using TsiErp.ErpUI.Pages.Base
+@using Tsi.Blazor.Component.Core.Components.Layouts
+@using TsiErp.Entities.Entities.Operation.Dtos
+@using TsiErp.Entities.Entities.Station.Dtos
+@using TsiErp.Business.Entities.Operation.Services
+@using TsiErp.Entities.Entities.OperationLine.Dtos
+
+@inherits BaseListPage<SelectOperationsDto, ListOperationsDto, CreateOperationsDto, UpdateOperationsDto, ListOperationsParameterDto>
+
+@inject IOperationsAppService OperationsAppService
+@inject IStationsAppService StationsAppService
+
+
+
+@if (!base.IsLoaded)
+{
+    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+}
+else
+{
+    <DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+        <GridLayoutItems>
+            <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIListPageTitleCard">
+                        <CardContent>
+                            <TsiBreadCrumb PreviousMenus="Üretim Yönetimi" CurrentMenu="Operasyonlar" />
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+            <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIGridCards">
+                        <CardHeader >
+                                <table width="100%">
+                                    <tr>
+                                        <td width="20%">
+                                          
+                                        </td>
+                                        <td width="20%">
+                                        </td>
+                                        <td width="20%">
+                                        </td>
+                                        <td width="20%">
+                                        </td>
+                                        <td width="20%"> 
+                                        <SfButton CssClass="TSIShowColumnsButton" OnClick="ShowColumns"><SfIcon Size="IconSize.Medium" Name="IconName.TwoColumn"></SfIcon>&nbsp;Sütunları Göster</SfButton>
+
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </CardHeader>
+                        <CardContent>
+                            <SfGrid ID="Grid" @ref="@_grid" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                <GridColumnChooserSettings>
+                                        <FooterTemplate>
+                                            @{
+                                                var ContextData = context as ColumnChooserFooterTemplateContext;
+                                                var visibles = ContextData.Columns.Where(x => x.Visible).Select(x => x.HeaderText).ToArray();
+                                                var hiddens = ContextData.Columns.Where(x => !x.Visible).Select(x => x.HeaderText).ToArray();
+                                        }
+                                        <SfButton CssClass="TSISubmitButton" IsPrimary="true" OnClick="@(async () => {
+                                         await _grid.ShowColumnsAsync(visibles);
+                                         await _grid.HideColumnsAsync(hiddens); })"><SfIcon Size="IconSize.Medium" Name="IconName.Eye"></SfIcon>&nbsp;Göster</SfButton>
+
+                                        <SfButton CssClass="TSICancelButton" @onclick="@(async () => await ContextData.CancelAsync())">
+                                            <SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;İptal
+                                        </SfButton>
+
+                                    </FooterTemplate>
+                                </GridColumnChooserSettings>
+                                <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListOperationsDto"></GridEvents>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                <GridPageSettings PageSizes="true"></GridPageSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(ListOperationsDto.Code) HeaderText="OPERASYON KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListOperationsDto.Name) HeaderText="OPERASYON AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+
+                                </GridColumns>
+                            </SfGrid>
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+        </GridLayoutItems>
+    </DevGridLayout>
+
+    <DxPopup @bind-Visible="base.EditPageVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Operasyonlar"
+         Width="750px"
+         Height="550px"
+         HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout>
+
+                <Rows>
+                    <DxGridLayoutRow Height="80px" />
+                    <DxGridLayoutRow Height="65px" />
+                    <DxGridLayoutRow Height="300px" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="80px" />
+                    <DxGridLayoutColumn Width="250px" />
+                    <DxGridLayoutColumn Width="50px" />
+                    <DxGridLayoutColumn Width="250px" />
+                    <DxGridLayoutColumn Width="80px" />
+                </Columns>
+
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>Operasyon Kodu: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" Placeholder="Operasyon Kodunu Yazınız." @bind-Value="DataSource.Code"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>Operasyon Açıklaması: </strong></label><br />
+                            <SfTextBox CssClass="TSITxtBox" Placeholder="Operasyon Açıklamasını Yazınız." @bind-Value="DataSource.Name"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>Aktiflik: </strong></label>
+                            <SfCheckBox @bind-Checked="DataSource.IsActive"></SfCheckBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="2" Column="1" ColumnSpan="3">
+                        <Template>
+                            <br />
+                            <SfGrid ID="LineGrid" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false"
+                                AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
+                            
+                                <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="ListOperationLinesDto"></GridEvents>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(ListOperationLinesDto.LineNr) HeaderText="SATIR NUMARASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListOperationLinesDto.Code) HeaderText="OPERASYON SATIR KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListOperationLinesDto.Name) HeaderText="OPERASYON SATIR AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListOperationLinesDto.OperationName) HeaderText="OPERASYON ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListOperationLinesDto.StationCode) HeaderText="İSTASYON KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListOperationLinesDto.Priority) HeaderText="ÖNCELİK" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListOperationLinesDto.ProcessQuantity) HeaderText="İŞLEM ADEDİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListOperationLinesDto.AdjustmentAndControlTime) HeaderText="AYAR VE KONTROL SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListOperationLinesDto.Alternative) HeaderText="ALTERNATİF" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="LineCrudPopup"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Operasyon Satırları"
+         Width="1000px"
+         Height="440px"
+         HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout>
+
+                <Rows>
+                    <DxGridLayoutRow Height="100px" />
+                    <DxGridLayoutRow Height="70px" />
+                    <DxGridLayoutRow Height="70px" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="200px" />
+                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="200px" />
+                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="200px" />
+                    <DxGridLayoutColumn Width="40px" />
+                </Columns>
+
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>Operasyon Satır Kodu: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" Placeholder="Operasyon Satır Kodunu Yazınız." @bind-Value="LineDataSource.Code"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>Operasyon Satır Adı: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" Placeholder="Operasyon Satır Adını Yazınız." @bind-Value="LineDataSource.Name"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="0" Column="5">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>Operasyon Adı: </strong></label><br />
+                            <SfComboBox @ref="LineOperationsComboBox"
+                                    TValue="string"
+                                    TItem="ListOperationsDto"
+                                    Placeholder="Operasyon Seçin"
+                                    CssClass="e-multi-column"
+                                    DataSource="@LineOperationsList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500">
+
+                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+
+                                <ComboBoxTemplates TItem="ListOperationsDto">
+                                    <HeaderTemplate>
+                                        <table>
+                                            <tr>
+                                                <th class="e-text-center">Operasyon Kodu</th>
+                                                <th class="e-text-center">Operasyon Açıklaması</th>
+                                            </tr>
+                                        </table>
+                                    </HeaderTemplate>
+                                    <ItemTemplate Context="cmbContext">
+
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="e-text-center">@((cmbContext as ListOperationsDto).Code)</td>
+                                                    <td class="e-text-center">@((cmbContext as ListOperationsDto).Name)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </ItemTemplate>
+                                </ComboBoxTemplates>
+
+                                <ComboBoxEvents TValue="string"
+                                            TItem="ListOperationsDto"
+                                            Filtering="LineOperationFiltering"
+                                            Opened="LineOperationOpened"
+                                            ValueChange="LineOperationValueChanged"></ComboBoxEvents>
+                            </SfComboBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>İstasyon Kodu: </strong></label><br />
+                            <SfComboBox @ref="LineStationsComboBox"
+                                    TValue="string"
+                                    TItem="ListStationsDto"
+                                    Placeholder="İstasyon Seçin"
+                                    CssClass="e-multi-column"
+                                    DataSource="@LineStationsList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500">
+
+                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+
+                                <ComboBoxTemplates TItem="ListStationsDto">
+                                    <HeaderTemplate>
+                                        <table>
+                                            <tr>
+                                                <th class="e-text-center">İstasyon Kodu</th>
+                                                <th class="e-text-center">İstasyon Açıklaması</th>
+                                            </tr>
+                                        </table>
+                                    </HeaderTemplate>
+                                    <ItemTemplate Context="cmbContext">
+
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="e-text-center">@((cmbContext as ListStationsDto).Code)</td>
+                                                    <td class="e-text-center">@((cmbContext as ListStationsDto).Name)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </ItemTemplate>
+                                </ComboBoxTemplates>
+
+                                <ComboBoxEvents TValue="string"
+                                            TItem="ListStationsDto"
+                                            Filtering="LineStationFiltering"
+                                            Opened="LineStationOpened"
+                                            ValueChange="LineStationValueChanged"></ComboBoxEvents>
+                            </SfComboBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Öncelik: </strong></label><br />
+                            <SfNumericTextBox Min="0" @bind-Value="LineDataSource.Priority"></SfNumericTextBox>
+
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="1" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>İşlem Adedi: </strong></label>
+                            <SfNumericTextBox Min="0"  @bind-Value="LineDataSource.ProcessQuantity" ></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Ayar ve Kontrol Süresi: </strong></label>
+                            <SfNumericTextBox Min="0" @bind-Value="LineDataSource.AdjustmentAndControlTime"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                      <DxGridLayoutItem Row="2" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Alternatif: </strong></label>
+                            <SfCheckBox @bind-Checked="LineDataSource.Alternative"></SfCheckBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideLinesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+}

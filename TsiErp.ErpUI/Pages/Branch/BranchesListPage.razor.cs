@@ -9,6 +9,7 @@ namespace TsiErp.ErpUI.Pages.Branch
 {
     public partial class BranchesListPage
     {
+        private SfGrid<ListBranchesDto> _grid;
         protected override async void OnInitialized()
         {
             BaseCrudService = BranchesService;
@@ -24,6 +25,11 @@ namespace TsiErp.ErpUI.Pages.Branch
             ShowEditPage();
 
             return Task.CompletedTask;
+        }
+
+        public void ShowColumns()
+        {
+            this._grid.OpenColumnChooserAsync(200, 50);
         }
 
         //protected override void CreateContextMenu()

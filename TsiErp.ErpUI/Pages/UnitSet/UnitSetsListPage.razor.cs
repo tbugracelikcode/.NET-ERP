@@ -9,6 +9,10 @@ namespace TsiErp.ErpUI.Pages.UnitSet
 {
     public partial class UnitSetsListPage
     {
+
+        private SfGrid<ListUnitSetsDto> _grid;
+
+
         protected override async void OnInitialized()
         {
             BaseCrudService = UnitSetsService;
@@ -24,6 +28,11 @@ namespace TsiErp.ErpUI.Pages.UnitSet
             ShowEditPage();
 
             return Task.CompletedTask;
+        }
+
+        public void ShowColumns()
+        {
+            this._grid.OpenColumnChooserAsync(200, 50);
         }
     }
 }

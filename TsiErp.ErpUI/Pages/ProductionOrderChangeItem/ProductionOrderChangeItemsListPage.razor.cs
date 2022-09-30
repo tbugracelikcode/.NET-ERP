@@ -9,6 +9,9 @@ namespace TsiErp.ErpUI.Pages.ProductionOrderChangeItem
 {
     public partial class ProductionOrderChangeItemsListPage
     {
+
+        private SfGrid<ListProductionOrderChangeItemsDto> _grid;
+
         protected override async void OnInitialized()
         {
             BaseCrudService = ProductionOrderChangeItemsService;
@@ -24,6 +27,11 @@ namespace TsiErp.ErpUI.Pages.ProductionOrderChangeItem
             ShowEditPage();
 
             return Task.CompletedTask;
+        }
+
+        public void ShowColumns()
+        {
+            this._grid.OpenColumnChooserAsync(200, 50);
         }
     }
 }

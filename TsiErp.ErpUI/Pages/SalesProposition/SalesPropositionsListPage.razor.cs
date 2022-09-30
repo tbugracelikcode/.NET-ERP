@@ -53,6 +53,7 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
 
         #endregion
 
+        private SfGrid<ListSalesPropositionsDto> _grid;
 
 
         [Inject]
@@ -75,6 +76,11 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             await GetCurrenciesList();
             await GetProductsList();
             await GetUnitSetsList();
+        }
+
+        public void ShowColumns()
+        {
+            this._grid.OpenColumnChooserAsync(200, 50);
         }
 
 

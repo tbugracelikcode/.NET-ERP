@@ -18,12 +18,20 @@ namespace TsiErp.ErpUI.Pages.Product
         SfComboBox<string, ListUnitSetsDto> UnitSetsComboBox;
         List<ListUnitSetsDto> UnitSetsList = new List<ListUnitSetsDto>();
 
+        private SfGrid<ListProductsDto> _grid;
+
+
         SfComboBox<string, ListProductGroupsDto> ProductGroupsComboBox;
         List<ListProductGroupsDto> ProductGroupsList = new List<ListProductGroupsDto>();
 
         protected override async void OnInitialized()
         {
             BaseCrudService = ProductService;
+        }
+
+        public void ShowColumns()
+        {
+            this._grid.OpenColumnChooserAsync(200, 50);
         }
 
         protected override Task BeforeInsertAsync()

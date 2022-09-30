@@ -6,7 +6,8 @@ namespace TsiErp.VsmBuilder.CustomNodes
     [DataContract]
     public class StokIsaretiNode : NodeModel
     {
-
+        [DataMember]
+        public string Name { get; set; }
         [DataMember]
         public string Adet { get; set; }
         [DataMember]
@@ -17,6 +18,8 @@ namespace TsiErp.VsmBuilder.CustomNodes
         public double X { get; set; }
         [DataMember]
         public double Y { get; set; }
+        [DataMember]
+        public string ParentID { get; set; }
 
     }
 }

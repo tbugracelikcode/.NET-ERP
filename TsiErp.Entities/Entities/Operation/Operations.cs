@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Entities.OperationLine;
+using TsiErp.Entities.Entities.RouteLine;
 
 namespace TsiErp.Entities.Entities.Operation
 {
@@ -28,5 +30,9 @@ namespace TsiErp.Entities.Entities.Operation
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
+
+        public ICollection<OperationLines> OperationLines { get; set; }
+
+        public ICollection<RouteLines> RouteLines { get; set; }
     }
 }

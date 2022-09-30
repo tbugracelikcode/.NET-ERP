@@ -14,6 +14,9 @@ namespace TsiErp.ErpUI.Pages.CalibrationRecord
     {
         SfComboBox<string, ListEquipmentRecordsDto> EquipmentRecordsComboBox;
         List<ListEquipmentRecordsDto> EquipmentRecordsList = new List<ListEquipmentRecordsDto>();
+
+        private SfGrid<ListCalibrationRecordsDto> _grid;
+
         protected override async void OnInitialized()
         {
             BaseCrudService = CalibrationRecordsService;
@@ -52,6 +55,11 @@ namespace TsiErp.ErpUI.Pages.CalibrationRecord
         {
             DataSource.EquipmentID = args.ItemData.Id;
             DataSource.Equipment = args.ItemData.Name;
+        }
+
+        public void ShowColumns()
+        {
+            this._grid.OpenColumnChooserAsync(200, 50);
         }
     }
 }

@@ -9,5 +9,9 @@ namespace TsiErp.Entities.Entities.OperationLine.Dtos
 {
     public class ListOperationLinesParameterDto : FullAuditedEntityDto
     {
+        /// <summary>
+        /// Operasyon ID
+        /// </summary>
+        public Guid OperationID { get; set; }
     }
 }

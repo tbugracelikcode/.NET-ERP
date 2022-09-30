@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Entities.Operation;
+using TsiErp.Entities.Entities.Station;
 
 namespace TsiErp.Entities.Entities.OperationLine
 {
@@ -48,6 +50,10 @@ namespace TsiErp.Entities.Entities.OperationLine
         /// Alternatif
         /// </summary>
         public bool Alternative { get; set; }
+
+        public Operations Operations { get; set; }
+
+        public Stations Stations { get; set; }
 
     }
 }

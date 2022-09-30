@@ -9,6 +9,10 @@ namespace TsiErp.ErpUI.Pages.CustomerComplaintItem
 {
     public partial class CustomerComplaintItemListPage
     {
+
+        private SfGrid<ListCustomerComplaintItemsDto> _grid;
+
+
         protected override async void OnInitialized()
         {
             BaseCrudService = CustomerComplaintItemsService;
@@ -24,6 +28,11 @@ namespace TsiErp.ErpUI.Pages.CustomerComplaintItem
             ShowEditPage();
 
             return Task.CompletedTask;
+        }
+
+        public void ShowColumns()
+        {
+            this._grid.OpenColumnChooserAsync(200, 50);
         }
     }
 }

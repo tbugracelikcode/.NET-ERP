@@ -43,7 +43,9 @@ using TsiErp.Entities.Entities.ProductionOrderChangeItem;
 using TsiErp.Entities.Entities.PurchasingUnsuitabilityItem;
 using TsiErp.Entities.Entities.ShippingAdress;
 using TsiErp.Entities.Entities.Operation;
+using TsiErp.Entities.Entities.OperationLine;
 using TsiErp.Entities.Entities.Route;
+using TsiErp.Entities.Entities.RouteLine;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore
 {
@@ -135,7 +137,9 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigureShippingAdresses();
             builder.ConfigureWarehouses();
             builder.ConfigureOperations();
+            builder.ConfigureOperationLines();
             builder.ConfigureRoutes();
+            builder.ConfigureRouteLines();
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -213,7 +217,9 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<ShippingAdresses> ShippingAdresses { get; set; }
         public DbSet<Warehouses> Warehouses { get; set; }
         public DbSet<Operations> Operations { get; set; }
+        public DbSet<OperationLines> OperationLines { get; set; }
         public DbSet<Routes> Routes { get; set; }
+        public DbSet<RouteLines> RouteLines { get; set; }
 
         #endregion
     }

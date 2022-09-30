@@ -19,11 +19,11 @@ namespace TsiErp.Entities.Entities.OperationLine.Dtos
         /// <summary>
         /// Operasyon 
         /// </summary>
-        public string Operation { get; set; }
+        public string OperationName { get; set; }
         /// <summary>
-        /// İstasyon 
+        /// İstasyon Kodu
         /// </summary>
-        public string Station { get; set; }
+        public string StationCode { get; set; }
         /// <summary>
         /// Öncelik
         /// </summary>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Entities.RouteLine.Dtos;
 
 namespace TsiErp.Entities.Entities.Route.Dtos
 {
@@ -22,6 +23,10 @@ namespace TsiErp.Entities.Entities.Route.Dtos
         /// </summary>
         public Guid ProductID { get; set; }
         /// <summary>
+        /// Ana Ürün Kodu
+        /// </summary>
+        public string ProductCode { get; set; }
+        /// <summary>
         /// Üretim Başlangıç
         /// </summary>
         public string ProductionStart { get; set; }
@@ -37,5 +42,7 @@ namespace TsiErp.Entities.Entities.Route.Dtos
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
+
+        public List<SelectRouteLinesDto> SelectRouteLines { get; set; }
     }
 }
