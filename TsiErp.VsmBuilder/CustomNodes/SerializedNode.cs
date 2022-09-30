@@ -1,9 +1,11 @@
-﻿using System.Runtime.Serialization;
+﻿using Blazor.Diagrams.Core.Models;
+using System.Runtime.Serialization;
 
 namespace TsiErp.VsmBuilder.CustomNodes
 {
-    public class SerializedNode
+    public class SerializedNode : NodeModel
     {
+        public string Name { get; set; }
         public string Adet { get; set; }
         public string Gun { get; set; }
         public string Sayi { get; set; }
@@ -16,5 +18,7 @@ namespace TsiErp.VsmBuilder.CustomNodes
         public string ClassName { get; set; }
         public double X { get; set; }
         public double Y { get; set; }
+        public string ParentID { get; set; }
+        public string mirrorID { get; set; }
     }
 }

@@ -11,7 +11,7 @@
 //  </PropertyGroup>
 //------------------------------------------------------------------------------
 using System;
-
+using DevExpress.Blazor;
 using Microsoft.AspNetCore.Hosting;
 
 [assembly: HostingStartup(typeof(TsiErp.VsmBuilder.DevExpressHostingStartup))]
@@ -20,7 +20,7 @@ namespace TsiErp.VsmBuilder {
     public partial class DevExpressHostingStartup : IHostingStartup {
         void IHostingStartup.Configure(IWebHostBuilder builder) {
             builder.ConfigureServices((serviceCollection) => {
-                //serviceCollection.AddDevExpressBlazor();
+                serviceCollection.AddDevExpressBlazor();
             });
         }
     }

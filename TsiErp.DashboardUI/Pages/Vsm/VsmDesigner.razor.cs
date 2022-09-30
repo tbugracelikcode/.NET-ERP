@@ -6,6 +6,7 @@ using Microsoft.JSInterop;
 using System.Reflection.Metadata;
 using TsiErp.DashboardUI.Data;
 using System.Text.Json;
+using Syncfusion.Blazor.RichTextEditor;
 
 namespace TsiErp.DashboardUI.Pages.Vsm
 {
@@ -43,20 +44,27 @@ namespace TsiErp.DashboardUI.Pages.Vsm
         // Defines palette's connector collection
         private DiagramObjectCollection<NodeBase> connectorSymbols = new DiagramObjectCollection<NodeBase>();
 
+        string firstTextValue = "";
+        string secondTextValue = "";
+        string thirdTextValue = "";
+        string fourthTextValue = "";
+        string fifthTextValue = "";
+        string sixthTextValue = "";
+        string data = "";
+
         public async void SaveDiagramClick()
         {
-            //string data = Diagram.SaveDiagram();
+            string data = Diagram.SaveDiagram();
 
-            //await Diagram.LoadDiagram(data);
+            await Diagram.LoadDiagram(data);
 
-            SaveDiagram();
         }
-        string nodesJson = "";
 
-        public void SaveDiagram()
-        {
-            nodesJson = new string(JsonSerializer.Serialize(nodes.Select(i => (Node)i.Clone())));
-        }
+
+        //public void SaveDiagram()
+        //{
+        //    nodesJson = new string(JsonSerializer.Serialize(nodes.Select(i => (Node)i.Clone())));
+        //}
 
         //public async Task DiagramLoadJson(string diagramId = "")
         //{
@@ -68,7 +76,7 @@ namespace TsiErp.DashboardUI.Pages.Vsm
         //        vnode.Annotations.Clear();
         //        vnode.Annotations = new DiagramObjectCollection(origAnnotation);
         //    }
-        //}
+        //}  
 
         public void OnDrop(DropEventArgs args)
         {
@@ -353,10 +361,6 @@ namespace TsiErp.DashboardUI.Pages.Vsm
                         Width = 93,
                         Height = 48,
                         Annotations = NewNode.Annotations,
-                        Shape = new Syncfusion.Blazor.Diagram.Shape()
-                        {
-                            Type = NodeShapes.HTML
-                        },
                         AdditionalInfo = NewNode.AdditionalInfo
 
 
@@ -710,6 +714,6 @@ namespace TsiErp.DashboardUI.Pages.Vsm
         };
         }
 
-       
+
     }
 }

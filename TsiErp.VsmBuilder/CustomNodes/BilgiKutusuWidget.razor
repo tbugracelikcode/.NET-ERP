@@ -4,7 +4,19 @@
         <div class="card-body">
             <div class="form-group">
                 <table class="tg">
-                    <thead>
+                    <thead>                        
+                        <tr>
+                            <td class="tg-0lax" colspan="3">
+                                <input type="text" class="form-control"
+                                       @bind-value="Node.Name"
+                                       placeholder="Bilgi Kutusu ismi"
+                                       @onmousedown:stopPropagation
+                                       @onmouseup:stopPropagation
+                                       @onmousemove:stopPropagation />
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
                         <tr>
                             <td class="tg-0lax" colspan="3">
                                 <input type="text" class="form-control"
@@ -15,8 +27,6 @@
                                        @onmousemove:stopPropagation />
                             </td>
                         </tr>
-                    </thead>
-                    <tbody>
                         <tr>
                             <td class="tg-0lax" colspan="3">
                                 <input type="text" class="form-control"
@@ -79,7 +89,7 @@
 
     @foreach (var port in Node.Ports)
     {
-        <PortRenderer Port="port"></PortRenderer>
+            <PortRenderer Port="port"></PortRenderer>
     }
 </div>
 
