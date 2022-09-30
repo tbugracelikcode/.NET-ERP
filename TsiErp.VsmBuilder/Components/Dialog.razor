@@ -13,46 +13,43 @@
             <div class="modal-body">
                 <p>@Message</p>
             </div>
-            @*<DxComboBox Data="@Data"
-            TextFieldName="@nameof(SerializedNode.Name)"
-            @bind-Value="@SelectedNode"
-            CssClass="cw-480" />*@
-            <select @bind=@SelectedNode>
-            @foreach (var item in Data.Where(t=>t.ClassName=="BilgiKutusuNode").Select(t=>t.Name).ToList())
-    {
-        <option>@item</option>
-    }
-        </select>
-            <button type="button" class="btn btn-primary">
-    Launch demo modal
-</button>
+            @if (Type == Category.SaveNot)
+                {
+            <div>
+            <select @bind=@SelectedNodeID>
+                @foreach (var item in Data.Where(t => t.ClassName == "BilgiKutusuNode").ToList())
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select></div>}
+
             <div class="modal-footer">
                 @switch (Type)
                 {
                     case Category.Okay:
                         <button type="button" class="btn btn-primary"
                         @onclick=@Ok>
-                            OK
+                            Tamam
                         </button>
                         break;
                     case Category.SaveNot:
                         <button type="button" class="btn btn-primary"
                         @onclick=@Ok>
-                            Save
+                            Kaydet
                         </button>
                         <button type="button" class="btn btn-warning"
                         @onclick="@Cancel">
-                            Don't Save
+                            İptal
                         </button>
                         break;
                     case Category.DeleteNot:
                         <button type="button" class="btn btn-danger"
                         @onclick=@Ok>
-                            Delete
+                            Sil
                         </button>
                         <button type="button" class="btn btn-warning"
                         @onclick="@Cancel">
-                            Don't Delete
+                            İptal
                         </button>
                         break;
                 }
@@ -63,17 +60,20 @@
 @code {
     [Parameter] public string Caption { get; set; }
     [Parameter] public string Message { get; set; }
+    [Parameter] public string PlaceHolder { get; set; }
     [Parameter] public EventCallback<bool> OnClose { get; set; }
     [Parameter] public Category Type { get; set; }
     [Parameter] public IEnumerable<SerializedNode> Data { get; set; }
-    [Parameter] public string SelectedNode { get; set; }
+    [Parameter] public string SelectedNodeID { get; set; }
 
     private Task Cancel()
     {
+        
         return OnClose.InvokeAsync(false);
     }
     private Task Ok()
     {
+
         return OnClose.InvokeAsync(true);
     }
     public enum Category
