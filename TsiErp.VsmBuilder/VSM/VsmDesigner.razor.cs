@@ -16,7 +16,6 @@ using Syncfusion.Blazor.DropDowns;
 using System.Collections.Immutable;
 using System.Security.Cryptography;
 using TsiErp.VsmBuilder.Components;
-using DevExpress.Blazor.ComboBox.Internal;
 using Blazor.Diagrams.Core.Models.Base;
 
 namespace TsiErp.VsmBuilder.VSM
