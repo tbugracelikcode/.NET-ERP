@@ -76,13 +76,13 @@ else
                                 </GridColumnChooserSettings>
                                 <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListStationGroupsDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
-                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListStationGroupsDto.Code) HeaderText="İŞ İSTASYON GRUBU KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListStationGroupsDto.Name) HeaderText="İŞ İSTASYON GRUBU AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationGroupsDto.TotalEmployees) HeaderText="TOPLAM ÇALIŞAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationGroupsDto.TotalEmployees) Type="ColumnType.Number" HeaderText="TOPLAM ÇALIŞAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                 </GridColumns>
                             </SfGrid>

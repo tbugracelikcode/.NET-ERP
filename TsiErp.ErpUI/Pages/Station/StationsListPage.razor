@@ -82,26 +82,26 @@ else
                                 </GridColumnChooserSettings>
                                 <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListStationsDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
-                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListStationsDto.Code) HeaderText="MAKİNA KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListStationsDto.Name) HeaderText="MAKİNA AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListStationsDto.Brand) HeaderText="MARKA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.Model) HeaderText="MODEL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationsDto.Model) Type="ColumnType.Number" HeaderText="MODEL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListStationsDto.Capacity) HeaderText="KAPASİTE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.KWA) HeaderText="KWA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationsDto.KWA) Type="ColumnType.Number" HeaderText="KWA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListStationsDto.StationGroup) HeaderText="İŞ İSTASYONU GRUBU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.X) HeaderText="X" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.Y) HeaderText="Y" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.AreaCovered) HeaderText="KAPLADIĞI ALAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.UsageArea) HeaderText="KULLANIM ALANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.Amortization) HeaderText="AMORTİSMAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.MachineCost) HeaderText="MAKİNA MALİYETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.Shift) HeaderText="VARDİYA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.ShiftWorkingTime) HeaderText="VARDİYA ÇALIŞMA SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.PowerFactor) HeaderText="GÜÇ FAKTÖRÜ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationsDto.X) HeaderText="X" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationsDto.Y) HeaderText="Y" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationsDto.AreaCovered) Type="ColumnType.Number" HeaderText="KAPLADIĞI ALAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationsDto.UsageArea) Type="ColumnType.Number" HeaderText="KULLANIM ALANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationsDto.Amortization) Type="ColumnType.Number" HeaderText="AMORTİSMAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationsDto.MachineCost) Type="ColumnType.Number" HeaderText="MAKİNA MALİYETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationsDto.Shift) Type="ColumnType.Number" HeaderText="VARDİYA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationsDto.ShiftWorkingTime) Type="ColumnType.Number" HeaderText="VARDİYA ÇALIŞMA SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationsDto.PowerFactor) Type="ColumnType.Number" HeaderText="GÜÇ FAKTÖRÜ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListStationsDto.WorkSafetyInstruction) HeaderText="İŞ GÜVENLİĞİ TALİMATI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListStationsDto.UsageInstruction) HeaderText="KULLANIM TALİMATI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 

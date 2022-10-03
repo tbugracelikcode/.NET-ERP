@@ -42,6 +42,7 @@ builder.Services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(Syncfus
                 // Define the list of cultures your app will support
                 var supportedCultures = new List<CultureInfo>()
                 {
+                    new CultureInfo("tr"),
                     new CultureInfo("en-US"),
                     new CultureInfo("de"),
                     new CultureInfo("fr"),
@@ -49,7 +50,7 @@ builder.Services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(Syncfus
                     new CultureInfo("zh"),
                 };
                     // Set the default culture
-                    options.DefaultRequestCulture = new RequestCulture("en-US");
+                    options.DefaultRequestCulture = new RequestCulture("tr");
                     options.SupportedCultures = supportedCultures;
                     options.SupportedUICultures = supportedCultures;
                 }); 

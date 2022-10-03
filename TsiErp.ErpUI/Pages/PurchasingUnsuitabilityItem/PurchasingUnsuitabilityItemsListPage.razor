@@ -75,16 +75,16 @@ else
                                 </GridColumnChooserSettings>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
                                 <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListPurchasingUnsuitabilityItemsDto"></GridEvents>
-                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListPurchasingUnsuitabilityItemsDto.Code) HeaderText="SATIN ALMA UYGUNSUZLUK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListPurchasingUnsuitabilityItemsDto.Name) HeaderText="SATIN ALMA UYGUNSUZLUK AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPurchasingUnsuitabilityItemsDto.Detection) HeaderText="TESPİT" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPurchasingUnsuitabilityItemsDto.Severity) HeaderText="ŞİDDET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPurchasingUnsuitabilityItemsDto.StaProductivityAnalysis) HeaderText="İSTASYON VERİMLİLİK ANALİZİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPurchasingUnsuitabilityItemsDto.PerProductivityAnalysis) HeaderText="PERSONEL VERİMLİLİK ANALİZİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPurchasingUnsuitabilityItemsDto.Detection) Type="ColumnType.Number" HeaderText="TESPİT" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPurchasingUnsuitabilityItemsDto.Severity) Type="ColumnType.Number" HeaderText="ŞİDDET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPurchasingUnsuitabilityItemsDto.StaProductivityAnalysis) DisplayAsCheckBox="true" HeaderText="İSTASYON VERİMLİLİK ANALİZİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPurchasingUnsuitabilityItemsDto.PerProductivityAnalysis) DisplayAsCheckBox="true" HeaderText="PERSONEL VERİMLİLİK ANALİZİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListPurchasingUnsuitabilityItemsDto.Image) HeaderText="RESİM" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                 </GridColumns>

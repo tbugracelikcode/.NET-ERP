@@ -80,7 +80,7 @@
                                 </GridColumnChooserSettings>
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
                                     <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListCalibrationVerificationsDto"></GridEvents>
-                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
@@ -88,8 +88,8 @@
                                         <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Name) HeaderText="KALİBRASYON DOĞRULAMA AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         <GridColumn Field=@nameof(ListCalibrationVerificationsDto.ReceiptNo) HeaderText="FİŞ NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Equipment) HeaderText="EKİPMAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Date) HeaderText="TARİH" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.NextControl) HeaderText="SONRAKİ KONTROL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Date) HeaderText="TARİH" Type="ColumnType.Date" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.NextControl) HeaderText="SONRAKİ KONTROL" Type="ColumnType.Date" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         <GridColumn Field=@nameof(ListCalibrationVerificationsDto.InfinitiveCertificateNo) HeaderText="MASTAR SERTİFİKA NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Result) HeaderText="SONUÇ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace TsiErp.ErpUI.Components
 {
@@ -7,7 +8,7 @@ namespace TsiErp.ErpUI.Components
         [Parameter]
         public bool Enabled { get; set; } = true;
         [Parameter]
-        public EventCallback ButtonClick { get; set; }
+        public EventCallback<MouseEventArgs> ButtonClick { get; set; }
 
         [Parameter] 
         public Type ButtonType { get; set; }
