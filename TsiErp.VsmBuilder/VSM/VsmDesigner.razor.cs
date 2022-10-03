@@ -51,65 +51,10 @@ namespace TsiErp.VsmBuilder.VSM
         };
         public List<SerializedNode> globalList = new List<SerializedNode>();
         public List<SerializedNode> serializedNodeList = new List<SerializedNode>();
-        public bool modalPopup = false;
-        public int bilgiKutusuSayisi = 1;
         public NodeModel selectedNode = new NodeModel();
-        public string parentIDseysi = "";
-        public Query urunQuery { get; set; } = null;
-        public string urunValue { get; set; } = null;
-        public string grupValue { get; set; } = null;
         private Dialog.Category category = new Dialog.Category();
         private string message;
         private bool DialogIsOpen = false;
-
-        private void OpenDialog()
-        {
-            if (globalList.Where(t => t.ClassName == "BilgiKutusuNode").Count() > 0)
-            {
-                category = Dialog.Category.SaveNot;
-                message = "Seçtiğiniz nesneyi bir bilgi kutusu ile eşleştiriniz.";
-            }
-            else
-            {
-                category = Dialog.Category.Okay;
-                message = "Bu nesneyi eklemeden önce diagrama bir Bilgi Kutusu ekleyiniz.";
-            }
-            DialogIsOpen = true;
-        }
-        private void OnDialogClose(bool ok)
-        {
-            if (category == Dialog.Category.SaveNot && !ok)
-            {
-                globalList.RemoveAt(globalList.Count - 1);
-                _diagram.Nodes.Remove(_diagram.Nodes.Last());
-            }
-            else if (category == Dialog.Category.SaveNot && ok)
-            {
-                //var s = parentID;
-                //parentID bağla
-            }
-            if (category == Dialog.Category.DeleteNot && ok)
-            {
-                _diagram.Nodes.Remove(selectedNode);
-                globalList.Remove(globalList.Where(t => t.mirrorID == selectedNode.Id).FirstOrDefault());
-            }
-            DialogIsOpen = false;
-            StateHasChanged();
-
-        }
-
-        private void _diagram_KeyDown(KeyboardEventArgs args)
-        {
-            if (args.Key == "Delete")
-            {
-                category = Dialog.Category.DeleteNot;
-                message = "Bu nesneyi silmek istediğinize emin misiniz ?";
-                selectedNode = _diagram.Nodes.Where(t => t.Selected == true).FirstOrDefault();
-                DialogIsOpen = true;
-                StateHasChanged();
-            }
-
-        }
 
         protected override void OnInitialized()
         {
@@ -138,14 +83,67 @@ namespace TsiErp.VsmBuilder.VSM
             #endregion
             _diagram.Options.DeleteKey = "Delete butonunu manuel kontrol etmek için yazıldı bu";
             _diagram.KeyDown += _diagram_KeyDown;
+            _diagram.Changed += _diagram_Changed;
         }
+        private void _diagram_KeyDown(KeyboardEventArgs args)
+        {
+            if (args.Key == "Delete")
+            {
+                category = Dialog.Category.DeleteNot;
+                message = "Bu nesneyi silmek istediğinize emin misiniz ?";
+                selectedNode = _diagram.Nodes.Where(t => t.Selected == true).FirstOrDefault();
+                DialogIsOpen = true;
+                StateHasChanged();
+            }
+        }
+        private void _diagram_Changed()
+        {
 
+        }
+        private void OpenDialog()
+        {
+            foreach (SerializedNode node in globalList.Where(t => t.ClassName == "BilgiKutusuNode").ToList())
+            {
+                //_diagram.Nodes.Where(t=>t.Id == node.mirrorID).Select(t=>t.)
+            }
+            if (globalList.Where(t => t.ClassName == "BilgiKutusuNode").Count() > 0)
+            {
+                category = Dialog.Category.SaveNot;
+                message = "Seçtiğiniz nesneyi bir bilgi kutusu ile eşleştiriniz.";
+            }
+            else
+            {
+                category = Dialog.Category.Okay;
+                message = "Bu nesneyi eklemeden önce diagrama bir Bilgi Kutusu ekleyiniz.";
+            }
+            DialogIsOpen = true;
+        }
+        private void OnDialogClose(bool ok)
+        {
+            if (category == Dialog.Category.SaveNot && !ok)
+            {
+                globalList.RemoveAt(globalList.Count - 1);
+                _diagram.Nodes.Remove(_diagram.Nodes.Last());
+            }
+            if (category == Dialog.Category.DeleteNot && ok)
+            {
+                _diagram.Nodes.Remove(selectedNode);
+                globalList.Remove(globalList.Where(t => t.mirrorID == selectedNode.Id).FirstOrDefault());
+            }
+            DialogIsOpen = false;
+            StateHasChanged();
 
+        }
+        private int BilgiKutusuSayisiHesapla()
+        {
+            int sayi = globalList.Where(t => t.ClassName == "BilgiKutusuNode").Count();
+            return sayi;
+
+        }
         private void OnDragStart(int key)
         {
             _draggedType = key;
         }
-
         private void OnDrop(DragEventArgs e)
         {
             if (_draggedType == null)
@@ -157,15 +155,14 @@ namespace TsiErp.VsmBuilder.VSM
             switch (_draggedType)
             {
                 case 1:
-                    node = new BilgiKutusuNode() { Position = position, X = position.X, Y = position.Y, Name = "Bilgi Kutusu " + bilgiKutusuSayisi.ToString() };
+                    node = new BilgiKutusuNode() { Position = position, X = position.X, Y = position.Y, Name = "Bilgi Kutusu " + BilgiKutusuSayisiHesapla().ToString() };
                     globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
-                    globalNode.Name = "Bilgi Kutusu " + bilgiKutusuSayisi.ToString();
+                    globalNode.Name = "Bilgi Kutusu " + BilgiKutusuSayisiHesapla().ToString();
                     globalNode.ClassName = "BilgiKutusuNode";
                     globalNode.mirrorID = node.Id;
-                    bilgiKutusuSayisi++;
                     break;
                 case 2:
-                    if (bilgiKutusuSayisi > 1)
+                    if (BilgiKutusuSayisiHesapla() > 0)
                     {
                         node = new StokIsaretiNode() { Position = position, X = position.X, Y = position.Y };
                         globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
@@ -176,7 +173,7 @@ namespace TsiErp.VsmBuilder.VSM
                     else { OpenDialog(); node = null; }
                     break;
                 case 3:
-                    if (bilgiKutusuSayisi > 1)
+                    if (BilgiKutusuSayisiHesapla() > 0)
                     {
                         node = new OperatorNode() { Position = position, X = position.X, Y = position.Y };
                         globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
@@ -271,7 +268,7 @@ namespace TsiErp.VsmBuilder.VSM
                     globalNode.mirrorID = node.Id;
                     break;
                 case 18:
-                    if (bilgiKutusuSayisi > 1)
+                    if (BilgiKutusuSayisiHesapla() > 0)
                     {
                         node = new ZamanCizgisiNode() { Position = position, X = position.X, Y = position.Y };
                         globalNode = new SerializedNode() { Position = position, X = position.X, Y = position.Y };
@@ -294,7 +291,6 @@ namespace TsiErp.VsmBuilder.VSM
             else { node = null; }
             _draggedType = null;
         }
-
         void Tikla()
         {
             string serializedString = JsonConvert.SerializeObject(_diagram.Nodes.ToList(), Formatting.Indented, new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
@@ -322,6 +318,10 @@ namespace TsiErp.VsmBuilder.VSM
                         bilgiKutusuNode.VardiyaSayisi = item.VardiyaSayisi;
                         bilgiKutusuNode.X = position.X;
                         bilgiKutusuNode.Y = position.Y;
+                        bilgiKutusuNode.ParentID = item.ParentID;
+                        bilgiKutusuNode.OperatorNodeID = item.OperatorNodeID;
+                        bilgiKutusuNode.StokIsaretiNodeID= item.StokIsaretiNodeID;
+                        bilgiKutusuNode.ZamanCizgisiNodeID = item.ZamanCizgisiNodeID;
                         _diagram.Nodes.Add(bilgiKutusuNode);
                         break;
                     case "BitmisUrunNode":
@@ -445,13 +445,6 @@ namespace TsiErp.VsmBuilder.VSM
                 i++;
             }
 
-        }
-
-        public void ChangeGroup(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, ProductGroup> args)
-        {
-            //this.enableUrunCombobox = !string.IsNullOrEmpty(args.Value);
-            this.urunQuery = new Query().Where(new WhereFilter() { Field = "GroupID", Operator = "equal", value = args.Value, IgnoreCase = false, IgnoreAccent = false });
-            this.urunValue = null;
         }
     }
 }

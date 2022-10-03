@@ -147,11 +147,10 @@
                             <tr>
                                 <td class="tg-0lax" colspan="3">
                                     <div class="cascading">
-                                        <label class="example-label">Ürün Grubu</label>
-                                        <SfComboBox TValue="string" TItem="ProductGroup" Placeholder="Ürün Grubu Seçiniz..." PopupHeight="auto" DataSource="@productGroupList">
-                                            <ComboBoxEvents TValue="string" TItem="ProductGroup" ValueChange="ChangeGroup"></ComboBoxEvents>
-                                            <ComboBoxFieldSettings Text="Name" Value="GroupID" />
-                                        </SfComboBox>
+                                        <label class="example-label">Ürün Grubu Combobox</label>
+                                        <select >
+                                            <option value=""></option>
+                                        </select>
 
                                     </div>
                                 </td>
@@ -177,7 +176,7 @@
             </DiagramCanvas>
         </CascadingValue>
     </div>
-    @if (DialogIsOpen && globalList.Where(t => t.ClassName == "BilgiKutusuNode").Count() > 0)
+    @if (DialogIsOpen && BilgiKutusuSayisiHesapla() > 0 && category == Dialog.Category.SaveNot)
     {
         <TsiErp.VsmBuilder.Components.Dialog Caption="Bilgi Kusu Seçiniz"
                                          Message="@message"
@@ -204,5 +203,5 @@
 
 
 @code {
-    //public string parentID = "";   
+    
 }
