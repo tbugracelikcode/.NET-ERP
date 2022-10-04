@@ -32324,8 +32324,8 @@ ejs-sidebar {
 
     .e-sidebar.e-right.e-close {
         box-shadow: none;
-        transform: translateX(100%);
-        transition: none !important;
+        /*transform: translateX(100%);
+        transition: none !important;*/
         visibility: hidden;
     }
 
@@ -32341,14 +32341,14 @@ ejs-sidebar {
 
     .e-sidebar.e-left.e-close {
         box-shadow: none;
-        transform: translateX(-100%);
+       /* transform: translateX(-100%);*/
         visibility: hidden;
     }
 
     .e-sidebar.e-right.e-close {
         box-shadow: none;
-        transform: translateX(100%);
-        transition: none !important;
+        /*transform: translateX(100%);
+        transition: none !important;*/
         visibility: hidden;
     }
 
@@ -32367,14 +32367,14 @@ ejs-sidebar {
     }
 
         .e-sidebar.e-left.e-close.e-dock {
-            transform: translateX(0%);
-            transition: none !important;
+           /* transform: translateX(0%);
+            transition: none !important;*/
             visibility: visible;
         }
 
     .e-sidebar.e-right.e-close.e-dock {
-        transform: translateX(0%);
-        transition: none !important;
+        /*transform: translateX(0%);
+        transition: none !important;*/
         visibility: visible;
     }
 
@@ -45919,6 +45919,7 @@ li.e-separator.e-menu-item.e-excel-separator {
 
 .e-grid.e-default.e-bothlines .e-headercell, .e-grid.e-default.e-bothlines .e-detailheadercell {
     border-width: 0 0 0 1px;
+    background-color: #d9d9d9 !important;
 }
 
 .e-grid.e-default table th[rowspan] {
@@ -45977,6 +45978,7 @@ li.e-separator.e-menu-item.e-excel-separator {
 
 .e-grid .e-gridheader .e-sortfilter .e-fltr-icon .e-headercelldiv {
     margin: -5px 20px -5px -5px;
+    font-size:15px !important;
 }
 
 .e-grid .e-gridheader .e-sortfilter .e-headercelldiv,
@@ -45990,7 +45992,7 @@ li.e-separator.e-menu-item.e-excel-separator {
 
 .e-grid .e-filtermenudiv {
     float: right;
-    margin: -12px -2px -12px 8px;
+    margin: -13px 28px -12px 8px;
     padding: 2px;
     text-align: right;
 }

@@ -56,7 +56,7 @@ else
                         </CardHeader>
                         <CardContent>
                             <SfGrid ID="Grid" @ref="@_grid" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
-                                AllowExcelExport="true" ShowColumnChooser="true" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                AllowExcelExport="true" GridLines="GridLine.Both" ShowColumnChooser="true" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
                                 <GridColumnChooserSettings>
                                     <FooterTemplate>
                                         @{
@@ -162,10 +162,8 @@ else
 
         </BodyTemplate>
         <FooterContentTemplate>
-             <TsiButton ButtonClick="OnSubmit" ButtonType="TsiButton.Type.Save"></TsiButton>
-        <TsiButton ButtonClick="HideEditPage" ButtonType="TsiButton.Type.Cancel"></TsiButton>
-       @* <TsiButton ButtonType="TsiButton.Type.LogOut"></TsiButton>
-        <TsiButton ButtonType="TsiButton.Type.Delete"></TsiButton>*@
+             <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 }

@@ -1,124 +1,126 @@
 <div>
-    
-    <div class="sidebar">
-        <DxTreeView  AllowSelectNodes="true" style="min-height: 90vh;"  CssClass=" app-sidebar" NodeExpandCollapseAction="TreeViewNodeExpandCollapseAction.NodeClick">
-           
-        <Nodes>
 
-         @*   <DxTreeViewNode Visible="@collapsevisible" Text="Ana Sayfa" IconCssClass="fas fa-columns b-bar-icon" />*@
-      
-            <DxTreeViewNode Visible="@collapsevisible"   Text="Stok Yönetimi" IconCssClass="oi oi-vertical-align-bottom">
-                <Nodes>
-                    <DxTreeViewNode Text="Ana Kayýtlar">
-                        <Nodes>
-                            <DxTreeViewNode NavigateUrl="/product-groups" Text="Ürün Gruplarý" />
-                            <DxTreeViewNode NavigateUrl="/unitsets" Text="Birim Setleri" />
-                            <DxTreeViewNode NavigateUrl="/warehouses" Text="Depo Kartlarý" />
-                            <DxTreeViewNode NavigateUrl="/products" Text="Stok Kartlarý" />
-                        </Nodes>
-                    </DxTreeViewNode>
-                    <DxTreeViewNode Text="Hareketler">
-                        <Nodes>
-                            <DxTreeViewNode Text="Stok Fiþleri" />
-                        </Nodes>
-                    </DxTreeViewNode>
-                </Nodes>
-            </DxTreeViewNode>
+    <div class="sidebar">
+        <DxTreeView AllowSelectNodes="true" style="min-height: 90vh;" CssClass=" app-sidebar" NodeExpandCollapseAction="TreeViewNodeExpandCollapseAction.NodeClick">
+
+            <Nodes>
+
+                @*   <DxTreeViewNode Visible="@collapsevisible" Text="Ana Sayfa" IconCssClass="fas fa-columns b-bar-icon" />*@
+
+                <DxTreeViewNode Visible="@collapsevisible" Text="Stok Yönetimi" IconCssClass="oi oi-vertical-align-bottom">
+                    <Nodes>
+                        <DxTreeViewNode Text="Ana Kayýtlar">
+                            <Nodes>
+                                <DxTreeViewNode NavigateUrl="/product-groups" Text="Ürün Gruplarý" />
+                                <DxTreeViewNode NavigateUrl="/unitsets" Text="Birim Setleri" />
+                                <DxTreeViewNode NavigateUrl="/warehouses" Text="Depo Kartlarý" />
+                                <DxTreeViewNode NavigateUrl="/products" Text="Stok Kartlarý" />
+                            </Nodes>
+                        </DxTreeViewNode>
+                        <DxTreeViewNode Text="Hareketler">
+                            <Nodes>
+                                <DxTreeViewNode Text="Stok Fiþleri" />
+                            </Nodes>
+                        </DxTreeViewNode>
+                    </Nodes>
+                </DxTreeViewNode>
 
                 <DxTreeViewNode Visible="@collapsevisible" Text="Finans Yönetimi" IconCssClass="oi oi-euro">
-                <Nodes>
-                    <DxTreeViewNode Text="Ana Kayýtlar">
-                        <Nodes>
-                            <DxTreeViewNode  NavigateUrl="/current-account-cards" Text="Cari Hesap Kartlarý" />
-                            <DxTreeViewNode NavigateUrl="/payment-plans" Text="Ödeme Planlarý" />
-                            <DxTreeViewNode NavigateUrl="/shipping-adresses" Text="Sevkiyat Adresleri" />
-                        </Nodes>
-                    </DxTreeViewNode>
-                </Nodes>
-            </DxTreeViewNode>
+                    <Nodes>
+                        <DxTreeViewNode Text="Ana Kayýtlar">
+                            <Nodes>
+                                <DxTreeViewNode NavigateUrl="/current-account-cards" Text="Cari Hesap Kartlarý" />
+                                <DxTreeViewNode NavigateUrl="/payment-plans" Text="Ödeme Planlarý" />
+                                <DxTreeViewNode NavigateUrl="/shipping-adresses" Text="Sevkiyat Adresleri" />
+                            </Nodes>
+                        </DxTreeViewNode>
+                    </Nodes>
+                </DxTreeViewNode>
 
                 <DxTreeViewNode Visible="@collapsevisible" Text="Satýþ Yönetimi" IconCssClass="oi oi-cart">
-                <Nodes>
-                    <DxTreeViewNode Text="Teklif Yönetimi">
-                        <Nodes>
-                            <DxTreeViewNode NavigateUrl="/sales-propositions" Text="Verilen Teklifler" />
-                        </Nodes>
-                    </DxTreeViewNode>
-                </Nodes>
-            </DxTreeViewNode>
+                    <Nodes>
+                        <DxTreeViewNode Text="Teklif Yönetimi">
+                            <Nodes>
+                                <DxTreeViewNode NavigateUrl="/sales-propositions" Text="Verilen Teklifler" />
+                            </Nodes>
+                        </DxTreeViewNode>
+                    </Nodes>
+                </DxTreeViewNode>
 
                 <DxTreeViewNode Visible="@collapsevisible" Text="Kaynak Yönetimi" IconCssClass="oi oi-people">
-                <Nodes>
-                    <DxTreeViewNode Text="Ana Kayýtlar">
-                        <Nodes>
-                            <DxTreeViewNode NavigateUrl="/stations" Text="Ýþ Ýstasyonlarý" />
-                            <DxTreeViewNode NavigateUrl="/station-groups" Text="Ýþ Ýstasyonu Gruplarý" />
-                            <DxTreeViewNode NavigateUrl="/employees" Text="Çalýþanlar" />
-                            <DxTreeViewNode NavigateUrl="/departments" Text="Departmanlar" />
-                        </Nodes>
-                    </DxTreeViewNode>
-                </Nodes>
-            </DxTreeViewNode>
+                    <Nodes>
+                        <DxTreeViewNode Text="Ana Kayýtlar">
+                            <Nodes>
+                                <DxTreeViewNode NavigateUrl="/stations" Text="Ýþ Ýstasyonlarý" />
+                                <DxTreeViewNode NavigateUrl="/station-groups" Text="Ýþ Ýstasyonu Gruplarý" />
+                                <DxTreeViewNode NavigateUrl="/employees" Text="Çalýþanlar" />
+                                <DxTreeViewNode NavigateUrl="/departments" Text="Departmanlar" />
+                            </Nodes>
+                        </DxTreeViewNode>
+                    </Nodes>
+                </DxTreeViewNode>
+
+
+                <DxTreeViewNode Visible="@collapsevisible" Text="Üretim Yönetimi" IconCssClass="oi oi-cog">
+                    <Nodes>
+                        <DxTreeViewNode NavigateUrl="/operations" Text="Operasyonlar" />
+                        <DxTreeViewNode NavigateUrl="/routes" Text="Rotalar" />
+                    </Nodes>
+                </DxTreeViewNode>
 
                 <DxTreeViewNode Visible="@collapsevisible" Text="Kalite Kontrol" IconCssClass="oi oi-clipboard">
-                <Nodes>
-                    <DxTreeViewNode Text="Ana Kayýtlar">
-                        <Nodes>
-                            <DxTreeViewNode Text="Uygunsuzluk Kayýtlarý Baþlýklarý">
-                                <Nodes>
-                                    <DxTreeViewNode NavigateUrl="/purchasing-unsuitability-items" Text="Satýn Alma Uygunsuzluk Baþlýklarý" />
-                                    <DxTreeViewNode NavigateUrl="/production-order-change-items" Text="Üretim Emri Deðiþiklik Baþlýklarý" />
-                                    <DxTreeViewNode NavigateUrl="/operation-unsuitability-items" Text="Operasyon Uygunsuzluk Baþlýklarý" />
-                                    <DxTreeViewNode NavigateUrl="/final-control-unsuitability-items" Text="Final Kontrol Uygunsuzluk Baþlýklarý" />
-                                    <DxTreeViewNode NavigateUrl="/contract-unsuitability-items" Text="Fason Uygunsuzluk Baþlýklarý" />
-                                    <DxTreeViewNode NavigateUrl="/customer-complaint-items" Text="Müþteri Þikayet Baþlýklarý" />
-                                </Nodes>
-                            </DxTreeViewNode>
+                    <Nodes>
+                        <DxTreeViewNode Text="Ana Kayýtlar">
+                            <Nodes>
+                                <DxTreeViewNode Text="Uygunsuzluk Kayýtlarý Baþlýklarý">
+                                    <Nodes>
+                                        <DxTreeViewNode NavigateUrl="/purchasing-unsuitability-items" Text="Satýn Alma Uygunsuzluk Baþlýklarý" />
+                                        <DxTreeViewNode NavigateUrl="/production-order-change-items" Text="Üretim Emri Deðiþiklik Baþlýklarý" />
+                                        <DxTreeViewNode NavigateUrl="/operation-unsuitability-items" Text="Operasyon Uygunsuzluk Baþlýklarý" />
+                                        <DxTreeViewNode NavigateUrl="/final-control-unsuitability-items" Text="Final Kontrol Uygunsuzluk Baþlýklarý" />
+                                        <DxTreeViewNode NavigateUrl="/contract-unsuitability-items" Text="Fason Uygunsuzluk Baþlýklarý" />
+                                        <DxTreeViewNode NavigateUrl="/customer-complaint-items" Text="Müþteri Þikayet Baþlýklarý" />
+                                    </Nodes>
+                                </DxTreeViewNode>
 
-                            <DxTreeViewNode Text="Ekipmanlar">
-                                <Nodes>
-                                    <DxTreeViewNode NavigateUrl="/equipment-records" Text="Ekipman Kayýtlarý" />
-                                </Nodes>
-                            </DxTreeViewNode>
+                                <DxTreeViewNode Text="Ekipmanlar">
+                                    <Nodes>
+                                        <DxTreeViewNode NavigateUrl="/equipment-records" Text="Ekipman Kayýtlarý" />
+                                    </Nodes>
+                                </DxTreeViewNode>
 
-                        </Nodes>
-                    </DxTreeViewNode>
+                            </Nodes>
+                        </DxTreeViewNode>
 
-                    <DxTreeViewNode Text="Ýþlemler">
-                        <Nodes>
-                            <DxTreeViewNode Text="Ekipman Ýþlemleri">
-                                <Nodes>
-                                    <DxTreeViewNode NavigateUrl="/calibration-records" Text="Kalibrasyon Takip Kayýtlarý" />
-                                    <DxTreeViewNode NavigateUrl="/calibration-verifications" Text="Kalibrasyon Doðrulama Kayýtlarý" />
-                                </Nodes>
-                            </DxTreeViewNode>
+                        <DxTreeViewNode Text="Ýþlemler">
+                            <Nodes>
+                                <DxTreeViewNode Text="Ekipman Ýþlemleri">
+                                    <Nodes>
+                                        <DxTreeViewNode NavigateUrl="/calibration-records" Text="Kalibrasyon Takip Kayýtlarý" />
+                                        <DxTreeViewNode NavigateUrl="/calibration-verifications" Text="Kalibrasyon Doðrulama Kayýtlarý" />
+                                    </Nodes>
+                                </DxTreeViewNode>
 
-                        </Nodes>
-                    </DxTreeViewNode>
+                            </Nodes>
+                        </DxTreeViewNode>
 
-                </Nodes>
-            </DxTreeViewNode>
+                    </Nodes>
+                </DxTreeViewNode>
 
                 <DxTreeViewNode Visible="@collapsevisible" Text="Genel Sistem Tanýmlamalarý" IconCssClass="oi oi-list-rich">
-                <Nodes>
-                    <DxTreeViewNode NavigateUrl="/periods" Text="Dönemler" />
-                    <DxTreeViewNode NavigateUrl="/branches" Text="Þubeler" />
-                    <DxTreeViewNode NavigateUrl="/currencies" Text="Para Birimleri" />
-                    <DxTreeViewNode NavigateUrl="/exchange-rates" Text="Kurlar" />
-                </Nodes>
-            </DxTreeViewNode>
+                    <Nodes>
+                        <DxTreeViewNode NavigateUrl="/periods" Text="Dönemler" />
+                        <DxTreeViewNode NavigateUrl="/branches" Text="Þubeler" />
+                        <DxTreeViewNode NavigateUrl="/currencies" Text="Para Birimleri" />
+                        <DxTreeViewNode NavigateUrl="/exchange-rates" Text="Kurlar" />
+                    </Nodes>
+                </DxTreeViewNode>
 
-            
-                <DxTreeViewNode Visible="@collapsevisible" Text="Üretim Yönetimi" IconCssClass="oi oi-cog">
-                <Nodes>
-                    <DxTreeViewNode NavigateUrl="/operations" Text="Operasyonlar" />
-                    <DxTreeViewNode NavigateUrl="/routes" Text="Rotalar" />
-                </Nodes>
-            </DxTreeViewNode>
 
-        </Nodes>
-    </DxTreeView>
-</div>
+
+            </Nodes>
+        </DxTreeView>
+    </div>
 
 </div>
 
@@ -155,10 +157,10 @@
     }
 </style>
 
-@code{
+@code {
     private bool collapsevisible = true;
     public bool SidebarToggle = true;
     public bool SidebarToggleFixed = true;
 
-  
+
 }

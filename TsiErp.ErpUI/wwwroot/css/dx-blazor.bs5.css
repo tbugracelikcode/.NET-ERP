@@ -7423,7 +7423,8 @@ tr.dx-blazor-listbox-column.dropdown-item {
     overflow: auto;
     display: grid;
     align-items: center;
-    justify-items: center
+    justify-items: center;
+    z-index: 0 !important;
 }
 
     .dxbs-modal > .dxbs-popup {
@@ -7562,7 +7563,7 @@ tr.dx-blazor-listbox-column.dropdown-item {
     top: 0px;
     visibility: visible;
     opacity: .5;
-    z-index: 1040
+    z-index: 0 !important
 }
 
 .dx-prevent-safari-scrolling {
