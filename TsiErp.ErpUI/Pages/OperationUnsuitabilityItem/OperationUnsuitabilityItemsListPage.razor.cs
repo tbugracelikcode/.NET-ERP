@@ -10,7 +10,7 @@ namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityItem
     public partial class OperationUnsuitabilityItemsListPage
     {
 
-        private SfGrid<ListOperationUnsuitabilityItemsDto> _grid;
+        private SfGrid<ListOperationUnsuitabilityItemsDto> _grid; 
 
         protected override async void OnInitialized()
         {
