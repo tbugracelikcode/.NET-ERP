@@ -12,6 +12,8 @@ namespace TsiErp.VsmBuilder.CustomNodes
         public double X { get; set; }
         [DataMember]
         public double Y { get; set; }
+        [DataMember]
+        public string nodeID { get; set; }
 
     }
 }
