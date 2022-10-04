@@ -2,8 +2,8 @@
 @inject IJSRuntime JS
 @using Syncfusion.Blazor.Navigations
 
-<PageTitle>TSI ERP</PageTitle>
-<SfSidebar ID="Sidebar" ZIndex="0" Type="SidebarType.Push" Width="340px" DockSize="65px" EnableDock="true" @ref="Sidebar" IsOpen="true" >
+<PageTitle>TSI ERP</PageTitle> 
+<SfSidebar ID="Sidebar" ZIndex="0"  Type="SidebarType.Push" Width="340px" CloseOnDocumentClick="false" EnableGestures="false"  EnableDock="false" Animate="false" @ref="Sidebar" IsOpen="true" >
     <div class="sidebar" style="position:fixed;z-index:1200">
         <div class="topnav navbar navbar-dark">
             @*<button class="navbar-toggler" @onclick="ToggleNavMenu">
