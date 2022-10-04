@@ -51,12 +51,13 @@ namespace TsiErp.ErpUI.Pages.Route
 
         public void ShowColumns()
         {
-            this._grid.OpenColumnChooserAsync(200, 50);
+            this._grid.OpenColumnChooserAsync(1250, 50);
         }
 
         #region Rota Satır Modalı İşlemleri
         protected override async Task BeforeInsertAsync()
         {
+            DataSource = new SelectRoutesDto();
            
             DataSource.SelectRouteLines = new List<SelectRouteLinesDto>();
 
@@ -86,6 +87,7 @@ namespace TsiErp.ErpUI.Pages.Route
                 case "new":
                     //BeforeInsertAsync();
                     LineCrudPopup = true;
+                    DataSource.SelectRouteLines.Add(LineDataSource);
                     await InvokeAsync(StateHasChanged);
                     break;
 

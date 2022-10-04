@@ -105,8 +105,8 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="Operasyonlar"
-         Width="750px"
-         Height="550px"
+         Width="740px"
+         Height="600px"
          HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
@@ -119,11 +119,11 @@ else
                 </Rows>
 
                 <Columns>
-                    <DxGridLayoutColumn Width="80px" />
-                    <DxGridLayoutColumn Width="250px" />
                     <DxGridLayoutColumn Width="50px" />
-                    <DxGridLayoutColumn Width="250px" />
-                    <DxGridLayoutColumn Width="80px" />
+                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="50px" />
+                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="50px" />
                 </Columns>
 
                 <Items>
@@ -144,7 +144,7 @@ else
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>Aktiflik: </strong></label>
+                            <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
                             <SfCheckBox @bind-Checked="DataSource.IsActive"></SfCheckBox>
                         </Template>
                     </DxGridLayoutItem>
@@ -187,8 +187,8 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="Operasyon Satırları"
-         Width="1000px"
-         Height="440px"
+         Width="770px"
+         Height="390px"
          HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
@@ -273,7 +273,6 @@ else
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <br />
                             <label class="TSIModalLabel"><strong>İstasyon Kodu: </strong></label><br />
                             <SfComboBox @ref="LineStationsComboBox"
                                     TValue="string"
@@ -340,7 +339,7 @@ else
                     </DxGridLayoutItem>
                       <DxGridLayoutItem Row="2" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Alternatif: </strong></label>
+                            <label class="TSIModalLabel"><strong>Alternatif: </strong></label><br />
                             <SfCheckBox @bind-Checked="LineDataSource.Alternative"></SfCheckBox>
                         </Template>
                     </DxGridLayoutItem>
