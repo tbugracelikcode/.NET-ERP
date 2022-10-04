@@ -50,13 +50,17 @@ builder.Services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(Syncfus
                     new CultureInfo("fr"),
                     new CultureInfo("ar"),
                     new CultureInfo("zh"),
+                    new CultureInfo("tr"),
                 };
-                    // Set the default culture
-                    options.DefaultRequestCulture = new RequestCulture("en-US");
-                    options.SupportedCultures = supportedCultures;
-                    options.SupportedUICultures = supportedCultures;
-                }); 
-            
+
+                // Set the default culture
+                options.DefaultRequestCulture = new RequestCulture("tr");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+
+            });
+
+
 builder.Services.AddRazorPages();
             builder.Services.AddControllers().AddNewtonsoftJson(options => { options.SerializerSettings.ContractResolver = new DefaultContractResolver(); });
             builder.Services.AddSignalR(e => { e.MaximumReceiveMessageSize = 102400000; });
@@ -74,6 +78,7 @@ builder.Services.AddScoped<ModalManager>();
 
 var app = builder.Build();
 
+
 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NzA0MDk0QDMyMzAyZTMyMmUzMEVjb29PTkxlM3YvRVZwVTR5U0VCT2toK24vMEJlYmFVeFkwRlYrT1cwMzA9");
 
 // Configure the HTTP request pipeline.
@@ -88,6 +93,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
+
 
 app.UseRouting();
             app.UseCors();

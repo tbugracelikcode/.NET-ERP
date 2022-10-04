@@ -41,9 +41,10 @@ builder.Services.AddDevExpressBlazor();
                     new CultureInfo("fr"),
                     new CultureInfo("ar"),
                     new CultureInfo("zh"),
+                     new CultureInfo("tr"),
                 };
                     // Set the default culture
-                    options.DefaultRequestCulture = new RequestCulture("en-US");
+                    options.DefaultRequestCulture = new RequestCulture("tr");
                     options.SupportedCultures = supportedCultures;
                     options.SupportedUICultures = supportedCultures;
                 }); 

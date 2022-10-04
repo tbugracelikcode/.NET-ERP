@@ -18,7 +18,6 @@ namespace TsiErp.ErpUI.Pages.Operation
     {
         private SfGrid<ListOperationsDto> _grid;
 
-
         #region Combobox Listeleri
 
         SfComboBox<string, ListOperationsDto> LineOperationsComboBox;
@@ -48,14 +47,14 @@ namespace TsiErp.ErpUI.Pages.Operation
 
         public void ShowColumns()
         {
-            this._grid.OpenColumnChooserAsync(200, 50);
+            this._grid.OpenColumnChooserAsync(1250, 50);
         }
 
 
         #region Operasyon Satır Modalı İşlemleri
         protected override async Task BeforeInsertAsync()
         {
-           
+            DataSource = new SelectOperationsDto();
             DataSource.SelectOperationLines = new List<SelectOperationLinesDto>();
 
             ShowEditPage();
@@ -84,6 +83,7 @@ namespace TsiErp.ErpUI.Pages.Operation
                 case "new":
                     //BeforeInsertAsync();
                     LineCrudPopup = true;
+                    DataSource.SelectOperationLines.Add(LineDataSource);
                     await InvokeAsync(StateHasChanged);
                     break;
 

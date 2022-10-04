@@ -28,7 +28,7 @@ namespace TsiErp.ErpUI.Pages.ExchangeRate
 
         public void ShowColumns()
         {
-            this._grid.OpenColumnChooserAsync(200, 50);
+            this._grid.OpenColumnChooserAsync(1250, 50);
         }
 
 

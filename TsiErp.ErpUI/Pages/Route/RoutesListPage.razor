@@ -84,7 +84,7 @@ else
                                 </GridColumnChooserSettings>
                                 <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListRoutesDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
-                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
@@ -92,8 +92,8 @@ else
                                     <GridColumn Field=@nameof(ListRoutesDto.Name) HeaderText="ROTA AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListRoutesDto.ProductCode) HeaderText="ANA ÜRÜN KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListRoutesDto.ProductionStart) HeaderText="ÜRETİM BAŞLANGIÇ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListRoutesDto.Approval) HeaderText="ONAY" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListRoutesDto.TechnicalApproval) HeaderText="TEKNİK ONAY" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListRoutesDto.Approval) DisplayAsCheckBox="true" HeaderText="ONAY" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListRoutesDto.TechnicalApproval) DisplayAsCheckBox="true" HeaderText="TEKNİK ONAY" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
 
                                 </GridColumns>
@@ -205,20 +205,20 @@ else
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Onay: </strong></label>
+                            <label class="TSIModalLabel"><strong>Onay: </strong></label><br />
                             <SfCheckBox @bind-Checked="DataSource.Approval"></SfCheckBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="5">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Teknik Onay: </strong></label>
+                            <label class="TSIModalLabel"><strong>Teknik Onay: </strong></label><br />
                             <SfCheckBox @bind-Checked="DataSource.TechnicalApproval"></SfCheckBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Aktiflik: </strong></label>
+                            <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
                             <SfCheckBox @bind-Checked="DataSource.IsActive"></SfCheckBox>
                         </Template>
                     </DxGridLayoutItem>
@@ -230,7 +230,7 @@ else
                                 AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
                                 <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="ListRouteLinesDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
-                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListRouteLinesDto.LineNr) HeaderText="SATIR NUMARASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
@@ -239,9 +239,9 @@ else
                                     <GridColumn Field=@nameof(ListRouteLinesDto.RouteCode) HeaderText="ROTA KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListRouteLinesDto.ProductCode) HeaderText="ANA ÜRÜN KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListRouteLinesDto.OperationName) HeaderText="OPERASYON ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListRouteLinesDto.AdjustmentAndControlTime) HeaderText="AYAR VE KONTROL SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListRouteLinesDto.OperationTime) HeaderText="OPERASYON SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListRouteLinesDto.Priority) HeaderText="ÖNCELİK" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListRouteLinesDto.AdjustmentAndControlTime) Type="ColumnType.Number" HeaderText="AYAR VE KONTROL SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListRouteLinesDto.OperationTime) Type="ColumnType.Number" HeaderText="OPERASYON SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListRouteLinesDto.Priority) Type="ColumnType.Number" HeaderText="ÖNCELİK" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListRouteLinesDto.OperationPicture) HeaderText="OPERASYON RESMİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
@@ -264,7 +264,7 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="Rota Satırları"
-         Width="1000px"
+         Width="800px"
          Height="440px"
          HeaderCssClass="HeaderTitleCss">
 

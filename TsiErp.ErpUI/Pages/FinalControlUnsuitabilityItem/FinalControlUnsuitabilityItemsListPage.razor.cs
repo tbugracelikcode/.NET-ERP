@@ -30,7 +30,7 @@ namespace TsiErp.ErpUI.Pages.FinalControlUnsuitabilityItem
         }
         public void ShowColumns()
         {
-            this._grid.OpenColumnChooserAsync(200, 50);
+            this._grid.OpenColumnChooserAsync(1250, 50);
         }
 
     }

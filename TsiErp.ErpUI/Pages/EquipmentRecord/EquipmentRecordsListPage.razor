@@ -80,7 +80,7 @@ else
                                 </GridColumnChooserSettings>
                                 <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListEquipmentRecordsDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
-                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
@@ -92,10 +92,10 @@ else
                                     <GridColumn Field=@nameof(ListEquipmentRecordsDto.Responsible) HeaderText="SORUMLU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListEquipmentRecordsDto.Frequency) HeaderText="SIKLIK" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListEquipmentRecordsDto.EquipmentSerialNo) HeaderText="EKİPMAN SERİ NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.RecordDate) HeaderText="KAYIT TARİHİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.Cancel) HeaderText="İPTAL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.CancellationDate) HeaderText="İPTAL TARİHİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.CancellationReason) HeaderText="İPTAL NEDENİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.RecordDate) Type="ColumnType.Date" HeaderText="KAYIT TARİHİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.Cancel) DisplayAsCheckBox="true" HeaderText="İPTAL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.CancellationDate) Type="ColumnType.Date" HeaderText="İPTAL TARİHİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.CancellationReason)  HeaderText="İPTAL NEDENİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                 </GridColumns>
                             </SfGrid>

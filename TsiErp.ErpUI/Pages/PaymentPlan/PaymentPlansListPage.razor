@@ -73,14 +73,14 @@ else
                             </GridColumnChooserSettings>
                             <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListPaymentPlansDto"></GridEvents>
                             <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
-                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                             <GridPageSettings PageSizes="true"></GridPageSettings>
                             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                             <GridColumns>
                                 <GridColumn Field=@nameof(ListPaymentPlansDto.Code) HeaderText="ÖDEME PLANI KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 <GridColumn Field=@nameof(ListPaymentPlansDto.Name) HeaderText="ÖDEME PLANI AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ListPaymentPlansDto.Days_) HeaderText="VADE GÜNÜ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ListPaymentPlansDto.DelayMaturityDifference) HeaderText="GECİKME VADE FARKI ORANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListPaymentPlansDto.Days_) Type="ColumnType.Number" HeaderText="VADE GÜNÜ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListPaymentPlansDto.DelayMaturityDifference) Type="ColumnType.Number" HeaderText="GECİKME VADE FARKI ORANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                             </GridColumns>
                         </SfGrid>
                     </CardContent>

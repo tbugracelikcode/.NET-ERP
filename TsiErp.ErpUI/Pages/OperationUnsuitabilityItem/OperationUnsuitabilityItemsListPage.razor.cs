@@ -10,7 +10,7 @@ namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityItem
     public partial class OperationUnsuitabilityItemsListPage
     {
 
-        private SfGrid<ListOperationUnsuitabilityItemsDto> _grid;
+        private SfGrid<ListOperationUnsuitabilityItemsDto> _grid; 
 
         protected override async void OnInitialized()
         {
@@ -31,7 +31,7 @@ namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityItem
 
         public void ShowColumns()
         {
-            this._grid.OpenColumnChooserAsync(200, 50);
+            this._grid.OpenColumnChooserAsync(1250, 50);
         }
     }
 }

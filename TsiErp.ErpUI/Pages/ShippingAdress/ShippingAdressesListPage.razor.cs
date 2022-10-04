@@ -29,7 +29,7 @@ namespace TsiErp.ErpUI.Pages.ShippingAdress
 
         public void ShowColumns()
         {
-            this._grid.OpenColumnChooserAsync(200, 50);
+            this._grid.OpenColumnChooserAsync(1250, 50);
         }
 
         public async Task CurrentAccountCardFiltering(FilteringEventArgs args)

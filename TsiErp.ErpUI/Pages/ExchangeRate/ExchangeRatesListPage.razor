@@ -79,16 +79,16 @@ else
                                     </FooterTemplate>
                                 </GridColumnChooserSettings>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
-                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListExchangeRatesDto.CurrencyCode) HeaderText="PARA BİRİMİ KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListExchangeRatesDto.Date) HeaderText="TARİH" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListExchangeRatesDto.BuyingRate) HeaderText="ALIŞ KURU" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListExchangeRatesDto.EffectiveBuyingRate) HeaderText="EFEKTİF ALIŞ KURU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListExchangeRatesDto.SaleRate) HeaderText="SATIŞ KURU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListExchangeRatesDto.EffectiveSaleRate) HeaderText="EFEKTİF SATIŞ KURU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListExchangeRatesDto.Date) HeaderText="TARİH" Type="ColumnType.Date" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListExchangeRatesDto.BuyingRate) HeaderText="ALIŞ KURU"  Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListExchangeRatesDto.EffectiveBuyingRate) HeaderText="EFEKTİF ALIŞ KURU" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListExchangeRatesDto.SaleRate) HeaderText="SATIŞ KURU" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListExchangeRatesDto.EffectiveSaleRate) HeaderText="EFEKTİF SATIŞ KURU" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </CardContent>
