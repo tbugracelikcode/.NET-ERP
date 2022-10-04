@@ -41,6 +41,7 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
 
         SfComboBox<string, ListBranchesDto> BranchesComboBox;
+        SfComboBox<string, ListBranchesDto> LineBranchesComboBox;
         List<ListBranchesDto> BranchesList = new List<ListBranchesDto>();
 
         SfComboBox<string, ListWarehousesDto> WarehousesComboBox;
@@ -55,15 +56,16 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         #endregion
 
         private SfGrid<ListSalesPropositionsDto> _grid;
-
+        private SfGrid<SelectSalesPropositionLinesDto> _LineGrid;
 
         [Inject]
         ModalManager ModalManager { get; set; }
 
-        SelectSalesPropositionLinesDto LineDataSource = new SelectSalesPropositionLinesDto();
+        SelectSalesPropositionLinesDto LineDataSource;
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
-        List<ListSalesPropositionLinesDto> GridLineList = new List<ListSalesPropositionLinesDto>();
+        //List<ListSalesPropositionLinesDto> GridLineList = new List<ListSalesPropositionLinesDto>();
+        List<SelectSalesPropositionLinesDto> GridLineList = new List<SelectSalesPropositionLinesDto>();
 
         private bool LineCrudPopup = false;
 
@@ -115,11 +117,12 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             }
         }
 
-        public async void OnListContextMenuClick(ContextMenuClickEventArgs<ListSalesPropositionLinesDto> args)
+        public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectSalesPropositionLinesDto> args)
         {
             switch (args.Item.Id)
             {
                 case "new":
+                    LineDataSource = new SelectSalesPropositionLinesDto();
                     LineCrudPopup = true;
                     LineDataSource.PaymentPlanID = DataSource.PaymentPlanID;
                     LineDataSource.PaymentPlanCode = DataSource.PaymentPlanCode;
@@ -127,32 +130,35 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
                     LineDataSource.BranchCode = DataSource.BranchCode;
                     LineDataSource.WarehouseID = DataSource.WarehouseID;
                     LineDataSource.WarehouseCode = DataSource.WarehouseCode;
-                    DataSource.SelectSalesPropositionLines.Add(LineDataSource);
+                    LineDataSource.LineNr = GridLineList.Count + 1;
+                    //DataSource.SelectSalesPropositionLines.Add(LineDataSource);
                     await InvokeAsync(StateHasChanged);
                     break;
 
                 case "changed":
                     //DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    LineDataSource = args.RowInfo.RowData;
                     LineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
                     break;
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync("Onay", "Silmek istediğinize emin misiniz ?");
+                    var res = await ModalManager.ConfirmationAsync("Dikkat", "Seçtiğiniz satır kalıcı olarak silinecektir.");
 
                     if (res == true)
                     {
-                        //SelectFirstDataRow = false;
-                        //await DeleteAsync(args.RowInfo.RowData.Id);
-                        //await GetListDataSourceAsync();
+                        await DeleteAsync(args.RowInfo.RowData.Id);
+                        await GetListDataSourceAsync();
+                        await _LineGrid.Refresh();
                         await InvokeAsync(StateHasChanged);
                     }
 
                     break;
 
                 case "refresh":
-                    //await GetListDataSourceAsync();
+                    await GetListDataSourceAsync();
+                    await _LineGrid.Refresh();
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -170,6 +176,7 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         {
             if (LineDataSource.Id == Guid.Empty)
             {
+                LineDataSource.Id = ApplicationService.GuidGenerator.CreateGuid();
                 DataSource.SelectSalesPropositionLines.Add(LineDataSource);
             }
             else
@@ -181,6 +188,10 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
                     DataSource.SelectSalesPropositionLines[selectedLineIndex] = LineDataSource;
                 }
             }
+
+            GridLineList = DataSource.SelectSalesPropositionLines;
+
+            await _LineGrid.Refresh();
 
             HideLinesPopup();
             await InvokeAsync(StateHasChanged);
@@ -260,6 +271,20 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             {
                 DataSource.BranchID = Guid.Empty;
                 DataSource.BranchCode = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
+        }
+        public async Task LineBranchValueChangeHandler(ChangeEventArgs<string, ListBranchesDto> args)
+        {
+            if (args.ItemData != null)
+            {
+                LineDataSource.BranchID = args.ItemData.Id;
+                LineDataSource.BranchCode = args.ItemData.Code;
+            }
+            else
+            {
+                LineDataSource.BranchID = Guid.Empty;
+                LineDataSource.BranchCode = string.Empty;
             }
             await InvokeAsync(StateHasChanged);
         }

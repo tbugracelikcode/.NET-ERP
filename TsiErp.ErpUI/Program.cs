@@ -20,16 +20,19 @@ using Blazored.Modal.Services;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 using Microsoft.EntityFrameworkCore;
 using Tsi.Blazor.Component.Core.TsiComponents.Extensions;
+using Tsi.Application.Contract.Services.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddBootstrap5Providers();
 
 // Add services to the container.
 builder.Services.AddDbContextFactory<TsiErpDbContext>(
         options =>
             options.UseSqlServer(@"Server=192.168.98.4;Database=TsiErpYeni;UID=sa;PWD=Logo1234567890;"), ServiceLifetime.Transient);
+
+builder.Services.AddTransient<ApplicationService>();
+
 ConfigureBusiness(builder);
+
 ConfigureDataAccess(builder);
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).ConfigureContainer<ContainerBuilder>(container =>
