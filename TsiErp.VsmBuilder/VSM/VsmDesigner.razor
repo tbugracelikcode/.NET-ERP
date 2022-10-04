@@ -163,7 +163,7 @@
                                     </div>
                                 </td>
                                 <td class="tg-0lax" colspan="3">
-                                    <button class="btn btn-primary" id="menu-toggle" @onclick="Tikla" style="float:right !important;">Kaydet</button>
+                                    <button class="btn btn-primary" id="menu-toggle" @onclick="()=>GetCurrentNodes(true)" style="float:right !important;">Kaydet</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -181,7 +181,7 @@
         <TsiErp.VsmBuilder.Components.Dialog Caption="Bilgi Kusu Seçiniz"
                                          Message="@message"
                                          OnClose="OnDialogClose"
-                                         Type="Dialog.Category.SaveNot" Data="globalList">
+                                         Type="Dialog.Category.SaveNot" Data="modalData">
         </TsiErp.VsmBuilder.Components.Dialog>
     }
     else if (DialogIsOpen && category == Dialog.Category.Okay)
