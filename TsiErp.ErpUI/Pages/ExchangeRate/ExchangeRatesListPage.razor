@@ -138,7 +138,7 @@ else
                                     TItem="ListCurrenciesDto"
                                     Placeholder="Para Birimi Seçin"
                                     CssClass="e-multi-column"
-                                        @bind-Value="DataSource.CurrencyCode"
+                                    Value="DataSource.CurrencyCode"
                                     DataSource="@CurrenciesList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
@@ -171,8 +171,7 @@ else
                                     <ComboBoxEvents TValue="string"
                                             TItem="ListCurrenciesDto"
                                             Filtering="CurrencyFiltering"
-                                            Opened="CurrencyGroupOpened"
-                                            ValueChange="CurrencyValueChanged"></ComboBoxEvents>
+                                            ValueChange="CurrencyValueChangeHandler"></ComboBoxEvents>
                                 </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>

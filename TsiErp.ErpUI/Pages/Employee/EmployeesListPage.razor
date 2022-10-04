@@ -179,7 +179,7 @@
                                     TItem="ListDepartmentsDto"
                                     Placeholder="Departman Seçin"
                                     CssClass="e-multi-column"
-                                        @bind-Value="DataSource.Department"
+                                    Value="DataSource.Department"
                                     DataSource="@DepartmentsList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
@@ -212,8 +212,7 @@
                                     <ComboBoxEvents TValue="string"
                                             TItem="ListDepartmentsDto"
                                             Filtering="DepartmentFiltering"
-                                            Opened="DepartmentGroupOpened"
-                                            ValueChange="DepartmentValueChanged"></ComboBoxEvents>
+                                            ValueChange="DepartmentValueChangeHandler"></ComboBoxEvents>
                                 </SfComboBox>
                             </Template>
                         </DxGridLayoutItem>

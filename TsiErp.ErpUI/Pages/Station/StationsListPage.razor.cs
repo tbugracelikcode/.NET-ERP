@@ -6,6 +6,7 @@ using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
 using Tsi.Core.Utilities.Results;
+using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.Station.Dtos;
 using TsiErp.Entities.Entities.StationGroup;
 using TsiErp.Entities.Entities.StationGroup.Dtos;
@@ -24,6 +25,7 @@ namespace TsiErp.ErpUI.Pages.Station
         protected override async void OnInitialized()
         {
             BaseCrudService = StationsService;
+            await GetStationGroupsList();
         }
 
         private async Task GetStationGroupsList()
@@ -60,12 +62,17 @@ namespace TsiErp.ErpUI.Pages.Station
             await StationGroupComboBox.FilterAsync(StationGroupList, query);
         }
 
-        public async Task StationGroupOpened(PopupEventArgs args)
+        public async Task StationGroupValueChangeHandler(ChangeEventArgs<string, ListStationGroupsDto> args)
         {
-            if(StationGroupList.Count==0)
+            if (args.ItemData != null)
             {
-                await GetStationGroupsList();
+                DataSource.StationGroup = args.ItemData.Name;
             }
+            else
+            {
+                DataSource.StationGroup = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
         }
 
         public void ShowColumns()

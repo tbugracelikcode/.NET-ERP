@@ -122,7 +122,7 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="İş İstasyonları"
-         Width="1450px"
+         Width="1220px"
          Height="470px"
          HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
@@ -137,13 +137,13 @@ else
                 </Rows>
                 <Columns>
                     <DxGridLayoutColumn Width="40px" />
-                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="250px" />
                     <DxGridLayoutColumn Width="40px" />
-                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="250px" />
                     <DxGridLayoutColumn Width="40px" />
-                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="250px" />
                     <DxGridLayoutColumn Width="40px" />
-                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="250px" />
                     <DxGridLayoutColumn Width="40px" />
                 </Columns>
                 <Items>
@@ -196,7 +196,7 @@ else
                                     TItem="ListStationGroupsDto"
                                     Placeholder="İstasyon Grubu"
                                     CssClass="e-multi-column"
-                                    @bind-Value="@DataSource.StationGroup"
+                                    Value="@DataSource.StationGroup"
                                     DataSource="@StationGroupList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
@@ -230,7 +230,7 @@ else
                                     TValue="string" 
                                     TItem="ListStationGroupsDto" 
                                     Filtering="StationGroupFiltering" 
-                                    Opened="StationGroupOpened"></ComboBoxEvents>
+                                    ValueChange="StationGroupValueChangeHandler"></ComboBoxEvents>
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>

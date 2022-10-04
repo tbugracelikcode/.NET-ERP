@@ -5,6 +5,7 @@ using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
 using Tsi.Core.Utilities.Results;
+using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.Currency.Dtos;
 using TsiErp.Entities.Entities.ExchangeRate.Dtos;
 
@@ -22,6 +23,7 @@ namespace TsiErp.ErpUI.Pages.ExchangeRate
         protected override async void OnInitialized()
         {
             BaseCrudService = ExchangeRatesService;
+            await GetCurrenciesList();
         }
 
         public void ShowColumns()
@@ -53,19 +55,21 @@ namespace TsiErp.ErpUI.Pages.ExchangeRate
             CurrenciesList = (await CurrenciesAppService.GetListAsync(new ListCurrenciesParameterDto())).Data.ToList();
         }
 
-        public async Task CurrencyGroupOpened(PopupEventArgs args)
+        public async Task CurrencyValueChangeHandler(ChangeEventArgs<string, ListCurrenciesDto> args)
         {
-            if (CurrenciesList.Count == 0)
+            if (args.ItemData != null)
             {
-                await GetCurrenciesList();
+                DataSource.CurrencyID = args.ItemData.Id;
+                DataSource.CurrencyCode = args.ItemData.Code;
             }
+            else
+            {
+                DataSource.CurrencyID = Guid.Empty;
+                DataSource.CurrencyCode = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
         }
 
-        private void CurrencyValueChanged(ChangeEventArgs<string, ListCurrenciesDto> args)
-        {
-            DataSource.CurrencyID = args.ItemData.Id;
-            DataSource.CurrencyCode = args.ItemData.Code;
-        }
         #endregion
 
 
