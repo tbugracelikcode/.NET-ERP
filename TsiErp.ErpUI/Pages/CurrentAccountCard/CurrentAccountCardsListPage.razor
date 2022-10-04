@@ -384,7 +384,7 @@ else
                                     TItem="ListCurrenciesDto"
                                     Placeholder="Para Birimi Seçin"
                                     CssClass="e-multi-column"
-                                    @bind-Value="DataSource.Currency"
+                                    Value="DataSource.Currency"
                                     DataSource="@CurrenciesList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
@@ -417,8 +417,7 @@ else
                                 <ComboBoxEvents TValue="string"
                                             TItem="ListCurrenciesDto"
                                             Filtering="CurrencyFiltering"
-                                            Opened="CurrencyOpened"
-                                            ValueChange="CurrencyValueChanged"></ComboBoxEvents>
+                                            ValueChange="CurrencyValueChangeHandler"></ComboBoxEvents>
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
@@ -430,7 +429,7 @@ else
                                     TItem="ListShippingAdressesDto"
                                     Placeholder="Sevkiyat Adresi Seçin"
                                     CssClass="e-multi-column"
-                                    @bind-Value="DataSource.ShippingAddress"
+                                    Value="DataSource.ShippingAddress"
                                     DataSource="@ShippingAdressesList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
@@ -463,8 +462,7 @@ else
                                 <ComboBoxEvents TValue="string"
                                             TItem="ListShippingAdressesDto"
                                             Filtering="ShippingAdressFiltering"
-                                            Opened="ShippingAdressOpened"
-                                            ValueChange="ShippingAdressValueChanged"></ComboBoxEvents>
+                                            ValueChange="ShippingAdressValueChangeHandler"></ComboBoxEvents>
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>

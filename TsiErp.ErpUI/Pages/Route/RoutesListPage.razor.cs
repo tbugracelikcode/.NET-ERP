@@ -5,6 +5,7 @@ using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
 using Tsi.Core.Utilities.Results;
+using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.Operation.Dtos;
 using TsiErp.Entities.Entities.Product.Dtos;
 using TsiErp.Entities.Entities.Route.Dtos;
@@ -47,6 +48,10 @@ namespace TsiErp.ErpUI.Pages.Route
         protected override async void OnInitialized()
         {
             BaseCrudService = RoutesAppService;
+            await GetProductsList();
+            await GetLineOperationsList();
+            await GetLineProductsList();
+            await GetLineRoutesList();
         }
 
         public void ShowColumns()
@@ -166,18 +171,19 @@ namespace TsiErp.ErpUI.Pages.Route
             ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
         }
 
-        public async Task ProductOpened(PopupEventArgs args)
+        public async Task ProductValueChangeHandler(ChangeEventArgs<string, ListProductsDto> args)
         {
-            if (ProductsList.Count == 0)
+            if (args.ItemData != null)
             {
-                await GetProductsList();
+                DataSource.ProductID = args.ItemData.Id;
+                DataSource.ProductCode = args.ItemData.Code;
             }
-        }
-
-        private void ProductValueChanged(ChangeEventArgs<string, ListProductsDto> args)
-        {
-            DataSource.ProductID = args.ItemData.Id;
-            DataSource.ProductCode = args.ItemData.Code;
+            else
+            {
+                DataSource.ProductID = Guid.Empty;
+                DataSource.ProductCode = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
         }
         #endregion
 
@@ -204,19 +210,21 @@ namespace TsiErp.ErpUI.Pages.Route
             LineProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
         }
 
-        public async Task LineProductOpened(PopupEventArgs args)
+        public async Task LineProductValueChangeHandler(ChangeEventArgs<string, ListProductsDto> args)
         {
-            if (LineProductsList.Count == 0)
+            if (args.ItemData != null)
             {
-                await GetLineProductsList();
+                LineDataSource.ProductID = args.ItemData.Id;
+                LineDataSource.ProductCode = args.ItemData.Code;
             }
+            else
+            {
+                LineDataSource.ProductID = Guid.Empty;
+                LineDataSource.ProductCode = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
         }
 
-        private void LineProductValueChanged(ChangeEventArgs<string, ListProductsDto> args)
-        {
-            LineDataSource.ProductID = args.ItemData.Id;
-            LineDataSource.ProductCode = args.ItemData.Code;
-        }
         #endregion
 
         #region Rotalar - Rota Satırları
@@ -242,18 +250,19 @@ namespace TsiErp.ErpUI.Pages.Route
             LineRoutesList = (await RoutesAppService.GetListAsync(new ListRoutesParameterDto())).Data.ToList();
         }
 
-        public async Task LineRouteOpened(PopupEventArgs args)
+        public async Task LineRouteValueChangeHandler(ChangeEventArgs<string, ListRoutesDto> args)
         {
-            if (LineRoutesList.Count == 0)
+            if (args.ItemData != null)
             {
-                await GetLineRoutesList();
+                LineDataSource.RouteID = args.ItemData.Id;
+                LineDataSource.RouteCode = args.ItemData.Code;
             }
-        }
-
-        private void LineRouteValueChanged(ChangeEventArgs<string, ListRoutesDto> args)
-        {
-            LineDataSource.RouteID = args.ItemData.Id;
-            LineDataSource.RouteCode = args.ItemData.Code;
+            else
+            {
+                LineDataSource.RouteID = Guid.Empty;
+                LineDataSource.RouteCode = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
         }
         #endregion
 
@@ -280,19 +289,21 @@ namespace TsiErp.ErpUI.Pages.Route
             LineOperationsList = (await OperationsAppService.GetListAsync(new ListOperationsParameterDto())).Data.ToList();
         }
 
-        public async Task LineOperationOpened(PopupEventArgs args)
+        public async Task LineOperationValueChangeHandler(ChangeEventArgs<string, ListOperationsDto> args)
         {
-            if (LineOperationsList.Count == 0)
+            if (args.ItemData != null)
             {
-                await GetLineOperationsList();
+                LineDataSource.OperationID = args.ItemData.Id;
+                LineDataSource.OperationName = args.ItemData.Name;
             }
+            else
+            {
+                LineDataSource.OperationID = Guid.Empty;
+                LineDataSource.OperationName = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
         }
 
-        private void LineOperationValueChanged(ChangeEventArgs<string, ListOperationsDto> args)
-        {
-            LineDataSource.OperationID = args.ItemData.Id;
-            LineDataSource.OperationName = args.ItemData.Name;
-        }
         #endregion
     }
 }

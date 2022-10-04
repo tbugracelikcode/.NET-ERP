@@ -151,7 +151,7 @@ else
                                     TItem="ListBranchesDto"
                                     Placeholder="Şube Seçin"
                                     CssClass="e-multi-column"
-                                        @bind-Value="DataSource.BranchName"
+                                    Value="DataSource.BranchName"
                                     DataSource="@BranchesList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
@@ -184,8 +184,7 @@ else
                                     <ComboBoxEvents TValue="string"
                                             TItem="ListBranchesDto"
                                             Filtering="BranchFiltering"
-                                            Opened="BranchGroupOpened"
-                                            ValueChange="BranchValueChanged"></ComboBoxEvents>
+                                            ValueChange="BranchValueChangeHandler"></ComboBoxEvents>
                                 </SfComboBox>
                     </Template>
                 </DxGridLayoutItem>

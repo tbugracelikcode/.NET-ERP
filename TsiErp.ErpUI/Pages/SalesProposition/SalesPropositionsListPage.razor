@@ -177,9 +177,9 @@ else
                                     AllowFiltering="true"
                                     PopupWidth="700px"
                                     PopupHeight="500"
-                                    @bind-Value="DataSource.CurrentAccountCardCode">
+                                    Value="DataSource.CurrentAccountCardCode">
 
-                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
 
                                 <ComboBoxTemplates TItem="ListCurrentAccountCardsDto">
                                     <HeaderTemplate>
@@ -205,7 +205,8 @@ else
 
                                 <ComboBoxEvents TValue="string"
                                             TItem="ListCurrentAccountCardsDto"
-                                            Filtering="CurrentAccountCardFiltering"></ComboBoxEvents>
+                                            Filtering="CurrentAccountCardFiltering"
+                                            ValueChange="CurrentAccountCardValueChangeHandler"></ComboBoxEvents>
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
@@ -286,7 +287,7 @@ else
 
                                 <ComboBoxEvents TValue="string"
                                             TItem="ListBranchesDto"
-                                            Filtering="BranchFiltering" 
+                                            Filtering="BranchFiltering"
                                             ValueChange="BranchValueChangeHandler"></ComboBoxEvents>
 
 
@@ -312,9 +313,9 @@ else
                                     AllowFiltering="true"
                                     PopupWidth="700px"
                                     PopupHeight="500"
-                                    @bind-Value="DataSource.WarehouseCode">
+                                    Value="DataSource.WarehouseCode">
 
-                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
 
                                 <ComboBoxTemplates TItem="ListWarehousesDto">
                                     <HeaderTemplate>
@@ -340,7 +341,8 @@ else
 
                                 <ComboBoxEvents TValue="string"
                                             TItem="ListWarehousesDto"
-                                            Filtering="WarehouseFiltering"></ComboBoxEvents>
+                                            Filtering="WarehouseFiltering"
+                                            ValueChange="WarehouseValueChangeHandler"></ComboBoxEvents>
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
@@ -356,9 +358,9 @@ else
                                     AllowFiltering="true"
                                     PopupWidth="700px"
                                     PopupHeight="500"
-                                    @bind-Value="DataSource.CurrencyCode">
+                                    Value="DataSource.CurrencyCode">
 
-                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
 
                                 <ComboBoxTemplates TItem="ListCurrenciesDto">
                                     <HeaderTemplate>
@@ -384,7 +386,8 @@ else
 
                                 <ComboBoxEvents TValue="string"
                                             TItem="ListCurrenciesDto"
-                                            Filtering="CurrencyFiltering"></ComboBoxEvents>
+                                            Filtering="CurrencyFiltering"
+                                            ValueChange="CurrencyValueChangeHandler"></ComboBoxEvents>
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
@@ -502,9 +505,9 @@ else
                                     AllowFiltering="true"
                                     PopupWidth="700px"
                                     PopupHeight="500"
-                                    @bind-Value="LineDataSource.WarehouseCode">
+                                    Value="LineDataSource.WarehouseCode">
 
-                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
 
                                 <ComboBoxTemplates TItem="ListWarehousesDto">
                                     <HeaderTemplate>
@@ -530,7 +533,8 @@ else
 
                                 <ComboBoxEvents TValue="string"
                                             TItem="ListWarehousesDto"
-                                            Filtering="LineWareHouseFiltering"></ComboBoxEvents>
+                                            Filtering="LineWareHouseFiltering"
+                                            ValueChange="LineWareHouseValueChangeHandler"></ComboBoxEvents>
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
@@ -547,9 +551,9 @@ else
                                     AllowFiltering="true"
                                     PopupWidth="700px"
                                     PopupHeight="500"
-                                    @bind-Value="LineDataSource.ProductCode">
+                                    Value="LineDataSource.ProductCode">
 
-                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
 
                                 <ComboBoxTemplates TItem="ListProductsDto">
                                     <HeaderTemplate>
@@ -575,7 +579,8 @@ else
 
                                 <ComboBoxEvents TValue="string"
                                             TItem="ListProductsDto"
-                                            Filtering="ProductFiltering"></ComboBoxEvents>
+                                            Filtering="ProductFiltering"
+                                            ValueChange="ProductValueChangeHandler"></ComboBoxEvents>
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
@@ -592,9 +597,9 @@ else
                                     AllowFiltering="true"
                                     PopupWidth="700px"
                                     PopupHeight="500"
-                                    @bind-Value="LineDataSource.ProductName">
+                                    Value="LineDataSource.ProductName">
 
-                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
 
                                 <ComboBoxTemplates TItem="ListProductsDto">
                                     <HeaderTemplate>
@@ -620,7 +625,8 @@ else
 
                                 <ComboBoxEvents TValue="string"
                                             TItem="ListProductsDto"
-                                            Filtering="ProductFiltering"></ComboBoxEvents>
+                                            Filtering="ProductFiltering"
+                                            ValueChange="ProductValueChangeHandler"></ComboBoxEvents>
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
@@ -637,9 +643,9 @@ else
                                     AllowFiltering="true"
                                     PopupWidth="700px"
                                     PopupHeight="500"
-                                    @bind-Value="LineDataSource.UnitSetCode">
+                                    Value="LineDataSource.UnitSetCode">
 
-                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
 
                                 <ComboBoxTemplates TItem="ListUnitSetsDto">
                                     <HeaderTemplate>
@@ -665,7 +671,8 @@ else
 
                                 <ComboBoxEvents TValue="string"
                                             TItem="ListUnitSetsDto"
-                                            Filtering="UnitSetFiltering"></ComboBoxEvents>
+                                            Filtering="UnitSetFiltering"
+                                            ValueChange="UnitSetValueChangeHandler"></ComboBoxEvents>
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
@@ -673,45 +680,46 @@ else
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>Şube Kodu: </strong></label><br />
-                            @*<SfComboBox @ref="BranchesComboBox"
-                        TValue="string"
-                        TItem="ListBranchesDto"
-                        Placeholder="Şube Seçin"
-                        CssClass="e-multi-column"
-                        DataSource="@BranchesList"
-                        AllowFiltering="true"
-                        PopupWidth="700px"
-                        PopupHeight="500"
-                        @bind-Value="LineDataSource.BranchCode">
+                            <SfComboBox @ref="BranchesComboBox"
+                                    TValue="string"
+                                    TItem="ListBranchesDto"
+                                    Placeholder="Şube Seçin"
+                                    CssClass="e-multi-column"
+                                    DataSource="@BranchesList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500"
+                                    Value="LineDataSource.BranchCode">
 
-                        <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
 
-                        <ComboBoxTemplates TItem="ListBranchesDto">
-                        <HeaderTemplate>
-                        <table>
-                        <tr>
-                        <th class="e-text-center">Şube Kodu</th>
-                        <th class="e-text-center">Şube Adı</th>
-                        </tr>
-                        </table>
-                        </HeaderTemplate>
-                        <ItemTemplate Context="cmbContext">
+                                <ComboBoxTemplates TItem="ListBranchesDto">
+                                    <HeaderTemplate>
+                                        <table>
+                                            <tr>
+                                                <th class="e-text-center">Şube Kodu</th>
+                                                <th class="e-text-center">Şube Adı</th>
+                                            </tr>
+                                        </table>
+                                    </HeaderTemplate>
+                                    <ItemTemplate Context="cmbContext">
 
-                        <table>
-                        <tbody>
-                        <tr>
-                        <td class="e-text-center">@((cmbContext as ListBranchesDto).Code)</td>
-                        <td class="e-text-center">@((cmbContext as ListBranchesDto).Name)</td>
-                        </tr>
-                        </tbody>
-                        </table>
-                        </ItemTemplate>
-                        </ComboBoxTemplates>
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="e-text-center">@((cmbContext as ListBranchesDto).Code)</td>
+                                                    <td class="e-text-center">@((cmbContext as ListBranchesDto).Name)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </ItemTemplate>
+                                </ComboBoxTemplates>
 
-                        <ComboBoxEvents TValue="string"
-                        TItem="ListBranchesDto"
-                        Filtering="BranchFiltering"></ComboBoxEvents>
-                        </SfComboBox>*@
+                                <ComboBoxEvents TValue="string"
+                                            TItem="ListBranchesDto"
+                                            Filtering="BranchFiltering"
+                                            ValueChange="BranchValueChangeHandler"></ComboBoxEvents>
+                            </SfComboBox>
 
                         </Template>
                     </DxGridLayoutItem>
@@ -786,9 +794,9 @@ else
                                     AllowFiltering="true"
                                     PopupWidth="700px"
                                     PopupHeight="500"
-                                    @bind-Value="LineDataSource.PaymentPlanCode">
+                                    Value="LineDataSource.PaymentPlanCode">
 
-                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
 
                                 <ComboBoxTemplates TItem="ListPaymentPlansDto">
                                     <HeaderTemplate>
@@ -814,7 +822,8 @@ else
 
                                 <ComboBoxEvents TValue="string"
                                             TItem="ListPaymentPlansDto"
-                                            Filtering="LinePaymentPlanFiltering"></ComboBoxEvents>
+                                            Filtering="LinePaymentPlanFiltering"
+                                            ValueChange="LinePaymentPlanValueChangeHandler"></ComboBoxEvents>
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
