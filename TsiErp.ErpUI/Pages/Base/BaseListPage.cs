@@ -17,7 +17,7 @@ using IResult = Tsi.Core.Utilities.Results.IResult;
 
 namespace TsiErp.ErpUI.Pages.Base
 {
-    public abstract class BaseListPage<TGetOutputDto, TGetListOutputDto, TCreateInput, TUpdateInput, TGetListInput> : ComponentBase,ICoreCommonService
+    public abstract class BaseListPage<TGetOutputDto, TGetListOutputDto, TCreateInput, TUpdateInput, TGetListInput> : ComponentBase,ICoreCommonService 
          where TGetOutputDto : class, IEntityDto, new()
          where TGetListOutputDto : class, IEntityDto, new()
          where TGetListInput : class, new()
@@ -29,6 +29,9 @@ namespace TsiErp.ErpUI.Pages.Base
         public bool SelectFirstDataRow { get; set; }
 
         public TGetListOutputDto SelectedItem { get; set; }
+
+        [Inject]
+        public ApplicationService ApplicationService { get; set; }
 
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -151,7 +154,7 @@ namespace TsiErp.ErpUI.Pages.Base
             switch (args.Item.Id)
             {
                 case "new":
-                    BeforeInsertAsync();
+                    await BeforeInsertAsync();
                     break;
 
                 case "changed":

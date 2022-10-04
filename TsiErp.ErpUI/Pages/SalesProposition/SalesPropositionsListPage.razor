@@ -395,19 +395,19 @@ else
                     <DxGridLayoutItem Row="5" Column="1" ColumnSpan="5">
                         <Template>
                             <br />
-                            <SfGrid ID="LineGrid" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false"
+                            <SfGrid @ref=_LineGrid ID="LineGrid" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false"
                                 AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
-                                <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="ListSalesPropositionLinesDto"></GridEvents>
+                                <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectSalesPropositionLinesDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ListSalesPropositionLinesDto.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListSalesPropositionLinesDto.ProductName) HeaderText="STOK AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListSalesPropositionLinesDto.UnitSetCode) HeaderText="BİRİM SETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListSalesPropositionLinesDto.Quantity)  Type="ColumnType.Number"HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListSalesPropositionLinesDto.UnitPrice) Type="ColumnType.Number" HeaderText="BİRİM FİYAT" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListSalesPropositionLinesDto.LineAmount) Type="ColumnType.Number" HeaderText="SATIR TUTARI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.ProductName) HeaderText="STOK AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.UnitSetCode) HeaderText="BİRİM SETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.Quantity)  Type="ColumnType.Number"HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.UnitPrice) Type="ColumnType.Number" HeaderText="BİRİM FİYAT" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.LineAmount) Type="ColumnType.Number" HeaderText="SATIR TUTARI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>
@@ -680,7 +680,7 @@ else
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>Şube Kodu: </strong></label><br />
-                            <SfComboBox @ref="BranchesComboBox"
+                            <SfComboBox @ref="LineBranchesComboBox"
                                     TValue="string"
                                     TItem="ListBranchesDto"
                                     Placeholder="Şube Seçin"
@@ -718,7 +718,7 @@ else
                                 <ComboBoxEvents TValue="string"
                                             TItem="ListBranchesDto"
                                             Filtering="BranchFiltering"
-                                            ValueChange="BranchValueChangeHandler"></ComboBoxEvents>
+                                            ValueChange="LineBranchValueChangeHandler"></ComboBoxEvents>
                             </SfComboBox>
 
                         </Template>
