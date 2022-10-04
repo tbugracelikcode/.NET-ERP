@@ -42,12 +42,12 @@ builder.Services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(Syncfus
                 // Define the list of cultures your app will support
                 var supportedCultures = new List<CultureInfo>()
                 {
-                    new CultureInfo("tr"),
                     new CultureInfo("en-US"),
                     new CultureInfo("de"),
                     new CultureInfo("fr"),
                     new CultureInfo("ar"),
                     new CultureInfo("zh"),
+                    new CultureInfo("tr"),
                 };
                     // Set the default culture
                     options.DefaultRequestCulture = new RequestCulture("tr");
