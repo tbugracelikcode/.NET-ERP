@@ -147,11 +147,10 @@
                             <tr>
                                 <td class="tg-0lax" colspan="3">
                                     <div class="cascading">
-                                        <label class="example-label">Ürün Grubu</label>
-                                        <SfComboBox TValue="string" TItem="ProductGroup" Placeholder="Ürün Grubu Seçiniz..." PopupHeight="auto" DataSource="@productGroupList">
-                                            <ComboBoxEvents TValue="string" TItem="ProductGroup" ValueChange="ChangeGroup"></ComboBoxEvents>
-                                            <ComboBoxFieldSettings Text="Name" Value="GroupID" />
-                                        </SfComboBox>
+                                        <label class="example-label">Ürün Grubu Combobox</label>
+                                        <select >
+                                            <option value=""></option>
+                                        </select>
 
                                     </div>
                                 </td>
@@ -164,7 +163,7 @@
                                     </div>
                                 </td>
                                 <td class="tg-0lax" colspan="3">
-                                    <button class="btn btn-primary" id="menu-toggle" @onclick="Tikla" style="float:right !important;">Kaydet</button>
+                                    <button class="btn btn-primary" id="menu-toggle" @onclick="()=>GetCurrentNodes(true)" style="float:right !important;">Kaydet</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -177,12 +176,12 @@
             </DiagramCanvas>
         </CascadingValue>
     </div>
-    @if (DialogIsOpen && globalList.Where(t => t.ClassName == "BilgiKutusuNode").Count() > 0)
+    @if (DialogIsOpen && BilgiKutusuSayisiHesapla() > 0 && category == Dialog.Category.SaveNot)
     {
         <TsiErp.VsmBuilder.Components.Dialog Caption="Bilgi Kusu Seçiniz"
                                          Message="@message"
                                          OnClose="OnDialogClose"
-                                         Type="Dialog.Category.SaveNot" Data="globalList">
+                                         Type="Dialog.Category.SaveNot" Data="modalData">
         </TsiErp.VsmBuilder.Components.Dialog>
     }
     else if (DialogIsOpen && category == Dialog.Category.Okay)
@@ -204,5 +203,5 @@
 
 
 @code {
-    //public string parentID = "";   
+    
 }

@@ -28,7 +28,15 @@ namespace TsiErp.VsmBuilder.CustomNodes
         [DataMember]
         public double Y { get; set; }
         [DataMember]
+        public string nodeID { get; set; }
+        [DataMember]
         public string ParentID { get; set; }
+        [DataMember]
+        public string StokIsaretiNodeID { get; set; }
+        [DataMember]
+        public string OperatorNodeID { get; set; }
+        [DataMember]
+        public string ZamanCizgisiNodeID { get; set; }
 
     }
 }
