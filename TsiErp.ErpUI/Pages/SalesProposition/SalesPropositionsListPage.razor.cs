@@ -20,6 +20,7 @@ using TsiErp.Entities.Entities.WareHouse.Dtos;
 using TsiErp.Entities.Entities.PaymentPlan.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 using Syncfusion.Blazor.HeatMap.Internal;
+using Newtonsoft.Json;
 
 namespace TsiErp.ErpUI.Pages.SalesProposition
 {
@@ -231,6 +232,23 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         {
             BranchesList = (await BranchesAppService.GetListAsync(new ListBranchesParameterDto())).Data.ToList();
         }
+
+        public async Task BranchValueChangeHandler(ChangeEventArgs<string, ListBranchesDto> args)
+        {
+            if (args.ItemData != null)
+            {
+                DataSource.BranchID = args.ItemData.Id;
+                DataSource.BranchCode = args.ItemData.Code;
+            }
+            else
+            {
+                DataSource.BranchID = Guid.Empty;
+                DataSource.BranchCode = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
+        }
+
+
         #endregion
 
         #region Depolar
