@@ -169,7 +169,7 @@
                                     TItem="ListEquipmentRecordsDto"
                                     Placeholder="Ekipman Seçin"
                                     CssClass="e-multi-column"
-                                        @bind-Value="@DataSource.Equipment"
+                                    Value="@DataSource.Equipment"
                                     DataSource="@EquipmentRecordsList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
@@ -202,8 +202,7 @@
                                     <ComboBoxEvents TValue="string"
                                             TItem="ListEquipmentRecordsDto"
                                             Filtering="EquipmentFiltering"
-                                            Opened="EquipmentGroupOpened"
-                                            ValueChange="EquipmentValueChanged"></ComboBoxEvents>
+                                            ValueChange="EquipmentRecordValueChangeHandler"></ComboBoxEvents>
                                 </SfComboBox>
                             </Template>
                         </DxGridLayoutItem>

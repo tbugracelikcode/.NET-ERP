@@ -6,6 +6,7 @@ using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
 using Tsi.Core.Utilities.Results;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.Operation.Dtos;
 using TsiErp.Entities.Entities.OperationLine.Dtos;
 using TsiErp.Entities.Entities.Station.Dtos;
@@ -40,6 +41,8 @@ namespace TsiErp.ErpUI.Pages.Operation
         protected override async void OnInitialized()
         {
             BaseCrudService = OperationsAppService;
+            await GetLineOperationsList();
+            await GetLineStationsList();
         }
 
         public void ShowColumns()
@@ -151,19 +154,21 @@ namespace TsiErp.ErpUI.Pages.Operation
             LineOperationsList = (await OperationsAppService.GetListAsync(new ListOperationsParameterDto())).Data.ToList();
         }
 
-        public async Task LineOperationOpened(PopupEventArgs args)
+        public async Task LineOperationValueChangeHandler(ChangeEventArgs<string, ListOperationsDto> args)
         {
-            if (LineOperationsList.Count == 0)
+            if (args.ItemData != null)
             {
-                await GetLineOperationsList();
+                LineDataSource.OperationID = args.ItemData.Id;
+                LineDataSource.OperationName = args.ItemData.Name;
             }
+            else
+            {
+                LineDataSource.OperationID = Guid.Empty;
+                LineDataSource.OperationName = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
         }
 
-        private void LineOperationValueChanged(ChangeEventArgs<string, ListOperationsDto> args)
-        {
-            LineDataSource.OperationID = args.ItemData.Id;
-            LineDataSource.OperationName = args.ItemData.Name;
-        }
         #endregion
 
         #region İstasyonlar - Operasyon Satırları
@@ -189,18 +194,19 @@ namespace TsiErp.ErpUI.Pages.Operation
             LineStationsList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
         }
 
-        public async Task LineStationOpened(PopupEventArgs args)
+        public async Task LineStationValueChangeHandler(ChangeEventArgs<string, ListStationsDto> args)
         {
-            if (LineStationsList.Count == 0)
+            if (args.ItemData != null)
             {
-                await GetLineStationsList();
+                LineDataSource.StationID = args.ItemData.Id;
+                LineDataSource.StationCode = args.ItemData.Code;
             }
-        }
-
-        private void LineStationValueChanged(ChangeEventArgs<string, ListStationsDto> args)
-        {
-            LineDataSource.StationID = args.ItemData.Id;
-            LineDataSource.StationCode = args.ItemData.Code;
+            else
+            {
+                LineDataSource.StationID = Guid.Empty;
+                LineDataSource.StationCode = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
         }
         #endregion
     }

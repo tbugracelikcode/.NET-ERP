@@ -158,7 +158,7 @@ else
                                     TItem="ListCurrentAccountCardsDto"
                                     Placeholder="Müşteri Kartı Seçin"
                                     CssClass="e-multi-column"
-                                    @bind-Value="DataSource.CustomerCard"
+                                    Value="DataSource.CustomerCard"
                                     DataSource="@CurrentAccountCardsList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
@@ -191,8 +191,7 @@ else
                                 <ComboBoxEvents TValue="string"
                                             TItem="ListCurrentAccountCardsDto"
                                             Filtering="CurrentAccountCardFiltering"
-                                            Opened="CurrentAccountCardOpened"
-                                            ValueChange="CurrentAccountCardValueChanged"></ComboBoxEvents>
+                                            ValueChange="CurrentAccountCardValueChangeHandler"></ComboBoxEvents>
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>

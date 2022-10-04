@@ -19,8 +19,11 @@ using Blazored.Modal;
 using Blazored.Modal.Services;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 using Microsoft.EntityFrameworkCore;
+using Tsi.Blazor.Component.Core.TsiComponents.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddBootstrap5Providers();
 
 // Add services to the container.
 builder.Services.AddDbContextFactory<TsiErpDbContext>(

@@ -232,6 +232,7 @@ else
                             <SfComboBox @ref="LineOperationsComboBox"
                                     TValue="string"
                                     TItem="ListOperationsDto"
+                                    Value="LineDataSource.OperationName"
                                     Placeholder="Operasyon Seçin"
                                     CssClass="e-multi-column"
                                     DataSource="@LineOperationsList"
@@ -266,8 +267,7 @@ else
                                 <ComboBoxEvents TValue="string"
                                             TItem="ListOperationsDto"
                                             Filtering="LineOperationFiltering"
-                                            Opened="LineOperationOpened"
-                                            ValueChange="LineOperationValueChanged"></ComboBoxEvents>
+                                            ValueChange="LineOperationValueChangeHandler"></ComboBoxEvents>
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
@@ -279,12 +279,13 @@ else
                                     TItem="ListStationsDto"
                                     Placeholder="İstasyon Seçin"
                                     CssClass="e-multi-column"
+                                    Value="LineDataSource.StationCode"
                                     DataSource="@LineStationsList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
                                     PopupHeight="500">
 
-                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
 
                                 <ComboBoxTemplates TItem="ListStationsDto">
                                     <HeaderTemplate>
@@ -311,8 +312,7 @@ else
                                 <ComboBoxEvents TValue="string"
                                             TItem="ListStationsDto"
                                             Filtering="LineStationFiltering"
-                                            Opened="LineStationOpened"
-                                            ValueChange="LineStationValueChanged"></ComboBoxEvents>
+                                            ValueChange="LineStationValueChangeHandler"></ComboBoxEvents>
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>

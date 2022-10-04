@@ -6,6 +6,8 @@
 @using TsiErp.Entities.Entities.Branch.Dtos
 @using TsiErp.ErpUI.Pages.Base
 @using Tsi.Blazor.Component.Core.Components.Layouts
+@using Tsi.Blazor.Component.Core.TsiComponents.Components.TextBox
+@using Tsi.Blazor.Component.Core.TsiComponents.Enums
 
 @inherits BaseListPage<SelectBranchesDto, ListBranchesDto, CreateBranchesDto, UpdateBranchesDto, ListBranchesParameterDto>
 
@@ -33,32 +35,34 @@ else
             <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
                 <Template>
                     <SfCard class="TSIGridCards">
-                        <CardHeader >
-                                <table width="100%">
-                                    <tr>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%"> 
+                        <CardHeader>
+                            <table width="100%">
+                                <tr>
+                                    <td width="20%">
+                                    </td>
+                                    <td width="20%">
+                                    </td>
+                                    <td width="20%">
+                                    </td>
+                                    <td width="20%">
+                                    </td>
+                                    <td width="20%">
                                         <SfButton CssClass="TSIShowColumnsButton" OnClick="ShowColumns"><SfIcon Size="IconSize.Medium" Name="IconName.TwoColumn"></SfIcon>&nbsp;Sütunları Göster</SfButton>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </CardHeader>
+
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </CardHeader>
                         <CardContent>
                             <SfGrid ID="Grid" @ref="@_grid" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
                                 AllowExcelExport="true" ShowColumnChooser="true" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
                                 <GridColumnChooserSettings>
-                                        <FooterTemplate>
-                                            @{
-                                                var ContextData = context as ColumnChooserFooterTemplateContext;
-                                                var visibles = ContextData.Columns.Where(x => x.Visible).Select(x => x.HeaderText).ToArray();
-                                                var hiddens = ContextData.Columns.Where(x => !x.Visible).Select(x => x.HeaderText).ToArray();
+                                    <FooterTemplate>
+                                        @{
+                                            var ContextData = context as ColumnChooserFooterTemplateContext;
+                                            var visibles = ContextData.Columns.Where(x => x.Visible).Select(x => x.HeaderText).ToArray();
+                                            var hiddens = ContextData.Columns.Where(x => !x.Visible).Select(x => x.HeaderText).ToArray();
                                         }
                                         <SfButton CssClass="TSISubmitButton" IsPrimary="true" OnClick="@(async () => {
                                          await _grid.ShowColumnsAsync(visibles);
@@ -125,7 +129,10 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>Şube Kodu: </strong></label>
-                            <TsiTextBox Placeholder="Şube Kodunu Yazınız." @bind-TSIText="DataSource.Code"></TsiTextBox>
+                            @*<TsiTextBox Placeholder="Şube Kodunu Yazınız." @bind-TSIText="DataSource.Code"></TsiTextBox>*@
+
+                            <SfTextBox CssClass="TSITxtBox" Placeholder="Şube Kodunu Yazınız." @bind-Value="DataSource.Code"></SfTextBox>
+
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="3">

@@ -1,0 +1,50 @@
+﻿@using Tsi.Blazor.Component.Core.TsiComponents.Base
+@using Tsi.Blazor.Component.Core.TsiComponents.Enums
+@using Tsi.Blazor.Component.Core.TsiComponents.Extensions
+
+@inherits BaseTextInput<string>
+
+@if (IsImmediate && IsDebounce)
+{
+    <input @ref="@ElementRef" id="@ElementId" type="@Type" inputmode="@Mode" class="@ClassNames" style="@StyleNames" placeholder="@Placeholder" disabled="@Disabled" readonly="@ReadOnly" size="@VisibleCharacters" pattern="@Pattern" tabindex="@TabIndex" value="@CurrentValue" @oninput="@OnInputHandler" @onkeydown="@OnKeyDownHandler" @onkeypress="@OnKeyPressHandler" @onkeyup="@OnKeyUpHandler" @onblur="@OnBlurHandler" @onfocus="@OnFocusHandler" @onfocusin="@OnFocusInHandler" @onfocusout="@OnFocusOutHandler" @attributes="@Attributes" />
+}
+else
+{
+    <input @ref="@ElementRef" id="@ElementId" type="@Type" inputmode="@Mode" class="@ClassNames" style="@StyleNames" placeholder="@Placeholder" disabled="@Disabled" readonly="@ReadOnly" size="@VisibleCharacters" pattern="@Pattern" tabindex="@TabIndex" @bind-value="CurrentValueAsString" @bind-value:event="@BindValueEventName" @onkeydown="@OnKeyDownHandler" @onkeypress="@OnKeyPressHandler" @onkeyup="@OnKeyUpHandler" @onblur="@OnBlurHandler" @onfocus="@OnFocusHandler" @onfocusin="@OnFocusInHandler" @onfocusout="@OnFocusOutHandler" @attributes="@Attributes" />
+}
+@ChildContent
+@Feedback
+
+@code {
+
+
+    [Parameter] public string ClassNames { get; set; }
+
+    [Parameter] public string StyleNames { get; set; }
+
+    [Parameter] public int VisibleCharacters { get; set; }
+
+    [Parameter] public string Text { get; set; }
+
+    [Parameter] public TextRole Role { get; set; } = TextRole.Text;
+
+    protected string Type => Role.ToTextRoleString();
+
+    [Parameter] public TextInputMode InputMode { get; set; } = TextInputMode.None;
+
+    protected string Mode => InputMode.ToTextInputMode();
+
+    [Parameter] public EventCallback<string> TextChanged { get; set; }
+
+    protected override Task<ParseValue<string>> ParseValueFromStringAsync(string value)
+    {
+        return Task.FromResult(new ParseValue<string>(true, value, null));
+    }
+
+    protected override Task OnInternalValueChanged(string value)
+    {
+        return TextChanged.InvokeAsync(value);
+    }
+
+    protected override string InternalValue { get => Text; set => Text = value; }
+}

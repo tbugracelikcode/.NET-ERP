@@ -5,6 +5,7 @@ using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
 using Tsi.Core.Utilities.Results;
+using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.Department.Dtos;
 using TsiErp.Entities.Entities.Employee.Dtos;
 using TsiErp.Entities.Enums;
@@ -26,6 +27,7 @@ namespace TsiErp.ErpUI.Pages.Employee
         protected override async void OnInitialized()
         {
             BaseCrudService = EmployeesService;
+            await GetDepartmentsList();
         }
 
         protected override Task BeforeInsertAsync()
@@ -68,19 +70,21 @@ namespace TsiErp.ErpUI.Pages.Employee
             DepartmentsList = (await DepartmentsAppService.GetListAsync(new ListDepartmentsParameterDto())).Data.ToList();
         }
 
-        public async Task DepartmentGroupOpened(PopupEventArgs args)
+        public async Task DepartmentValueChangeHandler(ChangeEventArgs<string, ListDepartmentsDto> args)
         {
-            if (DepartmentsList.Count == 0)
+            if (args.ItemData != null)
             {
-                await GetDepartmentsList();
+                DataSource.DepartmentID = args.ItemData.Id;
+                DataSource.Department = args.ItemData.Name;
             }
+            else
+            {
+                DataSource.DepartmentID = Guid.Empty;
+                DataSource.Department = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
         }
 
-        private void DepartmentValueChanged(ChangeEventArgs<string, ListDepartmentsDto> args)
-        {
-            DataSource.DepartmentID = args.ItemData.Id;
-            DataSource.Department = args.ItemData.Name;
-        }
         #endregion
 
         #region Kan Grubu
