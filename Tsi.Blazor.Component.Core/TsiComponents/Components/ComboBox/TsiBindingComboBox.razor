@@ -1,0 +1,26 @@
+﻿@typeparam TItem
+@typeparam TValue
+<TsiComboBox @ref="@selectRef" ElementId="@ElementId" TValue="TValue" Multiple="@Multiple" SelectedValue="@SelectedValue" SelectedValueChanged="@HandleSelectedValueChanged" SelectedValues="@SelectedValues" SelectedValuesChanged="@HandleSelectedValuesChanged" Class="@Class" Style="@Style" Size="@Size" MaxVisibleItems="@MaxVisibleItems" TabIndex="@TabIndex" Disabled="@Disabled" Attributes="@Attributes" SelectedValueExpression="@SelectedValueExpression" SelectedValuesExpression="@SelectedValuesExpression">
+    <ChildContent>
+        @if (DefaultItemText != null)
+        {
+            <TsiComboBoxItem @key="@DefaultItemValue" Value="@DefaultItemValue" Disabled="@DefaultItemDisabled" Hidden="@DefaultItemHidden">@DefaultItemText</TsiComboBoxItem>
+        }
+        @if (Data != null)
+        {
+            
+            @foreach (var item in Data)
+            {
+                var text = TextField?.Invoke(item);
+                var value = ValueField != null ? ValueField.Invoke(item) : default;
+                var disabled = ItemDisabled != null ? ItemDisabled.Invoke(item) : false;
+
+                <TsiComboBoxItem @key="@value" Value="@value" Disabled="@disabled">@text</TsiComboBoxItem>
+            }
+        }
+        @ChildContent
+    </ChildContent>
+    <Feedback>
+        @Feedback
+    </Feedback>
+</TsiComboBox>

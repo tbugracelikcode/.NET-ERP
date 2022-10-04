@@ -1,0 +1,18 @@
+﻿@using Tsi.Blazor.Component.Core.TsiComponents.Base
+@typeparam TValue
+@inherits BaseInputComponent<IReadOnlyList<TValue>>
+@attribute [CascadingTypeParameter(nameof(TValue))]
+<CascadingValue Value="@this" IsFixed>
+
+    <div class="input-group">
+        <select @ref="@ElementRef" id="@ElementId" class="@ClassNames" style="@StyleNames" disabled="@Disabled" readonly="@ReadOnly" multiple="@Multiple" size="@MaxVisibleItems" value="@CurrentValueAsString" tabindex="@TabIndex" @onchange="@OnChangeHandler" @onkeydown="@OnKeyDownHandler" @onkeypress="@OnKeyPressHandler" @onkeyup="@OnKeyUpHandler" @onblur="@OnBlurHandler" @onfocus="@OnFocusHandler" @onfocusin="@OnFocusInHandler" @onfocusout="@OnFocusOutHandler" @attributes="@Attributes">
+            @ChildContent
+        </select>
+
+        @if (ShowClearButton)
+        {
+            <button class="input-group-addon" @onclick=ClearButtonClicked>&#10006;</button>
+        }
+    </div>
+    @Feedback
+</CascadingValue>
