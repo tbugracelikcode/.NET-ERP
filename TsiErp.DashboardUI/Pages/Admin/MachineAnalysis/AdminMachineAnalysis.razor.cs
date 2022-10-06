@@ -14,7 +14,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
         #region Değişkenler
 
         DateTime startDate = DateTime.Today.AddDays(-90);
-        DateTime endDate = DateTime.Today;
+        DateTime endDate = DateTime.Today.AddDays(-(DateTime.Today.Day+1));
         private int? selectedTimeIndex { get; set; }
         private int threshold = 75;
         private double thresholddouble = 0.75;
@@ -42,7 +42,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
             StateHasChanged();
             
 
-            endDate = DateTime.Today;
+            //endDate = DateTime.Today;
 
             #region Zaman Seçimi
             switch (selectedTimeIndex)
