@@ -23,5 +23,16 @@ namespace TsiErp.ErpUI.Utilities.ModalUtilities
 
             return !modalResult.Cancelled;
         }
+
+        public async Task<bool> MessagePopupAsync(String Title, String Message)
+        {
+            ModalParameters mParams = new ModalParameters();
+            mParams.Add("Message", Message);
+
+            var modalRef = modalService.Show<ShowMessagePopupComponent>(Title, mParams);
+            var modalResult = await modalRef.Result;
+
+            return !modalResult.Cancelled;
+        }
     }
 }

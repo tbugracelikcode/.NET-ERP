@@ -4,6 +4,7 @@ using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
+using System.ComponentModel.DataAnnotations;
 using Tsi.Core.Utilities.Results;
 using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.Department.Dtos;
@@ -25,12 +26,19 @@ namespace TsiErp.ErpUI.Pages.Employee
 
         List<ComboBoxEnumItem<BloodTypeEnum>> BloodTypesList = new List<ComboBoxEnumItem<BloodTypeEnum>>();
 
+        public string[] Types { get; set; }
+
+        public string[] EnumValues = Enum.GetNames(typeof(BloodTypeEnum));
+
+
 
         protected override async void OnInitialized()
         {
             BaseCrudService = EmployeesService;
             await GetDepartmentsList();
         }
+
+       
 
         protected override Task BeforeInsertAsync()
         {
