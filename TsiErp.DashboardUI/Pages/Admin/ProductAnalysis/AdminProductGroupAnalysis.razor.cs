@@ -13,8 +13,8 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
 
         #region Değişkenler
 
-        DateTime startDate = DateTime.Today.AddDays(-90);
-        DateTime endDate = DateTime.Today;
+        DateTime startDate = DateTime.Today.AddDays(-(90 + DateTime.Today.Day));
+        DateTime endDate = DateTime.Today.AddDays(-(DateTime.Today.Day));
         private int? selectedTimeIndex { get; set; }
         private int? selectedProductIndex { get; set; }
         private int threshold;
@@ -53,7 +53,6 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
             await Task.Delay(1);
             StateHasChanged();
 
-            endDate = DateTime.Today;
 
             #region Zaman Seçimi
             switch (selectedTimeIndex)
