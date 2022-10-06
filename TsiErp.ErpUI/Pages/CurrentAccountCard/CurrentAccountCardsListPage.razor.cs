@@ -6,6 +6,7 @@ using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
 using Tsi.Core.Utilities.Results;
 using TsiErp.Business.Entities.Department.Services;
+using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.Currency.Dtos;
 using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.ShippingAdress.Dtos;
@@ -17,6 +18,8 @@ namespace TsiErp.ErpUI.Pages.CurrentAccountCard
 
         private SfGrid<ListCurrentAccountCardsDto> _grid;
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
         SfComboBox<string, ListShippingAdressesDto> ShippingAdressesComboBox;
         List<ListShippingAdressesDto> ShippingAdressesList = new List<ListShippingAdressesDto>();
 
@@ -25,6 +28,8 @@ namespace TsiErp.ErpUI.Pages.CurrentAccountCard
         protected override async void OnInitialized()
         {
             BaseCrudService = CurrentAccountCardsService;
+            await GetCurrenciesList();
+            await GetShippingAdressesList();
         }
 
         protected override Task BeforeInsertAsync()
@@ -39,10 +44,6 @@ namespace TsiErp.ErpUI.Pages.CurrentAccountCard
             return Task.CompletedTask;
         }
 
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(200, 50);
-        }
 
         #region Para Birimleri
         public async Task CurrencyFiltering(FilteringEventArgs args)
@@ -67,19 +68,21 @@ namespace TsiErp.ErpUI.Pages.CurrentAccountCard
             CurrenciesList = (await CurrenciesAppService.GetListAsync(new ListCurrenciesParameterDto())).Data.ToList();
         }
 
-        public async Task CurrencyOpened(PopupEventArgs args)
+        public async Task CurrencyValueChangeHandler(ChangeEventArgs<string, ListCurrenciesDto> args)
         {
-            if (CurrenciesList.Count == 0)
+            if (args.ItemData != null)
             {
-                await GetCurrenciesList();
+                DataSource.CurrencyID = args.ItemData.Id;
+                DataSource.Currency = args.ItemData.Name;
             }
+            else
+            {
+                DataSource.CurrencyID = Guid.Empty;
+                DataSource.Currency = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
         }
 
-        private void CurrencyValueChanged(ChangeEventArgs<string, ListCurrenciesDto> args)
-        {
-            DataSource.CurrencyID = args.ItemData.Id;
-            DataSource.Currency = args.ItemData.Name;
-        }
         #endregion
 
         #region Sevkiyat Adresleri
@@ -105,18 +108,19 @@ namespace TsiErp.ErpUI.Pages.CurrentAccountCard
             ShippingAdressesList = (await ShippingAdressesAppService.GetListAsync(new ListShippingAdressesParameterDto())).Data.ToList();
         }
 
-        public async Task ShippingAdressOpened(PopupEventArgs args)
+        public async Task ShippingAdressValueChangeHandler(ChangeEventArgs<string, ListShippingAdressesDto> args)
         {
-            if (ShippingAdressesList.Count == 0)
+            if (args.ItemData != null)
             {
-                await GetShippingAdressesList();
+                DataSource.ShippingAddress = args.ItemData.Name;
             }
+            else
+            {
+                DataSource.ShippingAddress = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
         }
 
-        private void ShippingAdressValueChanged(ChangeEventArgs<string, ListShippingAdressesDto> args)
-        {
-            DataSource.ShippingAddress = args.ItemData.Name;
-        }
         #endregion
 
     }

@@ -5,6 +5,7 @@ using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
 using Tsi.Core.Utilities.Results;
+using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.Department.Dtos;
 using TsiErp.Entities.Entities.EquipmentRecord.Dtos;
 
@@ -16,17 +17,15 @@ namespace TsiErp.ErpUI.Pages.EquipmentRecord
 
         private SfGrid<ListEquipmentRecordsDto> _grid;
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
         SfComboBox<string, ListDepartmentsDto> DepartmentsComboBox;
         List<ListDepartmentsDto> DepartmentsList = new List<ListDepartmentsDto>();
 
         protected override async void OnInitialized()
         {
             BaseCrudService = EquipmentRecordsService;
-        }
-
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(200, 50);
+            await GetDepartmentsList();
         }
 
         void CheckValueChanged(ChangeEventArgs args)
@@ -74,23 +73,25 @@ namespace TsiErp.ErpUI.Pages.EquipmentRecord
             await DepartmentsComboBox.FilterAsync(DepartmentsList, query);
         }
 
-        private async Task GetEquipmentRecordsList()
+        private async Task GetDepartmentsList()
         {
             DepartmentsList = (await DepartmentsAppService.GetListAsync(new ListDepartmentsParameterDto())).Data.ToList();
         }
 
-        public async Task DepartmentGroupOpened(PopupEventArgs args)
+        public async Task DepartmentValueChangeHandler(ChangeEventArgs<string, ListDepartmentsDto> args)
         {
-            if (DepartmentsList.Count == 0)
+            if (args.ItemData != null)
             {
-                await GetEquipmentRecordsList();
+                DataSource.Department = args.ItemData.Id;
+                DataSource.DepartmentName = args.ItemData.Name;
             }
+            else
+            {
+                DataSource.Department = Guid.Empty;
+                DataSource.DepartmentName = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
         }
 
-        private void DepartmentValueChanged(ChangeEventArgs<string, ListDepartmentsDto> args)
-        {
-           DataSource.Department= args.ItemData.Id;
-           DataSource.DepartmentName= args.ItemData.Name;
-        }
     }
 }

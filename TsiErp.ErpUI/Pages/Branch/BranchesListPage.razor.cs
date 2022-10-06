@@ -10,6 +10,9 @@ namespace TsiErp.ErpUI.Pages.Branch
     public partial class BranchesListPage
     {
         private SfGrid<ListBranchesDto> _grid;
+
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
         protected override async void OnInitialized()
         {
             BaseCrudService = BranchesService;
@@ -27,10 +30,6 @@ namespace TsiErp.ErpUI.Pages.Branch
             return Task.CompletedTask;
         }
 
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(200, 50);
-        }
 
         //protected override void CreateContextMenu()
         //{

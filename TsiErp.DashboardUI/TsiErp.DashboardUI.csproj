@@ -81,6 +81,9 @@
        <Generator>PublicResXFileCodeGenerator</Generator>
        <LastGenOutput>SfResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\SfResources.tr.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\SfResources.zh.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>

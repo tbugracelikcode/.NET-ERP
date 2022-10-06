@@ -38,49 +38,15 @@ else
             <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
                 <Template>
                     <SfCard class="TSIGridCards">
-                        <CardHeader >
-                                <table width="100%">
-                                    <tr>
-                                        <td width="20%">
-                                          
-                                        </td>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%"> 
-                                        <SfButton CssClass="TSIShowColumnsButton" OnClick="ShowColumns"><SfIcon Size="IconSize.Medium" Name="IconName.TwoColumn"></SfIcon>&nbsp;Sütunları Göster</SfButton>
-
-                                        </td>
-                                    </tr>
-                                </table>
-
-                            </CardHeader>
                         <CardContent>
-                            <SfGrid ID="Grid" @ref="@_grid" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"
+                            <SfGrid ID="Grid" @ref="@_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"
                                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
-                                <GridColumnChooserSettings>
-                                        <FooterTemplate>
-                                            @{
-                                                var ContextData = context as ColumnChooserFooterTemplateContext;
-                                                var visibles = ContextData.Columns.Where(x => x.Visible).Select(x => x.HeaderText).ToArray();
-                                                var hiddens = ContextData.Columns.Where(x => !x.Visible).Select(x => x.HeaderText).ToArray();
-                                        }
-                                        <SfButton CssClass="TSISubmitButton" IsPrimary="true" OnClick="@(async () => {
-                                         await _grid.ShowColumnsAsync(visibles);
-                                         await _grid.HideColumnsAsync(hiddens); })"><SfIcon Size="IconSize.Medium" Name="IconName.Eye"></SfIcon>&nbsp;Göster</SfButton>
-
-                                        <SfButton CssClass="TSICancelButton" @onclick="@(async () => await ContextData.CancelAsync())">
-                                            <SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;İptal
-                                        </SfButton>
-
-                                    </FooterTemplate>
-                                </GridColumnChooserSettings>
+                               
                                 <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListEquipmentRecordsDto"></GridEvents>
+                                                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
-                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
@@ -92,10 +58,10 @@ else
                                     <GridColumn Field=@nameof(ListEquipmentRecordsDto.Responsible) HeaderText="SORUMLU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListEquipmentRecordsDto.Frequency) HeaderText="SIKLIK" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListEquipmentRecordsDto.EquipmentSerialNo) HeaderText="EKİPMAN SERİ NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.RecordDate) HeaderText="KAYIT TARİHİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.Cancel) HeaderText="İPTAL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.CancellationDate) HeaderText="İPTAL TARİHİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.CancellationReason) HeaderText="İPTAL NEDENİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.RecordDate) Type="ColumnType.Date" Format="dd.MM.yyyy" HeaderText="KAYIT TARİHİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.Cancel) DisplayAsCheckBox="true" HeaderText="İPTAL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.CancellationDate) Type="ColumnType.Date" Format="dd.MM.yyyy" HeaderText="İPTAL TARİHİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.CancellationReason)  HeaderText="İPTAL NEDENİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                 </GridColumns>
                             </SfGrid>
@@ -170,7 +136,7 @@ else
                                     TItem="ListDepartmentsDto"
                                     Placeholder="Departman Seçin"
                                     CssClass="e-multi-column"
-                                    @bind-Value="@DataSource.DepartmentName"
+                                    Value="@DataSource.DepartmentName"
                                     DataSource="@DepartmentsList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
@@ -203,8 +169,7 @@ else
                                 <ComboBoxEvents TValue="string"
                                             TItem="ListDepartmentsDto"
                                             Filtering="DepartmentFiltering"
-                                            Opened="DepartmentGroupOpened"
-                                            ValueChange="DepartmentValueChanged"></ComboBoxEvents>
+                                            ValueChange="DepartmentValueChangeHandler"></ComboBoxEvents>
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>

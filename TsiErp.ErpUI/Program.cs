@@ -19,6 +19,8 @@ using Blazored.Modal;
 using Blazored.Modal.Services;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 using Microsoft.EntityFrameworkCore;
+using Tsi.Blazor.Component.Core.TsiComponents.Extensions;
+using Tsi.Application.Contract.Services.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +28,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContextFactory<TsiErpDbContext>(
         options =>
             options.UseSqlServer(@"Server=192.168.98.4;Database=TsiErpYeni;UID=sa;PWD=Logo1234567890;"), ServiceLifetime.Transient);
+
+builder.Services.AddTransient<ApplicationService>();
+
 ConfigureBusiness(builder);
+
 ConfigureDataAccess(builder);
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).ConfigureContainer<ContainerBuilder>(container =>
@@ -47,13 +53,17 @@ builder.Services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(Syncfus
                     new CultureInfo("fr"),
                     new CultureInfo("ar"),
                     new CultureInfo("zh"),
+                    new CultureInfo("tr"),
                 };
-                    // Set the default culture
-                    options.DefaultRequestCulture = new RequestCulture("en-US");
-                    options.SupportedCultures = supportedCultures;
-                    options.SupportedUICultures = supportedCultures;
-                }); 
-            
+
+                // Set the default culture
+                options.DefaultRequestCulture = new RequestCulture("tr");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+
+            });
+
+
 builder.Services.AddRazorPages();
             builder.Services.AddControllers().AddNewtonsoftJson(options => { options.SerializerSettings.ContractResolver = new DefaultContractResolver(); });
             builder.Services.AddSignalR(e => { e.MaximumReceiveMessageSize = 102400000; });
@@ -71,6 +81,7 @@ builder.Services.AddScoped<ModalManager>();
 
 var app = builder.Build();
 
+
 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NzA0MDk0QDMyMzAyZTMyMmUzMEVjb29PTkxlM3YvRVZwVTR5U0VCT2toK24vMEJlYmFVeFkwRlYrT1cwMzA9");
 
 // Configure the HTTP request pipeline.
@@ -85,6 +96,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
+
 
 app.UseRouting();
             app.UseCors();

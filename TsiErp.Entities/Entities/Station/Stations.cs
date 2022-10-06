@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,6 +35,8 @@ namespace TsiErp.Entities.Entities.Station
         /// Kapasite
         /// </summary>
         public string Capacity { get; set; }
+
+        [Precision(18, 6)]
         /// <summary>
         /// KWA
         /// </summary>
@@ -42,18 +45,26 @@ namespace TsiErp.Entities.Entities.Station
         /// Grup ID
         /// </summary>
         public Guid GroupID { get; set; }
+
+        [Precision(18, 6)]
         /// <summary>
         /// X
         /// </summary>
         public decimal X { get; set; }
+
+        [Precision(18, 6)]
         /// <summary>
         /// Y
         /// </summary>
         public decimal Y { get; set; }
+
+        [Precision(18, 6)]
         /// <summary>
         /// Kapladığı Alan
         /// </summary>
         public decimal AreaCovered { get; set; }
+
+        [Precision(18, 6)]
         /// <summary>
         /// Kullanım Alanı
         /// </summary>
@@ -62,6 +73,8 @@ namespace TsiErp.Entities.Entities.Station
         /// Amortisman
         /// </summary>
         public int Amortization { get; set; }
+
+        [Precision(18, 6)]
         /// <summary>
         /// Makine Maliyeti
         /// </summary>
@@ -70,10 +83,14 @@ namespace TsiErp.Entities.Entities.Station
         /// Vardiya
         /// </summary>
         public int Shift { get; set; }
+
+        [Precision(18, 6)]
         /// <summary>
         /// Vardiya Çalışma Süresi
         /// </summary>
         public decimal ShiftWorkingTime { get; set; }
+
+        [Precision(18, 6)]
         /// <summary>
         /// Güç Faktörü
         /// </summary>

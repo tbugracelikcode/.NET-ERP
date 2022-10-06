@@ -39,80 +39,45 @@
                 </DxGridLayoutItem>
                 <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
                     <Template>
-                        <SfCard  class="TSIGridCards">
-                            <CardHeader >
-                                <table width="100%">
-                                    <tr>
-                                        <td width="20%">
-                                          
-                                        </td>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%"> 
-                                        <SfButton CssClass="TSIShowColumnsButton" OnClick="ShowColumns"><SfIcon Size="IconSize.Medium" Name="IconName.TwoColumn"></SfIcon>&nbsp;Sütunları Göster</SfButton>
-
-                                        </td>
-                                    </tr>
-                                </table>
-
-                            </CardHeader>
+                        <SfCard class="TSIGridCards">
                             <CardContent>
-                                <SfGrid ID="Grid" @ref="@_grid" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%"
+                                <SfGrid ID="Grid" @ref="@_grid" DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%"
                                 class="GridZebra" ContextMenuItems="@GridContextMenu">
-                                    <GridColumnChooserSettings>
-                                        <FooterTemplate>
-                                            @{
-                                                var ContextData = context as ColumnChooserFooterTemplateContext;
-                                                var visibles = ContextData.Columns.Where(x => x.Visible).Select(x => x.HeaderText).ToArray();
-                                                var hiddens = ContextData.Columns.Where(x => !x.Visible).Select(x => x.HeaderText).ToArray();
-                                        }
-                                        <SfButton CssClass="TSISubmitButton" IsPrimary="true" OnClick="@(async () => {
-                                         await _grid.ShowColumnsAsync(visibles);
-                                         await _grid.HideColumnsAsync(hiddens); })"><SfIcon Size="IconSize.Medium" Name="IconName.Eye"></SfIcon>&nbsp;Göster</SfButton>
+                                    <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                        <SfButton CssClass="TSICancelButton" @onclick="@(async () => await ContextData.CancelAsync())">
-                                            <SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;İptal
-                                        </SfButton>
+                                    <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                    <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListEmployeesDto"></GridEvents>
+                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                    <GridPageSettings PageSizes="true"></GridPageSettings>
+                                    <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                    <GridColumns>
+                                        <GridColumn Field=@nameof(ListEmployeesDto.Code) HeaderText="ÇALIŞAN KODU" TextAlign="TextAlign.Center" Width="120">
+                                        </GridColumn>
+                                        <GridColumn Field=@nameof(ListEmployeesDto.Name) HeaderText="ÇALIŞAN ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListEmployeesDto.Surname) HeaderText="ÇALIŞAN SOYADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListEmployeesDto.Department) HeaderText="DEPARTMAN ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListEmployeesDto.IDnumber) HeaderText="TC KİMLİK NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListEmployeesDto.Birthday) Format="dd.MM.yyyy" Type="ColumnType.Date" HeaderText="DOĞUM GÜNÜ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListEmployeesDto.BloodType) HeaderText="KAN GRUBU" TextAlign="TextAlign.Center" Width="120">
+                                        </GridColumn>
+                                        <GridColumn Field=@nameof(ListEmployeesDto.Address) HeaderText="ADRES" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListEmployeesDto.District) HeaderText="İLÇE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListEmployeesDto.City) HeaderText="İL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListEmployeesDto.HomePhone) HeaderText="EV TELEFONU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListEmployeesDto.CellPhone) HeaderText="CEP TELEFONU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListEmployeesDto.Email) HeaderText="E-POSTA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListEmployeesDto.IsActive) HeaderText="AKTİFLİK" DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
-                                    </FooterTemplate>
-                                </GridColumnChooserSettings>
-                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
-                                <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListEmployeesDto"></GridEvents>
-                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                <GridPageSettings PageSizes="true"></GridPageSettings>
-                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
-                                <GridColumns>
-                                    <GridColumn Field=@nameof(ListEmployeesDto.Code) HeaderText="ÇALIŞAN KODU" TextAlign="TextAlign.Center" Width="120">
-                                    </GridColumn>
-                                    <GridColumn Field=@nameof(ListEmployeesDto.Name) HeaderText="ÇALIŞAN ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEmployeesDto.Surname) HeaderText="ÇALIŞAN SOYADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEmployeesDto.Department) HeaderText="DEPARTMAN ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEmployeesDto.IDnumber) HeaderText="TC KİMLİK NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEmployeesDto.Birthday) Format="dd MMM yyyy" Type="ColumnType.Date" HeaderText="DOĞUM GÜNÜ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEmployeesDto.BloodType) HeaderText="KAN GRUBU" TextAlign="TextAlign.Center" Width="120">
-                                    </GridColumn>
-                                    <GridColumn Field=@nameof(ListEmployeesDto.Address) HeaderText="ADRES" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEmployeesDto.District) HeaderText="İLÇE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEmployeesDto.City) HeaderText="İL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEmployeesDto.HomePhone) HeaderText="EV TELEFONU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEmployeesDto.CellPhone) HeaderText="CEP TELEFONU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEmployeesDto.Email) HeaderText="E-POSTA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEmployeesDto.IsActive) HeaderText="AKTİFLİK" DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="120"></GridColumn>
-
-                                </GridColumns>
-                            </SfGrid>
-                        </CardContent>
-                        <CardFooter>
-                        </CardFooter>
-                    </SfCard>
-                </Template>
-            </DxGridLayoutItem>
-        </GridLayoutItems>
-    </DevGridLayout>
+                                    </GridColumns>
+                                </SfGrid>
+                            </CardContent>
+                            <CardFooter>
+                            </CardFooter>
+                        </SfCard>
+                    </Template>
+                </DxGridLayoutItem>
+            </GridLayoutItems>
+        </DevGridLayout>
 
 
         <DxPopup @bind-Visible="base.EditPageVisible"
@@ -171,7 +136,7 @@
                                 <SfTextBox Placeholder="Çalışan Soyadı Yazınız." @bind-Value="DataSource.Surname" CssClass="TSITxtBox"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="1"  Column="3">
+                        <DxGridLayoutItem Row="1" Column="3">
                             <Template>
                                 <label class="TSIModalLabel"><strong>Departman: </strong></label>
                                 <SfComboBox @ref="DepartmentsComboBox"
@@ -179,7 +144,7 @@
                                     TItem="ListDepartmentsDto"
                                     Placeholder="Departman Seçin"
                                     CssClass="e-multi-column"
-                                        @bind-Value="DataSource.Department"
+                                    Value="DataSource.Department"
                                     DataSource="@DepartmentsList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
@@ -212,8 +177,7 @@
                                     <ComboBoxEvents TValue="string"
                                             TItem="ListDepartmentsDto"
                                             Filtering="DepartmentFiltering"
-                                            Opened="DepartmentGroupOpened"
-                                            ValueChange="DepartmentValueChanged"></ComboBoxEvents>
+                                            ValueChange="DepartmentValueChangeHandler"></ComboBoxEvents>
                                 </SfComboBox>
                             </Template>
                         </DxGridLayoutItem>
@@ -231,8 +195,12 @@
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="2" Column="5">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Kan Grubu: </strong></label>
+                                <label class="TSIModalLabel"><strong>Kan Grubu: </strong></label><br />
+                                @*<SfMultiSelect @bind-Value="@Types" DataSource="@EnumValues" Mode="@VisualMode.Box" Placeholder="Deneme" ></SfMultiSelect>*@
 
+                                @*<SfDropDownList PopupHeight="230px" Placeholder="Deneme" @bind-Value="@DataSource.BloodType" DataSource="@EnumValues">
+                                    <DropDownListFieldSettings Text="Name" Value="Name"></DropDownListFieldSettings>
+                                </SfDropDownList>*@
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="3" Column="1">

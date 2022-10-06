@@ -11,6 +11,8 @@ namespace TsiErp.ErpUI.Pages.Warehouse
     {
         private SfGrid<ListWarehousesDto> _grid;
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
         protected override async void OnInitialized()
         {
             BaseCrudService = WarehousesService;
@@ -28,9 +30,5 @@ namespace TsiErp.ErpUI.Pages.Warehouse
             return Task.CompletedTask;
         }
 
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(200, 50);
-        }
     }
 }

@@ -5,6 +5,7 @@ using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
 using Tsi.Core.Utilities.Results;
+using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.CalibrationVerification.Dtos;
 using TsiErp.Entities.Entities.Department.Dtos;
 using TsiErp.Entities.Entities.EquipmentRecord.Dtos;
@@ -18,11 +19,14 @@ namespace TsiErp.ErpUI.Pages.CalibrationVerification
 
         List<ListEquipmentRecordsDto> EquipmentRecordsList = new List<ListEquipmentRecordsDto>();
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
         private SfGrid<ListCalibrationVerificationsDto> _grid;
 
         protected override async void OnInitialized()
         {
             BaseCrudService = CalibrationVerificationsService;
+            await GetEquipmentRecordsList();
         }
 
 
@@ -49,23 +53,21 @@ namespace TsiErp.ErpUI.Pages.CalibrationVerification
             EquipmentRecordsList = (await EquipmentRecordsService.GetListAsync(new ListEquipmentRecordsParameterDto())).Data.ToList();
         }
 
-        public async Task EquipmentGroupOpened(PopupEventArgs args)
+        public async Task EquipmentRecordValueChangeHandler(ChangeEventArgs<string, ListEquipmentRecordsDto> args)
         {
-            if (EquipmentRecordsList.Count == 0)
+            if (args.ItemData != null)
             {
-                await GetEquipmentRecordsList();
+                DataSource.EquipmentID = args.ItemData.Id;
+                DataSource.Equipment = args.ItemData.Name;
             }
+            else
+            {
+                DataSource.EquipmentID = Guid.Empty;
+                DataSource.Equipment = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
         }
 
-        private void EquipmentValueChanged(ChangeEventArgs<string, ListEquipmentRecordsDto> args)
-        {
-            DataSource.EquipmentID = args.ItemData.Id;
-            DataSource.Equipment = args.ItemData.Name;
-        }
 
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(200, 50);
-        }
     }
 }

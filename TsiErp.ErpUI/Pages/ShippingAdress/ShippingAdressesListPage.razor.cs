@@ -6,6 +6,7 @@ using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
 using Tsi.Core.Utilities.Results;
 using TsiErp.Business.Entities.Department.Services;
+using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.Currency.Dtos;
 using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.Department.Dtos;
@@ -18,16 +19,14 @@ namespace TsiErp.ErpUI.Pages.ShippingAdress
         SfComboBox<string, ListCurrentAccountCardsDto> CurrentAccountCardsComboBox;
         List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
         private SfGrid<ListShippingAdressesDto> _grid;
 
         protected override async void OnInitialized()
         {
             BaseCrudService = ShippingAdressesAppService;
-        }
-
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(200, 50);
+            await GetCurrentAccountCardsList();
         }
 
         public async Task CurrentAccountCardFiltering(FilteringEventArgs args)
@@ -52,19 +51,21 @@ namespace TsiErp.ErpUI.Pages.ShippingAdress
             CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
         }
 
-        public async Task CurrentAccountCardOpened(PopupEventArgs args)
+        public async Task CurrentAccountCardValueChangeHandler(ChangeEventArgs<string, ListCurrentAccountCardsDto> args)
         {
-            if (CurrentAccountCardsList.Count == 0)
+            if (args.ItemData != null)
             {
-                await GetCurrentAccountCardsList();
+                DataSource.CustomerCardID = args.ItemData.Id;
+                DataSource.CustomerCard = args.ItemData.Name;
             }
+            else
+            {
+                DataSource.CustomerCardID = Guid.Empty;
+                DataSource.CustomerCard = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
         }
 
-        private void CurrentAccountCardValueChanged(ChangeEventArgs<string, ListCurrentAccountCardsDto> args)
-        {
-            DataSource.CustomerCardID = args.ItemData.Id;
-            DataSource.CustomerCard = args.ItemData.Name;
-        }
 
 
 

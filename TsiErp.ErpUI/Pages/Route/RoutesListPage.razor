@@ -42,49 +42,14 @@ else
             <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
                 <Template>
                     <SfCard class="TSIGridCards">
-                        <CardHeader >
-                                <table width="100%">
-                                    <tr>
-                                        <td width="20%">
-                                          
-                                        </td>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%"> 
-                                        <SfButton CssClass="TSIShowColumnsButton" OnClick="ShowColumns"><SfIcon Size="IconSize.Medium" Name="IconName.TwoColumn"></SfIcon>&nbsp;Sütunları Göster</SfButton>
-
-                                        </td>
-                                    </tr>
-                                </table>
-
-                            </CardHeader>
+                    
                         <CardContent>
-                            <SfGrid ID="Grid" @ref="@_grid" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
-                                AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
-                                <GridColumnChooserSettings>
-                                        <FooterTemplate>
-                                            @{
-                                                var ContextData = context as ColumnChooserFooterTemplateContext;
-                                                var visibles = ContextData.Columns.Where(x => x.Visible).Select(x => x.HeaderText).ToArray();
-                                                var hiddens = ContextData.Columns.Where(x => !x.Visible).Select(x => x.HeaderText).ToArray();
-                                        }
-                                        <SfButton CssClass="TSISubmitButton" IsPrimary="true" OnClick="@(async () => {
-                                         await _grid.ShowColumnsAsync(visibles);
-                                         await _grid.HideColumnsAsync(hiddens); })"><SfIcon Size="IconSize.Medium" Name="IconName.Eye"></SfIcon>&nbsp;Göster</SfButton>
+                            <SfGrid ID="Grid" @ref="@_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                        <SfButton CssClass="TSICancelButton" @onclick="@(async () => await ContextData.CancelAsync())">
-                                            <SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;İptal
-                                        </SfButton>
-
-                                    </FooterTemplate>
-                                </GridColumnChooserSettings>
                                 <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListRoutesDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
-                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
@@ -92,8 +57,8 @@ else
                                     <GridColumn Field=@nameof(ListRoutesDto.Name) HeaderText="ROTA AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListRoutesDto.ProductCode) HeaderText="ANA ÜRÜN KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListRoutesDto.ProductionStart) HeaderText="ÜRETİM BAŞLANGIÇ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListRoutesDto.Approval) HeaderText="ONAY" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListRoutesDto.TechnicalApproval) HeaderText="TEKNİK ONAY" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListRoutesDto.Approval) DisplayAsCheckBox="true" HeaderText="ONAY" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListRoutesDto.TechnicalApproval) DisplayAsCheckBox="true" HeaderText="TEKNİK ONAY" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
 
                                 </GridColumns>
@@ -158,6 +123,7 @@ else
                             <SfComboBox @ref="ProductsComboBox"
                                     TValue="string"
                                     TItem="ListProductsDto"
+                                    Value="DataSource.ProductCode"
                                     Placeholder="Ürün Seçin"
                                     CssClass="e-multi-column"
                                     DataSource="@ProductsList"
@@ -165,7 +131,7 @@ else
                                     PopupWidth="700px"
                                     PopupHeight="500">
 
-                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
 
                                 <ComboBoxTemplates TItem="ListProductsDto">
                                     <HeaderTemplate>
@@ -192,8 +158,7 @@ else
                                 <ComboBoxEvents TValue="string"
                                             TItem="ListProductsDto"
                                             Filtering="ProductFiltering"
-                                            Opened="ProductOpened"
-                                            ValueChange="ProductValueChanged"></ComboBoxEvents>
+                                            ValueChange="ProductValueChangeHandler"></ComboBoxEvents>
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
@@ -205,20 +170,20 @@ else
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Onay: </strong></label>
+                            <label class="TSIModalLabel"><strong>Onay: </strong></label><br />
                             <SfCheckBox @bind-Checked="DataSource.Approval"></SfCheckBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="5">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Teknik Onay: </strong></label>
+                            <label class="TSIModalLabel"><strong>Teknik Onay: </strong></label><br />
                             <SfCheckBox @bind-Checked="DataSource.TechnicalApproval"></SfCheckBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Aktiflik: </strong></label>
+                            <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
                             <SfCheckBox @bind-Checked="DataSource.IsActive"></SfCheckBox>
                         </Template>
                     </DxGridLayoutItem>
@@ -226,11 +191,13 @@ else
                     <DxGridLayoutItem Row="3" Column="1" ColumnSpan="5">
                         <Template>
                             <br />
-                            <SfGrid ID="LineGrid" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false"
+                            <SfGrid ID="LineGrid" DataSource="@GridLineList" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false"
                                 AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
                                 <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="ListRouteLinesDto"></GridEvents>
+                                                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
-                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListRouteLinesDto.LineNr) HeaderText="SATIR NUMARASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
@@ -239,9 +206,9 @@ else
                                     <GridColumn Field=@nameof(ListRouteLinesDto.RouteCode) HeaderText="ROTA KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListRouteLinesDto.ProductCode) HeaderText="ANA ÜRÜN KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListRouteLinesDto.OperationName) HeaderText="OPERASYON ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListRouteLinesDto.AdjustmentAndControlTime) HeaderText="AYAR VE KONTROL SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListRouteLinesDto.OperationTime) HeaderText="OPERASYON SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListRouteLinesDto.Priority) HeaderText="ÖNCELİK" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListRouteLinesDto.AdjustmentAndControlTime) Type="ColumnType.Number" HeaderText="AYAR VE KONTROL SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListRouteLinesDto.OperationTime) Type="ColumnType.Number" HeaderText="OPERASYON SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListRouteLinesDto.Priority) Type="ColumnType.Number" HeaderText="ÖNCELİK" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListRouteLinesDto.OperationPicture) HeaderText="OPERASYON RESMİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
@@ -264,7 +231,7 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="Rota Satırları"
-         Width="1000px"
+         Width="800px"
          Height="440px"
          HeaderCssClass="HeaderTitleCss">
 
@@ -315,6 +282,7 @@ else
                             <label class="TSIModalLabel"><strong>Rota Kodu: </strong></label><br />
                             <SfComboBox @ref="LineRoutesComboBox"
                                     TValue="string"
+                                    Value="LineDataSource.RouteCode"
                                     TItem="ListRoutesDto"
                                     Placeholder="Rota Seçin"
                                     CssClass="e-multi-column"
@@ -323,7 +291,7 @@ else
                                     PopupWidth="700px"
                                     PopupHeight="500">
 
-                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
 
                                 <ComboBoxTemplates TItem="ListRoutesDto">
                                     <HeaderTemplate>
@@ -350,8 +318,7 @@ else
                                 <ComboBoxEvents TValue="string"
                                             TItem="ListRoutesDto"
                                             Filtering="LineRouteFiltering"
-                                            Opened="LineRouteOpened"
-                                            ValueChange="LineRouteValueChanged"></ComboBoxEvents>
+                                            ValueChange="LineRouteValueChangeHandler"></ComboBoxEvents>
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
@@ -361,6 +328,7 @@ else
                             <SfComboBox @ref="LineProductsComboBox"
                                     TValue="string"
                                     TItem="ListProductsDto"
+                                    Value="LineDataSource.ProductCode"
                                     Placeholder="Ürün Seçin"
                                     CssClass="e-multi-column"
                                     DataSource="@LineProductsList"
@@ -368,7 +336,7 @@ else
                                     PopupWidth="700px"
                                     PopupHeight="500">
 
-                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
 
                                 <ComboBoxTemplates TItem="ListProductsDto">
                                     <HeaderTemplate>
@@ -395,8 +363,7 @@ else
                                 <ComboBoxEvents TValue="string"
                                             TItem="ListProductsDto"
                                             Filtering="LineProductFiltering"
-                                            Opened="LineProductOpened"
-                                            ValueChange="LineProductValueChanged"></ComboBoxEvents>
+                                            ValueChange="LineProductValueChangeHandler"></ComboBoxEvents>
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
@@ -409,6 +376,7 @@ else
                                     TItem="ListOperationsDto"
                                     Placeholder="Operasyon Seçin"
                                     CssClass="e-multi-column"
+                                    Value="LineDataSource.OperationName"
                                     DataSource="@LineOperationsList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
@@ -441,8 +409,7 @@ else
                                 <ComboBoxEvents TValue="string"
                                             TItem="ListOperationsDto"
                                             Filtering="LineOperationFiltering"
-                                            Opened="LineOperationOpened"
-                                            ValueChange="LineOperationValueChanged"></ComboBoxEvents>
+                                            ValueChange="LineOperationValueChangeHandler"></ComboBoxEvents>
                             </SfComboBox>
 
                         </Template>

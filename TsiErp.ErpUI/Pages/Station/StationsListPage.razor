@@ -40,68 +40,34 @@ else
             <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
                 <Template>
                     <SfCard class="TSIGridCards">
-                        <CardHeader >
-                                <table width="100%">
-                                    <tr>
-                                        <td width="20%">
-                                          
-                                        </td>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%"> 
-                                        <SfButton CssClass="TSIShowColumnsButton" OnClick="ShowColumns"><SfIcon Size="IconSize.Medium" Name="IconName.TwoColumn"></SfIcon>&nbsp;Sütunları Göster</SfButton>
-
-                                        </td>
-                                    </tr>
-                                </table>
-
-                            </CardHeader>
+                       
                         <CardContent>
-                            <SfGrid ID="Grid" @ref="@_grid" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"
+                            <SfGrid ID="Grid" @ref="@_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"
                                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
-                                <GridColumnChooserSettings>
-                                        <FooterTemplate>
-                                            @{
-                                                var ContextData = context as ColumnChooserFooterTemplateContext;
-                                                var visibles = ContextData.Columns.Where(x => x.Visible).Select(x => x.HeaderText).ToArray();
-                                                var hiddens = ContextData.Columns.Where(x => !x.Visible).Select(x => x.HeaderText).ToArray();
-                                        }
-                                        <SfButton CssClass="TSISubmitButton" IsPrimary="true" OnClick="@(async () => {
-                                         await _grid.ShowColumnsAsync(visibles);
-                                         await _grid.HideColumnsAsync(hiddens); })"><SfIcon Size="IconSize.Medium" Name="IconName.Eye"></SfIcon>&nbsp;Göster</SfButton>
+                                                              <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                        <SfButton CssClass="TSICancelButton" @onclick="@(async () => await ContextData.CancelAsync())">
-                                            <SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;İptal
-                                        </SfButton>
-
-                                    </FooterTemplate>
-                                </GridColumnChooserSettings>
                                 <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListStationsDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
-                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListStationsDto.Code) HeaderText="MAKİNA KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListStationsDto.Name) HeaderText="MAKİNA AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListStationsDto.Brand) HeaderText="MARKA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.Model) HeaderText="MODEL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationsDto.Model) Type="ColumnType.Number" HeaderText="MODEL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListStationsDto.Capacity) HeaderText="KAPASİTE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.KWA) HeaderText="KWA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationsDto.KWA) Format="N2" Type="ColumnType.Number" HeaderText="KWA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListStationsDto.StationGroup) HeaderText="İŞ İSTASYONU GRUBU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.X) HeaderText="X" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.Y) HeaderText="Y" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.AreaCovered) HeaderText="KAPLADIĞI ALAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.UsageArea) HeaderText="KULLANIM ALANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.Amortization) HeaderText="AMORTİSMAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.MachineCost) HeaderText="MAKİNA MALİYETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.Shift) HeaderText="VARDİYA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.ShiftWorkingTime) HeaderText="VARDİYA ÇALIŞMA SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.PowerFactor) HeaderText="GÜÇ FAKTÖRÜ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationsDto.X) Format="N2" HeaderText="X" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationsDto.Y) Format="N2" HeaderText="Y" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationsDto.AreaCovered) Format="N2" Type="ColumnType.Number" HeaderText="KAPLADIĞI ALAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationsDto.UsageArea) Format="N2" Type="ColumnType.Number" HeaderText="KULLANIM ALANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationsDto.Amortization) Type="ColumnType.Number" HeaderText="AMORTİSMAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationsDto.MachineCost) Format="N2" Type="ColumnType.Number" HeaderText="MAKİNA MALİYETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationsDto.Shift) Type="ColumnType.Number" HeaderText="VARDİYA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationsDto.ShiftWorkingTime) Format="N2" Type="ColumnType.Number" HeaderText="VARDİYA ÇALIŞMA SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationsDto.PowerFactor) Format="N2" Type="ColumnType.Number" HeaderText="GÜÇ FAKTÖRÜ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListStationsDto.WorkSafetyInstruction) HeaderText="İŞ GÜVENLİĞİ TALİMATI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListStationsDto.UsageInstruction) HeaderText="KULLANIM TALİMATI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
@@ -122,7 +88,7 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="İş İstasyonları"
-         Width="1450px"
+         Width="1220px"
          Height="470px"
          HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
@@ -137,13 +103,13 @@ else
                 </Rows>
                 <Columns>
                     <DxGridLayoutColumn Width="40px" />
-                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="250px" />
                     <DxGridLayoutColumn Width="40px" />
-                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="250px" />
                     <DxGridLayoutColumn Width="40px" />
-                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="250px" />
                     <DxGridLayoutColumn Width="40px" />
-                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="250px" />
                     <DxGridLayoutColumn Width="40px" />
                 </Columns>
                 <Items>
@@ -196,7 +162,7 @@ else
                                     TItem="ListStationGroupsDto"
                                     Placeholder="İstasyon Grubu"
                                     CssClass="e-multi-column"
-                                    @bind-Value="@DataSource.StationGroup"
+                                    Value="@DataSource.StationGroup"
                                     DataSource="@StationGroupList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
@@ -230,7 +196,7 @@ else
                                     TValue="string" 
                                     TItem="ListStationGroupsDto" 
                                     Filtering="StationGroupFiltering" 
-                                    Opened="StationGroupOpened"></ComboBoxEvents>
+                                    ValueChange="StationGroupValueChangeHandler"></ComboBoxEvents>
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>

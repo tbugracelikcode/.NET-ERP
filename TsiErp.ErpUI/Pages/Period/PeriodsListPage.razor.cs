@@ -20,9 +20,12 @@ namespace TsiErp.ErpUI.Pages.Period
 
         private SfGrid<ListPeriodsDto> _grid;
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
         protected override async void OnInitialized()
         {
             BaseCrudService = PeriodsService;
+            await GetBranchsList();
         }
 
         protected override Task BeforeInsertAsync()
@@ -37,10 +40,6 @@ namespace TsiErp.ErpUI.Pages.Period
             return Task.CompletedTask;
         }
 
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(200, 50);
-        }
 
         public async Task BranchFiltering(FilteringEventArgs args)
         {
@@ -59,24 +58,26 @@ namespace TsiErp.ErpUI.Pages.Period
             await BranchesComboBox.FilterAsync(BranchesList, query);
         }
 
-        private async Task GetBranchRecordsList()
+        private async Task GetBranchsList()
         {
             BranchesList = (await BranchesAppService.GetListAsync(new ListBranchesParameterDto())).Data.ToList();
         }
 
-        public async Task BranchGroupOpened(PopupEventArgs args)
+        public async Task BranchValueChangeHandler(ChangeEventArgs<string, ListBranchesDto> args)
         {
-            if (BranchesList.Count == 0)
+            if (args.ItemData != null)
             {
-                await GetBranchRecordsList();
+                DataSource.BranchID = args.ItemData.Id;
+                DataSource.BranchName = args.ItemData.Name;
             }
+            else
+            {
+                DataSource.BranchID = Guid.Empty;
+                DataSource.BranchName = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
         }
 
-        private void BranchValueChanged(ChangeEventArgs<string, ListBranchesDto> args)
-        {
-            DataSource.BranchID = args.ItemData.Id;
-            DataSource.BranchName = args.ItemData.Name;
-        }
 
 
     }

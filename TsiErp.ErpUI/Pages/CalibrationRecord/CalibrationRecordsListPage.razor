@@ -37,49 +37,14 @@
                 <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
                     <Template>
                         <SfCard class="TSIGridCards">
-                         <CardHeader >
-                                <table width="100%">
-                                    <tr>
-                                        <td width="20%">
-                                          
-                                        </td>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%"> 
-                                        <SfButton CssClass="TSIShowColumnsButton" OnClick="ShowColumns"><SfIcon Size="IconSize.Medium" Name="IconName.TwoColumn"></SfIcon>&nbsp;Sütunları Göster</SfButton>
-
-                                        </td>
-                                    </tr>
-                                </table>
-
-                            </CardHeader>
+                         
                             <CardContent>
-                                <SfGrid ID="Grid" @ref="@_grid" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" 
+                                <SfGrid ID="Grid" @ref="@_grid" ShowColumnMenu="true"  ColumnMenuItems=@MenuItems DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" 
                                 AllowSorting="true" Height="100%" ContextMenuItems="@GridContextMenu" Width="100%" class="GridZebra">
-                                <GridColumnChooserSettings>
-                                        <FooterTemplate>
-                                            @{
-                                                var ContextData = context as ColumnChooserFooterTemplateContext;
-                                                var visibles = ContextData.Columns.Where(x => x.Visible).Select(x => x.HeaderText).ToArray();
-                                                var hiddens = ContextData.Columns.Where(x => !x.Visible).Select(x => x.HeaderText).ToArray();
-                                        }
-                                        <SfButton CssClass="TSISubmitButton" IsPrimary="true" OnClick="@(async () => {
-                                         await _grid.ShowColumnsAsync(visibles);
-                                         await _grid.HideColumnsAsync(hiddens); })"><SfIcon Size="IconSize.Medium" Name="IconName.Eye"></SfIcon>&nbsp;Göster</SfButton>
-
-                                        <SfButton CssClass="TSICancelButton" @onclick="@(async () => await ContextData.CancelAsync())">
-                                            <SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;İptal
-                                        </SfButton>
-
-                                    </FooterTemplate>
-                                </GridColumnChooserSettings>
+                               <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
                                     <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListCalibrationRecordsDto"></GridEvents>
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
-                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
@@ -87,8 +52,8 @@
                                         <GridColumn Field=@nameof(ListCalibrationRecordsDto.Name) HeaderText="KALİBRASYON TAKİP AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         <GridColumn Field=@nameof(ListCalibrationRecordsDto.ReceiptNo) HeaderText="FİŞ NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         <GridColumn Field=@nameof(ListCalibrationRecordsDto.Equipment) HeaderText="EKİPMAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListCalibrationRecordsDto.Date) HeaderText="TARİH" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListCalibrationRecordsDto.NextControl) HeaderText="SONRAKİ KONTROL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalibrationRecordsDto.Date) HeaderText="TARİH" Format="dd.MM.yyyy" Type="ColumnType.Date" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalibrationRecordsDto.NextControl) HeaderText="SONRAKİ KONTROL" Format="dd.MM.yyyy" Type="ColumnType.Date" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         <GridColumn Field=@nameof(ListCalibrationRecordsDto.InfinitiveCertificateNo) HeaderText="MASTAR SERTİFİKA NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         <GridColumn Field=@nameof(ListCalibrationRecordsDto.Result) HeaderText="SONUÇ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     </GridColumns>
@@ -169,7 +134,7 @@
                                     TItem="ListEquipmentRecordsDto"
                                     Placeholder="Ekipman Seçin"
                                     CssClass="e-multi-column"
-                                        @bind-Value="@DataSource.Equipment"
+                                    Value="@DataSource.Equipment"
                                     DataSource="@EquipmentRecordsList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
@@ -202,8 +167,7 @@
                                     <ComboBoxEvents TValue="string"
                                             TItem="ListEquipmentRecordsDto"
                                             Filtering="EquipmentFiltering"
-                                            Opened="EquipmentGroupOpened"
-                                            ValueChange="EquipmentValueChanged"></ComboBoxEvents>
+                                            ValueChange="EquipmentRecordValueChangeHandler"></ComboBoxEvents>
                                 </SfComboBox>
                             </Template>
                         </DxGridLayoutItem>

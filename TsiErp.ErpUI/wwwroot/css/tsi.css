@@ -1,10 +1,9 @@
 ﻿.GridZebra table tbody tr:nth-child(odd) {
-    background-color: #B5B5B5;
+    background-color: #f9f9f9;
 }
 
 .GridZebra table tbody tr:nth-child(n) {
     text-align: center;
-    font-weight: bold;
 }
 
 table {
@@ -145,7 +144,7 @@ td, th {
 
 body,
 html {
-    background: #EAEAEA;
+    background: #ffffff;
     /* background-image: linear-gradient(360deg, rgb(171 171 171) 0%, #E0DBDB 70%) !important;*/
 }
 
@@ -348,14 +347,11 @@ html {
 }
 
 .TSIListPageTitleCard {
-    font-weight: bold;
-    font-size: 16px;
+    font-size: 14px;
     color: white;
-    background-image: linear-gradient(356deg, rgb(255 19 19) 0%, #ad0303 70%) !important;
-    text-shadow: 1px 3px 4px black !important;
-    box-shadow: rgb(0 0 0 / 60%) 0px 3px 10px;
+    background-image: linear-gradient(356deg, rgb(215 214 214) 0%, #f9f8f8 70%) !important;
+    box-shadow: rgb(0 0 0 / 60%) 0px 1px 4px;
     height: 40px;
-
 }
 .TSIModalLabel {
     color: black;

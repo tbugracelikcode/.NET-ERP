@@ -5,6 +5,7 @@ using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
 using Tsi.Core.Utilities.Results;
+using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.CalibrationRecord.Dtos;
 using TsiErp.Entities.Entities.EquipmentRecord.Dtos;
 
@@ -17,9 +18,12 @@ namespace TsiErp.ErpUI.Pages.CalibrationRecord
 
         private SfGrid<ListCalibrationRecordsDto> _grid;
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
         protected override async void OnInitialized()
         {
             BaseCrudService = CalibrationRecordsService;
+            await GetEquipmentRecordsList();
         }
         public async Task EquipmentFiltering(FilteringEventArgs args)
         {
@@ -43,23 +47,20 @@ namespace TsiErp.ErpUI.Pages.CalibrationRecord
             EquipmentRecordsList = (await EquipmentRecordsService.GetListAsync(new ListEquipmentRecordsParameterDto())).Data.ToList();
         }
 
-        public async Task EquipmentGroupOpened(PopupEventArgs args)
+        public async Task EquipmentRecordValueChangeHandler(ChangeEventArgs<string, ListEquipmentRecordsDto> args)
         {
-            if (EquipmentRecordsList.Count == 0)
+            if (args.ItemData != null)
             {
-                await GetEquipmentRecordsList();
+                DataSource.EquipmentID = args.ItemData.Id;
+                DataSource.Equipment = args.ItemData.Name;
             }
+            else
+            {
+                DataSource.EquipmentID = Guid.Empty;
+                DataSource.Equipment = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
         }
 
-        private void EquipmentValueChanged(ChangeEventArgs<string, ListEquipmentRecordsDto> args)
-        {
-            DataSource.EquipmentID = args.ItemData.Id;
-            DataSource.Equipment = args.ItemData.Name;
-        }
-
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(200, 50);
-        }
     }
 }

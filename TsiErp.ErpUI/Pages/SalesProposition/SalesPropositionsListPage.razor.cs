@@ -20,6 +20,7 @@ using TsiErp.Entities.Entities.WareHouse.Dtos;
 using TsiErp.Entities.Entities.PaymentPlan.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 using Syncfusion.Blazor.HeatMap.Internal;
+using Newtonsoft.Json;
 
 namespace TsiErp.ErpUI.Pages.SalesProposition
 {
@@ -40,6 +41,7 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
 
         SfComboBox<string, ListBranchesDto> BranchesComboBox;
+        SfComboBox<string, ListBranchesDto> LineBranchesComboBox;
         List<ListBranchesDto> BranchesList = new List<ListBranchesDto>();
 
         SfComboBox<string, ListWarehousesDto> WarehousesComboBox;
@@ -54,15 +56,18 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         #endregion
 
         private SfGrid<ListSalesPropositionsDto> _grid;
+        private SfGrid<SelectSalesPropositionLinesDto> _LineGrid;
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
 
         [Inject]
         ModalManager ModalManager { get; set; }
 
-        SelectSalesPropositionLinesDto LineDataSource = new SelectSalesPropositionLinesDto();
+        SelectSalesPropositionLinesDto LineDataSource;
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
-        List<ListSalesPropositionLinesDto> GridLineList = new List<ListSalesPropositionLinesDto>();
+        //List<ListSalesPropositionLinesDto> GridLineList = new List<ListSalesPropositionLinesDto>();
+        List<SelectSalesPropositionLinesDto> GridLineList = new List<SelectSalesPropositionLinesDto>();
 
         private bool LineCrudPopup = false;
 
@@ -76,11 +81,7 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             await GetCurrenciesList();
             await GetProductsList();
             await GetUnitSetsList();
-        }
-
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(200, 50);
+            await GetLinePaymentPlansList();
         }
 
 
@@ -113,11 +114,12 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             }
         }
 
-        public async void OnListContextMenuClick(ContextMenuClickEventArgs<ListSalesPropositionLinesDto> args)
+        public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectSalesPropositionLinesDto> args)
         {
             switch (args.Item.Id)
             {
                 case "new":
+                    LineDataSource = new SelectSalesPropositionLinesDto();
                     LineCrudPopup = true;
                     LineDataSource.PaymentPlanID = DataSource.PaymentPlanID;
                     LineDataSource.PaymentPlanCode = DataSource.PaymentPlanCode;
@@ -125,32 +127,35 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
                     LineDataSource.BranchCode = DataSource.BranchCode;
                     LineDataSource.WarehouseID = DataSource.WarehouseID;
                     LineDataSource.WarehouseCode = DataSource.WarehouseCode;
-                    DataSource.SelectSalesPropositionLines.Add(LineDataSource);
+                    LineDataSource.LineNr = GridLineList.Count + 1;
+                    //DataSource.SelectSalesPropositionLines.Add(LineDataSource);
                     await InvokeAsync(StateHasChanged);
                     break;
 
                 case "changed":
                     //DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    LineDataSource = args.RowInfo.RowData;
                     LineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
                     break;
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync("Onay", "Silmek istediğinize emin misiniz ?");
+                    var res = await ModalManager.ConfirmationAsync("Dikkat", "Seçtiğiniz satır kalıcı olarak silinecektir.");
 
                     if (res == true)
                     {
-                        //SelectFirstDataRow = false;
-                        //await DeleteAsync(args.RowInfo.RowData.Id);
-                        //await GetListDataSourceAsync();
+                        await DeleteAsync(args.RowInfo.RowData.Id);
+                        await GetListDataSourceAsync();
+                        await _LineGrid.Refresh();
                         await InvokeAsync(StateHasChanged);
                     }
 
                     break;
 
                 case "refresh":
-                    //await GetListDataSourceAsync();
+                    await GetListDataSourceAsync();
+                    await _LineGrid.Refresh();
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -168,6 +173,7 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         {
             if (LineDataSource.Id == Guid.Empty)
             {
+                LineDataSource.Id = ApplicationService.GuidGenerator.CreateGuid();
                 DataSource.SelectSalesPropositionLines.Add(LineDataSource);
             }
             else
@@ -179,6 +185,10 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
                     DataSource.SelectSalesPropositionLines[selectedLineIndex] = LineDataSource;
                 }
             }
+
+            GridLineList = DataSource.SelectSalesPropositionLines;
+
+            await _LineGrid.Refresh();
 
             HideLinesPopup();
             await InvokeAsync(StateHasChanged);
@@ -207,6 +217,21 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         {
             CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
         }
+
+        public async Task CurrentAccountCardValueChangeHandler(ChangeEventArgs<string, ListCurrentAccountCardsDto> args)
+        {
+            if (args.ItemData != null)
+            {
+                DataSource.CurrentAccountCardID = args.ItemData.Id;
+                DataSource.CurrentAccountCardCode = args.ItemData.Code;
+            }
+            else
+            {
+                DataSource.CurrentAccountCardID = Guid.Empty;
+                DataSource.CurrentAccountCardCode = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
+        }
         #endregion
 
         #region Şubeler
@@ -231,6 +256,37 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         {
             BranchesList = (await BranchesAppService.GetListAsync(new ListBranchesParameterDto())).Data.ToList();
         }
+
+        public async Task BranchValueChangeHandler(ChangeEventArgs<string, ListBranchesDto> args)
+        {
+            if (args.ItemData != null)
+            {
+                DataSource.BranchID = args.ItemData.Id;
+                DataSource.BranchCode = args.ItemData.Code;
+            }
+            else
+            {
+                DataSource.BranchID = Guid.Empty;
+                DataSource.BranchCode = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
+        }
+        public async Task LineBranchValueChangeHandler(ChangeEventArgs<string, ListBranchesDto> args)
+        {
+            if (args.ItemData != null)
+            {
+                LineDataSource.BranchID = args.ItemData.Id;
+                LineDataSource.BranchCode = args.ItemData.Code;
+            }
+            else
+            {
+                LineDataSource.BranchID = Guid.Empty;
+                LineDataSource.BranchCode = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
+        }
+
+
         #endregion
 
         #region Depolar
@@ -256,6 +312,20 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             WarehousesList = (await WarehousesAppService.GetListAsync(new ListWarehousesParameterDto())).Data.ToList();
             LineWarehousesList = WarehousesList;
         }
+        public async Task WarehouseValueChangeHandler(ChangeEventArgs<string, ListWarehousesDto> args)
+        {
+            if (args.ItemData != null)
+            {
+                DataSource.WarehouseID = args.ItemData.Id;
+                DataSource.WarehouseCode = args.ItemData.Code;
+            }
+            else
+            {
+                DataSource.WarehouseID = Guid.Empty;
+                DataSource.WarehouseCode = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
+        }
         #endregion
 
         #region Para Birimleri
@@ -279,6 +349,20 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         private async Task GetCurrenciesList()
         {
             CurrenciesList = (await CurrenciesAppService.GetListAsync(new ListCurrenciesParameterDto())).Data.ToList();
+        }
+        public async Task CurrencyValueChangeHandler(ChangeEventArgs<string, ListCurrenciesDto> args)
+        {
+            if (args.ItemData != null)
+            {
+                DataSource.CurrencyID = args.ItemData.Id;
+                DataSource.CurrencyCode = args.ItemData.Code;
+            }
+            else
+            {
+                DataSource.CurrencyID = Guid.Empty;
+                DataSource.CurrencyCode = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
         }
         #endregion
 
@@ -304,6 +388,22 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         {
             ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
         }
+        public async Task ProductValueChangeHandler(ChangeEventArgs<string, ListProductsDto> args)
+        {
+            if (args.ItemData != null)
+            {
+                LineDataSource.ProductID = args.ItemData.Id;
+                LineDataSource.ProductCode = args.ItemData.Code;
+                LineDataSource.ProductName = args.ItemData.Name;
+            }
+            else
+            {
+                LineDataSource.ProductID = Guid.Empty;
+                LineDataSource.ProductCode = string.Empty;
+                LineDataSource.ProductName = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
+        }
         #endregion
 
         #region Birim Setleri -Teklif Satırları
@@ -328,6 +428,21 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         {
             UnitSetsList = (await UnitSetsAppService.GetListAsync(new ListUnitSetsParameterDto())).Data.ToList();
         }
+
+        public async Task UnitSetValueChangeHandler(ChangeEventArgs<string, ListUnitSetsDto> args)
+        {
+            if (args.ItemData != null)
+            {
+                LineDataSource.UnitSetID = args.ItemData.Id;
+                LineDataSource.UnitSetCode = args.ItemData.Code;
+            }
+            else
+            {
+                LineDataSource.UnitSetID = Guid.Empty;
+                LineDataSource.UnitSetCode = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
+        }
         #endregion
 
         #region Depolar - Teklif Satırları
@@ -348,6 +463,21 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             await LineWarehousesComboBox.FilterAsync(LineWarehousesList, query);
         }
 
+        public async Task LineWareHouseValueChangeHandler(ChangeEventArgs<string, ListWarehousesDto> args)
+        {
+            if (args.ItemData != null)
+            {
+                LineDataSource.WarehouseID = args.ItemData.Id;
+                LineDataSource.WarehouseCode = args.ItemData.Code;
+            }
+            else
+            {
+                LineDataSource.WarehouseID = Guid.Empty;
+                LineDataSource.WarehouseCode = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
+        }
+
         #endregion
 
         #region Ödeme Planları - Teklif Satırları
@@ -366,6 +496,26 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             query = args.Text == "" ? new Query() : new Query().Where(pre);
 
             await LinePaymentPlansComboBox.FilterAsync(LinePaymentPlansList, query);
+        }
+
+        private async Task GetLinePaymentPlansList()
+        {
+            LinePaymentPlansList = (await PaymentPlansAppService.GetListAsync(new ListPaymentPlansParameterDto())).Data.ToList();
+        }
+
+        public async Task LinePaymentPlanValueChangeHandler(ChangeEventArgs<string, ListPaymentPlansDto> args)
+        {
+            if (args.ItemData != null)
+            {
+                LineDataSource.PaymentPlanID = args.ItemData.Id;
+                LineDataSource.PaymentPlanCode = args.ItemData.Code;
+            }
+            else
+            {
+                LineDataSource.PaymentPlanID = Guid.Empty;
+                LineDataSource.PaymentPlanCode = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
         }
         #endregion
 

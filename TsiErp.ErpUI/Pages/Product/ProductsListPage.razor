@@ -40,73 +40,39 @@ else
             <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
                 <Template>
                     <SfCard class="TSIGridCards">
-                        <CardHeader >
-                                <table width="100%">
-                                    <tr>
-                                        <td width="20%">
-                                          
-                                        </td>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%"> 
-                                        <SfButton CssClass="TSIShowColumnsButton" OnClick="ShowColumns"><SfIcon Size="IconSize.Medium" Name="IconName.TwoColumn"></SfIcon>&nbsp;Sütunları Göster</SfButton>
-
-                                        </td>
-                                    </tr>
-                                </table>
-
-                            </CardHeader>
+                        
                         <CardContent>
-                            <SfGrid ID="Grid" @ref="@_grid" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"
+                            <SfGrid ID="Grid" @ref="@_grid" DataSource="@ListDataSource"  ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"
                                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
-                                <GridColumnChooserSettings>
-                                        <FooterTemplate>
-                                            @{
-                                                var ContextData = context as ColumnChooserFooterTemplateContext;
-                                                var visibles = ContextData.Columns.Where(x => x.Visible).Select(x => x.HeaderText).ToArray();
-                                                var hiddens = ContextData.Columns.Where(x => !x.Visible).Select(x => x.HeaderText).ToArray();
-                                        }
-                                        <SfButton CssClass="TSISubmitButton" IsPrimary="true" OnClick="@(async () => {
-                                         await _grid.ShowColumnsAsync(visibles);
-                                         await _grid.HideColumnsAsync(hiddens); })"><SfIcon Size="IconSize.Medium" Name="IconName.Eye"></SfIcon>&nbsp;Göster</SfButton>
+                                                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                        <SfButton CssClass="TSICancelButton" @onclick="@(async () => await ContextData.CancelAsync())">
-                                            <SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;İptal
-                                        </SfButton>
-
-                                    </FooterTemplate>
-                                </GridColumnChooserSettings>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
                                 <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListProductsDto"></GridEvents>
-                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListProductsDto.Code) HeaderText="DÖNEM KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductsDto.Name) HeaderText="DÖNEM ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.SupplyForm) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.ProductSize) HeaderText="ŞUBE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.GTIP) HeaderText="DÖNEM KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.SawWastage) HeaderText="DÖNEM ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.Confirmation) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.TechnicalConfirmation) HeaderText="ŞUBE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.ProductGrp) HeaderText="DÖNEM KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.ManufacturerCode) HeaderText="DÖNEM ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.SaleVAT) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.PurchaseVAT) HeaderText="ŞUBE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.UnitSet) HeaderText="DÖNEM KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.FeatureSet) HeaderText="DÖNEM ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.EnglishDefinition) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.ExportCatNo) HeaderText="ŞUBE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.OemRefNo) HeaderText="DÖNEM KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.OemRefNo2) HeaderText="DÖNEM ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.OemRefNo3) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.PlannedWastage) HeaderText="ŞUBE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.CoatingWeight) HeaderText="ŞUBE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.SupplyForm) HeaderText="TEMİN ŞEKLİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.ProductSize) Format="N2" HeaderText="STOK BOYU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.GTIP) HeaderText="GTIP" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.SawWastage) Format="N2" Type="ColumnType.Number" HeaderText="TESTERE FİRE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.Confirmation) DisplayAsCheckBox="true" HeaderText="ONAY" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.TechnicalConfirmation) DisplayAsCheckBox="true"  HeaderText="TEKNİK ONAY" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.ProductGrp) HeaderText="ÜRÜN GRUBU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.ManufacturerCode) HeaderText="ÜRETİCİ FİRMA KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.SaleVAT) Type="ColumnType.Number" HeaderText="SATIŞ KDV" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.PurchaseVAT) Type="ColumnType.Number" HeaderText="SATIN ALMA KDV" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.UnitSet) HeaderText="BİRİM SETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.FeatureSet) HeaderText="ÖZELLİK SETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.EnglishDefinition) HeaderText="İNGİLİZCE AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.ExportCatNo) HeaderText="İHRACAT KATEGORİ NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.OemRefNo) HeaderText="OEMREFNO1" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.OemRefNo2) HeaderText="OEMREFNO2" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.OemRefNo3) HeaderText="OEMREFNO3" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.PlannedWastage) Type="ColumnType.Number" HeaderText="PLANLANAN FİRE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.CoatingWeight) Format="N2" Type="ColumnType.Number" HeaderText="KAPLAMA AĞIRLIĞI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </CardContent>
@@ -166,25 +132,25 @@ else
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="5">
                         <Template>
-                            <br/>
+                            <br />
                             <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
                             <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="7">
                         <Template>
-                            <br/>
+                            <br />
                             <label class="TSIModalLabel"><strong>Temin Şekli : </strong></label><br />
-                           <SfNumericTextBox @bind-Value="DataSource.SupplyForm" Placeholder="Temin Şeklini Yazınız."></SfNumericTextBox>
+                            <SfNumericTextBox @bind-Value="DataSource.SupplyForm" Placeholder="Temin Şeklini Yazınız."></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="1" Column="1" >
+                    <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                             <label class="TSIModalLabel"><strong>Stok Boyu : </strong></label><br />
-                           <SfNumericTextBox TValue="decimal" @bind-Value="DataSource.ProductSize" Placeholder="Stok Boyunu Yazınız."></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>Stok Boyu : </strong></label><br />
+                            <SfNumericTextBox TValue="decimal" @bind-Value="DataSource.ProductSize" Placeholder="Stok Boyunu Yazınız."></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
-                     <DxGridLayoutItem Row="1" Column="3">
+                    <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>GTIP: </strong></label>
                             <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.GTIP" Placeholder="GTIP Yazınız."></SfTextBox>
@@ -203,13 +169,13 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                       <DxGridLayoutItem Row="2" Column="1" >
+                    <DxGridLayoutItem Row="2" Column="1">
                         <Template>
-                              <label class="TSIModalLabel"><strong>Teknik Onay: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>Teknik Onay: </strong></label><br />
                             <SfSwitch @bind-Checked="DataSource.TechnicalConfirmation"></SfSwitch>
                         </Template>
                     </DxGridLayoutItem>
-                     <DxGridLayoutItem Row="2" Column="3">
+                    <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>Stok Türü: </strong></label>
                             <SfNumericTextBox @bind-Value="DataSource.ProductType" Placeholder="Stok Türünü Yazınız."></SfNumericTextBox>
@@ -229,52 +195,52 @@ else
                                     TItem="ListProductGroupsDto"
                                     Placeholder="Ürün Grubu Seçin"
                                     CssClass="e-multi-column"
-                                     @bind-Value="@DataSource.ProductGrp"
+                                    Value="@DataSource.ProductGrp"
                                     DataSource="@ProductGroupsList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
                                     PopupHeight="500">
 
-                                    <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
 
-                                    <ComboBoxTemplates TItem="ListProductGroupsDto">
-                                        <HeaderTemplate>
-                                            <table>
+                                <ComboBoxTemplates TItem="ListProductGroupsDto">
+                                    <HeaderTemplate>
+                                        <table>
+                                            <tr>
+                                                <th class="e-text-center">Ürün Grubu Kodu</th>
+                                                <th class="e-text-center">Ürün Grubu Adı</th>
+                                            </tr>
+                                        </table>
+                                    </HeaderTemplate>
+                                    <ItemTemplate Context="cmbContext">
+
+                                        <table>
+                                            <tbody>
                                                 <tr>
-                                                    <th class="e-text-center">Ürün Grubu Kodu</th>
-                                                    <th class="e-text-center">Ürün Grubu Adı</th>
+                                                    <td class="e-text-center">@((cmbContext as ListProductGroupsDto).Code)</td>
+                                                    <td class="e-text-center">@((cmbContext as ListProductGroupsDto).Name)</td>
                                                 </tr>
-                                            </table>
-                                        </HeaderTemplate>
-                                        <ItemTemplate Context="cmbContext">
+                                            </tbody>
+                                        </table>
+                                    </ItemTemplate>
+                                </ComboBoxTemplates>
 
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="e-text-center">@((cmbContext as ListProductGroupsDto).Code)</td>
-                                                        <td class="e-text-center">@((cmbContext as ListProductGroupsDto).Name)</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </ItemTemplate>
-                                    </ComboBoxTemplates>
-
-                                    <ComboBoxEvents TValue="string"
+                                <ComboBoxEvents TValue="string"
                                             TItem="ListProductGroupsDto"
                                             Filtering="ProductGroupFiltering"
-                                            Opened="ProductGroupOpened"
-                                            ValueChange="ProductGroupValueChanged"></ComboBoxEvents>
-                                </SfComboBox>
+                                            ValueChange="ProductGroupValueChangeHandler"></ComboBoxEvents>
+
+                            </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="3" Column="1" >
+                    <DxGridLayoutItem Row="3" Column="1">
                         <Template>
-                              <label class="TSIModalLabel"><strong>Üretici Firma Kodu: </strong></label><br />
-                           <SfTextBox @bind-Value="DataSource.ManufacturerCode" Placeholder=" Üretici Firma Kodu Yazınız."></SfTextBox>
+                            <label class="TSIModalLabel"><strong>Üretici Firma Kodu: </strong></label><br />
+                            <SfTextBox @bind-Value="DataSource.ManufacturerCode" Placeholder=" Üretici Firma Kodu Yazınız."></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
-                     <DxGridLayoutItem Row="3" Column="3">
+                    <DxGridLayoutItem Row="3" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>Satış KDV: </strong></label>
                             <SfNumericTextBox @bind-Value="DataSource.SaleVAT" Placeholder="Satış KDV Yazınız."></SfNumericTextBox>
@@ -294,52 +260,52 @@ else
                                     TItem="ListUnitSetsDto"
                                     Placeholder="Birim Seti Seçin"
                                     CssClass="e-multi-column"
-                                        @bind-Value="@DataSource.UnitSet"
+                                    Value="@DataSource.UnitSet"
                                     DataSource="@UnitSetsList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
                                     PopupHeight="500">
 
-                                    <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
 
-                                    <ComboBoxTemplates TItem="ListUnitSetsDto">
-                                        <HeaderTemplate>
-                                            <table>
+                                <ComboBoxTemplates TItem="ListUnitSetsDto">
+                                    <HeaderTemplate>
+                                        <table>
+                                            <tr>
+                                                <th class="e-text-center">Birim Seti Kodu</th>
+                                                <th class="e-text-center">Birim Seti Adı</th>
+                                            </tr>
+                                        </table>
+                                    </HeaderTemplate>
+                                    <ItemTemplate Context="cmbContext">
+
+                                        <table>
+                                            <tbody>
                                                 <tr>
-                                                    <th class="e-text-center">Birim Seti Kodu</th>
-                                                    <th class="e-text-center">Birim Seti Adı</th>
+                                                    <td class="e-text-center">@((cmbContext as ListUnitSetsDto).Code)</td>
+                                                    <td class="e-text-center">@((cmbContext as ListUnitSetsDto).Name)</td>
                                                 </tr>
-                                            </table>
-                                        </HeaderTemplate>
-                                        <ItemTemplate Context="cmbContext">
+                                            </tbody>
+                                        </table>
+                                    </ItemTemplate>
+                                </ComboBoxTemplates>
 
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="e-text-center">@((cmbContext as ListUnitSetsDto).Code)</td>
-                                                        <td class="e-text-center">@((cmbContext as ListUnitSetsDto).Name)</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </ItemTemplate>
-                                    </ComboBoxTemplates>
-
-                                    <ComboBoxEvents TValue="string"
+                                <ComboBoxEvents TValue="string"
                                             TItem="ListUnitSetsDto"
                                             Filtering="UnitSetFiltering"
-                                            Opened="UnitSetOpened"
-                                            ValueChange="UnitSetValueChanged"></ComboBoxEvents>
-                                </SfComboBox>
+                                            ValueChange="UnitSetValueChangeHandler"></ComboBoxEvents>
+
+                            </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                       <DxGridLayoutItem Row="4" Column="1" >
+                    <DxGridLayoutItem Row="4" Column="1">
                         <Template>
-                              <label class="TSIModalLabel"><strong>Özellik Seti: </strong></label><br />
-                           <SfTextBox @bind-Value="DataSource.FeatureSet" Placeholder=" Özellik Seti Yazınız."></SfTextBox>
+                            <label class="TSIModalLabel"><strong>Özellik Seti: </strong></label><br />
+                            <SfTextBox @bind-Value="DataSource.FeatureSet" Placeholder=" Özellik Seti Yazınız."></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
-                     <DxGridLayoutItem Row="4" Column="3">
+                    <DxGridLayoutItem Row="4" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>İngilizce Tanım: </strong></label>
                             <SfTextBox @bind-Value="DataSource.EnglishDefinition" Placeholder="İngilizce Tanım Yazınız."></SfTextBox>
@@ -358,15 +324,15 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                      <DxGridLayoutItem Row="5" Column="1" >
+                    <DxGridLayoutItem Row="5" Column="1">
                         <Template>
-                                <label class="TSIModalLabel"><strong>OemRefNo2: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>OemRefNo2: </strong></label><br />
                             <SfTextBox @bind-Value="DataSource.OemRefNo2" Placeholder=" OemRefNo Yazınız."></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
-                     <DxGridLayoutItem Row="5" Column="3">
+                    <DxGridLayoutItem Row="5" Column="3">
                         <Template>
-                             <label class="TSIModalLabel"><strong>OemRefNo3: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>OemRefNo3: </strong></label><br />
                             <SfTextBox @bind-Value="DataSource.OemRefNo3" Placeholder=" OemRefNo Yazınız."></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>

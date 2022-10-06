@@ -6,6 +6,7 @@ using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
 using Tsi.Core.Utilities.Results;
 using TsiErp.Business.Entities.Department.Services;
+using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.Department.Dtos;
 using TsiErp.Entities.Entities.Product.Dtos;
 using TsiErp.Entities.Entities.ProductGroup.Dtos;
@@ -20,6 +21,8 @@ namespace TsiErp.ErpUI.Pages.Product
 
         private SfGrid<ListProductsDto> _grid;
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
 
         SfComboBox<string, ListProductGroupsDto> ProductGroupsComboBox;
         List<ListProductGroupsDto> ProductGroupsList = new List<ListProductGroupsDto>();
@@ -27,11 +30,8 @@ namespace TsiErp.ErpUI.Pages.Product
         protected override async void OnInitialized()
         {
             BaseCrudService = ProductService;
-        }
-
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(200, 50);
+            await GetUnitSetsList();
+            await GetProductGroupsList();
         }
 
         protected override Task BeforeInsertAsync()
@@ -69,18 +69,19 @@ namespace TsiErp.ErpUI.Pages.Product
             UnitSetsList = (await UnitSetsAppService.GetListAsync(new ListUnitSetsParameterDto())).Data.ToList();
         }
 
-        public async Task UnitSetOpened(PopupEventArgs args)
+        public async Task UnitSetValueChangeHandler(ChangeEventArgs<string, ListUnitSetsDto> args)
         {
-            if (UnitSetsList.Count == 0)
+            if (args.ItemData != null)
             {
-                await GetUnitSetsList();
+                DataSource.UnitSetID = args.ItemData.Id;
+                DataSource.UnitSet = args.ItemData.Name;
             }
-        }
-
-        private void UnitSetValueChanged(ChangeEventArgs<string, ListUnitSetsDto> args)
-        {
-            DataSource.UnitSetID = args.ItemData.Id;
-            DataSource.UnitSet = args.ItemData.Name;
+            else
+            {
+                DataSource.UnitSetID = Guid.Empty;
+                DataSource.UnitSet = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
         }
         #endregion
 
@@ -107,19 +108,21 @@ namespace TsiErp.ErpUI.Pages.Product
             ProductGroupsList = (await ProductGroupsAppService.GetListAsync(new ListProductGroupsParameterDto())).Data.ToList();
         }
 
-        public async Task ProductGroupOpened(PopupEventArgs args)
+        public async Task ProductGroupValueChangeHandler(ChangeEventArgs<string, ListProductGroupsDto> args)
         {
-            if (ProductGroupsList.Count == 0)
+            if (args.ItemData != null)
             {
-                await GetProductGroupsList();
+                DataSource.ProductGrpID = args.ItemData.Id;
+                DataSource.ProductGrp = args.ItemData.Name;
             }
+            else
+            {
+                DataSource.ProductGrpID = Guid.Empty;
+                DataSource.ProductGrp = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
         }
 
-        private void ProductGroupValueChanged(ChangeEventArgs<string, ListProductGroupsDto> args)
-        {
-            DataSource.ProductGrpID = args.ItemData.Id;
-            DataSource.ProductGrp = args.ItemData.Name;
-        }
         #endregion
     }
 }

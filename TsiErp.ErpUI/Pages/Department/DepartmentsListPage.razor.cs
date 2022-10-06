@@ -11,7 +11,7 @@ namespace TsiErp.ErpUI.Pages.Department
     {
         private SfGrid<ListDepartmentsDto> _grid;
 
-
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
         protected override async void OnInitialized()
         {
             BaseCrudService = DepartmentsService;
@@ -29,9 +29,5 @@ namespace TsiErp.ErpUI.Pages.Department
             return Task.CompletedTask;
         }
 
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(200, 50);
-        }
     }
 }

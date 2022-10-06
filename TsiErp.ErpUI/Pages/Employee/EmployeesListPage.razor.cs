@@ -4,7 +4,9 @@ using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
+using System.ComponentModel.DataAnnotations;
 using Tsi.Core.Utilities.Results;
+using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.Department.Dtos;
 using TsiErp.Entities.Entities.Employee.Dtos;
 using TsiErp.Entities.Enums;
@@ -16,17 +18,27 @@ namespace TsiErp.ErpUI.Pages.Employee
     {
         SfComboBox<string, ListDepartmentsDto> DepartmentsComboBox;
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
         List<ListDepartmentsDto> DepartmentsList = new List<ListDepartmentsDto>();
 
         private SfGrid<ListEmployeesDto> _grid;
 
         List<ComboBoxEnumItem<BloodTypeEnum>> BloodTypesList = new List<ComboBoxEnumItem<BloodTypeEnum>>();
 
+        public string[] Types { get; set; }
+
+        public string[] EnumValues = Enum.GetNames(typeof(BloodTypeEnum));
+
+
 
         protected override async void OnInitialized()
         {
             BaseCrudService = EmployeesService;
+            await GetDepartmentsList();
         }
+
+       
 
         protected override Task BeforeInsertAsync()
         {
@@ -40,10 +52,6 @@ namespace TsiErp.ErpUI.Pages.Employee
             return Task.CompletedTask;
         }
 
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(200, 50);
-        }
 
         #region Departmanlar
         public async Task DepartmentFiltering(FilteringEventArgs args)
@@ -68,19 +76,21 @@ namespace TsiErp.ErpUI.Pages.Employee
             DepartmentsList = (await DepartmentsAppService.GetListAsync(new ListDepartmentsParameterDto())).Data.ToList();
         }
 
-        public async Task DepartmentGroupOpened(PopupEventArgs args)
+        public async Task DepartmentValueChangeHandler(ChangeEventArgs<string, ListDepartmentsDto> args)
         {
-            if (DepartmentsList.Count == 0)
+            if (args.ItemData != null)
             {
-                await GetDepartmentsList();
+                DataSource.DepartmentID = args.ItemData.Id;
+                DataSource.Department = args.ItemData.Name;
             }
+            else
+            {
+                DataSource.DepartmentID = Guid.Empty;
+                DataSource.Department = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
         }
 
-        private void DepartmentValueChanged(ChangeEventArgs<string, ListDepartmentsDto> args)
-        {
-            DataSource.DepartmentID = args.ItemData.Id;
-            DataSource.Department = args.ItemData.Name;
-        }
         #endregion
 
         #region Kan Grubu
