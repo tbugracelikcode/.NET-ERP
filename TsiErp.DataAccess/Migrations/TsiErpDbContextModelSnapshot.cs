@@ -1097,7 +1097,8 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("Id");
 
                     b.Property<decimal>("BuyingRate")
-                        .HasColumnType("decimal(18,6)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<DateTime?>("CreationTime")
                         .IsRequired()
@@ -1124,10 +1125,12 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("DeletionTime");
 
                     b.Property<decimal>("EffectiveBuyingRate")
-                        .HasColumnType("decimal(18,6)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<decimal>("EffectiveSaleRate")
-                        .HasColumnType("decimal(18,6)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -1141,7 +1144,8 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("LastModifierId");
 
                     b.Property<decimal>("SaleRate")
-                        .HasColumnType("decimal(18,6)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
 
                     b.HasKey("Id");
 
@@ -1494,7 +1498,8 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("Int");
 
                     b.Property<decimal>("DelayMaturityDifference")
-                        .HasColumnType("decimal(18,6)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<Guid?>("DeleterId")
                         .HasColumnType("uniqueidentifier")
@@ -1602,7 +1607,8 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("Id");
 
                     b.Property<decimal>("CoatingWeight")
-                        .HasColumnType("decimal(18,6)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -1691,7 +1697,8 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("UniqueIdentifier");
 
                     b.Property<decimal>("ProductSize")
-                        .HasColumnType("decimal(18,6)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<int>("ProductType")
                         .HasColumnType("Int");
@@ -1703,7 +1710,8 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("Int");
 
                     b.Property<decimal>("SawWastage")
-                        .HasColumnType("decimal(18,6)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<int>("SupplyForm")
                         .HasColumnType("Int");
@@ -2130,13 +2138,15 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("ExchangeRate")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
 
                     b.Property<string>("FicheNo")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("GrossAmount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -2151,7 +2161,8 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("NetAmount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
 
                     b.Property<Guid>("PaymentPlanID")
                         .HasColumnType("uniqueidentifier");
@@ -2181,13 +2192,16 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("TotalDiscountAmount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
 
                     b.Property<decimal>("TotalVatAmount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
 
                     b.Property<decimal>("TotalVatExcludedAmount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
 
                     b.Property<DateTime>("ValidityDate_")
                         .HasColumnType("datetime2");
@@ -2240,13 +2254,16 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("DiscountAmount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
 
                     b.Property<decimal>("DiscountRate")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
 
                     b.Property<decimal>("ExchangeRate")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -2258,7 +2275,8 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("LineAmount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
 
                     b.Property<string>("LineDescription")
                         .HasColumnType("nvarchar(max)");
@@ -2267,7 +2285,8 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("LineTotalAmount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
 
                     b.Property<DateTime?>("OrderConversionDate")
                         .HasColumnType("datetime2");
@@ -2285,7 +2304,8 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Quantity")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
 
                     b.Property<Guid>("SalesPropositionID")
                         .HasColumnType("uniqueidentifier");
@@ -2297,7 +2317,8 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("UnitPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
 
                     b.Property<Guid>("UnitSetID")
                         .HasColumnType("uniqueidentifier");
@@ -2306,7 +2327,8 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("VATamount")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
 
                     b.Property<int>("VATrate")
                         .HasColumnType("int");
@@ -2425,7 +2447,7 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("NVarChar(50)");
 
                     b.Property<decimal>("_Default")
-                        .HasColumnType("decimal(18,6)");
+                        .HasColumnType("Decimal");
 
                     b.HasKey("Id");
 
@@ -2447,7 +2469,8 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("Int");
 
                     b.Property<decimal>("AreaCovered")
-                        .HasColumnType("decimal(18,6)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<string>("Brand")
                         .HasMaxLength(50)
@@ -2496,7 +2519,8 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("Bit");
 
                     b.Property<decimal>("KWA")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnType("datetime2")
@@ -2507,7 +2531,8 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("LastModifierId");
 
                     b.Property<decimal>("MachineCost")
-                        .HasColumnType("decimal(18,6)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<int>("Model")
                         .HasColumnType("Int");
@@ -2518,16 +2543,19 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("NVarChar(200)");
 
                     b.Property<decimal>("PowerFactor")
-                        .HasColumnType("decimal(18,6)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<int>("Shift")
                         .HasColumnType("Int");
 
                     b.Property<decimal>("ShiftWorkingTime")
-                        .HasColumnType("decimal(18,6)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<decimal>("UsageArea")
-                        .HasColumnType("decimal(18,6)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<byte[]>("UsageInstruction")
                         .HasColumnType("varbinary(MAX)");
@@ -2536,10 +2564,12 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("varbinary(MAX)");
 
                     b.Property<decimal>("X")
-                        .HasColumnType("decimal(18,6)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<decimal>("Y")
-                        .HasColumnType("decimal(18,6)");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
 
                     b.HasKey("Id");
 
@@ -2785,13 +2815,13 @@ namespace TsiErp.DataAccess.Migrations
                     b.HasOne("Tsi.Authentication.Entities.Menus.TsiMenus", "TsiMenus")
                         .WithMany("TsiRolePermissions")
                         .HasForeignKey("MenuId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Tsi.Authentication.Entities.Roles.TsiRoles", "TsiRoles")
                         .WithMany("TsiRolePermissions")
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("TsiMenus");
