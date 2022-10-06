@@ -91,8 +91,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
                 
 
-                b.HasOne(x=>x.TsiMenus).WithMany(x=>x.TsiRolePermissions).HasForeignKey(x=>x.MenuId);
-                b.HasOne(x=>x.TsiRoles).WithMany(x=>x.TsiRolePermissions).HasForeignKey(x=>x.RoleId);
+                b.HasOne(x=>x.TsiMenus).WithMany(x=>x.TsiRolePermissions).HasForeignKey(x=>x.MenuId).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x=>x.TsiRoles).WithMany(x=>x.TsiRolePermissions).HasForeignKey(x=>x.RoleId).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -224,15 +224,15 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.Capacity).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(85);
                 b.Property(t => t.KWA).HasColumnType("decimal(18, 2)");
                 b.Property(t => t.GroupID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.X).HasColumnType("decimal(18, 6)");
-                b.Property(t => t.Y).HasColumnType("decimal(18, 6)");
-                b.Property(t => t.AreaCovered).HasColumnType("decimal(18, 6)");
-                b.Property(t => t.UsageArea).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.X).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.Y).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.AreaCovered).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.UsageArea).HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.Amortization).HasColumnType(SqlDbType.Int.ToString());
-                b.Property(t => t.MachineCost).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.MachineCost).HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.Shift).HasColumnType(SqlDbType.Int.ToString());
-                b.Property(t => t.ShiftWorkingTime).HasColumnType("decimal(18, 6)");
-                b.Property(t => t.PowerFactor).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.ShiftWorkingTime).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.PowerFactor).HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.WorkSafetyInstruction).HasColumnType("varbinary(MAX)");
                 b.Property(t => t.UsageInstruction).HasColumnType("varbinary(MAX)");
                 b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
@@ -376,7 +376,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
                 b.Property(t => t.ReceiptNo).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
-                b.Property(t => t.EquipmentID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.EquipmentID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.Date).HasColumnType(SqlDbType.DateTime.ToString());
                 b.Property(t => t.NextControl).HasColumnType(SqlDbType.DateTime.ToString());
                 b.Property(t => t.InfinitiveCertificateNo).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
@@ -416,7 +416,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.Description_).HasColumnType("nvarchar(max)");
                 b.Property(t => t.Date_).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
                 b.Property(t => t.Time_).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(8);
-                b.Property(t => t.ExchangeRate).IsRequired().HasColumnType("decimal(18, 6)");
+                b.Property(t => t.ExchangeRate).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.SpecialCode).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(201);
                 b.Property(t => t.PropositionRevisionNo).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
                 b.Property(t => t.RevisionDate).HasColumnType(SqlDbType.DateTime.ToString());
@@ -428,11 +428,11 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.PaymentPlanID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.BranchID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.CurrentAccountCardID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.GrossAmount).IsRequired().HasColumnType("decimal(18, 6)");
-                b.Property(t => t.TotalVatExcludedAmount).IsRequired().HasColumnType("decimal(18, 6)");
-                b.Property(t => t.TotalVatAmount).IsRequired().HasColumnType("decimal(18, 6)");
-                b.Property(t => t.TotalDiscountAmount).IsRequired().HasColumnType("decimal(18, 6)");
-                b.Property(t => t.NetAmount).IsRequired().HasColumnType("decimal(18, 6)");
+                b.Property(t => t.GrossAmount).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.TotalVatExcludedAmount).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.TotalVatAmount).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.TotalDiscountAmount).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.NetAmount).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.ValidityDate_).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
                 b.Property(t => t.ShippingAdressID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
 
@@ -464,17 +464,17 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.UnitSetID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.BranchID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.Quantity).HasColumnType("decimal(18, 6)");
-                b.Property(t => t.UnitPrice).HasColumnType("decimal(18, 6)");
-                b.Property(t => t.DiscountRate).HasColumnType("decimal(18, 6)");
-                b.Property(t => t.DiscountAmount).HasColumnType("decimal(18, 6)");
-                b.Property(t => t.LineAmount).HasColumnType("decimal(18, 6)");
-                b.Property(t => t.LineTotalAmount).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.Quantity).HasColumnType(SqlDbType.Decimal.ToString()).HasPrecision(18,6);
+                b.Property(t => t.UnitPrice).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.DiscountRate).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.DiscountAmount).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.LineAmount).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.LineTotalAmount).HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.LineDescription).HasColumnType("nvarchar(MAX)");
                 b.Property(t => t.VATrate).HasColumnType(SqlDbType.Int.ToString());
-                b.Property(t => t.VATamount).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.VATamount).HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.PaymentPlanID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.ExchangeRate).IsRequired().HasColumnType("decimal(18, 6)");
+                b.Property(t => t.ExchangeRate).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.SalesPropositionLineState).HasColumnType(SqlDbType.Int.ToString());
                 b.Property(t => t.OrderConversionDate).HasColumnType(SqlDbType.DateTime.ToString());
                 b.Property(t => t.WarehouseID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
@@ -501,10 +501,10 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
                 b.Property(t => t.CurrencyID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.Date).HasColumnType(SqlDbType.DateTime.ToString());
-                b.Property(t => t.BuyingRate).HasColumnType("decimal(18, 6)");
-                b.Property(t => t.SaleRate).HasColumnType("decimal(18, 6)");
-                b.Property(t => t.EffectiveBuyingRate).HasColumnType("decimal(18, 6)");
-                b.Property(t => t.EffectiveSaleRate).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.BuyingRate).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.SaleRate).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.EffectiveBuyingRate).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.EffectiveSaleRate).HasColumnType(SqlDbType.Decimal.ToString());
 
                 b.HasIndex(x => x.CurrencyID);
                 b.HasIndex(x => x.Date);
@@ -577,9 +577,9 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
                 b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
                 b.Property(t => t.SupplyForm).HasColumnType(SqlDbType.Int.ToString());
-                b.Property(t => t.ProductSize).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.ProductSize).HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.GTIP).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
-                b.Property(t => t.SawWastage).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.SawWastage).HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.Confirmation).HasColumnType(SqlDbType.Bit.ToString());
                 b.Property(t => t.TechnicalConfirmation).HasColumnType(SqlDbType.Bit.ToString());
                 b.Property(t => t.ProductType).HasColumnType(SqlDbType.Int.ToString());
@@ -596,7 +596,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.OemRefNo2).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
                 b.Property(t => t.OemRefNo3).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
                 b.Property(t => t.PlannedWastage).HasColumnType(SqlDbType.Int.ToString());
-                b.Property(t => t.CoatingWeight).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.CoatingWeight).HasColumnType(SqlDbType.Decimal.ToString());
 
 
                 b.HasIndex(x => x.Code);
@@ -708,7 +708,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.EMail).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
                 b.Property(t => t.Fax).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(100);
                 b.Property(t => t.PostCode).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
-                b.Property(t => t._Default).HasColumnType("decimal(18, 6)");
+                b.Property(t => t._Default).HasColumnType(SqlDbType.Decimal.ToString());
 
                 b.HasIndex(x => x.Code);
 
@@ -744,7 +744,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
                 b.Property(t => t.Days_).IsRequired().HasColumnType(SqlDbType.Int.ToString());
-                b.Property(t => t.DelayMaturityDifference).HasColumnType("decimal(18, 6)");
+                b.Property(t => t.DelayMaturityDifference).HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
 
                 b.HasIndex(x => x.Code);
