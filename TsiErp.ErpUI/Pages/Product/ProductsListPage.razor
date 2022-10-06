@@ -40,45 +40,12 @@ else
             <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
                 <Template>
                     <SfCard class="TSIGridCards">
-                        <CardHeader>
-                            <table width="100%">
-                                <tr>
-                                    <td width="20%">
-                                    </td>
-                                    <td width="20%">
-                                    </td>
-                                    <td width="20%">
-                                    </td>
-                                    <td width="20%">
-                                    </td>
-                                    <td width="20%">
-                                        <SfButton CssClass="TSIShowColumnsButton" OnClick="ShowColumns"><SfIcon Size="IconSize.Medium" Name="IconName.TwoColumn"></SfIcon>&nbsp;Sütunları Göster</SfButton>
-
-                                    </td>
-                                </tr>
-                            </table>
-
-                        </CardHeader>
+                        
                         <CardContent>
-                            <SfGrid ID="Grid" @ref="@_grid" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"
+                            <SfGrid ID="Grid" @ref="@_grid" DataSource="@ListDataSource"  ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"
                                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
-                                <GridColumnChooserSettings>
-                                    <FooterTemplate>
-                                        @{
-                                            var ContextData = context as ColumnChooserFooterTemplateContext;
-                                            var visibles = ContextData.Columns.Where(x => x.Visible).Select(x => x.HeaderText).ToArray();
-                                            var hiddens = ContextData.Columns.Where(x => !x.Visible).Select(x => x.HeaderText).ToArray();
-                                        }
-                                        <SfButton CssClass="TSISubmitButton" IsPrimary="true" OnClick="@(async () => {
-                                         await _grid.ShowColumnsAsync(visibles);
-                                         await _grid.HideColumnsAsync(hiddens); })"><SfIcon Size="IconSize.Medium" Name="IconName.Eye"></SfIcon>&nbsp;Göster</SfButton>
+                                                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                        <SfButton CssClass="TSICancelButton" @onclick="@(async () => await ContextData.CancelAsync())">
-                                            <SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;İptal
-                                        </SfButton>
-
-                                    </FooterTemplate>
-                                </GridColumnChooserSettings>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
                                 <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListProductsDto"></GridEvents>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
@@ -87,25 +54,25 @@ else
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListProductsDto.Code) HeaderText="DÖNEM KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductsDto.Name) HeaderText="DÖNEM ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.SupplyForm) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.ProductSize) HeaderText="ŞUBE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.GTIP) HeaderText="DÖNEM KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.SawWastage) Type="ColumnType.Number" HeaderText="DÖNEM ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.Confirmation) DisplayAsCheckBox="true" HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.TechnicalConfirmation) DisplayAsCheckBox="true"  HeaderText="ŞUBE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.ProductGrp) HeaderText="DÖNEM KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.ManufacturerCode) HeaderText="DÖNEM ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.SaleVAT) Type="ColumnType.Number" HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.PurchaseVAT) Type="ColumnType.Number" HeaderText="ŞUBE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.UnitSet) HeaderText="DÖNEM KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.FeatureSet) HeaderText="DÖNEM ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.EnglishDefinition) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.ExportCatNo) HeaderText="ŞUBE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.OemRefNo) HeaderText="DÖNEM KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.OemRefNo2) HeaderText="DÖNEM ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.OemRefNo3) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.PlannedWastage) Type="ColumnType.Number" HeaderText="ŞUBE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.CoatingWeight) Type="ColumnType.Number" HeaderText="ŞUBE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.SupplyForm) HeaderText="TEMİN ŞEKLİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.ProductSize) Format="N2" HeaderText="STOK BOYU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.GTIP) HeaderText="GTIP" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.SawWastage) Format="N2" Type="ColumnType.Number" HeaderText="TESTERE FİRE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.Confirmation) DisplayAsCheckBox="true" HeaderText="ONAY" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.TechnicalConfirmation) DisplayAsCheckBox="true"  HeaderText="TEKNİK ONAY" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.ProductGrp) HeaderText="ÜRÜN GRUBU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.ManufacturerCode) HeaderText="ÜRETİCİ FİRMA KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.SaleVAT) Type="ColumnType.Number" HeaderText="SATIŞ KDV" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.PurchaseVAT) Type="ColumnType.Number" HeaderText="SATIN ALMA KDV" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.UnitSet) HeaderText="BİRİM SETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.FeatureSet) HeaderText="ÖZELLİK SETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.EnglishDefinition) HeaderText="İNGİLİZCE AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.ExportCatNo) HeaderText="İHRACAT KATEGORİ NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.OemRefNo) HeaderText="OEMREFNO1" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.OemRefNo2) HeaderText="OEMREFNO2" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.OemRefNo3) HeaderText="OEMREFNO3" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.PlannedWastage) Type="ColumnType.Number" HeaderText="PLANLANAN FİRE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.CoatingWeight) Format="N2" Type="ColumnType.Number" HeaderText="KAPLAMA AĞIRLIĞI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </CardContent>

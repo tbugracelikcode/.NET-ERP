@@ -17,6 +17,8 @@ namespace TsiErp.ErpUI.Pages.Employee
     {
         SfComboBox<string, ListDepartmentsDto> DepartmentsComboBox;
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
         List<ListDepartmentsDto> DepartmentsList = new List<ListDepartmentsDto>();
 
         private SfGrid<ListEmployeesDto> _grid;
@@ -42,10 +44,6 @@ namespace TsiErp.ErpUI.Pages.Employee
             return Task.CompletedTask;
         }
 
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(1250, 50);
-        }
 
         #region Departmanlar
         public async Task DepartmentFiltering(FilteringEventArgs args)

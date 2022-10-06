@@ -144,7 +144,7 @@ td, th {
 
 body,
 html {
-    background: #EAEAEA;
+    background: #ffffff;
     /* background-image: linear-gradient(360deg, rgb(171 171 171) 0%, #E0DBDB 70%) !important;*/
 }
 
@@ -347,10 +347,9 @@ html {
 }
 
 .TSIListPageTitleCard {
-    font-weight: bold;
-    font-size: 16px;
+    font-size: 14px;
     color: white;
-    background-image: linear-gradient(356deg, rgb(241 238 238) 0%, #f9f8f8 70%) !important;
+    background-image: linear-gradient(356deg, rgb(215 214 214) 0%, #f9f8f8 70%) !important;
     box-shadow: rgb(0 0 0 / 60%) 0px 1px 4px;
     height: 40px;
 }

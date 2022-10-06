@@ -11,6 +11,8 @@ namespace TsiErp.ErpUI.Pages.ContractUnsuitabilityItem
     {
         private SfGrid<ListContractUnsuitabilityItemsDto> _grid;
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
         protected override async void OnInitialized()
         {
             BaseCrudService = ContractUnsuitabilityItemsService;
@@ -28,9 +30,6 @@ namespace TsiErp.ErpUI.Pages.ContractUnsuitabilityItem
             return Task.CompletedTask;
         }
 
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(1250, 50);
-        }
+       
     }
 }

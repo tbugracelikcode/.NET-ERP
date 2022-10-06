@@ -58,6 +58,8 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         private SfGrid<ListSalesPropositionsDto> _grid;
         private SfGrid<SelectSalesPropositionLinesDto> _LineGrid;
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
         [Inject]
         ModalManager ModalManager { get; set; }
 
@@ -80,11 +82,6 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             await GetProductsList();
             await GetUnitSetsList();
             await GetLinePaymentPlansList();
-        }
-
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(1250, 50);
         }
 
 

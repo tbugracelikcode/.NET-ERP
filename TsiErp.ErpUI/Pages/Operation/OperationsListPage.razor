@@ -39,46 +39,11 @@ else
             <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
                 <Template>
                     <SfCard class="TSIGridCards">
-                        <CardHeader >
-                                <table width="100%">
-                                    <tr>
-                                        <td width="20%">
-                                          
-                                        </td>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%">
-                                        </td>
-                                        <td width="20%"> 
-                                        <SfButton CssClass="TSIShowColumnsButton" OnClick="ShowColumns"><SfIcon Size="IconSize.Medium" Name="IconName.TwoColumn"></SfIcon>&nbsp;Sütunları Göster</SfButton>
-
-                                        </td>
-                                    </tr>
-                                </table>
-
-                            </CardHeader>
                         <CardContent>
-                            <SfGrid ID="Grid" @ref="@_grid" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                            <SfGrid ID="Grid" @ref="@_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
                                 AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
-                                <GridColumnChooserSettings>
-                                        <FooterTemplate>
-                                            @{
-                                                var ContextData = context as ColumnChooserFooterTemplateContext;
-                                                var visibles = ContextData.Columns.Where(x => x.Visible).Select(x => x.HeaderText).ToArray();
-                                                var hiddens = ContextData.Columns.Where(x => !x.Visible).Select(x => x.HeaderText).ToArray();
-                                        }
-                                        <SfButton CssClass="TSISubmitButton" IsPrimary="true" OnClick="@(async () => {
-                                         await _grid.ShowColumnsAsync(visibles);
-                                         await _grid.HideColumnsAsync(hiddens); })"><SfIcon Size="IconSize.Medium" Name="IconName.Eye"></SfIcon>&nbsp;Göster</SfButton>
+                                                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                        <SfButton CssClass="TSICancelButton" @onclick="@(async () => await ContextData.CancelAsync())">
-                                            <SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;İptal
-                                        </SfButton>
-
-                                    </FooterTemplate>
-                                </GridColumnChooserSettings>
                                 <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListOperationsDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
@@ -151,9 +116,10 @@ else
                     <DxGridLayoutItem Row="2" Column="1" ColumnSpan="3">
                         <Template>
                             <br />
-                            <SfGrid ID="LineGrid" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false"
+                            <SfGrid ID="LineGrid" DataSource="@GridLineList" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false"
                                 AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
-                            
+                                                             <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
                                 <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="ListOperationLinesDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>

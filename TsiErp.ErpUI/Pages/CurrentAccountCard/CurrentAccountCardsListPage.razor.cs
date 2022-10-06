@@ -18,6 +18,8 @@ namespace TsiErp.ErpUI.Pages.CurrentAccountCard
 
         private SfGrid<ListCurrentAccountCardsDto> _grid;
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
         SfComboBox<string, ListShippingAdressesDto> ShippingAdressesComboBox;
         List<ListShippingAdressesDto> ShippingAdressesList = new List<ListShippingAdressesDto>();
 
@@ -42,10 +44,6 @@ namespace TsiErp.ErpUI.Pages.CurrentAccountCard
             return Task.CompletedTask;
         }
 
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(1250, 50);
-        }
 
         #region Para Birimleri
         public async Task CurrencyFiltering(FilteringEventArgs args)

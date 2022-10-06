@@ -11,6 +11,8 @@ namespace TsiErp.ErpUI.Pages.StationGroup
     {
         private SfGrid<ListStationGroupsDto> _grid;
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
         protected override async void OnInitialized()
         {
             BaseCrudService = StationGroupsService;
@@ -28,9 +30,5 @@ namespace TsiErp.ErpUI.Pages.StationGroup
             return Task.CompletedTask;
         }
 
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(1250, 50);
-        }
     }
 }

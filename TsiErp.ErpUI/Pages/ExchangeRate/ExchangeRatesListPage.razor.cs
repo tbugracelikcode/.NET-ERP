@@ -15,6 +15,8 @@ namespace TsiErp.ErpUI.Pages.ExchangeRate
     {
         SfComboBox<string, ListCurrenciesDto> CurrenciesComboBox;
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
         private SfGrid<ListExchangeRatesDto> _grid;
 
         List<ListCurrenciesDto> CurrenciesList = new List<ListCurrenciesDto>();
@@ -26,10 +28,6 @@ namespace TsiErp.ErpUI.Pages.ExchangeRate
             await GetCurrenciesList();
         }
 
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(1250, 50);
-        }
 
 
         #region Para Birimleri

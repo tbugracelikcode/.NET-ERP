@@ -12,6 +12,8 @@ namespace TsiErp.ErpUI.Pages.UnitSet
 
         private SfGrid<ListUnitSetsDto> _grid;
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
 
         protected override async void OnInitialized()
         {
@@ -30,9 +32,5 @@ namespace TsiErp.ErpUI.Pages.UnitSet
             return Task.CompletedTask;
         }
 
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(1250, 50);
-        }
     }
 }
