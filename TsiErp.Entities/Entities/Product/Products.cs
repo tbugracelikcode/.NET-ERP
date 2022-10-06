@@ -9,6 +9,7 @@ using TsiErp.Entities.Entities.SalesPropositionLine;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.RouteLine;
 using TsiErp.Entities.Entities.Route;
+using Microsoft.EntityFrameworkCore;
 
 namespace TsiErp.Entities.Entities.Product
 {
@@ -33,6 +34,8 @@ namespace TsiErp.Entities.Entities.Product
         /// Temin Şekli
         /// </summary>
         public int SupplyForm { get; set; }
+
+        [Precision(18, 6)]
         /// <summary>
         /// Stok Boyu
         /// </summary>
@@ -41,6 +44,8 @@ namespace TsiErp.Entities.Entities.Product
         /// GTIP
         /// </summary>
         public string GTIP { get; set; }
+
+        [Precision(18, 6)]
         /// <summary>
         /// Testere Fire
         /// </summary>
@@ -109,6 +114,8 @@ namespace TsiErp.Entities.Entities.Product
         /// Planlanan Fire
         /// </summary>
         public int PlannedWastage { get; set; }
+
+        [Precision(18, 6)]
         /// <summary>
         /// Kaplama Ağırlığı
         /// </summary>

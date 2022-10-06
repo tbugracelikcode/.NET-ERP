@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,26 +37,38 @@ namespace TsiErp.Entities.Entities.SalesPropositionLine
         /// Şube ID
         /// </summary>
         public Guid BranchID { get; set; }
+
+        [Precision(18, 6)]
         /// <summary>
         /// Miktar
         /// </summary>
         public decimal Quantity { get; set; }
+
+        [Precision(18, 6)]
         /// <summary>
         /// Birim Fiyat
         /// </summary>
         public decimal UnitPrice { get; set; }
+
+        [Precision(18, 6)]
         /// <summary>
         /// İndirim Oranı
         /// </summary>
         public decimal DiscountRate { get; set; }
+
+        [Precision(18, 6)]
         ///<summary>
         /// İndirim Tutarı
         /// </summary>
         public decimal DiscountAmount { get; set; }
+
+        [Precision(18, 6)]
         /// <summary>
         /// Satır Tutarı
         /// </summary>
         public decimal LineAmount { get; set; }
+
+        [Precision(18, 6)]
         /// <summary>
         /// Satır Toplar Tutarı
         /// </summary>
@@ -68,6 +81,8 @@ namespace TsiErp.Entities.Entities.SalesPropositionLine
         /// KDV Oranı
         /// </summary>
         public int VATrate { get; set; }
+
+        [Precision(18, 6)]
         /// <summary>
         /// KDV Tutarı
         /// </summary>
@@ -88,6 +103,8 @@ namespace TsiErp.Entities.Entities.SalesPropositionLine
         /// Depo ID
         /// </summary>
         public Guid WarehouseID { get; set; }
+
+        [Precision(18, 6)]
         /// <summary>
         /// Kur Turarı
         /// </summary>
