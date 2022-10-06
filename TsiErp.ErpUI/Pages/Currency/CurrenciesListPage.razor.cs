@@ -14,6 +14,8 @@ namespace TsiErp.ErpUI.Pages.Currency
 
         private SfGrid<ListCurrenciesDto> _grid;
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
         protected override async void OnInitialized()
         {
             BaseCrudService = CurrenciesService;
@@ -31,9 +33,5 @@ namespace TsiErp.ErpUI.Pages.Currency
             return Task.CompletedTask;
         }
 
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(1250, 50);
-        }
     }
 }

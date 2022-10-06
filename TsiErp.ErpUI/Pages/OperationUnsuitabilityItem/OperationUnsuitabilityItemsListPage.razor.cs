@@ -10,7 +10,9 @@ namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityItem
     public partial class OperationUnsuitabilityItemsListPage
     {
 
-        private SfGrid<ListOperationUnsuitabilityItemsDto> _grid; 
+        private SfGrid<ListOperationUnsuitabilityItemsDto> _grid;
+
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
 
         protected override async void OnInitialized()
         {
@@ -27,11 +29,6 @@ namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityItem
             ShowEditPage();
 
             return Task.CompletedTask;
-        }
-
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(1250, 50);
         }
     }
 }

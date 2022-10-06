@@ -19,6 +19,8 @@ namespace TsiErp.ErpUI.Pages.CalibrationVerification
 
         List<ListEquipmentRecordsDto> EquipmentRecordsList = new List<ListEquipmentRecordsDto>();
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
         private SfGrid<ListCalibrationVerificationsDto> _grid;
 
         protected override async void OnInitialized()
@@ -67,9 +69,5 @@ namespace TsiErp.ErpUI.Pages.CalibrationVerification
         }
 
 
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(1250, 50);
-        }
     }
 }

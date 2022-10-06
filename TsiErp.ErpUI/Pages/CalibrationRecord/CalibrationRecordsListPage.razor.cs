@@ -18,6 +18,8 @@ namespace TsiErp.ErpUI.Pages.CalibrationRecord
 
         private SfGrid<ListCalibrationRecordsDto> _grid;
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
         protected override async void OnInitialized()
         {
             BaseCrudService = CalibrationRecordsService;
@@ -60,10 +62,5 @@ namespace TsiErp.ErpUI.Pages.CalibrationRecord
             await InvokeAsync(StateHasChanged);
         }
 
-
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(1250, 50);
-        }
     }
 }

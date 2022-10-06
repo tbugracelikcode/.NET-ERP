@@ -17,6 +17,8 @@ namespace TsiErp.ErpUI.Pages.EquipmentRecord
 
         private SfGrid<ListEquipmentRecordsDto> _grid;
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
         SfComboBox<string, ListDepartmentsDto> DepartmentsComboBox;
         List<ListDepartmentsDto> DepartmentsList = new List<ListDepartmentsDto>();
 
@@ -24,11 +26,6 @@ namespace TsiErp.ErpUI.Pages.EquipmentRecord
         {
             BaseCrudService = EquipmentRecordsService;
             await GetDepartmentsList();
-        }
-
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(1250, 50);
         }
 
         void CheckValueChanged(ChangeEventArgs args)

@@ -31,6 +31,8 @@ namespace TsiErp.ErpUI.Pages.Operation
         [Inject]
         ModalManager ModalManager { get; set; }
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
         SelectOperationLinesDto LineDataSource = new SelectOperationLinesDto();
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
@@ -45,10 +47,6 @@ namespace TsiErp.ErpUI.Pages.Operation
             await GetLineStationsList();
         }
 
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(1250, 50);
-        }
 
 
         #region Operasyon Satır Modalı İşlemleri

@@ -20,6 +20,8 @@ namespace TsiErp.ErpUI.Pages.Period
 
         private SfGrid<ListPeriodsDto> _grid;
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
         protected override async void OnInitialized()
         {
             BaseCrudService = PeriodsService;
@@ -38,10 +40,6 @@ namespace TsiErp.ErpUI.Pages.Period
             return Task.CompletedTask;
         }
 
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(1250, 50);
-        }
 
         public async Task BranchFiltering(FilteringEventArgs args)
         {

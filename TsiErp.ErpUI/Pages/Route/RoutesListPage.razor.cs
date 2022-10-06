@@ -18,6 +18,8 @@ namespace TsiErp.ErpUI.Pages.Route
     {
         private SfGrid<ListRoutesDto> _grid;
 
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
 
         #region ComboBox Listeleri
 
@@ -54,10 +56,6 @@ namespace TsiErp.ErpUI.Pages.Route
             await GetLineRoutesList();
         }
 
-        public void ShowColumns()
-        {
-            this._grid.OpenColumnChooserAsync(1250, 50);
-        }
 
         #region Rota Satır Modalı İşlemleri
         protected override async Task BeforeInsertAsync()
