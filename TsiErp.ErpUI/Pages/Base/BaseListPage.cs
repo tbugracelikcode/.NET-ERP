@@ -118,7 +118,11 @@ namespace TsiErp.ErpUI.Pages.Base
                 result = (await UpdateAsync(updateInput)).Data;
             }
 
-            if (result == null) return;
+            if (result == null) 
+            {
+                
+                return; 
+            }
 
             await GetListDataSourceAsync();
 
