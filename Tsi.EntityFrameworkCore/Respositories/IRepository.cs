@@ -27,5 +27,8 @@ namespace Tsi.EntityFrameworkCore.Repositories
         Task UpdateManyAsync(IEnumerable<TEntity> entities, bool autoSave = true);
 
         Task DeleteAsync(Guid id, bool autoSave = true);
+
+        Task<IQueryable<TEntity>> GetQueryableAsync();
+        Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
     }
 }

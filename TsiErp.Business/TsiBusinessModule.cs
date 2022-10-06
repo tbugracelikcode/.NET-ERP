@@ -26,7 +26,6 @@ namespace TsiErp.Business
     {
         public override void ConfigureServices(IServiceCollection services)
         {
-
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());

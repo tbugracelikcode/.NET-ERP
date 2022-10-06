@@ -5,6 +5,7 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.DependencyResolvers.Autofac;
+using TsiErp.Business.Entities.Branch.BusinessRules;
 using TsiErp.Business.Entities.Branch.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
@@ -14,9 +15,11 @@ using TsiErp.Entities.Entities.Branch.Dtos;
 namespace TsiErp.Business.Entities.Branch.Services
 {
     [ServiceRegistration(typeof(IBranchesAppService), DependencyInjectionType.Scoped)]
-    public class BranchesAppService : ApplicationService, IBranchesAppService
+    public class BranchesAppService : ApplicationService,IBranchesAppService
     {
         private readonly IBranchesRepository _repository;
+
+        BranchesManager _ruleManager { get; set; } = new BranchesManager();
 
         public BranchesAppService(IBranchesRepository repository)
         {
@@ -28,6 +31,8 @@ namespace TsiErp.Business.Entities.Branch.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBranchesDto>> CreateAsync(CreateBranchesDto input)
         {
+            await _ruleManager.CodeControl(_repository, input.Code);
+
             var entity = ObjectMapper.Map<CreateBranchesDto, Branches>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
