@@ -8313,7 +8313,7 @@ input.e-input::-webkit-input-placeholder {
     }
 
     .e-dropdownbase .e-list-item.e-active, .e-dropdownbase .e-list-item.e-active.e-hover {
-        background-color: #0d6efd;
+        background-color: #cb0505;
         border-color: #fff;
         color: #fff;
     }
@@ -13318,7 +13318,7 @@ ejs-calendar {
 
     .e-checkbox-wrapper:hover .e-label,
     .e-css.e-checkbox-wrapper:hover .e-label {
-        color: #212529;
+        color: #ffffff;
     }
 
     .e-checkbox-wrapper.e-checkbox-disabled .e-frame,
@@ -18985,9 +18985,9 @@ body.e-colorpicker-overflow {
 
     .e-contextmenu-wrapper ul .e-menu-item.e-focused,
     .e-contextmenu-container ul .e-menu-item.e-focused {
-        background-color: #e9ecef;
-        color: #212529;
-        outline: 0 solid #dee2e6;
+        background-color: #cb0505;
+        color: #ffffff;
+        outline: 0 solid #cb0505;
         outline-offset: 0;
     }
 
@@ -19003,9 +19003,9 @@ body.e-colorpicker-overflow {
 
     .e-contextmenu-wrapper ul .e-menu-item.e-selected,
     .e-contextmenu-container ul .e-menu-item.e-selected {
-        background-color: #0d6efd;
+        background-color: #cb0505;
         color: #fff;
-        outline: 0 solid #0d6efd;
+        outline: 0 solid #cb0505;
         outline-offset: 0;
     }
 
@@ -24480,8 +24480,8 @@ body.e-colorpicker-overflow {
 }
 
     .e-footer-content .e-btn.e-primary.e-flat:not([DISABLED]) {
-        background-color: #0d6efd;
-        border-color: #0d6efd;
+        background-color: #cb0505;
+        border-color: #cb0505;
         color: #fff;
     }
 
@@ -44120,6 +44120,7 @@ li.e-separator.e-menu-item.e-excel-separator {
 .e-grid .e-excl-filter-icon::before,
 .e-grid-menu .e-excl-filter-icon::before {
     content: "\e7f7";
+    color: #cb0505;
 }
 
 .e-grid .e-excl-filter-icon.e-filtered::before,
@@ -44135,6 +44136,7 @@ li.e-separator.e-menu-item.e-excel-separator {
 .e-grid .e-icon-group::before,
 .e-grid-menu .e-icon-group::before {
     content: "\e724";
+    color: #cb0505;
 }
 
 .e-grid .e-icon-ungroup::before,
