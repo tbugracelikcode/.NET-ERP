@@ -263,5 +263,7 @@ namespace TsiErp.ErpUI.Pages.Base
             ShowEditPage();
         }
 
+        public virtual void LineCalculate() { }
+
     }
 }

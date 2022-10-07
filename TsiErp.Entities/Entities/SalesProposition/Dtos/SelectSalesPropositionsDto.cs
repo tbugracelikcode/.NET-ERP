@@ -70,9 +70,9 @@ namespace TsiErp.Entities.Entities.SalesProposition.Dtos
         /// </summary>
         public Guid PaymentPlanID { get; set; }
         /// <summary>
-        /// Ödeme Planı Günü
+        /// Ödeme Planı Adı
         /// </summary>
-        public string PaymentPlanCode { get; set; }
+        public string PaymentPlanName { get; set; }
         /// <summary>
         /// Şube ID
         /// </summary>

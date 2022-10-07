@@ -54,6 +54,6 @@ namespace TsiErp.Entities.Entities.EquipmentRecord.Dtos
         /// <summary>
         /// İptal Nedeni
         /// </summary>
-        public string? CancellationReason { get; set; }
+        public string CancellationReason { get; set; }
     }
 }

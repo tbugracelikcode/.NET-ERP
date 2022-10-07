@@ -74,9 +74,9 @@ namespace TsiErp.Entities.Entities.Product.Dtos
         /// </summary>
         public Guid UnitSetID { get; set; }
         /// <summary>
-        /// Birim Seti 
+        /// Birim Seti Kodu
         /// </summary>
-        public string UnitSet { get; set; }
+        public string UnitSetCode { get; set; }
         /// <summary>
         /// Özellik Set 
         /// </summary>

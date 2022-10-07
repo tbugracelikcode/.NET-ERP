@@ -13,15 +13,15 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Validations
         {
             RuleFor(x => x.Code)
                .NotEmpty()
-               .WithMessage("Lütfen kalibrasyon doğrulama kodunu yazın.")
+               .WithMessage("Lütfen kalibrasyon takip kodunu yazın.")
                .MaximumLength(17)
-               .WithMessage("Kalibrasyon doğrulama kodu, 17 karakterden fazla olamaz.");
+               .WithMessage("Kalibrasyon takip kodu, 17 karakterden fazla olamaz.");
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen kalibrasyon doğrulama açıklaması yazın.")
+                .WithMessage("Lütfen kalibrasyon takip açıklaması yazın.")
                 .MaximumLength(200)
-                .WithMessage("Kalibrasyon doğrulama açıklaması, 200 karakterden fazla olamaz.");
+                .WithMessage("Kalibrasyon takip açıklaması, 200 karakterden fazla olamaz.");
 
             RuleFor(x => x.EquipmentID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen ekipman seçin.");
 

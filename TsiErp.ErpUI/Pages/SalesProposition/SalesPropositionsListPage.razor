@@ -56,10 +56,10 @@ else
             <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
                 <Template>
                     <SfCard class="TSIGridCards">
-                        
+
                         <CardContent>
                             <SfGrid ID="Grid" @ref="@_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
-                                                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                 <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListSalesPropositionsDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
@@ -73,7 +73,7 @@ else
                                     <GridColumn Field=@nameof(ListSalesPropositionsDto.CurrentAccountCardCode) HeaderText="CARİ HESAP KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListSalesPropositionsDto.CurrentAccountCardName) HeaderText="CARİ HESAP ÜNVANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListSalesPropositionsDto.CurrencyCode) HeaderText="PARA BİRİMİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListSalesPropositionsDto.PaymentPlanDay) Type="ColumnType.Number" HeaderText="VADE GÜNÜ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListSalesPropositionsDto.PaymentPlanName) Type="ColumnType.Number" HeaderText="ÖDEME PLANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListSalesPropositionsDto.BranchCode) HeaderText="ŞUBE KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListSalesPropositionsDto.WarehouseCode) HeaderText="DEPO KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
@@ -192,7 +192,47 @@ else
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong> Cari Hesap Kartı Ünvanı: </strong></label>
-                            <SfTextBox Placeholder="Cari Hesap Kartı Ünvanını Yazınız." @bind-Value="DataSource.CurrentAccountCardName"></SfTextBox>
+                            <SfComboBox @ref="CurrentAccountCardsComboBox"
+                                    TValue="string"
+                                    TItem="ListCurrentAccountCardsDto"
+                                    Placeholder="Cari Hesap Kartı Seçin"
+                                    CssClass="e-multi-column"
+                                    DataSource="@CurrentAccountCardsList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500"
+                                    Value="DataSource.CurrentAccountCardName">
+
+                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+
+                                <ComboBoxTemplates TItem="ListCurrentAccountCardsDto">
+                                    <HeaderTemplate>
+                                        <table>
+                                            <tr>
+                                                <th class="e-text-center">Cari Hesap Kartı Kodu</th>
+                                                <th class="e-text-center">Cari Hesap Kartı Ünvanı</th>
+                                            </tr>
+                                        </table>
+                                    </HeaderTemplate>
+                                    <ItemTemplate Context="cmbContext">
+
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="e-text-center">@((cmbContext as ListCurrentAccountCardsDto).Code)</td>
+                                                    <td class="e-text-center">@((cmbContext as ListCurrentAccountCardsDto).Name)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </ItemTemplate>
+                                </ComboBoxTemplates>
+
+                                <ComboBoxEvents TValue="string"
+                                            TItem="ListCurrentAccountCardsDto"
+                                            Filtering="CurrentAccountCardFiltering"
+                                            ValueChange="CurrentAccountCardValueChangeHandler"></ComboBoxEvents>
+                            </SfComboBox>
+
                         </Template>
                     </DxGridLayoutItem>
 
@@ -264,7 +304,46 @@ else
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong> Ödeme Planı Günü: </strong></label>
-                            @* <SfNumericTextBox Placeholder="Ödeme Planı Gününü Yazınız." @bind-Value="DataSource.PaymentPlanCode"></SfNumericTextBox>*@
+                            <SfComboBox @ref="PaymentPlansComboBox"
+                                    TValue="string"
+                                    TItem="ListPaymentPlansDto"
+                                    Placeholder="Ödeme Planı Seçin"
+                                    CssClass="e-multi-column"
+                                    DataSource="@PaymentPlansList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500"
+                                    Value="DataSource.PaymentPlanName">
+
+                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+
+                                <ComboBoxTemplates TItem="ListPaymentPlansDto">
+                                    <HeaderTemplate>
+                                        <table>
+                                            <tr>
+                                                <th class="e-text-center">Ödeme Planı Kodu</th>
+                                                <th class="e-text-center">Ödeme Planı Ünvanı</th>
+                                            </tr>
+                                        </table>
+                                    </HeaderTemplate>
+                                    <ItemTemplate Context="cmbContext">
+
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="e-text-center">@((cmbContext as ListPaymentPlansDto).Code)</td>
+                                                    <td class="e-text-center">@((cmbContext as ListPaymentPlansDto).Name)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </ItemTemplate>
+                                </ComboBoxTemplates>
+
+                                <ComboBoxEvents TValue="string"
+                                            TItem="ListPaymentPlansDto"
+                                            Filtering="PaymentPlanFiltering"
+                                            ValueChange="PaymentPlanValueChangeHandler"></ComboBoxEvents>
+                            </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="3" Column="1">
@@ -363,7 +442,7 @@ else
                             <br />
                             <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
                                 <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectSalesPropositionLinesDto"></GridEvents>
-                                                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
@@ -372,7 +451,7 @@ else
                                     <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.ProductName) HeaderText="STOK AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.UnitSetCode) HeaderText="BİRİM SETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.Quantity)  Format="N2" Type="ColumnType.Number"HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.UnitPrice) Format="N2" Type="ColumnType.Number" HeaderText="BİRİM FİYAT" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.LineAmount) Format="N2" Type="ColumnType.Number" HeaderText="SATIR TUTARI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
@@ -433,81 +512,35 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="Teklif Satırları"
-         Width="1000px"
-         Height="440px"
+         Width="760px"
+         Height="700px"
          HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
             <DxGridLayout>
 
                 <Rows>
-                    <DxGridLayoutRow Height="100px" />
-                    <DxGridLayoutRow Height="70px" />
-                    <DxGridLayoutRow Height="70px" />
-                    <DxGridLayoutRow Height="70px" />
+                    <DxGridLayoutRow Height="68px" />
+                    <DxGridLayoutRow Height="68px" />
+                    <DxGridLayoutRow Height="68px" />
+                    <DxGridLayoutRow Height="68px" />
+                    <DxGridLayoutRow Height="68px" />
+                    <DxGridLayoutRow Height="68px" />
+                    <DxGridLayoutRow Height="68px" />
+                    <DxGridLayoutRow Height="68px" />
                 </Rows>
 
                 <Columns>
                     <DxGridLayoutColumn Width="40px" />
-                    <DxGridLayoutColumn Width="200px" />
+                    <DxGridLayoutColumn Width="320px" />
                     <DxGridLayoutColumn Width="40px" />
-                    <DxGridLayoutColumn Width="200px" />
-                    <DxGridLayoutColumn Width="40px" />
-                    <DxGridLayoutColumn Width="200px" />
-                    <DxGridLayoutColumn Width="40px" />
-                    <DxGridLayoutColumn Width="200px" />
+                    <DxGridLayoutColumn Width="320px" />
                 </Columns>
 
                 <Items>
+                    <br/>
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
-                            <br />
-                            <label class="TSIModalLabel"><strong>Depo Kodu: </strong></label>
-                            <SfComboBox @ref="LineWarehousesComboBox"
-                                    TValue="string"
-                                    TItem="ListWarehousesDto"
-                                    Placeholder="Depo Seçin"
-                                    CssClass="e-multi-column"
-                                    DataSource="@LineWarehousesList"
-                                    AllowFiltering="true"
-                                    PopupWidth="700px"
-                                    PopupHeight="500"
-                                    Value="LineDataSource.WarehouseCode">
-
-                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
-
-                                <ComboBoxTemplates TItem="ListWarehousesDto">
-                                    <HeaderTemplate>
-                                        <table>
-                                            <tr>
-                                                <th class="e-text-center">Depo Kodu</th>
-                                                <th class="e-text-center">Depo Adı</th>
-                                            </tr>
-                                        </table>
-                                    </HeaderTemplate>
-                                    <ItemTemplate Context="cmbContext">
-
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="e-text-center">@((cmbContext as ListWarehousesDto).Code)</td>
-                                                    <td class="e-text-center">@((cmbContext as ListWarehousesDto).Name)</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </ItemTemplate>
-                                </ComboBoxTemplates>
-
-                                <ComboBoxEvents TValue="string"
-                                            TItem="ListWarehousesDto"
-                                            Filtering="LineWareHouseFiltering"
-                                            ValueChange="LineWareHouseValueChangeHandler"></ComboBoxEvents>
-                            </SfComboBox>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="0" Column="3">
-                        <Template>
-                            <br />
                             <label class="TSIModalLabel"><strong>Stok Kodu: </strong></label>
                             <SfComboBox @ref="ProductsComboBox"
                                     TValue="string"
@@ -551,9 +584,9 @@ else
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="0" Column="5">
+
+                    <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <br />
                             <label class="TSIModalLabel"><strong>Stok Adı: </strong></label><br />
                             <SfComboBox @ref="ProductsComboBox"
                                     TValue="string"
@@ -566,7 +599,7 @@ else
                                     PopupHeight="500"
                                     Value="LineDataSource.ProductName">
 
-                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
+                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
 
                                 <ComboBoxTemplates TItem="ListProductsDto">
                                     <HeaderTemplate>
@@ -597,9 +630,9 @@ else
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="0" Column="7">
+
+                    <DxGridLayoutItem Row="2" Column="1">
                         <Template>
-                            <br />
                             <label class="TSIModalLabel"><strong>Birim Seti Kodu: </strong></label><br />
                             <SfComboBox @ref="UnitSetsComboBox"
                                     TValue="string"
@@ -644,7 +677,7 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="1" Column="1">
+                    <DxGridLayoutItem Row="3" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>Şube Kodu: </strong></label><br />
                             <SfComboBox @ref="LineBranchesComboBox"
@@ -690,80 +723,68 @@ else
 
                         </Template>
                     </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="1" Column="3">
+
+                    <DxGridLayoutItem Row="4" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Birim Fiyat: </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.UnitPrice" Placeholder="Birim Fiyatı Yazınız."></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>Depo Kodu: </strong></label>
+                            <SfComboBox @ref="LineWarehousesComboBox"
+                                    TValue="string"
+                                    TItem="ListWarehousesDto"
+                                    Placeholder="Depo Seçin"
+                                    CssClass="e-multi-column"
+                                    DataSource="@LineWarehousesList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500"
+                                    Value="LineDataSource.WarehouseCode">
+
+                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
+
+                                <ComboBoxTemplates TItem="ListWarehousesDto">
+                                    <HeaderTemplate>
+                                        <table>
+                                            <tr>
+                                                <th class="e-text-center">Depo Kodu</th>
+                                                <th class="e-text-center">Depo Adı</th>
+                                            </tr>
+                                        </table>
+                                    </HeaderTemplate>
+                                    <ItemTemplate Context="cmbContext">
+
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="e-text-center">@((cmbContext as ListWarehousesDto).Code)</td>
+                                                    <td class="e-text-center">@((cmbContext as ListWarehousesDto).Name)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </ItemTemplate>
+                                </ComboBoxTemplates>
+
+                                <ComboBoxEvents TValue="string"
+                                            TItem="ListWarehousesDto"
+                                            Filtering="LineWareHouseFiltering"
+                                            ValueChange="LineWareHouseValueChangeHandler"></ComboBoxEvents>
+                            </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="1" Column="5">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>Miktar: </strong></label>
-                            <SfNumericTextBox TValue="decimal" @bind-Value="LineDataSource.Quantity" Placeholder="Miktarı Yazınız."></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="1" Column="7">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>İndirim Oranı: </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.DiscountRate" Placeholder="İndirim Oranını Yazınız."></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                    <DxGridLayoutItem Row="2" Column="1">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>İndirim Tutarı: </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.DiscountAmount" Placeholder="İndirim Tutarı Yazınız."></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="2" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>Satır Tutarı: </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.LineAmount" Placeholder="Satır Tutarı Yazınız."></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                    <DxGridLayoutItem Row="2" Column="5">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>Satır Toplam Tutarı: </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.LineTotalAmount" Placeholder="Satır Toplam Tutarı Yazınız."></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="2" Column="7">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>Satır Açıklaması: </strong></label><br />
-                            <SfTextBox @bind-Value="LineDataSource.LineDescription" Placeholder="Satır Açıklamasını Yazınız."></SfTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                    <DxGridLayoutItem Row="3" Column="1">
-                        <Template>
-                            <label class="TSIModalLabel"><strong> KDV Oranı: </strong></label>
-                            <SfNumericTextBox Min="0" @bind-Value="LineDataSource.VATrate" Placeholder="KDV Oranı Yazınız."></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="3" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>KDV Tutarı: </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.VATamount" Placeholder="KDV Tutarı Yazınız."></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                    <DxGridLayoutItem Row="3" Column="5">
+                    <DxGridLayoutItem Row="5" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>Ödeme Planı Kodu: </strong></label>
-                            <SfComboBox @ref="LinePaymentPlansComboBox"
+                            <SfComboBox @ref="PaymentPlansComboBox"
                                     TValue="string"
                                     TItem="ListPaymentPlansDto"
                                     Placeholder="Ödeme Planı Seçin"
                                     CssClass="e-multi-column"
-                                    DataSource="@LinePaymentPlansList"
+                                    DataSource="@PaymentPlansList"
                                     AllowFiltering="true"
                                     PopupWidth="700px"
                                     PopupHeight="500"
-                                    Value="LineDataSource.PaymentPlanCode">
+                                    Value="LineDataSource.PaymentPlanName">
 
-                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
+                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
 
                                 <ComboBoxTemplates TItem="ListPaymentPlansDto">
                                     <HeaderTemplate>
@@ -789,11 +810,79 @@ else
 
                                 <ComboBoxEvents TValue="string"
                                             TItem="ListPaymentPlansDto"
-                                            Filtering="LinePaymentPlanFiltering"
+                                            Filtering="PaymentPlanFiltering"
                                             ValueChange="LinePaymentPlanValueChangeHandler"></ComboBoxEvents>
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="6" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Satır Açıklaması: </strong></label><br />
+                            <SfTextBox @bind-Value="LineDataSource.LineDescription" Placeholder="Satır Açıklamasını Yazınız." Multiline=true></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Birim Fiyat: </strong></label>
+                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.UnitPrice" Placeholder="Birim Fiyatı Yazınız." OnChange="LineCalculate">
+
+
+                            </SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Miktar: </strong></label>
+                            <SfNumericTextBox TValue="decimal" @bind-Value="LineDataSource.Quantity" Placeholder="Miktarı Yazınız." OnChange="LineCalculate"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong> KDV Oranı: </strong></label>
+                            <SfNumericTextBox Min="0" @bind-Value="LineDataSource.VATrate" Placeholder="KDV Oranı Yazınız." OnChange="LineCalculate"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>KDV Tutarı: </strong></label>
+                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.VATamount" Placeholder="KDV Tutarı Yazınız."></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="4" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>İndirim Oranı: </strong></label>
+                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.DiscountRate" Placeholder="İndirim Oranını Yazınız." Enabled=false></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="5" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>İndirim Tutarı: </strong></label>
+                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.DiscountAmount" Placeholder="İndirim Tutarı Yazınız." OnChange="LineCalculate"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="6" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Satır Tutarı: </strong></label>
+                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.LineAmount" Placeholder="Satır Tutarı Yazınız." Enabled=false style="font-size:16px; font-weight:bold;"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="7" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Satır Toplam Tutarı: </strong></label>
+                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.LineTotalAmount" Placeholder="Satır Toplam Tutarı Yazınız." Enabled=false style="font-size:16px; font-weight:bold;"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
                 </Items>
             </DxGridLayout>
         </BodyTemplate>
