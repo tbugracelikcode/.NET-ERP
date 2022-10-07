@@ -18,6 +18,7 @@ using TsiErp.Business.Entities.EquipmentRecord.Validations;
 using TsiErp.Entities.Entities.EquipmentRecord.Dtos;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.EquipmentRecord;
+using TsiErp.Business.Entities.EquipmentRecord.BusinessRules;
 
 namespace TsiErp.Business.Entities.EquipmentRecord.Services
 {
@@ -25,6 +26,8 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
     public class EquipmentRecordsAppService : ApplicationService, IEquipmentRecordsAppService
     {
         private readonly IEquipmentRecordsRepository _repository;
+
+        EquipmentRecordManager _manager { get; set; } = new EquipmentRecordManager();
 
         public EquipmentRecordsAppService(IEquipmentRecordsRepository repository)
         {
@@ -36,6 +39,8 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEquipmentRecordsDto>> CreateAsync(CreateEquipmentRecordsDto input)
         {
+            await _manager.CodeControl(_repository, input.Code);
+
             var entity = ObjectMapper.Map<CreateEquipmentRecordsDto, EquipmentRecords>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
@@ -47,6 +52,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            await _manager.DeleteControl(_repository, id);
             await _repository.DeleteAsync(id);
             return new SuccessResult("Silme işlemi başarılı.");
         }
@@ -76,6 +82,8 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
         public async Task<IDataResult<SelectEquipmentRecordsDto>> UpdateAsync(UpdateEquipmentRecordsDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
+
+            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
 
             var mappedEntity = ObjectMapper.Map<UpdateEquipmentRecordsDto, EquipmentRecords>(input);
 
