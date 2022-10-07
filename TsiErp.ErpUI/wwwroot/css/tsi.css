@@ -357,9 +357,12 @@ html {
     color: black;
     font-size: 14px;
 }
-.TSIConfirmModalFooter{
-    text-align:end;
+.TSIConfirmModalFooter {
+    text-align: end;
     padding-right: 20px;
+    border-top: 2px solid #401515;
+    width: 90%;
+    padding-top: 2%;
 }
 .TSIModalLocation {
     margin-top: 15% !important;
