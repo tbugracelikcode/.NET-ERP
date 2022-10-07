@@ -13,6 +13,7 @@ using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TsiErp.Business.Entities.CurrentAccountCard.BusinessRules;
 
 namespace TsiErp.Business.Entities.CurrentAccountCard.Services
 {
@@ -20,6 +21,8 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
     public class CurrentAccountCardsAppService : ApplicationService, ICurrentAccountCardsAppService
     {
         private readonly ICurrentAccountCardsRepository _repository;
+
+        CurrentAccountCardManager _manager { get; set; } = new CurrentAccountCardManager();
 
         public CurrentAccountCardsAppService(ICurrentAccountCardsRepository repository)
         {
@@ -31,6 +34,8 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCurrentAccountCardsDto>> CreateAsync(CreateCurrentAccountCardsDto input)
         {
+            await _manager.CodeControl(_repository, input.Code);
+
             var entity = ObjectMapper.Map<CreateCurrentAccountCardsDto, CurrentAccountCards>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
@@ -42,6 +47,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            await _manager.DeleteControl(_repository, id);
             await _repository.DeleteAsync(id);
             return new SuccessResult("Silme işlemi başarılı.");
         }
@@ -49,7 +55,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
 
         public async Task<IDataResult<SelectCurrentAccountCardsDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id, t => t.Currencies, y => y.ShippingAdresses);
+            var entity = await _repository.GetAsync(t => t.Id == id, t => t.Currencies, y => y.ShippingAdresses, y => y.SalesPropositions);
             var mappedEntity = ObjectMapper.Map<CurrentAccountCards, SelectCurrentAccountCardsDto>(entity);
             return new SuccessDataResult<SelectCurrentAccountCardsDto>(mappedEntity);
         }
@@ -58,7 +64,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCurrentAccountCardsDto>>> GetListAsync(ListCurrentAccountCardsParameterDto input)
         {
-            var list = await _repository.GetListAsync(t => t.IsActive == input.IsActive, t => t.Currencies, y => y.ShippingAdresses);
+            var list = await _repository.GetListAsync(t => t.IsActive == input.IsActive, t => t.Currencies, y => y.ShippingAdresses, y => y.SalesPropositions);
 
             var mappedEntity = ObjectMapper.Map<List<CurrentAccountCards>, List<ListCurrentAccountCardsDto>>(list.ToList());
 
@@ -71,6 +77,8 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
         public async Task<IDataResult<SelectCurrentAccountCardsDto>> UpdateAsync(UpdateCurrentAccountCardsDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
+
+            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
 
             var mappedEntity = ObjectMapper.Map<UpdateCurrentAccountCardsDto, CurrentAccountCards>(input);
 

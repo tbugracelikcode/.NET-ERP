@@ -18,6 +18,7 @@ using TsiErp.Business.Entities.Employee.Validations;
 using TsiErp.Entities.Entities.Employee.Dtos;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.Employee;
+using TsiErp.Business.Entities.Employee.BusinessRules;
 
 namespace TsiErp.Business.Entities.Employee.Services
 {
@@ -25,6 +26,8 @@ namespace TsiErp.Business.Entities.Employee.Services
     public class EmployeesAppService : ApplicationService, IEmployeesAppService
     {
         private readonly IEmployeesRepository _repository;
+
+        EmployeeManager _manager { get; set; } = new EmployeeManager();
 
         public EmployeesAppService(IEmployeesRepository repository)
         {
@@ -36,6 +39,8 @@ namespace TsiErp.Business.Entities.Employee.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEmployeesDto>> CreateAsync(CreateEmployeesDto input)
         {
+            await _manager.CodeControl(_repository, input.Code);
+
             var entity = ObjectMapper.Map<CreateEmployeesDto, Employees>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
@@ -76,6 +81,8 @@ namespace TsiErp.Business.Entities.Employee.Services
         public async Task<IDataResult<SelectEmployeesDto>> UpdateAsync(UpdateEmployeesDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
+
+            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
 
             var mappedEntity = ObjectMapper.Map<UpdateEmployeesDto, Employees>(input);
 
