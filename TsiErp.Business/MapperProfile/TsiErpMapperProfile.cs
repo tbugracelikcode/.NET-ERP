@@ -141,7 +141,8 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectDepartmentsDto, UpdateDepartmentsDto>();
 
             CreateMap<Employees, SelectEmployeesDto>().ForMember(x => x.Department, y => y.MapFrom(z => z.Departments.Name));
-            CreateMap<Employees, ListEmployeesDto>().ForMember(x => x.Department, y => y.MapFrom(z => z.Departments.Name));
+            CreateMap<Employees, ListEmployeesDto>()
+                .ForMember(x => x.Department, y => y.MapFrom(z => z.Departments.Name));
             CreateMap<CreateEmployeesDto, Employees>();
             CreateMap<SelectEmployeesDto, CreateEmployeesDto>();
             CreateMap<UpdateEmployeesDto, Employees>();

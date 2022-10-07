@@ -64,6 +64,19 @@ namespace TsiErp.ErpUI.Pages.CalibrationVerification
             await InvokeAsync(StateHasChanged);
         }
 
+        protected override Task BeforeInsertAsync()
+        {
+            DataSource = new SelectCalibrationVerificationsDto()
+            {
+                Date = DateTime.Today,
+                NextControl = DateTime.Today
+            };
+
+            ShowEditPage();
+
+            return Task.CompletedTask;
+        }
+
 
     }
 }

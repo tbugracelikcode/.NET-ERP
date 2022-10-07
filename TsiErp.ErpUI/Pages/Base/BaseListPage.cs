@@ -236,6 +236,7 @@ namespace TsiErp.ErpUI.Pages.Base
 
                     var res = await ModalManager.ConfirmationAsync("Onay", "Silmek istediğinize emin misiniz ?");
 
+
                     if (res == true)
                     {
                         SelectFirstDataRow = false;

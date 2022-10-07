@@ -11,14 +11,14 @@ namespace TsiErp.DashboardUI.Services
 
         #region Chart
 
-        public async Task < List<EmployeeDetailedChart>> GetEmployeeDetailedtChart(int calisanID, DateTime startDate, DateTime endDate)
+        public async Task<List<EmployeeDetailedChart>> GetEmployeeDetailedtChart(int calisanID, DateTime startDate, DateTime endDate)
         {
 
 
             List<EmployeeDetailedChart> employeeDetailedChart = new List<EmployeeDetailedChart>();
 
             var haltCodes = DBHelper.GetHaltCodes();
-            var haltLines = DBHelper.GetHaltQueryEmployee(calisanID, startDate, endDate);
+            var haltLines = DBHelper.GetHaltQueryEmployee(calisanID, startDate, endDate).Where(t=>t.PKD==true).ToList();
             int totaltime = haltLines.Sum(t => t.DURUSSURE);
 
             foreach (var code in haltCodes)
@@ -36,7 +36,7 @@ namespace TsiErp.DashboardUI.Services
                     HaltTimeSecond = time,
                     Percent = (double)time / (double)totaltime
                 };
-                
+
                 if (analysis.HaltTimeSecond > 0)
                 {
                     employeeDetailedChart.Add(analysis);
@@ -50,7 +50,7 @@ namespace TsiErp.DashboardUI.Services
 
         #region Grid
 
-        public async Task< List<EmployeeDetailedHaltAnalysis>> GetStationDetailedHaltAnalysis(int calisanID, DateTime startDate, DateTime endDate)
+        public async Task<List<EmployeeDetailedHaltAnalysis>> GetStationDetailedHaltAnalysis(int calisanID, DateTime startDate, DateTime endDate)
         {
             List<EmployeeDetailedHaltAnalysis> employeeDetailedHaltAnalysis = new List<EmployeeDetailedHaltAnalysis>();
 

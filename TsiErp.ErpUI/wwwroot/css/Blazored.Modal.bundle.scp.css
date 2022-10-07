@@ -23,7 +23,7 @@
     border: 1px solid #fff;
     padding: 1.5rem;
     box-shadow: 0 2px 2px rgba(0,0,0,.25);
-    margin:20rem;
+    margin: 20rem;
 }
 
 .size-small[b-mwsrhhqq2g] {
@@ -52,10 +52,10 @@
 }
 
 .bm-header[b-mwsrhhqq2g] {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    padding: 0 0 2rem 0;
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    padding: 0 0 1rem 0 !important;
 }
 
 .bm-title[b-mwsrhhqq2g] {

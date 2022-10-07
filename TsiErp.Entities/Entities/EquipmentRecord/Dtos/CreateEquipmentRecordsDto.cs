@@ -26,7 +26,7 @@ namespace TsiErp.Entities.Entities.EquipmentRecord.Dtos
         /// <summary>
         /// Departman ID
         /// </summary>
-        public Guid Department { get; set; }
+        public Guid? Department { get; set; }
         /// <summary>
         /// Sorumlu
         /// </summary>
