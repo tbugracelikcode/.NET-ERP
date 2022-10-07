@@ -14,6 +14,7 @@ using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Warehouse;
 using TsiErp.Entities.Entities.WareHouse.Dtos;
 using TsiErp.Entities.Entities.WareHouse;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.Business.Entities.Warehouse.BusinessRules;
 
 namespace TsiErp.Business.Entities.Warehouse.Services
 {
@@ -21,6 +22,8 @@ namespace TsiErp.Business.Entities.Warehouse.Services
     public class WarehousesAppService : ApplicationService, IWarehousesAppService
     {
         private readonly IWarehousesRepository _repository;
+
+        WarehouseManager _manager { get; set; } = new WarehouseManager();
 
         public WarehousesAppService(IWarehousesRepository repository)
         {
@@ -31,6 +34,8 @@ namespace TsiErp.Business.Entities.Warehouse.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectWarehousesDto>> CreateAsync(CreateWarehousesDto input)
         {
+            await _manager.CodeControl(_repository, input.Code);
+
             var entity = ObjectMapper.Map<CreateWarehousesDto, Warehouses>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
@@ -41,6 +46,7 @@ namespace TsiErp.Business.Entities.Warehouse.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            await _manager.DeleteControl(_repository, id);
             await _repository.DeleteAsync(id);
             return new SuccessResult("Silme işlemi başarılı.");
         }
@@ -68,6 +74,8 @@ namespace TsiErp.Business.Entities.Warehouse.Services
         public async Task<IDataResult<SelectWarehousesDto>> UpdateAsync(UpdateWarehousesDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
+
+            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
 
             var mappedEntity = ObjectMapper.Map<UpdateWarehousesDto, Warehouses>(input);
 

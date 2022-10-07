@@ -5,6 +5,7 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.DependencyResolvers.Autofac;
+using TsiErp.Business.Entities.FinalControlUnsuitabilityItem.BusinessRules;
 using TsiErp.Business.Entities.FinalControlUnsuitabilityItem.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.FinalControlUnsuitabilityItem;
@@ -18,6 +19,8 @@ namespace TsiErp.Business.Entities.FinalControlUnsuitabilityItem.Services
     {
         private readonly IFinalControlUnsuitabilityItemsRepository _repository;
 
+        FinalControlUnsuitabilityItemManager _manager { get; set; } = new FinalControlUnsuitabilityItemManager();
+
         public FinalControlUnsuitabilityItemsAppService(IFinalControlUnsuitabilityItemsRepository repository)
         {
             _repository = repository;
@@ -28,6 +31,8 @@ namespace TsiErp.Business.Entities.FinalControlUnsuitabilityItem.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectFinalControlUnsuitabilityItemsDto>> CreateAsync(CreateFinalControlUnsuitabilityItemsDto input)
         {
+            await _manager.CodeControl(_repository, input.Code);
+
             var entity = ObjectMapper.Map<CreateFinalControlUnsuitabilityItemsDto, FinalControlUnsuitabilityItems>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
@@ -68,6 +73,8 @@ namespace TsiErp.Business.Entities.FinalControlUnsuitabilityItem.Services
         public async Task<IDataResult<SelectFinalControlUnsuitabilityItemsDto>> UpdateAsync(UpdateFinalControlUnsuitabilityItemsDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
+
+            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
 
             var mappedEntity = ObjectMapper.Map<UpdateFinalControlUnsuitabilityItemsDto, FinalControlUnsuitabilityItems>(input);
 

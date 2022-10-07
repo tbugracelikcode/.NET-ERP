@@ -5,6 +5,7 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.DependencyResolvers.Autofac;
+using TsiErp.Business.Entities.ProductionOrderChangeItem.BusinessRules;
 using TsiErp.Business.Entities.ProductionOrderChangeItem.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.ProductionOrderChangeItem;
@@ -18,6 +19,8 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeItem.Services
     {
         private readonly IProductionOrderChangeItemsRepository _repository;
 
+        ProductionOrderChangeItemManager _manager { get; set; } = new ProductionOrderChangeItemManager();
+
         public ProductionOrderChangeItemsAppService(IProductionOrderChangeItemsRepository repository)
         {
             _repository = repository;
@@ -28,6 +31,8 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeItem.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionOrderChangeItemsDto>> CreateAsync(CreateProductionOrderChangeItemsDto input)
         {
+            await _manager.CodeControl(_repository, input.Code);
+
             var entity = ObjectMapper.Map<CreateProductionOrderChangeItemsDto, ProductionOrderChangeItems>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
@@ -68,6 +73,8 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeItem.Services
         public async Task<IDataResult<SelectProductionOrderChangeItemsDto>> UpdateAsync(UpdateProductionOrderChangeItemsDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
+
+            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
 
             var mappedEntity = ObjectMapper.Map<UpdateProductionOrderChangeItemsDto, ProductionOrderChangeItems>(input);
 

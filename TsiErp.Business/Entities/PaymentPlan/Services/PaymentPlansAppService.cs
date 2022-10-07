@@ -5,6 +5,7 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.DependencyResolvers.Autofac;
+using TsiErp.Business.Entities.PaymentPlan.BusinessRules;
 using TsiErp.Business.Entities.PaymentPlan.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.PaymentPlan;
@@ -18,6 +19,8 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
     {
         private readonly IPaymentPlansRepository _repository;
 
+        PaymentPlanManager _manager { get; set; } = new PaymentPlanManager();
+
         public PaymentPlansAppService(IPaymentPlansRepository repository)
         {
             _repository = repository;
@@ -28,6 +31,8 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPaymentPlansDto>> CreateAsync(CreatePaymentPlansDto input)
         {
+            await _manager.CodeControl(_repository, input.Code);
+
             var entity = ObjectMapper.Map<CreatePaymentPlansDto, PaymentPlans>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
@@ -39,6 +44,7 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            await _manager.DeleteControl(_repository, id);
             await _repository.DeleteAsync(id);
             return new SuccessResult("Silme işlemi başarılı.");
         }
@@ -46,7 +52,7 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
 
         public async Task<IDataResult<SelectPaymentPlansDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id, null);
+            var entity = await _repository.GetAsync(t => t.Id == id, t=>t.SalesPropositions, t => t.SalesPropositionLines);
             var mappedEntity = ObjectMapper.Map<PaymentPlans, SelectPaymentPlansDto>(entity);
             return new SuccessDataResult<SelectPaymentPlansDto>(mappedEntity);
         }
@@ -55,7 +61,7 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPaymentPlansDto>>> GetListAsync(ListPaymentPlansParameterDto input)
         {
-            var list = await _repository.GetListAsync(t => t.IsActive == input.IsActive, null);
+            var list = await _repository.GetListAsync(t => t.IsActive == input.IsActive, t => t.SalesPropositions, t => t.SalesPropositionLines);
 
             var mappedEntity = ObjectMapper.Map<List<PaymentPlans>, List<ListPaymentPlansDto>>(list.ToList());
 
@@ -68,6 +74,8 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
         public async Task<IDataResult<SelectPaymentPlansDto>> UpdateAsync(UpdatePaymentPlansDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
+
+            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
 
             var mappedEntity = ObjectMapper.Map<UpdatePaymentPlansDto, PaymentPlans>(input);
 

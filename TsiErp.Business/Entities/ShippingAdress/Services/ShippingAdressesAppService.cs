@@ -13,6 +13,7 @@ using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TsiErp.Business.Entities.ShippingAdress.BusinessRules;
 
 namespace TsiErp.Business.Entities.ShippingAdress.Services
 {
@@ -20,6 +21,8 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
     public class ShippingAdressesAppService : ApplicationService, IShippingAdressesAppService
     {
         private readonly IShippingAdressesRepository _repository;
+
+        ShippingAdressesManager _manager { get; set; } = new ShippingAdressesManager();
 
         public ShippingAdressesAppService(IShippingAdressesRepository repository)
         {
@@ -31,6 +34,8 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectShippingAdressesDto>> CreateAsync(CreateShippingAdressesDto input)
         {
+            await _manager.CodeControl(_repository, input.Code);
+
             var entity = ObjectMapper.Map<CreateShippingAdressesDto, ShippingAdresses>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
@@ -42,6 +47,7 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            await _manager.DeleteControl(_repository, id);
             await _repository.DeleteAsync(id);
             return new SuccessResult("Silme işlemi başarılı.");
         }
@@ -49,7 +55,7 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
 
         public async Task<IDataResult<SelectShippingAdressesDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id, t => t.CurrentAccountCards);
+            var entity = await _repository.GetAsync(t => t.Id == id, t => t.CurrentAccountCards,t=>t.SalesPropositions);
             var mappedEntity = ObjectMapper.Map<ShippingAdresses, SelectShippingAdressesDto>(entity);
             return new SuccessDataResult<SelectShippingAdressesDto>(mappedEntity);
         }
@@ -58,7 +64,7 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListShippingAdressesDto>>> GetListAsync(ListShippingAdressesParameterDto input)
         {
-            var list = await _repository.GetListAsync(null, x => x.CurrentAccountCards);
+            var list = await _repository.GetListAsync(null, x => x.CurrentAccountCards, t => t.SalesPropositions);
 
             var mappedEntity = ObjectMapper.Map<List<ShippingAdresses>, List<ListShippingAdressesDto>>(list.ToList());
 
@@ -71,6 +77,8 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
         public async Task<IDataResult<SelectShippingAdressesDto>> UpdateAsync(UpdateShippingAdressesDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
+
+            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
 
             var mappedEntity = ObjectMapper.Map<UpdateShippingAdressesDto, ShippingAdresses>(input);
 
