@@ -202,5 +202,16 @@ namespace Tsi.EntityFrameworkCore.Respositories.EntityFrameworkCore
         {
             return IncludeDetails(_dbset.AsQueryable(), propertySelectors);
         }
+
+        public async Task<IQueryable<TEntity>> GetQueryableAsync()
+        {
+            await Task.CompletedTask;
+            return _dbset.AsQueryable();
+        }
+
+        public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await _dbset.AnyAsync(predicate);
+        }
     }
 }

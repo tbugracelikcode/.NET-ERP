@@ -9,9 +9,6 @@ namespace TsiErp.ErpUI.Pages.Department
 {
     public partial class DepartmentsListPage
     {
-        private SfGrid<ListDepartmentsDto> _grid;
-
-        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
         protected override async void OnInitialized()
         {
             BaseCrudService = DepartmentsService;

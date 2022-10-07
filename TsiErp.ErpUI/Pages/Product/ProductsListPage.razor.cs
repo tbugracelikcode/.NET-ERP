@@ -19,10 +19,6 @@ namespace TsiErp.ErpUI.Pages.Product
         SfComboBox<string, ListUnitSetsDto> UnitSetsComboBox;
         List<ListUnitSetsDto> UnitSetsList = new List<ListUnitSetsDto>();
 
-        private SfGrid<ListProductsDto> _grid;
-
-        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
-
 
         SfComboBox<string, ListProductGroupsDto> ProductGroupsComboBox;
         List<ListProductGroupsDto> ProductGroupsList = new List<ListProductGroupsDto>();

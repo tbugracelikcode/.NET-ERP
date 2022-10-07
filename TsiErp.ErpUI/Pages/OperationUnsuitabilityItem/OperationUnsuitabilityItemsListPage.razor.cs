@@ -10,10 +10,6 @@ namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityItem
     public partial class OperationUnsuitabilityItemsListPage
     {
 
-        private SfGrid<ListOperationUnsuitabilityItemsDto> _grid;
-
-        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
-
         protected override async void OnInitialized()
         {
             BaseCrudService = OperationUnsuitabilityItemsService;

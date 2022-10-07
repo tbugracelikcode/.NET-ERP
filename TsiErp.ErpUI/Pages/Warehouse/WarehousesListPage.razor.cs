@@ -9,10 +9,6 @@ namespace TsiErp.ErpUI.Pages.Warehouse
 {
     public partial class WarehousesListPage
     {
-        private SfGrid<ListWarehousesDto> _grid;
-
-        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
-
         protected override async void OnInitialized()
         {
             BaseCrudService = WarehousesService;

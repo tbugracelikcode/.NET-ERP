@@ -18,11 +18,7 @@ namespace TsiErp.ErpUI.Pages.Employee
     {
         SfComboBox<string, ListDepartmentsDto> DepartmentsComboBox;
 
-        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
-
         List<ListDepartmentsDto> DepartmentsList = new List<ListDepartmentsDto>();
-
-        private SfGrid<ListEmployeesDto> _grid;
 
         List<ComboBoxEnumItem<BloodTypeEnum>> BloodTypesList = new List<ComboBoxEnumItem<BloodTypeEnum>>();
 

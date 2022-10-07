@@ -15,10 +15,6 @@ namespace TsiErp.ErpUI.Pages.ExchangeRate
     {
         SfComboBox<string, ListCurrenciesDto> CurrenciesComboBox;
 
-        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
-
-        private SfGrid<ListExchangeRatesDto> _grid;
-
         List<ListCurrenciesDto> CurrenciesList = new List<ListCurrenciesDto>();
 
 

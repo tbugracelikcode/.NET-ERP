@@ -23,6 +23,7 @@
   <ItemGroup>
     <Folder Include="Entities\Authentication\UserRoles\" />
     <Folder Include="Entities\Authentication\Users\" />
+    <Folder Include="Extensions\CrudControl\" />
   </ItemGroup>
 
 </Project>

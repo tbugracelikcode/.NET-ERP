@@ -16,10 +16,6 @@ namespace TsiErp.ErpUI.Pages.CurrentAccountCard
     public partial class CurrentAccountCardsListPage
     {
 
-        private SfGrid<ListCurrentAccountCardsDto> _grid;
-
-        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
-
         SfComboBox<string, ListShippingAdressesDto> ShippingAdressesComboBox;
         List<ListShippingAdressesDto> ShippingAdressesList = new List<ListShippingAdressesDto>();
 

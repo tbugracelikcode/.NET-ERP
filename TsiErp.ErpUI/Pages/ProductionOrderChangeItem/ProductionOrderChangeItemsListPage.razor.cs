@@ -10,9 +10,6 @@ namespace TsiErp.ErpUI.Pages.ProductionOrderChangeItem
     public partial class ProductionOrderChangeItemsListPage
     {
 
-        private SfGrid<ListProductionOrderChangeItemsDto> _grid;
-        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
-
         protected override async void OnInitialized()
         {
             BaseCrudService = ProductionOrderChangeItemsService;

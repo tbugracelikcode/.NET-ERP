@@ -15,10 +15,6 @@ namespace TsiErp.ErpUI.Pages.EquipmentRecord
     {
         bool cancelReasonVisible = false;
 
-        private SfGrid<ListEquipmentRecordsDto> _grid;
-
-        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
-
         SfComboBox<string, ListDepartmentsDto> DepartmentsComboBox;
         List<ListDepartmentsDto> DepartmentsList = new List<ListDepartmentsDto>();
 
@@ -28,7 +24,7 @@ namespace TsiErp.ErpUI.Pages.EquipmentRecord
             await GetDepartmentsList();
         }
 
-        void CheckValueChanged(ChangeEventArgs args)
+        void CancelValueChanged(ChangeEventArgs args)
         {
             bool argsValue = Convert.ToBoolean(args.Value);
 
@@ -48,7 +44,9 @@ namespace TsiErp.ErpUI.Pages.EquipmentRecord
         {
             DataSource = new SelectEquipmentRecordsDto()
             {
-                IsActive = true
+                IsActive = true,
+                CancellationDate = null,
+                RecordDate = DateTime.Today
             };
 
             ShowEditPage();
