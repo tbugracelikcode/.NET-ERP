@@ -18,6 +18,7 @@ using TsiErp.Business.Entities.ContractUnsuitabilityItem.Validations;
 using TsiErp.Entities.Entities.ContractUnsuitabilityItem.Dtos;
 using TsiErp.Entities.Entities.ContractUnsuitabilityItem;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.Business.Entities.ContractUnsuitabilityItem.BusinessRules;
 
 namespace TsiErp.Business.Entities.ContractUnsuitabilityItem.Services
 {
@@ -25,6 +26,8 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityItem.Services
     public class ContractUnsuitabilityItemsAppService : ApplicationService, IContractUnsuitabilityItemsAppService
     {
         private readonly IContractUnsuitabilityItemsRepository _repository;
+
+        ContractUnsuitabilityItemManager _manager { get; set; } = new ContractUnsuitabilityItemManager();
 
         public ContractUnsuitabilityItemsAppService(IContractUnsuitabilityItemsRepository repository)
         {
@@ -36,6 +39,9 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityItem.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectContractUnsuitabilityItemsDto>> CreateAsync(CreateContractUnsuitabilityItemsDto input)
         {
+
+            await _manager.CodeControl(_repository, input.Code);
+
             var entity = ObjectMapper.Map<CreateContractUnsuitabilityItemsDto, ContractUnsuitabilityItems>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
@@ -76,6 +82,8 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityItem.Services
         public async Task<IDataResult<SelectContractUnsuitabilityItemsDto>> UpdateAsync(UpdateContractUnsuitabilityItemsDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
+
+            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
 
             var mappedEntity = ObjectMapper.Map<UpdateContractUnsuitabilityItemsDto, ContractUnsuitabilityItems>(input);
 

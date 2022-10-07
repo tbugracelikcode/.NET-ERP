@@ -16,7 +16,6 @@ namespace TsiErp.ErpUI.Pages.Operation
 {
     public partial class OperationsListPage
     {
-        private SfGrid<ListOperationsDto> _grid;
 
         #region Combobox Listeleri
 
@@ -31,7 +30,6 @@ namespace TsiErp.ErpUI.Pages.Operation
         [Inject]
         ModalManager ModalManager { get; set; }
 
-        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
 
         SelectOperationLinesDto LineDataSource = new SelectOperationLinesDto();
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
@@ -95,7 +93,7 @@ namespace TsiErp.ErpUI.Pages.Operation
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync("Onay", "Silmek istediğinize emin misiniz ?");
+                    var res = await ModalManager.ConfirmationAsync("Onay","Silmek istediğinize emin misiniz ?"  );
 
                     if (res == true)
                     {

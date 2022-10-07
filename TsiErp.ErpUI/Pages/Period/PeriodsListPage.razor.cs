@@ -18,10 +18,6 @@ namespace TsiErp.ErpUI.Pages.Period
         SfComboBox<string, ListBranchesDto> BranchesComboBox;
         List<ListBranchesDto> BranchesList = new List<ListBranchesDto>();
 
-        private SfGrid<ListPeriodsDto> _grid;
-
-        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
-
         protected override async void OnInitialized()
         {
             BaseCrudService = PeriodsService;

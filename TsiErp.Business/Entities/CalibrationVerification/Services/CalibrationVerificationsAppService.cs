@@ -18,6 +18,7 @@ using TsiErp.Business.Entities.CalibrationVerification.Validations;
 using TsiErp.Entities.Entities.CalibrationVerification.Dtos;
 using TsiErp.Entities.Entities.CalibrationVerification;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.Business.Entities.CalibrationVerification.BusinessRules;
 
 namespace TsiErp.Business.Entities.CalibrationVerification.Services
 {
@@ -25,6 +26,8 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
     public class CalibrationVerificationsAppService : ApplicationService, ICalibrationVerificationsAppService
     {
         private readonly ICalibrationVerificationsRepository _repository;
+
+        CalibrationVerificationManager _manager { get; set; } = new CalibrationVerificationManager();
 
         public CalibrationVerificationsAppService(ICalibrationVerificationsRepository repository)
         {
@@ -36,6 +39,9 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCalibrationVerificationsDto>> CreateAsync(CreateCalibrationVerificationsDto input)
         {
+
+            await _manager.CodeControl(_repository, input.Code);
+
             var entity = ObjectMapper.Map<CreateCalibrationVerificationsDto, CalibrationVerifications>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
@@ -76,6 +82,8 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
         public async Task<IDataResult<SelectCalibrationVerificationsDto>> UpdateAsync(UpdateCalibrationVerificationsDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
+
+            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
 
             var mappedEntity = ObjectMapper.Map<UpdateCalibrationVerificationsDto, CalibrationVerifications>(input);
 

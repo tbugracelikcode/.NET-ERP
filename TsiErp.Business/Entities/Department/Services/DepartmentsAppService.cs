@@ -18,6 +18,7 @@ using TsiErp.Business.Entities.Department.Validations;
 using TsiErp.Entities.Entities.Department.Dtos;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.Department;
+using TsiErp.Business.Entities.Department.BusinessRules;
 
 namespace TsiErp.Business.Entities.Department.Services
 {
@@ -25,6 +26,8 @@ namespace TsiErp.Business.Entities.Department.Services
     public class DepartmentsAppService : ApplicationService, IDepartmentsAppService
     {
         private readonly IDepartmentsRepository _repository;
+
+        DepartmentManager _manager { get; set; } = new DepartmentManager();
 
         public DepartmentsAppService(IDepartmentsRepository repository)
         {
@@ -36,6 +39,8 @@ namespace TsiErp.Business.Entities.Department.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectDepartmentsDto>> CreateAsync(CreateDepartmentsDto input)
         {
+            await _manager.CodeControl(_repository, input.Code);
+
             var entity = ObjectMapper.Map<CreateDepartmentsDto, Departments>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
@@ -47,6 +52,7 @@ namespace TsiErp.Business.Entities.Department.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            await _manager.DeleteControl(_repository, id);
             await _repository.DeleteAsync(id);
             return new SuccessResult("Silme işlemi başarılı.");
         }
@@ -76,6 +82,8 @@ namespace TsiErp.Business.Entities.Department.Services
         public async Task<IDataResult<SelectDepartmentsDto>> UpdateAsync(UpdateDepartmentsDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
+
+            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
 
             var mappedEntity = ObjectMapper.Map<UpdateDepartmentsDto, Departments>(input);
 

@@ -10,10 +10,6 @@ namespace TsiErp.ErpUI.Pages.CustomerComplaintItem
     public partial class CustomerComplaintItemListPage
     {
 
-        private SfGrid<ListCustomerComplaintItemsDto> _grid;
-
-        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
-
 
         protected override async void OnInitialized()
         {

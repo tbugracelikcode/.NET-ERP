@@ -9,9 +9,6 @@ namespace TsiErp.ErpUI.Pages.StationGroup
 {
     public partial class StationGroupsListPage
     {
-        private SfGrid<ListStationGroupsDto> _grid;
-
-        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
 
         protected override async void OnInitialized()
         {

@@ -18,6 +18,7 @@ using TsiErp.Business.Entities.CalibrationRecord.Validations;
 using TsiErp.Entities.Entities.CalibrationRecord.Dtos;
 using TsiErp.Entities.Entities.CalibrationRecord;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.Business.Entities.CalibrationRecord.BusinessRules;
 
 namespace TsiErp.Business.Entities.CalibrationRecord.Services
 {
@@ -25,6 +26,8 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
     public class CalibrationRecordsAppService : ApplicationService , ICalibrationRecordsAppService
     {
         private readonly ICalibrationRecordsRepository _repository;
+
+        CalibrationRecordsManager _manager { get; set; } = new CalibrationRecordsManager();
 
         public CalibrationRecordsAppService(ICalibrationRecordsRepository repository)
         {
@@ -36,6 +39,9 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCalibrationRecordsDto>> CreateAsync(CreateCalibrationRecordsDto input)
         {
+
+            await _manager.CodeControl(_repository, input.Code);
+
             var entity = ObjectMapper.Map<CreateCalibrationRecordsDto, CalibrationRecords>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
@@ -47,6 +53,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            await _manager.DeleteControl(_repository, id);
             await _repository.DeleteAsync(id);
             return new SuccessResult("Silme işlemi başarılı.");
         }
@@ -76,6 +83,8 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
         public async Task<IDataResult<SelectCalibrationRecordsDto>> UpdateAsync(UpdateCalibrationRecordsDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
+
+            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
 
             var mappedEntity = ObjectMapper.Map<UpdateCalibrationRecordsDto, CalibrationRecords>(input);
 

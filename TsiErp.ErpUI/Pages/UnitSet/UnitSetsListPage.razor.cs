@@ -9,12 +9,6 @@ namespace TsiErp.ErpUI.Pages.UnitSet
 {
     public partial class UnitSetsListPage
     {
-
-        private SfGrid<ListUnitSetsDto> _grid;
-
-        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
-
-
         protected override async void OnInitialized()
         {
             BaseCrudService = UnitSetsService;

@@ -16,15 +16,12 @@ namespace TsiErp.ErpUI.Pages.CalibrationRecord
         SfComboBox<string, ListEquipmentRecordsDto> EquipmentRecordsComboBox;
         List<ListEquipmentRecordsDto> EquipmentRecordsList = new List<ListEquipmentRecordsDto>();
 
-        private SfGrid<ListCalibrationRecordsDto> _grid;
-
-        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
-
         protected override async void OnInitialized()
         {
             BaseCrudService = CalibrationRecordsService;
             await GetEquipmentRecordsList();
         }
+
         public async Task EquipmentFiltering(FilteringEventArgs args)
         {
 
@@ -60,6 +57,19 @@ namespace TsiErp.ErpUI.Pages.CalibrationRecord
                 DataSource.Equipment = string.Empty;
             }
             await InvokeAsync(StateHasChanged);
+        }
+
+        protected override Task BeforeInsertAsync()
+        {
+            DataSource = new SelectCalibrationRecordsDto()
+            {
+                Date = DateTime.Today,
+                NextControl = DateTime.Today
+            };
+
+            ShowEditPage();
+
+            return Task.CompletedTask;
         }
 
     }

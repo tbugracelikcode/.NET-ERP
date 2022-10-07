@@ -5,6 +5,7 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.DependencyResolvers.Autofac;
+using TsiErp.Business.Entities.CustomerComplaintItem.BusinessRules;
 using TsiErp.Business.Entities.CustomerComplaintItem.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.CustomerComplaintItem;
@@ -18,6 +19,8 @@ namespace TsiErp.Business.Entities.CustomerComplaintItem.Services
     {
         private readonly ICustomerComplaintItemsRepository _repository;
 
+        CustomerComplaintItemManager _manager { get; set; } = new CustomerComplaintItemManager();
+
         public CustomerComplaintItemsAppService(ICustomerComplaintItemsRepository repository)
         {
             _repository = repository;
@@ -28,6 +31,8 @@ namespace TsiErp.Business.Entities.CustomerComplaintItem.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCustomerComplaintItemsDto>> CreateAsync(CreateCustomerComplaintItemsDto input)
         {
+            await _manager.CodeControl(_repository, input.Code);
+
             var entity = ObjectMapper.Map<CreateCustomerComplaintItemsDto, CustomerComplaintItems>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
@@ -68,6 +73,8 @@ namespace TsiErp.Business.Entities.CustomerComplaintItem.Services
         public async Task<IDataResult<SelectCustomerComplaintItemsDto>> UpdateAsync(UpdateCustomerComplaintItemsDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
+
+            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
 
             var mappedEntity = ObjectMapper.Map<UpdateCustomerComplaintItemsDto, CustomerComplaintItems>(input);
 

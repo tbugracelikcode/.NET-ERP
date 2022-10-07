@@ -10,10 +10,6 @@ namespace TsiErp.ErpUI.Pages.ProductGroup
     public partial class ProductGroupsListPage
     {
 
-        private SfGrid<ListProductGroupsDto> _grid;
-
-        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
-
         protected override async void OnInitialized()
         {
             BaseCrudService = ProductGroupsService;

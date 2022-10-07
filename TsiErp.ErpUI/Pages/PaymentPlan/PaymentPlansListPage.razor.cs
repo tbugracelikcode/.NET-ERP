@@ -10,10 +10,6 @@ namespace TsiErp.ErpUI.Pages.PaymentPlan
     public partial class PaymentPlansListPage
     {
 
-        private SfGrid<ListPaymentPlansDto> _grid;
-
-        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
-
         protected override async void OnInitialized()
         {
             BaseCrudService = PaymentPlansService;

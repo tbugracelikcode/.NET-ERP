@@ -19,11 +19,6 @@ namespace TsiErp.ErpUI.Pages.Station
         SfComboBox<string, ListStationGroupsDto> StationGroupComboBox;
         List<ListStationGroupsDto> StationGroupList = new List<ListStationGroupsDto>();
 
-        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
-
-        private SfGrid<ListStationsDto> _grid;
-
-
         protected override async void OnInitialized()
         {
             BaseCrudService = StationsService;
