@@ -7,7 +7,7 @@
 
                 @*   <DxTreeViewNode Visible="@collapsevisible" Text="Ana Sayfa" IconCssClass="fas fa-columns b-bar-icon" />*@
 
-                <DxTreeViewNode Visible="@collapsevisible" Text="Stok Yönetimi" IconCssClass="oi oi-vertical-align-bottom">
+                <DxTreeViewNode Visible="@collapsevisible" Text="Stok Yönetimi" IconCssClass="fa fa-warehouse-full">
                     <Nodes>
                         <DxTreeViewNode Text="Ana Kayýtlar">
                             <Nodes>
@@ -25,7 +25,7 @@
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text="Finans Yönetimi" IconCssClass="oi oi-euro">
+                <DxTreeViewNode Visible="@collapsevisible" Text="Finans Yönetimi" IconCssClass="fa fa-euro-sign">
                     <Nodes>
                         <DxTreeViewNode Text="Ana Kayýtlar">
                             <Nodes>
@@ -37,7 +37,7 @@
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text="Satýþ Yönetimi" IconCssClass="oi oi-cart">
+                <DxTreeViewNode Visible="@collapsevisible" Text="Satýþ Yönetimi" IconCssClass="fa fa-cart-shopping">
                     <Nodes>
                         <DxTreeViewNode Text="Teklif Yönetimi">
                             <Nodes>
@@ -47,7 +47,7 @@
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text="Kaynak Yönetimi" IconCssClass="oi oi-people">
+                <DxTreeViewNode Visible="@collapsevisible" Text="Kaynak Yönetimi" IconCssClass="fa fa-users">
                     <Nodes>
                         <DxTreeViewNode Text="Ana Kayýtlar">
                             <Nodes>
@@ -60,15 +60,21 @@
                     </Nodes>
                 </DxTreeViewNode>
 
+                 <DxTreeViewNode Visible="@collapsevisible" Text="Planlama" IconCssClass="fa fa-list-check">
+                    <Nodes>
+                        <DxTreeViewNode NavigateUrl="/deneme" Text="DENEME" />
+                    </Nodes>
+                </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text="Üretim Yönetimi" IconCssClass="oi oi-cog">
+
+                <DxTreeViewNode Visible="@collapsevisible" Text="Üretim Yönetimi" IconCssClass="fa fa-industry">
                     <Nodes>
                         <DxTreeViewNode NavigateUrl="/operations" Text="Operasyonlar" />
                         <DxTreeViewNode NavigateUrl="/routes" Text="Rotalar" />
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text="Kalite Kontrol" IconCssClass="oi oi-clipboard">
+                <DxTreeViewNode Visible="@collapsevisible" Text="Kalite Kontrol" IconCssClass="fa fa-clipboard">
                     <Nodes>
                         <DxTreeViewNode Text="Ana Kayýtlar">
                             <Nodes>
@@ -107,7 +113,7 @@
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text="Genel Sistem Tanýmlamalarý" IconCssClass="oi oi-list-rich">
+                <DxTreeViewNode Visible="@collapsevisible" Text="Genel Sistem Tanýmlamalarý" IconCssClass="fa fa-table-layout">
                     <Nodes>
                         <DxTreeViewNode NavigateUrl="/periods" Text="Dönemler" />
                         <DxTreeViewNode NavigateUrl="/branches" Text="Þubeler" />
