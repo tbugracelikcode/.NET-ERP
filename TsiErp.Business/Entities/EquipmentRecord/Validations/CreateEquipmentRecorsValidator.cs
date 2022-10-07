@@ -22,6 +22,10 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Validations
                 .WithMessage("Lütfen ekipman adını yazın.")
                 .MaximumLength(200)
                 .WithMessage("Ekipman adı 200 karakterden fazla olamaz.");
+
+            RuleFor(x => x.Department)
+                .Must(x => x.HasValue && x.Value != Guid.Empty)
+               .WithMessage("Lütfen departman seçin.");
         }
     }
 }

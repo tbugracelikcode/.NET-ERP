@@ -176,6 +176,7 @@
 
     .e-icons.e-group-icon:before {
         content: "\e724";
+        color: #b90000;
     }
 
     .e-icons.e-line-small:before {
@@ -1020,6 +1021,7 @@
 
     .e-icons.e-filter:before {
         content: "\e7f7";
+        color: #b90000;
     }
 
     .e-icons.e-clear-form:before {
@@ -43557,10 +43559,12 @@ label[for*=_wholeWord_e-de-rtl] {
 
 .e-excelfilter .e-icon-filter::before {
     content: "\e7f7";
+    color: #b90000;
 }
 
 .e-excelfilter .e-excl-filter-icon::before {
     content: "\e7f7";
+    color: #b90000;
 }
 
 .e-excelfilter .e-excl-filter-icon.e-filtered::before {
@@ -44105,11 +44109,13 @@ li.e-separator.e-menu-item.e-excel-separator {
 .e-grid-menu .e-icon-filter::before,
 .e-grid-menu .e-icon-filter.e-filtered::before {
     content: "\e7f7";
+    color: #b90000;
 }
 
 .e-grid .e-resfilter-icon::before,
 .e-grid-menu .e-resfilter-icon::before {
     content: "\e7f7";
+    color: #b90000;
 }
 
 .e-grid .e-ressort-icon::before,
@@ -44120,7 +44126,7 @@ li.e-separator.e-menu-item.e-excel-separator {
 .e-grid .e-excl-filter-icon::before,
 .e-grid-menu .e-excl-filter-icon::before {
     content: "\e7f7";
-    color: #cb0505;
+    color: #b90000;
 }
 
 .e-grid .e-excl-filter-icon.e-filtered::before,
@@ -44136,12 +44142,13 @@ li.e-separator.e-menu-item.e-excel-separator {
 .e-grid .e-icon-group::before,
 .e-grid-menu .e-icon-group::before {
     content: "\e724";
-    color: #cb0505;
+    color: #b90000;
 }
 
 .e-grid .e-icon-ungroup::before,
 .e-grid-menu .e-icon-ungroup::before {
     content: "\e724";
+    color: #b90000;
 }
 
 .e-grid .e-icon-reorderuparrow::before,
@@ -44239,6 +44246,7 @@ li.e-separator.e-menu-item.e-excel-separator {
 .e-grid .e-columnchooserdiv::before,
 .e-grid-menu .e-columnchooserdiv::before {
     content: "\e7f7";
+    color: #b90000;
 }
 
 .e-grid .e-ccsearch-icon::before,
@@ -44288,6 +44296,7 @@ li.e-separator.e-menu-item.e-excel-separator {
 
 .e-responsive-dialog .e-filterset::before {
     content: "\e7f7";
+    color: #b90000;
 }
 
 .e-responsive-dialog .e-search-icon::before {
@@ -64496,6 +64505,7 @@ div > .e-pv-bookmark-icon.e-pv-icon.e-right {
 .e-pivotfieldlist-wrapper .e-pv-filter::before,
 .e-pivotfieldlist-container .e-pv-filter::before {
     content: "\e7f7";
+    color: #b90000;
 }
 
 .e-pivotfieldlist-wrapper .e-pv-filtered::before,
@@ -64536,6 +64546,7 @@ div > .e-pv-bookmark-icon.e-pv-icon.e-right {
 .e-pivotfieldlist-wrapper .e-axis-filters::before,
 .e-pivotfieldlist-container .e-axis-filters::before {
     content: "\e7f7";
+    color: #b90000;
 }
 
 .e-pivotfieldlist-wrapper .e-selected-option-icon::before,
@@ -68403,6 +68414,7 @@ div > .e-pv-bookmark-icon.e-pv-icon.e-right {
 
 .e-pivotview .e-pv-filter::before {
     content: "\e7f7";
+    color: #b90000;
 }
 
 .e-pivotview .e-pv-filtered::before {
