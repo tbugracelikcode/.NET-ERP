@@ -13,8 +13,8 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
 
         #region Değişkenler
 
-        DateTime startDate = DateTime.Today.AddDays(-90);
-        DateTime endDate = DateTime.Today.AddDays(-(DateTime.Today.Day+1));
+        DateTime startDate = DateTime.Today.AddDays(-(90 + DateTime.Today.Day));
+        DateTime endDate = DateTime.Today.AddDays(-(DateTime.Today.Day));
         private int? selectedTimeIndex { get; set; }
         private int threshold = 75;
         private double thresholddouble = 0.75;
@@ -30,7 +30,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
         protected async override void OnInitialized()
         {
             dataoee = await IstasyonOEEService.GetStationOEEAnalysis(startDate, endDate);
-            datachart =await IstasyonOEEService.GetAdminMachineChart(startDate,endDate,3);
+            datachart = await IstasyonOEEService.GetAdminMachineChart(startDate, endDate, 3);
         }
 
         #region Component Metotları
@@ -40,14 +40,11 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
             VisibleSpinner = true;
             await Task.Delay(100);
             StateHasChanged();
-            
-
-            //endDate = DateTime.Today;
 
             #region Zaman Seçimi
             switch (selectedTimeIndex)
             {
-                case 0: startDate = DateTime.Today.AddDays(-365); frequencyChart =0; break;
+                case 0: startDate = DateTime.Today.AddDays(-365); frequencyChart = 0; break;
                 case 1: startDate = DateTime.Today.AddDays(-273); frequencyChart = 1; break;
                 case 2: startDate = DateTime.Today.AddDays(-181); frequencyChart = 2; break;
                 case 3: startDate = DateTime.Today.AddDays(-90); frequencyChart = 3; break;
@@ -61,7 +58,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
 
             thresholddouble = Convert.ToDouble(threshold) / 100;
 
-            datachart =await IstasyonOEEService.GetAdminMachineChart(startDate,endDate, frequencyChart);
+            datachart = await IstasyonOEEService.GetAdminMachineChart(startDate, endDate, frequencyChart);
             dataoee = await IstasyonOEEService.GetStationOEEAnalysis(startDate, endDate);
 
             await ChartInstance.RefreshAsync();
@@ -85,7 +82,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
 
         private async void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
         {
-            
+
             bool argsValue = Convert.ToBoolean(args.Value);
             isGridChecked = argsValue;
             StateHasChanged();

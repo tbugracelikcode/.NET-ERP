@@ -11,8 +11,8 @@ namespace TsiErp.DashboardUI.Pages.Admin.SupplierUnsuitabilityAnalysis
 
         #region Değişkenler
 
-        DateTime startDate = DateTime.Today.AddDays(-90);
-        DateTime endDate = DateTime.Today;
+        DateTime startDate = DateTime.Today.AddDays(-(90 + DateTime.Today.Day));
+        DateTime endDate = DateTime.Today.AddDays(-(DateTime.Today.Day));
         private int? selectedTimeIndex { get; set; }
         int? selectedactionID = 1;
         private bool isGridChecked = true;
@@ -24,7 +24,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.SupplierUnsuitabilityAnalysis
 
         protected override async void OnInitialized()
         {
-            
+
 
             datasuppunsuitability = await TedarikciUygunsuzlukService.GetSupplierUnsuitabilityAnalysis(startDate, endDate);
 
@@ -40,7 +40,6 @@ namespace TsiErp.DashboardUI.Pages.Admin.SupplierUnsuitabilityAnalysis
             await Task.Delay(1);
             StateHasChanged();
 
-            endDate = DateTime.Today;
 
             #region Zaman Seçimi
 
