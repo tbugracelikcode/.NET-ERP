@@ -19,10 +19,6 @@ namespace TsiErp.ErpUI.Pages.CalibrationVerification
 
         List<ListEquipmentRecordsDto> EquipmentRecordsList = new List<ListEquipmentRecordsDto>();
 
-        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
-
-        private SfGrid<ListCalibrationVerificationsDto> _grid;
-
         protected override async void OnInitialized()
         {
             BaseCrudService = CalibrationVerificationsService;

@@ -9,10 +9,6 @@ namespace TsiErp.ErpUI.Pages.Branch
 {
     public partial class BranchesListPage
     {
-        private SfGrid<ListBranchesDto> _grid;
-
-        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
-
         protected override async void OnInitialized()
         {
             BaseCrudService = BranchesService;
@@ -29,29 +25,5 @@ namespace TsiErp.ErpUI.Pages.Branch
 
             return Task.CompletedTask;
         }
-
-
-        //protected override void CreateContextMenu()
-        //{
-        //    base.CreateContextMenu();
-
-        //    //base.GridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
-        //}
-
-        //public async override void OnContextMenuClick(ContextMenuClickEventArgs<ListBranchesDto> args)
-        //{
-
-        //    switch (args.Item.Id)
-        //    {
-        //        case "refresh":
-        //            ListDataSource = (await GetListAsync(new ListBranchesParameterDto { IsActive = true })).Data.ToList();
-        //            break;
-
-        //        default:
-        //            break;
-        //    }
-
-        //    base.OnContextMenuClick(args);
-        //}
     }
 }

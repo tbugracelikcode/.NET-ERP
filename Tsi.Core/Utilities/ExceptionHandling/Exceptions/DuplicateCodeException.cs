@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TsiErp.Business.Exceptions
+namespace Tsi.Core.Utilities.ExceptionHandling.Exceptions
 {
     public class DuplicateCodeException : Exception
     {

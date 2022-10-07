@@ -9,9 +9,6 @@ namespace TsiErp.ErpUI.Pages.ContractUnsuitabilityItem
 {
     public partial class ContractUnsuitabilityItemsListPage
     {
-        private SfGrid<ListContractUnsuitabilityItemsDto> _grid;
-
-        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
 
         protected override async void OnInitialized()
         {

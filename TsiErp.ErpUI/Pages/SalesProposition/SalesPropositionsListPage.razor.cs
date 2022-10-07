@@ -58,8 +58,6 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         private SfGrid<ListSalesPropositionsDto> _grid;
         private SfGrid<SelectSalesPropositionLinesDto> _LineGrid;
 
-        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
-
         [Inject]
         ModalManager ModalManager { get; set; }
 
@@ -141,7 +139,7 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync("Dikkat", "Seçtiğiniz satır kalıcı olarak silinecektir.");
+                    var res = await ModalManager.ConfirmationAsync("Dikkat", "Seçtiğiniz satır kalıcı olarak silinecektir." );
 
                     if (res == true)
                     {

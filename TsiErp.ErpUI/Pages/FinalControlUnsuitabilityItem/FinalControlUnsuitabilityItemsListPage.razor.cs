@@ -10,10 +10,6 @@ namespace TsiErp.ErpUI.Pages.FinalControlUnsuitabilityItem
     public partial class FinalControlUnsuitabilityItemsListPage
     {
 
-        private SfGrid<ListFinalControlUnsuitabilityItemsDto> _grid;
-
-        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
-
         protected override async void OnInitialized()
         {
             BaseCrudService = FinalControlUnsuitabilityItemsService;

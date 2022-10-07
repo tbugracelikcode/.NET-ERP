@@ -1,23 +1,27 @@
 ﻿using Blazored.Modal.Services;
 using DevExpress.Blazor;
+using FluentValidation;
 using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.HeatMap.Internal;
 using Syncfusion.Blazor.Lists;
 using Syncfusion.Blazor.Navigations;
+using System.Text;
 using Tsi.Application.Contract.Services.EntityFrameworkCore;
 using Tsi.Blazor.Component.Core.Services;
 using Tsi.Core.Entities;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 using TsiErp.ErpUI.Utilities.ModalUtilities.ModalComponents;
+using static System.Net.Mime.MediaTypeNames;
 using IResult = Tsi.Core.Utilities.Results.IResult;
 
 namespace TsiErp.ErpUI.Pages.Base
 {
-    public abstract class BaseListPage<TGetOutputDto, TGetListOutputDto, TCreateInput, TUpdateInput, TGetListInput> : ComponentBase,ICoreCommonService 
+    public abstract class BaseListPage<TGetOutputDto, TGetListOutputDto, TCreateInput, TUpdateInput, TGetListInput> : ComponentBase, ICoreCommonService
          where TGetOutputDto : class, IEntityDto, new()
          where TGetListOutputDto : class, IEntityDto, new()
          where TGetListInput : class, new()
@@ -27,6 +31,8 @@ namespace TsiErp.ErpUI.Pages.Base
         public bool EditPageVisible { get; set; }
         public bool IsLoaded { get; set; }
         public bool SelectFirstDataRow { get; set; }
+
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
 
         public TGetListOutputDto SelectedItem { get; set; }
 
@@ -42,7 +48,7 @@ namespace TsiErp.ErpUI.Pages.Base
 
         protected ICrudAppService<TGetOutputDto, TGetListOutputDto, TCreateInput, TUpdateInput, TGetListInput> BaseCrudService { get; set; }
 
-        public ComponentBase ActiveEditComponent { get ; set ; }
+        public ComponentBase ActiveEditComponent { get; set; }
         public bool IsPopupListPage { get; set; }
         public Guid PopupListPageFocusedRowId { get; set; }
 
@@ -74,17 +80,75 @@ namespace TsiErp.ErpUI.Pages.Base
 
         protected async virtual Task<IDataResult<TGetOutputDto>> CreateAsync(TCreateInput input)
         {
-            return await BaseCrudService.CreateAsync(input);
+            try
+            {
+                return await BaseCrudService.CreateAsync(input);
+            }
+            catch (DuplicateCodeException exp)
+            {
+                await ModalManager.MessagePopupAsync("Bilgi", exp.Message);
+                return new ErrorDataResult<TGetOutputDto>();
+            }
+            catch (ValidationException exp)
+            {
+                var errorList = exp.Errors.ToList();
+
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("<ul>");
+
+                for (int i = 0; i < errorList.Count; i++)
+                {
+                    sb.AppendLine("<li>" + errorList[i].ErrorMessage + "</li>");
+                }
+
+                sb.AppendLine("</ul>");
+
+                await ModalManager.MessagePopupAsync("Bilgi", sb.ToString());
+                return new ErrorDataResult<TGetOutputDto>();
+            }
         }
 
         protected async virtual Task<IDataResult<TGetOutputDto>> UpdateAsync(TUpdateInput input)
         {
-            return await BaseCrudService.UpdateAsync(input);
+            try
+            {
+                return await BaseCrudService.UpdateAsync(input);
+            }
+            catch (DuplicateCodeException exp)
+            {
+                await ModalManager.MessagePopupAsync("Bilgi", exp.Message);
+                return new ErrorDataResult<TGetOutputDto>();
+            }
+            catch (ValidationException exp)
+            {
+                var errorList = exp.Errors.ToList();
+
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("<ul>");
+
+                for (int i = 0; i < errorList.Count; i++)
+                {
+                    sb.AppendLine("<li>" + errorList[i].ErrorMessage + "</li>");
+                }
+
+                sb.AppendLine("</ul>");
+
+                await ModalManager.MessagePopupAsync("Bilgi", sb.ToString());
+                return new ErrorDataResult<TGetOutputDto>();
+            }
         }
 
         protected async virtual Task<IResult> DeleteAsync(Guid id)
         {
-            return await BaseCrudService.DeleteAsync(id);
+            try
+            {
+                return await BaseCrudService.DeleteAsync(id);
+            }
+            catch (Exception exp)
+            {
+                await ModalManager.MessagePopupAsync("Bilgi", exp.Message);
+                return new ErrorDataResult<TGetOutputDto>();
+            }
         }
         #endregion
 
@@ -92,7 +156,7 @@ namespace TsiErp.ErpUI.Pages.Base
         {
             ListDataSource = (await GetListAsync(new TGetListInput
             {
-                
+
             })).ToList();
 
             IsLoaded = true;
@@ -118,10 +182,10 @@ namespace TsiErp.ErpUI.Pages.Base
                 result = (await UpdateAsync(updateInput)).Data;
             }
 
-            if (result == null) 
+            if (result == null)
             {
-                
-                return; 
+
+                return;
             }
 
             await GetListDataSourceAsync();
