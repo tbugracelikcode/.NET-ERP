@@ -24,6 +24,18 @@ namespace TsiErp.ErpUI.Pages.ExchangeRate
             await GetCurrenciesList();
         }
 
+        protected override Task BeforeInsertAsync()
+        {
+            DataSource = new SelectExchangeRatesDto()
+            {
+                Date = DateTime.Today
+            };
+
+            ShowEditPage();
+
+            return Task.CompletedTask;
+        }
+
 
 
         #region Para Birimleri

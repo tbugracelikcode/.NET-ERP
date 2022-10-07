@@ -43,25 +43,27 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).Conf
 builder.Services.AddSyncfusionBlazor();
 builder.Services.AddDevExpressBlazor();
 builder.Services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(SyncfusionLocalizer));
-            builder.Services.Configure<RequestLocalizationOptions>(options =>
-            {
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
                 // Define the list of cultures your app will support
-                var supportedCultures = new List<CultureInfo>()
-                {
+    var supportedCultures = new List<CultureInfo>()
+    {
                     new CultureInfo("en-US"),
                     new CultureInfo("de"),
                     new CultureInfo("fr"),
                     new CultureInfo("ar"),
                     new CultureInfo("zh"),
                     new CultureInfo("tr"),
-                };
+    };
 
                 // Set the default culture
-                options.DefaultRequestCulture = new RequestCulture("tr");
-                options.SupportedCultures = supportedCultures;
-                options.SupportedUICultures = supportedCultures;
+    options.DefaultRequestCulture = new RequestCulture("tr");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
 
-            });
+});
+
+
 
 
 builder.Services.AddRazorPages();
@@ -80,7 +82,6 @@ builder.Services.AddScoped<ModalManager>();
 
 
 var app = builder.Build();
-
 
 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NzA0MDk0QDMyMzAyZTMyMmUzMEVjb29PTkxlM3YvRVZwVTR5U0VCT2toK24vMEJlYmFVeFkwRlYrT1cwMzA9");
 

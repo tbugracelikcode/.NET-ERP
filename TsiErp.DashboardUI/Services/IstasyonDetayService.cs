@@ -9,12 +9,12 @@ namespace TsiErp.DashboardUI.Services
     public class IstasyonDetayService : IIstasyonDetayService
     {
 
-      
+
 
         #region Duruş Analizi
 
         #region Grid
-        public async Task< List<StationDetailedHaltAnalysis>> GetStationDetailedHaltAnalysis(int makineID, DateTime startDate, DateTime endDate)
+        public async Task<List<StationDetailedHaltAnalysis>> GetStationDetailedHaltAnalysis(int makineID, DateTime startDate, DateTime endDate)
         {
             List<StationDetailedHaltAnalysis> stationDetailedHaltAnalysis = new List<StationDetailedHaltAnalysis>();
 
@@ -36,7 +36,7 @@ namespace TsiErp.DashboardUI.Services
                 {
                     Code = code.KOD,
                     HaltID = haltID,
-                    Time = time ,
+                    Time = time,
                     StationName = stationName,
                     Percent = null,
                     Total = totaltime
@@ -50,12 +50,12 @@ namespace TsiErp.DashboardUI.Services
         #endregion
 
         #region Chart
-        public async Task < List<StationDetailedHaltAnalysis>> GetStationDetailedHaltAnalysisChart(int makineID, DateTime startDate, DateTime endDate)
+        public async Task<List<StationDetailedHaltAnalysis>> GetStationDetailedHaltAnalysisChart(int makineID, DateTime startDate, DateTime endDate)
         {
             List<StationDetailedHaltAnalysis> stationDetailedHaltAnalysisChart = new List<StationDetailedHaltAnalysis>();
 
             var haltCodes = DBHelper.GetHaltCodes();
-            var haltLines = DBHelper.GetHaltQueryStation(makineID, startDate, endDate);
+            var haltLines = DBHelper.GetHaltQueryStation(makineID, startDate, endDate).Where(t => t.MKD == true).ToList();
             int totaltime = haltLines.Sum(t => t.DURUSSURE);
 
             foreach (var code in haltCodes)
@@ -76,14 +76,14 @@ namespace TsiErp.DashboardUI.Services
                     StationName = stationName,
                     Total = totaltime,
                     Percent = (double)time / (double)totaltime
-                    
+
                 };
-                if(analysis.Time > 0)
+                if (analysis.Time > 0)
                 {
                     stationDetailedHaltAnalysisChart.Add(analysis);
                 }
 
-                
+
             }
             return await Task.FromResult(stationDetailedHaltAnalysisChart);
         }
@@ -95,7 +95,7 @@ namespace TsiErp.DashboardUI.Services
         #region Stok Analizi
 
         #region Chart
-        public async Task< List<StationDetailedProductChart>> GetStationDetailedProductChart(int makineID, DateTime startDate, DateTime endDate, int products)
+        public async Task<List<StationDetailedProductChart>> GetStationDetailedProductChart(int makineID, DateTime startDate, DateTime endDate, int products)
         {
 
             List<StationDetailedProductChart> stationDetailedProductChart = new List<StationDetailedProductChart>();
@@ -163,7 +163,7 @@ namespace TsiErp.DashboardUI.Services
         #endregion
 
         #region Grid
-        public async Task< List<StationDetailedProductAnalysis>> GetStationDetailedProductAnalysis(int makineID, DateTime startDate, DateTime endDate)
+        public async Task<List<StationDetailedProductAnalysis>> GetStationDetailedProductAnalysis(int makineID, DateTime startDate, DateTime endDate)
         {
 
             List<StationDetailedProductAnalysis> stationDetailedProductAnalysis = new List<StationDetailedProductAnalysis>();
@@ -214,7 +214,7 @@ namespace TsiErp.DashboardUI.Services
         #region Personel Analizi
 
         #region Grid-Chart
-        public async Task< List<StationDetailedEmployeeAnalysis>> GetStationDetailedEmployeeAnalysis(int makineID, DateTime startDate, DateTime endDate)
+        public async Task<List<StationDetailedEmployeeAnalysis>> GetStationDetailedEmployeeAnalysis(int makineID, DateTime startDate, DateTime endDate)
         {
 
             List<StationDetailedEmployeeAnalysis> stationDetailedEmployeeAnalysis = new List<StationDetailedEmployeeAnalysis>();
@@ -222,8 +222,8 @@ namespace TsiErp.DashboardUI.Services
             var operationLines = DBHelper.GetOperationLinesStationQuery(makineID, startDate, endDate);
             var employeeList = operationLines.Select(t => t.CALISANID).Distinct().ToList();
             var unsuitibility = DBHelper.GetUnsuitabilityEmployeeQuery(makineID, startDate, endDate);
-            var calenderLines = DBHelper.GetCalendarQuery(startDate, endDate).Where(t=>t.ISTASYONID == makineID).ToList();    
-            
+            var calenderLines = DBHelper.GetCalendarQuery(startDate, endDate).Where(t => t.ISTASYONID == makineID).ToList();
+
             foreach (var employeeID in employeeList)
             {
                 var tempUnsuitibility = unsuitibility.Where(t => t.CALISANID == employeeID).ToList();
@@ -231,7 +231,7 @@ namespace TsiErp.DashboardUI.Services
 
                 #region Değişkenler
 
-                decimal availability = (calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.PLANLANAN == "Hayır").Sum(c => c.TOPLAMCALISABILIRSURE)) > 0 ? (decimal)(tempOperationLines.Sum(t => t.OPERASYONSURESI) / (decimal)(calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" &&  c.PLANLANAN == "Hayır").Sum(c => c.TOPLAMCALISABILIRSURE))) : 0;
+                decimal availability = (calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.PLANLANAN == "Hayır").Sum(c => c.TOPLAMCALISABILIRSURE)) > 0 ? (decimal)(tempOperationLines.Sum(t => t.OPERASYONSURESI) / (decimal)(calenderLines.Where(c => c.CALISMADURUMU == "ÇALIŞMA VAR" && c.PLANLANAN == "Hayır").Sum(c => c.TOPLAMCALISABILIRSURE))) : 0;
                 decimal perf = tempOperationLines.Sum(t => t.BIRIMSURE) > 0 ? tempOperationLines.Sum(t => t.PLANLANANOPRSURESI) / tempOperationLines.Sum(t => t.BIRIMSURE) : 0;
                 decimal quality = (tempOperationLines.Sum(t => t.URETILENADET) * tempOperationLines.Sum(t => t.BIRIMSURE)) > 0 ? (decimal)((((tempOperationLines.Sum(t => t.URETILENADET) * tempOperationLines.Sum(t => t.BIRIMSURE)) - (tempUnsuitibility.Sum(t => t.OLCUKONTROLFORMBEYAN) * tempOperationLines.Sum(t => t.BIRIMSURE)))) / (tempOperationLines.Sum(t => t.URETILENADET) * tempOperationLines.Sum(t => t.BIRIMSURE))) : 0;
                 string employeeName = operationLines.Where(t => t.CALISANID == employeeID).Select(t => t.CALISAN).FirstOrDefault();

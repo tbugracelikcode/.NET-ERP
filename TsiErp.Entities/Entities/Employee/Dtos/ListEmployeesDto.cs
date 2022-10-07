@@ -37,9 +37,13 @@ namespace TsiErp.Entities.Entities.Employee.Dtos
         /// </summary>
         public DateTime? Birthday { get; set; }
         /// <summary>
-        /// Kan Grubu
+        /// Kan Grubu Enum
         /// </summary>
         public BloodTypeEnum BloodType { get; set; }
+        /// <summary>
+        /// Kan Grubu
+        /// </summary>
+        public string BloodTypeStr { get; set; }
         /// <summary>
         /// Adres
         /// </summary>
