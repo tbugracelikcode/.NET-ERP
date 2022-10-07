@@ -1,5 +1,5 @@
-﻿@*@page "/admin/maintenance-general"*@
-@page "/"
+﻿@page "/admin/maintenance-general"
+@*@page "/"*@
 @layout AdminLayout
 
 @inject NavigationManager NavigationManager
@@ -27,7 +27,7 @@
                 <td width="50px" align="center">
                     <br />
                     <center>
-                        <SfButton CssClass="e-btn e-secondary" style="background-color:#474747;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" IsPrimary="true" Content="Toplu Malzeme İhtiyaç Listesi Oluştur" OnClick="@(() => OnClickAllMaintenance())">
+                        <SfButton CssClass="e-btn e-secondary" style="border-color: #474747 !important;background-color:#474747 !important;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold ;" IsPrimary="true" Content="Toplu Malzeme İhtiyaç Listesi Oluştur" OnClick="@(() => OnClickAllMaintenance())">
 
                         </SfButton>
                     </center>
@@ -118,7 +118,7 @@
                 </td>
                 <td width="50px" align="right">
                     <br />
-                    <SfButton CssClass="e-btn e-secondary" style="background-color:#474747;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" IsPrimary="true" Content="Filtreyi Temizle" OnClick="OnReset"></SfButton>
+                    <SfButton CssClass="e-btn e-secondary" style="border-color: #474747 !important;background-color:#474747 !important;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" IsPrimary="true" Content="Filtreyi Temizle" OnClick="OnReset"></SfButton>
                 </td>
                 <td width="20px">
                 </td>

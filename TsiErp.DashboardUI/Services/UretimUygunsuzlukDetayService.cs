@@ -22,7 +22,7 @@ namespace TsiErp.DashboardUI.Services
 
             List<ProductionUnsuitabilityDetailedStation> productionUnsuitabilityDetailedStationAnalysis = new List<ProductionUnsuitabilityDetailedStation>();
 
-            var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery( startDate, endDate).Where(t=>t.KOD == unsuitabilityCode).ToList();
+            var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery( startDate, endDate).Where(t=>t.KOD == unsuitabilityCode && t.ISTVERIMLILIIKANALIZI == true).ToList();
             var stationList = DBHelper.GetStations();
             int total = (int)unsuitabilityLines.Sum(t => t.OLCUKONTROLFORMBEYAN);
 
@@ -144,7 +144,7 @@ namespace TsiErp.DashboardUI.Services
 
             List<ProductionUnsuitabilityDetailedEmployee> productionUnsuitabilityDetailedEmployeeAnalysis = new List<ProductionUnsuitabilityDetailedEmployee>();
 
-            var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate).Where(t => t.KOD == unsuitabilityCode).ToList();
+            var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate).Where(t => t.KOD == unsuitabilityCode && t.PERVERIMLILIKANALIZI == true).ToList();
             var employeeList = unsuitabilityLines.Select(t => t.CALISANID).Distinct().ToList();
             int total = unsuitabilityLines.Sum(t => t.OLCUKONTROLFORMBEYAN);
 

@@ -118,7 +118,7 @@ td, th {
 }
 body,
 html {
-    background: #EAEAEA;
+    background: #f1eeee;
     /* background-image: linear-gradient(360deg, rgb(171 171 171) 0%, #E0DBDB 70%) !important;*/
 }
 
@@ -216,7 +216,7 @@ html {
     text-shadow: 1px 3px 4px black !important;
     box-shadow: rgb(0 0 0 / 60%) 0px 3px 10px;
     height: 40px;
-    border: 1px solid #585858;
+    border: 1px solid #ff949400;
 }
 .TSIModalLabel {
     color: black;
