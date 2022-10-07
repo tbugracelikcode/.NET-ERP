@@ -18,6 +18,7 @@ using TsiErp.EntityContracts.StationGroup;
 using TsiErp.Entities.Entities.StationGroup.Dtos;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.StationGroup;
+using TsiErp.Business.Entities.StationGroup.BusinessRules;
 
 namespace TsiErp.Business.Entities.StationGroup.Services
 {
@@ -26,6 +27,8 @@ namespace TsiErp.Business.Entities.StationGroup.Services
     {
 
         private readonly IStationGroupsRepository _repository;
+
+        StationGroupManager _manager { get; set; } = new StationGroupManager();
 
         public StationGroupsAppService(IStationGroupsRepository repository)
         {
@@ -36,6 +39,8 @@ namespace TsiErp.Business.Entities.StationGroup.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStationGroupsDto>> CreateAsync(CreateStationGroupsDto input)
         {
+            await _manager.CodeControl(_repository, input.Code);
+
             var entity = ObjectMapper.Map<CreateStationGroupsDto, StationGroups>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
@@ -46,6 +51,7 @@ namespace TsiErp.Business.Entities.StationGroup.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            await _manager.DeleteControl(_repository, id);
             await _repository.DeleteAsync(id);
             return new SuccessResult("Silme işlemi başarılı.");
         }
@@ -73,6 +79,8 @@ namespace TsiErp.Business.Entities.StationGroup.Services
         public async Task<IDataResult<SelectStationGroupsDto>> UpdateAsync(UpdateStationGroupsDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
+
+            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
 
             var mappedEntity = ObjectMapper.Map<UpdateStationGroupsDto, StationGroups>(input);
 

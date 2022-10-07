@@ -5,6 +5,7 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.DependencyResolvers.Autofac;
+using TsiErp.Business.Entities.PurchasingUnsuitabilityItem.BusinessRules;
 using TsiErp.Business.Entities.PurchasingUnsuitabilityItem.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.PurchasingUnsuitabilityItem;
@@ -18,6 +19,8 @@ namespace TsiErp.Business.Entities.PurchasingUnsuitabilityItem.Services
     {
         private readonly IPurchasingUnsuitabilityItemsRepository _repository;
 
+        PurchasingUnsuitabilityItemManager _manager { get; set; } = new PurchasingUnsuitabilityItemManager();
+
         public PurchasingUnsuitabilityItemsAppService(IPurchasingUnsuitabilityItemsRepository repository)
         {
             _repository = repository;
@@ -28,6 +31,8 @@ namespace TsiErp.Business.Entities.PurchasingUnsuitabilityItem.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchasingUnsuitabilityItemsDto>> CreateAsync(CreatePurchasingUnsuitabilityItemsDto input)
         {
+            await _manager.CodeControl(_repository, input.Code);
+
             var entity = ObjectMapper.Map<CreatePurchasingUnsuitabilityItemsDto, PurchasingUnsuitabilityItems>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
@@ -68,6 +73,8 @@ namespace TsiErp.Business.Entities.PurchasingUnsuitabilityItem.Services
         public async Task<IDataResult<SelectPurchasingUnsuitabilityItemsDto>> UpdateAsync(UpdatePurchasingUnsuitabilityItemsDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
+
+            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
 
             var mappedEntity = ObjectMapper.Map<UpdatePurchasingUnsuitabilityItemsDto, PurchasingUnsuitabilityItems>(input);
 

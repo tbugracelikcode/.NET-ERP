@@ -17,6 +17,7 @@ using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.UnitSet.Dtos;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.UnitSet;
+using TsiErp.Business.Entities.UnitSet.BusinessRules;
 
 namespace TsiErp.Business.Entities.UnitSet.Services
 {
@@ -24,6 +25,8 @@ namespace TsiErp.Business.Entities.UnitSet.Services
     public class UnitSetsAppService : ApplicationService, IUnitSetsAppService
     {
         private readonly IUnitSetsRepository _repository;
+
+        UnitSetManager _manager { get; set; } = new UnitSetManager();
 
         public UnitSetsAppService(IUnitSetsRepository repository)
         {
@@ -34,6 +37,8 @@ namespace TsiErp.Business.Entities.UnitSet.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectUnitSetsDto>> CreateAsync(CreateUnitSetsDto input)
         {
+            await _manager.CodeControl(_repository, input.Code);
+
             var entity = ObjectMapper.Map<CreateUnitSetsDto, UnitSets>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
@@ -44,13 +49,14 @@ namespace TsiErp.Business.Entities.UnitSet.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            await _manager.DeleteControl(_repository, id);
             await _repository.DeleteAsync(id);
             return new SuccessResult("Silme işlemi başarılı.");
         }
 
         public async Task<IDataResult<SelectUnitSetsDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id);
+            var entity = await _repository.GetAsync(t => t.Id == id, t => t.Products, t => t.SalesPropositionLines);
             var mappedEntity = ObjectMapper.Map<UnitSets, SelectUnitSetsDto>(entity);
             return new SuccessDataResult<SelectUnitSetsDto>(mappedEntity);
         }
@@ -58,7 +64,7 @@ namespace TsiErp.Business.Entities.UnitSet.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListUnitSetsDto>>> GetListAsync(ListUnitSetsParameterDto input)
         {
-            var list = await _repository.GetListAsync(t => t.IsActive == input.IsActive);
+            var list = await _repository.GetListAsync(t => t.IsActive == input.IsActive, t => t.Products, t => t.SalesPropositionLines);
 
             var mappedEntity = ObjectMapper.Map<List<UnitSets>, List<ListUnitSetsDto>>(list.ToList());
 
@@ -71,6 +77,8 @@ namespace TsiErp.Business.Entities.UnitSet.Services
         public async Task<IDataResult<SelectUnitSetsDto>> UpdateAsync(UpdateUnitSetsDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
+
+            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
 
             var mappedEntity = ObjectMapper.Map<UpdateUnitSetsDto, UnitSets>(input);
 
