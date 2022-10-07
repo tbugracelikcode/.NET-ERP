@@ -88,9 +88,9 @@ namespace TsiErp.Entities.Entities.SalesPropositionLine.Dtos
         /// </summary>
         public Guid? PaymentPlanID { get; set; }
         /// <summary>
-        /// Ödeme Planı Kodu
+        /// Ödeme Planı Adı
         /// </summary>
-        public string PaymentPlanCode { get; set; }
+        public string PaymentPlanName { get; set; }
         /// <summary>
         /// Satış Teklif Satırı Durumu
         /// </summary>

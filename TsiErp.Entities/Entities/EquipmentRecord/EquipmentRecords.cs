@@ -62,7 +62,7 @@ namespace TsiErp.Entities.Entities.EquipmentRecord
         /// <summary>
         /// İptal Nedeni
         /// </summary>
-        public string? CancellationReason { get; set; }
+        public string CancellationReason { get; set; }
 
         public bool IsActive { get; set; }
 

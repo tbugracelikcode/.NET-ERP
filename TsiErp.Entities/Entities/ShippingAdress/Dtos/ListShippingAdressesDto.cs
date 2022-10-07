@@ -21,7 +21,7 @@ namespace TsiErp.Entities.Entities.ShippingAdress.Dtos
         /// <summary>
         /// Müşteri Kartı
         /// </summary>
-        public string? CustomerCard { get; set; }
+        public string CustomerCard { get; set; }
         /// <summary>
         /// Adres 1
         /// </summary>

@@ -20,6 +20,7 @@ using TsiErp.DataAccess.EntityFrameworkCore.Repositories.SalesPropositionLine;
 using TsiErp.Entities.Entities.SalesPropositionLine.Dtos;
 using TsiErp.Entities.Entities.SalesPropositionLine;
 using Tsi.Core.Entities;
+using TsiErp.Business.Entities.SalesProposition.BusinessRules;
 
 namespace TsiErp.Business.Entities.SalesProposition.Services
 {
@@ -28,6 +29,8 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
     {
         private readonly ISalesPropositionsRepository _repository;
         private readonly ISalesPropositionLinesRepository _lineRepository;
+
+        SalesPropositionManager _manager { get; set; } = new SalesPropositionManager();
 
         public SalesPropositionsAppService(ISalesPropositionsRepository repository, ISalesPropositionLinesRepository lineRepository)
         {
@@ -39,6 +42,8 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectSalesPropositionsDto>> CreateAsync(CreateSalesPropositionsDto input)
         {
+            await _manager.CodeControl(_repository, input.FicheNo);
+
             var entity = ObjectMapper.Map<CreateSalesPropositionsDto, SalesPropositions>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
@@ -56,6 +61,8 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
+            await _manager.DeleteControl(_repository, id);
+
             await _repository.DeleteAsync(id);
 
             var lines = (await _lineRepository.GetListAsync(t => t.SalesPropositionID == id)).ToList();
@@ -94,6 +101,8 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
         public async Task<IDataResult<SelectSalesPropositionsDto>> UpdateAsync(UpdateSalesPropositionsDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
+
+            await _manager.UpdateControl(_repository, input.FicheNo, input.Id, entity);
 
             var mappedEntity = ObjectMapper.Map<UpdateSalesPropositionsDto, SalesPropositions>(input);
 

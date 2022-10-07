@@ -63,10 +63,12 @@ namespace TsiErp.ErpUI.Pages.Station
         {
             if (args.ItemData != null)
             {
+                DataSource.GroupID = args.ItemData.Id;
                 DataSource.StationGroup = args.ItemData.Name;
             }
             else
             {
+                DataSource.GroupID = Guid.Empty;
                 DataSource.StationGroup = string.Empty;
             }
             await InvokeAsync(StateHasChanged);

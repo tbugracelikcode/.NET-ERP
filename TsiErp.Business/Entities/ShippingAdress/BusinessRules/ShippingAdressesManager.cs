@@ -35,6 +35,10 @@ namespace TsiErp.Business.Entities.ShippingAdress.BusinessRules
             {
                 throw new Exception("Hareket gören kayıtlar silinemez.");
             }
+            if (await _repository.AnyAsync(t => t.CurrentAccountCards.ShippingAdresses.Any(x=>x.Id==id)))
+            {
+                throw new Exception("Hareket gören kayıtlar silinemez.");
+            }
         }
     }
 }

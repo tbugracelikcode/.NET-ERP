@@ -43,9 +43,9 @@ namespace TsiErp.Entities.Entities.SalesProposition.Dtos
         public string CurrencyCode { get; set; }
 
         /// <summary>
-        /// Ödeme Planı Günü
+        /// Ödeme Planı Adı
         /// </summary>
-        public int PaymentPlanDay { get; set; }
+        public string PaymentPlanName { get; set; }
         /// <summary>
         /// Şube Kodu
         /// </summary>
