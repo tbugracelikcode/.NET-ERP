@@ -13,8 +13,8 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
 
         #region Değişkenler
 
-        DateTime startDate = DateTime.Today.AddDays(-90);
-        DateTime endDate = DateTime.Today;
+        DateTime startDate = DateTime.Today.AddDays(-(90 + DateTime.Today.Day));
+        DateTime endDate = DateTime.Today.AddDays(-(DateTime.Today.Day));
         private int? selectedTimeIndex { get; set; }
         private int? selectedActionIndex { get; set; }
         int? selectedactionID = 4;
@@ -50,7 +50,6 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
             await Task.Delay(1);
             StateHasChanged();
 
-            endDate = DateTime.Today;
 
             #region Zaman Seçimi
             switch (selectedTimeIndex)

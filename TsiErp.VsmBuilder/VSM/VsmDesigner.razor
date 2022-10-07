@@ -1,11 +1,11 @@
 ﻿@page "/"
 
 <div class="row h-100">
-    <div class="col-4" style="padding-right:unset !important;">
+    <div class="col-3" style="padding-right:unset !important;">
         <div class="row h-100 p-4 no-gutters" style="background: #eee;">
 
             <div class="col-6">
-                <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(0)" data-toggle="modal" data-target="#exampleModal">
+                <div class="text-center" draggable="true" @ondragstart="() => OnDragStart(0)">
                     <img class="d-block m-auto" src="/images/DefaultNodeWidget.png" />
                     <span>Default Node</span>
                 </div>
@@ -142,31 +142,29 @@
         <div class="col-lg-12 control-section">
             <div class="control-wrapper">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                    <table class="tg">
-                        <tbody>
+                    <table class="tg" style="text-align:right !important; width:100% !important;">
                             <tr>
-                                <td class="tg-0lax" colspan="3">
+                                <td class="tg-0lax" style="width:40% !important;">
                                     <div class="cascading">
-                                        <label class="example-label">Ürün Grubu Combobox</label>
+                                        @*<label class="example-label">Ürün Grubu Combobox</label>
                                         <select >
                                             <option value=""></option>
-                                        </select>
+                                        </select>*@
 
                                     </div>
                                 </td>
-                                <td class="tg-0lax" colspan="3">
+                                <td class="tg-0lax"style="width:40% !important;">
                                     <div class="cascading">
-                                        <label class="example-label">Ürün</label>
-                                        @*<Syncfusion.Blazor.DropDowns.SfComboBox TValue="string" TItem="Product" Placeholder="Ürün Seçiniz..." Enabled="@enableUrunCombobox" @bind-Value="@urunValue" Query="@urunQuery" AllowCustom="false" PopupHeight="auto" DataSource="@productList">
+                                        @*<label class="example-label">Ürün</label>
+                                        <Syncfusion.Blazor.DropDowns.SfComboBox TValue="string" TItem="Product" Placeholder="Ürün Seçiniz..." Enabled="@enableUrunCombobox" @bind-Value="@urunValue" Query="@urunQuery" AllowCustom="false" PopupHeight="auto" DataSource="@productList">
                                         <ComboBoxFieldSettings Text="Name" Value="ProductID" />
                                         </Syncfusion.Blazor.DropDowns.SfComboBox>*@
                                     </div>
                                 </td>
-                                <td class="tg-0lax" colspan="3">
+                                <td class="tg-0lax" style="width:20% !important;">
                                     <button class="btn btn-primary" id="menu-toggle" @onclick="()=>GetCurrentNodes(true)" style="float:right !important;">Kaydet</button>
                                 </td>
                             </tr>
-                        </tbody>
                     </table>
                 </nav>
             </div>

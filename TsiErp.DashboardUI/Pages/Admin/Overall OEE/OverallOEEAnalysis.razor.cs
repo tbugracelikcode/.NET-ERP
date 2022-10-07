@@ -12,8 +12,8 @@ namespace TsiErp.DashboardUI.Pages.Admin.Overall_OEE
 
         #region Değişkenler
 
-        DateTime startDate = DateTime.Today.AddDays(-90);
-        DateTime endDate = DateTime.Today;
+        DateTime startDate = DateTime.Today.AddDays(-(90 + DateTime.Today.Day));
+        DateTime endDate = DateTime.Today.AddDays(-(DateTime.Today.Day));
         private int? selectedTimeIndex { get; set; } = 3;
         private int threshold = 75;
         private double thresholddouble = 0.75;
@@ -39,8 +39,6 @@ namespace TsiErp.DashboardUI.Pages.Admin.Overall_OEE
             VisibleSpinner = true;
             await Task.Delay(1);
             StateHasChanged();
-
-            endDate = DateTime.Today;
 
             #region Zaman Seçimi
             switch (selectedTimeIndex)
