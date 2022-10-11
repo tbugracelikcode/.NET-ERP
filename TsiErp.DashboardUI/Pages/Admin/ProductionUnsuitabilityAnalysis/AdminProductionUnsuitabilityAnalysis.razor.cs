@@ -13,7 +13,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
 
         #region Değişkenler
 
-        DateTime startDate = DateTime.Today.AddDays(-(90 + DateTime.Today.Day));
+        DateTime startDate = DateTime.Today.AddDays(-(365 + DateTime.Today.Day));
         DateTime endDate = DateTime.Today.AddDays(-(DateTime.Today.Day));
         private int? selectedTimeIndex { get; set; }
         private int? selectedActionIndex { get; set; }
@@ -32,7 +32,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
         {
 
             dataprodunsuitability =await UretimUygunsuzlukService.GetProductionUnsuitabilityAnalysis(startDate, endDate);
-            datachart = await UretimUygunsuzlukService.GetProductionUnsuitabilityChart(startDate, endDate, 3, 4);
+            datachart = await UretimUygunsuzlukService.GetProductionUnsuitabilityChart(startDate, endDate, 0, 4);
 
         }
         private void onChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?, ComboboxUnsuitability> args)
@@ -99,7 +99,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
         {
             VisibleSpinner = true;
 
-            if (selectedactionID == null) { selectedactionID = 4; }
+            if (selectedactionID == null) { selectedactionID = 0; }
             NavigationManager.NavigateTo("/admin/production-unsuitability-analysis/details" + "/" + unsuitabilityCode + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd") + "/" + selectedactionID.ToString()); ;
         }
 

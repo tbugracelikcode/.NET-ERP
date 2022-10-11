@@ -13,7 +13,8 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
 
         #region Değişkenler
 
-        DateTime startDate = DateTime.Today.AddDays(-(90 + DateTime.Today.Day));
+        //DateTime startDate = DateTime.Today.AddDays(-(365 + DateTime.Today.Day));
+        DateTime startDate = DateTime.Today.AddDays(-(273 + DateTime.Today.Day));
         DateTime endDate = DateTime.Today.AddDays(-(DateTime.Today.Day));
         private int? selectedTimeIndex { get; set; }
         private int threshold = 75;
@@ -30,7 +31,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
         protected async override void OnInitialized()
         {
             dataoee = await IstasyonOEEService.GetStationOEEAnalysis(startDate, endDate);
-            datachart = await IstasyonOEEService.GetAdminMachineChart(startDate, endDate, 3);
+            datachart = await IstasyonOEEService.GetAdminMachineChart(startDate, endDate, 0);
         }
 
         #region Component Metotları
@@ -44,7 +45,8 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
             #region Zaman Seçimi
             switch (selectedTimeIndex)
             {
-                case 0: startDate = DateTime.Today.AddDays(-365); frequencyChart = 0; break;
+                //case 0: startDate = DateTime.Today.AddDays(-365); frequencyChart = 0; break;
+                case 0: startDate = DateTime.Today.AddDays(-273); frequencyChart = 0; break;
                 case 1: startDate = DateTime.Today.AddDays(-273); frequencyChart = 1; break;
                 case 2: startDate = DateTime.Today.AddDays(-181); frequencyChart = 2; break;
                 case 3: startDate = DateTime.Today.AddDays(-90); frequencyChart = 3; break;

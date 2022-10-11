@@ -13,7 +13,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.EmployeeAnalysis
 
         #region Değişkenler
 
-        DateTime startDate = DateTime.Today.AddDays(-(90 + DateTime.Today.Day));
+        DateTime startDate = DateTime.Today.AddDays(-(365 + DateTime.Today.Day));
         DateTime endDate = DateTime.Today.AddDays(-(DateTime.Today.Day));
         private int? selectedTimeIndex { get; set; }
         private int threshold = 75;
@@ -33,7 +33,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.EmployeeAnalysis
             
 
             dataemployee = await PersonelService.GetEmployeeGeneralAnalysis(startDate, endDate);
-            datachart = await PersonelService.GetEmployeeChart(startDate, endDate, 3);
+            datachart = await PersonelService.GetEmployeeChart(startDate, endDate, 0);
 
         }
 

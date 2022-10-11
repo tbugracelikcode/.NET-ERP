@@ -221,6 +221,8 @@ namespace TsiErp.DashboardUI.Services
                     supplierUnsuitabilityAnalysis.Add(analysis);
                 }
             }
+
+            supplierUnsuitabilityAnalysis = supplierUnsuitabilityAnalysis.OrderByDescending(t => t.Percent).ToList();
             return await Task.FromResult(supplierUnsuitabilityAnalysis);
         }
 

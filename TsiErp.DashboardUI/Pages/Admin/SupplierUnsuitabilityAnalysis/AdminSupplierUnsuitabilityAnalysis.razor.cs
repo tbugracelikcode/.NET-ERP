@@ -11,7 +11,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.SupplierUnsuitabilityAnalysis
 
         #region Değişkenler
 
-        DateTime startDate = DateTime.Today.AddDays(-(90 + DateTime.Today.Day));
+        DateTime startDate = DateTime.Today.AddDays(-(365 + DateTime.Today.Day));
         DateTime endDate = DateTime.Today.AddDays(-(DateTime.Today.Day));
         private int? selectedTimeIndex { get; set; }
         int? selectedactionID = 1;

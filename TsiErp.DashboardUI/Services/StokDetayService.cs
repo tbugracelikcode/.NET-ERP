@@ -47,6 +47,8 @@ namespace TsiErp.DashboardUI.Services
                 }
                 
             }
+
+            productgroupDetailedChart = productgroupDetailedChart.OrderByDescending(t => t.PPM).ToList();
             return await Task.FromResult(productgroupDetailedChart);
         }
 

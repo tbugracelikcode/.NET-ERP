@@ -129,6 +129,8 @@ namespace TsiErp.DashboardUI.Services
                 }
 
             }
+
+            productionUnsuitabilityDetailedStationAnalysis = productionUnsuitabilityDetailedStationAnalysis.OrderByDescending(t => t.Percent).ToList();
             return await Task.FromResult(productionUnsuitabilityDetailedStationAnalysis);
         }
 
@@ -269,6 +271,8 @@ namespace TsiErp.DashboardUI.Services
                     default: break;
                 }
             }
+
+            productionUnsuitabilityDetailedEmployeeAnalysis = productionUnsuitabilityDetailedEmployeeAnalysis.OrderByDescending(t => t.Percent).ToList();
             return await Task.FromResult(productionUnsuitabilityDetailedEmployeeAnalysis);
         }
 
@@ -411,6 +415,8 @@ namespace TsiErp.DashboardUI.Services
                 }
 
             }
+
+            productionUnsuitabilityDetailedProductAnalysis = productionUnsuitabilityDetailedProductAnalysis.OrderByDescending(t => t.Percent).ToList();
             return await Task.FromResult(productionUnsuitabilityDetailedProductAnalysis);
         }
 

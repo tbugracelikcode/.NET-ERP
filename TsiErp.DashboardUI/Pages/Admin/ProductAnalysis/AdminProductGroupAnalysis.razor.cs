@@ -13,11 +13,10 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
 
         #region Değişkenler
 
-        DateTime startDate = DateTime.Today.AddDays(-(90 + DateTime.Today.Day));
+        DateTime startDate = DateTime.Today.AddDays(-(365 + DateTime.Today.Day));
         DateTime endDate = DateTime.Today.AddDays(-(DateTime.Today.Day));
         private int? selectedTimeIndex { get; set; }
         private int? selectedProductIndex { get; set; }
-        private int threshold;
         int? selectedproductID;
         string chartTitle = string.Empty;
         private bool isGridChecked = true;
@@ -35,7 +34,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
             dataproductgroup = await StokService.GetProductGroupsAnalysis(startDate, endDate);
             dataproductgroupcombobox = await StokService.GetProductGroupsComboboxAnalysis(startDate, endDate);
             chartTitle =  dataproductgroup.Where(t => t.ProductGroupID == 9).Select(t => t.ProductGroupName).FirstOrDefault() + " HURDA GRAFİĞİ";
-            datachart = await StokService.GetProductChart(startDate, endDate, 3, 9);
+            datachart = await StokService.GetProductChart(startDate, endDate, 0, 9);
 
         }
         private void onChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?, ProductGroupsAnalysis> args)

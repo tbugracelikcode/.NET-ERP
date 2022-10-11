@@ -69,7 +69,7 @@ namespace TsiErp.DashboardUI.Services
                     #region Değişkenler
 
                     string productGroupName = operationLines.Where(t => t.URUNGRPID == groupID).Select(t => t.URUNGRUBU).FirstOrDefault();
-                    int totalScrap = Convert.ToInt32(tempUnsuitability.Sum(t => t.OLCUKONTROLFORMBEYAN));
+                    int totalScrap = Convert.ToInt32(tempUnsuitability.Where(t=>t.HURDA==true).Sum(t => t.OLCUKONTROLFORMBEYAN));
 
                     #endregion
 

@@ -12,9 +12,9 @@ namespace TsiErp.DashboardUI.Pages.Admin.Overall_OEE
 
         #region Değişkenler
 
-        DateTime startDate = DateTime.Today.AddDays(-(90 + DateTime.Today.Day));
+        DateTime startDate = DateTime.Today.AddDays(-(365 + DateTime.Today.Day));
         DateTime endDate = DateTime.Today.AddDays(-(DateTime.Today.Day));
-        private int? selectedTimeIndex { get; set; } = 3;
+        private int? selectedTimeIndex { get; set; } = 0;
         private int threshold = 75;
         private double thresholddouble = 0.75;
         SfChart ChartInstance;

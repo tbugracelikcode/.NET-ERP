@@ -15,7 +15,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ContractUnsuitabilityAnalysis
 
         #region Değişkenler
 
-        DateTime startDate = DateTime.Today.AddDays(-90);
+        DateTime startDate = DateTime.Today.AddDays(-(330 + DateTime.Today.Day));
         DateTime endDate = DateTime.Today;
         [Parameter]
         public DateTime dateStart { get; set; }

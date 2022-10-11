@@ -43,6 +43,8 @@ namespace TsiErp.DashboardUI.Services
                 }
 
             };
+
+            employeeDetailedChart = employeeDetailedChart.OrderByDescending(t => t.Percent).ToList();
             return await Task.FromResult(employeeDetailedChart);
         }
 

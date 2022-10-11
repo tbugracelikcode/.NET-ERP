@@ -86,6 +86,8 @@ namespace TsiErp.DashboardUI.Services
                     stationOEEAnalysis.Add(analysis);
                 }
             }
+
+            stationOEEAnalysis = stationOEEAnalysis.OrderByDescending(t => t.OEE).ToList();
             return await Task.FromResult(stationOEEAnalysis);
         }
 

@@ -13,7 +13,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ContractUnsuitabilityAnalysis
 
         #region Değişkenler
 
-        DateTime startDate = DateTime.Today.AddDays(-(90 + DateTime.Today.Day));
+        DateTime startDate = DateTime.Today.AddDays(-(365 + DateTime.Today.Day));
         DateTime endDate = DateTime.Today.AddDays(-(DateTime.Today.Day));
         private int? selectedTimeIndex { get; set; }
         private bool isGridChecked = true;
@@ -75,7 +75,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ContractUnsuitabilityAnalysis
 
             if (selectedTimeIndex == null)
             {
-                selectedTimeIndex = 3;
+                selectedTimeIndex = 0;
             }
              NavigationManager.NavigateTo("/admin/contract-unsuitability-analysis/details" + "/" + cariID.ToString() + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd") + "/" + selectedTimeIndex.ToString() + "/" + total.ToString()); 
         }
