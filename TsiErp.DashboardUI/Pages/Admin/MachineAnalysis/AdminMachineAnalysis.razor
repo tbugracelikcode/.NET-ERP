@@ -1,5 +1,4 @@
-﻿@*@page "/"*@
-@page "/admin/machine-analysis"
+﻿@page "/admin/machine-analysis"
 @layout AdminLayout
 
 @inject IIstasyonOEEService IstasyonOEEService
@@ -38,7 +37,7 @@
                 </td>
                 <td width="200px">
                     <label class="FilterLabelTitle"><strong>Zaman Periyodu:</strong></label>
-                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Son 3 Ay" DataSource="@timeperiods">
+                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Yıllık" DataSource="@timeperiods">
                         <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
                     </SfComboBox>
                 </td>
@@ -76,12 +75,41 @@
                 <Template>
                     @{
                         var data = context as ChartTooltipInfo;
+
+                        decimal comparisonOEE = datachart.Where(t => t.OEE == (decimal)data.Y).Select(t => t.DIFFOEE).FirstOrDefault();
+
+                        decimal comparisonQUA = datachart.Where(t => t.OEE == (decimal)data.Y).Select(t => t.DIFFQUA).FirstOrDefault();
+
+                        decimal comparisonAVA = datachart.Where(t => t.OEE == (decimal)data.Y).Select(t => t.DIFFAVA).FirstOrDefault();
+
+                        decimal comparisonPER = datachart.Where(t => t.OEE == (decimal)data.Y).Select(t => t.DIFFPER).FirstOrDefault();
+
+                        string valueColorOEE = comparisonOEE < 0 ? "#BF0000" : "#068800";
+
+                        string valueColorAVA = comparisonAVA < 0 ? "#BF0000" : "#068800";
+
+                        string valueColorQUA = comparisonQUA < 0 ? "#BF0000" : "#068800";
+
+                        string valueColorPER = comparisonPER < 0 ? "#BF0000" : "#068800";
+
+                        string comparisonOEEstr = comparisonOEE.ToString("p2");
+
+                        string comparisonAVAstr = comparisonAVA.ToString("p2");
+
+                        string comparisonQUAstr = comparisonQUA.ToString("p2");
+
+                        string comparisonPERstr = comparisonPER.ToString("p2");
+
                         <div>
-                            <table style="width:100%;  border: 1px solid black;">
-                                <tr><th colspan="2" bgcolor="#00FFFF">OEE Değişimi</th></tr>
-                                <tr><td bgcolor="#00FFFF">@data.X:</td><td bgcolor="#00FFFF">@data.Y</td></tr>
+                            <table class="TSIChartTooltip">
+                                <tr><th style="font-size:16px !important;" colspan="2">Değişim</th></tr>
+                                <tr><td>Kullanılabilirlik:</td><td style="color: @valueColorAVA">@comparisonAVAstr</td></tr>
+                                <tr><td>Performans:</td><td style="color: @valueColorPER">@comparisonPERstr</td></tr>
+                                <tr><td>Kalite:</td><td style="color: @valueColorQUA">@comparisonQUAstr</td></tr>
+                                <tr><td>OEE:</td><td style="color: @valueColorOEE">@comparisonOEEstr</td></tr>
                             </table>
                         </div>
+
                     }
                 </Template>
             </ChartTooltipSettings>

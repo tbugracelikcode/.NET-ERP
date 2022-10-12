@@ -13,8 +13,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
 
         #region Değişkenler
 
-        //DateTime startDate = DateTime.Today.AddDays(-(365 + DateTime.Today.Day));
-        DateTime startDate = DateTime.Today.AddDays(-(90 + DateTime.Today.Day));
+        DateTime startDate = DateTime.Today.AddDays(-(365 + DateTime.Today.Day));
 
         DateTime endDate = DateTime.Today.AddDays(-(DateTime.Today.Day));
         private int? selectedTimeIndex { get; set; }
@@ -32,8 +31,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
         protected async override void OnInitialized()
         {
             dataoee = await IstasyonOEEService.GetStationOEEAnalysis(startDate, endDate);
-            //datachart = await IstasyonOEEService.GetAdminMachineChart(startDate, endDate, 0);
-            datachart = await IstasyonOEEService.GetAdminMachineChart(startDate, endDate, 4);
+            datachart = await IstasyonOEEService.GetAdminMachineChart(startDate, endDate, 0);
 
         }
 

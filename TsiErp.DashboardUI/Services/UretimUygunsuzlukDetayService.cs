@@ -273,6 +273,7 @@ namespace TsiErp.DashboardUI.Services
             }
 
             productionUnsuitabilityDetailedEmployeeAnalysis = productionUnsuitabilityDetailedEmployeeAnalysis.OrderByDescending(t => t.Percent).ToList();
+
             return await Task.FromResult(productionUnsuitabilityDetailedEmployeeAnalysis);
         }
 

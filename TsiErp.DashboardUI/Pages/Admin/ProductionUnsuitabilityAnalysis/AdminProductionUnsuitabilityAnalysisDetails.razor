@@ -65,7 +65,7 @@
                 <TabAnimationNext Effect="Syncfusion.Blazor.AnimationEffect.FadeOut"></TabAnimationNext>
             </TabAnimationSettings>
             <TabItems>
-                <TabItem>
+                <TabItem Visible="@visibleMachineTab">
                     <ChildContent>
                         <TabHeader Text="Makinalara Göre Uygunsuzluk Analizi Detayı"></TabHeader>
                     </ChildContent>
@@ -117,7 +117,7 @@
                     </ContentTemplate>
                 </TabItem>
 
-                <TabItem>
+                <TabItem Visible="@visibleEmployeeTab">
                     <ChildContent>
                         <TabHeader Text="Personel Adına Göre Uygunsuzluk Analizi Detayı"></TabHeader>
                     </ChildContent>
