@@ -200,8 +200,6 @@
                     </ContentTemplate>
                 </TabItem>
 
-
-
                 <TabItem>
                     <ChildContent>
                         <TabHeader Text="Yarı Mamül Ürün Gruplarına / Kodlarına Göre Performans Analiz Detayları"></TabHeader>
@@ -226,7 +224,7 @@
                                     </ChartPrimaryYAxis>
                                     <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
                                     <ChartSeriesCollection>
-                                        <ChartSeries DataSource="@dataproductchart" Name="Performans" XName="ProductGroup" YName="Performance" Width="1" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column">
+                                        <ChartSeries ColumnWidth="@columnwidth" DataSource="@dataproductchart" Name="Performans" XName="ProductGroup" YName="Performance" Width="1" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column">
 
                                         </ChartSeries>
                                     </ChartSeriesCollection>
@@ -330,7 +328,7 @@
 
 
 @code {
-    string tabHeader = "Duruş Kodlarına Göre Genel OEE Analiz Detayları";
+    string tabHeader = "Makina Kaynaklı Duruş Kodlarına Göre Analiz Detayları";
 
     public void Selected(Syncfusion.Blazor.Navigations.SelectEventArgs args)
     {
@@ -343,9 +341,10 @@
         {
             switch(a.SelectedIndex)
             {
-                case 0: tabHeader = "Duruş Kodlarına Göre Genel OEE Analiz Detayları";break;
-                case 1: tabHeader = "Ürün Gruplarına / Kodlarına Göre Genel OEE Analiz Detayları";break;
-                case 2: tabHeader = "Personel İsimlerine Göre Genel OEE Analizi Detayları";break;
+                case 0: tabHeader = "Makina Kaynaklı Duruş Kodlarına Göre Analiz Detayları";break;
+                case 1: tabHeader = "Tüm Duruş Kodlarına Göre Analiz Detayları";break;
+                case 2: tabHeader = "Yarı Mamül Ürün Gruplarına / Kodlarına Göre Performans Analiz Detayları";break;
+                case 3: tabHeader = "Personel İsimlerine Göre Verimlilik Analizi Detayları";break;
                 default:break;
             }
         }

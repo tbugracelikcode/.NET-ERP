@@ -34,7 +34,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ContractUnsuitabilityAnalysis
         private int frequencyChart;
         private bool isGridChecked = true;
         SfChart ChartInstance;
-        string chartTitle = "Toplu Uygunsuzluk Analizi Grafiği";
+        string chartTitle = "Genel Uygunsuzluk Analizi Grafiği";
         bool VisibleSpinner = false;
         private bool isLabelsChecked = true;
         private bool dataLabels = true;
@@ -90,7 +90,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ContractUnsuitabilityAnalysis
                 case 2: chartTitle = "Red Analizi Grafiği"; ; break;
                 case 3: chartTitle = "Olduğu Gibi Kullanılacak Analizi Grafiği"; break;
                 case 4: chartTitle = "Düzeltilecek Analizi Grafiği"; break;
-                case 5: chartTitle = "Toplu Uygunsuzluk Grafiği"; break;
+                case 5: chartTitle = "Genel Uygunsuzluk Grafiği"; break;
             }
             
             #endregion

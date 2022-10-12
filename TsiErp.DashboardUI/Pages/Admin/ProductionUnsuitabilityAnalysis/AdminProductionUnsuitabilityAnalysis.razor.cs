@@ -7,9 +7,9 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
 {
     public partial class AdminProductionUnsuitabilityAnalysis
     {
-        List<TsiErp.DashboardUI.Models.ProductionUnsuitabilityAnalysis> dataprodunsuitability = new List<TsiErp.DashboardUI.Models.ProductionUnsuitabilityAnalysis>();
-        List<TsiErp.DashboardUI.Models.AdminProductionUnsuitabilityAnalysisChart> datachart = new List<TsiErp.DashboardUI.Models.AdminProductionUnsuitabilityAnalysisChart>();
-        SfGrid<TsiErp.DashboardUI.Models.ProductionUnsuitabilityAnalysis> Grid;
+        List<Models.ProductionUnsuitabilityAnalysis> dataprodunsuitability = new List<Models.ProductionUnsuitabilityAnalysis>();
+        List<AdminProductionUnsuitabilityAnalysisChart> datachart = new List<AdminProductionUnsuitabilityAnalysisChart>();
+        SfGrid<Models.ProductionUnsuitabilityAnalysis> Grid;
 
         #region Değişkenler
 
@@ -19,7 +19,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
         private int? selectedActionIndex { get; set; }
         int? selectedactionID = 4;
         private bool isGridChecked = true;
-        string chartTitle = "Toplu Uygunsuzluk Grafiği";
+        string chartTitle = "Genel Uygunsuzluk Grafiği";
         private int frequencyChart;
         SfChart ChartInstance;
         bool VisibleSpinner = false;
@@ -72,7 +72,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
                 case 1: chartTitle = "Hurda Grafiği";break;
                 case 2: chartTitle = "Düzeltme Grafiği"; break;
                 case 3: chartTitle = "Olduğu Gibi Kullanılacak Grafiği"; break;
-                case 4: chartTitle = "Toplu Uygunsuzluk Grafiği"; break;
+                case 4: chartTitle = "Genel Uygunsuzluk Grafiği"; break;
             }
 
             #endregion

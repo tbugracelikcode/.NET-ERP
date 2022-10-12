@@ -12,7 +12,7 @@
             <tr>
                 <td width="1000px">
                     <span style="float:left">
-                       <label class="TSIListPageTitleCardLabel">Makina Analizi</label>
+                        <label class="TSIListPageTitleCardLabel">Makina Analizi</label>
                     </span>
                 </td>
             </tr>
@@ -38,7 +38,7 @@
                 </td>
                 <td width="200px">
                     <label class="FilterLabelTitle"><strong>Zaman Periyodu:</strong></label>
-                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Yıllık" DataSource="@timeperiods">
+                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Son 3 Ay" DataSource="@timeperiods">
                         <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
                     </SfComboBox>
                 </td>
@@ -51,7 +51,7 @@
                 <td width="50px" align="right">
                     <br />
                     <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
-                    <SfSpinner @bind-Visible="VisibleSpinner"></SfSpinner> 
+                    <SfSpinner @bind-Visible="VisibleSpinner"></SfSpinner>
                 </td>
                 <td width="50px">
                 </td>
@@ -69,10 +69,22 @@
             <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
                 <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
             </ChartPrimaryXAxis>
-            <ChartPrimaryYAxis  LabelFormat="p2">
+            <ChartPrimaryYAxis LabelFormat="p2">
                 <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
             </ChartPrimaryYAxis>
-            <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
+            <ChartTooltipSettings Enable="true">
+                <Template>
+                    @{
+                        var data = context as ChartTooltipInfo;
+                        <div>
+                            <table style="width:100%;  border: 1px solid black;">
+                                <tr><th colspan="2" bgcolor="#00FFFF">OEE Değişimi</th></tr>
+                                <tr><td bgcolor="#00FFFF">@data.X:</td><td bgcolor="#00FFFF">@data.Y</td></tr>
+                            </table>
+                        </div>
+                    }
+                </Template>
+            </ChartTooltipSettings>
             <ChartSeriesCollection>
                 <ChartSeries DataSource="@datachart" Name="OEE" XName="AY" YName="OEE" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
                     <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
@@ -88,7 +100,7 @@
                     </ChartTrendlines>
                 </ChartSeries>
             </ChartSeriesCollection>
-            <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
+
         </SfChart>
 
     </CardContent>
@@ -136,16 +148,16 @@
          Width="400px"
          Height="250px">
     <BodyTemplate>
-         
-               
+
+
         <SfCard >
             <CardContent>
-                 
+
             </CardContent>
         </SfCard>
     </BodyTemplate>
     <FooterContentTemplate>
-      
+
     </FooterContentTemplate>
 </DxPopup>*@
 

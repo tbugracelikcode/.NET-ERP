@@ -10,7 +10,6 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
         List<ProductionUnsuitabilityDetailedEmployee> dataunsuitabilityemployee = new List<ProductionUnsuitabilityDetailedEmployee>();
         List<ProductionUnsuitabilityDetailedProduct> dataunsuitabilityproduct = new List<ProductionUnsuitabilityDetailedProduct>();
         List<Models.ProductionUnsuitabilityAnalysis> dataprouns = new List<Models.ProductionUnsuitabilityAnalysis>();
-        AdminProductionUnsuitabilityAnalysis _labelreason = new AdminProductionUnsuitabilityAnalysis();
 
         SfGrid<ProductionUnsuitabilityDetailedEmployee> EmployeeGrid;
         SfGrid<ProductionUnsuitabilityDetailedStation> StationGrid;
@@ -80,7 +79,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
             }
             else if (selectedActionID == 4)
             {
-                actionName = "Toplu Uygunsuzluk";
+                actionName = "Genel Uygunsuzluk";
             }
             #endregion
 

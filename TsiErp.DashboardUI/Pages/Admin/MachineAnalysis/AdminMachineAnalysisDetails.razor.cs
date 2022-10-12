@@ -30,6 +30,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
         int products = 1;
         string stationName = string.Empty;
         private bool isGridChecked = true;
+        double columnwidth;
         double columnwidth2;
         double columnwidth3;
         double columnwidth4;
@@ -73,6 +74,10 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
 
             {
                 columnwidth4 = 0.1;
+            }
+            if(dataproductchart.Count() <= 3)
+            {
+                columnwidth = 0.1;
             }
             #endregion
         }
