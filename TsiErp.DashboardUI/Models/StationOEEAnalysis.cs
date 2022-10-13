@@ -60,5 +60,8 @@ namespace TsiErp.DashboardUI.Models
         /// Departman
         /// </summary>
         public string Department { get; set; }
+
+
+       
     }
 }

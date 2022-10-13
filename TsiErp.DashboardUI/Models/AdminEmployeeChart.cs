@@ -15,5 +15,13 @@
         public decimal OEE { get; set; }
 
         public string AY { get; set; }
+
+        public decimal DIFFOEE { get; set; }
+
+        public decimal DIFFAVA { get; set; }
+
+        public decimal DIFFQUA { get; set; }
+
+        public decimal DIFFPER { get; set; }
     }
 }

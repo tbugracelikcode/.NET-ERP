@@ -13,7 +13,8 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
 
         #region Değişkenler
 
-        DateTime startDate = DateTime.Today.AddDays(-(365 + DateTime.Today.Day));
+        //DateTime startDate = DateTime.Today.AddDays(-(365 + DateTime.Today.Day));
+        DateTime startDate = DateTime.Today.AddDays(-(90 + DateTime.Today.Day));
 
         DateTime endDate = DateTime.Today.AddDays(-(DateTime.Today.Day));
         private int? selectedTimeIndex { get; set; }
@@ -25,13 +26,18 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
         private bool isLabelsChecked = true;
         private bool isGridChecked = true;
         private bool dataLabels = true;
+        private bool compareModalVisible = false;
+        public string[]? MultiSelectVal = new string[] {};
+
 
         #endregion
 
         protected async override void OnInitialized()
         {
             dataoee = await IstasyonOEEService.GetStationOEEAnalysis(startDate, endDate);
-            datachart = await IstasyonOEEService.GetAdminMachineChart(startDate, endDate, 0);
+            //datachart = await IstasyonOEEService.GetAdminMachineChart(startDate, endDate, 0);
+            datachart = await IstasyonOEEService.GetAdminMachineChart(startDate, endDate, 4);
+
 
         }
 
@@ -89,6 +95,24 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
             isGridChecked = argsValue;
             StateHasChanged();
         }
+
+        private async void OnCompareButtonClicked()
+        {
+            ShowCompareModal();
+        }
+
+        private async void ShowCompareModal ()
+        {
+            compareModalVisible = true;
+        }
+
+        private async void HideCompareModal()
+        {
+            compareModalVisible = false;
+            MultiSelectVal = null;
+        }
+
+        
 
         #endregion
 
