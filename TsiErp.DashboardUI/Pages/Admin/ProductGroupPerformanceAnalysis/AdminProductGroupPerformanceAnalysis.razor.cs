@@ -3,39 +3,38 @@ using Syncfusion.Blazor.Grids;
 using TsiErp.DashboardUI.Models;
 using TsiErp.DashboardUI.Services;
 
-namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
+namespace TsiErp.DashboardUI.Pages.Admin.ProductGroupPerformanceAnalysis
 {
-    public partial class AdminMachineAnalysis
+    public partial class AdminProductGroupPerformanceAnalysis
     {
-        List<StationOEEAnalysis> dataoee = new List<StationOEEAnalysis>();
-        List<AdminMachineChart> datachart = new List<AdminMachineChart>();
-        SfGrid<StationOEEAnalysis> Grid;
+        List<Models.ProductGroupPerformanceAnalysis> dataproductperformance = new List<Models.ProductGroupPerformanceAnalysis>();
+        List<AdminProductGroupPerformanceAnalysisChart> datachart = new List<AdminProductGroupPerformanceAnalysisChart>();
+        SfGrid<Models.ProductGroupPerformanceAnalysis> Grid;
+
 
         #region Değişkenler
 
-       DateTime startDate = DateTime.Today.AddDays(-(364 + DateTime.Today.Day));
-
+        DateTime startDate = DateTime.Today.AddDays(-(364 + DateTime.Today.Day));
         DateTime endDate = DateTime.Today.AddDays(-(DateTime.Today.Day));
         private int? selectedTimeIndex { get; set; }
         private int threshold = 75;
         private double thresholddouble = 0.75;
         private int frequencyChart;
         SfChart ChartInstance;
+        private bool isGridChecked = true;
         bool VisibleSpinner = false;
         private bool isLabelsChecked = true;
-        private bool isGridChecked = true;
         private bool dataLabels = true;
         private bool compareModalVisible = false;
-        public string[]? MultiSelectVal = new string[] {};
-
+        public string[]? MultiSelectVal = new string[] { };
 
         #endregion
 
-        protected async override void OnInitialized()
+        protected override async void OnInitialized()
         {
-            dataoee = await IstasyonOEEService.GetStationOEEAnalysis(startDate, endDate);
-            datachart = await IstasyonOEEService.GetAdminMachineChart(startDate, endDate, 0);
 
+            dataproductperformance = await UrunGrubuPerformansService.GetProductGroupPerformanceAnalysis(startDate, endDate);
+            datachart = await UrunGrubuPerformansService.GetProductGroupPerformanceAnalysisChart(startDate, endDate, 0);
 
         }
 
@@ -44,8 +43,9 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
         private async void OnDateButtonClicked()
         {
             VisibleSpinner = true;
-            await Task.Delay(100);
+            await Task.Delay(1);
             StateHasChanged();
+
 
             #region Zaman Seçimi
             switch (selectedTimeIndex)
@@ -63,22 +63,22 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
             #endregion
 
             thresholddouble = Convert.ToDouble(threshold) / 100;
-
-            datachart = await IstasyonOEEService.GetAdminMachineChart(startDate, endDate, frequencyChart);
-            dataoee = await IstasyonOEEService.GetStationOEEAnalysis(startDate, endDate);
-
+            dataproductperformance = await UrunGrubuPerformansService.GetProductGroupPerformanceAnalysis(startDate, endDate);
+            datachart = await UrunGrubuPerformansService.GetProductGroupPerformanceAnalysisChart(startDate, endDate, frequencyChart);
+            await Grid.Refresh();
             await ChartInstance.RefreshAsync();
             VisibleSpinner = false;
             StateHasChanged();
         }
 
-        private void OnDetailButtonClicked(int stationID)
+        private void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
         {
-            VisibleSpinner = true;
+            bool argsValue = Convert.ToBoolean(args.Value);
+            isGridChecked = argsValue;
 
-            NavigationManager.NavigateTo("/admin/machine-analysis/details" + "/" + stationID.ToString() + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd")); ;
+            StateHasChanged();
         }
-
+      
         private void OnChangeLabelCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
         {
             ChartInstance.RefreshAsync();
@@ -86,20 +86,12 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
             else { dataLabels = false; }
         }
 
-        private async void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
-        {
-
-            bool argsValue = Convert.ToBoolean(args.Value);
-            isGridChecked = argsValue;
-            StateHasChanged();
-        }
-
         private async void OnCompareButtonClicked()
         {
             ShowCompareModal();
         }
 
-        private async void ShowCompareModal ()
+        private async void ShowCompareModal()
         {
             compareModalVisible = true;
         }
@@ -110,15 +102,13 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
             MultiSelectVal = null;
         }
 
-        
-
         #endregion
 
-        public void CellInfoHandler(QueryCellInfoEventArgs<StationOEEAnalysis> Args)
+        public void CellInfoHandler(QueryCellInfoEventArgs<Models.ProductGroupPerformanceAnalysis> Args)
         {
-            if (Args.Column.Field == "OEE")
+            if (Args.Column.Field == "Performance")
             {
-                if (Args.Data.OEE < Convert.ToDecimal(thresholddouble))
+                if (Args.Data.Performance < Convert.ToDecimal(thresholddouble))
                 {
                     Args.Cell.AddStyle(new string[] { "background-color: #DF0000; color: white; " });
                 }
@@ -143,5 +133,8 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
      };
 
         #endregion
+
     }
+
+
 }

@@ -73,13 +73,13 @@ namespace TsiErp.DashboardUI.Pages.Admin.ContractUnsuitabilityAnalysis
             #region Zaman Seçimi
             switch(selectedTimeIndex)
             {
-                case 0:startDate = DateTime.Today.AddDays(-330); frequencyChart = 0;break;
-                case 1: startDate = DateTime.Today.AddDays(-273); frequencyChart = 1; break;
-                case 2: startDate = DateTime.Today.AddDays(-181); frequencyChart = 2; break;
-                case 3: startDate = DateTime.Today.AddDays(-90); frequencyChart = 3; break;
-                case 4: startDate = DateTime.Today.AddDays(-60); frequencyChart = 4; break;
-                case 5: startDate = DateTime.Today.AddDays(-30); frequencyChart = 5; break;
-                case 6: startDate = DateTime.Today.AddDays(-7); frequencyChart = 6; break;
+                case 0: startDate = DateTime.Today.AddDays(-(364 + DateTime.Today.Day));frequencyChart = 0;break;
+                case 1: startDate = DateTime.Today.AddDays(-(272 + DateTime.Today.Day)); frequencyChart = 1; break;
+                case 2: startDate = DateTime.Today.AddDays(-(180 + DateTime.Today.Day)); frequencyChart = 2; break;
+                case 3: startDate = DateTime.Today.AddDays(-(89 + DateTime.Today.Day)); frequencyChart = 3; break;
+                case 4: startDate = DateTime.Today.AddDays(-(59 + DateTime.Today.Day)); frequencyChart = 4; break;
+                case 5: startDate = DateTime.Today.AddDays(-(29 + DateTime.Today.Day)); frequencyChart = 5; break;
+                case 6: startDate = DateTime.Today.AddDays(-(6 + DateTime.Today.Day)); frequencyChart = 6; break;
                 default:break;
             }
            

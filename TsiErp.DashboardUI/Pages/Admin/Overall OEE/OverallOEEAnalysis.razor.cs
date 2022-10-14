@@ -12,7 +12,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.Overall_OEE
 
         #region Değişkenler
 
-        DateTime startDate = DateTime.Today.AddDays(-(365 + DateTime.Today.Day));
+        DateTime startDate = DateTime.Today.AddDays(-(364 + DateTime.Today.Day));
         DateTime endDate = DateTime.Today.AddDays(-(DateTime.Today.Day));
         private int? selectedTimeIndex { get; set; } = 0;
         private int threshold = 75;
@@ -45,10 +45,11 @@ namespace TsiErp.DashboardUI.Pages.Admin.Overall_OEE
             #region Zaman Seçimi
             switch (selectedTimeIndex)
             {
-                case 0: startDate = DateTime.Today.AddDays(-365); ; break;
-                case 1: startDate = DateTime.Today.AddDays(-273); ; break;
-                case 2: startDate = DateTime.Today.AddDays(-181); ; break;
-                case 3: startDate = DateTime.Today.AddDays(-90); ; break;
+
+                case 0: startDate = DateTime.Today.AddDays(-(364 + DateTime.Today.Day)); ; break;
+                case 1: startDate = DateTime.Today.AddDays(-(272 + DateTime.Today.Day)); ; break;
+                case 2: startDate = DateTime.Today.AddDays(-(180 + DateTime.Today.Day)); break;
+                case 3: startDate = DateTime.Today.AddDays(-(89 + DateTime.Today.Day)); break;
                 default: break;
             }
 

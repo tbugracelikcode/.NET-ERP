@@ -18,7 +18,7 @@ namespace TsiErp.DashboardUI.Services
             var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate);
             var calenderLines = DBHelper.GetCalendarQuery(startDate, endDate);
             var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate);
-            var haltLines = DBHelper.GetHaltQuery(startDate, endDate);
+            var haltLines = DBHelper.GetHaltQuery(startDate, endDate).Where(t=>t.PKD== false && t.OPERASYONID > 0).ToList();
 
             #region Değişkenler
             decimal previousMonthAvailability = 0;
@@ -53,7 +53,7 @@ namespace TsiErp.DashboardUI.Services
 
                     operasyonsuresi = t.Sum(t => t.OPERASYONSURESI);
 
-                    kullanilabilirlik = (decimal)toplamcalisilabilirsure > 0 ? (operasyonsuresi / (decimal)toplamcalisilabilirsure) : 0;
+                    kullanilabilirlik = (decimal)toplamcalisilabilirsure > 0 ? ((operasyonsuresi + haltLines.Sum(t=>t.DURUSSURE)) / (decimal)toplamcalisilabilirsure) : 0;
 
                     #endregion
 
@@ -173,7 +173,7 @@ namespace TsiErp.DashboardUI.Services
 
                     operasyonsuresi = t.Sum(t => t.OPERASYONSURESI);
 
-                    kullanilabilirlik = (decimal)toplamcalisilabilirsure == 0 ? 0 : (operasyonsuresi / (decimal)toplamcalisilabilirsure);
+                    kullanilabilirlik = (decimal)toplamcalisilabilirsure == 0 ? 0 : ((operasyonsuresi + haltLines.Sum(t=>t.DURUSSURE)) / (decimal)toplamcalisilabilirsure);
 
                     #endregion
 
@@ -259,7 +259,7 @@ namespace TsiErp.DashboardUI.Services
                 {
                     var tempOperationLines = operationLines.Where(t => t.CALISANID == employeeID).ToList();
                     var tempUnsuitabilityLines = unsuitabilityLines.Where(t => t.CALISANID == employeeID && t.PERVERIMLILIKANALIZI == true).ToList();
-                    var tempHaltLines = haltLines.Where(t => t.CALISANID == employeeID && t.PKD == false).ToList();
+                    var tempHaltLines = haltLines.Where(t => t.CALISANID == employeeID && t.PKD == false && t.OPERASYONID > 0).ToList();
 
                     #region Değişkenler
 
