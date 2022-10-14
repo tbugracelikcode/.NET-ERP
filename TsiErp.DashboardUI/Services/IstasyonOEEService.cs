@@ -36,8 +36,6 @@ namespace TsiErp.DashboardUI.Services
             int hurda = 0;
             int? toplamcalisilabilirsure = 0;
             decimal operasyonsuresi = 0;
-
-
             #endregion
 
 

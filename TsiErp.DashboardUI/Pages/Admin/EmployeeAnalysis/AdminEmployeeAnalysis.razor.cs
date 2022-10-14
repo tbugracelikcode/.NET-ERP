@@ -24,6 +24,8 @@ namespace TsiErp.DashboardUI.Pages.Admin.EmployeeAnalysis
         bool VisibleSpinner = false;
         private bool isLabelsChecked = true;
         private bool dataLabels = true;
+        private bool compareModalVisible = false;
+        public string[]? MultiSelectVal = new string[] { };
 
         #endregion
 
@@ -90,6 +92,22 @@ namespace TsiErp.DashboardUI.Pages.Admin.EmployeeAnalysis
             ChartInstance.RefreshAsync();
             if (isLabelsChecked) { dataLabels = true; }
             else { dataLabels = false; }
+        }
+
+        private async void OnCompareButtonClicked()
+        {
+            ShowCompareModal();
+        }
+
+        private async void ShowCompareModal()
+        {
+            compareModalVisible = true;
+        }
+
+        private async void HideCompareModal()
+        {
+            compareModalVisible = false;
+            MultiSelectVal = null;
         }
 
         #endregion

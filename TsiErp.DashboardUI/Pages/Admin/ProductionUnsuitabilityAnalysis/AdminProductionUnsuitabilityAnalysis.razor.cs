@@ -25,6 +25,9 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
         bool VisibleSpinner = false;
         private bool isLabelsChecked = true;
         private bool dataLabels = true;
+        private bool compareModalVisible = false;
+        public string[]? MultiSelectVal = new string[] { };
+        public string unsuitabilityTitle = "Genel Uygunsuzluk Oranı:";
 
         #endregion
 
@@ -69,10 +72,10 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
             #region Aksiyon Seçimi
             switch(selectedactionID)
             {
-                case 1: chartTitle = "Hurda Grafiği";break;
-                case 2: chartTitle = "Düzeltme Grafiği"; break;
-                case 3: chartTitle = "Olduğu Gibi Kullanılacak Grafiği"; break;
-                case 4: chartTitle = "Genel Uygunsuzluk Grafiği"; break;
+                case 1: chartTitle = "Hurda Grafiği"; unsuitabilityTitle = "Hurda Oranı:"; break;
+                case 2: chartTitle = "Düzeltme Grafiği"; unsuitabilityTitle = "Düzeltme Oranı:"; break;
+                case 3: chartTitle = "Olduğu Gibi Kullanılacak Grafiği"; unsuitabilityTitle = "Olduğu Gibi Kullanılacak Oranı:"; break;
+                case 4: chartTitle = "Genel Uygunsuzluk Grafiği"; unsuitabilityTitle = "Genel Uygunsuzluk Oranı:"; break;
             }
 
             #endregion
@@ -108,6 +111,22 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
             ChartInstance.RefreshAsync();
             if (isLabelsChecked) { dataLabels = true; }
             else { dataLabels = false; }
+        }
+
+        private async void OnCompareButtonClicked()
+        {
+            ShowCompareModal();
+        }
+
+        private async void ShowCompareModal()
+        {
+            compareModalVisible = true;
+        }
+
+        private async void HideCompareModal()
+        {
+            compareModalVisible = false;
+            MultiSelectVal = null;
         }
 
         #endregion

@@ -64,5 +64,13 @@ namespace TsiErp.DashboardUI.Models
         /// Oran 
         /// </summary>
         public double Percent { get; set; }
+
+        public int UNSUITABILITY { get; set; }
+
+        public decimal PRODUCTION { get; set; }
+
+        public decimal DIFFUNS { get; set; }
+
+        public decimal PREVIOUSMONTH { get; set; }
     }
 }

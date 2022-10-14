@@ -30,6 +30,12 @@ namespace TsiErp.DashboardUI.Services
             decimal availability = 0;
             decimal perf = 0;
             decimal quality = 0;
+            int planlananbirimsure = 0;
+            decimal gerceklesenbirimsure = 0;
+            decimal uretilenadet = 0;
+            int hurda = 0;
+            int? toplamcalisilabilirsure = 0;
+            decimal operasyonsuresi = 0;
 
             #endregion
 
@@ -42,7 +48,11 @@ namespace TsiErp.DashboardUI.Services
 
                 previousMonthAvailability = availability;
 
-                availability = (decimal)(calenderLines.Where(c => (c.CALISMADURUMU != "ÇALIŞMA YOK" && c.CALISMADURUMU != "TATİL") && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE)) > 0 ? ((decimal)t.Sum(t => t.OPERASYONSURESI) / (decimal)(calenderLines.Where(c => (c.CALISMADURUMU != "ÇALIŞMA YOK" && c.CALISMADURUMU != "TATİL") && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE))) : 0;
+                operasyonsuresi = t.Sum(t => t.OPERASYONSURESI);
+
+                toplamcalisilabilirsure = calenderLines.Where(c => (c.CALISMADURUMU != "ÇALIŞMA YOK" && c.CALISMADURUMU != "TATİL") && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE);
+
+                availability = (decimal)toplamcalisilabilirsure > 0 ? (operasyonsuresi / (decimal)toplamcalisilabilirsure) : 0;
 
                 #endregion
 
@@ -50,21 +60,29 @@ namespace TsiErp.DashboardUI.Services
 
                 previousMonthPerformance = perf;
 
-                perf = t.Sum(t => t.BIRIMSURE) > 0 ? (t.Sum(t => t.PLANLANANOPRSURESI) / t.Sum(t => t.BIRIMSURE)) : 0;
+                gerceklesenbirimsure = t.Sum(t => t.BIRIMSURE);
+
+                planlananbirimsure = t.Sum(t => t.PLANLANANOPRSURESI);
+
+                perf = gerceklesenbirimsure > 0 ? (planlananbirimsure / gerceklesenbirimsure) : 0;
                 #endregion
 
                 #region Kalite 
 
                 previousMonthQuality = quality;
 
-                quality = ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)) - (t.Sum(t => t.BIRIMSURE) * (unsuitabilityLines.Where(b => b.TARIH.Month == t.Key.AY).Sum(t => t.OLCUKONTROLFORMBEYAN)))) / ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)));
+                uretilenadet = t.Sum(t => t.URETILENADET);
+
+                hurda = unsuitabilityLines.Where(b => b.TARIH.Month == t.Key.AY).Sum(t => t.OLCUKONTROLFORMBEYAN);
+
+                quality = ((uretilenadet * gerceklesenbirimsure) - (gerceklesenbirimsure * hurda)) / (uretilenadet * gerceklesenbirimsure);
                 #endregion
 
                 #region OEE
 
                 previousMonthOEE = oee;
 
-                oee = ((calenderLines.Where(c => (c.CALISMADURUMU != "ÇALIŞMA YOK" && c.CALISMADURUMU != "TATİL") && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE)) > 0) && (t.Sum(t => t.BIRIMSURE) > 0) && ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)) > 0) ? ((decimal)t.Sum(t => t.OPERASYONSURESI) / (decimal)(calenderLines.Where(c => (c.CALISMADURUMU != "ÇALIŞMA YOK" && c.CALISMADURUMU != "TATİL") && c.VERITOPLAMA == true && c.PLANLANAN == "Hayır" && c.TARIH.Value.Month == t.Key.AY && c.TARIH.Value.Year == t.Key.YIL).Sum(c => c.TOPLAMCALISABILIRSURE))) * (t.Sum(t => t.PLANLANANOPRSURESI) / t.Sum(t => t.BIRIMSURE)) * (((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)) - (t.Sum(t => t.BIRIMSURE) * (unsuitabilityLines.Where(b => b.TARIH.Month == t.Key.AY).Sum(t => t.OLCUKONTROLFORMBEYAN)))) / ((t.Sum(t => t.URETILENADET) * t.Sum(t => t.BIRIMSURE)))) : 0;
+                oee = perf * quality * availability;
                 #endregion
 
                 decimal differenceOEE = oee - previousMonthOEE;
@@ -90,13 +108,26 @@ namespace TsiErp.DashboardUI.Services
                     KALITE = quality,
 
                     OEE = oee,
+
                     DIFFAVA = differenceAvailability,
 
                     DIFFOEE = differenceOEE,
 
                     DIFFPER = differencePerformance,
 
-                    DIFFQUA = differenceQuality
+                    DIFFQUA = differenceQuality,
+
+                    OCCUREDUNITTIME = gerceklesenbirimsure,
+
+                    PLANNEDUNITTIME = planlananbirimsure,
+
+                    PRODUCTION = uretilenadet,
+
+                    SCRAP = hurda,
+
+                    TOTALSHIFTTIME = toplamcalisilabilirsure,
+
+                    OPRTIME = operasyonsuresi
                 };
                
             }).ToList();

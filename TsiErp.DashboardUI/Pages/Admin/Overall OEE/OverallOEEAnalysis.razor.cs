@@ -22,6 +22,8 @@ namespace TsiErp.DashboardUI.Pages.Admin.Overall_OEE
         private bool isLabelsChecked = true;
         private bool isGridChecked = true;
         private bool dataLabels = true;
+        private bool compareModalVisible = false;
+        public string[]? MultiSelectVal = new string[] { };
 
         #endregion
 
@@ -84,6 +86,22 @@ namespace TsiErp.DashboardUI.Pages.Admin.Overall_OEE
             isGridChecked = argsValue;
 
             StateHasChanged();
+        }
+
+        private async void OnCompareButtonClicked()
+        {
+            ShowCompareModal();
+        }
+
+        private async void ShowCompareModal()
+        {
+            compareModalVisible = true;
+        }
+
+        private async void HideCompareModal()
+        {
+            compareModalVisible = false;
+            MultiSelectVal = null;
         }
 
         #endregion
