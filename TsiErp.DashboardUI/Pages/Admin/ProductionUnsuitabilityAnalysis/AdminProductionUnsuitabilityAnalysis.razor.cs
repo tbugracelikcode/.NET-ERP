@@ -7,24 +7,27 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
 {
     public partial class AdminProductionUnsuitabilityAnalysis
     {
-        List<TsiErp.DashboardUI.Models.ProductionUnsuitabilityAnalysis> dataprodunsuitability = new List<TsiErp.DashboardUI.Models.ProductionUnsuitabilityAnalysis>();
-        List<TsiErp.DashboardUI.Models.AdminProductionUnsuitabilityAnalysisChart> datachart = new List<TsiErp.DashboardUI.Models.AdminProductionUnsuitabilityAnalysisChart>();
-        SfGrid<TsiErp.DashboardUI.Models.ProductionUnsuitabilityAnalysis> Grid;
+        List<Models.ProductionUnsuitabilityAnalysis> dataprodunsuitability = new List<Models.ProductionUnsuitabilityAnalysis>();
+        List<AdminProductionUnsuitabilityAnalysisChart> datachart = new List<AdminProductionUnsuitabilityAnalysisChart>();
+        SfGrid<Models.ProductionUnsuitabilityAnalysis> Grid;
 
         #region Değişkenler
 
-        DateTime startDate = DateTime.Today.AddDays(-(90 + DateTime.Today.Day));
+        DateTime startDate = DateTime.Today.AddDays(-(364 + DateTime.Today.Day));
         DateTime endDate = DateTime.Today.AddDays(-(DateTime.Today.Day));
         private int? selectedTimeIndex { get; set; }
         private int? selectedActionIndex { get; set; }
         int? selectedactionID = 4;
         private bool isGridChecked = true;
-        string chartTitle = "Toplu Uygunsuzluk Grafiği";
+        string chartTitle = "Genel Uygunsuzluk Grafiği";
         private int frequencyChart;
         SfChart ChartInstance;
         bool VisibleSpinner = false;
         private bool isLabelsChecked = true;
         private bool dataLabels = true;
+        private bool compareModalVisible = false;
+        public string[]? MultiSelectVal = new string[] { };
+        public string unsuitabilityTitle = "Genel Uygunsuzluk Oranı:";
 
         #endregion
 
@@ -32,7 +35,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
         {
 
             dataprodunsuitability =await UretimUygunsuzlukService.GetProductionUnsuitabilityAnalysis(startDate, endDate);
-            datachart = await UretimUygunsuzlukService.GetProductionUnsuitabilityChart(startDate, endDate, 3, 4);
+            datachart = await UretimUygunsuzlukService.GetProductionUnsuitabilityChart(startDate, endDate, 0, 4);
 
         }
         private void onChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?, ComboboxUnsuitability> args)
@@ -54,13 +57,14 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
             #region Zaman Seçimi
             switch (selectedTimeIndex)
             {
-                case 0: startDate = DateTime.Today.AddDays(-365); frequencyChart = 0; break;
-                case 1: startDate = DateTime.Today.AddDays(-273); frequencyChart = 1; break;
-                case 2: startDate = DateTime.Today.AddDays(-181); frequencyChart = 2; break;
-                case 3: startDate = DateTime.Today.AddDays(-90); frequencyChart = 3; break;
-                case 4: startDate = DateTime.Today.AddDays(-60); frequencyChart = 4; break;
-                case 5: startDate = DateTime.Today.AddDays(-30); frequencyChart = 5; break;
-                case 6: startDate = DateTime.Today.AddDays(-7); frequencyChart = 6; break;
+
+                case 0: startDate = DateTime.Today.AddDays(-(364 + DateTime.Today.Day)); frequencyChart = 0; break;
+                case 1: startDate = DateTime.Today.AddDays(-(272 + DateTime.Today.Day)); frequencyChart = 1; break;
+                case 2: startDate = DateTime.Today.AddDays(-(180 + DateTime.Today.Day)); frequencyChart = 2; break;
+                case 3: startDate = DateTime.Today.AddDays(-(89 + DateTime.Today.Day)); frequencyChart = 3; break;
+                case 4: startDate = DateTime.Today.AddDays(-(59 + DateTime.Today.Day)); frequencyChart = 4; break;
+                case 5: startDate = DateTime.Today.AddDays(-(29 + DateTime.Today.Day)); frequencyChart = 5; break;
+                case 6: startDate = DateTime.Today.AddDays(-(6 + DateTime.Today.Day)); frequencyChart = 6; break;
                 default: break;
             }
 
@@ -69,10 +73,10 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
             #region Aksiyon Seçimi
             switch(selectedactionID)
             {
-                case 1: chartTitle = "Hurda Grafiği";break;
-                case 2: chartTitle = "Düzeltme Grafiği"; break;
-                case 3: chartTitle = "Olduğu Gibi Kullanılacak Grafiği"; break;
-                case 4: chartTitle = "Toplu Uygunsuzluk Grafiği"; break;
+                case 1: chartTitle = "Hurda Grafiği"; unsuitabilityTitle = "Hurda Oranı:"; break;
+                case 2: chartTitle = "Düzeltme Grafiği"; unsuitabilityTitle = "Düzeltme Oranı:"; break;
+                case 3: chartTitle = "Olduğu Gibi Kullanılacak Grafiği"; unsuitabilityTitle = "Olduğu Gibi Kullanılacak Oranı:"; break;
+                case 4: chartTitle = "Genel Uygunsuzluk Grafiği"; unsuitabilityTitle = "Genel Uygunsuzluk Oranı:"; break;
             }
 
             #endregion
@@ -99,7 +103,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
         {
             VisibleSpinner = true;
 
-            if (selectedactionID == null) { selectedactionID = 4; }
+            if (selectedactionID == null) { selectedactionID = 0; }
             NavigationManager.NavigateTo("/admin/production-unsuitability-analysis/details" + "/" + unsuitabilityCode + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd") + "/" + selectedactionID.ToString()); ;
         }
 
@@ -108,6 +112,22 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
             ChartInstance.RefreshAsync();
             if (isLabelsChecked) { dataLabels = true; }
             else { dataLabels = false; }
+        }
+
+        private async void OnCompareButtonClicked()
+        {
+            ShowCompareModal();
+        }
+
+        private async void ShowCompareModal()
+        {
+            compareModalVisible = true;
+        }
+
+        private async void HideCompareModal()
+        {
+            compareModalVisible = false;
+            MultiSelectVal = null;
         }
 
         #endregion

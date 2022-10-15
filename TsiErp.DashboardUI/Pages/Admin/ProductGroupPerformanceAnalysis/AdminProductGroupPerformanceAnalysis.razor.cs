@@ -1,15 +1,20 @@
 ﻿using Syncfusion.Blazor.Charts;
 using Syncfusion.Blazor.Grids;
+using System.Dynamic;
 using TsiErp.DashboardUI.Models;
+using TsiErp.DashboardUI.Services;
 
-namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
+namespace TsiErp.DashboardUI.Pages.Admin.ProductGroupPerformanceAnalysis
 {
-    public partial class AdminProductGroupAnalysis
+    public partial class AdminProductGroupPerformanceAnalysis
     {
-        List<ProductGroupsAnalysis> dataproductgroup = new List<ProductGroupsAnalysis>();
+        List<Models.ProductGroupPerformanceAnalysis> dataproductperformance = new List<Models.ProductGroupPerformanceAnalysis>();
+        List<AdminProductGroupPerformanceAnalysisChart> datachart = new List<AdminProductGroupPerformanceAnalysisChart>();
         List<ProductGroupsAnalysis> dataproductgroupcombobox = new List<ProductGroupsAnalysis>();
-        List<AdminProductChart> datachart = new List<AdminProductChart>();
-        SfGrid<ProductGroupsAnalysis> Grid;
+        //public List<ExpandoObject> GridMonthsExpando = new List<ExpandoObject>();
+
+        SfGrid<Models.ProductGroupPerformanceAnalysis> Grid;
+
 
         #region Değişkenler
 
@@ -18,10 +23,11 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
         private int? selectedTimeIndex { get; set; }
         private int? selectedProductIndex { get; set; }
         int? selectedproductID;
-        string chartTitle = string.Empty;
-        private bool isGridChecked = true;
+        private int threshold = 75;
+        private double thresholddouble = 0.75;
         private int frequencyChart;
         SfChart ChartInstance;
+        private bool isGridChecked = true;
         bool VisibleSpinner = false;
         private bool isLabelsChecked = true;
         private bool dataLabels = true;
@@ -33,13 +39,42 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
         protected override async void OnInitialized()
         {
 
-            dataproductgroup = await StokService.GetProductGroupsAnalysis(startDate, endDate);
+            dataproductperformance = await UrunGrubuPerformansService.GetProductGroupPerformanceAnalysis(startDate, endDate, 9, 0);
             dataproductgroupcombobox = await StokService.GetProductGroupsComboboxAnalysis(startDate, endDate);
-            chartTitle =  dataproductgroup.Where(t => t.ProductGroupID == 9).Select(t => t.ProductGroupName).FirstOrDefault() + " HURDA GRAFİĞİ";
-            datachart = await StokService.GetProductChart(startDate, endDate, 0, 9);
-
+            datachart = await UrunGrubuPerformansService.GetProductGroupPerformanceAnalysisChart(startDate, endDate, 0, 9);
+            //GenerateNewColumn();
         }
 
+        //public  List<ExpandoObject> GenerateNewColumn()
+        //{
+        //    var data = new List<ExpandoObject>();
+
+        //    int colCount = datachart.Count();
+
+        //    string[] ColNames = new string[colCount];
+
+
+        //    int a = 0;
+
+        //    foreach (var item in datachart)
+        //    {
+        //        ColNames[a] = item.Month;
+
+        //        dynamic month = new ExpandoObject();
+
+        //        var dict = (IDictionary<string, object>)month;
+
+        //        dict[ColNames[a]] = item.Month;
+
+        //        data.Add(month);
+
+        //        a++;
+        //    }
+
+        //    return data;
+
+            
+        //}
 
         #region Component Metotları
 
@@ -56,11 +91,9 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
             await Task.Delay(1);
             StateHasChanged();
 
-
             #region Zaman Seçimi
             switch (selectedTimeIndex)
             {
-
                 case 0: startDate = DateTime.Today.AddDays(-(364 + DateTime.Today.Day)); frequencyChart = 0; break;
                 case 1: startDate = DateTime.Today.AddDays(-(272 + DateTime.Today.Day)); frequencyChart = 1; break;
                 case 2: startDate = DateTime.Today.AddDays(-(180 + DateTime.Today.Day)); frequencyChart = 2; break;
@@ -73,11 +106,11 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
 
             #endregion
 
-
-            dataproductgroup = await StokService.GetProductGroupsAnalysis(startDate, endDate);
+            thresholddouble = Convert.ToDouble(threshold) / 100;
+            dataproductperformance = await UrunGrubuPerformansService.GetProductGroupPerformanceAnalysis(startDate, endDate, selectedproductID, frequencyChart);
             dataproductgroupcombobox = await StokService.GetProductGroupsComboboxAnalysis(startDate, endDate);
-            datachart = await StokService.GetProductChart(startDate, endDate, frequencyChart, selectedproductID);
-            chartTitle = dataproductgroup.Where(t => t.ProductGroupID == selectedproductID).Select(t => t.ProductGroupName).FirstOrDefault() + " HURDA GRAFİĞİ";
+            datachart = await UrunGrubuPerformansService.GetProductGroupPerformanceAnalysisChart(startDate, endDate, frequencyChart, selectedproductID);
+            //GenerateNewColumn();
             await Grid.Refresh();
             await ChartInstance.RefreshAsync();
             VisibleSpinner = false;
@@ -90,13 +123,6 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
             isGridChecked = argsValue;
 
             StateHasChanged();
-        }
-
-        private void OnDetailButtonClicked(int stationID)
-        {
-            VisibleSpinner = true;
-
-            NavigationManager.NavigateTo("/admin/product-group-analysis/details" + "/" + stationID.ToString() + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd")); ;
         }
 
         private void OnChangeLabelCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
@@ -124,6 +150,22 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
 
         #endregion
 
+        public void CellInfoHandler(QueryCellInfoEventArgs<Models.ProductGroupPerformanceAnalysis> Args)
+        {
+            if (Args.Column.Field == "Performance")
+            {
+                if (Args.Data.Performance < Convert.ToDecimal(thresholddouble))
+                {
+                    Args.Cell.AddStyle(new string[] { "background-color: #DF0000; color: white; " });
+                }
+                else
+                {
+                    Args.Cell.AddStyle(new string[] { "background-color: #37CB00; color: white;" });
+                }
+            }
+            StateHasChanged();
+        }
+
         #region Combobox
 
         private List<ComboboxTimePeriods> timeperiods = new List<ComboboxTimePeriods>() {
@@ -139,4 +181,6 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
         #endregion
 
     }
+
+
 }

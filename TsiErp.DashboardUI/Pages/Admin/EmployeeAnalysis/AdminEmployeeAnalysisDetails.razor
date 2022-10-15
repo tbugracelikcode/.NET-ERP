@@ -10,7 +10,7 @@
             <tr>
                 <td width="1000px">
                     <span style="float:left">
-                        <label style="font-size:15px; color:black">Fason Tedarikçi Uygunsuzluk Analizi</label><span class="TSIListPageTitleCardLabel">> @tabHeader1</span>
+                        <label style="font-size:15px; color:black">Personel Analizi</label><span class="TSIListPageTitleCardLabel">> @tabHeader1</span>
                     </span>
                 </td>
             </tr>
@@ -66,7 +66,7 @@
                     <ContentTemplate>
                         <SfCard class="Cards" style="text-align:center">
                             <CardContent>
-                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Duruş Analiz Grafiği">
+                                <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Personel Duruş Analiz Grafiği">
                                     <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
                                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
                                         <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
@@ -76,7 +76,7 @@
                                     </ChartPrimaryYAxis>
                                     <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
                                     <ChartSeriesCollection>
-                                        <ChartSeries DataSource="@dataemployeechart" ColumnWidth="@columnwidth" Name="Duruş Süresi" XName="HaltName" YName="Percent" Width="1" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column">
+                                        <ChartSeries DataSource="@dataemployeechart" ColumnWidth="@columnwidth" Name="Duruş Oranı" XName="HaltName" YName="Percent" Width="1" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column">
 
                                         </ChartSeries>
                                     </ChartSeriesCollection>

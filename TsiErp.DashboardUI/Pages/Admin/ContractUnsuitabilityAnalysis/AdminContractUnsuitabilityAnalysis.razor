@@ -30,9 +30,9 @@
                     <SfCheckBox @bind-Checked="isGridChecked" @onchange="OnCheckedChanged" CssClass="e-customcheck"></SfCheckBox>
                     <label class=FilterLabelTitle><strong>Detay Tablosunu Gizle</strong></label>
                 </td>
-                <td width="400px">
+                <td width="200px">
                     <label class="FilterLabelTitle"><strong>Zaman Periyodu:</strong></label>
-                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Son 3 Ay" DataSource="@timeperiods">
+                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Yıllık" DataSource="@timeperiods">
                         <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
                     </SfComboBox>
                 </td>

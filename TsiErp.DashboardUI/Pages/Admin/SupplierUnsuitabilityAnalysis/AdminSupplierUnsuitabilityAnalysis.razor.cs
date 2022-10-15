@@ -11,7 +11,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.SupplierUnsuitabilityAnalysis
 
         #region Değişkenler
 
-        DateTime startDate = DateTime.Today.AddDays(-(90 + DateTime.Today.Day));
+        DateTime startDate = DateTime.Today.AddDays(-(364 + DateTime.Today.Day));
         DateTime endDate = DateTime.Today.AddDays(-(DateTime.Today.Day));
         private int? selectedTimeIndex { get; set; }
         int? selectedactionID = 1;
@@ -45,13 +45,13 @@ namespace TsiErp.DashboardUI.Pages.Admin.SupplierUnsuitabilityAnalysis
 
             switch (selectedTimeIndex)
             {
-                case 0: startDate = DateTime.Today.AddDays(-365); ; break;
-                case 1: startDate = DateTime.Today.AddDays(-273); ; break;
-                case 2: startDate = DateTime.Today.AddDays(-181); ; break;
-                case 3: startDate = DateTime.Today.AddDays(-90); ; break;
-                case 4: startDate = DateTime.Today.AddDays(-60); ; break;
-                case 5: startDate = DateTime.Today.AddDays(-30); ; break;
-                case 6: startDate = DateTime.Today.AddDays(-7); ; break;
+                case 0: startDate = DateTime.Today.AddDays(-(364 + DateTime.Today.Day)); ; break;
+                case 1: startDate = DateTime.Today.AddDays(-(272 + DateTime.Today.Day)); ; break;
+                case 2: startDate = DateTime.Today.AddDays(-(180 + DateTime.Today.Day)); break;
+                case 3: startDate = DateTime.Today.AddDays(-(89 + DateTime.Today.Day)); break;
+                case 4: startDate = DateTime.Today.AddDays(-(59 + DateTime.Today.Day)); break;
+                case 5: startDate = DateTime.Today.AddDays(-(29 + DateTime.Today.Day)); break;
+                case 6: startDate = DateTime.Today.AddDays(-(6 + DateTime.Today.Day)); break;
                 default: break;
             }
 

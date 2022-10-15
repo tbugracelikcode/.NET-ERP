@@ -14,5 +14,11 @@
         /// Hurda Yüzde 
         /// </summary>
         public double ScrapPercent { get; set; }
+
+        public decimal DIFFSCRAPPERCENT { get; set; }
+
+        public decimal PRODUCTION { get; set; }
+
+        public int SCRAP { get; set; }
     }
 }

@@ -37,7 +37,7 @@
                 </td>
                 <td width="200px">
                     <label class="FilterLabelTitle"><strong>Zaman Periyodu:</strong></label>
-                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Son 3 Ay" DataSource="@timeperiods">
+                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Yıllık" DataSource="@timeperiods">
                         <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
                     </SfComboBox>
                 </td>
@@ -60,6 +60,8 @@
                     </SfSpinner>
                 </td>
                 <td width="100px">
+                      <br />
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnCompareButtonClicked">Karşılaştır</SfButton>
                 </td>
             </tr>
         </table>
@@ -75,12 +77,44 @@
             <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
                 <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
             </ChartPrimaryXAxis>
-            <ChartPrimaryYAxis LabelFormat="p3">
+            <ChartPrimaryYAxis Minimum="0" LabelFormat="p3">
                 <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
             </ChartPrimaryYAxis>
-            <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
+            <ChartTooltipSettings Enable="true">
+                <Template>
+
+                      @{
+                        var data = context as ChartTooltipInfo;
+
+                        #region Değişkenler
+
+                        decimal scrappercent = (decimal)datachart.Where(t => t.ScrapPercent == (double)data.Y).Select(t => t.ScrapPercent).FirstOrDefault();
+
+                        decimal comparisonScrapPercent = datachart.Where(t => t.ScrapPercent == (double)data.Y).Select(t => t.DIFFSCRAPPERCENT).FirstOrDefault();
+
+                        string valueColorScrapPercent = comparisonScrapPercent < 0 ? "#068800" : "#BF0000";
+
+                        string comparisonScrapPercentstr = comparisonScrapPercent.ToString("p2");
+
+                        #endregion
+
+                        if (scrappercent != comparisonScrapPercent)
+                        {
+                            <div>
+                                <table class="TSIChartTooltip">
+                                    <tr><th style="font-size:16px !important;" colspan="2">Değişim</th></tr>
+                                    <tr><td>Hurda Oranı:</td><td style="color: @valueColorScrapPercent">@comparisonScrapPercentstr</td></tr>
+                                </table>
+                            </div>
+                        }
+
+
+
+                    }
+                </Template>
+            </ChartTooltipSettings>
             <ChartSeriesCollection>
-                <ChartSeries DataSource="@datachart" Name="Kalite" XName="Ay" YName="ScrapPercent" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
+                <ChartSeries DataSource="@datachart" Name="Hurda Oranı" XName="Ay" YName="ScrapPercent" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
                     <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
                         <ChartDataLabel Visible="@dataLabels">
                             <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
@@ -94,7 +128,6 @@
                     </ChartTrendlines>
                 </ChartSeries>
             </ChartSeriesCollection>
-            <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
             <ChartZoomSettings EnableSelectionZooming="true"></ChartZoomSettings>
         </SfChart>
 
@@ -135,6 +168,111 @@
     </CardFooter>
 </SfCard>
 
-@code {
-  
-}
+<DxPopup Visible="compareModalVisible"
+         ShowFooter="false"
+         CloseButtonClick="HideCompareModal"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Zamana Göre Karşılaştırma"
+         Width="1200px"
+         CssClass="TSIModalCompareBox"
+         HeaderCssClass="ModalHeaderTitleCss">
+
+    <BodyTemplate>
+        <table style="width:100%">
+            <tr>
+                <td style="width:100%">
+                    <SfMultiSelect TValue="string[]?" @bind-Value="@MultiSelectVal" TItem="AdminProductChart" Placeholder="Zaman Dilimlerini Seçiniz" DataSource="@datachart">
+                        <MultiSelectFieldSettings Text="Ay" Value="ScrapPercent"></MultiSelectFieldSettings>
+                    </SfMultiSelect>
+                </td>
+
+            </tr>
+        </table>
+
+        <div class="row">
+            <center>
+                <div class="control-section col-lg-9 card-control-section tile_layout">
+                    <div class="row e-card-layout">
+                        @{
+
+                            if (MultiSelectVal != null)
+                            {
+
+                                #region Değişkenler
+
+                                string header = string.Empty;
+                                decimal scrappercent = 0;
+                                int hurda = 0;
+                                decimal uretilenadet = 0;
+
+                                #endregion
+
+                                foreach (var item in MultiSelectVal)
+                                {
+
+                                    #region Değişkenler
+
+                                    header = datachart.Where(t => t.ScrapPercent.ToString() == item).Select(t => t.Ay).FirstOrDefault();
+                                    scrappercent = (decimal)datachart.Where(t => t.ScrapPercent.ToString() == item).Select(t => t.ScrapPercent).FirstOrDefault();
+                                    uretilenadet = datachart.Where(t => t.ScrapPercent.ToString() == item).Select(t => t.PRODUCTION).FirstOrDefault();
+                                    hurda = datachart.Where(t => t.ScrapPercent.ToString() == item).Select(t => t.SCRAP).FirstOrDefault();
+
+                                    #endregion
+
+                                    <div class="col-lg-2 col-md-2 col-sm-4" style="padding: 10px;text-align:left;  width: 33%;">
+                                        <div id="card_sample_1" class="card_sample" style="border: 5px solid #9F0303 ;border-radius:5%;box-shadow: rgb(8 8 8 / 85%) 0px 5px 15px !important;">
+
+
+                                            <table class="table table-hover">
+                                                <tr><th style="font-size:16px !important;" colspan="2">@header</th></tr>
+                                                <tr>
+                                                    <td style="text-align: left; width:70%;font-weight:bold">Hurda Oranı:</td>
+                                                    <td style="width:30%;font-weight:bold">@scrappercent.ToString("p2")</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="font-size:12px !important;text-align:left; padding-left:8%">
+                                                        • Hurda Adet:
+                                                    </td>
+                                                    <td style="font-size:12px !important;text-align:left;">
+                                                        @hurda
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="font-size:12px !important;text-align:left;padding-left:8%">
+                                                        • Üretilen Adet:
+                                                    </td>
+                                                    <td style="font-size:12px !important;text-align:left;">
+                                                        @uretilenadet.ToString("0.00")
+                                                    </td>
+                                                </tr>
+
+                                                
+                                            </table>
+
+
+                                        </div>
+                                    </div>
+
+
+
+
+                                }
+
+                            }
+
+                        }
+                    </div>
+                </div>
+            </center>
+        </div>
+
+
+
+    </BodyTemplate>
+    @*   <FooterContentTemplate>
+    <SfButton CssClass="TSICancelButton" OnClick="HideCompareModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+    </FooterContentTemplate>*@
+</DxPopup>

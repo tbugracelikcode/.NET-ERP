@@ -48,6 +48,8 @@ namespace TsiErp.DashboardUI.Services
                     }
                 }
             }
+
+            contractUnsuitabilityAnalysis = contractUnsuitabilityAnalysis.OrderByDescending(t => t.Percent).ToList();
             return await Task.FromResult(contractUnsuitabilityAnalysis);
         }
 

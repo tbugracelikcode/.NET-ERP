@@ -14,10 +14,13 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
         List<StationDetailedHaltAnalysis> datahalt = new List<StationDetailedHaltAnalysis>();
         List<StationDetailedProductChart> dataproductchart = new List<StationDetailedProductChart>();
         List<StationDetailedHaltAnalysis> datahaltchart = new List<StationDetailedHaltAnalysis>();
+        List<StationDetailedHaltAnalysisAll> datahaltall = new List<StationDetailedHaltAnalysisAll>();
+        List<StationDetailedHaltAnalysisAll> datahaltchartall = new List<StationDetailedHaltAnalysisAll>();
 
         SfGrid<StationDetailedProductAnalysis> ProductGrid;
         SfGrid<StationDetailedEmployeeAnalysis> EmployeeGrid;
         SfGrid<StationDetailedHaltAnalysis> HaltGrid;
+        SfGrid<StationDetailedHaltAnalysisAll> HaltGridAll;
         SfChart ChartInstance;
 
         #region Değişkenler
@@ -27,8 +30,10 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
         int products = 1;
         string stationName = string.Empty;
         private bool isGridChecked = true;
+        double columnwidth;
         double columnwidth2;
         double columnwidth3;
+        double columnwidth4;
 
         [Parameter]
         public DateTime startDate { get; set; }
@@ -49,6 +54,8 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
             dataemployee = await IstasyonDetayService.GetStationDetailedEmployeeAnalysis(stationID, startDate, endDate);
             datahalt = await IstasyonDetayService.GetStationDetailedHaltAnalysis(stationID, startDate, endDate);
             datahaltchart = await IstasyonDetayService.GetStationDetailedHaltAnalysisChart(stationID, startDate, endDate);
+            datahaltall = await IstasyonDetayService.GetStationDetailedHaltAnalysisAll(stationID, startDate, endDate);
+            datahaltchartall = await IstasyonDetayService.GetStationDetailedHaltAnalysisAllChart(stationID, startDate, endDate);
             dataproductchart = await IstasyonDetayService.GetStationDetailedProductChart(stationID, startDate, endDate, 1);
             stationName = datahalt.Select(t => t.StationName).FirstOrDefault();
 
@@ -63,9 +70,16 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
             {
                 columnwidth2 = 0.1;
             }
+            if (datahaltchartall.Count() <= 3)
 
+            {
+                columnwidth4 = 0.1;
+            }
+            if(dataproductchart.Count() <= 3)
+            {
+                columnwidth = 0.1;
+            }
             #endregion
-
         }
 
         private async void OnChangeProductCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
@@ -88,7 +102,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
         {
             this.VisibleSpinner = true;
 
-            NavigationManager.NavigateTo("/admin/overall-oee");
+            NavigationManager.NavigateTo("/admin/machine-analysis");
         }
     }
 }
