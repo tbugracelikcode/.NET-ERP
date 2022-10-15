@@ -294,28 +294,28 @@ namespace TsiErp.DashboardUI.Helpers
             SqlCommand command = new SqlCommand();
             command.CommandText = "SELECT " +
                                   "ID," +
-                                  "CALISANID, " +
-                                  "VARDIYAID, " +
-                                  "ISTASYONID, " +
+                                  "ISNULL(CALISANID,0) as CALISANID, " +
+                                  "ISNULL(VARDIYAID,0) as VARDIYAID, " +
+                                  "ISNULL(ISTASYONID,0) as ISTASYONID, " +
                                   "ISNULL(URETILENADET,0) as URETILENADET, " +
                                   "ISNULL(HURDAADET,0) as HURDAADET, " +
                                   "ISNULL(OPERASYONSURESI,0) as OPERASYONSURESI, " +
                                   "ISNULL(AYARSURESI,0) as AYARSURESI, " +
                                   "ISNULL(ATILSURE,0) as ATILSURE, " +
-                                  "OPRBASLANGICTRH, " +
-                                  "OPRBITISTRH, " +
+                                  "ISNULL(OPRBASLANGICTRH,'1900-01-01') as OPRBASLANGICTRH, " +
+                                  "ISNULL(OPRBITISTRH,'1900-01-01') as OPRBITISTRH,  " +
                                   "ISNULL(OEE,0) as OEE, " +
                                   "ISNULL(KALITE,0) as KALITE, " +
                                   "ISNULL(MESAI,0) as MESAI, " +
-                                  "ROTAID, " +
-                                  "VARYANTID, " +
-                                  "STOKID, " +
-                                  "SIPARISID, " +
-                                  "URETIMEMRIID, " +
-                                  "OPERASYONID, " +
-                                  "MAKINEKODU, " +
+                                  "ISNULL(ROTAID,0) as ROTAID, " +
+                                  "ISNULL(VARYANTID,0) as VARYANTID, " +
+                                  "ISNULL(STOKID,0) as STOKID, " +
+                                  "ISNULL(SIPARISID,0) as SIPARISID, " +
+                                  "ISNULL(URETIMEMRIID,0) as URETIMEMRIID, " +
+                                  "ISNULL(OPERASYONID,0) as OPERASYONID, " +
+                                  "ISNULL(MAKINEKODU,0) as MAKINEKODU, " +
                                   "ISNULL(BIRIMSURE,0) as BIRIMSURE, " +
-                                  "ISEMRIID, " +
+                                  "ISNULL(ISEMRIID,0) as ISEMRIID, " +
                                   "ACIKLAMA, " +
                                   "TARIH," +
                                   "ISNULL(VARDIYA,0) as VARDIYA, " +
@@ -326,11 +326,11 @@ namespace TsiErp.DashboardUI.Helpers
                                   "ISNULL(AGIRLIK,0) as AGIRLIK, " +
                                   "CALISAN, " +
                                   "STOKKODU, " +
-                                  "URUNGRPID, " +
+                                  "ISNULL(URUNGRPID,0) as URUNGRPID, " +
                                   "URUNGRUBU, " +
                                   "ISNULL(AYARVEKONTROLSURESI,0) as AYARVEKONTROLSURESI, " +
                                   "ISNULL(PLANLANANOPRSURESI,0) as PLANLANANOPRSURESI, " +
-                                  "OPRID, " +
+                                  "ISNULL(OPRID,0) as OPRID, " +
                                   "ISNULL(PERFORMANS,0) as PERFORMANS, " +
                                   "ISNULL(KULLANILABILIRLIK,0) as KULLANILABILIRLIK, " +
                                   "ISNULL(ISLEMESURESI,0) as ISLEMESURESI," +

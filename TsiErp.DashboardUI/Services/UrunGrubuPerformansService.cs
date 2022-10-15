@@ -52,6 +52,8 @@ namespace TsiErp.DashboardUI.Services
                     return new AdminProductGroupPerformanceAnalysisChart
                     {
                         Month = GetMonth(t.Key.AY) + " " + t.Key.YIL.ToString(),
+                        THmonth = t.Key.AY,
+                        Year = t.Key.YIL,
                         Performance = performans,
                         DIFFPER = differencePerformance,
                         OCCUREDUNITTIME = gerceklesenbirimsure,
@@ -87,6 +89,8 @@ namespace TsiErp.DashboardUI.Services
                     return new AdminProductGroupPerformanceAnalysisChart
                     {
                         Month = t.Key.HAFTA.ToString("dd MMM", new CultureInfo("tr-TR")) + " " + t.Key.YIL.ToString(),
+                        THmonth = t.Key.HAFTA.Day,
+                        Year = t.Key.YIL,
                         Performance = performans,
                         DIFFPER = differencePerformance,
                         OCCUREDUNITTIME = gerceklesenbirimsure,

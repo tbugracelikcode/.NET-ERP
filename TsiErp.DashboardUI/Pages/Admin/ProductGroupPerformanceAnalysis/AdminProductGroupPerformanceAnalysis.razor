@@ -1,6 +1,8 @@
 ﻿@page "/admin/product-group-performance-analysis"
 @layout AdminLayout
 
+@using System.Dynamic
+
 @inject IUrunGrubuPerformansService UrunGrubuPerformansService
 @inject IStokService StokService
 @inject NavigationManager NavigationManager
@@ -136,42 +138,20 @@
 <br />
 <SfCard class="Cards" hidden="@isGridChecked">
     <CardContent>
-        <SfGrid ID="Grid" DataSource="@dataproductperformance" @ref="Grid" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+        <SfGrid ID="Grid" TValue="ExpandoObject" DataSource="@dataproductperformance" @ref="Grid" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
             <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
             <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
-            <GridEvents QueryCellInfo="CellInfoHandler" TValue="ProductGroupPerformanceAnalysis"></GridEvents>
+            @*<GridEvents QueryCellInfo="CellInfoHandler" TValue="ProductGroupPerformanceAnalysis"></GridEvents>*@
             <GridPageSettings PageSizes="true"></GridPageSettings>
             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
             <GridColumns>
-                <GridColumn Field=@nameof(ProductGroupPerformanceAnalysis.StationCode) HeaderText="MAKİNA KODU" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
-                @{
-                    //if(GridMonthsExpando != null && GridMonthsExpando.Any())
-                    //{
-                    //    foreach( var item in (IDictionary<string, object>)GridMonthsExpando.First())
-                    //    {
-                    //        <GridColumn Field="@item.Key"></GridColumn>
-                    //    }
-                    //}
-
-                    foreach (var item in datachart)
+                @if (dataproductperformance != null && dataproductperformance.Any())
+                {
+                    foreach (var item in (IDictionary<string, object>)dataproductperformance.First())
                     {
-                        string headerText = item.Month;
-
-
-                        <GridColumn Field=@nameof(ProductGroupPerformanceAnalysis.StationCode) HeaderText="@headerText">
-                            <Template>
-                                @*@item.Performance.ToString("p2")*@
-
-                                @{
-                                    var row = (context as ProductGroupPerformanceAnalysis);
-
-                                    decimal perf = dataproductperformance.Where(t => t.StationCode == row.StationCode).Select(t => t.Performance).FirstOrDefault();
-                                }
-
-                                @perf
-                            </Template>
-                        </GridColumn>
+                        @*<GridColumn Field=@nameof(AdminProductGroupPerformanceAnalysis.)></GridColumn>*@
+                        <GridColumn Field="@item.Key" Format="p2"></GridColumn> 
                     }
                 }
 
@@ -197,7 +177,7 @@
         <table style="width:100%">
             <tr>
                 <td style="width:100%">
-                    <SfMultiSelect TValue="string[]?" @bind-Value="@MultiSelectVal" TItem="AdminProductGroupPerformanceAnalysisChart" Placeholder="Zaman Dilimlerini Seçiniz" DataSource="@datachart">
+                    <SfMultiSelect TValue="string[]" @bind-Value="@MultiSelectVal" TItem="AdminProductGroupPerformanceAnalysisChart" Placeholder="Zaman Dilimlerini Seçiniz" DataSource="@datachart">
                         <MultiSelectFieldSettings Text="Month" Value="Month"></MultiSelectFieldSettings>
                     </SfMultiSelect>
                 </td>
