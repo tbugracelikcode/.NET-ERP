@@ -1,5 +1,296 @@
 ﻿@page "/admin/product-group-performance-analysis"
 @layout AdminLayout
 
-@inject IUrunGrubuPerformansService UrunGrubuPerformansService 
+@inject IUrunGrubuPerformansService UrunGrubuPerformansService
+@inject IStokService StokService
 @inject NavigationManager NavigationManager
+
+<SfCard class="TSIPageTitleCard">
+    <CardContent>
+        <table width="1000px">
+            <tr>
+                <td width="1000px">
+                    <span style="float:left">
+                        <label class="TSIListPageTitleCardLabel">Ürün Grubu Performans Analizi</label>
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+<br />
+<SfCard class="FilterCard">
+    <CardContent>
+        <table width="1000px">
+            <tr>
+                <td width="150px">
+                    <br />
+                    <SfCheckBox @bind-Checked="isGridChecked" @onchange="OnCheckedChanged" CssClass="e-customcheck"></SfCheckBox>
+                    <label class=FilterLabelTitle><strong>Detay Tablosunu Gizle</strong></label>
+                </td>
+                <td width="150px">
+                    <br />
+                    <SfCheckBox @bind-Checked="isLabelsChecked" @onchange="OnChangeLabelCheck" CssClass="e-customcheck"></SfCheckBox>
+                    <label class=FilterLabelTitle><strong>Etiketleri Göster</strong></label>
+                </td>
+                <td width="200px">
+                    <label class="FilterLabelTitle"><strong>Zaman Periyodu:</strong></label>
+                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Yıllık" DataSource="@timeperiods">
+                        <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
+                    </SfComboBox>
+                </td>
+                <td width="200px">
+                    <label class="FilterLabelTitle"><strong>Performans Değeri:</strong></label>
+                    <SfNumericTextBox TValue="int" @bind-Value="threshold" Placeholder="Performans Değeri Yazınız."></SfNumericTextBox>
+                </td>
+                <td width="200px">
+                    <label class="FilterLabelTitle"><strong>Ürün Grubu:</strong></label>
+                    <SfComboBox TValue="int?" TItem="ProductGroupsAnalysis" @bind-Index="@selectedProductIndex" PopupHeight="230px" Placeholder="ROT BAŞI" DataSource="@dataproductgroupcombobox">
+                        <ComboBoxEvents TItem="ProductGroupsAnalysis" TValue="int?" ValueChange="onChange"></ComboBoxEvents>
+                        <ComboBoxFieldSettings Text="ProductGroupName" Value="ProductGroupID"></ComboBoxFieldSettings>
+                    </SfComboBox>
+                </td>
+                <td width="50px" align="right">
+                    <br />
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
+                    <SfSpinner @bind-Visible="VisibleSpinner"></SfSpinner>
+                </td>
+                <td width="50px">
+                    <br />
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnCompareButtonClicked">Karşılaştır</SfButton>
+                </td>
+            </tr>
+        </table>
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+<br />
+<SfCard class="Cards" style="text-align:center">
+    <CardContent>
+        <SfChart @ref="ChartInstance" Theme="Theme.Bootstrap5" Title="Ürün Grubu Performans Analizi">
+            <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
+            <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
+                <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
+            </ChartPrimaryXAxis>
+            <ChartPrimaryYAxis LabelFormat="p2">
+                <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
+            </ChartPrimaryYAxis>
+            <ChartTooltipSettings Enable="true">
+                <Template>
+                    @{
+                        var data = context as ChartTooltipInfo;
+
+                        #region Değişkenler
+
+                        decimal Performance = datachart.Where(t => t.Performance == (decimal)data.Y).Select(t => t.Performance).FirstOrDefault();
+
+                        decimal comparisonPER = datachart.Where(t => t.Performance == (decimal)data.Y).Select(t => t.DIFFPER).FirstOrDefault();
+
+                        string valueColorPER = comparisonPER < 0 ? "#BF0000" : "#068800";
+
+                        string comparisonPERstr = comparisonPER.ToString("p2");
+
+                        #endregion
+
+                        if (Performance != comparisonPER)
+                        {
+                            <div>
+                                <table class="TSIChartTooltip">
+                                    <tr><th style="font-size:16px !important;" colspan="2">Değişim</th></tr>
+                                    <tr><td>Performans:</td><td style="color: @valueColorPER">@comparisonPERstr</td></tr>
+                                </table>
+                            </div>
+                        }
+
+
+
+                    }
+                </Template>
+            </ChartTooltipSettings>
+            <ChartSeriesCollection>
+                <ChartSeries DataSource="@datachart" Name="Performans" XName="Month" YName="Performance" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
+
+                    <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
+                        <ChartDataLabel Visible="@dataLabels">
+                            <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
+                        </ChartDataLabel>
+                    </ChartMarker>
+                    <ChartTrendlines>
+                        <ChartTrendline Type="TrendlineTypes.Linear" Width="3" Name="Trend" Fill="#3345A7">
+                            <ChartTrendlineMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Diamond">
+                            </ChartTrendlineMarker>
+                        </ChartTrendline>
+                    </ChartTrendlines>
+                </ChartSeries>
+            </ChartSeriesCollection>
+
+        </SfChart>
+
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+<br />
+<SfCard class="Cards" hidden="@isGridChecked">
+    <CardContent>
+        <SfGrid ID="Grid" DataSource="@dataproductperformance" @ref="Grid" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+            <GridEvents QueryCellInfo="CellInfoHandler" TValue="ProductGroupPerformanceAnalysis"></GridEvents>
+            <GridPageSettings PageSizes="true"></GridPageSettings>
+            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+            <GridColumns>
+                <GridColumn Field=@nameof(ProductGroupPerformanceAnalysis.StationCode) HeaderText="MAKİNA KODU" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                @{
+                    //if(GridMonthsExpando != null && GridMonthsExpando.Any())
+                    //{
+                    //    foreach( var item in (IDictionary<string, object>)GridMonthsExpando.First())
+                    //    {
+                    //        <GridColumn Field="@item.Key"></GridColumn>
+                    //    }
+                    //}
+
+                    foreach (var item in datachart)
+                    {
+                        string headerText = item.Month;
+
+
+                        <GridColumn Field=@nameof(ProductGroupPerformanceAnalysis.StationCode) HeaderText="@headerText">
+                            <Template>
+                                @*@item.Performance.ToString("p2")*@
+
+                                @{
+                                    var row = (context as ProductGroupPerformanceAnalysis);
+
+                                    decimal perf = dataproductperformance.Where(t => t.StationCode == row.StationCode).Select(t => t.Performance).FirstOrDefault();
+                                }
+
+                                @perf
+                            </Template>
+                        </GridColumn>
+                    }
+                }
+
+            </GridColumns>
+        </SfGrid>
+
+    </CardContent>
+    <CardFooter>
+    </CardFooter>
+</SfCard>
+
+<DxPopup Visible="compareModalVisible"
+         ShowFooter="false"
+         CloseButtonClick="HideCompareModal"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Zamana Göre Karşılaştırma"
+         Width="1200px"
+         CssClass="TSIModalCompareBox"
+         HeaderCssClass="ModalHeaderTitleCss">
+
+    <BodyTemplate>
+        <table style="width:100%">
+            <tr>
+                <td style="width:100%">
+                    <SfMultiSelect TValue="string[]?" @bind-Value="@MultiSelectVal" TItem="AdminProductGroupPerformanceAnalysisChart" Placeholder="Zaman Dilimlerini Seçiniz" DataSource="@datachart">
+                        <MultiSelectFieldSettings Text="Month" Value="Month"></MultiSelectFieldSettings>
+                    </SfMultiSelect>
+                </td>
+
+            </tr>
+        </table>
+
+        <div class="row">
+            <center>
+                <div class="control-section col-lg-9 card-control-section tile_layout">
+                    <div class="row e-card-layout">
+                        @{
+
+                            if (MultiSelectVal != null)
+                            {
+
+                                #region Değişkenler
+
+                                string header = string.Empty;
+                                decimal performance = 0;
+                                int planlananbirimsure = 0;
+                                decimal gerceklesenbirimsure = 0;
+                                string productGrpName = string.Empty;
+                                string generalTitle = string.Empty;
+
+                                #endregion
+
+                                foreach (var item in MultiSelectVal)
+                                {
+
+                                    #region Değişkenler
+
+                                    header = datachart.Where(t => t.Month == item).Select(t => t.Month).FirstOrDefault();
+                                    productGrpName = dataproductgroupcombobox.Where(t => t.ProductGroupID == selectedproductID).Select(t => t.ProductGroupName).FirstOrDefault();
+                                    performance = datachart.Where(t => t.Month == item).Select(t => t.Performance).FirstOrDefault();
+                                    planlananbirimsure = datachart.Where(t => t.Month == item).Select(t => t.PLANNEDUNITTIME).FirstOrDefault();
+                                    gerceklesenbirimsure = datachart.Where(t => t.Month == item).Select(t => t.OCCUREDUNITTIME).FirstOrDefault();
+                                    generalTitle = header + " (" + productGrpName + ")";
+
+                                    #endregion
+
+                                    <div class="col-lg-2 col-md-2 col-sm-4" style="padding: 10px;text-align:left;  width: 33%;">
+                                        <div id="card_sample_1" class="card_sample" style="border: 5px solid #9F0303 ;border-radius:5%;box-shadow: rgb(8 8 8 / 85%) 0px 5px 15px !important;">
+
+
+                                            <table class="table table-hover">
+                                                <tr><th style="font-size:16px !important;" colspan="2">@generalTitle</th></tr>
+                                                <tr>
+                                                    <td style="text-align: left; width:70%;font-weight:bold">Performans:</td>
+                                                    <td style="width:30%;font-weight:bold">@performance.ToString("p2")</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="font-size:12px !important;text-align:left; padding-left:8%">
+                                                        • Planlanan Birim Süre:
+                                                    </td>
+                                                    <td style="font-size:12px !important;text-align:left;">
+                                                        @planlananbirimsure
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="font-size:12px !important;text-align:left;padding-left:8%">
+                                                        • Gerçekleşen Birim Süre:
+                                                    </td>
+                                                    <td style="font-size:12px !important;text-align:left;">
+                                                        @gerceklesenbirimsure.ToString("0.00")
+                                                    </td>
+                                                </tr>
+
+                                            </table>
+
+
+                                        </div>
+                                    </div>
+
+
+
+
+                                }
+
+                            }
+
+                        }
+                    </div>
+                </div>
+            </center>
+        </div>
+
+
+
+    </BodyTemplate>
+    @*   <FooterContentTemplate>
+    <SfButton CssClass="TSICancelButton" OnClick="HideCompareModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+    </FooterContentTemplate>*@
+</DxPopup>

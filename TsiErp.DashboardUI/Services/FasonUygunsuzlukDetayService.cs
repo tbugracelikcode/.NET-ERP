@@ -25,7 +25,7 @@ namespace TsiErp.DashboardUI.Services
             decimal uretilenadet = 0;
             decimal unsuitabilityPercent = 0;
             decimal differenceUnsuitability = 0;
-            int receipt = generalList.Where(t => t.CariID == cariID).Sum(t => t.FasonFisiAdeti);
+            int receipt = 0;
             #endregion
 
             switch (action)
@@ -40,6 +40,8 @@ namespace TsiErp.DashboardUI.Services
                         {
 
                             #region Değişkenler
+
+                            receipt = generalList.Where(b => b.TARIH.Month == t.Key.AY).Sum(b => b.FasonFisiAdeti);
 
                             previousMonthUnsuitabilityPercent = unsuitabilityPercent;
 
@@ -76,6 +78,8 @@ namespace TsiErp.DashboardUI.Services
                         {
 
                             #region Değişkenler
+
+                            receipt = generalList.Where(b => b.TARIH.Date == t.Key.HAFTA).Sum(b => b.FasonFisiAdeti);
 
                             previousMonthUnsuitabilityPercent = unsuitabilityPercent;
 
@@ -117,6 +121,8 @@ namespace TsiErp.DashboardUI.Services
                         {
                             #region Değişkenler
 
+                            receipt = generalList.Where(b => b.TARIH.Month == t.Key.AY).Sum(b => b.FasonFisiAdeti);
+
                             previousMonthUnsuitabilityPercent = unsuitabilityPercent;
 
                             uygunsuzluk = t.Where(t => t.RED == true).Sum(t => t.UYGUNOLMAYANMIKTAR);
@@ -150,6 +156,8 @@ namespace TsiErp.DashboardUI.Services
                         var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date, YIL = t.TARIH.Year }).OrderBy(t => t.Key.HAFTA).Select(t => 
                         {
                             #region Değişkenler
+
+                            receipt = generalList.Where(b => b.TARIH.Date == t.Key.HAFTA).Sum(b => b.FasonFisiAdeti);
 
                             previousMonthUnsuitabilityPercent = unsuitabilityPercent;
 
@@ -191,6 +199,8 @@ namespace TsiErp.DashboardUI.Services
                         {
                             #region Değişkenler
 
+                            receipt = generalList.Where(b => b.TARIH.Month == t.Key.AY).Sum(b => b.FasonFisiAdeti);
+
                             previousMonthUnsuitabilityPercent = unsuitabilityPercent;
 
                             uygunsuzluk = t.Where(t => t.OLDUGUGIBIKULLANILACAK == true).Sum(t => t.UYGUNOLMAYANMIKTAR);
@@ -224,6 +234,8 @@ namespace TsiErp.DashboardUI.Services
                         var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date, YIL = t.TARIH.Year }).OrderBy(t => t.Key.HAFTA).Select(t => 
                         {
                             #region Değişkenler
+
+                            receipt = generalList.Where(b => b.TARIH.Date == t.Key.HAFTA).Sum(b => b.FasonFisiAdeti);
 
                             previousMonthUnsuitabilityPercent = unsuitabilityPercent;
 
@@ -265,6 +277,8 @@ namespace TsiErp.DashboardUI.Services
                         {
                             #region Değişkenler
 
+                            receipt = generalList.Where(b => b.TARIH.Month == t.Key.AY).Sum(b => b.FasonFisiAdeti);
+
                             previousMonthUnsuitabilityPercent = unsuitabilityPercent;
 
                             uygunsuzluk = t.Where(t => t.DUZELTME == true).Sum(t => t.UYGUNOLMAYANMIKTAR);
@@ -298,6 +312,8 @@ namespace TsiErp.DashboardUI.Services
                         var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date, YIL = t.TARIH.Year }).OrderBy(t => t.Key.HAFTA).Select(t => 
                         {
                             #region Değişkenler
+
+                            receipt = generalList.Where(b => b.TARIH.Date == t.Key.HAFTA).Sum(b => b.FasonFisiAdeti);
 
                             previousMonthUnsuitabilityPercent = unsuitabilityPercent;
 
@@ -339,6 +355,8 @@ namespace TsiErp.DashboardUI.Services
                         {
                             #region Değişkenler
 
+                            receipt = generalList.Where(b => b.TARIH.Month == t.Key.AY).Sum(b => b.FasonFisiAdeti);
+
                             previousMonthUnsuitabilityPercent = unsuitabilityPercent;
 
                             uygunsuzluk = t.Sum(t => t.UYGUNOLMAYANMIKTAR);
@@ -372,6 +390,8 @@ namespace TsiErp.DashboardUI.Services
                         var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date, YIL = t.TARIH.Year }).OrderBy(t => t.Key.HAFTA).Select(t => 
                         {
                             #region Değişkenler
+
+                            receipt = generalList.Where(b => b.TARIH.Date == t.Key.HAFTA).Sum(b => b.FasonFisiAdeti);
 
                             previousMonthUnsuitabilityPercent = unsuitabilityPercent;
 

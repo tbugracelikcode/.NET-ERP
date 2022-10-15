@@ -6,6 +6,12 @@
 
         public decimal Performance { get; set; }
 
+        public decimal DIFFPER { get; set; }
+
+        public int PLANNEDUNITTIME { get; set; }
+
+        public decimal OCCUREDUNITTIME { get; set; }
+
 
     }
 }

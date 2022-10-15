@@ -39,14 +39,16 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
             datachart = await StokService.GetProductChart(startDate, endDate, 0, 9);
 
         }
+
+
+        #region Component Metotları
+
         private void onChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?, ProductGroupsAnalysis> args)
         {
             selectedproductID = args.Value;
 
             StateHasChanged();
         }
-
-        #region Component Metotları
 
         private async void OnDateButtonClicked()
         {

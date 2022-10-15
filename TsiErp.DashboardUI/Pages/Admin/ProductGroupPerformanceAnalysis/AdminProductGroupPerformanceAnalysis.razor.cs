@@ -1,5 +1,6 @@
 ﻿using Syncfusion.Blazor.Charts;
 using Syncfusion.Blazor.Grids;
+using System.Dynamic;
 using TsiErp.DashboardUI.Models;
 using TsiErp.DashboardUI.Services;
 
@@ -9,6 +10,9 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductGroupPerformanceAnalysis
     {
         List<Models.ProductGroupPerformanceAnalysis> dataproductperformance = new List<Models.ProductGroupPerformanceAnalysis>();
         List<AdminProductGroupPerformanceAnalysisChart> datachart = new List<AdminProductGroupPerformanceAnalysisChart>();
+        List<ProductGroupsAnalysis> dataproductgroupcombobox = new List<ProductGroupsAnalysis>();
+        //public List<ExpandoObject> GridMonthsExpando = new List<ExpandoObject>();
+
         SfGrid<Models.ProductGroupPerformanceAnalysis> Grid;
 
 
@@ -17,6 +21,8 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductGroupPerformanceAnalysis
         DateTime startDate = DateTime.Today.AddDays(-(364 + DateTime.Today.Day));
         DateTime endDate = DateTime.Today.AddDays(-(DateTime.Today.Day));
         private int? selectedTimeIndex { get; set; }
+        private int? selectedProductIndex { get; set; }
+        int? selectedproductID;
         private int threshold = 75;
         private double thresholddouble = 0.75;
         private int frequencyChart;
@@ -33,19 +39,57 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductGroupPerformanceAnalysis
         protected override async void OnInitialized()
         {
 
-            dataproductperformance = await UrunGrubuPerformansService.GetProductGroupPerformanceAnalysis(startDate, endDate);
-            datachart = await UrunGrubuPerformansService.GetProductGroupPerformanceAnalysisChart(startDate, endDate, 0);
-
+            dataproductperformance = await UrunGrubuPerformansService.GetProductGroupPerformanceAnalysis(startDate, endDate, 9, 0);
+            dataproductgroupcombobox = await StokService.GetProductGroupsComboboxAnalysis(startDate, endDate);
+            datachart = await UrunGrubuPerformansService.GetProductGroupPerformanceAnalysisChart(startDate, endDate, 0, 9);
+            //GenerateNewColumn();
         }
 
+        //public  List<ExpandoObject> GenerateNewColumn()
+        //{
+        //    var data = new List<ExpandoObject>();
+
+        //    int colCount = datachart.Count();
+
+        //    string[] ColNames = new string[colCount];
+
+
+        //    int a = 0;
+
+        //    foreach (var item in datachart)
+        //    {
+        //        ColNames[a] = item.Month;
+
+        //        dynamic month = new ExpandoObject();
+
+        //        var dict = (IDictionary<string, object>)month;
+
+        //        dict[ColNames[a]] = item.Month;
+
+        //        data.Add(month);
+
+        //        a++;
+        //    }
+
+        //    return data;
+
+            
+        //}
+
         #region Component Metotları
+
+        private void onChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<int?, ProductGroupsAnalysis> args)
+        {
+            selectedproductID = args.Value;
+
+            StateHasChanged();
+        }
 
         private async void OnDateButtonClicked()
         {
             VisibleSpinner = true;
             await Task.Delay(1);
             StateHasChanged();
-
 
             #region Zaman Seçimi
             switch (selectedTimeIndex)
@@ -63,8 +107,10 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductGroupPerformanceAnalysis
             #endregion
 
             thresholddouble = Convert.ToDouble(threshold) / 100;
-            dataproductperformance = await UrunGrubuPerformansService.GetProductGroupPerformanceAnalysis(startDate, endDate);
-            datachart = await UrunGrubuPerformansService.GetProductGroupPerformanceAnalysisChart(startDate, endDate, frequencyChart);
+            dataproductperformance = await UrunGrubuPerformansService.GetProductGroupPerformanceAnalysis(startDate, endDate, selectedproductID, frequencyChart);
+            dataproductgroupcombobox = await StokService.GetProductGroupsComboboxAnalysis(startDate, endDate);
+            datachart = await UrunGrubuPerformansService.GetProductGroupPerformanceAnalysisChart(startDate, endDate, frequencyChart, selectedproductID);
+            //GenerateNewColumn();
             await Grid.Refresh();
             await ChartInstance.RefreshAsync();
             VisibleSpinner = false;
@@ -78,7 +124,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductGroupPerformanceAnalysis
 
             StateHasChanged();
         }
-      
+
         private void OnChangeLabelCheck(Microsoft.AspNetCore.Components.ChangeEventArgs args)
         {
             ChartInstance.RefreshAsync();

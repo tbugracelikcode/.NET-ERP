@@ -56,11 +56,11 @@
                 </td>
                 <td width="50px" align="right">
                     <br />
-                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnBackButtonClicked">Geri</SfButton> <SfSpinner @bind-Visible="VisibleSpinner"> </SfSpinner>
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnCompareButtonClicked">Karşılaştır</SfButton>
                 </td>
                 <td width="50px">
                     <br />
-                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnCompareButtonClicked">Karşılaştır</SfButton>
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnBackButtonClicked">Geri</SfButton> <SfSpinner @bind-Visible="VisibleSpinner"> </SfSpinner>
                 </td>
             </tr>
         </table>
@@ -79,7 +79,7 @@
                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
                         <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
                     </ChartPrimaryXAxis>
-                    <ChartPrimaryYAxis LabelFormat="p2">
+                    <ChartPrimaryYAxis LabelFormat="p2" Minimum="0">
                         <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
                     </ChartPrimaryYAxis>
                     <ChartTooltipSettings Enable="true">
@@ -101,8 +101,8 @@
 
                                 #endregion
 
-                                if (previous !=0 && Percent !=comparisonPercent)
-                                {
+                                //if (previous !=0 && Percent !=comparisonPercent)
+                                //{
 
                                     <div>
                                         <table class="TSIChartTooltip">
@@ -112,7 +112,7 @@
                                     </div>
 
 
-                                }
+                                //}
 
 
                             }
@@ -143,7 +143,7 @@
                     <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
                         <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
                     </ChartPrimaryXAxis>
-                    <ChartPrimaryYAxis LabelFormat="p2">
+                    <ChartPrimaryYAxis LabelFormat="p2" Minimum="0">
                         <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
                     </ChartPrimaryYAxis>
                     <ChartTooltipSettings Enable="true">
@@ -165,8 +165,8 @@
 
                                 #endregion
 
-                                if (previous !=0 && Percent !=comparisonPercent)
-                                {
+                                //if (previous !=0 && Percent !=comparisonPercent)
+                                //{
 
                                     <div>
                                         <table class="TSIChartTooltip">
@@ -176,7 +176,7 @@
                                     </div>
 
 
-                                }
+                                //}
 
 
                             }
@@ -253,7 +253,7 @@
 
 
                     <SfMultiSelect TValue="string[]?" @bind-Value="@MultiSelectVal" TItem="ContractUnsuitabilityAnalysis" Placeholder="Zaman Dilimlerini Seçiniz" DataSource="@datachart">
-                        <MultiSelectFieldSettings Text="Ay" Value="Percent"></MultiSelectFieldSettings>
+                        <MultiSelectFieldSettings Text="Ay" Value="Ay"></MultiSelectFieldSettings>
                     </SfMultiSelect>
                 </td>
                  
@@ -283,10 +283,10 @@
 
                                     #region Değişkenler
 
-                                    header = datachart.Where(t => t.Percent.ToString() == item).Select(t => t.Ay).FirstOrDefault();
-                                    uretilenadet = datachart.Where(t => t.Percent.ToString() == item).Select(t => t.PRODUCTION).FirstOrDefault();
-                                    uygunsuzluk = datachart.Where(t => t.Percent.ToString() == item).Select(t => t.UNSUITABILITY).FirstOrDefault();
-                                    percent = (decimal)datachart.Where(t => t.Percent.ToString() == item).Select(t => t.Percent).FirstOrDefault();
+                                    header = datachart.Where(t => t.Ay == item).Select(t => t.Ay).FirstOrDefault();
+                                    uretilenadet = datachart.Where(t => t.Ay == item).Select(t => t.PRODUCTION).FirstOrDefault();
+                                    uygunsuzluk = datachart.Where(t => t.Ay == item).Select(t => t.UNSUITABILITY).FirstOrDefault();
+                                    percent = (decimal)datachart.Where(t => t.Ay == item).Select(t => t.Percent).FirstOrDefault();
 
                                     #endregion
 
