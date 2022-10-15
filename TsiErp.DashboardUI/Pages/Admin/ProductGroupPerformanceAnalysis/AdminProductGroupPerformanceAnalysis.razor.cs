@@ -1,6 +1,7 @@
 ﻿using Syncfusion.Blazor.Charts;
 using Syncfusion.Blazor.Grids;
 using System.Dynamic;
+using TsiErp.DashboardUI.Helpers;
 using TsiErp.DashboardUI.Models;
 using TsiErp.DashboardUI.Services;
 
@@ -8,12 +9,13 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductGroupPerformanceAnalysis
 {
     public partial class AdminProductGroupPerformanceAnalysis
     {
-        List<Models.ProductGroupPerformanceAnalysis> dataproductperformance = new List<Models.ProductGroupPerformanceAnalysis>();
+        List<Models.ProductGroupPerformanceAnalysis> dataproductperformance2 = new List<Models.ProductGroupPerformanceAnalysis>();
+        List<ExpandoObject> dataproductperformance = new List<ExpandoObject>();
         List<AdminProductGroupPerformanceAnalysisChart> datachart = new List<AdminProductGroupPerformanceAnalysisChart>();
         List<ProductGroupsAnalysis> dataproductgroupcombobox = new List<ProductGroupsAnalysis>();
-        //public List<ExpandoObject> GridMonthsExpando = new List<ExpandoObject>();
+        public List<ExpandoObject> GridMonthsExpando = new List<ExpandoObject>();
 
-        SfGrid<Models.ProductGroupPerformanceAnalysis> Grid;
+        SfGrid<ExpandoObject> Grid;
 
 
         #region Değişkenler
@@ -22,7 +24,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductGroupPerformanceAnalysis
         DateTime endDate = DateTime.Today.AddDays(-(DateTime.Today.Day));
         private int? selectedTimeIndex { get; set; }
         private int? selectedProductIndex { get; set; }
-        int? selectedproductID;
+        int? selectedproductID = 9;
         private int threshold = 75;
         private double thresholddouble = 0.75;
         private int frequencyChart;
@@ -39,42 +41,70 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductGroupPerformanceAnalysis
         protected override async void OnInitialized()
         {
 
-            dataproductperformance = await UrunGrubuPerformansService.GetProductGroupPerformanceAnalysis(startDate, endDate, 9, 0);
-            dataproductgroupcombobox = await StokService.GetProductGroupsComboboxAnalysis(startDate, endDate);
+            //dataproductperformance = await UrunGrubuPerformansService.GetProductGroupPerformanceAnalysis(startDate, endDate, 9, 0);
             datachart = await UrunGrubuPerformansService.GetProductGroupPerformanceAnalysisChart(startDate, endDate, 0, 9);
-            //GenerateNewColumn();
+
+            dataproductperformance = GenerateNewColumn();
+            dataproductgroupcombobox = await StokService.GetProductGroupsComboboxAnalysis(startDate, endDate);
         }
 
-        //public  List<ExpandoObject> GenerateNewColumn()
-        //{
-        //    var data = new List<ExpandoObject>();
+        public List<ExpandoObject> GenerateNewColumn()
+        {
+            var data = new List<ExpandoObject>();
 
-        //    int colCount = datachart.Count();
+            int colCount = datachart.Count;
 
-        //    string[] ColNames = new string[colCount];
+            string[] ColNames = datachart.Select(t => t.Month).ToArray();
+            int[] ColMonthindex = datachart.Select(t => t.THmonth).ToArray();
+            int[] ColYearindex = datachart.Select(t => t.Year).ToArray();
 
+            var operationList = DBHelper.GetOperationLinesQuery(startDate,endDate).Where(t=>t.URUNGRPID == selectedproductID).ToList();
+            var istList = operationList.Select(t=>t.ISTASYONID).Distinct().ToList();
 
-        //    int a = 0;
+            for (int i = 0; i < istList.Count; i++)
+            {
+                int istID = istList[i];
 
-        //    foreach (var item in datachart)
-        //    {
-        //        ColNames[a] = item.Month;
+                string istKodu = operationList.Where(t=>t.ISTASYONID == istID).Select(t=>t.MAKINEKODU).FirstOrDefault();
 
-        //        dynamic month = new ExpandoObject();
+                var obj = new ExpandoObject() as IDictionary<string, object>;
 
-        //        var dict = (IDictionary<string, object>)month;
+                obj.Add("İSTASYON", istKodu);
+                var OprLines = DBHelper.GetOperationLinesStationQuery(istID, startDate, endDate).Where(t => t.URUNGRPID == selectedproductID).ToList();
 
-        //        dict[ColNames[a]] = item.Month;
+                for (int a = 0; a < colCount; a++)
+                {
+                    //var tempOprLines = OprLines.GroupBy(t => new { AY = t.TARIH.Month, YIL = t.TARIH.Year }).Select(t =>
+                    //{
+                    //    decimal planlananBirimSure = t.Sum(t => t.PLANLANANOPRSURESI);
+                    //    decimal gerceklesenBirimSure = t.Sum(t => t.BIRIMSURE);
+                    //    decimal performans = gerceklesenBirimSure > 0 ? planlananBirimSure / gerceklesenBirimSure : 0;
+                    //    return performans;
+                    //}).ToList();
 
-        //        data.Add(month);
+                    var tempOprLines = OprLines.Where(t => t.TARIH.Month == (ColMonthindex[a]) && t.TARIH.Year == ColYearindex[a]).ToList();
 
-        //        a++;
-        //    }
+                    decimal planlananBirimSure = tempOprLines.Sum(t => t.PLANLANANOPRSURESI);
+                    decimal gerceklesenBirimSure = tempOprLines.Sum(t => t.BIRIMSURE);
+                    decimal performans = gerceklesenBirimSure > 0 ? planlananBirimSure / gerceklesenBirimSure : 0;
+                    obj.Add(ColNames[a], performans);
 
-        //    return data;
+                    Models.ProductGroupPerformanceAnalysis model = new Models.ProductGroupPerformanceAnalysis()
+                    {
+                        Month = ColNames[a],
+                        Performance = performans,
+                        StationCode = istKodu
+                    };
+                    dataproductperformance2.Add(model);
+                }                
 
-            
-        //}
+                data.Add(obj as dynamic);
+
+            }
+
+            return data;
+
+        }
 
         #region Component Metotları
 
@@ -107,7 +137,8 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductGroupPerformanceAnalysis
             #endregion
 
             thresholddouble = Convert.ToDouble(threshold) / 100;
-            dataproductperformance = await UrunGrubuPerformansService.GetProductGroupPerformanceAnalysis(startDate, endDate, selectedproductID, frequencyChart);
+            //dataproductperformance = await UrunGrubuPerformansService.GetProductGroupPerformanceAnalysis(startDate, endDate, selectedproductID, frequencyChart);
+            dataproductperformance = GenerateNewColumn();
             dataproductgroupcombobox = await StokService.GetProductGroupsComboboxAnalysis(startDate, endDate);
             datachart = await UrunGrubuPerformansService.GetProductGroupPerformanceAnalysisChart(startDate, endDate, frequencyChart, selectedproductID);
             //GenerateNewColumn();
