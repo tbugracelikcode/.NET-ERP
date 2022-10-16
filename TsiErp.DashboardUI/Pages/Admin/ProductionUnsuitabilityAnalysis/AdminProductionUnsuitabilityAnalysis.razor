@@ -119,7 +119,7 @@
                         </ChartDataLabel>
                     </ChartMarker>
                     <ChartTrendlines>
-                        <ChartTrendline Type="TrendlineTypes.Linear" Width="3" Name="Trend" Fill="#3345A7">
+                        <ChartTrendline EnableTooltip=false Type="TrendlineTypes.Linear" Width="3" Name="Trend" Fill="#3345A7">
                             <ChartTrendlineMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Diamond">
                             </ChartTrendlineMarker>
                         </ChartTrendline>
@@ -131,6 +131,10 @@
 
     </CardContent>
     <CardFooter>
+          @{
+            string chartAverageValue = datachart.Average(t => t.Percent).ToString("p2");
+        }
+        <center><label class="TSIListPageTitleCardLabel" style="font-size:25px"><span style="color :#AC0000">@chartAverageLabel </span>&nbsp;@chartAverageValue</label></center>
     </CardFooter>
 </SfCard>
 <br />

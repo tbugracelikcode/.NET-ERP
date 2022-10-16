@@ -129,14 +129,14 @@
             <ChartSeriesCollection>
                 <ChartSeries DataSource="@datachart" Name="OEE" XName="AY" YName="OEE" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
 
-                    <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
+                    <ChartMarker  Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
                         <ChartDataLabel Visible="@dataLabels">
                             <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
                         </ChartDataLabel>
                     </ChartMarker>
                     <ChartTrendlines>
-                        <ChartTrendline Type="TrendlineTypes.Linear" Width="3" Name="Trend" Fill="#3345A7">
-                            <ChartTrendlineMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Diamond">
+                        <ChartTrendline EnableTooltip=false Type="TrendlineTypes.Linear" Width="3" Name="Trend" Fill="#3345A7">
+                            <ChartTrendlineMarker  Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Diamond">
                             </ChartTrendlineMarker>
                         </ChartTrendline>
                     </ChartTrendlines>
@@ -147,8 +147,15 @@
 
     </CardContent>
     <CardFooter>
+        @{
+            string chartAverageValue = datachart.Average(t => t.OEE).ToString("p2");
+        }
+        <center><label class="TSIListPageTitleCardLabel" style="font-size:25px"><span style="color :#AC0000">@chartAverageLabel </span>&nbsp;@chartAverageValue</label></center>
     </CardFooter>
 </SfCard>
+
+
+
 <br />
 <SfCard class="Cards" hidden="@isGridChecked">
     <CardContent>
