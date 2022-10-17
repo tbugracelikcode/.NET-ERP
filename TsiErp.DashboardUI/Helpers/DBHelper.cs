@@ -81,7 +81,6 @@ namespace TsiErp.DashboardUI.Helpers
                                   "ISNULL(AYARSURESI,0) as AYARSURESI, " +
                                   "ISNULL(ATILSURE,0) as ATILSURE, " +
                                   "OPRBASLANGICTRH, " +
-                                  "OPRBITISTRH, " +
                                   "ISNULL(OEE,0) as OEE, " +
                                   "TARIH," +
                                   "ISNULL(KALITE,0) as KALITE, " +
@@ -131,7 +130,6 @@ namespace TsiErp.DashboardUI.Helpers
                     AYARSURESI = Convert.ToDecimal(reader["AYARSURESI"]),
                     ATILSURE = Convert.ToDecimal(reader["ATILSURE"]),
                     OPRBASLANGICTRH = Convert.ToDateTime(reader["OPRBASLANGICTRH"]),
-                    OPRBITISTRH = Convert.ToDateTime(reader["OPRBITISTRH"]),
                     OEE = Convert.ToDecimal(reader["OEE"]),
                     KALITE = Convert.ToDecimal(reader["KALITE"]),
                     MESAI = Convert.ToInt32(reader["MESAI"]),
@@ -245,7 +243,6 @@ namespace TsiErp.DashboardUI.Helpers
                     AYARSURESI = Convert.ToDecimal(reader["AYARSURESI"]),
                     ATILSURE = Convert.ToDecimal(reader["ATILSURE"]),
                     OPRBASLANGICTRH = Convert.ToDateTime(reader["OPRBASLANGICTRH"]),
-                    OPRBITISTRH = Convert.ToDateTime(reader["OPRBITISTRH"]),
                     OEE = Convert.ToDecimal(reader["OEE"]),
                     KALITE = Convert.ToDecimal(reader["KALITE"]),
                     MESAI = Convert.ToInt32(reader["MESAI"]),
@@ -303,7 +300,6 @@ namespace TsiErp.DashboardUI.Helpers
                                   "ISNULL(AYARSURESI,0) as AYARSURESI, " +
                                   "ISNULL(ATILSURE,0) as ATILSURE, " +
                                   "ISNULL(OPRBASLANGICTRH,'1900-01-01') as OPRBASLANGICTRH, " +
-                                  "ISNULL(OPRBITISTRH,'1900-01-01') as OPRBITISTRH,  " +
                                   "ISNULL(OEE,0) as OEE, " +
                                   "ISNULL(KALITE,0) as KALITE, " +
                                   "ISNULL(MESAI,0) as MESAI, " +
@@ -355,7 +351,6 @@ namespace TsiErp.DashboardUI.Helpers
                     AYARSURESI = Convert.ToDecimal(reader["AYARSURESI"]),
                     ATILSURE = Convert.ToDecimal(reader["ATILSURE"]),
                     OPRBASLANGICTRH = Convert.ToDateTime(reader["OPRBASLANGICTRH"]),
-                    OPRBITISTRH = Convert.ToDateTime(reader["OPRBITISTRH"]),
                     OEE = Convert.ToDecimal(reader["OEE"]),
                     KALITE = Convert.ToDecimal(reader["KALITE"]),
                     MESAI = Convert.ToInt32(reader["MESAI"]),
@@ -1637,7 +1632,7 @@ namespace TsiErp.DashboardUI.Helpers
                                   "ISNULL(SIPARISDURUM,0) as SIPARISDURUM, " +
                                   "ISNULL(KAT,0) as KAT," +
                                   "BOLUM," +
-                                  "BOLUMID " +
+                                  "ISNULL(BOLUMID,0) AS BOLUMID " +
                                   "FROM TUR_VW_DASHBOARD_BAKIM ORDER BY TARIH DESC";
             command.Connection = connection;
 

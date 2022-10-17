@@ -83,13 +83,13 @@
                         <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
                     </ChartPrimaryYAxis>
                     <ChartTooltipSettings Enable="true">
-                       <Template>
+                        <Template>
                             @{
                                 var data = context as ChartTooltipInfo;
 
                                 #region Değişkenler
 
-                                 decimal previous = datachart.Where(t => t.Percent == (double)data.Y).Select(t => t.PREVIOUSMONTH).FirstOrDefault();
+                                decimal previous = datachart.Where(t => t.Percent == (double)data.Y).Select(t => t.PREVIOUSMONTH).FirstOrDefault();
 
                                 decimal Percent = (decimal)datachart.Where(t => t.Percent == (double)data.Y).Select(t => t.Percent).FirstOrDefault();
 
@@ -104,12 +104,12 @@
                                 //if (previous !=0 && Percent !=comparisonPercent)
                                 //{
 
-                                    <div>
-                                        <table class="TSIChartTooltip">
-                                            <tr><th style="font-size:16px !important;" colspan="2">Değişim</th></tr>
-                                            <tr><td>@unsuitabilityTitle</td><td style="color: @valueColorPercent">@comparisonPercentstr</td></tr>
-                                        </table>
-                                    </div>
+                                <div>
+                                    <table class="TSIChartTooltip">
+                                        <tr><th style="font-size:16px !important;" colspan="2">Değişim</th></tr>
+                                        <tr><td>@unsuitabilityTitle</td><td style="color: @valueColorPercent">@comparisonPercentstr</td></tr>
+                                    </table>
+                                </div>
 
 
                                 //}
@@ -131,6 +131,7 @@
 
             </CardContent>
             <CardFooter>
+                <center><label class="TSIListPageTitleCardLabel" style="font-size:25px"><span style="color :#AC0000">@chartAverageLabel </span>&nbsp;@chartAverageValue</label></center>
             </CardFooter>
         </SfCard>
     }
@@ -168,12 +169,12 @@
                                 //if (previous !=0 && Percent !=comparisonPercent)
                                 //{
 
-                                    <div>
-                                        <table class="TSIChartTooltip">
-                                            <tr><th style="font-size:16px !important;" colspan="2">Değişim</th></tr>
-                                            <tr><td>@unsuitabilityTitle</td><td style="color: @valueColorPercent">@comparisonPercentstr</td></tr>
-                                        </table>
-                                    </div>
+                                <div>
+                                    <table class="TSIChartTooltip">
+                                        <tr><th style="font-size:16px !important;" colspan="2">Değişim</th></tr>
+                                        <tr><td>@unsuitabilityTitle</td><td style="color: @valueColorPercent">@comparisonPercentstr</td></tr>
+                                    </table>
+                                </div>
 
 
                                 //}
@@ -191,7 +192,7 @@
                                 </ChartDataLabel>
                             </ChartMarker>
                             <ChartTrendlines>
-                                <ChartTrendline Type="TrendlineTypes.Linear" Width="3" Name="Trend" Fill="#3345A7">
+                                <ChartTrendline EnableTooltip=false Type="TrendlineTypes.Linear" Width="3" Name="Trend" Fill="#3345A7">
                                     <ChartTrendlineMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Diamond">
                                     </ChartTrendlineMarker>
                                 </ChartTrendline>
@@ -202,6 +203,7 @@
 
             </CardContent>
             <CardFooter>
+             <center><label class="TSIListPageTitleCardLabel" style="font-size:25px"><span style="color :#AC0000">@chartAverageLabel </span>&nbsp;@chartAverageValue</label></center>
             </CardFooter>
         </SfCard>
     }
@@ -256,7 +258,7 @@
                         <MultiSelectFieldSettings Text="Ay" Value="Ay"></MultiSelectFieldSettings>
                     </SfMultiSelect>
                 </td>
-                 
+
             </tr>
         </table>
 
@@ -320,7 +322,7 @@
                                                     </td>
                                                 </tr>
 
-                                               
+
                                             </table>
 
 

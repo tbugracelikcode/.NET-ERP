@@ -84,7 +84,7 @@ namespace TsiErp.DashboardUI.Services
 
                     return new AdminProductChart
                     {
-                        Ay = t.Key.HAFTA.ToString("dd MMM yy", new CultureInfo("tr-TR")) + " " + t.Key.YIL.ToString(),
+                        Ay = t.Key.HAFTA.ToString("dd MMM", new CultureInfo("tr-TR")) + " " + t.Key.YIL.ToString(),
                         OEE = t.Average(x => x.OEE),
                         ScrapPercent = scrappercent,
                         DIFFSCRAPPERCENT = differenceScrapPercent,
