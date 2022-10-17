@@ -79,10 +79,10 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
             dataproductgroupcombobox = await StokService.GetProductGroupsComboboxAnalysis(startDate, endDate);
             datachart = await StokService.GetProductChart(startDate, endDate, frequencyChart, selectedproductID);
             chartTitle = dataproductgroup.Where(t => t.ProductGroupID == selectedproductID).Select(t => t.ProductGroupName).FirstOrDefault() + " HURDA GRAFİĞİ";
-            await Grid.Refresh();
-            await ChartInstance.RefreshAsync();
             VisibleSpinner = false;
             StateHasChanged();
+            await Grid.Refresh();
+            await ChartInstance.RefreshAsync();
         }
 
         private void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)

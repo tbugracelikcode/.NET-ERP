@@ -85,11 +85,11 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
             
             dataprodunsuitability = await UretimUygunsuzlukService.GetProductionUnsuitabilityAnalysis(startDate, endDate);
             datachart = await UretimUygunsuzlukService.GetProductionUnsuitabilityChart(startDate, endDate, frequencyChart, selectedactionID);
-            await Grid.Refresh();
-            await ChartInstance.RefreshAsync();
             VisibleSpinner = false;
             StateHasChanged();
-            
+            await Grid.Refresh();
+            await ChartInstance.RefreshAsync();
+
         }
 
         private void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)

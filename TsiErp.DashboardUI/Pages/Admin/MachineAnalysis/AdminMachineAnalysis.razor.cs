@@ -67,9 +67,12 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
             datachart = await IstasyonOEEService.GetAdminMachineChart(startDate, endDate, frequencyChart);
             dataoee = await IstasyonOEEService.GetStationOEEAnalysis(startDate, endDate);
 
-            await ChartInstance.RefreshAsync();
+          
+
             VisibleSpinner = false;
             StateHasChanged();
+
+            await ChartInstance.RefreshAsync();
         }
 
         private void OnDetailButtonClicked(int stationID)

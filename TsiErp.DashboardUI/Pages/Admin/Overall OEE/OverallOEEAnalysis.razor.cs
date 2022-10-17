@@ -60,10 +60,10 @@ namespace TsiErp.DashboardUI.Pages.Admin.Overall_OEE
             thresholddouble = Convert.ToDouble(threshold) / 100;
             dataoee = await GenelOEEService.GetStationOEEAnalysis(startDate, endDate);
             datachart = await GenelOEEService.GetAdminMachineChart(startDate, endDate);
-            await Grid.Refresh();
-            await ChartInstance.RefreshAsync();
             VisibleSpinner = false;
             StateHasChanged();
+            await Grid.Refresh();
+            await ChartInstance.RefreshAsync();
         }
 
        

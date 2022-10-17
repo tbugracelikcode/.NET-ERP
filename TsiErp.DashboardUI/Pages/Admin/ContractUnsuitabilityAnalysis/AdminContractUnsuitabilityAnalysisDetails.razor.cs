@@ -117,10 +117,11 @@ namespace TsiErp.DashboardUI.Pages.Admin.ContractUnsuitabilityAnalysis
             dataconuns = await FasonUygunsuzlukService.GetContractUnsuitabilityAnalysis(startDate, endDate);
             total = dataconuns.Where(t => t.ContractSupplierID == cariID).Select(t => t.ContractReceiptQuantity).FirstOrDefault();
             datachart = await FasonUygunsuzlukDetayService.GetContractUnsuitabilityDetailedChart(startDate, endDate, frequencyChart, selectedactionID, cariID, -1);
-            await Grid.Refresh();
-            await ChartInstance.RefreshAsync();
             VisibleSpinner = false;
             StateHasChanged();
+            chartAverageValue = datachart.Average(t => t.Percent).ToString("p2");
+            await Grid.Refresh();
+            await ChartInstance.RefreshAsync();
         }
 
         private void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)

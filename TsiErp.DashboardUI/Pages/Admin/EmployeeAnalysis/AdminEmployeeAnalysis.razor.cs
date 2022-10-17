@@ -67,10 +67,10 @@ namespace TsiErp.DashboardUI.Pages.Admin.EmployeeAnalysis
             thresholddouble = Convert.ToDouble(threshold) / 100;
             dataemployee = await PersonelService.GetEmployeeGeneralAnalysis(startDate, endDate);
             datachart = await PersonelService.GetEmployeeChart(startDate, endDate, frequencyChart);
-            await Grid.Refresh();
-            await ChartInstance.RefreshAsync();
             VisibleSpinner = false;
             StateHasChanged();
+            await Grid.Refresh();
+            await ChartInstance.RefreshAsync();
         }
 
         private void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)

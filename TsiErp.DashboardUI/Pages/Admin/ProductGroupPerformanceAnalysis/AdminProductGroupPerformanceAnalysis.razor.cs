@@ -142,10 +142,10 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductGroupPerformanceAnalysis
             dataproductgroupcombobox = await StokService.GetProductGroupsComboboxAnalysis(startDate, endDate);
             datachart = await UrunGrubuPerformansService.GetProductGroupPerformanceAnalysisChart(startDate, endDate, frequencyChart, selectedproductID);
             dataproductperformance = GenerateNewColumn();
-            await Grid.Refresh();
-            await ChartInstance.RefreshAsync();
             VisibleSpinner = false;
             StateHasChanged();
+            await Grid.Refresh();
+            await ChartInstance.RefreshAsync();
         }
 
         private void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)

@@ -1632,7 +1632,7 @@ namespace TsiErp.DashboardUI.Helpers
                                   "ISNULL(SIPARISDURUM,0) as SIPARISDURUM, " +
                                   "ISNULL(KAT,0) as KAT," +
                                   "BOLUM," +
-                                  "BOLUMID " +
+                                  "ISNULL(BOLUMID,0) AS BOLUMID " +
                                   "FROM TUR_VW_DASHBOARD_BAKIM ORDER BY TARIH DESC";
             command.Connection = connection;
 

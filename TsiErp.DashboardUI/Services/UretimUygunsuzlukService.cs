@@ -240,7 +240,7 @@ namespace TsiErp.DashboardUI.Services
 
                             return new AdminProductionUnsuitabilityAnalysisChart
                             {
-                                Ay = t.Key.HAFTA.ToString("dd MMM yy", new CultureInfo("tr-TR")) + " " + t.Key.YIL.ToString(),
+                                Ay = t.Key.HAFTA.ToString("dd MMM", new CultureInfo("tr-TR")) + " " + t.Key.YIL.ToString(),
                                 Total = uygunsuzluk,
                                 Percent = unsuitabilityPercent,
                                 PRODUCTION = uretilenadet,
@@ -315,7 +315,7 @@ namespace TsiErp.DashboardUI.Services
 
                             return new AdminProductionUnsuitabilityAnalysisChart
                             {
-                                Ay = t.Key.HAFTA.ToString("dd MMM yy", new CultureInfo("tr-TR")) + " " + t.Key.YIL.ToString(),
+                                Ay = t.Key.HAFTA.ToString("dd MMM", new CultureInfo("tr-TR")) + " " + t.Key.YIL.ToString(),
                                 Total = uygunsuzluk,
                                 Percent = unsuitabilityPercent,
                                 PRODUCTION = uretilenadet,
