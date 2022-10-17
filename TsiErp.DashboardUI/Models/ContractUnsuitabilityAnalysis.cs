@@ -25,6 +25,10 @@ namespace TsiErp.DashboardUI.Models
         /// </summary>
         public string ContractSupplier { get; set; }
         /// <summary>
+        /// Fason Tedarikçi Kısa
+        /// </summary>
+        public string ContractShortSupplier { get; set; }
+        /// <summary>
         /// Fason Tedarikçi ID
         /// </summary>
         public int ContractSupplierID { get; set; }

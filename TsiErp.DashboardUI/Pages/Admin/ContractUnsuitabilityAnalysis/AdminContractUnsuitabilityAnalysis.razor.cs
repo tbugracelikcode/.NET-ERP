@@ -1,4 +1,5 @@
-﻿using Syncfusion.Blazor.Charts;
+﻿using DevExpress.Utils;
+using Syncfusion.Blazor.Charts;
 using Syncfusion.Blazor.Grids;
 using TsiErp.DashboardUI.Models;
 using TsiErp.DashboardUI.Services;
@@ -9,6 +10,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ContractUnsuitabilityAnalysis
     public partial class AdminContractUnsuitabilityAnalysis
     {
         List<Models.ContractUnsuitabilityAnalysis> datacontunsuitability = new List<Models.ContractUnsuitabilityAnalysis>();
+        List<Models.ContractUnsuitabilityAnalysis> datacontunsuitabilityChart = new List<Models.ContractUnsuitabilityAnalysis>();
         SfGrid<Models.ContractUnsuitabilityAnalysis> Grid;
 
         #region Değişkenler
@@ -27,7 +29,19 @@ namespace TsiErp.DashboardUI.Pages.Admin.ContractUnsuitabilityAnalysis
             
 
             datacontunsuitability = await FasonUygunsuzlukService.GetContractUnsuitabilityAnalysis(startDate, endDate);
-
+            var chartList = datacontunsuitability.Where(t => t.Total > 0).ToList();
+            foreach (var item in chartList)
+            {
+                if (item.ContractSupplier.Length > 15)
+                {
+                    item.ContractShortSupplier = item.ContractSupplier.Substring(0, 15) + "...";
+                }
+                else
+                {
+                    item.ContractShortSupplier = item.ContractSupplier;
+                }
+            }
+            datacontunsuitabilityChart = chartList;
         }
 
         #region Component Metotları
@@ -55,11 +69,26 @@ namespace TsiErp.DashboardUI.Pages.Admin.ContractUnsuitabilityAnalysis
             #endregion
 
             datacontunsuitability = await FasonUygunsuzlukService.GetContractUnsuitabilityAnalysis(startDate, endDate);
-            await Grid.Refresh();
-            await ChartInstance.RefreshAsync();
+            var chartList = datacontunsuitability.Where(t => t.Total > 0).ToList();
+            foreach (var item in chartList)
+            {
+                if (item.ContractSupplier.Length > 15)
+                {
+                    item.ContractShortSupplier = item.ContractSupplier.Substring(0, 15) + "...";
+                }
+                else
+                {
+                    item.ContractShortSupplier = item.ContractSupplier;
+                }
+            }
+            datacontunsuitabilityChart = chartList;
+
+            
             VisibleSpinner = false;
             StateHasChanged();
-            
+            await Grid.Refresh();
+            await ChartInstance.RefreshAsync();
+
         }
         private void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
         {

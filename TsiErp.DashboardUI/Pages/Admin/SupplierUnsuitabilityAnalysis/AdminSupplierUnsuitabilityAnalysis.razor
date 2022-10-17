@@ -197,50 +197,61 @@
             <ChartPrimaryYAxis LabelFormat="p2">
                 <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
             </ChartPrimaryYAxis>
-            <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
-            <ChartSeriesCollection>
-                <ChartSeries DataSource="@datasuppunsuitability" Name="Tedarikçi" XName="SupplierName" YName="Percent" Width="1" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column">
+            <ChartTooltipSettings Enable="true">
+                <Template>
+                    @{
+                        var data = context as ChartTooltipInfo;
+                        string labelName = datasuppunsuitabilityChart.Where(t => t.Percent == (Convert.ToDouble(data.Y))).Select(t => t.SupplierName).FirstOrDefault();
+                    }
+                     <div>
+                                <table class="TSIChartTooltip">
+                            <tr><td>@labelName</td></tr>
+                                    </table>
+                                </div>
+                    </Template>
+                </ChartTooltipSettings>
+                <ChartSeriesCollection>
+                    <ChartSeries DataSource="@datasuppunsuitabilityChart" Name="Tedarikçi" XName="SupplierShortName" YName="Percent" Width="1" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column">
 
-                </ChartSeries>
-            </ChartSeriesCollection>
-            <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
-            <ChartZoomSettings EnableSelectionZooming="true"></ChartZoomSettings>
-        </SfChart>
+                    </ChartSeries>
+                </ChartSeriesCollection>
+                <ChartZoomSettings EnableSelectionZooming="true"></ChartZoomSettings>
+            </SfChart>
 
-    </CardContent>
-    <CardFooter>
-    </CardFooter>
-</SfCard>
-<br />
-<SfCard class="Cards" hidden="@isGridChecked">
-    <CardContent>
-        <SfGrid ID="Grid" DataSource="@datasuppunsuitability" @ref="Grid" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+        </CardContent>
+        <CardFooter>
+        </CardFooter>
+    </SfCard>
+    <br />
+    <SfCard class="Cards" hidden="@isGridChecked">
+        <CardContent>
+            <SfGrid ID="Grid" DataSource="@datasuppunsuitability" @ref="Grid" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
-            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
-            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
-            <GridPageSettings PageSizes="true"></GridPageSettings>
-            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
-            <GridColumns>
-                <GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.SupplierName) HeaderText="TEDARİKÇİ" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.Total) HeaderText="UYGUNSUZLUK MİKTARI" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.TotalOrder) HeaderText="SİPARİŞ ADETİ" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
-                @*<GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.TotalOrder) HeaderText="DETAYLAR" TextAlign="TextAlign.Center" Width="80">*@
-                @*<Template>
+                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+                <GridPageSettings PageSizes="true"></GridPageSettings>
+                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                <GridColumns>
+                    <GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.SupplierName) HeaderText="TEDARİKÇİ" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                    <GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.Total) HeaderText="UYGUNSUZLUK MİKTARI" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                    <GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.TotalOrder) HeaderText="SİPARİŞ ADETİ" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                    @*<GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.TotalOrder) HeaderText="DETAYLAR" TextAlign="TextAlign.Center" Width="80">*@
+                    @*<Template>
                 @{
                 var row = (context as SupplierUnsuitabilityAnalysis);
                 <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" style="background-color:#AD0000;text-shadow: 6px 3px 4px black;" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.SupplierID,row.TotalOrder))"></SfButton>
                 }
 
                 </Template>*@
-                @*</GridColumn>*@
-            </GridColumns>
-        </SfGrid>
+                    @*</GridColumn>*@
+                </GridColumns>
+            </SfGrid>
 
-    </CardContent>
-    <CardFooter>
-    </CardFooter>
-</SfCard>
+        </CardContent>
+        <CardFooter>
+        </CardFooter>
+    </SfCard>
 
-@code {
+    @code {
 
-}
+    }

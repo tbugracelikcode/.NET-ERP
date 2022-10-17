@@ -7,6 +7,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.SupplierUnsuitabilityAnalysis
     public partial class AdminSupplierUnsuitabilityAnalysis
     {
         List<Models.SupplierUnsuitabilityAnalysis> datasuppunsuitability = new List<Models.SupplierUnsuitabilityAnalysis>();
+        List<Models.SupplierUnsuitabilityAnalysis> datasuppunsuitabilityChart = new List<Models.SupplierUnsuitabilityAnalysis>();
         SfGrid<Models.SupplierUnsuitabilityAnalysis> Grid;
 
         #region Değişkenler
@@ -27,7 +28,19 @@ namespace TsiErp.DashboardUI.Pages.Admin.SupplierUnsuitabilityAnalysis
 
 
             datasuppunsuitability = await TedarikciUygunsuzlukService.GetSupplierUnsuitabilityAnalysis(startDate, endDate);
-
+            var chartList = datasuppunsuitability.Where(t => t.Percent > 0).ToList();
+            foreach (var item in chartList)
+            {
+                if (item.SupplierName.Length > 15)
+                {
+                    item.SupplierShortName = item.SupplierName.Substring(0, 15) + "...";
+                }
+                else
+                {
+                    item.SupplierShortName = item.SupplierName;
+                }
+            }
+            datasuppunsuitabilityChart = chartList;
         }
 
 
@@ -71,7 +84,19 @@ namespace TsiErp.DashboardUI.Pages.Admin.SupplierUnsuitabilityAnalysis
             #endregion
 
             datasuppunsuitability = await TedarikciUygunsuzlukService.GetSupplierUnsuitabilityAnalysis(startDate, endDate);
-
+            var chartList = datasuppunsuitability.Where(t => t.Percent > 0).ToList();
+            foreach (var item in chartList)
+            {
+                if (item.SupplierName.Length > 15)
+                {
+                    item.SupplierShortName = item.SupplierName.Substring(0, 15) + "...";
+                }
+                else
+                {
+                    item.SupplierShortName = item.SupplierName;
+                }
+            }
+            datasuppunsuitabilityChart = chartList;
 
             VisibleSpinner = false;
             StateHasChanged();
