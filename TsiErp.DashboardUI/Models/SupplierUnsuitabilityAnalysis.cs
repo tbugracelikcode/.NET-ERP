@@ -11,6 +11,10 @@
         /// </summary>
         public string SupplierName { get; set; }
         /// <summary>
+        /// Tedarikçi Kısa Adı
+        /// </summary>
+        public string SupplierShortName { get; set; }
+        /// <summary>
         /// Tedarikçi Uygunsuzluk ID 
         /// </summary>
         public int SupplierUnsuitabilityID { get; set; }
