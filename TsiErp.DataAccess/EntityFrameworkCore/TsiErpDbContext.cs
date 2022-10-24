@@ -140,6 +140,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigureOperationLines();
             builder.ConfigureRoutes();
             builder.ConfigureRouteLines();
+            builder.ConfigureSalesPropositions();
+            builder.ConfigureSalesPropositionLines();
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -220,6 +222,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<OperationLines> OperationLines { get; set; }
         public DbSet<Routes> Routes { get; set; }
         public DbSet<RouteLines> RouteLines { get; set; }
+        public DbSet<SalesPropositions> SalesPropositions { get; set; }
+        public DbSet<SalesPropositionLines> SalesPropositionLines { get; set; }
 
         #endregion
     }

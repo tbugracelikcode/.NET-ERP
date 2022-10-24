@@ -233,7 +233,8 @@ namespace TsiErp.Business.MapperProfile
                 .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Name))
                 .ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Name))
                 .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name))
-               .ForMember(x => x.PaymentPlanName, y => y.MapFrom(z => z.PaymentPlan.Name));
+                .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
+                .ForMember(x => x.PaymentPlanName, y => y.MapFrom(z => z.PaymentPlan.Name));
 
             CreateMap<SalesPropositions, ListSalesPropositionsDto>()
                 .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Code))
@@ -268,6 +269,7 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectSalesPropositionLinesDto, CreateSalesPropositionLinesDto>();
             CreateMap<UpdateSalesPropositionLinesDto, SalesPropositionLines>();
             CreateMap<SelectSalesPropositionLinesDto, UpdateSalesPropositionLinesDto>();
+            CreateMap<SelectSalesPropositionLinesDto, SalesPropositionLines >();
 
 
             CreateMap<ProductGroups, SelectProductGroupsDto>();

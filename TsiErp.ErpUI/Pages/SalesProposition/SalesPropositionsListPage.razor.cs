@@ -63,6 +63,7 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
 
         SelectSalesPropositionLinesDto LineDataSource;
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+        public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectSalesPropositionLinesDto> GridLineList = new List<SelectSalesPropositionLinesDto>();
 
@@ -71,6 +72,8 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         protected override async void OnInitialized()
         {
             BaseCrudService = SalesPropositionsAppService;
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
 
             await GetCurrentAccountCardsList();
             await GetBranchesList();
@@ -92,10 +95,10 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             };
 
             DataSource.SelectSalesPropositionLines = new List<SelectSalesPropositionLinesDto>();
+            GridLineList = DataSource.SelectSalesPropositionLines;
 
             ShowEditPage();
 
-            CreateLineContextMenuItems();
 
             await Task.CompletedTask;
         }
@@ -108,6 +111,53 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
+            }
+        }
+
+        protected void CreateMainContextMenuItems()
+        {
+            if (LineGridContextMenu.Count() == 0)
+            {
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle", Id = "new" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
+            }
+        }
+
+        public async void MainContextMenuClick(ContextMenuClickEventArgs<ListSalesPropositionsDto> args)
+        {
+            switch (args.Item.Id)
+            {
+                case "new":
+                    await BeforeInsertAsync();
+                    break;
+
+                case "changed":
+                    DataSource = (await SalesPropositionsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    GridLineList = DataSource.SelectSalesPropositionLines;
+
+                    foreach (var item in GridLineList)
+                    {
+                        item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
+                        item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
+                        item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
+                    }
+
+                    EditPageVisible = true;
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "delete":
+                    await DeleteAsync(args.RowInfo.RowData.Id);
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "refresh":
+                    break;
+
+                default:
+                    break;
             }
         }
 
@@ -125,12 +175,10 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
                     LineDataSource.WarehouseID = DataSource.WarehouseID;
                     LineDataSource.WarehouseCode = DataSource.WarehouseCode;
                     LineDataSource.LineNr = GridLineList.Count + 1;
-                    //DataSource.SelectSalesPropositionLines.Add(LineDataSource);
                     await InvokeAsync(StateHasChanged);
                     break;
 
                 case "changed":
-                    //DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
                     LineDataSource = args.RowInfo.RowData;
                     LineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
@@ -142,9 +190,30 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
 
                     if (res == true)
                     {
-                        await DeleteAsync(args.RowInfo.RowData.Id);
-                        await GetListDataSourceAsync();
+                        if (DataSource.Id == Guid.Empty)
+                        {
+                            DataSource.SelectSalesPropositionLines.Remove(args.RowInfo.RowData);
+                        }
+                        else
+                        {
+                            var salesPropositions = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+
+                            var line = salesPropositions.SelectSalesPropositionLines.Find(t => t.Id == args.RowInfo.RowData.Id);
+
+                            if (line != null)
+                            {
+                                await DeleteAsync(args.RowInfo.RowData.Id);
+                                DataSource.SelectSalesPropositionLines.Remove(line);
+                                await GetListDataSourceAsync();
+                            }
+                            else
+                            {
+                                DataSource.SelectSalesPropositionLines.Remove(line);
+                            }
+                        }
+
                         await _LineGrid.Refresh();
+                        GetTotal();
                         await InvokeAsync(StateHasChanged);
                     }
 
@@ -184,7 +253,7 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             }
 
             GridLineList = DataSource.SelectSalesPropositionLines;
-
+            GetTotal();
             await _LineGrid.Refresh();
 
             HideLinesPopup();
@@ -554,7 +623,7 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
 
                 if (LineDataSource.Quantity == 0 || LineDataSource.UnitPrice == 0)
                 {
-                    LineDataSource.DiscountRate =0;
+                    LineDataSource.DiscountRate = 0;
                     LineDataSource.DiscountAmount = 0;
                 }
             }
@@ -568,5 +637,13 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             await InvokeAsync(StateHasChanged);
         }
 
+        public override void GetTotal()
+        {
+            DataSource.GrossAmount = GridLineList.Sum(x => x.LineAmount) + GridLineList.Sum(x => x.DiscountAmount);
+            DataSource.TotalDiscountAmount = GridLineList.Sum(x => x.DiscountAmount);
+            DataSource.TotalVatExcludedAmount = DataSource.GrossAmount - DataSource.TotalDiscountAmount;
+            DataSource.TotalVatAmount = GridLineList.Sum(x => x.VATamount);
+            DataSource.NetAmount = GridLineList.Sum(x => x.LineTotalAmount);
+        }
     }
 }

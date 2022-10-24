@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TsiErp.DataAccess.Migrations
 {
-    public partial class databaseCreated : Migration
+    public partial class dbCreated : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -959,36 +959,31 @@ namespace TsiErp.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FicheNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Date_ = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Time_ = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ExchangeRate = table.Column<decimal>(type: "decimal(18,6)", precision: 18, scale: 6, nullable: false),
+                    FicheNo = table.Column<string>(type: "NVarChar(17)", maxLength: 17, nullable: false),
+                    Date_ = table.Column<DateTime>(type: "DateTime", nullable: false),
+                    Time_ = table.Column<string>(type: "NVarChar(8)", maxLength: 8, nullable: true),
+                    ExchangeRate = table.Column<decimal>(type: "Decimal(18,6)", precision: 18, scale: 6, nullable: false),
                     Description_ = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SpecialCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PropositionRevisionNo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RevisionDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    RevisionTime = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SalesPropositionState = table.Column<int>(type: "int", nullable: false),
-                    LinkedSalesPropositionID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CurrencyID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    PaymentPlanID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BranchID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    WarehouseID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CurrentAccountCardID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GrossAmount = table.Column<decimal>(type: "decimal(18,6)", precision: 18, scale: 6, nullable: false),
-                    TotalVatExcludedAmount = table.Column<decimal>(type: "decimal(18,6)", precision: 18, scale: 6, nullable: false),
-                    TotalVatAmount = table.Column<decimal>(type: "decimal(18,6)", precision: 18, scale: 6, nullable: false),
-                    TotalDiscountAmount = table.Column<decimal>(type: "decimal(18,6)", precision: 18, scale: 6, nullable: false),
-                    NetAmount = table.Column<decimal>(type: "decimal(18,6)", precision: 18, scale: 6, nullable: false),
-                    ValidityDate_ = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ShippingAdressID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    BranchesId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    WarehousesId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CurrenciesId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CurrentAccountCardsId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ShippingAdressesId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    SpecialCode = table.Column<string>(type: "NVarChar(201)", maxLength: 201, nullable: true),
+                    PropositionRevisionNo = table.Column<string>(type: "NVarChar(50)", maxLength: 50, nullable: true),
+                    RevisionDate = table.Column<DateTime>(type: "DateTime", nullable: true),
+                    RevisionTime = table.Column<string>(type: "NVarChar(8)", maxLength: 8, nullable: true),
+                    SalesPropositionState = table.Column<int>(type: "Int", nullable: false),
+                    LinkedSalesPropositionID = table.Column<Guid>(type: "UniqueIdentifier", nullable: false),
+                    CurrencyID = table.Column<Guid>(type: "UniqueIdentifier", nullable: false),
+                    PaymentPlanID = table.Column<Guid>(type: "UniqueIdentifier", nullable: false),
+                    BranchID = table.Column<Guid>(type: "UniqueIdentifier", nullable: false),
+                    WarehouseID = table.Column<Guid>(type: "UniqueIdentifier", nullable: false),
+                    CurrentAccountCardID = table.Column<Guid>(type: "UniqueIdentifier", nullable: false),
+                    GrossAmount = table.Column<decimal>(type: "Decimal(18,6)", precision: 18, scale: 6, nullable: false),
+                    TotalVatExcludedAmount = table.Column<decimal>(type: "Decimal(18,6)", precision: 18, scale: 6, nullable: false),
+                    TotalVatAmount = table.Column<decimal>(type: "Decimal(18,6)", precision: 18, scale: 6, nullable: false),
+                    TotalDiscountAmount = table.Column<decimal>(type: "Decimal(18,6)", precision: 18, scale: 6, nullable: false),
+                    NetAmount = table.Column<decimal>(type: "Decimal(18,6)", precision: 18, scale: 6, nullable: false),
+                    ValidityDate_ = table.Column<DateTime>(type: "DateTime", nullable: false),
+                    ShippingAdressID = table.Column<Guid>(type: "UniqueIdentifier", nullable: true),
+                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifierId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeleterId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -999,34 +994,33 @@ namespace TsiErp.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_SalesPropositions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SalesPropositions_Branches_BranchesId",
-                        column: x => x.BranchesId,
+                        name: "FK_SalesPropositions_Branches_BranchID",
+                        column: x => x.BranchID,
                         principalTable: "Branches",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_SalesPropositions_Currencies_CurrenciesId",
-                        column: x => x.CurrenciesId,
+                        name: "FK_SalesPropositions_Currencies_CurrencyID",
+                        column: x => x.CurrencyID,
                         principalTable: "Currencies",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_SalesPropositions_CurrentAccountCards_CurrentAccountCardsId",
-                        column: x => x.CurrentAccountCardsId,
+                        name: "FK_SalesPropositions_CurrentAccountCards_CurrentAccountCardID",
+                        column: x => x.CurrentAccountCardID,
                         principalTable: "CurrentAccountCards",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_SalesPropositions_PaymentPlans_PaymentPlanID",
                         column: x => x.PaymentPlanID,
                         principalTable: "PaymentPlans",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_SalesPropositions_ShippingAdresses_ShippingAdressesId",
-                        column: x => x.ShippingAdressesId,
+                        name: "FK_SalesPropositions_ShippingAdresses_ShippingAdressID",
+                        column: x => x.ShippingAdressID,
                         principalTable: "ShippingAdresses",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_SalesPropositions_Warehouses_WarehousesId",
-                        column: x => x.WarehousesId,
+                        name: "FK_SalesPropositions_Warehouses_WarehouseID",
+                        column: x => x.WarehouseID,
                         principalTable: "Warehouses",
                         principalColumn: "Id");
                 });
@@ -1081,33 +1075,27 @@ namespace TsiErp.DataAccess.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SalesPropositionID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    LineNr = table.Column<int>(type: "int", nullable: false),
-                    ProductID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UnitSetID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BranchID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Quantity = table.Column<decimal>(type: "decimal(18,6)", precision: 18, scale: 6, nullable: false),
-                    UnitPrice = table.Column<decimal>(type: "decimal(18,6)", precision: 18, scale: 6, nullable: false),
-                    DiscountRate = table.Column<decimal>(type: "decimal(18,6)", precision: 18, scale: 6, nullable: false),
-                    DiscountAmount = table.Column<decimal>(type: "decimal(18,6)", precision: 18, scale: 6, nullable: false),
-                    LineAmount = table.Column<decimal>(type: "decimal(18,6)", precision: 18, scale: 6, nullable: false),
-                    LineTotalAmount = table.Column<decimal>(type: "decimal(18,6)", precision: 18, scale: 6, nullable: false),
-                    LineDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    VATrate = table.Column<int>(type: "int", nullable: false),
-                    VATamount = table.Column<decimal>(type: "decimal(18,6)", precision: 18, scale: 6, nullable: false),
-                    PaymentPlanID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SalesPropositionLineState = table.Column<int>(type: "int", nullable: false),
-                    OrderConversionDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    WarehouseID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ExchangeRate = table.Column<decimal>(type: "decimal(18,6)", precision: 18, scale: 6, nullable: false),
-                    ProductsId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UnitSetsId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    BranchesId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    PaymentPlansId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    WarehousesId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    SalesPropositionsId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    SalesPropositionID = table.Column<Guid>(type: "UniqueIdentifier", nullable: false),
+                    LineNr = table.Column<int>(type: "Int", nullable: false),
+                    ProductID = table.Column<Guid>(type: "UniqueIdentifier", nullable: false),
+                    UnitSetID = table.Column<Guid>(type: "UniqueIdentifier", nullable: false),
+                    BranchID = table.Column<Guid>(type: "UniqueIdentifier", nullable: false),
+                    Quantity = table.Column<decimal>(type: "Decimal(18,6)", precision: 18, scale: 6, nullable: false),
+                    UnitPrice = table.Column<decimal>(type: "Decimal(18,6)", precision: 18, scale: 6, nullable: false),
+                    DiscountRate = table.Column<decimal>(type: "Decimal(18,6)", precision: 18, scale: 6, nullable: false),
+                    DiscountAmount = table.Column<decimal>(type: "Decimal(18,6)", precision: 18, scale: 6, nullable: false),
+                    LineAmount = table.Column<decimal>(type: "Decimal(18,6)", precision: 18, scale: 6, nullable: false),
+                    LineTotalAmount = table.Column<decimal>(type: "Decimal(18,6)", precision: 18, scale: 6, nullable: false),
+                    LineDescription = table.Column<string>(type: "nvarchar(MAX)", nullable: true),
+                    VATrate = table.Column<int>(type: "Int", nullable: false),
+                    VATamount = table.Column<decimal>(type: "Decimal(18,6)", precision: 18, scale: 6, nullable: false),
+                    PaymentPlanID = table.Column<Guid>(type: "UniqueIdentifier", nullable: false),
+                    SalesPropositionLineState = table.Column<int>(type: "Int", nullable: false),
+                    OrderConversionDate = table.Column<DateTime>(type: "DateTime", nullable: true),
+                    WarehouseID = table.Column<Guid>(type: "UniqueIdentifier", nullable: false),
+                    ExchangeRate = table.Column<decimal>(type: "Decimal(18,6)", precision: 18, scale: 6, nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastModifierId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     LastModificationTime = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeleterId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -1118,33 +1106,33 @@ namespace TsiErp.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_SalesPropositionLines", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SalesPropositionLines_Branches_BranchesId",
-                        column: x => x.BranchesId,
+                        name: "FK_SalesPropositionLines_Branches_BranchID",
+                        column: x => x.BranchID,
                         principalTable: "Branches",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_SalesPropositionLines_PaymentPlans_PaymentPlansId",
-                        column: x => x.PaymentPlansId,
+                        name: "FK_SalesPropositionLines_PaymentPlans_PaymentPlanID",
+                        column: x => x.PaymentPlanID,
                         principalTable: "PaymentPlans",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_SalesPropositionLines_Products_ProductsId",
-                        column: x => x.ProductsId,
+                        name: "FK_SalesPropositionLines_Products_ProductID",
+                        column: x => x.ProductID,
                         principalTable: "Products",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_SalesPropositionLines_SalesPropositions_SalesPropositionsId",
-                        column: x => x.SalesPropositionsId,
+                        name: "FK_SalesPropositionLines_SalesPropositions_SalesPropositionID",
+                        column: x => x.SalesPropositionID,
                         principalTable: "SalesPropositions",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_SalesPropositionLines_UnitSets_UnitSetsId",
-                        column: x => x.UnitSetsId,
+                        name: "FK_SalesPropositionLines_UnitSets_UnitSetID",
+                        column: x => x.UnitSetID,
                         principalTable: "UnitSets",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_SalesPropositionLines_Warehouses_WarehousesId",
-                        column: x => x.WarehousesId,
+                        name: "FK_SalesPropositionLines_Warehouses_WarehouseID",
+                        column: x => x.WarehouseID,
                         principalTable: "Warehouses",
                         principalColumn: "Id");
                 });
@@ -1341,49 +1329,54 @@ namespace TsiErp.DataAccess.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_SalesPropositionLines_BranchesId",
+                name: "IX_SalesPropositionLines_BranchID",
                 table: "SalesPropositionLines",
-                column: "BranchesId");
+                column: "BranchID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SalesPropositionLines_PaymentPlansId",
+                name: "IX_SalesPropositionLines_PaymentPlanID",
                 table: "SalesPropositionLines",
-                column: "PaymentPlansId");
+                column: "PaymentPlanID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SalesPropositionLines_ProductsId",
+                name: "IX_SalesPropositionLines_ProductID",
                 table: "SalesPropositionLines",
-                column: "ProductsId");
+                column: "ProductID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SalesPropositionLines_SalesPropositionsId",
+                name: "IX_SalesPropositionLines_SalesPropositionID",
                 table: "SalesPropositionLines",
-                column: "SalesPropositionsId");
+                column: "SalesPropositionID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SalesPropositionLines_UnitSetsId",
+                name: "IX_SalesPropositionLines_UnitSetID",
                 table: "SalesPropositionLines",
-                column: "UnitSetsId");
+                column: "UnitSetID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SalesPropositionLines_WarehousesId",
+                name: "IX_SalesPropositionLines_WarehouseID",
                 table: "SalesPropositionLines",
-                column: "WarehousesId");
+                column: "WarehouseID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SalesPropositions_BranchesId",
+                name: "IX_SalesPropositions_BranchID",
                 table: "SalesPropositions",
-                column: "BranchesId");
+                column: "BranchID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SalesPropositions_CurrenciesId",
+                name: "IX_SalesPropositions_CurrencyID",
                 table: "SalesPropositions",
-                column: "CurrenciesId");
+                column: "CurrencyID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SalesPropositions_CurrentAccountCardsId",
+                name: "IX_SalesPropositions_CurrentAccountCardID",
                 table: "SalesPropositions",
-                column: "CurrentAccountCardsId");
+                column: "CurrentAccountCardID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SalesPropositions_FicheNo",
+                table: "SalesPropositions",
+                column: "FicheNo");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SalesPropositions_PaymentPlanID",
@@ -1391,14 +1384,14 @@ namespace TsiErp.DataAccess.Migrations
                 column: "PaymentPlanID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SalesPropositions_ShippingAdressesId",
+                name: "IX_SalesPropositions_ShippingAdressID",
                 table: "SalesPropositions",
-                column: "ShippingAdressesId");
+                column: "ShippingAdressID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SalesPropositions_WarehousesId",
+                name: "IX_SalesPropositions_WarehouseID",
                 table: "SalesPropositions",
-                column: "WarehousesId");
+                column: "WarehouseID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ShippingAdresses_Code",
