@@ -169,7 +169,9 @@
                         <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
                     </SfComboBox>
                 </td>
-                <td width="100px">
+                <td width="200px">
+                      <label class="FilterLabelTitle"><strong>Uygunsuzluk Oranı:</strong></label>
+                    <SfNumericTextBox TValue="int" @bind-Value="threshold" Placeholder="Uygunsuzluk Oranı Yazınız."></SfNumericTextBox>
                 </td>
                 <td width="50px" align="right">
                     <br />
@@ -229,12 +231,14 @@
                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
+            <GridEvents QueryCellInfo="CellInfoHandler" TValue="SupplierUnsuitabilityAnalysis"></GridEvents>
                 <GridPageSettings PageSizes="true"></GridPageSettings>
                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                 <GridColumns>
                     <GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.SupplierName) HeaderText="TEDARİKÇİ" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
                     <GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.Total) HeaderText="UYGUNSUZLUK MİKTARI" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
-                    <GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.TotalOrder) HeaderText="SİPARİŞ ADETİ" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                    <GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.TotalOrder) HeaderText="TESLİM ALINAN ADET" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
+                     <GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.Percent) HeaderText="UYGUNSUZLUK ORANI" Format="p2" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
                     @*<GridColumn Field=@nameof(SupplierUnsuitabilityAnalysis.TotalOrder) HeaderText="DETAYLAR" TextAlign="TextAlign.Center" Width="80">*@
                     @*<Template>
                 @{

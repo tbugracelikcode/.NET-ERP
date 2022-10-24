@@ -21,6 +21,8 @@ namespace TsiErp.DashboardUI.Pages.Admin.ContractUnsuitabilityAnalysis
         private bool isGridChecked = true;
         SfChart ChartInstance;
         bool VisibleSpinner = false;
+        private int threshold = 50;
+        private double thresholddouble = 0.50;
 
         #endregion
 
@@ -44,6 +46,22 @@ namespace TsiErp.DashboardUI.Pages.Admin.ContractUnsuitabilityAnalysis
             datacontunsuitabilityChart = chartList;
         }
 
+        public void CellInfoHandler(QueryCellInfoEventArgs<Models.ContractUnsuitabilityAnalysis> Args)
+        {
+            if (Args.Column.Field == "Percent")
+            {
+                if (Args.Data.Percent < thresholddouble)
+                {
+                    Args.Cell.AddStyle(new string[] { "background-color: #37CB00; color: white; " });
+                }
+                else
+                {
+                    Args.Cell.AddStyle(new string[] { "background-color: #DF0000; color: white;" });
+                }
+            }
+            StateHasChanged();
+        }
+
         #region Component Metotları
 
         private async void OnDateButtonClicked()
@@ -65,8 +83,10 @@ namespace TsiErp.DashboardUI.Pages.Admin.ContractUnsuitabilityAnalysis
                 case 6: startDate = DateTime.Today.AddDays(-(6 + DateTime.Today.Day)); break;
                 default:break;
             }
-           
+
             #endregion
+
+            thresholddouble = Convert.ToDouble(threshold) / 100;
 
             datacontunsuitability = await FasonUygunsuzlukService.GetContractUnsuitabilityAnalysis(startDate, endDate);
             var chartList = datacontunsuitability.Where(t => t.Total > 0).ToList();

@@ -20,6 +20,8 @@ namespace TsiErp.DashboardUI.Pages.Admin.SupplierUnsuitabilityAnalysis
         string chartTitle = "Tedarikçi ile İrtibat Sayısı Grafiği";
         SfChart ChartInstance;
         bool VisibleSpinner = false;
+        private int threshold = 50;
+        private double thresholddouble = 0.50;
 
         #endregion
 
@@ -41,6 +43,22 @@ namespace TsiErp.DashboardUI.Pages.Admin.SupplierUnsuitabilityAnalysis
                 }
             }
             datasuppunsuitabilityChart = chartList;
+        }
+
+        public void CellInfoHandler(QueryCellInfoEventArgs<Models.SupplierUnsuitabilityAnalysis> Args)
+        {
+            if (Args.Column.Field == "Percent")
+            {
+                if (Args.Data.Percent < thresholddouble)
+                {
+                    Args.Cell.AddStyle(new string[] { "background-color: #37CB00; color: white; " });
+                }
+                else
+                {
+                    Args.Cell.AddStyle(new string[] { "background-color: #DF0000; color: white;" });
+                }
+            }
+            StateHasChanged();
         }
 
 
@@ -82,6 +100,8 @@ namespace TsiErp.DashboardUI.Pages.Admin.SupplierUnsuitabilityAnalysis
             }
 
             #endregion
+
+            thresholddouble = Convert.ToDouble(threshold) / 100;
 
             datasuppunsuitability = await TedarikciUygunsuzlukService.GetSupplierUnsuitabilityAnalysis(startDate, endDate);
             var chartList = datasuppunsuitability.Where(t => t.Percent > 0).ToList();

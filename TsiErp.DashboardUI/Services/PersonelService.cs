@@ -267,6 +267,7 @@ namespace TsiErp.DashboardUI.Services
                     decimal perf = tempOperationLines.Sum(t => t.BIRIMSURE) == 0 ? 0 : tempOperationLines.Sum(t => t.PLANLANANOPRSURESI) / tempOperationLines.Sum(t => t.BIRIMSURE) ;
                     decimal quality = tempOperationLines.Sum(t => t.BIRIMSURE) == 0 ? 0 : ((((tempOperationLines.Sum(t => t.URETILENADET) * tempOperationLines.Sum(t => t.BIRIMSURE)) - (tempUnsuitabilityLines.Sum(t => t.OLCUKONTROLFORMBEYAN) * tempOperationLines.Sum(t => t.BIRIMSURE)))) / (tempOperationLines.Sum(t => t.URETILENADET) * tempOperationLines.Sum(t => t.BIRIMSURE)));
                     string employeeName = operationLines.Where(t => t.CALISANID == employeeID).Select(t => t.CALISAN).FirstOrDefault();
+                    string department = tempOperationLines.Select(t => t.DEPARTMAN).FirstOrDefault();
 
                     #endregion
 
@@ -277,7 +278,9 @@ namespace TsiErp.DashboardUI.Services
                         Performance = perf,
                         Quality = quality,
                         Availability = availability,
-                        OEE = perf* quality * availability
+                        OEE = perf* quality * availability,
+                        Department = department
+                        
 
                     };
                     employeeGeneralAnalysis.Add(analysis);
