@@ -29,6 +29,10 @@ namespace TsiErp.DashboardUI.Models
         /// </summary>
         public decimal TotalProduction { get; set; }
         /// <summary>
+        /// Departman 
+        /// </summary>
+        public string Department { get; set; }
+        /// <summary>
         /// Hurda Adet 
         /// </summary>
         public decimal TotalScrap { get; set; }
