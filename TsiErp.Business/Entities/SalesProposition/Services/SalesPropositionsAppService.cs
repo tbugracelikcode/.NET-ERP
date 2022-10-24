@@ -21,6 +21,7 @@ using TsiErp.Entities.Entities.SalesPropositionLine.Dtos;
 using TsiErp.Entities.Entities.SalesPropositionLine;
 using Tsi.Core.Entities;
 using TsiErp.Business.Entities.SalesProposition.BusinessRules;
+using Microsoft.EntityFrameworkCore;
 
 namespace TsiErp.Business.Entities.SalesProposition.Services
 {
@@ -63,24 +64,30 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
         {
             await _manager.DeleteControl(_repository, id);
 
+            //var lines = (await _lineRepository.GetListAsync(t => t.SalesPropositionID == id)).ToList();
+
+            //foreach (var line in lines)
+            //{
+            //    await _lineRepository.DeleteAsync(line.Id);
+            //}
+
             await _repository.DeleteAsync(id);
-
-            var lines = (await _lineRepository.GetListAsync(t => t.SalesPropositionID == id)).ToList();
-
-            foreach (var line in lines)
-            {
-                await _lineRepository.DeleteAsync(line.Id);
-            }
 
             return new SuccessResult("Silme işlemi başarılı.");
         }
 
         public async Task<IDataResult<SelectSalesPropositionsDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id, t => t.SalesPropositionLines);
+            var entity = await _repository.GetAsync(t => t.Id == id,
+                t => t.SalesPropositionLines,
+                t => t.CurrentAccountCards,
+                t => t.Warehouses,
+                t => t.Branches,
+                t => t.Currencies,
+                t => t.PaymentPlan);
+
             var mappedEntity = ObjectMapper.Map<SalesPropositions, SelectSalesPropositionsDto>(entity);
 
-            //var lines = (await _lineRepository.GetListAsync(t => t.SalesPropositionID == id)).ToList();
             mappedEntity.SelectSalesPropositionLines = ObjectMapper.Map<List<SalesPropositionLines>, List<SelectSalesPropositionLinesDto>>(entity.SalesPropositionLines.ToList());
 
             return new SuccessDataResult<SelectSalesPropositionsDto>(mappedEntity);
@@ -89,7 +96,13 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListSalesPropositionsDto>>> GetListAsync(ListSalesPropositionsParamaterDto input)
         {
-            var list = await _repository.GetListAsync(null, t => t.SalesPropositionLines);
+            var list = await _repository.GetListAsync(null,
+                t => t.SalesPropositionLines,
+                t => t.CurrentAccountCards,
+                t => t.Warehouses,
+                t => t.Branches,
+                t => t.Currencies,
+                t => t.PaymentPlan);
 
             var mappedEntity = ObjectMapper.Map<List<SalesPropositions>, List<ListSalesPropositionsDto>>(list.ToList());
 

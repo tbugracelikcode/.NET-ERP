@@ -415,8 +415,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.FicheNo).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Description_).HasColumnType("nvarchar(max)");
                 b.Property(t => t.Date_).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
-                b.Property(t => t.Time_).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(8);
-                b.Property(t => t.ExchangeRate).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.Time_).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(8);
+                b.Property(t => t.ExchangeRate).HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.SpecialCode).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(201);
                 b.Property(t => t.PropositionRevisionNo).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
                 b.Property(t => t.RevisionDate).HasColumnType(SqlDbType.DateTime.ToString());
@@ -438,7 +438,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
 
 
-                b.HasIndex(x => x.FicheNo);
+                b.HasIndex(x => x.FicheNo); 
                 b.HasIndex(x => x.CurrentAccountCardID);
                 b.HasIndex(x => x.BranchID);
                 b.HasIndex(x => x.WarehouseID);
@@ -484,7 +484,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.WarehouseID);
 
                 b.HasOne(x => x.Products).WithMany(x => x.SalesPropositionLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.SalesPropositions).WithMany(x => x.SalesPropositionLines).HasForeignKey(x => x.SalesPropositionID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.SalesPropositions).WithMany(x => x.SalesPropositionLines).HasForeignKey(x => x.SalesPropositionID).OnDelete(DeleteBehavior.Cascade);
                 b.HasOne(x => x.UnitSets).WithMany(x => x.SalesPropositionLines).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.Warehouses).WithMany(x => x.SalesPropositionLines).HasForeignKey(x => x.WarehouseID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.PaymentPlans).WithMany(x => x.SalesPropositionLines).HasForeignKey(x => x.PaymentPlanID).OnDelete(DeleteBehavior.NoAction);
