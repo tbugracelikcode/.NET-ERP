@@ -266,5 +266,7 @@ namespace TsiErp.ErpUI.Pages.Base
 
         public virtual void LineCalculate() { }
 
+        public virtual void GetTotal() { }
+
     }
 }
