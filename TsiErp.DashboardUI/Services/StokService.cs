@@ -20,24 +20,79 @@ namespace TsiErp.DashboardUI.Services
             var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate);
             Tuple<int, int> tuple = _PlanlananAdetHesapla(productionSelection, operationLines);
 
+            #region Değişkenler
+
+            double previousMonthScrapPercent = 0;
+            int hurda = 0;
+            decimal uretilenadet = 0;
+            double scrappercent = 0;
+
+            #endregion
+
             if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
             {
-                var gList = operationLines.Where(t => t.URUNGRPID == productionSelection).OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month, YIL = t.TARIH.Year }).Select(t => new AdminProductChart
+                var gList = operationLines.Where(t => t.URUNGRPID == productionSelection).OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month, YIL = t.TARIH.Year }).Select(t =>
                 {
-                    Ay = GetMonth(t.Key.Ay) + " " + t.Key.YIL.ToString(),
-                    OEE = t.Average(x => x.OEE),
-                    ScrapPercent = (double)unsuitabilityLines.Where(x=>x.URUNGRUPID==productionSelection && x.HURDA==true && x.TARIH.Month == t.Key.Ay).Sum(x=>x.OLCUKONTROLFORMBEYAN)/ (double)t.Sum(t=>t.URETILENADET)
+
+                    #region Değişkenler
+
+                    previousMonthScrapPercent = scrappercent;
+
+                    hurda = unsuitabilityLines.Where(x => x.URUNGRUPID == productionSelection && x.HURDA == true && x.TARIH.Month == t.Key.Ay).Sum(x => x.OLCUKONTROLFORMBEYAN);
+
+                    uretilenadet = t.Sum(t => t.URETILENADET);
+
+                    scrappercent = hurda / (double)uretilenadet;
+
+                    decimal differenceScrapPercent = (decimal)(scrappercent - previousMonthScrapPercent);
+
+                    #endregion
+
+
+
+                    return new AdminProductChart
+                    {
+                        Ay = GetMonth(t.Key.Ay) + " " + t.Key.YIL.ToString(),
+                        OEE = t.Average(x => x.OEE),
+                        ScrapPercent = scrappercent,
+                        DIFFSCRAPPERCENT = differenceScrapPercent,
+                        PRODUCTION = uretilenadet,
+                        SCRAP = hurda
+                    };
                 }).ToList();
                 adminProductChart = gList;
             }
 
             else if (frequency == 5 || frequency == 6)
             {
-                var gList = operationLines.GroupBy(t => new { HAFTA = t.TARIH.Date, YIL = t.TARIH.Year }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminProductChart
+                var gList = operationLines.GroupBy(t => new { HAFTA = t.TARIH.Date, YIL = t.TARIH.Year }).OrderBy(t => t.Key.HAFTA).Select(t => 
                 {
-                    Ay = t.Key.HAFTA.ToString("dd MMM yy", new CultureInfo("tr-TR")) + " " + t.Key.YIL.ToString(),
-                    OEE = t.Average(x => x.OEE),
-                    ScrapPercent = (double)unsuitabilityLines.Where(x => x.URUNGRUPID == productionSelection && x.HURDA == true && x.TARIH.Date == t.Key.HAFTA).Sum(x => x.OLCUKONTROLFORMBEYAN) / (double)t.Sum(t => t.URETILENADET)
+
+                    #region Değişkenler
+
+                    previousMonthScrapPercent = scrappercent;
+
+                    hurda = unsuitabilityLines.Where(x => x.URUNGRUPID == productionSelection && x.HURDA == true && x.TARIH.Date == t.Key.HAFTA).Sum(x => x.OLCUKONTROLFORMBEYAN);
+
+                    uretilenadet = t.Sum(t => t.URETILENADET);
+
+                    scrappercent = hurda / (double)uretilenadet;
+
+                    decimal differenceScrapPercent = (decimal)(scrappercent - previousMonthScrapPercent);
+
+                    #endregion
+
+                    return new AdminProductChart
+                    {
+                        Ay = t.Key.HAFTA.ToString("dd MMM", new CultureInfo("tr-TR")) + " " + t.Key.YIL.ToString(),
+                        OEE = t.Average(x => x.OEE),
+                        ScrapPercent = scrappercent,
+                        DIFFSCRAPPERCENT = differenceScrapPercent,
+                        PRODUCTION = uretilenadet,
+                        SCRAP = hurda
+                    };
+
+                    
                 }).ToList();
                 adminProductChart = gList;
             }
@@ -69,7 +124,7 @@ namespace TsiErp.DashboardUI.Services
                     #region Değişkenler
 
                     string productGroupName = operationLines.Where(t => t.URUNGRPID == groupID).Select(t => t.URUNGRUBU).FirstOrDefault();
-                    int totalScrap = Convert.ToInt32(tempUnsuitability.Sum(t => t.OLCUKONTROLFORMBEYAN));
+                    int totalScrap = Convert.ToInt32(tempUnsuitability.Where(t=>t.HURDA==true).Sum(t => t.OLCUKONTROLFORMBEYAN));
 
                     #endregion
 

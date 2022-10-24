@@ -25,6 +25,10 @@ namespace TsiErp.DashboardUI.Models
         /// </summary>
         public string ContractSupplier { get; set; }
         /// <summary>
+        /// Fason Tedarikçi Kısa
+        /// </summary>
+        public string ContractShortSupplier { get; set; }
+        /// <summary>
         /// Fason Tedarikçi ID
         /// </summary>
         public int ContractSupplierID { get; set; }
@@ -64,5 +68,13 @@ namespace TsiErp.DashboardUI.Models
         /// Oran 
         /// </summary>
         public double Percent { get; set; }
+
+        public int UNSUITABILITY { get; set; }
+
+        public decimal PRODUCTION { get; set; }
+
+        public decimal DIFFUNS { get; set; }
+
+        public decimal PREVIOUSMONTH { get; set; }
     }
 }

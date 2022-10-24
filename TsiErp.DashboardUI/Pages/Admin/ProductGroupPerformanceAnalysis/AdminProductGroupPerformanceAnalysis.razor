@@ -1,9 +1,11 @@
-﻿@page "/admin/product-group-analysis"
+﻿@page "/admin/product-group-performance-analysis"
 @layout AdminLayout
 
+@using System.Dynamic
+
+@inject IUrunGrubuPerformansService UrunGrubuPerformansService
 @inject IStokService StokService
 @inject NavigationManager NavigationManager
-
 
 <SfCard class="TSIPageTitleCard">
     <CardContent>
@@ -11,7 +13,7 @@
             <tr>
                 <td width="1000px">
                     <span style="float:left">
-                        <label class="TSIListPageTitleCardLabel">Ürün Grubu Hurda Analizi</label>
+                        <label class="TSIListPageTitleCardLabel">Ürün Grubu Performans Analizi</label>
                     </span>
                 </td>
             </tr>
@@ -31,36 +33,30 @@
                     <label class=FilterLabelTitle><strong>Detay Tablosunu Gizle</strong></label>
                 </td>
                 <td width="200px">
-                     <br />
+                    <br />
                     <SfCheckBox @bind-Checked="isLabelsChecked" @onchange="OnChangeLabelCheck" CssClass="e-customcheck"></SfCheckBox>
                     <label class=FilterLabelTitle><strong>Etiketleri Göster</strong></label>
                 </td>
-                <td width="200px">
+                <td width="250px">
                     <label class="FilterLabelTitle"><strong>Zaman Periyodu:</strong></label>
                     <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Yıllık" DataSource="@timeperiods">
                         <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
                     </SfComboBox>
                 </td>
-              @*<td width="200px">
-                    <label class=FilterLabelTitle><strong>Verim Değeri:</strong></label>
-                    <SfNumericTextBox TValue="int" @bind-Value="threshold" Placeholder="Verim Değeri Yazınız."></SfNumericTextBox>
-                </td>*@
-                <td width="200px">
+                <td width="250px">
                     <label class="FilterLabelTitle"><strong>Ürün Grubu:</strong></label>
                     <SfComboBox TValue="int?" TItem="ProductGroupsAnalysis" @bind-Index="@selectedProductIndex" PopupHeight="230px" Placeholder="ROT BAŞI" DataSource="@dataproductgroupcombobox">
-                        <ComboBoxEvents TItem="ProductGroupsAnalysis" TValue="int?" ValueChange="onChange"></ComboBoxEvents> 
+                        <ComboBoxEvents TItem="ProductGroupsAnalysis" TValue="int?" ValueChange="onChange"></ComboBoxEvents>
                         <ComboBoxFieldSettings Text="ProductGroupName" Value="ProductGroupID"></ComboBoxFieldSettings>
                     </SfComboBox>
                 </td>
-                <td width="100px" align="right">
+                <td width="50px" align="right">
                     <br />
                     <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
-                
-                    <SfSpinner @bind-Visible="VisibleSpinner">
-                    </SfSpinner>
+                    <SfSpinner @bind-Visible="VisibleSpinner"></SfSpinner>
                 </td>
-                <td width="100px">
-                      <br />
+                <td width="50px">
+                    <br />
                     <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnCompareButtonClicked">Karşılaştır</SfButton>
                 </td>
             </tr>
@@ -72,41 +68,40 @@
 <br />
 <SfCard class="Cards" style="text-align:center">
     <CardContent>
-        <SfChart @ref="ChartInstance" Theme="Theme.Bootstrap5" Title="@chartTitle">
+        <SfChart @ref="ChartInstance" Theme="Theme.Bootstrap5" Title="Ürün Grubu Performans Analizi">
             <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
             <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
                 <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
             </ChartPrimaryXAxis>
-            <ChartPrimaryYAxis Minimum="0" LabelFormat="p3">
+            <ChartPrimaryYAxis LabelFormat="p2">
                 <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
             </ChartPrimaryYAxis>
             <ChartTooltipSettings Enable="true">
                 <Template>
-
-                      @{
+                    @{
                         var data = context as ChartTooltipInfo;
 
                         #region Değişkenler
 
-                        decimal scrappercent = (decimal)datachart.Where(t => t.ScrapPercent == (double)data.Y).Select(t => t.ScrapPercent).FirstOrDefault();
+                        decimal Performance = datachart.Where(t => t.Performance == (decimal)data.Y).Select(t => t.Performance).FirstOrDefault();
 
-                        decimal comparisonScrapPercent = datachart.Where(t => t.ScrapPercent == (double)data.Y).Select(t => t.DIFFSCRAPPERCENT).FirstOrDefault();
+                        decimal comparisonPER = datachart.Where(t => t.Performance == (decimal)data.Y).Select(t => t.DIFFPER).FirstOrDefault();
 
-                        string valueColorScrapPercent = comparisonScrapPercent < 0 ? "#068800" : "#BF0000";
+                        string valueColorPER = comparisonPER < 0 ? "#BF0000" : "#068800";
 
-                        string comparisonScrapPercentstr = comparisonScrapPercent.ToString("p2");
+                        string comparisonPERstr = comparisonPER.ToString("p2");
 
                         #endregion
 
-                        //if (scrappercent != comparisonScrapPercent)
-                        //{
+                        if (Performance != comparisonPER)
+                        {
                             <div>
                                 <table class="TSIChartTooltip">
                                     <tr><th style="font-size:16px !important;" colspan="2">Değişim</th></tr>
-                                    <tr><td>Hurda Oranı:</td><td style="color: @valueColorScrapPercent">@comparisonScrapPercentstr</td></tr>
+                                    <tr><td>Performans:</td><td style="color: @valueColorPER">@comparisonPERstr</td></tr>
                                 </table>
                             </div>
-                        //}
+                        }
 
 
 
@@ -114,7 +109,8 @@
                 </Template>
             </ChartTooltipSettings>
             <ChartSeriesCollection>
-                <ChartSeries DataSource="@datachart" Name="Hurda Oranı" XName="Ay" YName="ScrapPercent" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
+                <ChartSeries DataSource="@datachart" Name="Performans" XName="Month" YName="Performance" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
+
                     <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
                         <ChartDataLabel Visible="@dataLabels">
                             <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
@@ -128,13 +124,13 @@
                     </ChartTrendlines>
                 </ChartSeries>
             </ChartSeriesCollection>
-            <ChartZoomSettings EnableSelectionZooming="true"></ChartZoomSettings>
+
         </SfChart>
 
     </CardContent>
     <CardFooter>
           @{
-            string chartAverageValue = datachart.Average(t => t.ScrapPercent).ToString("p3");
+            string chartAverageValue = datachart.Average(t => t.Performance).ToString("p2");
         }
         <center><label class="TSIListPageTitleCardLabel" style="font-size:25px"><span style="color :#AC0000">@chartAverageLabel </span>&nbsp;@chartAverageValue</label></center>
     </CardFooter>
@@ -142,28 +138,23 @@
 <br />
 <SfCard class="Cards" hidden="@isGridChecked">
     <CardContent>
-        <SfGrid ID="Grid" DataSource="@dataproductgroup" @ref="Grid" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+        <SfGrid ID="Grid" TValue="ExpandoObject" DataSource="@dataproductperformance" @ref="Grid" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
             <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
             <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
-            @*<GridEvents QueryCellInfo="CellInfoHandler" TValue="ProductGroupsAnalysis"></GridEvents>*@
+            @*<GridEvents QueryCellInfo="CellInfoHandler" TValue="ProductGroupPerformanceAnalysis"></GridEvents>*@
             <GridPageSettings PageSizes="true"></GridPageSettings>
             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
             <GridColumns>
-                <GridColumn Field=@nameof(ProductGroupsAnalysis.ProductGroupName) HeaderText="ÜRÜN GRUBU ADI" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(ProductGroupsAnalysis.PlannedQuantity) HeaderText="PLANLANAN ADET" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(ProductGroupsAnalysis.TotalProduction)  HeaderText="ÜRETİLEN ADET" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="120"></GridColumn>
-                <GridColumn Field=@nameof(ProductGroupsAnalysis.TotalScrap) HeaderText="HURDA ADET" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="130"></GridColumn>
-               @* <GridColumn Field=@nameof(ProductGroupsAnalysis.OEE) HeaderText="OEE" Format="#%" TextAlign="TextAlign.Center" Width="130"></GridColumn>*@
-                <GridColumn Field=@nameof(ProductGroupsAnalysis.TotalScrap) HeaderText="DETAYLAR" TextAlign="Syncfusion.Blazor.Grids.TextAlign.Center" Width="80">
-                    <Template>
-                        @{
-                            var row = (context as ProductGroupsAnalysis);
-                                <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" style="background-color:#AD0000;text-shadow: 6px 3px 4px black;" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.ProductGroupID))"></SfButton>
-                        }
+                @if (dataproductperformance != null && dataproductperformance.Any())
+                {
+                    foreach (var item in (IDictionary<string, object>)dataproductperformance.First())
+                    {
+                        @*<GridColumn Field=@nameof(AdminProductGroupPerformanceAnalysis.)></GridColumn>*@
+                        <GridColumn Field="@item.Key" Format="p2"></GridColumn>
+                    }
+                }
 
-                    </Template>
-                </GridColumn>
             </GridColumns>
         </SfGrid>
 
@@ -186,8 +177,8 @@
         <table style="width:100%">
             <tr>
                 <td style="width:100%">
-                    <SfMultiSelect TValue="string[]?" @bind-Value="@MultiSelectVal" TItem="AdminProductChart" Placeholder="Zaman Dilimlerini Seçiniz" DataSource="@datachart">
-                        <MultiSelectFieldSettings Text="Ay" Value="ScrapPercent"></MultiSelectFieldSettings>
+                    <SfMultiSelect TValue="string[]" @bind-Value="@MultiSelectVal" TItem="AdminProductGroupPerformanceAnalysisChart" Placeholder="Zaman Dilimlerini Seçiniz" DataSource="@datachart">
+                        <MultiSelectFieldSettings Text="Month" Value="Month"></MultiSelectFieldSettings>
                     </SfMultiSelect>
                 </td>
 
@@ -206,9 +197,11 @@
                                 #region Değişkenler
 
                                 string header = string.Empty;
-                                decimal scrappercent = 0;
-                                int hurda = 0;
-                                decimal uretilenadet = 0;
+                                decimal performance = 0;
+                                int planlananbirimsure = 0;
+                                decimal gerceklesenbirimsure = 0;
+                                string productGrpName = string.Empty;
+                                string generalTitle = string.Empty;
 
                                 #endregion
 
@@ -217,10 +210,12 @@
 
                                     #region Değişkenler
 
-                                    header = datachart.Where(t => t.ScrapPercent.ToString() == item).Select(t => t.Ay).FirstOrDefault();
-                                    scrappercent = (decimal)datachart.Where(t => t.ScrapPercent.ToString() == item).Select(t => t.ScrapPercent).FirstOrDefault();
-                                    uretilenadet = datachart.Where(t => t.ScrapPercent.ToString() == item).Select(t => t.PRODUCTION).FirstOrDefault();
-                                    hurda = datachart.Where(t => t.ScrapPercent.ToString() == item).Select(t => t.SCRAP).FirstOrDefault();
+                                    header = datachart.Where(t => t.Month == item).Select(t => t.Month).FirstOrDefault();
+                                    productGrpName = dataproductgroupcombobox.Where(t => t.ProductGroupID == selectedproductID).Select(t => t.ProductGroupName).FirstOrDefault();
+                                    performance = datachart.Where(t => t.Month == item).Select(t => t.Performance).FirstOrDefault();
+                                    planlananbirimsure = datachart.Where(t => t.Month == item).Select(t => t.PLANNEDUNITTIME).FirstOrDefault();
+                                    gerceklesenbirimsure = datachart.Where(t => t.Month == item).Select(t => t.OCCUREDUNITTIME).FirstOrDefault();
+                                    generalTitle = header + " (" + productGrpName + ")";
 
                                     #endregion
 
@@ -229,31 +224,30 @@
 
 
                                             <table class="table table-hover">
-                                                <tr><th style="font-size:16px !important;" colspan="2">@header</th></tr>
+                                                <tr><th style="font-size:16px !important;" colspan="2">@generalTitle</th></tr>
                                                 <tr>
-                                                    <td style="text-align: left; width:70%;font-weight:bold">Hurda Oranı:</td>
-                                                    <td style="width:30%;font-weight:bold">@scrappercent.ToString("p2")</td>
+                                                    <td style="text-align: left; width:70%;font-weight:bold">Performans:</td>
+                                                    <td style="width:30%;font-weight:bold">@performance.ToString("p2")</td>
                                                 </tr>
 
                                                 <tr>
                                                     <td style="font-size:12px !important;text-align:left; padding-left:8%">
-                                                        • Hurda Adet:
+                                                        • Planlanan Birim Süre:
                                                     </td>
                                                     <td style="font-size:12px !important;text-align:left;">
-                                                        @hurda
+                                                        @planlananbirimsure
                                                     </td>
                                                 </tr>
 
                                                 <tr>
                                                     <td style="font-size:12px !important;text-align:left;padding-left:8%">
-                                                        • Üretilen Adet:
+                                                        • Gerçekleşen Birim Süre:
                                                     </td>
                                                     <td style="font-size:12px !important;text-align:left;">
-                                                        @uretilenadet.ToString("0.00")
+                                                        @gerceklesenbirimsure.ToString("0.00")
                                                     </td>
                                                 </tr>
 
-                                                
                                             </table>
 
 

@@ -9,7 +9,7 @@ namespace TsiErp.DashboardUI.Services
 {
     public class TedarikciUygunsuzlukService : ITedarikciUygunsuzlukService
     {
-       
+
 
         #region Chart
 
@@ -182,17 +182,21 @@ namespace TsiErp.DashboardUI.Services
 
         #region Grid
 
-        public async Task< List<SupplierUnsuitabilityAnalysis>> GetSupplierUnsuitabilityAnalysis(DateTime startDate, DateTime endDate)
+        public async Task<List<SupplierUnsuitabilityAnalysis>> GetSupplierUnsuitabilityAnalysis(DateTime startDate, DateTime endDate)
         {
             List<SupplierUnsuitabilityAnalysis> supplierUnsuitabilityAnalysis = new List<SupplierUnsuitabilityAnalysis>();
 
+            var purchaseList = DBHelper.GetPurchaseQuery(startDate, endDate).Where(t => t.DURUM == 1 || t.DURUM == 2);
+            var purchaseLinesList = DBHelper.GetPurchaseLinesQuery(startDate, endDate);
             var unsuitabilityLines = DBHelper.GetSuppliertUnsuitabilityQuery(startDate, endDate);
-            var Carilist = unsuitabilityLines.Select(t => t.CARIID).Distinct().ToList();
+            var Carilist = purchaseList.Select(t => t.CARIID).Distinct().ToList();
 
-            if (unsuitabilityLines != null)
+            if (purchaseList != null)
             {
                 foreach (var cari in Carilist)
                 {
+                    var tempPurchaseList = purchaseList.Where(t => t.CARIID == cari).ToList();
+                    var tempPurchaseLinesList = purchaseLinesList.Where(t => t.CARIUNVAN == tempPurchaseList.Where(t => t.CARIID == cari).Select(t => t.CARIUNVAN).FirstOrDefault()).ToList();
                     var tempList = unsuitabilityLines.Where(t => t.CARIID == cari).ToList();
                     var orderList = tempList.Select(t => t.SIPARISID).Distinct().ToList();
 
@@ -200,13 +204,17 @@ namespace TsiErp.DashboardUI.Services
 
                     int totalOrder = 0;
                     int total = tempList.Sum(t => t.UYGUNOLMAYANMIKTAR);
-                    string supplierName = tempList.Select(t => t.CARIUNVAN).FirstOrDefault();
+                    string supplierName = tempPurchaseList.Where(t => t.CARIID == cari).Select(t => t.CARIUNVAN).FirstOrDefault();
 
                     #endregion
 
-                    foreach (var orderID in orderList)
+                    //foreach (var orderID in orderList)
+                    //{
+                    //    totalOrder += (int)DBHelper.GetSuppliertUnsuitabilityLinesQuery().Where(t => t.SIPARISID == orderID).Sum(t => t.ADET);
+                    //}
+                    foreach (var Purchase in tempPurchaseList)
                     {
-                        totalOrder += (int)DBHelper.GetSuppliertUnsuitabilityLinesQuery().Where(t => t.SIPARISID == orderID).Sum(t => t.ADET);
+                        totalOrder += Convert.ToInt32(tempPurchaseLinesList.Where(t=>t.FISNO == Purchase.FISNO).Sum(t=>t.ADET));
                     }
 
                     SupplierUnsuitabilityAnalysis analysis = new SupplierUnsuitabilityAnalysis
@@ -221,6 +229,8 @@ namespace TsiErp.DashboardUI.Services
                     supplierUnsuitabilityAnalysis.Add(analysis);
                 }
             }
+
+            supplierUnsuitabilityAnalysis = supplierUnsuitabilityAnalysis.OrderByDescending(t => t.Percent).ToList();
             return await Task.FromResult(supplierUnsuitabilityAnalysis);
         }
 

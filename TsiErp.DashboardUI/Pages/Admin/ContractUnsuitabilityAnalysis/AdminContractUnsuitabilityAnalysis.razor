@@ -30,9 +30,9 @@
                     <SfCheckBox @bind-Checked="isGridChecked" @onchange="OnCheckedChanged" CssClass="e-customcheck"></SfCheckBox>
                     <label class=FilterLabelTitle><strong>Detay Tablosunu Gizle</strong></label>
                 </td>
-                <td width="400px">
+                <td width="200px">
                     <label class="FilterLabelTitle"><strong>Zaman Periyodu:</strong></label>
-                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Son 3 Ay" DataSource="@timeperiods">
+                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Yıllık" DataSource="@timeperiods">
                         <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
                     </SfComboBox>
                 </td>
@@ -64,13 +64,24 @@
             <ChartPrimaryYAxis LabelFormat="p2">
                 <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
             </ChartPrimaryYAxis>
-            <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
+            <ChartTooltipSettings Enable="true">
+                <Template>
+                    @{
+                        var data = context as ChartTooltipInfo;
+                        string labelName = datacontunsuitabilityChart.Where(t => t.Percent == (Convert.ToDouble(data.Y))).Select(t => t.ContractSupplier).FirstOrDefault();
+                    }
+                    <div>
+                        <table class="TSIChartTooltip">
+                            <tr><td>@labelName</td></tr>
+                        </table>
+                    </div>
+                </Template>
+            </ChartTooltipSettings>
             <ChartSeriesCollection>
-                <ChartSeries DataSource="@datacontunsuitability" Name="Fason Tedarikçi" XName="ContractSupplier" YName="Percent" Width="1" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column">
+                <ChartSeries DataSource="@datacontunsuitabilityChart" Name="Fason Tedarikçi" XName="ContractShortSupplier" YName="Percent" Width="1" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column">
 
                 </ChartSeries>
             </ChartSeriesCollection>
-            <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
             <ChartZoomSettings EnableSelectionZooming="true"></ChartZoomSettings>
         </SfChart>
 
@@ -95,7 +106,10 @@
                     <Template>
                         @{
                             var row = (context as ContractUnsuitabilityAnalysis);
-                            <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" style="background-color:#AD0000;text-shadow: 6px 3px 4px black;" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.ContractSupplierID,row.ContractReceiptQuantity))"></SfButton>
+                            if (row.Total != 0)
+                            {
+                                <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" style="background-color:#AD0000;text-shadow: 6px 3px 4px black;" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.ContractSupplierID,row.ContractReceiptQuantity))"></SfButton>
+                            }
                         }
 
                     </Template>

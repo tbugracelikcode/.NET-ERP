@@ -70,7 +70,7 @@
                             <CardContent>
                                 <SfChart Width="90%" Theme="Theme.Bootstrap5" Title="Hurda PPM Analiz Grafiği">
                                     <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
-                                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
+                                    <ChartPrimaryXAxis  ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
                                         <ChartAxisLabelStyle Size="14px" Color="black" FontWeight="bold" />
                                     </ChartPrimaryXAxis>
                                     <ChartPrimaryYAxis LabelFormat="#">
@@ -78,9 +78,9 @@
                                     </ChartPrimaryYAxis>
                                     <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
                                     <ChartSeriesCollection>
-                                        <ChartSeries DataSource="@dataproductgroupchart" ColumnWidth="@columnwidth" Name="PPM" XName="ScrapCauseName" YName="PPM" Width="1" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column">
 
-                                        </ChartSeries>
+                                          <ChartSeries DataSource="@dataproductgroupchart" ColumnWidth="@columnwidth" Name="PPM"  XName="ScrapCauseName" YName="PPM" Width="1" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Column"></ChartSeries>
+
                                     </ChartSeriesCollection>
                                     <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
                                     <ChartZoomSettings EnableSelectionZooming="true"></ChartZoomSettings>

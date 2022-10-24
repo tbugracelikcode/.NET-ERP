@@ -15,5 +15,11 @@
         /// Oran 
         /// </summary>
         public decimal Percent { get; set; }
+
+        public int UNSUITABILITY { get; set; }
+
+        public decimal PRODUCTION { get; set; }
+
+        public decimal DIFFUNS { get; set; }
     }
 }

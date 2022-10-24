@@ -1,4 +1,5 @@
-﻿using Syncfusion.Blazor.Charts;
+﻿using DevExpress.Utils;
+using Syncfusion.Blazor.Charts;
 using Syncfusion.Blazor.Grids;
 using TsiErp.DashboardUI.Models;
 using TsiErp.DashboardUI.Services;
@@ -9,11 +10,12 @@ namespace TsiErp.DashboardUI.Pages.Admin.ContractUnsuitabilityAnalysis
     public partial class AdminContractUnsuitabilityAnalysis
     {
         List<Models.ContractUnsuitabilityAnalysis> datacontunsuitability = new List<Models.ContractUnsuitabilityAnalysis>();
+        List<Models.ContractUnsuitabilityAnalysis> datacontunsuitabilityChart = new List<Models.ContractUnsuitabilityAnalysis>();
         SfGrid<Models.ContractUnsuitabilityAnalysis> Grid;
 
         #region Değişkenler
 
-        DateTime startDate = DateTime.Today.AddDays(-(90 + DateTime.Today.Day));
+        DateTime startDate = DateTime.Today.AddDays(-(364 + DateTime.Today.Day));
         DateTime endDate = DateTime.Today.AddDays(-(DateTime.Today.Day));
         private int? selectedTimeIndex { get; set; }
         private bool isGridChecked = true;
@@ -27,7 +29,19 @@ namespace TsiErp.DashboardUI.Pages.Admin.ContractUnsuitabilityAnalysis
             
 
             datacontunsuitability = await FasonUygunsuzlukService.GetContractUnsuitabilityAnalysis(startDate, endDate);
-
+            var chartList = datacontunsuitability.Where(t => t.Total > 0).ToList();
+            foreach (var item in chartList)
+            {
+                if (item.ContractSupplier.Length > 15)
+                {
+                    item.ContractShortSupplier = item.ContractSupplier.Substring(0, 15) + "...";
+                }
+                else
+                {
+                    item.ContractShortSupplier = item.ContractSupplier;
+                }
+            }
+            datacontunsuitabilityChart = chartList;
         }
 
         #region Component Metotları
@@ -42,24 +56,39 @@ namespace TsiErp.DashboardUI.Pages.Admin.ContractUnsuitabilityAnalysis
             #region Zaman Seçimi
             switch(selectedTimeIndex)
             {
-                case 0: startDate = DateTime.Today.AddDays(-365); ;break;
-                case 1: startDate = DateTime.Today.AddDays(-273); ; break;
-                case 2: startDate = DateTime.Today.AddDays(-181); ; break;
-                case 3: startDate = DateTime.Today.AddDays(-90); ; break;
-                case 4: startDate = DateTime.Today.AddDays(-60); ; break;
-                case 5: startDate = DateTime.Today.AddDays(-30); ; break;
-                case 6: startDate = DateTime.Today.AddDays(-7); ; break;
+                case 0: startDate = DateTime.Today.AddDays(-(364 + DateTime.Today.Day)); ;break;
+                case 1: startDate = DateTime.Today.AddDays(-(272 + DateTime.Today.Day)); ; break;
+                case 2: startDate = DateTime.Today.AddDays(-(180 + DateTime.Today.Day)); break;
+                case 3: startDate = DateTime.Today.AddDays(-(89 + DateTime.Today.Day)); break;
+                case 4: startDate = DateTime.Today.AddDays(-(59 + DateTime.Today.Day)); break;
+                case 5: startDate = DateTime.Today.AddDays(-(29 + DateTime.Today.Day)); break;
+                case 6: startDate = DateTime.Today.AddDays(-(6 + DateTime.Today.Day)); break;
                 default:break;
             }
            
             #endregion
 
             datacontunsuitability = await FasonUygunsuzlukService.GetContractUnsuitabilityAnalysis(startDate, endDate);
-            await Grid.Refresh();
-            await ChartInstance.RefreshAsync();
+            var chartList = datacontunsuitability.Where(t => t.Total > 0).ToList();
+            foreach (var item in chartList)
+            {
+                if (item.ContractSupplier.Length > 15)
+                {
+                    item.ContractShortSupplier = item.ContractSupplier.Substring(0, 15) + "...";
+                }
+                else
+                {
+                    item.ContractShortSupplier = item.ContractSupplier;
+                }
+            }
+            datacontunsuitabilityChart = chartList;
+
+            
             VisibleSpinner = false;
             StateHasChanged();
-            
+            await Grid.Refresh();
+            await ChartInstance.RefreshAsync();
+
         }
         private void OnCheckedChanged(Microsoft.AspNetCore.Components.ChangeEventArgs args)
         {
@@ -75,7 +104,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ContractUnsuitabilityAnalysis
 
             if (selectedTimeIndex == null)
             {
-                selectedTimeIndex = 3;
+                selectedTimeIndex = 0;
             }
              NavigationManager.NavigateTo("/admin/contract-unsuitability-analysis/details" + "/" + cariID.ToString() + "/" + startDate.ToString("yyyy, MM, dd") + "/" + endDate.ToString("yyyy, MM, dd") + "/" + selectedTimeIndex.ToString() + "/" + total.ToString()); 
         }

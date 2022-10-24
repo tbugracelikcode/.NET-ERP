@@ -9,8 +9,7 @@
             <button class="navbar-toggler"  @onclick="ToggleNavMenu">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            &nbsp;&nbsp;&nbsp;<img src="tsi-logo.png" />&nbsp;&nbsp;&nbsp;
-            <a class="navbar-brand" href=""><span class="displayText" style="margin-right:40px">Dashboard</span></a>
+
         </div>
         @*<div @onmouseover="MouseIn" @onmouseout="MouseOut">*@
         <div>
@@ -22,7 +21,19 @@
 <div class="main">
     <div class="top-row px-4" style="z-index:1111;padding-top:0px">
         @* <CultureSwitcher />*@
-        <DxButton CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px;text-shadow: 6px 3px 4px black; font-weight:bold;" Click="@OnExitButtonClicked" Text="Çıkış" />
+        <table style="width:100%">
+            <tr>
+                <td style="width:90%; text-align:left">
+                    <img style="margin-bottom: 0.5%;" src="tsi-logo.png" />&nbsp;&nbsp;<span class="DashboardText" style="margin-right:40px;font-size: 24px;">Dashboard</span>
+                </td>
+
+                <td style="width:10%">
+                    <DxButton CssClass="e-btn e-secondary" style="background-color:#AD0000; font-size:18px;text-shadow: 6px 3px 4px black; font-weight:bold;" Click="@OnExitButtonClicked" Text="Çıkış" />
+                </td>
+            </tr>
+        </table>
+        
+        
     </div>
 
     <div class="content px-4">
@@ -35,6 +46,9 @@
         border-radius: 10%;
         width: 71px;
         height: 33px;
+    }
+    .DashboardText{
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     }
 
     .sidebar {

@@ -10,7 +10,6 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
         List<ProductionUnsuitabilityDetailedEmployee> dataunsuitabilityemployee = new List<ProductionUnsuitabilityDetailedEmployee>();
         List<ProductionUnsuitabilityDetailedProduct> dataunsuitabilityproduct = new List<ProductionUnsuitabilityDetailedProduct>();
         List<Models.ProductionUnsuitabilityAnalysis> dataprouns = new List<Models.ProductionUnsuitabilityAnalysis>();
-        AdminProductionUnsuitabilityAnalysis _labelreason = new AdminProductionUnsuitabilityAnalysis();
 
         SfGrid<ProductionUnsuitabilityDetailedEmployee> EmployeeGrid;
         SfGrid<ProductionUnsuitabilityDetailedStation> StationGrid;
@@ -18,6 +17,8 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
 
         #region Değişkenler
 
+        bool visibleMachineTab = true;
+        bool visibleEmployeeTab = true;
         bool VisibleSpinner = false;
         string unsuitabilityName = string.Empty;
         double columnwidth1;
@@ -43,12 +44,12 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
         protected override async void OnInitialized()
         {
 
-            dataunsuitabilitystation =await UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedStationAnalysis(unsuitabilityCode, startDate, endDate, selectedActionID);
+            dataunsuitabilitystation = await UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedStationAnalysis(unsuitabilityCode, startDate, endDate, selectedActionID);
             dataunsuitabilityemployee = await UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedEmployeeAnalysis(unsuitabilityCode, startDate, endDate, selectedActionID);
             dataunsuitabilityproduct = await UretimUygunsuzlukDetayService.GetProductionUnsuitabilityDetailedProductAnalysis(unsuitabilityCode, startDate, endDate, selectedActionID);
             dataprouns = await UretimUygunsuzlukService.GetProductionUnsuitabilityAnalysis(startDate, endDate);
 
-            unsuitabilityName =   dataprouns.Where(t => t.Code == unsuitabilityCode).Select(t => t.UnsuitabilityReason).FirstOrDefault();
+            unsuitabilityName = dataprouns.Where(t => t.Code == unsuitabilityCode).Select(t => t.UnsuitabilityReason).FirstOrDefault();
 
             #region Sütun Genişlikleri
             if (dataunsuitabilitystation.Count() <= 3)
@@ -80,8 +81,29 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
             }
             else if (selectedActionID == 4)
             {
-                actionName = "Toplu Uygunsuzluk";
+                actionName = "Genel Uygunsuzluk";
             }
+            #endregion
+
+            #region PKD Tab Visible
+            if (dataunsuitabilitystation.Count() == 0)
+            {
+                visibleMachineTab = false;
+            }
+            else
+            {
+                visibleMachineTab = true;
+            }
+
+            if(dataunsuitabilityemployee.Count() == 0)
+            {
+                visibleEmployeeTab = false;
+            }
+            else
+            {
+                visibleEmployeeTab = true;
+            }
+
             #endregion
 
         }

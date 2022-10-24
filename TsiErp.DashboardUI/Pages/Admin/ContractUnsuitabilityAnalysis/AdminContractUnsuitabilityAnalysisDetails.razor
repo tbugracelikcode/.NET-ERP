@@ -39,7 +39,7 @@
                 </td>
                 <td width="200px">
                     <label class="FilterLabelTitle"><strong>Zaman Periyodu:</strong></label>
-                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Son 3 Ay" DataSource="@timeperiods">
+                    <SfComboBox TValue="int?" TItem="ComboboxTimePeriods" @bind-Index="@selectedTimeIndex" PopupHeight="230px" Placeholder="Yıllık" DataSource="@timeperiods">
                         <ComboBoxFieldSettings Text="TimeText" Value="TimeID"></ComboBoxFieldSettings>
                     </SfComboBox>
                 </td>
@@ -51,12 +51,16 @@
                     </SfComboBox>
                 </td>
                 <td width="50px">
+                    <br />
                     <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnDateButtonClicked">Filtrele</SfButton>
                 </td>
                 <td width="50px" align="right">
-                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnBackButtonClicked">Geri</SfButton> <SfSpinner @bind-Visible="VisibleSpinner"> </SfSpinner>
+                    <br />
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnCompareButtonClicked">Karşılaştır</SfButton>
                 </td>
                 <td width="50px">
+                    <br />
+                    <SfButton IsPrimary="true" CssClass="e-btn e-secondary" style="background-color:#AD0000;text-shadow: 6px 3px 4px black; font-size:18px; font-weight:bold" OnClick="@OnBackButtonClicked">Geri</SfButton> <SfSpinner @bind-Visible="VisibleSpinner"> </SfSpinner>
                 </td>
             </tr>
         </table>
@@ -68,70 +72,140 @@
 @{
     if (datachart.Count() == 1)
     {
-    <SfCard class="Cards" style="text-align:center">
-                            <CardContent>
-                                <SfChart @ref="ChartInstance" Theme="Theme.Bootstrap5" Title="@chartTitle">
-                                    <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
-                                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
-                                        <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
-                                    </ChartPrimaryXAxis>
-                                    <ChartPrimaryYAxis LabelFormat="p2">
-                                        <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
-                                    </ChartPrimaryYAxis>
-                                    <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
-                                    <ChartSeriesCollection>
-                                        <ChartSeries DataSource="@datachart" Name="Aksiyon" XName="Ay" YName="Percent" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
-                                            <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
-                                                <ChartDataLabel Visible="@dataLabels">
-                                                    <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
-                                                </ChartDataLabel>
-                                            </ChartMarker>
-                                        </ChartSeries>
-                                    </ChartSeriesCollection>
-                                    <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
-                                </SfChart>
+        <SfCard class="Cards" style="text-align:center">
+            <CardContent>
+                <SfChart @ref="ChartInstance" Theme="Theme.Bootstrap5" Title="@chartTitle">
+                    <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
+                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
+                        <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
+                    </ChartPrimaryXAxis>
+                    <ChartPrimaryYAxis LabelFormat="p2" Minimum="0">
+                        <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
+                    </ChartPrimaryYAxis>
+                    <ChartTooltipSettings Enable="true">
+                        <Template>
+                            @{
+                                var data = context as ChartTooltipInfo;
 
-                            </CardContent>
-                            <CardFooter>
-                            </CardFooter>
-    </SfCard>
+                                #region Değişkenler
+
+                                decimal previous = datachart.Where(t => t.Percent == (double)data.Y).Select(t => t.PREVIOUSMONTH).FirstOrDefault();
+
+                                decimal Percent = (decimal)datachart.Where(t => t.Percent == (double)data.Y).Select(t => t.Percent).FirstOrDefault();
+
+                                decimal comparisonPercent = datachart.Where(t => t.Percent == (double)data.Y).Select(t => t.DIFFUNS).FirstOrDefault();
+
+                                string valueColorPercent = comparisonPercent < 0 ? "#068800" : "#BF0000";
+
+                                string comparisonPercentstr = comparisonPercent.ToString("p2");
+
+                                #endregion
+
+                                //if (previous !=0 && Percent !=comparisonPercent)
+                                //{
+
+                                <div>
+                                    <table class="TSIChartTooltip">
+                                        <tr><th style="font-size:16px !important;" colspan="2">Değişim</th></tr>
+                                        <tr><td>@unsuitabilityTitle</td><td style="color: @valueColorPercent">@comparisonPercentstr</td></tr>
+                                    </table>
+                                </div>
+
+
+                                //}
+
+
+                            }
+                        </Template>
+                    </ChartTooltipSettings>
+                    <ChartSeriesCollection>
+                        <ChartSeries DataSource="@datachart" Name="Aksiyon" XName="Ay" YName="Percent" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
+                            <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
+                                <ChartDataLabel Visible="@dataLabels">
+                                    <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
+                                </ChartDataLabel>
+                            </ChartMarker>
+                        </ChartSeries>
+                    </ChartSeriesCollection>
+                </SfChart>
+
+            </CardContent>
+            <CardFooter>
+                <center><label class="TSIListPageTitleCardLabel" style="font-size:25px"><span style="color :#AC0000">@chartAverageLabel </span>&nbsp;@chartAverageValue</label></center>
+            </CardFooter>
+        </SfCard>
     }
     else
     {
-    <SfCard class="Cards" style="text-align:center">
-                            <CardContent>
-                                <SfChart @ref="ChartInstance" Theme="Theme.Bootstrap5" Title="@chartTitle">
-                                    <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
-                                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
-                                        <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
-                                    </ChartPrimaryXAxis>
-                                    <ChartPrimaryYAxis LabelFormat="p2">
-                                        <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
-                                    </ChartPrimaryYAxis>
-                                    <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
-                                    <ChartSeriesCollection>
-                                        <ChartSeries DataSource="@datachart" Name="Aksiyon" XName="Ay" YName="Percent" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
+        <SfCard class="Cards" style="text-align:center">
+            <CardContent>
+                <SfChart @ref="ChartInstance" Theme="Theme.Bootstrap5" Title="@chartTitle">
+                    <ChartTitleStyle Size="22px" Color="black" FontWeight="bold"></ChartTitleStyle>
+                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
+                        <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
+                    </ChartPrimaryXAxis>
+                    <ChartPrimaryYAxis LabelFormat="p2" Minimum="0">
+                        <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
+                    </ChartPrimaryYAxis>
+                    <ChartTooltipSettings Enable="true">
+                        <Template>
+                            @{
+                                var data = context as ChartTooltipInfo;
 
-                                            <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
-                                                <ChartDataLabel Visible="@dataLabels">
-                                                <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
-                                                </ChartDataLabel>
-                                            </ChartMarker>
-                                            <ChartTrendlines>
-                                                <ChartTrendline Type="TrendlineTypes.Linear" Width="3" Name="Trend" Fill="#3345A7">
-                                                    <ChartTrendlineMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Diamond">
-                                                    </ChartTrendlineMarker>
-                                                </ChartTrendline>
-                                            </ChartTrendlines>
-                                        </ChartSeries>
-                                    </ChartSeriesCollection>
-                                    <ChartTooltipSettings Enable="true"></ChartTooltipSettings>
-                                </SfChart>
+                                #region Değişkenler
 
-                            </CardContent>
-                            <CardFooter>
-                            </CardFooter>
-    </SfCard>
+                                decimal previous = datachart.Where(t => t.Percent == (double)data.Y).Select(t => t.PREVIOUSMONTH).FirstOrDefault();
+
+                                decimal Percent = (decimal)datachart.Where(t => t.Percent == (double)data.Y).Select(t => t.Percent).FirstOrDefault();
+
+                                decimal comparisonPercent = datachart.Where(t => t.Percent == (double)data.Y).Select(t => t.DIFFUNS).FirstOrDefault();
+
+                                string valueColorPercent = comparisonPercent < 0 ? "#068800" : "#BF0000";
+
+                                string comparisonPercentstr = comparisonPercent.ToString("p2");
+
+                                #endregion
+
+                                //if (previous !=0 && Percent !=comparisonPercent)
+                                //{
+
+                                <div>
+                                    <table class="TSIChartTooltip">
+                                        <tr><th style="font-size:16px !important;" colspan="2">Değişim</th></tr>
+                                        <tr><td>@unsuitabilityTitle</td><td style="color: @valueColorPercent">@comparisonPercentstr</td></tr>
+                                    </table>
+                                </div>
+
+
+                                //}
+
+
+                            }
+                        </Template>
+                    </ChartTooltipSettings>
+                    <ChartSeriesCollection>
+                        <ChartSeries DataSource="@datachart" Name="Aksiyon" XName="Ay" YName="Percent" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
+
+                            <ChartMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
+                                <ChartDataLabel Visible="@dataLabels">
+                                    <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
+                                </ChartDataLabel>
+                            </ChartMarker>
+                            <ChartTrendlines>
+                                <ChartTrendline EnableTooltip=false Type="TrendlineTypes.Linear" Width="3" Name="Trend" Fill="#3345A7">
+                                    <ChartTrendlineMarker Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Diamond">
+                                    </ChartTrendlineMarker>
+                                </ChartTrendline>
+                            </ChartTrendlines>
+                        </ChartSeries>
+                    </ChartSeriesCollection>
+                </SfChart>
+
+            </CardContent>
+            <CardFooter>
+             <center><label class="TSIListPageTitleCardLabel" style="font-size:25px"><span style="color :#AC0000">@chartAverageLabel </span>&nbsp;@chartAverageValue</label></center>
+            </CardFooter>
+        </SfCard>
     }
 }
 
@@ -164,8 +238,112 @@
     </CardFooter>
 </SfCard>
 
-@code {
-   
+<DxPopup Visible="compareModalVisible"
+         ShowFooter="false"
+         CloseButtonClick="HideCompareModal"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Zamana Göre Karşılaştırma"
+         Width="1200px"
+         CssClass="TSIModalCompareBox"
+         HeaderCssClass="ModalHeaderTitleCss">
+
+    <BodyTemplate>
+        <table style="width:100%">
+            <tr>
+                <td style="width:100%">
 
 
-}
+                    <SfMultiSelect TValue="string[]?" @bind-Value="@MultiSelectVal" TItem="ContractUnsuitabilityAnalysis" Placeholder="Zaman Dilimlerini Seçiniz" DataSource="@datachart">
+                        <MultiSelectFieldSettings Text="Ay" Value="Ay"></MultiSelectFieldSettings>
+                    </SfMultiSelect>
+                </td>
+
+            </tr>
+        </table>
+
+        <div class="row">
+            <center>
+                <div class="control-section col-lg-9 card-control-section tile_layout">
+                    <div class="row e-card-layout">
+                        @{
+
+                            if (MultiSelectVal != null)
+                            {
+
+                                #region Değişkenler
+
+                                string header = string.Empty;
+                                decimal percent = 0;
+                                int uygunsuzluk = 0;
+                                decimal uretilenadet = 0;
+
+                                #endregion
+
+                                foreach (var item in MultiSelectVal)
+                                {
+
+                                    #region Değişkenler
+
+                                    header = datachart.Where(t => t.Ay == item).Select(t => t.Ay).FirstOrDefault();
+                                    uretilenadet = datachart.Where(t => t.Ay == item).Select(t => t.PRODUCTION).FirstOrDefault();
+                                    uygunsuzluk = datachart.Where(t => t.Ay == item).Select(t => t.UNSUITABILITY).FirstOrDefault();
+                                    percent = (decimal)datachart.Where(t => t.Ay == item).Select(t => t.Percent).FirstOrDefault();
+
+                                    #endregion
+
+                                    <div class="col-lg-2 col-md-2 col-sm-4" style="padding: 10px;text-align:left;  width: 33%;">
+                                        <div id="card_sample_1" class="card_sample" style="border: 5px solid #9F0303 ;border-radius:5%;box-shadow: rgb(8 8 8 / 85%) 0px 5px 15px !important;">
+
+
+                                            <table class="table table-hover">
+                                                <tr><th style="font-size:16px !important;" colspan="2">@header</th></tr>
+                                                <tr>
+                                                    <td style="text-align: left; width:70%;font-weight:bold">Uygunsuzluk Oranı:</td>
+                                                    <td style="width:30%;font-weight:bold">@percent.ToString("p2")</td>
+                                                </tr>
+
+
+                                                <tr>
+                                                    <td style="font-size:12px !important;text-align:left; padding-left:8%">
+                                                        • @unsuitabilityTitle
+                                                    </td>
+                                                    <td style="font-size:12px !important;text-align:left;">
+                                                        @uygunsuzluk
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td style="font-size:12px !important;text-align:left;padding-left:8%">
+                                                        • Üretilen Adet:
+                                                    </td>
+                                                    <td style="font-size:12px !important;text-align:left;">
+                                                        @uretilenadet.ToString("0.00")
+                                                    </td>
+                                                </tr>
+
+
+                                            </table>
+
+
+                                        </div>
+                                    </div>
+
+
+                                }
+
+                            }
+
+                        }
+                    </div>
+                </div>
+            </center>
+        </div>
+
+
+
+    </BodyTemplate>
+    @*   <FooterContentTemplate>
+    <SfButton CssClass="TSICancelButton" OnClick="HideCompareModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+    </FooterContentTemplate>*@
+</DxPopup>

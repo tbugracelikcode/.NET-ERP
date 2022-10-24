@@ -11,12 +11,103 @@ namespace TsiErp.DashboardUI.Services
 
 
 
-        #region Duruş Analizi
+        #region Duruş Analizi -- Makina Kaynaklı
 
         #region Grid
         public async Task<List<StationDetailedHaltAnalysis>> GetStationDetailedHaltAnalysis(int makineID, DateTime startDate, DateTime endDate)
         {
             List<StationDetailedHaltAnalysis> stationDetailedHaltAnalysis = new List<StationDetailedHaltAnalysis>();
+
+            var haltCodes = DBHelper.GetHaltCodes();
+            var haltLines = DBHelper.GetHaltQueryStation(makineID, startDate, endDate).Where(t => t.MKD == true).ToList();
+            var haltLinesDistinct = haltLines.Select(t => t.SEBEP).Distinct().ToList();
+            int totaltime = haltLines.Sum(t => t.DURUSSURE);
+
+            foreach (var halt in haltLinesDistinct)
+            {
+                #region Değişkenler
+
+                int haltID = haltLines.Where(t=>t.SEBEP == halt).Select(t=>t.DURUSID).FirstOrDefault();
+                int time = haltLines.Where(t => t.DURUSID == haltID).Sum(t => t.DURUSSURE);
+                string stationName = haltLines.Where(t => t.DURUSID == haltID).Select(t => t.MAKINEKODU).FirstOrDefault();
+
+                #endregion
+
+                StationDetailedHaltAnalysis analysis = new StationDetailedHaltAnalysis
+                {
+                    Code = halt,
+                    HaltID = haltID,
+                    Time = time,
+                    StationName = stationName,
+                    Percent = null,
+                    Total = totaltime
+                };
+
+                if(analysis.Time > 0)
+                {
+                    stationDetailedHaltAnalysis.Add(analysis);
+                }
+
+            }
+
+
+            return await Task.FromResult(stationDetailedHaltAnalysis);
+        }
+
+        #endregion
+
+        #region Chart
+        public async Task<List<StationDetailedHaltAnalysis>> GetStationDetailedHaltAnalysisChart(int makineID, DateTime startDate, DateTime endDate)
+        {
+            List<StationDetailedHaltAnalysis> stationDetailedHaltAnalysisChart = new List<StationDetailedHaltAnalysis>();
+
+            var haltCodes = DBHelper.GetHaltCodes();
+            var haltLines = DBHelper.GetHaltQueryStation(makineID, startDate, endDate).Where(t => t.MKD == true).ToList();
+            var haltLinesDistinct = haltLines.Select(t => t.SEBEP).Distinct().ToList();
+            int totaltime = haltLines.Sum(t => t.DURUSSURE);
+
+            foreach (var halt in haltLinesDistinct)
+            {
+                #region Değişkenler
+
+                int haltID = haltLines.Where(t => t.SEBEP == halt).Select(t => t.DURUSID).FirstOrDefault();
+                var time = haltLines.Where(t => t.DURUSID == haltID).Sum(t => t.DURUSSURE);
+                string stationName = haltLines.Where(t => t.DURUSID == haltID).Select(t => t.MAKINEKODU).FirstOrDefault();
+
+                #endregion
+
+                StationDetailedHaltAnalysis analysis = new StationDetailedHaltAnalysis
+                {
+                    Code = halt,
+                    HaltID = haltID,
+                    Time = time,
+                    StationName = stationName,
+                    Total = totaltime,
+                    Percent = (double)time / (double)totaltime
+
+                };
+                if (analysis.Time > 0)
+                {
+                    stationDetailedHaltAnalysisChart.Add(analysis);
+                }
+
+
+            }
+
+            stationDetailedHaltAnalysisChart = stationDetailedHaltAnalysisChart.OrderByDescending(t => t.Percent).ToList();
+            return await Task.FromResult(stationDetailedHaltAnalysisChart);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Duruş Analizi -- Tümü
+
+        #region Grid
+        public async Task<List<StationDetailedHaltAnalysisAll>> GetStationDetailedHaltAnalysisAll(int makineID, DateTime startDate, DateTime endDate)
+        {
+            List<StationDetailedHaltAnalysisAll> stationDetailedHaltAnalysis = new List<StationDetailedHaltAnalysisAll>();
 
             var haltCodes = DBHelper.GetHaltCodes();
             var haltLines = DBHelper.GetHaltQueryStation(makineID, startDate, endDate);
@@ -32,7 +123,7 @@ namespace TsiErp.DashboardUI.Services
 
                 #endregion
 
-                StationDetailedHaltAnalysis analysis = new StationDetailedHaltAnalysis
+                StationDetailedHaltAnalysisAll analysis = new StationDetailedHaltAnalysisAll
                 {
                     Code = code.KOD,
                     HaltID = haltID,
@@ -44,18 +135,21 @@ namespace TsiErp.DashboardUI.Services
 
                 stationDetailedHaltAnalysis.Add(analysis);
             }
+
+
+
             return await Task.FromResult(stationDetailedHaltAnalysis);
         }
 
         #endregion
 
         #region Chart
-        public async Task<List<StationDetailedHaltAnalysis>> GetStationDetailedHaltAnalysisChart(int makineID, DateTime startDate, DateTime endDate)
+        public async Task<List<StationDetailedHaltAnalysisAll>> GetStationDetailedHaltAnalysisAllChart(int makineID, DateTime startDate, DateTime endDate)
         {
-            List<StationDetailedHaltAnalysis> stationDetailedHaltAnalysisChart = new List<StationDetailedHaltAnalysis>();
+            List<StationDetailedHaltAnalysisAll> stationDetailedHaltAnalysisChart = new List<StationDetailedHaltAnalysisAll>();
 
             var haltCodes = DBHelper.GetHaltCodes();
-            var haltLines = DBHelper.GetHaltQueryStation(makineID, startDate, endDate).Where(t => t.MKD == true).ToList();
+            var haltLines = DBHelper.GetHaltQueryStation(makineID, startDate, endDate);
             int totaltime = haltLines.Sum(t => t.DURUSSURE);
 
             foreach (var code in haltCodes)
@@ -68,7 +162,7 @@ namespace TsiErp.DashboardUI.Services
 
                 #endregion
 
-                StationDetailedHaltAnalysis analysis = new StationDetailedHaltAnalysis
+                StationDetailedHaltAnalysisAll analysis = new StationDetailedHaltAnalysisAll
                 {
                     Code = code.KOD,
                     HaltID = haltID,
@@ -85,6 +179,8 @@ namespace TsiErp.DashboardUI.Services
 
 
             }
+
+            stationDetailedHaltAnalysisChart = stationDetailedHaltAnalysisChart.OrderByDescending(t => t.Percent).ToList();
             return await Task.FromResult(stationDetailedHaltAnalysisChart);
         }
 
@@ -157,6 +253,8 @@ namespace TsiErp.DashboardUI.Services
 
                 default: break;
             }
+
+            stationDetailedProductChart = stationDetailedProductChart.OrderByDescending(t=>t.Performance).ToList();
             return await Task.FromResult(stationDetailedProductChart);
         }
 
@@ -250,6 +348,8 @@ namespace TsiErp.DashboardUI.Services
 
                 stationDetailedEmployeeAnalysis.Add(analysis);
             }
+
+            stationDetailedEmployeeAnalysis = stationDetailedEmployeeAnalysis.OrderByDescending(t => t.OEE).ToList();
             return await Task.FromResult(stationDetailedEmployeeAnalysis);
         }
 

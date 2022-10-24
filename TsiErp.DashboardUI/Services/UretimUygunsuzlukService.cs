@@ -23,7 +23,15 @@ namespace TsiErp.DashboardUI.Services
             var unsuitabilityLines = DBHelper.GetUnsuitabilityQuery(startDate, endDate);
             var operationLines = DBHelper.GetOperationLinesQuery(startDate, endDate);
 
-            switch(action)
+            #region Değişkenler
+            decimal previousMonthUnsuitabilityPercent = 0;
+            int uygunsuzluk = 0;
+            decimal uretilenadet = 0;
+            decimal unsuitabilityPercent = 0;
+            decimal differenceUnsuitability = 0;
+            #endregion
+
+            switch (action)
             {
                 #region Hurda
 
@@ -31,22 +39,66 @@ namespace TsiErp.DashboardUI.Services
 
                     if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
                     {
-                        var gList = unsuitabilityLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month, YIL = t.TARIH.Year }).Select(t => new AdminProductionUnsuitabilityAnalysisChart
+                        var gList = unsuitabilityLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month, YIL = t.TARIH.Year }).Select(t => 
                         {
-                            Ay = GetMonth(t.Key.Ay) + " " + t.Key.YIL.ToString(),
-                            Total = t.Where(t => t.HURDA == true).Sum(t => t.OLCUKONTROLFORMBEYAN),
-                            Percent = (decimal)((double)t.Where(t => t.HURDA == true).Sum(t => t.OLCUKONTROLFORMBEYAN) / (double)operationLines.Where(x => x.TARIH.Month == t.Key.Ay).Sum(x => x.URETILENADET))
+
+                            #region Değişkenler
+
+                            previousMonthUnsuitabilityPercent = unsuitabilityPercent;
+
+                            uygunsuzluk = t.Where(t => t.HURDA == true).Sum(t => t.OLCUKONTROLFORMBEYAN);
+
+                            uretilenadet = operationLines.Where(x => x.TARIH.Month == t.Key.Ay).Sum(x => x.URETILENADET);
+
+                            unsuitabilityPercent = (decimal)(uygunsuzluk / (double)uretilenadet);
+
+                            differenceUnsuitability = unsuitabilityPercent - previousMonthUnsuitabilityPercent;
+
+                            #endregion
+
+                            return new AdminProductionUnsuitabilityAnalysisChart
+                            {
+                                Ay = GetMonth(t.Key.Ay) + " " + t.Key.YIL.ToString(),
+                                Total = uygunsuzluk,
+                                Percent = unsuitabilityPercent,
+                                PRODUCTION = uretilenadet,
+                                UNSUITABILITY = uygunsuzluk,
+                                DIFFUNS = differenceUnsuitability
+                            };
+                            
                         }).ToList();
 
                         adminProductionUnsuitabilityChart = gList;
                     }
                     else if (frequency == 5 || frequency == 6)
                     {
-                        var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date, YIL = t.TARIH.Year }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminProductionUnsuitabilityAnalysisChart
+                        var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date, YIL = t.TARIH.Year }).OrderBy(t => t.Key.HAFTA).Select(t =>
                         {
-                            Ay = t.Key.HAFTA.ToString("dd MMM yy", new CultureInfo("tr-TR")) + " " + t.Key.YIL.ToString(),
-                            Total = t.Where(t => t.HURDA == true).Sum(t => t.OLCUKONTROLFORMBEYAN),
-                            Percent = (decimal)((double)t.Where(t => t.HURDA == true).Sum(t => t.OLCUKONTROLFORMBEYAN) / (double)operationLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Sum(x => x.URETILENADET))
+                            #region Değişkenler
+
+                            previousMonthUnsuitabilityPercent = unsuitabilityPercent;
+
+                            uygunsuzluk = t.Where(t => t.HURDA == true).Sum(t => t.OLCUKONTROLFORMBEYAN);
+
+                            uretilenadet = operationLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Sum(x => x.URETILENADET);
+
+                            unsuitabilityPercent = (decimal)(uygunsuzluk / (double)uretilenadet);
+
+                            differenceUnsuitability = unsuitabilityPercent - previousMonthUnsuitabilityPercent;
+
+                            #endregion
+
+                            return new AdminProductionUnsuitabilityAnalysisChart
+                            {
+                                Ay = t.Key.HAFTA.ToString("dd MMM", new CultureInfo("tr-TR")) + " " + t.Key.YIL.ToString(),
+                                Total = uygunsuzluk,
+                                Percent = unsuitabilityPercent,
+                                PRODUCTION = uretilenadet,
+                                UNSUITABILITY = uygunsuzluk,
+                                DIFFUNS = differenceUnsuitability
+                            };
+                        
+                            
                         }).ToList();
 
                         adminProductionUnsuitabilityChart = gList;
@@ -61,22 +113,66 @@ namespace TsiErp.DashboardUI.Services
 
                     if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
                     {
-                        var gList = unsuitabilityLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month, YIL = t.TARIH.Year }).Select(t => new AdminProductionUnsuitabilityAnalysisChart
+                        var gList = unsuitabilityLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month, YIL = t.TARIH.Year }).Select(t => 
                         {
-                            Ay = GetMonth(t.Key.Ay) + " " + t.Key.YIL.ToString(),
-                            Total = t.Where(t => t.DUZELTME == true).Sum(t => t.OLCUKONTROLFORMBEYAN),
-                            Percent = (decimal)((double)t.Where(t => t.DUZELTME == true).Sum(t => t.OLCUKONTROLFORMBEYAN) / (double)operationLines.Where(x => x.TARIH.Month == t.Key.Ay).Sum(x => x.URETILENADET))
+                            #region Değişkenler
+
+                            previousMonthUnsuitabilityPercent = unsuitabilityPercent;
+
+                            uygunsuzluk = t.Where(t => t.DUZELTME == true).Sum(t => t.OLCUKONTROLFORMBEYAN);
+
+                            uretilenadet = operationLines.Where(x => x.TARIH.Month == t.Key.Ay).Sum(x => x.URETILENADET);
+
+                            unsuitabilityPercent = (decimal)(uygunsuzluk / (double)uretilenadet);
+
+                            differenceUnsuitability = unsuitabilityPercent - previousMonthUnsuitabilityPercent;
+
+                            #endregion
+
+                            return new AdminProductionUnsuitabilityAnalysisChart
+                            {
+                                Ay = GetMonth(t.Key.Ay) + " " + t.Key.YIL.ToString(),
+                                Total = uygunsuzluk,
+                                Percent = unsuitabilityPercent,
+                                PRODUCTION = uretilenadet,
+                                UNSUITABILITY = uygunsuzluk,
+                                DIFFUNS = differenceUnsuitability
+                            };
+                            
                         }).ToList();
 
                         adminProductionUnsuitabilityChart = gList;
                     }
                     else if (frequency == 5 || frequency == 6)
                     {
-                        var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date, YIL = t.TARIH.Year }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminProductionUnsuitabilityAnalysisChart
+                        var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date, YIL = t.TARIH.Year }).OrderBy(t => t.Key.HAFTA).Select(t =>
                         {
-                            Ay = t.Key.HAFTA.ToString("dd MMM yy", new CultureInfo("tr-TR")) + " " + t.Key.YIL.ToString(),
-                            Total = t.Where(t => t.DUZELTME == true).Sum(t => t.OLCUKONTROLFORMBEYAN),
-                            Percent = (decimal)((double)t.Where(t => t.DUZELTME == true).Sum(t => t.OLCUKONTROLFORMBEYAN) / (double)operationLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Sum(x => x.URETILENADET))
+
+                            #region Değişkenler
+
+                            previousMonthUnsuitabilityPercent = unsuitabilityPercent;
+
+                            uygunsuzluk = t.Where(t => t.DUZELTME == true).Sum(t => t.OLCUKONTROLFORMBEYAN);
+
+                            uretilenadet = operationLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Sum(x => x.URETILENADET);
+
+                            unsuitabilityPercent = (decimal)(uygunsuzluk / (double)uretilenadet);
+
+                            differenceUnsuitability = unsuitabilityPercent - previousMonthUnsuitabilityPercent;
+
+                            #endregion
+
+                            return new AdminProductionUnsuitabilityAnalysisChart
+                        {
+                            Ay = t.Key.HAFTA.ToString("dd MMM", new CultureInfo("tr-TR")) + " " + t.Key.YIL.ToString(),
+                                Total = uygunsuzluk,
+                                Percent = unsuitabilityPercent,
+                                PRODUCTION = uretilenadet,
+                                UNSUITABILITY = uygunsuzluk,
+                                DIFFUNS = differenceUnsuitability
+                            };
+                        
+                            
                         }).ToList();
 
                         adminProductionUnsuitabilityChart = gList;
@@ -91,11 +187,33 @@ namespace TsiErp.DashboardUI.Services
 
                     if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
                     {
-                        var gList = unsuitabilityLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month, YIL = t.TARIH.Year }).Select(t => new AdminProductionUnsuitabilityAnalysisChart
+                        var gList = unsuitabilityLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month, YIL = t.TARIH.Year }).Select(t => 
                         {
-                            Ay = GetMonth(t.Key.Ay) + " " + t.Key.YIL.ToString(),
-                            Total = t.Where(t => t.OLDUGUGIBIKULLANILACAK == true).Sum(t => t.OLCUKONTROLFORMBEYAN),
-                            Percent = (decimal)((double)t.Where(t => t.OLDUGUGIBIKULLANILACAK == true).Sum(t => t.OLCUKONTROLFORMBEYAN) / (double)operationLines.Where(x => x.TARIH.Month == t.Key.Ay).Sum(x => x.URETILENADET))
+
+                            #region Değişkenler
+
+                            previousMonthUnsuitabilityPercent = unsuitabilityPercent;
+
+                            uygunsuzluk = t.Where(t => t.OLDUGUGIBIKULLANILACAK == true).Sum(t => t.OLCUKONTROLFORMBEYAN);
+
+                            uretilenadet = operationLines.Where(x => x.TARIH.Month == t.Key.Ay).Sum(x => x.URETILENADET);
+
+                            unsuitabilityPercent = (decimal)(uygunsuzluk / (double)uretilenadet);
+
+                            differenceUnsuitability = unsuitabilityPercent - previousMonthUnsuitabilityPercent;
+
+                            #endregion
+
+                            return new AdminProductionUnsuitabilityAnalysisChart
+                            {
+                                Ay = GetMonth(t.Key.Ay) + " " + t.Key.YIL.ToString(),
+                                Total = uygunsuzluk,
+                                Percent = unsuitabilityPercent,
+                                PRODUCTION = uretilenadet,
+                                UNSUITABILITY = uygunsuzluk,
+                                DIFFUNS = differenceUnsuitability
+                            };
+                           
                         }).ToList();
 
                         adminProductionUnsuitabilityChart = gList;
@@ -103,11 +221,33 @@ namespace TsiErp.DashboardUI.Services
 
                     else if (frequency == 5 || frequency == 6)
                     {
-                        var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date, YIL = t.TARIH.Year }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminProductionUnsuitabilityAnalysisChart
+                        var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date, YIL = t.TARIH.Year }).OrderBy(t => t.Key.HAFTA).Select(t => 
                         {
-                            Ay = t.Key.HAFTA.ToString("dd MMM yy", new CultureInfo("tr-TR")) + " " + t.Key.YIL.ToString(),
-                            Total = t.Where(t => t.OLDUGUGIBIKULLANILACAK == true).Sum(t => t.OLCUKONTROLFORMBEYAN),
-                            Percent = (decimal)((double)t.Where(t => t.OLDUGUGIBIKULLANILACAK == true).Sum(t => t.OLCUKONTROLFORMBEYAN) / (double)operationLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Sum(x => x.URETILENADET))
+
+                            #region Değişkenler
+
+                            previousMonthUnsuitabilityPercent = unsuitabilityPercent;
+
+                            uygunsuzluk = t.Where(t => t.OLDUGUGIBIKULLANILACAK == true).Sum(t => t.OLCUKONTROLFORMBEYAN);
+
+                            uretilenadet = operationLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Sum(x => x.URETILENADET);
+
+                            unsuitabilityPercent = (decimal)(uygunsuzluk / (double)uretilenadet);
+
+                            differenceUnsuitability = unsuitabilityPercent - previousMonthUnsuitabilityPercent;
+
+                            #endregion
+
+                            return new AdminProductionUnsuitabilityAnalysisChart
+                            {
+                                Ay = t.Key.HAFTA.ToString("dd MMM", new CultureInfo("tr-TR")) + " " + t.Key.YIL.ToString(),
+                                Total = uygunsuzluk,
+                                Percent = unsuitabilityPercent,
+                                PRODUCTION = uretilenadet,
+                                UNSUITABILITY = uygunsuzluk,
+                                DIFFUNS = differenceUnsuitability
+                            };
+                            
                         }).ToList();
 
                         adminProductionUnsuitabilityChart = gList;
@@ -122,11 +262,33 @@ namespace TsiErp.DashboardUI.Services
 
                     if (frequency == 0 || frequency == 1 || frequency == 2 || frequency == 3 || frequency == 4)
                     {
-                        var gList = unsuitabilityLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month, YIL = t.TARIH.Year }).Select(t => new AdminProductionUnsuitabilityAnalysisChart
+                        var gList = unsuitabilityLines.OrderBy(t => t.TARIH).GroupBy(t => new { Ay = t.TARIH.Month, YIL = t.TARIH.Year }).Select(t => 
                         {
-                            Ay = GetMonth(t.Key.Ay) + " " + t.Key.YIL.ToString(),
-                            Total = t.Sum(t => t.OLCUKONTROLFORMBEYAN),
-                            Percent = (decimal)((double)t.Sum(t => t.OLCUKONTROLFORMBEYAN) / (double)operationLines.Where(x => x.TARIH.Month == t.Key.Ay).Sum(x => x.URETILENADET))
+
+                            #region Değişkenler
+
+                            previousMonthUnsuitabilityPercent = unsuitabilityPercent;
+
+                            uygunsuzluk = t.Sum(t => t.OLCUKONTROLFORMBEYAN);
+
+                            uretilenadet = operationLines.Where(x => x.TARIH.Month == t.Key.Ay).Sum(x => x.URETILENADET);
+
+                            unsuitabilityPercent = (decimal)(uygunsuzluk / (double)uretilenadet);
+
+                            differenceUnsuitability = unsuitabilityPercent - previousMonthUnsuitabilityPercent;
+
+                            #endregion
+
+                            return new AdminProductionUnsuitabilityAnalysisChart
+                            {
+                                Ay = GetMonth(t.Key.Ay) + " " + t.Key.YIL.ToString(),
+                                Total = uygunsuzluk,
+                                Percent = unsuitabilityPercent,
+                                PRODUCTION = uretilenadet,
+                                UNSUITABILITY = uygunsuzluk,
+                                DIFFUNS = differenceUnsuitability
+                            };
+                            
                         }).ToList();
 
                         adminProductionUnsuitabilityChart = gList;
@@ -134,11 +296,33 @@ namespace TsiErp.DashboardUI.Services
 
                     else if (frequency == 5 || frequency == 6)
                     {
-                        var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date, YIL = t.TARIH.Year }).OrderBy(t => t.Key.HAFTA).Select(t => new AdminProductionUnsuitabilityAnalysisChart
+                        var gList = unsuitabilityLines.GroupBy(t => new { HAFTA = t.TARIH.Date, YIL = t.TARIH.Year }).OrderBy(t => t.Key.HAFTA).Select(t => 
                         {
-                            Ay = t.Key.HAFTA.ToString("dd MMM yy", new CultureInfo("tr-TR")) + " " + t.Key.YIL.ToString(),
-                            Total = t.Sum(t => t.OLCUKONTROLFORMBEYAN),
-                            Percent = (decimal)((double)t.Sum(t => t.OLCUKONTROLFORMBEYAN) / (double)operationLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Sum(x => x.URETILENADET))
+
+                            #region Değişkenler
+
+                            previousMonthUnsuitabilityPercent = unsuitabilityPercent;
+
+                            uygunsuzluk = t.Sum(t => t.OLCUKONTROLFORMBEYAN);
+
+                            uretilenadet = operationLines.Where(x => x.TARIH.Date == t.Key.HAFTA).Sum(x => x.URETILENADET);
+
+                            unsuitabilityPercent = (decimal)(uygunsuzluk / (double)uretilenadet);
+
+                            differenceUnsuitability = unsuitabilityPercent - previousMonthUnsuitabilityPercent;
+
+                            #endregion
+
+                            return new AdminProductionUnsuitabilityAnalysisChart
+                            {
+                                Ay = t.Key.HAFTA.ToString("dd MMM", new CultureInfo("tr-TR")) + " " + t.Key.YIL.ToString(),
+                                Total = uygunsuzluk,
+                                Percent = unsuitabilityPercent,
+                                PRODUCTION = uretilenadet,
+                                UNSUITABILITY = uygunsuzluk,
+                                DIFFUNS = differenceUnsuitability
+                            };
+                            
                         }).ToList();
 
                         adminProductionUnsuitabilityChart = gList;

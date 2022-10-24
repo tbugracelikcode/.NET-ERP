@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Syncfusion.DocIO.DLS;
 using System.Data;
 using TsiErp.DashboardUI.Helpers.HelperModels;
 
@@ -81,7 +82,6 @@ namespace TsiErp.DashboardUI.Helpers
                                   "ISNULL(AYARSURESI,0) as AYARSURESI, " +
                                   "ISNULL(ATILSURE,0) as ATILSURE, " +
                                   "OPRBASLANGICTRH, " +
-                                  "OPRBITISTRH, " +
                                   "ISNULL(OEE,0) as OEE, " +
                                   "TARIH," +
                                   "ISNULL(KALITE,0) as KALITE, " +
@@ -131,7 +131,6 @@ namespace TsiErp.DashboardUI.Helpers
                     AYARSURESI = Convert.ToDecimal(reader["AYARSURESI"]),
                     ATILSURE = Convert.ToDecimal(reader["ATILSURE"]),
                     OPRBASLANGICTRH = Convert.ToDateTime(reader["OPRBASLANGICTRH"]),
-                    OPRBITISTRH = Convert.ToDateTime(reader["OPRBITISTRH"]),
                     OEE = Convert.ToDecimal(reader["OEE"]),
                     KALITE = Convert.ToDecimal(reader["KALITE"]),
                     MESAI = Convert.ToInt32(reader["MESAI"]),
@@ -226,7 +225,7 @@ namespace TsiErp.DashboardUI.Helpers
             #endregion
             command.Connection = connection;
             command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@startDate",startDate);
+            command.Parameters.AddWithValue("@startDate", startDate);
             command.Parameters.AddWithValue("@endDate", endDate);
 
             SqlDataReader reader = command.ExecuteReader();
@@ -245,7 +244,6 @@ namespace TsiErp.DashboardUI.Helpers
                     AYARSURESI = Convert.ToDecimal(reader["AYARSURESI"]),
                     ATILSURE = Convert.ToDecimal(reader["ATILSURE"]),
                     OPRBASLANGICTRH = Convert.ToDateTime(reader["OPRBASLANGICTRH"]),
-                    OPRBITISTRH = Convert.ToDateTime(reader["OPRBITISTRH"]),
                     OEE = Convert.ToDecimal(reader["OEE"]),
                     KALITE = Convert.ToDecimal(reader["KALITE"]),
                     MESAI = Convert.ToInt32(reader["MESAI"]),
@@ -294,28 +292,27 @@ namespace TsiErp.DashboardUI.Helpers
             SqlCommand command = new SqlCommand();
             command.CommandText = "SELECT " +
                                   "ID," +
-                                  "CALISANID, " +
-                                  "VARDIYAID, " +
-                                  "ISTASYONID, " +
+                                  "ISNULL(CALISANID,0) as CALISANID, " +
+                                  "ISNULL(VARDIYAID,0) as VARDIYAID, " +
+                                  "ISNULL(ISTASYONID,0) as ISTASYONID, " +
                                   "ISNULL(URETILENADET,0) as URETILENADET, " +
                                   "ISNULL(HURDAADET,0) as HURDAADET, " +
                                   "ISNULL(OPERASYONSURESI,0) as OPERASYONSURESI, " +
                                   "ISNULL(AYARSURESI,0) as AYARSURESI, " +
                                   "ISNULL(ATILSURE,0) as ATILSURE, " +
-                                  "OPRBASLANGICTRH, " +
-                                  "OPRBITISTRH, " +
+                                  "ISNULL(OPRBASLANGICTRH,'1900-01-01') as OPRBASLANGICTRH, " +
                                   "ISNULL(OEE,0) as OEE, " +
                                   "ISNULL(KALITE,0) as KALITE, " +
                                   "ISNULL(MESAI,0) as MESAI, " +
-                                  "ROTAID, " +
-                                  "VARYANTID, " +
-                                  "STOKID, " +
-                                  "SIPARISID, " +
-                                  "URETIMEMRIID, " +
-                                  "OPERASYONID, " +
-                                  "MAKINEKODU, " +
+                                  "ISNULL(ROTAID,0) as ROTAID, " +
+                                  "ISNULL(VARYANTID,0) as VARYANTID, " +
+                                  "ISNULL(STOKID,0) as STOKID, " +
+                                  "ISNULL(SIPARISID,0) as SIPARISID, " +
+                                  "ISNULL(URETIMEMRIID,0) as URETIMEMRIID, " +
+                                  "ISNULL(OPERASYONID,0) as OPERASYONID, " +
+                                  "ISNULL(MAKINEKODU,0) as MAKINEKODU, " +
                                   "ISNULL(BIRIMSURE,0) as BIRIMSURE, " +
-                                  "ISEMRIID, " +
+                                  "ISNULL(ISEMRIID,0) as ISEMRIID, " +
                                   "ACIKLAMA, " +
                                   "TARIH," +
                                   "ISNULL(VARDIYA,0) as VARDIYA, " +
@@ -326,11 +323,11 @@ namespace TsiErp.DashboardUI.Helpers
                                   "ISNULL(AGIRLIK,0) as AGIRLIK, " +
                                   "CALISAN, " +
                                   "STOKKODU, " +
-                                  "URUNGRPID, " +
+                                  "ISNULL(URUNGRPID,0) as URUNGRPID, " +
                                   "URUNGRUBU, " +
                                   "ISNULL(AYARVEKONTROLSURESI,0) as AYARVEKONTROLSURESI, " +
                                   "ISNULL(PLANLANANOPRSURESI,0) as PLANLANANOPRSURESI, " +
-                                  "OPRID, " +
+                                  "ISNULL(OPRID,0) as OPRID, " +
                                   "ISNULL(PERFORMANS,0) as PERFORMANS, " +
                                   "ISNULL(KULLANILABILIRLIK,0) as KULLANILABILIRLIK, " +
                                   "ISNULL(ISLEMESURESI,0) as ISLEMESURESI," +
@@ -355,7 +352,6 @@ namespace TsiErp.DashboardUI.Helpers
                     AYARSURESI = Convert.ToDecimal(reader["AYARSURESI"]),
                     ATILSURE = Convert.ToDecimal(reader["ATILSURE"]),
                     OPRBASLANGICTRH = Convert.ToDateTime(reader["OPRBASLANGICTRH"]),
-                    OPRBITISTRH = Convert.ToDateTime(reader["OPRBITISTRH"]),
                     OEE = Convert.ToDecimal(reader["OEE"]),
                     KALITE = Convert.ToDecimal(reader["KALITE"]),
                     MESAI = Convert.ToInt32(reader["MESAI"]),
@@ -1637,7 +1633,7 @@ namespace TsiErp.DashboardUI.Helpers
                                   "ISNULL(SIPARISDURUM,0) as SIPARISDURUM, " +
                                   "ISNULL(KAT,0) as KAT," +
                                   "BOLUM," +
-                                  "BOLUMID " +
+                                  "ISNULL(BOLUMID,0) AS BOLUMID " +
                                   "FROM TUR_VW_DASHBOARD_BAKIM ORDER BY TARIH DESC";
             command.Connection = connection;
 
@@ -1697,8 +1693,8 @@ namespace TsiErp.DashboardUI.Helpers
                                    "(ISNULL(STOK.ADET, 0) - ISNULL(STOK.REZERVE, 0)) as STOKMIKTARI " +
                                    "FROM dbo.TUR_ISTASYON_BAKIM_YEDEK_PARCALAR as YP LEFT JOIN " +
                                    "TUR_VW_STOK_BROWSER as STOK ON YP.STOKID = STOK.ID";
-                                                      command.Connection = connection;
-                                          
+            command.Connection = connection;
+
             SqlDataReader reader = command.ExecuteReader();
 
             while (reader.Read())
@@ -1718,7 +1714,7 @@ namespace TsiErp.DashboardUI.Helpers
 
             return bakimKayitlari;
         }
-         public static List<SatinAlmaDetaylari> GetPurchaseDetails()
+        public static List<SatinAlmaDetaylari> GetPurchaseDetails()
         {
             List<SatinAlmaDetaylari> purchaseLines = new List<SatinAlmaDetaylari>();
 
@@ -1759,6 +1755,143 @@ namespace TsiErp.DashboardUI.Helpers
                     CARIUNVAN = Convert.ToString(reader["CARIUNVAN"]),
                     TARIH = Convert.ToDateTime(reader["TARIH"]),
                     BIRIMFIYAT = Convert.ToString(reader["BIRIMFIYAT"])
+                });
+            }
+
+            return purchaseLines;
+        }
+        public static List<SatinalmaSiparis> GetPurchaseQuery(DateTime startDate, DateTime endDate)
+        {
+            List<SatinalmaSiparis> purchaseLines = new List<SatinalmaSiparis>();
+
+            SqlConnection connection = GetSqlConnection();
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "ID, " +
+                                  "FISNO, " +
+                                  "TARIH, " +
+                                  "TEMINTARIHI, " +
+                                  "CARIID," +
+                                  "CARIUNVAN, " +
+                                  "DURUM, " +
+                                  "STOGAGIRISTARIHI, " +
+                                  "DEPOID, " +
+                                  "TOPLAM, " +
+                                  "SIPARISONERIDURUM, " +
+                                  "GENELACIKLAMA " +
+                                  "FROM TUR_VW_SATINALMA_SIP_BROWSER " +
+                                  "WHERE STOGAGIRISTARIHI > '" + startDate.ToString("yyyy-MM-dd") + "' AND STOGAGIRISTARIHI < '" + endDate.ToString("yyyy-MM-dd") + "'";
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                purchaseLines.Add(new SatinalmaSiparis()
+                {
+                    ID = Convert.ToInt32(reader["ID"]),
+                    FISNO = Convert.ToString(reader["FISNO"]),
+                    TARIH = Convert.ToDateTime(reader["TARIH"]),
+                    TEMINTARIHI = Convert.ToDateTime(reader["TEMINTARIHI"]),
+                    CARIID = Convert.ToInt32(reader["CARIID"]),
+                    CARIUNVAN = Convert.ToString(reader["CARIUNVAN"]),
+                    DURUM = Convert.ToInt32(reader["DURUM"]),
+                    STOGAGIRISTARIHI = Convert.ToDateTime(reader["STOGAGIRISTARIHI"]),
+                    DEPOID = Convert.ToInt32(reader["DEPOID"]),
+                    TOPLAM = Convert.ToDecimal(reader["TOPLAM"]),
+                    SIPARISONERIDURUM = Convert.ToString(reader["SIPARISONERIDURUM"]),
+                    GENELACIKLAMA = Convert.ToString(reader["GENELACIKLAMA"])
+                });
+            }
+
+            return purchaseLines;
+        }
+        public static List<SatinalmaSatirlari> GetPurchaseLinesQuery(DateTime startDate,DateTime endDate)
+        {
+            List<SatinalmaSatirlari> purchaseLines = new List<SatinalmaSatirlari>();
+
+            SqlConnection connection = GetSqlConnection();
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "ID, " +
+                                  "SIPARISID, " +
+                                  "FISNO, " +
+                                  "TARIH, " +
+                                  "TEMINTARIHI," +
+                                  "STOGAGIRISTARIHI, " +
+                                  "ADET, " +
+                                  "BIRIMFIYAT, " +
+                                  "STOKID, " +
+                                  "BIRIMSETID, " +
+                                  "ESKISTOKKODU, " +
+                                  "STOKACIKLAMASI, " +
+                                  "BIRIMKOD, " +
+                                  "CARIKOD, " +
+                                  "CARIUNVAN " +
+                                  "FROM TUR_VW_SATINALMA_SIPARIS_DOKUM "  +
+                                  "WHERE STOGAGIRISTARIHI > '" + startDate.ToString("yyyy-MM-dd") + "' AND STOGAGIRISTARIHI < '" + endDate.ToString("yyyy-MM-dd") + "'";
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                purchaseLines.Add(new SatinalmaSatirlari()
+                {
+                    ID = Convert.ToInt32(reader["ID"]),
+                    SIPARISID = Convert.ToInt32(reader["SIPARISID"]),
+                    FISNO = Convert.ToString(reader["FISNO"]),
+                    TARIH = Convert.ToDateTime(reader["TARIH"]),
+                    TEMINTARIHI = Convert.ToDateTime(reader["TEMINTARIHI"]),
+                    STOGAGIRISTARIHI = Convert.ToDateTime(reader["STOGAGIRISTARIHI"]),
+                    ADET = Convert.ToDecimal(reader["ADET"]),
+                    BIRIMFIYAT = Convert.ToDecimal(reader["BIRIMFIYAT"]),
+                    STOKID = Convert.ToInt32(reader["STOKID"]),
+                    BIRIMSETID = Convert.ToInt32(reader["BIRIMSETID"]),
+                    ESKISTOKKODU = Convert.ToString(reader["ESKISTOKKODU"]),
+                    STOKACIKLAMASI = Convert.ToString(reader["STOKACIKLAMASI"]),
+                    BIRIMKOD = Convert.ToString(reader["BIRIMKOD"]),
+                    CARIKOD = Convert.ToString(reader["CARIKOD"]),
+                    CARIUNVAN = Convert.ToString(reader["CARIUNVAN"])
+                });
+            }
+
+            return purchaseLines;
+        }
+        public static List<FasonTakipFisi> GetContractorsQuery(DateTime startDate,DateTime endDate)
+        {
+            List<FasonTakipFisi> purchaseLines = new List<FasonTakipFisi>();
+
+            SqlConnection connection = GetSqlConnection();
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "SELECT " +
+                                  "ID, " +
+                                  "FISNO, " +
+                                  "TARIH, " +
+                                  "DURUM," +
+                                  "CARIID, " +
+                                  "ADET, " +
+                                  "CARIUNVAN " +
+                                  "FROM TUR_VW_FASON_TAKIP_BROWSER " +
+                                  "WHERE TARIH > '" + startDate.ToString("yyyy-MM-dd") + "' AND TARIH < '" + endDate.ToString("yyyy-MM-dd") + "'";
+            command.Connection = connection;
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                purchaseLines.Add(new FasonTakipFisi()
+                {
+                    ID = Convert.ToInt32(reader["ID"]),
+                    FISNO = Convert.ToString(reader["FISNO"]),
+                    TARIH = Convert.ToDateTime(reader["TARIH"]),
+                    DURUM = Convert.ToInt32(reader["DURUM"]),
+                    CARIID = Convert.ToInt32(reader["CARIID"]),
+                    CARIUNVAN = Convert.ToString(reader["CARIUNVAN"]),
+                    ADET = Convert.ToDecimal(reader["ADET"])
                 });
             }
 
