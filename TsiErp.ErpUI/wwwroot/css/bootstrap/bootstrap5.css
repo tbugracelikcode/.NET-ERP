@@ -12275,7 +12275,7 @@ ejs-calendar {
 
     .e-card .e-card-image {
         background-size: cover;
-        min-height: 112.5px;
+        min-height: 50px;
         position: relative;
         width: 100%;
     }

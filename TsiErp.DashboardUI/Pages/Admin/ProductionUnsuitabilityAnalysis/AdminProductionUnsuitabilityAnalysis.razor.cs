@@ -29,6 +29,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductionUnsuitabilityAnalysis
         public string[]? MultiSelectVal = new string[] { };
         public string unsuitabilityTitle = "Genel Uygunsuzluk Oranı:";
         string chartAverageLabel = "Yıllık Ortalama Değer :";
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
 
         #endregion
 

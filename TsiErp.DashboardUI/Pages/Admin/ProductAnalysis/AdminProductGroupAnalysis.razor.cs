@@ -28,6 +28,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
         private bool compareModalVisible = false;
         public string[]? MultiSelectVal = new string[] { };
         string chartAverageLabel = "Yıllık Ortalama Değer :";
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
 
         #endregion
 

@@ -65,6 +65,7 @@
                 <TabAnimationNext Effect="Syncfusion.Blazor.AnimationEffect.FadeOut"></TabAnimationNext>
             </TabAnimationSettings>
             <TabItems>
+
                 <TabItem Visible="@visibleMachineTab">
                     <ChildContent>
                         <TabHeader Text="Makinalara Göre Uygunsuzluk Analizi Detayı"></TabHeader>
@@ -97,10 +98,10 @@
                         <SfCard class="Cards" hidden="@isGridChecked">
 
                             <CardContent>
-                                <SfGrid ID="Grid" DataSource="@dataunsuitabilitystation" @ref="StationGrid" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                                <SfGrid ID="Grid" DataSource="@dataunsuitabilitystation" @ref="StationGrid" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ColumnMenuItems=@MenuItems ShowColumnMenu="true"
                                         AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
-                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
                                     <GridEvents TValue="ProductionUnsuitabilityDetailedStation"></GridEvents>
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
@@ -151,10 +152,10 @@
                         <SfCard class="Cards" hidden="@isGridChecked">
 
                             <CardContent>
-                                <SfGrid ID="Grid" DataSource="@dataunsuitabilityemployee" @ref="EmployeeGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                                <SfGrid ID="Grid" DataSource="@dataunsuitabilityemployee" @ref="EmployeeGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ColumnMenuItems=@MenuItems ShowColumnMenu="true"
                                         AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
-                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
                                     <GridEvents TValue="ProductionUnsuitabilityDetailedEmployee"></GridEvents>
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
@@ -203,10 +204,10 @@
                         <SfCard class="Cards" hidden="@isGridChecked">
 
                             <CardContent>
-                                <SfGrid ID="Grid" DataSource="@dataunsuitabilityproduct" @ref="ProductGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+                                <SfGrid ID="Grid" DataSource="@dataunsuitabilityproduct" @ref="ProductGrid" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ColumnMenuItems=@MenuItems ShowColumnMenu="true"
                                         AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
-                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
                                     <GridEvents TValue="ProductionUnsuitabilityDetailedProduct"></GridEvents>
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
@@ -222,6 +223,7 @@
                         </SfCard>
                     </ContentTemplate>
                 </TabItem>
+
             </TabItems>
         </SfTab>
     </CardContent>

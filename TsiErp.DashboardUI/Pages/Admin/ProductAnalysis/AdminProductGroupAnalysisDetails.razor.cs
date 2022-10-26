@@ -29,6 +29,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ProductAnalysis
 
         [Parameter]
         public int productgroupID { get; set; }
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
         #endregion
 
 

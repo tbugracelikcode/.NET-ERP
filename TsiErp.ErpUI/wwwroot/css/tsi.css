@@ -113,13 +113,13 @@ td, th {
 
 .tile_layout.card-control-section .e-card .e-card-image {
     background-size: cover;
-    height: 157px;
+    height: 15%;
     position: inherit;
-    width: 182px;
+    width: 25%;
 }
 
 .tile_layout.card-control-section .e-card .e-card-header .e-card-header-caption .e-card-header-title {
-    font-size: 20px;
+    font-size: 16px;
     font-family: Helvetica, 'Segoe UI';
     font-weight: bold;
 }
@@ -130,7 +130,7 @@ td, th {
 
 .tile_layout.card-control-section .e-card .e-card-content {
     padding-top: 0px;
-    height: 175px;
+    height: fit-content;
 }
 
 #source_link {
@@ -382,4 +382,29 @@ html {
     width: 10px !important;
     height: 10px !important;
 }
+.TSIWorkSchduleModal {
+    height: fit-content;
+}
+
+.TSIWorkSchduleModalStationsCard {
+    border: 2px solid #c1c1c1;
+    box-shadow: rgb(0 0 0 / 15%) 0px 3px 10px;
+    height: fit-content;
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 3%;
+    margin-bottom: 1%;
+    background-image: linear-gradient(337deg, rgb(243 240 240) 0%, #efecec 70%) !important;
+}
+.TSIStationCards {
+    height: fit-content;
+    border: 3px solid #c50000 !important;
+    border-radius: 20px !important;
+    box-shadow: rgb(8 8 8 / 85%) 0px 3px 8px !important;
+}
+
+    .TSIStationCards:hover {
+        border: 3px solid #0088E0 !important;
+        cursor:pointer;
+    }
 
