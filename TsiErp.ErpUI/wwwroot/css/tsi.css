@@ -115,11 +115,11 @@ td, th {
     background-size: cover;
     height: 15%;
     position: inherit;
-    width: 25%;
+    width: 50%;
 }
 
 .tile_layout.card-control-section .e-card .e-card-header .e-card-header-caption .e-card-header-title {
-    font-size: 16px;
+    font-size: 20px;
     font-family: Helvetica, 'Segoe UI';
     font-weight: bold;
 }
@@ -398,13 +398,13 @@ html {
 }
 .TSIStationCards {
     height: fit-content;
-    border: 3px solid #c50000 !important;
+    border: 3px solid #f36565 !important;
     border-radius: 20px !important;
     box-shadow: rgb(8 8 8 / 85%) 0px 3px 8px !important;
 }
 
     .TSIStationCards:hover {
-        border: 3px solid #0088E0 !important;
-        cursor:pointer;
+        border: 3px solid #60bffd !important;
+        cursor: pointer;
     }
 
