@@ -277,7 +277,7 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectSalesPropositionLinesDto, CreateSalesPropositionLinesDto>();
             CreateMap<UpdateSalesPropositionLinesDto, SalesPropositionLines>();
             CreateMap<SelectSalesPropositionLinesDto, UpdateSalesPropositionLinesDto>();
-            CreateMap<SelectSalesPropositionLinesDto, SalesPropositionLines >();
+            CreateMap<SelectSalesPropositionLinesDto, SalesPropositionLines>();
 
 
             CreateMap<ProductGroups, SelectProductGroupsDto>();
@@ -306,13 +306,13 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<CreateOperationsDto, Operations>();
             CreateMap<SelectOperationsDto, CreateOperationsDto>();
             CreateMap<UpdateOperationsDto, Operations>()
-                .ForMember(x=>x.OperationLines, y=>y.Ignore());
+                .ForMember(x => x.OperationLines, y => y.Ignore());
             CreateMap<SelectOperationsDto, UpdateOperationsDto>();
 
 
             CreateMap<OperationLines, SelectOperationLinesDto>()
                 .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
-                .ForMember(x=>x.OperationName, y=>y.MapFrom(z=>z.Operations.Name));
+                .ForMember(x => x.OperationName, y => y.MapFrom(z => z.Operations.Name));
             CreateMap<OperationLines, ListOperationLinesDto>()
                 .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
                 .ForMember(x => x.OperationName, y => y.MapFrom(z => z.Operations.Name)); ;
@@ -323,20 +323,20 @@ namespace TsiErp.Business.MapperProfile
 
 
             CreateMap<Routes, SelectRoutesDto>()
-                .ForMember(x=>x.ProductCode, y=>y.MapFrom(z=>z.Products.Code));
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code));
             CreateMap<Routes, ListRoutesDto>()
                 .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code));
             CreateMap<CreateRoutesDto, Routes>();
             CreateMap<SelectRoutesDto, CreateRoutesDto>();
             CreateMap<UpdateRoutesDto, Routes>()
-                .ForMember(x=>x.RouteLines, y=>y.Ignore());
+                .ForMember(x => x.RouteLines, y => y.Ignore());
             CreateMap<SelectRoutesDto, UpdateRoutesDto>();
 
 
             CreateMap<RouteLines, SelectRouteLinesDto>()
-                .ForMember(x=>x.ProductCode, y=>y.MapFrom(z=>z.Products.Code))
-                .ForMember(x=>x.RouteCode, y=>y.MapFrom(z=>z.Routes.Code))
-                .ForMember(x=>x.OperationName, y=>y.MapFrom(z=>z.Operations.Name));
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.RouteCode, y => y.MapFrom(z => z.Routes.Code))
+                .ForMember(x => x.OperationName, y => y.MapFrom(z => z.Operations.Name));
             CreateMap<RouteLines, ListRouteLinesDto>()
                 .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
                 .ForMember(x => x.RouteCode, y => y.MapFrom(z => z.Routes.Code))
@@ -370,22 +370,22 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<CreateCalendarsDto, Calendars>();
             CreateMap<SelectCalendarsDto, CreateCalendarsDto>();
             CreateMap<UpdateCalendarsDto, Calendars>()
-                .ForMember(x=>x.CalendarLines, y=>y.Ignore());
+                .ForMember(x => x.CalendarLines, y => y.Ignore());
             CreateMap<SelectCalendarsDto, UpdateCalendarsDto>();
 
             CreateMap<CalendarLines, SelectCalendarLinesDto>()
                 .ForMember(x => x.StationName, y => y.MapFrom(z => z.Stations.Code))
-                //.ForMember(x => x.ShiftOverTime, y => y.MapFrom(z => z.Shifts.ShiftOverTime))
-                //.ForMember(x => x.ShiftOrder, y => y.MapFrom(z => z.Shifts.ShiftOrder))
-                //.ForMember(x => x.ShiftName, y => y.MapFrom(z => z.Shifts.Code))
-                //.ForMember(x => x.ShiftTime, y => y.MapFrom(z => z.Shifts.ShiftTime))
+                .ForMember(x => x.ShiftOverTime, y => y.MapFrom(z => z.Shifts.Overtime))
+                .ForMember(x => x.ShiftOrder, y => y.MapFrom(z => z.Shifts.ShiftOrder))
+                .ForMember(x => x.ShiftName, y => y.MapFrom(z => z.Shifts.Code))
+                .ForMember(x => x.ShiftTime, y => y.MapFrom(z => z.Shifts.TotalWorkTime))
                 .ForMember(x => x.Code, y => y.MapFrom(z => z.Calendars.Code));
             CreateMap<CalendarLines, ListCalendarLinesDto>()
                 .ForMember(x => x.StationName, y => y.MapFrom(z => z.Stations.Code))
-                //.ForMember(x => x.ShiftOverTime, y => y.MapFrom(z => z.Shifts.ShiftOverTime))
-                //.ForMember(x => x.ShiftOrder, y => y.MapFrom(z => z.Shifts.ShiftOrder))
-                //.ForMember(x => x.ShiftName, y => y.MapFrom(z => z.Shifts.Code))
-                //.ForMember(x => x.ShiftTime, y => y.MapFrom(z => z.Shifts.ShiftTime))
+                .ForMember(x => x.ShiftOverTime, y => y.MapFrom(z => z.Shifts.Overtime))
+                .ForMember(x => x.ShiftOrder, y => y.MapFrom(z => z.Shifts.ShiftOrder))
+                .ForMember(x => x.ShiftName, y => y.MapFrom(z => z.Shifts.Code))
+                .ForMember(x => x.ShiftTime, y => y.MapFrom(z => z.Shifts.TotalWorkTime))
                 .ForMember(x => x.Code, y => y.MapFrom(z => z.Calendars.Code));
             CreateMap<CreateCalendarLinesDto, CalendarLines>();
             CreateMap<SelectCalendarLinesDto, CreateCalendarLinesDto>();

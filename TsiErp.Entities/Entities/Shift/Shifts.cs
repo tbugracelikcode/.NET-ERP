@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Entities.CalendarLine;
 using TsiErp.Entities.Entities.ShiftLine;
 
 namespace TsiErp.Entities.Entities.Shift
@@ -47,5 +48,7 @@ namespace TsiErp.Entities.Entities.Shift
         public int ShiftOrder { get; set; }
 
         public ICollection<ShiftLines> ShiftLines { get; set; }
+
+        public ICollection<CalendarLines> CalendarLines { get; set; }
     }
 }

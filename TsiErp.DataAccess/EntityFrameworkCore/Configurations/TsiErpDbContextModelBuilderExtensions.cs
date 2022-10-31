@@ -946,7 +946,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.ShiftID);
 
                 b.HasOne(x => x.Stations).WithMany(x => x.CalendarLines).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
-                //b.HasOne(x => x.Shifts).WithMany(x => x.CalendarLines).HasForeignKey(x => x.ShiftID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Shifts).WithMany(x => x.CalendarLines).HasForeignKey(x => x.ShiftID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.Calendars).WithMany(x => x.CalendarLines).HasForeignKey(x => x.CalendarID).OnDelete(DeleteBehavior.Cascade);
 
 
@@ -984,8 +984,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.ConfigureByConvention();
 
                 b.Property(t => t.ShiftID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.StartHour).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
-                b.Property(t => t.EndHour).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.StartHour).IsRequired().HasColumnType("time(7)");
+                b.Property(t => t.EndHour).IsRequired().HasColumnType("time(7)");
                 b.Property(t => t.Coefficient).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.Type).IsRequired().HasColumnType(SqlDbType.Int.ToString());
 

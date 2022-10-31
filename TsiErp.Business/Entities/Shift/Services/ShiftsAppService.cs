@@ -76,8 +76,8 @@ namespace TsiErp.Business.Entities.Shift.Services
         public async Task<IDataResult<SelectShiftsDto>> GetAsync(Guid id)
         {
             var entity = await _repository.GetAsync(t => t.Id == id,
-                t => t.ShiftLines
-               /* t => t.CurrentAccountCards,*/);
+                t => t.ShiftLines,
+                t =>t.CalendarLines);
 
             var mappedEntity = ObjectMapper.Map<Shifts, SelectShiftsDto>(entity);
 
@@ -90,12 +90,8 @@ namespace TsiErp.Business.Entities.Shift.Services
         public async Task<IDataResult<IList<ListShiftsDto>>> GetListAsync(ListShiftsParameterDto input)
         {
             var list = await _repository.GetListAsync(null,
-                t => t.ShiftLines
-                //t => t.CurrentAccountCards,
-                //t => t.Warehouses,
-                //t => t.Branches,
-                //t => t.Currencies,
-                /*t => t.PaymentPlan*/);
+                t => t.ShiftLines,
+                t => t.CalendarLines);
 
             var mappedEntity = ObjectMapper.Map<List<Shifts>, List<ListShiftsDto>>(list.ToList());
 
