@@ -1,4 +1,5 @@
-﻿using Syncfusion.Blazor.Charts;
+﻿using Microsoft.AspNetCore.Components.Web;
+using Syncfusion.Blazor.Charts;
 using Syncfusion.Blazor.Grids;
 using TsiErp.DashboardUI.Models;
 using TsiErp.DashboardUI.Services;
@@ -13,7 +14,8 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
 
         #region Değişkenler
 
-        DateTime startDate = DateTime.Today.AddDays(-(364 + DateTime.Today.Day));
+         DateTime startDate = DateTime.Today.AddDays(-(364 + DateTime.Today.Day));
+
 
         DateTime endDate = DateTime.Today.AddDays(-(DateTime.Today.Day));
         private int? selectedTimeIndex { get; set; }
@@ -28,6 +30,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
         private bool compareModalVisible = false;
         public string[]? MultiSelectVal = new string[] {};
         string chartAverageLabel = "Yıllık Ortalama Değer :";
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
 
         #endregion
 
@@ -35,7 +38,6 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
         {
             dataoee = await IstasyonOEEService.GetStationOEEAnalysis(startDate, endDate);
             datachart = await IstasyonOEEService.GetAdminMachineChart(startDate, endDate, 0);
-
 
         }
 
@@ -112,8 +114,6 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
             compareModalVisible = false;
             MultiSelectVal = null;
         }
-
-        
 
         #endregion
 

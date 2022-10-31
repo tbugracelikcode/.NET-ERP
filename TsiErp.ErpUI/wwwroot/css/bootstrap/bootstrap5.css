@@ -12275,7 +12275,7 @@ ejs-calendar {
 
     .e-card .e-card-image {
         background-size: cover;
-        min-height: 112.5px;
+        min-height: 50px;
         position: relative;
         width: 100%;
     }
@@ -45992,10 +45992,14 @@ li.e-separator.e-menu-item.e-excel-separator {
     font-size:15px !important;
 }
 
-.e-grid .e-gridheader .e-sortfilter .e-headercelldiv,
-.e-grid .e-gridheader .e-stackedheadercelldiv {
-    padding: 0 20px 0 5px;
-}
+    .e-grid .e-gridheader .e-sortfilter .e-fltr-icon .e-headercelldiv:hover {
+        color: #B70000;
+    }
+
+    .e-grid .e-gridheader .e-sortfilter .e-headercelldiv,
+    .e-grid .e-gridheader .e-stackedheadercelldiv {
+        padding: 0 20px 0 5px;
+    }
 
 .e-grid .e-gridheader .e-headercell .e-headercelldiv.e-headerchkcelldiv {
     padding-left: 8px;

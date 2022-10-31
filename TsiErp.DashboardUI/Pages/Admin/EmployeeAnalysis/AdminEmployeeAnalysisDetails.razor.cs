@@ -30,6 +30,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.EmployeeAnalysis
 
         [Parameter]
         public int employeeID { get; set; }
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
 
         #endregion
 

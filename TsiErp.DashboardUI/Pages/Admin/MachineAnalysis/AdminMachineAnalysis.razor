@@ -70,13 +70,14 @@
             <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Category" LabelIntersectAction="LabelIntersectAction.Rotate45">
                 <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
             </ChartPrimaryXAxis>
+
             <ChartPrimaryYAxis LabelFormat="p2">
                 <ChartAxisLabelStyle Size="18px" Color="black" FontWeight="bold" />
             </ChartPrimaryYAxis>
-            <ChartTooltipSettings Enable="true">
+            <ChartTooltipSettings Enable="true" FadeOutDuration="20.0">
                 <Template>
                     @{
-                        var data = context as ChartTooltipInfo;
+                         var data = context as ChartTooltipInfo;
 
                         #region Değişkenler
 
@@ -110,15 +111,15 @@
 
                         if (OEE != comparisonOEE)
                         {
-                            <div>
-                                <table class="TSIChartTooltip">
-                                    <tr><th style="font-size:16px !important;" colspan="2">Değişim</th></tr>
-                                    <tr><td>Kullanılabilirlik:</td><td style="color: @valueColorAVA">@comparisonAVAstr</td></tr>
-                                    <tr><td>Performans:</td><td style="color: @valueColorPER">@comparisonPERstr</td></tr>
-                                    <tr><td>Kalite:</td><td style="color: @valueColorQUA">@comparisonQUAstr</td></tr>
-                                    <tr><td>OEE:</td><td style="color: @valueColorOEE">@comparisonOEEstr</td></tr>
-                                </table>
-                            </div>
+                                    <div>
+                                        <table class="TSIChartTooltip">
+                                            <tr><th style="font-size:16px !important;" colspan="2">Değişim</th></tr>
+                                            <tr><td>Kullanılabilirlik:</td><td style="color: @valueColorAVA">@comparisonAVAstr</td></tr>
+                                            <tr><td>Performans:</td><td style="color: @valueColorPER">@comparisonPERstr</td></tr>
+                                            <tr><td>Kalite:</td><td style="color: @valueColorQUA">@comparisonQUAstr</td></tr>
+                                            <tr><td>OEE:</td><td style="color: @valueColorOEE">@comparisonOEEstr</td></tr>
+                                        </table>
+                                    </div>
                         }
 
 
@@ -127,9 +128,9 @@
                 </Template>
             </ChartTooltipSettings>
             <ChartSeriesCollection>
-                <ChartSeries DataSource="@datachart" Name="OEE" XName="AY" YName="OEE" Width="3" Fill="darkred" Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
+                <ChartSeries Fill="darkred" DataSource="@datachart" Name="OEE" XName="AY" YName="OEE" Width="3"  Type="Syncfusion.Blazor.Charts.ChartSeriesType.Line">
 
-                    <ChartMarker  Visible="true" Width="7" Height="7" IsFilled="true" Shape="ChartShape.Circle">
+                    <ChartMarker Visible="true" Width="7"  Height="7" IsFilled="true" Shape="ChartShape.Circle">
                         <ChartDataLabel Visible="@dataLabels">
                             <ChartDataLabelFont FontWeight="bold" Size="14px" Color="darkred"></ChartDataLabelFont>
                         </ChartDataLabel>
@@ -145,6 +146,7 @@
 
         </SfChart>
 
+
     </CardContent>
     <CardFooter>
         @{
@@ -156,14 +158,15 @@
 
 
 
+
 <br />
 <SfCard class="Cards" hidden="@isGridChecked">
     <CardContent>
-        <SfGrid ID="Grid" DataSource="@dataoee" @ref="Grid" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"
+        <SfGrid ID="Grid" DataSource="@dataoee" @ref="Grid" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ColumnMenuItems=@MenuItems ShowColumnMenu="true"
                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
             <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
-            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.FilterBar"></GridFilterSettings>
             <GridEvents QueryCellInfo="CellInfoHandler" TValue="StationOEEAnalysis"></GridEvents>
+            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
             <GridPageSettings PageSizes="true"></GridPageSettings>
             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
             <GridColumns>
@@ -177,7 +180,7 @@
                     <Template>
                         @{
                             var row = (context as StationOEEAnalysis);
-                            <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" style="background-color:#AD0000;text-shadow: 6px 3px 4px black;" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.StationID))"></SfButton>
+                                    <SfButton IconCss="oi oi-spreadsheet" IsPrimary="true" style="background-color:#AD0000;text-shadow: 6px 3px 4px black;" CssClass="e-btn e-secondary" OnClick="@(()=>OnDetailButtonClicked(row.StationID))"></SfButton>
                         }
 
                     </Template>
@@ -258,89 +261,89 @@
 
                                     #endregion
 
-                                    <div class="col-lg-2 col-md-2 col-sm-4" style="padding: 10px;text-align:left;  width: 33%;">
-                                        <div id="card_sample_1" class="card_sample" style="border: 5px solid #9F0303 ;border-radius:5%;box-shadow: rgb(8 8 8 / 85%) 0px 5px 15px !important;">
+                                            <div class="col-lg-2 col-md-2 col-sm-4" style="padding: 10px;text-align:left;  width: 33%;">
+                                                <div id="card_sample_1" class="card_sample" style="border: 5px solid #9F0303 ;border-radius:5%;box-shadow: rgb(8 8 8 / 85%) 0px 5px 15px !important;">
 
 
-                                            <table class="table table-hover">
-                                                <tr><th style="font-size:16px !important;" colspan="2">@header</th></tr>
-                                                <tr>
-                                                    <td style="text-align: left; width:70%;font-weight:bold">Kullanılabilirlik:</td>
-                                                    <td style="width:30%;font-weight:bold">@availability.ToString("p2")</td>
-                                                </tr>
+                                                    <table class="table table-hover">
+                                                        <tr><th style="font-size:16px !important;" colspan="2">@header</th></tr>
+                                                        <tr>
+                                                            <td style="text-align: left; width:70%;font-weight:bold">Kullanılabilirlik:</td>
+                                                            <td style="width:30%;font-weight:bold">@availability.ToString("p2")</td>
+                                                        </tr>
 
-                                                <tr>
-                                                    <td style="font-size:12px !important;text-align:left; padding-left:8%">
-                                                        • Toplam Çalışılabilir Süre:
-                                                    </td>
-                                                    <td style="font-size:12px !important;text-align:left;">
-                                                        @toplamcalisilabilirsure
-                                                    </td>
-                                                </tr>
+                                                        <tr>
+                                                            <td style="font-size:12px !important;text-align:left; padding-left:8%">
+                                                                • Toplam Çalışılabilir Süre:
+                                                            </td>
+                                                            <td style="font-size:12px !important;text-align:left;">
+                                                                @toplamcalisilabilirsure
+                                                            </td>
+                                                        </tr>
 
-                                                <tr>
-                                                    <td style="font-size:12px !important;text-align:left;padding-left:8%">
-                                                        • Operasyon Süresi:
-                                                    </td>
-                                                    <td style="font-size:12px !important;text-align:left;">
-                                                        @operasyonsuresi.ToString("0.00")
-                                                    </td>
-                                                </tr>
+                                                        <tr>
+                                                            <td style="font-size:12px !important;text-align:left;padding-left:8%">
+                                                                • Operasyon Süresi:
+                                                            </td>
+                                                            <td style="font-size:12px !important;text-align:left;">
+                                                                @operasyonsuresi.ToString("0.00")
+                                                            </td>
+                                                        </tr>
 
-                                                <tr>
-                                                    <td style="text-align: left;width:70%;font-weight:bold">Performans:</td>
-                                                    <td style="width:30%;font-weight:bold">@performance.ToString("p2")</td>
-                                                </tr>
+                                                        <tr>
+                                                            <td style="text-align: left;width:70%;font-weight:bold">Performans:</td>
+                                                            <td style="width:30%;font-weight:bold">@performance.ToString("p2")</td>
+                                                        </tr>
 
-                                                <tr>
-                                                    <td style="font-size:12px !important;text-align:left;padding-left:8%">
-                                                        • Planlanan Birim Süre:
-                                                    </td>
-                                                    <td style="font-size:12px !important;text-align:left;">
-                                                        @planlananbirimsure
-                                                    </td>
-                                                </tr>
+                                                        <tr>
+                                                            <td style="font-size:12px !important;text-align:left;padding-left:8%">
+                                                                • Planlanan Birim Süre:
+                                                            </td>
+                                                            <td style="font-size:12px !important;text-align:left;">
+                                                                @planlananbirimsure
+                                                            </td>
+                                                        </tr>
 
-                                                <tr>
-                                                    <td style="font-size:12px !important;text-align:left;padding-left:8%">
-                                                        • Gerçekleşen Birim Süre:
-                                                    </td>
-                                                    <td style="font-size:12px !important;text-align:left;">
-                                                        @gerceklesenbirimsure.ToString("0.00")
-                                                    </td>
-                                                </tr>
-
-
-
-                                                <tr>
-                                                    <td style="text-align: left;width:70%;font-weight:bold">Kalite:</td>
-                                                    <td style="width:30%;font-weight:bold">@quality.ToString("p2")</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td style="font-size:12px !important;text-align:left;padding-left:8%">
-                                                        • Üretilen Adet:
-                                                    </td>
-                                                    <td style="font-size:12px !important;text-align:left;">
-                                                        @uretilenadet
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td style="font-size:12px !important;text-align:left;padding-left:8%">
-                                                        • Hurda:
-                                                    </td>
-                                                    <td style="font-size:12px !important;text-align:left;">
-                                                        @hurda
-                                                    </td>
-                                                </tr>
-
-                                                <tr><td style="text-align: left;width:70%;font-weight:bold">OEE:</td><td style="width:30%;font-weight:bold">@oee.ToString("p2")</td></tr>
-                                            </table>
+                                                        <tr>
+                                                            <td style="font-size:12px !important;text-align:left;padding-left:8%">
+                                                                • Gerçekleşen Birim Süre:
+                                                            </td>
+                                                            <td style="font-size:12px !important;text-align:left;">
+                                                                @gerceklesenbirimsure.ToString("0.00")
+                                                            </td>
+                                                        </tr>
 
 
-                                        </div>
-                                    </div>
+
+                                                        <tr>
+                                                            <td style="text-align: left;width:70%;font-weight:bold">Kalite:</td>
+                                                            <td style="width:30%;font-weight:bold">@quality.ToString("p2")</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td style="font-size:12px !important;text-align:left;padding-left:8%">
+                                                                • Üretilen Adet:
+                                                            </td>
+                                                            <td style="font-size:12px !important;text-align:left;">
+                                                                @uretilenadet
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td style="font-size:12px !important;text-align:left;padding-left:8%">
+                                                                • Hurda:
+                                                            </td>
+                                                            <td style="font-size:12px !important;text-align:left;">
+                                                                @hurda
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr><td style="text-align: left;width:70%;font-weight:bold">OEE:</td><td style="width:30%;font-weight:bold">@oee.ToString("p2")</td></tr>
+                                                    </table>
+
+
+                                                </div>
+                                            </div>
 
 
 

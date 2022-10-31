@@ -9,9 +9,6 @@ using TsiErp.Entities.Entities.Branch;
 namespace TsiErp.Entities.Entities.Period
 {
 
-
-
-
     /// <summary>
     /// Dönemler
     /// </summary>

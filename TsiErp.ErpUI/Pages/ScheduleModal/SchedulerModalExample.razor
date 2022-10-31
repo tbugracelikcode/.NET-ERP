@@ -1,0 +1,177 @@
+﻿@page "/scheduler-modal-example"
+@using Syncfusion.Blazor.Buttons
+@using Tsi.Blazor.Component.Core.Components.Commons.Loadings
+@using Tsi.Blazor.Component.Core.Components.DataEditors
+@using TsiErp.Business.Entities.Station.Services
+@using TsiErp.Business.Entities.StationGroup.Services
+@using TsiErp.Entities.Entities.Station
+@using TsiErp.Entities.Entities.Station.Dtos
+@using TsiErp.ErpUI.Pages.Base
+@using Tsi.Blazor.Component.Core.Components.Layouts
+
+@inherits BaseListPage<SelectStationsDto, ListStationsDto, CreateStationsDto, UpdateStationsDto, ListStationsParameterDto>
+
+
+@inject IStationsAppService StationsService
+
+
+<center><SfButton CssClass="TSISaveButton" OnClick="ShowModal1"><SfIcon Size="IconSize.Medium" Name="IconName.InsertRight"></SfIcon>&nbsp;Modal</SfButton></center>
+
+<DxPopup Visible="modal1visible"
+         ShowFooter="true"
+         CloseButtonClick="HideModal1"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Modal 1"
+         Width="1600px"
+         CssClass="TSIWorkSchduleModal"
+         HeaderCssClass="HeaderTitleCss">
+
+    <BodyTemplate>
+
+        <table style="margin-top:2%">
+            <tr>
+                <td style="font-size:16px;padding-left:2%; width:20%"><strong>Tarih :</strong> @today</td>
+                <td style="width:80%"></td>
+            </tr>
+        </table>
+
+        <SfCard class="TSIWorkSchduleModalStationsCard">
+            <CardContent>
+
+                @{
+
+                    <div class="row">
+                        <center>
+                            <div class="control-section col-lg-11 card-control-section tile_layout">
+                                <div class="row e-card-layout">
+                                    @if (ListDataSource != null)
+                                    {
+                                        @foreach (var item in ListDataSource)
+                                        {
+                                            string exactURL = imageURL + item.Name + "off.png";
+
+                                            <div class="col-lg-2 col-md-2 col-sm-4" style="padding: 10px;text-align:left;  width: 10%;">
+                                                <div id="card_sample_1" class="card_sample">
+                                                    <SfCard CssClass="TSIStationCards">
+                                                        <center><CardImage Image="@exactURL" /></center>
+                                                        <center> <CardHeader Title="@item.Name" /></center>
+                                                        <CardContent>
+                                                            <ChildContent>
+                                                                @* <table class="table table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                    <th scope="col" style="text-align:center">Bakım </th>
+                                                    <th scope="col" style="text-align:left"> &nbsp;Detayları</th>
+                                                    <th scope="col" style="text-align:left"> </th>
+                                                    <th scope="col" style="text-align:left"></th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                    <td><strong>Departman : @card.StationDepartment</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                    <td><strong>Planlanan Bakım Tarihi : @card.PlannedMaintenanceDate.ToString("dd-MM-yyyy")</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                    <td><strong>Bakım Türü : @card.MaintenanceType</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                    <td><strong>Bakıma Kalan Süre : @card.TimeLeft İş Günü</strong></td>
+                                                    </tr>
+                                                    </tbody>
+                                                    </table>*@
+                                                            </ChildContent>
+                                                        </CardContent>
+                                                        <CardFooter>
+                                                        </CardFooter>
+                                                    </SfCard>
+
+
+
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
+
+
+
+                                </div>
+                            </div>
+                        </center>
+                    </div>
+
+
+                }
+
+            </CardContent>
+            <CardFooter>
+            </CardFooter>
+        </SfCard>
+
+
+
+    </BodyTemplate>
+    <FooterContentTemplate>
+        <SfButton CssClass="TSICancelButton" OnClick="HideModal1"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        <SfButton CssClass="TSISaveButton" OnClick="ShowModal2"><SfIcon Size="IconSize.Medium" Name="IconName.Check"></SfIcon>&nbsp;Seç</SfButton>
+    </FooterContentTemplate>
+</DxPopup>
+
+
+<DxPopup Visible="modal2visible"
+         ShowFooter="true"
+         CloseButtonClick="HideModal2"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Modal 2"
+         Width="500px"
+         CssClass="TSIWorkSchduleModal"
+         HeaderCssClass="HeaderTitleCss">
+
+    <BodyTemplate>
+
+        <table style="width:90%; height:fit-content;margin-top:2%;">
+
+            <tr>
+                <td style="width:50%; text-align:left;padding-left:10%">
+                    <label class="TSIModalLabel"><strong>Çalışma Bilgileri: </strong></label>
+                </td>
+                <td style="width:50%">
+                    <SfTextBox style="width:80%"></SfTextBox>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="width:50%; text-align:left;padding-left:10%">
+                    <label class="TSIModalLabel"><strong>Bakım Bilgileri:</strong> </label>
+                </td>
+                <td style="width:50%">
+                    <SfTextBox style="width:80%"></SfTextBox>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="width:50%; text-align:left;padding-left:10%">
+                    <label class="TSIModalLabel"><strong>Fazla Mesai Bilgileri:</strong> </label>
+                </td>
+                <td style="width:50%">
+                    <SfTextBox style="width:80%"></SfTextBox>
+                </td>
+            </tr>
+
+        </table>
+
+
+
+    </BodyTemplate>
+    <FooterContentTemplate>
+        <SfButton CssClass="TSICancelButton" OnClick="HideModal2"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        <SfButton CssClass="TSISaveButton" OnClick="Modal2Save"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+    </FooterContentTemplate>
+</DxPopup>
+
+
+

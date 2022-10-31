@@ -34,6 +34,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.MachineAnalysis
         double columnwidth2;
         double columnwidth3;
         double columnwidth4;
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
 
         [Parameter]
         public DateTime startDate { get; set; }
