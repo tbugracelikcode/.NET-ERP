@@ -43,6 +43,8 @@ using TsiErp.Entities.Entities.Operation;
 using TsiErp.Entities.Entities.Route;
 using TsiErp.Entities.Entities.OperationLine;
 using TsiErp.Entities.Entities.RouteLine;
+using TsiErp.Entities.Entities.Shift;
+using TsiErp.Entities.Entities.ShiftLine;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 {
@@ -902,6 +904,49 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasOne(x => x.Routes).WithMany(x => x.RouteLines).HasForeignKey(x => x.RouteID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.Operations).WithMany(x => x.RouteLines).HasForeignKey(x => x.OperationID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.Products).WithMany(x => x.RouteLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+
+        public static void ConfigureShifts(this ModelBuilder builder)
+        {
+            builder.Entity<Shifts>(b =>
+            {
+                b.ToTable("Shifts");
+                b.ConfigureByConvention();
+
+                //b.HasQueryFilter(x => !x.IsDeleted);
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.TotalWorkTime).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.TotalBreakTime).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.NetWorkTime).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.Overtime).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.ShiftOrder).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+                b.HasIndex(x => x.Code);
+
+            });
+        }
+
+        public static void ConfigureShiftLines(this ModelBuilder builder)
+        {
+            builder.Entity<ShiftLines>(b =>
+            {
+                b.ToTable("ShiftLines");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.ShiftID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.StartHour).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.EndHour).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.Coefficient).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.Type).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+
+
+                b.HasIndex(x => x.ShiftID);
+
+                b.HasOne(x => x.Shifts).WithMany(x => x.ShiftLines).HasForeignKey(x => x.ShiftID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 

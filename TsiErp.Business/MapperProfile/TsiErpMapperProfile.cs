@@ -70,6 +70,10 @@ using TsiErp.Entities.Entities.OperationLine;
 using TsiErp.Entities.Entities.OperationLine.Dtos;
 using TsiErp.Entities.Entities.RouteLine;
 using TsiErp.Entities.Entities.RouteLine.Dtos;
+using TsiErp.Entities.Entities.Shift;
+using TsiErp.Entities.Entities.Shift.Dtos;
+using TsiErp.Entities.Entities.ShiftLine;
+using TsiErp.Entities.Entities.ShiftLine.Dtos;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -337,6 +341,24 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectRouteLinesDto, CreateRouteLinesDto>();
             CreateMap<UpdateRouteLinesDto, RouteLines>();
             CreateMap<SelectRouteLinesDto, UpdateRouteLinesDto>();
+
+
+            CreateMap<Shifts, SelectShiftsDto>();
+            CreateMap<Shifts, ListShiftsDto>();
+            CreateMap<UpdateShiftsDto, Shifts>()
+                .ForMember(x => x.ShiftLines, y => y.Ignore());
+            CreateMap<CreateShiftsDto, Shifts>();
+            CreateMap<SelectShiftsDto, CreateShiftsDto>();
+            CreateMap<SelectShiftsDto, UpdateShiftsDto>();
+
+
+            CreateMap<ShiftLines, SelectShiftLinesDto>();
+            CreateMap<ShiftLines, ListShiftLinesDto>();
+            CreateMap<CreateShiftLinesDto, ShiftLines>();
+            CreateMap<SelectShiftLinesDto, CreateShiftLinesDto>();
+            CreateMap<UpdateShiftLinesDto, ShiftLines>();
+            CreateMap<SelectShiftLinesDto, UpdateShiftLinesDto>();
+            CreateMap<SelectShiftLinesDto, ShiftLines>();
         }
     }
 }
