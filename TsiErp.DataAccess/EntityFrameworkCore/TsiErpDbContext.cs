@@ -46,6 +46,8 @@ using TsiErp.Entities.Entities.Operation;
 using TsiErp.Entities.Entities.OperationLine;
 using TsiErp.Entities.Entities.Route;
 using TsiErp.Entities.Entities.RouteLine;
+using TsiErp.Entities.Entities.Calendar;
+using TsiErp.Entities.Entities.CalendarLine;
 using TsiErp.Entities.Entities.Shift;
 using TsiErp.Entities.Entities.ShiftLine;
 
@@ -144,6 +146,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigureRouteLines();
             builder.ConfigureSalesPropositions();
             builder.ConfigureSalesPropositionLines();
+            builder.ConfigureCalendars();
+            builder.ConfigureCalendarLines();
             builder.ConfigureShifts();
             builder.ConfigureShiftLines();
         }
@@ -228,6 +232,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<RouteLines> RouteLines { get; set; }
         public DbSet<SalesPropositions> SalesPropositions { get; set; }
         public DbSet<SalesPropositionLines> SalesPropositionLines { get; set; }
+        public DbSet<Calendars> Calendars { get; set; }
+        public DbSet<CalendarLines> CalendarLines { get; set; }
         public DbSet<Shifts> Shifts { get; set; }
         public DbSet<ShiftLines> ShiftLines { get; set; }
 
