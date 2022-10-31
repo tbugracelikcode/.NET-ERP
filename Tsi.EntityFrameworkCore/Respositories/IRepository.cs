@@ -18,17 +18,20 @@ namespace Tsi.EntityFrameworkCore.Repositories
 
         Task<IList<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> predicate = null, params Expression<Func<TEntity, object>>[] includeProperties);
 
-        Task<TEntity> InsertAsync(TEntity entity, bool autoSave = true);
+        Task<TEntity> InsertAsync(TEntity entity);
 
-        Task InsertManyAsync(IEnumerable<TEntity> entities, bool autoSave = true);
+        Task InsertManyAsync(IEnumerable<TEntity> entities);
 
-        Task<TEntity> UpdateAsync(TEntity entity, bool autoSave = true);
+        Task<TEntity> UpdateAsync(TEntity entity);
 
-        Task UpdateManyAsync(IEnumerable<TEntity> entities, bool autoSave = true);
+        Task UpdateManyAsync(IEnumerable<TEntity> entities);
 
-        Task DeleteAsync(Guid id, bool autoSave = true);
+        Task DeleteAsync(Guid id);
 
         Task<IQueryable<TEntity>> GetQueryableAsync();
+
         Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
+
+        Task<int> SaveChanges();
     }
 }

@@ -30,23 +30,40 @@ namespace TsiErp.Business.Entities.SalesProposition.BusinessRules
             }
         }
 
-        public async Task DeleteControl(ISalesPropositionsRepository _repository, Guid id)
+        public async Task DeleteControl(ISalesPropositionsRepository _repository, Guid id,  Guid lineId,bool lineDelete)
         {
-            var entity = await _repository.GetAsync(t=>t.Id==id, t=>t.SalesPropositionLines);
-
-            if (entity.SalesPropositionState==SalesPropositionStateEnum.Onaylandı)
+            if (lineDelete)
             {
-                throw new Exception("Onaylanan satış teklifleri silinemez.");
+                var entity = await _repository.GetAsync(t => t.Id == id, t => t.SalesPropositionLines);
+
+                var line = entity.SalesPropositionLines.Where(t => t.Id == lineId).FirstOrDefault();
+
+                if(line!=null)
+                {
+                    if (line.SalesPropositionLineState == SalesPropositionLineStateEnum.Onaylandı)
+                    {
+                        throw new Exception("Onaylanan satış teklifi satırları silinemez.");
+                    }
+                }
             }
-
-            if (entity.SalesPropositionState==SalesPropositionStateEnum.Siparis)
+            else
             {
-                throw new Exception("Siparişe dönüşen satış teklifleri silinemez.");
-            }
+                var entity = await _repository.GetAsync(t => t.Id == id);
 
-            if (entity.SalesPropositionState==SalesPropositionStateEnum.KismiSiparis)
-            {
-                throw new Exception("Siparişe dönüşen satış teklifleri silinemez.");
+                if (entity.SalesPropositionState == SalesPropositionStateEnum.Onaylandı)
+                {
+                    throw new Exception("Onaylanan satış teklifleri silinemez.");
+                }
+
+                if (entity.SalesPropositionState == SalesPropositionStateEnum.Siparis)
+                {
+                    throw new Exception("Siparişe dönüşen satış teklifleri silinemez.");
+                }
+
+                if (entity.SalesPropositionState == SalesPropositionStateEnum.KismiSiparis)
+                {
+                    throw new Exception("Siparişe dönüşen satış teklifleri silinemez.");
+                }
             }
         }
     }

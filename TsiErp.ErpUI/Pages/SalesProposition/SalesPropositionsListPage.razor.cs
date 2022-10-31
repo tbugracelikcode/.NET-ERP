@@ -21,6 +21,7 @@ using TsiErp.Entities.Entities.PaymentPlan.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 using Syncfusion.Blazor.HeatMap.Internal;
 using Newtonsoft.Json;
+using TsiErp.Entities.Entities.SalesProposition;
 
 namespace TsiErp.ErpUI.Pages.SalesProposition
 {
@@ -190,16 +191,15 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
 
                     if (res == true)
                     {
-                        if (DataSource.Id == Guid.Empty)
+                        //var salesPropositionLines = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                        var line = args.RowInfo.RowData;
+
+                        if (line.Id == Guid.Empty)
                         {
                             DataSource.SelectSalesPropositionLines.Remove(args.RowInfo.RowData);
                         }
                         else
                         {
-                            var salesPropositions = (await GetAsync(args.RowInfo.RowData.Id)).Data;
-
-                            var line = salesPropositions.SelectSalesPropositionLines.Find(t => t.Id == args.RowInfo.RowData.Id);
-
                             if (line != null)
                             {
                                 await DeleteAsync(args.RowInfo.RowData.Id);
@@ -239,7 +239,7 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         {
             if (LineDataSource.Id == Guid.Empty)
             {
-                LineDataSource.Id = ApplicationService.GuidGenerator.CreateGuid();
+                //LineDataSource.Id = ApplicationService.GuidGenerator.CreateGuid();
                 DataSource.SelectSalesPropositionLines.Add(LineDataSource);
             }
             else
@@ -258,6 +258,43 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
 
             HideLinesPopup();
             await InvokeAsync(StateHasChanged);
+        }
+
+        public override async void LineCalculate()
+        {
+            LineDataSource.LineAmount = (LineDataSource.Quantity * LineDataSource.UnitPrice) - LineDataSource.DiscountAmount;
+            LineDataSource.VATamount = (LineDataSource.LineAmount * LineDataSource.VATrate) / 100;
+
+            if (LineDataSource.DiscountAmount > 0)
+            {
+                if (LineDataSource.Quantity > 0 && LineDataSource.UnitPrice > 0)
+                {
+                    LineDataSource.DiscountRate = (LineDataSource.DiscountAmount / (LineDataSource.Quantity * LineDataSource.UnitPrice)) * 100;
+                }
+
+                if (LineDataSource.Quantity == 0 || LineDataSource.UnitPrice == 0)
+                {
+                    LineDataSource.DiscountRate = 0;
+                    LineDataSource.DiscountAmount = 0;
+                }
+            }
+            else
+            {
+                LineDataSource.DiscountRate = 0;
+            }
+
+            LineDataSource.LineTotalAmount = LineDataSource.LineAmount + LineDataSource.VATamount;
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public override void GetTotal()
+        {
+            DataSource.GrossAmount = GridLineList.Sum(x => x.LineAmount) + GridLineList.Sum(x => x.DiscountAmount);
+            DataSource.TotalDiscountAmount = GridLineList.Sum(x => x.DiscountAmount);
+            DataSource.TotalVatExcludedAmount = DataSource.GrossAmount - DataSource.TotalDiscountAmount;
+            DataSource.TotalVatAmount = GridLineList.Sum(x => x.VATamount);
+            DataSource.NetAmount = GridLineList.Sum(x => x.LineTotalAmount);
         }
         #endregion
 
@@ -331,6 +368,15 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             {
                 DataSource.BranchID = args.ItemData.Id;
                 DataSource.BranchCode = args.ItemData.Code;
+
+                foreach (var item in DataSource.SelectSalesPropositionLines)
+                {
+                    if (item.BranchID == Guid.Empty)
+                    {
+                        item.BranchID = DataSource.BranchID;
+                        item.BranchCode = DataSource.BranchCode;
+                    }
+                }
             }
             else
             {
@@ -380,12 +426,22 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             WarehousesList = (await WarehousesAppService.GetListAsync(new ListWarehousesParameterDto())).Data.ToList();
             LineWarehousesList = WarehousesList;
         }
+
         public async Task WarehouseValueChangeHandler(ChangeEventArgs<string, ListWarehousesDto> args)
         {
             if (args.ItemData != null)
             {
                 DataSource.WarehouseID = args.ItemData.Id;
                 DataSource.WarehouseCode = args.ItemData.Code;
+
+                foreach (var item in DataSource.SelectSalesPropositionLines)
+                {
+                    if(item.WarehouseID==Guid.Empty)
+                    {
+                        item.WarehouseID = DataSource.WarehouseID;
+                        item.WarehouseCode = DataSource.WarehouseCode;
+                    }
+                }
             }
             else
             {
@@ -584,6 +640,16 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             {
                 DataSource.PaymentPlanID = args.ItemData.Id;
                 DataSource.PaymentPlanName = args.ItemData.Name;
+
+
+                foreach (var item in DataSource.SelectSalesPropositionLines)
+                {
+                    if (item.PaymentPlanID == Guid.Empty)
+                    {
+                        item.PaymentPlanID = DataSource.PaymentPlanID;
+                        item.PaymentPlanName = DataSource.PaymentPlanName;
+                    }
+                }
             }
             else
             {
@@ -608,42 +674,5 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             await InvokeAsync(StateHasChanged);
         }
         #endregion
-
-        public override async void LineCalculate()
-        {
-            LineDataSource.LineAmount = (LineDataSource.Quantity * LineDataSource.UnitPrice) - LineDataSource.DiscountAmount;
-            LineDataSource.VATamount = (LineDataSource.LineAmount * LineDataSource.VATrate) / 100;
-
-            if (LineDataSource.DiscountAmount > 0)
-            {
-                if (LineDataSource.Quantity > 0 && LineDataSource.UnitPrice > 0)
-                {
-                    LineDataSource.DiscountRate = (LineDataSource.DiscountAmount / (LineDataSource.Quantity * LineDataSource.UnitPrice)) * 100;
-                }
-
-                if (LineDataSource.Quantity == 0 || LineDataSource.UnitPrice == 0)
-                {
-                    LineDataSource.DiscountRate = 0;
-                    LineDataSource.DiscountAmount = 0;
-                }
-            }
-            else
-            {
-                LineDataSource.DiscountRate = 0;
-            }
-
-            LineDataSource.LineTotalAmount = LineDataSource.LineAmount + LineDataSource.VATamount;
-
-            await InvokeAsync(StateHasChanged);
-        }
-
-        public override void GetTotal()
-        {
-            DataSource.GrossAmount = GridLineList.Sum(x => x.LineAmount) + GridLineList.Sum(x => x.DiscountAmount);
-            DataSource.TotalDiscountAmount = GridLineList.Sum(x => x.DiscountAmount);
-            DataSource.TotalVatExcludedAmount = DataSource.GrossAmount - DataSource.TotalDiscountAmount;
-            DataSource.TotalVatAmount = GridLineList.Sum(x => x.VATamount);
-            DataSource.NetAmount = GridLineList.Sum(x => x.LineTotalAmount);
-        }
     }
 }
