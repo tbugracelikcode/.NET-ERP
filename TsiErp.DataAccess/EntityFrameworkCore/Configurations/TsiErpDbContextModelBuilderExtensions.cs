@@ -43,6 +43,8 @@ using TsiErp.Entities.Entities.Operation;
 using TsiErp.Entities.Entities.Route;
 using TsiErp.Entities.Entities.OperationLine;
 using TsiErp.Entities.Entities.RouteLine;
+using TsiErp.Entities.Entities.Calendar;
+using TsiErp.Entities.Entities.CalendarLine;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 {
@@ -902,6 +904,50 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasOne(x => x.Routes).WithMany(x => x.RouteLines).HasForeignKey(x => x.RouteID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.Operations).WithMany(x => x.RouteLines).HasForeignKey(x => x.OperationID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.Products).WithMany(x => x.RouteLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+        public static void ConfigureCalendars(this ModelBuilder builder)
+        {
+            builder.Entity<Calendars>(b =>
+            {
+                b.ToTable("Calendars");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t._Description).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.Year).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.IsPlanned).IsRequired().HasColumnType(SqlDbType.Bit.ToString());
+
+
+                b.HasIndex(x => x.Code);
+
+            });
+        }
+        public static void ConfigureCalendarLines(this ModelBuilder builder)
+        {
+            builder.Entity<CalendarLines>(b =>
+            {
+                b.ToTable("CalendarLines");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.AvailableTime).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.PlannedHaltTimes).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.CalendarID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ShiftID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ShiftOverTime).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.ShiftTime).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.StationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+                b.HasIndex(x => x.StationID);
+                b.HasIndex(x => x.CalendarID);
+                b.HasIndex(x => x.ShiftID);
+
+                b.HasOne(x => x.Stations).WithMany(x => x.CalendarLines).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
+                //b.HasOne(x => x.Shifts).WithMany(x => x.CalendarLines).HasForeignKey(x => x.ShiftID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Calendars).WithMany(x => x.CalendarLines).HasForeignKey(x => x.CalendarID).OnDelete(DeleteBehavior.Cascade);
+
+
             });
         }
 
