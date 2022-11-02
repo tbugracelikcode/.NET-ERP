@@ -38,7 +38,11 @@ else
                     <SfCard class="TSIGridCards">
 
                         <CardContent>
-                            <SfGrid ID="Grid" @ref="@_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu">
+
+                            @{
+                                var _list = ListDataSource.OrderBy(t => t.ShiftOrder).ToList();
+                            }
+                            <SfGrid ID="Grid" @ref="@_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@_list" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu">
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                 <GridEvents ContextMenuItemClicked="@MainContextMenuClick" TValue="ListShiftsDto"></GridEvents>
@@ -114,25 +118,25 @@ else
                     <DxGridLayoutItem Row="0" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>Toplam Çalışma Süresi: </strong></label>
-                            <SfNumericTextBox TValue="decimal" CssClass="TSITxtBox" Min="0" @bind-Value="DataSource.TotalWorkTime"></SfNumericTextBox>
+                            <SfNumericTextBox TValue="decimal" Enabled=false ShowSpinButton=false CssClass="TSITxtBox" Min="0" @bind-Value="DataSource.TotalWorkTime"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>Toplam Mola Süresi: </strong></label>
-                            <SfNumericTextBox TValue="decimal" CssClass="TSITxtBox" Min="0" @bind-Value="DataSource.TotalBreakTime"></SfNumericTextBox>
+                            <SfNumericTextBox TValue="decimal" Enabled=false ShowSpinButton=false CssClass="TSITxtBox" Min="0" @bind-Value="DataSource.TotalBreakTime"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>Net Çalışma Süresi: </strong></label>
-                            <SfNumericTextBox TValue="decimal" CssClass="TSITxtBox" Min="0" @bind-Value="DataSource.NetWorkTime"></SfNumericTextBox>
+                            <SfNumericTextBox TValue="decimal" Enabled=false ShowSpinButton=false CssClass="TSITxtBox" Min="0" @bind-Value="DataSource.NetWorkTime"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>Fazla Mesai Süresi: </strong></label>
-                            <SfNumericTextBox TValue="decimal" CssClass="TSITxtBox" Min="0" @bind-Value="DataSource.Overtime"></SfNumericTextBox>
+                            <SfNumericTextBox TValue="decimal" Enabled=false ShowSpinButton=false CssClass="TSITxtBox" Min="0" @bind-Value="DataSource.Overtime"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -140,7 +144,7 @@ else
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>Vardiya Sırası: </strong></label>
-                            <SfNumericTextBox CssClass="TSITxtBox" Min="0" @bind-Value="DataSource.ShiftOrder"></SfNumericTextBox>
+                            <SfNumericTextBox CssClass="TSITxtBox" Min="1" @bind-Value="DataSource.ShiftOrder"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="2" Column="3">
@@ -161,25 +165,8 @@ else
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(SelectShiftLinesDto.StartHour) HeaderText="BAŞLANGIÇ SAATİ" TextAlign="TextAlign.Center" Width="120" Context="linecontext">
-                                        <Template>
-                                            @{
-                                                var a = (linecontext as SelectShiftLinesDto);
-                                                string starthour = a.StartHour.ToString();
-
-                                        }
-                                        @starthour
-                                    </Template>
-                                </GridColumn>
-                                <GridColumn Field=@nameof(SelectShiftLinesDto.EndHour) HeaderText="BİTİŞ SAATİ" TextAlign="TextAlign.Center" Width="120" Context="linecontext">
-                                    <Template>
-                                        @{
-                                                var a = (linecontext as SelectShiftLinesDto);
-                                                string endhour = a.EndHour.ToString();
-                                        }
-                                        @endhour
-                                    </Template>
-                                </GridColumn>
+                                    <GridColumn Field=@nameof(SelectShiftLinesDto.StartHour) HeaderText="BAŞLANGIÇ SAATİ" TextAlign="TextAlign.Center" Width="120" Context="linecontext"></GridColumn>
+                                <GridColumn Field=@nameof(SelectShiftLinesDto.EndHour) HeaderText="BİTİŞ SAATİ" TextAlign="TextAlign.Center" Width="120" Context="linecontext"> </GridColumn>
                                 <GridColumn Field=@nameof(SelectShiftLinesDto.Type) HeaderText="TÜR" TextAlign="TextAlign.Center" Width="120" Context="linecontext">
                                     @*<Template>
                                         @{
@@ -235,14 +222,14 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>Başlangıç Saati: </strong></label>
-                            <SfTimePicker Step="15" Format="@("hh\\:mm\\:ss")" TValue="TimeSpan?" Value="@LineDataSource.StartHour"></SfTimePicker>
+                            <SfTimePicker Step="15" Format="@("hh\\:mm\\:ss")" TValue="TimeSpan?" @bind-Value="@LineDataSource.StartHour"></SfTimePicker>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>Bitiş Saati: </strong></label><br />
-                            <SfTimePicker Step="15" Format="@("hh\\:mm\\:ss")" TValue="TimeSpan?" Value="@LineDataSource.EndHour"></SfTimePicker>
+                            <SfTimePicker Step="15" Format="@("hh\\:mm\\:ss")" TValue="TimeSpan?" @bind-Value="@LineDataSource.EndHour"></SfTimePicker>
                         </Template>
                     </DxGridLayoutItem>
 

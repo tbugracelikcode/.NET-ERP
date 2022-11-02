@@ -968,7 +968,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.TotalBreakTime).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.NetWorkTime).HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.Overtime).HasColumnType(SqlDbType.Decimal.ToString());
-                b.Property(t => t.ShiftOrder).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.ShiftOrder).IsRequired().HasColumnType(SqlDbType.Int.ToString());
                 b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
 
                 b.HasIndex(x => x.Code);
