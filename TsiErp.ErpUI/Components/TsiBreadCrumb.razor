@@ -2,10 +2,21 @@
     <tr>
         <td width="1000px">
             <span style="float:left">
-                <label style="font-size:15px" ><span style="color:black">@PreviousMenus&nbsp;</span><span style="color:black; font-weight:bold">>&nbsp;@CurrentMenu</span></label>
+                <label style="font-size:15px"><span style="color:black">@PreviousMenus&nbsp;</span><span class="breadCrumbCurrentPage">>&nbsp;@CurrentMenu</span></label>
             </span>
         </td>
-      
+
     </tr>
 </table>
+
+<style>
+    .breadCrumbCurrentPage {
+        color: black;
+        font-weight: bold
+    }
+
+        .breadCrumbCurrentPage:hover {
+            color: #B70000;
+        }
+</style>
 

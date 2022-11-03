@@ -22,6 +22,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.SupplierUnsuitabilityAnalysis
         bool VisibleSpinner = false;
         private int threshold = 50;
         private double thresholddouble = 0.50;
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
 
         #endregion
 

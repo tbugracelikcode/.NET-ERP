@@ -43,6 +43,7 @@ namespace TsiErp.DashboardUI.Pages.Admin.ContractUnsuitabilityAnalysis
         public string unsuitabilityTitle = "Genel Uygunsuzluk Oranı:";
         string chartAverageLabel = string.Empty;
         string chartAverageValue = string.Empty;
+        public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
 
         #endregion
 

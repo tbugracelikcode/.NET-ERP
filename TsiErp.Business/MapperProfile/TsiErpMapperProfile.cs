@@ -70,6 +70,14 @@ using TsiErp.Entities.Entities.OperationLine;
 using TsiErp.Entities.Entities.OperationLine.Dtos;
 using TsiErp.Entities.Entities.RouteLine;
 using TsiErp.Entities.Entities.RouteLine.Dtos;
+using TsiErp.Entities.Entities.Shift;
+using TsiErp.Entities.Entities.Shift.Dtos;
+using TsiErp.Entities.Entities.ShiftLine;
+using TsiErp.Entities.Entities.ShiftLine.Dtos;
+using TsiErp.Entities.Entities.Calendar.Dtos;
+using TsiErp.Entities.Entities.CalendarLine.Dtos;
+using TsiErp.Entities.Entities.CalendarLine;
+using TsiErp.Entities.Entities.Calendar;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -337,6 +345,52 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectRouteLinesDto, CreateRouteLinesDto>();
             CreateMap<UpdateRouteLinesDto, RouteLines>();
             CreateMap<SelectRouteLinesDto, UpdateRouteLinesDto>();
+
+
+            CreateMap<Shifts, SelectShiftsDto>();
+            CreateMap<Shifts, ListShiftsDto>();
+            CreateMap<UpdateShiftsDto, Shifts>()
+                .ForMember(x => x.ShiftLines, y => y.Ignore());
+            CreateMap<CreateShiftsDto, Shifts>();
+            CreateMap<SelectShiftsDto, CreateShiftsDto>();
+            CreateMap<SelectShiftsDto, UpdateShiftsDto>();
+
+
+            CreateMap<ShiftLines, SelectShiftLinesDto>();
+            CreateMap<ShiftLines, ListShiftLinesDto>();
+            CreateMap<CreateShiftLinesDto, ShiftLines>();
+            CreateMap<SelectShiftLinesDto, CreateShiftLinesDto>();
+            CreateMap<UpdateShiftLinesDto, ShiftLines>();
+            CreateMap<SelectShiftLinesDto, UpdateShiftLinesDto>();
+            CreateMap<SelectShiftLinesDto, ShiftLines>();
+
+
+            CreateMap<Calendars, SelectCalendarsDto>();
+            CreateMap<Calendars, ListCalendarsDto>();
+            CreateMap<CreateCalendarsDto, Calendars>();
+            CreateMap<SelectCalendarsDto, CreateCalendarsDto>();
+            CreateMap<UpdateCalendarsDto, Calendars>()
+                .ForMember(x=>x.CalendarLines, y=>y.Ignore());
+            CreateMap<SelectCalendarsDto, UpdateCalendarsDto>();
+
+            CreateMap<CalendarLines, SelectCalendarLinesDto>()
+                .ForMember(x => x.StationName, y => y.MapFrom(z => z.Stations.Code))
+                //.ForMember(x => x.ShiftOverTime, y => y.MapFrom(z => z.Shifts.ShiftOverTime))
+                //.ForMember(x => x.ShiftOrder, y => y.MapFrom(z => z.Shifts.ShiftOrder))
+                //.ForMember(x => x.ShiftName, y => y.MapFrom(z => z.Shifts.Code))
+                //.ForMember(x => x.ShiftTime, y => y.MapFrom(z => z.Shifts.ShiftTime))
+                .ForMember(x => x.Code, y => y.MapFrom(z => z.Calendars.Code));
+            CreateMap<CalendarLines, ListCalendarLinesDto>()
+                .ForMember(x => x.StationName, y => y.MapFrom(z => z.Stations.Code))
+                //.ForMember(x => x.ShiftOverTime, y => y.MapFrom(z => z.Shifts.ShiftOverTime))
+                //.ForMember(x => x.ShiftOrder, y => y.MapFrom(z => z.Shifts.ShiftOrder))
+                //.ForMember(x => x.ShiftName, y => y.MapFrom(z => z.Shifts.Code))
+                //.ForMember(x => x.ShiftTime, y => y.MapFrom(z => z.Shifts.ShiftTime))
+                .ForMember(x => x.Code, y => y.MapFrom(z => z.Calendars.Code));
+            CreateMap<CreateCalendarLinesDto, CalendarLines>();
+            CreateMap<SelectCalendarLinesDto, CreateCalendarLinesDto>();
+            CreateMap<UpdateCalendarLinesDto, CalendarLines>();
+            CreateMap<SelectCalendarLinesDto, UpdateCalendarLinesDto>();
         }
     }
 }

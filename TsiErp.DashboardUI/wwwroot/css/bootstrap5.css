@@ -18986,9 +18986,9 @@ body.e-colorpicker-overflow {
 
     .e-contextmenu-wrapper ul .e-menu-item.e-focused,
     .e-contextmenu-container ul .e-menu-item.e-focused {
-        background-color: #e9ecef;
-        color: #212529;
-        outline: 0 solid #dee2e6;
+        background-color: #b10000 !important;
+        color: #fff;
+        outline: 0 solid #b10000 !important;
         outline-offset: 0;
     }
 
@@ -24483,7 +24483,7 @@ body.e-colorpicker-overflow {
     .e-footer-content .e-btn.e-primary.e-flat:not([DISABLED]) {
         background-color: #b10000 !important;
         border-color: #b10000 !important;
-        color: #fff;
+        color: #fff !important;
     }
 
     .e-footer-content .e-btn:hover.e-primary.e-flat:not([DISABLED]) {
@@ -48370,7 +48370,9 @@ li.e-separator.e-menu-item.e-excel-separator {
     }
 
     .e-grid .e-gridheader .e-icons:not(.e-icon-hide):not(.e-check):not(.e-stop):not(.e-icon-reorderuparrow):not(.e-icon-reorderdownarrow) {
-        color: #6c757d;
+        color: #c10000;
+        font-size: 16px !important;
+        font-weight: bold;
     }
 
     .e-grid .e-gridheader .e-headercontent .e-icon-reorderuparrow,
