@@ -49,13 +49,13 @@
                                     {
                                         @foreach (var item in ListDataSource)
                                         {
-                                            string exactURL = imageURL + item.Name + "off.png";
+                                            string exactURL = imageURL + item.Code + "off.png";
 
                                             <div class="col-lg-2 col-md-2 col-sm-4" style="padding: 10px;text-align:left;  width: 10%;">
                                                 <div id="card_sample_1" class="card_sample">
                                                     <SfCard CssClass="TSIStationCards">
                                                         <center><CardImage Image="@exactURL" /></center>
-                                                        <center> <CardHeader Title="@item.Name" /></center>
+                                                        <center> <CardHeader Title="@item.Code" /></center>
                                                         <CardContent>
                                                             <ChildContent>
                                                                 @* <table class="table table-hover">

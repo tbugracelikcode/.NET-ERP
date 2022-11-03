@@ -40,7 +40,7 @@ namespace TsiErp.Business.Entities.Shift.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectShiftsDto>> CreateAsync(CreateShiftsDto input)
         {
-            await _manager.CodeControl(_repository, input.Code);
+            await _manager.CodeControl(_repository, input.Code, input.ShiftOrder);
 
             var entity = ObjectMapper.Map<CreateShiftsDto, Shifts>(input);
 
@@ -76,8 +76,8 @@ namespace TsiErp.Business.Entities.Shift.Services
         public async Task<IDataResult<SelectShiftsDto>> GetAsync(Guid id)
         {
             var entity = await _repository.GetAsync(t => t.Id == id,
-                t => t.ShiftLines
-               /* t => t.CurrentAccountCards,*/);
+                t => t.ShiftLines,
+                t => t.CalendarLines);
 
             var mappedEntity = ObjectMapper.Map<Shifts, SelectShiftsDto>(entity);
 
@@ -90,12 +90,8 @@ namespace TsiErp.Business.Entities.Shift.Services
         public async Task<IDataResult<IList<ListShiftsDto>>> GetListAsync(ListShiftsParameterDto input)
         {
             var list = await _repository.GetListAsync(null,
-                t => t.ShiftLines
-                //t => t.CurrentAccountCards,
-                //t => t.Warehouses,
-                //t => t.Branches,
-                //t => t.Currencies,
-                /*t => t.PaymentPlan*/);
+                t => t.ShiftLines,
+                t => t.CalendarLines);
 
             var mappedEntity = ObjectMapper.Map<List<Shifts>, List<ListShiftsDto>>(list.ToList());
 
@@ -108,7 +104,7 @@ namespace TsiErp.Business.Entities.Shift.Services
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
 
-            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
+            await _manager.UpdateControl(_repository, input.Code, input.Id, entity, input.ShiftOrder);
 
             var mappedEntity = ObjectMapper.Map<UpdateShiftsDto, Shifts>(input);
 

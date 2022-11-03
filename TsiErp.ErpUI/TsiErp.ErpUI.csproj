@@ -89,8 +89,4 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Utilities\ModalUtilities\ModalComponents\" />
-  </ItemGroup>
-
 </Project>
