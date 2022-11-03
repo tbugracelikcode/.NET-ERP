@@ -51,6 +51,7 @@ namespace TsiErp.Business.Entities.Logging.Services
             };
 
             await _repository.InsertAsync(logRecord);
+            await _repository.SaveChanges();
         }
     }
 }

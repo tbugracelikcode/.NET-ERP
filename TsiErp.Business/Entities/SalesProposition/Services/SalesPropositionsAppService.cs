@@ -22,11 +22,13 @@ using TsiErp.Entities.Entities.SalesPropositionLine;
 using Tsi.Core.Entities;
 using TsiErp.Business.Entities.SalesProposition.BusinessRules;
 using Microsoft.EntityFrameworkCore;
+using Tsi.Application.Contract.Services.EntityFrameworkCore;
+using Tsi.Core.Utilities.Guids;
 
 namespace TsiErp.Business.Entities.SalesProposition.Services
 {
     [ServiceRegistration(typeof(ISalesPropositionsAppService), DependencyInjectionType.Scoped)]
-    public class SalesPropositionsAppService : ISalesPropositionsAppService
+    public class SalesPropositionsAppService : ApplicationService, ISalesPropositionsAppService
     {
         private readonly ISalesPropositionsRepository _repository;
         private readonly ISalesPropositionLinesRepository _lineRepository;
@@ -52,28 +54,37 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
             foreach (var item in input.SelectSalesPropositionLines)
             {
                 var lineEntity = ObjectMapper.Map<SelectSalesPropositionLinesDto, SalesPropositionLines>(item);
+                lineEntity.Id = GuidGenerator.CreateGuid();
                 lineEntity.SalesPropositionID = addedEntity.Id;
                 await _lineRepository.InsertAsync(lineEntity);
             }
 
+            await _repository.SaveChanges();
+            await _lineRepository.SaveChanges();
             return new SuccessDataResult<SelectSalesPropositionsDto>(ObjectMapper.Map<SalesPropositions, SelectSalesPropositionsDto>(addedEntity));
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            await _manager.DeleteControl(_repository, id);
+            var lines = (await _lineRepository.GetAsync(t => t.Id == id));
 
-            //var lines = (await _lineRepository.GetListAsync(t => t.SalesPropositionID == id)).ToList();
-
-            //foreach (var line in lines)
-            //{
-            //    await _lineRepository.DeleteAsync(line.Id);
-            //}
-
-            await _repository.DeleteAsync(id);
-
-            return new SuccessResult("Silme işlemi başarılı.");
+            if (lines != null)
+            {
+                await _manager.DeleteControl(_repository, lines.SalesPropositionID, lines.Id, true);
+                await _lineRepository.DeleteAsync(id);
+                await _repository.SaveChanges();
+                await _lineRepository.SaveChanges();
+                return new SuccessResult("Silme işlemi başarılı.");
+            }
+            else
+            {
+                await _manager.DeleteControl(_repository, id, Guid.Empty, false);
+                await _repository.DeleteAsync(id);
+                await _repository.SaveChanges();
+                await _lineRepository.SaveChanges();
+                return new SuccessResult("Silme işlemi başarılı.");
+            }
         }
 
         public async Task<IDataResult<SelectSalesPropositionsDto>> GetAsync(Guid id)
@@ -88,7 +99,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
 
             var mappedEntity = ObjectMapper.Map<SalesPropositions, SelectSalesPropositionsDto>(entity);
 
-            mappedEntity.SelectSalesPropositionLines = ObjectMapper.Map<List<SalesPropositionLines>, List<SelectSalesPropositionLinesDto>>(entity.SalesPropositionLines.ToList());
+             mappedEntity.SelectSalesPropositionLines = ObjectMapper.Map<List<SalesPropositionLines>, List<SelectSalesPropositionLinesDto>>(entity.SalesPropositionLines.ToList());
 
             return new SuccessDataResult<SelectSalesPropositionsDto>(mappedEntity);
         }
@@ -125,8 +136,20 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
             {
                 var lineEntity = ObjectMapper.Map<SelectSalesPropositionLinesDto, SalesPropositionLines>(item);
                 lineEntity.SalesPropositionID = mappedEntity.Id;
-                await _lineRepository.UpdateAsync(lineEntity);
+
+                if (lineEntity.Id == Guid.Empty)
+                {
+                    lineEntity.Id = GuidGenerator.CreateGuid();
+                    await _lineRepository.InsertAsync(lineEntity);
+                }
+                else
+                {
+                    await _lineRepository.UpdateAsync(lineEntity);
+                }
             }
+
+            await _repository.SaveChanges();
+            await _lineRepository.SaveChanges();
 
             return new SuccessDataResult<SelectSalesPropositionsDto>(ObjectMapper.Map<SalesPropositions, SelectSalesPropositionsDto>(mappedEntity));
         }

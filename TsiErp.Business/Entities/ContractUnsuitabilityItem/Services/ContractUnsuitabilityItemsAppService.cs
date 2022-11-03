@@ -45,6 +45,7 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityItem.Services
             var entity = ObjectMapper.Map<CreateContractUnsuitabilityItemsDto, ContractUnsuitabilityItems>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
+            await _repository.SaveChanges();
 
             return new SuccessDataResult<SelectContractUnsuitabilityItemsDto>(ObjectMapper.Map<ContractUnsuitabilityItems, SelectContractUnsuitabilityItemsDto>(addedEntity));
         }
@@ -54,6 +55,7 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityItem.Services
         public async Task<IResult> DeleteAsync(Guid id)
         {
             await _repository.DeleteAsync(id);
+            await _repository.SaveChanges();
             return new SuccessResult("Silme işlemi başarılı.");
         }
 
@@ -88,6 +90,7 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityItem.Services
             var mappedEntity = ObjectMapper.Map<UpdateContractUnsuitabilityItemsDto, ContractUnsuitabilityItems>(input);
 
             await _repository.UpdateAsync(mappedEntity);
+            await _repository.SaveChanges();
 
             return new SuccessDataResult<SelectContractUnsuitabilityItemsDto>(ObjectMapper.Map<ContractUnsuitabilityItems, SelectContractUnsuitabilityItemsDto>(mappedEntity));
         }

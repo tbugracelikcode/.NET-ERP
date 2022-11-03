@@ -44,6 +44,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
             var entity = ObjectMapper.Map<CreateEquipmentRecordsDto, EquipmentRecords>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
+            await _repository.SaveChanges();
 
             return new SuccessDataResult<SelectEquipmentRecordsDto>(ObjectMapper.Map<EquipmentRecords, SelectEquipmentRecordsDto>(addedEntity));
         }
@@ -54,6 +55,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
         {
             await _manager.DeleteControl(_repository, id);
             await _repository.DeleteAsync(id);
+            await _repository.SaveChanges();
             return new SuccessResult("Silme işlemi başarılı.");
         }
 
@@ -88,6 +90,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
             var mappedEntity = ObjectMapper.Map<UpdateEquipmentRecordsDto, EquipmentRecords>(input);
 
             await _repository.UpdateAsync(mappedEntity);
+            await _repository.SaveChanges();
 
             return new SuccessDataResult<SelectEquipmentRecordsDto>(ObjectMapper.Map<EquipmentRecords, SelectEquipmentRecordsDto>(mappedEntity));
         }

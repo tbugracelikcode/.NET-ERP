@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tsi.Application.Contract.Services.EntityFrameworkCore;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
+using Tsi.Core.Utilities.Guids;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.Entities.Calendar.BusinessRules;
@@ -21,7 +23,7 @@ using TsiErp.Entities.Entities.CalendarLine.Dtos;
 namespace TsiErp.Business.Entities.Calendar.Services
 {
     [ServiceRegistration(typeof(ICalendarsAppService), DependencyInjectionType.Scoped)]
-    public class CalendarsAppService : ICalendarsAppService
+    public class CalendarsAppService : ApplicationService, ICalendarsAppService
     {
         private readonly ICalendarsRepository _repository;
         private readonly ICalendarLinesRepository _lineRepository;
@@ -47,27 +49,22 @@ namespace TsiErp.Business.Entities.Calendar.Services
             foreach (var item in input.SelectCalendarLinesDto)
             {
                 var lineEntity = ObjectMapper.Map<SelectCalendarLinesDto, CalendarLines>(item);
+                lineEntity.Id = GuidGenerator.CreateGuid();
                 lineEntity.CalendarID = addedEntity.Id;
                 await _lineRepository.InsertAsync(lineEntity);
             }
 
+            await _repository.SaveChanges();
+            await _lineRepository.SaveChanges();
             return new SuccessDataResult<SelectCalendarsDto>(ObjectMapper.Map<Calendars, SelectCalendarsDto>(addedEntity));
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            await _manager.DeleteControl(_repository, id);
-
-            //var lines = (await _lineRepository.GetListAsync(t => t.SalesPropositionID == id)).ToList();
-
-            //foreach (var line in lines)
-            //{
-            //    await _lineRepository.DeleteAsync(line.Id);
-            //}
-
             await _repository.DeleteAsync(id);
-
+            await _repository.SaveChanges();
+            await _lineRepository.SaveChanges();
             return new SuccessResult("Silme işlemi başarılı.");
         }
 
@@ -110,8 +107,20 @@ namespace TsiErp.Business.Entities.Calendar.Services
             {
                 var lineEntity = ObjectMapper.Map<SelectCalendarLinesDto, CalendarLines>(item);
                 lineEntity.CalendarID = mappedEntity.Id;
-                await _lineRepository.UpdateAsync(lineEntity);
+                if (lineEntity.Id == Guid.Empty)
+                {
+                    lineEntity.Id = GuidGenerator.CreateGuid();
+                    await _lineRepository.InsertAsync(lineEntity);
+                }
+                else
+                {
+                    await _lineRepository.UpdateAsync(lineEntity);
+                }
             }
+
+
+            await _repository.SaveChanges();
+            await _lineRepository.SaveChanges();
 
             return new SuccessDataResult<SelectCalendarsDto>(ObjectMapper.Map<Calendars, SelectCalendarsDto>(mappedEntity));
         }

@@ -36,6 +36,7 @@ namespace TsiErp.Business.Entities.FinalControlUnsuitabilityItem.Services
             var entity = ObjectMapper.Map<CreateFinalControlUnsuitabilityItemsDto, FinalControlUnsuitabilityItems>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
+            await _repository.SaveChanges();
 
             return new SuccessDataResult<SelectFinalControlUnsuitabilityItemsDto>(ObjectMapper.Map<FinalControlUnsuitabilityItems, SelectFinalControlUnsuitabilityItemsDto>(addedEntity));
         }
@@ -45,6 +46,7 @@ namespace TsiErp.Business.Entities.FinalControlUnsuitabilityItem.Services
         public async Task<IResult> DeleteAsync(Guid id)
         {
             await _repository.DeleteAsync(id);
+            await _repository.SaveChanges();
             return new SuccessResult("Silme işlemi başarılı.");
         }
 
@@ -79,6 +81,7 @@ namespace TsiErp.Business.Entities.FinalControlUnsuitabilityItem.Services
             var mappedEntity = ObjectMapper.Map<UpdateFinalControlUnsuitabilityItemsDto, FinalControlUnsuitabilityItems>(input);
 
             await _repository.UpdateAsync(mappedEntity);
+            await _repository.SaveChanges();
 
             return new SuccessDataResult<SelectFinalControlUnsuitabilityItemsDto>(ObjectMapper.Map<FinalControlUnsuitabilityItems, SelectFinalControlUnsuitabilityItemsDto>(mappedEntity));
         }
