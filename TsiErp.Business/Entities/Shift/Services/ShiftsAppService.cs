@@ -65,10 +65,24 @@ namespace TsiErp.Business.Entities.Shift.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            await _repository.DeleteAsync(id);
-            await _repository.SaveChanges();
-            await _lineRepository.SaveChanges();
-            return new SuccessResult("Silme işlemi başarılı.");
+            var lines = (await _lineRepository.GetAsync(t => t.Id == id));
+
+            if(lines != null)
+            {
+                await _manager.DeleteControl(_repository, lines.Id);
+                await _lineRepository.DeleteAsync(id);
+                await _repository.SaveChanges();
+                await _lineRepository.SaveChanges();
+                return new SuccessResult("Silme işlemi başarılı.");
+            }
+            else
+            {
+                await _manager.DeleteControl(_repository, lines.Id);
+                await _repository.DeleteAsync(id);
+                await _repository.SaveChanges();
+                await _lineRepository.SaveChanges();
+                return new SuccessResult("Silme işlemi başarılı.");
+            }
         }
 
         public async Task<IDataResult<SelectShiftsDto>> GetAsync(Guid id)
