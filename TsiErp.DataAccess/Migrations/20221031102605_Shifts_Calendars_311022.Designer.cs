@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TsiErp.DataAccess.EntityFrameworkCore;
 
@@ -11,9 +12,10 @@ using TsiErp.DataAccess.EntityFrameworkCore;
 namespace TsiErp.DataAccess.Migrations
 {
     [DbContext(typeof(TsiErpDbContext))]
-    partial class TsiErpDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221031102605_Shifts_Calendars_311022")]
+    partial class Shifts_Calendars_311022
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2579,9 +2581,9 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("DeletionTime");
 
-                    b.Property<TimeSpan?>("EndHour")
+                    b.Property<DateTime?>("EndHour")
                         .IsRequired()
-                        .HasColumnType("time(7)");
+                        .HasColumnType("DateTime");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -2600,9 +2602,9 @@ namespace TsiErp.DataAccess.Migrations
                     b.Property<Guid>("ShiftID")
                         .HasColumnType("UniqueIdentifier");
 
-                    b.Property<TimeSpan?>("StartHour")
+                    b.Property<DateTime?>("StartHour")
                         .IsRequired()
-                        .HasColumnType("time(7)");
+                        .HasColumnType("DateTime");
 
                     b.Property<int>("Type")
                         .HasColumnType("Int");

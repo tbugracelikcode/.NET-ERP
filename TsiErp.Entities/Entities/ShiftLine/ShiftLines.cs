@@ -19,13 +19,17 @@ namespace TsiErp.Entities.Entities.ShiftLine
         /// </summary>
         public Guid ShiftID { get; set; }
         /// <summary>
+        /// Satır Nr
+        /// </summary>
+        public int LineNr { get; set; }
+        /// <summary>
         /// Başlangıç Saati
         /// </summary>
-        public DateTime? StartHour { get; set; }
+        public TimeSpan? StartHour { get; set; }
         /// <summary>
         /// Bitiş Saati
         /// </summary>
-        public DateTime? EndHour { get; set; }
+        public TimeSpan? EndHour { get; set; }
         /// <summary>
         /// Tür Enum
         /// </summary>

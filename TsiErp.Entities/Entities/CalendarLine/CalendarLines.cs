@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.Calendar;
+using TsiErp.Entities.Entities.Shift;
 using TsiErp.Entities.Entities.Station;
 
 namespace TsiErp.Entities.Entities.CalendarLine
@@ -47,5 +48,7 @@ namespace TsiErp.Entities.Entities.CalendarLine
         /// İstasyon
         /// </summary>
         public Stations Stations { get; set; }
+
+        public Shifts Shifts { get; set; }
     }
 }
