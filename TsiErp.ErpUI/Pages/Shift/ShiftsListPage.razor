@@ -164,19 +164,22 @@ else
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
-                                <GridColumns>
-                                    <GridColumn Field=@nameof(SelectShiftLinesDto.StartHour) HeaderText="BAŞLANGIÇ SAATİ" TextAlign="TextAlign.Center" Width="120" Context="linecontext"></GridColumn>
+                                
+                            <GridColumns>
+                                <GridColumn Field=@nameof(SelectShiftLinesDto.StartHour) HeaderText="BAŞLANGIÇ SAATİ" TextAlign="TextAlign.Center" Width="120" Context="linecontext"></GridColumn>
                                 <GridColumn Field=@nameof(SelectShiftLinesDto.EndHour) HeaderText="BİTİŞ SAATİ" TextAlign="TextAlign.Center" Width="120" Context="linecontext"> </GridColumn>
+
                                 <GridColumn Field=@nameof(SelectShiftLinesDto.Type) HeaderText="TÜR" TextAlign="TextAlign.Center" Width="120" Context="linecontext">
                                     @*<Template>
-                                        @{
-                                                var a = (linecontext as SelectShiftLinesDto);
-                                                string shifttype = ShiftTypesList.Where(t => t.Value.ToString() == a.Type.ToString()).Select(t => t.DisplayName).FirstOrDefault().ToString();
-                                        }
-                                        @shifttype
+                                    @{
+                                    var a = (linecontext as SelectShiftLinesDto);
+                                    string shifttype = ShiftTypesList.Where(t => t.Value.ToString() == a.Type.ToString()).Select(t => t.DisplayName).FirstOrDefault().ToString();
+                                    }
+                                    @shifttype
                                     </Template>*@
                                 </GridColumn>
                                 <GridColumn Field=@nameof(SelectShiftLinesDto.Coefficient) Type="ColumnType.Number" HeaderText="KATSAYI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                
                             </GridColumns>
                         </SfGrid>
                     </Template>
@@ -237,8 +240,8 @@ else
                         <Template>
                             <label class="TSIModalLabel"><strong>Tür: </strong></label><br />
                             <SfDropDownList PopupHeight="230px" Placeholder="Vardiya Türü Seçiniz" @bind-Value="@LineDataSource.Type" DataSource="@EnumValues">
-                                    <DropDownListFieldSettings Text="Name" Value="Value"></DropDownListFieldSettings>
-                                </SfDropDownList>
+                                <DropDownListFieldSettings Text="Name" Value="Value"></DropDownListFieldSettings>
+                            </SfDropDownList>
                         </Template>
                     </DxGridLayoutItem>
 

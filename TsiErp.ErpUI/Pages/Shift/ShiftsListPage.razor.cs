@@ -35,6 +35,9 @@ namespace TsiErp.ErpUI.Pages.Shift
         decimal totalNetWorkTime;
         decimal totalOvertime;
 
+        decimal totalHour;
+        Guid rowID;
+
         #endregion
 
 
@@ -181,6 +184,12 @@ namespace TsiErp.ErpUI.Pages.Shift
 
         public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectShiftLinesDto> args)
         {
+            TimeSpan? start;
+            TimeSpan? end;
+            TimeSpan diff;
+            string control;
+            decimal result;
+
             switch (args.Item.Id)
             {
                 case "new":
@@ -203,15 +212,45 @@ namespace TsiErp.ErpUI.Pages.Shift
 
                     if (res == true)
                     {
-                        if (DataSource.Id == Guid.Empty)
+
+                        var line = args.RowInfo.RowData;
+
+                        if (line.Id == Guid.Empty)
                         {
                             DataSource.SelectShiftLinesDto.Remove(args.RowInfo.RowData);
+
+                             start = args.RowInfo.RowData.StartHour;
+                             end = args.RowInfo.RowData.EndHour;
+                            diff = end.GetValueOrDefault() - start.GetValueOrDefault();
+                            control = diff.TotalSeconds.ToString("#.00");
+                            result = Convert.ToDecimal(control);
+                            DataSource.TotalWorkTime -= result;
+                            switch (args.RowInfo.RowData.Type)
+                            {
+                                case ShiftLinesTypeEnum.Mola: DataSource.TotalBreakTime -= result; break;
+                                case ShiftLinesTypeEnum.Calisma: DataSource.NetWorkTime -= result; break;
+                                case ShiftLinesTypeEnum.Temizlik: break;
+                                case ShiftLinesTypeEnum.FazlaMesai: DataSource.Overtime -= result; break;
+                            }
+
                         }
+
                         else
                         {
-                            var shifts = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                             start = line.StartHour;
+                             end = line.EndHour;
+                             diff = end.GetValueOrDefault() - start.GetValueOrDefault();
+                             control = diff.TotalSeconds.ToString("#.00");
+                             result = Convert.ToDecimal(control);
+                            DataSource.TotalWorkTime -= result;
 
-                            var line = shifts.SelectShiftLinesDto.Find(t => t.Id == args.RowInfo.RowData.Id);
+                            switch(line.Type)
+                            {
+                                case ShiftLinesTypeEnum.Mola: DataSource.TotalBreakTime -= result;break;
+                                case ShiftLinesTypeEnum.Calisma: DataSource.NetWorkTime -= result;break;
+                                case ShiftLinesTypeEnum.Temizlik:break;
+                                case ShiftLinesTypeEnum.FazlaMesai: DataSource.Overtime -= result;break;
+                            }
 
                             if (line != null)
                             {
@@ -252,7 +291,7 @@ namespace TsiErp.ErpUI.Pages.Shift
         {
             if (LineDataSource.Id == Guid.Empty)
             {
-                LineDataSource.Id = ApplicationService.GuidGenerator.CreateGuid();
+                //LineDataSource.Id = ApplicationService.GuidGenerator.CreateGuid();
                 DataSource.SelectShiftLinesDto.Add(LineDataSource);
             }
             else
@@ -279,14 +318,12 @@ namespace TsiErp.ErpUI.Pages.Shift
                     case ShiftLinesTypeEnum.Mola:
 
 
-                        TimeSpan? baslangicMola = GridLineList.Where(t => t.Type == ShiftLinesTypeEnum.Mola).Select(t => t.StartHour).FirstOrDefault();
-                        TimeSpan? bitisMola = GridLineList.Where(t => t.Type == ShiftLinesTypeEnum.Mola).Select(t => t.EndHour).FirstOrDefault();
+                        TimeSpan? baslangicMola = GridLineList.Where(t => t.Type == ShiftLinesTypeEnum.Mola && t.Id == LineDataSource.Id).Select(t => t.StartHour).LastOrDefault();
+                        TimeSpan? bitisMola = GridLineList.Where(t => t.Type == ShiftLinesTypeEnum.Mola && t.Id == LineDataSource.Id).Select(t => t.EndHour).LastOrDefault();
                         TimeSpan farkMola = bitisMola.GetValueOrDefault() - baslangicMola.GetValueOrDefault();
                         string arakontrolMola = farkMola.TotalSeconds.ToString("#.00");
-                        totalBreakTime += Convert.ToDecimal(arakontrolMola);
-                        DataSource.TotalBreakTime = totalBreakTime;
-                        totalWorkTime += Convert.ToDecimal(arakontrolMola);
-                        DataSource.TotalWorkTime = totalWorkTime;
+                        DataSource.TotalBreakTime += Convert.ToDecimal(arakontrolMola);
+                        DataSource.TotalWorkTime += Convert.ToDecimal(arakontrolMola);
                         break;
 
                     #endregion
@@ -294,13 +331,11 @@ namespace TsiErp.ErpUI.Pages.Shift
                     #region Toplam Temizlik Süresi
                     case ShiftLinesTypeEnum.Temizlik:
 
-                        TimeSpan? baslangicTemizlik = GridLineList.Where(t => t.Type == ShiftLinesTypeEnum.Temizlik).Select(t => t.StartHour).FirstOrDefault();
-                        TimeSpan? bitisTemizlik = GridLineList.Where(t => t.Type == ShiftLinesTypeEnum.Temizlik).Select(t => t.StartHour).FirstOrDefault();
+                        TimeSpan? baslangicTemizlik = GridLineList.Where(t => t.Type == ShiftLinesTypeEnum.Temizlik && t.Id == LineDataSource.Id).Select(t => t.StartHour).LastOrDefault();
+                        TimeSpan? bitisTemizlik = GridLineList.Where(t => t.Type == ShiftLinesTypeEnum.Temizlik && t.Id == LineDataSource.Id).Select(t => t.StartHour).LastOrDefault();
                         TimeSpan farkTemizlik = bitisTemizlik.GetValueOrDefault() - baslangicTemizlik.GetValueOrDefault();
                         string arakontrolTemizlik = farkTemizlik.TotalSeconds.ToString("#.00");
-                        totalCleaningTime = Convert.ToDecimal(arakontrolTemizlik);
-                        totalWorkTime += Convert.ToDecimal(arakontrolTemizlik);
-                        DataSource.TotalWorkTime = totalWorkTime;
+                        DataSource.TotalWorkTime += Convert.ToDecimal(arakontrolTemizlik);
                         break;
 
                     #endregion
@@ -308,14 +343,12 @@ namespace TsiErp.ErpUI.Pages.Shift
                     #region Toplam Net Çalışma Süresi
                     case ShiftLinesTypeEnum.Calisma:
 
-                        TimeSpan? baslangicNetCalisma = GridLineList.Where(t => t.Type == ShiftLinesTypeEnum.Calisma).Select(t => t.StartHour).FirstOrDefault();
-                        TimeSpan? bitisNetCalisma = GridLineList.Where(t => t.Type == ShiftLinesTypeEnum.Calisma).Select(t => t.EndHour).FirstOrDefault();
+                        TimeSpan? baslangicNetCalisma = GridLineList.Where(t => t.Type == ShiftLinesTypeEnum.Calisma && t.Id == LineDataSource.Id).Select(t => t.StartHour).LastOrDefault();
+                        TimeSpan? bitisNetCalisma = GridLineList.Where(t => t.Type == ShiftLinesTypeEnum.Calisma && t.Id == LineDataSource.Id).Select(t => t.EndHour).LastOrDefault();
                         TimeSpan farkNetCalisma = bitisNetCalisma.GetValueOrDefault() - baslangicNetCalisma.GetValueOrDefault();
                         string arakontrolNetCalisma = farkNetCalisma.TotalSeconds.ToString("#.00");
-                        totalNetWorkTime += Convert.ToDecimal(arakontrolNetCalisma);
-                        DataSource.NetWorkTime = totalNetWorkTime;
-                        totalWorkTime += Convert.ToDecimal(arakontrolNetCalisma);
-                        DataSource.TotalWorkTime = totalWorkTime;
+                        DataSource.NetWorkTime += Convert.ToDecimal(arakontrolNetCalisma);
+                        DataSource.TotalWorkTime += Convert.ToDecimal(arakontrolNetCalisma);
                         break;
 
                     #endregion
@@ -323,14 +356,12 @@ namespace TsiErp.ErpUI.Pages.Shift
                     #region Toplam Fazla Mesai Süresi
                     case ShiftLinesTypeEnum.FazlaMesai:
 
-                        TimeSpan? baslangicFazlaMesai = GridLineList.Where(t => t.Type == ShiftLinesTypeEnum.FazlaMesai).Select(t => t.StartHour).FirstOrDefault();
-                        TimeSpan? bitisFazlaMesai = GridLineList.Where(t => t.Type == ShiftLinesTypeEnum.FazlaMesai).Select(t => t.EndHour).FirstOrDefault();
+                        TimeSpan? baslangicFazlaMesai = GridLineList.Where(t => t.Type == ShiftLinesTypeEnum.FazlaMesai && t.Id == LineDataSource.Id).Select(t => t.StartHour).LastOrDefault();
+                        TimeSpan? bitisFazlaMesai = GridLineList.Where(t => t.Type == ShiftLinesTypeEnum.FazlaMesai && t.Id == LineDataSource.Id).Select(t => t.EndHour).LastOrDefault();
                         TimeSpan farkFazlaMesai = bitisFazlaMesai.GetValueOrDefault() - baslangicFazlaMesai.GetValueOrDefault();
                         string arakontrolFazlaMesai = farkFazlaMesai.TotalSeconds.ToString("#.00");
-                        totalOvertime += Convert.ToDecimal(arakontrolFazlaMesai);
-                        DataSource.Overtime = totalOvertime;
-                        totalWorkTime += Convert.ToDecimal(arakontrolFazlaMesai);
-                        DataSource.TotalWorkTime = totalWorkTime;
+                        DataSource.Overtime += Convert.ToDecimal(arakontrolFazlaMesai);
+                        DataSource.TotalWorkTime += Convert.ToDecimal(arakontrolFazlaMesai);
                         break;
 
                         #endregion
@@ -338,12 +369,27 @@ namespace TsiErp.ErpUI.Pages.Shift
 
                 #endregion
 
-                GridLineList = DataSource.SelectShiftLinesDto;
-                GetTotal();
-                await _LineGrid.Refresh();
+                #region Vardiya 24 Saat Kontrolü
 
-                HideLinesPopup();
-                await InvokeAsync(StateHasChanged);
+                if (DataSource.TotalWorkTime > 86400)
+                {
+                    DataSource.TotalWorkTime = 0;
+                    DataSource.TotalBreakTime = 0;
+                    DataSource.NetWorkTime = 0;
+                    DataSource.Overtime = 0;
+                    await ModalManager.WarningPopupAsync("Uyarı", "Vardiya süresi 24 saatten (86400 saniye) fazla olamaz.");
+                }
+                else
+                {
+                    GridLineList = DataSource.SelectShiftLinesDto;
+                    GetTotal();
+                    await _LineGrid.Refresh();
+
+                    HideLinesPopup();
+                    await InvokeAsync(StateHasChanged);
+                }
+
+                #endregion
             }
 
             else

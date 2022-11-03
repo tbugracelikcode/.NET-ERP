@@ -88,7 +88,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
 
             var mappedEntity = ObjectMapper.Map<SalesPropositions, SelectSalesPropositionsDto>(entity);
 
-            mappedEntity.SelectSalesPropositionLines = ObjectMapper.Map<List<SalesPropositionLines>, List<SelectSalesPropositionLinesDto>>(entity.SalesPropositionLines.ToList());
+             mappedEntity.SelectSalesPropositionLines = ObjectMapper.Map<List<SalesPropositionLines>, List<SelectSalesPropositionLinesDto>>(entity.SalesPropositionLines.ToList());
 
             return new SuccessDataResult<SelectSalesPropositionsDto>(mappedEntity);
         }

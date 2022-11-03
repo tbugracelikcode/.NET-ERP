@@ -992,7 +992,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
                 b.HasIndex(x => x.ShiftID);
 
-                b.HasOne(x => x.Shifts).WithMany(x => x.ShiftLines).HasForeignKey(x => x.ShiftID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Shifts).WithMany(x => x.ShiftLines).HasForeignKey(x => x.ShiftID).OnDelete(DeleteBehavior.Cascade);
             });
         }
 
