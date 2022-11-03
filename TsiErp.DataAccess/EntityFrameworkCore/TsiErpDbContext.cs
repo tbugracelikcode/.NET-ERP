@@ -50,6 +50,8 @@ using TsiErp.Entities.Entities.Calendar;
 using TsiErp.Entities.Entities.CalendarLine;
 using TsiErp.Entities.Entities.Shift;
 using TsiErp.Entities.Entities.ShiftLine;
+using TsiErp.Entities.Entities.SalesOrderLine;
+using TsiErp.Entities.Entities.SalesOrder;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore
 {
@@ -150,6 +152,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigureCalendarLines();
             builder.ConfigureShifts();
             builder.ConfigureShiftLines();
+            builder.ConfigureSalesOrders();
+            builder.ConfigureSalesOrderLines();
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -236,6 +240,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<CalendarLines> CalendarLines { get; set; }
         public DbSet<Shifts> Shifts { get; set; }
         public DbSet<ShiftLines> ShiftLines { get; set; }
+        public DbSet<SalesOrders> SalesOrders { get; set; }
+        public DbSet<SalesOrderLines> SalesOrderLines { get; set; }
 
         #endregion
     }

@@ -261,14 +261,11 @@ namespace TsiErp.Business.MapperProfile
 
 
             CreateMap<SalesPropositionLines, SelectSalesPropositionLinesDto>()
-                .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Code))
-                .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Name))
                 .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
                 .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name))
                 .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code))
                .ForMember(x => x.PaymentPlanName, y => y.MapFrom(z => z.PaymentPlans.Name));
             CreateMap<SalesPropositionLines, ListSalesPropositionLinesDto>()
-                .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Code))
                 .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
                 .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name))
                 .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code))
