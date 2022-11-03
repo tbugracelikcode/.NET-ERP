@@ -37,6 +37,8 @@ namespace TsiErp.Business.Entities.Branch.Services
 
             var addedEntity = await _repository.InsertAsync(entity);
 
+            await _repository.SaveChanges();
+
             return new SuccessDataResult<SelectBranchesDto>(ObjectMapper.Map<Branches, SelectBranchesDto>(addedEntity));
         }
 
@@ -46,6 +48,7 @@ namespace TsiErp.Business.Entities.Branch.Services
         {
             await _manager.DeleteControl(_repository, id);
             await _repository.DeleteAsync(id);
+            await _repository.SaveChanges();
             return new SuccessResult("Silme işlemi başarılı.");
         }
 
@@ -81,6 +84,7 @@ namespace TsiErp.Business.Entities.Branch.Services
             var mappedEntity = ObjectMapper.Map<UpdateBranchesDto, Branches>(input);
 
             await _repository.UpdateAsync(mappedEntity);
+            await _repository.SaveChanges();
 
             return new SuccessDataResult<SelectBranchesDto>(ObjectMapper.Map<Branches, SelectBranchesDto>(mappedEntity));
         }

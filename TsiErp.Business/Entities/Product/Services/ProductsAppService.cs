@@ -39,6 +39,7 @@ namespace TsiErp.Business.Entities.Product.Services
             var entity = ObjectMapper.Map<CreateProductsDto, Products>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
+            await _repository.SaveChanges();
 
             return new SuccessDataResult<SelectProductsDto>(ObjectMapper.Map<Products, SelectProductsDto>(addedEntity));
         }
@@ -49,6 +50,7 @@ namespace TsiErp.Business.Entities.Product.Services
         {
             await _manager.DeleteControl(_repository, id);
             await _repository.DeleteAsync(id);
+            await _repository.SaveChanges();
             return new SuccessResult("Silme işlemi başarılı.");
         }
 
@@ -83,6 +85,7 @@ namespace TsiErp.Business.Entities.Product.Services
             var mappedEntity = ObjectMapper.Map<UpdateProductsDto, Products>(input);
 
             await _repository.UpdateAsync(mappedEntity);
+            await _repository.SaveChanges();
 
             return new SuccessDataResult<SelectProductsDto>(ObjectMapper.Map<Products, SelectProductsDto>(mappedEntity));
         }
