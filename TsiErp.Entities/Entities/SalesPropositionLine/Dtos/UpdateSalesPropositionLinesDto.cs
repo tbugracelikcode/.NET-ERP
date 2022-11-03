@@ -27,10 +27,6 @@ namespace TsiErp.Entities.Entities.SalesPropositionLine.Dtos
         /// </summary>
         public Guid UnitSetID { get; set; }
         /// <summary>
-        /// Şube ID
-        /// </summary>
-        public Guid BranchID { get; set; }
-        /// <summary>
         /// Miktar
         /// </summary>
         public decimal Quantity { get; set; }
@@ -78,10 +74,6 @@ namespace TsiErp.Entities.Entities.SalesPropositionLine.Dtos
         /// Siparişe Çevirilme Tarihi
         /// </summary>
         public DateTime? OrderConversionDate { get; set; }
-        /// <summary>
-        /// Depo ID
-        /// </summary>
-        public Guid WarehouseID { get; set; }
         /// <summary>
         /// Kur Turarı
         /// </summary>

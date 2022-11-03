@@ -39,9 +39,5 @@ namespace TsiErp.Entities.Entities.Branch
         /// </summary>
         public ICollection<SalesPropositions> SalesPropositions { get; set; }
         public ICollection<SalesOrders> SalesOrders { get; set; }
-        /// <summary>
-        /// Satış Teklif Satırları
-        /// </summary>
-        public ICollection<SalesPropositionLines> SalesPropositionLines { get; set; }
     }
 }
