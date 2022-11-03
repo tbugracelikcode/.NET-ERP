@@ -40,7 +40,7 @@ namespace Tsi.EntityFrameworkCore.Respositories.EntityFrameworkCore
             return entity;
         }
 
-        public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate,  params Expression<Func<TEntity, object>>[] includeProperties)
+        public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includeProperties)
         {
             var queryable = await WithDetailsAsync(includeProperties);
 
@@ -60,7 +60,7 @@ namespace Tsi.EntityFrameworkCore.Respositories.EntityFrameworkCore
             return entities;
         }
 
-        public async Task<IList<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> predicate = null,  params Expression<Func<TEntity, object>>[] includeProperties)
+        public async Task<IList<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> predicate = null, params Expression<Func<TEntity, object>>[] includeProperties)
         {
 
             var queryable = await WithDetailsAsync(includeProperties);
@@ -73,7 +73,7 @@ namespace Tsi.EntityFrameworkCore.Respositories.EntityFrameworkCore
             return await queryable.ToListAsync();
         }
 
-        public async Task<TEntity> InsertAsync(TEntity entity, bool autoSave = true)
+        public async Task<TEntity> InsertAsync(TEntity entity)
         {
             //var addedEntity = _dbContext.Entry(entity);
             //addedEntity.State = EntityState.Added;
@@ -82,7 +82,7 @@ namespace Tsi.EntityFrameworkCore.Respositories.EntityFrameworkCore
 
             if (entity is IFullEntityObject)
             {
-                entity.GetType().GetProperty("CreatorId").SetValue(entity, Guid.NewGuid());
+                entity.GetType().GetProperty("CreatorId").SetValue(entity, GuidGenerator.CreateGuid());
                 entity.GetType().GetProperty("CreationTime").SetValue(entity, DateTime.Now);
                 entity.GetType().GetProperty("IsDeleted").SetValue(entity, false);
                 entity.GetType().GetProperty("DeleterId").SetValue(entity, null);
@@ -96,44 +96,25 @@ namespace Tsi.EntityFrameworkCore.Respositories.EntityFrameworkCore
                 entity.GetType().GetProperty("Id").SetValue(entity, GuidGenerator.CreateGuid());
             }
 
-            _dbset.Add(entity);
-
-
-            if (autoSave)
-            {
-                await _dbContext.SaveChangesAsync(true);
-            }
+            await _dbset.AddAsync(entity);
 
             return entity;
 
         }
 
-        public async Task InsertManyAsync(IEnumerable<TEntity> entities, bool autoSave = true)
+        public async Task InsertManyAsync(IEnumerable<TEntity> entities)
         {
             foreach (var entity in entities)
             {
                 await InsertAsync(entity);
             }
-
-            if (autoSave)
-            {
-                await _dbContext.SaveChangesAsync(true);
-            }
         }
 
-        public async Task<TEntity> UpdateAsync(TEntity entity, bool autoSave = true)
+        public async Task<TEntity> UpdateAsync(TEntity entity)
         {
-
-            ////var updatedEntity = _dbContext.Set<TEntity>().AsNoTracking().Single(t => t.Id == entity.Id);
-
-            //var updatedEntity = _dbContext.Entry(entity);
-            //updatedEntity.State = EntityState.Modified;
-            //await _dbContext.SaveChangesAsync();
-            //return updatedEntity.Entity;
-
             var previousEntity = (IFullEntityObject)await GetAsync(t => t.Id == entity.Id);
 
-            if (entity is IFullEntityObject)
+            if (entity is IFullEntityObject && previousEntity != null)
             {
                 entity.GetType().GetProperty("CreatorId").SetValue(entity, previousEntity.CreatorId);
                 entity.GetType().GetProperty("CreationTime").SetValue(entity, previousEntity.CreationTime);
@@ -144,6 +125,17 @@ namespace Tsi.EntityFrameworkCore.Respositories.EntityFrameworkCore
                 entity.GetType().GetProperty("LastModificationTime").SetValue(entity, DateTime.Now);
             }
 
+            if (entity is IFullEntityObject && previousEntity == null)
+            {
+                entity.GetType().GetProperty("CreatorId").SetValue(entity, GuidGenerator.CreateGuid());
+                entity.GetType().GetProperty("CreationTime").SetValue(entity, DateTime.Now);
+                entity.GetType().GetProperty("IsDeleted").SetValue(entity, false);
+                entity.GetType().GetProperty("DeleterId").SetValue(entity, null);
+                entity.GetType().GetProperty("DeletionTime").SetValue(entity, null);
+                entity.GetType().GetProperty("LastModifierId").SetValue(entity, null);
+                entity.GetType().GetProperty("LastModificationTime").SetValue(entity, null);
+            }
+
             _dbContext.ChangeTracker.Clear();
 
             _dbContext.Attach(entity);
@@ -151,38 +143,22 @@ namespace Tsi.EntityFrameworkCore.Respositories.EntityFrameworkCore
             var updatedEntity = _dbContext.Update(entity).Entity;
 
 
-
-            if (autoSave)
-            {
-                await _dbContext.SaveChangesAsync(true);
-            }
-
             return updatedEntity;
         }
 
-        public async Task UpdateManyAsync(IEnumerable<TEntity> entities, bool autoSave = true)
+        public async Task UpdateManyAsync(IEnumerable<TEntity> entities)
         {
             foreach (var entity in entities)
             {
                 await UpdateAsync(entity);
             }
-
-            if (autoSave)
-            {
-                await _dbContext.SaveChangesAsync();
-            }
         }
 
-        public async Task DeleteAsync(Guid id, bool autoSave = true)
+        public async Task DeleteAsync(Guid id)
         {
             var entity = _dbset.Single(t => t.Id == id);
 
             _dbContext.Set<TEntity>().Remove(entity);
-
-            if (autoSave)
-            {
-                await _dbContext.SaveChangesAsync(true);
-            }
         }
 
         private static IQueryable<TEntity> IncludeDetails(IQueryable<TEntity> query, Expression<Func<TEntity, object>>[] propertySelectors)
@@ -212,6 +188,11 @@ namespace Tsi.EntityFrameworkCore.Respositories.EntityFrameworkCore
         public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await _dbset.AnyAsync(predicate);
+        }
+
+        public async Task<int> SaveChanges()
+        {
+            return await _dbContext.SaveChangesAsync();
         }
     }
 }
