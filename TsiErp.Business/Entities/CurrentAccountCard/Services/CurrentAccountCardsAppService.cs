@@ -39,6 +39,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
             var entity = ObjectMapper.Map<CreateCurrentAccountCardsDto, CurrentAccountCards>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
+            await _repository.SaveChanges();
 
             return new SuccessDataResult<SelectCurrentAccountCardsDto>(ObjectMapper.Map<CurrentAccountCards, SelectCurrentAccountCardsDto>(addedEntity));
         }
@@ -49,6 +50,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
         {
             await _manager.DeleteControl(_repository, id);
             await _repository.DeleteAsync(id);
+            await _repository.SaveChanges();
             return new SuccessResult("Silme işlemi başarılı.");
         }
 
@@ -83,6 +85,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
             var mappedEntity = ObjectMapper.Map<UpdateCurrentAccountCardsDto, CurrentAccountCards>(input);
 
             await _repository.UpdateAsync(mappedEntity);
+            await _repository.SaveChanges();
 
             return new SuccessDataResult<SelectCurrentAccountCardsDto>(ObjectMapper.Map<CurrentAccountCards, SelectCurrentAccountCardsDto>(mappedEntity));
         }

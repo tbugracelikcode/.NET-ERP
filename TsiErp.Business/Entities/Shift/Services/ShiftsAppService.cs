@@ -19,11 +19,13 @@ using Microsoft.EntityFrameworkCore;
 using TsiErp.Business.Entities.Shift.BusinessRules;
 using TsiErp.Entities.Entities.Shift.Dtos;
 using TsiErp.Entities.Entities.Shift;
+using Tsi.Core.Utilities.Guids;
+using Tsi.Application.Contract.Services.EntityFrameworkCore;
 
 namespace TsiErp.Business.Entities.Shift.Services
 {
     [ServiceRegistration(typeof(IShiftsAppService), DependencyInjectionType.Scoped)]
-    public class ShiftsAppService : IShiftsAppService
+    public class ShiftsAppService : ApplicationService, IShiftsAppService
     {
         private readonly IShiftsRepository _repository;
         private readonly IShiftLinesRepository _lineRepository;
@@ -49,9 +51,13 @@ namespace TsiErp.Business.Entities.Shift.Services
             foreach (var item in input.SelectShiftLinesDto)
             {
                 var lineEntity = ObjectMapper.Map<SelectShiftLinesDto, ShiftLines>(item);
+                lineEntity.Id = GuidGenerator.CreateGuid();
                 lineEntity.ShiftID = addedEntity.Id;
                 await _lineRepository.InsertAsync(lineEntity);
             }
+
+            await _repository.SaveChanges();
+            await _lineRepository.SaveChanges();
 
             return new SuccessDataResult<SelectShiftsDto>(ObjectMapper.Map<Shifts, SelectShiftsDto>(addedEntity));
         }
@@ -59,17 +65,9 @@ namespace TsiErp.Business.Entities.Shift.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            await _manager.DeleteControl(_repository, id);
-
-            //var lines = (await _lineRepository.GetListAsync(t => t.SalesPropositionID == id)).ToList();
-
-            //foreach (var line in lines)
-            //{
-            //    await _lineRepository.DeleteAsync(line.Id);
-            //}
-
             await _repository.DeleteAsync(id);
-
+            await _repository.SaveChanges();
+            await _lineRepository.SaveChanges();
             return new SuccessResult("Silme işlemi başarılı.");
         }
 
@@ -114,9 +112,19 @@ namespace TsiErp.Business.Entities.Shift.Services
             {
                 var lineEntity = ObjectMapper.Map<SelectShiftLinesDto, ShiftLines>(item);
                 lineEntity.ShiftID = mappedEntity.Id;
-                await _lineRepository.UpdateAsync(lineEntity);
+                if (lineEntity.Id == Guid.Empty)
+                {
+                    lineEntity.Id = GuidGenerator.CreateGuid();
+                    await _lineRepository.InsertAsync(lineEntity);
+                }
+                else
+                {
+                    await _lineRepository.UpdateAsync(lineEntity);
+                }
             }
 
+            await _repository.SaveChanges();
+            await _lineRepository.SaveChanges();
             return new SuccessDataResult<SelectShiftsDto>(ObjectMapper.Map<Shifts, SelectShiftsDto>(mappedEntity));
         }
 

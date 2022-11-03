@@ -35,7 +35,6 @@ namespace TsiErp.Business.Entities.Shift.BusinessRules
 
         public async Task DeleteControl(IShiftsRepository _repository, Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id, t => t.ShiftLines);
 
         }
     }

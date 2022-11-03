@@ -40,6 +40,7 @@ namespace TsiErp.Business.Entities.Currency.Services
             var entity = ObjectMapper.Map<CreateCurrenciesDto, Currencies>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
+            await _repository.SaveChanges();
 
             return new SuccessDataResult<SelectCurrenciesDto>(ObjectMapper.Map<Currencies, SelectCurrenciesDto>(addedEntity));
         }
@@ -50,6 +51,7 @@ namespace TsiErp.Business.Entities.Currency.Services
         {
             await _manager.DeleteControl(_repository, id);
             await _repository.DeleteAsync(id);
+            await _repository.SaveChanges();
             return new SuccessResult("Silme işlemi başarılı.");
         }
 
@@ -84,6 +86,7 @@ namespace TsiErp.Business.Entities.Currency.Services
             var mappedEntity = ObjectMapper.Map<UpdateCurrenciesDto, Currencies>(input);
 
             await _repository.UpdateAsync(mappedEntity);
+            await _repository.SaveChanges();
 
             return new SuccessDataResult<SelectCurrenciesDto>(ObjectMapper.Map<Currencies, SelectCurrenciesDto>(mappedEntity));
         }

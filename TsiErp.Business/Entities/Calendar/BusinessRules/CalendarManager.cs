@@ -27,10 +27,8 @@ namespace TsiErp.Business.Entities.Calendar.BusinessRules
             }
         }
 
-        public async Task DeleteControl(ICalendarsRepository _repository, Guid id)
-        {
-            var entity = await _repository.GetAsync(t => t.Id == id, t => t.CalendarLines);
-            
+        public async Task DeleteControl(ICalendarsRepository _repository, Guid id, Guid lineId, bool lineDelete)
+        {            
         }
     }
 }
