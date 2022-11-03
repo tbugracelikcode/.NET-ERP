@@ -35,11 +35,6 @@ namespace TsiErp.Business.Entities.Product.BusinessRules
             {
                 throw new Exception("Hareket gören kayıtlar silinemez.");
             }
-
-            if (await _repository.AnyAsync(t => t.SalesPropositionLines.Any(x => x.BranchID == id)))
-            {
-                throw new Exception("Hareket gören kayıtlar silinemez.");
-            }
         }
     }
 }

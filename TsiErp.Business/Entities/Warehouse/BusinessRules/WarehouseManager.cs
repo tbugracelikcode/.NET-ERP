@@ -31,11 +31,6 @@ namespace TsiErp.Business.Entities.Warehouse.BusinessRules
 
         public async Task DeleteControl(IWarehousesRepository _repository, Guid id)
         {
-            if (await _repository.AnyAsync(t => t.SalesPropositionLines.Any(x => x.BranchID == id)))
-            {
-                throw new Exception("Hareket gören kayıtlar silinemez.");
-            }
-
             if (await _repository.AnyAsync(t => t.SalesPropositions.Any(x => x.BranchID == id)))
             {
                 throw new Exception("Hareket gören kayıtlar silinemez.");

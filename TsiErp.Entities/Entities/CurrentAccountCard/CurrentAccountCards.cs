@@ -7,6 +7,7 @@ using TsiErp.Entities.Entities.Currency;
 using TsiErp.Entities.Entities.SalesProposition;
 using TsiErp.Entities.Entities.ShippingAdress;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Entities.SalesOrder;
 
 namespace TsiErp.Entities.Entities.CurrentAccountCard
 {
@@ -151,6 +152,7 @@ namespace TsiErp.Entities.Entities.CurrentAccountCard
         public Currencies Currencies { get; set; }
 
         public ICollection<SalesPropositions> SalesPropositions { get; set; }
+        public ICollection<SalesOrders> SalesOrders { get; set; }
 
         public ICollection<ShippingAdresses> ShippingAdresses { get; set; }
     }
