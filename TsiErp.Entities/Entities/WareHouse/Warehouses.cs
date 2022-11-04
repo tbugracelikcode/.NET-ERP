@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Entities.SalesOrder;
 using TsiErp.Entities.Entities.SalesProposition;
 using TsiErp.Entities.Entities.SalesPropositionLine;
 
@@ -30,9 +31,6 @@ namespace TsiErp.Entities.Entities.WareHouse
         /// Satış Teklifleri 
         /// </summary>
         public ICollection<SalesPropositions> SalesPropositions { get; set; }
-        /// <summary>
-        /// Satış Teklif Satırları
-        /// </summary>
-        public ICollection<SalesPropositionLines> SalesPropositionLines { get; set; }
+        public ICollection<SalesOrders> SalesOrders { get; set; }
     }
 }

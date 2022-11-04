@@ -47,6 +47,8 @@ using TsiErp.Entities.Entities.Calendar;
 using TsiErp.Entities.Entities.CalendarLine;
 using TsiErp.Entities.Entities.Shift;
 using TsiErp.Entities.Entities.ShiftLine;
+using TsiErp.Entities.Entities.SalesOrder;
+using TsiErp.Entities.Entities.SalesOrderLine;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 {
@@ -467,7 +469,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.LineNr).IsRequired().HasColumnType(SqlDbType.Int.ToString());
                 b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.UnitSetID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.BranchID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.Quantity).HasColumnType(SqlDbType.Decimal.ToString()).HasPrecision(18,6);
                 b.Property(t => t.UnitPrice).HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.DiscountRate).HasColumnType(SqlDbType.Decimal.ToString());
@@ -481,18 +482,13 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.ExchangeRate).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.SalesPropositionLineState).HasColumnType(SqlDbType.Int.ToString());
                 b.Property(t => t.OrderConversionDate).HasColumnType(SqlDbType.DateTime.ToString());
-                b.Property(t => t.WarehouseID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.HasIndex(x => x.SalesPropositionID);
                 b.HasIndex(x => x.ProductID);
-                b.HasIndex(x => x.BranchID);
-                b.HasIndex(x => x.WarehouseID);
 
                 b.HasOne(x => x.Products).WithMany(x => x.SalesPropositionLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.SalesPropositions).WithMany(x => x.SalesPropositionLines).HasForeignKey(x => x.SalesPropositionID).OnDelete(DeleteBehavior.Cascade);
                 b.HasOne(x => x.UnitSets).WithMany(x => x.SalesPropositionLines).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Warehouses).WithMany(x => x.SalesPropositionLines).HasForeignKey(x => x.WarehouseID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.PaymentPlans).WithMany(x => x.SalesPropositionLines).HasForeignKey(x => x.PaymentPlanID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Branches).WithMany(x => x.SalesPropositionLines).HasForeignKey(x => x.BranchID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -993,6 +989,84 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.ShiftID);
 
                 b.HasOne(x => x.Shifts).WithMany(x => x.ShiftLines).HasForeignKey(x => x.ShiftID).OnDelete(DeleteBehavior.Cascade);
+            });
+        }
+
+        public static void ConfigureSalesOrders(this ModelBuilder builder)
+        {
+            builder.Entity<SalesOrders>(b =>
+            {
+                b.ToTable("SalesOrders");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.FicheNo).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Description_).HasColumnType("nvarchar(max)");
+                b.Property(t => t.Date_).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.Time_).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(8);
+                b.Property(t => t.ExchangeRate).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.SpecialCode).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(201);
+                b.Property(t => t.LinkedSalesPropositionID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.SalesOrderState).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.CurrencyID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.WarehouseID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.LinkedSalesPropositionID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.PaymentPlanID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.BranchID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.CurrentAccountCardID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.GrossAmount).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.TotalVatExcludedAmount).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.TotalVatAmount).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.TotalDiscountAmount).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.NetAmount).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.WorkOrderCreationDate).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.ShippingAdressID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+                b.HasIndex(x => x.FicheNo);
+                b.HasIndex(x => x.CurrentAccountCardID);
+                b.HasIndex(x => x.BranchID);
+                b.HasIndex(x => x.WarehouseID);
+
+                b.HasOne(x => x.CurrentAccountCards).WithMany(x => x.SalesOrders).HasForeignKey(x => x.CurrentAccountCardID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Currencies).WithMany(x => x.SalesOrders).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Warehouses).WithMany(x => x.SalesOrders).HasForeignKey(x => x.WarehouseID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.PaymentPlan).WithMany(x => x.SalesOrders).HasForeignKey(x => x.PaymentPlanID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Branches).WithMany(x => x.SalesOrders).HasForeignKey(x => x.BranchID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.ShippingAdresses).WithMany(x => x.SalesOrders).HasForeignKey(x => x.ShippingAdressID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+
+        public static void ConfigureSalesOrderLines(this ModelBuilder builder)
+        {
+            builder.Entity<SalesOrderLines>(b =>
+            {
+                b.ToTable("SalesOrderLines");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.SalesOrderID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.LineNr).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.UnitSetID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.LikedPropositionLineID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.Quantity).HasColumnType(SqlDbType.Decimal.ToString()).HasPrecision(18, 6);
+                b.Property(t => t.UnitPrice).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.DiscountRate).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.DiscountAmount).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.LineAmount).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.LineTotalAmount).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.LineDescription).HasColumnType("nvarchar(MAX)");
+                b.Property(t => t.VATrate).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.VATamount).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.PaymentPlanID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ExchangeRate).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.SalesOrderLineStateEnum).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.WorkOrderCreationDate).HasColumnType(SqlDbType.DateTime.ToString());
+                b.HasIndex(x => x.SalesOrderID);
+                b.HasIndex(x => x.ProductID);
+
+                b.HasOne(x => x.Products).WithMany(x => x.SalesOrderLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.SalesOrders).WithMany(x => x.SalesOrderLines).HasForeignKey(x => x.SalesOrderID).OnDelete(DeleteBehavior.Cascade);
+                b.HasOne(x => x.UnitSets).WithMany(x => x.SalesOrderLines).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.PaymentPlans).WithMany(x => x.SalesOrderLines).HasForeignKey(x => x.PaymentPlanID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 

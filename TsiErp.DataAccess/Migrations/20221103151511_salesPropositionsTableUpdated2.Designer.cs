@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TsiErp.DataAccess.EntityFrameworkCore;
 
@@ -11,9 +12,10 @@ using TsiErp.DataAccess.EntityFrameworkCore;
 namespace TsiErp.DataAccess.Migrations
 {
     [DbContext(typeof(TsiErpDbContext))]
-    partial class TsiErpDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221103151511_salesPropositionsTableUpdated2")]
+    partial class salesPropositionsTableUpdated2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2610,6 +2612,9 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("Id");
 
+                    b.Property<Guid?>("BranchesId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime?>("CreationTime")
                         .IsRequired()
                         .HasColumnType("datetime2")
@@ -2698,7 +2703,12 @@ namespace TsiErp.DataAccess.Migrations
                     b.Property<int>("VATrate")
                         .HasColumnType("Int");
 
+                    b.Property<Guid?>("WarehousesId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("BranchesId");
 
                     b.HasIndex("PaymentPlanID");
 
@@ -2707,6 +2717,8 @@ namespace TsiErp.DataAccess.Migrations
                     b.HasIndex("SalesPropositionID");
 
                     b.HasIndex("UnitSetID");
+
+                    b.HasIndex("WarehousesId");
 
                     b.ToTable("SalesPropositionLines", (string)null);
                 });
@@ -3641,6 +3653,10 @@ namespace TsiErp.DataAccess.Migrations
 
             modelBuilder.Entity("TsiErp.Entities.Entities.SalesPropositionLine.SalesPropositionLines", b =>
                 {
+                    b.HasOne("TsiErp.Entities.Entities.Branch.Branches", null)
+                        .WithMany("SalesPropositionLines")
+                        .HasForeignKey("BranchesId");
+
                     b.HasOne("TsiErp.Entities.Entities.PaymentPlan.PaymentPlans", "PaymentPlans")
                         .WithMany("SalesPropositionLines")
                         .HasForeignKey("PaymentPlanID")
@@ -3664,6 +3680,10 @@ namespace TsiErp.DataAccess.Migrations
                         .HasForeignKey("UnitSetID")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.HasOne("TsiErp.Entities.Entities.WareHouse.Warehouses", null)
+                        .WithMany("SalesPropositionLines")
+                        .HasForeignKey("WarehousesId");
 
                     b.Navigation("PaymentPlans");
 
@@ -3722,6 +3742,8 @@ namespace TsiErp.DataAccess.Migrations
                     b.Navigation("Periods");
 
                     b.Navigation("SalesOrders");
+
+                    b.Navigation("SalesPropositionLines");
 
                     b.Navigation("SalesPropositions");
                 });
@@ -3852,6 +3874,8 @@ namespace TsiErp.DataAccess.Migrations
             modelBuilder.Entity("TsiErp.Entities.Entities.WareHouse.Warehouses", b =>
                 {
                     b.Navigation("SalesOrders");
+
+                    b.Navigation("SalesPropositionLines");
 
                     b.Navigation("SalesPropositions");
                 });

@@ -8,19 +8,21 @@ using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.PaymentPlan;
 using TsiErp.Entities.Entities.Product;
+using TsiErp.Entities.Entities.SalesOrder;
 using TsiErp.Entities.Entities.SalesProposition;
+using TsiErp.Entities.Entities.SalesPropositionLine;
 using TsiErp.Entities.Entities.UnitSet;
 using TsiErp.Entities.Entities.WareHouse;
 using TsiErp.Entities.Enums;
 
-namespace TsiErp.Entities.Entities.SalesPropositionLine
+namespace TsiErp.Entities.Entities.SalesOrderLine
 {
-    public class SalesPropositionLines : FullAuditedEntity
+    public class SalesOrderLines : FullAuditedEntity
     {
         /// <summary>
-        /// Satış Teklif ID
+        /// Satış Sipariş ID
         /// </summary>
-        public Guid SalesPropositionID { get; set; }
+        public Guid SalesOrderID { get; set; }
         /// <summary>
         /// Satır Nr
         /// </summary>
@@ -33,6 +35,10 @@ namespace TsiErp.Entities.Entities.SalesPropositionLine
         /// Birim Set ID
         /// </summary>
         public Guid UnitSetID { get; set; }
+        /// <summary>
+        /// Bağlı Teklif Satır ID
+        /// </summary>
+        public Guid LikedPropositionLineID { get; set; }
 
         [Precision(18, 6)]
         /// <summary>
@@ -94,13 +100,13 @@ namespace TsiErp.Entities.Entities.SalesPropositionLine
         /// </summary>
         public Guid PaymentPlanID { get; set; }
         /// <summary>
-        /// Satış Teklif Satırı Durumu
+        /// Satış Sipariş Satırı Durumu
         /// </summary>
-        public SalesPropositionLineStateEnum SalesPropositionLineState { get; set; }
+        public SalesOrderLineStateEnum SalesOrderLineStateEnum { get; set; }
         /// <summary>
-        /// Siparişe Çevirilme Tarihi
+        /// Üretim Emri Oluşturulma Tarihi
         /// </summary>
-        public DateTime? OrderConversionDate { get; set; }
+        public DateTime WorkOrderCreationDate { get; set; }
 
 
 
@@ -119,8 +125,12 @@ namespace TsiErp.Entities.Entities.SalesPropositionLine
         /// </summary>
         public PaymentPlans PaymentPlans { get; set; }
         /// <summary>
-        /// Satış Teklifi
+        /// Satış Siparişi
         /// </summary>
-        public SalesPropositions SalesPropositions { get; set; }
+        public SalesOrders SalesOrders { get; set; }
+        /// <summary>
+        /// Satış Teklifi Satırı
+        /// </summary>
+        public SalesPropositionLines SalesPropositionLines { get; set; }
     }
 }

@@ -10,6 +10,7 @@ using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.RouteLine;
 using TsiErp.Entities.Entities.Route;
 using Microsoft.EntityFrameworkCore;
+using TsiErp.Entities.Entities.SalesOrderLine;
 
 namespace TsiErp.Entities.Entities.Product
 {
@@ -127,6 +128,7 @@ namespace TsiErp.Entities.Entities.Product
         public ProductGroups ProductGroups { get; set; }
 
         public ICollection<SalesPropositionLines> SalesPropositionLines { get; set; }
+        public ICollection<SalesOrderLines> SalesOrderLines { get; set; }
 
         public ICollection<RouteLines> RouteLines { get; set; }
 

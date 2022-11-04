@@ -54,9 +54,5 @@ namespace TsiErp.Entities.Entities.SalesPropositionLine.Dtos
         /// Satış Teklif Satırı Durumu
         /// </summary>
         public SalesPropositionLineStateEnum SalesPropositionLineState { get; set; }
-        /// <summary>
-        /// Depo Kodu
-        /// </summary>
-        public string WarehouseCode { get; set; }
     }
 }
