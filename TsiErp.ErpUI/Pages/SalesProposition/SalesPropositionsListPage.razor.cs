@@ -32,9 +32,6 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         SfComboBox<string, ListPaymentPlansDto> PaymentPlansComboBox;
         List<ListPaymentPlansDto> PaymentPlansList = new List<ListPaymentPlansDto>();
 
-        SfComboBox<string, ListWarehousesDto> LineWarehousesComboBox;
-        List<ListWarehousesDto> LineWarehousesList = new List<ListWarehousesDto>();
-
         SfComboBox<string, ListUnitSetsDto> UnitSetsComboBox;
         List<ListUnitSetsDto> UnitSetsList = new List<ListUnitSetsDto>();
 
@@ -42,7 +39,6 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
 
         SfComboBox<string, ListBranchesDto> BranchesComboBox;
-        SfComboBox<string, ListBranchesDto> LineBranchesComboBox;
         List<ListBranchesDto> BranchesList = new List<ListBranchesDto>();
 
         SfComboBox<string, ListWarehousesDto> WarehousesComboBox;
@@ -150,11 +146,20 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
                     break;
 
                 case "delete":
-                    await DeleteAsync(args.RowInfo.RowData.Id);
-                    await InvokeAsync(StateHasChanged);
+                    var res = await ModalManager.ConfirmationAsync("Dikkat", "Seçtiğiniz satış teklifi kalıcı olarak silinecektir.");
+                    if (res == true)
+                    {
+                        await DeleteAsync(args.RowInfo.RowData.Id);
+                        await GetListDataSourceAsync();
+                        await _grid.Refresh();
+                        await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "refresh":
+                    await GetListDataSourceAsync();
+                    await _grid.Refresh();
+                    await InvokeAsync(StateHasChanged);
                     break;
 
                 default:
@@ -171,10 +176,6 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
                     LineCrudPopup = true;
                     LineDataSource.PaymentPlanID = DataSource.PaymentPlanID;
                     LineDataSource.PaymentPlanName = DataSource.PaymentPlanName;
-                    LineDataSource.BranchID = DataSource.BranchID;
-                    LineDataSource.BranchCode = DataSource.BranchCode;
-                    LineDataSource.WarehouseID = DataSource.WarehouseID;
-                    LineDataSource.WarehouseCode = DataSource.WarehouseCode;
                     LineDataSource.LineNr = GridLineList.Count + 1;
                     await InvokeAsync(StateHasChanged);
                     break;
@@ -239,8 +240,19 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         {
             if (LineDataSource.Id == Guid.Empty)
             {
-                //LineDataSource.Id = ApplicationService.GuidGenerator.CreateGuid();
-                DataSource.SelectSalesPropositionLines.Add(LineDataSource);
+                if(DataSource.SelectSalesPropositionLines.Contains(LineDataSource))
+                {
+                    int selectedLineIndex = DataSource.SelectSalesPropositionLines.FindIndex(t => t.LineNr == LineDataSource.LineNr);
+
+                    if (selectedLineIndex > -1)
+                    {
+                        DataSource.SelectSalesPropositionLines[selectedLineIndex] = LineDataSource;
+                    }
+                }
+                else
+                {
+                    DataSource.SelectSalesPropositionLines.Add(LineDataSource);
+                }
             }
             else
             {
@@ -368,34 +380,11 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             {
                 DataSource.BranchID = args.ItemData.Id;
                 DataSource.BranchCode = args.ItemData.Code;
-
-                foreach (var item in DataSource.SelectSalesPropositionLines)
-                {
-                    if (item.BranchID == Guid.Empty)
-                    {
-                        item.BranchID = DataSource.BranchID;
-                        item.BranchCode = DataSource.BranchCode;
-                    }
-                }
             }
             else
             {
                 DataSource.BranchID = Guid.Empty;
                 DataSource.BranchCode = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-        public async Task LineBranchValueChangeHandler(ChangeEventArgs<string, ListBranchesDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                LineDataSource.BranchID = args.ItemData.Id;
-                LineDataSource.BranchCode = args.ItemData.Code;
-            }
-            else
-            {
-                LineDataSource.BranchID = Guid.Empty;
-                LineDataSource.BranchCode = string.Empty;
             }
             await InvokeAsync(StateHasChanged);
         }
@@ -424,7 +413,6 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         private async Task GetWarehousesList()
         {
             WarehousesList = (await WarehousesAppService.GetListAsync(new ListWarehousesParameterDto())).Data.ToList();
-            LineWarehousesList = WarehousesList;
         }
 
         public async Task WarehouseValueChangeHandler(ChangeEventArgs<string, ListWarehousesDto> args)
@@ -433,15 +421,6 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             {
                 DataSource.WarehouseID = args.ItemData.Id;
                 DataSource.WarehouseCode = args.ItemData.Code;
-
-                foreach (var item in DataSource.SelectSalesPropositionLines)
-                {
-                    if(item.WarehouseID==Guid.Empty)
-                    {
-                        item.WarehouseID = DataSource.WarehouseID;
-                        item.WarehouseCode = DataSource.WarehouseCode;
-                    }
-                }
             }
             else
             {
@@ -576,41 +555,6 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         }
         #endregion
 
-        #region Depolar - Teklif Satırları
-        public async Task LineWareHouseFiltering(FilteringEventArgs args)
-        {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await LineWarehousesComboBox.FilterAsync(LineWarehousesList, query);
-        }
-
-        public async Task LineWareHouseValueChangeHandler(ChangeEventArgs<string, ListWarehousesDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                LineDataSource.WarehouseID = args.ItemData.Id;
-                LineDataSource.WarehouseCode = args.ItemData.Code;
-            }
-            else
-            {
-                LineDataSource.WarehouseID = Guid.Empty;
-                LineDataSource.WarehouseCode = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-
-        #endregion
-
         #region Ödeme Planları - Teklif Satırları
         public async Task PaymentPlanFiltering(FilteringEventArgs args)
         {
@@ -659,20 +603,6 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             await InvokeAsync(StateHasChanged);
         }
 
-        public async Task LinePaymentPlanValueChangeHandler(ChangeEventArgs<string, ListPaymentPlansDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                LineDataSource.PaymentPlanID = args.ItemData.Id;
-                LineDataSource.PaymentPlanName = args.ItemData.Name;
-            }
-            else
-            {
-                LineDataSource.PaymentPlanID = Guid.Empty;
-                LineDataSource.PaymentPlanName = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
         #endregion
     }
 }
