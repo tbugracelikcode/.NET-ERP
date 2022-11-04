@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Tsi.Application.Contract.Services.EntityFrameworkCore;
+using TsiErp.Entities.Entities.SalesOrder.Dtos;
+using TsiErp.Entities.Entities.SalesProposition.Dtos;
+
+namespace TsiErp.Business.Entities.SalesOrder.Services
+{
+    public interface ISalesOrdersAppService : ICrudAppService<SelectSalesOrderDto, ListSalesOrderDto, CreateSalesOrderDto, UpdateSalesOrderDto, ListSalesOrderParameterDto>
+    {
+    }
+}

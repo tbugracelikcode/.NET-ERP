@@ -6,12 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.SalesOrderLine.Dtos;
-using TsiErp.Entities.Entities.SalesPropositionLine.Dtos;
 using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.SalesOrder.Dtos
 {
-    public class CreateSalesOrderDto : FullAuditedEntityDto
+    public class SelectSalesOrderDto : FullAuditedEntityDto
     {
         /// <summary>
         /// Satış Fiş No
@@ -50,23 +49,47 @@ namespace TsiErp.Entities.Entities.SalesOrder.Dtos
         /// <summary>
         /// Para Birimi ID
         /// </summary>
-        public Guid? CurrencyID { get; set; }
+        public Guid CurrencyID { get; set; }
+        /// <summary>
+        /// Para Birimi Kodu
+        /// </summary>
+        public string CurrencyCode { get; set; }
         /// <summary>
         /// Ödeme Planı ID
         /// </summary>
         public Guid PaymentPlanID { get; set; }
         /// <summary>
+        /// Ödeme Planı Adı
+        /// </summary>
+        public string PaymentPlanName { get; set; }
+        /// <summary>
         /// Şube ID
         /// </summary>
-        public Guid? BranchID { get; set; }
+        public Guid BranchID { get; set; }
+        /// <summary>
+        /// Şube Kodu
+        /// </summary>
+        public string BranchCode { get; set; }
         /// <summary>
         /// Depo ID
         /// </summary>
-        public Guid? WarehouseID { get; set; }
+        public Guid WarehouseID { get; set; }
+        /// <summary>
+        /// Depo Kodu
+        /// </summary>
+        public string WarehouseCode { get; set; }
         /// <summary>
         /// Cari Hesap Kartı ID
         /// </summary>
-        public Guid? CurrentAccountCardID { get; set; }
+        public Guid CurrentAccountCardID { get; set; }
+        /// <summary>
+        /// Cari Hesap Kartı Kodu
+        /// </summary>
+        public string CurrentAccountCardCode { get; set; }
+        /// <summary>
+        /// Cari Hesap Kartı Ünvanı
+        /// </summary>
+        public string CurrentAccountCardName { get; set; }
 
         [Precision(18, 6)]
         /// <summary>
@@ -105,6 +128,10 @@ namespace TsiErp.Entities.Entities.SalesOrder.Dtos
         /// Sevkiyat Adresi ID
         /// </summary>
         public Guid? ShippingAdressID { get; set; }
+        /// <summary>
+        /// Sevkiyat Adresi Kodu
+        /// </summary>
+        public string ShippingAdressCode { get; set; }
 
 
 

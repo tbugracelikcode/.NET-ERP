@@ -1,14 +1,17 @@
 ﻿using FluentValidation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using TsiErp.Entities.Entities.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesProposition.Dtos;
 
-namespace TsiErp.Business.Entities.SalesProposition.Validations
+namespace TsiErp.Business.Entities.SalesOrder.Validations
 {
-    public class CreateSalesPropositionsValidatorDto : AbstractValidator<CreateSalesPropositionsDto>
+    public class CreateSalesOrderValidatorDto : AbstractValidator<CreateSalesOrderDto>
     {
-        public CreateSalesPropositionsValidatorDto()
+        public CreateSalesOrderValidatorDto()
         {
             RuleFor(x => x.FicheNo)
                .NotEmpty()
@@ -16,10 +19,6 @@ namespace TsiErp.Business.Entities.SalesProposition.Validations
                .MaximumLength(17)
                .WithMessage("Teklif numarası 17 karakterden fazla olamaz.");
 
-            RuleFor(x => x.ValidityDate_)
-               .NotEmpty()
-               .WithMessage("Lütfen teklif geçerlilik tarihi seçin.");
-               
 
             RuleFor(x => x.CurrentAccountCardID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
@@ -33,6 +32,10 @@ namespace TsiErp.Business.Entities.SalesProposition.Validations
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
                .WithMessage("Lütfen depo seçin.");
 
+            //RuleFor(x => x.PaymentPlanID)
+            //    .Must(x => x.HasValue && x.Value != Guid.Empty)
+            //   .WithMessage("Lütfen ödeme planı seçin.");
+
             RuleFor(x => x.BranchID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
                .WithMessage("Lütfen şube seçin.");
@@ -42,7 +45,6 @@ namespace TsiErp.Business.Entities.SalesProposition.Validations
                 .WithMessage("Lütfen kur tutarını yazın.")
                 .GreaterThanOrEqualTo(1)
                 .WithMessage("Kur tutarı 0'dan büyük olmalıdır.");
-
         }
     }
 }

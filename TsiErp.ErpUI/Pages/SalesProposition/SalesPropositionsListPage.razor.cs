@@ -268,7 +268,7 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             GetTotal();
             await _LineGrid.Refresh();
 
-            HideLinesPopup();
+            HideLinesPopup(); 
             await InvokeAsync(StateHasChanged);
         }
 

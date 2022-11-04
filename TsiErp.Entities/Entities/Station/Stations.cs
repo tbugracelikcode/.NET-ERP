@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.CalendarLine;
-using TsiErp.Entities.Entities.OperationLine;
 using TsiErp.Entities.Entities.StationGroup;
+using TsiErp.Entities.Entities.TemplateOperationLine;
 
 namespace TsiErp.Entities.Entities.Station
 {
@@ -119,7 +119,7 @@ namespace TsiErp.Entities.Entities.Station
 
         public StationGroups StationGroups { get; set; }
 
-        public ICollection<OperationLines> OperationLines { get; set; }
+        public ICollection<TemplateOperationLines> TemplateOperationLines { get; set; }
         public ICollection<CalendarLines> CalendarLines { get; set; }
     }
 }
