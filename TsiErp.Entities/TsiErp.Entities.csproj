@@ -14,9 +14,4 @@
     <ProjectReference Include="..\Tsi.Core\Tsi.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Entities\SalesOrderLine\Dtos\" />
-    <Folder Include="Entities\SalesOrder\Dtos\" />
-  </ItemGroup>
-
 </Project>
