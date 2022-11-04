@@ -31,7 +31,7 @@ namespace TsiErp.Business.Entities.Station.BusinessRules
 
         public async Task DeleteControl(IStationsRepository _repository, Guid id)
         {
-            if (await _repository.AnyAsync(t => t.OperationLines.Any(x => x.StationID == id)))
+            if (await _repository.AnyAsync(t => t.TemplateOperationLines.Any(x => x.StationID == id)))
             {
                 throw new Exception("Hareket gören kayıtlar silinemez.");
             }
