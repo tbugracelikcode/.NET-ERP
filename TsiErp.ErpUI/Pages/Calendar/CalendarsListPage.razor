@@ -3,17 +3,38 @@
 @using Syncfusion.Blazor
 @using Syncfusion.Blazor.Schedule
 
-<SfSchedule TValue=AppointmentData>
+<SfSchedule TValue="AppointmentData" @bind-SelectedDate="@CurrentDate">
+    <ScheduleResources>
+        <ScheduleResource TItem="ResourceData" TValue="int[]" DataSource="@OwnersData" Field="OwnerId" Title="Owner" Name="Owners" TextField="OwnerText" IdField="Id" ColorField="OwnerColor" AllowMultiple="true" ></ScheduleResource>
+    </ScheduleResources>
+    <ScheduleEvents TValue="AppointmentData" OnPopupOpen="@OnPopupOpen"></ScheduleEvents>
+    <ScheduleEventSettings DataSource="@DataSource">
+    </ScheduleEventSettings>
     <ScheduleViews>
-        <ScheduleView Option="View.Day"></ScheduleView>
-        <ScheduleView Option="View.Week"></ScheduleView>
-        <ScheduleView Option="View.TimelineYear"></ScheduleView>
-        <ScheduleView Option="View.Month"></ScheduleView>
-        <ScheduleView Option="View.Year"></ScheduleView>
+        <ScheduleView Option="View.Year" FirstDayOfWeek="1" ShowWeekNumber=true></ScheduleView>
     </ScheduleViews>
 </SfSchedule>
-
 @code {
+    public void OnPopupOpen(PopupOpenEventArgs<AppointmentData> args)
+    {
+        if (args.Type == PopupType.Editor || args.Type == PopupType.QuickInfo)
+        {
+            args.Cancel = true;
+        }
+    }
+    DateTime CurrentDate = new DateTime(2022, 6, 1);
+    List<AppointmentData> DataSource = new List<AppointmentData>
+    {
+        new AppointmentData { Id = 1, Subject = "Meeting", StartTime = new DateTime(2022, 6, 1, 9, 30, 0) , EndTime = new DateTime(2022, 6, 1, 11, 0, 0), OwnerId = 1 },
+        new AppointmentData { Id = 2, Subject = "Swimming", StartTime = new DateTime(2022, 6, 1, 9, 30, 0) , EndTime = new DateTime(2022, 6, 1, 11, 0, 0), OwnerId = 2 },
+        new AppointmentData { Id = 3, Subject = "Movie", StartTime = new DateTime(2022, 6, 2, 10, 0, 0) , EndTime = new DateTime(2022, 6, 2, 12, 0, 0), OwnerId = 3 }
+    };
+    public List<ResourceData> OwnersData { get; set; } = new List<ResourceData>
+    {
+        new ResourceData{ OwnerText = "Nancy", Id = 1, OwnerColor = "#ffaa00" },
+        new ResourceData{ OwnerText = "Steven", Id = 2, OwnerColor = "#f8a398" },
+        new ResourceData{ OwnerText = "Michael", Id = 3, OwnerColor = "#7499e1" }
+    };
     public class AppointmentData
     {
         public int Id { get; set; }
@@ -26,5 +47,12 @@
         public string RecurrenceRule { get; set; }
         public string RecurrenceException { get; set; }
         public Nullable<int> RecurrenceID { get; set; }
+        public int OwnerId { get; set; }
+    }
+    public class ResourceData
+    {
+        public int Id { get; set; }
+        public string OwnerText { get; set; }
+        public string OwnerColor { get; set; }
     }
 }
