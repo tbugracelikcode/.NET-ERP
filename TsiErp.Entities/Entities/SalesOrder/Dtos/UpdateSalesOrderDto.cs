@@ -6,12 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.SalesOrderLine.Dtos;
-using TsiErp.Entities.Entities.SalesPropositionLine.Dtos;
 using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.SalesOrder.Dtos
 {
-    public class CreateSalesOrderDto : FullAuditedEntityDto
+    public class UpdateSalesOrderDto : FullAuditedEntityDto
     {
         /// <summary>
         /// Satış Fiş No
@@ -50,7 +49,7 @@ namespace TsiErp.Entities.Entities.SalesOrder.Dtos
         /// <summary>
         /// Para Birimi ID
         /// </summary>
-        public Guid? CurrencyID { get; set; }
+        public Guid CurrencyID { get; set; }
         /// <summary>
         /// Ödeme Planı ID
         /// </summary>
@@ -58,15 +57,15 @@ namespace TsiErp.Entities.Entities.SalesOrder.Dtos
         /// <summary>
         /// Şube ID
         /// </summary>
-        public Guid? BranchID { get; set; }
+        public Guid BranchID { get; set; }
         /// <summary>
         /// Depo ID
         /// </summary>
-        public Guid? WarehouseID { get; set; }
+        public Guid WarehouseID { get; set; }
         /// <summary>
         /// Cari Hesap Kartı ID
         /// </summary>
-        public Guid? CurrentAccountCardID { get; set; }
+        public Guid CurrentAccountCardID { get; set; }
 
         [Precision(18, 6)]
         /// <summary>
