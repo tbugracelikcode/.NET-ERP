@@ -77,7 +77,7 @@ namespace TsiErp.Business.Entities.Shift.Services
             }
             else
             {
-                await _manager.DeleteControl(_repository, lines.Id);
+                await _manager.DeleteControl(_repository, id);
                 await _repository.DeleteAsync(id);
                 await _repository.SaveChanges();
                 await _lineRepository.SaveChanges();
