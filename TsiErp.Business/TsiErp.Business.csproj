@@ -23,9 +23,6 @@
   <ItemGroup>
     <Folder Include="Entities\Authentication\UserRoles\" />
     <Folder Include="Entities\Authentication\Users\" />
-    <Folder Include="Entities\SalesOrder\BusinessRules\" />
-    <Folder Include="Entities\SalesOrder\Validations\" />
-    <Folder Include="Entities\SalesOrder\Services\" />
     <Folder Include="Extensions\CrudControl\" />
   </ItemGroup>
 
