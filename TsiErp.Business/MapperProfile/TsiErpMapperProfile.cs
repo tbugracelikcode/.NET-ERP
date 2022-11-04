@@ -62,12 +62,8 @@ using TsiErp.Entities.Entities.ShippingAdress;
 using TsiErp.Entities.Entities.ShippingAdress.Dtos;
 using TsiErp.Entities.Entities.SalesPropositionLine.Dtos;
 using TsiErp.Entities.Entities.SalesPropositionLine;
-using TsiErp.Entities.Entities.Operation.Dtos;
-using TsiErp.Entities.Entities.Operation;
 using TsiErp.Entities.Entities.Route.Dtos;
 using TsiErp.Entities.Entities.Route;
-using TsiErp.Entities.Entities.OperationLine;
-using TsiErp.Entities.Entities.OperationLine.Dtos;
 using TsiErp.Entities.Entities.RouteLine;
 using TsiErp.Entities.Entities.RouteLine.Dtos;
 using TsiErp.Entities.Entities.Shift;
@@ -78,6 +74,10 @@ using TsiErp.Entities.Entities.Calendar.Dtos;
 using TsiErp.Entities.Entities.CalendarLine.Dtos;
 using TsiErp.Entities.Entities.CalendarLine;
 using TsiErp.Entities.Entities.Calendar;
+using TsiErp.Entities.Entities.TemplateOperation;
+using TsiErp.Entities.Entities.TemplateOperation.Dtos;
+using TsiErp.Entities.Entities.TemplateOperationLine;
+using TsiErp.Entities.Entities.TemplateOperationLine.Dtos;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -298,26 +298,6 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateWarehousesDto, Warehouses>();
             CreateMap<SelectWarehousesDto, UpdateWarehousesDto>();
 
-            CreateMap<Operations, SelectOperationsDto>();
-            CreateMap<Operations, ListOperationsDto>();
-            CreateMap<CreateOperationsDto, Operations>();
-            CreateMap<SelectOperationsDto, CreateOperationsDto>();
-            CreateMap<UpdateOperationsDto, Operations>()
-                .ForMember(x => x.OperationLines, y => y.Ignore());
-            CreateMap<SelectOperationsDto, UpdateOperationsDto>();
-
-
-            CreateMap<OperationLines, SelectOperationLinesDto>()
-                .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
-                .ForMember(x => x.OperationName, y => y.MapFrom(z => z.Operations.Name));
-            CreateMap<OperationLines, ListOperationLinesDto>()
-                .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
-                .ForMember(x => x.OperationName, y => y.MapFrom(z => z.Operations.Name)); ;
-            CreateMap<CreateOperationLinesDto, OperationLines>();
-            CreateMap<SelectOperationLinesDto, CreateOperationLinesDto>();
-            CreateMap<UpdateOperationLinesDto, OperationLines>();
-            CreateMap<SelectOperationLinesDto, UpdateOperationLinesDto>();
-
 
             CreateMap<Routes, SelectRoutesDto>()
                 .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code));
@@ -333,11 +313,11 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<RouteLines, SelectRouteLinesDto>()
                 .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
                 .ForMember(x => x.RouteCode, y => y.MapFrom(z => z.Routes.Code))
-                .ForMember(x => x.OperationName, y => y.MapFrom(z => z.Operations.Name));
+                .ForMember(x => x.OperationName, y => y.MapFrom(z => z.TemplateOperations.Name));
             CreateMap<RouteLines, ListRouteLinesDto>()
                 .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
                 .ForMember(x => x.RouteCode, y => y.MapFrom(z => z.Routes.Code))
-                .ForMember(x => x.OperationName, y => y.MapFrom(z => z.Operations.Name));
+                .ForMember(x => x.OperationName, y => y.MapFrom(z => z.TemplateOperations.Name));
             CreateMap<CreateRouteLinesDto, RouteLines>();
             CreateMap<SelectRouteLinesDto, CreateRouteLinesDto>();
             CreateMap<UpdateRouteLinesDto, RouteLines>();
@@ -388,6 +368,28 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectCalendarLinesDto, CreateCalendarLinesDto>();
             CreateMap<UpdateCalendarLinesDto, CalendarLines>();
             CreateMap<SelectCalendarLinesDto, UpdateCalendarLinesDto>();
+
+
+            CreateMap<TemplateOperations, SelectTemplateOperationsDto>();
+            CreateMap<TemplateOperations, ListTemplateOperationsDto>();
+            CreateMap<UpdateTemplateOperationsDto, TemplateOperations>()
+                .ForMember(x => x.TemplateOperationLines, y => y.Ignore());
+            CreateMap<CreateTemplateOperationsDto, TemplateOperations>();
+            CreateMap<SelectTemplateOperationsDto, CreateTemplateOperationsDto>();
+            CreateMap<SelectTemplateOperationsDto, UpdateTemplateOperationsDto>();
+
+
+            CreateMap<TemplateOperationLines, SelectTemplateOperationLinesDto>()
+                .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
+                .ForMember(x => x.TemplateOperationName, y => y.MapFrom(z => z.TemplateOperations.Name));
+            CreateMap<TemplateOperationLines, ListTemplateOperationLinesDto>()
+                .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
+                .ForMember(x => x.TemplateOperationName, y => y.MapFrom(z => z.TemplateOperations.Name));
+            CreateMap<CreateTemplateOperationLinesDto, TemplateOperationLines>();
+            CreateMap<SelectTemplateOperationLinesDto, CreateTemplateOperationLinesDto>();
+            CreateMap<UpdateTemplateOperationLinesDto, TemplateOperationLines>();
+            CreateMap<SelectTemplateOperationLinesDto, UpdateTemplateOperationLinesDto>();
+            CreateMap<SelectTemplateOperationLinesDto, TemplateOperationLines>();
         }
     }
 }
