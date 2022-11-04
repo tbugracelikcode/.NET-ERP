@@ -42,8 +42,8 @@ using TsiErp.Entities.Entities.CustomerComplaintItem;
 using TsiErp.Entities.Entities.ProductionOrderChangeItem;
 using TsiErp.Entities.Entities.PurchasingUnsuitabilityItem;
 using TsiErp.Entities.Entities.ShippingAdress;
-using TsiErp.Entities.Entities.Operation;
-using TsiErp.Entities.Entities.OperationLine;
+using TsiErp.Entities.Entities.TemplateOperation;
+using TsiErp.Entities.Entities.TemplateOperationLine;
 using TsiErp.Entities.Entities.Route;
 using TsiErp.Entities.Entities.RouteLine;
 using TsiErp.Entities.Entities.Calendar;
@@ -142,8 +142,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigureCustomerComplaintItems();
             builder.ConfigureShippingAdresses();
             builder.ConfigureWarehouses();
-            builder.ConfigureOperations();
-            builder.ConfigureOperationLines();
+            builder.ConfigureTemplateOperations();
+            builder.ConfigureTemplateOperationLines();
             builder.ConfigureRoutes();
             builder.ConfigureRouteLines();
             builder.ConfigureSalesPropositions();
@@ -230,8 +230,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<PurchasingUnsuitabilityItems> PurchasingUnsuitabilityItems { get; set; }
         public DbSet<ShippingAdresses> ShippingAdresses { get; set; }
         public DbSet<Warehouses> Warehouses { get; set; }
-        public DbSet<Operations> Operations { get; set; }
-        public DbSet<OperationLines> OperationLines { get; set; }
+        public DbSet<TemplateOperations> TemplateOperations { get; set; }
+        public DbSet<TemplateOperationLines> TemplateOperationLines { get; set; }
         public DbSet<Routes> Routes { get; set; }
         public DbSet<RouteLines> RouteLines { get; set; }
         public DbSet<SalesPropositions> SalesPropositions { get; set; }

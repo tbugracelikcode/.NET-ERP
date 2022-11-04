@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
-using TsiErp.Entities.Entities.Operation;
 using TsiErp.Entities.Entities.Product;
 using TsiErp.Entities.Entities.Route;
+using TsiErp.Entities.Entities.TemplateOperation;
 
 namespace TsiErp.Entities.Entities.RouteLine
 {
@@ -64,7 +64,7 @@ namespace TsiErp.Entities.Entities.RouteLine
         /// </summary>
         public byte[] OperationPicture { get; set; }
 
-        public Operations Operations { get; set; }
+        public TemplateOperations TemplateOperations { get; set; }
 
         public Products Products { get; set; }
 

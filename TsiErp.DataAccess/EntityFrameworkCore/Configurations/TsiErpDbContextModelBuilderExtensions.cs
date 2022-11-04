@@ -39,9 +39,7 @@ using TsiErp.Entities.Entities.CustomerComplaintItem;
 using TsiErp.Entities.Entities.ProductionOrderChangeItem;
 using TsiErp.Entities.Entities.PurchasingUnsuitabilityItem;
 using TsiErp.Entities.Entities.ShippingAdress;
-using TsiErp.Entities.Entities.Operation;
 using TsiErp.Entities.Entities.Route;
-using TsiErp.Entities.Entities.OperationLine;
 using TsiErp.Entities.Entities.RouteLine;
 using TsiErp.Entities.Entities.Calendar;
 using TsiErp.Entities.Entities.CalendarLine;
@@ -49,6 +47,8 @@ using TsiErp.Entities.Entities.Shift;
 using TsiErp.Entities.Entities.ShiftLine;
 using TsiErp.Entities.Entities.SalesOrder;
 using TsiErp.Entities.Entities.SalesOrderLine;
+using TsiErp.Entities.Entities.TemplateOperation;
+using TsiErp.Entities.Entities.TemplateOperationLine;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 {
@@ -809,18 +809,18 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             });
         }
 
-        public static void ConfigureOperations(this ModelBuilder builder)
+        public static void ConfigureTemplateOperations(this ModelBuilder builder)
         {
-            builder.Entity<Operations>(b =>
+            builder.Entity<TemplateOperations>(b =>
             {
-                b.ToTable("Operations");
+                b.ToTable("TemplateOperations");
                 b.ConfigureByConvention();
 
                 //b.HasQueryFilter(x => !x.IsDeleted);
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
-                b.Property(t => t.ProductionPoolID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.WorkCenterID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
 
                 b.HasIndex(x => x.Code);
@@ -852,27 +852,25 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             });
         }
 
-        public static void ConfigureOperationLines(this ModelBuilder builder)
+        public static void ConfigureTemplateOperationLines(this ModelBuilder builder)
         {
-            builder.Entity<OperationLines>(b =>
+            builder.Entity<TemplateOperationLines>(b =>
             {
-                b.ToTable("OperationLines");
+                b.ToTable("TemplateOperationLines");
                 b.ConfigureByConvention();
 
-                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
-                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
                 b.Property(t => t.StationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.OperationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.TemplateOperationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.Priority).IsRequired().HasColumnType(SqlDbType.Int.ToString());
                 b.Property(t => t.ProcessQuantity).IsRequired().HasColumnType(SqlDbType.Int.ToString());
                 b.Property(t => t.AdjustmentAndControlTime).IsRequired().HasColumnType(SqlDbType.Int.ToString());
                 b.Property(t => t.LineNr).IsRequired().HasColumnType(SqlDbType.Int.ToString());
                 b.Property(t => t.Alternative).HasColumnType(SqlDbType.Bit.ToString());
 
-                b.HasIndex(x => x.Code);
+                b.HasIndex(x => x.TemplateOperationID);
 
-                b.HasOne(x => x.Operations).WithMany(x => x.OperationLines).HasForeignKey(x => x.OperationID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Stations).WithMany(x => x.OperationLines).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.TemplateOperations).WithMany(x => x.TemplateOperationLines).HasForeignKey(x => x.TemplateOperationID).OnDelete(DeleteBehavior.Cascade);
+                b.HasOne(x => x.Stations).WithMany(x => x.TemplateOperationLines).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -900,7 +898,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.Code);
 
                 b.HasOne(x => x.Routes).WithMany(x => x.RouteLines).HasForeignKey(x => x.RouteID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Operations).WithMany(x => x.RouteLines).HasForeignKey(x => x.OperationID).OnDelete(DeleteBehavior.NoAction);
+              //  b.HasOne(x => x.TemplateOperations).WithMany(x => x.RouteLines).HasForeignKey(x => x.OperationID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.Products).WithMany(x => x.RouteLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
             });
         }
