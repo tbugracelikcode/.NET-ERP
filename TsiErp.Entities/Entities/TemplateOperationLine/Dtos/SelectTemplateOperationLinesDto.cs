@@ -27,6 +27,10 @@ namespace TsiErp.Entities.Entities.TemplateOperationLine.Dtos
         /// </summary>
         public string StationCode { get; set; }
         /// <summary>
+        /// Operasyon Süresi
+        /// </summary>
+        public decimal OperationTime { get; set; }
+        /// <summary>
         /// Öncelik
         /// </summary>
         public int Priority { get; set; }

@@ -11,6 +11,7 @@ using TsiErp.Entities.Entities.RouteLine;
 using TsiErp.Entities.Entities.Route;
 using Microsoft.EntityFrameworkCore;
 using TsiErp.Entities.Entities.SalesOrderLine;
+using TsiErp.Entities.Entities.ProductsOperation;
 
 namespace TsiErp.Entities.Entities.Product
 {
@@ -133,5 +134,7 @@ namespace TsiErp.Entities.Entities.Product
         public ICollection<RouteLines> RouteLines { get; set; }
 
         public Routes Routes { get; set; }
+
+        public ICollection<ProductsOperations> ProductsOperations { get; set; }
     }
 }

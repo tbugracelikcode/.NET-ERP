@@ -49,6 +49,8 @@ using TsiErp.Entities.Entities.SalesOrder;
 using TsiErp.Entities.Entities.SalesOrderLine;
 using TsiErp.Entities.Entities.TemplateOperation;
 using TsiErp.Entities.Entities.TemplateOperationLine;
+using TsiErp.Entities.Entities.ProductsOperation;
+using TsiErp.Entities.Entities.ProductsOperationLine;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 {
@@ -862,8 +864,9 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.StationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.TemplateOperationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.Priority).IsRequired().HasColumnType(SqlDbType.Int.ToString());
-                b.Property(t => t.ProcessQuantity).IsRequired().HasColumnType(SqlDbType.Int.ToString());
-                b.Property(t => t.AdjustmentAndControlTime).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.ProcessQuantity).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.AdjustmentAndControlTime).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.OperationTime).HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.LineNr).IsRequired().HasColumnType(SqlDbType.Int.ToString());
                 b.Property(t => t.Alternative).HasColumnType(SqlDbType.Bit.ToString());
 
@@ -1065,6 +1068,51 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasOne(x => x.SalesOrders).WithMany(x => x.SalesOrderLines).HasForeignKey(x => x.SalesOrderID).OnDelete(DeleteBehavior.Cascade);
                 b.HasOne(x => x.UnitSets).WithMany(x => x.SalesOrderLines).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.PaymentPlans).WithMany(x => x.SalesOrderLines).HasForeignKey(x => x.PaymentPlanID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+
+        public static void ConfigureProductsOperations(this ModelBuilder builder)
+        {
+            builder.Entity<ProductsOperations>(b =>
+            {
+                b.ToTable("ProductsOperations");
+                b.ConfigureByConvention();
+
+                //b.HasQueryFilter(x => !x.IsDeleted);
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.WorkCenterID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+                b.HasIndex(x => x.Code);
+
+                b.HasOne(x => x.Products).WithMany(x => x.ProductsOperations).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
+
+            });
+        }
+
+        public static void ConfigureProductsOperationLines(this ModelBuilder builder)
+        {
+            builder.Entity<ProductsOperationLines>(b =>
+            {
+                b.ToTable("ProductsOperationLines");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.StationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductsOperationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.Priority).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.ProcessQuantity).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.AdjustmentAndControlTime).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.OperationTime).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.LineNr).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.Alternative).HasColumnType(SqlDbType.Bit.ToString());
+
+                b.HasIndex(x => x.ProductsOperationID);
+
+                b.HasOne(x => x.ProductsOperations).WithMany(x => x.ProductsOperationLines).HasForeignKey(x => x.ProductsOperationID).OnDelete(DeleteBehavior.Cascade);
+                b.HasOne(x => x.Stations).WithMany(x => x.ProductsOperationLines).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 

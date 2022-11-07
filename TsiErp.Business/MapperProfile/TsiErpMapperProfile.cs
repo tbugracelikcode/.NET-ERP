@@ -78,6 +78,10 @@ using TsiErp.Entities.Entities.TemplateOperation;
 using TsiErp.Entities.Entities.TemplateOperation.Dtos;
 using TsiErp.Entities.Entities.TemplateOperationLine;
 using TsiErp.Entities.Entities.TemplateOperationLine.Dtos;
+using TsiErp.Entities.Entities.ProductsOperation;
+using TsiErp.Entities.Entities.ProductsOperation.Dtos;
+using TsiErp.Entities.Entities.ProductsOperationLine;
+using TsiErp.Entities.Entities.ProductsOperationLine.Dtos;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -390,6 +394,30 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateTemplateOperationLinesDto, TemplateOperationLines>();
             CreateMap<SelectTemplateOperationLinesDto, UpdateTemplateOperationLinesDto>();
             CreateMap<SelectTemplateOperationLinesDto, TemplateOperationLines>();
+
+
+            CreateMap<ProductsOperations, SelectProductsOperationsDto>()
+                .ForMember(x=>x.ProductCode, y=>y.MapFrom(z=>z.Products.Code));
+            CreateMap<ProductsOperations, ListProductsOperationsDto>()
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code));
+            CreateMap<UpdateProductsOperationsDto, ProductsOperations>()
+                .ForMember(x => x.ProductsOperationLines, y => y.Ignore());
+            CreateMap<CreateProductsOperationsDto, ProductsOperations>();
+            CreateMap<SelectProductsOperationsDto, CreateProductsOperationsDto>();
+            CreateMap<SelectProductsOperationsDto, UpdateProductsOperationsDto>();
+
+
+            CreateMap<ProductsOperationLines, SelectProductsOperationLinesDto>()
+                .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
+                .ForMember(x => x.ProductsOperationName, y => y.MapFrom(z => z.ProductsOperations.Name));
+            CreateMap<ProductsOperationLines, ListProductsOperationLinesDto>()
+                .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
+                .ForMember(x => x.ProductsOperationName, y => y.MapFrom(z => z.ProductsOperations.Name));
+            CreateMap<CreateProductsOperationLinesDto, ProductsOperationLines>();
+            CreateMap<SelectProductsOperationLinesDto, CreateProductsOperationLinesDto>();
+            CreateMap<UpdateProductsOperationLinesDto, ProductsOperationLines>();
+            CreateMap<SelectProductsOperationLinesDto, UpdateProductsOperationLinesDto>();
+            CreateMap<SelectProductsOperationLinesDto, ProductsOperationLines>();
         }
     }
 }

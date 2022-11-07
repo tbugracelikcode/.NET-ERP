@@ -28,6 +28,7 @@ namespace TsiErp.ErpUI.Pages.Shift
         private bool LineCrudPopup = false;
 
 
+
         protected override async void OnInitialized()
         {
             BaseCrudService = ShiftsAppService;
