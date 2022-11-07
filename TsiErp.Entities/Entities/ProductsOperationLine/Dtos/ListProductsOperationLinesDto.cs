@@ -5,19 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 
-namespace TsiErp.Entities.Entities.TemplateOperationLine.Dtos
+namespace TsiErp.Entities.Entities.ProductsOperationLine.Dtos
 {
-    public class UpdateTemplateOperationLinesDto : FullAuditedEntityDto
+    public class ListProductsOperationLinesDto : FullAuditedEntityDto
     {
-        
         /// <summary>
-        /// Şablon Operasyon ID
+        /// Ürüne Özel Operasyon Adı
         /// </summary>
-        public Guid? TemplateOperationID { get; set; }
+        public string ProductsOperationName { get; set; }
         /// <summary>
-        /// İstasyon ID
+        /// İstasyon Kodu
         /// </summary>
-        public Guid? StationID { get; set; }
+        public string StationCode { get; set; }
         /// <summary>
         /// Öncelik
         /// </summary>
@@ -27,13 +26,13 @@ namespace TsiErp.Entities.Entities.TemplateOperationLine.Dtos
         /// </summary>
         public int ProcessQuantity { get; set; }
         /// <summary>
-        /// Operasyon Süresi
-        /// </summary>
-        public decimal OperationTime { get; set; }
-        /// <summary>
         /// Ayar ve Kontrol Süresi
         /// </summary>
         public int AdjustmentAndControlTime { get; set; }
+        /// <summary>
+        /// Operasyon Süresi
+        /// </summary>
+        public decimal OperationTime { get; set; }
         /// <summary>
         /// Satır Numarası
         /// </summary>

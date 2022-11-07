@@ -5,15 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 
-namespace TsiErp.Entities.Entities.TemplateOperationLine.Dtos
+namespace TsiErp.Entities.Entities.ProductsOperationLine.Dtos
 {
-    public class UpdateTemplateOperationLinesDto : FullAuditedEntityDto
+    public class CreateProductsOperationLinesDto : FullAuditedEntityDto
     {
-        
         /// <summary>
-        /// Şablon Operasyon ID
+        /// Ürüne Özel Operasyon ID
         /// </summary>
-        public Guid? TemplateOperationID { get; set; }
+        public Guid? ProductsOperationID { get; set; }
         /// <summary>
         /// İstasyon ID
         /// </summary>

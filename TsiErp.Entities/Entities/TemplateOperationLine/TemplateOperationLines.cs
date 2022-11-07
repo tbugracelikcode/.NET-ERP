@@ -36,6 +36,10 @@ namespace TsiErp.Entities.Entities.TemplateOperationLine
         /// </summary>
         public int AdjustmentAndControlTime { get; set; }
         /// <summary>
+        /// Operasyon Süresi
+        /// </summary>
+        public decimal OperationTime { get; set; }
+        /// <summary>
         /// Satır Numarası
         /// </summary>
         public int LineNr { get; set; }
