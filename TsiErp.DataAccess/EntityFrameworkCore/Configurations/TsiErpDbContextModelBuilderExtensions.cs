@@ -1019,7 +1019,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.TotalVatAmount).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.TotalDiscountAmount).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.NetAmount).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
-                b.Property(t => t.WorkOrderCreationDate).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.WorkOrderCreationDate).HasColumnType(SqlDbType.DateTime.ToString());
                 b.Property(t => t.ShippingAdressID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
 
                 b.HasIndex(x => x.FicheNo);
