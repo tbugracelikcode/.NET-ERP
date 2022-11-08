@@ -22,7 +22,7 @@ namespace TsiErp.Entities.Entities.SalesOrderLine.Dtos
         /// <summary>
         /// Stok ID
         /// </summary>
-        public Guid ProductID { get; set; }
+        public Guid? ProductID { get; set; }
         /// <summary>
         /// Stok Kodu
         /// </summary>
@@ -34,7 +34,7 @@ namespace TsiErp.Entities.Entities.SalesOrderLine.Dtos
         /// <summary>
         /// Birim Set ID
         /// </summary>
-        public Guid UnitSetID { get; set; }
+        public Guid? UnitSetID { get; set; }
         /// <summary>
         /// Birim Set Kodu
         /// </summary>
@@ -42,7 +42,7 @@ namespace TsiErp.Entities.Entities.SalesOrderLine.Dtos
         /// <summary>
         /// Bağlı Teklif Satır ID
         /// </summary>
-        public Guid LikedPropositionLineID { get; set; }
+        public Guid? LikedPropositionLineID { get; set; }
 
         [Precision(18, 6)]
         /// <summary>
@@ -102,7 +102,7 @@ namespace TsiErp.Entities.Entities.SalesOrderLine.Dtos
         /// <summary>
         /// Ödeme Planı ID
         /// </summary>
-        public Guid PaymentPlanID { get; set; }
+        public Guid? PaymentPlanID { get; set; }
         /// <summary>
         /// Ödeme Planı Adı
         /// </summary>

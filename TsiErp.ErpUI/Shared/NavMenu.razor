@@ -44,7 +44,13 @@
                                 <DxTreeViewNode NavigateUrl="/sales-propositions" Text="Verilen Teklifler" />
                             </Nodes>
                         </DxTreeViewNode>
+                        <DxTreeViewNode Text="Sipariþ Yönetimi">
+                            <Nodes>
+                                <DxTreeViewNode NavigateUrl="/sales-orders" Text="Satýþ Sipariþleri" />
+                            </Nodes>
+                        </DxTreeViewNode>
                     </Nodes>
+
                 </DxTreeViewNode>
 
                 <DxTreeViewNode Visible="@collapsevisible" Text="Kaynak Yönetimi" IconCssClass="fa fa-users">
@@ -60,7 +66,7 @@
                     </Nodes>
                 </DxTreeViewNode>
 
-                 <DxTreeViewNode Visible="@collapsevisible" Text="Planlama" IconCssClass="fa fa-list">
+                <DxTreeViewNode Visible="@collapsevisible" Text="Planlama" IconCssClass="fa fa-list">
                     <Nodes>
                         <DxTreeViewNode NavigateUrl="/deneme" Text="DENEME" />
                     </Nodes>
@@ -124,7 +130,7 @@
                     </Nodes>
                 </DxTreeViewNode>
 
-                  <DxTreeViewNode Visible="@collapsevisible" Text="MODAL" IconCssClass="fa fa-cog fa-spin fa-x fa-fw">
+                <DxTreeViewNode Visible="@collapsevisible" Text="MODAL" IconCssClass="fa fa-cog fa-spin fa-x fa-fw">
                     <Nodes>
                         <DxTreeViewNode NavigateUrl="/scheduler-modal-example" Text="MODAL DENEME" />
                     </Nodes>
