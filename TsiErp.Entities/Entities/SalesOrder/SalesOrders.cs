@@ -106,7 +106,7 @@ namespace TsiErp.Entities.Entities.SalesOrder
         /// <summary>
         /// Üretim Emri Oluşturulma Tarihi
         /// </summary>
-        public DateTime WorkOrderCreationDate { get; set; }
+        public DateTime? WorkOrderCreationDate { get; set; }
         /// <summary>
         /// Sevkiyat Adresi ID
         /// </summary>
