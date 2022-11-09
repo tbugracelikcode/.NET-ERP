@@ -53,6 +53,7 @@ using TsiErp.Entities.Entities.ProductsOperation;
 using TsiErp.Entities.Entities.ProductsOperationLine;
 using TsiErp.Entities.Entities.BillsofMaterial;
 using TsiErp.Entities.Entities.BillsofMaterialLine;
+using TsiErp.Entities.Entities.CalendarDay;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 {
@@ -916,6 +917,9 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t._Description).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
                 b.Property(t => t.Year).IsRequired().HasColumnType(SqlDbType.Int.ToString());
                 b.Property(t => t.IsPlanned).IsRequired().HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.TotalDays).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.AvailableDays).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.OfficialHolidayDays).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
 
 
                 b.HasIndex(x => x.Code);
@@ -944,6 +948,30 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasOne(x => x.Stations).WithMany(x => x.CalendarLines).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.Shifts).WithMany(x => x.CalendarLines).HasForeignKey(x => x.ShiftID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.Calendars).WithMany(x => x.CalendarLines).HasForeignKey(x => x.CalendarID).OnDelete(DeleteBehavior.Cascade);
+
+
+            });
+        }
+        public static void ConfigureCalendarDays(this ModelBuilder builder)
+        {
+            builder.Entity<CalendarDays>(b =>
+            {
+                b.ToTable("CalendarDays");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Date_).IsRequired().HasColumnType(SqlDbType.Date.ToString());
+                b.Property(t => t.CalendarID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.IsWorkDay).IsRequired().HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsNotWorkDay).IsRequired().HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsOfficialHoliday).IsRequired().HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsHoliday).IsRequired().HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsHalfDay).IsRequired().HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsShipmentDay).IsRequired().HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsMaintenance).IsRequired().HasColumnType(SqlDbType.Bit.ToString());
+
+                b.HasIndex(x => x.CalendarID);
+
+                b.HasOne(x => x.Calendars).WithMany(x => x.CalendarDays).HasForeignKey(x => x.CalendarID).OnDelete(DeleteBehavior.Cascade);
 
 
             });

@@ -56,6 +56,7 @@ using TsiErp.Entities.Entities.ProductsOperation;
 using TsiErp.Entities.Entities.ProductsOperationLine;
 using TsiErp.Entities.Entities.BillsofMaterial;
 using TsiErp.Entities.Entities.BillsofMaterialLine;
+using TsiErp.Entities.Entities.CalendarDay;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore
 {
@@ -154,6 +155,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigureSalesPropositionLines();
             builder.ConfigureCalendars();
             builder.ConfigureCalendarLines();
+            builder.ConfigureCalendarDays();
             builder.ConfigureShifts();
             builder.ConfigureShiftLines();
             builder.ConfigureSalesOrders();
@@ -246,6 +248,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<SalesPropositionLines> SalesPropositionLines { get; set; }
         public DbSet<Calendars> Calendars { get; set; }
         public DbSet<CalendarLines> CalendarLines { get; set; }
+        public DbSet<CalendarDays> CalendarDays { get; set; }
         public DbSet<Shifts> Shifts { get; set; }
         public DbSet<ShiftLines> ShiftLines { get; set; }
         public DbSet<SalesOrders> SalesOrders { get; set; }

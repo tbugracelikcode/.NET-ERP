@@ -18,11 +18,6 @@ namespace TsiErp.Business.Entities.Calendar.Validations
                .MaximumLength(17)
                .WithMessage("Çalışma takvimi kodu 17 karakterden fazla olamaz.");
 
-            RuleFor(x => x.IsPlanned)
-               .NotEmpty()
-               .WithMessage("Lütfen takvimin türünü seçiniz");
-
-
             RuleFor(x => x.Year)
                .NotEmpty()
                .WithMessage("Lütfen takvim yılını seçiniz.");

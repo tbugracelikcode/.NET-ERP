@@ -413,15 +413,13 @@ namespace TsiErp.Business.MapperProfile
                 .ForMember(x => x.ShiftOverTime, y => y.MapFrom(z => z.Shifts.Overtime))
                 .ForMember(x => x.ShiftOrder, y => y.MapFrom(z => z.Shifts.ShiftOrder))
                 .ForMember(x => x.ShiftName, y => y.MapFrom(z => z.Shifts.Code))
-                .ForMember(x => x.ShiftTime, y => y.MapFrom(z => z.Shifts.TotalWorkTime))
-                .ForMember(x => x.Code, y => y.MapFrom(z => z.Calendars.Code));
+                .ForMember(x => x.ShiftTime, y => y.MapFrom(z => z.Shifts.TotalWorkTime));
             CreateMap<CalendarLines, ListCalendarLinesDto>()
                 .ForMember(x => x.StationName, y => y.MapFrom(z => z.Stations.Code))
                 .ForMember(x => x.ShiftOverTime, y => y.MapFrom(z => z.Shifts.Overtime))
                 .ForMember(x => x.ShiftOrder, y => y.MapFrom(z => z.Shifts.ShiftOrder))
                 .ForMember(x => x.ShiftName, y => y.MapFrom(z => z.Shifts.Code))
-                .ForMember(x => x.ShiftTime, y => y.MapFrom(z => z.Shifts.TotalWorkTime))
-                .ForMember(x => x.Code, y => y.MapFrom(z => z.Calendars.Code));
+                .ForMember(x => x.ShiftTime, y => y.MapFrom(z => z.Shifts.TotalWorkTime));
             CreateMap<CreateCalendarLinesDto, CalendarLines>();
             CreateMap<SelectCalendarLinesDto, CreateCalendarLinesDto>();
             CreateMap<UpdateCalendarLinesDto, CalendarLines>();

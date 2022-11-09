@@ -9,6 +9,9 @@ namespace TsiErp.Entities.Entities.CalendarLine.Dtos
 {
     public class ListCalendarLinesDto : FullAuditedEntityDto
     {
+        /// <summary>
+        /// Fazla Mesai Süresi
+        /// </summary>
         public decimal ShiftOverTime { get; set; }
         /// <summary>
         /// Vardiya Süresi
@@ -22,14 +25,6 @@ namespace TsiErp.Entities.Entities.CalendarLine.Dtos
         /// Çalışılabilir Süre
         /// </summary>
         public decimal AvailableTime { get; set; }
-        /// <summary>
-        /// Çalışma Takvimi Satırı Kodu
-        /// </summary>
-        public string Code { get; set; }
-        /// <summary>
-        /// Çalışma Takvimi Satırı Adı
-        /// </summary>
-        public string Name { get; set; }
         /// <summary>
         /// Vardiya Adı
         /// </summary>
