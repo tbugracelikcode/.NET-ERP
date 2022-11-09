@@ -31,10 +31,7 @@ namespace TsiErp.Business.Entities.Product.BusinessRules
 
         public async Task DeleteControl(IProductsRepository _repository, Guid id)
         {
-            if (await _repository.AnyAsync(t => t.RouteLines.Any(x => x.ProductID == id)))
-            {
-                throw new Exception("Hareket gören kayıtlar silinemez.");
-            }
+            
         }
     }
 }
