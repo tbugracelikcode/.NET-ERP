@@ -86,6 +86,10 @@ using TsiErp.Entities.Entities.SalesOrder;
 using TsiErp.Entities.Entities.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesOrderLine;
 using TsiErp.Entities.Entities.SalesOrderLine.Dtos;
+using TsiErp.Entities.Entities.BillsofMaterial;
+using TsiErp.Entities.Entities.BillsofMaterial.Dtos;
+using TsiErp.Entities.Entities.BillsofMaterialLine;
+using TsiErp.Entities.Entities.BillsofMaterialLine.Dtos;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -468,6 +472,32 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateProductsOperationLinesDto, ProductsOperationLines>();
             CreateMap<SelectProductsOperationLinesDto, UpdateProductsOperationLinesDto>();
             CreateMap<SelectProductsOperationLinesDto, ProductsOperationLines>();
+
+
+            CreateMap<BillsofMaterials, SelectBillsofMaterialsDto>()
+                .ForMember(x => x.FinishedProductCode, y => y.MapFrom(z => z.Products.Code));
+            CreateMap<BillsofMaterials, ListBillsofMaterialsDto>()
+                .ForMember(x => x.FinishedProductCode, y => y.MapFrom(z => z.Products.Code));
+            CreateMap<UpdateBillsofMaterialsDto, BillsofMaterials>()
+                .ForMember(x => x.BillsofMaterialLines, y => y.Ignore());
+            CreateMap<CreateBillsofMaterialsDto, BillsofMaterials>();
+            CreateMap<SelectBillsofMaterialsDto, CreateBillsofMaterialsDto>();
+            CreateMap<SelectBillsofMaterialsDto, UpdateBillsofMaterialsDto>();
+
+
+            CreateMap<BillsofMaterialLines, SelectBillsofMaterialLinesDto>()
+                .ForMember(x => x.FinishedProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code))
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code));
+            CreateMap<BillsofMaterialLines, ListBillsofMaterialLinesDto>()
+                .ForMember(x => x.FinishedProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code))
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code));
+            CreateMap<CreateBillsofMaterialLinesDto, BillsofMaterialLines>();
+            CreateMap<SelectBillsofMaterialLinesDto, CreateBillsofMaterialLinesDto>();
+            CreateMap<UpdateBillsofMaterialLinesDto, BillsofMaterialLines>();
+            CreateMap<SelectBillsofMaterialLinesDto, UpdateBillsofMaterialLinesDto>();
+            CreateMap<SelectBillsofMaterialLinesDto, BillsofMaterialLines>();
         }
     }
 }

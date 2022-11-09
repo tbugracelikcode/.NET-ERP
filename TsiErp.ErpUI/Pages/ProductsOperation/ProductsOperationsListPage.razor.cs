@@ -71,6 +71,8 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
             {
                 Alternative = true
             };
+
+            await Task.CompletedTask;
         }
 
         protected void CreateLineContextMenuItems()

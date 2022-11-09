@@ -1,27 +1,18 @@
-﻿using DevExpress.Blazor;
+﻿
 using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
-using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
-using Tsi.Core.Utilities.Results;
-using TsiErp.Business.Entities.CurrentAccountCard.Services;
-using TsiErp.Business.Entities.Department.Services;
-using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.Currency.Dtos;
 using TsiErp.Entities.Entities.UnitSet.Dtos;
 using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
-using TsiErp.Entities.Entities.Department.Dtos;
 using TsiErp.Entities.Entities.Product.Dtos;
 using TsiErp.Entities.Entities.SalesProposition.Dtos;
 using TsiErp.Entities.Entities.SalesPropositionLine.Dtos;
 using TsiErp.Entities.Entities.WareHouse.Dtos;
 using TsiErp.Entities.Entities.PaymentPlan.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
-using Syncfusion.Blazor.HeatMap.Internal;
-using Newtonsoft.Json;
-using TsiErp.Entities.Entities.SalesProposition;
 
 namespace TsiErp.ErpUI.Pages.SalesProposition
 {

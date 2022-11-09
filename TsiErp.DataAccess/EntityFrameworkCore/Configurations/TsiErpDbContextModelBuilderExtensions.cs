@@ -51,6 +51,8 @@ using TsiErp.Entities.Entities.TemplateOperation;
 using TsiErp.Entities.Entities.TemplateOperationLine;
 using TsiErp.Entities.Entities.ProductsOperation;
 using TsiErp.Entities.Entities.ProductsOperationLine;
+using TsiErp.Entities.Entities.BillsofMaterial;
+using TsiErp.Entities.Entities.BillsofMaterialLine;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 {
@@ -849,7 +851,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
                 b.HasIndex(x => x.Code);
 
-                b.HasOne(x => x.Products).WithOne(x => x.Routes).HasForeignKey<Routes>(x=>x.ProductID).OnDelete(DeleteBehavior.NoAction);
 
             });
         }
@@ -901,8 +902,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.Code);
 
                 b.HasOne(x => x.Routes).WithMany(x => x.RouteLines).HasForeignKey(x => x.RouteID).OnDelete(DeleteBehavior.NoAction);
-              //  b.HasOne(x => x.TemplateOperations).WithMany(x => x.RouteLines).HasForeignKey(x => x.OperationID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Products).WithMany(x => x.RouteLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
             });
         }
         public static void ConfigureCalendars(this ModelBuilder builder)
@@ -1113,6 +1112,59 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
                 b.HasOne(x => x.ProductsOperations).WithMany(x => x.ProductsOperationLines).HasForeignKey(x => x.ProductsOperationID).OnDelete(DeleteBehavior.Cascade);
                 b.HasOne(x => x.Stations).WithMany(x => x.ProductsOperationLines).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+
+        public static void ConfigureBillsofMaterials(this ModelBuilder builder)
+        {
+            builder.Entity<BillsofMaterials>(b =>
+            {
+                b.ToTable("BillsofMaterials");
+                b.ConfigureByConvention();
+
+                //b.HasQueryFilter(x => !x.IsDeleted);
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t._Description).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.FinishedProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.RouteID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+                b.HasIndex(x => x.Code);
+
+                b.HasOne(x => x.Products).WithMany(x => x.BillsofMaterials).HasForeignKey(x => x.FinishedProductID).OnDelete(DeleteBehavior.NoAction);
+
+            });
+        }
+
+        public static void ConfigureBillsofMaterialLines(this ModelBuilder builder)
+        {
+            builder.Entity<BillsofMaterialLines>(b =>
+            {
+                b.ToTable("BillsofMaterialLines");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.BoMID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.FinishedProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.RouteID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.UnitSetID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.MaterialType).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.LineNr).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.Quantity).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.Size).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.QuantityFormula).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t._Description).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+
+
+                b.HasIndex(x => x.BoMID);
+                b.HasIndex(x => x.ProductID);
+                b.HasIndex(x => x.UnitSetID);
+
+                b.HasOne(x => x.BillsofMaterials).WithMany(x => x.BillsofMaterialLines).HasForeignKey(x => x.BoMID).OnDelete(DeleteBehavior.Cascade);
+                b.HasOne(x => x.Products).WithMany(x => x.BillsofMaterialLines).HasForeignKey(x => x.FinishedProductID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.UnitSets).WithMany(x => x.BillsofMaterialLines).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 

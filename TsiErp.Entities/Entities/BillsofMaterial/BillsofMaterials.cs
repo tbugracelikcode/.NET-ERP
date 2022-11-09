@@ -6,41 +6,43 @@ using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.BillsofMaterialLine;
 using TsiErp.Entities.Entities.Product;
-using TsiErp.Entities.Entities.SalesOrderLine;
-using TsiErp.Entities.Entities.SalesPropositionLine;
 
-namespace TsiErp.Entities.Entities.UnitSet
+namespace TsiErp.Entities.Entities.BillsofMaterial
 {
     /// <summary>
-    /// Birim Setleri
+    /// Reçeteler
     /// </summary>
-    public class UnitSets : FullAuditedEntity
+    public class BillsofMaterials : FullAuditedEntity
     {
         /// <summary>
-        /// Kod
+        /// Reçete Kodu
         /// </summary>
         public string Code { get; set; }
         /// <summary>
-        /// Açıklama
+        /// Reçete Adı
         /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// Mamül ID
+        /// </summary>
+        public Guid FinishedProductID { get; set; }
+        /// <summary>
+        /// Rota ID
+        /// </summary>
+        public Guid RouteID { get; set; }
+        /// <summary>
+        /// Genel Açıklama
+        /// </summary>
+        public string _Description { get; set; }
         /// <summary>
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
-        /// <summary>
-        /// Stoklar
-        /// </summary>
-        ///  /// <summary>
-        /// Stoklar
-        /// </summary>
-        public ICollection<Products> Products { get; set; }
-        /// <summary>
-        /// Satış Teklifleri
-        /// </summary>
-        public ICollection<SalesPropositionLines> SalesPropositionLines { get; set; }
-        public ICollection<SalesOrderLines> SalesOrderLines { get; set; }
+
+        public Products Products { get; set; }
 
         public ICollection<BillsofMaterialLines> BillsofMaterialLines { get; set; }
+
+        
     }
 }

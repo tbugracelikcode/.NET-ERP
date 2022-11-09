@@ -68,6 +68,7 @@ namespace TsiErp.ErpUI.Pages.Base
         }
 
         #region Crud Operations
+
         protected async virtual Task<IDataResult<TGetOutputDto>> GetAsync(Guid id)
         {
             return await BaseCrudService.GetAsync(id);
@@ -150,6 +151,7 @@ namespace TsiErp.ErpUI.Pages.Base
                 return new ErrorDataResult<TGetOutputDto>();
             }
         }
+
         #endregion
 
         protected virtual async Task GetListDataSourceAsync()
@@ -262,6 +264,8 @@ namespace TsiErp.ErpUI.Pages.Base
             DataSource = new TGetOutputDto();
 
             ShowEditPage();
+
+            await Task.CompletedTask;
         }
 
         public virtual void LineCalculate() { }
