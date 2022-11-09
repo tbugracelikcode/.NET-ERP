@@ -54,6 +54,8 @@ using TsiErp.Entities.Entities.SalesOrderLine;
 using TsiErp.Entities.Entities.SalesOrder;
 using TsiErp.Entities.Entities.ProductsOperation;
 using TsiErp.Entities.Entities.ProductsOperationLine;
+using TsiErp.Entities.Entities.BillsofMaterial;
+using TsiErp.Entities.Entities.BillsofMaterialLine;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore
 {
@@ -158,6 +160,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigureSalesOrderLines();
             builder.ConfigureProductsOperations();
             builder.ConfigureProductsOperationLines();
+            builder.ConfigureBillsofMaterials();
+            builder.ConfigureBillsofMaterialLines();
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -248,6 +252,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<SalesOrderLines> SalesOrderLines { get; set; }
         public DbSet<ProductsOperations> ProductsOperations { get; set; }
         public DbSet<ProductsOperationLines> ProductsOperationLines { get; set; }
+        public DbSet<BillsofMaterials> BillsofMaterials { get; set; }
+        public DbSet<BillsofMaterialLines> BillsofMaterialLines { get; set; }
 
         #endregion
     }
