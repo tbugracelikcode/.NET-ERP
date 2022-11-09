@@ -52,6 +52,10 @@ using TsiErp.Entities.Entities.Shift;
 using TsiErp.Entities.Entities.ShiftLine;
 using TsiErp.Entities.Entities.SalesOrderLine;
 using TsiErp.Entities.Entities.SalesOrder;
+using TsiErp.Entities.Entities.ProductsOperation;
+using TsiErp.Entities.Entities.ProductsOperationLine;
+using TsiErp.Entities.Entities.BillsofMaterial;
+using TsiErp.Entities.Entities.BillsofMaterialLine;
 using TsiErp.Entities.Entities.CalendarDay;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore
@@ -156,6 +160,10 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigureShiftLines();
             builder.ConfigureSalesOrders();
             builder.ConfigureSalesOrderLines();
+            builder.ConfigureProductsOperations();
+            builder.ConfigureProductsOperationLines();
+            builder.ConfigureBillsofMaterials();
+            builder.ConfigureBillsofMaterialLines();
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -245,6 +253,10 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<ShiftLines> ShiftLines { get; set; }
         public DbSet<SalesOrders> SalesOrders { get; set; }
         public DbSet<SalesOrderLines> SalesOrderLines { get; set; }
+        public DbSet<ProductsOperations> ProductsOperations { get; set; }
+        public DbSet<ProductsOperationLines> ProductsOperationLines { get; set; }
+        public DbSet<BillsofMaterials> BillsofMaterials { get; set; }
+        public DbSet<BillsofMaterialLines> BillsofMaterialLines { get; set; }
 
         #endregion
     }

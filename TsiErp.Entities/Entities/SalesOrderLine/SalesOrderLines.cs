@@ -106,7 +106,7 @@ namespace TsiErp.Entities.Entities.SalesOrderLine
         /// <summary>
         /// Üretim Emri Oluşturulma Tarihi
         /// </summary>
-        public DateTime WorkOrderCreationDate { get; set; }
+        public DateTime? WorkOrderCreationDate { get; set; }
 
 
 

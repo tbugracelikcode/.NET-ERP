@@ -44,7 +44,13 @@
                                 <DxTreeViewNode NavigateUrl="/sales-propositions" Text="Verilen Teklifler" />
                             </Nodes>
                         </DxTreeViewNode>
+                        <DxTreeViewNode Text="Sipariþ Yönetimi">
+                            <Nodes>
+                                <DxTreeViewNode NavigateUrl="/sales-orders" Text="Satýþ Sipariþleri" />
+                            </Nodes>
+                        </DxTreeViewNode>
                     </Nodes>
+
                 </DxTreeViewNode>
 
                 <DxTreeViewNode Visible="@collapsevisible" Text="Kaynak Yönetimi" IconCssClass="fa fa-users">
@@ -71,6 +77,7 @@
                 <DxTreeViewNode Visible="@collapsevisible" Text="Üretim Yönetimi" IconCssClass="fa fa-industry">
                     <Nodes>
                         <DxTreeViewNode NavigateUrl="/template-operations" Text="Þablon Operasyonlar" />
+                        <DxTreeViewNode NavigateUrl="/products-operations" Text="Ürüne Özel Operasyonlar" />
                         <DxTreeViewNode NavigateUrl="/routes" Text="Rotalar" />
                     </Nodes>
                 </DxTreeViewNode>

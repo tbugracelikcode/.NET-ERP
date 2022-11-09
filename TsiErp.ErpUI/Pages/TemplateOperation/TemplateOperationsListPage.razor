@@ -51,7 +51,7 @@ else
                                     <GridColumn Field=@nameof(ListTemplateOperationsDto.Code) HeaderText="OPERASYON KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListTemplateOperationsDto.Name) HeaderText="OPERASYON AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ListTemplateOperationsDto.WorkCenterCode) HeaderText="İŞ MERKEZİ KODU KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListTemplateOperationsDto.WorkCenterCode) HeaderText="İŞ MERKEZİ KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </CardContent>
@@ -68,7 +68,7 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="Operasyonlar"
-         Width="640px"
+         Width="900px"
          Height="540px"
          HeaderCssClass="HeaderTitleCss">
 
@@ -83,11 +83,11 @@ else
                 </Rows>
 
                 <Columns>
-                    <DxGridLayoutColumn Width="40px" />
-                    <DxGridLayoutColumn Width="250px" />
-                    <DxGridLayoutColumn Width="40px" />
-                    <DxGridLayoutColumn Width="250px" />
-                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="60px" />
+                    <DxGridLayoutColumn Width="350px" />
+                    <DxGridLayoutColumn Width="60px" />
+                    <DxGridLayoutColumn Width="350px" />
+                    <DxGridLayoutColumn Width="60px" />
                 </Columns>
 
                 <Items>
@@ -127,6 +127,9 @@ else
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.StationCode) HeaderText="İSTASYON KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    
+                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.OperationTime) Format="N2"  Type="ColumnType.Number" HeaderText="OPERASYON SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
                                     <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.Priority) Type="ColumnType.Number" HeaderText="ÖNCELİK" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                        <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.ProcessQuantity) Type="ColumnType.Number" HeaderText="İŞLEM ADET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.AdjustmentAndControlTime)  Type="ColumnType.Number" HeaderText="AYAR KONTROL SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
@@ -241,8 +244,16 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
+                     <DxGridLayoutItem Row="1" Column="3">
+                        <Template>
+                           <label class="TSIModalLabel"><strong>Operasyon Süresi: </strong></label><br />
+                             <SfNumericTextBox TValue="decimal" CssClass="TSITxtBox" Min="0" @bind-Value="LineDataSource.OperationTime"></SfNumericTextBox>
 
-                    <DxGridLayoutItem Row="1" Column="3">
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                    <DxGridLayoutItem Row="1" Column="5">
                         <Template>
                            <label class="TSIModalLabel"><strong>Alternatif: </strong></label><br />
                             <SfSwitch @bind-Checked="LineDataSource.Alternative"></SfSwitch>

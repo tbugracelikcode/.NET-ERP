@@ -170,12 +170,13 @@ else
                                     <GridColumn Field=@nameof(SelectShiftLinesDto.EndHour) HeaderText="BİTİŞ SAATİ" TextAlign="TextAlign.Center" Width="120" Context="linecontext"> </GridColumn>
 
                                     <GridColumn Field=@nameof(SelectShiftLinesDto.Type) HeaderText="TÜR" TextAlign="TextAlign.Center" Width="120" Context="linecontext">
-                                        @*<Template>
+                                     @*   <Template>
                                     @{
                                     var a = (linecontext as SelectShiftLinesDto);
-                                    string shifttype = ShiftTypesList.Where(t => t.Value.ToString() == a.Type.ToString()).Select(t => t.DisplayName).FirstOrDefault().ToString();
+                                    List<ShiftLinesTypeEnum> _list = Enum.GetValues(typeof(ShiftLinesTypeEnum)).Cast<ShiftLinesTypeEnum>().ToString().ToList();
+                                   _list.Contains(t=>t.)
                                     }
-                                    @shifttype
+                                    @_list
                                     </Template>*@
                                     </GridColumn>
                                     <GridColumn Field=@nameof(SelectShiftLinesDto.Coefficient) Type="ColumnType.Number" HeaderText="KATSAYI" TextAlign="TextAlign.Center" Width="120">

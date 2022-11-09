@@ -28,6 +28,7 @@ namespace TsiErp.ErpUI.Pages.Shift
         private bool LineCrudPopup = false;
 
 
+
         protected override async void OnInitialized()
         {
             BaseCrudService = ShiftsAppService;
@@ -287,10 +288,10 @@ namespace TsiErp.ErpUI.Pages.Shift
 
         protected async Task OnLineSubmit()
         {
+
             #region Değişkenler
 
             int commonEndHour;
-            int commonStartHour;
             TimeSpan? baslangic = LineDataSource.StartHour;
             TimeSpan? bitis = LineDataSource.EndHour;
             TimeSpan fark = bitis.GetValueOrDefault() - baslangic.GetValueOrDefault();

@@ -46,6 +46,7 @@ namespace TsiErp.ErpUI.Pages.TemplateOperation
         {
             DataSource = new SelectTemplateOperationsDto()
             {
+                IsActive = true
             };
 
             DataSource.SelectTemplateOperationLines = new List<SelectTemplateOperationLinesDto>();
@@ -55,6 +56,14 @@ namespace TsiErp.ErpUI.Pages.TemplateOperation
 
 
             await Task.CompletedTask;
+        }
+
+        protected async Task LineBeforeInsertAsync()
+        {
+            LineDataSource = new SelectTemplateOperationLinesDto()
+            {
+                Alternative = true
+            };
         }
 
         protected void CreateLineContextMenuItems()
@@ -101,7 +110,7 @@ namespace TsiErp.ErpUI.Pages.TemplateOperation
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync("Dikkat", "Seçtiğiniz satış teklifi kalıcı olarak silinecektir.");
+                    var res = await ModalManager.ConfirmationAsync("Dikkat", "Seçtiğiniz şablon operasyon kalıcı olarak silinecektir.");
                     if (res == true)
                     {
                         await DeleteAsync(args.RowInfo.RowData.Id);
@@ -130,6 +139,7 @@ namespace TsiErp.ErpUI.Pages.TemplateOperation
                     LineDataSource = new SelectTemplateOperationLinesDto();
                     LineCrudPopup = true;
                     LineDataSource.LineNr = GridLineList.Count + 1;
+                    await LineBeforeInsertAsync();
                     await InvokeAsync(StateHasChanged);
                     break;
 

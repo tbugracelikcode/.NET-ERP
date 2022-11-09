@@ -27,6 +27,10 @@ namespace TsiErp.Entities.Entities.TemplateOperationLine.Dtos
         /// </summary>
         public int ProcessQuantity { get; set; }
         /// <summary>
+        /// Operasyon Süresi
+        /// </summary>
+        public decimal OperationTime { get; set; }
+        /// <summary>
         /// Ayar ve Kontrol Süresi
         /// </summary>
         public int AdjustmentAndControlTime { get; set; }
