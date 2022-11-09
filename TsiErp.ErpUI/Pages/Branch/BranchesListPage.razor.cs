@@ -12,6 +12,7 @@ namespace TsiErp.ErpUI.Pages.Branch
         protected override async void OnInitialized()
         {
             BaseCrudService = BranchesService;
+
         }
 
         protected override Task BeforeInsertAsync()
