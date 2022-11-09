@@ -1191,7 +1191,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.UnitSetID);
 
                 b.HasOne(x => x.BillsofMaterials).WithMany(x => x.BillsofMaterialLines).HasForeignKey(x => x.BoMID).OnDelete(DeleteBehavior.Cascade);
-                b.HasOne(x => x.Products).WithMany(x => x.BillsofMaterialLines).HasForeignKey(x => x.FinishedProductID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Products).WithMany(x => x.BillsofMaterialLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.UnitSets).WithMany(x => x.BillsofMaterialLines).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
             });
         }

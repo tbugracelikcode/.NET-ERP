@@ -68,7 +68,7 @@ else
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListSalesPropositionsDto.FicheNo) HeaderText="TEKLİF NO." TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListSalesPropositionsDto.Date_) Format="dd.MM.yyyy" HeaderText="TARİH" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListSalesPropositionsDto.Date_) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="TARİH" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                     <GridColumn Field=@nameof(ListSalesPropositionsDto.CurrentAccountCardCode) HeaderText="CARİ HESAP KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListSalesPropositionsDto.CurrentAccountCardName) HeaderText="CARİ HESAP ÜNVANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
@@ -650,7 +650,7 @@ else
                                         <table>
                                             <tr>
                                                 <th class="e-text-center">Birim Seti Kodu</th>
-                                                <th class="e-text-center">Birim Seti Ünvanı</th>
+                                                <th class="e-text-center">Birim Seti Açıklaması</th>
                                             </tr>
                                         </table>
                                     </HeaderTemplate>
