@@ -15,6 +15,9 @@ namespace TsiErp.Entities.Entities.CalendarLine
     /// </summary>
     public class CalendarLines : FullAuditedEntity
     {
+        /// <summary>
+        /// Fazla Mesai Süresi
+        /// </summary>
         public decimal ShiftOverTime { get; set; }
         /// <summary>
         /// Vardiya Süresi

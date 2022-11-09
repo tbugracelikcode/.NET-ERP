@@ -31,6 +31,18 @@ namespace TsiErp.Entities.Entities.Calendar.Dtos
         /// Yıl
         /// </summary>
         public int Year { get; set; }
+        /// <summary>
+        /// Toplam Gün Sayısı
+        /// </summary>
+        public decimal TotalDays { get; set; }
+        /// <summary>
+        /// Resmi Tatil Sayısı
+        /// </summary>
+        public decimal OfficialHolidayDays { get; set; }
+        /// <summary>
+        /// Çalışılabilir Gün Sayısı
+        /// </summary>
+        public decimal AvailableDays { get; set; }
 
         public List<SelectCalendarLinesDto> SelectCalendarLinesDto { get; set; }
     }
