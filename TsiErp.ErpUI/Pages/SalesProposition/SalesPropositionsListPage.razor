@@ -65,10 +65,11 @@ else
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
-                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
+                                    <GridColumn Type="ColumnType.CheckBox" Width="50"></GridColumn>
                                     <GridColumn Field=@nameof(ListSalesPropositionsDto.FicheNo) HeaderText="TEKLİF NO." TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListSalesPropositionsDto.Date_) Format="dd.MM.yyyy" HeaderText="TARİH" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListSalesPropositionsDto.Date_) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="TARİH" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                     <GridColumn Field=@nameof(ListSalesPropositionsDto.CurrentAccountCardCode) HeaderText="CARİ HESAP KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListSalesPropositionsDto.CurrentAccountCardName) HeaderText="CARİ HESAP ÜNVANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
@@ -448,8 +449,9 @@ else
 
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridSelectionSettings  Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
+                                    <GridColumn Type="ColumnType.CheckBox" Width="50"></GridColumn>
                                     <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.ProductName) HeaderText="STOK AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.UnitSetCode) HeaderText="BİRİM SETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
@@ -650,7 +652,7 @@ else
                                         <table>
                                             <tr>
                                                 <th class="e-text-center">Birim Seti Kodu</th>
-                                                <th class="e-text-center">Birim Seti Ünvanı</th>
+                                                <th class="e-text-center">Birim Seti Açıklaması</th>
                                             </tr>
                                         </table>
                                     </HeaderTemplate>

@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
@@ -13,6 +12,8 @@ using TsiErp.Entities.Entities.SalesPropositionLine.Dtos;
 using TsiErp.Entities.Entities.WareHouse.Dtos;
 using TsiErp.Entities.Entities.PaymentPlan.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
+using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.ErpUI.Helpers;
 
 namespace TsiErp.ErpUI.Pages.SalesProposition
 {
@@ -98,6 +99,8 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle", Id = "new" });
                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Onayla", Id = "approve" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Siparişe Dönüştür", Id = "converttoorder" });
                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
             }
         }
@@ -109,6 +112,7 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle", Id = "new" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Siparişe Dönüştür", Id = "converttoorder" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
             }
         }
@@ -145,6 +149,25 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
                         await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
                     }
+                    break;
+
+                case "converttoorder":
+
+                    int onholdorpartial = _grid.SelectedRecords.Where(t => t.SalesPropositionState == Entities.Enums.SalesPropositionStateEnum.Beklemede || t.SalesPropositionState == Entities.Enums.SalesPropositionStateEnum.KismiSiparis).Count();
+
+                    if(onholdorpartial == 0)
+                    {
+                        foreach (var item in _grid.SelectedRecords)
+                        {
+                            item.SalesPropositionState = Entities.Enums.SalesPropositionStateEnum.Siparis;
+                        }
+                    }
+
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync("Uyarı", "Seçilen kayıtlarda onaylanmamış satırlar mevcut.");
+                    }
+
                     break;
 
                 case "refresh":
@@ -211,6 +234,26 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
 
                     break;
 
+                case "approve":
+
+
+                    foreach (var item in _LineGrid.SelectedRecords)
+                    {
+                        item.SalesPropositionLineState = Entities.Enums.SalesPropositionLineStateEnum.Onaylandı;
+                    }
+
+                    break;
+
+                case "converttoorder":
+
+
+                    foreach (var item in _LineGrid.SelectedRecords)
+                    {
+                        item.SalesPropositionLineState = Entities.Enums.SalesPropositionLineStateEnum.Siparis;
+                    }
+
+                    break;
+
                 case "refresh":
                     await GetListDataSourceAsync();
                     await _LineGrid.Refresh();
@@ -220,6 +263,81 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
                 default:
                     break;
             }
+        }
+
+        protected override async Task OnSubmit()
+        {
+            SelectSalesPropositionsDto result;
+
+            #region Satırların Durumuna Göre Ana Tablo Sipariş Durumunu Belirleme
+
+            List<SelectSalesPropositionLinesDto> _orderList = new List<SelectSalesPropositionLinesDto>();
+
+            foreach(var item in DataSource.SelectSalesPropositionLines)
+            {
+                _orderList.Add(item);
+            }
+
+            int approved = _orderList.Where(t => t.SalesPropositionLineState == Entities.Enums.SalesPropositionLineStateEnum.Onaylandı).Count();
+            int order = _orderList.Where(t => t.SalesPropositionLineState == Entities.Enums.SalesPropositionLineStateEnum.Siparis).Count();
+            int onhold = _orderList.Where(t => t.SalesPropositionLineState == Entities.Enums.SalesPropositionLineStateEnum.Beklemede).Count();
+
+            if(approved != 0 && order !=_orderList.Count() && onhold !=0)
+            {
+                DataSource.SalesPropositionState = Entities.Enums.SalesPropositionStateEnum.KismiSiparis;
+            }
+            else if (order == _orderList.Count())
+            {
+                DataSource.SalesPropositionState = Entities.Enums.SalesPropositionStateEnum.Siparis;
+            }
+            else if( approved == 0 && onhold == 0 && order == 0)
+            {
+                DataSource.SalesPropositionState = Entities.Enums.SalesPropositionStateEnum.Beklemede;
+            }
+            else if(approved == _orderList.Count())
+            {
+                DataSource.SalesPropositionState = Entities.Enums.SalesPropositionStateEnum.Onaylandı;
+            }
+
+            #endregion
+
+            if (DataSource.Id == Guid.Empty)
+            {
+                var createInput = ObjectMapper.Map<SelectSalesPropositionsDto, CreateSalesPropositionsDto>(DataSource);
+
+                result = (await CreateAsync(createInput)).Data;
+
+                if (result != null)
+                    DataSource.Id = result.Id;
+            }
+            else
+            {
+                var updateInput = ObjectMapper.Map<SelectSalesPropositionsDto, UpdateSalesPropositionsDto>(DataSource);
+
+                result = (await UpdateAsync(updateInput)).Data;
+            }
+
+            if (result == null)
+            {
+
+                return;
+            }
+
+            await GetListDataSourceAsync();
+
+            var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
+
+            HideEditPage();
+
+            if (DataSource.Id == Guid.Empty)
+            {
+                DataSource.Id = result.Id;
+            }
+
+            if (savedEntityIndex > -1)
+                SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
+            else
+                SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
         }
 
         public void HideLinesPopup()

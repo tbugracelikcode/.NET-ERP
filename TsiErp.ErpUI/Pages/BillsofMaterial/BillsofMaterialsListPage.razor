@@ -1,5 +1,419 @@
-﻿<h3>BillsofMaterialsListPage</h3>
+﻿@page "/bills-of-materials"
+@using Syncfusion.Blazor.Buttons
+@using Tsi.Blazor.Component.Core.Components.Commons.Loadings
+@using TsiErp.Business.Entities.BillsofMaterial.Services
+@using TsiErp.Entities.Entities.BillsofMaterial
+@using TsiErp.Entities.Entities.BillsofMaterial.Dtos
+@using TsiErp.Entities.Entities.BillsofMaterialLine
+@using TsiErp.Entities.Entities.BillsofMaterialLine.Dtos
+@using TsiErp.ErpUI.Pages.Base
+@using Tsi.Blazor.Component.Core.Components.Layouts
+@using TsiErp.Entities.Entities.Product.Dtos
+@using TsiErp.Business.Entities.Product.Services
+@using TsiErp.Entities.Entities.UnitSet.Dtos
+@using TsiErp.Business.Entities.UnitSet.Services
 
-@code {
+@inherits BaseListPage<SelectBillsofMaterialsDto, ListBillsofMaterialsDto, CreateBillsofMaterialsDto, UpdateBillsofMaterialsDto, ListBillsofMaterialsParameterDto>
+
+@inject IBillsofMaterialsAppService BillsofMaterialsAppService
+@inject IProductsAppService ProductsAppService
+@inject IUnitSetsAppService UnitSetsAppService
+
+
+@if (!base.IsLoaded)
+{
+    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+}
+else
+{
+    <DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+        <GridLayoutItems>
+            <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIListPageTitleCard">
+                        <CardContent>
+                            <TsiBreadCrumb PreviousMenus="Üretim Yönetimi" CurrentMenu="Reçeteler" />
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+
+            <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIGridCards">
+
+                        <CardContent>
+                            <SfGrid ID="Grid" @ref="@_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu">
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                <GridEvents ContextMenuItemClicked="@MainContextMenuClick" TValue="ListBillsofMaterialsDto"></GridEvents>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridPageSettings PageSizes="true"></GridPageSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(ListBillsofMaterialsDto.Code) HeaderText="REÇETE KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListBillsofMaterialsDto.Name) HeaderText="REÇETE ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ListBillsofMaterialsDto.FinishedProductCode) HeaderText="MAMÜL KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListBillsofMaterialsDto._Description) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+
+                                </GridColumns>
+                            </SfGrid>
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+        </GridLayoutItems>
+    </DevGridLayout>
+
+    <DxPopup @bind-Visible="base.EditPageVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Reçeteler"
+         Width="720px"
+         Height="600px"
+         HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout>
+
+                <Rows>
+                    <DxGridLayoutRow Height="65px" />
+                    <DxGridLayoutRow Height="65px" />
+                    <DxGridLayoutRow Height="10px" />
+                    <DxGridLayoutRow Height="300px" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="40px" />
+                </Columns>
+
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Reçete Kodu: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" Placeholder="Reçete kodunu yazınız." @bind-Value="DataSource.Code"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Reçete Adı: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" Placeholder="Reçete adını yazınız." @bind-Value="DataSource.Name"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Mamül Kodu: </strong></label><br />
+                            <SfComboBox @ref="FinishedProductsComboBox"
+                                    TValue="string"
+                                    TItem="ListProductsDto"
+                                    Placeholder="Mamül Kodu"
+                                    CssClass="e-multi-column"
+                                    DataSource="@FinishedProductsList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500"
+                                    Value="DataSource.FinishedProductCode">
+
+                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
+
+                                <ComboBoxTemplates TItem="ListProductsDto">
+                                    <HeaderTemplate>
+                                        <table>
+                                            <tr>
+                                                <th class="e-text-center">Mamül Kodu</th>
+                                                <th class="e-text-center">Mamül Açıklaması</th>
+                                            </tr>
+                                        </table>
+                                    </HeaderTemplate>
+                                    <ItemTemplate Context="cmbContext">
+
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="e-text-center">@((cmbContext as ListProductsDto).Code)</td>
+                                                    <td class="e-text-center">@((cmbContext as ListProductsDto).Name)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </ItemTemplate>
+                                </ComboBoxTemplates>
+
+                                <ComboBoxEvents TValue="string"
+                                            TItem="ListProductsDto"
+                                            Filtering="FinishedProductFiltering"
+                                            ValueChange="FinishedProductValueChangeHandler"></ComboBoxEvents>
+                            </SfComboBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="1" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Aktiflik: </strong></label>
+                            <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                    <DxGridLayoutItem Row="3" Column="1" ColumnSpan="3">
+                        <Template>
+                            <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
+                                <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectBillsofMaterialLinesDto"></GridEvents>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.FinishedProductCode) HeaderText="MAMÜL KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.UnitSetCode) HeaderText="BİRİM SETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.MaterialType) Type="ColumnType.Number" HeaderText="MALZEME TÜRÜ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.QuantityFormula) HeaderText="MİKTAR FORMÜLÜ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.Size) Format="N2" Type="ColumnType.Number" HeaderText="BOY" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="LineCrudPopup"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Reçete Satırları"
+         Width="1060px"
+         Height="350px"
+         HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout>
+
+                <Rows>
+                    <DxGridLayoutRow Height="68px" />
+                    <DxGridLayoutRow Height="68px" />
+                    <DxGridLayoutRow Height="68px" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="40px" />
+
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Mamül Kodu: </strong></label>
+                                  <SfComboBox @ref="LineFinishedProductsComboBox"
+                                    TValue="string"
+                                    TItem="ListProductsDto"
+                                    Placeholder="Stok Seçin"
+                                    CssClass="e-multi-column"
+                                    DataSource="@LineFinishedProductsList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500"
+                                    Value="LineDataSource.FinishedProductCode">
+
+                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
+
+                                <ComboBoxTemplates TItem="ListProductsDto">
+                                    <HeaderTemplate>
+                                        <table>
+                                            <tr>
+                                                <th class="e-text-center">Stok Kodu</th>
+                                                <th class="e-text-center">Stok Adı</th>
+                                            </tr>
+                                        </table>
+                                    </HeaderTemplate>
+                                    <ItemTemplate Context="cmbContext">
+
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="e-text-center">@((cmbContext as ListProductsDto).Code)</td>
+                                                    <td class="e-text-center">@((cmbContext as ListProductsDto).Name)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </ItemTemplate>
+                                </ComboBoxTemplates>
+
+                                <ComboBoxEvents TValue="string"
+                                            TItem="ListProductsDto"
+                                            Filtering="LineFinishedProductFiltering"
+                                            ValueChange="LineFinishedProductValueChangeHandler"></ComboBoxEvents>
+                            </SfComboBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Stok Kodu: </strong></label><br />
+                            <SfComboBox @ref="LineProductsComboBox"
+                                    TValue="string"
+                                    TItem="ListProductsDto"
+                                    Placeholder="Stok Seçin"
+                                    CssClass="e-multi-column"
+                                    DataSource="@LineProductsList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500"
+                                    Value="LineDataSource.ProductCode">
+
+                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
+
+                                <ComboBoxTemplates TItem="ListProductsDto">
+                                    <HeaderTemplate>
+                                        <table>
+                                            <tr>
+                                                <th class="e-text-center">Stok Kodu</th>
+                                                <th class="e-text-center">Stok Adı</th>
+                                            </tr>
+                                        </table>
+                                    </HeaderTemplate>
+                                    <ItemTemplate Context="cmbContext">
+
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="e-text-center">@((cmbContext as ListProductsDto).Code)</td>
+                                                    <td class="e-text-center">@((cmbContext as ListProductsDto).Name)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </ItemTemplate>
+                                </ComboBoxTemplates>
+
+                                <ComboBoxEvents TValue="string"
+                                            TItem="ListProductsDto"
+                                            Filtering="LineProductFiltering"
+                                            ValueChange="LineProductValueChangeHandler"></ComboBoxEvents>
+                            </SfComboBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Birim Seti Kodu: </strong></label><br />
+                            <SfComboBox @ref="LineUnitSetsComboBox"
+                                    TValue="string"
+                                    TItem="ListUnitSetsDto"
+                                    Placeholder="Birim Seti Seçin"
+                                    CssClass="e-multi-column"
+                                    DataSource="@LineUnitSetsList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500"
+                                    Value="LineDataSource.UnitSetCode">
+
+                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
+
+                                <ComboBoxTemplates TItem="ListUnitSetsDto">
+                                    <HeaderTemplate>
+                                        <table>
+                                            <tr>
+                                                <th class="e-text-center">Birim Seti Kodu</th>
+                                                <th class="e-text-center">Birim Seti Açıklaması</th>
+                                            </tr>
+                                        </table>
+                                    </HeaderTemplate>
+                                    <ItemTemplate Context="cmbContext">
+
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="e-text-center">@((cmbContext as ListUnitSetsDto).Code)</td>
+                                                    <td class="e-text-center">@((cmbContext as ListUnitSetsDto).Name)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </ItemTemplate>
+                                </ComboBoxTemplates>
+
+                                <ComboBoxEvents TValue="string"
+                                            TItem="ListUnitSetsDto"
+                                            Filtering="LineUnitSetFiltering"
+                                            ValueChange="LineUnitSetValueChangeHandler"></ComboBoxEvents>
+                            </SfComboBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Malzeme Türü: </strong></label><br />
+                            <SfNumericTextBox @bind-Value="LineDataSource.MaterialType" TValue="int" Min="0"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                    <DxGridLayoutItem Row="1" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Miktar Formülü: </strong></label>
+                            <SfTextBox  @bind-Value="LineDataSource.QuantityFormula" Placeholder="Miktar Formülünü Yazınız.">
+
+
+                            </SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Miktar: </strong></label>
+                            <SfNumericTextBox TValue="decimal" @bind-Value="LineDataSource.Quantity"  Min="0"></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Boy: </strong></label>
+                            <SfNumericTextBox Min="0" @bind-Value="LineDataSource.Size" TValue="decimal" Placeholder="KDV Oranı Yazınız."></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Açıklama: </strong></label>
+                            <SfTextBox Multiline=true @bind-Value="LineDataSource._Description" Placeholder="Açıklama Yazınız."></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideLinesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
 
 }
