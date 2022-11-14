@@ -22,7 +22,11 @@ namespace TsiErp.Entities.Entities.BillsofMaterial.Dtos
         /// Mamül Kodu
         /// </summary>
         public string FinishedProductCode { get; set; }
-       
+        /// <summary>
+        /// Mamül Açıklaması
+        /// </summary>
+        public string FinishedProducName { get; set; }
+
         /// <summary>
         /// Genel Açıklama
         /// </summary>

@@ -437,9 +437,11 @@ namespace TsiErp.Business.MapperProfile
 
             CreateMap<TemplateOperationLines, SelectTemplateOperationLinesDto>()
                 .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
+                .ForMember(x => x.StationName, y => y.MapFrom(z => z.Stations.Name))
                 .ForMember(x => x.TemplateOperationName, y => y.MapFrom(z => z.TemplateOperations.Name));
             CreateMap<TemplateOperationLines, ListTemplateOperationLinesDto>()
                 .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
+                .ForMember(x => x.StationName, y => y.MapFrom(z => z.Stations.Name))
                 .ForMember(x => x.TemplateOperationName, y => y.MapFrom(z => z.TemplateOperations.Name));
             CreateMap<CreateTemplateOperationLinesDto, TemplateOperationLines>();
             CreateMap<SelectTemplateOperationLinesDto, CreateTemplateOperationLinesDto>();
@@ -461,9 +463,11 @@ namespace TsiErp.Business.MapperProfile
 
             CreateMap<ProductsOperationLines, SelectProductsOperationLinesDto>()
                 .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
+                .ForMember(x => x.StationName, y => y.MapFrom(z => z.Stations.Name))
                 .ForMember(x => x.ProductsOperationName, y => y.MapFrom(z => z.ProductsOperations.Name));
             CreateMap<ProductsOperationLines, ListProductsOperationLinesDto>()
                 .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
+                .ForMember(x => x.StationName, y => y.MapFrom(z => z.Stations.Name))
                 .ForMember(x => x.ProductsOperationName, y => y.MapFrom(z => z.ProductsOperations.Name));
             CreateMap<CreateProductsOperationLinesDto, ProductsOperationLines>();
             CreateMap<SelectProductsOperationLinesDto, CreateProductsOperationLinesDto>();
@@ -473,9 +477,11 @@ namespace TsiErp.Business.MapperProfile
 
 
             CreateMap<BillsofMaterials, SelectBillsofMaterialsDto>()
-                .ForMember(x => x.FinishedProductCode, y => y.MapFrom(z => z.Products.Code));
+                .ForMember(x => x.FinishedProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.FinishedProducName, y => y.MapFrom(z => z.Products.Name));
             CreateMap<BillsofMaterials, ListBillsofMaterialsDto>()
-                .ForMember(x => x.FinishedProductCode, y => y.MapFrom(z => z.Products.Code));
+                .ForMember(x => x.FinishedProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.FinishedProducName, y => y.MapFrom(z => z.Products.Name));
             CreateMap<UpdateBillsofMaterialsDto, BillsofMaterials>()
                 .ForMember(x => x.BillsofMaterialLines, y => y.Ignore());
             CreateMap<CreateBillsofMaterialsDto, BillsofMaterials>();
@@ -486,11 +492,13 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<BillsofMaterialLines, SelectBillsofMaterialLinesDto>()
                 .ForMember(x => x.FinishedProductCode, y => y.MapFrom(z => z.Products.Code))
                 .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code))
-                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code));
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
             CreateMap<BillsofMaterialLines, ListBillsofMaterialLinesDto>()
                 .ForMember(x => x.FinishedProductCode, y => y.MapFrom(z => z.Products.Code))
                 .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code))
-                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code));
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
             CreateMap<CreateBillsofMaterialLinesDto, BillsofMaterialLines>();
             CreateMap<SelectBillsofMaterialLinesDto, CreateBillsofMaterialLinesDto>();
             CreateMap<UpdateBillsofMaterialLinesDto, BillsofMaterialLines>();

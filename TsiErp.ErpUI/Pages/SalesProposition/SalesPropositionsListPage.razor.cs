@@ -75,6 +75,7 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
 
 
         #region Teklif Satır Modalı İşlemleri
+
         protected override async Task BeforeInsertAsync()
         {
             DataSource = new SelectSalesPropositionsDto()
