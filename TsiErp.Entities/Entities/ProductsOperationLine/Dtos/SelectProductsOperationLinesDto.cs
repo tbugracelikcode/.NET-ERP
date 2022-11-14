@@ -26,6 +26,10 @@ namespace TsiErp.Entities.Entities.ProductsOperationLine.Dtos
         /// </summary>
         public string StationCode { get; set; }
         /// <summary>
+        /// İstasyon Açıklaması
+        /// </summary>
+        public string StationName { get; set; }
+        /// <summary>
         /// Operasyon Süresi
         /// </summary>
         public decimal OperationTime { get; set; }

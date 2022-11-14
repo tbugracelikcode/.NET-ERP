@@ -69,7 +69,7 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
         {
             LineDataSource = new SelectProductsOperationLinesDto()
             {
-                Alternative = true
+                Alternative = false
             };
 
             await Task.CompletedTask;
@@ -112,6 +112,7 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
                     foreach (var item in GridLineList)
                     {
                         item.StationCode = (await StationsAppService.GetAsync(item.StationID.GetValueOrDefault())).Data.Code;
+                        item.StationName = (await StationsAppService.GetAsync(item.StationID.GetValueOrDefault())).Data.Code;
                     }
 
                     EditPageVisible = true;
@@ -317,12 +318,14 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
             if (args.ItemData != null)
             {
                 LineDataSource.StationID = args.ItemData.Id;
-                LineDataSource.StationCode = args.ItemData.Code; ;
+                LineDataSource.StationCode = args.ItemData.Code; 
+                LineDataSource.StationName = args.ItemData.Name; 
             }
             else
             {
                 LineDataSource.StationID = Guid.Empty;
                 LineDataSource.StationCode = string.Empty;
+                LineDataSource.StationName = string.Empty;
             }
             LineCalculate();
             await InvokeAsync(StateHasChanged);

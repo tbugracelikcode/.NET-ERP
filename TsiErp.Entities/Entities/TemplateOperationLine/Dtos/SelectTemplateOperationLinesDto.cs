@@ -9,7 +9,7 @@ namespace TsiErp.Entities.Entities.TemplateOperationLine.Dtos
 {
     public class SelectTemplateOperationLinesDto : FullAuditedEntityDto
     {
-       
+
         /// <summary>
         /// Şablon Operasyon ID
         /// </summary>
@@ -26,6 +26,10 @@ namespace TsiErp.Entities.Entities.TemplateOperationLine.Dtos
         /// İstasyon Kodu
         /// </summary>
         public string StationCode { get; set; }
+        /// <summary>
+        /// İstasyon Açıklaması
+        /// </summary>
+        public string StationName { get; set; }
         /// <summary>
         /// Operasyon Süresi
         /// </summary>

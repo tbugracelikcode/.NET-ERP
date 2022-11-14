@@ -75,10 +75,14 @@
 
                 <DxTreeViewNode Visible="@collapsevisible" Text="Üretim Yönetimi" IconCssClass="fa fa-industry">
                     <Nodes>
-                        <DxTreeViewNode NavigateUrl="/template-operations" Text="Þablon Operasyonlar" />
-                        <DxTreeViewNode NavigateUrl="/products-operations" Text="Ürüne Özel Operasyonlar" />
+                        <DxTreeViewNode Text="Operasyonlar">
+                            <Nodes>
+                                <DxTreeViewNode NavigateUrl="/template-operations" Text="Þablon Operasyonlar" />
+                                <DxTreeViewNode NavigateUrl="/products-operations" Text="Ürüne Özel Operasyonlar" />
+                            </Nodes>
+                        </DxTreeViewNode>
                         <DxTreeViewNode NavigateUrl="/bills-of-materials" Text="Reçeteler" />
-                        <DxTreeViewNode NavigateUrl="/routes" Text="Rotalar" />
+                        @* <DxTreeViewNode NavigateUrl="/routes" Text="Rotalar" />*@
                     </Nodes>
                 </DxTreeViewNode>
 

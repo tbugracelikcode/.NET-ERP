@@ -55,6 +55,7 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
         }
 
         #region Reçete Satır Modalı İşlemleri
+
         protected override async Task BeforeInsertAsync()
         {
             DataSource = new SelectBillsofMaterialsDto()
@@ -108,6 +109,7 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
                     foreach (var item in GridLineList)
                     {
                         item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
+                        item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
                         item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
                     }
 
@@ -144,6 +146,10 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
                 case "new":
                     LineDataSource = new SelectBillsofMaterialLinesDto();
                     LineCrudPopup = true;
+                    LineDataSource.FinishedProductCode = DataSource.FinishedProductCode;
+                    LineDataSource.FinishedProductID = DataSource.FinishedProductID;
+                    LineDataSource.ProductCode = DataSource.FinishedProductCode;
+                    LineDataSource.ProductID = DataSource.FinishedProductID;
                     LineDataSource.LineNr = GridLineList.Count + 1;
                     await InvokeAsync(StateHasChanged);
                     break;
@@ -232,13 +238,14 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
                 }
             }
 
+            DataSource.FinishedProductID = LineDataSource.FinishedProductID;
+            DataSource.FinishedProductCode = LineDataSource.FinishedProductCode;
             GridLineList = DataSource.SelectBillsofMaterialLines;
             await _LineGrid.Refresh();
 
             HideLinesPopup();
             await InvokeAsync(StateHasChanged);
         }
-
 
         #endregion
 
@@ -271,11 +278,14 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
             {
                 DataSource.FinishedProductID = args.ItemData.Id;
                 DataSource.FinishedProductCode = args.ItemData.Code;
+                DataSource.FinishedProducName = args.ItemData.Name;
+
             }
             else
             {
                 DataSource.FinishedProductID = Guid.Empty;
                 DataSource.FinishedProductCode = string.Empty;
+                DataSource.FinishedProducName = string.Empty;
             }
             await InvokeAsync(StateHasChanged);
         }
@@ -308,13 +318,13 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
         {
             if (args.ItemData != null)
             {
-                LineDataSource.FinishedProductID = args.ItemData.Id;
-                LineDataSource.FinishedProductCode = args.ItemData.Code;
+                DataSource.FinishedProductCode = args.ItemData.Code;
+                DataSource.FinishedProductID = args.ItemData.Id;
             }
             else
             {
-                LineDataSource.FinishedProductID = Guid.Empty;
-                LineDataSource.FinishedProductCode = string.Empty;
+                DataSource.FinishedProductCode = string.Empty;
+                DataSource.FinishedProductID = Guid.Empty;
             }
             await InvokeAsync(StateHasChanged);
         }
@@ -389,11 +399,13 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
             {
                 LineDataSource.ProductID = args.ItemData.Id;
                 LineDataSource.ProductCode = args.ItemData.Code;
+                LineDataSource.ProductName = args.ItemData.Name;
             }
             else
             {
                 LineDataSource.ProductID = Guid.Empty;
                 LineDataSource.ProductCode = string.Empty;
+                LineDataSource.ProductName = string.Empty;
             }
             await InvokeAsync(StateHasChanged);
         }

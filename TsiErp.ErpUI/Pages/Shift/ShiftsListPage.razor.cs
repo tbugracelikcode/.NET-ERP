@@ -27,8 +27,6 @@ namespace TsiErp.ErpUI.Pages.Shift
 
         private bool LineCrudPopup = false;
 
-
-
         protected override async void OnInitialized()
         {
             BaseCrudService = ShiftsAppService;
@@ -87,7 +85,6 @@ namespace TsiErp.ErpUI.Pages.Shift
                 else
                     SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
             }
-
 
         }
 
@@ -439,5 +436,6 @@ namespace TsiErp.ErpUI.Pages.Shift
         
 
         #endregion
+
     }
 }

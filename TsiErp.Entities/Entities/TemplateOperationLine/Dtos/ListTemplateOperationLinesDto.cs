@@ -19,6 +19,10 @@ namespace TsiErp.Entities.Entities.TemplateOperationLine.Dtos
         /// </summary>
         public string StationCode { get; set; }
         /// <summary>
+        /// İstasyon Açıklaması
+        /// </summary>
+        public string StationName { get; set; }
+        /// <summary>
         /// Öncelik
         /// </summary>
         public int Priority { get; set; }
