@@ -212,10 +212,10 @@
             <BodyTemplate>
                 <SfSchedule TValue="SelectCalendarDaysDto" @bind-SelectedDate="@CurrentDate">
                     <ScheduleResources>
-                        <ScheduleResource TItem="SelectCalendarDaysDto" TValue="bool" DataSource="@SchedularDaysList" Field="CalendarDayStateEnum" Title="DurumTitle" Name="DurumName" TextField="OwnerText" IdField="Id" ColorField="OwnerColor" AllowMultiple="true"></ScheduleResource>
+                        <ScheduleResource TItem="SelectCalendarDaysDto" TValue="int[]" DataSource="@SchedularDaysList" Field="CalendarDayStateEnum" Title="DurumTitle" Name="DurumName" TextField="OwnerText" IdField="CalendarDayStateEnum" ColorField="ColorCode" AllowMultiple="true"></ScheduleResource>
                     </ScheduleResources>
-                    <ScheduleEvents TValue="AppointmentData" OnPopupOpen="@OnPopupOpen"></ScheduleEvents>
-                    <ScheduleEventSettings DataSource="@DataSource">
+                    <ScheduleEvents TValue="SelectCalendarDaysDto" OnPopupOpen="@OnPopupOpen"></ScheduleEvents>
+                    <ScheduleEventSettings DataSource="@SchedularDaysList">
                     </ScheduleEventSettings>
                     <ScheduleViews>
                         <ScheduleView Option="View.Year" FirstDayOfWeek="1" ShowWeekNumber=true></ScheduleView>

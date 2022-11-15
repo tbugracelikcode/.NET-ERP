@@ -40,7 +40,7 @@ namespace TsiErp.ErpUI.Pages.Calendar
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         [Inject]
         ModalManager ModalManager { get; set; }
-        public void OnPopupOpen(PopupOpenEventArgs<AppointmentData> args)
+        public void OnPopupOpen(PopupOpenEventArgs<SelectCalendarDaysDto> args)
         {
             if (args.Type == PopupType.Editor || args.Type == PopupType.QuickInfo)
             {
@@ -132,7 +132,7 @@ namespace TsiErp.ErpUI.Pages.Calendar
                 case "schedular":
                     SelectFirstDataRow = false;
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
-                    EditPageVisible = true;
+                    schedularVisible = true;
                     await InvokeAsync(StateHasChanged);
                     break;
 

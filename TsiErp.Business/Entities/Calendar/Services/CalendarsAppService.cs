@@ -56,13 +56,13 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
             await _manager.CodeControl(_repository, input.Code);
 
-            var entityPlanned = ObjectMapper.Map<CreateCalendarsDto, Calendars>(input);
-            var addedEntityPlanned = await _repository.InsertAsync(entityPlanned);
+            var entity = ObjectMapper.Map<CreateCalendarsDto, Calendars>(input);
+            var addedEntity = await _repository.InsertAsync(entity);
 
             var shiftList = (await _shiftsRepository.GetListAsync()).OrderBy(t => t.ShiftOrder).ToList();
             var stationList = await _stationsRepository.GetListAsync();
 
-            var yearDays = DateRange(new DateTime(addedEntityPlanned.Year, 1, 1), new DateTime(addedEntityPlanned.Year + 1, 1, 1).AddDays(-1)).ToList();
+            var yearDays = DateRange(new DateTime(addedEntity.Year, 1, 1), new DateTime(addedEntity.Year + 1, 1, 1).AddDays(-1)).ToList();
 
             // Seçilen yıl için loop
             for (int i = 0; i < yearDays.Count; i++)
@@ -78,7 +78,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                         {
                             var lineEntity = ObjectMapper.Map<SelectCalendarLinesDto, CalendarLines>(new SelectCalendarLinesDto());
                             lineEntity.Id = GuidGenerator.CreateGuid();
-                            lineEntity.CalendarID = addedEntityPlanned.Id;
+                            lineEntity.CalendarID = addedEntity.Id;
                             lineEntity.StationID = stationList[k].Id;
                             lineEntity.ShiftID = shiftList[j].Id;
                             lineEntity.AvailableTime = 0;
@@ -92,7 +92,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                         {
                             var lineEntity = ObjectMapper.Map<SelectCalendarLinesDto, CalendarLines>(new SelectCalendarLinesDto());
                             lineEntity.Id = GuidGenerator.CreateGuid();
-                            lineEntity.CalendarID = addedEntityPlanned.Id;
+                            lineEntity.CalendarID = addedEntity.Id;
                             lineEntity.StationID = stationList[k].Id;
                             lineEntity.ShiftID = shiftList[j].Id;
                             lineEntity.AvailableTime = shiftList[j].NetWorkTime;
@@ -104,23 +104,26 @@ namespace TsiErp.Business.Entities.Calendar.Services
                     }
                 }
 
+                // Tüm günler için çalışma var satırları oluşturuldu
                 var dayEntity = ObjectMapper.Map<SelectCalendarDaysDto, CalendarDays>(new SelectCalendarDaysDto());
                 dayEntity.Id = GuidGenerator.CreateGuid();
-                dayEntity.CalendarID = addedEntityPlanned.Id;
+                dayEntity.CalendarID = addedEntity.Id;
                 dayEntity.Date_ = yearDays[i];
-                // Day entitysi için 365 günlük çalışma var satırı oluştur ancak eklenen resmi tatil günlerini hariç tut
-                if (input.SelectCalendarDaysDto.Select(t => t.Date_).Contains(yearDays[i]))
-                {
-                    dayEntity.CalendarDayStateEnum = CalendarDayStateEnum.CalismaVar;
-                    dayEntity.ColorCode = "#ffaa00";
-
-                }
-                // Resmi tatil günlerini burada ekle
-                else
-                {
-                    dayEntity.CalendarDayStateEnum = CalendarDayStateEnum.ResmiTatil;
-                }
+                dayEntity.CalendarDayStateEnum = CalendarDayStateEnum.CalismaVar;
+                dayEntity.ColorCode = "#ffaa00";
                 await _dayRepository.InsertAsync(dayEntity);
+
+                //Resmi tatil günleri satırları oluşturuldu
+                for (int l = 0; l < input.SelectCalendarDaysDto.Count; l++)
+                {
+                    var officialHolidayEntity = ObjectMapper.Map<SelectCalendarDaysDto, CalendarDays>(new SelectCalendarDaysDto());
+                    officialHolidayEntity.Id = GuidGenerator.CreateGuid();
+                    officialHolidayEntity.CalendarID = addedEntity.Id;
+                    officialHolidayEntity.Date_ = input.SelectCalendarDaysDto[i].Date_;
+                    officialHolidayEntity.CalendarDayStateEnum = CalendarDayStateEnum.ResmiTatil;
+                    officialHolidayEntity.ColorCode = "#f8a398";
+                    await _dayRepository.InsertAsync(dayEntity);
+                }
             }
 
 
@@ -205,7 +208,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
             await _repository.SaveChanges();
             await _lineRepository.SaveChanges();
             await _dayRepository.SaveChanges();
-            return new SuccessDataResult<SelectCalendarsDto>(ObjectMapper.Map<Calendars, SelectCalendarsDto>(addedEntityPlanned));
+            return new SuccessDataResult<SelectCalendarsDto>(ObjectMapper.Map<Calendars, SelectCalendarsDto>(addedEntity));
         }
 
         public IEnumerable<DateTime> DateRange(DateTime fromDate, DateTime toDate)
