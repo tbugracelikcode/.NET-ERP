@@ -100,7 +100,7 @@ else
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>Operasyon Adı: </strong></label>
-                              <SfTextBox CssClass="TSITxtBox" Placeholder="Operasyon Adını giriniz." @bind-Value="DataSource.Name"></SfTextBox>
+                            <SfTextBox CssClass="TSITxtBox" Placeholder="Operasyon Adını giriniz." @bind-Value="DataSource.Name"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="1">
@@ -115,7 +115,7 @@ else
                             <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
                         </Template>
                     </DxGridLayoutItem>
-                  
+
                     <DxGridLayoutItem Row="3" Column="1" ColumnSpan="3">
                         <Template>
                             <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
@@ -124,20 +124,37 @@ else
 
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridSelectionSettings  Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
+                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.Priority) Type="ColumnType.Number" HeaderText="ÖNCELİK" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
                                     <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.StationCode) HeaderText="İSTASYON KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.StationName) HeaderText="İSTASYON AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    
-                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.OperationTime) Format="N2"  Type="ColumnType.Number" HeaderText="OPERASYON SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
-                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.Priority) Type="ColumnType.Number" HeaderText="ÖNCELİK" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                       <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.ProcessQuantity) Type="ColumnType.Number" HeaderText="İŞLEM ADET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.AdjustmentAndControlTime)  Type="ColumnType.Number" HeaderText="AYAR KONTROL SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    
-                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.Alternative)  DisplayAsCheckBox=true HeaderText="ALTERNATİF" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.OperationTime) Format="N2" Type="ColumnType.Number" HeaderText="OPERASYON SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+
+                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.ProcessQuantity) Type="ColumnType.Number" HeaderText="İŞLEM ADET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.AdjustmentAndControlTime) Type="ColumnType.Number" HeaderText="AYAR KONTROL SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.Alternative) DisplayAsCheckBox=true HeaderText="ALTERNATİF" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+                    <DxGridLayoutItem Row="3" Column="4">
+                        <Template>
+                            <table style="height:100%">
+                                <tr style="vertical-align:central">
+                                    <td>
+                                        <SfButton CssClass="TSISaveButton" OnClick="ArrowUpBtnClicked"><SfIcon Size="IconSize.Medium" Name="IconName.ArrowUp"></SfIcon></SfButton>
+                                        <SfButton CssClass="TSICancelButton" OnClick="ArrowDownBtnClicked"><SfIcon Size="IconSize.Medium" Name="IconName.ArrowDown"></SfIcon></SfButton>
+
+                                    </td>
+                                </tr>
+                            </table>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -227,7 +244,7 @@ else
 
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
-                             <label class="TSIModalLabel"><strong>İstasyon Açıklaması: </strong></label>
+                            <label class="TSIModalLabel"><strong>İstasyon Açıklaması: </strong></label>
                             <SfComboBox @ref="LineStationsComboBox"
                                     TValue="string"
                                     TItem="ListStationsDto"
@@ -268,28 +285,28 @@ else
                                             Filtering="LineStationFiltering"
                                             ValueChange="LineStationValueChangeHandler"></ComboBoxEvents>
                             </SfComboBox>
-                            
+
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="0" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>Öncelik: </strong></label><br />
-                             <SfNumericTextBox TValue="int" CssClass="TSITxtBox" Min="0" @bind-Value="LineDataSource.Priority"></SfNumericTextBox>
+                            <SfNumericTextBox TValue="int" CssClass="TSITxtBox" Min="0" @bind-Value="LineDataSource.Priority"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>İşlem Adet: </strong></label><br />
-                             <SfNumericTextBox TValue="int" CssClass="TSITxtBox" Min="0" @bind-Value="LineDataSource.ProcessQuantity"></SfNumericTextBox>
+                            <SfNumericTextBox TValue="int" CssClass="TSITxtBox" Min="0" @bind-Value="LineDataSource.ProcessQuantity"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="1" Column="3">
+                    <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>Ayar ve Kontrol Süresi: </strong></label><br />
-                             <SfNumericTextBox TValue="int" CssClass="TSITxtBox" Min="0" @bind-Value="LineDataSource.AdjustmentAndControlTime"></SfNumericTextBox>
+                            <SfNumericTextBox TValue="int" CssClass="TSITxtBox" Min="0" @bind-Value="LineDataSource.AdjustmentAndControlTime"></SfNumericTextBox>
 
                         </Template>
                     </DxGridLayoutItem>
@@ -297,15 +314,15 @@ else
 
                     <DxGridLayoutItem Row="1" Column="5">
                         <Template>
-                           <label class="TSIModalLabel"><strong>Operasyon Süresi: </strong></label><br />
-                             <SfNumericTextBox TValue="decimal" CssClass="TSITxtBox" Min="0" @bind-Value="LineDataSource.OperationTime"></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>Operasyon Süresi: </strong></label><br />
+                            <SfNumericTextBox TValue="decimal" CssClass="TSITxtBox" Min="0" @bind-Value="LineDataSource.OperationTime"></SfNumericTextBox>
 
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="2" Column="1">
+                    <DxGridLayoutItem Row="2" Column="1">
                         <Template>
-                           <label class="TSIModalLabel"><strong>Alternatif: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>Alternatif: </strong></label><br />
                             <SfSwitch @bind-Checked="LineDataSource.Alternative"></SfSwitch>
 
                         </Template>
