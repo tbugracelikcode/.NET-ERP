@@ -8,6 +8,7 @@
 @using Tsi.Blazor.Component.Core.Components.Layouts
 @using TsiErp.Entities.Entities.Calendar.Dtos
 @using TsiErp.Business.Entities.Calendar.Services
+@using Syncfusion.Blazor.Schedule
 
 @inherits BaseListPage<SelectCalendarsDto, ListCalendarsDto, CreateCalendarsDto, UpdateCalendarsDto, ListCalendarsParameterDto>
 
@@ -76,7 +77,7 @@
          CloseOnOutsideClick="false"
          HeaderText="Çalışma Takvimi Kayıtları"
          Width="720px"
-         Height="480px"
+         Height="880px"
          HeaderCssClass="HeaderTitleCss">
             <BodyTemplate>
                 <DxGridLayout>
@@ -84,12 +85,16 @@
                         <DxGridLayoutRow Height="100px" />
                         <DxGridLayoutRow Height="70px" />
                         <DxGridLayoutRow Height="140px" />
+                        <DxGridLayoutRow Height="60px" />
+                        <DxGridLayoutRow Height="70px" />
+                        <DxGridLayoutRow Height="270px" />
                     </Rows>
                     <Columns>
                         <DxGridLayoutColumn Width="40px" />
                         <DxGridLayoutColumn Width="300px" />
                         <DxGridLayoutColumn Width="40px" />
                         <DxGridLayoutColumn Width="300px" />
+                        <DxGridLayoutColumn Width="40px" />
                     </Columns>
                     <Items>
                         <DxGridLayoutItem Row="0" Column="1">
@@ -159,31 +164,32 @@
                                 <SfTextBox CssClass="TSIMemoBox" @bind-Value="DataSource._Description" Placeholder="Takvim Açıklaması Yazınız." Multiline="true"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="3" Column="1">
+                        <DxGridLayoutItem Row="4" Column="1">
                             <Template>
                                 <label class="TSIModalLabel"><strong>Resmi Tatil Günü: </strong></label><br />
                                 <SfDatePicker @bind-Value="officialHoliday"></SfDatePicker>
                             </Template>
                         </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="3" Column="2">
+                        <DxGridLayoutItem Row="4" Column="3">
                             <Template>
+                                <br />
                                 <SfButton CssClass="TSISaveButton" OnClick="AddOfficialHoliday"><SfIcon Size="IconSize.Medium" Name="IconName.CommentAdd"></SfIcon>&nbsp;Ekle</SfButton>
                             </Template>
                         </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="4" Column="1" ColumnSpan="3">
+                        <DxGridLayoutItem Row="5" Column="1" ColumnSpan="3">
                             <Template>
                                 <SfGrid @ref=_daysGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridDaysList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
                                     <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectCalendarDaysDto"></GridEvents>
-                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                    <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
-                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
-                                <GridColumns>
-                                    <GridColumn Field=@nameof(SelectCalendarDaysDto.Date_) HeaderText="TARİH" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectCalendarDaysDto.IsOfficialHoliday) Type="ColumnType.Boolean" HeaderText="RESMİ TATİL" DisplayAsCheckBox="true" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                </GridColumns>
-                            </SfGrid>
+                                    <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                    <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                    <GridColumns>
+                                        <GridColumn Field=@nameof(SelectCalendarDaysDto.Date_) Format="dd-MM-yyyy" HeaderText="TARİH" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(SelectCalendarDaysDto.CalendarDayStateEnum) Type="ColumnType.String" HeaderText="DURUM" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    </GridColumns>
+                                </SfGrid>
                             </Template>
                         </DxGridLayoutItem>
                     </Items>
@@ -195,10 +201,34 @@
             </FooterContentTemplate>
         </DxPopup>
 
+        <DxPopup @bind-Visible="schedularVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Çalışma Takvimi"
+         Width="720px"
+         Height="880px"
+         HeaderCssClass="HeaderTitleCss">
+            <BodyTemplate>
+                <SfSchedule TValue="SelectCalendarDaysDto" @bind-SelectedDate="@CurrentDate">
+                    <ScheduleResources>
+                        <ScheduleResource TItem="SelectCalendarDaysDto" TValue="bool" DataSource="@SchedularDaysList" Field="CalendarDayStateEnum" Title="DurumTitle" Name="DurumName" TextField="OwnerText" IdField="Id" ColorField="OwnerColor" AllowMultiple="true"></ScheduleResource>
+                    </ScheduleResources>
+                    <ScheduleEvents TValue="AppointmentData" OnPopupOpen="@OnPopupOpen"></ScheduleEvents>
+                    <ScheduleEventSettings DataSource="@DataSource">
+                    </ScheduleEventSettings>
+                    <ScheduleViews>
+                        <ScheduleView Option="View.Year" FirstDayOfWeek="1" ShowWeekNumber=true></ScheduleView>
+                    </ScheduleViews>
+                </SfSchedule>
+            </BodyTemplate>
+            <FooterContentTemplate>
+                <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+            </FooterContentTemplate>
+        </DxPopup>
     }
 }
-
-
 
 
 

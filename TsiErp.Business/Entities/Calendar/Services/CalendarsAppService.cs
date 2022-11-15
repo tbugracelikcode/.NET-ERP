@@ -14,11 +14,17 @@ using TsiErp.Business.Entities.Calendar.BusinessRules;
 using TsiErp.Business.Entities.Calendar.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Calendar;
+using TsiErp.DataAccess.EntityFrameworkCore.Repositories.CalendarDay;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.CalendarLine;
+using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Shift;
+using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Station;
 using TsiErp.Entities.Entities.Calendar;
 using TsiErp.Entities.Entities.Calendar.Dtos;
+using TsiErp.Entities.Entities.CalendarDay;
+using TsiErp.Entities.Entities.CalendarDay.Dtos;
 using TsiErp.Entities.Entities.CalendarLine;
 using TsiErp.Entities.Entities.CalendarLine.Dtos;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Business.Entities.Calendar.Services
 {
@@ -27,36 +33,185 @@ namespace TsiErp.Business.Entities.Calendar.Services
     {
         private readonly ICalendarsRepository _repository;
         private readonly ICalendarLinesRepository _lineRepository;
+        private readonly ICalendarDaysRepository _dayRepository;
+        private readonly IShiftsRepository _shiftsRepository;
+        private readonly IStationsRepository _stationsRepository;
 
         CalendarManager _manager { get; set; } = new CalendarManager();
 
-        public CalendarsAppService(ICalendarsRepository repository, ICalendarLinesRepository lineRepository)
+        public CalendarsAppService(ICalendarsRepository repository, ICalendarLinesRepository lineRepository, ICalendarDaysRepository dayRepository, IShiftsRepository shiftsRepository, IStationsRepository stationsRepository)
         {
             _repository = repository;
             _lineRepository = lineRepository;
+            _dayRepository = dayRepository;
+            _shiftsRepository = shiftsRepository;
+            _stationsRepository = stationsRepository;
         }
 
         [ValidationAspect(typeof(CreateCalendarsValidatorDto), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCalendarsDto>> CreateAsync(CreateCalendarsDto input)
         {
+            #region Planlı çalışma takvimi satırları
+
             await _manager.CodeControl(_repository, input.Code);
 
-            var entity = ObjectMapper.Map<CreateCalendarsDto, Calendars>(input);
+            var entityPlanned = ObjectMapper.Map<CreateCalendarsDto, Calendars>(input);
+            var addedEntityPlanned = await _repository.InsertAsync(entityPlanned);
 
-            var addedEntity = await _repository.InsertAsync(entity);
+            var shiftList = (await _shiftsRepository.GetListAsync()).OrderBy(t => t.ShiftOrder).ToList();
+            var stationList = await _stationsRepository.GetListAsync();
 
-            foreach (var item in input.SelectCalendarLinesDto)
+            var yearDays = DateRange(new DateTime(addedEntityPlanned.Year, 1, 1), new DateTime(addedEntityPlanned.Year + 1, 1, 1).AddDays(-1)).ToList();
+
+            // Seçilen yıl için loop
+            for (int i = 0; i < yearDays.Count; i++)
             {
-                var lineEntity = ObjectMapper.Map<SelectCalendarLinesDto, CalendarLines>(item);
-                lineEntity.Id = GuidGenerator.CreateGuid();
-                lineEntity.CalendarID = addedEntity.Id;
-                await _lineRepository.InsertAsync(lineEntity);
+                // Makine sayısı kadar loop
+                for (int k = 0; k < stationList.Count; k++)
+                {
+                    // Aktif Vardiya sayısı kadar loop
+                    for (int j = 0; j < shiftList.Count; j++)
+                    {
+                        // Eğer eklenecek gün resmi tatil olarak seçildiyse çalışma ve duruş sürelerini 0 yap
+                        if (input.SelectCalendarDaysDto.Select(t => t.Date_).Contains(yearDays[i]))
+                        {
+                            var lineEntity = ObjectMapper.Map<SelectCalendarLinesDto, CalendarLines>(new SelectCalendarLinesDto());
+                            lineEntity.Id = GuidGenerator.CreateGuid();
+                            lineEntity.CalendarID = addedEntityPlanned.Id;
+                            lineEntity.StationID = stationList[k].Id;
+                            lineEntity.ShiftID = shiftList[j].Id;
+                            lineEntity.AvailableTime = 0;
+                            lineEntity.ShiftOverTime = 0;
+                            lineEntity.PlannedHaltTimes = 0;
+                            lineEntity.ShiftTime = 0;
+                            await _lineRepository.InsertAsync(lineEntity);
+                        }
+                        // Resmi tatil değilse vardiyadan süreleri al
+                        else
+                        {
+                            var lineEntity = ObjectMapper.Map<SelectCalendarLinesDto, CalendarLines>(new SelectCalendarLinesDto());
+                            lineEntity.Id = GuidGenerator.CreateGuid();
+                            lineEntity.CalendarID = addedEntityPlanned.Id;
+                            lineEntity.StationID = stationList[k].Id;
+                            lineEntity.ShiftID = shiftList[j].Id;
+                            lineEntity.AvailableTime = shiftList[j].NetWorkTime;
+                            lineEntity.ShiftOverTime = shiftList[j].Overtime;
+                            lineEntity.PlannedHaltTimes = shiftList[j].TotalBreakTime;
+                            lineEntity.ShiftTime = shiftList[j].TotalWorkTime;
+                            await _lineRepository.InsertAsync(lineEntity);
+                        }
+                    }
+                }
+
+                var dayEntity = ObjectMapper.Map<SelectCalendarDaysDto, CalendarDays>(new SelectCalendarDaysDto());
+                dayEntity.Id = GuidGenerator.CreateGuid();
+                dayEntity.CalendarID = addedEntityPlanned.Id;
+                dayEntity.Date_ = yearDays[i];
+                // Day entitysi için 365 günlük çalışma var satırı oluştur ancak eklenen resmi tatil günlerini hariç tut
+                if (input.SelectCalendarDaysDto.Select(t => t.Date_).Contains(yearDays[i]))
+                {
+                    dayEntity.CalendarDayStateEnum = CalendarDayStateEnum.CalismaVar;
+                    dayEntity.ColorCode = "#ffaa00";
+
+                }
+                // Resmi tatil günlerini burada ekle
+                else
+                {
+                    dayEntity.CalendarDayStateEnum = CalendarDayStateEnum.ResmiTatil;
+                }
+                await _dayRepository.InsertAsync(dayEntity);
             }
+
+
+            #endregion
+
+            #region Plansız çalışma takvimi satırları
+            //var entityUnplanned = ObjectMapper.Map<CreateCalendarsDto, Calendars>(input);
+            //entityUnplanned.IsPlanned = false;
+            //var addedEntityUnplanned = await _repository.InsertAsync(entityUnplanned);
+
+            //// Seçilen yıl için loop
+            //for (int i = 0; i < yearDays.Count; i++)
+            //{
+            //    // Makine sayısı kadar loop
+            //    for (int k = 0; k < stationList.Count; k++)
+            //    {
+            //        // Aktif Vardiya sayısı kadar loop
+            //        for (int j = 0; j < shiftList.Count; j++)
+            //        {
+            //            // Eğer eklenecek gün resmi tatil olarak seçildiyse çalışma ve duruş sürelerini 0 yap
+            //            if (input.SelectCalendarDaysDto.Select(t => t.Date_).Contains(yearDays[i]))
+            //            {
+            //                var lineEntity = ObjectMapper.Map<SelectCalendarLinesDto, CalendarLines>(new SelectCalendarLinesDto());
+            //                lineEntity.Id = GuidGenerator.CreateGuid();
+            //                lineEntity.CalendarID = addedEntityUnplanned.Id;
+            //                lineEntity.StationID = stationList[k].Id;
+            //                lineEntity.ShiftID = shiftList[j].Id;
+            //                lineEntity.AvailableTime = shiftList[j].NetWorkTime;
+            //                lineEntity.ShiftOverTime = 0;
+            //                lineEntity.PlannedHaltTimes = 0;
+            //                lineEntity.ShiftTime = 0;
+            //                await _lineRepository.InsertAsync(lineEntity);
+            //            }
+            //            // Resmi tatil değilse vardiyadan süreleri al
+            //            else
+            //            {
+            //                var lineEntity = ObjectMapper.Map<SelectCalendarLinesDto, CalendarLines>(new SelectCalendarLinesDto());
+            //                lineEntity.Id = GuidGenerator.CreateGuid();
+            //                lineEntity.CalendarID = addedEntityUnplanned.Id;
+            //                lineEntity.StationID = stationList[k].Id;
+            //                lineEntity.ShiftID = shiftList[j].Id;
+            //                lineEntity.AvailableTime = shiftList[j].NetWorkTime;
+            //                lineEntity.ShiftOverTime = shiftList[j].Overtime;
+            //                lineEntity.PlannedHaltTimes = shiftList[j].TotalBreakTime;
+            //                lineEntity.ShiftTime = shiftList[j].TotalWorkTime;
+            //                await _lineRepository.InsertAsync(lineEntity);
+            //            }
+            //        }
+            //    }
+
+            //    var dayEntity = ObjectMapper.Map<SelectCalendarDaysDto, CalendarDays>(new SelectCalendarDaysDto());
+            //    dayEntity.Id = GuidGenerator.CreateGuid();
+            //    dayEntity.CalendarID = addedEntityUnplanned.Id;
+
+            //    // Day entitysi için 365 günlük çalışma var satırı oluştur ancak eklenen resmi tatil günlerini hariç tut
+            //    if (input.SelectCalendarDaysDto.Select(t => t.Date_).Contains(yearDays[i]))
+            //    {
+            //        dayEntity.IsWorkDay = true;
+            //        dayEntity.IsHalfDay = false;
+            //        dayEntity.IsHoliday = false;
+            //        dayEntity.IsOfficialHoliday = false;
+            //        dayEntity.IsMaintenance = false;
+            //        dayEntity.IsNotWorkDay = false;
+            //        dayEntity.IsShipmentDay = false;
+            //    }
+            //    // Resmi tatil günlerini burada ekle
+            //    else
+            //    {
+            //        dayEntity.IsOfficialHoliday = true;
+            //        dayEntity.IsWorkDay = false;
+            //        dayEntity.IsHalfDay = false;
+            //        dayEntity.IsHoliday = false;
+            //        dayEntity.IsMaintenance = false;
+            //        dayEntity.IsNotWorkDay = false;
+            //        dayEntity.IsShipmentDay = false;
+            //    }
+            //    await _dayRepository.InsertAsync(dayEntity);
+            //}
+            #endregion
+
 
             await _repository.SaveChanges();
             await _lineRepository.SaveChanges();
-            return new SuccessDataResult<SelectCalendarsDto>(ObjectMapper.Map<Calendars, SelectCalendarsDto>(addedEntity));
+            await _dayRepository.SaveChanges();
+            return new SuccessDataResult<SelectCalendarsDto>(ObjectMapper.Map<Calendars, SelectCalendarsDto>(addedEntityPlanned));
+        }
+
+        public IEnumerable<DateTime> DateRange(DateTime fromDate, DateTime toDate)
+        {
+            return Enumerable.Range(0, toDate.Subtract(fromDate).Days + 1)
+                             .Select(d => fromDate.AddDays(d));
         }
 
         [CacheRemoveAspect("Get")]

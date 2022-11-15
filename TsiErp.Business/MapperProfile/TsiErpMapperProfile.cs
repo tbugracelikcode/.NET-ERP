@@ -90,6 +90,8 @@ using TsiErp.Entities.Entities.BillsofMaterial;
 using TsiErp.Entities.Entities.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.BillsofMaterialLine;
 using TsiErp.Entities.Entities.BillsofMaterialLine.Dtos;
+using TsiErp.Entities.Entities.CalendarDay.Dtos;
+using TsiErp.Entities.Entities.CalendarDay;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -408,6 +410,14 @@ namespace TsiErp.Business.MapperProfile
                 .ForMember(x => x.CalendarLines, y => y.Ignore());
             CreateMap<SelectCalendarsDto, UpdateCalendarsDto>();
 
+            CreateMap<CalendarDays, SelectCalendarDaysDto>();
+            CreateMap<CalendarDays, ListCalendarDaysDto>();
+            CreateMap<CreateCalendarDaysDto, CalendarDays>();
+            CreateMap<SelectCalendarDaysDto, CreateCalendarDaysDto>();
+            CreateMap<UpdateCalendarDaysDto, CalendarDays>();
+            CreateMap<SelectCalendarDaysDto, UpdateCalendarDaysDto>();
+            CreateMap<SelectCalendarDaysDto, CalendarDays>();
+
             CreateMap<CalendarLines, SelectCalendarLinesDto>()
                 .ForMember(x => x.StationName, y => y.MapFrom(z => z.Stations.Code))
                 .ForMember(x => x.ShiftOverTime, y => y.MapFrom(z => z.Shifts.Overtime))
@@ -424,6 +434,7 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectCalendarLinesDto, CreateCalendarLinesDto>();
             CreateMap<UpdateCalendarLinesDto, CalendarLines>();
             CreateMap<SelectCalendarLinesDto, UpdateCalendarLinesDto>();
+            CreateMap<SelectCalendarLinesDto, CalendarLines>();
 
 
             CreateMap<TemplateOperations, SelectTemplateOperationsDto>();

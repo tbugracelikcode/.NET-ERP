@@ -935,7 +935,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
                 b.Property(t => t.AvailableTime).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.PlannedHaltTimes).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
-                b.Property(t => t.CalendarID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.CalendarID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.ShiftID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.ShiftOverTime).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.ShiftTime).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
@@ -960,14 +960,9 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.ConfigureByConvention();
 
                 b.Property(t => t.Date_).IsRequired().HasColumnType(SqlDbType.Date.ToString());
-                b.Property(t => t.CalendarID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.IsWorkDay).IsRequired().HasColumnType(SqlDbType.Bit.ToString());
-                b.Property(t => t.IsNotWorkDay).IsRequired().HasColumnType(SqlDbType.Bit.ToString());
-                b.Property(t => t.IsOfficialHoliday).IsRequired().HasColumnType(SqlDbType.Bit.ToString());
-                b.Property(t => t.IsHoliday).IsRequired().HasColumnType(SqlDbType.Bit.ToString());
-                b.Property(t => t.IsHalfDay).IsRequired().HasColumnType(SqlDbType.Bit.ToString());
-                b.Property(t => t.IsShipmentDay).IsRequired().HasColumnType(SqlDbType.Bit.ToString());
-                b.Property(t => t.IsMaintenance).IsRequired().HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.CalendarID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.CalendarDayStateEnum).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.ColorCode).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
 
                 b.HasIndex(x => x.CalendarID);
 
