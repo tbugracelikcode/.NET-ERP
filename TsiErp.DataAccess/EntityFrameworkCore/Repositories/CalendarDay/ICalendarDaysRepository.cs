@@ -8,7 +8,7 @@ using TsiErp.Entities.Entities.CalendarDay;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Repositories.CalendarDay
 {
-    internal interface ICalendarDaysRepository : IEfCoreRepository<CalendarDays>
+    public interface ICalendarDaysRepository : IEfCoreRepository<CalendarDays>
     {
     }
 }

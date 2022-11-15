@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Entities.CalendarDay.Dtos;
 using TsiErp.Entities.Entities.CalendarLine.Dtos;
 
 namespace TsiErp.Entities.Entities.Calendar.Dtos
@@ -44,5 +45,7 @@ namespace TsiErp.Entities.Entities.Calendar.Dtos
         public decimal AvailableDays { get; set; }
 
         public List<SelectCalendarLinesDto> SelectCalendarLinesDto { get; set; }
+
+        public List<SelectCalendarDaysDto> SelectCalendarDaysDto { get; set; }
     }
 }

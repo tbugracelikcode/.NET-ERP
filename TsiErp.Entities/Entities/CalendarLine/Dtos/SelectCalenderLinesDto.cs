@@ -28,7 +28,7 @@ namespace TsiErp.Entities.Entities.CalendarLine.Dtos
         /// <summary>
         /// Çalışma takvimi ID
         /// </summary>
-        public Guid? CalenderID { get; set; }
+        public Guid? CalendarID { get; set; }
         /// <summary>
         /// Vardiya Adı
         /// </summary>
