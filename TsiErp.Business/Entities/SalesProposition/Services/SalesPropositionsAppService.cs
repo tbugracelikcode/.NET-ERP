@@ -24,6 +24,8 @@ using TsiErp.Business.Entities.SalesProposition.BusinessRules;
 using Microsoft.EntityFrameworkCore;
 using Tsi.Application.Contract.Services.EntityFrameworkCore;
 using Tsi.Core.Utilities.Guids;
+using TsiErp.Entities.Enums;
+using TsiErp.Entities.Entities.SalesOrderLine.Dtos;
 
 namespace TsiErp.Business.Entities.SalesProposition.Services
 {
@@ -99,7 +101,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
 
             var mappedEntity = ObjectMapper.Map<SalesPropositions, SelectSalesPropositionsDto>(entity);
 
-             mappedEntity.SelectSalesPropositionLines = ObjectMapper.Map<List<SalesPropositionLines>, List<SelectSalesPropositionLinesDto>>(entity.SalesPropositionLines.ToList());
+            mappedEntity.SelectSalesPropositionLines = ObjectMapper.Map<List<SalesPropositionLines>, List<SelectSalesPropositionLinesDto>>(entity.SalesPropositionLines.ToList());
 
             return new SuccessDataResult<SelectSalesPropositionsDto>(mappedEntity);
         }
@@ -150,9 +152,33 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                 }
             }
 
-            await _repository.SaveChanges();            
+            await _repository.SaveChanges();
 
             return new SuccessDataResult<SelectSalesPropositionsDto>(ObjectMapper.Map<SalesPropositions, SelectSalesPropositionsDto>(mappedEntity));
         }
+
+        public async Task UpdateSalesPropositionLineState(List<SelectSalesOrderLinesDto> orderLineList, SalesPropositionLineStateEnum lineState)
+        {
+
+            foreach (var item in orderLineList)
+            {
+                var lineEntity = (await GetAsync(item.LinkedSalesPropositionID.GetValueOrDefault())).Data.SelectSalesPropositionLines;
+
+                if (lineEntity.Count > 0)
+                {
+                    foreach (var line in lineEntity)
+                    {
+                        var mappedLineEntity = ObjectMapper.Map<SelectSalesPropositionLinesDto, SalesPropositionLines>(line);
+                        mappedLineEntity.SalesPropositionLineState = lineState;
+                        mappedLineEntity.OrderConversionDate = DateTime.Now;
+                        await _lineRepository.UpdateAsync(mappedLineEntity);
+                        await _lineRepository.SaveChanges();
+                    }
+                }
+            }
+
+
+        }
     }
+
 }

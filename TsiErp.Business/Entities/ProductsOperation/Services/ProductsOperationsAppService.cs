@@ -128,15 +128,16 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 {
                     lineEntity.Id = GuidGenerator.CreateGuid();
                     await _lineRepository.InsertAsync(lineEntity);
+                    await _lineRepository.SaveChanges();
                 }
                 else
                 {
                     await _lineRepository.UpdateAsync(lineEntity);
+                    await _lineRepository.SaveChanges();
                 }
             }
 
             await _repository.SaveChanges();
-            await _lineRepository.SaveChanges();
 
             return new SuccessDataResult<SelectProductsOperationsDto>(ObjectMapper.Map<ProductsOperations, SelectProductsOperationsDto>(mappedEntity));
         }

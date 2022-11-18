@@ -9,14 +9,7 @@ namespace TsiErp.Entities.Entities.RouteLine.Dtos
 {
     public class UpdateRouteLinesDto : FullAuditedEntityDto
     {
-        /// <summary>
-        /// Kod
-        /// </summary>
-        public string Code { get; set; }
-        /// <summary>
-        /// Açıklama
-        /// </summary>
-        public string Name { get; set; }
+        
         /// <summary>
         /// Rota ID
         /// </summary>

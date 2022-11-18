@@ -135,5 +135,6 @@ namespace TsiErp.Entities.Entities.Product
         public ICollection<ProductsOperations> ProductsOperations { get; set; }
         public ICollection<BillsofMaterialLines> BillsofMaterialLines { get; set; }
         public ICollection<BillsofMaterials> BillsofMaterials { get; set; }
+        public ICollection<RouteLines> RouteLines { get; set; }
     }
 }

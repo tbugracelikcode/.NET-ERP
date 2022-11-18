@@ -38,17 +38,17 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
 
         protected override async void OnInitialized()
         {
+             CreateMainContextMenuItems();
+             CreateLineContextMenuItems();
+
             BaseCrudService = ProductsOperationsAppService;
-
+         
             await GetProductsList();
-
-            CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
-
             await GetLineStationsList();
         }
 
-        #region Şablon Operasyon Satır Modalı İşlemleri
+        #region Ürüne Özel Operasyon Satır Modalı İşlemleri
+
         protected override async Task BeforeInsertAsync()
         {
             DataSource = new SelectProductsOperationsDto()
@@ -69,7 +69,9 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
         {
             LineDataSource = new SelectProductsOperationLinesDto()
             {
-                Alternative = false
+                Alternative = false,
+                Priority = GridLineList.Count + 1,
+                LineNr = GridLineList.Count + 1
             };
 
             await Task.CompletedTask;
@@ -107,7 +109,7 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
 
                 case "changed":
                     DataSource = (await ProductsOperationsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    GridLineList = DataSource.SelectProductsOperationLines;
+                    GridLineList = DataSource.SelectProductsOperationLines.OrderBy(t=>t.Priority).ToList();
 
                     foreach (var item in GridLineList)
                     {
@@ -148,7 +150,6 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
                 case "new":
                     LineDataSource = new SelectProductsOperationLinesDto();
                     LineCrudPopup = true;
-                    LineDataSource.LineNr = GridLineList.Count + 1;
                     await LineBeforeInsertAsync();
                     await InvokeAsync(StateHasChanged);
                     break;
@@ -165,30 +166,52 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
 
                     if (res == true)
                     {
-                        //var salesPropositionLines = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+
                         var line = args.RowInfo.RowData;
 
                         if (line.Id == Guid.Empty)
                         {
                             DataSource.SelectProductsOperationLines.Remove(args.RowInfo.RowData);
+
+
+
+                            await _LineGrid.Refresh();
+                            await InvokeAsync(StateHasChanged);
                         }
                         else
                         {
                             if (line != null)
                             {
-                                await DeleteAsync(args.RowInfo.RowData.Id);
-                                DataSource.SelectProductsOperationLines.Remove(line);
-                                await GetListDataSourceAsync();
+
+                                int selectedIndex = GridLineList.FindIndex(t => t.Id == line.Id);
+
+                                if (selectedIndex >= 0)
+                                {
+                                    int selectedPriority = GridLineList[selectedIndex].Priority;
+
+
+                                    GridLineList.Remove(line);
+
+                                    for (int i = 0; i < GridLineList.Count; i++)
+                                    {
+                                        GridLineList[i].LineNr = i + 1;
+                                        GridLineList[i].Priority = i + 1;
+                                    }
+
+                                    DataSource.SelectProductsOperationLines = GridLineList;
+
+                                    await _LineGrid.Refresh();
+
+                                    await DeleteAsync(args.RowInfo.RowData.Id);
+                                    await GetListDataSourceAsync();
+                                    await InvokeAsync(StateHasChanged);
+                                }
                             }
                             else
                             {
                                 DataSource.SelectProductsOperationLines.Remove(line);
                             }
                         }
-
-                        await _LineGrid.Refresh();
-                        GetTotal();
-                        await InvokeAsync(StateHasChanged);
                     }
 
                     break;
@@ -237,12 +260,53 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
                 }
             }
 
-            GridLineList = DataSource.SelectProductsOperationLines;
+            GridLineList = DataSource.SelectProductsOperationLines.OrderBy(t=>t.Priority).ToList();
 
             await _LineGrid.Refresh();
 
             HideLinesPopup();
             await InvokeAsync(StateHasChanged);
+        }
+
+        public async void ArrowUpBtnClicked()
+        {
+            var index = Convert.ToInt32(_LineGrid.SelectedRowIndexes.FirstOrDefault());
+
+            if (!(index == 0))
+            {
+                GridLineList[index].Priority -= 1;
+                GridLineList[index - 1].Priority += 1;
+                GridLineList[index].LineNr -= 1;
+                GridLineList[index - 1].LineNr += 1;
+
+                GridLineList = GridLineList.OrderBy(t => t.Priority).ToList();
+
+                DataSource.SelectProductsOperationLines = GridLineList;
+
+                await _LineGrid.Refresh();
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        public async void ArrowDownBtnClicked()
+        {
+
+            var index = Convert.ToInt32(_LineGrid.SelectedRowIndexes.FirstOrDefault());
+
+            if (!(index == GridLineList.Count()))
+            {
+                GridLineList[index].Priority += 1;
+                GridLineList[index + 1].Priority -= 1;
+                GridLineList[index].LineNr += 1;
+                GridLineList[index + 1].LineNr -= 1;
+
+                GridLineList = GridLineList.OrderBy(t => t.Priority).ToList();
+
+                DataSource.SelectProductsOperationLines = GridLineList;
+
+                await _LineGrid.Refresh();
+                await InvokeAsync(StateHasChanged);
+            }
         }
 
         #endregion
@@ -318,8 +382,8 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
             if (args.ItemData != null)
             {
                 LineDataSource.StationID = args.ItemData.Id;
-                LineDataSource.StationCode = args.ItemData.Code; 
-                LineDataSource.StationName = args.ItemData.Name; 
+                LineDataSource.StationCode = args.ItemData.Code;
+                LineDataSource.StationName = args.ItemData.Name;
             }
             else
             {

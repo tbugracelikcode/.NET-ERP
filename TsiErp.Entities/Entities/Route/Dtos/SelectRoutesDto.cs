@@ -21,11 +21,15 @@ namespace TsiErp.Entities.Entities.Route.Dtos
         /// <summary>
         /// Ana Ürün ID
         /// </summary>
-        public Guid ProductID { get; set; }
+        public Guid? ProductID { get; set; }
         /// <summary>
         /// Ana Ürün Kodu
         /// </summary>
         public string ProductCode { get; set; }
+        /// <summary>
+        /// Ana Ürün Açıklaması
+        /// </summary>
+        public string ProductName { get; set; }
         /// <summary>
         /// Üretim Başlangıç
         /// </summary>
