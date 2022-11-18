@@ -9,14 +9,7 @@ namespace TsiErp.Entities.Entities.RouteLine.Dtos
 {
     public class SelectRouteLinesDto : FullAuditedEntityDto
     {
-        /// <summary>
-        /// Kod
-        /// </summary>
-        public string Code { get; set; }
-        /// <summary>
-        /// Açıklama
-        /// </summary>
-        public string Name { get; set; }
+        
         /// <summary>
         /// Rota ID
         /// </summary>
@@ -28,11 +21,15 @@ namespace TsiErp.Entities.Entities.RouteLine.Dtos
         /// <summary>
         /// Ana Ürün ID
         /// </summary>
-        public Guid ProductID { get; set; }
+        public Guid? ProductID { get; set; }
         /// <summary>
         /// Ana Ürün Kodu
         /// </summary>
         public string ProductCode { get; set; }
+        /// <summary>
+        /// Ana Ürün Açıklaması
+        /// </summary>
+        public string ProductName { get; set; }
         /// <summary>
         /// Operasyon ID
         /// </summary>
@@ -41,6 +38,10 @@ namespace TsiErp.Entities.Entities.RouteLine.Dtos
         /// Operasyon Adı
         /// </summary>
         public string OperationName { get; set; }
+        /// <summary>
+        /// Operasyon Kodu
+        /// </summary>
+        public string OperationCode { get; set; }
         /// <summary>
         /// Üretim Havuz ID
         /// </summary>

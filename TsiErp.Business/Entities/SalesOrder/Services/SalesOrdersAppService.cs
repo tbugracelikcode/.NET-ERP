@@ -5,6 +5,7 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.Entities.SalesOrder.BusinessRules;
 using TsiErp.Business.Entities.SalesOrder.Validations;
+using TsiErp.Business.Entities.SalesProposition.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.SalesOrder;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.SalesOrderLine;
@@ -21,11 +22,14 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
         private readonly ISalesOrdersRepository _repository;
         private readonly ISalesOrderLinesRepository _lineRepository;
 
+        private readonly ISalesPropositionsAppService _salesPropositionsAppService;
+
         SalesOrderManager _manager { get; set; } = new SalesOrderManager();
-        public SalesOrdersAppService(ISalesOrdersRepository repository, ISalesOrderLinesRepository lineRepository)
+        public SalesOrdersAppService(ISalesOrdersRepository repository, ISalesOrderLinesRepository lineRepository, ISalesPropositionsAppService salesPropositionsAppService)
         {
             _repository = repository;
             _lineRepository = lineRepository;
+            _salesPropositionsAppService = salesPropositionsAppService;
         }
 
 
@@ -46,6 +50,37 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 lineEntity.SalesOrderID = addedEntity.Id;
                 await _lineRepository.InsertAsync(lineEntity);
             }
+
+            await _repository.SaveChanges();
+            await _lineRepository.SaveChanges();
+            return new SuccessDataResult<SelectSalesOrderDto>(ObjectMapper.Map<SalesOrders, SelectSalesOrderDto>(addedEntity));
+        }
+
+        [ValidationAspect(typeof(CreateSalesOrderValidatorDto), Priority = 1)]
+        [CacheRemoveAspect("Get")]
+        public async Task<IDataResult<SelectSalesOrderDto>> ConvertToSalesOrderAsync(CreateSalesOrderDto input)
+        {
+            await _manager.CodeControl(_repository, input.FicheNo);
+
+            var entity = ObjectMapper.Map<CreateSalesOrderDto, SalesOrders>(input);
+
+            var addedEntity = await _repository.InsertAsync(entity);
+
+            if(input.SelectSalesOrderLines != null)
+            {
+                foreach (var item in input.SelectSalesOrderLines)
+                {
+                    var lineEntity = ObjectMapper.Map<SelectSalesOrderLinesDto, SalesOrderLines>(item);
+                    lineEntity.Id = GuidGenerator.CreateGuid();
+                    lineEntity.SalesOrderID = addedEntity.Id;
+                    await _lineRepository.InsertAsync(lineEntity);
+
+                }
+
+                await _salesPropositionsAppService.UpdateSalesPropositionLineState(input.SelectSalesOrderLines, TsiErp.Entities.Enums.SalesPropositionLineStateEnum.Siparis);
+            }
+
+
 
             await _repository.SaveChanges();
             await _lineRepository.SaveChanges();

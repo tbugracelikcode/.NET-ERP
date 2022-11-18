@@ -22,6 +22,10 @@ namespace TsiErp.Entities.Entities.Route.Dtos
         /// </summary>
         public string ProductCode { get; set; }
         /// <summary>
+        /// Ana Ürün Açıklaması
+        /// </summary>
+        public string ProductName { get; set; }
+        /// <summary>
         /// Üretim Başlangıç
         /// </summary>
         public string ProductionStart { get; set; }

@@ -22,11 +22,11 @@ namespace TsiErp.Entities.Entities.SalesOrderLine.Dtos
         /// <summary>
         /// Stok ID
         /// </summary>
-        public Guid ProductID { get; set; }
+        public Guid? ProductID { get; set; }
         /// <summary>
         /// Birim Set ID
         /// </summary>
-        public Guid UnitSetID { get; set; }
+        public Guid? UnitSetID { get; set; }
         /// <summary>
         /// Bağlı Teklif Satır ID
         /// </summary>
@@ -90,7 +90,7 @@ namespace TsiErp.Entities.Entities.SalesOrderLine.Dtos
         /// <summary>
         /// Ödeme Planı ID
         /// </summary>
-        public Guid PaymentPlanID { get; set; }
+        public Guid? PaymentPlanID { get; set; }
         /// <summary>
         /// Satış Sipariş Satırı Durumu
         /// </summary>

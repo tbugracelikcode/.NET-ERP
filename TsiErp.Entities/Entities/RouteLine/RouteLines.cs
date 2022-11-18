@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.Product;
+using TsiErp.Entities.Entities.ProductsOperation;
 using TsiErp.Entities.Entities.Route;
-using TsiErp.Entities.Entities.TemplateOperation;
 
 namespace TsiErp.Entities.Entities.RouteLine
 {
@@ -15,14 +15,7 @@ namespace TsiErp.Entities.Entities.RouteLine
     /// </summary>
     public class RouteLines : FullAuditedEntity
     {
-        /// <summary>
-        /// Kod
-        /// </summary>
-        public string Code { get; set; }
-        /// <summary>
-        /// Açıklama
-        /// </summary>
-        public string Name { get; set; }
+        
         /// <summary>
         /// Rota ID
         /// </summary>
@@ -32,9 +25,9 @@ namespace TsiErp.Entities.Entities.RouteLine
         /// </summary>
         public Guid ProductID { get; set; }
         /// <summary>
-        /// Operasyon ID
+        /// Ürün Operasyon ID
         /// </summary>
-        public Guid OperationID { get; set; }
+        public Guid ProductsOperationID { get; set; }
         /// <summary>
         /// Üretim Havuz ID
         /// </summary>
@@ -64,7 +57,7 @@ namespace TsiErp.Entities.Entities.RouteLine
         /// </summary>
         public byte[] OperationPicture { get; set; }
 
-        public TemplateOperations TemplateOperations { get; set; }
+        public ProductsOperations ProductsOperations { get; set; }
 
         public Products Products { get; set; }
 

@@ -23,7 +23,11 @@ namespace TsiErp.Business.Entities.Route.Validations
                 .NotEmpty()
                 .WithMessage("Lütfen rota açıklamasını yazın.")
                 .MaximumLength(200)
-                .WithMessage("Rota açıklaması 200 karakterden fazla olamaz."); ;
+                .WithMessage("Rota açıklaması 200 karakterden fazla olamaz.");
+
+            RuleFor(x => x.ProductID)
+                .Must(x => x.HasValue && x.Value != Guid.Empty)
+               .WithMessage("Lütfen üretilecek ürünü seçin.");
         }
     }
 }

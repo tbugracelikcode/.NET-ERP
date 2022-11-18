@@ -17,6 +17,8 @@ namespace TsiErp.Entities.Enums
         [Display(Name = "Sipariş")]
         Siparis = 3,
         [Display(Name = "Kısmi Sipariş")]
-        KismiSiparis = 4
+        KismiSiparis = 4,
+        [Display(Name = "Kısmi Onaylandı")]
+        KismiOnaylandi = 5
     }
 }

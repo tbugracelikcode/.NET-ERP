@@ -339,8 +339,6 @@ namespace TsiErp.ErpUI.Pages.SalesOrder
         }
         #endregion
 
-
-
         #region Şubeler
         public async Task BranchFiltering(FilteringEventArgs args)
         {

@@ -11,6 +11,8 @@ using TsiErp.Entities.Entities.SalesProposition.Dtos;
 using TsiErp.Entities.Entities.SalesPropositionLine.Dtos;
 using TsiErp.Entities.Entities.WareHouse.Dtos;
 using TsiErp.Entities.Entities.PaymentPlan.Dtos;
+using TsiErp.Entities.Entities.SalesOrder.Dtos;
+using TsiErp.Entities.Entities.SalesOrderLine.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.ErpUI.Helpers;
@@ -46,23 +48,31 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
 
         private SfGrid<ListSalesPropositionsDto> _grid;
         private SfGrid<SelectSalesPropositionLinesDto> _LineGrid;
+        private SfGrid<SelectSalesPropositionLinesDto> _ConvertToOrderGrid;
 
         [Inject]
         ModalManager ModalManager { get; set; }
 
         SelectSalesPropositionLinesDto LineDataSource;
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+        public List<ContextMenuItemModel> ConvertToOrderGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectSalesPropositionLinesDto> GridLineList = new List<SelectSalesPropositionLinesDto>();
 
+        List<SelectSalesPropositionLinesDto> GridConvertToOrderList = new List<SelectSalesPropositionLinesDto>();
+
         private bool LineCrudPopup = false;
+
+        private bool ConvertToOrderCrudPopup = false;
 
         protected override async void OnInitialized()
         {
-            BaseCrudService = SalesPropositionsAppService;
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
+            CreateConvertToOrderContextMenuItems();
+
+            BaseCrudService = SalesPropositionsAppService;
 
             await GetCurrentAccountCardsList();
             await GetBranchesList();
@@ -72,6 +82,258 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             await GetUnitSetsList();
             await GetPaymentPlansList();
         }
+
+        #region Satışı Teklife Dönüştürme Modalı İşlemleri
+
+        protected void CreateConvertToOrderContextMenuItems()
+        {
+            if (ConvertToOrderGridContextMenu.Count() == 0)
+            {
+                ConvertToOrderGridContextMenu.Add(new ContextMenuItemModel { Text = "Onaylandı", Id = "approve" });
+                ConvertToOrderGridContextMenu.Add(new ContextMenuItemModel { Text = "Beklemede", Id = "onhold" });
+            }
+        }
+
+        public async void OnConvertToOrderContextMenuClick(ContextMenuClickEventArgs<SelectSalesPropositionLinesDto> args)
+        {
+            switch (args.Item.Id)
+            {
+                case "approve":
+
+
+                    var selectedIndexList = _ConvertToOrderGrid.SelectedRowIndexes;
+
+                    foreach (var item in selectedIndexList)
+                    {
+                        if (GridConvertToOrderList[Convert.ToInt32(item)].SalesPropositionLineState != Entities.Enums.SalesPropositionLineStateEnum.Siparis)
+                        {
+                            GridConvertToOrderList[Convert.ToInt32(item)].SalesPropositionLineState = Entities.Enums.SalesPropositionLineStateEnum.Onaylandı;
+                        }
+                        
+                    }
+
+                    DataSource.SelectSalesPropositionLines = GridConvertToOrderList;
+
+                    #region Teklif Durumunu Onaylandı Kaydetme
+
+                    SelectSalesPropositionsDto result;
+
+                    if (DataSource.Id == Guid.Empty)
+                    {
+                        var createInput = ObjectMapper.Map<SelectSalesPropositionsDto, CreateSalesPropositionsDto>(DataSource);
+
+                         result = (await CreateAsync(createInput)).Data;
+
+                        if (result != null)
+                            DataSource.Id = result.Id;
+                    }
+                    else
+                    {
+                        var updateInput = ObjectMapper.Map<SelectSalesPropositionsDto, UpdateSalesPropositionsDto>(DataSource);
+
+                         result = (await UpdateAsync(updateInput)).Data;
+                    }
+
+                    #endregion
+
+                    await _ConvertToOrderGrid.Refresh();
+
+                    break;
+
+                case "onhold":
+
+                     selectedIndexList = _ConvertToOrderGrid.SelectedRowIndexes;
+
+                    foreach (var item in selectedIndexList)
+                    {
+                        if (GridConvertToOrderList[Convert.ToInt32(item)].SalesPropositionLineState != Entities.Enums.SalesPropositionLineStateEnum.Siparis)
+                        {
+                            GridConvertToOrderList[Convert.ToInt32(item)].SalesPropositionLineState = Entities.Enums.SalesPropositionLineStateEnum.Beklemede;
+                        }
+                    }
+
+                    DataSource.SelectSalesPropositionLines = GridConvertToOrderList;
+
+                    #region Teklif Durumunu Beklemede Olarak Kaydetme
+
+                    if (DataSource.Id == Guid.Empty)
+                    {
+                        var createInput = ObjectMapper.Map<SelectSalesPropositionsDto, CreateSalesPropositionsDto>(DataSource);
+
+                        result = (await CreateAsync(createInput)).Data;
+
+                        if (result != null)
+                            DataSource.Id = result.Id;
+                    }
+                    else
+                    {
+                        var updateInput = ObjectMapper.Map<SelectSalesPropositionsDto, UpdateSalesPropositionsDto>(DataSource);
+
+                        result = (await UpdateAsync(updateInput)).Data;
+                    }
+
+                    #endregion
+
+                    await _ConvertToOrderGrid.Refresh();
+
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        protected async Task OnConvertToOrderBtnClicked()
+        {
+
+            List<SelectSalesPropositionLinesDto> _orderList = new List<SelectSalesPropositionLinesDto>();
+            var selectedRowList = _ConvertToOrderGrid.SelectedRecords;
+            var selectedIndexList = _ConvertToOrderGrid.SelectedRowIndexes;
+
+            foreach (var item in selectedRowList)
+            {
+                _orderList.Add(item);
+            }
+
+            var approvedSelected = _orderList.Where(t => t.SalesPropositionLineState == Entities.Enums.SalesPropositionLineStateEnum.Onaylandı).ToList();
+
+            if (approvedSelected.Count > 0)
+            {
+                #region Teklifi Siparişe Çevirme
+
+                CreateSalesOrderDto createSalesOrder = new CreateSalesOrderDto
+                {
+                    BranchID = DataSource.BranchID,
+                    CurrencyID = DataSource.CurrencyID,
+                    CurrentAccountCardID = DataSource.CurrentAccountCardID,
+                    Date_ = DataSource.Date_,
+                    Description_ = DataSource.Description_,
+                    ExchangeRate = DataSource.ExchangeRate,
+                    GrossAmount = DataSource.GrossAmount,
+                    LinkedSalesPropositionID = DataSource.Id,
+                    FicheNo = "DENEME 8",
+                    NetAmount = DataSource.NetAmount,
+                    PaymentPlanID = DataSource.PaymentPlanID,
+                    SalesOrderState = Entities.Enums.SalesOrderStateEnum.Beklemede,
+                    ShippingAdressID = DataSource.ShippingAdressID,
+                    SpecialCode = DataSource.SpecialCode,
+                    Time_ = DataSource.Time_,
+                    TotalDiscountAmount = DataSource.TotalDiscountAmount,
+                    TotalVatAmount = DataSource.TotalVatAmount,
+                    TotalVatExcludedAmount = DataSource.TotalVatExcludedAmount,
+                    WarehouseID = DataSource.WarehouseID
+                };
+
+                List<SelectSalesOrderLinesDto> orderLineList = new List<SelectSalesOrderLinesDto>();
+
+                foreach (var item in approvedSelected)
+                {
+                    SelectSalesOrderLinesDto selectSalesOrderLine = new SelectSalesOrderLinesDto
+                    {
+                        DiscountAmount = item.DiscountAmount,
+                        DiscountRate = item.DiscountRate,
+                        ExchangeRate = item.ExchangeRate,
+                        LikedPropositionLineID = item.Id,
+                        LineAmount = item.LineAmount,
+                        LineDescription = item.LineDescription,
+                        LineNr = item.LineNr,
+                        LineTotalAmount = item.LineTotalAmount,
+                        PaymentPlanID = item.PaymentPlanID,
+                        ProductID = item.ProductID,
+                        Quantity = item.Quantity,
+                        SalesOrderID = Guid.Empty,
+                        SalesOrderLineStateEnum = Entities.Enums.SalesOrderLineStateEnum.Beklemede,
+                        UnitPrice = item.UnitPrice,
+                        UnitSetID = item.UnitSetID,
+                        VATamount = item.VATamount,
+                        VATrate = item.VATrate,
+                         LinkedSalesPropositionID= createSalesOrder.LinkedSalesPropositionID
+                    };
+                    orderLineList.Add(selectSalesOrderLine);
+                    item.SalesPropositionLineState = Entities.Enums.SalesPropositionLineStateEnum.Siparis;
+                }
+
+                createSalesOrder.SelectSalesOrderLines = orderLineList;
+
+                await SalesOrdersAppService.ConvertToSalesOrderAsync(createSalesOrder);
+
+                #endregion
+
+                await ModalManager.MessagePopupAsync("Bilgilendirme", "Seçilen onaylanmış satırlar, siparişe dönüştürüldü.");
+            }
+            else
+            {
+                await ModalManager.WarningPopupAsync("Uyarı", "Seçilen tüm satırların durumu beklemededir. Beklemede olan satırlar, siparişe dönüştürülemez.");
+            }
+
+            #region Ana Satırın Sipariş Durumunu Belirleme
+
+            int approvedMain = GridConvertToOrderList.Where(t => t.SalesPropositionLineState == Entities.Enums.SalesPropositionLineStateEnum.Onaylandı).Count();
+            int onholdMain = GridConvertToOrderList.Where(t => t.SalesPropositionLineState == Entities.Enums.SalesPropositionLineStateEnum.Beklemede).Count();
+            int orderMain = GridConvertToOrderList.Where(t => t.SalesPropositionLineState == Entities.Enums.SalesPropositionLineStateEnum.Siparis).Count();
+
+            #region Koşullar
+
+            if (orderMain != 0 && orderMain != GridConvertToOrderList.Count())
+            {
+                DataSource.SalesPropositionState = Entities.Enums.SalesPropositionStateEnum.KismiSiparis;
+            }
+            else if (orderMain == GridConvertToOrderList.Count())
+            {
+                DataSource.SalesPropositionState = Entities.Enums.SalesPropositionStateEnum.Siparis;
+            }
+            else if (approvedMain == GridConvertToOrderList.Count())
+            {
+                DataSource.SalesPropositionState = Entities.Enums.SalesPropositionStateEnum.Onaylandı;
+            }
+            else if (approvedMain != 0 && approvedMain != GridConvertToOrderList.Count())
+            {
+                DataSource.SalesPropositionState = Entities.Enums.SalesPropositionStateEnum.KismiOnaylandi;
+            }
+            else if (onholdMain == GridConvertToOrderList.Count())
+            {
+                DataSource.SalesPropositionState = Entities.Enums.SalesPropositionStateEnum.Beklemede;
+            }
+
+            #endregion
+
+            #endregion
+
+            GridConvertToOrderList = DataSource.SelectSalesPropositionLines;
+
+            #region Teklif Durumunu Sipariş Olarak Kaydetme
+
+            SelectSalesPropositionsDto result;
+
+            if (DataSource.Id == Guid.Empty)
+            {
+                var createInput = ObjectMapper.Map<SelectSalesPropositionsDto, CreateSalesPropositionsDto>(DataSource);
+
+                result = (await CreateAsync(createInput)).Data;
+
+                if (result != null)
+                    DataSource.Id = result.Id;
+            }
+            else
+            {
+                var updateInput = ObjectMapper.Map<SelectSalesPropositionsDto, UpdateSalesPropositionsDto>(DataSource);
+
+                result = (await UpdateAsync(updateInput)).Data;
+            }
+
+            #endregion
+
+            GetTotal();
+            await _ConvertToOrderGrid.Refresh();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void HideConvertToOrderPopup()
+        {
+            ConvertToOrderCrudPopup = false;
+        }
+
+        #endregion
 
 
         #region Teklif Satır Modalı İşlemleri
@@ -100,8 +362,6 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle", Id = "new" });
                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Onayla", Id = "approve" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Siparişe Dönüştür", Id = "converttoorder" });
                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
             }
         }
@@ -154,21 +414,18 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
 
                 case "converttoorder":
 
-                    int onholdorpartial = _grid.SelectedRecords.Where(t => t.SalesPropositionState == Entities.Enums.SalesPropositionStateEnum.Beklemede || t.SalesPropositionState == Entities.Enums.SalesPropositionStateEnum.KismiSiparis).Count();
+                    DataSource = (await SalesPropositionsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    GridConvertToOrderList = DataSource.SelectSalesPropositionLines;
 
-                    if(onholdorpartial == 0)
+                    foreach (var item in GridConvertToOrderList)
                     {
-                        foreach (var item in _grid.SelectedRecords)
-                        {
-                            item.SalesPropositionState = Entities.Enums.SalesPropositionStateEnum.Siparis;
-                        }
+                        item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
+                        item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
+                        item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
                     }
 
-                    else
-                    {
-                        await ModalManager.WarningPopupAsync("Uyarı", "Seçilen kayıtlarda onaylanmamış satırlar mevcut.");
-                    }
-
+                    ConvertToOrderCrudPopup = true;
+                    await InvokeAsync(StateHasChanged);
                     break;
 
                 case "refresh":
@@ -235,26 +492,6 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
 
                     break;
 
-                case "approve":
-
-
-                    foreach (var item in _LineGrid.SelectedRecords)
-                    {
-                        item.SalesPropositionLineState = Entities.Enums.SalesPropositionLineStateEnum.Onaylandı;
-                    }
-
-                    break;
-
-                case "converttoorder":
-
-
-                    foreach (var item in _LineGrid.SelectedRecords)
-                    {
-                        item.SalesPropositionLineState = Entities.Enums.SalesPropositionLineStateEnum.Siparis;
-                    }
-
-                    break;
-
                 case "refresh":
                     await GetListDataSourceAsync();
                     await _LineGrid.Refresh();
@@ -270,37 +507,11 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         {
             SelectSalesPropositionsDto result;
 
-            #region Satırların Durumuna Göre Ana Tablo Sipariş Durumunu Belirleme
-
-            List<SelectSalesPropositionLinesDto> _orderList = new List<SelectSalesPropositionLinesDto>();
-
             foreach(var item in DataSource.SelectSalesPropositionLines)
             {
-                _orderList.Add(item);
+                item.SalesPropositionLineState = Entities.Enums.SalesPropositionLineStateEnum.Beklemede;
             }
 
-            int approved = _orderList.Where(t => t.SalesPropositionLineState == Entities.Enums.SalesPropositionLineStateEnum.Onaylandı).Count();
-            int order = _orderList.Where(t => t.SalesPropositionLineState == Entities.Enums.SalesPropositionLineStateEnum.Siparis).Count();
-            int onhold = _orderList.Where(t => t.SalesPropositionLineState == Entities.Enums.SalesPropositionLineStateEnum.Beklemede).Count();
-
-            if(approved != 0 && order !=_orderList.Count() && onhold !=0)
-            {
-                DataSource.SalesPropositionState = Entities.Enums.SalesPropositionStateEnum.KismiSiparis;
-            }
-            else if (order == _orderList.Count())
-            {
-                DataSource.SalesPropositionState = Entities.Enums.SalesPropositionStateEnum.Siparis;
-            }
-            else if( approved == 0 && onhold == 0 && order == 0)
-            {
-                DataSource.SalesPropositionState = Entities.Enums.SalesPropositionStateEnum.Beklemede;
-            }
-            else if(approved == _orderList.Count())
-            {
-                DataSource.SalesPropositionState = Entities.Enums.SalesPropositionStateEnum.Onaylandı;
-            }
-
-            #endregion
 
             if (DataSource.Id == Guid.Empty)
             {
@@ -350,7 +561,7 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         {
             if (LineDataSource.Id == Guid.Empty)
             {
-                if(DataSource.SelectSalesPropositionLines.Contains(LineDataSource))
+                if (DataSource.SelectSalesPropositionLines.Contains(LineDataSource))
                 {
                     int selectedLineIndex = DataSource.SelectSalesPropositionLines.FindIndex(t => t.LineNr == LineDataSource.LineNr);
 
@@ -378,7 +589,7 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             GetTotal();
             await _LineGrid.Refresh();
 
-            HideLinesPopup(); 
+            HideLinesPopup();
             await InvokeAsync(StateHasChanged);
         }
 
@@ -418,6 +629,7 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             DataSource.TotalVatAmount = GridLineList.Sum(x => x.VATamount);
             DataSource.NetAmount = GridLineList.Sum(x => x.LineTotalAmount);
         }
+
         #endregion
 
         #region Cari Hesap Kartları

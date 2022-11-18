@@ -44,6 +44,12 @@ namespace TsiErp.Entities.Entities.SalesOrderLine.Dtos
         /// </summary>
         public Guid? LikedPropositionLineID { get; set; }
 
+        /// <summary>
+        /// Bağlı Teklif ID
+        /// </summary>
+        public Guid? LinkedSalesPropositionID { get; set; }
+
+
         [Precision(18, 6)]
         /// <summary>
         /// Miktar

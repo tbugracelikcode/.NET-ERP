@@ -22,10 +22,12 @@
 @using TsiErp.Business.Entities.UnitSet.Services
 @using TsiErp.Entities.Entities.PaymentPlan.Dtos
 @using TsiErp.Business.Entities.PaymentPlan.Services
+@using TsiErp.Business.Entities.SalesOrder.Services
 
 @inherits BaseListPage<SelectSalesPropositionsDto, ListSalesPropositionsDto, CreateSalesPropositionsDto, UpdateSalesPropositionsDto, ListSalesPropositionsParamaterDto>
 
 @inject ISalesPropositionsAppService SalesPropositionsAppService
+@inject ISalesOrdersAppService SalesOrdersAppService
 @inject ICurrentAccountCardsAppService CurrentAccountCardsAppService
 @inject IBranchesAppService BranchesAppService
 @inject IWarehousesAppService WarehousesAppService
@@ -65,9 +67,8 @@ else
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
-                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Type="ColumnType.CheckBox" Width="50"></GridColumn>
                                     <GridColumn Field=@nameof(ListSalesPropositionsDto.FicheNo) HeaderText="TEKLİF NO." TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListSalesPropositionsDto.Date_) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="TARİH" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
@@ -126,12 +127,14 @@ else
                 </Columns>
 
                 <Items>
+
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>Teklif No: </strong></label>
                             <SfTextBox CssClass="TSITxtBox" Placeholder="Teklif Numarası" @bind-Value="DataSource.FicheNo"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
+
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>Cari Hesap Kodu: </strong></label><br />
@@ -177,18 +180,21 @@ else
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
+
                     <DxGridLayoutItem Row="0" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>Özel Kod: </strong></label>
                             <SfTextBox CssClass="TSITxtBox" Placeholder="Özel Kod" @bind-Value="DataSource.SpecialCode"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
+
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>Tarih: </strong></label><br />
                             <SfDatePicker @bind-Value="@DataSource.Date_" Placeholder="Teklif Tarihi"></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
+
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong> Cari Hesap Ünvanı: </strong></label>
@@ -235,13 +241,13 @@ else
 
                         </Template>
                     </DxGridLayoutItem>
+
                     <DxGridLayoutItem Row="1" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>Geçerlilik Tarihi: </strong></label>
                             <SfDatePicker @bind-Value="@DataSource.ValidityDate_" Placeholder="Geçerlilik Tarihi"></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
-
 
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
@@ -290,6 +296,7 @@ else
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
+
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong> Ödeme Planı: </strong></label>
@@ -335,13 +342,13 @@ else
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
+
                     <DxGridLayoutItem Row="2" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>Açıklama: </strong></label><br />
                             <SfTextBox Multiline=true Placeholder="Teklif Açıklaması" @bind-Value="@DataSource.Description_"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
-
 
                     <DxGridLayoutItem Row="3" Column="1">
                         <Template>
@@ -388,6 +395,7 @@ else
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
+
                     <DxGridLayoutItem Row="3" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>Para Birimi: </strong></label><br />
@@ -449,9 +457,8 @@ else
 
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                <GridSelectionSettings  Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Type="ColumnType.CheckBox" Width="50"></GridColumn>
                                     <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.ProductName) HeaderText="STOK AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.UnitSetCode) HeaderText="BİRİM SETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
@@ -469,6 +476,7 @@ else
                             <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" Placeholder="Brüt Tutarı Yazınız." @bind-Value="DataSource.GrossAmount" Enabled=false></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
+
                     <DxGridLayoutItem Row="7" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>İndirim Toplamı: </strong></label>
@@ -482,6 +490,7 @@ else
                             <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" Placeholder="KDV Hariç Tutarı Yazınız." @bind-Value="DataSource.TotalVatExcludedAmount" Enabled=false></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
+
                     <DxGridLayoutItem Row="8" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>KDV Toplamı: </strong></label>
@@ -495,8 +504,6 @@ else
                             <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" Placeholder="Net Tutarı Yazınız." @bind-Value="DataSource.NetAmount" Enabled=false></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
-
-
 
                 </Items>
             </DxGridLayout>
@@ -753,4 +760,73 @@ else
         </FooterContentTemplate>
     </DxPopup>
 
+    <DxPopup @bind-Visible="@ConvertToOrderCrudPopup"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Siparişe Dönüştür"
+         Width="1300px"
+         Height="510px"
+         HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+            <DxGridLayout>
+
+                <Rows>
+                    <DxGridLayoutRow Height="65px" />
+                    <DxGridLayoutRow Height="10px" />
+                    <DxGridLayoutRow Height="300px" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="200px" />
+                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="640px" />
+                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="300px" />
+                    <DxGridLayoutColumn Width="40px" />
+                </Columns>
+
+                <Items>
+
+                    <DxGridLayoutItem Row="0" Column="5">
+                        <Template>
+                            <br/>
+                            <SfButton CssClass="TSISaveButton" OnClick="OnConvertToOrderBtnClicked"><SfIcon Size="IconSize.Medium" Name="IconName.ChangesAccept"></SfIcon>&nbsp;Siparişe Dönüştür</SfButton>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1" ColumnSpan="5">
+                        <Template>
+                            <SfGrid @ref=_ConvertToOrderGrid ID="ConvertToOrderGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridConvertToOrderList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@ConvertToOrderGridContextMenu">
+                                <GridEvents ContextMenuItemClicked="@OnConvertToOrderContextMenuClick" TValue="SelectSalesPropositionLinesDto"></GridEvents>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Type="ColumnType.CheckBox" Width="50" HeaderText="SİPARİŞ"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.ProductName) HeaderText="STOK AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.UnitSetCode) HeaderText="BİRİM SETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.UnitPrice) Format="N2" Type="ColumnType.Number" HeaderText="BİRİM FİYAT" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.LineAmount) Format="N2" Type="ColumnType.Number" HeaderText="SATIR TUTARI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.SalesPropositionLineState) HeaderText="DURUM" TextAlign="TextAlign.Center" Width="120" Context="convert2OrderContext">
+                                </GridColumn>
+
+                            </GridColumns>
+                        </SfGrid>
+                    </Template>
+                </DxGridLayoutItem>
+
+            </Items>
+        </DxGridLayout>
+    </BodyTemplate>
+    <FooterContentTemplate>
+        <SfButton CssClass="TSICancelButton" OnClick="HideConvertToOrderPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+    </FooterContentTemplate>
+</DxPopup>
 }

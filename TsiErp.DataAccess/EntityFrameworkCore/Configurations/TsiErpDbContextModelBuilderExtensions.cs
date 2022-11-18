@@ -886,10 +886,9 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.ToTable("RouteLines");
                 b.ConfigureByConvention();
 
-                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
-                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+               
                 b.Property(t => t.RouteID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.OperationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductsOperationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.ProductionPoolID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.ProductionPoolDescription).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
@@ -900,9 +899,13 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.OperationPicture).HasColumnType("varbinary(max)");
 
 
-                b.HasIndex(x => x.Code);
+                b.HasIndex(x => x.RouteID);
+                b.HasIndex(x => x.ProductID);
+                b.HasIndex(x => x.ProductsOperationID);
 
-                b.HasOne(x => x.Routes).WithMany(x => x.RouteLines).HasForeignKey(x => x.RouteID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Routes).WithMany(x => x.RouteLines).HasForeignKey(x => x.RouteID).OnDelete(DeleteBehavior.Cascade);
+                b.HasOne(x => x.Products).WithMany(x => x.RouteLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.ProductsOperations).WithMany(x => x.RouteLines).HasForeignKey(x => x.ProductsOperationID).OnDelete(DeleteBehavior.NoAction);
             });
         }
         public static void ConfigureCalendars(this ModelBuilder builder)

@@ -360,9 +360,11 @@ namespace TsiErp.Business.MapperProfile
 
 
             CreateMap<Routes, SelectRoutesDto>()
-                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code));
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
             CreateMap<Routes, ListRoutesDto>()
-                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code));
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
             CreateMap<CreateRoutesDto, Routes>();
             CreateMap<SelectRoutesDto, CreateRoutesDto>();
             CreateMap<UpdateRoutesDto, Routes>()
@@ -373,11 +375,15 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<RouteLines, SelectRouteLinesDto>()
                 .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
                 .ForMember(x => x.RouteCode, y => y.MapFrom(z => z.Routes.Code))
-                .ForMember(x => x.OperationName, y => y.MapFrom(z => z.TemplateOperations.Name));
+                .ForMember(x => x.OperationName, y => y.MapFrom(z => z.ProductsOperations.Name))
+                .ForMember(x => x.OperationCode ,y => y.MapFrom(z => z.ProductsOperations.Code))
+                .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
             CreateMap<RouteLines, ListRouteLinesDto>()
                 .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
                 .ForMember(x => x.RouteCode, y => y.MapFrom(z => z.Routes.Code))
-                .ForMember(x => x.OperationName, y => y.MapFrom(z => z.TemplateOperations.Name));
+                .ForMember(x => x.OperationName, y => y.MapFrom(z => z.ProductsOperations.Name))
+                .ForMember(x => x.OperationCode, y => y.MapFrom(z => z.ProductsOperations.Code))
+                .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
             CreateMap<CreateRouteLinesDto, RouteLines>();
             CreateMap<SelectRouteLinesDto, CreateRouteLinesDto>();
             CreateMap<UpdateRouteLinesDto, RouteLines>();

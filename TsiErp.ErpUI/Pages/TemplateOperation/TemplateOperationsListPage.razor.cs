@@ -7,6 +7,7 @@ using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.Station.Dtos;
 using TsiErp.Entities.Entities.TemplateOperation.Dtos;
 using TsiErp.Entities.Entities.TemplateOperationLine.Dtos;
+using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.TemplateOperation
@@ -44,6 +45,8 @@ namespace TsiErp.ErpUI.Pages.TemplateOperation
             await GetLineStationsList();
         }
 
+        
+
         #region Şablon Operasyon Satır Modalı İşlemleri
         protected override async Task BeforeInsertAsync()
         {
@@ -65,7 +68,8 @@ namespace TsiErp.ErpUI.Pages.TemplateOperation
             LineDataSource = new SelectTemplateOperationLinesDto()
             {
                 Alternative = false,
-                Priority = GridLineList.Count + 1
+                Priority = GridLineList.Count + 1,
+                LineNr = GridLineList.Count + 1
             };
         }
 
@@ -142,8 +146,6 @@ namespace TsiErp.ErpUI.Pages.TemplateOperation
                 case "new":
                     LineDataSource = new SelectTemplateOperationLinesDto();
                     LineCrudPopup = true;
-                    LineDataSource.LineNr = GridLineList.Count + 1;
-                    LineDataSource.Priority = GridLineList.Count + 1;
                     await LineBeforeInsertAsync();
                     await InvokeAsync(StateHasChanged);
                     break;
@@ -166,11 +168,6 @@ namespace TsiErp.ErpUI.Pages.TemplateOperation
                         {
                             DataSource.SelectTemplateOperationLines.Remove(args.RowInfo.RowData);
 
-                            for (int index = Convert.ToInt32(_LineGrid.SelectedRowIndexes.FirstOrDefault()); index < GridLineList.Count(); index++ )
-                            {
-                                GridLineList[index].Priority -= 1;
-                                GridLineList[index].LineNr -= 1;
-                            }
 
 
                             await _LineGrid.Refresh();
@@ -180,25 +177,30 @@ namespace TsiErp.ErpUI.Pages.TemplateOperation
                         {
                             if (line != null)
                             {
-                                int index = Convert.ToInt32(_LineGrid.SelectedRowIndexes.FirstOrDefault());
 
-                                for (index+=1; index < GridLineList.Count(); index++)
+                                int selectedIndex = GridLineList.FindIndex(t=>t.Id==line.Id);
+
+                                if(selectedIndex >= 0)
                                 {
-                                    GridLineList[index].Priority -= 1;
-                                    GridLineList[index].LineNr -= 1;
+                                    int selectedPriority = GridLineList[selectedIndex].Priority;
+
+
+                                    GridLineList.Remove(line);
+
+                                    for (int i = 0; i < GridLineList.Count; i++)
+                                    {
+                                        GridLineList[i].LineNr = i +1;
+                                        GridLineList[i].Priority = i +1;
+                                    }
+
+                                    DataSource.SelectTemplateOperationLines = GridLineList;
+
+                                    await _LineGrid.Refresh();
+
+                                    await DeleteAsync(args.RowInfo.RowData.Id);
+                                    await GetListDataSourceAsync();
+                                    await InvokeAsync(StateHasChanged);
                                 }
-
-                                await DeleteAsync(args.RowInfo.RowData.Id);
-                                DataSource.SelectTemplateOperationLines.Remove(line);
-
-                                DataSource.SelectTemplateOperationLines = GridLineList;
-
-                                
-                                await GetListDataSourceAsync();
-
-                                await _LineGrid.Refresh();
-                                await InvokeAsync(StateHasChanged);
-
                             }
                             else
                             {
