@@ -22,7 +22,7 @@ namespace TsiErp.Entities.Entities.CalendarDay
         /// <summary>
         /// Durum
         /// </summary>
-        public CalendarDayStateEnum CalendarDayStateEnum { get; set; }
+        public int CalendarDayStateEnum { get; set; }
         /// <summary>
         /// Renk Kodu
         /// </summary>

@@ -21,10 +21,22 @@ namespace TsiErp.Entities.Entities.CalendarDay.Dtos
         /// <summary>
         /// Durum
         /// </summary>
-        public CalendarDayStateEnum CalendarDayStateEnum { get; set; }
+        public int CalendarDayStateEnum { get; set; }
         /// <summary>
         /// Renk Kodu
         /// </summary>
         public string ColorCode { get; set; }
+        /// <summary>
+        /// Başlangıç Zamanı
+        /// </summary>
+        public DateTime StartTime { get; set; }
+        /// <summary>
+        /// Bitiş Zamanı
+        /// </summary>
+        public DateTime EndTime { get; set; }
+        /// <summary>
+        /// Konu
+        /// </summary>
+        public string Subject { get; set; }
     }
 }
