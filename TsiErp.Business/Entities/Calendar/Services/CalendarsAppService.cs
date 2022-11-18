@@ -109,21 +109,22 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 dayEntity.Id = GuidGenerator.CreateGuid();
                 dayEntity.CalendarID = addedEntity.Id;
                 dayEntity.Date_ = yearDays[i];
-                dayEntity.CalendarDayStateEnum = CalendarDayStateEnum.CalismaVar;
+                dayEntity.CalendarDayStateEnum = 1;
                 dayEntity.ColorCode = "#ffaa00";
                 await _dayRepository.InsertAsync(dayEntity);
 
-                //Resmi tatil günleri satırları oluşturuldu
-                for (int l = 0; l < input.SelectCalendarDaysDto.Count; l++)
-                {
-                    var officialHolidayEntity = ObjectMapper.Map<SelectCalendarDaysDto, CalendarDays>(new SelectCalendarDaysDto());
-                    officialHolidayEntity.Id = GuidGenerator.CreateGuid();
-                    officialHolidayEntity.CalendarID = addedEntity.Id;
-                    officialHolidayEntity.Date_ = input.SelectCalendarDaysDto[i].Date_;
-                    officialHolidayEntity.CalendarDayStateEnum = CalendarDayStateEnum.ResmiTatil;
-                    officialHolidayEntity.ColorCode = "#f8a398";
-                    await _dayRepository.InsertAsync(dayEntity);
-                }
+            }
+
+            //Resmi tatil günleri satırları oluşturuldu
+            for (int l = 0; l < input.SelectCalendarDaysDto.Count; l++)
+            {
+                var officialHolidayEntity = ObjectMapper.Map<SelectCalendarDaysDto, CalendarDays>(new SelectCalendarDaysDto());
+                officialHolidayEntity.Id = GuidGenerator.CreateGuid();
+                officialHolidayEntity.CalendarID = addedEntity.Id;
+                officialHolidayEntity.Date_ = input.SelectCalendarDaysDto[l].Date_;
+                officialHolidayEntity.CalendarDayStateEnum = 3;
+                officialHolidayEntity.ColorCode = "#f8a398";
+                await _dayRepository.InsertAsync(officialHolidayEntity);
             }
 
 
@@ -249,6 +250,58 @@ namespace TsiErp.Business.Entities.Calendar.Services
             return new SuccessDataResult<IList<ListCalendarsDto>>(mappedEntity);
         }
 
+        [CacheAspect(duration: 60)]
+        public async Task<IDataResult<IList<SelectCalendarDaysDto>>> GetDaysListAsync(Guid calendarID)
+        {
+            var list = await _dayRepository.GetListAsync(t => t.CalendarID == calendarID);
+
+            var mappedEntity = ObjectMapper.Map<List<CalendarDays>, List<SelectCalendarDaysDto>>(list.ToList());
+
+            return new SuccessDataResult<IList<SelectCalendarDaysDto>>(mappedEntity.Select(t => new SelectCalendarDaysDto()
+            {
+                CalendarID = calendarID,
+                CalendarDayStateEnum = t.CalendarDayStateEnum,
+                ColorCode = t.ColorCode,
+                Date_ = t.Date_,
+                EndTime = t.Date_.AddHours(1),
+                StartTime = t.Date_,
+                Id = t.Id,
+                Subject = SubjectConvert(t.CalendarDayStateEnum)
+            }).ToList());
+        }
+
+        private string SubjectConvert(int subjectCode)
+        {
+            string subject = "";
+            switch (subjectCode)
+            {
+                case 1:
+                    subject = "Çalışma Var";
+                    break;
+                case 2:
+                    subject = "Çalışma Yok";
+                    break;
+                case 3:
+                    subject = "Resmi Tatil";
+                    break;
+                case 4:
+                    subject = "Tatil";
+                    break;
+                case 5:
+                    subject = "Yarım Gün";
+                    break;
+                case 6:
+                    subject = "Yükleme Günü";
+                    break;
+                case 7:
+                    subject = "Bakım";
+                    break;
+                default:
+                    break;
+            }
+            return subject;
+        }
+
         [ValidationAspect(typeof(UpdateCalendarsValidatorDto), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCalendarsDto>> UpdateAsync(UpdateCalendarsDto input)
@@ -269,16 +322,19 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 {
                     lineEntity.Id = GuidGenerator.CreateGuid();
                     await _lineRepository.InsertAsync(lineEntity);
+                    await _lineRepository.SaveChanges();
+
                 }
                 else
                 {
                     await _lineRepository.UpdateAsync(lineEntity);
+                    await _lineRepository.SaveChanges();
+
                 }
             }
 
 
             await _repository.SaveChanges();
-            await _lineRepository.SaveChanges();
 
             return new SuccessDataResult<SelectCalendarsDto>(ObjectMapper.Map<Calendars, SelectCalendarsDto>(mappedEntity));
         }

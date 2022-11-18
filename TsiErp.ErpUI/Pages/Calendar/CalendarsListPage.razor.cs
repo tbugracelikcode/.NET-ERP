@@ -33,6 +33,7 @@ namespace TsiErp.ErpUI.Pages.Calendar
         public SfGrid<SelectCalendarDaysDto> _daysGrid;
         public List<SelectCalendarDaysDto> GridDaysList = new List<SelectCalendarDaysDto>();
         public List<SelectCalendarDaysDto> SchedularDaysList = new List<SelectCalendarDaysDto>();
+        public List<SelectCalendarDaysDto> SchedularDaysResourceList = new List<SelectCalendarDaysDto>();
         SfComboBox<int, int> Years;
         public DateTime CurrentDate = DateTime.Today;
 
@@ -40,23 +41,67 @@ namespace TsiErp.ErpUI.Pages.Calendar
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         [Inject]
         ModalManager ModalManager { get; set; }
-        public void OnPopupOpen(PopupOpenEventArgs<SelectCalendarDaysDto> args)
+        public string[] CustomClass = { "custom-class" };
+        public void OnPopupOpen(PopupOpenEventArgs<AppointmentData> args)
         {
             if (args.Type == PopupType.Editor || args.Type == PopupType.QuickInfo)
             {
                 args.Cancel = true;
             }
         }
+        public void OnRenderCell(RenderCellEventArgs args)
+        {
+            DataSourceEvent.Where(t => t.StartTime == args.Date).ToList();
+            args.CssClasses = new List<string>(CustomClass);
+        }
+
+
+
+        public class AppointmentData
+        {
+            public int Id { get; set; }
+            public string Subject { get; set; }
+            public string Location { get; set; }
+            public DateTime StartTime { get; set; }
+            public DateTime EndTime { get; set; }
+            public string Description { get; set; }
+            public bool IsAllDay { get; set; }
+            public string RecurrenceRule { get; set; }
+            public string RecurrenceException { get; set; }
+            public Nullable<int> RecurrenceID { get; set; }
+            public string StartTimezone { get; set; }
+            public string EndTimezone { get; set; }
+            public int ResourceId { get; set; }
+        }
+
+        public List<AppointmentData> DataSourceEvent = new List<AppointmentData>{};
+
+        public List<ResourceData> ResourceList { get; set; } = new List<ResourceData> {
+        new ResourceData{ Text = "Çalışma Var", Id= 1, Color = "#df5286" },
+        new ResourceData{ Text = "Çalışma Yok", Id= 2, Color = "#7fa900" },
+        new ResourceData{ Text = "Resmi Tatil", Id= 3, Color = "#2408db" },
+        new ResourceData{ Text = "Tatil", Id= 4, Color = "#00bf00" },
+        new ResourceData{ Text = "Yarım Gün", Id= 5, Color = "#00ffff" },
+        new ResourceData{ Text = "Yükleme Günü", Id= 6, Color = "#bf5f00" },
+        new ResourceData{ Text = "Bakım", Id= 7, Color = "#ff0000" }
+    };
+        public class ResourceData
+        {
+            public int Id { get; set; }
+            public string Text { get; set; }
+            public string Color { get; set; }
+        }
         protected override async void OnInitialized()
         {
             BaseCrudService = CalendarsService;
             GetYearsList();
-            CreateLineContextMenuItems();
+            CreateMainContextMenuItems();
         }
 
         protected override Task BeforeInsertAsync()
         {
-            DataSource = new SelectCalendarsDto(){};
+            GridDaysList.Clear();
+            DataSource = new SelectCalendarsDto() { };
             ShowEditPage();
 
             return Task.CompletedTask;
@@ -93,7 +138,7 @@ namespace TsiErp.ErpUI.Pages.Calendar
                 GridDaysList.Add(new SelectCalendarDaysDto()
                 {
                     Date_ = officialHoliday,
-                    CalendarDayStateEnum = CalendarDayStateEnum.ResmiTatil
+                    CalendarDayStateEnum = 7
                 });
                 await _daysGrid.Refresh();
                 await InvokeAsync(StateHasChanged);
@@ -132,6 +177,7 @@ namespace TsiErp.ErpUI.Pages.Calendar
                 case "schedular":
                     SelectFirstDataRow = false;
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    DataSourceEvent = ConvertToAppointmentData((await CalendarsService.GetDaysListAsync(args.RowInfo.RowData.Id)).Data.ToList());
                     schedularVisible = true;
                     await InvokeAsync(StateHasChanged);
                     break;
@@ -166,6 +212,25 @@ namespace TsiErp.ErpUI.Pages.Calendar
                 default:
                     break;
             }
+        }
+
+        private List<AppointmentData> ConvertToAppointmentData(List<SelectCalendarDaysDto> dtoList)
+        {
+            List<AppointmentData> DataSourceEvent = new List<AppointmentData> { };
+            if (dtoList.Count > 0)
+            {
+                foreach (var dto in dtoList)
+                {
+                    AppointmentData data = new AppointmentData(); 
+                    data.StartTime = dto.StartTime;
+                    data.EndTime = dto.EndTime;
+                    data.ResourceId = dto.CalendarDayStateEnum;
+                    data.Subject = dto.Subject;
+                    DataSourceEvent.Add(data);
+                }
+            }
+
+            return DataSourceEvent;
         }
 
         protected void CreateLineContextMenuItems()
