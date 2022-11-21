@@ -18,6 +18,10 @@ namespace TsiErp.Entities.Entities.ProductsOperationLine.Dtos
         /// </summary>
         public string ProductsOperationName { get; set; }
         /// <summary>
+        /// Ürüne Özel Operasyon Kod
+        /// </summary>
+        public string ProductsOperationCode { get; set; }
+        /// <summary>
         /// İstasyon ID
         /// </summary>
         public Guid? StationID { get; set; }

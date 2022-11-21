@@ -852,7 +852,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
                 b.HasIndex(x => x.Code);
 
-
+                b.HasOne(x => x.Products).WithMany(x => x.Routes).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -891,9 +891,9 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.ProductsOperationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.ProductionPoolID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.ProductionPoolDescription).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.ProductionPoolDescription).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
                 b.Property(t => t.AdjustmentAndControlTime).IsRequired().HasColumnType(SqlDbType.Int.ToString());
-                b.Property(t => t.OperationTime).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.OperationTime).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.Priority).IsRequired().HasColumnType(SqlDbType.Int.ToString());
                 b.Property(t => t.LineNr).IsRequired().HasColumnType(SqlDbType.Int.ToString());
                 b.Property(t => t.OperationPicture).HasColumnType("varbinary(max)");

@@ -176,8 +176,6 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                     }
                 }
             }
-
-
         }
     }
 

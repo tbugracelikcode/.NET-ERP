@@ -396,6 +396,10 @@ html {
     margin-bottom: 1%;
     background-image: linear-gradient(337deg, rgb(243 240 240) 0%, #efecec 70%) !important;
 }
+.TISGridLayout{
+    width:100%;
+    height:100%;
+}
 .TSIStationCards {
     height: fit-content;
     border: 3px solid #f36565 !important;
@@ -407,4 +411,5 @@ html {
         border: 3px solid #60bffd !important;
         cursor: pointer;
     }
+
 

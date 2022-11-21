@@ -35,6 +35,10 @@ namespace TsiErp.Entities.Entities.ProductsOperation.Dtos
         /// </summary>
         public string ProductCode { get; set; }
         /// <summary>
+        /// Ürün Açıklaması
+        /// </summary>
+        public string ProductName { get; set; }
+        /// <summary>
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }

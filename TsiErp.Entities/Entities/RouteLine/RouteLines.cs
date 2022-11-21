@@ -43,7 +43,7 @@ namespace TsiErp.Entities.Entities.RouteLine
         /// <summary>
         /// Operasyon Süresi
         /// </summary>
-        public int OperationTime { get; set; }
+        public decimal OperationTime { get; set; }
         /// <summary>
         /// Öncelik
         /// </summary>
