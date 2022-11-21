@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Tsi.Authentication\Tsi.Authentication.csproj" />
     <ProjectReference Include="..\Tsi.Core\Tsi.Core.csproj" />
   </ItemGroup>
 

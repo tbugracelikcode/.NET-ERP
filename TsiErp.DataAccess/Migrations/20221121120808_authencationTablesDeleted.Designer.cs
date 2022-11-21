@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TsiErp.DataAccess.EntityFrameworkCore;
 
@@ -11,9 +12,10 @@ using TsiErp.DataAccess.EntityFrameworkCore;
 namespace TsiErp.DataAccess.Migrations
 {
     [DbContext(typeof(TsiErpDbContext))]
-    partial class TsiErpDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221121120808_authencationTablesDeleted")]
+    partial class authencationTablesDeleted
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2156,8 +2158,8 @@ namespace TsiErp.DataAccess.Migrations
                     b.Property<byte[]>("OperationPicture")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<decimal>("OperationTime")
-                        .HasColumnType("Decimal");
+                    b.Property<int>("OperationTime")
+                        .HasColumnType("Int");
 
                     b.Property<int>("Priority")
                         .HasColumnType("Int");
@@ -2166,6 +2168,7 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("UniqueIdentifier");
 
                     b.Property<string>("ProductionPoolDescription")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("NVarChar(200)");
 
