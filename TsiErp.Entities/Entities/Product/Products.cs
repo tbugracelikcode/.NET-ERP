@@ -128,6 +128,8 @@ namespace TsiErp.Entities.Entities.Product
 
         public UnitSets UnitSets { get; set; }
 
+        public ICollection<Routes> Routes { get; set; }
+
         public ProductGroups ProductGroups { get; set; }
 
         public ICollection<SalesPropositionLines> SalesPropositionLines { get; set; }
