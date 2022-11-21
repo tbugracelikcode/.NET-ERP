@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tsi.Authentication.Abstract;
 using Tsi.Core.Entities.Auditing;
 using Tsi.EntityFrameworkCore.Extensions;
 using Tsi.EntityFrameworkCore.Modeling;
