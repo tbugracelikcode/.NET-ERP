@@ -35,11 +35,11 @@ else
                     <SfCard class="TSIGridCards">
 
                         <CardContent>
-                            <SfGrid ID="Grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                            <SfGrid ID="Grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true"  GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                 <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListWarehousesDto"></GridEvents>
-                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
@@ -62,27 +62,29 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="Depo Kartları"
-         Width="750px"
-         Height="300px"
+         Width="39%"
+         Height="28%"
+         MinWidth="750px"
+         MinHeight="300px"
          HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
-            <DxGridLayout>
+            <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="100px" />
-                    <DxGridLayoutRow Height="1px" />
-                    <DxGridLayoutRow Height="50px" />
-                    <DxGridLayoutRow Height="1px" />
-                    <DxGridLayoutRow Height="50px" />
+                    <DxGridLayoutRow Height="45%" />
+                    <DxGridLayoutRow Height="1%" />
+                    <DxGridLayoutRow Height="25%" />
+                    <DxGridLayoutRow Height="1%" />
+                    <DxGridLayoutRow Height="25%" />
                 </Rows>
 
                 <Columns>
-                    <DxGridLayoutColumn Width="40px" />
-                    <DxGridLayoutColumn Width="300px" />
-                    <DxGridLayoutColumn Width="40px" />
-                    <DxGridLayoutColumn Width="300px" />
-                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="40%" />
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="40%" />
+                    <DxGridLayoutColumn Width="6%" />
                 </Columns>
 
                 <Items>

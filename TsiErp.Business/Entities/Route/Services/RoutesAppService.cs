@@ -92,7 +92,7 @@ namespace TsiErp.Business.Entities.Route.Services
         {
             var entity = await _repository.GetAsync(t => t.Id == id,
                 t => t.RouteLines,
-                t =>t.Products);
+                t => t.Products);
 
             var mappedEntity = ObjectMapper.Map<Routes, SelectRoutesDto>(entity);
 
@@ -152,12 +152,12 @@ namespace TsiErp.Business.Entities.Route.Services
         {
             //var entity = await _productsOperationsRepository.GetAsync(t => t.ProductID == productId,t=>t.ProductsOperationLines);
 
-            var entity = await _productsOperationsRepository.GetListAsync(t => t.ProductID == productId,t=>t.ProductsOperationLines);
+            var entity = await _productsOperationsRepository.GetListAsync(t => t.ProductID == productId, t => t.ProductsOperationLines);
 
             var mappedEntity = ObjectMapper.Map<List<ProductsOperations>, List<ListProductsOperationsDto>>(entity.ToList());
 
-            return new SuccessDataResult<List<ListProductsOperationsDto>>(mappedEntity);            
-            
+            return new SuccessDataResult<List<ListProductsOperationsDto>>(mappedEntity);
+
             //var mappedEntity = ObjectMapper.Map<ProductsOperations, SelectProductsOperationsDto>(entity);
 
             //mappedEntity.SelectProductsOperationLines = ObjectMapper.Map<List<ProductsOperationLines>, List<SelectProductsOperationLinesDto>>(entity.ProductsOperationLines.ToList());

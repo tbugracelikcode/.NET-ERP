@@ -37,8 +37,6 @@ namespace TsiErp.ErpUI.Pages.Route
 
         List<SelectProductsOperationLinesDto> ProductsOperationLinesList = new List<SelectProductsOperationLinesDto>();
 
-        List<SelectProductsOperationsDto> ProductsOperationsDataSource;
-
 
         protected override async Task OnInitializedAsync()
         {
@@ -49,55 +47,6 @@ namespace TsiErp.ErpUI.Pages.Route
             await GetProductsList();
         }
 
-        protected override async Task OnSubmit()
-        {
-            SelectRoutesDto result;
-            DataSource.SelectRouteLines = GridLineList;
-            DataSource.ProductID = GridLineList.Select(t => t.ProductID).FirstOrDefault();
-            DataSource.ProductName = GridLineList.Select(t => t.ProductName).FirstOrDefault();
-            DataSource.ProductCode = GridLineList.Select(t => t.ProductCode).FirstOrDefault();
-
-            if (DataSource.Id == Guid.Empty)
-            {
-                var createInput = ObjectMapper.Map<SelectRoutesDto, CreateRoutesDto>(DataSource);
-
-                result = (await CreateAsync(createInput)).Data;
-
-                if (result != null)
-                    DataSource.Id = result.Id;
-            }
-            else
-            {
-                var updateInput = ObjectMapper.Map<SelectRoutesDto, UpdateRoutesDto>(DataSource);
-
-                result = (await UpdateAsync(updateInput)).Data;
-            }
-
-            if (result == null)
-            {
-
-                return;
-            }
-
-            await GetListDataSourceAsync();
-
-            var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
-
-            HideEditPage();
-
-            if (DataSource.Id == Guid.Empty)
-            {
-                DataSource.Id = result.Id;
-            }
-
-            if (savedEntityIndex > -1)
-                SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
-            else
-                SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
-
-            GridProductsOperationList = null;
-            GridLineList = null;
-        }
 
         #region Rota Satır Modalı İşlemleri
         protected override async Task BeforeInsertAsync()
@@ -138,14 +87,28 @@ namespace TsiErp.ErpUI.Pages.Route
                 case "changed":
                     DataSource = (await RoutesAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectRouteLines;
-                    //ProductsOperationsDataSource = (await RoutesAppService.GetProductsOperationAsync(DataSource.ProductID.GetValueOrDefault())).Data;
-                    //ProductsOperationLinesList = ProductsOperationsDataSource.SelectProductsOperationLines;
+                    GridProductsOperationList = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.Where(t => t.ProductId == DataSource.ProductID).ToList();
+                   
 
-                    //foreach (var item in GridLineList)
-                    //{
-                    //    item.OperationCode = ProductsOperationLinesList.Where(t => t.ProductsOperationID == item.ProductsOperationID).Select(t => t.ProductsOperationCode).FirstOrDefault();
-                    //    item.OperationName = ProductsOperationLinesList.Where(t => t.ProductsOperationID == item.ProductsOperationID).Select(t => t.ProductsOperationName).FirstOrDefault();
-                    //}
+
+                    foreach (var item in GridLineList)
+                    {
+                        item.OperationCode = GridProductsOperationList.Where(t => t.Id == item.ProductsOperationID).Select(t => t.Code).FirstOrDefault();
+                        item.OperationName = GridProductsOperationList.Where(t => t.Id == item.ProductsOperationID).Select(t => t.Name).FirstOrDefault();
+
+                        if (GridProductsOperationList.Any(t => t.Id == item.ProductsOperationID))
+                        {
+                            var deletedOperation = GridProductsOperationList.Find(t => t.Id == item.ProductsOperationID);
+
+                            if (deletedOperation != null)
+                            {
+                                GridProductsOperationList.Remove(deletedOperation);
+                            }
+
+                        }
+                    }
+
+
 
 
                     EditPageVisible = true;
@@ -176,60 +139,93 @@ namespace TsiErp.ErpUI.Pages.Route
 
         public async void ArrowLeftBtnClicked()
         {
-            var selectedRow = _LineGrid.SelectedRecords;
-
-            foreach (var item in selectedRow)
+            if (GridLineList.Count != 0)
             {
-                ListProductsOperationsDto listProductsOperations = new ListProductsOperationsDto
+                var selectedRow = _LineGrid.SelectedRecords;
+
+                foreach (var item in selectedRow)
                 {
-                    Code = item.OperationCode,
-                    Name = item.OperationName
-                };
+                    ListProductsOperationsDto listProductsOperations = new ListProductsOperationsDto
+                    {
+                        Code = item.OperationCode,
+                        Name = item.OperationName,
+                        Id = item.ProductsOperationID
+                    };
 
-                GridProductsOperationList.Add(listProductsOperations);
-                SelectRouteLinesDto removedItem = GridLineList.Where(T => T.Id == item.Id).FirstOrDefault();
-                GridLineList.Remove(removedItem);
+                    GridProductsOperationList.Add(listProductsOperations);
+                    SelectRouteLinesDto removedItem = GridLineList.Where(t=>t.OperationName == item.OperationName && t.OperationCode == item.OperationCode).FirstOrDefault();
+                    GridLineList.Remove(removedItem);
+                }
+
+                for (int i = 0; i < GridLineList.Count; i++)
+                {
+                    GridLineList[i].LineNr = i + 1;
+                    GridLineList[i].Priority = i + 1;
+                }
+
+                DataSource.SelectRouteLines = GridLineList;
+
+                await _ProductsOperationGrid.Refresh();
+                await _LineGrid.Refresh();
             }
-
-            await _ProductsOperationGrid.Refresh();
-            await _LineGrid.Refresh();
-
         }
 
         public async void ArrowRightBtnClicked()
         {
-            var selectedRow = _ProductsOperationGrid.SelectedRecords[0];
 
-            if (selectedRow.Id != Guid.Empty)
+            if (GridProductsOperationList.Count != 0)
             {
-                ProductsOperationLinesList = (await ProductsOperationsAppService.GetAsync(selectedRow.Id)).Data.SelectProductsOperationLines;
-            }
+                var selectedRow = _ProductsOperationGrid.SelectedRecords[0];
 
-
-            var productsOperationLine = ProductsOperationLinesList.Where(t => t.Priority == 1).FirstOrDefault();
-
-            if (productsOperationLine != null)
-            {
-                SelectRouteLinesDto selectRouteLine = new SelectRouteLinesDto
+                if (selectedRow.Id != Guid.Empty)
                 {
-                    LineNr = GridLineList.Count() + 1,
-                    AdjustmentAndControlTime = productsOperationLine.AdjustmentAndControlTime,
-                    OperationCode = selectedRow.Code,
-                    OperationName = selectedRow.Name,
-                    OperationTime = productsOperationLine.OperationTime,
-                    ProductCode = selectedRow.ProductCode,
-                    ProductName = selectedRow.ProductName,
-                    ProductID = DataSource.ProductID,
-                    ProductsOperationID = productsOperationLine.Id
+                    ProductsOperationLinesList = (await ProductsOperationsAppService.GetAsync(selectedRow.Id)).Data.SelectProductsOperationLines;
+                }
 
 
-                };
-                GridLineList.Add(selectRouteLine);
+                var productsOperationLine = ProductsOperationLinesList.Where(t => t.Priority == 1).FirstOrDefault();
 
-                GridProductsOperationList.Remove(selectedRow);
-                await _ProductsOperationGrid.Refresh();
-                await _LineGrid.Refresh();
+                if (productsOperationLine != null)
+                {
+
+                    if(!GridLineList.Any(t=>t.Id==productsOperationLine.Id))
+                    {
+
+                        SelectRouteLinesDto selectRouteLine = new SelectRouteLinesDto
+                        {
+                            LineNr = 0,
+                            Priority =0,
+                            AdjustmentAndControlTime = productsOperationLine.AdjustmentAndControlTime,
+                            OperationCode = selectedRow.Code,
+                            OperationName = selectedRow.Name,
+                            OperationTime = productsOperationLine.OperationTime,
+                            ProductCode = DataSource.ProductCode,
+                            ProductName = DataSource.ProductName,
+                            ProductID = DataSource.ProductID,
+                            ProductsOperationID = productsOperationLine.ProductsOperationID.GetValueOrDefault()
+
+
+                        };
+
+                        GridLineList.Add(selectRouteLine);
+
+                        for (int i = 0; i < GridLineList.Count; i++)
+                        {
+                            GridLineList[i].LineNr = i + 1;
+                            GridLineList[i].Priority = i + 1;
+                        }
+
+                        GridProductsOperationList.Remove(selectedRow);
+
+                        DataSource.SelectRouteLines = GridLineList;
+
+                        await _ProductsOperationGrid.Refresh();
+                        await _LineGrid.Refresh();
+                    }
+
+                }
             }
+
         }
 
         public async void ArrowUpBtnClicked()
@@ -315,7 +311,6 @@ namespace TsiErp.ErpUI.Pages.Route
                 DataSource.ProductCode = string.Empty;
                 DataSource.ProductName = string.Empty;
 
-                GridProductsOperationList = null;
             }
 
             await _ProductsOperationGrid.Refresh();

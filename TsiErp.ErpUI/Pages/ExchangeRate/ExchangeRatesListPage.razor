@@ -43,7 +43,7 @@ else
                                 <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListExchangeRatesDto"></GridEvents>
                                                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
@@ -70,27 +70,29 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="Kurlar"
-         Width="740px"
-         Height="330px"
+         Width="39%"
+         Height="31%"
+         MinWidth="740px"
+         MinHeight="330px"
          HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
-            <DxGridLayout>
+            <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="90px" />
-                    <DxGridLayoutRow Height="1px" />
-                    <DxGridLayoutRow Height="60px" />
-                    <DxGridLayoutRow Height="1px" />
-                    <DxGridLayoutRow Height="50px" />
+                    <DxGridLayoutRow Height="35%" />
+                    <DxGridLayoutRow Height="1%" />
+                    <DxGridLayoutRow Height="25%" />
+                    <DxGridLayoutRow Height="1%" />
+                    <DxGridLayoutRow Height="25%" />
                 </Rows>
 
                 <Columns>
-                    <DxGridLayoutColumn Width="40px" />
-                    <DxGridLayoutColumn Width="300px" />
-                    <DxGridLayoutColumn Width="40px" />
-                    <DxGridLayoutColumn Width="300px" />
-                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="5%" />
+                    <DxGridLayoutColumn Width="41%" />
+                    <DxGridLayoutColumn Width="5%" />
+                    <DxGridLayoutColumn Width="41%" />
+                    <DxGridLayoutColumn Width="5%" />
                 </Columns>
 
                 <Items>

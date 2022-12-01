@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.Product;
+using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.RouteLine;
 
 namespace TsiErp.Entities.Entities.Route
@@ -44,7 +45,7 @@ namespace TsiErp.Entities.Entities.Route
         public bool IsActive { get; set; }
 
         public ICollection<RouteLines> RouteLines { get; set; }
-
         public Products Products { get; set; }
+        public ICollection<ProductionOrders> ProductionOrders { get; set; }
     }
 }

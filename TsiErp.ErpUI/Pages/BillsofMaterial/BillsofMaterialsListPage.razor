@@ -45,11 +45,11 @@ else
                     <SfCard class="TSIGridCards">
 
                         <CardContent>
-                            <SfGrid ID="Grid" @ref="@_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu">
+                            <SfGrid ID="Grid" @ref="@_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"  GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu">
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                 <GridEvents ContextMenuItemClicked="@MainContextMenuClick" TValue="ListBillsofMaterialsDto"></GridEvents>
-                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
@@ -77,27 +77,29 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="Reçeteler"
-         Width="1120px"
-         Height="670px"
+         Width="60%"
+         Height="60%"
+         MinWidth="1120px"
+         MinHeight="670px"
          HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
-            <DxGridLayout>
+            <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="65px" />
-                    <DxGridLayoutRow Height="65px" />
-                    <DxGridLayoutRow Height="65px" />
-                    <DxGridLayoutRow Height="10px" />
-                    <DxGridLayoutRow Height="300px" />
+                    <DxGridLayoutRow Height="12%" />
+                    <DxGridLayoutRow Height="12%" />
+                    <DxGridLayoutRow Height="12%" />
+                    <DxGridLayoutRow Height="2%" />
+                    <DxGridLayoutRow Height="48%" />
                 </Rows>
 
                 <Columns>
-                    <DxGridLayoutColumn Width="40px" />
-                    <DxGridLayoutColumn Width="480px" />
-                    <DxGridLayoutColumn Width="80px" />
-                    <DxGridLayoutColumn Width="480px" />
-                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="4%" />
                 </Columns>
 
                 <Items>
@@ -220,7 +222,7 @@ else
                                 <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectBillsofMaterialLinesDto"></GridEvents>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
@@ -251,17 +253,19 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="Reçete Satırları"
-         Width="1060px"
-         Height="350px"
+         Width="56%"
+         Height="32%"
+         MinWidth="1060px"
+         MinHeight="350px"
          HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
-            <DxGridLayout>
+            <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="68px" />
-                    <DxGridLayoutRow Height="68px" />
-                    <DxGridLayoutRow Height="68px" />
+                    <DxGridLayoutRow Height="25%" />
+                    <DxGridLayoutRow Height="25%" />
+                    <DxGridLayoutRow Height="25%" />
                 </Rows>
 
                 <Columns>

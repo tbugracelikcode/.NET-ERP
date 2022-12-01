@@ -39,10 +39,10 @@ else
                     <SfCard class="TSIGridCards">
                       
                         <CardContent>
-                            <SfGrid ID="Grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"
+                            <SfGrid ID="Grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"  GridLines="GridLine.Both"
                                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
-                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListPeriodsDto"></GridEvents>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
@@ -70,23 +70,25 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="Dönemler"
-         Width="760px"
-         Height="480px"
+         Width="40%"
+         Height="44%"
+         MinWidth="760px"
+         MinHeight="480px"
          HeaderCssClass="HeaderTitleCss">
     <BodyTemplate>
 
-        <DxGridLayout>
+        <DxGridLayout CssClass="TSIGridLayout">
             <Rows>
-                <DxGridLayoutRow Height="100px" />
-                <DxGridLayoutRow Height="50px" />
-                <DxGridLayoutRow Height="70px" />
+                <DxGridLayoutRow Height="23%" />
+                <DxGridLayoutRow Height="15%" />
+                <DxGridLayoutRow Height="45%" />
             </Rows>
             <Columns>
-                <DxGridLayoutColumn Width="40px" />
-                <DxGridLayoutColumn Width="300px" />
-                <DxGridLayoutColumn Width="40px" />
-                <DxGridLayoutColumn Width="300px" />
-                <DxGridLayoutColumn Width="40px" />
+                <DxGridLayoutColumn Width="5%" />
+                <DxGridLayoutColumn Width="40%" />
+                <DxGridLayoutColumn Width="5%" />
+                <DxGridLayoutColumn Width="40%" />
+                <DxGridLayoutColumn Width="5%" />
             </Columns>
             <Items>
                 <DxGridLayoutItem Row="0" Column="1">

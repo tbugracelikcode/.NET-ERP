@@ -252,7 +252,7 @@ html {
 }
 
 .TSIMemoBox {
-    min-height: 160px !important;
+   height:100% !important;
 }
 
 .TSIComboBox {
@@ -265,7 +265,7 @@ html {
 .TSISaveButton {
     border-color: #565656 !important;
     background-color: white !important;
-    color: #878787 !important;
+    color: #505050 !important;
     font-size: 14px !important;
     font-weight: bold !important;
     width: auto;
@@ -396,7 +396,7 @@ html {
     margin-bottom: 1%;
     background-image: linear-gradient(337deg, rgb(243 240 240) 0%, #efecec 70%) !important;
 }
-.TISGridLayout{
+.TSIGridLayout{
     width:100%;
     height:100%;
 }
