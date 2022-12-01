@@ -22,7 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tsi.Application.Contract\Tsi.Application.Contract.csproj" />
-    <ProjectReference Include="..\Tsi.Authentication\Tsi.Authentication.csproj" />
     <ProjectReference Include="..\Tsi.Core\Tsi.Core.csproj" />
     <ProjectReference Include="..\TsiErp.Entities\TsiErp.Entities.csproj" />
   </ItemGroup>

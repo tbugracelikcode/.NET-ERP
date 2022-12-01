@@ -5,11 +5,6 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tsi.Authentication.Entities.Menus;
-using Tsi.Authentication.Entities.RolePermissions;
-using Tsi.Authentication.Entities.Roles;
-using Tsi.Authentication.Entities.UserRoles;
-using Tsi.Authentication.Entities.Users;
 using Tsi.EntityFrameworkCore.Modeling;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.CalibrationRecord;
@@ -53,83 +48,14 @@ using TsiErp.Entities.Entities.ProductsOperation;
 using TsiErp.Entities.Entities.ProductsOperationLine;
 using TsiErp.Entities.Entities.BillsofMaterial;
 using TsiErp.Entities.Entities.BillsofMaterialLine;
+using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.CalendarDay;
+using TsiErp.Entities.Entities.Menu;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 {
     public static class TsiErpDbContextModelBuilderExtensions
     {
-        public static void ConfigureUsers(this ModelBuilder builder)
-        {
-            builder.Entity<TsiUser>(b =>
-            {
-                b.ToTable("TsiUser");
-                b.ConfigureByConvention();
-
-                b.Property(t => t.UserName).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(250);
-                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(250);
-                b.Property(t => t.Surname).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(250);
-                b.Property(t => t.Email).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(250);
-                b.Property(t => t.EmailConfirmed).HasColumnType(SqlDbType.Bit.ToString());
-                b.Property(t => t.PasswordHash).IsRequired().HasColumnType("nvarchar(max)");
-                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
-                b.Property(t => t.PhoneNumber).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(95);
-
-            });
-        }
-
-        public static void ConfigureUserRoles(this ModelBuilder builder)
-        {
-            builder.Entity<TsiUserRoles>(b =>
-            {
-                b.ToTable("TsiUserRoles");
-                b.ConfigureByConvention();
-
-                b.Property(t => t.UserId).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.RoleId).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-            });
-        }
-
-        public static void ConfigureRolePermissions(this ModelBuilder builder)
-        {
-            builder.Entity<TsiRolePermissions>(b =>
-            {
-                b.ToTable("TsiRolePermissions");
-                b.ConfigureByConvention();
-
-                b.Property(t => t.RoleId).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.MenuId).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-
-                
-
-                b.HasOne(x=>x.TsiMenus).WithMany(x=>x.TsiRolePermissions).HasForeignKey(x=>x.MenuId).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x=>x.TsiRoles).WithMany(x=>x.TsiRolePermissions).HasForeignKey(x=>x.RoleId).OnDelete(DeleteBehavior.NoAction);
-            });
-        }
-
-        public static void ConfigureRoles(this ModelBuilder builder)
-        {
-            builder.Entity<TsiRoles>(b =>
-            {
-                b.ToTable("TsiRoles");
-                b.ConfigureByConvention();
-
-                b.Property(t => t.RoleName).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(250);
-
-            });
-        }
-
-        public static void ConfigureMenus(this ModelBuilder builder)
-        {
-            builder.Entity<TsiMenus>(b =>
-            {
-                b.ToTable("TsiMenus");
-
-                b.Property(t => t.Id).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.ParentMenutId).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.MenuName).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(250);
-            });
-        }
 
         public static void ConfigureBranches(this ModelBuilder builder)
         {
@@ -852,7 +778,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
                 b.HasIndex(x => x.Code);
 
-
+                b.HasOne(x => x.Products).WithMany(x => x.Routes).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -891,9 +817,9 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.ProductsOperationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.ProductionPoolID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.ProductionPoolDescription).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.ProductionPoolDescription).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
                 b.Property(t => t.AdjustmentAndControlTime).IsRequired().HasColumnType(SqlDbType.Int.ToString());
-                b.Property(t => t.OperationTime).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.OperationTime).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.Priority).IsRequired().HasColumnType(SqlDbType.Int.ToString());
                 b.Property(t => t.LineNr).IsRequired().HasColumnType(SqlDbType.Int.ToString());
                 b.Property(t => t.OperationPicture).HasColumnType("varbinary(max)");
@@ -1193,6 +1119,72 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasOne(x => x.UnitSets).WithMany(x => x.BillsofMaterialLines).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
             });
         }
+
+        public static void ConfigureProductionOrders(this ModelBuilder builder)
+        {
+            builder.Entity<ProductionOrders>(b =>
+            {
+                b.ToTable("ProductionOrders");
+                b.ConfigureByConvention();
+
+                //b.HasQueryFilter(x => !x.IsDeleted);
+
+                b.Property(t => t.FicheNo).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Date_).HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.Cancel_).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.ProductionOrderState).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.StartDate).HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.EndDate).HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.PlannedQuantity).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.ProducedQuantity).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.Description_).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.CustomerOrderNo).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.OrderID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.OrderLineID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.FinishedProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.LinkedProductID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.UnitSetID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.BOMID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.RouteID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductTreeID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductTreeLineID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.PropositionID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.PropositionLineID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.CurrentAccountID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.LinkedProductionOrderID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+                b.HasIndex(x => x.FicheNo);
+                b.HasIndex(x => x.OrderID);
+                b.HasIndex(x => x.FinishedProductID);
+                b.HasIndex(x => x.BOMID);
+                b.HasIndex(x => x.CurrentAccountID);
+
+                b.HasOne(x => x.Products).WithMany(x => x.ProductionOrders).HasForeignKey(x => x.FinishedProductID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.SalesOrders).WithMany(x => x.ProductionOrders).HasForeignKey(x => x.OrderID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.SalesOrderLines).WithOne(x => x.ProductionOrders).HasForeignKey<ProductionOrders>(x => x.OrderLineID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.UnitSets).WithMany(x => x.ProductionOrders).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.BillsofMaterials).WithMany(x => x.ProductionOrders).HasForeignKey(x => x.BOMID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Routes).WithMany(x => x.ProductionOrders).HasForeignKey(x => x.RouteID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.SalesPropositions).WithMany(x => x.ProductionOrders).HasForeignKey(x => x.PropositionID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.SalesPropositionLines).WithOne(x => x.ProductionOrders).HasForeignKey<ProductionOrders>(x => x.PropositionLineID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.CurrentAccountCards).WithMany(x => x.ProductionOrders).HasForeignKey(x => x.CurrentAccountID).OnDelete(DeleteBehavior.NoAction);
+
+            });
+        }
+
+        public static void ConfigureMenus(this ModelBuilder builder)
+        {
+            builder.Entity<Menus>(b =>
+            {
+                b.ToTable("Menus");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.MenuName).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200); ;
+                b.Property(t => t.ParentMenuId).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                
+            });
+        }
+
 
 
     }

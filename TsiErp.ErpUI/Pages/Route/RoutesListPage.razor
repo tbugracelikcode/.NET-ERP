@@ -23,7 +23,7 @@
 }
 else
 {
-        <DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+    <DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
         <GridLayoutItems>
             <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
                 <Template>
@@ -41,21 +41,21 @@ else
                     <SfCard class="TSIGridCards">
 
                         <CardContent>
-                            <SfGrid ID="Grid" @ref="@_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu">
+                            <SfGrid ID="Grid" @ref="@_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"  GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu">
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                 <GridEvents ContextMenuItemClicked="@MainContextMenuClick" TValue="ListRoutesDto"></GridEvents>
-                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListRoutesDto.Code) HeaderText="ROTA KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListRoutesDto.Name)  HeaderText="ROTA AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListRoutesDto.Name) HeaderText="ROTA AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListRoutesDto.ProductCode) HeaderText="ÜRÜN KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListRoutesDto.ProductName) HeaderText="ÜRÜN AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListRoutesDto.ProductionStart) HeaderText="ÜRETİM BAŞLANGIÇ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListRoutesDto.Approval) Type="ColumnType.Number" HeaderText="ONAY" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListRoutesDto.Approval) DisplayAsCheckBox=true HeaderText="ONAY" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListRoutesDto.TechnicalApproval) HeaderText="TEKNİK ONAY" DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
@@ -74,30 +74,31 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="Rotalar"
-         Width="1180px"
-         Height="730px"
+         Width="63%"
+         Height="66%"
+         MinWidth="1200px"
+         MinHeight="710px"
          HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
-            <DxGridLayout>
+            <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="65px" />
-                    <DxGridLayoutRow Height="65px" />
-                    <DxGridLayoutRow Height="65px" />
-                    <DxGridLayoutRow Height="65px" />
-                    <DxGridLayoutRow Height="10px" />
-                    <DxGridLayoutRow Height="300px" />
+                    <DxGridLayoutRow Height="11%" />
+                    <DxGridLayoutRow Height="11%" />
+                    <DxGridLayoutRow Height="11%" />
+                    <DxGridLayoutRow Height="1%" />
+                    <DxGridLayoutRow Height="60%" />
                 </Rows>
 
                 <Columns>
-                    <DxGridLayoutColumn Width="40px" />
-                    <DxGridLayoutColumn Width="340px" />
-                    <DxGridLayoutColumn Width="40px" />
-                    <DxGridLayoutColumn Width="340px" />
-                    <DxGridLayoutColumn Width="40px" />
-                    <DxGridLayoutColumn Width="340px" />
-                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="28%" />
+                    <DxGridLayoutColumn Width="5%" />
+                    <DxGridLayoutColumn Width="28%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="28%" />
+                    <DxGridLayoutColumn Width="3%" />
                 </Columns>
 
                 <Items>
@@ -108,14 +109,14 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                      <DxGridLayoutItem Row="0" Column="3">
+                    <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>Rota Açıklaması: </strong></label>
                             <SfTextBox CssClass="TSITxtBox" Placeholder="Rota Açıklaması yazınız." @bind-Value="DataSource.Name"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                      <DxGridLayoutItem Row="0" Column="5">
+                    <DxGridLayoutItem Row="0" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>Üretim Başlangıç: </strong></label>
                             <SfTextBox CssClass="TSITxtBox" Placeholder="Üretim Başlangıcını yazınız." @bind-Value="DataSource.ProductionStart"></SfTextBox>
@@ -168,7 +169,7 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="1" Column="3">
+                    <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>Ürün Açıklaması: </strong></label><br />
                             <SfComboBox @ref="ProductsComboBox"
@@ -213,79 +214,98 @@ else
                             </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
+                   
 
-                     <DxGridLayoutItem Row="1" Column="5">
+                    <DxGridLayoutItem Row="1" Column="5">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Aktiflik: </strong></label>
-                            <SfCheckBox @bind-Checked="DataSource.IsActive"></SfCheckBox>
+                            <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
+                            <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
                         </Template>
                     </DxGridLayoutItem>
 
-                      <DxGridLayoutItem Row="2" Column="1">
+                    <DxGridLayoutItem Row="2" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Onay: </strong></label>
-                            <SfCheckBox @bind-Checked="DataSource.Approval"></SfCheckBox>
+                            <label class="TSIModalLabel"><strong>Onay: </strong></label><br />
+                            <SfSwitch @bind-Checked="DataSource.Approval"></SfSwitch>
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="2" Column="3">
+                    <DxGridLayoutItem Row="2" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Teknik Onay: </strong></label>
-                            <SfCheckBox @bind-Checked="DataSource.TechnicalApproval"></SfCheckBox>
+                            <label class="TSIModalLabel"><strong>Teknik Onay: </strong></label><br />
+                            <SfSwitch @bind-Checked="DataSource.TechnicalApproval"></SfSwitch>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="5" Column="1">
+                    <DxGridLayoutItem Row="4" Column="1">
                         <Template>
-                            <SfGrid @ref=_ProductsOperationGrid ID="ProductsOperationGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridProductsOperationList" AllowPaging="true" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                            <SfGrid @ref=_ProductsOperationGrid ID="ProductsOperationGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridProductsOperationList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
-                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(SelectProductsOperationsDto.Code) HeaderText="OPERASYON KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectProductsOperationsDto.Name) HeaderText="OPERASYON AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsOperationsDto.Code) HeaderText="OPERASYON KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsOperationsDto.Name) HeaderText="OPERASYON AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="5" Column="2">
+                    <DxGridLayoutItem Row="4" Column="2">
                         <Template>
                             <table style="height:100%">
-                                <tr style="vertical-align:central">
+                                <tr style="height:30%">
                                     <td>
-                                        <SfButton CssClass="TSISaveButton"   ><SfIcon Size="IconSize.Medium" Name="IconName.ArrowRight"></SfIcon></SfButton>
-                                        <SfButton CssClass="TSICancelButton"  ><SfIcon Size="IconSize.Medium" Name="IconName.ArrowLeft"></SfIcon></SfButton>
-                                        <SfButton CssClass="TSISaveButton"    ><SfIcon Size="IconSize.Medium" Name="IconName.ArrowUp"></SfIcon></SfButton>
-                                        <SfButton CssClass="TSICancelButton"   ><SfIcon Size="IconSize.Medium" Name="IconName.ArrowDown"></SfIcon></SfButton>
                                     </td>
                                 </tr>
+                                <tr style="vertical-align:central; height:10%">
+                                    <td>
+                                        <SfButton CssClass="TSISaveButton" OnClick="ArrowRightBtnClicked"><SfIcon Size="IconSize.Medium" Name="IconName.ArrowRight"></SfIcon></SfButton>
+                                    </td>
+                                </tr>
+                                <tr style="vertical-align:central;height:10%">
+                                    <td>
+                                        <SfButton CssClass="TSICancelButton" OnClick="ArrowLeftBtnClicked"><SfIcon Size="IconSize.Medium" Name="IconName.ArrowLeft"></SfIcon></SfButton>
+                                    </td>
+                                </tr>
+                                <tr style="vertical-align:central;height:10%">
+                                    <td>
+                                        <SfButton CssClass="TSISaveButton" OnClick="ArrowUpBtnClicked"><SfIcon Size="IconSize.Medium" Name="IconName.ArrowUp"></SfIcon></SfButton>
+                                    </td>
+                                </tr>
+                                <tr style="vertical-align:central;height:10%">
+                                    <td>
+                                        <SfButton CssClass="TSICancelButton" OnClick="ArrowDownBtnClicked"><SfIcon Size="IconSize.Medium" Name="IconName.ArrowDown"></SfIcon></SfButton>
+                                    </td>
+                                </tr>
+                                <tr style="height:30%">
+                                    <td>
+                                    </td>
+                                </tr>
+
                             </table>
                         </Template>
                     </DxGridLayoutItem>
-                  @*  OnClick="ArrowRightBtnClicked"
-                    OnClick="ArrowLeftBtnClicked" 
-                    OnClick="ArrowUpBtnClicked"   
-                    OnClick="ArrowDownBtnClicked" *@
 
 
-                    <DxGridLayoutItem Row="5" Column="3" ColumnSpan="5">
+
+                    <DxGridLayoutItem Row="4" Column="3" ColumnSpan="3">
                         <Template>
-                            <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+                            <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                      <GridColumn Field=@nameof(SelectRouteLinesDto.LineNr)  Type="ColumnType.Number" HeaderText="SIRA NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectRouteLinesDto.LineNr) Type="ColumnType.Number" HeaderText="SIRA NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectRouteLinesDto.OperationCode) HeaderText="OPERASYON KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectRouteLinesDto.OperationName) HeaderText="OPERASYON AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectRouteLinesDto.ProductCode) HeaderText="ÜRÜN KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                     <GridColumn Field=@nameof(SelectRouteLinesDto.ProductName) HeaderText="ÜRÜN AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectRouteLinesDto.ProductName) HeaderText="ÜRÜN AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectRouteLinesDto.AdjustmentAndControlTime) Type="ColumnType.Number" HeaderText="AYAR VE KONTROL SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectRouteLinesDto.OperationTime)  Type="ColumnType.Number" HeaderText="OPERASYON SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectRouteLinesDto.OperationTime) Type="ColumnType.Number" HeaderText="OPERASYON SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>
@@ -299,5 +319,5 @@ else
         </FooterContentTemplate>
     </DxPopup>
 
-    
+
 }

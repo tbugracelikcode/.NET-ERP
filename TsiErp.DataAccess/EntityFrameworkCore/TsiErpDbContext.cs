@@ -5,11 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tsi.Authentication.Entities.Menus;
-using Tsi.Authentication.Entities.RolePermissions;
-using Tsi.Authentication.Entities.Roles;
-using Tsi.Authentication.Entities.UserRoles;
-using Tsi.Authentication.Entities.Users;
 using Tsi.Core.Entities.Auditing;
 using Tsi.EntityFrameworkCore.EntityframeworkCore;
 using Tsi.EntityFrameworkCore.Extensions;
@@ -57,6 +52,8 @@ using TsiErp.Entities.Entities.ProductsOperationLine;
 using TsiErp.Entities.Entities.BillsofMaterial;
 using TsiErp.Entities.Entities.BillsofMaterialLine;
 using TsiErp.Entities.Entities.CalendarDay;
+using TsiErp.Entities.Entities.ProductionOrder;
+using TsiErp.Entities.Entities.Menu;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore
 {
@@ -118,11 +115,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
 
             builder.ConfigureBranches();
             builder.ConfigurePeriods();
-            builder.ConfigureUsers();
-            builder.ConfigureUserRoles();
-            builder.ConfigureRolePermissions();
-            builder.ConfigureRoles();
-            builder.ConfigureMenus();
             builder.ConfigureLogs();
             builder.ConfigureUnitSets();
             builder.ConfigureStationGroups();
@@ -164,6 +156,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigureProductsOperationLines();
             builder.ConfigureBillsofMaterials();
             builder.ConfigureBillsofMaterialLines();
+            builder.ConfigureProductionOrders();
+            builder.ConfigureMenus();
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -203,12 +197,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         }
 
         #region Authentication DbSets
-
-        public DbSet<TsiUser> Users { get; set; }
-        public DbSet<TsiUserRoles> UserRoles { get; set; }
-        public DbSet<TsiRoles> Roles { get; set; }
-        public DbSet<TsiMenus> Menus { get; set; }
-        public DbSet<TsiRolePermissions> RolePermissions { get; set; }
 
         #endregion
 
@@ -257,6 +245,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<ProductsOperationLines> ProductsOperationLines { get; set; }
         public DbSet<BillsofMaterials> BillsofMaterials { get; set; }
         public DbSet<BillsofMaterialLines> BillsofMaterialLines { get; set; }
+        public DbSet<ProductionOrders> ProductionOrders { get; set; }
+        public DbSet<Menus> Menus { get; set; }
 
         #endregion
     }

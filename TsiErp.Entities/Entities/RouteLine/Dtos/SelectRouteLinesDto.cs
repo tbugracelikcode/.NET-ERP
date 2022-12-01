@@ -33,7 +33,7 @@ namespace TsiErp.Entities.Entities.RouteLine.Dtos
         /// <summary>
         /// Operasyon ID
         /// </summary>
-        public Guid OperationID { get; set; }
+        public Guid ProductsOperationID { get; set; }
         /// <summary>
         /// Operasyon Adı
         /// </summary>
@@ -57,7 +57,7 @@ namespace TsiErp.Entities.Entities.RouteLine.Dtos
         /// <summary>
         /// Operasyon Süresi
         /// </summary>
-        public int OperationTime { get; set; }
+        public decimal OperationTime { get; set; }
         /// <summary>
         /// Öncelik
         /// </summary>

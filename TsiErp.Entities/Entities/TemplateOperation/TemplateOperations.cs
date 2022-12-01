@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Entities.RouteLine;
 using TsiErp.Entities.Entities.TemplateOperationLine;
 
 namespace TsiErp.Entities.Entities.TemplateOperation

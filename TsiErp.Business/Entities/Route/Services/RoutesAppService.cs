@@ -18,6 +18,11 @@ using TsiErp.Entities.Entities.RouteLine.Dtos;
 using TsiErp.Entities.Entities.RouteLine;
 using Tsi.Core.Utilities.Guids;
 using TsiErp.Business.Entities.Route.BusinessRules;
+using TsiErp.DataAccess.EntityFrameworkCore.Repositories.ProductsOperation;
+using TsiErp.Entities.Entities.ProductsOperation;
+using TsiErp.Entities.Entities.ProductsOperation.Dtos;
+using TsiErp.Entities.Entities.ProductsOperationLine;
+using TsiErp.Entities.Entities.ProductsOperationLine.Dtos;
 
 namespace TsiErp.Business.Entities.Route.Services
 {
@@ -26,13 +31,15 @@ namespace TsiErp.Business.Entities.Route.Services
     {
         private readonly IRoutesRepository _repository;
         private readonly IRouteLinesRepository _lineRepository;
+        private readonly IProductsOperationsRepository _productsOperationsRepository;
 
         RouteManager _manager { get; set; } = new RouteManager();
 
-        public RoutesAppService(IRoutesRepository repository, IRouteLinesRepository lineRepository)
+        public RoutesAppService(IRoutesRepository repository, IRouteLinesRepository lineRepository, IProductsOperationsRepository productsOperationsRepository)
         {
             _repository = repository;
             _lineRepository = lineRepository;
+            _productsOperationsRepository = productsOperationsRepository;
         }
 
         [ValidationAspect(typeof(CreateRoutesValidator), Priority = 1)]
@@ -85,7 +92,7 @@ namespace TsiErp.Business.Entities.Route.Services
         {
             var entity = await _repository.GetAsync(t => t.Id == id,
                 t => t.RouteLines,
-                t=>t.Products);
+                t => t.Products);
 
             var mappedEntity = ObjectMapper.Map<Routes, SelectRoutesDto>(entity);
 
@@ -140,5 +147,31 @@ namespace TsiErp.Business.Entities.Route.Services
 
             return new SuccessDataResult<SelectRoutesDto>(ObjectMapper.Map<Routes, SelectRoutesDto>(mappedEntity));
         }
+
+        public async Task<IDataResult<List<ListProductsOperationsDto>>> GetProductsOperationAsync(Guid productId)
+        {
+            //var entity = await _productsOperationsRepository.GetAsync(t => t.ProductID == productId,t=>t.ProductsOperationLines);
+
+            var entity = await _productsOperationsRepository.GetListAsync(t => t.ProductID == productId, t => t.ProductsOperationLines);
+
+            var mappedEntity = ObjectMapper.Map<List<ProductsOperations>, List<ListProductsOperationsDto>>(entity.ToList());
+
+            return new SuccessDataResult<List<ListProductsOperationsDto>>(mappedEntity);
+
+            //var mappedEntity = ObjectMapper.Map<ProductsOperations, SelectProductsOperationsDto>(entity);
+
+            //mappedEntity.SelectProductsOperationLines = ObjectMapper.Map<List<ProductsOperationLines>, List<SelectProductsOperationLinesDto>>(entity.ProductsOperationLines.ToList());
+
+            //return new SuccessDataResult<SelectProductsOperationsDto>(mappedEntity);
+        }
+
+        //public async Task<IDataResult<List<SelectProductsOperationsDto>>> GetProductsOperationLinesAsync(Guid productId)
+        //{
+        //    var entity = await _productsOperationsRepository.GetListAsync(t => t.ProductID == productId, t => t.ProductsOperationLines);
+
+        //    var mappedEntity = ObjectMapper.Map<List<ProductsOperations>, List<SelectProductsOperationsDto>>(entity.ToList());
+
+        //    return new SuccessDataResult<List<SelectProductsOperationsDto>>(mappedEntity);
+        //}
     }
 }

@@ -4,12 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tsi.Authentication.Dtos.Menus;
-using Tsi.Authentication.Dtos.RolePermissions;
-using Tsi.Authentication.Dtos.Roles;
-using Tsi.Authentication.Entities.Menus;
-using Tsi.Authentication.Entities.RolePermissions;
-using Tsi.Authentication.Entities.Roles;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.Period;
@@ -92,6 +86,8 @@ using TsiErp.Entities.Entities.BillsofMaterialLine;
 using TsiErp.Entities.Entities.BillsofMaterialLine.Dtos;
 using TsiErp.Entities.Entities.CalendarDay.Dtos;
 using TsiErp.Entities.Entities.CalendarDay;
+using TsiErp.Entities.Entities.ProductionOrder;
+using TsiErp.Entities.Entities.ProductionOrder.Dtos;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -385,6 +381,7 @@ namespace TsiErp.Business.MapperProfile
                 .ForMember(x => x.OperationCode, y => y.MapFrom(z => z.ProductsOperations.Code))
                 .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
             CreateMap<CreateRouteLinesDto, RouteLines>();
+            CreateMap<SelectRouteLinesDto, RouteLines>();
             CreateMap<SelectRouteLinesDto, CreateRouteLinesDto>();
             CreateMap<UpdateRouteLinesDto, RouteLines>();
             CreateMap<SelectRouteLinesDto, UpdateRouteLinesDto>();
@@ -468,9 +465,12 @@ namespace TsiErp.Business.MapperProfile
 
 
             CreateMap<ProductsOperations, SelectProductsOperationsDto>()
-                .ForMember(x=>x.ProductCode, y=>y.MapFrom(z=>z.Products.Code));
+                .ForMember(x=>x.ProductCode, y=>y.MapFrom(z=>z.Products.Code))
+                .ForMember(x=>x.ProductName, y=>y.MapFrom(z=>z.Products.Name));
             CreateMap<ProductsOperations, ListProductsOperationsDto>()
-                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code));
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name))
+                .ForMember(x => x.ProductId, y => y.MapFrom(z => z.Products.Id));
             CreateMap<UpdateProductsOperationsDto, ProductsOperations>()
                 .ForMember(x => x.ProductsOperationLines, y => y.Ignore());
             CreateMap<CreateProductsOperationsDto, ProductsOperations>();
@@ -481,11 +481,13 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<ProductsOperationLines, SelectProductsOperationLinesDto>()
                 .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
                 .ForMember(x => x.StationName, y => y.MapFrom(z => z.Stations.Name))
-                .ForMember(x => x.ProductsOperationName, y => y.MapFrom(z => z.ProductsOperations.Name));
+                .ForMember(x => x.ProductsOperationName, y => y.MapFrom(z => z.ProductsOperations.Name))
+                .ForMember(x => x.ProductsOperationCode, y => y.MapFrom(z => z.ProductsOperations.Code));
             CreateMap<ProductsOperationLines, ListProductsOperationLinesDto>()
                 .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
                 .ForMember(x => x.StationName, y => y.MapFrom(z => z.Stations.Name))
-                .ForMember(x => x.ProductsOperationName, y => y.MapFrom(z => z.ProductsOperations.Name));
+                .ForMember(x => x.ProductsOperationName, y => y.MapFrom(z => z.ProductsOperations.Name))
+                .ForMember(x => x.ProductsOperationCode, y => y.MapFrom(z => z.ProductsOperations.Code));
             CreateMap<CreateProductsOperationLinesDto, ProductsOperationLines>();
             CreateMap<SelectProductsOperationLinesDto, CreateProductsOperationLinesDto>();
             CreateMap<UpdateProductsOperationLinesDto, ProductsOperationLines>();
@@ -521,6 +523,39 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateBillsofMaterialLinesDto, BillsofMaterialLines>();
             CreateMap<SelectBillsofMaterialLinesDto, UpdateBillsofMaterialLinesDto>();
             CreateMap<SelectBillsofMaterialLinesDto, BillsofMaterialLines>();
+
+            CreateMap<ProductionOrders, SelectProductionOrdersDto>()
+                .ForMember(x => x.OrderFicheNo, y => y.MapFrom(z => z.SalesOrders.FicheNo))
+                .ForMember(x => x.PropositionFicheNo, y => y.MapFrom(z => z.SalesPropositions.FicheNo))
+                .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code))
+                .ForMember(x => x.BOMCode, y => y.MapFrom(z => z.BillsofMaterials.Code))
+                .ForMember(x => x.BOMName, y => y.MapFrom(z => z.BillsofMaterials.Name))
+                .ForMember(x => x.CurrentAccountCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
+                .ForMember(x => x.CurrentAccountName, y => y.MapFrom(z => z.CurrentAccountCards.Name))
+                .ForMember(x => x.RouteCode, y => y.MapFrom(z => z.Routes.Code))
+                .ForMember(x => x.RouteName, y => y.MapFrom(z => z.Routes.Name))
+                .ForMember(x => x.FinishedProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.FinishedProductName, y => y.MapFrom(z => z.Products.Name))
+                .ForMember(x => x.LinkedProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.LinkedProductName, y => y.MapFrom(z => z.Products.Name));
+            CreateMap<ProductionOrders, ListProductionOrdersDto>()
+                .ForMember(x => x.OrderFicheNo, y => y.MapFrom(z => z.SalesOrders.FicheNo))
+                .ForMember(x => x.PropositionFicheNo, y => y.MapFrom(z => z.SalesPropositions.FicheNo))
+                .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code))
+                .ForMember(x => x.BOMCode, y => y.MapFrom(z => z.BillsofMaterials.Code))
+                .ForMember(x => x.BOMName, y => y.MapFrom(z => z.BillsofMaterials.Name))
+                .ForMember(x => x.CurrentAccountCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
+                .ForMember(x => x.CurrentAccountName, y => y.MapFrom(z => z.CurrentAccountCards.Name))
+                .ForMember(x => x.RouteCode, y => y.MapFrom(z => z.Routes.Code))
+                .ForMember(x => x.RouteName, y => y.MapFrom(z => z.Routes.Name))
+                .ForMember(x => x.FinishedProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.FinishedProductName, y => y.MapFrom(z => z.Products.Name))
+                .ForMember(x => x.LinkedProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.LinkedProductName, y => y.MapFrom(z => z.Products.Name));
+            CreateMap<CreateProductionOrdersDto, ProductionOrders>();
+            CreateMap<SelectProductionOrdersDto, CreateProductionOrdersDto>();
+            CreateMap<UpdateProductionOrdersDto, ProductionOrders>();
+            CreateMap<SelectProductionOrdersDto, UpdateProductionOrdersDto>();
         }
     }
 }

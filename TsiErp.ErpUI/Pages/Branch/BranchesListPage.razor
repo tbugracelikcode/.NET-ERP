@@ -37,11 +37,11 @@ else
                     <SfCard class="TSIGridCards">
                      
                         <CardContent>
-                            <SfGrid ID="Grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true"  DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"  AllowExcelExport="true" GridLines="GridLine.Both" ShowColumnChooser="true" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                            <SfGrid ID="Grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true"  DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"  AllowExcelExport="true" ShowColumnChooser="true"  GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
                                 
                                 <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListBranchesDto"></GridEvents>
                                  <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
-                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
@@ -67,27 +67,29 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="Şubeler"
-         Width="760px"
-         Height="480px"
+         Width="40%"
+         Height="44%"
+         MinWidth="760px"
+         MinHeight="480px"
          HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
-            <DxGridLayout>
+            <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="100px" />
-                    <DxGridLayoutRow Height="1px" />
-                    <DxGridLayoutRow Height="50px" />
-                    <DxGridLayoutRow Height="1px" />
-                    <DxGridLayoutRow Height="80px" />
+                    <DxGridLayoutRow Height="21%" />
+                    <DxGridLayoutRow Height="0.4%" />
+                    <DxGridLayoutRow Height="11%" />
+                    <DxGridLayoutRow Height="0.4%" />
+                    <DxGridLayoutRow Height="17%" />
                 </Rows>
 
                 <Columns>
-                    <DxGridLayoutColumn Width="40px" />
-                    <DxGridLayoutColumn Width="300px" />
-                    <DxGridLayoutColumn Width="40px" />
-                    <DxGridLayoutColumn Width="300px" />
-                    <DxGridLayoutColumn Width="40px" />
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="40%" />
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="40%" />
+                    <DxGridLayoutColumn Width="6%" />
                 </Columns>
 
                 <Items>

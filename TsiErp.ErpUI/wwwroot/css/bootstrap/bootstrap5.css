@@ -23,7 +23,8 @@
     }
 
     .e-icons.e-medium {
-        font-size: 16px;
+        font-size: 17px;
+        font-weight: bold;
     }
 
     .e-icons.e-large {
@@ -45905,6 +45906,7 @@ li.e-separator.e-menu-item.e-excel-separator {
 
 .e-grid.e-default .e-headercell, .e-grid.e-default .e-detailheadercell {
     border-width: 0;
+    background-color: #d9d9d9 !important;
 }
 
 .e-grid [aria-selected] + tr .e-detailindentcell {

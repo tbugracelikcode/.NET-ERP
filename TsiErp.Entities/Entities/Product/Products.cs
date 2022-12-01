@@ -14,6 +14,7 @@ using TsiErp.Entities.Entities.SalesOrderLine;
 using TsiErp.Entities.Entities.ProductsOperation;
 using TsiErp.Entities.Entities.BillsofMaterialLine;
 using TsiErp.Entities.Entities.BillsofMaterial;
+using TsiErp.Entities.Entities.ProductionOrder;
 
 namespace TsiErp.Entities.Entities.Product
 {
@@ -128,6 +129,8 @@ namespace TsiErp.Entities.Entities.Product
 
         public UnitSets UnitSets { get; set; }
 
+        public ICollection<Routes> Routes { get; set; }
+
         public ProductGroups ProductGroups { get; set; }
 
         public ICollection<SalesPropositionLines> SalesPropositionLines { get; set; }
@@ -136,5 +139,6 @@ namespace TsiErp.Entities.Entities.Product
         public ICollection<BillsofMaterialLines> BillsofMaterialLines { get; set; }
         public ICollection<BillsofMaterials> BillsofMaterials { get; set; }
         public ICollection<RouteLines> RouteLines { get; set; }
+        public ICollection<ProductionOrders> ProductionOrders { get; set; }
     }
 }
