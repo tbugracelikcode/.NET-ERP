@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.BillsofMaterialLine;
 using TsiErp.Entities.Entities.Product;
+using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.SalesOrderLine;
 using TsiErp.Entities.Entities.SalesPropositionLine;
 
@@ -40,7 +41,7 @@ namespace TsiErp.Entities.Entities.UnitSet
         /// </summary>
         public ICollection<SalesPropositionLines> SalesPropositionLines { get; set; }
         public ICollection<SalesOrderLines> SalesOrderLines { get; set; }
-
+        public ICollection<ProductionOrders> ProductionOrders { get; set; }
         public ICollection<BillsofMaterialLines> BillsofMaterialLines { get; set; }
     }
 }

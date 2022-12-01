@@ -45906,6 +45906,7 @@ li.e-separator.e-menu-item.e-excel-separator {
 
 .e-grid.e-default .e-headercell, .e-grid.e-default .e-detailheadercell {
     border-width: 0;
+    background-color: #d9d9d9 !important;
 }
 
 .e-grid [aria-selected] + tr .e-detailindentcell {

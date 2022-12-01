@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.BillsofMaterialLine;
 using TsiErp.Entities.Entities.Product;
+using TsiErp.Entities.Entities.ProductionOrder;
 
 namespace TsiErp.Entities.Entities.BillsofMaterial
 {
@@ -42,7 +43,8 @@ namespace TsiErp.Entities.Entities.BillsofMaterial
         public Products Products { get; set; }
 
         public ICollection<BillsofMaterialLines> BillsofMaterialLines { get; set; }
+        public ICollection<ProductionOrders> ProductionOrders { get; set; }
 
-        
+
     }
 }
