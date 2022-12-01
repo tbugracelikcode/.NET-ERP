@@ -9,6 +9,7 @@ using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Currency;
 using TsiErp.Entities.Entities.CurrentAccountCard;
 using TsiErp.Entities.Entities.PaymentPlan;
+using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.SalesOrderLine;
 using TsiErp.Entities.Entities.SalesPropositionLine;
 using TsiErp.Entities.Entities.ShippingAdress;
@@ -142,5 +143,7 @@ namespace TsiErp.Entities.Entities.SalesOrder
         public ShippingAdresses ShippingAdresses { get; set; }
 
         public ICollection<SalesOrderLines> SalesOrderLines { get; set; }
+
+        public ICollection<ProductionOrders> ProductionOrders { get; set; }
     }
 }

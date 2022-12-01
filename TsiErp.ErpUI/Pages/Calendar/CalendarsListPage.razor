@@ -39,11 +39,11 @@
                             <Template>
                                 <SfCard class="TSIGridCards">
                                     <CardContent>
-                                        <SfGrid ID="Grid" DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%"
+                                        <SfGrid ID="Grid" DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"  GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%"
                                 class="GridZebra" ContextMenuItems="@MainGridContextMenu">
                                             <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                             <GridEvents ContextMenuItemClicked="@MainContextMenuClick" TValue="ListCalendarsDto"></GridEvents>
                                             <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                             <GridPageSettings PageSizes="true"></GridPageSettings>
@@ -76,25 +76,27 @@
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="Çalışma Takvimi Kayıtları"
-         Width="720px"
-         Height="880px"
+         Width="38%"
+         Height="81%"
+         MinWidth="720px"
+         MinHeight="880px"
          HeaderCssClass="HeaderTitleCss">
                     <BodyTemplate>
-                        <DxGridLayout>
+                        <DxGridLayout CssClass="TSIGridLayout">
                             <Rows>
-                                <DxGridLayoutRow Height="100px" />
-                                <DxGridLayoutRow Height="70px" />
-                                <DxGridLayoutRow Height="140px" />
-                                <DxGridLayoutRow Height="60px" />
-                                <DxGridLayoutRow Height="70px" />
-                                <DxGridLayoutRow Height="270px" />
+                                <DxGridLayoutRow Height="11%" />
+                                <DxGridLayoutRow Height="7%" />
+                                <DxGridLayoutRow Height="18%" />
+                                <DxGridLayoutRow Height="7%" />
+                                <DxGridLayoutRow Height="10%" />
+                                <DxGridLayoutRow Height="35%" />
                             </Rows>
                             <Columns>
-                                <DxGridLayoutColumn Width="40px" />
-                                <DxGridLayoutColumn Width="300px" />
-                                <DxGridLayoutColumn Width="40px" />
-                                <DxGridLayoutColumn Width="300px" />
-                                <DxGridLayoutColumn Width="40px" />
+                                <DxGridLayoutColumn Width="5%" />
+                                <DxGridLayoutColumn Width="41%" />
+                                <DxGridLayoutColumn Width="5%" />
+                                <DxGridLayoutColumn Width="41%" />
+                                <DxGridLayoutColumn Width="5%" />
                             </Columns>
                             <Items>
                                 <DxGridLayoutItem Row="0" Column="1">
@@ -182,7 +184,7 @@
                                             <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectCalendarDaysDto"></GridEvents>
                                             <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="EditMode.Normal"></GridEditSettings>
+                                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                             <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                             <GridColumns>
