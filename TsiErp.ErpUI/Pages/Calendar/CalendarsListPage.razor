@@ -18,105 +18,103 @@
 @{
     if (!base.IsLoaded)
     {
-    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+        <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
     }
     else
     {
-    <DevGridLayout ColumnCount="1" RowCount="3">
-                    <GridLayoutItems>
-                        <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
-                            <Template>
-                                <SfCard class="TSIListPageTitleCard">
-                                    <CardContent>
-                                        <TsiBreadCrumb PreviousMenus="Planlama" CurrentMenu="Çalışma Takvimleri" />
-                                    </CardContent>
-                                    <CardFooter>
-                                    </CardFooter>
-                                </SfCard>
-                            </Template>
-                        </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
-                            <Template>
-                                <SfCard class="TSIGridCards">
-                                    <CardContent>
-                                        <SfGrid ID="Grid" DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"  GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%"
+        <DevGridLayout ColumnCount="1" RowCount="3">
+            <GridLayoutItems>
+                <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+                    <Template>
+                        <SfCard class="TSIListPageTitleCard">
+                            <CardContent>
+                                <TsiBreadCrumb PreviousMenus="Planlama" CurrentMenu="Çalışma Takvimleri" />
+                            </CardContent>
+                            <CardFooter>
+                            </CardFooter>
+                        </SfCard>
+                    </Template>
+                </DxGridLayoutItem>
+                <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+                    <Template>
+                        <SfCard class="TSIGridCards">
+                            <CardContent>
+                                <SfGrid ID="Grid" DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%"
                                 class="GridZebra" ContextMenuItems="@MainGridContextMenu">
-                                            <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                    <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                            <GridEvents ContextMenuItemClicked="@MainContextMenuClick" TValue="ListCalendarsDto"></GridEvents>
-                                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                            <GridPageSettings PageSizes="true"></GridPageSettings>
-                                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
-                                            <GridColumns>
-                                                <GridColumn Field=@nameof(ListCalendarsDto.Code) HeaderText="TAKVİM KODU" TextAlign="TextAlign.Center" Width="120">
-                                                </GridColumn>
-                                                <GridColumn Field=@nameof(ListCalendarsDto.Name) HeaderText="TAKVİM ADI" TextAlign="TextAlign.Center" Width="120">
+                                    <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false"></GridEditSettings>
+                                    <GridEvents ContextMenuItemClicked="@MainContextMenuClick" TValue="ListCalendarsDto"></GridEvents>
+                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                    <GridPageSettings PageSizes="true"></GridPageSettings>
+                                    <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                    <GridColumns>
+                                        <GridColumn Field=@nameof(ListCalendarsDto.Code) HeaderText="TAKVİM KODU" TextAlign="TextAlign.Center" Width="120">
+                                        </GridColumn>
+                                        <GridColumn Field=@nameof(ListCalendarsDto.Name) HeaderText="TAKVİM ADI" TextAlign="TextAlign.Center" Width="120">
 
-                                                </GridColumn>
-                                                <GridColumn Field=@nameof(ListCalendarsDto.Year) HeaderText="YIL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                                <GridColumn Field=@nameof(ListCalendarsDto.IsPlanned) HeaderText="PLANLI" DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumn>
+                                        <GridColumn Field=@nameof(ListCalendarsDto.Year) HeaderText="YIL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalendarsDto.IsPlanned) HeaderText="PLANLI" DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
-                                                <GridColumn Field=@nameof(ListCalendarsDto._Description) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalendarsDto._Description) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
-                                            </GridColumns>
-                                        </SfGrid>
-                                    </CardContent>
-                                    <CardFooter>
-                                    </CardFooter>
-                                </SfCard>
-                            </Template>
-                        </DxGridLayoutItem>
-                    </GridLayoutItems>
-    </DevGridLayout>
+                                    </GridColumns>
+                                </SfGrid>
+                            </CardContent>
+                            <CardFooter>
+                            </CardFooter>
+                        </SfCard>
+                    </Template>
+                </DxGridLayoutItem>
+            </GridLayoutItems>
+        </DevGridLayout>
 
 
-    <DxPopup @bind-Visible="base.EditPageVisible"
+        <DxPopup @bind-Visible="base.EditPageVisible"
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="Çalışma Takvimi Kayıtları"
-         Width="38%"
-         Height="81%"
-         MinWidth="720px"
-         MinHeight="880px"
+         Width="720px"
+         Height="880px"
          HeaderCssClass="HeaderTitleCss">
-                    <BodyTemplate>
-                        <DxGridLayout CssClass="TSIGridLayout">
-                            <Rows>
-                                <DxGridLayoutRow Height="11%" />
-                                <DxGridLayoutRow Height="7%" />
-                                <DxGridLayoutRow Height="18%" />
-                                <DxGridLayoutRow Height="7%" />
-                                <DxGridLayoutRow Height="10%" />
-                                <DxGridLayoutRow Height="35%" />
-                            </Rows>
-                            <Columns>
-                                <DxGridLayoutColumn Width="5%" />
-                                <DxGridLayoutColumn Width="41%" />
-                                <DxGridLayoutColumn Width="5%" />
-                                <DxGridLayoutColumn Width="41%" />
-                                <DxGridLayoutColumn Width="5%" />
-                            </Columns>
-                            <Items>
-                                <DxGridLayoutItem Row="0" Column="1">
-                                    <Template>
-                                        <br />
-                                        <label class="TSIModalLabel"><strong>Takvim Kodu: </strong></label>
-                                        <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Takvim Kodu Yazınız."></SfTextBox>
-                                    </Template>
-                                </DxGridLayoutItem>
-                                <DxGridLayoutItem Row="0" Column="3">
-                                    <Template>
-                                        <br />
-                                        <label class="TSIModalLabel"><strong>Takvim Adı: </strong></label>
-                                        <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="Takvim Adı Yazınız."></SfTextBox>
-                                    </Template>
-                                </DxGridLayoutItem>
-                                <DxGridLayoutItem Row="1" Column="1">
-                                    <Template>
-                                        <label class="TSIModalLabel"><strong>Takvim Yılı: </strong></label>
-                                        <SfComboBox @ref="Years"
+            <BodyTemplate>
+                <DxGridLayout>
+                    <Rows>
+                        <DxGridLayoutRow Height="100px" />
+                        <DxGridLayoutRow Height="70px" />
+                        <DxGridLayoutRow Height="140px" />
+                        <DxGridLayoutRow Height="60px" />
+                        <DxGridLayoutRow Height="70px" />
+                        <DxGridLayoutRow Height="270px" />
+                    </Rows>
+                    <Columns>
+                        <DxGridLayoutColumn Width="40px" />
+                        <DxGridLayoutColumn Width="300px" />
+                        <DxGridLayoutColumn Width="40px" />
+                        <DxGridLayoutColumn Width="300px" />
+                        <DxGridLayoutColumn Width="40px" />
+                    </Columns>
+                    <Items>
+                        <DxGridLayoutItem Row="0" Column="1">
+                            <Template>
+                                <br />
+                                <label class="TSIModalLabel"><strong>Takvim Kodu: </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Takvim Kodu Yazınız."></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="0" Column="3">
+                            <Template>
+                                <br />
+                                <label class="TSIModalLabel"><strong>Takvim Adı: </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="Takvim Adı Yazınız."></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="1" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>Takvim Yılı: </strong></label>
+                                <SfComboBox @ref="Years"
                                     TValue="int"
                                     TItem="int"
                                     Placeholder="Yıl Seçin"
@@ -127,180 +125,365 @@
                                     PopupWidth="300px"
                                     PopupHeight="350">
 
-                                            <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+                                    <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
 
-                                            <ComboBoxTemplates TItem="int">
-                                                <HeaderTemplate>
-                                                    <table>
-                                                        <tr>
-                                                            <th class="e-text-center">Takvim Yılı</th>
-                                                        </tr>
-                                                    </table>
-                                                </HeaderTemplate>
-                                                <ItemTemplate Context="cmbContext">
+                                    <ComboBoxTemplates TItem="int">
+                                        <HeaderTemplate>
+                                            <table>
+                                                <tr>
+                                                    <th class="e-text-center">Takvim Yılı</th>
+                                                </tr>
+                                            </table>
+                                        </HeaderTemplate>
+                                        <ItemTemplate Context="cmbContext">
 
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td class="e-text-center">@(cmbContext)</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </ItemTemplate>
-                                            </ComboBoxTemplates>
-                                            <ComboBoxEvents TValue="int"
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="e-text-center">@(cmbContext)</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ItemTemplate>
+                                    </ComboBoxTemplates>
+                                    <ComboBoxEvents TValue="int"
                                             TItem="int"
                                             ValueChange="YearValueChangeHandler"></ComboBoxEvents>
-                                        </SfComboBox>
-                                    </Template>
-                                </DxGridLayoutItem>
-                                <DxGridLayoutItem Row="1" Column="3">
-                                    <Template>
-                                        <label class="TSIModalLabel"><strong>Planlı: </strong></label><br />
-                                        <SfSwitch @bind-Checked="DataSource.IsPlanned"></SfSwitch>
-                                    </Template>
-                                </DxGridLayoutItem>
-                                <DxGridLayoutItem Row="2" Column="1">
-                                    <Template>
-                                        <label class="TSIModalLabel"><strong>Açıklama: </strong></label><br />
-                                        <SfTextBox CssClass="TSIMemoBox" @bind-Value="DataSource._Description" Placeholder="Takvim Açıklaması Yazınız." Multiline="true"></SfTextBox>
-                                    </Template>
-                                </DxGridLayoutItem>
-                                <DxGridLayoutItem Row="4" Column="1">
-                                    <Template>
-                                        <label class="TSIModalLabel"><strong>Resmi Tatil Günü: </strong></label><br />
-                                        <SfDatePicker @bind-Value="officialHoliday"></SfDatePicker>
-                                    </Template>
-                                </DxGridLayoutItem>
-                                <DxGridLayoutItem Row="4" Column="3">
-                                    <Template>
-                                        <br />
-                                        <SfButton CssClass="TSISaveButton" OnClick="AddOfficialHoliday"><SfIcon Size="IconSize.Medium" Name="IconName.CommentAdd"></SfIcon>&nbsp;Ekle</SfButton>
-                                    </Template>
-                                </DxGridLayoutItem>
-                                <DxGridLayoutItem Row="5" Column="1" ColumnSpan="3">
-                                    <Template>
-                                        <SfGrid @ref=_daysGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridDaysList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
-                                            <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectCalendarDaysDto"></GridEvents>
-                                            <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                </SfComboBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="1" Column="3">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>Planlı: </strong></label><br />
+                                <SfSwitch @bind-Checked="DataSource.IsPlanned"></SfSwitch>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="2" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>Açıklama: </strong></label><br />
+                                <SfTextBox CssClass="TSIMemoBox" @bind-Value="DataSource._Description" Placeholder="Takvim Açıklaması Yazınız." Multiline="true"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="4" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>Resmi Tatil Günü: </strong></label><br />
+                                <SfDatePicker @bind-Value="officialHoliday"></SfDatePicker>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="4" Column="3">
+                            <Template>
+                                <br />
+                                <SfButton CssClass="TSISaveButton" OnClick="AddOfficialHoliday"><SfIcon Size="IconSize.Medium" Name="IconName.CommentAdd"></SfIcon>&nbsp;Ekle</SfButton>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="5" Column="1" ColumnSpan="3">
+                            <Template>
+                                <SfGrid @ref=_daysGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridDaysList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
+                                    <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectCalendarDaysDto"></GridEvents>
+                                    <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
-                                            <GridColumns>
-                                                <GridColumn Field=@nameof(SelectCalendarDaysDto.Date_) Format="dd-MM-yyyy" HeaderText="TARİH" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                                <GridColumn Field=@nameof(SelectCalendarDaysDto.CalendarDayStateEnum) Type="ColumnType.String" HeaderText="DURUM" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            </GridColumns>
-                                        </SfGrid>
-                                    </Template>
-                                </DxGridLayoutItem>
-                            </Items>
-                        </DxGridLayout>
-                    </BodyTemplate>
-                    <FooterContentTemplate>
-                        <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-                        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
-                    </FooterContentTemplate>
-    </DxPopup>
+                                    <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false"></GridEditSettings>
+                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                    <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                    <GridColumns>
+                                        <GridColumn Field=@nameof(SelectCalendarDaysDto.Date_) Format="dd-MM-yyyy" HeaderText="TARİH" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(SelectCalendarDaysDto.CalendarDayStateEnum) Type="ColumnType.String" HeaderText="DURUM" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    </GridColumns>
+                                </SfGrid>
+                            </Template>
+                        </DxGridLayoutItem>
+                    </Items>
+                </DxGridLayout>
+            </BodyTemplate>
+            <FooterContentTemplate>
+                <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+            </FooterContentTemplate>
+        </DxPopup>
 
-    <DxPopup @bind-Visible="schedularVisible"
+        <DxPopup @bind-Visible="schedularVisible"
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="Çalışma Takvimi"
-         Width="1800px"
-         Height="1280px"
-         HeaderCssClass="HeaderTitleCss">
-                    <BodyTemplate>
-                        <SfSchedule TValue="AppointmentData" @bind-SelectedDate="@CurrentDate">
-                            <ScheduleResources>
-                                <ScheduleResource TItem="ResourceData" TValue="int[]" DataSource="@ResourceList" Field="ResourceId" Title="Owner" Name="Owners" TextField="OwnerText" IdField="Id" ColorField="Color" AllowMultiple="true"></ScheduleResource>
-                            </ScheduleResources>
-                            <ScheduleEvents TValue="AppointmentData" OnPopupOpen="@OnPopupOpen" OnRenderCell="@OnRenderCell"></ScheduleEvents>
-                            <ScheduleEventSettings DataSource="@DataSourceEvent">
-                            </ScheduleEventSettings>
-                            <ScheduleViews>
-                                <ScheduleView Option="View.Year" FirstDayOfWeek="1" ShowWeekNumber=true></ScheduleView>
-                            </ScheduleViews>
-                        </SfSchedule>
-                    </BodyTemplate>
-                    <FooterContentTemplate>
-                    <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-                    <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
-                    </FooterContentTemplate>
-    </DxPopup>
+         Width="90%"
+         Height="90%"
+         Scrollable="true"
+         HeaderCssClass="HeaderTitleCss" Context="contextPopup">
+            <BodyTemplate>
+                <SfSchedule @ref="ScheduleObj" TValue="AppointmentData" @bind-SelectedDate="@CurrentDate" Height="100%" Width="100%" ShowQuickInfo="false">
 
-    <style>
-                @*.e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-content span.e-day {
-                display: block;
-                margin: 0 auto;
-                
-                }*@
-                    
+                    <ScheduleResources>
+                        <ScheduleResource TItem="ResourceData" TValue="int[]" DataSource="@ResourceList" Field="ResourceId" Title="Owner" Name="Owners" TextField="OwnerText" IdField="Id" ColorField="Color" AllowMultiple="true"></ScheduleResource>
+                    </ScheduleResources>
+                    <ScheduleEvents TValue="AppointmentData" OnPopupOpen="@OnPopupOpen" OnRenderCell="@OnRenderCell"> </ScheduleEvents>
+                    <ScheduleEventSettings DataSource="@DataSourceEvent">
+                    </ScheduleEventSettings>
+                    <ScheduleQuickInfoTemplates>
+                    <ContentTemplate>
+                @if ((context as AppointmentData).Id == default(int) )
+                {
+                    <div class="cell-footer">
+                        <SfButton Content="Düzenle" IsPrimary="true" OnClick="@(ShowModal1)"></SfButton>
+                    </div>
+                }
+            </ContentTemplate>
+        </ScheduleQuickInfoTemplates>
+                    <ScheduleViews>
+                        <ScheduleView Option="View.Year" FirstDayOfWeek="1" ShowWeekNumber=true></ScheduleView>
+                        <ScheduleView Option="View.Month" ShowWeekNumber=true></ScheduleView>
+                    </ScheduleViews>
+                    @* <ScheduleTemplates Context="context">
 
-                    .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-other-month {
-                        visibility: hidden !important;
+                        <CellHeaderTemplate>
+
+                @{
+
+                    DateTime currentDate = (context as TemplateContext).Date;
+
+                    string name = string.Empty;
+
+                    switch (DataSourceEvent.Where(t => t.StartTime == currentDate).Select(t => t.ResourceId).LastOrDefault())
+
+                    {
+
+                        case 1:
+
+                            name = "calismaVar";
+
+                            break;
+
+                        case 2:
+
+                            name = "calismaYok";
+
+                            break;
+
+                        case 3:
+
+                            name = "resmiTatil";
+
+                            break;
+
+                        default:
+
+                            break;
+
                     }
 
-                    .e-calendar .e-content span, .e-bigger.e-small .e-calendar .e-content span.custom-class {
-                        background-color: red !important;
-        }
-    </style>
+                    <span class="@("e-day " + name)">@currentDate.Day.ToString(CultureInfo.CurrentCulture)</span>
+
+                }
+
+            </CellHeaderTemplate>
+
+                </ScheduleTemplates>*@
+                </SfSchedule>
+                @*<table id='property' class='property-panel-table' style="width: 100%;">
+                <tbody>
+                    <tr style="height: 50px">
+                        <td style="width: 100%">
+                                <SfCheckBox TChecked="bool" @bind-Checked="@chcTumu" Label="Tümü" ValueChange="@OnChange"></SfCheckBox>
+                            </td>
+                    </tr>
+                    <tr style="height: 50px">
+                        <td style="width: 100%">
+                                <SfCheckBox TChecked="bool" @bind-Checked="@chcCalismaVar" Label="Çalışma Var" ValueChange="@OnChange"></SfCheckBox>
+                        </td>
+                    </tr>
+                    <tr style="height: 50px">
+                        <td style="width: 100%">
+                                <SfCheckBox TChecked="bool"  @bind-Checked="@chcResmiTatil" Label="Resmi Tatil" ValueChange="@OnChange"></SfCheckBox>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>*@
+            </BodyTemplate>
+            <FooterContentTemplate>
+                <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+            </FooterContentTemplate>
+        </DxPopup>
+        <DxPopup Visible="modal1visible"
+         ShowFooter="true"
+         CloseButtonClick="HideModal1"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Modal 1"
+         Width="1600px"
+         CssClass="TSIWorkSchduleModal"
+         HeaderCssClass="HeaderTitleCss">
+
+    <BodyTemplate>
+
+        <table style="margin-top:2%">
+            <tr>
+                <td style="font-size:16px;padding-left:2%; width:20%"><strong>Tarih :</strong> @today</td>
+                <td style="width:80%"></td>
+            </tr>
+        </table>
+
+        <SfCard class="TSIWorkSchduleModalStationsCard">
+            <CardContent>
+
+                @{
+
+                    <div class="row">
+                        <center>
+                            <div class="control-section col-lg-11 card-control-section tile_layout">
+                                <div class="row e-card-layout">
+                                    @if (ListDataSource != null)
+                                    {
+                                        @foreach (var item in ListDataSource)
+                                        {
+                                            string exactURL = imageURL + item.Code + "off.png";
+
+                                            <div class="col-lg-2 col-md-2 col-sm-4" style="padding: 10px;text-align:left;  width: 10%;">
+                                                <div id="card_sample_1" class="card_sample">
+                                                    <SfCard CssClass="TSIStationCards">
+                                                        <center><CardImage Image="@exactURL" /></center>
+                                                        <center> <CardHeader Title="@item.Code" /></center>
+                                                        <CardContent>
+                                                            <ChildContent>
+                                                                @* <table class="table table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                    <th scope="col" style="text-align:center">Bakım </th>
+                                                    <th scope="col" style="text-align:left"> &nbsp;Detayları</th>
+                                                    <th scope="col" style="text-align:left"> </th>
+                                                    <th scope="col" style="text-align:left"></th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                    <td><strong>Departman : @card.StationDepartment</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                    <td><strong>Planlanan Bakım Tarihi : @card.PlannedMaintenanceDate.ToString("dd-MM-yyyy")</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                    <td><strong>Bakım Türü : @card.MaintenanceType</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                    <td><strong>Bakıma Kalan Süre : @card.TimeLeft İş Günü</strong></td>
+                                                    </tr>
+                                                    </tbody>
+                                                    </table>*@
+                                                            </ChildContent>
+                                                        </CardContent>
+                                                        <CardFooter>
+                                                        </CardFooter>
+                                                    </SfCard>
+
+
+
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+
+
+
+
+                                </div>
+                            </div>
+                        </center>
+                    </div>
+
+
+                }
+
+            </CardContent>
+            <CardFooter>
+            </CardFooter>
+        </SfCard>
+
+
+
+    </BodyTemplate>
+    <FooterContentTemplate>
+        <SfButton CssClass="TSICancelButton" OnClick="HideModal1"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        <SfButton CssClass="TSISaveButton" OnClick="ShowModal2"><SfIcon Size="IconSize.Medium" Name="IconName.Check"></SfIcon>&nbsp;Seç</SfButton>
+    </FooterContentTemplate>
+</DxPopup>
+
+
+<DxPopup Visible="modal2visible"
+         ShowFooter="true"
+         CloseButtonClick="HideModal2"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Modal 2"
+         Width="500px"
+         CssClass="TSIWorkSchduleModal"
+         HeaderCssClass="HeaderTitleCss">
+
+    <BodyTemplate>
+
+        <table style="width:90%; height:fit-content;margin-top:2%;">
+
+            <tr>
+                <td style="width:50%; text-align:left;padding-left:10%">
+                    <label class="TSIModalLabel"><strong>Çalışma Bilgileri: </strong></label>
+                </td>
+                <td style="width:50%">
+                    <SfTextBox style="width:80%"></SfTextBox>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="width:50%; text-align:left;padding-left:10%">
+                    <label class="TSIModalLabel"><strong>Bakım Bilgileri:</strong> </label>
+                </td>
+                <td style="width:50%">
+                    <SfTextBox style="width:80%"></SfTextBox>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="width:50%; text-align:left;padding-left:10%">
+                    <label class="TSIModalLabel"><strong>Fazla Mesai Bilgileri:</strong> </label>
+                </td>
+                <td style="width:50%">
+                    <SfTextBox style="width:80%"></SfTextBox>
+                </td>
+            </tr>
+
+        </table>
+
+
+
+    </BodyTemplate>
+    <FooterContentTemplate>
+        <SfButton CssClass="TSICancelButton" OnClick="HideModal2"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        <SfButton CssClass="TSISaveButton" OnClick="Modal2Save"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+    </FooterContentTemplate>
+</DxPopup>
+        <style>
+            .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-other-month {
+                visibility: hidden !important;
+            }
+
+            .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-header .e-title {
+                cursor: default !important;
+                background-color: white !important;
+            }
+
+            .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-appointment, .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-appointment-indicator {
+                visibility: hidden;
+            }
+
+            @*.e-schedule .e-year-view .calismaVar {
+                background: green !important;
+            }
+
+            .e-schedule .e-year-view .calismaYok {
+                background: red !important;
+            }
+
+            .e-schedule .e-year-view .resmiTatil {
+                background: yellow !important;
+            }*@
+        </style>
     }
 }
-
-
-
-@*<SfSchedule TValue="AppointmentData" @bind-SelectedDate="@CurrentDate">
-    <ScheduleResources>
-        <ScheduleResource TItem="ResourceData" TValue="int[]" DataSource="@OwnersData" Field="OwnerId" Title="Owner" Name="Owners" TextField="OwnerText" IdField="Id" ColorField="OwnerColor" AllowMultiple="true" ></ScheduleResource>
-    </ScheduleResources>
-    <ScheduleEvents TValue="AppointmentData" OnPopupOpen="@OnPopupOpen"></ScheduleEvents>
-    <ScheduleEventSettings DataSource="@DataSource">
-    </ScheduleEventSettings>
-    <ScheduleViews>
-        <ScheduleView Option="View.Year" FirstDayOfWeek="1" ShowWeekNumber=true></ScheduleView>
-    </ScheduleViews>
-</SfSchedule>
-@code {
-    public void OnPopupOpen(PopupOpenEventArgs<AppointmentData> args)
-    {
-        if (args.Type == PopupType.Editor || args.Type == PopupType.QuickInfo)
-        {
-            args.Cancel = true;
-        }
-    }
-    DateTime CurrentDate = new DateTime(2022, 6, 1);
-    List<AppointmentData> DataSource = new List<AppointmentData>
-    {
-        new AppointmentData { Id = 1, Subject = "Meeting", StartTime = new DateTime(2022, 6, 1, 9, 30, 0) , EndTime = new DateTime(2022, 6, 1, 11, 0, 0), OwnerId = 1 },
-        new AppointmentData { Id = 2, Subject = "Swimming", StartTime = new DateTime(2022, 6, 1, 9, 30, 0) , EndTime = new DateTime(2022, 6, 1, 11, 0, 0), OwnerId = 2 },
-        new AppointmentData { Id = 3, Subject = "Movie", StartTime = new DateTime(2022, 6, 2, 10, 0, 0) , EndTime = new DateTime(2022, 6, 2, 12, 0, 0), OwnerId = 3 }
-    };
-    public List<ResourceData> OwnersData { get; set; } = new List<ResourceData>
-    {
-        new ResourceData{ OwnerText = "Nancy", Id = 1, OwnerColor = "#ffaa00" },
-        new ResourceData{ OwnerText = "Steven", Id = 2, OwnerColor = "#f8a398" },
-        new ResourceData{ OwnerText = "Michael", Id = 3, OwnerColor = "#7499e1" }
-    };
-    public class AppointmentData
-    {
-        public int Id { get; set; }
-        public string Subject { get; set; }
-        public string Location { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
-        public string Description { get; set; }
-        public bool IsAllDay { get; set; }
-        public string RecurrenceRule { get; set; }
-        public string RecurrenceException { get; set; }
-        public Nullable<int> RecurrenceID { get; set; }
-        public int OwnerId { get; set; }
-    }
-    public class ResourceData
-    {
-        public int Id { get; set; }
-        public string OwnerText { get; set; }
-        public string OwnerColor { get; set; }
-    }
-}*@

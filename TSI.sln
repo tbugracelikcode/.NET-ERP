@@ -37,6 +37,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ui-diagram", "ui-diagram", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TsiErp.VsmBuilder", "TsiErp.VsmBuilder\TsiErp.VsmBuilder.csproj", "{C3F041A6-4D36-4411-AD11-0A95FEFE6C50}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IoT", "IoT", "{8AFF0841-2F35-4626-A518-A2D227D28B32}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{846D2A43-6E9F-45BD-8EAA-46DD020914B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +91,10 @@ Global
 		{C3F041A6-4D36-4411-AD11-0A95FEFE6C50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3F041A6-4D36-4411-AD11-0A95FEFE6C50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3F041A6-4D36-4411-AD11-0A95FEFE6C50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{846D2A43-6E9F-45BD-8EAA-46DD020914B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{846D2A43-6E9F-45BD-8EAA-46DD020914B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{846D2A43-6E9F-45BD-8EAA-46DD020914B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{846D2A43-6E9F-45BD-8EAA-46DD020914B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -103,6 +111,7 @@ Global
 		{097DAD31-0D25-4C46-9B0D-D742B46612D7} = {1CF32D9B-7561-42F2-8668-4A61F458604D}
 		{F24A0CD3-46CC-4C22-8B9B-0FA268F53F6A} = {AED827AF-E34A-4BCB-9A24-70E6FF1F21AB}
 		{C3F041A6-4D36-4411-AD11-0A95FEFE6C50} = {03F701A0-8D06-4C31-8106-EC6CC301B048}
+		{846D2A43-6E9F-45BD-8EAA-46DD020914B1} = {8AFF0841-2F35-4626-A518-A2D227D28B32}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {249F607F-1AF1-497A-ADFA-357532BFCABD}
