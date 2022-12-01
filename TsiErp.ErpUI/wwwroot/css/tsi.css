@@ -1,4 +1,32 @@
-﻿.GridZebra table tbody tr:nth-child(odd) {
+﻿.calismaVar {
+    background-color: #00ff14;
+}
+
+.bakim {
+    background-color: #ff8d00;
+}
+
+.resmiTatil {
+    background-color: #6c757d;
+}
+
+.calismaYok {
+    background-color: #ff0000;
+}
+
+.tatil {
+    background-color: #b75050ed;
+}
+
+.yarimGun {
+    background-color: #0089ff;
+}
+
+.yuklemeGunu {
+    background-color: #ffeb00;
+}
+
+.GridZebra table tbody tr:nth-child(odd) {
     background-color: #f9f9f9;
 }
 
