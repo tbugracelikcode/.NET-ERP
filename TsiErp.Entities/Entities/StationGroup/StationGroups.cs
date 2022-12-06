@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.Station;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Entities.Entities.StationGroup
 {
@@ -31,5 +32,7 @@ namespace TsiErp.Entities.Entities.StationGroup
         public bool IsActive { get; set; }
 
         public ICollection<Stations> Stations { get; set; }
+
+        public ICollection<WorkOrders> WorkOrders { get; set; }
     }
 }

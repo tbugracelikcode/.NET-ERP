@@ -9,6 +9,7 @@ using TsiErp.Entities.Entities.CalendarLine;
 using TsiErp.Entities.Entities.ProductsOperationLine;
 using TsiErp.Entities.Entities.StationGroup;
 using TsiErp.Entities.Entities.TemplateOperationLine;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Entities.Entities.Station
 {
@@ -125,5 +126,7 @@ namespace TsiErp.Entities.Entities.Station
         public ICollection<ProductsOperationLines> ProductsOperationLines { get; set; }
 
         public ICollection<CalendarLines> CalendarLines { get; set; }
+
+        public ICollection<WorkOrders> WorkOrders { get; set; }
     }
 }

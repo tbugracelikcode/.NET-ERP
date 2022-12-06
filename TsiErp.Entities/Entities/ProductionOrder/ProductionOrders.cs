@@ -9,6 +9,7 @@ using TsiErp.Entities.Entities.SalesOrderLine;
 using TsiErp.Entities.Entities.SalesProposition;
 using TsiErp.Entities.Entities.SalesPropositionLine;
 using TsiErp.Entities.Entities.UnitSet;
+using TsiErp.Entities.Entities.WorkOrder;
 using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.ProductionOrder 
@@ -124,6 +125,7 @@ namespace TsiErp.Entities.Entities.ProductionOrder
         public SalesPropositions SalesPropositions { get; set; }
         public SalesPropositionLines SalesPropositionLines { get; set; }
         public CurrentAccountCards CurrentAccountCards { get; set; }
+        public ICollection<WorkOrders> WorkOrders { get; set; }
 
 
     }

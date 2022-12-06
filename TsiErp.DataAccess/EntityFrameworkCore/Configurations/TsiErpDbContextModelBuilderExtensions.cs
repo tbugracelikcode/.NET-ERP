@@ -49,6 +49,7 @@ using TsiErp.Entities.Entities.ProductsOperationLine;
 using TsiErp.Entities.Entities.BillsofMaterial;
 using TsiErp.Entities.Entities.BillsofMaterialLine;
 using TsiErp.Entities.Entities.ProductionOrder;
+using TsiErp.Entities.Entities.WorkOrder;
 using TsiErp.Entities.Entities.CalendarDay;
 using TsiErp.Entities.Entities.Menu;
 
@@ -1168,6 +1169,55 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasOne(x => x.SalesPropositions).WithMany(x => x.ProductionOrders).HasForeignKey(x => x.PropositionID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.SalesPropositionLines).WithOne(x => x.ProductionOrders).HasForeignKey<ProductionOrders>(x => x.PropositionLineID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.CurrentAccountCards).WithMany(x => x.ProductionOrders).HasForeignKey(x => x.CurrentAccountID).OnDelete(DeleteBehavior.NoAction);
+
+            });
+        }
+
+        public static void ConfigureWorkOrders(this ModelBuilder builder)
+        {
+            builder.Entity<WorkOrders>(b =>
+            {
+                b.ToTable("WorkOrders");
+                b.ConfigureByConvention();
+
+                //b.HasQueryFilter(x => !x.IsDeleted);
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.WorkOrderNo).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.IsCancel).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.WorkOrderState).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.AdjustmentAndControlTime).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.OperationTime).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.PlannedQuantity).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.ProducedQuantity).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.OccuredStartDate).HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.OccuredFinishDate).HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.LineNr).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.LinkedWorkOrderID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductionOrderID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.PropositionID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.RouteID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductsOperationID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.StationID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.StationGroupID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.CurrentAccountCardID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                
+
+                b.HasIndex(x => x.Code);
+                b.HasIndex(x => x.ProductionOrderID);
+                b.HasIndex(x => x.ProductID);
+                b.HasIndex(x => x.ProductsOperationID);
+                b.HasIndex(x => x.CurrentAccountCardID);
+
+                b.HasOne(x => x.ProductionOrders).WithMany(x => x.WorkOrders).HasForeignKey(x => x.ProductionOrderID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.SalesPropositions).WithMany(x => x.WorkOrders).HasForeignKey(x => x.PropositionID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Routes).WithMany(x => x.WorkOrders).HasForeignKey(x => x.RouteID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.ProductsOperations).WithMany(x => x.WorkOrders).HasForeignKey(x => x.ProductsOperationID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Stations).WithMany(x => x.WorkOrders).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.StationGroups).WithMany(x => x.WorkOrders).HasForeignKey(x => x.StationGroupID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Products).WithMany(x => x.WorkOrders).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.CurrentAccountCards).WithMany(x => x.WorkOrders).HasForeignKey(x => x.CurrentAccountCardID).OnDelete(DeleteBehavior.NoAction);
 
             });
         }

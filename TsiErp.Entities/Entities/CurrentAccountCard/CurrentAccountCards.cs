@@ -9,6 +9,7 @@ using TsiErp.Entities.Entities.ShippingAdress;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.SalesOrder;
 using TsiErp.Entities.Entities.ProductionOrder;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Entities.Entities.CurrentAccountCard
 {
@@ -156,5 +157,6 @@ namespace TsiErp.Entities.Entities.CurrentAccountCard
         public ICollection<SalesOrders> SalesOrders { get; set; }
         public ICollection<ProductionOrders> ProductionOrders { get; set; }
         public ICollection<ShippingAdresses> ShippingAdresses { get; set; }
+        public ICollection<WorkOrders> WorkOrders { get; set; }
     }
 }
