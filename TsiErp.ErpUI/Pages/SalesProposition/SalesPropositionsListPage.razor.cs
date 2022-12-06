@@ -60,29 +60,24 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         SelectSalesPropositionLinesDto LineDataSource;
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> ConvertToOrderGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
-        public List<ContextMenuItemModel> CreateProductionOrderTreeGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectSalesPropositionLinesDto> GridLineList = new List<SelectSalesPropositionLinesDto>();
 
         List<SelectSalesPropositionLinesDto> GridConvertToOrderList = new List<SelectSalesPropositionLinesDto>();
 
-        List<SelectSalesPropositionLinesDto> TreeGridCreateProductionOrderList = new List<SelectSalesPropositionLinesDto>();
-
-        //List<ListBillsofMaterialsDto> BoMList = new List<ListBillsofMaterialsDto>();
-
         private bool LineCrudPopup = false;
 
         private bool ConvertToOrderCrudPopup = false;
 
-        private bool CreateProductionOrderCrudPopup = false;
+       
+
 
         protected override async void OnInitialized()
         {
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
             CreateConvertToOrderContextMenuItems();
-            CreateProductionOrderContextMenuItems();
 
             BaseCrudService = SalesPropositionsAppService;
 
@@ -94,55 +89,6 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             await GetUnitSetsList();
             await GetPaymentPlansList();
         }
-
-        #region Üretim Emri Oluşturma Modalı İşlemleri
-
-        //public class SalesPropositionTreeGrid
-        //{
-        //    public int ID { get; set; }
-
-        //    public int? ParentID { get; set; }
-
-        //    public string ProductCode { get; set; }
-        //}
-
-        //public async void ProductionOrderTreeGridRecursive(List<SelectSalesPropositionLinesDto> list)
-        //{
-           
-        //}
-
-        protected void CreateProductionOrderContextMenuItems()
-        {
-            if (CreateProductionOrderTreeGridContextMenu.Count() == 0)
-            {
-                CreateProductionOrderTreeGridContextMenu.Add(new ContextMenuItemModel { Text = "Üretim Emirlerini Oluştur", Id = "createproductionorders" });
-            }
-        }
-
-        public async void OnCreateProductionOrderContextMenuClick(ContextMenuClickEventArgs<SelectSalesPropositionLinesDto> args)
-        {
-            switch (args.Item.Id)
-            {
-                case "createproductionorders":
-
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        protected async Task OnCreateProductionOrderBtnClicked()
-        {
-
-        }
-
-        public void HideCreateProductionOrderPopup()
-        {
-            CreateProductionOrderCrudPopup = false;
-        }
-
-        #endregion
 
         #region Satışı Teklife Dönüştürme Modalı İşlemleri
 
@@ -272,7 +218,7 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
                     ExchangeRate = DataSource.ExchangeRate,
                     GrossAmount = DataSource.GrossAmount,
                     LinkedSalesPropositionID = DataSource.Id,
-                    FicheNo = "DENEME 8",
+                    FicheNo = "DENEME 9",
                     NetAmount = DataSource.NetAmount,
                     PaymentPlanID = DataSource.PaymentPlanID,
                     SalesOrderState = Entities.Enums.SalesOrderStateEnum.Beklemede,
@@ -434,7 +380,6 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Siparişe Dönüştür", Id = "converttoorder" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Üretim Emri Oluştur", Id = "createproductionorder" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
             }
         }
@@ -489,20 +434,7 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
                     await InvokeAsync(StateHasChanged);
                     break;
 
-                case "createproductionorder":
-                    DataSource = (await SalesPropositionsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    TreeGridCreateProductionOrderList = DataSource.SelectSalesPropositionLines;
-
-                    foreach (var item in TreeGridCreateProductionOrderList)
-                    {
-                        item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
-                        item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
-                        item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
-                    }
-
-                    CreateProductionOrderCrudPopup = true;
-                    await InvokeAsync(StateHasChanged);
-                    break;
+               
 
                 case "refresh":
                     await GetListDataSourceAsync();
