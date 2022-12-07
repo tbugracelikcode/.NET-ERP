@@ -21,7 +21,7 @@ namespace TsiErp.Entities.Entities.WorkOrder.Dtos
         /// <summary>
         /// İptal
         /// </summary>
-        public decimal IsCancel { get; set; }
+        public bool IsCancel { get; set; }
         /// <summary>
         /// Durum
         /// </summary>
@@ -65,9 +65,9 @@ namespace TsiErp.Entities.Entities.WorkOrder.Dtos
         /// </summary>
         public Guid? ProductionOrderID { get; set; }
         /// <summary>
-        /// Üretim Emri Kodu
+        /// Üretim Emri Fiş No
         /// </summary>
-        public string ProductionOrderCode { get; set; }
+        public string ProductionOrderFicheNo { get; set; }
         /// <summary>
         /// Sipariş ID
         /// </summary>

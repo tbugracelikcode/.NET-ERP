@@ -33,7 +33,7 @@ namespace TsiErp.Entities.Entities.WorkOrder
         /// <summary>
         /// İptal
         /// </summary>
-        public decimal IsCancel { get; set; }
+        public bool IsCancel { get; set; }
         /// <summary>
         /// Durum
         /// </summary>
@@ -79,35 +79,35 @@ namespace TsiErp.Entities.Entities.WorkOrder
         /// <summary>
         /// Üretim Emri ID
         /// </summary>
-        public Guid? ProductionOrderID { get; set; }
+        public Guid ProductionOrderID { get; set; }
         /// <summary>
         /// Sipariş ID
         /// </summary>
-        public Guid? PropositionID { get; set; }
+        public Guid PropositionID { get; set; }
         /// <summary>
         /// Rota ID
         /// </summary>
-        public Guid? RouteID { get; set; }
+        public Guid RouteID { get; set; }
         /// <summary>
         /// Ürüne Özel Operasyon ID
         /// </summary>
-        public Guid? ProductsOperationID { get; set; }
+        public Guid ProductsOperationID { get; set; }
         /// <summary>
         /// İş İstasyonu ID
         /// </summary>
-        public Guid? StationID { get; set; }
+        public Guid StationID { get; set; }
         /// <summary>
         /// İş İstasyonu Grup ID
         /// </summary>
-        public Guid? StationGroupID { get; set; }
+        public Guid StationGroupID { get; set; }
         /// <summary>
         /// Stok ID
         /// </summary>
-        public Guid? ProductID { get; set; }
+        public Guid ProductID { get; set; }
         /// <summary>
         /// Cari ID
         /// </summary>
-        public Guid? CurrentAccountCardID { get; set; }
+        public Guid CurrentAccountCardID { get; set; }
 
         public ProductionOrders ProductionOrders { get; set; }
 

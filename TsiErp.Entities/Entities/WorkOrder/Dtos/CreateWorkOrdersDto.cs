@@ -22,7 +22,7 @@ namespace TsiErp.Entities.Entities.WorkOrder.Dtos
         /// <summary>
         /// İptal
         /// </summary>
-        public decimal IsCancel { get; set; }
+        public bool IsCancel { get; set; }
         /// <summary>
         /// Durum
         /// </summary>

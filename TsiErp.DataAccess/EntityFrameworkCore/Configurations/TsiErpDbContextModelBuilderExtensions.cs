@@ -1194,14 +1194,14 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.OccuredFinishDate).HasColumnType(SqlDbType.DateTime.ToString());
                 b.Property(t => t.LineNr).IsRequired().HasColumnType(SqlDbType.Int.ToString());
                 b.Property(t => t.LinkedWorkOrderID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.ProductionOrderID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.PropositionID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.RouteID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.ProductsOperationID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.StationID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.StationGroupID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.ProductID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.CurrentAccountCardID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductionOrderID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.PropositionID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.RouteID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductsOperationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.StationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.StationGroupID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.CurrentAccountCardID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 
 
                 b.HasIndex(x => x.Code);
