@@ -7,6 +7,8 @@ using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.BillsofMaterialLine;
 using TsiErp.Entities.Entities.Product;
 using TsiErp.Entities.Entities.ProductionOrder;
+using TsiErp.Entities.Entities.PurchaseOrderLine;
+using TsiErp.Entities.Entities.PurchaseRequestLine;
 using TsiErp.Entities.Entities.SalesOrderLine;
 using TsiErp.Entities.Entities.SalesPropositionLine;
 
@@ -43,5 +45,7 @@ namespace TsiErp.Entities.Entities.UnitSet
         public ICollection<SalesOrderLines> SalesOrderLines { get; set; }
         public ICollection<ProductionOrders> ProductionOrders { get; set; }
         public ICollection<BillsofMaterialLines> BillsofMaterialLines { get; set; }
+        public ICollection<PurchaseOrderLines> PurchaseOrderLines { get; set; }
+        public ICollection<PurchaseRequestLines> PurchaseRequestLines { get; set; }
     }
 }

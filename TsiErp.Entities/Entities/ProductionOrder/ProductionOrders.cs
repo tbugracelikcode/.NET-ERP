@@ -3,6 +3,10 @@ using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.BillsofMaterial;
 using TsiErp.Entities.Entities.CurrentAccountCard;
 using TsiErp.Entities.Entities.Product;
+using TsiErp.Entities.Entities.PurchaseOrder;
+using TsiErp.Entities.Entities.PurchaseOrderLine;
+using TsiErp.Entities.Entities.PurchaseRequest;
+using TsiErp.Entities.Entities.PurchaseRequestLine;
 using TsiErp.Entities.Entities.Route;
 using TsiErp.Entities.Entities.SalesOrder;
 using TsiErp.Entities.Entities.SalesOrderLine;
@@ -126,7 +130,6 @@ namespace TsiErp.Entities.Entities.ProductionOrder
         public SalesPropositionLines SalesPropositionLines { get; set; }
         public CurrentAccountCards CurrentAccountCards { get; set; }
         public ICollection<WorkOrders> WorkOrders { get; set; }
-
 
     }
 }

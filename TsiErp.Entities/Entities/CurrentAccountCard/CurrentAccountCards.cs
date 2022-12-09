@@ -10,6 +10,8 @@ using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.SalesOrder;
 using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.WorkOrder;
+using TsiErp.Entities.Entities.PurchaseOrder;
+using TsiErp.Entities.Entities.PurchaseRequest;
 
 namespace TsiErp.Entities.Entities.CurrentAccountCard
 {
@@ -158,5 +160,7 @@ namespace TsiErp.Entities.Entities.CurrentAccountCard
         public ICollection<ProductionOrders> ProductionOrders { get; set; }
         public ICollection<ShippingAdresses> ShippingAdresses { get; set; }
         public ICollection<WorkOrders> WorkOrders { get; set; }
+        public ICollection<PurchaseOrders> PurchaseOrders { get; set; }
+        public ICollection<PurchaseRequests> PurchaseRequests { get; set; }
     }
 }

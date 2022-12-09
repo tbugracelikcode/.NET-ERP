@@ -2152,6 +2152,503 @@ namespace TsiErp.DataAccess.Migrations
                     b.ToTable("ProductsOperationLines", (string)null);
                 });
 
+            modelBuilder.Entity("TsiErp.Entities.Entities.PurchaseOrder.PurchaseOrders", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<Guid>("BranchID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<DateTime?>("CreationTime")
+                        .IsRequired()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid>("CurrencyID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<Guid>("CurrentAccountCardID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<DateTime>("Date_")
+                        .HasColumnType("DateTime");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<string>("Description_")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("ExchangeRate")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
+
+                    b.Property<string>("FicheNo")
+                        .IsRequired()
+                        .HasMaxLength(17)
+                        .HasColumnType("NVarChar(17)");
+
+                    b.Property<decimal>("GrossAmount")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<Guid>("LinkedPurchaseRequestID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<decimal>("NetAmount")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
+
+                    b.Property<Guid>("PaymentPlanID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<Guid>("ProductionOrderID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<int>("PurchaseOrderState")
+                        .HasColumnType("Int");
+
+                    b.Property<Guid?>("ShippingAdressID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<string>("SpecialCode")
+                        .HasMaxLength(201)
+                        .HasColumnType("NVarChar(201)");
+
+                    b.Property<string>("Time_")
+                        .HasMaxLength(8)
+                        .HasColumnType("NVarChar(8)");
+
+                    b.Property<decimal>("TotalDiscountAmount")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
+
+                    b.Property<decimal>("TotalVatAmount")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
+
+                    b.Property<decimal>("TotalVatExcludedAmount")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
+
+                    b.Property<Guid>("WarehouseID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<DateTime?>("WorkOrderCreationDate")
+                        .HasColumnType("DateTime");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BranchID");
+
+                    b.HasIndex("CurrencyID");
+
+                    b.HasIndex("CurrentAccountCardID");
+
+                    b.HasIndex("FicheNo");
+
+                    b.HasIndex("PaymentPlanID");
+
+                    b.HasIndex("ShippingAdressID");
+
+                    b.HasIndex("WarehouseID");
+
+                    b.ToTable("PurchaseOrders", (string)null);
+                });
+
+            modelBuilder.Entity("TsiErp.Entities.Entities.PurchaseOrderLine.PurchaseOrderLines", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<DateTime?>("CreationTime")
+                        .IsRequired()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<decimal>("DiscountAmount")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
+
+                    b.Property<decimal>("DiscountRate")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
+
+                    b.Property<decimal>("ExchangeRate")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<Guid>("LikedPurchaseRequestLineID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<decimal>("LineAmount")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
+
+                    b.Property<string>("LineDescription")
+                        .HasColumnType("nvarchar(MAX)");
+
+                    b.Property<int>("LineNr")
+                        .HasColumnType("Int");
+
+                    b.Property<decimal>("LineTotalAmount")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
+
+                    b.Property<Guid?>("LinkedPurchaseRequestID")
+                        .IsRequired()
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<Guid>("PaymentPlanID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<Guid>("ProductionOrderID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<Guid>("PurchaseOrderID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<int>("PurchaseOrderLineStateEnum")
+                        .HasColumnType("Int");
+
+                    b.Property<decimal>("Quantity")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
+
+                    b.Property<Guid>("UnitSetID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<decimal>("VATamount")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
+
+                    b.Property<int>("VATrate")
+                        .HasColumnType("Int");
+
+                    b.Property<DateTime?>("WorkOrderCreationDate")
+                        .HasColumnType("DateTime");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PaymentPlanID");
+
+                    b.HasIndex("ProductID");
+
+                    b.HasIndex("PurchaseOrderID");
+
+                    b.HasIndex("UnitSetID");
+
+                    b.ToTable("PurchaseOrderLines", (string)null);
+                });
+
+            modelBuilder.Entity("TsiErp.Entities.Entities.PurchaseRequest.PurchaseRequests", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BranchID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("BranchesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CurrenciesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CurrencyID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CurrentAccountCardID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CurrentAccountCardsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Date_")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description_")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("ExchangeRate")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<string>("FicheNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("GrossAmount")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("LinkedPurchaseRequestID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("NetAmount")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<Guid>("PaymentPlanID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ProductionOrderID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PropositionRevisionNo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PurchaseRequestState")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("RevisionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RevisionTime")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ShippingAdressID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ShippingAdressesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SpecialCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Time_")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TotalDiscountAmount")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("TotalVatAmount")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("TotalVatExcludedAmount")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<DateTime>("ValidityDate_")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("WarehouseID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("WarehousesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BranchesId");
+
+                    b.HasIndex("CurrenciesId");
+
+                    b.HasIndex("CurrentAccountCardsId");
+
+                    b.HasIndex("PaymentPlanID");
+
+                    b.HasIndex("ShippingAdressesId");
+
+                    b.HasIndex("WarehousesId");
+
+                    b.ToTable("PurchaseRequests");
+                });
+
+            modelBuilder.Entity("TsiErp.Entities.Entities.PurchaseRequestLine.PurchaseRequestLines", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("DiscountAmount")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("DiscountRate")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("ExchangeRate")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("LineAmount")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<string>("LineDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LineNr")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("LineTotalAmount")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<DateTime?>("OrderConversionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("PaymentPlanID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("PaymentPlansId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductionOrderID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ProductsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PurchaseRequestID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("PurchaseRequestLineState")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("PurchaseRequestsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Quantity")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<Guid>("UnitSetID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UnitSetsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("VATamount")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<int>("VATrate")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PaymentPlansId");
+
+                    b.HasIndex("ProductsId");
+
+                    b.HasIndex("PurchaseRequestsId");
+
+                    b.HasIndex("UnitSetsId");
+
+                    b.ToTable("PurchaseRequestLines");
+                });
+
             modelBuilder.Entity("TsiErp.Entities.Entities.PurchasingUnsuitabilityItem.PurchasingUnsuitabilityItems", b =>
                 {
                     b.Property<Guid>("Id")
@@ -2821,6 +3318,9 @@ namespace TsiErp.DataAccess.Migrations
                     b.Property<Guid>("ProductID")
                         .HasColumnType("UniqueIdentifier");
 
+                    b.Property<Guid?>("PurchaseRequestsId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<decimal>("Quantity")
                         .HasPrecision(18, 6)
                         .HasColumnType("Decimal(18,6)");
@@ -2850,6 +3350,8 @@ namespace TsiErp.DataAccess.Migrations
                     b.HasIndex("PaymentPlanID");
 
                     b.HasIndex("ProductID");
+
+                    b.HasIndex("PurchaseRequestsId");
 
                     b.HasIndex("SalesPropositionID");
 
@@ -3977,6 +4479,159 @@ namespace TsiErp.DataAccess.Migrations
                     b.Navigation("Stations");
                 });
 
+            modelBuilder.Entity("TsiErp.Entities.Entities.PurchaseOrder.PurchaseOrders", b =>
+                {
+                    b.HasOne("TsiErp.Entities.Entities.Branch.Branches", "Branches")
+                        .WithMany("PurchaseOrders")
+                        .HasForeignKey("BranchID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TsiErp.Entities.Entities.Currency.Currencies", "Currencies")
+                        .WithMany("PurchaseOrders")
+                        .HasForeignKey("CurrencyID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TsiErp.Entities.Entities.CurrentAccountCard.CurrentAccountCards", "CurrentAccountCards")
+                        .WithMany("PurchaseOrders")
+                        .HasForeignKey("CurrentAccountCardID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TsiErp.Entities.Entities.PaymentPlan.PaymentPlans", "PaymentPlan")
+                        .WithMany("PurchaseOrders")
+                        .HasForeignKey("PaymentPlanID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TsiErp.Entities.Entities.ShippingAdress.ShippingAdresses", "ShippingAdresses")
+                        .WithMany("PurchaseOrders")
+                        .HasForeignKey("ShippingAdressID")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("TsiErp.Entities.Entities.WareHouse.Warehouses", "Warehouses")
+                        .WithMany("PurchaseOrders")
+                        .HasForeignKey("WarehouseID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Branches");
+
+                    b.Navigation("Currencies");
+
+                    b.Navigation("CurrentAccountCards");
+
+                    b.Navigation("PaymentPlan");
+
+                    b.Navigation("ShippingAdresses");
+
+                    b.Navigation("Warehouses");
+                });
+
+            modelBuilder.Entity("TsiErp.Entities.Entities.PurchaseOrderLine.PurchaseOrderLines", b =>
+                {
+                    b.HasOne("TsiErp.Entities.Entities.PaymentPlan.PaymentPlans", "PaymentPlans")
+                        .WithMany("PurchaseOrderLines")
+                        .HasForeignKey("PaymentPlanID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TsiErp.Entities.Entities.Product.Products", "Products")
+                        .WithMany("PurchaseOrderLines")
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TsiErp.Entities.Entities.PurchaseOrder.PurchaseOrders", "PurchaseOrders")
+                        .WithMany("PurchaseOrderLines")
+                        .HasForeignKey("PurchaseOrderID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TsiErp.Entities.Entities.UnitSet.UnitSets", "UnitSets")
+                        .WithMany("PurchaseOrderLines")
+                        .HasForeignKey("UnitSetID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("PaymentPlans");
+
+                    b.Navigation("Products");
+
+                    b.Navigation("PurchaseOrders");
+
+                    b.Navigation("UnitSets");
+                });
+
+            modelBuilder.Entity("TsiErp.Entities.Entities.PurchaseRequest.PurchaseRequests", b =>
+                {
+                    b.HasOne("TsiErp.Entities.Entities.Branch.Branches", "Branches")
+                        .WithMany("PurchaseRequests")
+                        .HasForeignKey("BranchesId");
+
+                    b.HasOne("TsiErp.Entities.Entities.Currency.Currencies", "Currencies")
+                        .WithMany("PurchaseRequests")
+                        .HasForeignKey("CurrenciesId");
+
+                    b.HasOne("TsiErp.Entities.Entities.CurrentAccountCard.CurrentAccountCards", "CurrentAccountCards")
+                        .WithMany("PurchaseRequests")
+                        .HasForeignKey("CurrentAccountCardsId");
+
+                    b.HasOne("TsiErp.Entities.Entities.PaymentPlan.PaymentPlans", "PaymentPlan")
+                        .WithMany("PurchaseRequests")
+                        .HasForeignKey("PaymentPlanID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TsiErp.Entities.Entities.ShippingAdress.ShippingAdresses", "ShippingAdresses")
+                        .WithMany("PurchaseRequests")
+                        .HasForeignKey("ShippingAdressesId");
+
+                    b.HasOne("TsiErp.Entities.Entities.WareHouse.Warehouses", "Warehouses")
+                        .WithMany("PurchaseRequests")
+                        .HasForeignKey("WarehousesId");
+
+                    b.Navigation("Branches");
+
+                    b.Navigation("Currencies");
+
+                    b.Navigation("CurrentAccountCards");
+
+                    b.Navigation("PaymentPlan");
+
+                    b.Navigation("ShippingAdresses");
+
+                    b.Navigation("Warehouses");
+                });
+
+            modelBuilder.Entity("TsiErp.Entities.Entities.PurchaseRequestLine.PurchaseRequestLines", b =>
+                {
+                    b.HasOne("TsiErp.Entities.Entities.PaymentPlan.PaymentPlans", "PaymentPlans")
+                        .WithMany("PurchaseRequestLines")
+                        .HasForeignKey("PaymentPlansId");
+
+                    b.HasOne("TsiErp.Entities.Entities.Product.Products", "Products")
+                        .WithMany("PurchaseRequestLines")
+                        .HasForeignKey("ProductsId");
+
+                    b.HasOne("TsiErp.Entities.Entities.PurchaseRequest.PurchaseRequests", "PurchaseRequests")
+                        .WithMany("PurchaseRequestLines")
+                        .HasForeignKey("PurchaseRequestsId");
+
+                    b.HasOne("TsiErp.Entities.Entities.UnitSet.UnitSets", "UnitSets")
+                        .WithMany("PurchaseRequestLines")
+                        .HasForeignKey("UnitSetsId");
+
+                    b.Navigation("PaymentPlans");
+
+                    b.Navigation("Products");
+
+                    b.Navigation("PurchaseRequests");
+
+                    b.Navigation("UnitSets");
+                });
+
             modelBuilder.Entity("TsiErp.Entities.Entities.Route.Routes", b =>
                 {
                     b.HasOne("TsiErp.Entities.Entities.Product.Products", "Products")
@@ -4170,6 +4825,10 @@ namespace TsiErp.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("TsiErp.Entities.Entities.PurchaseRequest.PurchaseRequests", "PurchaseRequests")
+                        .WithMany()
+                        .HasForeignKey("PurchaseRequestsId");
+
                     b.HasOne("TsiErp.Entities.Entities.SalesProposition.SalesPropositions", "SalesPropositions")
                         .WithMany("SalesPropositionLines")
                         .HasForeignKey("SalesPropositionID")
@@ -4185,6 +4844,8 @@ namespace TsiErp.DataAccess.Migrations
                     b.Navigation("PaymentPlans");
 
                     b.Navigation("Products");
+
+                    b.Navigation("PurchaseRequests");
 
                     b.Navigation("SalesPropositions");
 
@@ -4321,6 +4982,10 @@ namespace TsiErp.DataAccess.Migrations
                 {
                     b.Navigation("Periods");
 
+                    b.Navigation("PurchaseOrders");
+
+                    b.Navigation("PurchaseRequests");
+
                     b.Navigation("SalesOrders");
 
                     b.Navigation("SalesPropositions");
@@ -4339,6 +5004,10 @@ namespace TsiErp.DataAccess.Migrations
 
                     b.Navigation("ExchangeRates");
 
+                    b.Navigation("PurchaseOrders");
+
+                    b.Navigation("PurchaseRequests");
+
                     b.Navigation("SalesOrders");
 
                     b.Navigation("SalesPropositions");
@@ -4347,6 +5016,10 @@ namespace TsiErp.DataAccess.Migrations
             modelBuilder.Entity("TsiErp.Entities.Entities.CurrentAccountCard.CurrentAccountCards", b =>
                 {
                     b.Navigation("ProductionOrders");
+
+                    b.Navigation("PurchaseOrders");
+
+                    b.Navigation("PurchaseRequests");
 
                     b.Navigation("SalesOrders");
 
@@ -4373,6 +5046,14 @@ namespace TsiErp.DataAccess.Migrations
 
             modelBuilder.Entity("TsiErp.Entities.Entities.PaymentPlan.PaymentPlans", b =>
                 {
+                    b.Navigation("PurchaseOrderLines");
+
+                    b.Navigation("PurchaseOrders");
+
+                    b.Navigation("PurchaseRequestLines");
+
+                    b.Navigation("PurchaseRequests");
+
                     b.Navigation("SalesOrderLines");
 
                     b.Navigation("SalesOrders");
@@ -4391,6 +5072,10 @@ namespace TsiErp.DataAccess.Migrations
                     b.Navigation("ProductionOrders");
 
                     b.Navigation("ProductsOperations");
+
+                    b.Navigation("PurchaseOrderLines");
+
+                    b.Navigation("PurchaseRequestLines");
 
                     b.Navigation("RouteLines");
 
@@ -4420,6 +5105,16 @@ namespace TsiErp.DataAccess.Migrations
                     b.Navigation("RouteLines");
 
                     b.Navigation("WorkOrders");
+                });
+
+            modelBuilder.Entity("TsiErp.Entities.Entities.PurchaseOrder.PurchaseOrders", b =>
+                {
+                    b.Navigation("PurchaseOrderLines");
+                });
+
+            modelBuilder.Entity("TsiErp.Entities.Entities.PurchaseRequest.PurchaseRequests", b =>
+                {
+                    b.Navigation("PurchaseRequestLines");
                 });
 
             modelBuilder.Entity("TsiErp.Entities.Entities.Route.Routes", b =>
@@ -4466,6 +5161,10 @@ namespace TsiErp.DataAccess.Migrations
 
             modelBuilder.Entity("TsiErp.Entities.Entities.ShippingAdress.ShippingAdresses", b =>
                 {
+                    b.Navigation("PurchaseOrders");
+
+                    b.Navigation("PurchaseRequests");
+
                     b.Navigation("SalesOrders");
 
                     b.Navigation("SalesPropositions");
@@ -4502,6 +5201,10 @@ namespace TsiErp.DataAccess.Migrations
 
                     b.Navigation("Products");
 
+                    b.Navigation("PurchaseOrderLines");
+
+                    b.Navigation("PurchaseRequestLines");
+
                     b.Navigation("SalesOrderLines");
 
                     b.Navigation("SalesPropositionLines");
@@ -4509,6 +5212,10 @@ namespace TsiErp.DataAccess.Migrations
 
             modelBuilder.Entity("TsiErp.Entities.Entities.WareHouse.Warehouses", b =>
                 {
+                    b.Navigation("PurchaseOrders");
+
+                    b.Navigation("PurchaseRequests");
+
                     b.Navigation("SalesOrders");
 
                     b.Navigation("SalesPropositions");

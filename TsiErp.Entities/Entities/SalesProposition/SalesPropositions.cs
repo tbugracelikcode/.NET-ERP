@@ -18,6 +18,9 @@ using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.SalesProposition
 {
+    /// <summary>
+    /// Satış Teklifleri
+    /// </summary>
     public class SalesPropositions : FullAuditedEntity
     {
         /// <summary>

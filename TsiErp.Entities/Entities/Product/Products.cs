@@ -16,6 +16,8 @@ using TsiErp.Entities.Entities.BillsofMaterialLine;
 using TsiErp.Entities.Entities.BillsofMaterial;
 using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.WorkOrder;
+using TsiErp.Entities.Entities.PurchaseOrderLine;
+using TsiErp.Entities.Entities.PurchaseRequestLine;
 
 namespace TsiErp.Entities.Entities.Product
 {
@@ -142,6 +144,8 @@ namespace TsiErp.Entities.Entities.Product
         public ICollection<RouteLines> RouteLines { get; set; }
         public ICollection<ProductionOrders> ProductionOrders { get; set; }
         public ICollection<WorkOrders> WorkOrders { get; set; }
+        public ICollection<PurchaseOrderLines> PurchaseOrderLines { get; set; }
+        public ICollection<PurchaseRequestLines> PurchaseRequestLines { get; set; }
 
     }
 }
