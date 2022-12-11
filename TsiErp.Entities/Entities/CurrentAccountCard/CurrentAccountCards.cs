@@ -12,6 +12,7 @@ using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.WorkOrder;
 using TsiErp.Entities.Entities.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseRequest;
+using TsiErp.Entities.Entities.PurchaseUnsuitabilityReport;
 
 namespace TsiErp.Entities.Entities.CurrentAccountCard
 {
@@ -154,7 +155,6 @@ namespace TsiErp.Entities.Entities.CurrentAccountCard
         public bool IsActive { get; set; }
 
         public Currencies Currencies { get; set; }
-
         public ICollection<SalesPropositions> SalesPropositions { get; set; }
         public ICollection<SalesOrders> SalesOrders { get; set; }
         public ICollection<ProductionOrders> ProductionOrders { get; set; }
@@ -162,5 +162,6 @@ namespace TsiErp.Entities.Entities.CurrentAccountCard
         public ICollection<WorkOrders> WorkOrders { get; set; }
         public ICollection<PurchaseOrders> PurchaseOrders { get; set; }
         public ICollection<PurchaseRequests> PurchaseRequests { get; set; }
+        public ICollection<PurchaseUnsuitabilityReports> PurchaseUnsuitabilityReports { get; set; }
     }
 }

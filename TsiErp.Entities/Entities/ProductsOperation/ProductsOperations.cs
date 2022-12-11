@@ -1,5 +1,6 @@
 ﻿
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.Product;
 using TsiErp.Entities.Entities.ProductsOperationLine;
 using TsiErp.Entities.Entities.RouteLine;
@@ -37,5 +38,7 @@ namespace TsiErp.Entities.Entities.ProductsOperation
         public ICollection<RouteLines> RouteLines { get; set; }
 
         public ICollection<WorkOrders> WorkOrders { get; set; }
+
+        public ICollection<OperationUnsuitabilityReports> OperationUnsuitabilityReports { get; set; }
     }
 }

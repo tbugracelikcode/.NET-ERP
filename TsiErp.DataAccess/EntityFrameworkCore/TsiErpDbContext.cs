@@ -56,6 +56,8 @@ using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.WorkOrder;
 using TsiErp.Entities.Entities.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseOrderLine;
+using TsiErp.Entities.Entities.PurchaseUnsuitabilityReport;
+using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.Menu;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore
@@ -163,6 +165,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigureWorkOrders();
             builder.ConfigurePurchaseOrders();
             builder.ConfigurePurchaseOrderLines();
+            builder.ConfigurePurchaseUnsuitabilityReports();
+            builder.ConfigureOperationUnsuitabilityReports();
             builder.ConfigureMenus();
         }
 
@@ -255,6 +259,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<WorkOrders> WorkOrders { get; set; }
         public DbSet<PurchaseOrders> PurchaseOrders { get; set; }
         public DbSet<PurchaseOrderLines> PurchaseOrderLines { get; set; }
+        public DbSet<PurchaseUnsuitabilityReports> PurchaseUnsuitabilityReports { get; set; }
+        public DbSet<OperationUnsuitabilityReports> OperationUnsuitabilityReports { get; set; }
         public DbSet<Menus> Menus { get; set; }
 
         #endregion

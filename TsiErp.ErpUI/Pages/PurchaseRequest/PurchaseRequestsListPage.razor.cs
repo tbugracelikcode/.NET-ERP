@@ -479,7 +479,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseRequest
 
                     if (res == true)
                     {
-                        //var salesPropositionLines = (await GetAsync(args.RowInfo.RowData.Id)).Data;
                         var line = args.RowInfo.RowData;
 
                         if (line.Id == Guid.Empty)

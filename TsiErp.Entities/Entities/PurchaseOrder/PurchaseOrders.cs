@@ -12,6 +12,7 @@ using TsiErp.Entities.Entities.PaymentPlan;
 using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.PurchaseOrderLine;
 using TsiErp.Entities.Entities.PurchaseRequest;
+using TsiErp.Entities.Entities.PurchaseUnsuitabilityReport;
 using TsiErp.Entities.Entities.ShippingAdress;
 using TsiErp.Entities.Entities.WareHouse;
 using TsiErp.Entities.Enums;
@@ -146,6 +147,8 @@ namespace TsiErp.Entities.Entities.PurchaseOrder
         public ShippingAdresses ShippingAdresses { get; set; }
 
         public ICollection<PurchaseOrderLines> PurchaseOrderLines { get; set; }
+
+        public ICollection<PurchaseUnsuitabilityReports> PurchaseUnsuitabilityReports { get; set; }
 
     }
 }

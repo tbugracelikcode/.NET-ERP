@@ -55,6 +55,8 @@ using TsiErp.Entities.Entities.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseOrderLine;
 using TsiErp.Entities.Entities.PurchaseRequest;
 using TsiErp.Entities.Entities.PurchaseRequestLine;
+using TsiErp.Entities.Entities.PurchaseUnsuitabilityReport;
+using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.Menu;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
@@ -1388,6 +1390,79 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasOne(x => x.PurchaseRequests).WithMany(x => x.PurchaseRequestLines).HasForeignKey(x => x.PurchaseRequestID).OnDelete(DeleteBehavior.Cascade);
                 b.HasOne(x => x.UnitSets).WithMany(x => x.PurchaseRequestLines).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.PaymentPlans).WithMany(x => x.PurchaseRequestLines).HasForeignKey(x => x.PaymentPlanID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+
+        public static void ConfigurePurchaseUnsuitabilityReports(this ModelBuilder builder)
+        {
+            builder.Entity<PurchaseUnsuitabilityReports>(b =>
+            {
+                b.ToTable("PurchaseUnsuitabilityReports");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.FicheNo).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Description_).HasColumnType("nvarchar(max)");
+                b.Property(t => t.Date_).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.OrderID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.PartyNo).HasColumnType("nvarchar(max)");
+                b.Property(t => t.CurrentAccountCardID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.IsUnsuitabilityWorkOrder).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsReject).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsToBeUsedAs).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsContactSupplier).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsCorrection).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.UnsuitableAmount).HasColumnType(SqlDbType.Decimal.ToString());
+
+
+                b.HasIndex(x => x.FicheNo);
+                b.HasIndex(x => x.CurrentAccountCardID);
+                b.HasIndex(x => x.OrderID);
+                b.HasIndex(x => x.ProductID);
+
+                b.HasOne(x => x.CurrentAccountCards).WithMany(x => x.PurchaseUnsuitabilityReports).HasForeignKey(x => x.CurrentAccountCardID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Products).WithMany(x => x.PurchaseUnsuitabilityReports).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.PurchaseOrders).WithMany(x => x.PurchaseUnsuitabilityReports).HasForeignKey(x => x.OrderID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+
+        public static void ConfigureOperationUnsuitabilityReports(this ModelBuilder builder)
+        {
+            builder.Entity<OperationUnsuitabilityReports>(b =>
+            {
+                b.ToTable("OperationUnsuitabilityReports");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.FicheNo).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Description_).HasColumnType("nvarchar(max)");
+                b.Property(t => t.Date_).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.IsUnsuitabilityWorkOrder).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsScrap).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.ControlFormDeclaration).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.IsToBeUsedAs).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsCorrection).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.WorkOrderID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.StationID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.StationGroupID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.EmployeeID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductionOrderID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.OperationID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+
+                b.HasIndex(x => x.FicheNo);
+                b.HasIndex(x => x.OperationID);
+                b.HasIndex(x => x.WorkOrderID);
+                b.HasIndex(x => x.ProductionOrderID);
+                b.HasIndex(x => x.ProductID);
+
+                b.HasOne(x => x.WorkOrders).WithMany(x => x.OperationUnsuitabilityReports).HasForeignKey(x => x.WorkOrderID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Products).WithMany(x => x.OperationUnsuitabilityReports).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Stations).WithMany(x => x.OperationUnsuitabilityReports).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.StationGroups).WithMany(x => x.OperationUnsuitabilityReports).HasForeignKey(x => x.StationGroupID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Employees).WithMany(x => x.OperationUnsuitabilityReports).HasForeignKey(x => x.EmployeeID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.ProductionOrders).WithMany(x => x.OperationUnsuitabilityReports).HasForeignKey(x => x.ProductionOrderID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.ProductsOperations).WithMany(x => x.OperationUnsuitabilityReports).HasForeignKey(x => x.OperationID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 

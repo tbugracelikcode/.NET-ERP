@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.CalendarLine;
+using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.ProductsOperationLine;
 using TsiErp.Entities.Entities.StationGroup;
 using TsiErp.Entities.Entities.TemplateOperationLine;
@@ -128,5 +129,7 @@ namespace TsiErp.Entities.Entities.Station
         public ICollection<CalendarLines> CalendarLines { get; set; }
 
         public ICollection<WorkOrders> WorkOrders { get; set; }
+
+        public ICollection<OperationUnsuitabilityReports> OperationUnsuitabilityReports { get; set; }
     }
 }
