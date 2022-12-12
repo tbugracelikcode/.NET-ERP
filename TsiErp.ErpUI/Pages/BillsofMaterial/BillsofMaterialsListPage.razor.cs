@@ -144,11 +144,21 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
             switch (args.Item.Id)
             {
                 case "new":
-                    LineDataSource = new SelectBillsofMaterialLinesDto();
-                    LineCrudPopup = true;
-                    LineDataSource.FinishedProductCode = DataSource.FinishedProductCode;
-                    LineDataSource.FinishedProductID = DataSource.FinishedProductID;
-                    LineDataSource.LineNr = GridLineList.Count + 1;
+
+                    if(DataSource.FinishedProductCode != null )
+                    {
+                        LineDataSource = new SelectBillsofMaterialLinesDto();
+                        LineCrudPopup = true;
+                        LineDataSource.FinishedProductCode = DataSource.FinishedProductCode;
+                        LineDataSource.FinishedProductID = DataSource.FinishedProductID;
+                        LineDataSource.LineNr = GridLineList.Count + 1;
+                    }
+
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync("Uyarı", "Mamül seçmeden yeni satır eklenemez.");
+                    }
+
                     await InvokeAsync(StateHasChanged);
                     break;
 

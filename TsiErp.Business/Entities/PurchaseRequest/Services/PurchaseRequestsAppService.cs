@@ -97,6 +97,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                 t => t.Warehouses,
                 t => t.Branches,
                 t => t.Currencies,
+                t => t.ShippingAdresses,
                 t => t.PaymentPlan);
 
             var mappedEntity = ObjectMapper.Map<PurchaseRequests, SelectPurchaseRequestsDto>(entity);
@@ -115,6 +116,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                 t => t.Warehouses,
                 t => t.Branches,
                 t => t.Currencies,
+                t => t.ShippingAdresses,
                 t => t.PaymentPlan);
 
             var mappedEntity = ObjectMapper.Map<List<PurchaseRequests>, List<ListPurchaseRequestsDto>>(list.ToList());

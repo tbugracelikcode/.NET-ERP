@@ -1194,7 +1194,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.Quantity).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.Size).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
-                b.Property(t => t.QuantityFormula).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
                 b.Property(t => t._Description).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
 
 
@@ -1340,8 +1339,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.NetAmount).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.ValidityDate_).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
                 b.Property(t => t.ShippingAdressID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-
-
 
                 b.HasIndex(x => x.FicheNo);
                 b.HasIndex(x => x.CurrentAccountCardID);

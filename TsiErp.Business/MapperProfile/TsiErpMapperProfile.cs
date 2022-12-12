@@ -656,7 +656,7 @@ namespace TsiErp.Business.MapperProfile
               .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name))
               .ForMember(x => x.ShippingAdressCode, y => y.MapFrom(z => z.ShippingAdresses.Code));
             CreateMap<PurchaseRequests, ListPurchaseRequestsDto>()
-               .ForMember(x => x.PaymentPlanName, y => y.MapFrom(z => z.PaymentPlan.Name))
+              .ForMember(x => x.PaymentPlanName, y => y.MapFrom(z => z.PaymentPlan.Name))
               .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Code))
               .ForMember(x => x.BranchName, y => y.MapFrom(z => z.Branches.Name))
               .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Code))
@@ -670,6 +670,8 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<CreatePurchaseRequestsDto, PurchaseRequests>();
             CreateMap<SelectPurchaseRequestsDto, CreatePurchaseRequestsDto>();
             CreateMap<SelectPurchaseRequestsDto, UpdatePurchaseRequestsDto>();
+            CreateMap<SelectPurchaseRequestsDto, PurchaseRequests>();
+            CreateMap<UpdatePurchaseRequestsDto, PurchaseRequests>();
 
 
             CreateMap<PurchaseRequestLines, SelectPurchaseRequestLinesDto>()

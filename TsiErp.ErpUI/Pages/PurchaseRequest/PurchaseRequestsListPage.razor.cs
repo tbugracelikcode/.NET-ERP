@@ -79,11 +79,12 @@ namespace TsiErp.ErpUI.Pages.PurchaseRequest
 
         protected override async void OnInitialized()
         {
+            BaseCrudService = PurchaseRequestsAppService;
+
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
             CreateConvertToOrderContextMenuItems();
 
-            BaseCrudService = PurchaseRequestsAppService;
 
             await GetCurrentAccountCardsList();
             await GetBranchesList();
