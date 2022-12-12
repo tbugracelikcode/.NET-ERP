@@ -9,6 +9,7 @@ using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.PaymentPlan;
 using TsiErp.Entities.Entities.Product;
 using TsiErp.Entities.Entities.ProductionOrder;
+using TsiErp.Entities.Entities.PurchaseRequest;
 using TsiErp.Entities.Entities.SalesProposition;
 using TsiErp.Entities.Entities.UnitSet;
 using TsiErp.Entities.Entities.WareHouse;
@@ -122,8 +123,9 @@ namespace TsiErp.Entities.Entities.SalesPropositionLine
         /// <summary>
         /// Satış Teklifi
         /// </summary>
-        public SalesPropositions SalesPropositions { get; set; }
+        public PurchaseRequests PurchaseRequests { get; set; }
 
         public ProductionOrders ProductionOrders { get; set; }
+        public SalesPropositions SalesPropositions { get; set; }
     }
 }

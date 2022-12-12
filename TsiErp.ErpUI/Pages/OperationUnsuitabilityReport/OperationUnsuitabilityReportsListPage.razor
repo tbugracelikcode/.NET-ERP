@@ -1,0 +1,698 @@
+﻿@page "/operation-unsuitability-reports"
+@using Syncfusion.Blazor.Buttons
+@using Tsi.Blazor.Component.Core.Components.Commons.Loadings
+@using TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
+@using TsiErp.Entities.Entities.OperationUnsuitabilityReport
+@using TsiErp.Entities.Entities.OperationUnsuitabilityReport.Dtos
+@using TsiErp.Entities.Entities.WorkOrder.Dtos
+@using TsiErp.Business.Entities.WorkOrder.Services
+@using TsiErp.Entities.Entities.Product.Dtos
+@using TsiErp.Business.Entities.Product.Services
+@using TsiErp.Entities.Entities.Station.Dtos
+@using TsiErp.Business.Entities.Station.Services
+@using TsiErp.Entities.Entities.StationGroup.Dtos
+@using TsiErp.Business.Entities.StationGroup.Services
+@using TsiErp.Entities.Entities.Employee.Dtos
+@using TsiErp.Business.Entities.Employee.Services
+@using TsiErp.Entities.Entities.ProductionOrder.Dtos
+@using TsiErp.Business.Entities.ProductionOrder.Services
+@using TsiErp.Entities.Entities.ProductsOperation.Dtos
+@using TsiErp.Business.Entities.ProductsOperation.Services
+@using TsiErp.ErpUI.Pages.Base
+@using Tsi.Blazor.Component.Core.Components.Layouts
+
+@inherits BaseListPage<SelectOperationUnsuitabilityReportsDto, ListOperationUnsuitabilityReportsDto, CreateOperationUnsuitabilityReportsDto, UpdateOperationUnsuitabilityReportsDto, ListOperationUnsuitabilityReportsParameterDto>
+
+
+@inject IOperationUnsuitabilityReportsAppService OperationUnsuitabilityReportsService
+@inject IWorkOrdersAppService WorkOrdersAppService
+@inject IProductsAppService ProductsAppService
+@inject IStationGroupsAppService StationGroupsAppService
+@inject IStationsAppService StationsAppService
+@inject IEmployeesAppService EmployeesAppService
+@inject IProductionOrdersAppService ProductionOrdersAppService
+@inject IProductsOperationsAppService ProductsOperationsAppService
+
+@{
+    if (!base.IsLoaded)
+    {
+        <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+    }
+    else
+    {
+        <DevGridLayout ColumnCount="1" RowCount="3">
+            <GridLayoutItems>
+                <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+                    <Template>
+                        <SfCard class="TSIListPageTitleCard">
+                            <CardContent>
+                                <TsiBreadCrumb PreviousMenus="Kalite Kontrol > İşlemler > Uygunsuzluk Raporları" CurrentMenu="Operasyon Uygunsuzluk Raporları" />
+                            </CardContent>
+                            <CardFooter>
+                            </CardFooter>
+                        </SfCard>
+                    </Template>
+                </DxGridLayoutItem>
+                <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+                    <Template>
+                        <SfCard class="TSIGridCards">
+                            <CardContent>
+                                <SfGrid ID="Grid" DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"  GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%"
+                                class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                    <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                    <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                    <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListOperationUnsuitabilityReportsDto"></GridEvents>
+                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                    <GridPageSettings PageSizes="true"></GridPageSettings>
+                                    <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                    <GridColumns>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.FicheNo) HeaderText="UYGUNSUZLUK FİŞ NO" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.Date_) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="TARİH" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.ControlFormDeclaration) Type="ColumnType.Number" HeaderText="ÖLÇÜ KONTROL FORM BEYAN" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.Description_) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+                                       
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.IsCorrection) DisplayAsCheckBox=true HeaderText="DÜZELTME" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.IsScrap) DisplayAsCheckBox=true HeaderText="HURDA" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.IsToBeUsedAs) DisplayAsCheckBox=true HeaderText="OLDUĞU GİBİ KULLANILACAK" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.IsUnsuitabilityWorkOrder) DisplayAsCheckBox=true HeaderText="UYGUNSUZLUK İŞ EMRİ OLUŞACAK" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.WorkOrderNo) HeaderText="İŞ EMRİ NO" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.StationCode) HeaderText="İSTASYON KODU" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.StationName) HeaderText="İSTASYON AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.StationGroupCode) HeaderText="İSTASYON GRUP KODU" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.StationGroupName) HeaderText="İSTASYON GRUP AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.EmployeeName) HeaderText="ÇALIŞAN ADI" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.ProductionOrderFicheNo) HeaderText="ÜRETİM EMRİ FİŞ NO" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.ProductCode) HeaderText="ÜRÜN KODU" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.ProductName) HeaderText="ÜRÜN AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.OperationCode) HeaderText="OPERASYON KODU" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.OperationName) HeaderText="OPERASYON AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+
+                                </GridColumns>
+                            </SfGrid>
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+        </GridLayoutItems>
+    </DevGridLayout>
+
+
+        <DxPopup @bind-Visible="base.EditPageVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Satın Alma Uygunsuzluk Raporları"
+         Width="57%"
+         Height="46%"
+         MinWidth="1200px"
+         MinHeight="500px"
+         HeaderCssClass="HeaderTitleCss">
+            <BodyTemplate>
+
+                <DxGridLayout CssClass="TSIGridLayout">
+                    <Rows>
+                        <DxGridLayoutRow Height="24%" />
+                        <DxGridLayoutRow Height="16%" />
+                        <DxGridLayoutRow Height="16%" />
+                        <DxGridLayoutRow Height="16%" />
+                        <DxGridLayoutRow Height="16%" />
+                    </Rows>
+                    <Columns>
+                        <DxGridLayoutColumn Width="3%" />
+                        <DxGridLayoutColumn Width="21%" />
+                        <DxGridLayoutColumn Width="3%" />
+                        <DxGridLayoutColumn Width="21%" />
+                        <DxGridLayoutColumn Width="3%" />
+                        <DxGridLayoutColumn Width="21%" />
+                        <DxGridLayoutColumn Width="3%" />
+                        <DxGridLayoutColumn Width="21%" />
+                        <DxGridLayoutColumn Width="3%" />
+                    </Columns>
+                    <Items>
+                        <DxGridLayoutItem Row="0" Column="1">
+                            <Template>
+                                <br />
+                                <label class="TSIModalLabel"><strong>Uygunsuzluk Fiş Numarası: </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.FicheNo" Placeholder="Uygunsuzluk Fiş Numarası Yazınız."></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                       
+                        <DxGridLayoutItem Row="0" Column="3">
+                            <Template>
+                                <br />
+                                <label class="TSIModalLabel"><strong>Tarih: </strong></label>
+                                <SfDatePicker @bind-Value="DataSource.Date_"></SfDatePicker>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="0" Column="5">
+                            <Template>
+                                <br />
+                                <label class="TSIModalLabel"><strong>Ölçü Kontrol Form Beyan: </strong></label>
+                                <SfNumericTextBox TValue="decimal" @bind-Value="DataSource.ControlFormDeclaration" Min=0></SfNumericTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="0" Column="7">
+                            <Template>
+                                <br />
+                                <label class="TSIModalLabel"><strong>Hurda: </strong></label><br />
+                                <SfSwitch @bind-Checked="DataSource.IsScrap"></SfSwitch>
+                            </Template>
+                        </DxGridLayoutItem>
+                       
+                         <DxGridLayoutItem Row="1" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>Düzeltme: </strong></label><br />
+                                <SfSwitch @bind-Checked="DataSource.IsCorrection"></SfSwitch>
+                            </Template>
+                        </DxGridLayoutItem>
+                         <DxGridLayoutItem Row="1" Column="3">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>Olduğu Gibi Kullanılacak: </strong></label><br />
+                                <SfSwitch @bind-Checked="DataSource.IsToBeUsedAs"></SfSwitch>
+                            </Template>
+                        </DxGridLayoutItem>
+                         <DxGridLayoutItem Row="1" Column="5">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>Uygunsuzluk İş Emri Oluşacak: </strong></label><br />
+                                <SfSwitch @bind-Checked="DataSource.IsUnsuitabilityWorkOrder"></SfSwitch>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="1" Column="7">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>Ürün Kodu: </strong></label>
+                                <SfComboBox @ref="ProductsComboBox"
+                                    TValue="string"
+                                    TItem="ListProductsDto"
+                                    Placeholder="Ürün Seçin"
+                                    CssClass="e-multi-column"
+                                    Value="DataSource.ProductCode"
+                                    DataSource="@ProductsList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500">
+
+                                    <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
+
+                                    <ComboBoxTemplates TItem="ListProductsDto">
+                                        <HeaderTemplate>
+                                            <table>
+                                                <tr>
+                                                    <th class="e-text-center">Ürün Kodu</th>
+                                                    <th class="e-text-center">Ürün Açıklaması</th>
+                                                </tr>
+                                            </table>
+                                        </HeaderTemplate>
+                                        <ItemTemplate Context="cmbContext">
+
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="e-text-center">@((cmbContext as ListProductsDto).Code)</td>
+                                                        <td class="e-text-center">@((cmbContext as ListProductsDto).Name)</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ItemTemplate>
+                                    </ComboBoxTemplates>
+
+                                    <ComboBoxEvents TValue="string"
+                                            TItem="ListProductsDto"
+                                            Filtering="ProductFiltering"
+                                            ValueChange="ProductValueChangeHandler"></ComboBoxEvents>
+                                </SfComboBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                         <DxGridLayoutItem Row="2" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>Ürün Açıklaması: </strong></label>
+                                <SfComboBox @ref="ProductsComboBox"
+                                    TValue="string"
+                                    TItem="ListProductsDto"
+                                    Placeholder="Ürün Seçin"
+                                    CssClass="e-multi-column"
+                                    Value="DataSource.ProductName"
+                                    DataSource="@ProductsList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500">
+
+                                    <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+
+                                    <ComboBoxTemplates TItem="ListProductsDto">
+                                        <HeaderTemplate>
+                                            <table>
+                                                <tr>
+                                                    <th class="e-text-center">Ürün Kodu</th>
+                                                    <th class="e-text-center">Ürün Açıklaması</th>
+                                                </tr>
+                                            </table>
+                                        </HeaderTemplate>
+                                        <ItemTemplate Context="cmbContext">
+
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="e-text-center">@((cmbContext as ListProductsDto).Code)</td>
+                                                        <td class="e-text-center">@((cmbContext as ListProductsDto).Name)</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ItemTemplate>
+                                    </ComboBoxTemplates>
+
+                                    <ComboBoxEvents TValue="string"
+                                            TItem="ListProductsDto"
+                                            Filtering="ProductFiltering"
+                                            ValueChange="ProductValueChangeHandler"></ComboBoxEvents>
+                                </SfComboBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="2" Column="3">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>İş Emri Numarası: </strong></label><br />
+                                <SfComboBox @ref="WorkOrdersComboBox"
+                                    TValue="string"
+                                    TItem="ListWorkOrdersDto"
+                                    Placeholder="İş Emri Seçin"
+                                    CssClass="e-multi-column"
+                                    Value="DataSource.WorkOrderNo"
+                                    DataSource="@WorkOrdersList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500">
+
+                                    <ComboBoxFieldSettings Text="WorkOrderNo" Value="WorkOrderNo"></ComboBoxFieldSettings>
+
+                                    <ComboBoxTemplates TItem="ListWorkOrdersDto">
+                                        <HeaderTemplate>
+                                            <table>
+                                                <tr>
+                                                    <th class="e-text-center">İş Emri No</th>
+                                                </tr>
+                                            </table>
+                                        </HeaderTemplate>
+                                        <ItemTemplate Context="cmbContext">
+
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="e-text-center">@((cmbContext as ListWorkOrdersDto).WorkOrderNo)</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ItemTemplate>
+                                    </ComboBoxTemplates>
+
+                                    <ComboBoxEvents TValue="string"
+                                            TItem="ListWorkOrdersDto"
+                                            Filtering="WorkOrderFiltering"
+                                            ValueChange="WorkOrderValueChangeHandler"></ComboBoxEvents>
+                                </SfComboBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                         <DxGridLayoutItem Row="2" Column="5">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>İstasyon Kodu: </strong></label><br />
+                                <SfComboBox @ref="StationsComboBox"
+                                    TValue="string"
+                                    TItem="ListStationsDto"
+                                    Placeholder="İstasyon Seçin"
+                                    CssClass="e-multi-column"
+                                    Value="DataSource.StationCode"
+                                    DataSource="@StationsList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500">
+
+                                    <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
+
+                                    <ComboBoxTemplates TItem="ListStationsDto">
+                                        <HeaderTemplate>
+                                            <table>
+                                                <tr>
+                                                    <th class="e-text-center">İstasyon Kodu</th>
+                                                    <th class="e-text-center">İstasyon Açıklaması</th>
+                                                </tr>
+                                            </table>
+                                        </HeaderTemplate>
+                                        <ItemTemplate Context="cmbContext">
+
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="e-text-center">@((cmbContext as ListStationsDto).Code)</td>
+                                                        <td class="e-text-center">@((cmbContext as ListStationsDto).Name)</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ItemTemplate>
+                                    </ComboBoxTemplates>
+
+                                    <ComboBoxEvents TValue="string"
+                                            TItem="ListStationsDto"
+                                            Filtering="StationFiltering"
+                                            ValueChange="StationValueChangeHandler"></ComboBoxEvents>
+                                </SfComboBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                         <DxGridLayoutItem Row="2" Column="7">
+                            <Template>
+                                  <label class="TSIModalLabel"><strong>İstasyon Açıklaması: </strong></label><br />
+                                <SfComboBox @ref="StationsComboBox"
+                                    TValue="string"
+                                    TItem="ListStationsDto"
+                                    Placeholder="İstasyon Seçin"
+                                    CssClass="e-multi-column"
+                                    Value="DataSource.StationName"
+                                    DataSource="@StationsList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500">
+
+                                    <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+
+                                    <ComboBoxTemplates TItem="ListStationsDto">
+                                        <HeaderTemplate>
+                                            <table>
+                                                <tr>
+                                                    <th class="e-text-center">İstasyon Kodu</th>
+                                                    <th class="e-text-center">İstasyon Açıklaması</th>
+                                                </tr>
+                                            </table>
+                                        </HeaderTemplate>
+                                        <ItemTemplate Context="cmbContext">
+
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="e-text-center">@((cmbContext as ListStationsDto).Code)</td>
+                                                        <td class="e-text-center">@((cmbContext as ListStationsDto).Name)</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ItemTemplate>
+                                    </ComboBoxTemplates>
+
+                                    <ComboBoxEvents TValue="string"
+                                            TItem="ListStationsDto"
+                                            Filtering="StationFiltering"
+                                            ValueChange="StationValueChangeHandler"></ComboBoxEvents>
+                                </SfComboBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                          <DxGridLayoutItem Row="3" Column="1">
+                            <Template>
+                                  <label class="TSIModalLabel"><strong>İstasyon Grup Kodu: </strong></label><br />
+                                <SfComboBox @ref="StationGroupsComboBox"
+                                    TValue="string"
+                                    TItem="ListStationGroupsDto"
+                                    Placeholder="İstasyon Grubu Seçin"
+                                    CssClass="e-multi-column"
+                                    Value="DataSource.StationGroupCode"
+                                    DataSource="@StationGroupsList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500">
+
+                                    <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
+
+                                    <ComboBoxTemplates TItem="ListStationGroupsDto">
+                                        <HeaderTemplate>
+                                            <table>
+                                                <tr>
+                                                    <th class="e-text-center">İstasyon Grup Kodu</th>
+                                                    <th class="e-text-center">İstasyon Grup Açıklaması</th>
+                                                </tr>
+                                            </table>
+                                        </HeaderTemplate>
+                                        <ItemTemplate Context="cmbContext">
+
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="e-text-center">@((cmbContext as ListStationGroupsDto).Code)</td>
+                                                        <td class="e-text-center">@((cmbContext as ListStationGroupsDto).Name)</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ItemTemplate>
+                                    </ComboBoxTemplates>
+
+                                    <ComboBoxEvents TValue="string"
+                                            TItem="ListStationGroupsDto"
+                                            Filtering="StationGroupFiltering"
+                                            ValueChange="StationGroupValueChangeHandler"></ComboBoxEvents>
+                                </SfComboBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                         <DxGridLayoutItem Row="3" Column="3">
+                            <Template>
+                                  <label class="TSIModalLabel"><strong>İstasyon Grup Açıklaması: </strong></label><br />
+                                <SfComboBox @ref="StationGroupsComboBox"
+                                    TValue="string"
+                                    TItem="ListStationGroupsDto"
+                                    Placeholder="İstasyon Grubu Seçin"
+                                    CssClass="e-multi-column"
+                                    Value="DataSource.StationGroupName"
+                                    DataSource="@StationGroupsList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500">
+
+                                    <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+
+                                    <ComboBoxTemplates TItem="ListStationGroupsDto">
+                                        <HeaderTemplate>
+                                            <table>
+                                                <tr>
+                                                    <th class="e-text-center">İstasyon Grup Kodu</th>
+                                                    <th class="e-text-center">İstasyon Grup Açıklaması</th>
+                                                </tr>
+                                            </table>
+                                        </HeaderTemplate>
+                                        <ItemTemplate Context="cmbContext">
+
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="e-text-center">@((cmbContext as ListStationGroupsDto).Code)</td>
+                                                        <td class="e-text-center">@((cmbContext as ListStationGroupsDto).Name)</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ItemTemplate>
+                                    </ComboBoxTemplates>
+
+                                    <ComboBoxEvents TValue="string"
+                                            TItem="ListStationGroupsDto"
+                                            Filtering="StationGroupFiltering"
+                                            ValueChange="StationGroupValueChangeHandler"></ComboBoxEvents>
+                                </SfComboBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                         <DxGridLayoutItem Row="3" Column="5">
+                            <Template>
+                                  <label class="TSIModalLabel"><strong>Çalışan Adı: </strong></label><br />
+                                <SfComboBox @ref="EmployeesComboBox"
+                                    TValue="string"
+                                    TItem="ListEmployeesDto"
+                                    Placeholder="Çalışan Seçin"
+                                    CssClass="e-multi-column"
+                                    Value="DataSource.EmployeeName"
+                                    DataSource="@EmployeesList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500">
+
+                                    <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+
+                                    <ComboBoxTemplates TItem="ListEmployeesDto">
+                                        <HeaderTemplate>
+                                            <table>
+                                                <tr>
+                                                    <th class="e-text-center">Çalışan Adı</th>
+                                                </tr>
+                                            </table>
+                                        </HeaderTemplate>
+                                        <ItemTemplate Context="cmbContext">
+
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="e-text-center">@((cmbContext as ListEmployeesDto).Name)</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ItemTemplate>
+                                    </ComboBoxTemplates>
+
+                                    <ComboBoxEvents TValue="string"
+                                            TItem="ListEmployeesDto"
+                                            Filtering="EmployeeFiltering"
+                                            ValueChange="EmployeeValueChangeHandler"></ComboBoxEvents>
+                                </SfComboBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                         <DxGridLayoutItem Row="3" Column="7">
+                            <Template>
+                                  <label class="TSIModalLabel"><strong>Üretim Emri Fiş Numarası: </strong></label><br />
+                                <SfComboBox @ref="ProductionOrdersComboBox"
+                                    TValue="string"
+                                    TItem="ListProductionOrdersDto"
+                                    Placeholder="Üretim Emri Seçin"
+                                    CssClass="e-multi-column"
+                                    Value="DataSource.ProductionOrderFicheNo"
+                                    DataSource="@ProductionOrdersList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500">
+
+                                    <ComboBoxFieldSettings Text="FicheNo" Value="FicheNo"></ComboBoxFieldSettings>
+
+                                    <ComboBoxTemplates TItem="ListProductionOrdersDto">
+                                        <HeaderTemplate>
+                                            <table>
+                                                <tr>
+                                                    <th class="e-text-center">Üretim Emri Fiş No</th>
+                                                </tr>
+                                            </table>
+                                        </HeaderTemplate>
+                                        <ItemTemplate Context="cmbContext">
+
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="e-text-center">@((cmbContext as ListProductionOrdersDto).FicheNo)</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ItemTemplate>
+                                    </ComboBoxTemplates>
+
+                                    <ComboBoxEvents TValue="string"
+                                            TItem="ListProductionOrdersDto"
+                                            Filtering="ProductionOrderFiltering"
+                                            ValueChange="ProductionOrderValueChangeHandler"></ComboBoxEvents>
+                                </SfComboBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="4" Column="1">
+                            <Template>
+                                  <label class="TSIModalLabel"><strong>Operasyon Kodu: </strong></label><br />
+                                <SfComboBox @ref="ProductsOperationsComboBox"
+                                    TValue="string"
+                                    TItem="ListProductsOperationsDto"
+                                    Placeholder="Operasyon Seçin"
+                                    CssClass="e-multi-column"
+                                    Value="DataSource.OperationCode"
+                                    DataSource="@ProductsOperationsList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500">
+
+                                    <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
+
+                                    <ComboBoxTemplates TItem="ListProductsOperationsDto">
+                                        <HeaderTemplate>
+                                            <table>
+                                                <tr>
+                                                    <th class="e-text-center">Operasyon Kodu</th>
+                                                    <th class="e-text-center">Operasyon Açıklaması</th>
+                                                </tr>
+                                            </table>
+                                        </HeaderTemplate>
+                                        <ItemTemplate Context="cmbContext">
+
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="e-text-center">@((cmbContext as ListProductsOperationsDto).Code)</td>
+                                                        <td class="e-text-center">@((cmbContext as ListProductsOperationsDto).Name)</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ItemTemplate>
+                                    </ComboBoxTemplates>
+
+                                    <ComboBoxEvents TValue="string"
+                                            TItem="ListProductsOperationsDto"
+                                            Filtering="ProductsOperationFiltering"
+                                            ValueChange="ProductsOperationValueChangeHandler"></ComboBoxEvents>
+                                </SfComboBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                         <DxGridLayoutItem Row="4" Column="3">
+                            <Template>
+                                  <label class="TSIModalLabel"><strong>Operasyon Açıklaması: </strong></label><br />
+                                <SfComboBox @ref="ProductsOperationsComboBox"
+                                    TValue="string"
+                                    TItem="ListProductsOperationsDto"
+                                    Placeholder="Operasyon Seçin"
+                                    CssClass="e-multi-column"
+                                    Value="DataSource.OperationName"
+                                    DataSource="@ProductsOperationsList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500">
+
+                                    <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+
+                                    <ComboBoxTemplates TItem="ListProductsOperationsDto">
+                                        <HeaderTemplate>
+                                            <table>
+                                                <tr>
+                                                    <th class="e-text-center">Operasyon Kodu</th>
+                                                    <th class="e-text-center">Operasyon Açıklaması</th>
+                                                </tr>
+                                            </table>
+                                        </HeaderTemplate>
+                                        <ItemTemplate Context="cmbContext">
+
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="e-text-center">@((cmbContext as ListProductsOperationsDto).Code)</td>
+                                                        <td class="e-text-center">@((cmbContext as ListProductsOperationsDto).Name)</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </ItemTemplate>
+                                    </ComboBoxTemplates>
+
+                                    <ComboBoxEvents TValue="string"
+                                            TItem="ListProductsOperationsDto"
+                                            Filtering="ProductsOperationFiltering"
+                                            ValueChange="ProductsOperationValueChangeHandler"></ComboBoxEvents>
+                                </SfComboBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="4" Column="5">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>Açıklama: </strong></label>
+                                <SfTextBox Placeholder="Açıklama Yazınız." @bind-Value="DataSource.Description_" CssClass="TSIMemoBox"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                       
+
+                    </Items>
+                </DxGridLayout>
+            </BodyTemplate>
+            <FooterContentTemplate>
+                <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+            </FooterContentTemplate>
+        </DxPopup>
+
+    }
+}

@@ -49,7 +49,6 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
             CreateLineContextMenuItems();
 
             await GetFinishedProductsList();
-            await GetLineFinishedProductsList();
             await GetLineProductsList();
             await GetLineUnitSetsList();
         }
@@ -108,6 +107,7 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
 
                     foreach (var item in GridLineList)
                     {
+                        item.FinishedProductCode = DataSource.FinishedProductCode;
                         item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
                         item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
                         item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
@@ -144,13 +144,21 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
             switch (args.Item.Id)
             {
                 case "new":
-                    LineDataSource = new SelectBillsofMaterialLinesDto();
-                    LineCrudPopup = true;
-                    LineDataSource.FinishedProductCode = DataSource.FinishedProductCode;
-                    LineDataSource.FinishedProductID = DataSource.FinishedProductID;
-                    LineDataSource.ProductCode = DataSource.FinishedProductCode;
-                    LineDataSource.ProductID = DataSource.FinishedProductID;
-                    LineDataSource.LineNr = GridLineList.Count + 1;
+
+                    if(DataSource.FinishedProductCode != null )
+                    {
+                        LineDataSource = new SelectBillsofMaterialLinesDto();
+                        LineCrudPopup = true;
+                        LineDataSource.FinishedProductCode = DataSource.FinishedProductCode;
+                        LineDataSource.FinishedProductID = DataSource.FinishedProductID;
+                        LineDataSource.LineNr = GridLineList.Count + 1;
+                    }
+
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync("Uyarı", "Mamül seçmeden yeni satır eklenemez.");
+                    }
+
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -238,8 +246,8 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
                 }
             }
 
-            DataSource.FinishedProductID = LineDataSource.FinishedProductID;
-            DataSource.FinishedProductCode = LineDataSource.FinishedProductCode;
+            LineDataSource.FinishedProductID = DataSource.FinishedProductID;
+            LineDataSource.FinishedProductCode = DataSource.FinishedProductCode;
             GridLineList = DataSource.SelectBillsofMaterialLines;
             await _LineGrid.Refresh();
 
@@ -291,46 +299,6 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
         }
         #endregion
 
-        #region Mamüller - Reçete Satırları
-        public async Task LineFinishedProductFiltering(FilteringEventArgs args)
-        {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await LineFinishedProductsComboBox.FilterAsync(LineFinishedProductsList, query);
-        }
-
-        private async Task GetLineFinishedProductsList()
-        {
-            LineFinishedProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
-        }
-
-        public async Task LineFinishedProductValueChangeHandler(ChangeEventArgs<string, ListProductsDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                DataSource.FinishedProductCode = args.ItemData.Code;
-                DataSource.FinishedProductID = args.ItemData.Id;
-            }
-            else
-            {
-                DataSource.FinishedProductCode = string.Empty;
-                DataSource.FinishedProductID = Guid.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-
-
-        #endregion
 
         #region Birim Setleri - Reçete Satırları
         public async Task LineUnitSetFiltering(FilteringEventArgs args)

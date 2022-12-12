@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.Department;
+using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
 using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.Employee
@@ -76,5 +77,7 @@ namespace TsiErp.Entities.Entities.Employee
         public bool IsActive { get; set; }
 
         public Departments Departments { get; set; }
+
+        public ICollection<OperationUnsuitabilityReports> OperationUnsuitabilityReports { get; set; }
     }
 }

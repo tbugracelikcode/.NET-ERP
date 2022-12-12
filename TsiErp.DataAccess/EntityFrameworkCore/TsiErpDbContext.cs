@@ -53,6 +53,13 @@ using TsiErp.Entities.Entities.BillsofMaterial;
 using TsiErp.Entities.Entities.BillsofMaterialLine;
 using TsiErp.Entities.Entities.CalendarDay;
 using TsiErp.Entities.Entities.ProductionOrder;
+using TsiErp.Entities.Entities.WorkOrder;
+using TsiErp.Entities.Entities.PurchaseOrder;
+using TsiErp.Entities.Entities.PurchaseOrderLine;
+using TsiErp.Entities.Entities.PurchaseRequest;
+using TsiErp.Entities.Entities.PurchaseRequestLine;
+using TsiErp.Entities.Entities.PurchaseUnsuitabilityReport;
+using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.Menu;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore
@@ -157,6 +164,13 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigureBillsofMaterials();
             builder.ConfigureBillsofMaterialLines();
             builder.ConfigureProductionOrders();
+            builder.ConfigureWorkOrders();
+            builder.ConfigurePurchaseOrders();
+            builder.ConfigurePurchaseOrderLines();
+            builder.ConfigurePurchaseRequestLines();
+            builder.ConfigurePurchaseRequests();
+            builder.ConfigurePurchaseUnsuitabilityReports();
+            builder.ConfigureOperationUnsuitabilityReports();
             builder.ConfigureMenus();
         }
 
@@ -246,6 +260,13 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<BillsofMaterials> BillsofMaterials { get; set; }
         public DbSet<BillsofMaterialLines> BillsofMaterialLines { get; set; }
         public DbSet<ProductionOrders> ProductionOrders { get; set; }
+        public DbSet<WorkOrders> WorkOrders { get; set; }
+        public DbSet<PurchaseOrders> PurchaseOrders { get; set; }
+        public DbSet<PurchaseOrderLines> PurchaseOrderLines { get; set; }
+        public DbSet<PurchaseRequests> PurchaseRequests { get; set; }
+        public DbSet<PurchaseRequestLines> PurchaseRequestLines { get; set; }
+        public DbSet<PurchaseUnsuitabilityReports> PurchaseUnsuitabilityReports { get; set; }
+        public DbSet<OperationUnsuitabilityReports> OperationUnsuitabilityReports { get; set; }
         public DbSet<Menus> Menus { get; set; }
 
         #endregion

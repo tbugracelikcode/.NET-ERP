@@ -2,6 +2,8 @@
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
+using TsiErp.Entities.Entities.BillsofMaterial.Dtos;
+using TsiErp.Entities.Entities.BillsofMaterialLine.Dtos;
 using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.Currency.Dtos;
 using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
@@ -15,6 +17,9 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.SalesOrder
 {
+
+
+
     public partial class SalesOrdersListPage
     {
         #region ComboBox Listeleri
@@ -44,23 +49,42 @@ namespace TsiErp.ErpUI.Pages.SalesOrder
 
         private SfGrid<ListSalesOrderDto> _grid;
         private SfGrid<SelectSalesOrderLinesDto> _LineGrid;
+        private SfGrid<SelectSalesOrderLinesDto> _ProductionOrderGrid;
+        private SfGrid<ProductsTreeDto> _BoMLineGrid;
 
         [Inject]
         ModalManager ModalManager { get; set; }
 
         SelectSalesOrderLinesDto LineDataSource;
+
+        SelectBillsofMaterialsDto BoMDataSource;
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+        public List<ContextMenuItemModel> ProductionOrderGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+        public List<ContextMenuItemModel> BoMLineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectSalesOrderLinesDto> GridLineList = new List<SelectSalesOrderLinesDto>();
 
+        List<SelectSalesOrderLinesDto> GridProductionOrderList = new List<SelectSalesOrderLinesDto>();
+
+        List<SelectBillsofMaterialLinesDto> GridBoMLineList = new List<SelectBillsofMaterialLinesDto>();
+
+        List<ListBillsofMaterialsDto> BoMList = new List<ListBillsofMaterialsDto>();
+
         private bool LineCrudPopup = false;
+
+        private bool CreateProductionOrderCrudPopup = false;
+
+        private bool BoMLineCrudPopup = false;
 
         protected override async Task OnInitializedAsync()
         {
             BaseCrudService = SalesOrdersAppService;
+
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
+            CreateProductionOrderContextMenuItems();
+            CreateBoMLineContextMenuItems();
 
             await GetCurrentAccountCardsList();
             await GetBranchesList();
@@ -70,6 +94,114 @@ namespace TsiErp.ErpUI.Pages.SalesOrder
             await GetUnitSetsList();
             await GetPaymentPlansList();
         }
+
+        #region Reçete Satırları Modalı İşlemleri
+
+        protected void CreateBoMLineContextMenuItems()
+        {
+            //if (BoMLineGridContextMenu.Count() == 0)
+            //{
+            //    BoMLineGridContextMenu.Add(new ContextMenuItemModel { Text = "Ürün Ağacı", Id = "productstree" });
+            //}
+        }
+
+        public async void OnBoMLineContextMenuClick(ContextMenuClickEventArgs<ProductsTreeDto> args)
+        {
+            //switch (args.Item.Id)
+            //{
+            //    case "productstree":
+
+            //        break;
+
+            //    default:
+            //        break;
+            //}
+        }
+
+
+        public void HideBoMLinePopup()
+        {
+            CreateProductionOrderCrudPopup = false;
+        }
+
+        #endregion
+
+
+        #region Üretim Emri Oluşturma Modalı İşlemleri
+
+
+        List<ProductsTreeDto> ProductTreeDataSource = new List<ProductsTreeDto>();
+
+        public class ProductsTreeDto
+        {
+            public string ProductName { get; set; }
+            public string ProductCode { get; set; }
+            public int SupplyForm { get; set; }
+            public decimal AmountofStock { get; set; }
+            public decimal AmountofRequierement { get; set; }
+        }
+
+        protected void CreateProductionOrderContextMenuItems()
+        {
+            if (ProductionOrderGridContextMenu.Count() == 0)
+            {
+                ProductionOrderGridContextMenu.Add(new ContextMenuItemModel { Text = "Ürün Ağacı", Id = "productstree" });
+            }
+        }
+
+        public async void OnCreateProductionOrderContextMenuClick(ContextMenuClickEventArgs<SelectSalesOrderLinesDto> args)
+        {
+            switch (args.Item.Id)
+            {
+                case "productstree":
+
+                    BoMList = (await BillsofMaterialsAppService.GetListAsync(new ListBillsofMaterialsParameterDto())).Data.Where(t => t.FinishedProductCode == args.RowInfo.RowData.ProductCode).ToList();
+
+                    Guid BoMID = BoMList.Select(t => t.Id).FirstOrDefault();
+
+                    BoMDataSource = (await BillsofMaterialsAppService.GetAsync(BoMID)).Data;
+
+                    GridBoMLineList = BoMDataSource.SelectBillsofMaterialLines;
+
+                    foreach (var item in GridBoMLineList)
+                    {
+                        item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
+                        item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
+
+                        ProductsTreeDto _model = new ProductsTreeDto
+                        {
+                            ProductName = item.ProductName,
+                            ProductCode = item.ProductCode,
+                            AmountofStock = 30, //deneme
+                            AmountofRequierement = Math.Abs(30 - (GridBoMLineList.Count * item.Quantity)),
+                            SupplyForm = 1 //deneme
+                        };
+
+                        ProductTreeDataSource.Add(_model);
+                    }
+
+                    BoMLineCrudPopup = true;
+
+                    await InvokeAsync(StateHasChanged);
+
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        protected async Task OnCreateProductionOrderBtnClicked()
+        {
+
+        }
+
+        public void HideCreateProductionOrderPopup()
+        {
+            CreateProductionOrderCrudPopup = false;
+        }
+
+        #endregion
 
         #region Teklif Satır Modalı İşlemleri
         protected override async Task BeforeInsertAsync()
@@ -105,6 +237,7 @@ namespace TsiErp.ErpUI.Pages.SalesOrder
             {
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle", Id = "new" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Üretim Emri Oluştur", Id = "createproductionorder" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
             }
@@ -142,6 +275,25 @@ namespace TsiErp.ErpUI.Pages.SalesOrder
                         await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
                     }
+                    break;
+
+                case "createproductionorder":
+
+                    DataSource = (await SalesOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    GridProductionOrderList = DataSource.SelectSalesOrderLines;
+
+
+                    foreach (var item in GridProductionOrderList)
+                    {
+                        item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
+                        item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
+                        item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
+                    }
+
+
+                    CreateProductionOrderCrudPopup = true;
+
+                    await InvokeAsync(StateHasChanged);
                     break;
 
                 case "refresh":

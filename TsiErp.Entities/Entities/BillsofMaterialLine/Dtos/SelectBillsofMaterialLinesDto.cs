@@ -41,10 +41,7 @@ namespace TsiErp.Entities.Entities.BillsofMaterialLine.Dtos
         /// Ürün Açıklaması
         /// </summary>
         public string ProductName { get; set; }
-        /// <summary>
-        /// Miktar Formül
-        /// </summary>
-        public string QuantityFormula { get; set; }
+       
         /// <summary>
         /// Miktar
         /// </summary>

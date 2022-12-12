@@ -62,7 +62,7 @@ else
                     <SfCard class="TSIGridCards">
 
                         <CardContent>
-                            <SfGrid ID="Grid" @ref="@_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"  GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu">
+                            <SfGrid ID="Grid" @ref="@_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu">
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                 <GridEvents ContextMenuItemClicked="@MainContextMenuClick" TValue="ListSalesPropositionsDto"></GridEvents>
@@ -838,64 +838,5 @@ else
         </FooterContentTemplate>
     </DxPopup>
 
-    <DxPopup @bind-Visible="@CreateProductionOrderCrudPopup"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="Üretim Emri Oluştur"
-         Width="68%"
-         Height="47%"
-         MinWidth="1300px"
-         MinHeight="510px"
-         HeaderCssClass="HeaderTitleCss">
-
-        <BodyTemplate>
-
-            <DxGridLayout CssClass="TSIGridLayout">
-
-                <Rows>
-                    <DxGridLayoutRow Height="20%" />
-                    <DxGridLayoutRow Height="1%" />
-                    <DxGridLayoutRow Height="70%" />
-                </Rows>
-
-                <Columns>
-                    <DxGridLayoutColumn Width="3%" />
-                    <DxGridLayoutColumn Width="15%" />
-                    <DxGridLayoutColumn Width="3%" />
-                    <DxGridLayoutColumn Width="49%" />
-                    <DxGridLayoutColumn Width="3%" />
-                    <DxGridLayoutColumn Width="23%" />
-                    <DxGridLayoutColumn Width="3%" />
-                </Columns>
-
-                <Items>
-
-                    <DxGridLayoutItem Row="0" Column="5">
-                        <Template>
-                            <br />
-                            <SfButton CssClass="TSISaveButton" OnClick="OnCreateProductionOrderBtnClicked"><SfIcon Size="IconSize.Medium" Name="IconName.ChangesAccept"></SfIcon>&nbsp;Üretim Emri Oluştur</SfButton>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                    <DxGridLayoutItem Row="2" Column="1" ColumnSpan="5">
-                        <Template>
-                            <SfTreeGrid DataSource="@TreeGridCreateProductionOrderList"  AllowPaging="false" AllowExcelExport="true" AllowPdfExport="true" AllowSorting="true"  ContextMenuItems="CreateProductionOrderTreeGridContextMenu"  TreeColumnIndex="1">
-                                <TreeGridEditSettings AllowAdding="true" AllowEditing="true" AllowDeleting="true" Mode="Syncfusion.Blazor.TreeGrid.EditMode.Row"></TreeGridEditSettings>
-                                <TreeGridPageSettings PageSize="1"></TreeGridPageSettings>
-                                <TreeGridColumns>
-                                    <TreeGridColumn Field="ProductCode" HeaderText="MAMÜL KODU"  Width="150" TextAlign=" Syncfusion.Blazor.Grids.TextAlign.Center"></TreeGridColumn>
-                                    <TreeGridColumn Field="ProductCode" HeaderText="TEMİN ŞEKLİ" Width="150" TextAlign=" Syncfusion.Blazor.Grids.TextAlign.Center"></TreeGridColumn>
-                                </TreeGridColumns>
-                            </SfTreeGrid>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                </Items>
-            </DxGridLayout>
-        </BodyTemplate>
-        <FooterContentTemplate>
-            <SfButton CssClass="TSICancelButton" OnClick="HideCreateProductionOrderPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
-        </FooterContentTemplate>
-    </DxPopup>
+ 
 }

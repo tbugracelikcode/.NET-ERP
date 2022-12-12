@@ -37,6 +37,22 @@
                     </Nodes>
                 </DxTreeViewNode>
 
+                 <DxTreeViewNode Visible="@collapsevisible" Text="Satýn Alma Yönetimi" IconCssClass="oi oi-cart">
+                    <Nodes>
+                        <DxTreeViewNode Text="Talep Yönetimi">
+                            <Nodes>
+                                <DxTreeViewNode NavigateUrl="/purchase-requests" Text="Satýn Alma Talep Fiþleri" />
+                            </Nodes>
+                        </DxTreeViewNode>
+                        <DxTreeViewNode Text="Sipariþ Yönetimi">
+                            <Nodes>
+                                <DxTreeViewNode NavigateUrl="/purchase-orders" Text="Satýn Alma Sipariþleri" />
+                            </Nodes>
+                        </DxTreeViewNode>
+                    </Nodes>
+
+                </DxTreeViewNode>
+
                 <DxTreeViewNode Visible="@collapsevisible" Text="Satýþ Yönetimi" IconCssClass="oi oi-cart">
                     <Nodes>
                         <DxTreeViewNode Text="Teklif Yönetimi">
@@ -83,6 +99,7 @@
                         </DxTreeViewNode>
                         <DxTreeViewNode NavigateUrl="/bills-of-materials" Text="Reçeteler" />
                          <DxTreeViewNode NavigateUrl="/routes" Text="Rotalar" />
+                         <DxTreeViewNode NavigateUrl="/work-orders" Text="Ýþ Emirleri" />
                     </Nodes>
                 </DxTreeViewNode>
 
@@ -119,7 +136,15 @@
                                     </Nodes>
                                 </DxTreeViewNode>
 
+                                 <DxTreeViewNode Text="Uygunsuzluk Raporlarý">
+                                    <Nodes>
+                                        <DxTreeViewNode NavigateUrl="/operation-unsuitability-reports" Text="Operasyon Uygunsuzluk Raporlarý" />
+                                        <DxTreeViewNode NavigateUrl="/purchase-unsuitability-reports" Text="Satýn Alma Uygunsuzluk Raporlarý" />
+                                    </Nodes>
+                                </DxTreeViewNode>
+
                             </Nodes>
+                            
                         </DxTreeViewNode>
 
                     </Nodes>
