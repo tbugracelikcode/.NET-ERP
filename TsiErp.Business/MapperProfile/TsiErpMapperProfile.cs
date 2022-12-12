@@ -88,6 +88,20 @@ using TsiErp.Entities.Entities.CalendarDay.Dtos;
 using TsiErp.Entities.Entities.CalendarDay;
 using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.PurchaseOrder.Dtos;
+using TsiErp.Entities.Entities.PurchaseOrderLine.Dtos;
+using TsiErp.Entities.Entities.PurchaseRequest.Dtos;
+using TsiErp.Entities.Entities.PurchaseRequestLine.Dtos;
+using TsiErp.Entities.Entities.PurchaseOrder;
+using TsiErp.Entities.Entities.PurchaseOrderLine;
+using TsiErp.Entities.Entities.PurchaseRequest;
+using TsiErp.Entities.Entities.PurchaseRequestLine;
+using TsiErp.Entities.Entities.PurchaseUnsuitabilityReport;
+using TsiErp.Entities.Entities.PurchaseUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.OperationUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -372,7 +386,7 @@ namespace TsiErp.Business.MapperProfile
                 .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
                 .ForMember(x => x.RouteCode, y => y.MapFrom(z => z.Routes.Code))
                 .ForMember(x => x.OperationName, y => y.MapFrom(z => z.ProductsOperations.Name))
-                .ForMember(x => x.OperationCode ,y => y.MapFrom(z => z.ProductsOperations.Code))
+                .ForMember(x => x.OperationCode, y => y.MapFrom(z => z.ProductsOperations.Code))
                 .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
             CreateMap<RouteLines, ListRouteLinesDto>()
                 .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
@@ -465,8 +479,8 @@ namespace TsiErp.Business.MapperProfile
 
 
             CreateMap<ProductsOperations, SelectProductsOperationsDto>()
-                .ForMember(x=>x.ProductCode, y=>y.MapFrom(z=>z.Products.Code))
-                .ForMember(x=>x.ProductName, y=>y.MapFrom(z=>z.Products.Name));
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
             CreateMap<ProductsOperations, ListProductsOperationsDto>()
                 .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
                 .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name))
@@ -556,6 +570,172 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectProductionOrdersDto, CreateProductionOrdersDto>();
             CreateMap<UpdateProductionOrdersDto, ProductionOrders>();
             CreateMap<SelectProductionOrdersDto, UpdateProductionOrdersDto>();
+
+
+            CreateMap<WorkOrders, SelectWorkOrdersDto>()
+               .ForMember(x => x.ProductionOrderFicheNo, y => y.MapFrom(z => z.ProductionOrders.FicheNo))
+               .ForMember(x => x.PropositionFicheNo, y => y.MapFrom(z => z.SalesPropositions.FicheNo))
+               .ForMember(x => x.RouteCode, y => y.MapFrom(z => z.Routes.Code))
+               .ForMember(x => x.ProductsOperationCode, y => y.MapFrom(z => z.ProductsOperations.Code))
+               .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
+               .ForMember(x => x.StationName, y => y.MapFrom(z => z.Stations.Name))
+               .ForMember(x => x.StationGroupCode, y => y.MapFrom(z => z.StationGroups.Code))
+               .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+               .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name))
+               .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
+               .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name));
+            CreateMap<WorkOrders, ListWorkOrdersDto>()
+                 .ForMember(x => x.ProductionOrderFicheNo, y => y.MapFrom(z => z.ProductionOrders.FicheNo))
+               .ForMember(x => x.PropositionFicheNo, y => y.MapFrom(z => z.SalesPropositions.FicheNo))
+               .ForMember(x => x.RouteCode, y => y.MapFrom(z => z.Routes.Code))
+               .ForMember(x => x.ProductsOperationCode, y => y.MapFrom(z => z.ProductsOperations.Code))
+               .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
+               .ForMember(x => x.StationName, y => y.MapFrom(z => z.Stations.Name))
+               .ForMember(x => x.StationGroupCode, y => y.MapFrom(z => z.StationGroups.Code))
+               .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+               .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name))
+               .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
+               .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name));
+            CreateMap<CreateWorkOrdersDto, WorkOrders>();
+            CreateMap<SelectWorkOrdersDto, CreateWorkOrdersDto>();
+            CreateMap<UpdateWorkOrdersDto, WorkOrders>();
+            CreateMap<SelectWorkOrdersDto, UpdateWorkOrdersDto>();
+
+
+            CreateMap<PurchaseOrders, SelectPurchaseOrdersDto>()
+               .ForMember(x => x.PaymentPlanName, y => y.MapFrom(z => z.PaymentPlan.Name))
+               .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Code))
+               .ForMember(x => x.BranchName, y => y.MapFrom(z => z.Branches.Name))
+               .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Code))
+               .ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Code))
+               .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
+               .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name))
+               .ForMember(x => x.ShippingAdressCode, y => y.MapFrom(z => z.ShippingAdresses.Code))
+               .ForMember(x => x.ShippingAdressName, y => y.MapFrom(z => z.ShippingAdresses.Name));
+            CreateMap<PurchaseOrders, ListPurchaseOrdersDto>()
+               .ForMember(x => x.PaymentPlanName, y => y.MapFrom(z => z.PaymentPlan.Name))
+               .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Code))
+               .ForMember(x => x.BranchName, y => y.MapFrom(z => z.Branches.Name))
+               .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Code))
+               .ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Code))
+               .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
+               .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name))
+               .ForMember(x => x.ShippingAdressCode, y => y.MapFrom(z => z.ShippingAdresses.Code))
+               .ForMember(x => x.ShippingAdressName, y => y.MapFrom(z => z.ShippingAdresses.Name));
+            CreateMap<UpdatePurchaseOrdersDto, PurchaseOrders>()
+                .ForMember(x => x.PurchaseOrderLines, y => y.Ignore());
+            CreateMap<CreatePurchaseOrdersDto, PurchaseOrders>();
+            CreateMap<SelectPurchaseOrdersDto, CreatePurchaseOrdersDto>();
+            CreateMap<SelectPurchaseOrdersDto, UpdatePurchaseOrdersDto>();
+
+
+            CreateMap<PurchaseOrderLines, SelectPurchaseOrderLinesDto>()
+               .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code))
+               .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+               .ForMember(x => x.PaymentPlanName, y => y.MapFrom(z => z.PaymentPlans.Name))
+               .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
+            CreateMap<PurchaseOrderLines, ListPurchaseOrderLinesDto>()
+               .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code))
+               .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+               .ForMember(x => x.PaymentPlanName, y => y.MapFrom(z => z.PaymentPlans.Name))
+               .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
+            CreateMap<CreatePurchaseOrderLinesDto, PurchaseOrderLines>();
+            CreateMap<SelectPurchaseOrderLinesDto, CreatePurchaseOrderLinesDto>();
+            CreateMap<UpdatePurchaseOrderLinesDto, PurchaseOrderLines>();
+            CreateMap<SelectPurchaseOrderLinesDto, UpdatePurchaseOrderLinesDto>();
+            CreateMap<SelectPurchaseOrderLinesDto, PurchaseOrderLines>();
+
+            CreateMap<PurchaseRequests, SelectPurchaseRequestsDto>()
+              .ForMember(x => x.PaymentPlanName, y => y.MapFrom(z => z.PaymentPlan.Name))
+              .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Code))
+              .ForMember(x => x.BranchName, y => y.MapFrom(z => z.Branches.Name))
+              .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Code))
+              .ForMember(x => x.WarehouseName, y => y.MapFrom(z => z.Warehouses.Name))
+              .ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Code))
+              .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
+              .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name))
+              .ForMember(x => x.ShippingAdressCode, y => y.MapFrom(z => z.ShippingAdresses.Code));
+            CreateMap<PurchaseRequests, ListPurchaseRequestsDto>()
+              .ForMember(x => x.PaymentPlanName, y => y.MapFrom(z => z.PaymentPlan.Name))
+              .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Code))
+              .ForMember(x => x.BranchName, y => y.MapFrom(z => z.Branches.Name))
+              .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Code))
+              .ForMember(x => x.WarehouseName, y => y.MapFrom(z => z.Warehouses.Name))
+              .ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Code))
+              .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
+              .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name))
+              .ForMember(x => x.ShippingAdressCode, y => y.MapFrom(z => z.ShippingAdresses.Code));
+            CreateMap<UpdatePurchaseRequestsDto, PurchaseRequests>()
+                .ForMember(x => x.PurchaseRequestLines, y => y.Ignore());
+            CreateMap<CreatePurchaseRequestsDto, PurchaseRequests>();
+            CreateMap<SelectPurchaseRequestsDto, CreatePurchaseRequestsDto>();
+            CreateMap<SelectPurchaseRequestsDto, UpdatePurchaseRequestsDto>();
+            CreateMap<SelectPurchaseRequestsDto, PurchaseRequests>();
+            CreateMap<UpdatePurchaseRequestsDto, PurchaseRequests>();
+
+
+            CreateMap<PurchaseRequestLines, SelectPurchaseRequestLinesDto>()
+               .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code))
+               .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+               .ForMember(x => x.PaymentPlanName, y => y.MapFrom(z => z.PaymentPlans.Name))
+               .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
+            CreateMap<PurchaseRequestLines, ListPurchaseRequestLinesDto>()
+               .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code))
+               .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+               .ForMember(x => x.PaymentPlanName, y => y.MapFrom(z => z.PaymentPlans.Name))
+               .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
+            CreateMap<CreatePurchaseRequestLinesDto, PurchaseRequestLines>();
+            CreateMap<SelectPurchaseRequestLinesDto, CreatePurchaseRequestLinesDto>();
+            CreateMap<UpdatePurchaseRequestLinesDto, PurchaseRequestLines>();
+            CreateMap<SelectPurchaseRequestLinesDto, UpdatePurchaseRequestLinesDto>();
+            CreateMap<SelectPurchaseRequestLinesDto, PurchaseRequestLines>();
+
+
+            CreateMap<PurchaseUnsuitabilityReports, SelectPurchaseUnsuitabilityReportsDto>()
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name))
+                .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name))
+                .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
+                .ForMember(x => x.OrderFicheNo, y => y.MapFrom(z => z.PurchaseOrders.FicheNo));
+            CreateMap<PurchaseUnsuitabilityReports, ListPurchaseUnsuitabilityReportsDto>()
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name))
+                .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name))
+                .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
+                .ForMember(x => x.OrderFicheNo, y => y.MapFrom(z => z.PurchaseOrders.FicheNo));
+            CreateMap<CreatePurchaseUnsuitabilityReportsDto, PurchaseUnsuitabilityReports>();
+            CreateMap<SelectPurchaseUnsuitabilityReportsDto, CreatePurchaseUnsuitabilityReportsDto>();
+            CreateMap<UpdatePurchaseUnsuitabilityReportsDto, PurchaseUnsuitabilityReports>();
+            CreateMap<SelectPurchaseUnsuitabilityReportsDto, UpdatePurchaseUnsuitabilityReportsDto>();
+
+            CreateMap<OperationUnsuitabilityReports, SelectOperationUnsuitabilityReportsDto>()
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name))
+                .ForMember(x => x.WorkOrderNo, y => y.MapFrom(z => z.WorkOrders.WorkOrderNo))
+                .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
+                .ForMember(x => x.StationName, y => y.MapFrom(z => z.Stations.Name))
+                .ForMember(x => x.StationGroupCode, y => y.MapFrom(z => z.StationGroups.Code))
+                .ForMember(x => x.StationGroupName, y => y.MapFrom(z => z.StationGroups.Name))
+                .ForMember(x => x.EmployeeName, y => y.MapFrom(z => z.Employees.Name))
+                .ForMember(x => x.ProductionOrderFicheNo, y => y.MapFrom(z => z.ProductionOrders.FicheNo))
+                .ForMember(x => x.OperationCode, y => y.MapFrom(z => z.ProductsOperations.Code))
+                .ForMember(x => x.OperationName, y => y.MapFrom(z => z.ProductsOperations.Name));
+            CreateMap<OperationUnsuitabilityReports, ListOperationUnsuitabilityReportsDto>()
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name))
+                .ForMember(x => x.WorkOrderNo, y => y.MapFrom(z => z.WorkOrders.WorkOrderNo))
+                .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
+                .ForMember(x => x.StationName, y => y.MapFrom(z => z.Stations.Name))
+                .ForMember(x => x.StationGroupCode, y => y.MapFrom(z => z.StationGroups.Code))
+                .ForMember(x => x.StationGroupName, y => y.MapFrom(z => z.StationGroups.Name))
+                .ForMember(x => x.EmployeeName, y => y.MapFrom(z => z.Employees.Name))
+                .ForMember(x => x.ProductionOrderFicheNo, y => y.MapFrom(z => z.ProductionOrders.FicheNo))
+                .ForMember(x => x.OperationCode, y => y.MapFrom(z => z.ProductsOperations.Code))
+                .ForMember(x => x.OperationName, y => y.MapFrom(z => z.ProductsOperations.Name));
+            CreateMap<CreateOperationUnsuitabilityReportsDto, OperationUnsuitabilityReports>();
+            CreateMap<SelectOperationUnsuitabilityReportsDto, CreateOperationUnsuitabilityReportsDto>();
+            CreateMap<UpdateOperationUnsuitabilityReportsDto, OperationUnsuitabilityReports>();
+            CreateMap<SelectOperationUnsuitabilityReportsDto, UpdateOperationUnsuitabilityReportsDto>();
         }
     }
 }

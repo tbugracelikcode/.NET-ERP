@@ -230,7 +230,6 @@ else
                                     <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.UnitSetCode) HeaderText="BİRİM SETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.MaterialType) Type="ColumnType.Number" HeaderText="MALZEME TÜRÜ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.QuantityFormula) HeaderText="MİKTAR FORMÜLÜ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(SelectBillsofMaterialLinesDto.Size) Format="N2" Type="ColumnType.Number" HeaderText="BOY" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
@@ -426,32 +425,21 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Miktar Formülü: </strong></label>
-                            <SfTextBox @bind-Value="LineDataSource.QuantityFormula" Placeholder="Miktar Formülünü Yazınız.">
-
-
-                            </SfTextBox>
+                            <label class="TSIModalLabel"><strong>Miktar: </strong></label>
+                            <SfNumericTextBox Format="N6" TValue="decimal" @bind-Value="LineDataSource.Quantity" Min="0"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="5">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Miktar: </strong></label>
-                            <SfNumericTextBox TValue="decimal" @bind-Value="LineDataSource.Quantity" Min="0"></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>Boy: </strong></label>
+                            <SfNumericTextBox Format="N6" Min="0" @bind-Value="LineDataSource.Size" TValue="decimal" Placeholder="KDV Oranı Yazınız."></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="2" Column="1">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>Boy: </strong></label>
-                            <SfNumericTextBox Min="0" @bind-Value="LineDataSource.Size" TValue="decimal" Placeholder="KDV Oranı Yazınız."></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                    <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>Açıklama: </strong></label>
                             <SfTextBox Multiline=true @bind-Value="LineDataSource._Description" Placeholder="Açıklama Yazınız."></SfTextBox>

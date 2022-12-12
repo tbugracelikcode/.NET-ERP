@@ -12,6 +12,7 @@
 @using TsiErp.Entities.Entities.Currency.Dtos
 @using TsiErp.Entities.Entities.SalesOrder.Dtos
 @using TsiErp.Entities.Entities.SalesOrderLine.Dtos
+@using TsiErp.Entities.Entities.BillsofMaterialLine.Dtos
 @using TsiErp.ErpUI.Pages.Base
 @using TsiErp.Entities.Entities.CurrentAccountCard.Dtos
 @using TsiErp.Entities.Entities.Branch.Dtos
@@ -19,6 +20,7 @@
 @using TsiErp.Entities.Entities.Product.Dtos
 @using TsiErp.Entities.Entities.UnitSet.Dtos
 @using TsiErp.Entities.Entities.PaymentPlan.Dtos
+@using TsiErp.Business.Entities.BillsofMaterial.Services
 
 @inherits BaseListPage<SelectSalesOrderDto, ListSalesOrderDto, CreateSalesOrderDto, UpdateSalesOrderDto, ListSalesOrderParameterDto>
 
@@ -30,6 +32,7 @@
 @inject IProductsAppService ProductsAppService
 @inject IUnitSetsAppService UnitSetsAppService
 @inject IPaymentPlansAppService PaymentPlansAppService
+@inject IBillsofMaterialsAppService BillsofMaterialsAppService
 
 @if (!base.IsLoaded)
 {
@@ -37,7 +40,7 @@
 }
 else
 {
-        <DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+    <DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
         <GridLayoutItems>
             <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
                 <Template>
@@ -55,7 +58,7 @@ else
                     <SfCard class="TSIGridCards">
 
                         <CardContent>
-                            <SfGrid ID="Grid" @ref="@_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"  GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu">
+                            <SfGrid ID="Grid" @ref="@_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu">
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                 <GridEvents ContextMenuItemClicked="@MainContextMenuClick" TValue="ListSalesOrderDto"></GridEvents>
@@ -235,11 +238,11 @@ else
                         </Template>
                     </DxGridLayoutItem>
                     @*<DxGridLayoutItem Row="1" Column="5">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>Geçerlilik Tarihi: </strong></label>
-                            <SfDatePicker @bind-Value="@DataSource.WorkOrderCreationDate" Placeholder="Geçerlilik Tarihi"></SfDatePicker>
-                        </Template>
-                    </DxGridLayoutItem>*@
+                <Template>
+                <label class="TSIModalLabel"><strong>Geçerlilik Tarihi: </strong></label>
+                <SfDatePicker @bind-Value="@DataSource.WorkOrderCreationDate" Placeholder="Geçerlilik Tarihi"></SfDatePicker>
+                </Template>
+                </DxGridLayoutItem>*@
 
 
                     <DxGridLayoutItem Row="2" Column="1">
@@ -505,7 +508,6 @@ else
         </FooterContentTemplate>
     </DxPopup>
 
-    
 
     <DxPopup @bind-Visible="LineCrudPopup"
          ShowFooter="true"
@@ -752,6 +754,135 @@ else
         <FooterContentTemplate>
             <SfButton CssClass="TSISaveButton" OnClick="OnLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HideLinesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="@CreateProductionOrderCrudPopup"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Üretim Emri Oluştur"
+         Width="68%"
+         Height="47%"
+         MinWidth="1300px"
+         MinHeight="510px"
+         HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="20%" />
+                    <DxGridLayoutRow Height="1%" />
+                    <DxGridLayoutRow Height="70%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="15%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="49%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="23%" />
+                    <DxGridLayoutColumn Width="3%" />
+                </Columns>
+
+                <Items>
+
+                    <DxGridLayoutItem Row="0" Column="5">
+                        <Template>
+                            <br />
+                            <SfButton CssClass="TSISaveButton" OnClick="OnCreateProductionOrderBtnClicked"><SfIcon Size="IconSize.Medium" Name="IconName.ChangesAccept"></SfIcon>&nbsp;Üretim Emri Oluştur</SfButton>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1" ColumnSpan="5">
+                        <Template>
+                          <SfGrid @ref=_ProductionOrderGrid ID="ProductionOrderGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridProductionOrderList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@ProductionOrderGridContextMenu">
+                                <GridEvents ContextMenuItemClicked="@OnCreateProductionOrderContextMenuClick" TValue="SelectSalesOrderLinesDto"></GridEvents>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(SelectSalesOrderLinesDto.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesOrderLinesDto.ProductName) HeaderText="STOK AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesOrderLinesDto.UnitSetCode) HeaderText="BİRİM SETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesOrderLinesDto.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesOrderLinesDto.UnitPrice) Format="N2" Type="ColumnType.Number" HeaderText="BİRİM FİYAT" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesOrderLinesDto.LineAmount) Format="N2" Type="ColumnType.Number" HeaderText="SATIR TUTARI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HideCreateProductionOrderPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="@BoMLineCrudPopup"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Ürün Ağacı"
+         Width="68%"
+         Height="47%"
+         MinWidth="1300px"
+         MinHeight="510px"
+         HeaderCssClass="HeaderTitleCss">
+
+        <BodyTemplate>
+
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="1%" />
+                    <DxGridLayoutRow Height="90%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="15%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="49%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="23%" />
+                    <DxGridLayoutColumn Width="3%" />
+                </Columns>
+
+                <Items>
+
+                    <DxGridLayoutItem Row="1" Column="1" ColumnSpan="5">
+                        <Template>
+                            <SfGrid @ref=_BoMLineGrid ID="BoMLineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ProductTreeDataSource" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@BoMLineGridContextMenu">
+                                <GridEvents ContextMenuItemClicked="@OnBoMLineContextMenuClick" TValue="ProductsTreeDto"></GridEvents>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(ProductsTreeDto.ProductCode) HeaderText="MALZEME KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ProductsTreeDto.ProductName) HeaderText="MALZEME AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ProductsTreeDto.SupplyForm) HeaderText="TEMİN ŞEKLİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ProductsTreeDto.AmountofStock) HeaderText="STOK MİKTARI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ProductsTreeDto.AmountofRequierement) HeaderText="İHTİYAÇ MİKTARI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HideCreateProductionOrderPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 }

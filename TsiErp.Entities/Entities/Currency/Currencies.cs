@@ -8,6 +8,8 @@ using TsiErp.Entities.Entities.ExchangeRate;
 using TsiErp.Entities.Entities.SalesProposition;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.SalesOrder;
+using TsiErp.Entities.Entities.PurchaseOrder;
+using TsiErp.Entities.Entities.PurchaseRequest;
 
 namespace TsiErp.Entities.Entities.Currency
 {
@@ -30,10 +32,10 @@ namespace TsiErp.Entities.Entities.Currency
         public bool IsActive { get; set; }
 
         public ICollection<CurrentAccountCards> CurrentAccountCards { get; set; }
-
+        public ICollection<PurchaseRequests> PurchaseRequests { get; set; }
         public ICollection<SalesPropositions> SalesPropositions { get; set; }
         public ICollection<SalesOrders> SalesOrders { get; set; }
-
+        public ICollection<PurchaseOrders> PurchaseOrders { get; set; }
         public ICollection<ExchangeRates> ExchangeRates { get; set; }
     }
 }

@@ -29,10 +29,7 @@ namespace TsiErp.Entities.Entities.BillsofMaterialLine.Dtos
         /// Ürün ID
         /// </summary>
         public Guid? ProductID { get; set; }
-        /// <summary>
-        /// Miktar Formül
-        /// </summary>
-        public string QuantityFormula { get; set; }
+       
         /// <summary>
         /// Miktar
         /// </summary>

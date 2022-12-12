@@ -7,6 +7,7 @@ using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.Product;
 using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.RouteLine;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Entities.Entities.Route
 {
@@ -47,5 +48,6 @@ namespace TsiErp.Entities.Entities.Route
         public ICollection<RouteLines> RouteLines { get; set; }
         public Products Products { get; set; }
         public ICollection<ProductionOrders> ProductionOrders { get; set; }
+        public ICollection<WorkOrders> WorkOrders { get; set; }
     }
 }

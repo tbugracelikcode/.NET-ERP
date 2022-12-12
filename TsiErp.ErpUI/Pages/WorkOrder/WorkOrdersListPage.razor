@@ -1,0 +1,101 @@
+﻿@page "/work-orders"
+@using Syncfusion.Blazor.Buttons
+@using Tsi.Blazor.Component.Core.Components.Commons.Loadings
+@using TsiErp.Business.Entities.WorkOrder.Services
+@using TsiErp.Entities.Entities.WorkOrder
+@using TsiErp.Entities.Entities.WorkOrder.Dtos
+@using TsiErp.Entities.Entities.Route.Dtos
+@using TsiErp.Business.Entities.Route.Services
+@using TsiErp.Entities.Entities.ProductionOrder.Dtos
+@using TsiErp.Business.Entities.ProductionOrder.Services
+@using TsiErp.Entities.Entities.SalesProposition.Dtos
+@using TsiErp.Business.Entities.SalesProposition.Services
+@using TsiErp.Entities.Entities.ProductsOperation.Dtos
+@using TsiErp.Business.Entities.ProductsOperation.Services
+@using TsiErp.Entities.Entities.Station.Dtos
+@using TsiErp.Business.Entities.Station.Services
+@using TsiErp.Entities.Entities.StationGroup.Dtos
+@using TsiErp.Business.Entities.StationGroup.Services
+@using TsiErp.Entities.Entities.Product.Dtos
+@using TsiErp.Business.Entities.Product.Services
+@using TsiErp.Entities.Entities.CurrentAccountCard.Dtos
+@using TsiErp.Business.Entities.CurrentAccountCard.Services
+@using TsiErp.ErpUI.Pages.Base
+@using Tsi.Blazor.Component.Core.Components.Layouts
+
+@inherits BaseListPage<SelectWorkOrdersDto, ListWorkOrdersDto, CreateWorkOrdersDto, UpdateWorkOrdersDto, ListWorkOrdersParameterDto>
+
+
+@inject IWorkOrdersAppService WorkOrdersAppService
+@inject ICurrentAccountCardsAppService CurrentAccountCardsService
+@inject IProductionOrdersAppService ProductionOrdersAppService
+@inject ISalesPropositionsAppService SalesPropositionsAppService
+@inject IRoutesAppService RoutesAppService
+@inject IProductsOperationsAppService ProductsOperationsAppService
+@inject IStationsAppService StationsAppService
+@inject IStationGroupsAppService StationGroupsAppService
+@inject IProductsAppService ProductsAppService
+
+@if (!base.IsLoaded)
+{
+    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+}
+else
+{
+    <DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+        <GridLayoutItems>
+            <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIListPageTitleCard">
+                        <CardContent>
+                            <TsiBreadCrumb PreviousMenus="Üretim Yönetimi" CurrentMenu="İş Emirleri" />
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+            <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIGridCards">
+                        <CardContent>
+                            <SfGrid ID="Grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                @*  <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListWorkOrdersDto"></GridEvents>*@
+                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                <GridPageSettings PageSizes="true"></GridPageSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridColumns>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.Code) HeaderText="İŞ EMRİ KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderNo) HeaderText="İŞ EMRİ FİŞ NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderState) HeaderText="DURUM" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.AdjustmentAndControlTime) HeaderText="AYAR VE KONTROL SÜRESİ" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.OperationTime) HeaderText="OPERASYON SÜRESİ" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.OccuredStartDate) HeaderText="GERÇEKLEŞEN BAŞLANGIÇ TARİHİ" Type="ColumnType.DateTime" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.OccuredFinishDate) HeaderText="GERÇEKLEŞEN BİTİŞ TARİHİ" Type="ColumnType.DateTime" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.PlannedQuantity) HeaderText="PLANLANAN MİKTAR" TextAlign="TextAlign.Center" Type="ColumnType.Number" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.ProducedQuantity) HeaderText="GERÇEKLEŞEN MİKTAR" TextAlign="TextAlign.Center" Type="ColumnType.Number" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.ProductionOrderFicheNo) HeaderText="ÜRETİM EMRİ FİŞ NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.PropositionFicheNo) HeaderText="SİPARİŞ FİŞ NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.RouteCode) HeaderText="ROTA KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.ProductsOperationCode) HeaderText="OPERASYON KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.StationCode) HeaderText="İSTASYON KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.StationName) HeaderText="İSTASYON AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.StationGroupCode) HeaderText="İSTASYON GRUBU KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.ProductName) HeaderText="STOK ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.CurrentAccountCardCode) HeaderText="CARİ HESAP KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.CurrentAccountCardName) HeaderText="CARİ HESAP ÜNVANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+        </GridLayoutItems>
+    </DevGridLayout>
+
+}
