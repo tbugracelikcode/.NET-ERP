@@ -1117,11 +1117,10 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.ToTable("ProductsOperations");
                 b.ConfigureByConvention();
 
-                //b.HasQueryFilter(x => !x.IsDeleted);
-
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
                 b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.TemplateOperationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.WorkCenterID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
 
@@ -1143,7 +1142,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.ProductsOperationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.Priority).IsRequired().HasColumnType(SqlDbType.Int.ToString());
                 b.Property(t => t.ProcessQuantity).HasColumnType(SqlDbType.Int.ToString());
-                b.Property(t => t.AdjustmentAndControlTime).HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.AdjustmentAndControlTime).HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.OperationTime).HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.LineNr).IsRequired().HasColumnType(SqlDbType.Int.ToString());
                 b.Property(t => t.Alternative).HasColumnType(SqlDbType.Bit.ToString());

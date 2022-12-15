@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,10 +28,12 @@ namespace TsiErp.Entities.Entities.ProductsOperationLine
         /// İşlem Adet
         /// </summary>
         public int ProcessQuantity { get; set; }
+        [Precision(18, 6)]
         /// <summary>
         /// Ayar ve Kontrol Süresi
         /// </summary>
-        public int AdjustmentAndControlTime { get; set; }
+        public decimal AdjustmentAndControlTime { get; set; }
+        [Precision(18, 6)]
         /// <summary>
         /// Operasyon Süresi
         /// </summary>

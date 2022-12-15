@@ -2124,133 +2124,123 @@ namespace TsiErp.DataAccess.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Id");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(17)
-                        .HasColumnType("NVarChar(17)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CreationTime")
-                        .IsRequired()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreationTime");
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid?>("CreatorId")
-                        .IsRequired()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("CreatorId");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("DeleterId");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DeletionTime");
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("Bit");
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("LastModificationTime");
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("LastModifierId");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("NVarChar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ProductID")
-                        .HasColumnType("UniqueIdentifier");
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ProductsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TemplateOperationID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("WorkCenterID")
-                        .HasColumnType("UniqueIdentifier");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Code");
+                    b.HasIndex("ProductsId");
 
-                    b.HasIndex("ProductID");
-
-                    b.ToTable("ProductsOperations", (string)null);
+                    b.ToTable("ProductsOperations");
                 });
 
             modelBuilder.Entity("TsiErp.Entities.Entities.ProductsOperationLine.ProductsOperationLines", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Id");
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("AdjustmentAndControlTime")
-                        .HasColumnType("Int");
+                    b.Property<decimal>("AdjustmentAndControlTime")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
 
                     b.Property<bool>("Alternative")
-                        .HasColumnType("Bit");
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("CreationTime")
-                        .IsRequired()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreationTime");
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid?>("CreatorId")
-                        .IsRequired()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("CreatorId");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("DeleterId");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DeletionTime");
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("LastModificationTime");
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("LastModifierId");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("LineNr")
-                        .HasColumnType("Int");
+                        .HasColumnType("int");
 
                     b.Property<decimal>("OperationTime")
-                        .HasColumnType("Decimal");
+                        .HasPrecision(18, 6)
+                        .HasColumnType("decimal(18,6)");
 
                     b.Property<int>("Priority")
-                        .HasColumnType("Int");
+                        .HasColumnType("int");
 
                     b.Property<int>("ProcessQuantity")
-                        .HasColumnType("Int");
+                        .HasColumnType("int");
 
                     b.Property<Guid>("ProductsOperationID")
-                        .HasColumnType("UniqueIdentifier");
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ProductsOperationsId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("StationID")
-                        .HasColumnType("UniqueIdentifier");
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("StationsId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductsOperationID");
+                    b.HasIndex("ProductsOperationsId");
 
-                    b.HasIndex("StationID");
+                    b.HasIndex("StationsId");
 
-                    b.ToTable("ProductsOperationLines", (string)null);
+                    b.ToTable("ProductsOperationLines");
                 });
 
             modelBuilder.Entity("TsiErp.Entities.Entities.PurchaseOrder.PurchaseOrders", b =>
@@ -4704,9 +4694,7 @@ namespace TsiErp.DataAccess.Migrations
                 {
                     b.HasOne("TsiErp.Entities.Entities.Product.Products", "Products")
                         .WithMany("ProductsOperations")
-                        .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("ProductsId");
 
                     b.Navigation("Products");
                 });
@@ -4715,15 +4703,11 @@ namespace TsiErp.DataAccess.Migrations
                 {
                     b.HasOne("TsiErp.Entities.Entities.ProductsOperation.ProductsOperations", "ProductsOperations")
                         .WithMany("ProductsOperationLines")
-                        .HasForeignKey("ProductsOperationID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductsOperationsId");
 
                     b.HasOne("TsiErp.Entities.Entities.Station.Stations", "Stations")
                         .WithMany("ProductsOperationLines")
-                        .HasForeignKey("StationID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .HasForeignKey("StationsId");
 
                     b.Navigation("ProductsOperations");
 

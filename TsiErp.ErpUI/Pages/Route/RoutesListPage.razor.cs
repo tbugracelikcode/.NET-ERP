@@ -195,7 +195,7 @@ namespace TsiErp.ErpUI.Pages.Route
                         {
                             LineNr = 0,
                             Priority =0,
-                            AdjustmentAndControlTime = productsOperationLine.AdjustmentAndControlTime,
+                            AdjustmentAndControlTime = (int)productsOperationLine.AdjustmentAndControlTime,
                             OperationCode = selectedRow.Code,
                             OperationName = selectedRow.Name,
                             OperationTime = productsOperationLine.OperationTime,

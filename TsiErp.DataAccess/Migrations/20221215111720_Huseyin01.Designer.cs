@@ -12,8 +12,8 @@ using TsiErp.DataAccess.EntityFrameworkCore;
 namespace TsiErp.DataAccess.Migrations
 {
     [DbContext(typeof(TsiErpDbContext))]
-    [Migration("20221212062230_Opr_Purc_Uns_Reports_01")]
-    partial class Opr_Purc_Uns_Reports_01
+    [Migration("20221215111720_Huseyin01")]
+    partial class Huseyin01
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -145,11 +145,6 @@ namespace TsiErp.DataAccess.Migrations
 
                     b.Property<decimal>("Quantity")
                         .HasColumnType("Decimal");
-
-                    b.Property<string>("QuantityFormula")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("NVarChar(200)");
 
                     b.Property<Guid>("RouteID")
                         .HasColumnType("UniqueIdentifier");
@@ -2179,6 +2174,9 @@ namespace TsiErp.DataAccess.Migrations
                     b.Property<Guid>("ProductID")
                         .HasColumnType("UniqueIdentifier");
 
+                    b.Property<Guid>("TemplateOperationID")
+                        .HasColumnType("UniqueIdentifier");
+
                     b.Property<Guid>("WorkCenterID")
                         .HasColumnType("UniqueIdentifier");
 
@@ -2510,251 +2508,250 @@ namespace TsiErp.DataAccess.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
 
                     b.Property<Guid>("BranchID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("BranchesId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("UniqueIdentifier");
 
                     b.Property<DateTime?>("CreationTime")
-                        .HasColumnType("datetime2");
+                        .IsRequired()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
 
                     b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CurrenciesId")
-                        .HasColumnType("uniqueidentifier");
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
 
                     b.Property<Guid>("CurrencyID")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("UniqueIdentifier");
 
                     b.Property<Guid>("CurrentAccountCardID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CurrentAccountCardsId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("UniqueIdentifier");
 
                     b.Property<DateTime>("Date_")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("DateTime");
 
                     b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
 
                     b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
 
                     b.Property<string>("Description_")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("ExchangeRate")
                         .HasPrecision(18, 6)
-                        .HasColumnType("decimal(18,6)");
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<string>("FicheNo")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(17)
+                        .HasColumnType("NVarChar(17)");
 
                     b.Property<decimal>("GrossAmount")
                         .HasPrecision(18, 6)
-                        .HasColumnType("decimal(18,6)");
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
 
                     b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
 
                     b.Property<Guid>("LinkedPurchaseRequestID")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("UniqueIdentifier");
 
                     b.Property<decimal>("NetAmount")
                         .HasPrecision(18, 6)
-                        .HasColumnType("decimal(18,6)");
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<Guid>("PaymentPlanID")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("UniqueIdentifier");
 
                     b.Property<Guid?>("ProductionOrderID")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("UniqueIdentifier");
 
                     b.Property<string>("PropositionRevisionNo")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("NVarChar(50)");
 
                     b.Property<int>("PurchaseRequestState")
-                        .HasColumnType("int");
+                        .HasColumnType("Int");
 
                     b.Property<DateTime?>("RevisionDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("DateTime");
 
                     b.Property<string>("RevisionTime")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(8)
+                        .HasColumnType("NVarChar(8)");
 
                     b.Property<Guid?>("ShippingAdressID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ShippingAdressesId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("UniqueIdentifier");
 
                     b.Property<string>("SpecialCode")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(201)
+                        .HasColumnType("NVarChar(201)");
 
                     b.Property<string>("Time_")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(8)
+                        .HasColumnType("NVarChar(8)");
 
                     b.Property<decimal>("TotalDiscountAmount")
                         .HasPrecision(18, 6)
-                        .HasColumnType("decimal(18,6)");
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<decimal>("TotalVatAmount")
                         .HasPrecision(18, 6)
-                        .HasColumnType("decimal(18,6)");
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<decimal>("TotalVatExcludedAmount")
                         .HasPrecision(18, 6)
-                        .HasColumnType("decimal(18,6)");
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<DateTime>("ValidityDate_")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("DateTime");
 
                     b.Property<Guid>("WarehouseID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("WarehousesId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("UniqueIdentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BranchesId");
+                    b.HasIndex("BranchID");
 
-                    b.HasIndex("CurrenciesId");
+                    b.HasIndex("CurrencyID");
 
-                    b.HasIndex("CurrentAccountCardsId");
+                    b.HasIndex("CurrentAccountCardID");
+
+                    b.HasIndex("FicheNo");
 
                     b.HasIndex("PaymentPlanID");
 
-                    b.HasIndex("ShippingAdressesId");
+                    b.HasIndex("ShippingAdressID");
 
-                    b.HasIndex("WarehousesId");
+                    b.HasIndex("WarehouseID");
 
-                    b.ToTable("PurchaseRequests");
+                    b.ToTable("PurchaseRequests", (string)null);
                 });
 
             modelBuilder.Entity("TsiErp.Entities.Entities.PurchaseRequestLine.PurchaseRequestLines", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
 
                     b.Property<DateTime?>("CreationTime")
-                        .HasColumnType("datetime2");
+                        .IsRequired()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
 
                     b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uniqueidentifier");
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
 
                     b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
 
                     b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
 
                     b.Property<decimal>("DiscountAmount")
                         .HasPrecision(18, 6)
-                        .HasColumnType("decimal(18,6)");
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<decimal>("DiscountRate")
                         .HasPrecision(18, 6)
-                        .HasColumnType("decimal(18,6)");
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<decimal>("ExchangeRate")
                         .HasPrecision(18, 6)
-                        .HasColumnType("decimal(18,6)");
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
 
                     b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
 
                     b.Property<decimal>("LineAmount")
                         .HasPrecision(18, 6)
-                        .HasColumnType("decimal(18,6)");
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<string>("LineDescription")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(MAX)");
 
                     b.Property<int>("LineNr")
-                        .HasColumnType("int");
+                        .HasColumnType("Int");
 
                     b.Property<decimal>("LineTotalAmount")
                         .HasPrecision(18, 6)
-                        .HasColumnType("decimal(18,6)");
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<DateTime?>("OrderConversionDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("DateTime");
 
                     b.Property<Guid>("PaymentPlanID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("PaymentPlansId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("UniqueIdentifier");
 
                     b.Property<Guid>("ProductID")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("UniqueIdentifier");
 
                     b.Property<Guid>("ProductionOrderID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ProductsId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("UniqueIdentifier");
 
                     b.Property<Guid>("PurchaseRequestID")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("UniqueIdentifier");
 
                     b.Property<int>("PurchaseRequestLineState")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("PurchaseRequestsId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("Int");
 
                     b.Property<decimal>("Quantity")
                         .HasPrecision(18, 6)
-                        .HasColumnType("decimal(18,6)");
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<decimal>("UnitPrice")
                         .HasPrecision(18, 6)
-                        .HasColumnType("decimal(18,6)");
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<Guid>("UnitSetID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("UnitSetsId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("UniqueIdentifier");
 
                     b.Property<decimal>("VATamount")
                         .HasPrecision(18, 6)
-                        .HasColumnType("decimal(18,6)");
+                        .HasColumnType("Decimal(18,6)");
 
                     b.Property<int>("VATrate")
-                        .HasColumnType("int");
+                        .HasColumnType("Int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PaymentPlansId");
+                    b.HasIndex("PaymentPlanID");
 
-                    b.HasIndex("ProductsId");
+                    b.HasIndex("ProductID");
 
-                    b.HasIndex("PurchaseRequestsId");
+                    b.HasIndex("PurchaseRequestID");
 
-                    b.HasIndex("UnitSetsId");
+                    b.HasIndex("UnitSetID");
 
-                    b.ToTable("PurchaseRequestLines");
+                    b.ToTable("PurchaseRequestLines", (string)null);
                 });
 
             modelBuilder.Entity("TsiErp.Entities.Entities.PurchaseUnsuitabilityReport.PurchaseUnsuitabilityReports", b =>
@@ -4827,29 +4824,38 @@ namespace TsiErp.DataAccess.Migrations
                 {
                     b.HasOne("TsiErp.Entities.Entities.Branch.Branches", "Branches")
                         .WithMany("PurchaseRequests")
-                        .HasForeignKey("BranchesId");
+                        .HasForeignKey("BranchID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("TsiErp.Entities.Entities.Currency.Currencies", "Currencies")
                         .WithMany("PurchaseRequests")
-                        .HasForeignKey("CurrenciesId");
+                        .HasForeignKey("CurrencyID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("TsiErp.Entities.Entities.CurrentAccountCard.CurrentAccountCards", "CurrentAccountCards")
                         .WithMany("PurchaseRequests")
-                        .HasForeignKey("CurrentAccountCardsId");
+                        .HasForeignKey("CurrentAccountCardID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("TsiErp.Entities.Entities.PaymentPlan.PaymentPlans", "PaymentPlan")
                         .WithMany("PurchaseRequests")
                         .HasForeignKey("PaymentPlanID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("TsiErp.Entities.Entities.ShippingAdress.ShippingAdresses", "ShippingAdresses")
                         .WithMany("PurchaseRequests")
-                        .HasForeignKey("ShippingAdressesId");
+                        .HasForeignKey("ShippingAdressID")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("TsiErp.Entities.Entities.WareHouse.Warehouses", "Warehouses")
                         .WithMany("PurchaseRequests")
-                        .HasForeignKey("WarehousesId");
+                        .HasForeignKey("WarehouseID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Branches");
 
@@ -4868,19 +4874,27 @@ namespace TsiErp.DataAccess.Migrations
                 {
                     b.HasOne("TsiErp.Entities.Entities.PaymentPlan.PaymentPlans", "PaymentPlans")
                         .WithMany("PurchaseRequestLines")
-                        .HasForeignKey("PaymentPlansId");
+                        .HasForeignKey("PaymentPlanID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("TsiErp.Entities.Entities.Product.Products", "Products")
                         .WithMany("PurchaseRequestLines")
-                        .HasForeignKey("ProductsId");
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("TsiErp.Entities.Entities.PurchaseRequest.PurchaseRequests", "PurchaseRequests")
                         .WithMany("PurchaseRequestLines")
-                        .HasForeignKey("PurchaseRequestsId");
+                        .HasForeignKey("PurchaseRequestID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("TsiErp.Entities.Entities.UnitSet.UnitSets", "UnitSets")
                         .WithMany("PurchaseRequestLines")
-                        .HasForeignKey("UnitSetsId");
+                        .HasForeignKey("UnitSetID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("PaymentPlans");
 

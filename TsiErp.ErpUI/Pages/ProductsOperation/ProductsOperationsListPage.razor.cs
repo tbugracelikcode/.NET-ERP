@@ -7,6 +7,8 @@ using TsiErp.Entities.Entities.Product.Dtos;
 using TsiErp.Entities.Entities.ProductsOperation.Dtos;
 using TsiErp.Entities.Entities.ProductsOperationLine.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
+using TsiErp.Entities.Entities.TemplateOperation.Dtos;
+using TsiErp.Entities.Entities.TemplateOperationLine.Dtos;
 
 namespace TsiErp.ErpUI.Pages.ProductsOperation
 {
@@ -20,6 +22,9 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
         SfComboBox<string, ListProductsDto> ProductsComboBox;
         List<ListProductsDto> ProductsList = new List<ListProductsDto>();
 
+        SfComboBox<string, ListTemplateOperationsDto> TemplateOperationsComboBox;
+        List<ListTemplateOperationsDto> TemplateOperationsList = new List<ListTemplateOperationsDto>();
+
         #endregion
 
         private SfGrid<ListProductsOperationsDto> _grid;
@@ -29,22 +34,27 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
         ModalManager ModalManager { get; set; }
 
         SelectProductsOperationLinesDto LineDataSource;
+
+        SelectTemplateOperationsDto TemplateOperationDataSource;
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectProductsOperationLinesDto> GridLineList = new List<SelectProductsOperationLinesDto>();
 
+        List<SelectTemplateOperationLinesDto> TemplateOperationLineList = new List<SelectTemplateOperationLinesDto>();
+
         private bool LineCrudPopup = false;
 
         protected override async void OnInitialized()
         {
-             CreateMainContextMenuItems();
-             CreateLineContextMenuItems();
+            CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
 
             BaseCrudService = ProductsOperationsAppService;
-         
+
             await GetProductsList();
             await GetLineStationsList();
+            await GetTemplateOperationsList();
         }
 
         #region Ürüne Özel Operasyon Satır Modalı İşlemleri
@@ -109,7 +119,7 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
 
                 case "changed":
                     DataSource = (await ProductsOperationsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    GridLineList = DataSource.SelectProductsOperationLines.OrderBy(t=>t.Priority).ToList();
+                    GridLineList = DataSource.SelectProductsOperationLines.OrderBy(t => t.Priority).ToList();
 
                     foreach (var item in GridLineList)
                     {
@@ -260,7 +270,7 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
                 }
             }
 
-            GridLineList = DataSource.SelectProductsOperationLines.OrderBy(t=>t.Priority).ToList();
+            GridLineList = DataSource.SelectProductsOperationLines.OrderBy(t => t.Priority).ToList();
 
             await _LineGrid.Refresh();
 
@@ -346,6 +356,91 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
             {
                 DataSource.ProductID = Guid.Empty;
                 DataSource.ProductCode = string.Empty;
+            }
+            LineCalculate();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        #endregion
+
+        #region Şablon Operasyonlar 
+
+        public async Task TemplateOperationFiltering(FilteringEventArgs args)
+        {
+
+            args.PreventDefaultAction = true;
+
+            var pre = new WhereFilter();
+            var predicate = new List<WhereFilter>();
+            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
+            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
+            pre = WhereFilter.Or(predicate);
+
+            var query = new Query();
+            query = args.Text == "" ? new Query() : new Query().Where(pre);
+
+            await TemplateOperationsComboBox.FilterAsync(TemplateOperationsList, query);
+        }
+
+        private async Task GetTemplateOperationsList()
+        {
+            TemplateOperationsList = (await TemplateOperationsAppService.GetListAsync(new ListTemplateOperationsParameterDto())).Data.ToList();
+        }
+
+        public async Task TemplateOperationValueChangeHandler(ChangeEventArgs<string, ListTemplateOperationsDto> args)
+        {
+            if (args.ItemData != null)
+            {
+                if (DataSource.ProductID != null)
+                {
+                    DataSource.TemplateOperationID = args.ItemData.Id;
+                    DataSource.TemplateOperationCode = args.ItemData.Code;
+                    DataSource.TemplateOperationName = args.ItemData.Name;
+                    DataSource.Name = DataSource.ProductCode + "-" + args.ItemData.Name;
+                    DataSource.Code = DataSource.ProductCode + "-" + args.ItemData.Code;
+
+                    TemplateOperationDataSource = (await TemplateOperationsAppService.GetAsync(args.ItemData.Id)).Data;
+                    TemplateOperationLineList = TemplateOperationDataSource.SelectTemplateOperationLines;
+                    var stationList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
+
+                    foreach (var item in TemplateOperationLineList)
+                    {
+                        SelectProductsOperationLinesDto _productsOperationLine = new SelectProductsOperationLinesDto
+                        {
+                            AdjustmentAndControlTime = item.AdjustmentAndControlTime,
+                            Alternative = item.Alternative,
+                            OperationTime = item.OperationTime,
+                            LineNr = item.LineNr,
+                            Priority = item.Priority,
+                            ProcessQuantity = item.ProcessQuantity,
+                            ProductsOperationCode = DataSource.Code,
+                            ProductsOperationID = DataSource.Id,
+                            ProductsOperationName = DataSource.Name,
+                            StationCode = stationList.Where(t=>t.Id == item.StationID).Select(t=>t.Code).FirstOrDefault(),
+                            StationID = item.StationID,
+                            StationName = stationList.Where(t => t.Id == item.StationID).Select(t => t.Name).FirstOrDefault()
+
+                        };
+                        GridLineList.Add(_productsOperationLine);
+                      
+                       
+                    }
+                    await _LineGrid.Refresh();
+                    await InvokeAsync(StateHasChanged);
+                }
+                else
+                {
+                    await ModalManager.WarningPopupAsync("Uyarı", "Ürün seçmeden şablon operasyon seçilemez.");
+                }
+
+            }
+            else
+            {
+                DataSource.TemplateOperationID = Guid.Empty;
+                DataSource.TemplateOperationCode = string.Empty;
+                DataSource.TemplateOperationName = string.Empty;
+                DataSource.Name = string.Empty;
+                DataSource.Code = string.Empty;
             }
             LineCalculate();
             await InvokeAsync(StateHasChanged);

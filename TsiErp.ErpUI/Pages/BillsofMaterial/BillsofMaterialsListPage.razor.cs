@@ -299,7 +299,6 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
         }
         #endregion
 
-
         #region Birim Setleri - Reçete Satırları
         public async Task LineUnitSetFiltering(FilteringEventArgs args)
         {
