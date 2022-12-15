@@ -27,6 +27,10 @@ namespace TsiErp.Entities.Entities.ProductsOperation.Dtos
         /// </summary>
         public Guid? ProductID { get; set; }
         /// <summary>
+        /// Şablon Operasyon ID
+        /// </summary>
+        public Guid? TemplateOperationID { get; set; }
+        /// <summary>
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
