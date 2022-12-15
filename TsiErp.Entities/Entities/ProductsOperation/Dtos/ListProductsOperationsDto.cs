@@ -30,6 +30,14 @@ namespace TsiErp.Entities.Entities.ProductsOperation.Dtos
         /// </summary>
         public string ProductName { get; set; }
         /// <summary>
+        /// Şablon Operasyon Kodu
+        /// </summary>
+        public string TemplateOperationCode { get; set; }
+        /// <summary>
+        /// Şablon Operasyon Açıklaması
+        /// </summary>
+        public string TemplateOperationName { get; set; }
+        /// <summary>
         /// Ürün Id
         /// </summary>
         public Guid ProductId { get; set; }

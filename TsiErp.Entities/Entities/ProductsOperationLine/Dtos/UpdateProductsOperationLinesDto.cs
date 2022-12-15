@@ -32,7 +32,7 @@ namespace TsiErp.Entities.Entities.ProductsOperationLine.Dtos
         /// <summary>
         /// Ayar ve Kontrol Süresi
         /// </summary>
-        public int AdjustmentAndControlTime { get; set; }
+        public decimal AdjustmentAndControlTime { get; set; }
         /// <summary>
         /// Satır Numarası
         /// </summary>
