@@ -39,19 +39,23 @@ namespace TsiErp.ErpUI.Pages.Calendar
         public SfGrid<SelectCalendarDaysDto> _daysGrid;
         public List<SelectCalendarDaysDto> GridDaysList = new List<SelectCalendarDaysDto>();
         public List<SelectCalendarDaysDto> SchedularDaysList = new List<SelectCalendarDaysDto>();
-        //public List<SelectCalendarDaysDto> SchedularDaysResourceList = new List<SelectCalendarDaysDto>();
         SfComboBox<int, int> Years;
         public DateTime CurrentDate = DateTime.Today;
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         [Inject]
         ModalManager ModalManager { get; set; }
-        //public bool chcTumu;
-        //public bool chcCalismaVar;
-        //public bool chcResmiTatil;
+        private bool isCell;
+        public bool chcTumu=true;
+        public bool chcCalismaVar;
+        public bool chcCalismaYok;
+        public bool chcResmiTatil;
+        public bool chcTatil;
+        public bool chcYarimGun;
+        public bool chcYuklemeGunu;
+        public bool chcBakim;
         private bool modal1visible = false;
         private bool modal2visible = false;
-        DateTime today = DateTime.Today;
         string imageURL = "images/Stations/";
 
         public List<AppointmentData> DataSourceEvent = new List<AppointmentData>{};
@@ -93,50 +97,28 @@ namespace TsiErp.ErpUI.Pages.Calendar
                 modal1visible = true;
             }
         }
-        //public async Task OnChange(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool> args)
-        //{
-        //    List<int> selectedResource = new List<int>();
-        //    List<AppointmentData> filteredData = new List<AppointmentData>();
-        //    if (chcTumu) { selectedResource.Add(0); }
-        //    if (chcCalismaVar) { selectedResource.Add(1); }
-        //    if (chcResmiTatil) { selectedResource.Add(2); }
-        //    foreach (int resource in selectedResource)
-        //    {
-        //        List<AppointmentData> data = FinalDataSource.Where(x => ResourceList[resource].Id == x.ResourceId).ToList();
-        //        filteredData = filteredData.Concat(data).ToList();
-        //    }
 
-        //    DataSourceEvent = filteredData;
-        //}
-
-        public void OnRenderCell(RenderCellEventArgs args)
+        public void customChange(string switchName)
         {
-            switch (DataSourceEvent.Where(t => t.StartTime == args.Date).Select(t => t.ResourceId).LastOrDefault())
+            DataSourceEvent = FinalDataSource;
+            List<int> selectedResource = new List<int>();
+            List<AppointmentData> filteredData = new List<AppointmentData>();
+            if (chcCalismaVar) { selectedResource.Add(0); }
+            if (chcCalismaYok) { selectedResource.Add(1); }
+            if (chcResmiTatil) { selectedResource.Add(2); }
+            if (chcTatil) { selectedResource.Add(3); }
+            if (chcYarimGun) { selectedResource.Add(4); }
+            if (chcYuklemeGunu) { selectedResource.Add(5); }
+            if (chcBakim) { selectedResource.Add(6); }
+            foreach (int resource in selectedResource)
             {
-                case 1:
-                    args.CssClasses = new List<string> { "calismaVar" };
-                    break;
-                case 2:
-                    args.CssClasses = new List<string>() { "calismaYok" };
-                    break;
-                case 3:
-                    args.CssClasses = new List<string>() { "resmiTatil" };
-                    break;
-                case 4:
-                    args.CssClasses = new List<string>() { "tatil" };
-                    break;
-                case 5:
-                    args.CssClasses = new List<string>() { "yarimGun" };
-                    break;
-                case 6:
-                    args.CssClasses = new List<string>() { "yuklemeGunu" };
-                    break;
-                case 7:
-                    args.CssClasses = new List<string>() { "bakim" };
-                    break;
-                default:
-                    break;
+                List<AppointmentData> data = FinalDataSource.Where(x => ResourceList[resource].Id == x.ResourceId).ToList();
+                filteredData = filteredData.Concat(data).ToList();
             }
+            DataSourceEvent = filteredData;
+            if (switchName == "chcTumu") { chcCalismaVar = false; chcCalismaYok = false; chcResmiTatil = false; chcTatil = false; chcYarimGun = false; chcYuklemeGunu = false; chcBakim = false; } else { chcTumu = false; }
+
+            if (chcTumu) { DataSourceEvent = FinalDataSource; }
         }
 
         private void GetYearsList()
