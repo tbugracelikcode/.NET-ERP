@@ -38,6 +38,19 @@ namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityReport
 
         #endregion
 
+        public class UnsComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<UnsComboBox> _unsComboBox = new List<UnsComboBox>
+        {
+            new UnsComboBox(){ID = "Scrap", Text="Hurda"},
+            new UnsComboBox(){ID = "Correction", Text="Düzeltme"},
+            new UnsComboBox(){ID = "ToBeUsedAs", Text="Olduğu Gibi Kullanılacak"}
+        };
+
         protected override async void OnInitialized()
         {
             BaseCrudService = OperationUnsuitabilityReportsService;
@@ -61,6 +74,32 @@ namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityReport
             ShowEditPage();
 
             await Task.CompletedTask;
+        }
+
+        private void UnsComboBoxValueChangeHandler(ChangeEventArgs<string, UnsComboBox> args)
+        {
+            switch(args.ItemData.ID)
+            {
+                case "Scrap": 
+                    DataSource.IsScrap = true; 
+                    DataSource.IsCorrection = false; 
+                    DataSource.IsToBeUsedAs = false;
+                    break;
+
+                case "Correction":
+                    DataSource.IsScrap = false;
+                    DataSource.IsCorrection = true;
+                    DataSource.IsToBeUsedAs = false;
+                    break;
+
+                case "ToBeUsedAs":
+                    DataSource.IsScrap = false;
+                    DataSource.IsCorrection = false;
+                    DataSource.IsToBeUsedAs = true;
+                    break;
+
+                default:break;
+            }
         }
 
         #region Ürünler

@@ -23,6 +23,20 @@ namespace TsiErp.ErpUI.Pages.PurchaseUnsuitabilityReport
 
         #endregion
 
+        public class UnsComboBox
+        {
+            public string ID { get; set; }
+            public string Text { get; set; }
+        }
+
+        List<UnsComboBox> _unsComboBox = new List<UnsComboBox>
+        {
+            new UnsComboBox(){ID = "Rejection", Text="Red"},
+            new UnsComboBox(){ID = "Correction", Text="Düzeltme"},
+            new UnsComboBox(){ID = "ToBeUsedAs", Text="Olduğu Gibi Kullanılacak"},
+            new UnsComboBox(){ID = "ContactSupplier", Text="Tedarikçi ile İrtibat"}
+        };
+
         protected override async void OnInitialized()
         {
             BaseCrudService = PurchaseUnsuitabilityReportsService;
@@ -30,6 +44,42 @@ namespace TsiErp.ErpUI.Pages.PurchaseUnsuitabilityReport
             await GetProductsList();
             await GetPurchaseOrdersList();
             await GetCurrentAccountCardsList();
+        }
+
+        private void UnsComboBoxValueChangeHandler(ChangeEventArgs<string, UnsComboBox> args)
+        {
+            switch (args.ItemData.ID)
+            {
+                case "Rejection":
+                    DataSource.IsReject = true;
+                    DataSource.IsCorrection = false;
+                    DataSource.IsToBeUsedAs = false;
+                    DataSource.IsContactSupplier = false;
+                    break;
+
+                case "Correction":
+                    DataSource.IsReject = false;
+                    DataSource.IsCorrection = true;
+                    DataSource.IsToBeUsedAs = false;
+                    DataSource.IsContactSupplier = false;
+                    break;
+
+                case "ToBeUsedAs":
+                    DataSource.IsReject = false;
+                    DataSource.IsCorrection = false;
+                    DataSource.IsToBeUsedAs = true;
+                    DataSource.IsContactSupplier = false;
+                    break;
+
+                case "ContactSupplier":
+                    DataSource.IsReject = false;
+                    DataSource.IsCorrection = false;
+                    DataSource.IsToBeUsedAs = false;
+                    DataSource.IsContactSupplier = true;
+                    break;
+
+                default: break;
+            }
         }
 
         protected override async Task BeforeInsertAsync()
