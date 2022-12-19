@@ -32,9 +32,6 @@ namespace TsiErp.Business.Entities.SalesOrder.Validations
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
                .WithMessage("Lütfen depo seçin.");
 
-            //RuleFor(x => x.PaymentPlanID)
-            //    .Must(x => x.HasValue && x.Value != Guid.Empty)
-            //   .WithMessage("Lütfen ödeme planı seçin.");
 
             RuleFor(x => x.BranchID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)

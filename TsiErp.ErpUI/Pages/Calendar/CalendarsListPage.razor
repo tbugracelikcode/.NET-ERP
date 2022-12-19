@@ -8,6 +8,7 @@
 @using Tsi.Blazor.Component.Core.Components.Layouts
 @using TsiErp.Entities.Entities.Calendar.Dtos
 @using TsiErp.Business.Entities.Calendar.Services
+@using TsiErp.Business.Entities.Station.Services
 @using Syncfusion.Blazor.Schedule
 @using Syncfusion.Blazor.Navigations
 
@@ -15,6 +16,7 @@
 
 
 @inject ICalendarsAppService CalendarsService
+@inject IStationsAppService StationsAppService
 
 @{
     if (!base.IsLoaded)
@@ -70,7 +72,6 @@
                                 </DxGridLayoutItem>
                             </GridLayoutItems>
     </DevGridLayout>
-
 
     <DxPopup @bind-Visible="base.EditPageVisible"
          ShowFooter="true"
@@ -214,7 +215,7 @@
                             <BodyTemplate>
                             <table>
                   <th style="width:75%">
-                                <SfSchedule @ref="ScheduleObj" TValue="AppointmentData" @bind-SelectedDate="@CurrentDate" Width="100%" Height="650px" ShowQuickInfo="false">
+                                <SfSchedule @ref="ScheduleObj" TValue="AppointmentData" @bind-SelectedDate="@CurrentDate" Width="100%" Height="650px">
 
                                     <ScheduleResources>
                                         <ScheduleResource TItem="ResourceData" TValue="int[]" DataSource="@ResourceList" Field="ResourceId" Title="Owner" Name="Owners" TextField="OwnerText" IdField="Id" ColorField="Color" AllowMultiple="true"></ScheduleResource>
@@ -222,16 +223,7 @@
                                     <ScheduleEvents TValue="AppointmentData" OnPopupOpen="@OnPopupOpen"> </ScheduleEvents>
                                     <ScheduleEventSettings DataSource="@DataSourceEvent">
                                     </ScheduleEventSettings>
-                                    <ScheduleQuickInfoTemplates>
-                                    <ContentTemplate>
-                                @if ((context as AppointmentData).Id == default(int) )
-                {
-                                    <div class="cell-footer">
-                                        <SfButton Content="Düzenle" IsPrimary="true" OnClick="@(ShowModal1)"></SfButton>
-                                    </div>
-                }
-                            </ContentTemplate>
-                        </ScheduleQuickInfoTemplates>
+                                   
                                     <ScheduleViews>
                                         <ScheduleView Option="View.Year" FirstDayOfWeek="1" ShowWeekNumber=true></ScheduleView>
                                     </ScheduleViews>
@@ -283,29 +275,15 @@
 
                                 </ScheduleTemplates>
                                 </SfSchedule>
-                                @*<SfContextMenu TValue="MenuItem" Target=".e-schedule">
+
+                                <SfContextMenu TValue="MenuItem" Target=".e-schedule">
     <MenuItems>
-        <MenuItem Text="New Event" Id="Add" Hidden="@isCell"></MenuItem>
-        <MenuItem Text="New Recurring Event" Hidden="@isCell" Id="AddRecurrence"></MenuItem>
-        <MenuItem Text="Today" Id="Today" Hidden="@isCell"></MenuItem>
-        <MenuItem Text="Edit Event" Id="Save" Hidden="@isEvent"></MenuItem>
-        <MenuItem Text="Edit Event" Id="EditRecurrenceEvent" Hidden="@isRecurrence">
-            <MenuItems>
-                <MenuItem Text="Edit Occurrence" Id="EditOccurrence" Hidden="@isRecurrence"></MenuItem>
-                <MenuItem Text="Edit Series" Id="EditSeries" Hidden="@isRecurrence"></MenuItem>
-            </MenuItems>
-        </MenuItem>
-        <MenuItem Text="Delete Event" Id="Delete" Hidden="@isEvent"></MenuItem>
-        <MenuItem Text="Delete Event" Id="DeleteRecurrenceEvent" Hidden="@isRecurrence">
-            <MenuItems>
-                <MenuItem Text="Delete Occurrence" Id="DeleteOccurrence" Hidden="@isRecurrence"></MenuItem>
-                <MenuItem Text="Delete Series" Id="DeleteSeries" Hidden="@isRecurrence"></MenuItem>
-            </MenuItems>
-        </MenuItem>
-        <MenuItem Text="Rename" Id="Rename" Hidden="@isResource"></MenuItem>
+        <MenuItem Text="Düzenle" Id="Edit" Hidden="@isCell"></MenuItem>
+        
     </MenuItems>
-    <MenuEvents TValue="MenuItem" OnOpen="OnOpen" ItemSelected="OnItemSelected"></MenuEvents>
-</SfContextMenu>*@
+    <MenuEvents TValue="MenuItem" ItemSelected="OnItemSelected"></MenuEvents>
+</SfContextMenu>
+                              
                                 </th>
                                 <th style="width:25%">
                                 <table id='property' class='property-panel-table' style="width: 100%;">
@@ -359,6 +337,7 @@
                                 <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
                             </FooterContentTemplate>
     </DxPopup>
+
     <DxPopup Visible="modal1visible"
          ShowFooter="true"
          CloseButtonClick="HideModal1"
@@ -387,9 +366,9 @@
                                                         <center>
                                                             <div class="control-section col-lg-11 card-control-section tile_layout">
                                                                 <div class="row e-card-layout">
-                                                                    @if (ListDataSource != null)
+                                                                    @if (StationsList != null)
                                     {
-                                                                        @foreach (var item in ListDataSource)
+                                                                        @foreach (var item in StationsList)
                                         {
                                             string exactURL = imageURL + item.Code + "off.png";
 
@@ -457,7 +436,6 @@
                     </FooterContentTemplate>
     </DxPopup>
 
-
     <DxPopup Visible="modal2visible"
          ShowFooter="true"
          CloseButtonClick="HideModal2"
@@ -509,6 +487,7 @@
                         <SfButton CssClass="TSISaveButton" OnClick="Modal2Save"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
                     </FooterContentTemplate>
     </DxPopup>
+
     <style>
                             .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-other-month {
                                 visibility: hidden !important;
@@ -534,6 +513,7 @@
             .e-schedule .e-year-view .resmiTatil {
                 background: yellow !important;
             }*@
+
     </style>
     }
 }

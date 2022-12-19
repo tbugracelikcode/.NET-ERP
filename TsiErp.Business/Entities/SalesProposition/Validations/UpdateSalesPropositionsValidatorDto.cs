@@ -20,6 +20,9 @@ namespace TsiErp.Business.Entities.SalesProposition.Validations
                .NotEmpty()
                .WithMessage("Lütfen teklif geçerlilik tarihi seçin.");
 
+            RuleFor(x => x.Date_)
+           .NotEmpty()
+           .WithMessage("Lütfen tarihi seçin.");
 
             RuleFor(x => x.CurrentAccountCardID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)

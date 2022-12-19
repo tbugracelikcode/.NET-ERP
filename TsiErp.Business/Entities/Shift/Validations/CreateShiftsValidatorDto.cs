@@ -24,6 +24,11 @@ namespace TsiErp.Business.Entities.Shift.Validations
                .MaximumLength(200)
                .WithMessage("Vardiya açıklaması 200 karakterden fazla olamaz.");
 
+            RuleFor(x => x.TotalWorkTime).GreaterThanOrEqualTo(1).WithMessage("Toplam çalışma süresi, 0'dan büyük olmalıdır.");
+
+            RuleFor(x => x.TotalBreakTime).GreaterThanOrEqualTo(1).WithMessage("Toplam mola süresi, 0'dan büyük olmalıdır.");
+
+
         }
 
     }

@@ -5,6 +5,7 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.DependencyResolvers.Autofac;
+using TsiErp.Business.Entities.OperationUnsuitabilityItem.BusinessRules;
 using TsiErp.Business.Entities.OperationUnsuitabilityItem.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.OperationUnsuitabilityItem;
@@ -18,6 +19,8 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityItem.Services
     {
         private readonly IOperationUnsuitabilityItemsRepository _repository;
 
+        OperationUnsuitabilityItemManager _manager { get; set; } = new OperationUnsuitabilityItemManager();
+
         public OperationUnsuitabilityItemsAppService(IOperationUnsuitabilityItemsRepository repository)
         {
             _repository = repository;
@@ -28,6 +31,8 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityItem.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectOperationUnsuitabilityItemsDto>> CreateAsync(CreateOperationUnsuitabilityItemsDto input)
         {
+            await _manager.CodeControl(_repository, input.Code);
+
             var entity = ObjectMapper.Map<CreateOperationUnsuitabilityItemsDto, OperationUnsuitabilityItems>(input);
 
             var addedEntity = await _repository.InsertAsync(entity);
@@ -48,7 +53,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityItem.Services
 
         public async Task<IDataResult<SelectOperationUnsuitabilityItemsDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id,null);
+            var entity = await _repository.GetAsync(t => t.Id == id, null);
             var mappedEntity = ObjectMapper.Map<OperationUnsuitabilityItems, SelectOperationUnsuitabilityItemsDto>(entity);
             return new SuccessDataResult<SelectOperationUnsuitabilityItemsDto>(mappedEntity);
         }
@@ -70,6 +75,8 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityItem.Services
         public async Task<IDataResult<SelectOperationUnsuitabilityItemsDto>> UpdateAsync(UpdateOperationUnsuitabilityItemsDto input)
         {
             var entity = await _repository.GetAsync(x => x.Id == input.Id);
+
+            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
 
             var mappedEntity = ObjectMapper.Map<UpdateOperationUnsuitabilityItemsDto, OperationUnsuitabilityItems>(input);
 

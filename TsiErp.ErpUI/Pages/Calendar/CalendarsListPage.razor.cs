@@ -1,30 +1,14 @@
 ﻿using DevExpress.Blazor;
 using Microsoft.AspNetCore.Components;
-using Syncfusion.Blazor.Buttons;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
-using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
-using Syncfusion.Blazor.HeatMap.Internal;
-using Syncfusion.Blazor.Inputs;
+using Syncfusion.Blazor.Navigations;
 using Syncfusion.Blazor.Schedule;
-using Syncfusion.Blazor.TreeGrid;
-using System;
-using System.ComponentModel.DataAnnotations;
 using Tsi.Core.Utilities.Results;
-using TsiErp.Business.Entities.Department.Services;
-using TsiErp.Business.Entities.Product.Services;
-using TsiErp.Business.Entities.SalesOrder.Services;
-using TsiErp.Business.Entities.Station.Services;
-using TsiErp.Business.Entities.TemplateOperation.Services;
-using TsiErp.Business.Entities.UnitSet.Services;
 using TsiErp.Entities.Entities.Calendar.Dtos;
 using TsiErp.Entities.Entities.CalendarDay.Dtos;
-using TsiErp.Entities.Entities.Department.Dtos;
-using TsiErp.Entities.Entities.SalesOrder.Dtos;
-using TsiErp.Entities.Entities.TemplateOperation.Dtos;
-using TsiErp.Entities.Entities.TemplateOperationLine.Dtos;
-using TsiErp.Entities.Enums;
+using TsiErp.Entities.Entities.Station.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 using Action = System.Action;
 
@@ -33,12 +17,14 @@ namespace TsiErp.ErpUI.Pages.Calendar
     public partial class CalendarsListPage
     {
         SfSchedule<AppointmentData> ScheduleObj;
+        private CellClickEventArgs CellData { get; set; }
         public bool schedularVisible { get; set; } = false;
         public DateTime officialHoliday = DateTime.Today;
         public List<int> YearList = new List<int>();
         public SfGrid<SelectCalendarDaysDto> _daysGrid;
         public List<SelectCalendarDaysDto> GridDaysList = new List<SelectCalendarDaysDto>();
         public List<SelectCalendarDaysDto> SchedularDaysList = new List<SelectCalendarDaysDto>();
+        public List<ListStationsDto> StationsList = new List<ListStationsDto>();
         SfComboBox<int, int> Years;
         public DateTime CurrentDate = DateTime.Today;
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
@@ -79,7 +65,6 @@ namespace TsiErp.ErpUI.Pages.Calendar
             base.OnInitialized();
         }
 
-
         protected override Task BeforeInsertAsync()
         {
             GridDaysList.Clear();
@@ -94,7 +79,6 @@ namespace TsiErp.ErpUI.Pages.Calendar
             if (args.Type == PopupType.Editor)
             {
                 args.Cancel = true;
-                modal1visible = true;
             }
         }
 
@@ -285,8 +269,9 @@ namespace TsiErp.ErpUI.Pages.Calendar
             }
         }
 
-        private void ShowModal1()
+        private async void ShowModal1()
         {
+            StationsList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
             modal1visible = true;
         }
 
@@ -308,6 +293,21 @@ namespace TsiErp.ErpUI.Pages.Calendar
         private void Modal2Save()
         {
             HideModal2();
+        }
+
+      
+        public async Task OnItemSelected(MenuEventArgs<MenuItem> args)
+        {
+            var SelectedMenuItem = args.Item.Id;
+           
+            switch (SelectedMenuItem)
+            {
+                case "Edit":
+                     ShowModal1();
+                    break;
+                default:
+                    break;
+            }
         }
 
         public class ResourceData

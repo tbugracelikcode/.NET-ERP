@@ -94,7 +94,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
                 b.Property(t => t.Description_).HasColumnType("nvarchar(MAX)");
                 b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
-                b.Property(t => t.BranchID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.BranchID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
 
                 b.HasIndex(x => x.Code);
 
@@ -230,7 +230,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
                 b.Property(t => t.MeasuringRange).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(150);
                 b.Property(t => t.MeasuringAccuracy).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
-                b.Property(t => t.Department).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.Department).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.Responsible).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(150);
                 b.Property(t => t.EquipmentSerialNo).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(250);
                 b.Property(t => t.RecordDate).HasColumnType(SqlDbType.DateTime.ToString());
@@ -320,7 +320,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
                 b.Property(t => t.ReceiptNo).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
-                b.Property(t => t.EquipmentID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.EquipmentID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.Date).HasColumnType(SqlDbType.DateTime.ToString());
                 b.Property(t => t.NextControl).HasColumnType(SqlDbType.DateTime.ToString());
                 b.Property(t => t.InfinitiveCertificateNo).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
@@ -562,6 +562,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
             });
         }
+
         public static void ConfigureCustomerComplaintItems(this ModelBuilder builder)
         {
             builder.Entity<CustomerComplaintItems>(b =>
@@ -689,7 +690,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             });
         }
 
-
         public static void ConfigureOperationUnsuitabilityItems(this ModelBuilder builder)
         {
             builder.Entity<OperationUnsuitabilityItems>(b =>
@@ -710,6 +710,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.Code);
             });
         }
+
         public static void ConfigureFinalControlUnsuitabilityItems(this ModelBuilder builder)
         {
             builder.Entity<FinalControlUnsuitabilityItems>(b =>
@@ -778,7 +779,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
                 b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.ProductionStart).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.ProductionStart).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
                 b.Property(t => t.Approval).HasColumnType(SqlDbType.Bit.ToString());
                 b.Property(t => t.TechnicalApproval).HasColumnType(SqlDbType.Bit.ToString());
                 b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
@@ -841,6 +842,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasOne(x => x.ProductsOperations).WithMany(x => x.RouteLines).HasForeignKey(x => x.ProductsOperationID).OnDelete(DeleteBehavior.NoAction);
             });
         }
+
         public static void ConfigureCalendars(this ModelBuilder builder)
         {
             builder.Entity<Calendars>(b =>
@@ -862,6 +864,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
             });
         }
+
         public static void ConfigureCalendarLines(this ModelBuilder builder)
         {
             builder.Entity<CalendarLines>(b =>
@@ -888,6 +891,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
             });
         }
+
         public static void ConfigureCalendarDays(this ModelBuilder builder)
         {
             builder.Entity<CalendarDays>(b =>
@@ -1120,7 +1124,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
                 b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.TemplateOperationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.TemplateOperationID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.WorkCenterID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
 
@@ -1399,10 +1403,10 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.FicheNo).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Description_).HasColumnType("nvarchar(max)");
                 b.Property(t => t.Date_).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
-                b.Property(t => t.OrderID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.ProductID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.OrderID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.PartyNo).HasColumnType("nvarchar(max)");
-                b.Property(t => t.CurrentAccountCardID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.CurrentAccountCardID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.IsUnsuitabilityWorkOrder).HasColumnType(SqlDbType.Bit.ToString());
                 b.Property(t => t.IsReject).HasColumnType(SqlDbType.Bit.ToString());
                 b.Property(t => t.IsToBeUsedAs).HasColumnType(SqlDbType.Bit.ToString());
@@ -1437,13 +1441,13 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.ControlFormDeclaration).HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.IsToBeUsedAs).HasColumnType(SqlDbType.Bit.ToString());
                 b.Property(t => t.IsCorrection).HasColumnType(SqlDbType.Bit.ToString());
-                b.Property(t => t.WorkOrderID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.StationID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.StationGroupID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.EmployeeID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.ProductionOrderID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.ProductID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.OperationID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.WorkOrderID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.StationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.StationGroupID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.EmployeeID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductionOrderID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.OperationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
 
 
                 b.HasIndex(x => x.FicheNo);

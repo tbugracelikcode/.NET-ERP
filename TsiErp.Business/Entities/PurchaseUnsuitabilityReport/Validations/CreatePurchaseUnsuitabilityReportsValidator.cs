@@ -19,11 +19,15 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Validations
                 .MaximumLength(17)
                 .WithMessage("Fiş numarası, 17 karakterden fazla olamaz.");
 
+            RuleFor(x => x.Date_)
+               .NotEmpty()
+               .WithMessage("Lütfen tarihi seçin.");
+
             RuleFor(x => x.ProductID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen ürün seçin.");
 
             RuleFor(x => x.CurrentAccountCardID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen cari hesap kartı seçin.");
 
-            //RuleFor(x => x.OrderID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen sipariş seçin.");
+            RuleFor(x => x.OrderID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen sipariş seçin.");
 
         }
     }
