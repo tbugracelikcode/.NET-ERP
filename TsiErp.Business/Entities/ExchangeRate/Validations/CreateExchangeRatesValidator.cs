@@ -14,7 +14,6 @@ namespace TsiErp.Business.Entities.ExchangeRate.Validations
         public CreateExchangeRatesValidator()
         {
 
-
         }
     }
 }

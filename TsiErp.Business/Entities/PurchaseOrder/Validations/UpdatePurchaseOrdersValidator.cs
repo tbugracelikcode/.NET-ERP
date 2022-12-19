@@ -18,6 +18,10 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Validations
                .MaximumLength(17)
                .WithMessage("Teklif numarası 17 karakterden fazla olamaz.");
 
+            RuleFor(x => x.Date_)
+               .NotEmpty()
+               .WithMessage("Lütfen tarihi seçin.");
+
 
             RuleFor(x => x.CurrentAccountCardID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)

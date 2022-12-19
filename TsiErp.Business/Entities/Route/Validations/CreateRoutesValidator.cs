@@ -28,6 +28,7 @@ namespace TsiErp.Business.Entities.Route.Validations
             RuleFor(x => x.ProductID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
                .WithMessage("Lütfen üretilecek ürünü seçin.");
+
         }
     }
 }

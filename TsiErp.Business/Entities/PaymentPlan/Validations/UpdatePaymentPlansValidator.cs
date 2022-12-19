@@ -27,9 +27,7 @@ namespace TsiErp.Business.Entities.PaymentPlan.Validations
                 .MaximumLength(200)
                 .WithMessage("Ödeme planı adı 200 karakterden fazla olamaz.");
 
-            //RuleFor(x => x.Days_)
-            //.Must(x => x.HasValue && x.Value > 0)
-            //.WithMessage("Ödeme planı vade gününü yazmalısınız.");
+            RuleFor(x => x.Days_).GreaterThanOrEqualTo(1).WithMessage("Ödeme planı vade günü, 0'dan büyük olmalıdır.");
 
 
         }

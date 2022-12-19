@@ -25,6 +25,40 @@ namespace TsiErp.Business.Entities.ShippingAdress.Validations
 
             RuleFor(x => x.CustomerCardID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen müşteri kartını seçin.");
 
+            RuleFor(x => x.Adress1)
+              .NotEmpty()
+              .WithMessage("Lütfen adresi yazın.");
+
+            RuleFor(x => x.District)
+                .NotEmpty()
+                .WithMessage("Lütfen ilçeyi yazın.")
+                .MaximumLength(50)
+                .WithMessage("İlçe, 50 karakterden fazla olamaz.");
+
+            RuleFor(x => x.City)
+                .NotEmpty()
+                .WithMessage("Lütfen şehri yazın.")
+                .MaximumLength(50)
+                .WithMessage("Şehir, 50 karakterden fazla olamaz.");
+
+            RuleFor(x => x.Country)
+                .NotEmpty()
+                .WithMessage("Lütfen ülkeyi yazın.")
+                .MaximumLength(50)
+                .WithMessage("Ülke, 50 karakterden fazla olamaz.");
+
+            RuleFor(x => x.Phone)
+                .NotEmpty()
+                .WithMessage("Lütfen telefon numarasını yazın.")
+                .MaximumLength(100)
+                .WithMessage("Telefon numarası, 100 karakterden fazla olamaz.");
+
+            RuleFor(x => x.PostCode)
+               .NotEmpty()
+               .WithMessage("Lütfen posta kodunu yazın.")
+               .MaximumLength(50)
+               .WithMessage("Posta kodu, 50 karakterden fazla olamaz.");
+
         }
     }
 }

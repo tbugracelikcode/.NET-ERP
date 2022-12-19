@@ -24,6 +24,9 @@ namespace TsiErp.Business.Entities.TemplateOperation.Validations
                .MaximumLength(200)
                .WithMessage("Operasyon açıklaması 200 karakterden fazla olamaz.");
 
+            RuleFor(x => x.WorkCenterID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen ürün grubunu seçin.");
+
+
         }
     }
 }

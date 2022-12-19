@@ -25,7 +25,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Validations
 
             RuleFor(x => x.Department)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("Lütfen şube seçin.");
+               .WithMessage("Lütfen departman seçin.");
         }
     }
 }
