@@ -57,6 +57,9 @@ using TsiErp.Entities.Entities.PurchaseRequest;
 using TsiErp.Entities.Entities.PurchaseRequestLine;
 using TsiErp.Entities.Entities.PurchaseUnsuitabilityReport;
 using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
+using TsiErp.Entities.Entities.ProductionTracking;
+using TsiErp.Entities.Entities.ProductionTrackingHaltLine;
+using TsiErp.Entities.Entities.HaltReason;
 using TsiErp.Entities.Entities.Menu;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
@@ -1386,6 +1389,69 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasOne(x => x.PurchaseRequests).WithMany(x => x.PurchaseRequestLines).HasForeignKey(x => x.PurchaseRequestID).OnDelete(DeleteBehavior.Cascade);
                 b.HasOne(x => x.UnitSets).WithMany(x => x.PurchaseRequestLines).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.PaymentPlans).WithMany(x => x.PurchaseRequestLines).HasForeignKey(x => x.PaymentPlanID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+        public static void ConfigureProductionTrackings(this ModelBuilder builder)
+        {
+            builder.Entity<ProductionTrackings>(b =>
+            {
+                b.ToTable("ProductionTrackings");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.WorkOrderID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProducedQuantity).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.OperationTime).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.OperationStartDate).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.HaltTime).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.PlannedQuantity).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.StationID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.EmployeeID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ShiftID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+                b.HasIndex(x => x.WorkOrderID);
+                b.HasIndex(x => x.StationID);
+                b.HasIndex(x => x.EmployeeID);
+                b.HasIndex(x => x.ShiftID);
+
+                b.HasOne(x => x.WorkOrders).WithMany(x => x.ProductionTrackings).HasForeignKey(x => x.WorkOrderID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Stations).WithMany(x => x.ProductionTrackings).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Employees).WithMany(x => x.ProductionTrackings).HasForeignKey(x => x.EmployeeID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Shifts).WithMany(x => x.ProductionTrackings).HasForeignKey(x => x.ShiftID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+
+        public static void ConfigureProductionTrackingHaltLines(this ModelBuilder builder)
+        {
+            builder.Entity<ProductionTrackingHaltLines>(b =>
+            {
+                b.ToTable("ProductionTrackingHaltLines");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.ProductionTrackingID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.HaltID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.HaltTime).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+
+                b.HasIndex(x => x.ProductionTrackingID);
+                b.HasIndex(x => x.HaltID);
+
+                b.HasOne(x => x.HaltReasons).WithMany(x => x.ProductionTrackingHaltLines).HasForeignKey(x => x.HaltID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.ProductionTrackings).WithMany(x => x.ProductionTrackingHaltLines).HasForeignKey(x => x.ProductionTrackingID).OnDelete(DeleteBehavior.Cascade);
+            });
+        }
+
+        public static void ConfigureHaltReasons(this ModelBuilder builder)
+        {
+            builder.Entity<HaltReasons>(b =>
+            {
+                b.ToTable("HaltReasons");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.IsPlanned).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsMachine).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsOperator).HasColumnType(SqlDbType.Bit.ToString());
+
             });
         }
 

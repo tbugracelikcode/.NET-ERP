@@ -2172,7 +2172,7 @@ namespace TsiErp.DataAccess.Migrations
 
                     b.HasIndex("ProductsId");
 
-                    b.ToTable("ProductsOperations");
+                    b.ToTable("ProductsOperations", (string)null);
                 });
 
             modelBuilder.Entity("TsiErp.Entities.Entities.ProductsOperationLine.ProductsOperationLines", b =>
@@ -2240,7 +2240,7 @@ namespace TsiErp.DataAccess.Migrations
 
                     b.HasIndex("StationsId");
 
-                    b.ToTable("ProductsOperationLines");
+                    b.ToTable("ProductsOperationLines", (string)null);
                 });
 
             modelBuilder.Entity("TsiErp.Entities.Entities.PurchaseOrder.PurchaseOrders", b =>

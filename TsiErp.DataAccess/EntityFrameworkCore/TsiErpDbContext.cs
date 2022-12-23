@@ -60,6 +60,9 @@ using TsiErp.Entities.Entities.PurchaseRequest;
 using TsiErp.Entities.Entities.PurchaseRequestLine;
 using TsiErp.Entities.Entities.PurchaseUnsuitabilityReport;
 using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
+using TsiErp.Entities.Entities.ProductionTracking;
+using TsiErp.Entities.Entities.ProductionTrackingHaltLine;
+using TsiErp.Entities.Entities.HaltReason;
 using TsiErp.Entities.Entities.Menu;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore
@@ -171,6 +174,9 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigurePurchaseRequests();
             builder.ConfigurePurchaseUnsuitabilityReports();
             builder.ConfigureOperationUnsuitabilityReports();
+            builder.ConfigureProductionTrackings();
+            builder.ConfigureProductionTrackingHaltLines();
+            builder.ConfigureHaltReasons();
             builder.ConfigureMenus();
         }
 
@@ -267,6 +273,9 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<PurchaseRequestLines> PurchaseRequestLines { get; set; }
         public DbSet<PurchaseUnsuitabilityReports> PurchaseUnsuitabilityReports { get; set; }
         public DbSet<OperationUnsuitabilityReports> OperationUnsuitabilityReports { get; set; }
+        public DbSet<ProductionTrackings> ProductionTrackings { get; set; }
+        public DbSet<ProductionTrackingHaltLines> ProductionTrackingHaltLines { get; set; }
+        public DbSet<HaltReasons> HaltReasons { get; set; }
         public DbSet<Menus> Menus { get; set; }
 
         #endregion
