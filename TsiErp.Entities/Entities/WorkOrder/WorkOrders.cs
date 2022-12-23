@@ -9,6 +9,7 @@ using TsiErp.Entities.Entities.CurrentAccountCard;
 using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.Product;
 using TsiErp.Entities.Entities.ProductionOrder;
+using TsiErp.Entities.Entities.ProductionTracking;
 using TsiErp.Entities.Entities.ProductsOperation;
 using TsiErp.Entities.Entities.Route;
 using TsiErp.Entities.Entities.SalesProposition;
@@ -127,6 +128,7 @@ namespace TsiErp.Entities.Entities.WorkOrder
         public CurrentAccountCards CurrentAccountCards { get; set; }
 
         public ICollection<OperationUnsuitabilityReports> OperationUnsuitabilityReports { get; set; }
+        public ICollection<ProductionTrackings> ProductionTrackings { get; set; }
 
 
     }
