@@ -30,6 +30,10 @@ namespace TsiErp.Entities.Entities.HaltReason
         /// Operatör Kaynaklı mı?
         /// </summary>
         public bool IsOperator { get; set; }
+        /// <summary>
+        /// Yönetim Kaynaklı mı?
+        /// </summary>
+        public bool IsManagement { get; set; }
 
         public ICollection<ProductionTrackingHaltLines> ProductionTrackingHaltLines { get; set; }
     }

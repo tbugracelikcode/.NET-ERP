@@ -6,16 +6,19 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.ProductionTrackingHaltLine.Dtos;
-using TsiErp.Entities.Entities.SalesOrderLine.Dtos;
 
 namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
 {
-    public class CreateProductionTrackingsDto : FullAuditedEntityDto
+    public class SelectContractProductionTrackingsDto : FullAuditedEntityDto
     {
         /// <summary>
         /// İş Emri ID
         /// </summary>
         public Guid WorkOrderID { get; set; }
+        /// <summary>
+        /// İş Emri Kodu
+        /// </summary>
+        public string WorkOrderCode { get; set; }
         [Precision(18, 6)]
         /// <summary>
         /// Üretilen Miktar
@@ -40,21 +43,27 @@ namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
         /// </summary>
         public decimal HaltTime { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
-        /// Ayar Süresi
+        /// Tamamlandı mı ?
         /// </summary>
-        public decimal AdjustmentTime { get; set; }
+        public bool IsFinished { get; set; }
         [Precision(18, 6)]
         /// <summary>
         /// Planlanan Adet
         /// </summary>
         public decimal PlannedQuantity { get; set; }
-
         /// <summary>
-        /// Tamamlandı mı ?
+        /// İş İstasyonu Kody
         /// </summary>
-        public bool IsFinished { get; set; }
+        public string StationCode { get; set; }
+        /// <summary>
+        /// Çalışan Adı
+        /// </summary>
+        public string EmployeeName { get; set; }
+        /// <summary>
+        /// Vardiya Kodu
+        /// </summary>
+        public string ShiftCode { get; set; }
         /// <summary>
         /// İş İstasyonu ID
         /// </summary>
@@ -68,9 +77,8 @@ namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
         /// </summary>
         public Guid ShiftID { get; set; }
 
-        /// <summary>
-        /// Sipariş Satırları
-        /// </summary>
-        public List<SelectProductionTrackingHaltLinesDto> SelectProductionTrackingHaltLinesDto { get; set; }
-    }    
+
+        public List<SelectProductionTrackingHaltLinesDto> SelectProductionTrackingHaltLines { get; set; }
+
+    }
 }

@@ -175,6 +175,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigurePurchaseUnsuitabilityReports();
             builder.ConfigureOperationUnsuitabilityReports();
             builder.ConfigureProductionTrackings();
+            builder.ConfigureContractProductionTrackings();
             builder.ConfigureProductionTrackingHaltLines();
             builder.ConfigureHaltReasons();
             builder.ConfigureMenus();
@@ -274,6 +275,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<PurchaseUnsuitabilityReports> PurchaseUnsuitabilityReports { get; set; }
         public DbSet<OperationUnsuitabilityReports> OperationUnsuitabilityReports { get; set; }
         public DbSet<ProductionTrackings> ProductionTrackings { get; set; }
+        public DbSet<ContractProductionTrackings> ContractProductionTrackings { get; set; }
         public DbSet<ProductionTrackingHaltLines> ProductionTrackingHaltLines { get; set; }
         public DbSet<HaltReasons> HaltReasons { get; set; }
         public DbSet<Menus> Menus { get; set; }
