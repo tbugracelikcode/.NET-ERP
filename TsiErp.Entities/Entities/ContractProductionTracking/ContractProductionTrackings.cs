@@ -5,12 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
-using TsiErp.Entities.Entities.ProductionTrackingHaltLine.Dtos;
-using TsiErp.Entities.Entities.SalesOrderLine.Dtos;
+using TsiErp.Entities.Entities.Employee;
+using TsiErp.Entities.Entities.ProductionTrackingHaltLine;
+using TsiErp.Entities.Entities.Shift;
+using TsiErp.Entities.Entities.Station;
+using TsiErp.Entities.Entities.WorkOrder;
 
-namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
+namespace TsiErp.Entities.Entities.ProductionTracking
 {
-    public class CreateProductionTrackingsDto : FullAuditedEntityDto
+    public class ContractProductionTrackings : FullAuditedEntity
     {
         /// <summary>
         /// İş Emri ID
@@ -40,21 +43,27 @@ namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
         /// </summary>
         public decimal HaltTime { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
-        /// Ayar Süresi
+        /// Tamamlandı mı ?
         /// </summary>
-        public decimal AdjustmentTime { get; set; }
+        public bool IsFinished { get; set; }
         [Precision(18, 6)]
         /// <summary>
         /// Planlanan Adet
         /// </summary>
         public decimal PlannedQuantity { get; set; }
-
         /// <summary>
-        /// Tamamlandı mı ?
+        /// İş İstasyonu Kody
         /// </summary>
-        public bool IsFinished { get; set; }
+        public string StationCode { get; set; }
+        /// <summary>
+        /// Çalışan Adı
+        /// </summary>
+        public string EmployeeName { get; set; }
+        /// <summary>
+        /// Vardiya Kodu
+        /// </summary>
+        public string ShiftCode { get; set; }
         /// <summary>
         /// İş İstasyonu ID
         /// </summary>
@@ -68,9 +77,16 @@ namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
         /// </summary>
         public Guid ShiftID { get; set; }
 
-        /// <summary>
-        /// Sipariş Satırları
-        /// </summary>
-        public List<SelectProductionTrackingHaltLinesDto> SelectProductionTrackingHaltLinesDto { get; set; }
-    }    
+
+        public WorkOrders WorkOrders { get; set; }
+
+        public Stations Stations { get; set; }
+
+        public Shifts Shifts { get; set; }
+
+        public Employees Employees { get; set; }
+
+        public ICollection<ProductionTrackingHaltLines> ProductionTrackingHaltLines { get; set; }
+
+    }
 }

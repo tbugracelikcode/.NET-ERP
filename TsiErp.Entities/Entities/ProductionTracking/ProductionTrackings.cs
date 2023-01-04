@@ -44,9 +44,18 @@ namespace TsiErp.Entities.Entities.ProductionTracking
         public decimal HaltTime { get; set; }
         [Precision(18, 6)]
         /// <summary>
+        /// Ayar Süresi
+        /// </summary>
+        public decimal AdjustmentTime { get; set; }
+        [Precision(18, 6)]
+        /// <summary>
         /// Planlanan Adet
         /// </summary>
         public decimal PlannedQuantity { get; set; }
+        /// <summary>
+        /// Tamamlandı mı ?
+        /// </summary>
+        public bool IsFinished { get; set; }
         /// <summary>
         /// İş İstasyonu Kody
         /// </summary>

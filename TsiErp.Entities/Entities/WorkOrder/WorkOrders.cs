@@ -129,6 +129,7 @@ namespace TsiErp.Entities.Entities.WorkOrder
 
         public ICollection<OperationUnsuitabilityReports> OperationUnsuitabilityReports { get; set; }
         public ICollection<ProductionTrackings> ProductionTrackings { get; set; }
+        public ICollection<ContractProductionTrackings> ContractProductionTrackings { get; set; }
 
 
     }
