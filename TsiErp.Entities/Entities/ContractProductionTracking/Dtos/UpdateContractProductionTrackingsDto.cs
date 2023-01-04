@@ -5,12 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
-using TsiErp.Entities.Entities.ProductionTrackingHaltLine.Dtos;
-using TsiErp.Entities.Entities.SalesOrderLine.Dtos;
 
 namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
 {
-    public class CreateProductionTrackingsDto : FullAuditedEntityDto
+    public class UpdateContractProductionTrackingsDto : FullAuditedEntityDto
     {
         /// <summary>
         /// İş Emri ID
@@ -40,21 +38,15 @@ namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
         /// </summary>
         public decimal HaltTime { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
-        /// Ayar Süresi
+        /// Tamamlandı mı ?
         /// </summary>
-        public decimal AdjustmentTime { get; set; }
+        public bool IsFinished { get; set; }
         [Precision(18, 6)]
         /// <summary>
         /// Planlanan Adet
         /// </summary>
         public decimal PlannedQuantity { get; set; }
-
-        /// <summary>
-        /// Tamamlandı mı ?
-        /// </summary>
-        public bool IsFinished { get; set; }
         /// <summary>
         /// İş İstasyonu ID
         /// </summary>
@@ -67,10 +59,5 @@ namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
         /// Vardiya ID
         /// </summary>
         public Guid ShiftID { get; set; }
-
-        /// <summary>
-        /// Sipariş Satırları
-        /// </summary>
-        public List<SelectProductionTrackingHaltLinesDto> SelectProductionTrackingHaltLinesDto { get; set; }
-    }    
+    }
 }

@@ -54,5 +54,7 @@ namespace TsiErp.Entities.Entities.Shift
 
         public ICollection<ProductionTrackings> ProductionTrackings { get; set; }
 
+        public ICollection<ContractProductionTrackings> ContractProductionTrackings { get; set; }
+
     }
 }

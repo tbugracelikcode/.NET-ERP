@@ -29,5 +29,10 @@ namespace TsiErp.Entities.Entities.HaltReason.Dtos
         /// Operatör Kaynaklı mı?
         /// </summary>
         public bool IsOperator { get; set; }
+
+        /// <summary>
+        /// Yönetim Kaynaklı mı?
+        /// </summary>
+        public bool IsManagement { get; set; }
     }
 }

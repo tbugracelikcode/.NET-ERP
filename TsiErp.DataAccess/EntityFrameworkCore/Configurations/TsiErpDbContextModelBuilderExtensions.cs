@@ -1407,7 +1407,9 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.OperationTime).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.OperationStartDate).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
                 b.Property(t => t.HaltTime).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.AdjustmentTime).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.PlannedQuantity).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.IsFinished).HasColumnType(SqlDbType.Bit.ToString());
                 b.Property(t => t.StationID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.EmployeeID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.ShiftID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
@@ -1421,6 +1423,35 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasOne(x => x.Stations).WithMany(x => x.ProductionTrackings).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.Employees).WithMany(x => x.ProductionTrackings).HasForeignKey(x => x.EmployeeID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.Shifts).WithMany(x => x.ProductionTrackings).HasForeignKey(x => x.ShiftID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+        public static void ConfigureContractProductionTrackings(this ModelBuilder builder)
+        {
+            builder.Entity<ContractProductionTrackings>(b =>
+            {
+                b.ToTable("ContractProductionTrackings");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.WorkOrderID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProducedQuantity).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.OperationTime).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.OperationStartDate).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.HaltTime).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.PlannedQuantity).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.IsFinished).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.StationID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.EmployeeID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ShiftID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+                b.HasIndex(x => x.WorkOrderID);
+                b.HasIndex(x => x.StationID);
+                b.HasIndex(x => x.EmployeeID);
+                b.HasIndex(x => x.ShiftID);
+
+                b.HasOne(x => x.WorkOrders).WithMany(x => x.ContractProductionTrackings).HasForeignKey(x => x.WorkOrderID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Stations).WithMany(x => x.ContractProductionTrackings).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Employees).WithMany(x => x.ContractProductionTrackings).HasForeignKey(x => x.EmployeeID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Shifts).WithMany(x => x.ContractProductionTrackings).HasForeignKey(x => x.ShiftID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -1455,6 +1486,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.IsPlanned).HasColumnType(SqlDbType.Bit.ToString());
                 b.Property(t => t.IsMachine).HasColumnType(SqlDbType.Bit.ToString());
                 b.Property(t => t.IsOperator).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsManagement).HasColumnType(SqlDbType.Bit.ToString());
 
             });
         }
