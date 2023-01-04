@@ -135,5 +135,7 @@ namespace TsiErp.Entities.Entities.Station
 
         public ICollection<ProductionTrackings> ProductionTrackings { get; set; }
 
+        public ICollection<ContractProductionTrackings> ContractProductionTrackings { get; set; }
+
     }
 }

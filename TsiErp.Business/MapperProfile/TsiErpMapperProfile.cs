@@ -755,7 +755,7 @@ namespace TsiErp.Business.MapperProfile
                 .ForMember(x => x.ShiftCode, y => y.MapFrom(z => z.Shifts.Code))
                 .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
                 .ForMember(x => x.EmployeeName, y => y.MapFrom(z => z.Employees.Name));
-            CreateMap<ProductionTrackings, ListProductionTrackingsDto>()
+            CreateMap<ProductionTrackings, ListContractProductionTrackingsDto>()
                 .ForMember(x => x.ShiftCode, y => y.MapFrom(z => z.Shifts.Code))
                 .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
                 .ForMember(x => x.EmployeeName, y => y.MapFrom(z => z.Employees.Name));
