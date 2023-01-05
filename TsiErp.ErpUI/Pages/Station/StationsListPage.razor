@@ -276,8 +276,8 @@ else
         </FooterContentTemplate>
     </DxPopup>
 
-    @if(SelectStationGroupPopupVisible)
-   {
+    @*@if(SelectStationGroupPopupVisible)
+   {*@
        <DxPopup @bind-Visible="SelectStationGroupPopupVisible" 
          ShowFooter="true"
          CloseOnEscape="false"
@@ -305,10 +305,10 @@ else
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
                         <Template>
-                            <SfCard class="TSIGridCards">
+                            <SfCard class="TSIWorkStationGroupPopUpCard">
 
                                 <CardContent>
-                                    <SfGrid ID="Grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@StationGroupList" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                    <SfGrid ID="GroupGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@StationGroupList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
                                         AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
@@ -339,7 +339,7 @@ else
             <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>*@
         </FooterContentTemplate>
     </DxPopup>
-   }
+   @*}*@
     
 }
 
