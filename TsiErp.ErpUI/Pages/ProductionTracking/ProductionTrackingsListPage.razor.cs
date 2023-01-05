@@ -18,6 +18,8 @@ using TsiErp.Entities.Entities.Employee.Dtos;
 using TsiErp.Entities.Entities.HaltReason.Dtos;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.Business.Extensions.ObjectMapping;
+using Syncfusion.Blazor.HeatMap.Internal;
+using Syncfusion.Blazor.Calendars;
 
 namespace TsiErp.ErpUI.Pages.ProductionTracking
 {
@@ -59,7 +61,9 @@ namespace TsiErp.ErpUI.Pages.ProductionTracking
 
         private bool LineCrudPopup = false;
 
-        private DateTime _date = DateTime.Today;
+        private DateTime? _date = DateTime.Today;
+
+        private SfDatePicker<DateTime?> _endDatePicker;
 
         protected override async Task OnInitializedAsync()
         {
@@ -79,6 +83,7 @@ namespace TsiErp.ErpUI.Pages.ProductionTracking
             DataSource = new SelectProductionTrackingsDto() { };
 
             DataSource.OperationStartDate = _date;
+            DataSource.OperationEndDate = null;
             DataSource.SelectProductionTrackingHaltLines = new List<SelectProductionTrackingHaltLinesDto>();
             GridLineList = DataSource.SelectProductionTrackingHaltLines;
 
@@ -253,8 +258,6 @@ namespace TsiErp.ErpUI.Pages.ProductionTracking
                 SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
             else
                 SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
-
-
         }
 
         public void HideLinesPopup()
@@ -264,10 +267,15 @@ namespace TsiErp.ErpUI.Pages.ProductionTracking
 
         public void OnDateFocus()
         {
-            if (DataSource.OperationStartDate == DateTime.MinValue)
+            if (DataSource.OperationStartDate == DateTime.MinValue || DataSource.OperationStartDate == null)
             {
+                _endDatePicker.Enabled = false;
                 ModalManager.WarningPopupAsync("Dikkat!", "Lütfen önce başlangıç tarihini seçiniz.");
             }
+        }
+        public void OnDateChange()
+        {
+            _endDatePicker.Enabled = true;
         }
 
         protected async Task OnLineSubmit()
