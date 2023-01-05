@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentValidation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,9 @@ using TsiErp.Entities.Entities.ProductionTracking.Dtos;
 
 namespace TsiErp.Business.Entities.ProductionTracking.Validations
 {
-    public class CreateProductionTrackingsValidatorDto : TsiAbstractValidatorBase<CreateProductionTrackingsDto>
+    public class UpdateProductionTrackingsValidator : TsiAbstractValidatorBase<UpdateProductionTrackingsDto>
     {
-        public CreateProductionTrackingsValidatorDto()
+        public UpdateProductionTrackingsValidator()
         {
 
         }

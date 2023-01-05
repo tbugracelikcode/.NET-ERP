@@ -61,6 +61,7 @@ using TsiErp.Entities.Entities.ProductionTracking;
 using TsiErp.Entities.Entities.ProductionTrackingHaltLine;
 using TsiErp.Entities.Entities.HaltReason;
 using TsiErp.Entities.Entities.Menu;
+using TsiErp.Entities.Entities.ContractProductionTracking;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 {
@@ -1439,7 +1440,9 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.ProducedQuantity).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.OperationTime).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.OperationStartDate).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
-                b.Property(t => t.HaltTime).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.OperationStartTime).HasColumnType("time(7)");
+                b.Property(t => t.OperationEndDate).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.OperationEndTime).HasColumnType("time(7)");
                 b.Property(t => t.PlannedQuantity).HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.IsFinished).HasColumnType(SqlDbType.Bit.ToString());
                 b.Property(t => t.StationID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
@@ -1450,11 +1453,13 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.StationID);
                 b.HasIndex(x => x.EmployeeID);
                 b.HasIndex(x => x.ShiftID);
+                b.HasIndex(x => x.CurrentAccountID);
 
                 b.HasOne(x => x.WorkOrders).WithMany(x => x.ContractProductionTrackings).HasForeignKey(x => x.WorkOrderID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.Stations).WithMany(x => x.ContractProductionTrackings).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.Employees).WithMany(x => x.ContractProductionTrackings).HasForeignKey(x => x.EmployeeID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.Shifts).WithMany(x => x.ContractProductionTrackings).HasForeignKey(x => x.ShiftID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.CurrentAccountCards).WithMany(x => x.ContractProductionTrackings).HasForeignKey(x => x.ShiftID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 

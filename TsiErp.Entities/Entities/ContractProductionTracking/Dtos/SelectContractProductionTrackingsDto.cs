@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.ProductionTrackingHaltLine.Dtos;
 
-namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
+namespace TsiErp.Entities.Entities.ContractProductionTracking.Dtos
 {
     public class SelectContractProductionTrackingsDto : FullAuditedEntityDto
     {
@@ -15,10 +15,6 @@ namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
         /// İş Emri ID
         /// </summary>
         public Guid WorkOrderID { get; set; }
-        /// <summary>
-        /// İş Emri Kodu
-        /// </summary>
-        public string WorkOrderCode { get; set; }
         [Precision(18, 6)]
         /// <summary>
         /// Üretilen Miktar
@@ -32,16 +28,19 @@ namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
         /// <summary>
         /// Operasyon Başlangıç Tarihi
         /// </summary>
-        public DateTime OperationStartDate { get; set; }
+        public DateTime? OperationStartDate { get; set; }
+        /// <summary>
+        /// Başlangıç Saati
+        /// </summary>
+        public TimeSpan? OperationStartTime { get; set; }
         /// <summary>
         /// Operasyon Bitiş Tarihi
         /// </summary>
-        public DateTime OperationEndDate { get; set; }
-        [Precision(18, 6)]
+        public DateTime? OperationEndDate { get; set; }
         /// <summary>
-        /// Duruş Süresi
+        /// Bitiş Saati
         /// </summary>
-        public decimal HaltTime { get; set; }
+        public TimeSpan? OperationEndTime { get; set; }
 
         /// <summary>
         /// Tamamlandı mı ?
@@ -53,9 +52,13 @@ namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
         /// </summary>
         public decimal PlannedQuantity { get; set; }
         /// <summary>
-        /// İş İstasyonu Kody
+        /// İş İstasyonu Kodu
         /// </summary>
         public string StationCode { get; set; }
+        /// <summary>
+        /// Cari Kodu
+        /// </summary>
+        public string CurrentAccountCardCode { get; set; }
         /// <summary>
         /// Çalışan Adı
         /// </summary>
@@ -76,9 +79,10 @@ namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
         /// Vardiya ID
         /// </summary>
         public Guid ShiftID { get; set; }
-
-
-        public List<SelectProductionTrackingHaltLinesDto> SelectProductionTrackingHaltLines { get; set; }
-
+        /// <summary>
+        /// Cari Hesap ID
+        /// </summary>
+        public Guid CurrentAccountCardID { get; set; }
+        public string WorkOrderCode { get; set; }
     }
 }
