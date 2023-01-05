@@ -62,30 +62,6 @@
                                         </Template>
 
                                         </GridColumn>
-                                        @*<GridColumn Field=@nameof(ListEmployeesDto.Surname) HeaderText="ÇALIŞAN SOYADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListEmployeesDto.Department) HeaderText="DEPARTMAN ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListEmployeesDto.IDnumber) HeaderText="TC KİMLİK NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListEmployeesDto.Birthday) Format="dd.MM.yyyy" Type="ColumnType.Date" HeaderText="DOĞUM GÜNÜ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListEmployeesDto.BloodType) HeaderText="KAN GRUBU" TextAlign="TextAlign.Center" Width="120" Visible=false>
-
-                                        </GridColumn>
-                                        <GridColumn Field=@nameof(ListEmployeesDto.BloodTypeStr) HeaderText="KAN GRUBU" TextAlign="TextAlign.Center" Width="120">
-                                            <Template>
-                                                @{
-                                                    var bldtype = (context as ListEmployeesDto).BloodType;
-                                                    (context as ListEmployeesDto).BloodTypeStr = Enum.GetName(bldtype);
-
-                                                    var str = (context as ListEmployeesDto).BloodTypeStr;
-                                            }
-
-                                            @str
-                                        </Template>
-                                    </GridColumn>
-                                    <GridColumn Field=@nameof(ListEmployeesDto.Address) HeaderText="ADRES" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEmployeesDto.District) HeaderText="İLÇE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEmployeesDto.City) HeaderText="İL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEmployeesDto.HomePhone) HeaderText="EV TELEFONU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEmployeesDto.CellPhone) HeaderText="CEP TELEFONU" TextAlign="TextAlign.Center" Width="120"></GridColumn>*@
                                     <GridColumn Field=@nameof(ListEmployeesDto.Email) HeaderText="E-POSTA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListEmployeesDto.IsActive) HeaderText="AKTİFLİK" DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="120"></GridColumn>
 

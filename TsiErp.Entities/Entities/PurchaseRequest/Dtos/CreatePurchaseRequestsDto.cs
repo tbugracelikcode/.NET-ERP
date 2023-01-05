@@ -22,7 +22,7 @@ namespace TsiErp.Entities.Entities.PurchaseRequest.Dtos
         /// <summary>
         /// Saat
         /// </summary>
-        public string Time_ { get; set; }
+        public TimeSpan? Time_ { get; set; }
 
         /// <summary>
         /// Kur Tutarı
