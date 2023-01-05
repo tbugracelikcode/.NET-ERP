@@ -5,13 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Entities.CurrentAccountCard;
 using TsiErp.Entities.Entities.Employee;
 using TsiErp.Entities.Entities.ProductionTrackingHaltLine;
 using TsiErp.Entities.Entities.Shift;
 using TsiErp.Entities.Entities.Station;
 using TsiErp.Entities.Entities.WorkOrder;
 
-namespace TsiErp.Entities.Entities.ProductionTracking
+namespace TsiErp.Entities.Entities.ContractProductionTracking
 {
     public class ContractProductionTrackings : FullAuditedEntity
     {
@@ -34,14 +35,17 @@ namespace TsiErp.Entities.Entities.ProductionTracking
         /// </summary>
         public DateTime OperationStartDate { get; set; }
         /// <summary>
+        /// Başlangıç Saati
+        /// </summary>
+        public TimeSpan? OperationStartTime { get; set; }
+        /// <summary>
         /// Operasyon Bitiş Tarihi
         /// </summary>
         public DateTime OperationEndDate { get; set; }
-        [Precision(18, 6)]
         /// <summary>
-        /// Duruş Süresi
+        /// Bitiş Saati
         /// </summary>
-        public decimal HaltTime { get; set; }
+        public TimeSpan? OperationEndTime { get; set; }
 
         /// <summary>
         /// Tamamlandı mı ?
@@ -76,6 +80,10 @@ namespace TsiErp.Entities.Entities.ProductionTracking
         /// Vardiya ID
         /// </summary>
         public Guid ShiftID { get; set; }
+        /// <summary>
+        /// Cari Hesap ID
+        /// </summary>
+        public Guid CurrentAccountID { get; set; }
 
 
         public WorkOrders WorkOrders { get; set; }
@@ -86,7 +94,7 @@ namespace TsiErp.Entities.Entities.ProductionTracking
 
         public Employees Employees { get; set; }
 
-        public ICollection<ProductionTrackingHaltLines> ProductionTrackingHaltLines { get; set; }
+        public CurrentAccountCards CurrentAccountCards { get; set; }
 
     }
 }

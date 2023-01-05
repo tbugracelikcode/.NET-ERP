@@ -35,7 +35,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             _lineRepository = lineRepository;
         }
 
-        [ValidationAspect(typeof(CreateProductionTrackingsValidatorDto), Priority = 1)]
+        [ValidationAspect(typeof(CreateProductionTrackingsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionTrackingsDto>> CreateAsync(CreateProductionTrackingsDto input)
         {
@@ -103,7 +103,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             return new SuccessDataResult<IList<ListProductionTrackingsDto>>(mappedEntity);
         }
 
-        [ValidationAspect(typeof(UpdateProductionTrackingsValidatorDto), Priority = 1)]
+        [ValidationAspect(typeof(UpdateProductionTrackingsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionTrackingsDto>> UpdateAsync(UpdateProductionTrackingsDto input)
         {

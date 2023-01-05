@@ -5,8 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Entities.CurrentAccountCard;
+using TsiErp.Entities.Entities.Employee;
+using TsiErp.Entities.Entities.Shift;
+using TsiErp.Entities.Entities.WorkOrder;
 
-namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
+namespace TsiErp.Entities.Entities.ContractProductionTracking.Dtos
 {
     public class UpdateContractProductionTrackingsDto : FullAuditedEntityDto
     {
@@ -29,14 +33,17 @@ namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
         /// </summary>
         public DateTime OperationStartDate { get; set; }
         /// <summary>
+        /// Başlangıç Saati
+        /// </summary>
+        public TimeSpan? OperationStartTime { get; set; }
+        /// <summary>
         /// Operasyon Bitiş Tarihi
         /// </summary>
         public DateTime OperationEndDate { get; set; }
-        [Precision(18, 6)]
         /// <summary>
-        /// Duruş Süresi
+        /// Bitiş Saati
         /// </summary>
-        public decimal HaltTime { get; set; }
+        public TimeSpan? OperationEndTime { get; set; }
 
         /// <summary>
         /// Tamamlandı mı ?
@@ -59,5 +66,9 @@ namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
         /// Vardiya ID
         /// </summary>
         public Guid ShiftID { get; set; }
+        /// <summary>
+        /// Cari Hesap ID
+        /// </summary>
+        public Guid CurrentAccountID { get; set; }
     }
 }

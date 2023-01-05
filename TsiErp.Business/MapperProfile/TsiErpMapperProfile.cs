@@ -108,6 +108,8 @@ using TsiErp.Entities.Entities.ProductionTracking;
 using TsiErp.Entities.Entities.ProductionTracking.Dtos;
 using TsiErp.Entities.Entities.ProductionTrackingHaltLine;
 using TsiErp.Entities.Entities.ProductionTrackingHaltLine.Dtos;
+using TsiErp.Entities.Entities.ContractProductionTracking.Dtos;
+using TsiErp.Entities.Entities.ContractProductionTracking;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -755,7 +757,7 @@ namespace TsiErp.Business.MapperProfile
                 .ForMember(x => x.ShiftCode, y => y.MapFrom(z => z.Shifts.Code))
                 .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
                 .ForMember(x => x.EmployeeName, y => y.MapFrom(z => z.Employees.Name));
-            CreateMap<ProductionTrackings, ListContractProductionTrackingsDto>()
+            CreateMap<ProductionTrackings, ListProductionTrackingsDto>()
                 .ForMember(x => x.ShiftCode, y => y.MapFrom(z => z.Shifts.Code))
                 .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
                 .ForMember(x => x.EmployeeName, y => y.MapFrom(z => z.Employees.Name));
@@ -776,6 +778,22 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateProductionTrackingHaltLinesDto, ProductionTrackingHaltLines>();
             CreateMap<SelectProductionTrackingHaltLinesDto, UpdateProductionTrackingHaltLinesDto>();
             CreateMap<SelectProductionTrackingHaltLinesDto, ProductionTrackingHaltLines>();
+
+            CreateMap<ContractProductionTrackings, SelectContractProductionTrackingsDto>()
+                .ForMember(x => x.ShiftCode, y => y.MapFrom(z => z.Shifts.Code))
+                .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
+                .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
+                .ForMember(x => x.EmployeeName, y => y.MapFrom(z => z.Employees.Name));
+            CreateMap<ContractProductionTrackings, ListContractProductionTrackingsDto>()
+                .ForMember(x => x.ShiftCode, y => y.MapFrom(z => z.Shifts.Code))
+                .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
+                .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
+                .ForMember(x => x.EmployeeName, y => y.MapFrom(z => z.Employees.Name));
+            CreateMap<CreateContractProductionTrackingsDto, ContractProductionTrackings>();
+            CreateMap<SelectContractProductionTrackingsDto, CreateContractProductionTrackingsDto>();
+            CreateMap<UpdateContractProductionTrackingsDto, ContractProductionTrackings>();
+            CreateMap<SelectContractProductionTrackingsDto, UpdateContractProductionTrackingsDto>();
+            CreateMap<SelectContractProductionTrackingsDto, ContractProductionTrackings>();
         }
     }
 }

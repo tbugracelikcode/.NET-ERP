@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 
-namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
+namespace TsiErp.Entities.Entities.ContractProductionTracking.Dtos
 {
     public class ListContractProductionTrackingsParameterDto : FullAuditedEntityDto
     {
@@ -26,5 +26,9 @@ namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
         /// Vardiya ID
         /// </summary>
         public Guid ShiftID { get; set; }
+        /// <summary>
+        /// Cari Hesap ID
+        /// </summary>
+        public Guid CurrentAccountID { get; set; }
     }
 }
