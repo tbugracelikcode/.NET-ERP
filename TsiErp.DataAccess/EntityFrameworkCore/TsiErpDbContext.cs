@@ -61,6 +61,7 @@ using TsiErp.Entities.Entities.PurchaseRequestLine;
 using TsiErp.Entities.Entities.PurchaseUnsuitabilityReport;
 using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.ProductionTracking;
+using TsiErp.Entities.Entities.ContractProductionTracking;
 using TsiErp.Entities.Entities.ProductionTrackingHaltLine;
 using TsiErp.Entities.Entities.HaltReason;
 using TsiErp.Entities.Entities.Menu;
