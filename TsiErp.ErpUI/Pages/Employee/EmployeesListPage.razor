@@ -30,7 +30,7 @@
                     <Template>
                         <SfCard class="TSIListPageTitleCard">
                             <CardContent>
-                                <TsiBreadCrumb PreviousMenus="Kaynak Yönetimi > Ana Kayıtlar" CurrentMenu="Çalışanlar" />
+                                <TsiBreadCrumb PreviousMenus="Makine & İş Gücü Yönetimi Yönetimi > Ana Kayıtlar" CurrentMenu="Personel Kayıtları" />
                             </CardContent>
                             <CardFooter>
                             </CardFooter>
@@ -41,7 +41,7 @@
                     <Template>
                         <SfCard class="TSIGridCards">
                             <CardContent>
-                                <SfGrid ID="Grid" DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"  GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%"
+                                <SfGrid ID="Grid" DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%"
                                 class="GridZebra" ContextMenuItems="@GridContextMenu">
                                     <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
@@ -51,17 +51,17 @@
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(ListEmployeesDto.Code) HeaderText="ÇALIŞAN KODU" TextAlign="TextAlign.Center" Width="120">
+                                        <GridColumn Field=@nameof(ListEmployeesDto.Code) HeaderText="PERSONEL KODU" TextAlign="TextAlign.Center" Width="120">
                                         </GridColumn>
-                                        <GridColumn Field=@nameof(ListEmployeesDto.Name) HeaderText="ÇALIŞAN ADI" TextAlign="TextAlign.Center" Width="120">
-                                        <Template>
+                                        <GridColumn Field=@nameof(ListEmployeesDto.Name) HeaderText="PERSONEL ADI" TextAlign="TextAlign.Center" Width="120">
+                                            <Template>
                                                 @{
                                                     string name = (context as ListEmployeesDto).Name + " " + (context as ListEmployeesDto).Surname;
                                             }
                                             @name
                                         </Template>
 
-                                        </GridColumn>
+                                    </GridColumn>
                                     <GridColumn Field=@nameof(ListEmployeesDto.Email) HeaderText="E-POSTA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListEmployeesDto.IsActive) HeaderText="AKTİFLİK" DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
@@ -81,166 +81,219 @@
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Çalışanlar"
-         Width="57%"
-         Height="57%"
-         MinWidth="1080px"
-         MinHeight="620px"
+         HeaderText="Personel Kayıtları"
+         Width="40%"
+         Height="69%"
+         MinWidth="680px"
+         MinHeight="750px"
          HeaderCssClass="HeaderTitleCss">
             <BodyTemplate>
 
                 <DxGridLayout CssClass="TSIGridLayout">
                     <Rows>
-                        <DxGridLayoutRow Height="20%" />
-                        <DxGridLayoutRow Height="14%" />
-                        <DxGridLayoutRow Height="14%" />
-                        <DxGridLayoutRow Height="14%" />
-                        <DxGridLayoutRow Height="14%" />
-                        <DxGridLayoutRow Height="15%" />
+                        <DxGridLayoutRow Height="13%" />
+                        <DxGridLayoutRow Height="9%" />
+                        <DxGridLayoutRow Height="11%" />
+                        <DxGridLayoutRow Height="45%" />
                     </Rows>
                     <Columns>
                         <DxGridLayoutColumn Width="4%" />
-                        <DxGridLayoutColumn Width="28%" />
-                        <DxGridLayoutColumn Width="4%" />
-                        <DxGridLayoutColumn Width="28%" />
-                        <DxGridLayoutColumn Width="4%" />
-                        <DxGridLayoutColumn Width="28%" />
+                        <DxGridLayoutColumn Width="45%" />
+                        <DxGridLayoutColumn Width="13%" />
+                        <DxGridLayoutColumn Width="3%" />
+                        <DxGridLayoutColumn Width="30%" />
                         <DxGridLayoutColumn Width="4%" />
                     </Columns>
                     <Items>
+
                         <DxGridLayoutItem Row="0" Column="1">
                             <Template>
                                 <br />
-                                <label class="TSIModalLabel"><strong>Çalışan Kodu: </strong></label>
+                                <label class="TSIModalLabel"><strong>Personel Kodu: </strong></label>
                                 <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Çalışan Kodu Yazınız."></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="0" Column="3">
+
+                        <DxGridLayoutItem Row="1" Column="1">
                             <Template>
-                                <br />
-                                <label class="TSIModalLabel"><strong>Çalışan Adı: </strong></label>
+                                <label class="TSIModalLabel"><strong>Personel Adı: </strong></label>
                                 <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="Çalışan Adı Yazınız."></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="0" Column="5" RowSpan="1">
+
+                        <DxGridLayoutItem Row="1" Column="2">
+                            <Template>
+                                <center>
+                                     <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
+                                     <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                                </center>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="2" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>Personel Soyadı: </strong></label>
+                                <SfTextBox Placeholder="Çalışan Soyadı Yazınız." @bind-Value="DataSource.Surname" CssClass="TSITxtBox"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="0" Column="4" RowSpan="3">
                             <Template>
                                 <br />
                                 <label class="TSIModalLabel"><strong>Resim: </strong></label>
                                 <DxImage></DxImage>
                             </Template>
                         </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="1" Column="1">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>Çalışan Soyadı: </strong></label>
-                                <SfTextBox Placeholder="Çalışan Soyadı Yazınız." @bind-Value="DataSource.Surname" CssClass="TSITxtBox"></SfTextBox>
-                            </Template>
-                        </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="1" Column="3">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>Departman: </strong></label>
-                                <SfComboBox @ref="DepartmentsComboBox"
-                                    TValue="string"
-                                    TItem="ListDepartmentsDto"
-                                    Placeholder="Departman Seçin"
-                                    CssClass="e-multi-column"
-                                    Value="DataSource.Department"
-                                    DataSource="@DepartmentsList"
-                                    AllowFiltering="true"
-                                    PopupWidth="700px"
-                                    PopupHeight="500">
 
-                                    <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+                        <DxGridLayoutItem Row="3" Column="1" ColumnSpan="4">
+                            <Template>
+                                <SfTab>
+                                    <TabItems>
+                                        <TabItem>
+                                            <ChildContent>
+                                                <TabHeader Text="Genel Bilgiler"></TabHeader>
+                                            </ChildContent>
+                                            <ContentTemplate>
 
-                                    <ComboBoxTemplates TItem="ListDepartmentsDto">
-                                        <HeaderTemplate>
-                                            <table>
-                                                <tr>
-                                                    <th class="e-text-center">Departman Kodu</th>
-                                                    <th class="e-text-center">Departman Adı</th>
-                                                </tr>
-                                            </table>
-                                        </HeaderTemplate>
-                                        <ItemTemplate Context="cmbContext">
+                                                <DxGridLayout CssClass="TSIGridLayout">
+                                                    <Rows>
+                                                        <DxGridLayoutRow Height="38%" />
+                                                        <DxGridLayoutRow Height="32%" />
+                                                        <DxGridLayoutRow Height="32%" />
+                                                        <DxGridLayoutRow Height="32%" />
+                                                    </Rows>
+                                                    <Columns>
+                                                        <DxGridLayoutColumn Width="30%" />
+                                                        <DxGridLayoutColumn Width="5%" />
+                                                        <DxGridLayoutColumn Width="30%" />
+                                                        <DxGridLayoutColumn Width="5%" />
+                                                        <DxGridLayoutColumn Width="30%" />
+                                                    </Columns>
+                                                    <Items>
 
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="e-text-center">@((cmbContext as ListDepartmentsDto).Code)</td>
-                                                        <td class="e-text-center">@((cmbContext as ListDepartmentsDto).Name)</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </ItemTemplate>
-                                    </ComboBoxTemplates>
+                                                        <DxGridLayoutItem Row="0" Column="0">
+                                                            <Template>
+                                                                <br />
+                                                                <label class="TSIModalLabel"><strong>Departman: </strong></label>
+                                                                <SfComboBox @ref="DepartmentsComboBox"
+                                                                    TValue="string"
+                                                                    TItem="ListDepartmentsDto"
+                                                                    Placeholder="Departman Seçin"
+                                                                    CssClass="e-multi-column"
+                                                                    Value="DataSource.Department"
+                                                                    DataSource="@DepartmentsList"
+                                                                    AllowFiltering="true"
+                                                                    PopupWidth="700px"
+                                                                    PopupHeight="500">
 
-                                    <ComboBoxEvents TValue="string"
-                                            TItem="ListDepartmentsDto"
-                                            Filtering="DepartmentFiltering"
-                                            ValueChange="DepartmentValueChangeHandler"></ComboBoxEvents>
-                                </SfComboBox>
-                            </Template>
-                        </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="2" Column="1">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>TC Kimlik No: </strong></label><br />
-                                <SfTextBox Placeholder="TC No Yazınız." @bind-Value="DataSource.IDnumber" CssClass="TSITxtBox"></SfTextBox>
-                            </Template>
-                        </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="2" Column="3">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>Doğum Günü: </strong></label><br />
-                                <SfDatePicker @bind-Value="DataSource.Birthday"></SfDatePicker>
-                            </Template>
-                        </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="2" Column="5">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>Kan Grubu: </strong></label><br />
-                                <SfDropDownList PopupHeight="230px" Placeholder="Kan Grubu Seçiniz" @bind-Value="@DataSource.BloodType" DataSource="@EnumValues">
-                                    <DropDownListFieldSettings Text="Name" Value="Name"></DropDownListFieldSettings>
-                                </SfDropDownList>
-                            </Template>
-                        </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="3" Column="1">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
-                                <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
-                            </Template>
-                        </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="3" Column="3">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>İl: </strong></label><br />
-                                <SfTextBox Placeholder="İli Yazınız." @bind-Value="DataSource.City" CssClass="TSITxtBox"></SfTextBox>
-                            </Template>
-                        </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="3" Column="5">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>İlçe: </strong></label><br />
-                                <SfTextBox Placeholder="İlçe Yazınız." @bind-Value="DataSource.District" CssClass="TSITxtBox"></SfTextBox>
-                            </Template>
-                        </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="4" Column="1">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>Ev Telefonu: </strong></label><br />
-                                <SfTextBox Placeholder="Ev Telefonu Numarasını Yazınız." @bind-Value="DataSource.HomePhone" CssClass="TSITxtBox"></SfTextBox>
-                            </Template>
-                        </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="4" Column="3">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>Cep Telefonu: </strong></label><br />
-                                <SfTextBox Placeholder="Cep Telefonu Numarasını Yazınız." @bind-Value="DataSource.CellPhone" CssClass="TSITxtBox"></SfTextBox>
-                            </Template>
-                        </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="4" Column="5">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>E-Posta: </strong></label><br />
-                                <SfTextBox Placeholder="E-Postayı Yazınız." @bind-Value="DataSource.Email" CssClass="TSITxtBox"></SfTextBox>
-                            </Template>
-                        </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="5" Column="1" ColumnSpan="5">
-                            <Template>
+                                                                    <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
 
-                                <label class="TSIModalLabel"><strong>Adres: </strong></label><br />
-                                <SfTextBox CssClass="TSIMemoBox" Placeholder="Adres Yazınız." @bind-Value="DataSource.Address"  Multiline=true></SfTextBox>
+                                                                    <ComboBoxTemplates TItem="ListDepartmentsDto">
+                                                                        <HeaderTemplate>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <th class="e-text-center">Departman Kodu</th>
+                                                                                    <th class="e-text-center">Departman Adı</th>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </HeaderTemplate>
+                                                                        <ItemTemplate Context="cmbContext">
+
+                                                                            <table>
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td class="e-text-center">@((cmbContext as ListDepartmentsDto).Code)</td>
+                                                                                        <td class="e-text-center">@((cmbContext as ListDepartmentsDto).Name)</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </ItemTemplate>
+                                                                    </ComboBoxTemplates>
+
+                                                                    <ComboBoxEvents TValue="string"
+                                                                            TItem="ListDepartmentsDto"
+                                                                            Filtering="DepartmentFiltering"
+                                                                            ValueChange="DepartmentValueChangeHandler"></ComboBoxEvents>
+                                                                </SfComboBox>
+                                                            </Template>
+                                                        </DxGridLayoutItem>
+
+                                                        <DxGridLayoutItem Row="0" Column="2">
+                                                            <Template>
+                                                                <br />
+                                                                <label class="TSIModalLabel"><strong>TC Kimlik No: </strong></label><br />
+                                                                <SfTextBox Placeholder="TC No Yazınız." @bind-Value="DataSource.IDnumber" CssClass="TSITxtBox"></SfTextBox>
+                                                            </Template>
+                                                        </DxGridLayoutItem>
+
+                                                        <DxGridLayoutItem Row="0" Column="4">
+                                                            <Template>
+                                                                <br />
+                                                                <label class="TSIModalLabel"><strong>Doğum Günü: </strong></label><br />
+                                                                <SfDatePicker @bind-Value="DataSource.Birthday"></SfDatePicker>
+                                                            </Template>
+                                                        </DxGridLayoutItem>
+
+                                                        <DxGridLayoutItem Row="1" Column="0">
+                                                            <Template>
+                                                                <label class="TSIModalLabel"><strong>Kan Grubu: </strong></label><br />
+                                                                <SfDropDownList PopupHeight="230px" Placeholder="Kan Grubu Seçiniz" @bind-Value="@DataSource.BloodType" DataSource="@EnumValues">
+                                                                    <DropDownListFieldSettings Text="Name" Value="Name"></DropDownListFieldSettings>
+                                                                </SfDropDownList>
+                                                            </Template>
+                                                        </DxGridLayoutItem>
+
+                                                        <DxGridLayoutItem Row="1" Column="2">
+                                                            <Template>
+                                                                <label class="TSIModalLabel"><strong>İl: </strong></label><br />
+                                                                <SfTextBox Placeholder="İli Yazınız." @bind-Value="DataSource.City" CssClass="TSITxtBox"></SfTextBox>
+                                                            </Template>
+                                                        </DxGridLayoutItem>
+
+                                                        <DxGridLayoutItem Row="1" Column="4">
+                                                            <Template>
+                                                                <label class="TSIModalLabel"><strong>İlçe: </strong></label><br />
+                                                                <SfTextBox Placeholder="İlçe Yazınız." @bind-Value="DataSource.District" CssClass="TSITxtBox"></SfTextBox>
+                                                            </Template>
+                                                        </DxGridLayoutItem>
+
+                                                        <DxGridLayoutItem Row="2" Column="0">
+                                                            <Template>
+                                                                <label class="TSIModalLabel"><strong>Ev Telefonu: </strong></label><br />
+                                                                <SfTextBox Placeholder="Ev Telefonu Numarasını Yazınız." @bind-Value="DataSource.HomePhone" CssClass="TSITxtBox"></SfTextBox>
+                                                            </Template>
+                                                        </DxGridLayoutItem>
+
+                                                        <DxGridLayoutItem Row="2" Column="2">
+                                                            <Template>
+                                                                <label class="TSIModalLabel"><strong>Cep Telefonu: </strong></label><br />
+                                                                <SfTextBox Placeholder="Cep Telefonu Numarasını Yazınız." @bind-Value="DataSource.CellPhone" CssClass="TSITxtBox"></SfTextBox>
+                                                            </Template>
+                                                        </DxGridLayoutItem>
+
+                                                        <DxGridLayoutItem Row="2" Column="4">
+                                                            <Template>
+                                                                <label class="TSIModalLabel"><strong>E-Posta: </strong></label><br />
+                                                                <SfTextBox Placeholder="E-Postayı Yazınız." @bind-Value="DataSource.Email" CssClass="TSITxtBox"></SfTextBox>
+                                                            </Template>
+                                                        </DxGridLayoutItem>
+
+                                                        <DxGridLayoutItem Row="3" Column="0" ColumnSpan="5">
+                                                            <Template>
+
+                                                                <label class="TSIModalLabel"><strong>Adres: </strong></label><br />
+                                                                <SfTextBox CssClass="TSIMemoBox" Placeholder="Adres Yazınız." @bind-Value="DataSource.Address" Multiline=true></SfTextBox>
+                                                            </Template>
+                                                        </DxGridLayoutItem>
+
+                                                    </Items>
+                                                </DxGridLayout>
+
+                                            </ContentTemplate>
+                                        </TabItem>
+
+                                    </TabItems>
+                                </SfTab>
                             </Template>
                         </DxGridLayoutItem>
 
