@@ -362,7 +362,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.FicheNo).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Description_).HasColumnType("nvarchar(max)");
                 b.Property(t => t.Date_).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
-                b.Property(t => t.Time_).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(8);
+                b.Property(t => t.Time_).HasColumnType("time(7)");
                 b.Property(t => t.ExchangeRate).HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.SpecialCode).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(201);
                 b.Property(t => t.PropositionRevisionNo).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
@@ -968,7 +968,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.FicheNo).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Description_).HasColumnType("nvarchar(max)");
                 b.Property(t => t.Date_).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
-                b.Property(t => t.Time_).IsRequired().HasColumnType("time(7)");
+                b.Property(t => t.Time_).HasColumnType("time(7)");
                 b.Property(t => t.ExchangeRate).HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.SpecialCode).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(201);
                 b.Property(t => t.LinkedSalesPropositionID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
@@ -1046,7 +1046,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.FicheNo).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Description_).HasColumnType("nvarchar(max)");
                 b.Property(t => t.Date_).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
-                b.Property(t => t.Time_).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(8);
+                b.Property(t => t.Time_).HasColumnType("time(7)");
                 b.Property(t => t.ExchangeRate).HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.SpecialCode).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(201);
                 b.Property(t => t.LinkedPurchaseRequestID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
@@ -1324,7 +1324,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.FicheNo).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Description_).HasColumnType("nvarchar(max)");
                 b.Property(t => t.Date_).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
-                b.Property(t => t.Time_).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(8);
+                b.Property(t => t.Time_).HasColumnType("time(7)");
                 b.Property(t => t.ExchangeRate).HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.SpecialCode).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(201);
                 b.Property(t => t.PropositionRevisionNo).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
