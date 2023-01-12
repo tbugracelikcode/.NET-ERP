@@ -8,6 +8,7 @@ using Syncfusion.Blazor.Schedule;
 using Tsi.Core.Utilities.Results;
 using TsiErp.Entities.Entities.Calendar.Dtos;
 using TsiErp.Entities.Entities.CalendarDay.Dtos;
+using TsiErp.Entities.Entities.Shift.Dtos;
 using TsiErp.Entities.Entities.Station.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 using Action = System.Action;
@@ -19,20 +20,27 @@ namespace TsiErp.ErpUI.Pages.Calendar
         SfSchedule<AppointmentData> ScheduleObj;
         private CellClickEventArgs CellData { get; set; }
         public bool schedularVisible { get; set; } = false;
-        public DateTime officialHoliday = DateTime.Today;
         public List<int> YearList = new List<int>();
         public SfGrid<SelectCalendarDaysDto> _daysGrid;
         public List<SelectCalendarDaysDto> GridDaysList = new List<SelectCalendarDaysDto>();
         public List<SelectCalendarDaysDto> SchedularDaysList = new List<SelectCalendarDaysDto>();
         public List<ListStationsDto> StationsList = new List<ListStationsDto>();
+        public List<ListStationsDto> SelectedStations = new List<ListStationsDto>();
+        public List<ListShiftsDto> ShiftsList = new List<ListShiftsDto>();
         SfComboBox<int, int> Years;
-        public DateTime CurrentDate = DateTime.Today;
+        
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+        public List<ContextMenuItemModel> StationShiftGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+
+        public List<StationShiftInfos> StationShiftList = new List<StationShiftInfos>();
         [Inject]
         ModalManager ModalManager { get; set; }
+
+        #region Değişkenler
+
         private bool isCell;
-        public bool chcTumu=true;
+        public bool chcTumu = true;
         public bool chcCalismaVar;
         public bool chcCalismaYok;
         public bool chcResmiTatil;
@@ -43,8 +51,13 @@ namespace TsiErp.ErpUI.Pages.Calendar
         private bool modal1visible = false;
         private bool modal2visible = false;
         string imageURL = "images/Stations/";
+        string cardbgcolor = "white";
+        public DateTime CurrentDate = DateTime.Today;
+        public DateTime officialHoliday = DateTime.Today;
 
-        public List<AppointmentData> DataSourceEvent = new List<AppointmentData>{};
+        #endregion
+
+        public List<AppointmentData> DataSourceEvent = new List<AppointmentData> { };
         public List<AppointmentData> FinalDataSource = new List<AppointmentData>();
         public List<ResourceData> ResourceList { get; set; } = new List<ResourceData> {
         new ResourceData{ Text = "Çalışma Var", Id= 1, Color = "#00ff14" },
@@ -221,7 +234,7 @@ namespace TsiErp.ErpUI.Pages.Calendar
             {
                 foreach (var dto in dtoList)
                 {
-                    AppointmentData data = new AppointmentData(); 
+                    AppointmentData data = new AppointmentData();
                     data.StartTime = dto.StartTime;
                     data.EndTime = dto.EndTime;
                     data.ResourceId = dto.CalendarDayStateEnum;
@@ -269,6 +282,9 @@ namespace TsiErp.ErpUI.Pages.Calendar
             }
         }
 
+
+        #region İş İstasyonları Modalı İşlemleri
+
         private async void ShowModal1()
         {
             StationsList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
@@ -278,10 +294,62 @@ namespace TsiErp.ErpUI.Pages.Calendar
         private void HideModal1()
         {
             modal1visible = false;
+            SelectedStations.Clear();
         }
 
-        private void ShowModal2()
+        private async void OnSelectStation(ListStationsDto station)
         {
+            if (SelectedStations.Contains(station))
+            {
+                SelectedStations.Remove(station);
+            }
+            else
+            {
+                SelectedStations.Add(station);
+            }
+
+            await InvokeAsync(() => StateHasChanged());
+
+        }
+
+        private void Remove(ListStationsDto station)
+        {
+            SelectedStations.Remove(station);
+
+            InvokeAsync(() => StateHasChanged());
+        }
+
+        #endregion
+
+        #region Vardiya Bilgileri Modalı İşlemleri
+
+        private async void ShowModal2()
+        {
+           
+            //ShiftsList = (await ShiftsAppService.GetListAsync(new ListShiftsParameterDto())).Data.ToList();
+
+            //var lineList = (await CalendarsService.GetLineListAsync(DataSource.Id)).Data.Where(t=>t.Date_ == selectedDay.).ToList();
+
+            //foreach (var station in SelectedStations)
+            //{
+            //    lineList.Where(t=>t.)
+
+            //    foreach (var line in lineList)
+            //    {
+            //        StationShiftInfos stationShiftModel = new StationShiftInfos
+            //        {
+            //            Station = station.Code,
+            //            Overtime = line.ShiftOverTime,
+            //            BreakTime = line.PlannedHaltTimes,
+            //            ShiftOrder = line.ShiftOrder,
+            //            TotalWorkTime = line.AvailableTime
+            //        };
+
+            //        StationShiftList.Add(stationShiftModel);
+            //    }
+
+            //}
+
             modal2visible = true;
         }
 
@@ -295,15 +363,39 @@ namespace TsiErp.ErpUI.Pages.Calendar
             HideModal2();
         }
 
-      
+        protected void CreateStationShiftContextMenuItems()
+        {
+            if (StationShiftGridContextMenu.Count() == 0)
+            {
+                StationShiftGridContextMenu.Add(new ContextMenuItemModel { Text = "Bakım Bilgileri", Id = "maintenance" });
+            }
+        }
+
+        public async void OnStationShiftContextMenuClick(ContextMenuClickEventArgs<StationShiftInfos> args)
+        {
+            switch (args.Item.Id)
+            {
+                case "maintenance":
+
+
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        #endregion
+
+
         public async Task OnItemSelected(MenuEventArgs<MenuItem> args)
         {
             var SelectedMenuItem = args.Item.Id;
-           
+
             switch (SelectedMenuItem)
             {
                 case "Edit":
-                     ShowModal1();
+                    ShowModal1();
                     break;
                 default:
                     break;
@@ -332,6 +424,19 @@ namespace TsiErp.ErpUI.Pages.Calendar
             public string StartTimezone { get; set; }
             public string EndTimezone { get; set; }
             public int ResourceId { get; set; }
+        }
+
+        public class StationShiftInfos
+        {
+            public decimal TotalWorkTime { get; set; }
+
+            public decimal BreakTime { get; set; }
+
+            public decimal Overtime { get; set; }
+
+            public string Station { get; set; }
+
+            public int ShiftOrder { get; set; }
         }
 
     }
