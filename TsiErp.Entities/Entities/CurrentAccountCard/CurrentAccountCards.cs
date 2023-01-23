@@ -16,6 +16,10 @@ using TsiErp.Entities.Entities.PurchaseUnsuitabilityReport;
 using TsiErp.Entities.Entities.ProductionTracking;
 using TsiErp.Entities.Entities.ContractProductionTracking;
 using TsiErp.Entities.Entities.Forecast;
+using TsiErp.Entities.Entities.SalesPrice;
+using TsiErp.Entities.Entities.SalesPriceLine;
+using TsiErp.Entities.Entities.PurchasePrice;
+using TsiErp.Entities.Entities.PurchasePriceLine;
 
 namespace TsiErp.Entities.Entities.CurrentAccountCard
 {

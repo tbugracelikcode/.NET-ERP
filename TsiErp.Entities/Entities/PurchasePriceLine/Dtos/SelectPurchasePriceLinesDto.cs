@@ -15,6 +15,10 @@ namespace TsiErp.Entities.Entities.PurchasePriceLine.Dtos
         /// </summary>
         public Guid PurchasePriceID { get; set; }
         /// <summary>
+        /// Cari ID
+        /// </summary>
+        public Guid? CurrentAccountCardID { get; set; }
+        /// <summary>
         /// Stok ID
         /// </summary>
         public Guid? ProductID { get; set; }

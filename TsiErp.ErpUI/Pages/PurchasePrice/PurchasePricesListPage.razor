@@ -4,10 +4,12 @@
 @using TsiErp.Business.Entities.Currency.Services
 @using TsiErp.Business.Entities.Product.Services
 @using TsiErp.Business.Entities.PurchasePrice.Services
+@using TsiErp.Business.Entities.CurrentAccountCard.Services
 @using TsiErp.Entities.Entities.Currency.Dtos
 @using TsiErp.Entities.Entities.PurchasePrice.Dtos
 @using TsiErp.Entities.Entities.PurchasePriceLine.Dtos
 @using TsiErp.Entities.Entities.Product.Dtos
+@using TsiErp.Entities.Entities.CurrentAccountCard.Dtos
 @using TsiErp.ErpUI.Pages.Base
 
 
@@ -16,6 +18,7 @@
 @inject IPurchasePricesAppService PurchasePricesAppService
 @inject ICurrenciesAppService CurrenciesAppService
 @inject IProductsAppService ProductsAppService
+@inject ICurrentAccountCardsAppService CurrentAccountCardsAppService
 
 @if (!base.IsLoaded)
 {
@@ -85,8 +88,9 @@ else
 
                 <Rows>
                     <DxGridLayoutRow Height="15%" />
+                    <DxGridLayoutRow Height="12%" />
                     <DxGridLayoutRow Height="14%" />
-                    <DxGridLayoutRow Height="65%" />
+                    <DxGridLayoutRow Height="51%" />
                 </Rows>
 
                 <Columns>
@@ -170,7 +174,61 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="2" Column="1" ColumnSpan="5">
+                     <DxGridLayoutItem Row="1" Column="5">
+                        <Template>
+                          <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
+                           <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    
+                     <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                          <label class="TSIModalLabel"><strong>Cari Hesap: </strong></label><br />
+                            <SfComboBox @ref="CurrentAccountCardsComboBox"
+                                    TValue="Guid?"
+                                    TItem="ListCurrentAccountCardsDto"
+                                    Placeholder="Cari Hesap"
+                                    CssClass="e-multi-column"
+                                    DataSource="@CurrentAccountCardsList"
+                                    AllowFiltering="true"
+                                    PopupWidth="700px"
+                                    PopupHeight="500"
+                                    Value="DataSource.CurrentAccountCardID">
+
+                                <ComboBoxFieldSettings Text="Name" Value="Id"></ComboBoxFieldSettings>
+
+                                <ComboBoxTemplates TItem="ListCurrentAccountCardsDto">
+                                    <HeaderTemplate>
+                                        <table>
+                                            <tr>
+                                                <th class="e-text-center">Cari Hesap Kodu</th>
+                                                <th class="e-text-center">Cari Hesap Ünvanı</th>
+                                            </tr>
+                                        </table>
+                                    </HeaderTemplate>
+                                    <ItemTemplate Context="cmbContext">
+
+                                        <table>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="e-text-center">@((cmbContext as ListCurrentAccountCardsDto).Code)</td>
+                                                    <td class="e-text-center">@((cmbContext as ListCurrentAccountCardsDto).Name)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </ItemTemplate>
+                                </ComboBoxTemplates>
+
+                                <ComboBoxEvents TValue="Guid?"
+                                            TItem="ListCurrentAccountCardsDto"
+                                            Filtering="CurrentAccountCardsFiltering"
+                                            ValueChange="CurrentAccountCardsValueChangeHandler"></ComboBoxEvents>
+                            </SfComboBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="1" ColumnSpan="5">
                         <Template>
                             <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
                                 <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectPurchasePriceLinesDto"></GridEvents>

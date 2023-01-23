@@ -1640,9 +1640,12 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.StartDate).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
                 b.Property(t => t.EndDate).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
                 b.Property(t => t.CurrencyID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.CurrentAccountCardID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
 
                 b.HasIndex(x => x.Code);
                 b.HasIndex(x => x.CurrencyID);
+                b.HasIndex(x => x.CurrentAccountCardID);
 
                 b.HasOne(x => x.Currencies).WithMany(x => x.SalesPrices).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
             });
@@ -1658,6 +1661,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.SalesPriceID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.CurrencyID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.CurrentAccountCardID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.Linenr).IsRequired().HasColumnType(SqlDbType.Int.ToString());
                 b.Property(t => t.Price).HasColumnType(SqlDbType.Decimal.ToString()).HasPrecision(18, 6);
                 b.Property(t => t.StartDate).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
@@ -1666,6 +1670,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.SalesPriceID);
                 b.HasIndex(x => x.ProductID);
                 b.HasIndex(x => x.CurrencyID);
+                b.HasIndex(x => x.CurrentAccountCardID);
 
                 b.HasOne(x => x.Products).WithMany(x => x.SalesPriceLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.Currencies).WithMany(x => x.SalesPriceLines).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
@@ -1685,9 +1690,12 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.StartDate).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
                 b.Property(t => t.EndDate).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
                 b.Property(t => t.CurrencyID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.CurrentAccountCardID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
 
                 b.HasIndex(x => x.Code);
                 b.HasIndex(x => x.CurrencyID);
+                b.HasIndex(x => x.CurrentAccountCardID);
 
                 b.HasOne(x => x.Currencies).WithMany(x => x.PurchasePrices).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
             });
@@ -1703,6 +1711,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.PurchasePriceID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.CurrencyID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.CurrentAccountCardID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.Linenr).IsRequired().HasColumnType(SqlDbType.Int.ToString());
                 b.Property(t => t.Price).HasColumnType(SqlDbType.Decimal.ToString()).HasPrecision(18, 6);
                 b.Property(t => t.StartDate).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
@@ -1711,6 +1720,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.PurchasePriceID);
                 b.HasIndex(x => x.ProductID);
                 b.HasIndex(x => x.CurrencyID);
+                b.HasIndex(x => x.CurrentAccountCardID);
 
                 b.HasOne(x => x.Products).WithMany(x => x.PurchasePriceLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.Currencies).WithMany(x => x.PurchasePriceLines).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
