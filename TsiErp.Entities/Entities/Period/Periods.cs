@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.Branch;
+using TsiErp.Entities.Entities.Forecast;
 
 namespace TsiErp.Entities.Entities.Period
 {
@@ -37,5 +38,6 @@ namespace TsiErp.Entities.Entities.Period
 
 
         public Branches Branches { get; set; }
+        public ICollection<Forecasts> Forecasts { get; set; }
     }
 }
