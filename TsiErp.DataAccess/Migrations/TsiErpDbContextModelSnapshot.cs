@@ -1436,6 +1436,149 @@ namespace TsiErp.DataAccess.Migrations
                     b.ToTable("FinalControlUnsuitabilityItems", (string)null);
                 });
 
+            modelBuilder.Entity("TsiErp.Entities.Entities.Forecast.Forecasts", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<Guid>("BranchID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(17)
+                        .HasColumnType("NVarChar(17)");
+
+                    b.Property<DateTime>("CreationDate_")
+                        .HasColumnType("DateTime");
+
+                    b.Property<DateTime?>("CreationTime")
+                        .IsRequired()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid>("CurrentAccountCardID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<string>("Description_")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<int>("LineNumber")
+                        .HasColumnType("Int");
+
+                    b.Property<Guid>("PeriodID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<decimal>("Total")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
+
+                    b.Property<DateTime?>("ValidityEndDate")
+                        .HasColumnType("DateTime");
+
+                    b.Property<DateTime?>("ValidityStartDate")
+                        .HasColumnType("DateTime");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BranchID");
+
+                    b.HasIndex("Code");
+
+                    b.HasIndex("CurrentAccountCardID");
+
+                    b.HasIndex("PeriodID");
+
+                    b.ToTable("Forecasts", (string)null);
+                });
+
+            modelBuilder.Entity("TsiErp.Entities.Entities.ForecastLine.ForecastLines", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<decimal>("Amount")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
+
+                    b.Property<DateTime?>("CreationTime")
+                        .IsRequired()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<string>("CustomerProductCode")
+                        .HasColumnType("nvarchar(MAX)");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<Guid>("ForecastID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<int>("LineNr")
+                        .HasColumnType("Int");
+
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ForecastID");
+
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("ForecastLines", (string)null);
+                });
+
             modelBuilder.Entity("TsiErp.Entities.Entities.HaltReason.HaltReasons", b =>
                 {
                     b.Property<Guid>("Id")
@@ -2839,6 +2982,142 @@ namespace TsiErp.DataAccess.Migrations
                     b.ToTable("PurchaseOrderLines", (string)null);
                 });
 
+            modelBuilder.Entity("TsiErp.Entities.Entities.PurchasePrice.PurchasePrices", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(17)
+                        .HasColumnType("NVarChar(17)");
+
+                    b.Property<DateTime?>("CreationTime")
+                        .IsRequired()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid>("CurrencyID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<DateTime?>("EndDate")
+                        .IsRequired()
+                        .HasColumnType("DateTime");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(200)
+                        .HasColumnType("NVarChar(200)");
+
+                    b.Property<DateTime?>("StartDate")
+                        .IsRequired()
+                        .HasColumnType("DateTime");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code");
+
+                    b.HasIndex("CurrencyID");
+
+                    b.ToTable("PurchasePrices", (string)null);
+                });
+
+            modelBuilder.Entity("TsiErp.Entities.Entities.PurchasePriceLine.PurchasePriceLines", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<DateTime?>("CreationTime")
+                        .IsRequired()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid>("CurrencyID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<DateTime?>("EndDate")
+                        .IsRequired()
+                        .HasColumnType("DateTime");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<int>("Linenr")
+                        .HasColumnType("Int");
+
+                    b.Property<decimal>("Price")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
+
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<Guid>("PurchasePriceID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<DateTime?>("StartDate")
+                        .IsRequired()
+                        .HasColumnType("DateTime");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrencyID");
+
+                    b.HasIndex("ProductID");
+
+                    b.HasIndex("PurchasePriceID");
+
+                    b.ToTable("PurchasePriceLines", (string)null);
+                });
+
             modelBuilder.Entity("TsiErp.Entities.Entities.PurchaseRequest.PurchaseRequests", b =>
                 {
                     b.Property<Guid>("Id")
@@ -3638,6 +3917,142 @@ namespace TsiErp.DataAccess.Migrations
                     b.HasIndex("UnitSetID");
 
                     b.ToTable("SalesOrderLines", (string)null);
+                });
+
+            modelBuilder.Entity("TsiErp.Entities.Entities.SalesPrice.SalesPrices", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(17)
+                        .HasColumnType("NVarChar(17)");
+
+                    b.Property<DateTime?>("CreationTime")
+                        .IsRequired()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid>("CurrencyID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<DateTime?>("EndDate")
+                        .IsRequired()
+                        .HasColumnType("DateTime");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(200)
+                        .HasColumnType("NVarChar(200)");
+
+                    b.Property<DateTime?>("StartDate")
+                        .IsRequired()
+                        .HasColumnType("DateTime");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code");
+
+                    b.HasIndex("CurrencyID");
+
+                    b.ToTable("SalesPrices", (string)null);
+                });
+
+            modelBuilder.Entity("TsiErp.Entities.Entities.SalesPriceLine.SalesPriceLines", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<DateTime?>("CreationTime")
+                        .IsRequired()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid>("CurrencyID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<DateTime?>("EndDate")
+                        .IsRequired()
+                        .HasColumnType("DateTime");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<int>("Linenr")
+                        .HasColumnType("Int");
+
+                    b.Property<decimal>("Price")
+                        .HasPrecision(18, 6)
+                        .HasColumnType("Decimal(18,6)");
+
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<Guid>("SalesPriceID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<DateTime?>("StartDate")
+                        .IsRequired()
+                        .HasColumnType("DateTime");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrencyID");
+
+                    b.HasIndex("ProductID");
+
+                    b.HasIndex("SalesPriceID");
+
+                    b.ToTable("SalesPriceLines", (string)null);
                 });
 
             modelBuilder.Entity("TsiErp.Entities.Entities.SalesProposition.SalesPropositions", b =>
@@ -4915,6 +5330,52 @@ namespace TsiErp.DataAccess.Migrations
                     b.Navigation("Currencies");
                 });
 
+            modelBuilder.Entity("TsiErp.Entities.Entities.Forecast.Forecasts", b =>
+                {
+                    b.HasOne("TsiErp.Entities.Entities.Branch.Branches", "Branches")
+                        .WithMany("Forecasts")
+                        .HasForeignKey("BranchID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TsiErp.Entities.Entities.CurrentAccountCard.CurrentAccountCards", "CurrentAccountCards")
+                        .WithMany("Forecasts")
+                        .HasForeignKey("CurrentAccountCardID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TsiErp.Entities.Entities.Period.Periods", "Periods")
+                        .WithMany("Forecasts")
+                        .HasForeignKey("PeriodID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Branches");
+
+                    b.Navigation("CurrentAccountCards");
+
+                    b.Navigation("Periods");
+                });
+
+            modelBuilder.Entity("TsiErp.Entities.Entities.ForecastLine.ForecastLines", b =>
+                {
+                    b.HasOne("TsiErp.Entities.Entities.Forecast.Forecasts", "Forecasts")
+                        .WithMany("ForecastLines")
+                        .HasForeignKey("ForecastID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TsiErp.Entities.Entities.Product.Products", "Products")
+                        .WithMany("ForecastLines")
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Forecasts");
+
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("TsiErp.Entities.Entities.OperationUnsuitabilityReport.OperationUnsuitabilityReports", b =>
                 {
                     b.HasOne("TsiErp.Entities.Entities.Employee.Employees", "Employees")
@@ -5248,6 +5709,44 @@ namespace TsiErp.DataAccess.Migrations
                     b.Navigation("UnitSets");
                 });
 
+            modelBuilder.Entity("TsiErp.Entities.Entities.PurchasePrice.PurchasePrices", b =>
+                {
+                    b.HasOne("TsiErp.Entities.Entities.Currency.Currencies", "Currencies")
+                        .WithMany("PurchasePrices")
+                        .HasForeignKey("CurrencyID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Currencies");
+                });
+
+            modelBuilder.Entity("TsiErp.Entities.Entities.PurchasePriceLine.PurchasePriceLines", b =>
+                {
+                    b.HasOne("TsiErp.Entities.Entities.Currency.Currencies", "Currencies")
+                        .WithMany("PurchasePriceLines")
+                        .HasForeignKey("CurrencyID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TsiErp.Entities.Entities.Product.Products", "Products")
+                        .WithMany("PurchasePriceLines")
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TsiErp.Entities.Entities.PurchasePrice.PurchasePrices", "PurchasePrices")
+                        .WithMany("PurchasePriceLines")
+                        .HasForeignKey("PurchasePriceID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Currencies");
+
+                    b.Navigation("Products");
+
+                    b.Navigation("PurchasePrices");
+                });
+
             modelBuilder.Entity("TsiErp.Entities.Entities.PurchaseRequest.PurchaseRequests", b =>
                 {
                     b.HasOne("TsiErp.Entities.Entities.Branch.Branches", "Branches")
@@ -5489,6 +5988,44 @@ namespace TsiErp.DataAccess.Migrations
                     b.Navigation("UnitSets");
                 });
 
+            modelBuilder.Entity("TsiErp.Entities.Entities.SalesPrice.SalesPrices", b =>
+                {
+                    b.HasOne("TsiErp.Entities.Entities.Currency.Currencies", "Currencies")
+                        .WithMany("SalesPrices")
+                        .HasForeignKey("CurrencyID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Currencies");
+                });
+
+            modelBuilder.Entity("TsiErp.Entities.Entities.SalesPriceLine.SalesPriceLines", b =>
+                {
+                    b.HasOne("TsiErp.Entities.Entities.Currency.Currencies", "Currencies")
+                        .WithMany("SalesPriceLines")
+                        .HasForeignKey("CurrencyID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TsiErp.Entities.Entities.Product.Products", "Products")
+                        .WithMany("SalesPriceLines")
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TsiErp.Entities.Entities.SalesPrice.SalesPrices", "SalesPrices")
+                        .WithMany("SalesPriceLines")
+                        .HasForeignKey("SalesPriceID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Currencies");
+
+                    b.Navigation("Products");
+
+                    b.Navigation("SalesPrices");
+                });
+
             modelBuilder.Entity("TsiErp.Entities.Entities.SalesProposition.SalesPropositions", b =>
                 {
                     b.HasOne("TsiErp.Entities.Entities.Branch.Branches", "Branches")
@@ -5708,6 +6245,8 @@ namespace TsiErp.DataAccess.Migrations
 
             modelBuilder.Entity("TsiErp.Entities.Entities.Branch.Branches", b =>
                 {
+                    b.Navigation("Forecasts");
+
                     b.Navigation("Periods");
 
                     b.Navigation("PurchaseOrders");
@@ -5734,9 +6273,17 @@ namespace TsiErp.DataAccess.Migrations
 
                     b.Navigation("PurchaseOrders");
 
+                    b.Navigation("PurchasePriceLines");
+
+                    b.Navigation("PurchasePrices");
+
                     b.Navigation("PurchaseRequests");
 
                     b.Navigation("SalesOrders");
+
+                    b.Navigation("SalesPriceLines");
+
+                    b.Navigation("SalesPrices");
 
                     b.Navigation("SalesPropositions");
                 });
@@ -5744,6 +6291,8 @@ namespace TsiErp.DataAccess.Migrations
             modelBuilder.Entity("TsiErp.Entities.Entities.CurrentAccountCard.CurrentAccountCards", b =>
                 {
                     b.Navigation("ContractProductionTrackings");
+
+                    b.Navigation("Forecasts");
 
                     b.Navigation("ProductionOrders");
 
@@ -5785,6 +6334,11 @@ namespace TsiErp.DataAccess.Migrations
                     b.Navigation("CalibrationVerifications");
                 });
 
+            modelBuilder.Entity("TsiErp.Entities.Entities.Forecast.Forecasts", b =>
+                {
+                    b.Navigation("ForecastLines");
+                });
+
             modelBuilder.Entity("TsiErp.Entities.Entities.HaltReason.HaltReasons", b =>
                 {
                     b.Navigation("ProductionTrackingHaltLines");
@@ -5809,11 +6363,18 @@ namespace TsiErp.DataAccess.Migrations
                     b.Navigation("SalesPropositions");
                 });
 
+            modelBuilder.Entity("TsiErp.Entities.Entities.Period.Periods", b =>
+                {
+                    b.Navigation("Forecasts");
+                });
+
             modelBuilder.Entity("TsiErp.Entities.Entities.Product.Products", b =>
                 {
                     b.Navigation("BillsofMaterialLines");
 
                     b.Navigation("BillsofMaterials");
+
+                    b.Navigation("ForecastLines");
 
                     b.Navigation("OperationUnsuitabilityReports");
 
@@ -5822,6 +6383,8 @@ namespace TsiErp.DataAccess.Migrations
                     b.Navigation("ProductsOperations");
 
                     b.Navigation("PurchaseOrderLines");
+
+                    b.Navigation("PurchasePriceLines");
 
                     b.Navigation("PurchaseRequestLines");
 
@@ -5832,6 +6395,8 @@ namespace TsiErp.DataAccess.Migrations
                     b.Navigation("Routes");
 
                     b.Navigation("SalesOrderLines");
+
+                    b.Navigation("SalesPriceLines");
 
                     b.Navigation("SalesPropositionLines");
 
@@ -5873,6 +6438,11 @@ namespace TsiErp.DataAccess.Migrations
                     b.Navigation("PurchaseUnsuitabilityReports");
                 });
 
+            modelBuilder.Entity("TsiErp.Entities.Entities.PurchasePrice.PurchasePrices", b =>
+                {
+                    b.Navigation("PurchasePriceLines");
+                });
+
             modelBuilder.Entity("TsiErp.Entities.Entities.PurchaseRequest.PurchaseRequests", b =>
                 {
                     b.Navigation("PurchaseRequestLines");
@@ -5897,6 +6467,11 @@ namespace TsiErp.DataAccess.Migrations
             modelBuilder.Entity("TsiErp.Entities.Entities.SalesOrderLine.SalesOrderLines", b =>
                 {
                     b.Navigation("ProductionOrders");
+                });
+
+            modelBuilder.Entity("TsiErp.Entities.Entities.SalesPrice.SalesPrices", b =>
+                {
+                    b.Navigation("SalesPriceLines");
                 });
 
             modelBuilder.Entity("TsiErp.Entities.Entities.SalesProposition.SalesPropositions", b =>

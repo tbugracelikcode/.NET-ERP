@@ -8,6 +8,7 @@ using TsiErp.Entities.Entities.ContractProductionTracking;
 using TsiErp.Entities.Entities.Department;
 using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.ProductionTracking;
+using TsiErp.Entities.Entities.SalesPrice;
 using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.Employee
@@ -79,12 +80,9 @@ namespace TsiErp.Entities.Entities.Employee
         public bool IsActive { get; set; }
 
         public Departments Departments { get; set; }
-
         public ICollection<OperationUnsuitabilityReports> OperationUnsuitabilityReports { get; set; }
-
         public ICollection<ProductionTrackings> ProductionTrackings { get; set; }
         public ICollection<ContractProductionTrackings> ContractProductionTrackings { get; set; }
-
 
     }
 }

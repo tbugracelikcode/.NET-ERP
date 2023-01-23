@@ -80,6 +80,10 @@ using TsiErp.Entities.Entities.SalesOrder;
 using TsiErp.Entities.Entities.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesOrderLine;
 using TsiErp.Entities.Entities.SalesOrderLine.Dtos;
+using TsiErp.Entities.Entities.SalesPrice;
+using TsiErp.Entities.Entities.SalesPrice.Dtos;
+using TsiErp.Entities.Entities.SalesPriceLine;
+using TsiErp.Entities.Entities.SalesPriceLine.Dtos;
 using TsiErp.Entities.Entities.BillsofMaterial;
 using TsiErp.Entities.Entities.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.BillsofMaterialLine;
@@ -92,6 +96,8 @@ using TsiErp.Entities.Entities.WorkOrder;
 using TsiErp.Entities.Entities.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseOrderLine.Dtos;
+using TsiErp.Entities.Entities.Forecast.Dtos;
+using TsiErp.Entities.Entities.ForecastLine.Dtos;
 using TsiErp.Entities.Entities.PurchaseRequest.Dtos;
 using TsiErp.Entities.Entities.PurchaseRequestLine.Dtos;
 using TsiErp.Entities.Entities.PurchaseOrder;
@@ -110,6 +116,12 @@ using TsiErp.Entities.Entities.ProductionTrackingHaltLine;
 using TsiErp.Entities.Entities.ProductionTrackingHaltLine.Dtos;
 using TsiErp.Entities.Entities.ContractProductionTracking.Dtos;
 using TsiErp.Entities.Entities.ContractProductionTracking;
+using TsiErp.Entities.Entities.Forecast;
+using TsiErp.Entities.Entities.ForecastLine;
+using TsiErp.Entities.Entities.PurchasePriceLine;
+using TsiErp.Entities.Entities.PurchasePrice;
+using TsiErp.Entities.Entities.PurchasePrice.Dtos;
+using TsiErp.Entities.Entities.PurchasePriceLine.Dtos;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -794,6 +806,87 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateContractProductionTrackingsDto, ContractProductionTrackings>();
             CreateMap<SelectContractProductionTrackingsDto, UpdateContractProductionTrackingsDto>();
             CreateMap<SelectContractProductionTrackingsDto, ContractProductionTrackings>();
+
+            CreateMap<Forecasts, SelectForecastsDto>()
+           .ForMember(x => x.PeriodCode, y => y.MapFrom(z => z.Periods.Code))
+           .ForMember(x => x.PeriodName, y => y.MapFrom(z => z.Periods.Name))
+           .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Code))
+           .ForMember(x => x.BranchName, y => y.MapFrom(z => z.Branches.Name))
+           .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
+           .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name));
+            CreateMap<Forecasts, ListForecastsDto>()
+              .ForMember(x => x.PeriodCode, y => y.MapFrom(z => z.Periods.Code))
+           .ForMember(x => x.PeriodName, y => y.MapFrom(z => z.Periods.Name))
+           .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Code))
+           .ForMember(x => x.BranchName, y => y.MapFrom(z => z.Branches.Name))
+           .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
+           .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name));
+            CreateMap<UpdateForecastsDto, Forecasts>()
+                .ForMember(x => x.ForecastLines, y => y.Ignore());
+            CreateMap<CreateForecastsDto, Forecasts>();
+            CreateMap<SelectForecastsDto, CreateForecastsDto>();
+            CreateMap<SelectForecastsDto, UpdateForecastsDto>();
+
+
+            CreateMap<ForecastLines, SelectForecastLinesDto>()
+               .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+               .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
+            CreateMap<ForecastLines, ListForecastLinesDto>()
+               .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+               .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
+            CreateMap<CreateForecastLinesDto, ForecastLines>();
+            CreateMap<SelectForecastLinesDto, CreateForecastLinesDto>();
+            CreateMap<UpdateForecastLinesDto, ForecastLines>();
+            CreateMap<SelectForecastLinesDto, UpdateForecastLinesDto>();
+            CreateMap<SelectForecastLinesDto, ForecastLines>();
+
+
+            CreateMap<SalesPrices, SelectSalesPricesDto>().ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Code));
+            CreateMap<SalesPrices, ListSalesPricesDto>().ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Code));
+            CreateMap<UpdateSalesPricesDto, SalesPrices>()
+                .ForMember(x => x.SalesPriceLines, y => y.Ignore());
+            CreateMap<CreateSalesPricesDto, SalesPrices>();
+            CreateMap<SelectSalesPricesDto, CreateSalesPricesDto>();
+            CreateMap<SelectSalesPricesDto, UpdateSalesPricesDto>();
+
+
+            CreateMap<SalesPriceLines, SelectSalesPriceLinesDto>()
+               .ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Code))
+               .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+               .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
+            CreateMap<SalesPriceLines, ListSalesPriceLinesDto>()
+               .ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Code))
+               .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+               .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
+            CreateMap<CreateSalesPriceLinesDto, SalesPriceLines>();
+            CreateMap<SelectSalesPriceLinesDto, CreateSalesPriceLinesDto>();
+            CreateMap<UpdateSalesPriceLinesDto, SalesPriceLines>();
+            CreateMap<SelectSalesPriceLinesDto, UpdateSalesPriceLinesDto>();
+            CreateMap<SelectSalesPriceLinesDto, SalesPriceLines>();
+
+
+            CreateMap<PurchasePrices, SelectPurchasePricesDto>().ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Code));
+            CreateMap<PurchasePrices, ListPurchasePricesDto>().ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Code));
+            CreateMap<UpdatePurchasePricesDto, PurchasePrices>()
+                .ForMember(x => x.PurchasePriceLines, y => y.Ignore());
+            CreateMap<CreatePurchasePricesDto, PurchasePrices>();
+            CreateMap<SelectPurchasePricesDto, CreatePurchasePricesDto>();
+            CreateMap<SelectPurchasePricesDto, UpdatePurchasePricesDto>();
+
+
+            CreateMap<PurchasePriceLines, SelectPurchasePriceLinesDto>()
+               .ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Code))
+               .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+               .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
+            CreateMap<PurchasePriceLines, ListPurchasePriceLinesDto>()
+               .ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Code))
+               .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+               .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
+            CreateMap<CreatePurchasePriceLinesDto, PurchasePriceLines>();
+            CreateMap<SelectPurchasePriceLinesDto, CreatePurchasePriceLinesDto>();
+            CreateMap<UpdatePurchasePriceLinesDto, PurchasePriceLines>();
+            CreateMap<SelectPurchasePriceLinesDto, UpdatePurchasePriceLinesDto>();
+            CreateMap<SelectPurchasePriceLinesDto, PurchasePriceLines>();
         }
     }
 }

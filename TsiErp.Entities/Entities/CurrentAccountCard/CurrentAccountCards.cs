@@ -15,6 +15,7 @@ using TsiErp.Entities.Entities.PurchaseRequest;
 using TsiErp.Entities.Entities.PurchaseUnsuitabilityReport;
 using TsiErp.Entities.Entities.ProductionTracking;
 using TsiErp.Entities.Entities.ContractProductionTracking;
+using TsiErp.Entities.Entities.Forecast;
 
 namespace TsiErp.Entities.Entities.CurrentAccountCard
 {
@@ -166,5 +167,6 @@ namespace TsiErp.Entities.Entities.CurrentAccountCard
         public ICollection<PurchaseRequests> PurchaseRequests { get; set; }
         public ICollection<PurchaseUnsuitabilityReports> PurchaseUnsuitabilityReports { get; set; }
         public ICollection<ContractProductionTrackings> ContractProductionTrackings { get; set; }
+        public ICollection<Forecasts> Forecasts { get; set; }
     }
 }

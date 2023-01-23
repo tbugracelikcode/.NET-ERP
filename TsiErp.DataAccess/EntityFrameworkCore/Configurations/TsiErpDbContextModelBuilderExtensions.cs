@@ -48,6 +48,8 @@ using TsiErp.Entities.Entities.ProductsOperation;
 using TsiErp.Entities.Entities.ProductsOperationLine;
 using TsiErp.Entities.Entities.BillsofMaterial;
 using TsiErp.Entities.Entities.BillsofMaterialLine;
+using TsiErp.Entities.Entities.Forecast;
+using TsiErp.Entities.Entities.ForecastLine;
 using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.WorkOrder;
 using TsiErp.Entities.Entities.CalendarDay;
@@ -59,6 +61,10 @@ using TsiErp.Entities.Entities.PurchaseUnsuitabilityReport;
 using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.ProductionTracking;
 using TsiErp.Entities.Entities.ProductionTrackingHaltLine;
+using TsiErp.Entities.Entities.SalesPrice;
+using TsiErp.Entities.Entities.SalesPriceLine;
+using TsiErp.Entities.Entities.PurchasePrice;
+using TsiErp.Entities.Entities.PurchasePriceLine;
 using TsiErp.Entities.Entities.HaltReason;
 using TsiErp.Entities.Entities.Menu;
 using TsiErp.Entities.Entities.ContractProductionTracking;
@@ -1569,6 +1575,146 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasOne(x => x.Employees).WithMany(x => x.OperationUnsuitabilityReports).HasForeignKey(x => x.EmployeeID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.ProductionOrders).WithMany(x => x.OperationUnsuitabilityReports).HasForeignKey(x => x.ProductionOrderID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.ProductsOperations).WithMany(x => x.OperationUnsuitabilityReports).HasForeignKey(x => x.OperationID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+
+        public static void ConfigureForecasts(this ModelBuilder builder)
+        {
+            builder.Entity<Forecasts>(b =>
+            {
+                b.ToTable("Forecasts");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Description_).HasColumnType("nvarchar(max)");
+                b.Property(t => t.CreationDate_).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.ValidityStartDate).HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.ValidityEndDate).HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.CurrentAccountCardID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.BranchID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.PeriodID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.Total).HasColumnType(SqlDbType.Decimal.ToString()).HasPrecision(18, 6);
+                b.Property(t => t.LineNumber).HasColumnType(SqlDbType.Int.ToString());
+                
+                b.HasIndex(x => x.Code);
+                b.HasIndex(x => x.CurrentAccountCardID);
+                b.HasIndex(x => x.BranchID);
+                b.HasIndex(x => x.PeriodID);
+
+                b.HasOne(x => x.CurrentAccountCards).WithMany(x => x.Forecasts).HasForeignKey(x => x.CurrentAccountCardID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Branches).WithMany(x => x.Forecasts).HasForeignKey(x => x.BranchID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Periods).WithMany(x => x.Forecasts).HasForeignKey(x => x.PeriodID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+
+        public static void ConfigureForecastLines(this ModelBuilder builder)
+        {
+            builder.Entity<ForecastLines>(b =>
+            {
+                b.ToTable("ForecastLines");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.ForecastID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.LineNr).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.Amount).HasColumnType(SqlDbType.Decimal.ToString()).HasPrecision(18, 6);
+                b.Property(t => t.CustomerProductCode).HasColumnType("nvarchar(MAX)");
+
+                b.HasIndex(x => x.ForecastID);
+                b.HasIndex(x => x.ProductID);
+
+                b.HasOne(x => x.Products).WithMany(x => x.ForecastLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Forecasts).WithMany(x => x.ForecastLines).HasForeignKey(x => x.ForecastID).OnDelete(DeleteBehavior.Cascade);
+            });
+        }
+
+        public static void ConfigureSalesPrices(this ModelBuilder builder)
+        {
+            builder.Entity<SalesPrices>(b =>
+            {
+                b.ToTable("SalesPrices");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.StartDate).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.EndDate).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.CurrencyID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+                b.HasIndex(x => x.Code);
+                b.HasIndex(x => x.CurrencyID);
+
+                b.HasOne(x => x.Currencies).WithMany(x => x.SalesPrices).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+
+        public static void ConfigureSalesPriceLines(this ModelBuilder builder)
+        {
+            builder.Entity<SalesPriceLines>(b =>
+            {
+                b.ToTable("SalesPriceLines");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.SalesPriceID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.CurrencyID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.Linenr).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.Price).HasColumnType(SqlDbType.Decimal.ToString()).HasPrecision(18, 6);
+                b.Property(t => t.StartDate).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.EndDate).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+
+                b.HasIndex(x => x.SalesPriceID);
+                b.HasIndex(x => x.ProductID);
+                b.HasIndex(x => x.CurrencyID);
+
+                b.HasOne(x => x.Products).WithMany(x => x.SalesPriceLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Currencies).WithMany(x => x.SalesPriceLines).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.SalesPrices).WithMany(x => x.SalesPriceLines).HasForeignKey(x => x.SalesPriceID).OnDelete(DeleteBehavior.Cascade);
+            });
+        }
+
+        public static void ConfigurePurchasePrices(this ModelBuilder builder)
+        {
+            builder.Entity<PurchasePrices>(b =>
+            {
+                b.ToTable("PurchasePrices");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.StartDate).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.EndDate).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.CurrencyID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+                b.HasIndex(x => x.Code);
+                b.HasIndex(x => x.CurrencyID);
+
+                b.HasOne(x => x.Currencies).WithMany(x => x.PurchasePrices).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+
+        public static void ConfigurePurchasePriceLines(this ModelBuilder builder)
+        {
+            builder.Entity<PurchasePriceLines>(b =>
+            {
+                b.ToTable("PurchasePriceLines");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.PurchasePriceID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.CurrencyID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.Linenr).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.Price).HasColumnType(SqlDbType.Decimal.ToString()).HasPrecision(18, 6);
+                b.Property(t => t.StartDate).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.EndDate).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+
+                b.HasIndex(x => x.PurchasePriceID);
+                b.HasIndex(x => x.ProductID);
+                b.HasIndex(x => x.CurrencyID);
+
+                b.HasOne(x => x.Products).WithMany(x => x.PurchasePriceLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Currencies).WithMany(x => x.PurchasePriceLines).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.PurchasePrices).WithMany(x => x.PurchasePriceLines).HasForeignKey(x => x.PurchasePriceID).OnDelete(DeleteBehavior.Cascade);
             });
         }
 

@@ -22,8 +22,12 @@
     height: 30px;
 }
 
-.TSIMemoBox {
+.TSIMemoBox100 {
     height: 100% !important;
+}
+
+.TSIMemoBox60 {
+    height: 60% !important;
 }
 
 .TSIComboBox {

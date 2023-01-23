@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Entities.Forecast;
 using TsiErp.Entities.Entities.Period;
 using TsiErp.Entities.Entities.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseRequest;
@@ -43,5 +44,6 @@ namespace TsiErp.Entities.Entities.Branch
         public ICollection<SalesOrders> SalesOrders { get; set; }
         public ICollection<PurchaseOrders> PurchaseOrders { get; set; }
         public ICollection<PurchaseRequests> PurchaseRequests { get; set; }
+        public ICollection<Forecasts> Forecasts { get; set; }
     }
 }
