@@ -30,6 +30,14 @@ namespace TsiErp.Entities.Entities.PurchasePrice.Dtos
         /// Para Birimi ID
         /// </summary>
         public Guid? CurrencyID { get; set; }
+        // <summary>
+        /// Cari ID
+        /// </summary>
+        public Guid? CurrentAccountCardID { get; set; }
+        /// <summary>
+        /// Aktiflik
+        /// </summary>
+        public bool IsActive { get; set; }
 
         public List<SelectPurchasePriceLinesDto> SelectPurchasePriceLines { get; set; }
     }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.Currency;
+using TsiErp.Entities.Entities.CurrentAccountCard;
 using TsiErp.Entities.Entities.Product;
 using TsiErp.Entities.Entities.SalesPrice;
 
@@ -17,6 +18,10 @@ namespace TsiErp.Entities.Entities.SalesPriceLine
         /// Fiyat Liste ID
         /// </summary>
         public Guid SalesPriceID { get; set; }
+        /// <summary>
+        /// Cari ID
+        /// </summary>
+        public Guid CurrentAccountCardID { get; set; }
         /// <summary>
         /// Stok ID
         /// </summary>

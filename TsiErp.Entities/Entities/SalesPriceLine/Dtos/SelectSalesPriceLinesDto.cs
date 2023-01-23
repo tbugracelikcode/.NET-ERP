@@ -30,6 +30,10 @@ namespace TsiErp.Entities.Entities.SalesPriceLine.Dtos
         /// Para Birimi ID
         /// </summary>
         public Guid? CurrencyID { get; set; }
+        // <summary>
+        /// Cari ID
+        /// </summary>
+        public Guid? CurrentAccountCardID { get; set; }
         /// <summary>
         /// Para Birimi Kodu
         /// </summary>

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.Currency;
+using TsiErp.Entities.Entities.CurrentAccountCard;
 using TsiErp.Entities.Entities.PurchasePriceLine;
 
 namespace TsiErp.Entities.Entities.PurchasePrice
@@ -31,6 +32,14 @@ namespace TsiErp.Entities.Entities.PurchasePrice
         /// Para Birimi ID
         /// </summary>
         public Guid CurrencyID { get; set; }
+        // <summary>
+        /// Cari ID
+        /// </summary>
+        public Guid CurrentAccountCardID { get; set; }
+        /// <summary>
+        /// Aktiflik
+        /// </summary>
+        public bool IsActive { get; set; }
 
         public Currencies Currencies { get; set; }
         public ICollection<PurchasePriceLines> PurchasePriceLines { get; set; }

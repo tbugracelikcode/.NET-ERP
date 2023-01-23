@@ -3,6 +3,7 @@ using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using TsiErp.Entities.Entities.Currency.Dtos;
+using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.Product.Dtos;
 using TsiErp.Entities.Entities.SalesPrice.Dtos;
 using TsiErp.Entities.Entities.SalesPriceLine.Dtos;
@@ -19,6 +20,9 @@ namespace TsiErp.ErpUI.Pages.SalesPrice
 
         SfComboBox<Guid?, ListProductsDto> LineProductsComboBox;
         List<ListProductsDto> LineProductsList = new List<ListProductsDto>();
+
+        SfComboBox<Guid?, ListCurrentAccountCardsDto> CurrentAccountCardsComboBox;
+        List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
 
         #endregion
 
@@ -45,13 +49,14 @@ namespace TsiErp.ErpUI.Pages.SalesPrice
 
             await GetCurrenciesList();
             await GetLineProductsList();
+            await GetCurrentAccountCardsList();
         }
 
         #region Fiyat Listesi Satır Modalı İşlemleri
 
         protected override async Task BeforeInsertAsync()
         {
-            DataSource = new SelectSalesPricesDto(){};
+            DataSource = new SelectSalesPricesDto() { IsActive = true };
 
             DataSource.SelectSalesPriceLines = new List<SelectSalesPriceLinesDto>();
             GridLineList = DataSource.SelectSalesPriceLines;
@@ -139,6 +144,7 @@ namespace TsiErp.ErpUI.Pages.SalesPrice
                         LineDataSource = new SelectSalesPriceLinesDto();
                         LineCrudPopup = true;
                         LineDataSource.CurrencyID = DataSource.CurrencyID;
+                        LineDataSource.CurrentAccountCardID = DataSource.CurrentAccountCardID;
                         LineDataSource.CurrencyCode = DataSource.CurrencyCode;
                         LineDataSource.Linenr = GridLineList.Count + 1;
                         await InvokeAsync(StateHasChanged);
@@ -279,6 +285,42 @@ namespace TsiErp.ErpUI.Pages.SalesPrice
             {
                 DataSource.CurrencyID = Guid.Empty;
                 DataSource.CurrencyCode = string.Empty;
+            }
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
+
+        #region Cari Hesaplar
+        public async Task CurrentAccountCardsFiltering(FilteringEventArgs args)
+        {
+
+            args.PreventDefaultAction = true;
+
+            var pre = new WhereFilter();
+            var predicate = new List<WhereFilter>();
+            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
+            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
+            pre = WhereFilter.Or(predicate);
+
+            var query = new Query();
+            query = args.Text == "" ? new Query() : new Query().Where(pre);
+
+            await CurrentAccountCardsComboBox.FilterAsync(CurrentAccountCardsList, query);
+        }
+
+        private async Task GetCurrentAccountCardsList()
+        {
+            CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
+        }
+        public async Task CurrentAccountCardsValueChangeHandler(ChangeEventArgs<Guid?, ListCurrentAccountCardsDto> args)
+        {
+            if (args.ItemData != null)
+            {
+                DataSource.CurrentAccountCardID = args.ItemData.Id;
+            }
+            else
+            {
+                DataSource.CurrentAccountCardID = Guid.Empty;
             }
             await InvokeAsync(StateHasChanged);
         }

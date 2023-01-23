@@ -92,7 +92,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListSalesPricesDto>>> GetListAsync(ListSalesPricesParameterDto input)
         {
-            var list = await _repository.GetListAsync(null,
+            var list = await _repository.GetListAsync(t => t.IsActive == input.IsActive,
                 t => t.SalesPriceLines,
                 t => t.Currencies);
 

@@ -9,5 +9,9 @@ namespace TsiErp.Entities.Entities.SalesPrice.Dtos
 {
     public class ListSalesPricesParameterDto : FullAuditedEntityDto
     {
+        /// <summary>
+        /// Aktiflik
+        /// </summary>
+        public bool IsActive { get; set; }
     }
 }

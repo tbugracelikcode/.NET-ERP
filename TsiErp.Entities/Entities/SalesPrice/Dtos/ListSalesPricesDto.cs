@@ -29,5 +29,9 @@ namespace TsiErp.Entities.Entities.SalesPrice.Dtos
         /// Para Birimi Kodu
         /// </summary>
         public string CurrencyCode { get; set; }
+        /// <summary>
+        /// Aktiflik
+        /// </summary>
+        public bool IsActive { get; set; }
     }
 }
