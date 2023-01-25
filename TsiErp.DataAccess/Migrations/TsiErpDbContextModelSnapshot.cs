@@ -4930,6 +4930,138 @@ namespace TsiErp.DataAccess.Migrations
                     b.ToTable("UnitSets", (string)null);
                 });
 
+            modelBuilder.Entity("TsiErp.Entities.Entities.User.Users", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(17)
+                        .HasColumnType("NVarChar(17)");
+
+                    b.Property<DateTime?>("CreationTime")
+                        .IsRequired()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(300)
+                        .HasColumnType("NVarChar(300)");
+
+                    b.Property<Guid>("GroupID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("Bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEmailApproved")
+                        .HasColumnType("Bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("NameSurname")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("NVarChar(300)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(MAX)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("NVarChar(300)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code");
+
+                    b.HasIndex("GroupID");
+
+                    b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("TsiErp.Entities.Entities.UserGroup.UserGroups", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(17)
+                        .HasColumnType("NVarChar(17)");
+
+                    b.Property<DateTime?>("CreationTime")
+                        .IsRequired()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("Bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("NVarChar(300)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code");
+
+                    b.ToTable("UserGroups", (string)null);
+                });
+
             modelBuilder.Entity("TsiErp.Entities.Entities.Vsm.VsmSchemas", b =>
                 {
                     b.Property<Guid>("Id")
@@ -6195,6 +6327,17 @@ namespace TsiErp.DataAccess.Migrations
                     b.Navigation("TemplateOperations");
                 });
 
+            modelBuilder.Entity("TsiErp.Entities.Entities.User.Users", b =>
+                {
+                    b.HasOne("TsiErp.Entities.Entities.UserGroup.UserGroups", "UserGroups")
+                        .WithMany("Users")
+                        .HasForeignKey("GroupID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("UserGroups");
+                });
+
             modelBuilder.Entity("TsiErp.Entities.Entities.WorkOrder.WorkOrders", b =>
                 {
                     b.HasOne("TsiErp.Entities.Entities.CurrentAccountCard.CurrentAccountCards", "CurrentAccountCards")
@@ -6582,6 +6725,11 @@ namespace TsiErp.DataAccess.Migrations
                     b.Navigation("SalesOrderLines");
 
                     b.Navigation("SalesPropositionLines");
+                });
+
+            modelBuilder.Entity("TsiErp.Entities.Entities.UserGroup.UserGroups", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("TsiErp.Entities.Entities.WareHouse.Warehouses", b =>

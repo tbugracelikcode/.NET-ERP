@@ -122,6 +122,10 @@ using TsiErp.Entities.Entities.PurchasePriceLine;
 using TsiErp.Entities.Entities.PurchasePrice;
 using TsiErp.Entities.Entities.PurchasePrice.Dtos;
 using TsiErp.Entities.Entities.PurchasePriceLine.Dtos;
+using TsiErp.Entities.Entities.UserGroup;
+using TsiErp.Entities.Entities.UserGroup.Dtos;
+using TsiErp.Entities.Entities.User;
+using TsiErp.Entities.Entities.User.Dtos;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -887,6 +891,22 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdatePurchasePriceLinesDto, PurchasePriceLines>();
             CreateMap<SelectPurchasePriceLinesDto, UpdatePurchasePriceLinesDto>();
             CreateMap<SelectPurchasePriceLinesDto, PurchasePriceLines>();
+
+
+            CreateMap<UserGroups, SelectUserGroupsDto>();
+            CreateMap<UserGroups, ListUserGroupsDto>();
+            CreateMap<CreateUserGroupsDto, UserGroups>();
+            CreateMap<SelectUserGroupsDto, CreateUserGroupsDto>();
+            CreateMap<UpdateUserGroupsDto, UserGroups>();
+            CreateMap<SelectUserGroupsDto, UpdateUserGroupsDto>();
+
+
+            CreateMap<Users, SelectUsersDto>().ForMember(x => x.GroupName, y => y.MapFrom(z => z.UserGroups.Name));
+            CreateMap<Users, ListUsersDto>().ForMember(x => x.GroupName, y => y.MapFrom(z => z.UserGroups.Name));
+            CreateMap<CreateUsersDto, Users>();
+            CreateMap<SelectUsersDto, CreateUsersDto>();
+            CreateMap<UpdateUsersDto, Users>();
+            CreateMap<SelectUsersDto, UpdateUsersDto>();
         }
     }
 }

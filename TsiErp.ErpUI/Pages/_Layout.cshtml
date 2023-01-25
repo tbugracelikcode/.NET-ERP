@@ -16,7 +16,7 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link rel="stylesheet" href="~/css/dx-blazor.bs5.css" />
     <link rel="stylesheet" href="~/css/tsi.css" />
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link href="~/css/blazorise.bootstrap5.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/bootstrap/bootstrap5.css" />
     <link rel="stylesheet" href="~/css/Blazored.Modal.bundle.scp.css" />
@@ -69,6 +69,32 @@
         function isSidebar(x, y) {
             var sidebarEle = document.elementFromPoint(x, y);
             return (sidebarEle && sidebarEle.closest('.sidebar') != null) ? true : false;
+        }
+    </script>
+
+    <script>
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        document.onkeydown = function(e) {
+            e = (e || window.e);
+            // disable F12 key
+            if (e.keyCode == 123) {
+                return false;
+            }
+            // disable I key
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 73) {
+                return false;
+            }
+
+            // disable J key
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 74) {
+                return false;
+            }
+
+            // disable U key
+            if (e.ctrlKey && e.keyCode == 85) {
+                return false;
+            }
         }
     </script>
 

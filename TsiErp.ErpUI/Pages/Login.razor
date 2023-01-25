@@ -1,0 +1,135 @@
+﻿@page "/"
+
+@inject NavigationManager NavigationManager
+@using Syncfusion.Blazor.Buttons
+@using Syncfusion.Blazor.Popups
+@using Syncfusion.Blazor.Cards
+@using Syncfusion.Blazor.Data
+@using Syncfusion.Blazor.DropDowns
+@using Syncfusion.Blazor.Inputs
+@using Syncfusion.Blazor.Calendars
+@using Syncfusion.Blazor.Grids
+@using Syncfusion.Blazor.Navigations
+@using System.Timers
+
+<style>
+    body,
+    html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background-image:  linear-gradient(350deg, rgb(251 251 251) -111%, #e7e7e7 70%) !important;
+    }
+</style>
+
+<SfSpinner @bind-Visible="VisibleSpinner">
+</SfSpinner>
+
+
+<!DOCTYPE html>
+<html>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<head>
+    <title>TSI Dashboard Giriş</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+
+</head>
+<body>
+    <div class="container h-100">
+        <div class="d-flex justify-content-center h-100">
+            <div class="user_card">
+                <div class="d-flex justify-content-center">
+                    <div class="brand_logo_container">
+                        <img src="tsilogodikdortgen.png" class="brand_logo" alt="Logo">
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center form_container">
+                    <form>
+                        <div class="input-group mb-3">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" name="" class="form-control input_user" @bind="@User" placeholder="Kullanıcı Adı">
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            </div>
+                            <input type="password" name="" @bind="@Password" class="form-control input_pass" placeholder="Şifre">
+                        </div>
+                        <br />
+
+                        <div class="d-flex justify-content-center mt-3 login_container">
+                            <button type="button" name="button" onclick="@OnLoginButtonClicked" class="btn login_btn">Giriş</button>
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!---page load popup_content---->
+
+</body>
+</html>
+<DxPopup CssClass="PopUpCss" Visible="@vispopup"
+         ShowFooter="false"
+         ShowHeader="false"
+         Width="600px"
+         Height="300px"
+         Closing="LoginPopupClosing">
+    <BodyTemplate>
+        <SfCard class="CardsLogin">
+            <CardContent>
+                <br />
+                <center><h1 style="color:white">Hatalı Kullanıcı Girişi</h1></center>	<br /><br />
+                <center><span style="font-size:16px; font-weight:bold; color:white">Kullanıcı adı veya şifre hatalı. Lütfen tekrar deneyiniz.</span></center>
+                <br /><br /><br />
+            </CardContent>
+            <CardFooter>
+                @*<center><DxButton  CssClass="e-btn e-secondary" style="background-color:#1E1E1E; font-size:18px; font-weight:bold;" Click="@OnOkButtonClicked" Text="Kapat" /></center>*@
+                <center><DxButton class="btn login_btn" style="width:75px" Click="@OnOkButtonClicked" Text="Kapat" /></center>
+            </CardFooter>
+        </SfCard>
+    </BodyTemplate>
+    <FooterContentTemplate>
+        @*<DxButton CssClass="popup-button" RenderStyle="ButtonRenderStyle.Secondary" Text="Cancel" Click="@(() => PopupVisible = false)" />*@
+    </FooterContentTemplate>
+</DxPopup>
+
+@code {
+
+    string User = string.Empty;
+    string Password = string.Empty;
+    bool vispopup = false;
+    bool VisibleSpinner = false;
+
+    void LoginPopupClosing(PopupClosingEventArgs args)
+    {
+        vispopup = false;
+    }
+
+    private void OnLoginButtonClicked()
+    {
+        if (User == "admin" && Password == "admin")
+        {
+            VisibleSpinner = true;
+
+            NavigationManager.NavigateTo("/home");
+        }
+        else
+        {
+            vispopup = true;
+        }
+
+    }
+    private void OnOkButtonClicked()
+    {
+        vispopup = false;
+        NavigationManager.NavigateTo("/");
+    }
+
+}

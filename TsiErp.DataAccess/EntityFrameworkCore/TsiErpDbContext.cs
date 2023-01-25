@@ -71,6 +71,8 @@ using TsiErp.Entities.Entities.SalesPrice;
 using TsiErp.Entities.Entities.SalesPriceLine;
 using TsiErp.Entities.Entities.PurchasePrice;
 using TsiErp.Entities.Entities.PurchasePriceLine;
+using TsiErp.Entities.Entities.UserGroup;
+using TsiErp.Entities.Entities.User;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore
 {
@@ -191,6 +193,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigurePurchasePrices();
             builder.ConfigurePurchasePriceLines();
             builder.ConfigureHaltReasons();
+            builder.ConfigureUserGroups();
+            builder.ConfigureUsers();
             builder.ConfigureMenus();
         }
 
@@ -297,6 +301,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<PurchasePrices> PurchasePrices { get; set; }
         public DbSet<PurchasePriceLines> PurchasePriceLines { get; set; }
         public DbSet<HaltReasons> HaltReasons { get; set; }
+        public DbSet<UserGroups> UserGroups { get; set; }
+        public DbSet<Users> Users { get; set; }
         public DbSet<Menus> Menus { get; set; }
 
         #endregion

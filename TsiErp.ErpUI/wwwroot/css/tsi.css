@@ -448,19 +448,20 @@ html {
 
 .brand_logo_container {
     position: absolute;
-    height: 170px;
-    width: 170px;
+    height: 120px;
+    width: 220px; /*DİKDÖRTGEN*/
     top: -75px;
-    border-radius: 50%;
-    background-image: linear-gradient(350deg, rgb(129 129 129) -333%, #282b2c 70%) !important;
+    border-radius: 0%;
+    background-image: linear-gradient(350deg, rgb(243 238 238) -333%, #ebe5e5 70%) !important;
     padding: 10px;
+    margin-top: 65px;
     text-align: center;
 }
 
 .brand_logo {
-    height: 150px;
-    width: 150px;
-    border-radius: 50%;
+    height: 100px;
+    width: 200px;
+    border-radius: 0%; /*DİKDÖRTGEN*/
     border: 2px solid white;
 }
 
@@ -470,9 +471,10 @@ html {
 
 .login_btn {
     width: 100%;
-    background: #1E1E1E !important;
-    color: white !important;
+    background: white !important;
+    color: #1E1E1E !important;
     font-size: 1.2rem !important;
+    font-weight: 500 !important;
 }
 
     .login_btn:focus {

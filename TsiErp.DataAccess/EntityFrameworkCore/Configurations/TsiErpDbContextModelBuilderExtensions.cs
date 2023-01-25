@@ -66,8 +66,10 @@ using TsiErp.Entities.Entities.SalesPriceLine;
 using TsiErp.Entities.Entities.PurchasePrice;
 using TsiErp.Entities.Entities.PurchasePriceLine;
 using TsiErp.Entities.Entities.HaltReason;
+using TsiErp.Entities.Entities.UserGroup;
 using TsiErp.Entities.Entities.Menu;
 using TsiErp.Entities.Entities.ContractProductionTracking;
+using TsiErp.Entities.Entities.User;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 {
@@ -1725,6 +1727,43 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasOne(x => x.Products).WithMany(x => x.PurchasePriceLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.Currencies).WithMany(x => x.PurchasePriceLines).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.PurchasePrices).WithMany(x => x.PurchasePriceLines).HasForeignKey(x => x.PurchasePriceID).OnDelete(DeleteBehavior.Cascade);
+            });
+        }
+
+        public static void ConfigureUserGroups(this ModelBuilder builder)
+        {
+            builder.Entity<UserGroups>(b =>
+            {
+                b.ToTable("UserGroups");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(300);
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+                b.HasIndex(x => x.Code);
+            });
+        }
+
+        public static void ConfigureUsers(this ModelBuilder builder)
+        {
+            builder.Entity<Users>(b =>
+            {
+                b.ToTable("Users");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.UserName).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(300);
+                b.Property(t => t.NameSurname).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(300);
+                b.Property(t => t.Email).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(300);
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsEmailApproved).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.Password).HasColumnType("nvarchar(MAX)");
+                b.Property(t => t.GroupID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+                b.HasIndex(x => x.Code);
+
+                b.HasOne(x => x.UserGroups).WithMany(x => x.Users).HasForeignKey(x => x.GroupID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
