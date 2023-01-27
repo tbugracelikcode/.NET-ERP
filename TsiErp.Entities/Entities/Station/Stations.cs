@@ -11,6 +11,7 @@ using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.ProductionTracking;
 using TsiErp.Entities.Entities.ProductsOperationLine;
 using TsiErp.Entities.Entities.StationGroup;
+using TsiErp.Entities.Entities.StationInventory;
 using TsiErp.Entities.Entities.TemplateOperationLine;
 using TsiErp.Entities.Entities.WorkOrder;
 
@@ -137,6 +138,8 @@ namespace TsiErp.Entities.Entities.Station
         public ICollection<ProductionTrackings> ProductionTrackings { get; set; }
 
         public ICollection<ContractProductionTrackings> ContractProductionTrackings { get; set; }
+
+        public ICollection<StationInventories> StationInventories { get; set; }
 
     }
 }

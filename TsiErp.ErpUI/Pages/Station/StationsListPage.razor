@@ -6,12 +6,16 @@
 @using Tsi.Blazor.Component.Core.Components.DataEditors
 @using TsiErp.Business.Entities.Station.Services
 @using TsiErp.Business.Entities.StationGroup.Services
+@using TsiErp.Business.Entities.Product.Services
+@using TsiErp.Business.Entities.StationInventory.Services
 @using TsiErp.Entities.Entities.Station
 @using TsiErp.Entities.Entities.Station.Dtos
 @using TsiErp.ErpUI.Pages.Base
 @using Tsi.Blazor.Component.Core.Components.Layouts
 @using TsiErp.ErpUI.Pages.StationGroup
 @using TsiErp.Entities.Entities.StationGroup.Dtos
+@using TsiErp.Entities.Entities.Product.Dtos
+@using TsiErp.Entities.Entities.StationInventory.Dtos
 
 
 @inherits BaseListPage<SelectStationsDto, ListStationsDto, CreateStationsDto, UpdateStationsDto, ListStationsParameterDto>
@@ -19,6 +23,8 @@
 
 @inject IStationsAppService StationsService
 @inject IStationGroupsAppService StationGroupsService
+@inject IProductsAppService ProductsAppService
+@inject IStationInventoriesAppService StationInventoriesAppService
 
 @if (!base.IsLoaded)
 {
@@ -44,15 +50,15 @@ else
                     <SfCard class="TSIGridCards">
 
                         <CardContent>
-                            <SfGrid ID="Grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
-                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                            <SfGrid ID="Grid"  @ref="@_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu">
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListStationsDto"></GridEvents>
+                                <GridEvents ContextMenuItemClicked="@MainContextMenuClick" TValue="ListStationsDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
-                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListStationsDto.Code) HeaderText="MAKİNA KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListStationsDto.Name) HeaderText="MAKİNA AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
@@ -76,17 +82,17 @@ else
          CloseOnOutsideClick="false"
          HeaderText="İş İstasyonları"
          Width="54%"
-         Height="59%"
+         Height="78%"
          MinWidth="940px"
-         MinHeight="640px"
+         MinHeight="840px"
          HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DxGridLayout CssClass="TSIGridLayout">
                 <Rows>
-                    <DxGridLayoutRow Height="20%" />
-                    <DxGridLayoutRow Height="18%" />
-                    <DxGridLayoutRow Height="55%" />
+                    <DxGridLayoutRow Height="15%" />
+                    <DxGridLayoutRow Height="15%" />
+                    <DxGridLayoutRow Height="65%" />
                 </Rows>
                 <Columns>
                     <DxGridLayoutColumn Width="4%" />
@@ -132,10 +138,10 @@ else
 
                                             <DxGridLayout CssClass="TSIGridLayout">
                                                 <Rows>
-                                                    <DxGridLayoutRow Height="38%" />
-                                                    <DxGridLayoutRow Height="32%" />
-                                                    <DxGridLayoutRow Height="32%" />
-                                                    <DxGridLayoutRow Height="32%" />
+                                                    <DxGridLayoutRow Height="45%" />
+                                                    <DxGridLayoutRow Height="40%" />
+                                                    <DxGridLayoutRow Height="40%" />
+                                                    <DxGridLayoutRow Height="40%" />
                                                 </Rows>
                                                 <Columns>
                                                     <DxGridLayoutColumn Width="22%" />
@@ -291,6 +297,130 @@ else
                                                             <SfNumericTextBox @bind-Value="DataSource.PowerFactor" TValue="decimal"></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
+
+                                                </Items>
+                                            </DxGridLayout>
+
+
+                                        </ContentTemplate>
+                                    </TabItem>
+
+                                    <TabItem>
+                                        <ChildContent>
+                                            <TabHeader Text="İş İstasyonu Envanteri"></TabHeader>
+                                        </ChildContent>
+                                        <ContentTemplate>
+
+                                            <DxGridLayout CssClass="TSIGridLayout">
+                                                <Rows>
+                                                    <DxGridLayoutRow Height="20%" />
+                                                    <DxGridLayoutRow Height="28%" />
+                                                    <DxGridLayoutRow Height="50%" />
+                                                </Rows>
+                                                <Columns>
+                                                    <DxGridLayoutColumn Width="4%" />
+                                                    <DxGridLayoutColumn Width="30%" />
+                                                    <DxGridLayoutColumn Width="4%" />
+                                                    <DxGridLayoutColumn Width="30%" />
+                                                    <DxGridLayoutColumn Width="4%" />
+                                                    <DxGridLayoutColumn Width="24%" />
+                                                    <DxGridLayoutColumn Width="4%" />
+                                                </Columns>
+                                                <Items>
+
+                                                    <DxGridLayoutItem Row="0" Column="1">
+                                                        <Template>
+                                                            <br />
+                                                            <label class="TSIModalLabel"><strong>Stok Kodu: </strong></label>
+                                                            <SfComboBox @ref="ProductsComboBox"
+                                                                    TValue="string"
+                                                                    TItem="ListProductsDto"
+                                                                    Placeholder="Stok Seçiniz"
+                                                                    CssClass="e-multi-column"
+                                                                    Value="@InventoryDataSource.ProductCode"
+                                                                    DataSource="@ProductsList"
+                                                                    AllowFiltering="true"
+                                                                    PopupWidth="700px"
+                                                                    PopupHeight="500">
+
+                                                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
+
+                                                                <ComboBoxTemplates TItem="ListProductsDto">
+                                                                    <HeaderTemplate>
+                                                                        <table>
+                                                                            <tr>
+                                                                                <th class="e-text-center">Stok Kodu</th>
+                                                                                <th class="e-text-center">Stok Açıklaması</th>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </HeaderTemplate>
+                                                                    <ItemTemplate Context="cmbContext">
+
+                                                                        <table>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td class="e-text-center">@((cmbContext as ListProductsDto).Code)</td>
+                                                                                    <td class="e-text-center">@((cmbContext as ListProductsDto).Name)</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </ItemTemplate>
+                                                                </ComboBoxTemplates>
+
+                                                                <ComboBoxEvents TValue="string"
+                                                                            TItem="ListProductsDto"
+                                                                            Filtering="ProductFiltering"
+                                                                            ValueChange="ProductValueChangeHandler"></ComboBoxEvents>
+                                                            </SfComboBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="0" Column="3">
+                                                        <Template>
+                                                            <br />
+                                                            <label class="TSIModalLabel"><strong>Miktar: </strong></label>
+                                                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="InventoryDataSource.Amount" CssClass="TSITxtBox"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="0" Column="5">
+                                                        <Template>
+                                                            <br />
+                                                            <br />
+                                                            <center>
+                                                                <SfButton CssClass="TSISaveButton" OnClick="OnInventorySubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+                                                            </center>
+
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="1" Column="1" ColumnSpan="3">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>Açıklama: </strong></label><br />
+                                                            <SfTextBox Multiline=true Placeholder="Açıklama Yazınız." @bind-Value="InventoryDataSource.Description_" CssClass="TSIMemoBox60"></SfTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="2" Column="1" ColumnSpan="5">
+                                                        <Template>
+                                                            <SfGrid @ref="_InventoryGrid" ID="InventoryGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="InventoryList" AllowPaging="false" AllowFiltering="true" AllowReordering="true"  AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"  ShowColumnChooser="true" GridLines="GridLine.Both"
+                                                                AllowSorting="true" Height="200px !important" Width="100%" class="GridZebra" ContextMenuItems="@InventoryGridContextMenu">
+                                                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                                                <GridEvents ContextMenuItemClicked="@OnInventoryContextMenuClick" TValue="SelectStationInventoriesDto"></GridEvents>
+                                                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                                                <GridPageSettings PageSizes="true"></GridPageSettings>
+                                                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                                                <GridColumns>
+                                                                    <GridColumn Field=@nameof(SelectStationInventoriesDto.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectStationInventoriesDto.Amount) Type="ColumnType.Number" HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                    
+                                                                </GridColumns>
+                                                            </SfGrid>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
 
                                                 </Items>
                                             </DxGridLayout>

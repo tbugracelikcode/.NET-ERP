@@ -12,7 +12,7 @@
 @inject IPurchasingUnsuitabilityItemsAppService PurchasingUnsuitabilityItemsAppService
 @inject IEmployeesAppService EmployeesAppService
 
-<DevGridLayout ColumnCount="4" RowCount="6" RowHeights="@RowHeights("*")">
+@*<DevGridLayout ColumnCount="4" RowCount="6" RowHeights="@RowHeights("*")">
     <GridLayoutItems>
         <DxGridLayoutItem Column="0" Row="0" ColumnSpan="2">
             <Template>
@@ -143,84 +143,84 @@
         </DxGridLayoutItem>
     </GridLayoutItems>
 </DevGridLayout>
-
+*@
 
 
 
 @code
 {
 
-    #region Range Selector
-    public class StockPrice
-    {
-        public DateTime Date { get; set; }
-        public double Close { get; set; }
-    }
+    //#region Range Selector
+    //public class StockPrice
+    //{
+    //    public DateTime Date { get; set; }
+    //    public double Close { get; set; }
+    //}
 
-    public List<StockPrice> StockDetails = new List<StockPrice>
-    {
-        new StockPrice { Date = new DateTime(2005, 01, 01), Close = 21 },
-        new StockPrice { Date = new DateTime(2006, 01, 01), Close = 24 },
-        new StockPrice { Date = new DateTime(2007, 01, 01), Close = 36 },
-        new StockPrice { Date = new DateTime(2008, 01, 01), Close = 38 },
-        new StockPrice { Date = new DateTime(2009, 01, 01), Close = 54 },
-        new StockPrice { Date = new DateTime(2010, 01, 01), Close = 57 },
-        new StockPrice { Date = new DateTime(2011, 01, 01), Close = 62 }
-    };
-    #endregion
+    //public List<StockPrice> StockDetails = new List<StockPrice>
+    //{
+    //    new StockPrice { Date = new DateTime(2005, 01, 01), Close = 21 },
+    //    new StockPrice { Date = new DateTime(2006, 01, 01), Close = 24 },
+    //    new StockPrice { Date = new DateTime(2007, 01, 01), Close = 36 },
+    //    new StockPrice { Date = new DateTime(2008, 01, 01), Close = 38 },
+    //    new StockPrice { Date = new DateTime(2009, 01, 01), Close = 54 },
+    //    new StockPrice { Date = new DateTime(2010, 01, 01), Close = 57 },
+    //    new StockPrice { Date = new DateTime(2011, 01, 01), Close = 62 }
+    //};
+    //#endregion
 
-    #region Bar Chart
-    public class ChartDataBar
-    {
-        public string Country { get; set; }
-        public double Gold { get; set; }
-    }
+    //#region Bar Chart
+    //public class ChartDataBar
+    //{
+    //    public string Country { get; set; }
+    //    public double Gold { get; set; }
+    //}
 
-    public List<ChartDataBar> MedalDetailsBar = new List<ChartDataBar>
-    {
-        new ChartDataBar{ Country= "USA", Gold=50  },
-        new ChartDataBar{ Country="China", Gold=40 },
-        new ChartDataBar{ Country= "Japan", Gold=70 },
-        new ChartDataBar{ Country= "Australia", Gold=60},
-        new ChartDataBar{ Country= "France", Gold=50 },
-        new ChartDataBar{ Country= "Germany", Gold=40 },
-        new ChartDataBar{ Country= "Italy", Gold=40 },
-        new ChartDataBar{ Country= "Sweden", Gold=30 }
-    };
-    #endregion
+    //public List<ChartDataBar> MedalDetailsBar = new List<ChartDataBar>
+    //{
+    //    new ChartDataBar{ Country= "USA", Gold=50  },
+    //    new ChartDataBar{ Country="China", Gold=40 },
+    //    new ChartDataBar{ Country= "Japan", Gold=70 },
+    //    new ChartDataBar{ Country= "Australia", Gold=60},
+    //    new ChartDataBar{ Country= "France", Gold=50 },
+    //    new ChartDataBar{ Country= "Germany", Gold=40 },
+    //    new ChartDataBar{ Country= "Italy", Gold=40 },
+    //    new ChartDataBar{ Country= "Sweden", Gold=30 }
+    //};
+    //#endregion
 
-    #region Stacked Column Chart
-    public class ChartDataStackedColumn
-    {
-        public string X { get; set; }
-        public double YValue { get; set; }
-        public double YValue1 { get; set; }
-    }
+    //#region Stacked Column Chart
+    //public class ChartDataStackedColumn
+    //{
+    //    public string X { get; set; }
+    //    public double YValue { get; set; }
+    //    public double YValue1 { get; set; }
+    //}
 
-    public List<ChartDataStackedColumn> MedalDetailsStackedColumn = new List<ChartDataStackedColumn>
-    {
-        new ChartDataStackedColumn { X= "USA", YValue= 46, YValue1=56 },
-        new ChartDataStackedColumn { X= "GBR", YValue= 27, YValue1=17 },
-        new ChartDataStackedColumn { X= "CHN", YValue= 26, YValue1=36 },
-        new ChartDataStackedColumn { X= "UK", YValue= 56,  YValue1=16 },
-        new ChartDataStackedColumn { X= "AUS", YValue= 12, YValue1=46 },
-        new ChartDataStackedColumn { X= "IND", YValue= 26, YValue1=16 },
-        new ChartDataStackedColumn { X= "DEN", YValue= 26, YValue1=12 },
-        new ChartDataStackedColumn { X= "MEX", YValue= 34, YValue1=32},
-    };
+    //public List<ChartDataStackedColumn> MedalDetailsStackedColumn = new List<ChartDataStackedColumn>
+    //{
+    //    new ChartDataStackedColumn { X= "USA", YValue= 46, YValue1=56 },
+    //    new ChartDataStackedColumn { X= "GBR", YValue= 27, YValue1=17 },
+    //    new ChartDataStackedColumn { X= "CHN", YValue= 26, YValue1=36 },
+    //    new ChartDataStackedColumn { X= "UK", YValue= 56,  YValue1=16 },
+    //    new ChartDataStackedColumn { X= "AUS", YValue= 12, YValue1=46 },
+    //    new ChartDataStackedColumn { X= "IND", YValue= 26, YValue1=16 },
+    //    new ChartDataStackedColumn { X= "DEN", YValue= 26, YValue1=12 },
+    //    new ChartDataStackedColumn { X= "MEX", YValue= 34, YValue1=32},
+    //};
 
-    #endregion
+    //#endregion
 
 
-    public List<ListEmployeesDto> _employeeList = new List<ListEmployeesDto>();
-    public List<ListPurchasingUnsuitabilityItemsDto> _purchaseUnsuitabilityList = new List<ListPurchasingUnsuitabilityItemsDto>();
+    //public List<ListEmployeesDto> _employeeList = new List<ListEmployeesDto>();
+    //public List<ListPurchasingUnsuitabilityItemsDto> _purchaseUnsuitabilityList = new List<ListPurchasingUnsuitabilityItemsDto>();
 
-    protected override async void OnInitialized()
-    {
+    //protected override async void OnInitialized()
+    //{
 
-        _purchaseUnsuitabilityList = (await PurchasingUnsuitabilityItemsAppService.GetListAsync(new ListPurchasingUnsuitabilityItemsParameterDto())).Data.ToList();
-        _employeeList = (await EmployeesAppService.GetListAsync(new ListEmployeesParameterDto())).Data.ToList();
-    }
+    //    _purchaseUnsuitabilityList = (await PurchasingUnsuitabilityItemsAppService.GetListAsync(new ListPurchasingUnsuitabilityItemsParameterDto())).Data.ToList();
+    //    _employeeList = (await EmployeesAppService.GetListAsync(new ListEmployeesParameterDto())).Data.ToList();
+    //}
 
  }
 

@@ -73,6 +73,9 @@ using TsiErp.Entities.Entities.PurchasePrice;
 using TsiErp.Entities.Entities.PurchasePriceLine;
 using TsiErp.Entities.Entities.UserGroup;
 using TsiErp.Entities.Entities.User;
+using TsiErp.Entities.Entities.StationInventory;
+using TsiErp.Entities.Entities.FinalControlUnsuitabilityReport;
+using TsiErp.Entities.Entities.MaintenancePeriod;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore
 {
@@ -195,6 +198,9 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigureHaltReasons();
             builder.ConfigureUserGroups();
             builder.ConfigureUsers();
+            builder.ConfigureStationInventories();
+            builder.ConfigureFinalControlUnsuitabilityReports();
+            builder.ConfigureMaintenancePeriods();
             builder.ConfigureMenus();
         }
 
@@ -303,7 +309,10 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<HaltReasons> HaltReasons { get; set; }
         public DbSet<UserGroups> UserGroups { get; set; }
         public DbSet<Users> Users { get; set; }
+        public DbSet<FinalControlUnsuitabilityReports> FinalControlUnsuitabilityReports { get; set; }
+        public DbSet<StationInventories> StationInventories { get; set; }
         public DbSet<Menus> Menus { get; set; }
+        public DbSet<MaintenancePeriods> MaintenancePeriods { get; set; }
 
         #endregion
     }

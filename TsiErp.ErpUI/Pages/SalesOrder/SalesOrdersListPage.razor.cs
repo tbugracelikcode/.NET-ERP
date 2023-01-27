@@ -17,9 +17,6 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.SalesOrder
 {
-
-
-
     public partial class SalesOrdersListPage
     {
         #region ComboBox Listeleri

@@ -14,6 +14,9 @@ using TsiErp.Entities.Entities.SalesPropositionLine;
 
 namespace TsiErp.Entities.Entities.Branch
 {
+    /// <summary>
+    /// Şubeler
+    /// </summary>
     public class Branches : FullAuditedEntity
     {
         /// <summary>

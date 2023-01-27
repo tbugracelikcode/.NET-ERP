@@ -30,6 +30,10 @@
     height: 60% !important;
 }
 
+.TSIMemoBox57 {
+    height: 57% !important;
+}
+
 .TSIComboBox {
     font-size: 14px;
     font-family: Arial, Helvetica, sans-serif;
@@ -49,6 +53,18 @@
     border: 2px solid;
 }
 
+    .TSISaveButton:hover {
+        border-color: #565656 !important;
+        background-color: #505050 !important;
+        color: white !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        width: auto;
+        border-radius: 5px;
+        height: 35px;
+        border: 2px solid;
+    }
+
 
 .TSICancelButton {
     border-color: #565656 !important;
@@ -62,6 +78,18 @@
     border: 2px solid;
 }
 
+    .TSICancelButton:hover {
+        border-color: #565656 !important;
+        background-color: #AD0000 !important;
+        color: white !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        width: auto;
+        border-radius: 5px;
+        height: 35px;
+        border: 2px solid;
+    }
+
 .TSIDeleteButton {
     border-color: #565656 !important;
     background-color: white !important;
@@ -74,6 +102,18 @@
     border: 2px solid;
 }
 
+    .TSIDeleteButton:hover {
+        border-color: #565656 !important;
+        background-color: #01147F !important;
+        color: white !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        width: auto;
+        border-radius: 5px;
+        height: 35px;
+        border: 2px solid;
+    }
+
 .TSILogOutButton {
     background-color: #AD0000 !important;
     text-shadow: 1px 3px 4px black !important;
@@ -84,6 +124,7 @@
     height: 35px;
     border: 2px solid;
 }
+
 
 .TSIShowColumnsButton {
     border-color: #565656 !important;
@@ -97,6 +138,18 @@
     border: 2px solid;
 }
 
+    .TSIShowColumnsButton:hover {
+        border-color: #565656 !important;
+        background-color: #878787 !important;
+        color: white !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        width: auto;
+        border-radius: 5px;
+        height: 35px;
+        border: 2px solid;
+    }
+
 .TSISubmitButton {
     border-color: #565656 !important;
     background-color: white !important;
@@ -108,6 +161,18 @@
     height: 35px;
     border: 2px solid;
 }
+
+    .TSISubmitButton:hover {
+        border-color: #565656 !important;
+        background-color: #878787 !important;
+        color: white !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        width: auto;
+        border-radius: 5px;
+        height: 35px;
+        border: 2px solid;
+    }
 
 .TSIGeneralBTNRed {
     background-color: #AD0000 !important;
@@ -492,8 +557,9 @@ html {
     border: 0 !important;
     border-radius: 0.25rem 0 0 0.25rem !important;
 }
-.e-grid .e-headercelldiv{
-    font-size:12px !important;
+
+.e-grid .e-headercelldiv {
+    font-size: 12px !important;
 }
 
 .input_user,
@@ -508,5 +574,6 @@ html {
     font-weight: bold;
 }
 
-
-
+.e-tab .e-tab-header .e-toolbar-item .e-tab-wrap:hover .e-tab-text, .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap:hover .e-tab-icon {
+    color: #AD0000 !important;
+}

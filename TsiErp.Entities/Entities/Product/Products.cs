@@ -23,6 +23,7 @@ using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.ForecastLine;
 using TsiErp.Entities.Entities.SalesPriceLine;
 using TsiErp.Entities.Entities.PurchasePriceLine;
+using TsiErp.Entities.Entities.FinalControlUnsuitabilityReport;
 
 namespace TsiErp.Entities.Entities.Product
 {
@@ -153,6 +154,8 @@ namespace TsiErp.Entities.Entities.Product
         public ICollection<ForecastLines> ForecastLines { get; set; }
         public ICollection<SalesPriceLines> SalesPriceLines { get; set; }
         public ICollection<PurchasePriceLines> PurchasePriceLines { get; set; }
+        public ICollection<FinalControlUnsuitabilityReports> FinalControlUnsuitabilityReports { get; set; }
+
 
     }
 }

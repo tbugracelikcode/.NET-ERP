@@ -65,11 +65,14 @@ using TsiErp.Entities.Entities.SalesPrice;
 using TsiErp.Entities.Entities.SalesPriceLine;
 using TsiErp.Entities.Entities.PurchasePrice;
 using TsiErp.Entities.Entities.PurchasePriceLine;
+using TsiErp.Entities.Entities.FinalControlUnsuitabilityReport;
 using TsiErp.Entities.Entities.HaltReason;
 using TsiErp.Entities.Entities.UserGroup;
+using TsiErp.Entities.Entities.StationInventory;
 using TsiErp.Entities.Entities.Menu;
 using TsiErp.Entities.Entities.ContractProductionTracking;
 using TsiErp.Entities.Entities.User;
+using TsiErp.Entities.Entities.MaintenancePeriod;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 {
@@ -89,6 +92,26 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
                 b.Property(t => t.Description_).HasColumnType("nvarchar(MAX)");
                 b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+                b.HasIndex(x => x.Code);
+
+            });
+        }
+
+        public static void ConfigureMaintenancePeriods(this ModelBuilder builder)
+        {
+            builder.Entity<MaintenancePeriods>(b =>
+            {
+                b.ToTable("MaintenancePeriods");
+                b.ConfigureByConvention();
+
+                //b.HasQueryFilter(x => !x.IsDeleted);
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.Description_).HasColumnType("nvarchar(MAX)");
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.PeriodTime).HasColumnType(SqlDbType.Decimal.ToString());
 
                 b.HasIndex(x => x.Code);
 
@@ -1764,6 +1787,54 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.Code);
 
                 b.HasOne(x => x.UserGroups).WithMany(x => x.Users).HasForeignKey(x => x.GroupID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+
+        public static void ConfigureFinalControlUnsuitabilityReports(this ModelBuilder builder)
+        {
+            builder.Entity<FinalControlUnsuitabilityReports>(b =>
+            {
+                b.ToTable("FinalControlUnsuitabilityReports");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.FicheNo).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Description_).HasColumnType("nvarchar(max)");
+                b.Property(t => t.Date_).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.EmployeeID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.PartyNo).HasColumnType("nvarchar(max)");
+                b.Property(t => t.IsToBeUsedAs).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsCorrection).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsScrap).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.ControlFormDeclaration).HasColumnType(SqlDbType.Decimal.ToString());
+
+
+                b.HasIndex(x => x.FicheNo);
+                b.HasIndex(x => x.EmployeeID);
+                b.HasIndex(x => x.ProductID);
+
+                b.HasOne(x => x.Employees).WithMany(x => x.FinalControlUnsuitabilityReports).HasForeignKey(x => x.EmployeeID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Products).WithMany(x => x.FinalControlUnsuitabilityReports).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+
+        public static void ConfigureStationInventories(this ModelBuilder builder)
+        {
+            builder.Entity<StationInventories>(b =>
+            {
+                b.ToTable("StationInventories");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.StationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.Amount).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.Description_).HasColumnType("nvarchar(max)");
+
+                b.HasIndex(x => x.StationID);
+                b.HasIndex(x => x.ProductID);
+
+                b.HasOne(x => x.Stations).WithMany(x => x.StationInventories).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.Cascade);
+
             });
         }
 

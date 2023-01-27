@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.ContractProductionTracking;
 using TsiErp.Entities.Entities.Department;
+using TsiErp.Entities.Entities.FinalControlUnsuitabilityReport;
 using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.ProductionTracking;
 using TsiErp.Entities.Entities.SalesPrice;
@@ -83,6 +84,7 @@ namespace TsiErp.Entities.Entities.Employee
         public ICollection<OperationUnsuitabilityReports> OperationUnsuitabilityReports { get; set; }
         public ICollection<ProductionTrackings> ProductionTrackings { get; set; }
         public ICollection<ContractProductionTrackings> ContractProductionTrackings { get; set; }
+        public ICollection<FinalControlUnsuitabilityReports> FinalControlUnsuitabilityReports { get; set; }
 
     }
 }
