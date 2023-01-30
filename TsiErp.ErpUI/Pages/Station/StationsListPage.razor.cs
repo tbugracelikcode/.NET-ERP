@@ -1,10 +1,12 @@
 ﻿using Castle.Core.Resource;
 using DevExpress.Blazor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
+using Syncfusion.Blazor.Inputs;
 using Tsi.Core.Utilities.Results;
 using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.Station.Dtos;
@@ -15,9 +17,31 @@ namespace TsiErp.ErpUI.Pages.Station
 {
     public partial class StationsListPage
     {
+        SfTextBox TextBoxSearchObj;
+        bool SelectStationGroupPopupVisible = false;
+
 
         SfComboBox<string, ListStationGroupsDto> StationGroupComboBox;
         List<ListStationGroupsDto> StationGroupList = new List<ListStationGroupsDto>();
+
+
+
+        public async Task OnCreateSearch()
+        {
+            // Event creation with event handler
+            var Click = EventCallback.Factory.Create<MouseEventArgs>(this, SearchClick);
+            await TextBoxSearchObj.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", Click } });
+        }
+
+
+
+        public async void SearchClick()
+        {
+            SelectStationGroupPopupVisible = true;
+            await InvokeAsync(StateHasChanged);
+        }
+
+
 
         protected override async void OnInitialized()
         {
