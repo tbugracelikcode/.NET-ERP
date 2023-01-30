@@ -32,11 +32,19 @@ namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
         /// <summary>
         /// Operasyon Başlangıç Tarihi
         /// </summary>
-        public DateTime OperationStartDate { get; set; }
+        public DateTime? OperationStartDate { get; set; }
+        /// <summary>
+        /// Başlangıç Saati
+        /// </summary>
+        public TimeSpan? OperationStartTime { get; set; }
         /// <summary>
         /// Operasyon Bitiş Tarihi
         /// </summary>
-        public DateTime OperationEndDate { get; set; }
+        public DateTime? OperationEndDate { get; set; }
+        /// <summary>
+        /// Bitiş Saati
+        /// </summary>
+        public TimeSpan? OperationEndTime { get; set; }
         [Precision(18, 6)]
         /// <summary>
         /// Duruş Süresi

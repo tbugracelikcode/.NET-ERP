@@ -29,7 +29,7 @@
                             <Template>
                                 <SfCard class="TSIListPageTitleCard">
                                     <CardContent>
-                                        <TsiBreadCrumb PreviousMenus="Kaynak Yönetimi > Ana Kayıtlar" CurrentMenu="Duruş Sebepleri" />
+                                        <TsiBreadCrumb PreviousMenus="Üretim Yönetimi > Ana Kayıtlar" CurrentMenu="Duruş Kodları" />
                                     </CardContent>
                                     <CardFooter>
                                     </CardFooter>
@@ -60,6 +60,8 @@
                                                 </GridColumn>
                                                 <GridColumn Field=@nameof(ListHaltReasonsDto.IsOperator) DisplayAsCheckBox="true" HeaderText="OPERATÖR KAYNAKLI" TextAlign="TextAlign.Center" Width="120">
                                                 </GridColumn>
+                                                <GridColumn Field=@nameof(ListHaltReasonsDto.IsManagement) DisplayAsCheckBox="true" HeaderText="YÖNETİM KAYNAKLI" TextAlign="TextAlign.Center" Width="120">
+                                                </GridColumn>
                                         </GridColumns>
                                     </SfGrid>
                                 </CardContent>
@@ -87,10 +89,12 @@
                         <DxGridLayout CssClass="TSIGridLayout">
                             <Rows>
                                 <DxGridLayoutRow Height="40%" />
-                                <DxGridLayoutRow Height="30%" />
-                                <DxGridLayoutRow Height="30%" />
+                                <DxGridLayoutRow Height="20%" />
+                                <DxGridLayoutRow Height="20%" />
                             </Rows>
                             <Columns>
+                                <DxGridLayoutColumn Width="4%" />
+                                <DxGridLayoutColumn Width="28%" />
                                 <DxGridLayoutColumn Width="4%" />
                                 <DxGridLayoutColumn Width="28%" />
                                 <DxGridLayoutColumn Width="4%" />
@@ -101,14 +105,14 @@
                                 <DxGridLayoutItem Row="0" Column="1">
                                     <Template>
                                         <br />
-                                        <label class="TSIModalLabel"><strong>Duruş Sebebi Kodu: </strong></label>
+                                        <label class="TSIModalLabel"><strong>Duruş Kodu: </strong></label>
                                         <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Duruş Sebebi Kodu Yazınız."></SfTextBox>
                                     </Template>
                                 </DxGridLayoutItem>
-                                <DxGridLayoutItem Row="0" Column="3">
+                                <DxGridLayoutItem Row="0" Column="3" ColumnSpan="3">
                                     <Template>
                                         <br />
-                                        <label class="TSIModalLabel"><strong>Duruş Sebebi Adı: </strong></label>
+                                        <label class="TSIModalLabel"><strong>Duruş Adı: </strong></label>
                                 <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="Duruş Sebebi Adı Yazınız."></SfTextBox>
                                     </Template>
                                 </DxGridLayoutItem>
@@ -122,6 +126,12 @@
                                     <Template>
                                 <label class="TSIModalLabel"><strong>Operatör Kaynaklı: </strong></label><br />
                                         <SfSwitch @bind-Checked="DataSource.IsOperator"></SfSwitch>
+                                    </Template>
+                                </DxGridLayoutItem>  
+                                <DxGridLayoutItem Row="1" Column="5">
+                                    <Template>
+                                <label class="TSIModalLabel"><strong>Yönetim Kaynaklı: </strong></label><br />
+                                        <SfSwitch @bind-Checked="DataSource.IsManagement"></SfSwitch>
                                     </Template>
                                 </DxGridLayoutItem>                                
                                 <DxGridLayoutItem Row="2" Column="1">

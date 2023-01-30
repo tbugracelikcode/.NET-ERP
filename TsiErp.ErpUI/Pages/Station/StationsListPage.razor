@@ -30,7 +30,7 @@ else
                 <Template>
                     <SfCard class="TSIListPageTitleCard">
                         <CardContent>
-                            <TsiBreadCrumb PreviousMenus="Kaynak Yönetimi > Ana Kayıtlar" CurrentMenu="İş İstasyonları" />
+                            <TsiBreadCrumb PreviousMenus="Makine & İş Gücü Yönetimi Yönetimi > Ana Kayıtlar" CurrentMenu="İş İstasyonları" />
                         </CardContent>
                         <CardFooter>
                         </CardFooter>
@@ -40,11 +40,11 @@ else
             <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
                 <Template>
                     <SfCard class="TSIGridCards">
-                       
+
                         <CardContent>
-                            <SfGrid ID="Grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"  GridLines="GridLine.Both"
+                            <SfGrid ID="Grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
                                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
-                                                              <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                 <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListStationsDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
@@ -55,22 +55,7 @@ else
                                     <GridColumn Field=@nameof(ListStationsDto.Code) HeaderText="MAKİNA KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListStationsDto.Name) HeaderText="MAKİNA AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListStationsDto.Brand) HeaderText="MARKA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.Model) Type="ColumnType.Number" HeaderText="MODEL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.Capacity) HeaderText="KAPASİTE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.KWA) Format="N2" Type="ColumnType.Number" HeaderText="KWA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListStationsDto.StationGroup) HeaderText="İŞ İSTASYONU GRUBU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.X) Format="N2" HeaderText="X" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.Y) Format="N2" HeaderText="Y" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.AreaCovered) Format="N2" Type="ColumnType.Number" HeaderText="KAPLADIĞI ALAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.UsageArea) Format="N2" Type="ColumnType.Number" HeaderText="KULLANIM ALANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.Amortization) Type="ColumnType.Number" HeaderText="AMORTİSMAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.MachineCost) Format="N2" Type="ColumnType.Number" HeaderText="MAKİNA MALİYETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.Shift) Type="ColumnType.Number" HeaderText="VARDİYA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.ShiftWorkingTime) Format="N2" Type="ColumnType.Number" HeaderText="VARDİYA ÇALIŞMA SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.PowerFactor) Format="N2" Type="ColumnType.Number" HeaderText="GÜÇ FAKTÖRÜ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.WorkSafetyInstruction) HeaderText="İŞ GÜVENLİĞİ TALİMATI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationsDto.UsageInstruction) HeaderText="KULLANIM TALİMATI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-
                                 </GridColumns>
                             </SfGrid>
                         </CardContent>
@@ -88,31 +73,25 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="İş İstasyonları"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
+         Width="54%"
+         Height="59%"
+         MinWidth="940px"
+         MinHeight="640px"
          HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DxGridLayout CssClass="TSIGridLayout">
                 <Rows>
-                    <DxGridLayoutRow Height="28%" />
+                    <DxGridLayoutRow Height="20%" />
                     <DxGridLayoutRow Height="18%" />
-                    <DxGridLayoutRow Height="18%" />
-                    <DxGridLayoutRow Height="18%" />
-                    <DxGridLayoutRow Height="15%" />
+                    <DxGridLayoutRow Height="55%" />
                 </Rows>
                 <Columns>
-                    <DxGridLayoutColumn Width="3%" />
-                    <DxGridLayoutColumn Width="20%" />
-                    <DxGridLayoutColumn Width="3%" />
-                    <DxGridLayoutColumn Width="20%" />
-                    <DxGridLayoutColumn Width="3%" />
-                    <DxGridLayoutColumn Width="20%" />
-                    <DxGridLayoutColumn Width="3%" />
-                    <DxGridLayoutColumn Width="20%" />
-                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="32%" />
+                    <DxGridLayoutColumn Width="21%" />
+                    <DxGridLayoutColumn Width="38%" />
+                    <DxGridLayoutColumn Width="4%" />
                 </Columns>
                 <Items>
                     <DxGridLayoutItem Row="0" Column="1">
@@ -122,42 +101,86 @@ else
                             <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Makina Kodunu Yazınız."></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="0" Column="3">
+
+                    <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <br />
                             <label class="TSIModalLabel"><strong>Makina Açıklaması: </strong></label>
                             <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="İsim Yazınız."></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="0" Column="5">
+
+                    <DxGridLayoutItem Row="1" Column="2">
                         <Template>
-                            <br />
-                            <label class="TSIModalLabel"><strong>Marka: </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Brand" Placeholder="Markayı Yazınız."></SfTextBox>
+                            <center>
+                                <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
+                                <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                            </center>
                         </Template>
                     </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="0" Column="7">
+
+                    <DxGridLayoutItem Row="2" Column="1" ColumnSpan="3">
                         <Template>
-                            <br />
-                            <label class="TSIModalLabel"><strong>Model: </strong></label>
-                            <SfNumericTextBox Min="0" TValue="int" @bind-Value="DataSource.Model" CssClass="TSITxtBox"></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="1" Column="1">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>Kapasite: </strong></label>
-                            <SfTextBox Placeholder="Kapasiteyi Yazınız." @bind-Value="DataSource.Capacity" CssClass="TSITxtBox"></SfTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="1" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>KWA: </strong></label><br />
-                            <SfNumericTextBox Min="0" Placeholder="KWA" @bind-Value="DataSource.KWA" CssClass="TSITxtBox"></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="1" Column="5">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>İş İstasyonu Grubu: </strong></label><br />
+                            <SfTab>
+                                <TabItems>
+                                    <TabItem>
+                                        <ChildContent>
+                                            <TabHeader Text="Genel Bilgiler"></TabHeader>
+                                        </ChildContent>
+                                        <ContentTemplate>
+
+                                            <DxGridLayout CssClass="TSIGridLayout">
+                                                <Rows>
+                                                    <DxGridLayoutRow Height="38%" />
+                                                    <DxGridLayoutRow Height="32%" />
+                                                    <DxGridLayoutRow Height="32%" />
+                                                    <DxGridLayoutRow Height="32%" />
+                                                </Rows>
+                                                <Columns>
+                                                    <DxGridLayoutColumn Width="22%" />
+                                                    <DxGridLayoutColumn Width="4%" />
+                                                    <DxGridLayoutColumn Width="22%" />
+                                                    <DxGridLayoutColumn Width="4%" />
+                                                    <DxGridLayoutColumn Width="22%" />
+                                                    <DxGridLayoutColumn Width="4%" />
+                                                    <DxGridLayoutColumn Width="22%" />
+                                                </Columns>
+                                                <Items>
+
+                                                    <DxGridLayoutItem Row="0" Column="0">
+                                                        <Template>
+                                                            <br />
+                                                            <label class="TSIModalLabel"><strong>Marka: </strong></label>
+                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Brand" Placeholder="Markayı Yazınız."></SfTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="0" Column="2">
+                                                        <Template>
+                                                            <br />
+                                                            <label class="TSIModalLabel"><strong>Model: </strong></label>
+                                                            <SfNumericTextBox Min="0" TValue="int" @bind-Value="DataSource.Model" CssClass="TSITxtBox"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="0" Column="4">
+                                                        <Template>
+                                                            <br />
+                                                            <label class="TSIModalLabel"><strong>Kapasite: </strong></label>
+                                                            <SfTextBox Placeholder="Kapasiteyi Yazınız." @bind-Value="DataSource.Capacity" CssClass="TSITxtBox"></SfTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="0" Column="6">
+                                                        <Template>
+                                                            <br />
+                                                            <label class="TSIModalLabel"><strong>KWA: </strong></label><br />
+                                                            <SfNumericTextBox Min="0" Placeholder="KWA" @bind-Value="DataSource.KWA" CssClass="TSITxtBox"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="1" Column="0">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>İş İstasyonu Grubu: </strong></label><br />
 
                             <SfTextBox @ref="@TextBoxSearchObj" Created="@OnCreateSearch"></SfTextBox>
 
@@ -172,98 +195,112 @@ else
                                     PopupWidth="700px"
                                     PopupHeight="500">
 
-                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
+                                                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
 
-                                <ComboBoxTemplates TItem="ListStationGroupsDto">
-                                    <HeaderTemplate>
-                                        <table>
-                                            <tr>
-                                                <th class="e-text-center">Account Number</th>
-                                                <th class="e-text-center">Name</th>
-                                            </tr>
-                                        </table>
-                                    </HeaderTemplate>
-                                    <ItemTemplate Context="cmbContext">
+                                                                <ComboBoxTemplates TItem="ListStationGroupsDto">
+                                                                    <HeaderTemplate>
+                                                                        <table>
+                                                                            <tr>
+                                                                                <th class="e-text-center">Account Number</th>
+                                                                                <th class="e-text-center">Name</th>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </HeaderTemplate>
+                                                                    <ItemTemplate Context="cmbContext">
 
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="e-text-center">@((cmbContext as ListStationGroupsDto).Code)</td>
-                                                    <td class="e-text-center">@((cmbContext as ListStationGroupsDto).Name)</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </ItemTemplate>
-                                </ComboBoxTemplates>
+                                                                        <table>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                    <td class="e-text-center">@((cmbContext as ListStationGroupsDto).Code)</td>
+                                                                                    <td class="e-text-center">@((cmbContext as ListStationGroupsDto).Name)</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </ItemTemplate>
+                                                                </ComboBoxTemplates>
 
-                                <ComboBoxEvents 
-                                    TValue="string" 
-                                    TItem="ListStationGroupsDto" 
-                                    Filtering="StationGroupFiltering" 
-                                    ValueChange="StationGroupValueChangeHandler"></ComboBoxEvents>
-                            </SfComboBox>*@
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="1" Column="7">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>Amortisman: </strong></label>
-                            <SfNumericTextBox Min="0" @bind-Value="DataSource.Amortization" TValue="int"></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="2" Column="1">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>X: </strong></label>
-                            <SfNumericTextBox Min="0" @bind-Value="DataSource.X" TValue="decimal"></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="2" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>Y: </strong></label>
-                            <SfNumericTextBox Min="0" @bind-Value="DataSource.Y" TValue="decimal"></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="2" Column="5">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>Kapladığı Alan: </strong></label>
-                            <SfNumericTextBox Min="0" @bind-Value="DataSource.AreaCovered" TValue="decimal"></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="2" Column="7">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>Kullanım Alanı: </strong></label>
-                            <SfNumericTextBox Min="0" @bind-Value="DataSource.UsageArea" TValue="decimal"></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="3" Column="1">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>Makina Maliyeti: </strong></label>
-                            <SfNumericTextBox Min="0" @bind-Value="DataSource.MachineCost" TValue="decimal"></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="3" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>Vardiya: </strong></label>
-                            <SfNumericTextBox Min="0" @bind-Value="DataSource.Shift" TValue="int"></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="3" Column="5">
-                        <Template>
+                                                                <ComboBoxEvents TValue="string"
+                                                                            TItem="ListStationGroupsDto"
+                                                                            Filtering="StationGroupFiltering"
+                                                                            ValueChange="StationGroupValueChangeHandler"></ComboBoxEvents>
+                                                            </SfComboBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
 
-                            <label class="TSIModalLabel"><strong>Vardiya Çalışma Süresi: </strong></label><br />
-                            <SfNumericTextBox Min="0" @bind-Value="DataSource.ShiftWorkingTime" TValue="decimal"></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="3" Column="7">
-                        <Template>
+                                                    <DxGridLayoutItem Row="1" Column="2">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>Amortisman: </strong></label>
+                                                            <SfNumericTextBox Min="0" @bind-Value="DataSource.Amortization" TValue="int"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
 
-                            <label class="TSIModalLabel"><strong>Güç Faktörü: </strong></label><br />
-                            <SfNumericTextBox @bind-Value="DataSource.PowerFactor" TValue="decimal"></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="4" Column="1">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
-                            <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                                                    <DxGridLayoutItem Row="1" Column="4">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>X: </strong></label>
+                                                            <SfNumericTextBox Min="0" @bind-Value="DataSource.X" TValue="decimal"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="1" Column="6">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>Y: </strong></label>
+                                                            <SfNumericTextBox Min="0" @bind-Value="DataSource.Y" TValue="decimal"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="2" Column="0">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>Kapladığı Alan: </strong></label>
+                                                            <SfNumericTextBox Min="0" @bind-Value="DataSource.AreaCovered" TValue="decimal"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="2" Column="2">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>Kullanım Alanı: </strong></label>
+                                                            <SfNumericTextBox Min="0" @bind-Value="DataSource.UsageArea" TValue="decimal"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="2" Column="4">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>Makina Maliyeti: </strong></label>
+                                                            <SfNumericTextBox Min="0" @bind-Value="DataSource.MachineCost" TValue="decimal"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="2" Column="6">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>Vardiya: </strong></label>
+                                                            <SfNumericTextBox Min="0" @bind-Value="DataSource.Shift" TValue="int"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="3" Column="0">
+                                                        <Template>
+
+                                                            <label class="TSIModalLabel"><strong>Vardiya Çalışma Süresi: </strong></label><br />
+                                                            <SfNumericTextBox Min="0" @bind-Value="DataSource.ShiftWorkingTime" TValue="decimal"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="3" Column="2">
+                                                        <Template>
+
+                                                            <label class="TSIModalLabel"><strong>Güç Faktörü: </strong></label><br />
+                                                            <SfNumericTextBox @bind-Value="DataSource.PowerFactor" TValue="decimal"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                </Items>
+                                            </DxGridLayout>
+
+
+                                        </ContentTemplate>
+                                    </TabItem>
+
+                                </TabItems>
+                            </SfTab>
                         </Template>
                     </DxGridLayoutItem>
 

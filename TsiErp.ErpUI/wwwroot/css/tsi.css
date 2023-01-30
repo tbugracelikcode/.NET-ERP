@@ -1,4 +1,250 @@
-﻿.calismaVar {
+﻿
+/* ----------------------------------------------------------------TSI CUSTOM CLASSES----------------------------------------------------------------*/
+
+.TSIGridCards {
+    border: 1px solid #d6d5d5;
+    background-color: #fff;
+    box-shadow: rgb(0 0 0 / 35%) 0px 3px 10px;
+    height: 800px;
+}
+
+.TSIIndexPageCards {
+    border: 1px solid #d6d5d5;
+    background-color: #fff;
+    box-shadow: rgb(0 0 0 / 35%) 0px 3px 10px;
+    height: fit-content;
+}
+
+.TSITxtBox {
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    height: 30px;
+}
+
+.TSIMemoBox100 {
+    height: 100% !important;
+}
+
+.TSIMemoBox60 {
+    height: 60% !important;
+}
+
+.TSIComboBox {
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100%;
+    height: 30px;
+}
+
+.TSISaveButton {
+    border-color: #565656 !important;
+    background-color: white !important;
+    color: #505050 !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    width: auto;
+    border-radius: 5px;
+    height: 35px;
+    border: 2px solid;
+}
+
+
+.TSICancelButton {
+    border-color: #565656 !important;
+    background-color: white !important;
+    color: #AD0000 !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    width: auto;
+    border-radius: 5px;
+    height: 35px;
+    border: 2px solid;
+}
+
+.TSIDeleteButton {
+    border-color: #565656 !important;
+    background-color: white !important;
+    color: #01147F !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    width: auto;
+    border-radius: 5px;
+    height: 35px;
+    border: 2px solid;
+}
+
+.TSILogOutButton {
+    background-color: #AD0000 !important;
+    text-shadow: 1px 3px 4px black !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    width: auto;
+    border-radius: 5px;
+    height: 35px;
+    border: 2px solid;
+}
+
+.TSIShowColumnsButton {
+    border-color: #565656 !important;
+    background-color: white !important;
+    color: #878787 !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    width: auto;
+    border-radius: 5px;
+    height: 35px;
+    border: 2px solid;
+}
+
+.TSISubmitButton {
+    border-color: #565656 !important;
+    background-color: white !important;
+    color: #878787 !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    width: auto;
+    border-radius: 5px;
+    height: 35px;
+    border: 2px solid;
+}
+
+.TSIGeneralBTNRed {
+    background-color: #AD0000 !important;
+    text-shadow: 1px 3px 4px black !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    width: auto;
+    border-radius: 5px;
+    height: 35px;
+    border: 2px solid;
+}
+
+.TSIGeneralBTNGray {
+    background-color: #474747 !important;
+    text-shadow: 6px 3px 4px black !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    width: auto;
+    border-radius: 5px;
+    height: 35px;
+    border: 2px solid;
+}
+
+.TSIListPageTitleCard {
+    font-size: 14px;
+    color: white;
+    background-image: linear-gradient(356deg, rgb(215 214 214) 0%, #f9f8f8 70%) !important;
+    box-shadow: rgb(0 0 0 / 60%) 0px 1px 4px;
+    height: 40px;
+}
+
+.TSIModalLabel {
+    color: black;
+    font-size: 14px;
+}
+
+.TSIConfirmModalFooter {
+    text-align: end;
+    padding-right: 20px;
+    border-top: 2px solid #401515;
+    width: 90%;
+    padding-top: 2%;
+}
+
+.TSIModalLocation {
+    margin-top: 15% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.button-edit {
+    background-image: url("../images/buttonedit.svg") !important;
+    width: 10px !important;
+    height: 10px !important;
+}
+
+.TSIWorkSchduleModal {
+    height: fit-content;
+}
+
+.TSIWorkSchduleModalStationsCard {
+    border: 2px solid #c1c1c1;
+    box-shadow: rgb(0 0 0 / 15%) 0px 3px 10px;
+    height: fit-content;
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 3%;
+    margin-bottom: 1%;
+    background-image: linear-gradient(337deg, rgb(243 240 240) 0%, #efecec 70%) !important;
+}
+
+.TSIGridLayout {
+    width: 100%;
+    height: 100%;
+}
+
+.TSIStationCards {
+    height: fit-content;
+    border: 3px solid #f36565 !important;
+    border-radius: 20px !important;
+    box-shadow: rgb(8 8 8 / 85%) 0px 3px 8px !important;
+}
+
+    .TSIStationCards:hover {
+        border: 3px solid #60bffd !important;
+        cursor: pointer;
+    }
+
+    .TSIStationCards:focus {
+        background-color: #78FF6A !important;
+    }
+
+.TSI_Paper {
+    height: max-content !important;
+    width: 100%;
+    padding: 16px !important;
+    margin-top: 16px !important;
+    z-index: 10;
+    position: relative;
+    border-width: 2px !important;
+    border-style: dashed !important;
+    border-radius: 8px !important;
+    border: 1px solid #0000001e;
+}
+
+.TSI_Chip {
+    color: #ffffffff;
+    background-color: #424242ff;
+    cursor: pointer;
+    height: 32px;
+    font-size: 14px;
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+    border: none;
+    display: inline-flex;
+    max-width: 100%;
+    outline: 0;
+    padding: 0 12px;
+    box-sizing: border-box;
+    transition: background-color 300ms cubic-bezier(.4,0,.2,1) 0ms,box-shadow 300ms cubic-bezier(.4,0,.2,1) 0ms;
+    align-items: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    justify-content: center;
+    text-decoration: none;
+    line-height: normal;
+    margin: 4px;
+}
+
+
+/* ----------------------------------------------------------------------OVERRIDE CLASSES----------------------------------------------------------------------*/
+
+
+
+
+.calismaVar {
     background-color: #00ff14;
 }
 
@@ -85,12 +331,6 @@ td, th {
     background-color: #fff;
     box-shadow: rgb(0 0 0 / 35%) 0px 3px 10px;
 }
-.TSIGridCards {
-    border: 1px solid #d6d5d5;
-    background-color: #fff;
-    box-shadow: rgb(0 0 0 / 35%) 0px 3px 10px;
-    height: 800px;
-}
 .TSIWorkStationGroupPopUpCard {
     border: 1px solid #d6d5d5;
     background-color: #fff;
@@ -98,12 +338,6 @@ td, th {
     height: fit-content;
 }
 
-.TSIIndexPageCards {
-    border: 1px solid #d6d5d5;
-    background-color: #fff;
-    box-shadow: rgb(0 0 0 / 35%) 0px 3px 10px;
-    height: fit-content;
-}
 
 .e-checkbox-wrapper.e-customcheck:hover .e-frame.e-check {
     background-color: #9C0D0D;
@@ -278,172 +512,5 @@ html {
     font-weight: bold;
 }
 
-.TSITxtBox {
-    font-size: 14px;
-    font-family:Arial, Helvetica, sans-serif;
-    width:100%;
-    height:30px;
-}
-
-.TSIMemoBox {
-   height:100% !important;
-}
-
-.TSIComboBox {
-    font-size: 14px;
-    font-family: Arial, Helvetica, sans-serif;
-    width: 100%;
-    height: 30px;
-}
-
-.TSISaveButton {
-    border-color: #565656 !important;
-    background-color: white !important;
-    color: #505050 !important;
-    font-size: 14px !important;
-    font-weight: bold !important;
-    width: auto;
-    border-radius: 5px;
-    height: 35px;
-    border: 2px solid;
-}
-
-
-.TSICancelButton {
-    border-color: #565656 !important;
-    background-color: white !important;
-    color: #AD0000 !important;
-    font-size: 14px !important;
-    font-weight: bold !important;
-    width: auto;
-    border-radius: 5px;
-    height: 35px;
-    border: 2px solid;
-}
-.TSIDeleteButton {
-    border-color: #565656 !important;
-    background-color: white !important;
-    color: #01147F !important;
-    font-size: 14px !important;
-    font-weight: bold !important;
-    width: auto;
-    border-radius: 5px;
-    height: 35px;
-    border: 2px solid;
-}
-.TSILogOutButton {
-    background-color: #AD0000 !important;
-    text-shadow: 1px 3px 4px black !important;
-    font-size: 14px !important;
-    font-weight: bold !important;
-    width: auto;
-    border-radius: 5px;
-    height: 35px;
-    border: 2px solid;
-}
-
-.TSIShowColumnsButton {
-    border-color: #565656 !important;
-    background-color: white !important;
-    color: #878787 !important;
-    font-size: 14px !important;
-    font-weight: bold !important;
-    width: auto;
-    border-radius: 5px;
-    height: 35px;
-    border: 2px solid;
-}
-
-.TSISubmitButton {
-    border-color: #565656 !important;
-    background-color: white !important;
-    color: #878787 !important;
-    font-size: 14px !important;
-    font-weight: bold !important;
-    width: auto;
-    border-radius: 5px;
-    height: 35px;
-    border: 2px solid;
-}
-
-.TSIGeneralBTNRed {
-    background-color: #AD0000 !important;
-    text-shadow: 1px 3px 4px black !important;
-    font-size: 14px !important;
-    font-weight: bold !important;
-    width: auto;
-    border-radius: 5px;
-    height: 35px;
-    border: 2px solid;
-}
-.TSIGeneralBTNGray {
-    background-color: #474747 !important;
-    text-shadow: 6px 3px 4px black !important;
-    font-size: 14px !important;
-    font-weight: bold !important;
-    width: auto;
-    border-radius: 5px;
-    height: 35px;
-    border: 2px solid;
-}
-
-.TSIListPageTitleCard {
-    font-size: 14px;
-    color: white;
-    background-image: linear-gradient(356deg, rgb(215 214 214) 0%, #f9f8f8 70%) !important;
-    box-shadow: rgb(0 0 0 / 60%) 0px 1px 4px;
-    height: 40px;
-}
-.TSIModalLabel {
-    color: black;
-    font-size: 14px;
-}
-.TSIConfirmModalFooter {
-    text-align: end;
-    padding-right: 20px;
-    border-top: 2px solid #401515;
-    width: 90%;
-    padding-top: 2%;
-}
-.TSIModalLocation {
-    margin-top: 15% !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-}
-
-.button-edit {
-    background-image: url("../images/buttonedit.svg") !important;
-    width: 10px !important;
-    height: 10px !important;
-}
-.TSIWorkSchduleModal {
-    height: fit-content;
-}
-
-.TSIWorkSchduleModalStationsCard {
-    border: 2px solid #c1c1c1;
-    box-shadow: rgb(0 0 0 / 15%) 0px 3px 10px;
-    height: fit-content;
-    width: 90%;
-    margin-left: 5%;
-    margin-top: 3%;
-    margin-bottom: 1%;
-    background-image: linear-gradient(337deg, rgb(243 240 240) 0%, #efecec 70%) !important;
-}
-.TSIGridLayout{
-    width:100%;
-    height:100%;
-}
-.TSIStationCards {
-    height: fit-content;
-    border: 3px solid #f36565 !important;
-    border-radius: 20px !important;
-    box-shadow: rgb(8 8 8 / 85%) 0px 3px 8px !important;
-}
-
-    .TSIStationCards:hover {
-        border: 3px solid #60bffd !important;
-        cursor: pointer;
-    }
 
 

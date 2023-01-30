@@ -338,5 +338,15 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
             return new SuccessDataResult<SelectCalendarsDto>(ObjectMapper.Map<Calendars, SelectCalendarsDto>(mappedEntity));
         }
+
+        [CacheAspect(duration: 60)]
+        public async Task<IDataResult<IList<ListCalendarLinesDto>>> GetLineListAsync(Guid calendarID)
+        {
+            var entity = await _repository.GetAsync(x => x.Id == calendarID);
+
+            var mappedEntity = ObjectMapper.Map<List<CalendarLines>, List<ListCalendarLinesDto>>(entity.CalendarLines.ToList());
+
+            return new SuccessDataResult<IList<ListCalendarLinesDto>>(mappedEntity);
+        }
     }
 }

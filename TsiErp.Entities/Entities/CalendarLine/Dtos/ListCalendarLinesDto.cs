@@ -37,5 +37,9 @@ namespace TsiErp.Entities.Entities.CalendarLine.Dtos
         /// İstasyon Adı
         /// </summary>
         public string StationName { get; set; }
+        /// <summary>
+        /// Tarih
+        /// </summary>
+        public DateTime Date_ { get; set; }
     }
 }

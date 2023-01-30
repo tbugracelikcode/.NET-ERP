@@ -45,23 +45,23 @@
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text="Satýnalma Yönetimi" IconCssClass="fa fa-euro-sign">
+                <DxTreeViewNode Visible="@collapsevisible" Text="Satýn Alma Yönetimi" IconCssClass="fa fa-euro-sign">
                     <Nodes>
                         <DxTreeViewNode Text="Ana Kayýtlar">
                             <Nodes>
-                                <DxTreeViewNode Text="Satýnalma Fiyat Listeleri" />
+                                <DxTreeViewNode NavigateUrl="/purchase-prices" Text="Satýn Alma Fiyat Listeleri" />
                             </Nodes>
                         </DxTreeViewNode>
                         <DxTreeViewNode Text="Ýþlemler">
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/purchase-requests" Text="Satýnalma Talep Fiþleri" />
-                                <DxTreeViewNode NavigateUrl="/purchase-orders" Text="Satýnalma Sipariþleri " />
+                                <DxTreeViewNode NavigateUrl="/purchase-requests" Text="Satýn Alma Talep Fiþleri" />
+                                <DxTreeViewNode NavigateUrl="/purchase-orders" Text="Satýn Alma Sipariþleri " />
                             </Nodes>
                         </DxTreeViewNode>
                         <DxTreeViewNode Text="Raporlar">
                             <Nodes>
-                                <DxTreeViewNode Text="Satýnalma Talep Fiþi Listesi" />
-                                <DxTreeViewNode Text="Satýnalma Sipariþleri Listesi" />
+                                <DxTreeViewNode Text="Satýn Alma Talep Fiþi Listesi" />
+                                <DxTreeViewNode Text="Satýn Alma Sipariþleri Listesi" />
                             </Nodes>
                         </DxTreeViewNode>
                     </Nodes>
@@ -71,13 +71,14 @@
                     <Nodes>
                         <DxTreeViewNode Text="Ana Kayýtlar">
                             <Nodes>
-                                <DxTreeViewNode Text="Satýþ Fiyat Listeleri" />
+                                <DxTreeViewNode NavigateUrl="/sales-prices" Text="Satýþ Fiyat Listeleri" />
                             </Nodes>
                         </DxTreeViewNode>
                         <DxTreeViewNode Text="Ýþlemler">
                             <Nodes>
                                 <DxTreeViewNode NavigateUrl="/sales-propositions" Text="Verilen Teklifler" />
                                 <DxTreeViewNode NavigateUrl="/sales-orders" Text="Satýþ Sipariþleri" />
+                                <DxTreeViewNode NavigateUrl="/forecasts" Text="Satýþ Forecast Kayýtlarý" />
                             </Nodes>
                         </DxTreeViewNode>
                         <DxTreeViewNode Text="Maliyetlendirme">
@@ -94,7 +95,7 @@
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text="Planlama" IconCssClass="fa fa-users">
+                <DxTreeViewNode Visible="@collapsevisible" Text="Planlama" IconCssClass="fa fa-list">
                     <Nodes>
                         <DxTreeViewNode Text="Üretim Planlama">
                             <Nodes>
@@ -110,7 +111,7 @@
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text="Sevkiyat Yönetimi" IconCssClass="fa fa-euro-sign">
+                <DxTreeViewNode Visible="@collapsevisible" Text="Sevkiyat Yönetimi" IconCssClass="fa fa-truck">
                     <Nodes>
                         <DxTreeViewNode Text="Ana Kayýtlar">
                             <Nodes>
@@ -194,8 +195,8 @@
                         <DxTreeViewNode Text="Üretim Takip Kayýtlarý">
                             <Nodes>
                                 <DxTreeViewNode NavigateUrl="/production-tracking" Text="Manuel" />
-                                <DxTreeViewNode NavigateUrl="" Text="IoT" />
-                                <DxTreeViewNode NavigateUrl="" Text="Fason Ýmalat Takip Kayýtlarý" />
+                                <DxTreeViewNode NavigateUrl="/production-tracking-iot" Text="IoT" />
+                                <DxTreeViewNode NavigateUrl="/contract-production-tracking" Text="Fason Ýmalat Takip Kayýtlarý" />
                             </Nodes>
                         </DxTreeViewNode>
                         <DxTreeViewNode Text="Raporlar">

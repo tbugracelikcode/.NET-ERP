@@ -58,12 +58,19 @@ using TsiErp.Entities.Entities.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseOrderLine;
 using TsiErp.Entities.Entities.PurchaseRequest;
 using TsiErp.Entities.Entities.PurchaseRequestLine;
+using TsiErp.Entities.Entities.Forecast;
+using TsiErp.Entities.Entities.ForecastLine;
 using TsiErp.Entities.Entities.PurchaseUnsuitabilityReport;
 using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.ProductionTracking;
+using TsiErp.Entities.Entities.ContractProductionTracking;
 using TsiErp.Entities.Entities.ProductionTrackingHaltLine;
 using TsiErp.Entities.Entities.HaltReason;
 using TsiErp.Entities.Entities.Menu;
+using TsiErp.Entities.Entities.SalesPrice;
+using TsiErp.Entities.Entities.SalesPriceLine;
+using TsiErp.Entities.Entities.PurchasePrice;
+using TsiErp.Entities.Entities.PurchasePriceLine;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore
 {
@@ -177,6 +184,12 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigureProductionTrackings();
             builder.ConfigureContractProductionTrackings();
             builder.ConfigureProductionTrackingHaltLines();
+            builder.ConfigureForecasts();
+            builder.ConfigureForecastLines();
+            builder.ConfigureSalesPrices();
+            builder.ConfigureSalesPriceLines();
+            builder.ConfigurePurchasePrices();
+            builder.ConfigurePurchasePriceLines();
             builder.ConfigureHaltReasons();
             builder.ConfigureMenus();
         }
@@ -270,6 +283,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<WorkOrders> WorkOrders { get; set; }
         public DbSet<PurchaseOrders> PurchaseOrders { get; set; }
         public DbSet<PurchaseOrderLines> PurchaseOrderLines { get; set; }
+        public DbSet<Forecasts> Forecasts { get; set; }
+        public DbSet<ForecastLines> ForecastLines { get; set; }
         public DbSet<PurchaseRequests> PurchaseRequests { get; set; }
         public DbSet<PurchaseRequestLines> PurchaseRequestLines { get; set; }
         public DbSet<PurchaseUnsuitabilityReports> PurchaseUnsuitabilityReports { get; set; }
@@ -277,6 +292,10 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<ProductionTrackings> ProductionTrackings { get; set; }
         public DbSet<ContractProductionTrackings> ContractProductionTrackings { get; set; }
         public DbSet<ProductionTrackingHaltLines> ProductionTrackingHaltLines { get; set; }
+        public DbSet<SalesPrices> SalesPrices { get; set; }
+        public DbSet<SalesPriceLines> SalesPriceLines { get; set; }
+        public DbSet<PurchasePrices> PurchasePrices { get; set; }
+        public DbSet<PurchasePriceLines> PurchasePriceLines { get; set; }
         public DbSet<HaltReasons> HaltReasons { get; set; }
         public DbSet<Menus> Menus { get; set; }
 

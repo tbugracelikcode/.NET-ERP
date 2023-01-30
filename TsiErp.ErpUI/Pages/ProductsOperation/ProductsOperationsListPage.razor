@@ -33,7 +33,7 @@ else
                 <Template>
                     <SfCard class="TSIListPageTitleCard">
                         <CardContent>
-                            <TsiBreadCrumb PreviousMenus="Üretim Yönetimi" CurrentMenu="Ürüne Özel Operasyonlar" />
+                            <TsiBreadCrumb PreviousMenus="Üretim Yönetimi > Ana Kayıtlar > Operasyonlar" CurrentMenu="Ürün Operasyon Kayıtları" />
                         </CardContent>
                         <CardFooter>
                         </CardFooter>
@@ -212,8 +212,8 @@ else
 
                       <DxGridLayoutItem Row="2" Column="3">
                         <Template>
-                             <label class="TSIModalLabel"><strong>İş Merkezi Kodu: </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" Placeholder="İş Merkezi Kodunu giriniz." @bind-Value="DataSource.WorkCenterCode"></SfTextBox>
+                            @* <label class="TSIModalLabel"><strong>İş Merkezi Kodu: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" Placeholder="İş Merkezi Kodunu giriniz." @bind-Value="DataSource.WorkCenterCode"></SfTextBox>*@
                         </Template>
                     </DxGridLayoutItem>
 
@@ -439,7 +439,7 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="2" Column="1">
+                    <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>Alternatif: </strong></label><br />
                             <SfSwitch @bind-Checked="LineDataSource.Alternative"></SfSwitch>

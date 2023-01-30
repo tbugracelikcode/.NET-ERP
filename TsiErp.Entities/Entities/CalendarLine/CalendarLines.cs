@@ -48,6 +48,10 @@ namespace TsiErp.Entities.Entities.CalendarLine
         /// </summary>
         public Calendars Calendars { get; set; }
         /// <summary>
+        /// Tarih
+        /// </summary>
+        public DateTime Date_ { get; set; }
+        /// <summary>
         /// İstasyon
         /// </summary>
         public Stations Stations { get; set; }

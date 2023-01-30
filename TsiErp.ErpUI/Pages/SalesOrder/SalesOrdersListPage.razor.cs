@@ -126,7 +126,6 @@ namespace TsiErp.ErpUI.Pages.SalesOrder
 
         #endregion
 
-
         #region Üretim Emri Oluşturma Modalı İşlemleri
 
 

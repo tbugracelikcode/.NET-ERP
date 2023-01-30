@@ -20,6 +20,9 @@ using TsiErp.Entities.Entities.PurchaseOrderLine;
 using TsiErp.Entities.Entities.PurchaseRequestLine;
 using TsiErp.Entities.Entities.PurchaseUnsuitabilityReport;
 using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
+using TsiErp.Entities.Entities.ForecastLine;
+using TsiErp.Entities.Entities.SalesPriceLine;
+using TsiErp.Entities.Entities.PurchasePriceLine;
 
 namespace TsiErp.Entities.Entities.Product
 {
@@ -147,6 +150,9 @@ namespace TsiErp.Entities.Entities.Product
         public ICollection<PurchaseRequestLines> PurchaseRequestLines { get; set; }
         public ICollection<PurchaseUnsuitabilityReports> PurchaseUnsuitabilityReports { get; set; }
         public ICollection<OperationUnsuitabilityReports> OperationUnsuitabilityReports { get; set; }
+        public ICollection<ForecastLines> ForecastLines { get; set; }
+        public ICollection<SalesPriceLines> SalesPriceLines { get; set; }
+        public ICollection<PurchasePriceLines> PurchasePriceLines { get; set; }
 
     }
 }

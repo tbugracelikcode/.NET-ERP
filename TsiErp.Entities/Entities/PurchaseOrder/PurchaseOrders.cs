@@ -35,7 +35,7 @@ namespace TsiErp.Entities.Entities.PurchaseOrder
         /// <summary>
         /// Saat
         /// </summary>
-        public string Time_ { get; set; }
+        public TimeSpan? Time_ { get; set; }
 
         [Precision(18, 6)]
         /// <summary>
