@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
+using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.Forecast.Dtos;
@@ -22,9 +24,6 @@ namespace TsiErp.ErpUI.Pages.Forecast
         SfComboBox<Guid?, ListCurrentAccountCardsDto> CurrentAccountCardsComboBox;
         List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
 
-        SfComboBox<Guid?, ListBranchesDto> BranchesComboBox;
-        List<ListBranchesDto> BranchesList = new List<ListBranchesDto>();
-
         SfComboBox<Guid?, ListPeriodsDto> PeriodsComboBox;
         List<ListPeriodsDto> PeriodsList = new List<ListPeriodsDto>();
 
@@ -44,6 +43,50 @@ namespace TsiErp.ErpUI.Pages.Forecast
 
         private bool LineCrudPopup = false;
 
+        #region Şube ButtonEdit
+
+        SfTextBox BranchesButtonEdit;
+        bool SelectBranchesPopupVisible = false;
+        List<ListBranchesDto> BranchesList = new List<ListBranchesDto>();
+
+        public async Task BranchesOnCreateIcon()
+        {
+            var BranchesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, BranchesButtonClickEvent);
+            await BranchesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", BranchesButtonClick } });
+        }
+
+        public async void BranchesButtonClickEvent()
+        {
+            SelectBranchesPopupVisible = true;
+            await GetBranchesList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void BranchesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.BranchID = Guid.Empty;
+                DataSource.BranchCode = string.Empty;
+                DataSource.BranchName = string.Empty;
+            }
+        }
+
+        public async void BranchesDoubleClickHandler(RecordDoubleClickEventArgs<ListBranchesDto> args)
+        {
+            var selectedUnitSet = args.RowData;
+
+            if (selectedUnitSet != null)
+            {
+                DataSource.BranchID = selectedUnitSet.Id;
+                DataSource.BranchCode = selectedUnitSet.Code;
+                DataSource.BranchName = selectedUnitSet.Name;
+                SelectBranchesPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
         protected override async Task OnInitializedAsync()
         {
             BaseCrudService = ForecastsAppService;
@@ -52,7 +95,6 @@ namespace TsiErp.ErpUI.Pages.Forecast
             CreateLineContextMenuItems();
 
             await GetCurrentAccountCardsList();
-            await GetBranchesList();
             await GetPeriodsList();
             await GetLineProductsList();
         }
@@ -289,46 +331,10 @@ namespace TsiErp.ErpUI.Pages.Forecast
         }
         #endregion
 
-        #region Şubeler
-        public async Task BranchFiltering(FilteringEventArgs args)
-        {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await BranchesComboBox.FilterAsync(BranchesList, query);
-        }
-
         private async Task GetBranchesList()
         {
             BranchesList = (await BranchesAppService.GetListAsync(new ListBranchesParameterDto())).Data.ToList();
         }
-
-        public async Task BranchValueChangeHandler(ChangeEventArgs<Guid?, ListBranchesDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                DataSource.BranchID = args.ItemData.Id;
-                DataSource.BranchCode = args.ItemData.Code;
-            }
-            else
-            {
-                DataSource.BranchID = Guid.Empty;
-                DataSource.BranchCode = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-
-
-        #endregion
 
         #region Dönemler
         public async Task PeriodsFiltering(FilteringEventArgs args)

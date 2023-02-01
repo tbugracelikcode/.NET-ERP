@@ -40,7 +40,7 @@ namespace TsiErp.ErpUI.Pages.WorkOrder
 
         #endregion
 
-        protected override async void OnInitialized()
+        protected override void OnInitialized()
         {
             BaseCrudService = WorkOrdersAppService;
 

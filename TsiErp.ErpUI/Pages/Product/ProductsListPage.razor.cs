@@ -1,9 +1,11 @@
 ﻿using DevExpress.Blazor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
+using Syncfusion.Blazor.Inputs;
 using Tsi.Core.Utilities.Results;
 using TsiErp.Business.Entities.Department.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
@@ -11,6 +13,7 @@ using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.Department.Dtos;
 using TsiErp.Entities.Entities.Product.Dtos;
 using TsiErp.Entities.Entities.ProductGroup.Dtos;
+using TsiErp.Entities.Entities.StationGroup.Dtos;
 using TsiErp.Entities.Entities.UnitSet.Dtos;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
@@ -19,13 +22,10 @@ namespace TsiErp.ErpUI.Pages.Product
 {
     public partial class ProductsListPage
     {
-        #region Combobox Listeleri
 
-        SfComboBox<string, ListUnitSetsDto> UnitSetsComboBox;
-        List<ListUnitSetsDto> UnitSetsList = new List<ListUnitSetsDto>();
-
-
-        SfComboBox<string, ListProductGroupsDto> ProductGroupsComboBox;
+        #region Ürün Grubu ButtonEdit
+        SfTextBox ProductGroupsButtonEdit;
+        bool SelectProductGroupsPopupVisible = false;
         List<ListProductGroupsDto> ProductGroupsList = new List<ListProductGroupsDto>();
 
         public class SupplyFormModel
@@ -61,22 +61,26 @@ namespace TsiErp.ErpUI.Pages.Product
         ModalManager ModalManager { get; set; }
         
         protected override async void OnInitialized()
+        public async Task ProductGroupsOnCreateIcon()
         {
-            BaseCrudService = ProductService;
-            await GetUnitSetsList();
-            await GetProductGroupsList();
+            var ProductGroupsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductGroupsButtonClickEvent);
+            await ProductGroupsButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductGroupsButtonClick } });
         }
 
-        protected override Task BeforeInsertAsync()
+        public async void ProductGroupsButtonClickEvent()
         {
-            DataSource = new SelectProductsDto()
+            SelectProductGroupsPopupVisible = true;
+            await GetProductGroupsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void ProductGroupsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
             {
-                IsActive = true
-            };
-
-            ShowEditPage();
-
-            return Task.CompletedTask;
+                DataSource.ProductGrpID = Guid.Empty;
+                DataSource.ProductGrp = string.Empty;
+            }
         }
 
         private void SupplyValueChangeHandler(ChangeEventArgs<string, SupplyFormModel> args)
@@ -209,20 +213,77 @@ namespace TsiErp.ErpUI.Pages.Product
 
         #region Birim Setleri ComboBox
         public async Task UnitSetFiltering(FilteringEventArgs args)
+        public async void ProductGroupsDoubleClickHandler(RecordDoubleClickEventArgs<ListProductGroupsDto> args)
         {
+            var selectedProductGroup = args.RowData;
 
-            args.PreventDefaultAction = true;
+            if (selectedProductGroup != null)
+            {
+                DataSource.ProductGrpID = selectedProductGroup.Id;
+                DataSource.ProductGrp = selectedProductGroup.Name;
+                SelectProductGroupsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
 
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
+        #region Birim Setleri ButtonEdit
+        SfTextBox UnitSetsButtonEdit;
+        bool SelectUnitSetsPopupVisible = false;
+        List<ListUnitSetsDto> UnitSetsList = new List<ListUnitSetsDto>();
 
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
+        public async Task UnitSetsOnCreateIcon()
+        {
+            var UnitSetsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, UnitSetsButtonClickEvent);
+            await UnitSetsButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", UnitSetsButtonClick } });
+        }
 
-            await UnitSetsComboBox.FilterAsync(UnitSetsList, query);
+        public async void UnitSetsButtonClickEvent()
+        {
+            SelectUnitSetsPopupVisible = true;
+            await GetUnitSetsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void UnitSetsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.UnitSetID = Guid.Empty;
+                DataSource.UnitSet = string.Empty;
+            }
+        }
+
+        public async void UnitSetsDoubleClickHandler(RecordDoubleClickEventArgs<ListUnitSetsDto> args)
+        {
+            var selectedUnitSet = args.RowData;
+
+            if (selectedUnitSet != null)
+            {
+                DataSource.UnitSetID = selectedUnitSet.Id;
+                DataSource.UnitSet = selectedUnitSet.Name;
+                SelectUnitSetsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        protected override async void OnInitialized()
+        {
+            BaseCrudService = ProductService;
+            await GetUnitSetsList();
+        }
+
+        protected override Task BeforeInsertAsync()
+        {
+            DataSource = new SelectProductsDto()
+            {
+                IsActive = true
+            };
+
+            ShowEditPage();
+
+            return Task.CompletedTask;
         }
 
         private async Task GetUnitSetsList()
@@ -230,60 +291,10 @@ namespace TsiErp.ErpUI.Pages.Product
             UnitSetsList = (await UnitSetsAppService.GetListAsync(new ListUnitSetsParameterDto())).Data.ToList();
         }
 
-        public async Task UnitSetValueChangeHandler(ChangeEventArgs<string, ListUnitSetsDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                DataSource.UnitSetID = args.ItemData.Id;
-                DataSource.UnitSet = args.ItemData.Name;
-            }
-            else
-            {
-                DataSource.UnitSetID = Guid.Empty;
-                DataSource.UnitSet = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-        #endregion
-
-        #region Ürün Grupları ComboBox
-        public async Task ProductGroupFiltering(FilteringEventArgs args)
-        {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await ProductGroupsComboBox.FilterAsync(ProductGroupsList, query);
-        }
-
         private async Task GetProductGroupsList()
         {
             ProductGroupsList = (await ProductGroupsAppService.GetListAsync(new ListProductGroupsParameterDto())).Data.ToList();
         }
 
-        public async Task ProductGroupValueChangeHandler(ChangeEventArgs<string, ListProductGroupsDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                DataSource.ProductGrpID = args.ItemData.Id;
-                DataSource.ProductGrp = args.ItemData.Name;
-            }
-            else
-            {
-                DataSource.ProductGrpID = Guid.Empty;
-                DataSource.ProductGrp = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-
-        #endregion
     }
 }

@@ -69,7 +69,7 @@ namespace TsiErp.ErpUI.Pages.Calendar
         new ResourceData{ Text = "Bakım", Id= 7, Color = "#ff8d00" }
     };
 
-        protected override async void OnInitialized()
+        protected override void OnInitialized()
         {
             BaseCrudService = CalendarsService;
             GetYearsList();
@@ -323,7 +323,7 @@ namespace TsiErp.ErpUI.Pages.Calendar
 
         #region Vardiya Bilgileri Modalı İşlemleri
 
-        private async void ShowModal2()
+        private void ShowModal2()
         {
            
             //ShiftsList = (await ShiftsAppService.GetListAsync(new ListShiftsParameterDto())).Data.ToList();
@@ -371,7 +371,7 @@ namespace TsiErp.ErpUI.Pages.Calendar
             }
         }
 
-        public async void OnStationShiftContextMenuClick(ContextMenuClickEventArgs<StationShiftInfos> args)
+        public void OnStationShiftContextMenuClick(ContextMenuClickEventArgs<StationShiftInfos> args)
         {
             switch (args.Item.Id)
             {
