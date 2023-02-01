@@ -35,6 +35,8 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Validations
                 .MaximumLength(10)
                 .WithMessage("Vergi numarası, 10 karakterden fazla olamaz.");
 
+            RuleFor(x => x.CurrencyID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen para birimi seçin.");
+
 
         }
     }

@@ -127,7 +127,7 @@ namespace TsiErp.Entities.Entities.CurrentAccountCard.Dtos
         /// <summary>
         /// Para Birimi ID
         /// </summary>
-        public Guid CurrencyID { get; set; }
+        public Guid? CurrencyID { get; set; }
         /// <summary>
         /// Tedarikçi
         /// </summary>

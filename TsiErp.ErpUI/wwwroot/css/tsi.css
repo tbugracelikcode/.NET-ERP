@@ -30,6 +30,10 @@
     height: 60% !important;
 }
 
+.TSIMemoBox57 {
+    height: 57% !important;
+}
+
 .TSIComboBox {
     font-size: 14px;
     font-family: Arial, Helvetica, sans-serif;
@@ -49,6 +53,18 @@
     border: 2px solid;
 }
 
+    .TSISaveButton:hover {
+        border-color: #565656 !important;
+        background-color: #505050 !important;
+        color: white !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        width: auto;
+        border-radius: 5px;
+        height: 35px;
+        border: 2px solid;
+    }
+
 
 .TSICancelButton {
     border-color: #565656 !important;
@@ -62,6 +78,18 @@
     border: 2px solid;
 }
 
+    .TSICancelButton:hover {
+        border-color: #565656 !important;
+        background-color: #AD0000 !important;
+        color: white !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        width: auto;
+        border-radius: 5px;
+        height: 35px;
+        border: 2px solid;
+    }
+
 .TSIDeleteButton {
     border-color: #565656 !important;
     background-color: white !important;
@@ -74,6 +102,18 @@
     border: 2px solid;
 }
 
+    .TSIDeleteButton:hover {
+        border-color: #565656 !important;
+        background-color: #01147F !important;
+        color: white !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        width: auto;
+        border-radius: 5px;
+        height: 35px;
+        border: 2px solid;
+    }
+
 .TSILogOutButton {
     background-color: #AD0000 !important;
     text-shadow: 1px 3px 4px black !important;
@@ -84,6 +124,7 @@
     height: 35px;
     border: 2px solid;
 }
+
 
 .TSIShowColumnsButton {
     border-color: #565656 !important;
@@ -97,6 +138,18 @@
     border: 2px solid;
 }
 
+    .TSIShowColumnsButton:hover {
+        border-color: #565656 !important;
+        background-color: #878787 !important;
+        color: white !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        width: auto;
+        border-radius: 5px;
+        height: 35px;
+        border: 2px solid;
+    }
+
 .TSISubmitButton {
     border-color: #565656 !important;
     background-color: white !important;
@@ -108,6 +161,18 @@
     height: 35px;
     border: 2px solid;
 }
+
+    .TSISubmitButton:hover {
+        border-color: #565656 !important;
+        background-color: #878787 !important;
+        color: white !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        width: auto;
+        border-radius: 5px;
+        height: 35px;
+        border: 2px solid;
+    }
 
 .TSIGeneralBTNRed {
     background-color: #AD0000 !important;
@@ -456,19 +521,20 @@ html {
 
 .brand_logo_container {
     position: absolute;
-    height: 170px;
-    width: 170px;
+    height: 120px;
+    width: 220px; /*DİKDÖRTGEN*/
     top: -75px;
-    border-radius: 50%;
-    background-image: linear-gradient(350deg, rgb(129 129 129) -333%, #282b2c 70%) !important;
+    border-radius: 0%;
+    background-image: linear-gradient(350deg, rgb(243 238 238) -333%, #ebe5e5 70%) !important;
     padding: 10px;
+    margin-top: 65px;
     text-align: center;
 }
 
 .brand_logo {
-    height: 150px;
-    width: 150px;
-    border-radius: 50%;
+    height: 100px;
+    width: 200px;
+    border-radius: 0%; /*DİKDÖRTGEN*/
     border: 2px solid white;
 }
 
@@ -478,9 +544,10 @@ html {
 
 .login_btn {
     width: 100%;
-    background: #1E1E1E !important;
-    color: white !important;
+    background: white !important;
+    color: #1E1E1E !important;
     font-size: 1.2rem !important;
+    font-weight: 500 !important;
 }
 
     .login_btn:focus {
@@ -498,8 +565,9 @@ html {
     border: 0 !important;
     border-radius: 0.25rem 0 0 0.25rem !important;
 }
-.e-grid .e-headercelldiv{
-    font-size:12px !important;
+
+.e-grid .e-headercelldiv {
+    font-size: 12px !important;
 }
 
 .input_user,
@@ -514,13 +582,58 @@ html {
     font-weight: bold;
 }
 
+.e-tab .e-tab-header .e-toolbar-item .e-tab-wrap:hover .e-tab-text, .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap:hover .e-tab-icon {
+    color: #AD0000 !important;
+}
+
+.e-tab .e-tab-header .e-toolbar-item .e-tab-wrap {
+    border-radius: 4px;
+    color: #AD0000 !important;
+    border: 1px solid transparent;
+}
+
+.e-pager .e-currentitem, .e-pager .e-currentitem:hover {
+    border-right-color: #f36060 !important;
+    background: #e9ecef !important;
+    color: #c70707 !important;
+    opacity: 1;
+}
+
+.e-pager .e-currentitem {
+    border: 3px solid #f56d6d !important;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+}
+
+.e-pager .e-numericitem {
+    background: #fff;
+    border-right-color: #dee2e6 !important;
+    color: #ff7070 !important;
+}
+
+.e-pager .e-currentitem.e-numericitem.e-focused {
+    background: #e9ecef;
+    box-shadow: 0 0 0 1px #d30000 inset !important;
+}
+
+.e-pager .e-spacing {
+    color: #d30000 !important;
+    opacity: 1;
+}
 
 .e-search-icon::before {
     content: '\e799' !important;
     font-family: e-icons !important;
 }
+.e-pager div.e-icons.e-pager-default {
+    color: #c10606 !important;
+}
 
 .e-close-icon::before {
     content: '\e7e7' !important;
     font-family: e-icons !important;
+}
+.e-grid .e-focused:not(.e-menu-item) {
+    box-shadow: 0 0 0 1px #d30000 inset !important;
 }

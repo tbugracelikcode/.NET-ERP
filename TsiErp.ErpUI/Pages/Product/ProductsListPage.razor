@@ -1,4 +1,6 @@
 ﻿@page "/products"
+@layout MainLayout
+
 @using Syncfusion.Blazor.Buttons
 @using Tsi.Blazor.Component.Core.Components.Commons.Loadings
 @using TsiErp.Business.Entities.Product.Services
@@ -54,21 +56,57 @@ else
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListProductsDto.Code) HeaderText="ÜRÜN KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductsDto.Name) HeaderText="ÜRÜN ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.SupplyForm) HeaderText="TEMİN ŞEKLİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.ProductGrp) HeaderText="ÜRÜN GRUBU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.ProductType) HeaderText="TÜR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.UnitSetCode) HeaderText="BİRİM SETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.SupplyForm) HeaderText="TEMİN ŞEKLİ" TextAlign="TextAlign.Center" Width="120">
+                                        <Template>
+                                            @{
+                                                int productsupplyform = (context as ListProductsDto).SupplyForm;
+                                                string supplyForm = "";
+                                                if (productsupplyform == 1)
+                                                {
+                                                    supplyForm = "Satın Alma";
+                                                }
+                                                else if (productsupplyform == 2)
+                                                {
+                                                    supplyForm = "Üretim";
+                                                }
+                                        }
+                                        @supplyForm
+                                    </Template>
+                                </GridColumn>
+                                <GridColumn Field=@nameof(ListProductsDto.ProductGrp) HeaderText="ÜRÜN GRUBU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListProductsDto.ProductType) HeaderText="TÜR" TextAlign="TextAlign.Center" Width="120">
+                                    <Template>
+                                            @{
+                                                int producttype = (context as ListProductsDto).ProductType;
+                                                string type = "";
+                                                switch(producttype){
+                                                    case 1: type = "TM"; break;
+                                                    case 10: type = "HM"; break;
+                                                    case 11: type = "YM"; break;
+                                                    case 12: type = "MM"; break;
+                                                    case 30: type = "BP"; break;
+                                                    case 40: type = "TK"; break;
+                                                    case 50: type = "KLP"; break;
+                                                    case 60: type = "APRT"; break;
+                                                    default: break;
+                                                }
+                                        }
+                                        @type
+                                    </Template>
+                                </GridColumn>
 
 
-                                </GridColumns>
-                            </SfGrid>
-                        </CardContent>
-                        <CardFooter>
-                        </CardFooter>
-                    </SfCard>
-                </Template>
-            </DxGridLayoutItem>
-        </GridLayoutItems>
-    </DevGridLayout>
+                            </GridColumns>
+                        </SfGrid>
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+    </GridLayoutItems>
+</DevGridLayout>
 
 
 
@@ -78,9 +116,9 @@ else
          CloseOnOutsideClick="false"
          HeaderText="Stok Kartları"
          Width="54%"
-         Height="74%"
+         Height="71%"
          MinWidth="920px"
-         MinHeight="800px"
+         MinHeight="750px"
          HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
@@ -127,6 +165,16 @@ else
                                 <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
 
                             </center>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Stok Türü: </strong></label>
+                            <SfComboBox TValue="string" TItem="TypeModel" Placeholder="Stok Türü Seçiniz" DataSource="@TypeData">
+                                <ComboBoxEvents TItem="TypeModel" TValue="string" ValueChange="@TypeValueChangeHandler"></ComboBoxEvents>
+                                <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                            </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -180,7 +228,10 @@ else
                                                         <Template>
                                                             <br />
                                                             <label class="TSIModalLabel"><strong>Temin Şekli : </strong></label><br />
-                                                            <SfNumericTextBox @bind-Value="DataSource.SupplyForm" Placeholder="Temin Şeklini Yazınız."></SfNumericTextBox>
+                                                            <SfComboBox TValue="string" TItem="SupplyFormModel" Placeholder="Temin Şekli Seçiniz" DataSource="@SupplyData">
+                                                                <ComboBoxEvents TItem="SupplyFormModel" TValue="string" ValueChange="@SupplyValueChangeHandler"></ComboBoxEvents>
+                                                                <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                                                            </SfComboBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -216,89 +267,75 @@ else
 
                                                     <DxGridLayoutItem Row="1" Column="4">
                                                         <Template>
-                                                            <label class="TSIModalLabel"><strong>Stok Türü: </strong></label>
-                                                            <SfNumericTextBox @bind-Value="DataSource.ProductType" Placeholder="Stok Türünü Yazınız."></SfNumericTextBox>
-                                                        </Template>
-                                                    </DxGridLayoutItem>
-
-                                                    <DxGridLayoutItem Row="1" Column="6">
-                                                        <Template>
                                                             <label class="TSIModalLabel"><strong>Üretici Firma Kodu: </strong></label><br />
                                                             <SfTextBox @bind-Value="DataSource.ManufacturerCode" Placeholder=" Üretici Firma Kodu Yazınız."></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
-                                                    <DxGridLayoutItem Row="2" Column="0">
-                                                        <Template>
-                                                            <label class="TSIModalLabel"><strong>Özellik Seti: </strong></label><br />
-                                                            <SfTextBox @bind-Value="DataSource.FeatureSet" Placeholder=" Özellik Seti Yazınız."></SfTextBox>
-                                                        </Template>
-                                                    </DxGridLayoutItem>
-
-                                                    <DxGridLayoutItem Row="2" Column="2">
+                                                    <DxGridLayoutItem Row="1" Column="6">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>Satış KDV: </strong></label>
                                                             <SfNumericTextBox @bind-Value="DataSource.SaleVAT" Placeholder="Satış KDV Yazınız."></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
-                                                    <DxGridLayoutItem Row="2" Column="4">
+                                                    <DxGridLayoutItem Row="2" Column="0">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>Satın Alma KDV: </strong></label>
                                                             <SfNumericTextBox @bind-Value="DataSource.PurchaseVAT" Placeholder="Satın Alma KDV Yazınız."></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
-                                                    <DxGridLayoutItem Row="2" Column="6">
+                                                    <DxGridLayoutItem Row="2" Column="2">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>İhracat Kategori No: </strong></label>
                                                             <SfTextBox @bind-Value="DataSource.ExportCatNo" Placeholder="İhracat Kategori Numarasını Yazınız."></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
-                                                    <DxGridLayoutItem Row="3" Column="0">
+                                                    <DxGridLayoutItem Row="2" Column="4">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>OemRefNo: </strong></label><br />
                                                             <SfTextBox @bind-Value="DataSource.OemRefNo" Placeholder=" OemRefNo Yazınız."></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
-                                                    <DxGridLayoutItem Row="3" Column="2">
+                                                    <DxGridLayoutItem Row="2" Column="6">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>OemRefNo2: </strong></label><br />
                                                             <SfTextBox @bind-Value="DataSource.OemRefNo2" Placeholder=" OemRefNo Yazınız."></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
-                                                    <DxGridLayoutItem Row="3" Column="4">
+                                                    <DxGridLayoutItem Row="3" Column="0">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>OemRefNo3: </strong></label><br />
                                                             <SfTextBox @bind-Value="DataSource.OemRefNo3" Placeholder=" OemRefNo Yazınız."></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
-                                                    <DxGridLayoutItem Row="3" Column="6">
+                                                    <DxGridLayoutItem Row="3" Column="2">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>Planlanan Fire: </strong></label>
                                                             <SfNumericTextBox @bind-Value="DataSource.PlannedWastage" Placeholder="Planlanan Fireyi Yazınız."></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
-                                                    <DxGridLayoutItem Row="4" Column="0">
+                                                    <DxGridLayoutItem Row="3" Column="4">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>Kaplama Ağırlığı: </strong></label><br />
                                                             <SfNumericTextBox TValue="decimal" @bind-Value="DataSource.CoatingWeight" Placeholder=" Kaplama Ağırlığını Yazınız."></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
-                                                    <DxGridLayoutItem Row="4" Column="2">
+                                                    <DxGridLayoutItem Row="3" Column="6">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>Onay: </strong></label><br />
                                                             <SfSwitch @bind-Checked="DataSource.Confirmation"></SfSwitch>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
-                                                    <DxGridLayoutItem Row="4" Column="4">
+                                                    <DxGridLayoutItem Row="4" Column="0">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>Teknik Onay: </strong></label><br />
                                                             <SfSwitch @bind-Checked="DataSource.TechnicalConfirmation"></SfSwitch>

@@ -17,6 +17,9 @@ using TsiErp.EntityContracts.Station;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.Station;
 using TsiErp.Business.Entities.Station.BusinessRules;
+using TsiErp.Business.Entities.StationInventory.Services;
+using TsiErp.Entities.Entities.StationInventory.Dtos;
+using TsiErp.Entities.Entities.StationInventory;
 
 namespace TsiErp.Business.Entities.Station.Services
 {
@@ -25,11 +28,14 @@ namespace TsiErp.Business.Entities.Station.Services
     {
         private readonly IStationsRepository _repository;
 
+        private readonly IStationInventoriesAppService _inventioriesRepository;
+
         StationManager _manager { get; set; } = new StationManager();
 
-        public StationsAppService(IStationsRepository repository)
+        public StationsAppService(IStationsRepository repository, IStationInventoriesAppService inventioriesRepository)
         {
             _repository = repository;
+            _inventioriesRepository = inventioriesRepository;
         }
 
         [ValidationAspect(typeof(CreateStationsValidator), Priority = 1)]
@@ -42,6 +48,23 @@ namespace TsiErp.Business.Entities.Station.Services
 
             var addedEntity = await _repository.InsertAsync(entity);
             await _repository.SaveChanges();
+
+            foreach (var item in input.SelectStationInventoriesDto)
+            {
+                if(item.Id == Guid.Empty)
+                {
+                    var inventories = ObjectMapper.Map<SelectStationInventoriesDto, CreateStationInventoriesDto>(item);
+                    inventories.StationID = addedEntity.Id;
+                    await _inventioriesRepository.CreateAsync(inventories);
+                }
+                else
+                {
+                    var inventories = ObjectMapper.Map<SelectStationInventoriesDto, UpdateStationInventoriesDto>(item);
+                    inventories.StationID = addedEntity.Id;
+                    await _inventioriesRepository.UpdateAsync(inventories);
+                }
+                
+            }
 
             return new SuccessDataResult<SelectStationsDto>(ObjectMapper.Map<Stations, SelectStationsDto>(addedEntity));
         }
@@ -57,8 +80,10 @@ namespace TsiErp.Business.Entities.Station.Services
 
         public async Task<IDataResult<SelectStationsDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id, t => t.StationGroups, t => t.TemplateOperationLines);
+            var entity = await _repository.GetAsync(t => t.Id == id, t => t.StationGroups, t => t.TemplateOperationLines, t => t.StationInventories);
             var mappedEntity = ObjectMapper.Map<Stations, SelectStationsDto>(entity);
+
+            mappedEntity.SelectStationInventoriesDto = ObjectMapper.Map<List<StationInventories>, List<SelectStationInventoriesDto>>(entity.StationInventories.Where(t=>t.StationID == id).ToList());
             return new SuccessDataResult<SelectStationsDto>(mappedEntity);
         }
 
@@ -85,6 +110,25 @@ namespace TsiErp.Business.Entities.Station.Services
 
             await _repository.UpdateAsync(mappedEntity);
             await _repository.SaveChanges();
+
+
+
+            foreach (var item in input.SelectStationInventoriesDto)
+            {
+                if(item.Id== Guid.Empty)
+                {
+                    var inventories = ObjectMapper.Map<SelectStationInventoriesDto, CreateStationInventoriesDto>(item);
+                    inventories.StationID = mappedEntity.Id;
+                    await _inventioriesRepository.CreateAsync(inventories);
+                }
+                else
+                {
+                    var inventories = ObjectMapper.Map<SelectStationInventoriesDto, UpdateStationInventoriesDto>(item);
+                    inventories.StationID = mappedEntity.Id;
+                    await _inventioriesRepository.UpdateAsync(inventories);
+                }
+
+            }
 
             return new SuccessDataResult<SelectStationsDto>(ObjectMapper.Map<Stations, SelectStationsDto>(mappedEntity));
         }

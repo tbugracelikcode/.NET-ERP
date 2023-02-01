@@ -65,9 +65,16 @@ using TsiErp.Entities.Entities.SalesPrice;
 using TsiErp.Entities.Entities.SalesPriceLine;
 using TsiErp.Entities.Entities.PurchasePrice;
 using TsiErp.Entities.Entities.PurchasePriceLine;
+using TsiErp.Entities.Entities.FinalControlUnsuitabilityReport;
 using TsiErp.Entities.Entities.HaltReason;
+using TsiErp.Entities.Entities.UserGroup;
+using TsiErp.Entities.Entities.StationInventory;
 using TsiErp.Entities.Entities.Menu;
 using TsiErp.Entities.Entities.ContractProductionTracking;
+using TsiErp.Entities.Entities.User;
+using TsiErp.Entities.Entities.MaintenancePeriod;
+using TsiErp.Entities.Entities.MaintenanceInstruction;
+using TsiErp.Entities.Entities.MaintenanceInstructionLine;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 {
@@ -87,6 +94,27 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
                 b.Property(t => t.Description_).HasColumnType("nvarchar(MAX)");
                 b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+                b.HasIndex(x => x.Code);
+
+            });
+        }
+
+        public static void ConfigureMaintenancePeriods(this ModelBuilder builder)
+        {
+            builder.Entity<MaintenancePeriods>(b =>
+            {
+                b.ToTable("MaintenancePeriods");
+                b.ConfigureByConvention();
+
+                //b.HasQueryFilter(x => !x.IsDeleted);
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
+                b.Property(t => t.Description_).HasColumnType("nvarchar(MAX)");
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsDaily).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.PeriodTime).HasColumnType(SqlDbType.Decimal.ToString());
 
                 b.HasIndex(x => x.Code);
 
@@ -1725,6 +1753,140 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasOne(x => x.Products).WithMany(x => x.PurchasePriceLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.Currencies).WithMany(x => x.PurchasePriceLines).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.PurchasePrices).WithMany(x => x.PurchasePriceLines).HasForeignKey(x => x.PurchasePriceID).OnDelete(DeleteBehavior.Cascade);
+            });
+        }
+
+        public static void ConfigureUserGroups(this ModelBuilder builder)
+        {
+            builder.Entity<UserGroups>(b =>
+            {
+                b.ToTable("UserGroups");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(300);
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+
+                b.HasIndex(x => x.Code);
+            });
+        }
+
+        public static void ConfigureUsers(this ModelBuilder builder)
+        {
+            builder.Entity<Users>(b =>
+            {
+                b.ToTable("Users");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.UserName).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(300);
+                b.Property(t => t.NameSurname).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(300);
+                b.Property(t => t.Email).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(300);
+                b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsEmailApproved).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.Password).HasColumnType("nvarchar(MAX)");
+                b.Property(t => t.GroupID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+                b.HasIndex(x => x.Code);
+
+                b.HasOne(x => x.UserGroups).WithMany(x => x.Users).HasForeignKey(x => x.GroupID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+
+        public static void ConfigureFinalControlUnsuitabilityReports(this ModelBuilder builder)
+        {
+            builder.Entity<FinalControlUnsuitabilityReports>(b =>
+            {
+                b.ToTable("FinalControlUnsuitabilityReports");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.FicheNo).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.Description_).HasColumnType("nvarchar(max)");
+                b.Property(t => t.Date_).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.EmployeeID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.PartyNo).HasColumnType("nvarchar(max)");
+                b.Property(t => t.IsToBeUsedAs).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsCorrection).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsScrap).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.ControlFormDeclaration).HasColumnType(SqlDbType.Decimal.ToString());
+
+
+                b.HasIndex(x => x.FicheNo);
+                b.HasIndex(x => x.EmployeeID);
+                b.HasIndex(x => x.ProductID);
+
+                b.HasOne(x => x.Employees).WithMany(x => x.FinalControlUnsuitabilityReports).HasForeignKey(x => x.EmployeeID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Products).WithMany(x => x.FinalControlUnsuitabilityReports).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+
+        public static void ConfigureStationInventories(this ModelBuilder builder)
+        {
+            builder.Entity<StationInventories>(b =>
+            {
+                b.ToTable("StationInventories");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.StationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.Amount).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.Description_).HasColumnType("nvarchar(max)");
+
+                b.HasIndex(x => x.StationID);
+                b.HasIndex(x => x.ProductID);
+
+                b.HasOne(x => x.Stations).WithMany(x => x.StationInventories).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.Cascade);
+
+            });
+        }
+
+        public static void ConfigureMaintenanceInstructions(this ModelBuilder builder)
+        {
+            builder.Entity<MaintenanceInstructions>(b =>
+            {
+                b.ToTable("MaintenanceInstructions");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.InstructionName).IsRequired().HasColumnType("nvarchar(max)");
+                b.Property(t => t.StationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.PeriodID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.PeriodTime).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.PlannedMaintenanceTime).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.Note_).HasColumnType("nvarchar(max)");
+
+
+                b.HasIndex(x => x.Code);
+                b.HasIndex(x => x.StationID);
+                b.HasIndex(x => x.PeriodID);
+
+                b.HasOne(x => x.Stations).WithMany(x => x.MaintenanceInstructions).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.MaintenancePeriods).WithMany(x => x.MaintenanceInstructions).HasForeignKey(x => x.PeriodID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+
+        public static void ConfigureMaintenanceInstructionLines(this ModelBuilder builder)
+        {
+            builder.Entity<MaintenanceInstructionLines>(b =>
+            {
+                b.ToTable("MaintenanceInstructionLines");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.InstructionID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.LineNr).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.UnitSetID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.Amount).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.InstructionDescription).HasColumnType("nvarchar(MAX)");
+
+                b.HasIndex(x => x.InstructionID);
+                b.HasIndex(x => x.ProductID);
+                b.HasIndex(x => x.UnitSetID);
+
+                b.HasOne(x => x.Products).WithMany(x => x.MaintenanceInstructionLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.MaintenanceInstructions).WithMany(x => x.MaintenanceInstructionLines).HasForeignKey(x => x.InstructionID).OnDelete(DeleteBehavior.Cascade);
+                b.HasOne(x => x.UnitSets).WithMany(x => x.MaintenanceInstructionLines).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 

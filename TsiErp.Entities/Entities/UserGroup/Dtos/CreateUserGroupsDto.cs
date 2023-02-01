@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Tsi.Core.Entities.Auditing;
+
+namespace TsiErp.Entities.Entities.UserGroup.Dtos
+{
+    public class CreateUserGroupsDto : FullAuditedEntityDto
+    {
+        /// <summary>
+        /// Kullanıcı Grubu Kodu
+        /// </summary>
+        public string Code { get; set; }
+        /// <summary>
+        /// Kullanıcı Grubu Adı
+        /// </summary>
+        public string Name { get; set; }
+        /// <summary>
+        /// Aktiflik
+        /// </summary>
+        public bool IsActive { get; set; }
+    }
+}
