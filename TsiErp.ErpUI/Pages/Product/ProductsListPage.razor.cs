@@ -60,7 +60,6 @@ namespace TsiErp.ErpUI.Pages.Product
         [Inject]
         ModalManager ModalManager { get; set; }
         
-        protected override async void OnInitialized()
         public async Task ProductGroupsOnCreateIcon()
         {
             var ProductGroupsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductGroupsButtonClickEvent);
@@ -211,8 +210,6 @@ namespace TsiErp.ErpUI.Pages.Product
             }
         }
 
-        #region Birim Setleri ComboBox
-        public async Task UnitSetFiltering(FilteringEventArgs args)
         public async void ProductGroupsDoubleClickHandler(RecordDoubleClickEventArgs<ListProductGroupsDto> args)
         {
             var selectedProductGroup = args.RowData;
@@ -225,7 +222,6 @@ namespace TsiErp.ErpUI.Pages.Product
                 await InvokeAsync(StateHasChanged);
             }
         }
-        #endregion
 
         #region Birim Setleri ButtonEdit
         SfTextBox UnitSetsButtonEdit;
