@@ -21,6 +21,8 @@ using TsiErp.ErpUI.Helpers;
 using Syncfusion.Blazor.Navigations;
 using Syncfusion.Blazor.TreeGrid;
 using TsiErp.Entities.Entities.ProductionOrder.Dtos;
+using Syncfusion.Blazor.Inputs;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace TsiErp.ErpUI.Pages.PurchaseRequest
 {
@@ -28,23 +30,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseRequest
     {
         #region ComboBox Listeleri
 
-        SfComboBox<string, ListPaymentPlansDto> PaymentPlansComboBox;
-        List<ListPaymentPlansDto> PaymentPlansList = new List<ListPaymentPlansDto>();
-
-        SfComboBox<string, ListUnitSetsDto> UnitSetsComboBox;
-        List<ListUnitSetsDto> UnitSetsList = new List<ListUnitSetsDto>();
-
         SfComboBox<string, ListCurrentAccountCardsDto> CurrentAccountCardsComboBox;
         List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
-
-        SfComboBox<string, ListBranchesDto> BranchesComboBox;
-        List<ListBranchesDto> BranchesList = new List<ListBranchesDto>();
-
-        SfComboBox<string, ListWarehousesDto> WarehousesComboBox;
-        List<ListWarehousesDto> WarehousesList = new List<ListWarehousesDto>();
-
-        SfComboBox<string, ListCurrenciesDto> CurrenciesComboBox;
-        List<ListCurrenciesDto> CurrenciesList = new List<ListCurrenciesDto>();
 
         SfComboBox<string, ListProductsDto> ProductsComboBox;
         List<ListProductsDto> ProductsList = new List<ListProductsDto>();
@@ -77,6 +64,219 @@ namespace TsiErp.ErpUI.Pages.PurchaseRequest
 
         private bool ConvertToOrderCrudPopup = false;
 
+        #region Birim Setleri ButtonEdit
+        SfTextBox UnitSetsButtonEdit;
+        bool SelectUnitSetsPopupVisible = false;
+        List<ListUnitSetsDto> UnitSetsList = new List<ListUnitSetsDto>();
+
+        public async Task UnitSetsOnCreateIcon()
+        {
+            var UnitSetsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, UnitSetsButtonClickEvent);
+            await UnitSetsButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", UnitSetsButtonClick } });
+        }
+
+        public async void UnitSetsButtonClickEvent()
+        {
+            SelectUnitSetsPopupVisible = true;
+            await GetUnitSetsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void UnitSetsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                LineDataSource.UnitSetID = Guid.Empty;
+                LineDataSource.UnitSetCode = string.Empty;
+            }
+        }
+
+        public async void UnitSetsDoubleClickHandler(RecordDoubleClickEventArgs<ListUnitSetsDto> args)
+        {
+            var selectedUnitSet = args.RowData;
+
+            if (selectedUnitSet != null)
+            {
+                LineDataSource.UnitSetID = selectedUnitSet.Id;
+                LineDataSource.UnitSetCode = selectedUnitSet.Name;
+                SelectUnitSetsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region Para Birimleri ButtonEdit
+
+        SfTextBox CurrenciesButtonEdit;
+        bool SelectCurrencyPopupVisible = false;
+        List<ListCurrenciesDto> CurrenciesList = new List<ListCurrenciesDto>();
+
+        public async Task CurrenciesOnCreateIcon()
+        {
+            var CurrenciesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CurrenciesButtonClickEvent);
+            await CurrenciesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CurrenciesButtonClick } });
+        }
+
+        public async void CurrenciesButtonClickEvent()
+        {
+            SelectCurrencyPopupVisible = true;
+            await GetCurrenciesList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void CurrenciesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.CurrencyID = Guid.Empty;
+                DataSource.CurrencyCode = string.Empty;
+            }
+        }
+
+        public async void CurrenciesDoubleClickHandler(RecordDoubleClickEventArgs<ListCurrenciesDto> args)
+        {
+            var selectedUnitSet = args.RowData;
+
+            if (selectedUnitSet != null)
+            {
+                DataSource.CurrencyID = selectedUnitSet.Id;
+                DataSource.CurrencyCode = selectedUnitSet.Name;
+                SelectCurrencyPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region Şube ButtonEdit
+
+        SfTextBox BranchesButtonEdit;
+        bool SelectBranchesPopupVisible = false;
+        List<ListBranchesDto> BranchesList = new List<ListBranchesDto>();
+
+        public async Task BranchesOnCreateIcon()
+        {
+            var BranchesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, BranchesButtonClickEvent);
+            await BranchesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", BranchesButtonClick } });
+        }
+
+        public async void BranchesButtonClickEvent()
+        {
+            SelectBranchesPopupVisible = true;
+            await GetBranchesList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void BranchesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.BranchID = Guid.Empty;
+                DataSource.BranchCode = string.Empty;
+                DataSource.BranchName = string.Empty;
+            }
+        }
+
+        public async void BranchesDoubleClickHandler(RecordDoubleClickEventArgs<ListBranchesDto> args)
+        {
+            var selectedUnitSet = args.RowData;
+
+            if (selectedUnitSet != null)
+            {
+                DataSource.BranchID = selectedUnitSet.Id;
+                DataSource.BranchCode = selectedUnitSet.Code;
+                DataSource.BranchName = selectedUnitSet.Name;
+                SelectBranchesPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region Ödeme Planı ButtonEdit
+
+        SfTextBox PaymentPlansButtonEdit;
+        bool SelectPaymentPlansPopupVisible = false;
+        List<ListPaymentPlansDto> PaymentPlansList = new List<ListPaymentPlansDto>();
+
+        public async Task PaymentPlansOnCreateIcon()
+        {
+            var PaymentPlansButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, PaymentPlansButtonClickEvent);
+            await PaymentPlansButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", PaymentPlansButtonClick } });
+        }
+
+        public async void PaymentPlansButtonClickEvent()
+        {
+            SelectPaymentPlansPopupVisible = true;
+            await GetPaymentPlansList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void PaymentPlansOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.PaymentPlanID = Guid.Empty;
+                DataSource.PaymentPlanName = string.Empty;
+            }
+        }
+
+        public async void PaymentPlansDoubleClickHandler(RecordDoubleClickEventArgs<ListPaymentPlansDto> args)
+        {
+            var selectedUnitSet = args.RowData;
+
+            if (selectedUnitSet != null)
+            {
+                DataSource.PaymentPlanID = selectedUnitSet.Id;
+                DataSource.PaymentPlanName = selectedUnitSet.Name;
+                SelectPaymentPlansPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region Depo ButtonEdit
+
+        SfTextBox WarehousesButtonEdit;
+        bool SelectWarehousesPopupVisible = false;
+        List<ListWarehousesDto> WarehousesList = new List<ListWarehousesDto>();
+
+        public async Task WarehousesOnCreateIcon()
+        {
+            var WarehousesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, WarehousesButtonClickEvent);
+            await WarehousesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", WarehousesButtonClick } });
+        }
+
+        public async void WarehousesButtonClickEvent()
+        {
+            SelectWarehousesPopupVisible = true;
+            await GetWarehousesList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void WarehousesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.WarehouseID = Guid.Empty;
+                DataSource.WarehouseCode = string.Empty;
+                DataSource.WarehouseName = string.Empty;
+            }
+        }
+
+        public async void WarehousesDoubleClickHandler(RecordDoubleClickEventArgs<ListWarehousesDto> args)
+        {
+            var selectedUnitSet = args.RowData;
+
+            if (selectedUnitSet != null)
+            {
+                DataSource.WarehouseID = selectedUnitSet.Id;
+                DataSource.WarehouseCode = selectedUnitSet.Code;
+                DataSource.WarehouseName = selectedUnitSet.Name;
+                SelectWarehousesPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
         protected override async void OnInitialized()
         {
             BaseCrudService = PurchaseRequestsAppService;
@@ -87,12 +287,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseRequest
 
 
             await GetCurrentAccountCardsList();
-            await GetBranchesList();
-            await GetWarehousesList();
-            await GetCurrenciesList();
             await GetProductsList();
-            await GetUnitSetsList();
-            await GetPaymentPlansList();
             await GetProductionOrdersList();
             await LineGetProductionOrdersList();
         }
@@ -693,63 +888,9 @@ namespace TsiErp.ErpUI.Pages.PurchaseRequest
         }
         #endregion
 
-        #region Şubeler
-        public async Task BranchFiltering(FilteringEventArgs args)
-        {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await BranchesComboBox.FilterAsync(BranchesList, query);
-        }
-
         private async Task GetBranchesList()
         {
             BranchesList = (await BranchesAppService.GetListAsync(new ListBranchesParameterDto())).Data.ToList();
-        }
-
-        public async Task BranchValueChangeHandler(ChangeEventArgs<string, ListBranchesDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                DataSource.BranchID = args.ItemData.Id;
-                DataSource.BranchCode = args.ItemData.Code;
-            }
-            else
-            {
-                DataSource.BranchID = Guid.Empty;
-                DataSource.BranchCode = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-
-
-        #endregion
-
-        #region Depolar
-        public async Task WarehouseFiltering(FilteringEventArgs args)
-        {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await WarehousesComboBox.FilterAsync(WarehousesList, query);
         }
 
         private async Task GetWarehousesList()
@@ -757,59 +898,10 @@ namespace TsiErp.ErpUI.Pages.PurchaseRequest
             WarehousesList = (await WarehousesAppService.GetListAsync(new ListWarehousesParameterDto())).Data.ToList();
         }
 
-        public async Task WarehouseValueChangeHandler(ChangeEventArgs<string, ListWarehousesDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                DataSource.WarehouseID = args.ItemData.Id;
-                DataSource.WarehouseCode = args.ItemData.Code;
-            }
-            else
-            {
-                DataSource.WarehouseID = Guid.Empty;
-                DataSource.WarehouseCode = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-        #endregion
-
-        #region Para Birimleri
-        public async Task CurrencyFiltering(FilteringEventArgs args)
-        {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await CurrenciesComboBox.FilterAsync(CurrenciesList, query);
-        }
-
         private async Task GetCurrenciesList()
         {
             CurrenciesList = (await CurrenciesAppService.GetListAsync(new ListCurrenciesParameterDto())).Data.ToList();
         }
-        public async Task CurrencyValueChangeHandler(ChangeEventArgs<string, ListCurrenciesDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                DataSource.CurrencyID = args.ItemData.Id;
-                DataSource.CurrencyCode = args.ItemData.Code;
-            }
-            else
-            {
-                DataSource.CurrencyID = Guid.Empty;
-                DataSource.CurrencyCode = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-        #endregion
 
         #region Stok Kartları -Teklif Satırları
         public async Task ProductFiltering(FilteringEventArgs args)
@@ -858,94 +950,15 @@ namespace TsiErp.ErpUI.Pages.PurchaseRequest
         }
         #endregion
 
-        #region Birim Setleri -Teklif Satırları
-        public async Task UnitSetFiltering(FilteringEventArgs args)
-        {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await UnitSetsComboBox.FilterAsync(UnitSetsList, query);
-        }
-
         private async Task GetUnitSetsList()
         {
             UnitSetsList = (await UnitSetsAppService.GetListAsync(new ListUnitSetsParameterDto())).Data.ToList();
-        }
-
-        public async Task UnitSetValueChangeHandler(ChangeEventArgs<string, ListUnitSetsDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                LineDataSource.UnitSetID = args.ItemData.Id;
-                LineDataSource.UnitSetCode = args.ItemData.Code;
-            }
-            else
-            {
-                LineDataSource.UnitSetID = Guid.Empty;
-                LineDataSource.UnitSetCode = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-        #endregion
-
-        #region Ödeme Planları - Teklif Satırları
-        public async Task PaymentPlanFiltering(FilteringEventArgs args)
-        {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await PaymentPlansComboBox.FilterAsync(PaymentPlansList, query);
         }
 
         private async Task GetPaymentPlansList()
         {
             PaymentPlansList = (await PaymentPlansAppService.GetListAsync(new ListPaymentPlansParameterDto())).Data.ToList();
         }
-
-        public async Task PaymentPlanValueChangeHandler(ChangeEventArgs<string, ListPaymentPlansDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                DataSource.PaymentPlanID = args.ItemData.Id;
-                DataSource.PaymentPlanName = args.ItemData.Name;
-
-
-                foreach (var item in DataSource.SelectPurchaseRequestLines)
-                {
-                    if (item.PaymentPlanID == Guid.Empty)
-                    {
-                        item.PaymentPlanID = DataSource.PaymentPlanID;
-                        item.PaymentPlanName = DataSource.PaymentPlanName;
-                    }
-                }
-            }
-            else
-            {
-                DataSource.PaymentPlanID = Guid.Empty;
-                DataSource.PaymentPlanName = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-
-        #endregion
 
         #region Üretim Emirleri - Talep Satırları
         public async Task LineProductionOrderFiltering(FilteringEventArgs args)

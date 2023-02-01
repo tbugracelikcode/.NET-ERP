@@ -1,10 +1,12 @@
 ﻿using Castle.Core.Resource;
 using DevExpress.Blazor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
+using Syncfusion.Blazor.Inputs;
 using Tsi.Core.Utilities.Results;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.Branch.Dtos;
@@ -20,11 +22,44 @@ namespace TsiErp.ErpUI.Pages.Station
 {
     public partial class StationsListPage
     {
-
-        #region Combobox Listeleri
-
-        SfComboBox<string, ListStationGroupsDto> StationGroupComboBox;
+        SfTextBox StationGroupButtonEdit;
+        bool SelectStationGroupPopupVisible = false;
         List<ListStationGroupsDto> StationGroupList = new List<ListStationGroupsDto>();
+
+        public async Task StationGroupOnCreateIcon()
+        {
+            var StationGroupButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, StationGroupButtonClickEvent);
+            await StationGroupButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", StationGroupButtonClick } });
+        }
+
+        public async void StationGroupButtonClickEvent()
+        {
+            SelectStationGroupPopupVisible = true;
+            await GetStationGroupsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void StationGroupOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.GroupID = Guid.Empty;
+                DataSource.StationGroup = string.Empty;
+            }
+        }
+
+        public async void StationGroupDoubleClickHandler(RecordDoubleClickEventArgs<ListStationGroupsDto> args)
+        {
+            var selectedStationGroup = args.RowData;
+
+            if (selectedStationGroup != null)
+            {
+                DataSource.GroupID = selectedStationGroup.Id;
+                DataSource.StationGroup = selectedStationGroup.Name;
+                SelectStationGroupPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
 
         SfComboBox<string, ListProductsDto> ProductsComboBox;
         List<ListProductsDto> ProductsList = new List<ListProductsDto>();
@@ -51,9 +86,6 @@ namespace TsiErp.ErpUI.Pages.Station
             CreateMainContextMenuItems();
 
             BaseCrudService = StationsService;
-            await GetStationGroupsList();
-            await GetProductsList();
-           
         }
 
         protected void CreateMainContextMenuItems()
@@ -254,84 +286,5 @@ namespace TsiErp.ErpUI.Pages.Station
         {
             StationGroupList = (await StationGroupsService.GetListAsync(new ListStationGroupsParameterDto())).Data.ToList();
         }
-
-        public async Task StationGroupFiltering(FilteringEventArgs args)
-        {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await StationGroupComboBox.FilterAsync(StationGroupList, query);
-        }
-
-        public async Task StationGroupValueChangeHandler(ChangeEventArgs<string, ListStationGroupsDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                DataSource.GroupID = args.ItemData.Id;
-                DataSource.StationGroup = args.ItemData.Name;
-            }
-            else
-            {
-                DataSource.GroupID = Guid.Empty;
-                DataSource.StationGroup = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-
-        #endregion
-
-        #region Stoklar
-
-        private async Task GetProductsList()
-        {
-            ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
-        }
-
-        public async Task ProductFiltering(FilteringEventArgs args)
-        {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await ProductsComboBox.FilterAsync(ProductsList, query);
-        }
-
-        public async Task ProductValueChangeHandler(ChangeEventArgs<string, ListProductsDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                InventoryDataSource.ProductID = args.ItemData.Id;
-                InventoryDataSource.ProductCode = args.ItemData.Code;
-                InventoryDataSource.ProductName = args.ItemData.Name;
-            }
-            else
-            {
-                InventoryDataSource.ProductID = Guid.Empty;
-                InventoryDataSource.ProductCode = string.Empty;
-                InventoryDataSource.ProductName = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-
-        #endregion
-
-
     }
 }

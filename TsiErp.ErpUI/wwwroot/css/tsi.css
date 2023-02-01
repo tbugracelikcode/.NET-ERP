@@ -304,6 +304,8 @@
 }
 
 
+
+
 /* ----------------------------------------------------------------------OVERRIDE CLASSES----------------------------------------------------------------------*/
 
 
@@ -395,6 +397,12 @@ td, th {
     border: 1px solid #d6d5d5;
     background-color: #fff;
     box-shadow: rgb(0 0 0 / 35%) 0px 3px 10px;
+}
+.TSIWorkStationGroupPopUpCard {
+    border: 1px solid #d6d5d5;
+    background-color: #fff;
+    box-shadow: rgb(0 0 0 / 35%) 0px 3px 10px;
+    height: fit-content;
 }
 
 
@@ -614,10 +622,18 @@ html {
     opacity: 1;
 }
 
+.e-search-icon::before {
+    content: '\e799' !important;
+    font-family: e-icons !important;
+}
 .e-pager div.e-icons.e-pager-default {
     color: #c10606 !important;
 }
 
+.e-close-icon::before {
+    content: '\e7e7' !important;
+    font-family: e-icons !important;
+}
 .e-grid .e-focused:not(.e-menu-item) {
     box-shadow: 0 0 0 1px #d30000 inset !important;
 }

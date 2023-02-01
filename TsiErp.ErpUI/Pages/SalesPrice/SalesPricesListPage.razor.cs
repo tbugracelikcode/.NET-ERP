@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
+using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.Currency.Dtos;
 using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.Product.Dtos;
@@ -14,9 +16,6 @@ namespace TsiErp.ErpUI.Pages.SalesPrice
     public partial class SalesPricesListPage
     {
         #region ComboBox Listeleri
-
-        SfComboBox<string, ListCurrenciesDto> CurrenciesComboBox;
-        List<ListCurrenciesDto> CurrenciesList = new List<ListCurrenciesDto>();
 
         SfComboBox<Guid?, ListProductsDto> LineProductsComboBox;
         List<ListProductsDto> LineProductsList = new List<ListProductsDto>();
@@ -40,6 +39,48 @@ namespace TsiErp.ErpUI.Pages.SalesPrice
 
         private bool LineCrudPopup = false;
 
+        #region Para Birimleri ButtonEdit
+
+        SfTextBox CurrenciesButtonEdit;
+        bool SelectCurrencyPopupVisible = false;
+        List<ListCurrenciesDto> CurrenciesList = new List<ListCurrenciesDto>();
+
+        public async Task CurrenciesOnCreateIcon()
+        {
+            var CurrenciesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CurrenciesButtonClickEvent);
+            await CurrenciesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CurrenciesButtonClick } });
+        }
+
+        public async void CurrenciesButtonClickEvent()
+        {
+            SelectCurrencyPopupVisible = true;
+            await GetCurrenciesList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void CurrenciesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.CurrencyID = Guid.Empty;
+                DataSource.CurrencyCode = string.Empty;
+            }
+        }
+
+        public async void CurrenciesDoubleClickHandler(RecordDoubleClickEventArgs<ListCurrenciesDto> args)
+        {
+            var selectedUnitSet = args.RowData;
+
+            if (selectedUnitSet != null)
+            {
+                DataSource.CurrencyID = selectedUnitSet.Id;
+                DataSource.CurrencyCode = selectedUnitSet.Name;
+                SelectCurrencyPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
         protected override async Task OnInitializedAsync()
         {
             BaseCrudService = SalesPricesAppService;
@@ -47,7 +88,6 @@ namespace TsiErp.ErpUI.Pages.SalesPrice
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
 
-            await GetCurrenciesList();
             await GetLineProductsList();
             await GetCurrentAccountCardsList();
         }
@@ -252,43 +292,11 @@ namespace TsiErp.ErpUI.Pages.SalesPrice
 
         #endregion
 
-        #region Para Birimleri
-        public async Task CurrencyFiltering(FilteringEventArgs args)
-        {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await CurrenciesComboBox.FilterAsync(CurrenciesList, query);
-        }
-
+       
         private async Task GetCurrenciesList()
         {
             CurrenciesList = (await CurrenciesAppService.GetListAsync(new ListCurrenciesParameterDto())).Data.ToList();
         }
-        public async Task CurrencyValueChangeHandler(ChangeEventArgs<string, ListCurrenciesDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                DataSource.CurrencyID = args.ItemData.Id;
-                DataSource.CurrencyCode = args.ItemData.Code;
-            }
-            else
-            {
-                DataSource.CurrencyID = Guid.Empty;
-                DataSource.CurrencyCode = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-        #endregion
 
         #region Cari Hesaplar
         public async Task CurrentAccountCardsFiltering(FilteringEventArgs args)
