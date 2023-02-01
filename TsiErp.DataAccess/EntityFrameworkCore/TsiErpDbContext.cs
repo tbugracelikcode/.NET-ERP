@@ -76,6 +76,8 @@ using TsiErp.Entities.Entities.User;
 using TsiErp.Entities.Entities.StationInventory;
 using TsiErp.Entities.Entities.FinalControlUnsuitabilityReport;
 using TsiErp.Entities.Entities.MaintenancePeriod;
+using TsiErp.Entities.Entities.MaintenanceInstruction;
+using TsiErp.Entities.Entities.MaintenanceInstructionLine;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore
 {
@@ -202,6 +204,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigureFinalControlUnsuitabilityReports();
             builder.ConfigureMaintenancePeriods();
             builder.ConfigureMenus();
+            builder.ConfigureMaintenanceInstructions();
+            builder.ConfigureMaintenanceInstructionLines();
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -313,6 +317,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<StationInventories> StationInventories { get; set; }
         public DbSet<Menus> Menus { get; set; }
         public DbSet<MaintenancePeriods> MaintenancePeriods { get; set; }
+        public DbSet<MaintenanceInstructions> MaintenanceInstructions { get; set; }
+        public DbSet<MaintenanceInstructionLines> MaintenanceInstructionLines { get; set; }
 
         #endregion
     }

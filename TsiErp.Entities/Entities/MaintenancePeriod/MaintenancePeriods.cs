@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Entities.MaintenanceInstruction;
 
 namespace TsiErp.Entities.Entities.MaintenancePeriod
 {
@@ -34,5 +35,12 @@ namespace TsiErp.Entities.Entities.MaintenancePeriod
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
+        /// <summary>
+        /// Günlük Bakım
+        /// </summary>
+        public bool IsDaily { get; set; }
+
+        public ICollection<MaintenanceInstructions> MaintenanceInstructions { get; set; }
+
     }
 }

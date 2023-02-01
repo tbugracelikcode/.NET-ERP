@@ -31,5 +31,9 @@ namespace TsiErp.Entities.Entities.MaintenancePeriod.Dtos
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
+        /// <summary>
+        /// Günlük Bakım
+        /// </summary>
+        public bool IsDaily { get; set; }
     }
 }

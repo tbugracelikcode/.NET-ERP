@@ -577,3 +577,47 @@ html {
 .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap:hover .e-tab-text, .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap:hover .e-tab-icon {
     color: #AD0000 !important;
 }
+
+.e-tab .e-tab-header .e-toolbar-item .e-tab-wrap {
+    border-radius: 4px;
+    color: #AD0000 !important;
+    border: 1px solid transparent;
+}
+
+.e-pager .e-currentitem, .e-pager .e-currentitem:hover {
+    border-right-color: #f36060 !important;
+    background: #e9ecef !important;
+    color: #c70707 !important;
+    opacity: 1;
+}
+
+.e-pager .e-currentitem {
+    border: 3px solid #f56d6d !important;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+}
+
+.e-pager .e-numericitem {
+    background: #fff;
+    border-right-color: #dee2e6 !important;
+    color: #ff7070 !important;
+}
+
+.e-pager .e-currentitem.e-numericitem.e-focused {
+    background: #e9ecef;
+    box-shadow: 0 0 0 1px #d30000 inset !important;
+}
+
+.e-pager .e-spacing {
+    color: #d30000 !important;
+    opacity: 1;
+}
+
+.e-pager div.e-icons.e-pager-default {
+    color: #c10606 !important;
+}
+
+.e-grid .e-focused:not(.e-menu-item) {
+    box-shadow: 0 0 0 1px #d30000 inset !important;
+}

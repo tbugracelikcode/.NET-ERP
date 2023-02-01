@@ -73,6 +73,8 @@ using TsiErp.Entities.Entities.Menu;
 using TsiErp.Entities.Entities.ContractProductionTracking;
 using TsiErp.Entities.Entities.User;
 using TsiErp.Entities.Entities.MaintenancePeriod;
+using TsiErp.Entities.Entities.MaintenanceInstruction;
+using TsiErp.Entities.Entities.MaintenanceInstructionLine;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 {
@@ -111,6 +113,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
                 b.Property(t => t.Description_).HasColumnType("nvarchar(MAX)");
                 b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsDaily).HasColumnType(SqlDbType.Bit.ToString());
                 b.Property(t => t.PeriodTime).HasColumnType(SqlDbType.Decimal.ToString());
 
                 b.HasIndex(x => x.Code);
@@ -1835,6 +1838,55 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
                 b.HasOne(x => x.Stations).WithMany(x => x.StationInventories).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.Cascade);
 
+            });
+        }
+
+        public static void ConfigureMaintenanceInstructions(this ModelBuilder builder)
+        {
+            builder.Entity<MaintenanceInstructions>(b =>
+            {
+                b.ToTable("MaintenanceInstructions");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
+                b.Property(t => t.InstructionName).IsRequired().HasColumnType("nvarchar(max)");
+                b.Property(t => t.StationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.PeriodID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.PeriodTime).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.PlannedMaintenanceTime).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.Note_).HasColumnType("nvarchar(max)");
+
+
+                b.HasIndex(x => x.Code);
+                b.HasIndex(x => x.StationID);
+                b.HasIndex(x => x.PeriodID);
+
+                b.HasOne(x => x.Stations).WithMany(x => x.MaintenanceInstructions).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.MaintenancePeriods).WithMany(x => x.MaintenanceInstructions).HasForeignKey(x => x.PeriodID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+
+        public static void ConfigureMaintenanceInstructionLines(this ModelBuilder builder)
+        {
+            builder.Entity<MaintenanceInstructionLines>(b =>
+            {
+                b.ToTable("MaintenanceInstructionLines");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.InstructionID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.LineNr).IsRequired().HasColumnType(SqlDbType.Int.ToString());
+                b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.UnitSetID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.Amount).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.InstructionDescription).HasColumnType("nvarchar(MAX)");
+
+                b.HasIndex(x => x.InstructionID);
+                b.HasIndex(x => x.ProductID);
+                b.HasIndex(x => x.UnitSetID);
+
+                b.HasOne(x => x.Products).WithMany(x => x.MaintenanceInstructionLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.MaintenanceInstructions).WithMany(x => x.MaintenanceInstructionLines).HasForeignKey(x => x.InstructionID).OnDelete(DeleteBehavior.Cascade);
+                b.HasOne(x => x.UnitSets).WithMany(x => x.MaintenanceInstructionLines).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 

@@ -50,7 +50,7 @@
                                     <GridColumns>
                                         <GridColumn Field=@nameof(ListMaintenancePeriodsDto.Code) HeaderText="BAKIM PERİYODU KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         <GridColumn Field=@nameof(ListMaintenancePeriodsDto.Name) HeaderText="BAKIM PERİYODU ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListMaintenancePeriodsDto.PeriodTime) Type="ColumnType.Number" HeaderText="PERİYOT SÜRESİ (SN)" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListMaintenancePeriodsDto.PeriodTime) Format="N2" Type="ColumnType.Number" HeaderText="PERİYOT SÜRESİ (SN)" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         <GridColumn Field=@nameof(ListMaintenancePeriodsDto.Description_) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                     </GridColumns>
@@ -78,9 +78,10 @@
 
                 <DxGridLayout CssClass="TSIGridLayout">
                     <Rows>
-                        <DxGridLayoutRow Height="35%" />
                         <DxGridLayoutRow Height="30%" />
-                        <DxGridLayoutRow Height="30%" />
+                        <DxGridLayoutRow Height="25%" />
+                        <DxGridLayoutRow Height="25%" />
+                        <DxGridLayoutRow Height="25%" />
                     </Rows>
                     <Columns>
                         <DxGridLayoutColumn Width="6%" />
@@ -109,7 +110,7 @@
                         <DxGridLayoutItem Row="2" Column="1">
                             <Template>
                                 <label class="TSIModalLabel"><strong>Bakım Periyodu Süresi: </strong></label>
-                                <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.PeriodTime"></SfNumericTextBox>
+                                <SfNumericTextBox Min="0" Enabled=@periodEnable TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.PeriodTime"></SfNumericTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
@@ -126,6 +127,15 @@
                                 <center>
                                     <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
                                     <SfSwitch  @bind-Checked="DataSource.IsActive"></SfSwitch>
+                                </center>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                          <DxGridLayoutItem Row="3" Column="3">
+                            <Template>
+                                <center>
+                                    <label class="TSIModalLabel"><strong>Günlük Bakım: </strong></label><br />
+                                    <SfSwitch @bind-Checked="isChecked"  ValueChange="Change" TChecked="bool?" ></SfSwitch>
                                 </center>
                             </Template>
                         </DxGridLayoutItem>

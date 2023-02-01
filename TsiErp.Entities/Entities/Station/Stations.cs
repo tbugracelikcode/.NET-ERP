@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.CalendarLine;
 using TsiErp.Entities.Entities.ContractProductionTracking;
+using TsiErp.Entities.Entities.MaintenanceInstruction;
 using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.ProductionTracking;
 using TsiErp.Entities.Entities.ProductsOperationLine;
@@ -140,6 +141,7 @@ namespace TsiErp.Entities.Entities.Station
         public ICollection<ContractProductionTrackings> ContractProductionTrackings { get; set; }
 
         public ICollection<StationInventories> StationInventories { get; set; }
+        public ICollection<MaintenanceInstructions> MaintenanceInstructions { get; set; }
 
     }
 }

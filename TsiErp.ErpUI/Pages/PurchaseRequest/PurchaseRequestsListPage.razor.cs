@@ -525,40 +525,52 @@ namespace TsiErp.ErpUI.Pages.PurchaseRequest
 
         protected async Task OnLineSubmit()
         {
-            LineDataSource.PurchaseRequestLineState = Entities.Enums.PurchaseRequestLineStateEnum.Beklemede;
-
-            if (LineDataSource.Id == Guid.Empty)
+            if(LineDataSource.UnitSetID == Guid.Empty)
             {
-                if (DataSource.SelectPurchaseRequestLines.Contains(LineDataSource))
+                await ModalManager.WarningPopupAsync("Uyarı", "Birim seti seçilmeden satır kaydetme işlemi yapılamaz.");
+            }
+            else if(LineDataSource.ProductID == Guid.Empty)
+            {
+                await ModalManager.WarningPopupAsync("Uyarı", "Stok kartı seçilmeden satır kaydetme işlemi yapılamaz.");
+            }
+            else
+            {
+                LineDataSource.PurchaseRequestLineState = Entities.Enums.PurchaseRequestLineStateEnum.Beklemede;
+
+                if (LineDataSource.Id == Guid.Empty)
                 {
-                    int selectedLineIndex = DataSource.SelectPurchaseRequestLines.FindIndex(t => t.LineNr == LineDataSource.LineNr);
+                    if (DataSource.SelectPurchaseRequestLines.Contains(LineDataSource))
+                    {
+                        int selectedLineIndex = DataSource.SelectPurchaseRequestLines.FindIndex(t => t.LineNr == LineDataSource.LineNr);
+
+                        if (selectedLineIndex > -1)
+                        {
+                            DataSource.SelectPurchaseRequestLines[selectedLineIndex] = LineDataSource;
+                        }
+                    }
+                    else
+                    {
+                        DataSource.SelectPurchaseRequestLines.Add(LineDataSource);
+                    }
+                }
+                else
+                {
+                    int selectedLineIndex = DataSource.SelectPurchaseRequestLines.FindIndex(t => t.Id == LineDataSource.Id);
 
                     if (selectedLineIndex > -1)
                     {
                         DataSource.SelectPurchaseRequestLines[selectedLineIndex] = LineDataSource;
                     }
                 }
-                else
-                {
-                    DataSource.SelectPurchaseRequestLines.Add(LineDataSource);
-                }
+
+                GridLineList = DataSource.SelectPurchaseRequestLines;
+                GetTotal();
+                await _LineGrid.Refresh();
+
+                HideLinesPopup();
+                await InvokeAsync(StateHasChanged);
             }
-            else
-            {
-                int selectedLineIndex = DataSource.SelectPurchaseRequestLines.FindIndex(t => t.Id == LineDataSource.Id);
-
-                if (selectedLineIndex > -1)
-                {
-                    DataSource.SelectPurchaseRequestLines[selectedLineIndex] = LineDataSource;
-                }
-            }
-
-            GridLineList = DataSource.SelectPurchaseRequestLines;
-            GetTotal();
-            await _LineGrid.Refresh();
-
-            HideLinesPopup();
-            await InvokeAsync(StateHasChanged);
+          
         }
 
         public override async void LineCalculate()
