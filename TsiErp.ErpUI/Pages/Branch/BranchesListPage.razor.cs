@@ -9,7 +9,7 @@ namespace TsiErp.ErpUI.Pages.Branch
 {
     public partial class BranchesListPage
     {
-        protected override async void OnInitialized()
+        protected override void OnInitialized()
         {
             BaseCrudService = BranchesService;
 

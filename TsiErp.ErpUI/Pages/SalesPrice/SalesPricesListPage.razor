@@ -105,60 +105,24 @@ else
 
                 <Items>
                     <DxGridLayoutItem Row="0" Column="1">
-                        <Template><br/>
+                        <Template>
+                            <br />
                             <label class="TSIModalLabel"><strong>Fiyat Listesi Kodu: </strong></label>
                             <SfTextBox CssClass="TSITxtBox" Placeholder="Fiyat Listesi Kodu" @bind-Value="DataSource.Code"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="3">
-                        <Template><br/>
-                        <label class="TSIModalLabel"><strong>Fiyat Listesi Açıklaması: </strong></label>
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>Fiyat Listesi Açıklaması: </strong></label>
                             <SfTextBox CssClass="TSITxtBox" Placeholder="Fiyat Listesi Açıklaması" @bind-Value="DataSource.Name"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="5">
-                        <Template><br/>
+                        <Template>
+                            <br />
                             <label class="TSIModalLabel"><strong>Para Birimi: </strong></label><br />
-                            <SfComboBox @ref="CurrenciesComboBox"
-                                    TValue="string"
-                                    TItem="ListCurrenciesDto"
-                                    Placeholder="Para Birimi"
-                                    CssClass="e-multi-column"
-                                    DataSource="@CurrenciesList"
-                                    AllowFiltering="true"
-                                    PopupWidth="700px"
-                                    PopupHeight="500"
-                                    Value="DataSource.CurrencyCode">
-
-                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
-
-                                <ComboBoxTemplates TItem="ListCurrenciesDto">
-                                    <HeaderTemplate>
-                                        <table>
-                                            <tr>
-                                                <th class="e-text-center">Para Birimi Kodu</th>
-                                                <th class="e-text-center">Para Birimi Adı</th>
-                                            </tr>
-                                        </table>
-                                    </HeaderTemplate>
-                                    <ItemTemplate Context="cmbContext">
-
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="e-text-center">@((cmbContext as ListCurrenciesDto).Code)</td>
-                                                    <td class="e-text-center">@((cmbContext as ListCurrenciesDto).Name)</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </ItemTemplate>
-                                </ComboBoxTemplates>
-
-                                <ComboBoxEvents TValue="string"
-                                            TItem="ListCurrenciesDto"
-                                            Filtering="CurrencyFiltering"
-                                            ValueChange="CurrencyValueChangeHandler"></ComboBoxEvents>
-                            </SfComboBox>
+                            <SfTextBox @ref="@CurrenciesButtonEdit" Created="@CurrenciesOnCreateIcon" @bind-Value="DataSource.CurrencyCode" ShowClearButton=true ValueChange="CurrenciesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="1">
@@ -169,22 +133,22 @@ else
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
-                          <label class="TSIModalLabel"><strong>Bitiş Tarihi: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>Bitiş Tarihi: </strong></label><br />
                             <SfDatePicker @bind-Value="@DataSource.EndDate" Placeholder="Bitiş Tarihi"></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="1" Column="5">
+                    <DxGridLayoutItem Row="1" Column="5">
                         <Template>
-                          <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
-                           <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                            <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
+                            <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
                         </Template>
                     </DxGridLayoutItem>
 
-                    
-                     <DxGridLayoutItem Row="2" Column="1">
+
+                    <DxGridLayoutItem Row="2" Column="1">
                         <Template>
-                          <label class="TSIModalLabel"><strong>Cari Hesap: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>Cari Hesap: </strong></label><br />
                             <SfComboBox @ref="CurrentAccountCardsComboBox"
                                     TValue="Guid?"
                                     TItem="ListCurrentAccountCardsDto"
@@ -286,7 +250,7 @@ else
                     <DxGridLayoutColumn Width="28%" />
                     <DxGridLayoutColumn Width="4%" />
                     <DxGridLayoutColumn Width="28%" />
-                      <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="4%" />
                 </Columns>
 
                 <Items>
@@ -340,7 +304,7 @@ else
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>Stok Adı: </strong></label><br />
-                             <SfComboBox @ref="LineProductsComboBox"
+                            <SfComboBox @ref="LineProductsComboBox"
                                     TValue="Guid?"
                                     TItem="ListProductsDto"
                                     Placeholder="Stok Seçin"
@@ -385,18 +349,18 @@ else
 
                     <DxGridLayoutItem Row="0" Column="5">
                         <Template>
-                             <label class="TSIModalLabel"><strong>Para Birimi: </strong></label><br />
-                            <SfTextBox @bind-Value="LineDataSource.CurrencyCode"   CssClass="TSITxtBox" Enabled=false></SfTextBox>
+                            <label class="TSIModalLabel"><strong>Para Birimi: </strong></label><br />
+                            <SfTextBox @bind-Value="LineDataSource.CurrencyCode" CssClass="TSITxtBox" Enabled=false></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
-                           <label class="TSIModalLabel"><strong>Fiyat: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>Fiyat: </strong></label><br />
                             <SfNumericTextBox @bind-Value="LineDataSource.Price" TValue="decimal" Min="0"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
-                   
+
 
                 </Items>
             </DxGridLayout>
@@ -404,6 +368,57 @@ else
         <FooterContentTemplate>
             <SfButton CssClass="TSISaveButton" OnClick="OnLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HideLinesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectCurrencyPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectCurrencyPopupVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Para Birimleri"
+         Width="64%"
+         Height="44%"
+         MinWidth="1220px"
+         MinHeight="470px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="CurrenciesGrid" DataSource="@CurrenciesList" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@CurrenciesDoubleClickHandler" TValue="ListCurrenciesDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListCurrenciesDto.Code) HeaderText="PARA BİRİMİ KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrenciesDto.Name) HeaderText="PARA BİRİMİ ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+            @*<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>*@
         </FooterContentTemplate>
     </DxPopup>
 }

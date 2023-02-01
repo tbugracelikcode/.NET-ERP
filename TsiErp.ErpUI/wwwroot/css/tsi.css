@@ -239,6 +239,8 @@
 }
 
 
+
+
 /* ----------------------------------------------------------------------OVERRIDE CLASSES----------------------------------------------------------------------*/
 
 
@@ -513,4 +515,12 @@ html {
 }
 
 
+.e-search-icon::before {
+    content: '\e799' !important;
+    font-family: e-icons !important;
+}
 
+.e-close-icon::before {
+    content: '\e7e7' !important;
+    font-family: e-icons !important;
+}

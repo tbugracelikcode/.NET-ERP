@@ -45,7 +45,7 @@ else
                     <SfCard class="TSIGridCards">
 
                         <CardContent>
-                            <SfGrid ID="Grid" @ref="@_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"  GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu">
+                            <SfGrid ID="Grid" @ref="@_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu">
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                 <GridEvents ContextMenuItemClicked="@MainContextMenuClick" TValue="ListBillsofMaterialsDto"></GridEvents>
@@ -335,7 +335,7 @@ else
 
                     <DxGridLayoutItem Row="0" Column="5">
                         <Template>
-                             <label class="TSIModalLabel"><strong>Stok Açıklaması: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>Stok Açıklaması: </strong></label><br />
                             <SfComboBox @ref="LineProductsComboBox"
                                     TValue="string"
                                     TItem="ListProductsDto"
@@ -381,47 +381,10 @@ else
 
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                             <label class="TSIModalLabel"><strong>Birim Seti Kodu: </strong></label><br />
-                            <SfComboBox @ref="LineUnitSetsComboBox"
-                                    TValue="string"
-                                    TItem="ListUnitSetsDto"
-                                    Placeholder="Birim Seti Seçin"
-                                    CssClass="e-multi-column"
-                                    DataSource="@LineUnitSetsList"
-                                    AllowFiltering="true"
-                                    PopupWidth="700px"
-                                    PopupHeight="500"
-                                    Value="LineDataSource.UnitSetCode">
+                            <label class="TSIModalLabel"><strong>Birim Seti Kodu: </strong></label><br />
 
-                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
+                            <SfTextBox @ref="@UnitSetsButtonEdit" Created="@UnitSetsOnCreateIcon" @bind-Value="LineDataSource.UnitSetCode" ShowClearButton=true ValueChange="UnitSetsOnValueChange"></SfTextBox>
 
-                                <ComboBoxTemplates TItem="ListUnitSetsDto">
-                                    <HeaderTemplate>
-                                        <table>
-                                            <tr>
-                                                <th class="e-text-center">Birim Seti Kodu</th>
-                                                <th class="e-text-center">Birim Seti Açıklaması</th>
-                                            </tr>
-                                        </table>
-                                    </HeaderTemplate>
-                                    <ItemTemplate Context="cmbContext">
-
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="e-text-center">@((cmbContext as ListUnitSetsDto).Code)</td>
-                                                    <td class="e-text-center">@((cmbContext as ListUnitSetsDto).Name)</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </ItemTemplate>
-                                </ComboBoxTemplates>
-
-                                <ComboBoxEvents TValue="string"
-                                            TItem="ListUnitSetsDto"
-                                            Filtering="LineUnitSetFiltering"
-                                            ValueChange="LineUnitSetValueChangeHandler"></ComboBoxEvents>
-                            </SfComboBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -436,14 +399,14 @@ else
                         <Template>
                             <label class="TSIModalLabel"><strong>Açıklama: </strong></label>
                             <SfTextBox Multiline=true @bind-Value="LineDataSource._Description" Placeholder="Açıklama Yazınız."></SfTextBox>
-                          
+
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
-                          @*   <label class="TSIModalLabel"><strong>Boy: </strong></label>
-                            <SfNumericTextBox Format="N6" Min="0" @bind-Value="LineDataSource.Size" TValue="decimal" Placeholder="KDV Oranı Yazınız."></SfNumericTextBox>*@
+                            @*   <label class="TSIModalLabel"><strong>Boy: </strong></label>
+                        <SfNumericTextBox Format="N6" Min="0" @bind-Value="LineDataSource.Size" TValue="decimal" Placeholder="KDV Oranı Yazınız."></SfNumericTextBox>*@
                         </Template>
                     </DxGridLayoutItem>
 
@@ -456,4 +419,57 @@ else
         </FooterContentTemplate>
     </DxPopup>
 
+}
+
+@if (SelectUnitSetsPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectUnitSetsPopupVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Birim Setleri"
+         Width="64%"
+         Height="44%"
+         MinWidth="1220px"
+         MinHeight="470px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="UnitSetGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@UnitSetsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                        AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@UnitSetsDoubleClickHandler" TValue="ListUnitSetsDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListUnitSetsDto.Code) HeaderText="BİRİM SETİ KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListUnitSetsDto.Name) HeaderText="BİRİM SETİ AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+            @*<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>*@
+        </FooterContentTemplate>
+    </DxPopup>
 }

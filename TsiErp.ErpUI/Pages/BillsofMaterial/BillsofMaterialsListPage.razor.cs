@@ -7,6 +7,8 @@ using TsiErp.Entities.Entities.Product.Dtos;
 using TsiErp.Entities.Entities.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.BillsofMaterialLine.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
+using Syncfusion.Blazor.Inputs;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace TsiErp.ErpUI.Pages.BillsofMaterial
 {
@@ -16,9 +18,6 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
 
         SfComboBox<string, ListProductsDto> FinishedProductsComboBox;
         List<ListProductsDto> FinishedProductsList = new List<ListProductsDto>();
-
-        SfComboBox<string, ListUnitSetsDto> LineUnitSetsComboBox;
-        List<ListUnitSetsDto> LineUnitSetsList = new List<ListUnitSetsDto>();
 
         SfComboBox<string, ListProductsDto> LineProductsComboBox;
         List<ListProductsDto> LineProductsList = new List<ListProductsDto>();
@@ -42,6 +41,47 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
 
         private bool LineCrudPopup = false;
 
+        #region Birim Setleri ButtonEdit
+        SfTextBox UnitSetsButtonEdit;
+        bool SelectUnitSetsPopupVisible = false;
+        List<ListUnitSetsDto> UnitSetsList = new List<ListUnitSetsDto>();
+
+        public async Task UnitSetsOnCreateIcon()
+        {
+            var UnitSetsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, UnitSetsButtonClickEvent);
+            await UnitSetsButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", UnitSetsButtonClick } });
+        }
+
+        public async void UnitSetsButtonClickEvent()
+        {
+            SelectUnitSetsPopupVisible = true;
+            await GetUnitSetsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void UnitSetsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                LineDataSource.UnitSetID = Guid.Empty;
+                LineDataSource.UnitSetCode = string.Empty;
+            }
+        }
+
+        public async void UnitSetsDoubleClickHandler(RecordDoubleClickEventArgs<ListUnitSetsDto> args)
+        {
+            var selectedUnitSet = args.RowData;
+
+            if (selectedUnitSet != null)
+            {
+                LineDataSource.UnitSetID = selectedUnitSet.Id;
+                LineDataSource.UnitSetCode = selectedUnitSet.Name;
+                SelectUnitSetsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
         protected override async void OnInitialized()
         {
             BaseCrudService = BillsofMaterialsAppService;
@@ -50,7 +90,6 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
 
             await GetFinishedProductsList();
             await GetLineProductsList();
-            await GetLineUnitSetsList();
         }
 
         #region Reçete Satır Modalı İşlemleri
@@ -299,44 +338,10 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
         }
         #endregion
 
-        #region Birim Setleri - Reçete Satırları
-        public async Task LineUnitSetFiltering(FilteringEventArgs args)
+        private async Task GetUnitSetsList()
         {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await LineUnitSetsComboBox.FilterAsync(LineUnitSetsList, query);
+            UnitSetsList = (await UnitSetsAppService.GetListAsync(new ListUnitSetsParameterDto())).Data.ToList();
         }
-
-        private async Task GetLineUnitSetsList()
-        {
-            LineUnitSetsList = (await UnitSetsAppService.GetListAsync(new ListUnitSetsParameterDto())).Data.ToList();
-        }
-
-        public async Task LineUnitSetValueChangeHandler(ChangeEventArgs<string, ListUnitSetsDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                LineDataSource.UnitSetID = args.ItemData.Id;
-                LineDataSource.UnitSetCode = args.ItemData.Code;
-            }
-            else
-            {
-                LineDataSource.UnitSetID = Guid.Empty;
-                LineDataSource.UnitSetCode = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-        #endregion
 
         #region Stok Kartları - Reçete Satırları
         public async Task LineProductFiltering(FilteringEventArgs args)
