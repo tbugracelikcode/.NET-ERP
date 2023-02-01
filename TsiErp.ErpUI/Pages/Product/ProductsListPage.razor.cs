@@ -23,6 +23,7 @@ namespace TsiErp.ErpUI.Pages.Product
     public partial class ProductsListPage
     {
 
+
         #region Ürün Grubu ButtonEdit
         SfTextBox ProductGroupsButtonEdit;
         bool SelectProductGroupsPopupVisible = false;
@@ -263,6 +264,8 @@ namespace TsiErp.ErpUI.Pages.Product
             }
         }
         #endregion
+
+        
 
         protected override async void OnInitialized()
         {

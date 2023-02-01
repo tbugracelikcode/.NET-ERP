@@ -35,7 +35,6 @@ namespace TsiErp.ErpUI.Pages.Station
         public async void StationGroupButtonClickEvent()
         {
             SelectStationGroupPopupVisible = true;
-            await GetStationGroupsList();
             await InvokeAsync(StateHasChanged);
         }
 
@@ -64,7 +63,7 @@ namespace TsiErp.ErpUI.Pages.Station
         SfComboBox<string, ListProductsDto> ProductsComboBox;
         List<ListProductsDto> ProductsList = new List<ListProductsDto>();
 
-        #endregion
+    
 
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -84,6 +83,8 @@ namespace TsiErp.ErpUI.Pages.Station
         {
             CreateLineContextMenuItems();
             CreateMainContextMenuItems();
+
+            await GetProductsList();
 
             BaseCrudService = StationsService;
         }
@@ -279,12 +280,48 @@ namespace TsiErp.ErpUI.Pages.Station
                 SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
         }
 
+        #region Ürünler 
 
-        #region İstasyon Grupları
-
-        private async Task GetStationGroupsList()
+        public async Task ProductFiltering(FilteringEventArgs args)
         {
-            StationGroupList = (await StationGroupsService.GetListAsync(new ListStationGroupsParameterDto())).Data.ToList();
+
+            args.PreventDefaultAction = true;
+
+            var pre = new WhereFilter();
+            var predicate = new List<WhereFilter>();
+            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
+            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
+            pre = WhereFilter.Or(predicate);
+
+            var query = new Query();
+            query = args.Text == "" ? new Query() : new Query().Where(pre);
+
+            await ProductsComboBox.FilterAsync(ProductsList, query);
         }
+
+        private async Task GetProductsList()
+        {
+            ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
+        }
+
+        public async Task ProductValueChangeHandler(ChangeEventArgs<string, ListProductsDto> args)
+        {
+            if (args.ItemData != null)
+            {
+                InventoryDataSource.ProductID = args.ItemData.Id;
+                InventoryDataSource.ProductCode = args.ItemData.Code; ;
+            }
+            else
+            {
+                InventoryDataSource.ProductID = Guid.Empty;
+                InventoryDataSource.ProductCode = string.Empty;
+            }
+            LineCalculate();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        #endregion
+
+
     }
 }
