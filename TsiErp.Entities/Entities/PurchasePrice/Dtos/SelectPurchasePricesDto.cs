@@ -47,10 +47,6 @@ namespace TsiErp.Entities.Entities.PurchasePrice.Dtos
         /// </summary>
         public string CurrentAccountCardName { get; set; }
         /// <summary>
-        /// Cari Ünvan
-        /// </summary>
-        public string CurrentAccountCardName { get; set; }
-        /// <summary>
         /// Şube ID
         /// </summary>
         public Guid? BranchID { get; set; }

@@ -49,9 +49,5 @@ namespace TsiErp.Entities.Entities.PurchasePrice.Dtos
         /// Cari Kod
         /// </summary>
         public string CurrentAccountCardCode { get; set; }
-        // <summary>
-        /// Cari Ünvan
-        /// </summary>
-        public string CurrentAccountCardName { get; set; }
     }
 }
