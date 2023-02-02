@@ -33,5 +33,13 @@ namespace TsiErp.Entities.Entities.SalesPrice.Dtos
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
+        // <summary>
+        /// Cari Kod
+        /// </summary>
+        public string CurrentAccountCardCode { get; set; }
+        // <summary>
+        /// Cari Ünvan
+        /// </summary>
+        public string CurrentAccountCardName { get; set; }
     }
 }

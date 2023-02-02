@@ -36,7 +36,7 @@ namespace TsiErp.Entities.Entities.SalesPrice
         /// <summary>
         /// Cari ID
         /// </summary>
-        public Guid CurrentAccountCardID { get; set; }
+        public Guid? CurrentAccountCardID { get; set; }
         /// <summary>
         /// Aktiflik
         /// </summary>
@@ -44,5 +44,6 @@ namespace TsiErp.Entities.Entities.SalesPrice
 
         public Currencies Currencies { get; set; }
         public ICollection<SalesPriceLines> SalesPriceLines { get; set; }
+        public CurrentAccountCards CurrentAccountCards { get; set; }
     }
 }
