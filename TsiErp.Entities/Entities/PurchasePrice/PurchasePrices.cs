@@ -37,7 +37,7 @@ namespace TsiErp.Entities.Entities.PurchasePrice
         /// <summary>
         /// Cari ID
         /// </summary>
-        public Guid CurrentAccountCardID { get; set; }
+        public Guid? CurrentAccountCardID { get; set; }
         /// <summary>
         /// Şube ID
         /// </summary>
@@ -55,5 +55,7 @@ namespace TsiErp.Entities.Entities.PurchasePrice
         public Branches Branches { get; set; }
         public Warehouses Warehouses { get; set; }
         public ICollection<PurchasePriceLines> PurchasePriceLines { get; set; }
+
+        public CurrentAccountCards CurrentAccountCards { get; set; }
     }
 }

@@ -83,7 +83,8 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                 t => t.PurchasePriceLines,
                 t => t.Branches,
                 t => t.Warehouses,
-                t => t.Currencies);
+                t => t.Currencies,
+                t => t.CurrentAccountCards);
 
             var mappedEntity = ObjectMapper.Map<PurchasePrices, SelectPurchasePricesDto>(entity);
 
@@ -99,7 +100,8 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                 t => t.PurchasePriceLines,
                 t => t.Branches,
                 t => t.Warehouses,
-                t => t.Currencies);
+                t => t.Currencies,
+                t => t.CurrentAccountCards);
 
             var mappedEntity = ObjectMapper.Map<List<PurchasePrices>, List<ListPurchasePricesDto>>(list.ToList());
 

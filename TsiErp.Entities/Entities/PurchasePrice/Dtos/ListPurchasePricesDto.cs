@@ -45,5 +45,9 @@ namespace TsiErp.Entities.Entities.PurchasePrice.Dtos
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
+        // <summary>
+        /// Cari Kod
+        /// </summary>
+        public string CurrentAccountCardCode { get; set; }
     }
 }

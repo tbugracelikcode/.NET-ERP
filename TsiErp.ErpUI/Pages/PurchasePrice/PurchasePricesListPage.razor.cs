@@ -22,9 +22,6 @@ namespace TsiErp.ErpUI.Pages.PurchasePrice
         SfComboBox<Guid?, ListProductsDto> LineProductsComboBox;
         List<ListProductsDto> LineProductsList = new List<ListProductsDto>();
 
-        SfComboBox<Guid?, ListCurrentAccountCardsDto> CurrentAccountCardsComboBox;
-        List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
-
         #endregion
 
         private SfGrid<ListPurchasePricesDto> _grid;
@@ -167,7 +164,63 @@ namespace TsiErp.ErpUI.Pages.PurchasePrice
 
         #endregion
 
+        #region Cari Hesap ButtonEdit
 
+        SfTextBox CurrentAccountCardsCodeButtonEdit;
+        SfTextBox CurrentAccountCardsNameButtonEdit;
+        bool SelectCurrentAccountCardsPopupVisible = false;
+        List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
+
+        public async Task CurrentAccountCardsCodeOnCreateIcon()
+        {
+            var CurrentAccountCardsCodeButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CurrentAccountCardsCodeButtonClickEvent);
+            await CurrentAccountCardsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CurrentAccountCardsCodeButtonClick } });
+        }
+
+        public async void CurrentAccountCardsCodeButtonClickEvent()
+        {
+            SelectCurrentAccountCardsPopupVisible = true;
+            await GetCurrentAccountCardsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async Task CurrentAccountCardsNameOnCreateIcon()
+        {
+            var CurrentAccountCardsNameButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CurrentAccountCardsNameButtonClickEvent);
+            await CurrentAccountCardsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CurrentAccountCardsNameButtonClick } });
+        }
+
+        public async void CurrentAccountCardsNameButtonClickEvent()
+        {
+            SelectCurrentAccountCardsPopupVisible = true;
+            await GetCurrentAccountCardsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void CurrentAccountCardsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.CurrentAccountCardID = Guid.Empty;
+                DataSource.CurrentAccountCardCode = string.Empty;
+                DataSource.CurrentAccountCardName = string.Empty;
+            }
+        }
+
+        public async void CurrentAccountCardsDoubleClickHandler(RecordDoubleClickEventArgs<ListCurrentAccountCardsDto> args)
+        {
+            var selectedUnitSet = args.RowData;
+
+            if (selectedUnitSet != null)
+            {
+                DataSource.CurrentAccountCardID = selectedUnitSet.Id;
+                DataSource.CurrentAccountCardCode = selectedUnitSet.Code;
+                DataSource.CurrentAccountCardName = selectedUnitSet.Name;
+                SelectCurrentAccountCardsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
 
         protected override async Task OnInitializedAsync()
         {
@@ -177,9 +230,6 @@ namespace TsiErp.ErpUI.Pages.PurchasePrice
             CreateLineContextMenuItems();
 
             await GetLineProductsList();
-            await GetCurrentAccountCardsList();
-            await GetWarehousesList();
-            await GetBranchesList();
         }
 
         #region Fiyat Listesi Satır Modalı İşlemleri
@@ -385,7 +435,6 @@ namespace TsiErp.ErpUI.Pages.PurchasePrice
 
         #endregion
 
-
         private async Task GetCurrenciesList()
         {
             CurrenciesList = (await CurrenciesAppService.GetListAsync(new ListCurrenciesParameterDto())).Data.ToList();
@@ -401,41 +450,10 @@ namespace TsiErp.ErpUI.Pages.PurchasePrice
             BranchesList = (await BranchesAppService.GetListAsync(new ListBranchesParameterDto())).Data.ToList();
         }
 
-        #region Cari Hesaplar
-        public async Task CurrentAccountCardsFiltering(FilteringEventArgs args)
-        {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await CurrentAccountCardsComboBox.FilterAsync(CurrentAccountCardsList, query);
-        }
-
-        private async Task GetCurrentAccountCardsList()
+                private async Task GetCurrentAccountCardsList()
         {
             CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
         }
-        public async Task CurrentAccountCardsValueChangeHandler(ChangeEventArgs<Guid?, ListCurrentAccountCardsDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                DataSource.CurrentAccountCardID = args.ItemData.Id;
-            }
-            else
-            {
-                DataSource.CurrentAccountCardID = Guid.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-        #endregion
 
         #region Stok Kartları -Teklif Satırları
         public async Task LineProductFiltering(FilteringEventArgs args)
