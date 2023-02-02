@@ -1014,9 +1014,11 @@ namespace TsiErp.Business.MapperProfile
 
             CreateMap<PlannedMaintenanceLines, SelectPlannedMaintenanceLinesDto>()
                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+               .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name))
                .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code));
             CreateMap<PlannedMaintenanceLines, ListPlannedMaintenanceLinesDto>()
                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+               .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name))
                .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code));
             CreateMap<CreatePlannedMaintenanceLinesDto, PlannedMaintenanceLines>();
             CreateMap<SelectPlannedMaintenanceLinesDto, CreatePlannedMaintenanceLinesDto>();

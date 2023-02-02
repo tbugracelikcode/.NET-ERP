@@ -15,6 +15,7 @@ using TsiErp.Entities.Entities.Product.Dtos;
 using TsiErp.Entities.Entities.ProductGroup.Dtos;
 using TsiErp.Entities.Entities.StationGroup.Dtos;
 using TsiErp.Entities.Entities.UnitSet.Dtos;
+using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
@@ -58,6 +59,11 @@ namespace TsiErp.ErpUI.Pages.Product
       new TypeModel() { ID= "APRT", Text= "Aparat" },
   };
 
+        List<ComboBoxEnumItem<ProductTypeEnum>> ProductTypesList = new List<ComboBoxEnumItem<ProductTypeEnum>>();
+        public string[] ProductTypes { get; set; }
+
+        public string[] ProductEnumValues = Enum.GetNames(typeof(ProductTypeEnum));
+
         #endregion
 
 
@@ -90,41 +96,41 @@ namespace TsiErp.ErpUI.Pages.Product
             }
         }
 
-        private void SupplyValueChangeHandler(ChangeEventArgs<string, SupplyFormModel> args)
-        {
-            switch (args.Value)
-            {
-                case "Form1":
-                    DataSource.SupplyForm = 1;break;
-                case "Form2":
-                    DataSource.SupplyForm = 2; break;
+        //private void SupplyValueChangeHandler(ChangeEventArgs<string, SupplyFormModel> args)
+        //{
+        //    switch (args.Value)
+        //    {
+        //        case "Form1":
+        //            DataSource.SupplyForm = 1;break;
+        //        case "Form2":
+        //            DataSource.SupplyForm = 2; break;
 
-            }
-        }
+        //    }
+        //}
 
-        private void TypeValueChangeHandler(ChangeEventArgs<string, TypeModel> args)
-        {
-            switch (args.Value)
-            {
-                case "TM":
-                    DataSource.ProductType = 1; break;
-                case "HM":
-                    DataSource.ProductType = 10; break;
-                case "YM":
-                    DataSource.ProductType = 11; break;
-                case "MM":
-                    DataSource.ProductType = 12; break;
-                case "BP":
-                    DataSource.ProductType = 30; break;
-                case "TK":
-                    DataSource.ProductType = 40; break;
-                case "KLP":
-                    DataSource.ProductType = 50; break;
-                case "APRT":
-                    DataSource.ProductType = 60; break;
+        //private void TypeValueChangeHandler(ChangeEventArgs<string, TypeModel> args)
+        //{
+        //    switch (args.Value)
+        //    {
+        //        case "TM":
+        //            DataSource.ProductType = 1; break;
+        //        case "HM":
+        //            DataSource.ProductType = 10; break;
+        //        case "YM":
+        //            DataSource.ProductType = 11; break;
+        //        case "MM":
+        //            DataSource.ProductType = 12; break;
+        //        case "BP":
+        //            DataSource.ProductType = 30; break;
+        //        case "TK":
+        //            DataSource.ProductType = 40; break;
+        //        case "KLP":
+        //            DataSource.ProductType = 50; break;
+        //        case "APRT":
+        //            DataSource.ProductType = 60; break;
 
-            }
-        }
+        //    }
+        //}
 
         protected override async Task OnSubmit()
         {

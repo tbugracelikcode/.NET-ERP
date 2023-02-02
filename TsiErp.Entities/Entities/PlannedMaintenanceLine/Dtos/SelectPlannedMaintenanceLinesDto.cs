@@ -27,6 +27,10 @@ namespace TsiErp.Entities.Entities.PlannedMaintenanceLine.Dtos
         /// </summary>
         public string ProductCode { get; set; }
         /// <summary>
+        /// Stok Adı
+        /// </summary>
+        public string ProductName { get; set; }
+        /// <summary>
         /// Birim Set ID
         /// </summary>
         public Guid? UnitSetID { get; set; }

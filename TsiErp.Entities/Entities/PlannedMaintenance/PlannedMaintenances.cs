@@ -45,6 +45,11 @@ namespace TsiErp.Entities.Entities.PlannedMaintenance
         /// Kalan Süre
         /// </summary>
         public decimal RemainingTime { get; set; }
+        [Precision(18, 6)]
+        /// <summary>
+        /// Periyot Süresi
+        /// </summary>
+        public decimal PeriodTime { get; set; }
         /// <summary>
         /// Not
         /// </summary>
@@ -63,10 +68,6 @@ namespace TsiErp.Entities.Entities.PlannedMaintenance
         /// Başlangıç Tarihi
         /// </summary>
         public DateTime? StartDate { get; set; }
-        /// <summary>
-        /// Bitiş Tarihi
-        /// </summary>
-        public DateTime? EndDate { get; set; }
         /// <summary>
         /// Planlanan Bakım Tarihi
         /// </summary>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.Product.Dtos
 {
@@ -24,7 +25,7 @@ namespace TsiErp.Entities.Entities.Product.Dtos
         /// <summary>
         /// Temin Şekli
         /// </summary>
-        public int SupplyForm { get; set; }
+        public ProductSupplyFormEnum SupplyForm { get; set; }
         /// <summary>
         /// Stok Boyu
         /// </summary>
@@ -48,7 +49,7 @@ namespace TsiErp.Entities.Entities.Product.Dtos
         /// <summary>
         /// Stok Türü
         /// </summary>
-        public int ProductType { get; set; }
+        public ProductTypeEnum ProductType { get; set; }
         /// <summary>
         /// Stok Açıklaması
         /// </summary>

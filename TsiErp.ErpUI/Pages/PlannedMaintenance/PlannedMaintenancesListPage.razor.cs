@@ -15,6 +15,9 @@ namespace TsiErp.ErpUI.Pages.PlannedMaintenance
 {
     public partial class PlannedMaintenancesListPage
     {
+        List<ListProductsDto> ProductsList = new List<ListProductsDto>();
+        List<ListUnitSetsDto> UnitSetsList = new List<ListUnitSetsDto>();
+
         private SfGrid<ListPlannedMaintenancesDto> _grid;
         private SfGrid<SelectPlannedMaintenanceLinesDto> _LineGrid;
 
@@ -44,7 +47,6 @@ namespace TsiErp.ErpUI.Pages.PlannedMaintenance
         {
             DataSource = new SelectPlannedMaintenancesDto()
             {
-                EndDate = DateTime.Today,
                 StartDate = DateTime.Today,
                 PlannedDate = DateTime.Today,
                 CompletionDate = DateTime.Today
@@ -221,90 +223,6 @@ namespace TsiErp.ErpUI.Pages.PlannedMaintenance
 
         #endregion
 
-        #region Stok Kartı ButtonEdit 
-
-        SfTextBox ProductsButtonEdit;
-        bool SelectproductsPopupVisible = false;
-        List<ListProductsDto> ProductsList = new List<ListProductsDto>();
-        public async Task ProductsOnCreateIcon()
-        {
-            var ProductsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductsButtonClickEvent);
-            await ProductsButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductsButtonClick } });
-        }
-
-        public async void ProductsButtonClickEvent()
-        {
-            SelectproductsPopupVisible = true;
-            await GetProductsList();
-            await InvokeAsync(StateHasChanged);
-        }
-
-        public void ProductsOnValueChange(ChangedEventArgs args)
-        {
-            if (args.Value == null)
-            {
-                LineDataSource.ProductID = Guid.Empty;
-                LineDataSource.ProductCode = string.Empty;
-            }
-        }
-
-        public async void ProductsDoubleClickHandler(RecordDoubleClickEventArgs<ListProductsDto> args)
-        {
-            var selectedProduct = args.RowData;
-
-            if (selectedProduct != null)
-            {
-                LineDataSource.ProductID = selectedProduct.Id;
-                LineDataSource.ProductCode = selectedProduct.Code;
-                SelectproductsPopupVisible = false;
-                await InvokeAsync(StateHasChanged);
-            }
-        }
-
-        #endregion
-
-        #region Birim Seti ButtonEdit 
-
-        SfTextBox UnitSetsButtonEdit;
-        bool SelectUnitSetsPopupVisible = false;
-        List<ListUnitSetsDto> UnitSetsList = new List<ListUnitSetsDto>();
-        public async Task UnitSetsOnCreateIcon()
-        {
-            var UnitSetsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, UnitSetsButtonClickEvent);
-            await UnitSetsButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", UnitSetsButtonClick } });
-        }
-
-        public async void UnitSetsButtonClickEvent()
-        {
-            SelectUnitSetsPopupVisible = true;
-            await GetUnitSetsList();
-            await InvokeAsync(StateHasChanged);
-        }
-
-        public void UnitSetsOnValueChange(ChangedEventArgs args)
-        {
-            if (args.Value == null)
-            {
-                LineDataSource.UnitSetID = Guid.Empty;
-                LineDataSource.UnitSetCode = string.Empty;
-            }
-        }
-
-        public async void UnitSetsDoubleClickHandler(RecordDoubleClickEventArgs<ListUnitSetsDto> args)
-        {
-            var selectedUnitSet = args.RowData;
-
-            if (selectedUnitSet != null)
-            {
-                LineDataSource.UnitSetID = selectedUnitSet.Id;
-                LineDataSource.UnitSetCode = selectedUnitSet.Code;
-                SelectUnitSetsPopupVisible = false;
-                await InvokeAsync(StateHasChanged);
-            }
-        }
-
-        #endregion
-
         #region İş İstasyonu ButtonEdit 
 
         SfTextBox StationsButtonEdit;
@@ -343,10 +261,13 @@ namespace TsiErp.ErpUI.Pages.PlannedMaintenance
                 SelectStationsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
 
-                if (DataSource.PeriodID != Guid.Empty && DataSource.StationID != Guid.Empty)
+                if (DataSource.PeriodID != null && DataSource.StationID != null)
                 {
                     var instructionDataSource = (await MaintenanceInstructionsAppService.GetbyPeriodStationAsync(DataSource.StationID, DataSource.PeriodID)).Data;
                     var instructionGridLineList = instructionDataSource.SelectMaintenanceInstructionLines;
+
+                    await GetProductsList();
+                    await GetUnitSetsList();
 
                     foreach (var instructionline in instructionGridLineList)
                     {
@@ -356,13 +277,15 @@ namespace TsiErp.ErpUI.Pages.PlannedMaintenance
                             InstructionDescription = instructionline.InstructionDescription,
                             LineNr = instructionline.LineNr,
                             PlannedMaintenanceID = DataSource.Id,
-                            ProductCode = instructionline.ProductCode,
+                            ProductCode = ProductsList.Where(t=>t.Id == instructionline.ProductID).Select(t=>t.Code).FirstOrDefault(),
+                            ProductName = ProductsList.Where(t => t.Id == instructionline.ProductID).Select(t => t.Name).FirstOrDefault(),
                             ProductID = instructionline.ProductID,
-                            UnitSetCode = instructionline.UnitSetCode,
+                            UnitSetCode = UnitSetsList.Where(t => t.Id == instructionline.UnitSetID).Select(t => t.Code).FirstOrDefault(),
                             UnitSetID = instructionline.UnitSetID
                         };
 
                         GridLineList.Add(plannedMaintenanceLine);
+                        await _LineGrid.Refresh();
                     }
 
                 }
@@ -406,13 +329,17 @@ namespace TsiErp.ErpUI.Pages.PlannedMaintenance
             {
                 DataSource.PeriodID = selectedMaintenancePeriod.Id;
                 DataSource.PeriodName = selectedMaintenancePeriod.Name;
+                DataSource.PeriodTime = selectedMaintenancePeriod.PeriodTime;
                 SelectMaintenancePeriodsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
 
-                if (DataSource.PeriodID != Guid.Empty && DataSource.StationID != Guid.Empty)
+                if (DataSource.PeriodID != null && DataSource.StationID != null)
                 {
                     var instructionDataSource = (await MaintenanceInstructionsAppService.GetbyPeriodStationAsync(DataSource.StationID, DataSource.PeriodID)).Data;
                     var instructionGridLineList = instructionDataSource.SelectMaintenanceInstructionLines;
+
+                    await GetProductsList();
+                    await GetUnitSetsList();
 
                     foreach (var instructionline in instructionGridLineList)
                     {
@@ -422,13 +349,16 @@ namespace TsiErp.ErpUI.Pages.PlannedMaintenance
                             InstructionDescription = instructionline.InstructionDescription,
                             LineNr = instructionline.LineNr,
                             PlannedMaintenanceID = DataSource.Id,
-                            ProductCode = instructionline.ProductCode,
+                            ProductCode = ProductsList.Where(t => t.Id == instructionline.ProductID).Select(t => t.Code).FirstOrDefault(),
+                            ProductName = ProductsList.Where(t => t.Id == instructionline.ProductID).Select(t => t.Name).FirstOrDefault(),
                             ProductID = instructionline.ProductID,
-                            UnitSetCode = instructionline.UnitSetCode,
+                            UnitSetCode = UnitSetsList.Where(t => t.Id == instructionline.UnitSetID).Select(t => t.Code).FirstOrDefault(),
                             UnitSetID = instructionline.UnitSetID
                         };
 
                         GridLineList.Add(plannedMaintenanceLine);
+                        await _LineGrid.Refresh();
+
                     }
 
                 }
@@ -461,5 +391,94 @@ namespace TsiErp.ErpUI.Pages.PlannedMaintenance
 
         #endregion
 
+        #region Stok Kartı ve Birim Seti ButtonEdit Kodları
+
+        //#region Stok Kartı ButtonEdit 
+
+        //SfTextBox ProductsButtonEdit;
+        //bool SelectproductsPopupVisible = false;
+        //List<ListProductsDto> ProductsList = new List<ListProductsDto>();
+        //public async Task ProductsOnCreateIcon()
+        //{
+        //    var ProductsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductsButtonClickEvent);
+        //    await ProductsButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductsButtonClick } });
+        //}
+
+        //public async void ProductsButtonClickEvent()
+        //{
+        //    SelectproductsPopupVisible = true;
+        //    await GetProductsList();
+        //    await InvokeAsync(StateHasChanged);
+        //}
+
+        //public void ProductsOnValueChange(ChangedEventArgs args)
+        //{
+        //    if (args.Value == null)
+        //    {
+        //        LineDataSource.ProductID = Guid.Empty;
+        //        LineDataSource.ProductCode = string.Empty;
+        //        LineDataSource.ProductName = string.Empty;
+        //    }
+        //}
+
+        //public async void ProductsDoubleClickHandler(RecordDoubleClickEventArgs<ListProductsDto> args)
+        //{
+        //    var selectedProduct = args.RowData;
+
+        //    if (selectedProduct != null)
+        //    {
+        //        LineDataSource.ProductID = selectedProduct.Id;
+        //        LineDataSource.ProductCode = selectedProduct.Code;
+        //        LineDataSource.ProductName = selectedProduct.Name;
+        //        SelectproductsPopupVisible = false;
+        //        await InvokeAsync(StateHasChanged);
+        //    }
+        //}
+
+        //#endregion
+
+        //#region Birim Seti ButtonEdit 
+
+        //SfTextBox UnitSetsButtonEdit;
+        //bool SelectUnitSetsPopupVisible = false;
+        //List<ListUnitSetsDto> UnitSetsList = new List<ListUnitSetsDto>();
+        //public async Task UnitSetsOnCreateIcon()
+        //{
+        //    var UnitSetsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, UnitSetsButtonClickEvent);
+        //    await UnitSetsButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", UnitSetsButtonClick } });
+        //}
+
+        //public async void UnitSetsButtonClickEvent()
+        //{
+        //    SelectUnitSetsPopupVisible = true;
+        //    await GetUnitSetsList();
+        //    await InvokeAsync(StateHasChanged);
+        //}
+
+        //public void UnitSetsOnValueChange(ChangedEventArgs args)
+        //{
+        //    if (args.Value == null)
+        //    {
+        //        LineDataSource.UnitSetID = Guid.Empty;
+        //        LineDataSource.UnitSetCode = string.Empty;
+        //    }
+        //}
+
+        //public async void UnitSetsDoubleClickHandler(RecordDoubleClickEventArgs<ListUnitSetsDto> args)
+        //{
+        //    var selectedUnitSet = args.RowData;
+
+        //    if (selectedUnitSet != null)
+        //    {
+        //        LineDataSource.UnitSetID = selectedUnitSet.Id;
+        //        LineDataSource.UnitSetCode = selectedUnitSet.Code;
+        //        SelectUnitSetsPopupVisible = false;
+        //        await InvokeAsync(StateHasChanged);
+        //    }
+        //}
+
+        //#endregion
+
+        #endregion
     }
 }
