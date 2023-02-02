@@ -80,6 +80,8 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
         {
             var entity = await _repository.GetAsync(t => t.Id == id,
                 t => t.SalesPriceLines,
+                t=>t.Warehouses,
+                t=>t.Branches,
                 t => t.Currencies);
 
             var mappedEntity = ObjectMapper.Map<SalesPrices, SelectSalesPricesDto>(entity);
@@ -92,8 +94,10 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListSalesPricesDto>>> GetListAsync(ListSalesPricesParameterDto input)
         {
-            var list = await _repository.GetListAsync(t => t.IsActive == input.IsActive,
+            var list = await _repository.GetListAsync(t=>t.IsActive == input.IsActive,
                 t => t.SalesPriceLines,
+                t => t.Warehouses,
+                t => t.Branches,
                 t => t.Currencies);
 
             var mappedEntity = ObjectMapper.Map<List<SalesPrices>, List<ListSalesPricesDto>>(list.ToList());

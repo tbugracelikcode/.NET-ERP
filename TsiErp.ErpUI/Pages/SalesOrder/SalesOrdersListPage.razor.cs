@@ -619,38 +619,51 @@ namespace TsiErp.ErpUI.Pages.SalesOrder
 
         protected async Task OnLineSubmit()
         {
-            if (LineDataSource.Id == Guid.Empty)
+
+            if (LineDataSource.UnitSetID == Guid.Empty)
             {
-                if (DataSource.SelectSalesOrderLines.Contains(LineDataSource))
+                await ModalManager.WarningPopupAsync("Uyarı", "Birim seti seçilmeden satır kaydetme işlemi yapılamaz.");
+            }
+            else if (LineDataSource.ProductID == Guid.Empty)
+            {
+                await ModalManager.WarningPopupAsync("Uyarı", "Stok kartı seçilmeden satır kaydetme işlemi yapılamaz.");
+            }
+            else
+            {
+                if (LineDataSource.Id == Guid.Empty)
                 {
-                    int selectedLineIndex = DataSource.SelectSalesOrderLines.FindIndex(t => t.LineNr == LineDataSource.LineNr);
+                    if (DataSource.SelectSalesOrderLines.Contains(LineDataSource))
+                    {
+                        int selectedLineIndex = DataSource.SelectSalesOrderLines.FindIndex(t => t.LineNr == LineDataSource.LineNr);
+
+                        if (selectedLineIndex > -1)
+                        {
+                            DataSource.SelectSalesOrderLines[selectedLineIndex] = LineDataSource;
+                        }
+                    }
+                    else
+                    {
+                        DataSource.SelectSalesOrderLines.Add(LineDataSource);
+                    }
+                }
+                else
+                {
+                    int selectedLineIndex = DataSource.SelectSalesOrderLines.FindIndex(t => t.Id == LineDataSource.Id);
 
                     if (selectedLineIndex > -1)
                     {
                         DataSource.SelectSalesOrderLines[selectedLineIndex] = LineDataSource;
                     }
                 }
-                else
-                {
-                    DataSource.SelectSalesOrderLines.Add(LineDataSource);
-                }
+
+                GridLineList = DataSource.SelectSalesOrderLines;
+                GetTotal();
+                await _LineGrid.Refresh();
+
+                HideLinesPopup();
+                await InvokeAsync(StateHasChanged);
             }
-            else
-            {
-                int selectedLineIndex = DataSource.SelectSalesOrderLines.FindIndex(t => t.Id == LineDataSource.Id);
-
-                if (selectedLineIndex > -1)
-                {
-                    DataSource.SelectSalesOrderLines[selectedLineIndex] = LineDataSource;
-                }
-            }
-
-            GridLineList = DataSource.SelectSalesOrderLines;
-            GetTotal();
-            await _LineGrid.Refresh();
-
-            HideLinesPopup();
-            await InvokeAsync(StateHasChanged);
+           
         }
 
         public override async void LineCalculate()

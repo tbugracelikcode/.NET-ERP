@@ -13,6 +13,7 @@ using TsiErp.Entities.Entities.PurchaseOrderLine;
 using TsiErp.Entities.Entities.PurchaseRequestLine;
 using TsiErp.Entities.Entities.SalesOrderLine;
 using TsiErp.Entities.Entities.SalesPropositionLine;
+using TsiErp.Entities.Entities.UnplannedMaintenanceLine;
 
 namespace TsiErp.Entities.Entities.UnitSet
 {
@@ -51,6 +52,7 @@ namespace TsiErp.Entities.Entities.UnitSet
         public ICollection<PurchaseRequestLines> PurchaseRequestLines { get; set; }
         public ICollection<MaintenanceInstructionLines> MaintenanceInstructionLines { get; set; }
         public ICollection<PlannedMaintenanceLines> PlannedMaintenanceLines { get; set; }
+        public ICollection<UnplannedMaintenanceLines> UnplannedMaintenanceLines { get; set; }
 
 
     }
