@@ -24,9 +24,6 @@ using TsiErp.Business.Entities.CurrentAccountCard.Services;
 
 namespace TsiErp.ErpUI.Pages.ContractProductionTracking
 {
-
-
-
     public partial class ContractProductionTrackingsListPage
     {
         #region ComboBox Listeleri
