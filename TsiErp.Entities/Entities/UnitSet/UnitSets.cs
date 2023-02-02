@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.BillsofMaterialLine;
 using TsiErp.Entities.Entities.MaintenanceInstructionLine;
+using TsiErp.Entities.Entities.PlannedMaintenanceLine;
 using TsiErp.Entities.Entities.Product;
 using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.PurchaseOrderLine;
@@ -49,6 +50,8 @@ namespace TsiErp.Entities.Entities.UnitSet
         public ICollection<PurchaseOrderLines> PurchaseOrderLines { get; set; }
         public ICollection<PurchaseRequestLines> PurchaseRequestLines { get; set; }
         public ICollection<MaintenanceInstructionLines> MaintenanceInstructionLines { get; set; }
+        public ICollection<PlannedMaintenanceLines> PlannedMaintenanceLines { get; set; }
+
 
     }
 }

@@ -25,6 +25,7 @@ using TsiErp.Entities.Entities.SalesPriceLine;
 using TsiErp.Entities.Entities.PurchasePriceLine;
 using TsiErp.Entities.Entities.FinalControlUnsuitabilityReport;
 using TsiErp.Entities.Entities.MaintenanceInstructionLine;
+using TsiErp.Entities.Entities.PlannedMaintenanceLine;
 
 namespace TsiErp.Entities.Entities.Product
 {
@@ -157,6 +158,7 @@ namespace TsiErp.Entities.Entities.Product
         public ICollection<PurchasePriceLines> PurchasePriceLines { get; set; }
         public ICollection<FinalControlUnsuitabilityReports> FinalControlUnsuitabilityReports { get; set; }
         public ICollection<MaintenanceInstructionLines> MaintenanceInstructionLines { get; set; }
+        public ICollection<PlannedMaintenanceLines> PlannedMaintenanceLines { get; set; }
 
     }
 }

@@ -896,11 +896,15 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<PurchasePrices, SelectPurchasePricesDto>()
                 .ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Code))
                 .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
-                .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name));
+                .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name))
+                .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Code))
+                .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Code));
             CreateMap<PurchasePrices, ListPurchasePricesDto>()
                 .ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Code))
                 .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
-                .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name));
+                .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name))
+                .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Code))
+                .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Code));
             CreateMap<UpdatePurchasePricesDto, PurchasePrices>()
                 .ForMember(x => x.PurchasePriceLines, y => y.Ignore());
             CreateMap<CreatePurchasePricesDto, PurchasePrices>();

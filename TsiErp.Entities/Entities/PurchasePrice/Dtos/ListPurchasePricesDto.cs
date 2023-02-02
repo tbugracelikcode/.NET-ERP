@@ -30,6 +30,18 @@ namespace TsiErp.Entities.Entities.PurchasePrice.Dtos
         /// </summary>
         public string CurrencyCode { get; set; }
         /// <summary>
+        /// Şube Kodu
+        /// </summary>
+        public string BranchCode { get; set; }
+        /// <summary>
+        /// Depo Kodu
+        /// </summary>
+        public string WarehouseCode { get; set; }
+        /// <summary>
+        /// Cari Ünvan
+        /// </summary>
+        public string CurrentAccountCardName { get; set; }
+        /// <summary>
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
