@@ -37,6 +37,11 @@ namespace TsiErp.Entities.Entities.PlannedMaintenance.Dtos
         public int NumberofCaregivers { get; set; }
         [Precision(18, 6)]
         /// <summary>
+        /// Periyot Süresi
+        /// </summary>
+        public decimal PeriodTime { get; set; }
+        [Precision(18, 6)]
+        /// <summary>
         /// Kalan Süre
         /// </summary>
         public decimal RemainingTime { get; set; }
@@ -58,10 +63,6 @@ namespace TsiErp.Entities.Entities.PlannedMaintenance.Dtos
         /// Başlangıç Tarihi
         /// </summary>
         public DateTime? StartDate { get; set; }
-        /// <summary>
-        /// Bitiş Tarihi
-        /// </summary>
-        public DateTime? EndDate { get; set; }
         /// <summary>
         /// Planlanan Bakım Tarihi
         /// </summary>

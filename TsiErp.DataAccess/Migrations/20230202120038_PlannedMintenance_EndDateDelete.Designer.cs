@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TsiErp.DataAccess.EntityFrameworkCore;
 
@@ -11,9 +12,10 @@ using TsiErp.DataAccess.EntityFrameworkCore;
 namespace TsiErp.DataAccess.Migrations
 {
     [DbContext(typeof(TsiErpDbContext))]
-    partial class TsiErpDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230202120038_PlannedMintenance_EndDateDelete")]
+    partial class PlannedMintenance_EndDateDelete
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2373,10 +2375,6 @@ namespace TsiErp.DataAccess.Migrations
                     b.Property<Guid>("PeriodID")
                         .HasColumnType("UniqueIdentifier");
 
-                    b.Property<decimal>("PeriodTime")
-                        .HasPrecision(18, 6)
-                        .HasColumnType("Decimal(18,6)");
-
                     b.Property<DateTime?>("PlannedDate")
                         .HasColumnType("DateTime");
 
@@ -4417,7 +4415,7 @@ namespace TsiErp.DataAccess.Migrations
                     b.Property<Guid>("CurrencyID")
                         .HasColumnType("UniqueIdentifier");
 
-                    b.Property<Guid?>("CurrentAccountCardID")
+                    b.Property<Guid>("CurrentAccountCardID")
                         .HasColumnType("UniqueIdentifier");
 
                     b.Property<Guid?>("DeleterId")
@@ -6804,14 +6802,7 @@ namespace TsiErp.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("TsiErp.Entities.Entities.CurrentAccountCard.CurrentAccountCards", "CurrentAccountCards")
-                        .WithMany("SalesPrices")
-                        .HasForeignKey("CurrentAccountCardID")
-                        .OnDelete(DeleteBehavior.NoAction);
-
                     b.Navigation("Currencies");
-
-                    b.Navigation("CurrentAccountCards");
                 });
 
             modelBuilder.Entity("TsiErp.Entities.Entities.SalesPriceLine.SalesPriceLines", b =>
@@ -7144,8 +7135,6 @@ namespace TsiErp.DataAccess.Migrations
                     b.Navigation("PurchaseUnsuitabilityReports");
 
                     b.Navigation("SalesOrders");
-
-                    b.Navigation("SalesPrices");
 
                     b.Navigation("SalesPropositions");
 

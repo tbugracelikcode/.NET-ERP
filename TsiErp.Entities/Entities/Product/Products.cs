@@ -26,6 +26,7 @@ using TsiErp.Entities.Entities.PurchasePriceLine;
 using TsiErp.Entities.Entities.FinalControlUnsuitabilityReport;
 using TsiErp.Entities.Entities.MaintenanceInstructionLine;
 using TsiErp.Entities.Entities.PlannedMaintenanceLine;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.Product
 {
@@ -49,7 +50,7 @@ namespace TsiErp.Entities.Entities.Product
         /// <summary>
         /// Temin Şekli
         /// </summary>
-        public int SupplyForm { get; set; }
+        public ProductSupplyFormEnum SupplyForm { get; set; }
 
         [Precision(18, 6)]
         /// <summary>
@@ -77,7 +78,7 @@ namespace TsiErp.Entities.Entities.Product
         /// <summary>
         /// Stok Türü
         /// </summary>
-        public int ProductType { get; set; }
+        public ProductTypeEnum ProductType { get; set; }
         /// <summary>
         /// Stok Açıklaması
         /// </summary>

@@ -12,6 +12,7 @@
 @using TsiErp.Entities.Entities.UnitSet.Dtos
 @using TsiErp.Business.Entities.ProductGroup.Services
 @using TsiErp.Business.Entities.UnitSet.Services
+@using TsiErp.Entities.Enums
 
 @inherits BaseListPage<SelectProductsDto, ListProductsDto, CreateProductsDto, UpdateProductsDto, ListProductsParameterDto>
 
@@ -59,7 +60,7 @@ else
                                     <GridColumn Field=@nameof(ListProductsDto.UnitSetCode) HeaderText="BİRİM SETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductsDto.SupplyForm) HeaderText="TEMİN ŞEKLİ" TextAlign="TextAlign.Center" Width="120">
                                         <Template>
-                                            @{
+                                          @*  @{
                                                 int productsupplyform = (context as ListProductsDto).SupplyForm;
                                                 string supplyForm = "";
                                                 if (productsupplyform == 1)
@@ -71,16 +72,17 @@ else
                                                     supplyForm = "Üretim";
                                                 }
                                         }
-                                        @supplyForm
+                                        @supplyForm*@
                                     </Template>
                                 </GridColumn>
                                 <GridColumn Field=@nameof(ListProductsDto.ProductGrp) HeaderText="ÜRÜN GRUBU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 <GridColumn Field=@nameof(ListProductsDto.ProductType) HeaderText="TÜR" TextAlign="TextAlign.Center" Width="120">
                                     <Template>
-                                            @{
+                                     @*   @{
                                                 int producttype = (context as ListProductsDto).ProductType;
                                                 string type = "";
-                                                switch(producttype){
+                                                switch (producttype)
+                                                {
                                                     case 1: type = "TM"; break;
                                                     case 10: type = "HM"; break;
                                                     case 11: type = "YM"; break;
@@ -92,7 +94,7 @@ else
                                                     default: break;
                                                 }
                                         }
-                                        @type
+                                        @type*@
                                     </Template>
                                 </GridColumn>
 
@@ -169,10 +171,8 @@ else
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>Stok Türü: </strong></label>
-                            <SfComboBox TValue="string" TItem="TypeModel" Placeholder="Stok Türü Seçiniz" DataSource="@TypeData">
-                                <ComboBoxEvents TItem="TypeModel" TValue="string" ValueChange="@TypeValueChangeHandler"></ComboBoxEvents>
-                                <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
-                            </SfComboBox>
+                         @*   <SfDropDownList TItem="string" TValue="ProductTypeEnum" PopupHeight="230px" Placeholder="Stok Türü Seçiniz" @bind-Value="@DataSource.ProductType" DataSource="@ProductTypesList">
+                            </SfDropDownList>*@
                         </Template>
                     </DxGridLayoutItem>
 
@@ -226,10 +226,10 @@ else
                                                         <Template>
                                                             <br />
                                                             <label class="TSIModalLabel"><strong>Temin Şekli : </strong></label><br />
-                                                            <SfComboBox TValue="string" TItem="SupplyFormModel" Placeholder="Temin Şekli Seçiniz" DataSource="@SupplyData">
+                                                          @*  <SfComboBox TValue="string" TItem="SupplyFormModel" Placeholder="Temin Şekli Seçiniz" DataSource="@SupplyData">
                                                                 <ComboBoxEvents TItem="SupplyFormModel" TValue="string" ValueChange="@SupplyValueChangeHandler"></ComboBoxEvents>
                                                                 <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
-                                                            </SfComboBox>
+                                                            </SfComboBox>*@
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -377,7 +377,7 @@ else
 
             <DevGridLayout ColumnCount="1" RowCount="1">
                 <GridLayoutItems>
-                    
+
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <SfCard class="TSIGridCards">
@@ -435,21 +435,21 @@ else
                             <SfCard class="TSIGridCards">
 
                                 <CardContent>
-                                    <SfGrid ID="UnitSetGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@UnitSetsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"  GridLines="GridLine.Both"
-                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
-                                                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                    <SfGrid ID="UnitSetGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@UnitSetsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                        AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                 <GridEvents OnRecordDoubleClick="@UnitSetsDoubleClickHandler" TValue="ListUnitSetsDto"></GridEvents>
-                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                <GridPageSettings PageSizes="true"></GridPageSettings>
-                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
-                                <GridColumns>
-                                    <GridColumn Field=@nameof(ListUnitSetsDto.Code) HeaderText="BİRİM SETİ KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListUnitSetsDto.Name) HeaderText="BİRİM SETİ AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridEvents OnRecordDoubleClick="@UnitSetsDoubleClickHandler" TValue="ListUnitSetsDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListUnitSetsDto.Code) HeaderText="BİRİM SETİ KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListUnitSetsDto.Name) HeaderText="BİRİM SETİ AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
-                                </GridColumns>
-                            </SfGrid>
+                                        </GridColumns>
+                                    </SfGrid>
                                 </CardContent>
                                 <CardFooter>
                                 </CardFooter>
