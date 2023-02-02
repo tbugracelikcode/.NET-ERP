@@ -869,8 +869,14 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectForecastLinesDto, ForecastLines>();
 
 
-            CreateMap<SalesPrices, SelectSalesPricesDto>().ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Code));
-            CreateMap<SalesPrices, ListSalesPricesDto>().ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Code));
+            CreateMap<SalesPrices, SelectSalesPricesDto>()
+                .ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Code))
+                .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
+                .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name));
+            CreateMap<SalesPrices, ListSalesPricesDto>()
+                .ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Code))
+                .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
+                .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name));
             CreateMap<UpdateSalesPricesDto, SalesPrices>()
                 .ForMember(x => x.SalesPriceLines, y => y.Ignore());
             CreateMap<CreateSalesPricesDto, SalesPrices>();

@@ -450,7 +450,7 @@ namespace TsiErp.ErpUI.Pages.PurchasePrice
             BranchesList = (await BranchesAppService.GetListAsync(new ListBranchesParameterDto())).Data.ToList();
         }
 
-                private async Task GetCurrentAccountCardsList()
+        private async Task GetCurrentAccountCardsList()
         {
             CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
         }
