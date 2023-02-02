@@ -28,7 +28,9 @@ namespace TsiErp.ErpUI.Pages.Product
         SfTextBox ProductGroupsButtonEdit;
         bool SelectProductGroupsPopupVisible = false;
         List<ListProductGroupsDto> ProductGroupsList = new List<ListProductGroupsDto>();
+        #endregion
 
+        #region Combobox İşlemleri
         public class SupplyFormModel
         {
             public string ID { get; set; }
@@ -58,9 +60,12 @@ namespace TsiErp.ErpUI.Pages.Product
 
         #endregion
 
+
+
         [Inject]
         ModalManager ModalManager { get; set; }
-        
+
+        #region Ürün Grubu ButtonEdit İşlemleri
         public async Task ProductGroupsOnCreateIcon()
         {
             var ProductGroupsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductGroupsButtonClickEvent);
@@ -73,6 +78,8 @@ namespace TsiErp.ErpUI.Pages.Product
             await GetProductGroupsList();
             await InvokeAsync(StateHasChanged);
         }
+
+        #endregion
 
         public void ProductGroupsOnValueChange(ChangedEventArgs args)
         {

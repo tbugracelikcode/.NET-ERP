@@ -81,6 +81,8 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
         {
             var entity = await _repository.GetAsync(t => t.Id == id,
                 t => t.PurchasePriceLines,
+                t => t.Branches,
+                t => t.Warehouses,
                 t => t.Currencies);
 
             var mappedEntity = ObjectMapper.Map<PurchasePrices, SelectPurchasePricesDto>(entity);
@@ -95,6 +97,8 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
         {
             var list = await _repository.GetListAsync(null,
                 t => t.PurchasePriceLines,
+                t => t.Branches,
+                t => t.Warehouses,
                 t => t.Currencies);
 
             var mappedEntity = ObjectMapper.Map<List<PurchasePrices>, List<ListPurchasePricesDto>>(list.ToList());

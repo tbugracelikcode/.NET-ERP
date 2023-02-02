@@ -893,8 +893,14 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectSalesPriceLinesDto, SalesPriceLines>();
 
 
-            CreateMap<PurchasePrices, SelectPurchasePricesDto>().ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Code));
-            CreateMap<PurchasePrices, ListPurchasePricesDto>().ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Code));
+            CreateMap<PurchasePrices, SelectPurchasePricesDto>()
+                .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Code))
+                .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Code))
+                .ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Code));
+            CreateMap<PurchasePrices, ListPurchasePricesDto>()
+                .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Code))
+                .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Code))
+                .ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Code));
             CreateMap<UpdatePurchasePricesDto, PurchasePrices>()
                 .ForMember(x => x.PurchasePriceLines, y => y.Ignore());
             CreateMap<CreatePurchasePricesDto, PurchasePrices>();
