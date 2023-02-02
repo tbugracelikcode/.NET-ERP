@@ -22,9 +22,13 @@ namespace TsiErp.Entities.Entities.ShippingAdress.Dtos
         /// </summary>
         public Guid? CustomerCardID { get; set; }
         /// <summary>
-        /// Müşteri Kartı
+        /// Müşteri Kartı Kodu
         /// </summary>
-        public string CustomerCard { get; set; }
+        public string CustomerCardCode { get; set; }
+        /// <summary>
+        /// Müşteri Kartı Ünvanı
+        /// </summary>
+        public string CustomerCardName { get; set; }
         /// <summary>
         /// Adres 1
         /// </summary>

@@ -406,8 +406,12 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateProductGroupsDto, ProductGroups>();
             CreateMap<SelectProductGroupsDto, UpdateProductGroupsDto>();
 
-            CreateMap<ShippingAdresses, SelectShippingAdressesDto>().ForMember(x => x.CustomerCard, y => y.MapFrom(z => z.CurrentAccountCards.Name));
-            CreateMap<ShippingAdresses, ListShippingAdressesDto>().ForMember(x => x.CustomerCard, y => y.MapFrom(z => z.CurrentAccountCards.Name));
+            CreateMap<ShippingAdresses, SelectShippingAdressesDto>()
+                .ForMember(x => x.CustomerCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
+                .ForMember(x => x.CustomerCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name));
+            CreateMap<ShippingAdresses, ListShippingAdressesDto>()
+                .ForMember(x => x.CustomerCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
+                .ForMember(x => x.CustomerCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name));
             CreateMap<CreateShippingAdressesDto, ShippingAdresses>();
             CreateMap<SelectShippingAdressesDto, CreateShippingAdressesDto>();
             CreateMap<UpdateShippingAdressesDto, ShippingAdresses>();
