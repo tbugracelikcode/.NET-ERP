@@ -15,6 +15,7 @@ using TsiErp.Entities.Entities.ProductsOperationLine;
 using TsiErp.Entities.Entities.StationGroup;
 using TsiErp.Entities.Entities.StationInventory;
 using TsiErp.Entities.Entities.TemplateOperationLine;
+using TsiErp.Entities.Entities.UnplannedMaintenance;
 using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Entities.Entities.Station
@@ -134,6 +135,7 @@ namespace TsiErp.Entities.Entities.Station
         public ICollection<ProductionTrackings> ProductionTrackings { get; set; }
         public ICollection<ContractProductionTrackings> ContractProductionTrackings { get; set; }
         public ICollection<PlannedMaintenances> PlannedMaintenances { get; set; }
+        public ICollection<UnplannedMaintenances> UnplannedMaintenances { get; set; }
         public ICollection<StationInventories> StationInventories { get; set; }
         public ICollection<MaintenanceInstructions> MaintenanceInstructions { get; set; }
 

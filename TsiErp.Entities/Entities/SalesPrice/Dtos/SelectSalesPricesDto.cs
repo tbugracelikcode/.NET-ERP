@@ -47,6 +47,22 @@ namespace TsiErp.Entities.Entities.SalesPrice.Dtos
         /// </summary>
         public string CurrentAccountCardName { get; set; }
         /// <summary>
+        /// Şube ID
+        /// </summary>
+        public Guid? BranchID { get; set; }
+        /// <summary>
+        /// Şube Kodu
+        /// </summary>
+        public string BranchCode { get; set; }
+        /// <summary>
+        /// Depo ID
+        /// </summary>
+        public Guid? WarehouseID { get; set; }
+        /// <summary>
+        /// Depo Kodu
+        /// </summary>
+        public string WarehouseCode { get; set; }
+        /// <summary>
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }

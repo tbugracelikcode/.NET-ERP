@@ -4,11 +4,13 @@ using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.Currency.Dtos;
 using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.Product.Dtos;
 using TsiErp.Entities.Entities.SalesPrice.Dtos;
 using TsiErp.Entities.Entities.SalesPriceLine.Dtos;
+using TsiErp.Entities.Entities.WareHouse.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.SalesPrice
@@ -134,6 +136,90 @@ namespace TsiErp.ErpUI.Pages.SalesPrice
                 await InvokeAsync(StateHasChanged);
             }
         }
+        #endregion
+
+        #region Depo ButtonEdit 
+
+        SfTextBox WarehousesButtonEdit;
+        bool SelectwarehousesPopupVisible = false;
+        List<ListWarehousesDto> WarehousesList = new List<ListWarehousesDto>();
+        public async Task WarehousesOnCreateIcon()
+        {
+            var WarehousesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, WarehousesButtonClickEvent);
+            await WarehousesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", WarehousesButtonClick } });
+        }
+
+        public async void WarehousesButtonClickEvent()
+        {
+            SelectwarehousesPopupVisible = true;
+            await GetWarehousesList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void WarehousesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.WarehouseID = Guid.Empty;
+                DataSource.WarehouseCode = string.Empty;
+            }
+        }
+
+        public async void WarehousesDoubleClickHandler(RecordDoubleClickEventArgs<ListWarehousesDto> args)
+        {
+            var selectedWarehouse = args.RowData;
+
+            if (selectedWarehouse != null)
+            {
+                DataSource.WarehouseID = selectedWarehouse.Id;
+                DataSource.WarehouseCode = selectedWarehouse.Code;
+                SelectwarehousesPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        #endregion
+
+        #region Şube ButtonEdit 
+
+        SfTextBox BranchesButtonEdit;
+        bool SelectBranchesPopupVisible = false;
+        List<ListBranchesDto> BranchesList = new List<ListBranchesDto>();
+        public async Task BranchesOnCreateIcon()
+        {
+            var BranchesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, BranchesButtonClickEvent);
+            await BranchesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", BranchesButtonClick } });
+        }
+
+        public async void BranchesButtonClickEvent()
+        {
+            SelectBranchesPopupVisible = true;
+            await GetBranchesList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void BranchesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.BranchID = Guid.Empty;
+                DataSource.BranchCode = string.Empty;
+            }
+        }
+
+        public async void BranchesDoubleClickHandler(RecordDoubleClickEventArgs<ListBranchesDto> args)
+        {
+            var selectedBranch = args.RowData;
+
+            if (selectedBranch != null)
+            {
+                DataSource.BranchID = selectedBranch.Id;
+                DataSource.BranchCode = selectedBranch.Code;
+                SelectBranchesPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
         #endregion
 
         protected override async Task OnInitializedAsync()
@@ -355,6 +441,16 @@ namespace TsiErp.ErpUI.Pages.SalesPrice
         private async Task GetCurrentAccountCardsList()
         {
             CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
+        }
+
+        private async Task GetWarehousesList()
+        {
+            WarehousesList = (await WarehousesAppService.GetListAsync(new ListWarehousesParameterDto())).Data.ToList();
+        }
+
+        private async Task GetBranchesList()
+        {
+            BranchesList = (await BranchesAppService.GetListAsync(new ListBranchesParameterDto())).Data.ToList();
         }
 
         #region Stok Kartları -Teklif Satırları

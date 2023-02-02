@@ -140,6 +140,10 @@ using TsiErp.Entities.Entities.PlannedMaintenance;
 using TsiErp.Entities.Entities.PlannedMaintenance.Dtos;
 using TsiErp.Entities.Entities.PlannedMaintenanceLine;
 using TsiErp.Entities.Entities.PlannedMaintenanceLine.Dtos;
+using TsiErp.Entities.Entities.UnplannedMaintenance;
+using TsiErp.Entities.Entities.UnplannedMaintenance.Dtos;
+using TsiErp.Entities.Entities.UnplannedMaintenanceLine;
+using TsiErp.Entities.Entities.UnplannedMaintenanceLine.Dtos;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -880,11 +884,15 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SalesPrices, SelectSalesPricesDto>()
                 .ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Code))
                 .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
-                .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name));
+                .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name))
+                .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Code))
+                .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Code));
             CreateMap<SalesPrices, ListSalesPricesDto>()
                 .ForMember(x => x.CurrencyCode, y => y.MapFrom(z => z.Currencies.Code))
                 .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
-                .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name));
+                .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name))
+                .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Code))
+                .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Code));
             CreateMap<UpdateSalesPricesDto, SalesPrices>()
                 .ForMember(x => x.SalesPriceLines, y => y.Ignore());
             CreateMap<CreateSalesPricesDto, SalesPrices>();
@@ -1029,6 +1037,35 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdatePlannedMaintenanceLinesDto, PlannedMaintenanceLines>();
             CreateMap<SelectPlannedMaintenanceLinesDto, UpdatePlannedMaintenanceLinesDto>();
             CreateMap<SelectPlannedMaintenanceLinesDto, PlannedMaintenanceLines>();
+
+
+            CreateMap<UnplannedMaintenances, SelectUnplannedMaintenancesDto>()
+          .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
+          .ForMember(x => x.PeriodName, y => y.MapFrom(z => z.MaintenancePeriods.Name));
+            CreateMap<UnplannedMaintenances, ListUnplannedMaintenancesDto>()
+            .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
+            .ForMember(x => x.PeriodName, y => y.MapFrom(z => z.MaintenancePeriods.Name));
+            CreateMap<UpdateUnplannedMaintenancesDto, UnplannedMaintenances>()
+                .ForMember(x => x.UnplannedMaintenanceLines, y => y.Ignore());
+            CreateMap<CreateUnplannedMaintenancesDto, UnplannedMaintenances>();
+            CreateMap<SelectUnplannedMaintenancesDto, CreateUnplannedMaintenancesDto>();
+            CreateMap<SelectUnplannedMaintenancesDto, UpdateUnplannedMaintenancesDto>();
+
+
+
+            CreateMap<UnplannedMaintenanceLines, SelectUnplannedMaintenanceLinesDto>()
+               .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+               .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name))
+               .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code));
+            CreateMap<UnplannedMaintenanceLines, ListUnplannedMaintenanceLinesDto>()
+               .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+               .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name))
+               .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code));
+            CreateMap<CreateUnplannedMaintenanceLinesDto, UnplannedMaintenanceLines>();
+            CreateMap<SelectUnplannedMaintenanceLinesDto, CreateUnplannedMaintenanceLinesDto>();
+            CreateMap<UpdateUnplannedMaintenanceLinesDto, UnplannedMaintenanceLines>();
+            CreateMap<SelectUnplannedMaintenanceLinesDto, UpdateUnplannedMaintenanceLinesDto>();
+            CreateMap<SelectUnplannedMaintenanceLinesDto, UnplannedMaintenanceLines>();
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TsiErp.DataAccess.EntityFrameworkCore;
 
@@ -11,9 +12,10 @@ using TsiErp.DataAccess.EntityFrameworkCore;
 namespace TsiErp.DataAccess.Migrations
 {
     [DbContext(typeof(TsiErpDbContext))]
-    partial class TsiErpDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230202162109_SalesPrices_WarehouseBranch")]
+    partial class SalesPrices_WarehouseBranch
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -5458,170 +5460,6 @@ namespace TsiErp.DataAccess.Migrations
                     b.ToTable("UnitSets", (string)null);
                 });
 
-            modelBuilder.Entity("TsiErp.Entities.Entities.UnplannedMaintenance.UnplannedMaintenances", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Id");
-
-                    b.Property<string>("Caregiver")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("CompletionDate")
-                        .HasColumnType("DateTime");
-
-                    b.Property<DateTime?>("CreationTime")
-                        .IsRequired()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .IsRequired()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("DeleterId");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DeletionTime");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("LastModificationTime");
-
-                    b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("LastModifierId");
-
-                    b.Property<string>("Note_")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NumberofCaregivers")
-                        .HasColumnType("Int");
-
-                    b.Property<decimal>("OccuredTime")
-                        .HasPrecision(18, 6)
-                        .HasColumnType("Decimal(18,6)");
-
-                    b.Property<Guid>("PeriodID")
-                        .HasColumnType("UniqueIdentifier");
-
-                    b.Property<decimal>("PeriodTime")
-                        .HasPrecision(18, 6)
-                        .HasColumnType("Decimal(18,6)");
-
-                    b.Property<string>("RegistrationNo")
-                        .IsRequired()
-                        .HasMaxLength(17)
-                        .HasColumnType("NVarChar(17)");
-
-                    b.Property<decimal>("RemainingTime")
-                        .HasPrecision(18, 6)
-                        .HasColumnType("Decimal(18,6)");
-
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("DateTime");
-
-                    b.Property<Guid>("StationID")
-                        .HasColumnType("UniqueIdentifier");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("Int");
-
-                    b.Property<DateTime?>("UnplannedDate")
-                        .HasColumnType("DateTime");
-
-                    b.Property<decimal>("UnplannedTime")
-                        .HasPrecision(18, 6)
-                        .HasColumnType("Decimal(18,6)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PeriodID");
-
-                    b.HasIndex("RegistrationNo");
-
-                    b.HasIndex("StationID");
-
-                    b.ToTable("UnplannedMaintenances", (string)null);
-                });
-
-            modelBuilder.Entity("TsiErp.Entities.Entities.UnplannedMaintenanceLine.UnplannedMaintenanceLines", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Id");
-
-                    b.Property<decimal>("Amount")
-                        .HasPrecision(18, 6)
-                        .HasColumnType("Decimal(18,6)");
-
-                    b.Property<DateTime?>("CreationTime")
-                        .IsRequired()
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .IsRequired()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("DeleterId");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DeletionTime");
-
-                    b.Property<string>("InstructionDescription")
-                        .HasColumnType("nvarchar(MAX)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("LastModificationTime");
-
-                    b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("LastModifierId");
-
-                    b.Property<int>("LineNr")
-                        .HasColumnType("Int");
-
-                    b.Property<string>("MaintenanceNote")
-                        .HasColumnType("nvarchar(MAX)");
-
-                    b.Property<Guid>("ProductID")
-                        .HasColumnType("UniqueIdentifier");
-
-                    b.Property<Guid>("UnitSetID")
-                        .HasColumnType("UniqueIdentifier");
-
-                    b.Property<Guid>("UnplannedMaintenanceID")
-                        .HasColumnType("UniqueIdentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductID");
-
-                    b.HasIndex("UnitSetID");
-
-                    b.HasIndex("UnplannedMaintenanceID");
-
-                    b.ToTable("UnplannedMaintenanceLines", (string)null);
-                });
-
             modelBuilder.Entity("TsiErp.Entities.Entities.User.Users", b =>
                 {
                     b.Property<Guid>("Id")
@@ -7183,52 +7021,6 @@ namespace TsiErp.DataAccess.Migrations
                     b.Navigation("TemplateOperations");
                 });
 
-            modelBuilder.Entity("TsiErp.Entities.Entities.UnplannedMaintenance.UnplannedMaintenances", b =>
-                {
-                    b.HasOne("TsiErp.Entities.Entities.MaintenancePeriod.MaintenancePeriods", "MaintenancePeriods")
-                        .WithMany("UnplannedMaintenances")
-                        .HasForeignKey("PeriodID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("TsiErp.Entities.Entities.Station.Stations", "Stations")
-                        .WithMany("UnplannedMaintenances")
-                        .HasForeignKey("StationID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("MaintenancePeriods");
-
-                    b.Navigation("Stations");
-                });
-
-            modelBuilder.Entity("TsiErp.Entities.Entities.UnplannedMaintenanceLine.UnplannedMaintenanceLines", b =>
-                {
-                    b.HasOne("TsiErp.Entities.Entities.Product.Products", "Products")
-                        .WithMany("UnplannedMaintenanceLines")
-                        .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("TsiErp.Entities.Entities.UnitSet.UnitSets", "UnitSets")
-                        .WithMany("UnplannedMaintenanceLines")
-                        .HasForeignKey("UnitSetID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("TsiErp.Entities.Entities.UnplannedMaintenance.UnplannedMaintenances", "UnplannedMaintenances")
-                        .WithMany("UnplannedMaintenanceLines")
-                        .HasForeignKey("UnplannedMaintenanceID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Products");
-
-                    b.Navigation("UnitSets");
-
-                    b.Navigation("UnplannedMaintenances");
-                });
-
             modelBuilder.Entity("TsiErp.Entities.Entities.User.Users", b =>
                 {
                     b.HasOne("TsiErp.Entities.Entities.UserGroup.UserGroups", "UserGroups")
@@ -7435,8 +7227,6 @@ namespace TsiErp.DataAccess.Migrations
                     b.Navigation("MaintenanceInstructions");
 
                     b.Navigation("PlannedMaintenances");
-
-                    b.Navigation("UnplannedMaintenances");
                 });
 
             modelBuilder.Entity("TsiErp.Entities.Entities.PaymentPlan.PaymentPlans", b =>
@@ -7505,8 +7295,6 @@ namespace TsiErp.DataAccess.Migrations
                     b.Navigation("SalesPriceLines");
 
                     b.Navigation("SalesPropositionLines");
-
-                    b.Navigation("UnplannedMaintenanceLines");
 
                     b.Navigation("WorkOrders");
                 });
@@ -7638,8 +7426,6 @@ namespace TsiErp.DataAccess.Migrations
 
                     b.Navigation("TemplateOperationLines");
 
-                    b.Navigation("UnplannedMaintenances");
-
                     b.Navigation("WorkOrders");
                 });
 
@@ -7676,13 +7462,6 @@ namespace TsiErp.DataAccess.Migrations
                     b.Navigation("SalesOrderLines");
 
                     b.Navigation("SalesPropositionLines");
-
-                    b.Navigation("UnplannedMaintenanceLines");
-                });
-
-            modelBuilder.Entity("TsiErp.Entities.Entities.UnplannedMaintenance.UnplannedMaintenances", b =>
-                {
-                    b.Navigation("UnplannedMaintenanceLines");
                 });
 
             modelBuilder.Entity("TsiErp.Entities.Entities.UserGroup.UserGroups", b =>

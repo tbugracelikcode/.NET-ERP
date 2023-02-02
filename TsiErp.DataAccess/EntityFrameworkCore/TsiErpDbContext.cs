@@ -80,6 +80,8 @@ using TsiErp.Entities.Entities.MaintenanceInstruction;
 using TsiErp.Entities.Entities.MaintenanceInstructionLine;
 using TsiErp.Entities.Entities.PlannedMaintenance;
 using TsiErp.Entities.Entities.PlannedMaintenanceLine;
+using TsiErp.Entities.Entities.UnplannedMaintenance;
+using TsiErp.Entities.Entities.UnplannedMaintenanceLine;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore
 {
@@ -210,6 +212,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigureMaintenanceInstructionLines();
             builder.ConfigurePlannedMaintenanceLines();
             builder.ConfigurePlannedMaintenances();
+            builder.ConfigureUnplannedMaintenanceLines();
+            builder.ConfigureUnplannedMaintenances();
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -325,6 +329,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<MaintenanceInstructionLines> MaintenanceInstructionLines { get; set; }
         public DbSet<PlannedMaintenances> PlannedMaintenances { get; set; }
         public DbSet<PlannedMaintenanceLines> PlannedMaintenanceLines { get; set; }
+        public DbSet<UnplannedMaintenances> UnplannedMaintenances { get; set; }
+        public DbSet<UnplannedMaintenanceLines> UnplannedMaintenanceLines { get; set; }
 
         #endregion
     }

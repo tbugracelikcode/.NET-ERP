@@ -8,6 +8,7 @@ using TsiErp.Entities.Entities.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchasePrice;
 using TsiErp.Entities.Entities.PurchaseRequest;
 using TsiErp.Entities.Entities.SalesOrder;
+using TsiErp.Entities.Entities.SalesPrice;
 using TsiErp.Entities.Entities.SalesProposition;
 using TsiErp.Entities.Entities.SalesPropositionLine;
 
@@ -38,6 +39,8 @@ namespace TsiErp.Entities.Entities.WareHouse
         public ICollection<PurchaseOrders> PurchaseOrders { get; set; }
         public ICollection<PurchaseRequests> PurchaseRequests { get; set; }
         public ICollection<PurchasePrices> PurchasePrices { get; set; }
+        public ICollection<SalesPrices> SalesPrices { get; set; }
+
 
     }
 }

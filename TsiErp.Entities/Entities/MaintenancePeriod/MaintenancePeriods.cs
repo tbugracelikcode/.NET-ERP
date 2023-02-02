@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.MaintenanceInstruction;
 using TsiErp.Entities.Entities.PlannedMaintenance;
+using TsiErp.Entities.Entities.UnplannedMaintenance;
 
 namespace TsiErp.Entities.Entities.MaintenancePeriod
 {
@@ -42,6 +43,7 @@ namespace TsiErp.Entities.Entities.MaintenancePeriod
         public bool IsDaily { get; set; }
 
         public ICollection<MaintenanceInstructions> MaintenanceInstructions { get; set; }
+        public ICollection<UnplannedMaintenances> UnplannedMaintenances { get; set; }
         public ICollection<PlannedMaintenances> PlannedMaintenances { get; set; }
 
 

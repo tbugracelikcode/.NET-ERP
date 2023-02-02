@@ -41,5 +41,13 @@ namespace TsiErp.Entities.Entities.SalesPrice.Dtos
         /// Cari Ünvan
         /// </summary>
         public string CurrentAccountCardName { get; set; }
+        /// <summary>
+        /// Şube Kodu
+        /// </summary>
+        public string BranchCode { get; set; }
+        /// <summary>
+        /// Depo Kodu
+        /// </summary>
+        public string WarehouseCode { get; set; }
     }
 }

@@ -12,6 +12,6 @@ namespace TsiErp.Entities.Entities.SalesPrice.Dtos
         /// <summary>
         /// Aktiflik
         /// </summary>
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
     }
 }

@@ -259,39 +259,47 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
 
         protected async Task OnLineSubmit()
         {
-            if (LineDataSource.Id == Guid.Empty)
+            if (LineDataSource.UnitSetID == Guid.Empty)
             {
-                if (DataSource.SelectBillsofMaterialLines.Contains(LineDataSource))
+                await ModalManager.WarningPopupAsync("Uyarı", "Birim seti seçilmeden satır kaydetme işlemi yapılamaz.");
+            }
+            else
+            {
+                if (LineDataSource.Id == Guid.Empty)
                 {
-                    int selectedLineIndex = DataSource.SelectBillsofMaterialLines.FindIndex(t => t.LineNr == LineDataSource.LineNr);
+                    if (DataSource.SelectBillsofMaterialLines.Contains(LineDataSource))
+                    {
+                        int selectedLineIndex = DataSource.SelectBillsofMaterialLines.FindIndex(t => t.LineNr == LineDataSource.LineNr);
+
+                        if (selectedLineIndex > -1)
+                        {
+                            DataSource.SelectBillsofMaterialLines[selectedLineIndex] = LineDataSource;
+                        }
+                    }
+                    else
+                    {
+                        DataSource.SelectBillsofMaterialLines.Add(LineDataSource);
+                    }
+                }
+                else
+                {
+                    int selectedLineIndex = DataSource.SelectBillsofMaterialLines.FindIndex(t => t.Id == LineDataSource.Id);
 
                     if (selectedLineIndex > -1)
                     {
                         DataSource.SelectBillsofMaterialLines[selectedLineIndex] = LineDataSource;
                     }
                 }
-                else
-                {
-                    DataSource.SelectBillsofMaterialLines.Add(LineDataSource);
-                }
+
+                LineDataSource.FinishedProductID = DataSource.FinishedProductID;
+                LineDataSource.FinishedProductCode = DataSource.FinishedProductCode;
+                GridLineList = DataSource.SelectBillsofMaterialLines;
+                await _LineGrid.Refresh();
+
+                HideLinesPopup();
+                await InvokeAsync(StateHasChanged);
             }
-            else
-            {
-                int selectedLineIndex = DataSource.SelectBillsofMaterialLines.FindIndex(t => t.Id == LineDataSource.Id);
-
-                if (selectedLineIndex > -1)
-                {
-                    DataSource.SelectBillsofMaterialLines[selectedLineIndex] = LineDataSource;
-                }
-            }
-
-            LineDataSource.FinishedProductID = DataSource.FinishedProductID;
-            LineDataSource.FinishedProductCode = DataSource.FinishedProductCode;
-            GridLineList = DataSource.SelectBillsofMaterialLines;
-            await _LineGrid.Refresh();
-
-            HideLinesPopup();
-            await InvokeAsync(StateHasChanged);
+           
         }
 
         #endregion
