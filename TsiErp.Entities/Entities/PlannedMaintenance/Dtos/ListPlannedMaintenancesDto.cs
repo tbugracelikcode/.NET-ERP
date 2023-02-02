@@ -61,5 +61,9 @@ namespace TsiErp.Entities.Entities.PlannedMaintenance.Dtos
         /// Planlanan Bakım Tarihi
         /// </summary>
         public DateTime? PlannedDate { get; set; }
+        /// <summary>
+        ///  Tamamlama Tarihi
+        /// </summary>
+        public DateTime? CompletionDate { get; set; }
     }
 }

@@ -12,6 +12,6 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
 {
     public interface IMaintenanceInstructionsAppService : ICrudAppService<SelectMaintenanceInstructionsDto, ListMaintenanceInstructionsDto, CreateMaintenanceInstructionsDto, UpdateMaintenanceInstructionsDto, ListMaintenanceInstructionsParameterDto>
     {
-
+        Task<IDataResult<SelectMaintenanceInstructionsDto>> GetbyPeriodStationAsync(Guid? stationID, Guid? periodID);
     }
 }
