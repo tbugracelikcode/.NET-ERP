@@ -138,5 +138,19 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
 
             return new SuccessDataResult<SelectMaintenanceInstructionsDto>(ObjectMapper.Map<MaintenanceInstructions, SelectMaintenanceInstructionsDto>(mappedEntity));
         }
+
+        public async Task<IDataResult<SelectMaintenanceInstructionsDto>> GetbyPeriodStationAsync(Guid? stationID, Guid? periodID)
+        {
+            var entity = await _repository.GetAsync(t => t.StationID == stationID && t.PeriodID == periodID,
+                t => t.MaintenanceInstructionLines,
+                t => t.MaintenancePeriods,
+                t => t.Stations);
+
+            var mappedEntity = ObjectMapper.Map<MaintenanceInstructions, SelectMaintenanceInstructionsDto>(entity);
+
+            mappedEntity.SelectMaintenanceInstructionLines = ObjectMapper.Map<List<MaintenanceInstructionLines>, List<SelectMaintenanceInstructionLinesDto>>(entity.MaintenanceInstructionLines.ToList());
+
+            return new SuccessDataResult<SelectMaintenanceInstructionsDto>(mappedEntity);
+        }
     }
 }

@@ -1919,6 +1919,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.StartDate).HasColumnType(SqlDbType.DateTime.ToString());
                 b.Property(t => t.EndDate).HasColumnType(SqlDbType.DateTime.ToString());
                 b.Property(t => t.PlannedDate).HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.CompletionDate).HasColumnType(SqlDbType.DateTime.ToString());
                 b.Property(t => t.Note_).HasColumnType("nvarchar(max)");
 
                 b.HasIndex(x => x.RegistrationNo);

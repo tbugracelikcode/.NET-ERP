@@ -136,6 +136,10 @@ using TsiErp.Entities.Entities.MaintenanceInstruction;
 using TsiErp.Entities.Entities.MaintenanceInstruction.Dtos;
 using TsiErp.Entities.Entities.MaintenanceInstructionLine;
 using TsiErp.Entities.Entities.MaintenanceInstructionLine.Dtos;
+using TsiErp.Entities.Entities.PlannedMaintenance;
+using TsiErp.Entities.Entities.PlannedMaintenance.Dtos;
+using TsiErp.Entities.Entities.PlannedMaintenanceLine;
+using TsiErp.Entities.Entities.PlannedMaintenanceLine.Dtos;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -992,6 +996,33 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateMaintenanceInstructionLinesDto, MaintenanceInstructionLines>();
             CreateMap<SelectMaintenanceInstructionLinesDto, UpdateMaintenanceInstructionLinesDto>();
             CreateMap<SelectMaintenanceInstructionLinesDto, MaintenanceInstructionLines>();
+
+
+            CreateMap<PlannedMaintenances, SelectPlannedMaintenancesDto>()
+           .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
+           .ForMember(x => x.PeriodName, y => y.MapFrom(z => z.MaintenancePeriods.Name));
+            CreateMap<PlannedMaintenances, ListPlannedMaintenancesDto>()
+            .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
+            .ForMember(x => x.PeriodName, y => y.MapFrom(z => z.MaintenancePeriods.Name));
+            CreateMap<UpdatePlannedMaintenancesDto, PlannedMaintenances>()
+                .ForMember(x => x.PlannedMaintenanceLines, y => y.Ignore());
+            CreateMap<CreatePlannedMaintenancesDto, PlannedMaintenances>();
+            CreateMap<SelectPlannedMaintenancesDto, CreatePlannedMaintenancesDto>();
+            CreateMap<SelectPlannedMaintenancesDto, UpdatePlannedMaintenancesDto>();
+
+
+
+            CreateMap<PlannedMaintenanceLines, SelectPlannedMaintenanceLinesDto>()
+               .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+               .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code));
+            CreateMap<PlannedMaintenanceLines, ListPlannedMaintenanceLinesDto>()
+               .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+               .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code));
+            CreateMap<CreatePlannedMaintenanceLinesDto, PlannedMaintenanceLines>();
+            CreateMap<SelectPlannedMaintenanceLinesDto, CreatePlannedMaintenanceLinesDto>();
+            CreateMap<UpdatePlannedMaintenanceLinesDto, PlannedMaintenanceLines>();
+            CreateMap<SelectPlannedMaintenanceLinesDto, UpdatePlannedMaintenanceLinesDto>();
+            CreateMap<SelectPlannedMaintenanceLinesDto, PlannedMaintenanceLines>();
         }
     }
 }
