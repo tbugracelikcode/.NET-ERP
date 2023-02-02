@@ -9,6 +9,7 @@ using TsiErp.Entities.Entities.CalendarLine;
 using TsiErp.Entities.Entities.ContractProductionTracking;
 using TsiErp.Entities.Entities.MaintenanceInstruction;
 using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
+using TsiErp.Entities.Entities.PlannedMaintenance;
 using TsiErp.Entities.Entities.ProductionTracking;
 using TsiErp.Entities.Entities.ProductsOperationLine;
 using TsiErp.Entities.Entities.StationGroup;
@@ -125,21 +126,14 @@ namespace TsiErp.Entities.Entities.Station
         public bool IsContract { get; set; }
 
         public StationGroups StationGroups { get; set; }
-
         public ICollection<TemplateOperationLines> TemplateOperationLines { get; set; }
-
         public ICollection<ProductsOperationLines> ProductsOperationLines { get; set; }
-
         public ICollection<CalendarLines> CalendarLines { get; set; }
-
         public ICollection<WorkOrders> WorkOrders { get; set; }
-
         public ICollection<OperationUnsuitabilityReports> OperationUnsuitabilityReports { get; set; }
-
         public ICollection<ProductionTrackings> ProductionTrackings { get; set; }
-
         public ICollection<ContractProductionTrackings> ContractProductionTrackings { get; set; }
-
+        public ICollection<PlannedMaintenances> PlannedMaintenances { get; set; }
         public ICollection<StationInventories> StationInventories { get; set; }
         public ICollection<MaintenanceInstructions> MaintenanceInstructions { get; set; }
 
