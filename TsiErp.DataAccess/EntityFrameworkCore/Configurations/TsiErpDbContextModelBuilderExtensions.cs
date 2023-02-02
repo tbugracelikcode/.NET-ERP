@@ -1914,9 +1914,9 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.NumberofCaregivers).HasColumnType(SqlDbType.Int.ToString());
                 b.Property(t => t.RemainingTime).HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.PlannedTime).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.PeriodTime).HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.OccuredTime).HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.StartDate).HasColumnType(SqlDbType.DateTime.ToString());
-                b.Property(t => t.EndDate).HasColumnType(SqlDbType.DateTime.ToString());
                 b.Property(t => t.PlannedDate).HasColumnType(SqlDbType.DateTime.ToString());
                 b.Property(t => t.CompletionDate).HasColumnType(SqlDbType.DateTime.ToString());
                 b.Property(t => t.Note_).HasColumnType("nvarchar(max)");

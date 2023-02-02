@@ -22,6 +22,10 @@ namespace TsiErp.Entities.Entities.PlannedMaintenance.Dtos
         /// </summary>
         public string PeriodName { get; set; }
         /// <summary>
+        /// Periyot Süresi
+        /// </summary>
+        public decimal PeriodTime { get; set; }
+        /// <summary>
         /// Durum
         /// </summary>
         public int Status { get; set; }
@@ -53,10 +57,6 @@ namespace TsiErp.Entities.Entities.PlannedMaintenance.Dtos
         /// Başlangıç Tarihi
         /// </summary>
         public DateTime? StartDate { get; set; }
-        /// <summary>
-        /// Bitiş Tarihi
-        /// </summary>
-        public DateTime? EndDate { get; set; }
         /// <summary>
         /// Planlanan Bakım Tarihi
         /// </summary>
