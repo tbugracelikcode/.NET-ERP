@@ -43,5 +43,7 @@ namespace TsiErp.Entities.Entities.PurchasePrice
 
         public Currencies Currencies { get; set; }
         public ICollection<PurchasePriceLines> PurchasePriceLines { get; set; }
+
+        public CurrentAccountCards CurrentAccountCards { get; set; }
     }
 }

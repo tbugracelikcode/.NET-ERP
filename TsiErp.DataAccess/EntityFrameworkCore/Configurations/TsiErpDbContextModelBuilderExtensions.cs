@@ -1726,6 +1726,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.CurrentAccountCardID);
 
                 b.HasOne(x => x.Currencies).WithMany(x => x.PurchasePrices).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.CurrentAccountCards).WithMany(x => x.PurchasePrices).HasForeignKey(x => x.CurrentAccountCardID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 

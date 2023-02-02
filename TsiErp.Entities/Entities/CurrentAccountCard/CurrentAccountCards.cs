@@ -172,5 +172,6 @@ namespace TsiErp.Entities.Entities.CurrentAccountCard
         public ICollection<PurchaseUnsuitabilityReports> PurchaseUnsuitabilityReports { get; set; }
         public ICollection<ContractProductionTrackings> ContractProductionTrackings { get; set; }
         public ICollection<Forecasts> Forecasts { get; set; }
+        public ICollection<PurchasePrices> PurchasePrices { get; set; }
     }
 }

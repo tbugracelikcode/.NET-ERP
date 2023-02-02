@@ -38,6 +38,14 @@ namespace TsiErp.Entities.Entities.PurchasePrice.Dtos
         /// Cari ID
         /// </summary>
         public Guid? CurrentAccountCardID { get; set; }
+        // <summary>
+        /// Cari Kod
+        /// </summary>
+        public string CurrentAccountCardCode { get; set; }
+        // <summary>
+        /// Cari Ünvan
+        /// </summary>
+        public string CurrentAccountCardName { get; set; }
         /// <summary>
         /// Aktiflik
         /// </summary>
