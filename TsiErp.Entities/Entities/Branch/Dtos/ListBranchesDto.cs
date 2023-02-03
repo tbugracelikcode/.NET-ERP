@@ -25,5 +25,6 @@ namespace TsiErp.Entities.Entities.Branch.Dtos
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
+
     }
 }

@@ -16,15 +16,6 @@ namespace TsiErp.ErpUI.Pages.Forecast
 {
     public partial class ForecastsListPage
     {
-        #region ComboBox Listeleri
-
-        SfComboBox<Guid?, ListProductsDto> LineProductsComboBox;
-        List<ListProductsDto> LineProductsList = new List<ListProductsDto>();
-
-        SfComboBox<Guid?, ListPeriodsDto> PeriodsComboBox;
-        List<ListPeriodsDto> PeriodsList = new List<ListPeriodsDto>();
-
-        #endregion
 
         private SfGrid<ListForecastsDto> _grid;
         private SfGrid<SelectForecastLinesDto> _LineGrid;
@@ -142,6 +133,107 @@ namespace TsiErp.ErpUI.Pages.Forecast
         }
         #endregion
 
+        #region Stok Kartı Button Edit
+
+        SfTextBox ProductsCodeButtonEdit;
+        SfTextBox ProductsNameButtonEdit;
+        bool SelectProductsPopupVisible = false;
+        List<ListProductsDto> ProductsList = new List<ListProductsDto>();
+        public async Task ProductsCodeOnCreateIcon()
+        {
+            var ProductsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductsCodeButtonClickEvent);
+            await ProductsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductsButtonClick } });
+        }
+
+        public async void ProductsCodeButtonClickEvent()
+        {
+            SelectProductsPopupVisible = true;
+            await GetProductsList();
+            await InvokeAsync(StateHasChanged);
+        }
+        public async Task ProductsNameOnCreateIcon()
+        {
+            var ProductsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductsNameButtonClickEvent);
+            await ProductsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductsButtonClick } });
+        }
+
+        public async void ProductsNameButtonClickEvent()
+        {
+            SelectProductsPopupVisible = true;
+            await GetProductsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void ProductsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                LineDataSource.ProductID = Guid.Empty;
+                LineDataSource.ProductCode = string.Empty;
+                LineDataSource.ProductName = string.Empty;
+            }
+        }
+
+        public async void ProductsDoubleClickHandler(RecordDoubleClickEventArgs<ListProductsDto> args)
+        {
+            var selectedProduct = args.RowData;
+
+            if (selectedProduct != null)
+            {
+                LineDataSource.ProductID = selectedProduct.Id;
+                LineDataSource.ProductCode = selectedProduct.Code;
+                LineDataSource.ProductName = selectedProduct.Name;
+                SelectProductsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        #endregion
+
+        #region Dönem ButtonEdit
+
+        SfTextBox PeriodsButtonEdit;
+        bool SelectPeriodsPopupVisible = false;
+        List<ListPeriodsDto> PeriodsList = new List<ListPeriodsDto>();
+
+        public async Task PeriodsOnCreateIcon()
+        {
+            var PeriodsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, PeriodsButtonClickEvent);
+            await PeriodsButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", PeriodsButtonClick } });
+        }
+
+        public async void PeriodsButtonClickEvent()
+        {
+            SelectPeriodsPopupVisible = true;
+            await GetPeriodsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void PeriodsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.PeriodID = Guid.Empty;
+                DataSource.PeriodCode = string.Empty;
+                DataSource.PeriodName = string.Empty;
+            }
+        }
+
+        public async void PeriodsDoubleClickHandler(RecordDoubleClickEventArgs<ListPeriodsDto> args)
+        {
+            var selectedUnitSet = args.RowData;
+
+            if (selectedUnitSet != null)
+            {
+                DataSource.PeriodID = selectedUnitSet.Id;
+                DataSource.PeriodCode = selectedUnitSet.Code;
+                DataSource.PeriodName = selectedUnitSet.Name;
+                SelectPeriodsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
         protected override async Task OnInitializedAsync()
         {
             BaseCrudService = ForecastsAppService;
@@ -149,8 +241,6 @@ namespace TsiErp.ErpUI.Pages.Forecast
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
 
-            await GetPeriodsList();
-            await GetLineProductsList();
         }
 
         #region Forecast Satır Modalı İşlemleri
@@ -344,6 +434,12 @@ namespace TsiErp.ErpUI.Pages.Forecast
 
         #endregion
 
+        #region GetList Metotları
+
+        private async Task GetPeriodsList()
+        {
+            PeriodsList = (await PeriodsAppService.GetListAsync(new ListPeriodsParameterDto())).Data.ToList();
+        }
 
         private async Task GetCurrentAccountCardsList()
         {
@@ -355,88 +451,12 @@ namespace TsiErp.ErpUI.Pages.Forecast
             BranchesList = (await BranchesAppService.GetListAsync(new ListBranchesParameterDto())).Data.ToList();
         }
 
-        #region Dönemler
-        public async Task PeriodsFiltering(FilteringEventArgs args)
+        private async Task GetProductsList()
         {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await PeriodsComboBox.FilterAsync(PeriodsList, query);
+            ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
         }
-
-        private async Task GetPeriodsList()
-        {
-            PeriodsList = (await PeriodsAppService.GetListAsync(new ListPeriodsParameterDto())).Data.ToList();
-        }
-
-        public async Task PeriodValueChangeHandler(ChangeEventArgs<Guid?, ListPeriodsDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                DataSource.PeriodID = args.ItemData.Id;
-                DataSource.PeriodCode = args.ItemData.Code;
-                DataSource.PeriodName = args.ItemData.Name;
-            }
-            else
-            {
-                DataSource.PeriodID = args.ItemData.Id;
-                DataSource.PeriodCode = args.ItemData.Code;
-                DataSource.PeriodName = args.ItemData.Name;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-
 
         #endregion
 
-        #region Stok Kartları - Forecast Satırları
-        public async Task LineProductFiltering(FilteringEventArgs args)
-        {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await LineProductsComboBox.FilterAsync(LineProductsList, query);
-        }
-
-        private async Task GetLineProductsList()
-        {
-            LineProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
-        }
-        public async Task LineProductValueChangeHandler(ChangeEventArgs<Guid?, ListProductsDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                LineDataSource.ProductID = args.ItemData.Id;
-                LineDataSource.ProductCode = args.ItemData.Code;
-                LineDataSource.ProductName = args.ItemData.Name;
-            }
-            else
-            {
-                LineDataSource.ProductID = Guid.Empty;
-                LineDataSource.ProductCode = string.Empty;
-                LineDataSource.ProductName = string.Empty;
-            }
-            LineCalculate();
-            await InvokeAsync(StateHasChanged);
-        }
-        #endregion
     }
 }

@@ -16,12 +16,6 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
     {
         #region ComboBox Listeleri
 
-        SfComboBox<string, ListProductsDto> FinishedProductsComboBox;
-        List<ListProductsDto> FinishedProductsList = new List<ListProductsDto>();
-
-        SfComboBox<string, ListProductsDto> LineProductsComboBox;
-        List<ListProductsDto> LineProductsList = new List<ListProductsDto>();
-
         SfComboBox<string, ListProductsDto> LineFinishedProductsComboBox;
         List<ListProductsDto> LineFinishedProductsList = new List<ListProductsDto>();
 
@@ -88,8 +82,6 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
 
-            await GetFinishedProductsList();
-            await GetLineProductsList();
         }
 
         #region Reçete Satır Modalı İşlemleri
@@ -304,91 +296,139 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
 
         #endregion
 
-        #region Mamüller
-        public async Task FinishedProductFiltering(FilteringEventArgs args)
+        #region Stok Kartı Button Edit
+
+        SfTextBox ProductsCodeButtonEdit;
+        SfTextBox ProductsNameButtonEdit;
+        bool SelectProductsPopupVisible = false;
+        List<ListProductsDto> ProductsList = new List<ListProductsDto>();
+        public async Task ProductsCodeOnCreateIcon()
         {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await FinishedProductsComboBox.FilterAsync(FinishedProductsList, query);
+            var ProductsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductsCodeButtonClickEvent);
+            await ProductsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductsButtonClick } });
         }
+
+        public async void ProductsCodeButtonClickEvent()
+        {
+            SelectProductsPopupVisible = true;
+            await GetProductsList();
+            await InvokeAsync(StateHasChanged);
+        }
+        public async Task ProductsNameOnCreateIcon()
+        {
+            var ProductsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductsNameButtonClickEvent);
+            await ProductsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductsButtonClick } });
+        }
+
+        public async void ProductsNameButtonClickEvent()
+        {
+            SelectProductsPopupVisible = true;
+            await GetProductsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void ProductsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                LineDataSource.ProductID = Guid.Empty;
+                LineDataSource.ProductCode = string.Empty;
+                LineDataSource.ProductName = string.Empty;
+            }
+        }
+
+        public async void ProductsDoubleClickHandler(RecordDoubleClickEventArgs<ListProductsDto> args)
+        {
+            var selectedProduct = args.RowData;
+
+            if (selectedProduct != null)
+            {
+                LineDataSource.ProductID = selectedProduct.Id;
+                LineDataSource.ProductCode = selectedProduct.Code;
+                LineDataSource.ProductName = selectedProduct.Name;
+                SelectProductsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        #endregion
+
+        #region Mamül Button Edit
+
+        SfTextBox FinishedProductsCodeButtonEdit;
+        SfTextBox FinishedProductsNameButtonEdit;
+        bool SelectFinishedProductsPopupVisible = false;
+        List<ListProductsDto> FinishedProductsList = new List<ListProductsDto>();
+        public async Task FinishedProductsCodeOnCreateIcon()
+        {
+            var FinishedProductsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, FinishedProductsCodeButtonClickEvent);
+            await FinishedProductsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", FinishedProductsButtonClick } });
+        }
+
+        public async void FinishedProductsCodeButtonClickEvent()
+        {
+            SelectFinishedProductsPopupVisible = true;
+            await GetFinishedProductsList();
+            await InvokeAsync(StateHasChanged);
+        }
+        public async Task FinishedProductsNameOnCreateIcon()
+        {
+            var FinishedProductsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, FinishedProductsNameButtonClickEvent);
+            await FinishedProductsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", FinishedProductsButtonClick } });
+        }
+
+        public async void FinishedProductsNameButtonClickEvent()
+        {
+            SelectFinishedProductsPopupVisible = true;
+            await GetFinishedProductsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void FinishedProductsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.FinishedProductID = Guid.Empty;
+                DataSource.FinishedProductCode = string.Empty;
+                DataSource.FinishedProducName = string.Empty;
+            }
+        }
+
+        public async void FinishedProductsDoubleClickHandler(RecordDoubleClickEventArgs<ListProductsDto> args)
+        {
+            var selectedFinishedProduct = args.RowData;
+
+            if (selectedFinishedProduct != null)
+            {
+                DataSource.FinishedProductID = selectedFinishedProduct.Id;
+                DataSource.FinishedProductCode = selectedFinishedProduct.Code;
+                DataSource.FinishedProducName = selectedFinishedProduct.Name;
+                SelectFinishedProductsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        #endregion
+
+        #region GetList Metotları
 
         private async Task GetFinishedProductsList()
         {
             FinishedProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
         }
 
-        public async Task FinishedProductValueChangeHandler(ChangeEventArgs<string, ListProductsDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                DataSource.FinishedProductID = args.ItemData.Id;
-                DataSource.FinishedProductCode = args.ItemData.Code;
-                DataSource.FinishedProducName = args.ItemData.Name;
-
-            }
-            else
-            {
-                DataSource.FinishedProductID = Guid.Empty;
-                DataSource.FinishedProductCode = string.Empty;
-                DataSource.FinishedProducName = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-        #endregion
-
         private async Task GetUnitSetsList()
         {
             UnitSetsList = (await UnitSetsAppService.GetListAsync(new ListUnitSetsParameterDto())).Data.ToList();
         }
 
-        #region Stok Kartları - Reçete Satırları
-        public async Task LineProductFiltering(FilteringEventArgs args)
+        private async Task GetProductsList()
         {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await LineProductsComboBox.FilterAsync(LineProductsList, query);
+            ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
         }
 
-        private async Task GetLineProductsList()
-        {
-            LineProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
-        }
-        public async Task LineProductValueChangeHandler(ChangeEventArgs<string, ListProductsDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                LineDataSource.ProductID = args.ItemData.Id;
-                LineDataSource.ProductCode = args.ItemData.Code;
-                LineDataSource.ProductName = args.ItemData.Name;
-            }
-            else
-            {
-                LineDataSource.ProductID = Guid.Empty;
-                LineDataSource.ProductCode = string.Empty;
-                LineDataSource.ProductName = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
         #endregion
+
+
     }
 }

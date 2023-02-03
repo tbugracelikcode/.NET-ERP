@@ -22,17 +22,12 @@ using Syncfusion.Blazor.Navigations;
 using Syncfusion.Blazor.TreeGrid;
 using Syncfusion.Blazor.Inputs;
 using Microsoft.AspNetCore.Components.Web;
+using TsiErp.Entities.Entities.ShippingAdress.Dtos;
 
 namespace TsiErp.ErpUI.Pages.SalesProposition
 {
     public partial class SalesPropositionsListPage
     {
-        #region ComboBox Listeleri
-
-        SfComboBox<string, ListProductsDto> ProductsComboBox;
-        List<ListProductsDto> ProductsList = new List<ListProductsDto>();
-
-        #endregion
 
         private SfGrid<ListSalesPropositionsDto> _grid;
         private SfGrid<SelectSalesPropositionLinesDto> _LineGrid;
@@ -303,6 +298,9 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
                 DataSource.CurrentAccountCardID = Guid.Empty;
                 DataSource.CurrentAccountCardCode = string.Empty;
                 DataSource.CurrentAccountCardName = string.Empty;
+                ShippingAdressEnable = false;
+                DataSource.ShippingAdressCode = string.Empty;
+                DataSource.ShippingAdressID = Guid.Empty;
             }
         }
 
@@ -316,9 +314,116 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
                 DataSource.CurrentAccountCardCode = selectedUnitSet.Code;
                 DataSource.CurrentAccountCardName = selectedUnitSet.Name;
                 SelectCurrentAccountCardsPopupVisible = false;
+                ShippingAdressEnable = true;
                 await InvokeAsync(StateHasChanged);
             }
         }
+        #endregion
+
+        #region Sevkiyat Adresi ButtonEdit
+
+        SfTextBox ShippingAdressesButtonEdit;
+        bool ShippingAdressEnable = false;
+        bool SelectShippingAdressesPopupVisible = false;
+        List<ListShippingAdressesDto> ShippingAdressesList = new List<ListShippingAdressesDto>();
+
+        public async Task ShippingAdressesOnCreateIcon()
+        {
+            var ShippingAdressesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ShippingAdressesButtonClickEvent);
+            await ShippingAdressesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ShippingAdressesButtonClick } });
+        }
+
+        public async void ShippingAdressesButtonClickEvent()
+        {
+            SelectShippingAdressesPopupVisible = true;
+            ShippingAdressesList = (await ShippingAdressesAppService.GetListAsync(new ListShippingAdressesParameterDto())).Data.Where(t => t.CustomerCardCode == DataSource.CurrentAccountCardCode && t.CustomerCardName == DataSource.CurrentAccountCardName).ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void ShippingAdressesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.ShippingAdressID = Guid.Empty;
+                DataSource.ShippingAdressCode = string.Empty;
+            }
+        }
+
+        public async void ShippingAdressesDoubleClickHandler(RecordDoubleClickEventArgs<ListShippingAdressesDto> args)
+        {
+            var selectedShippingAdress = args.RowData;
+
+            if (selectedShippingAdress != null)
+            {
+                DataSource.ShippingAdressID = selectedShippingAdress.Id;
+                DataSource.ShippingAdressCode = selectedShippingAdress.Code;
+                SelectShippingAdressesPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region Stok Kartı Button Edit
+
+        SfTextBox ProductsCodeButtonEdit;
+        SfTextBox ProductsNameButtonEdit;
+        bool SelectProductsPopupVisible = false;
+        List<ListProductsDto> ProductsList = new List<ListProductsDto>();
+        public async Task ProductsCodeOnCreateIcon()
+        {
+            var ProductsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductsCodeButtonClickEvent);
+            await ProductsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductsButtonClick } });
+        }
+
+        public async void ProductsCodeButtonClickEvent()
+        {
+            SelectProductsPopupVisible = true;
+            await GetProductsList();
+            await InvokeAsync(StateHasChanged);
+        }
+        public async Task ProductsNameOnCreateIcon()
+        {
+            var ProductsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductsNameButtonClickEvent);
+            await ProductsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductsButtonClick } });
+        }
+
+        public async void ProductsNameButtonClickEvent()
+        {
+            SelectProductsPopupVisible = true;
+            await GetProductsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void ProductsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                LineDataSource.ProductID = Guid.Empty;
+                LineDataSource.ProductCode = string.Empty;
+                LineDataSource.ProductName = string.Empty;
+                LineDataSource.UnitSetID = Guid.Empty;
+                LineDataSource.UnitSetCode = string.Empty;
+                LineDataSource.VATrate = 0;
+            }
+        }
+
+        public async void ProductsDoubleClickHandler(RecordDoubleClickEventArgs<ListProductsDto> args)
+        {
+            var selectedProduct = args.RowData;
+
+            if (selectedProduct != null)
+            {
+                LineDataSource.ProductID = selectedProduct.Id;
+                LineDataSource.ProductCode = selectedProduct.Code;
+                LineDataSource.ProductName = selectedProduct.Name;
+                LineDataSource.UnitSetID = selectedProduct.UnitSetID;
+                LineDataSource.UnitSetCode = selectedProduct.UnitSetCode;
+                LineDataSource.VATrate = selectedProduct.SaleVAT;
+                SelectProductsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
         #endregion
 
 
@@ -330,7 +435,6 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
 
             BaseCrudService = SalesPropositionsAppService;
 
-            await GetProductsList();
         }
 
         #region Satışı Teklife Dönüştürme Modalı İşlemleri
@@ -895,6 +999,13 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
 
         #endregion
 
+        #region GetList Metotları
+
+        private async Task GetProductsList()
+        {
+            ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
+        }
+
         private async Task GetCurrentAccountCardsList()
         {
             CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
@@ -916,53 +1027,6 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             CurrenciesList = (await CurrenciesAppService.GetListAsync(new ListCurrenciesParameterDto())).Data.ToList();
         }
 
-        #region Stok Kartları -Teklif Satırları
-        public async Task ProductFiltering(FilteringEventArgs args)
-        {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await ProductsComboBox.FilterAsync(ProductsList, query);
-        }
-
-        private async Task GetProductsList()
-        {
-            ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
-        }
-        public async Task ProductValueChangeHandler(ChangeEventArgs<string, ListProductsDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                LineDataSource.ProductID = args.ItemData.Id;
-                LineDataSource.ProductCode = args.ItemData.Code;
-                LineDataSource.ProductName = args.ItemData.Name;
-                LineDataSource.UnitSetID = args.ItemData.UnitSetID;
-                LineDataSource.UnitSetCode = args.ItemData.UnitSetCode;
-                LineDataSource.VATrate = args.ItemData.SaleVAT;
-            }
-            else
-            {
-                LineDataSource.ProductID = Guid.Empty;
-                LineDataSource.ProductCode = string.Empty;
-                LineDataSource.ProductName = string.Empty;
-                LineDataSource.UnitSetID = Guid.Empty;
-                LineDataSource.UnitSetCode = string.Empty;
-                LineDataSource.VATrate = 0;
-            }
-            LineCalculate();
-            await InvokeAsync(StateHasChanged);
-        }
-        #endregion
-
         private async Task GetUnitSetsList()
         {
             UnitSetsList = (await UnitSetsAppService.GetListAsync(new ListUnitSetsParameterDto())).Data.ToList();
@@ -972,5 +1036,9 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
         {
             PaymentPlansList = (await PaymentPlansAppService.GetListAsync(new ListPaymentPlansParameterDto())).Data.ToList();
         }
+        #endregion
+
+
+
     }
 }

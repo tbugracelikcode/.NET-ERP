@@ -165,7 +165,7 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateMaintenancePeriodsDto, MaintenancePeriods>();
             CreateMap<SelectMaintenancePeriodsDto, UpdateMaintenancePeriodsDto>();
 
-            CreateMap<Branches, SelectBranchesDto>();
+            CreateMap<Branches, SelectBranchesDto>(); 
             CreateMap<Branches, ListBranchesDto>();
             CreateMap<CreateBranchesDto, Branches>();
             CreateMap<SelectBranchesDto, CreateBranchesDto>();

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Employee;
 using TsiErp.Entities.Entities.EquipmentRecord;
 

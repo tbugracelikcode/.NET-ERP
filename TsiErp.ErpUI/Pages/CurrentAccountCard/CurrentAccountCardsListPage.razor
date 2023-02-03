@@ -136,10 +136,10 @@ else
                                             <DxGridLayout CssClass="TSIGridLayout">
 
                                                 <Rows>
+                                                    <DxGridLayoutRow Height="35%" />
                                                     <DxGridLayoutRow Height="30%" />
-                                                    <DxGridLayoutRow Height="25%" />
-                                                    <DxGridLayoutRow Height="25%" />
-                                                    <DxGridLayoutRow Height="20%" />
+                                                    <DxGridLayoutRow Height="30%" />
+                                                    <DxGridLayoutRow Height="30%" />
                                                     <DxGridLayoutRow Height="20%" />
                                                 </Rows>
 
@@ -166,47 +166,8 @@ else
                                                     <DxGridLayoutItem Row="0" Column="2">
                                                         <Template>
                                                             <br />
-                                                            <label class="TSIModalLabel"><strong>Sevkiyat Adresi: </strong></label>
-                                                            <SfComboBox @ref="ShippingAdressesComboBox"
-                                                                    TValue="string"
-                                                                    TItem="ListShippingAdressesDto"
-                                                                    Placeholder="Sevkiyat Adresi Seçin"
-                                                                    CssClass="e-multi-column"
-                                                                    Value="DataSource.ShippingAddress"
-                                                                    DataSource="@ShippingAdressesList"
-                                                                    AllowFiltering="true"
-                                                                    PopupWidth="700px"
-                                                                    PopupHeight="500">
-
-                                                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
-
-                                                                <ComboBoxTemplates TItem="ListShippingAdressesDto">
-                                                                    <HeaderTemplate>
-                                                                        <table>
-                                                                            <tr>
-                                                                                <th class="e-text-center">Sevkiyat Adresi Kodu</th>
-                                                                                <th class="e-text-center">Sevkiyat Adresi Adı</th>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate Context="cmbContext">
-
-                                                                        <table>
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td class="e-text-center">@((cmbContext as ListShippingAdressesDto).Code)</td>
-                                                                                    <td class="e-text-center">@((cmbContext as ListShippingAdressesDto).Name)</td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </ItemTemplate>
-                                                                </ComboBoxTemplates>
-
-                                                                <ComboBoxEvents TValue="string"
-                                                                            TItem="ListShippingAdressesDto"
-                                                                            Filtering="ShippingAdressFiltering"
-                                                                            ValueChange="ShippingAdressValueChangeHandler"></ComboBoxEvents>
-                                                            </SfComboBox>
+                                                            <label class="TSIModalLabel"><strong>Artı Yüzde Oran: </strong></label>
+                                                            <SfNumericTextBox Placeholder="Artı Yüzde Oranı Yazınız" @bind-Value="DataSource.PlusPercentage"></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -306,8 +267,7 @@ else
 
                                                     <DxGridLayoutItem Row="3" Column="6">
                                                         <Template>
-                                                            <label class="TSIModalLabel"><strong>Artı Yüzde Oran: </strong></label>
-                                                            <SfNumericTextBox Placeholder="Artı Yüzde Oranı Yazınız" @bind-Value="DataSource.PlusPercentage"></SfNumericTextBox>
+                                                           
                                                         </Template>
                                                     </DxGridLayoutItem>
 
