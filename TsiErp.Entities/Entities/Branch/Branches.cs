@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Entities.Department;
 using TsiErp.Entities.Entities.Forecast;
 using TsiErp.Entities.Entities.Period;
 using TsiErp.Entities.Entities.PurchaseOrder;
@@ -38,13 +39,8 @@ namespace TsiErp.Entities.Entities.Branch
         /// </summary>
         public bool IsActive { get; set; }
 
-        /// <summary>
-        /// Dönemler
-        /// </summary>
+        
         public ICollection<Periods> Periods { get; set; }
-        /// <summary>
-        /// Satış Teklifleri
-        /// </summary>
         public ICollection<SalesPropositions> SalesPropositions { get; set; }
         public ICollection<SalesOrders> SalesOrders { get; set; }
         public ICollection<PurchaseOrders> PurchaseOrders { get; set; }

@@ -20,18 +20,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseOrder
 {
     public partial class PurchaseOrdersListPage
     {
-        #region ComboBox Listeleri
-
-        SfComboBox<string, ListProductsDto> ProductsComboBox;
-        List<ListProductsDto> ProductsList = new List<ListProductsDto>();
-
-        SfComboBox<string, ListProductionOrdersDto> ProductionOrdersComboBox;
-        List<ListProductionOrdersDto> ProductionOrdersList = new List<ListProductionOrdersDto>();
-
-        SfComboBox<string, ListProductionOrdersDto> LineProductionOrdersComboBox;
-        List<ListProductionOrdersDto> LineProductionOrdersList = new List<ListProductionOrdersDto>();
-
-        #endregion
 
         private SfGrid<ListPurchaseOrdersDto> _grid;
         private SfGrid<SelectPurchaseOrderLinesDto> _LineGrid;
@@ -317,16 +305,152 @@ namespace TsiErp.ErpUI.Pages.PurchaseOrder
         }
         #endregion
 
+        #region Stok Kartı Button Edit
+
+        SfTextBox ProductsCodeButtonEdit;
+        SfTextBox ProductsNameButtonEdit;
+        bool SelectProductsPopupVisible = false;
+        List<ListProductsDto> ProductsList = new List<ListProductsDto>();
+        public async Task ProductsCodeOnCreateIcon()
+        {
+            var ProductsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductsCodeButtonClickEvent);
+            await ProductsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductsButtonClick } });
+        }
+
+        public async void ProductsCodeButtonClickEvent()
+        {
+            SelectProductsPopupVisible = true;
+            await GetProductsList();
+            await InvokeAsync(StateHasChanged);
+        }
+        public async Task ProductsNameOnCreateIcon()
+        {
+            var ProductsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductsNameButtonClickEvent);
+            await ProductsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductsButtonClick } });
+        }
+
+        public async void ProductsNameButtonClickEvent()
+        {
+            SelectProductsPopupVisible = true;
+            await GetProductsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void ProductsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                LineDataSource.ProductID = Guid.Empty;
+                LineDataSource.ProductCode = string.Empty;
+                LineDataSource.ProductName = string.Empty;
+            }
+        }
+
+        public async void ProductsDoubleClickHandler(RecordDoubleClickEventArgs<ListProductsDto> args)
+        {
+            var selectedProduct = args.RowData;
+
+            if (selectedProduct != null)
+            {
+                LineDataSource.ProductID = selectedProduct.Id;
+                LineDataSource.ProductCode = selectedProduct.Code;
+                LineDataSource.ProductName = selectedProduct.Name;
+                SelectProductsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        #endregion
+
+        #region Üretim Emri ButtonEdit
+
+        SfTextBox ProductionOrdersButtonEdit;
+        bool SelectProductionOrdersPopupVisible = false;
+        List<ListProductionOrdersDto> ProductionOrdersList = new List<ListProductionOrdersDto>();
+
+        public async Task ProductionOrdersOnCreateIcon()
+        {
+            var ProductionOrdersButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductionOrdersButtonClickEvent);
+            await ProductionOrdersButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductionOrdersButtonClick } });
+        }
+
+        public async void ProductionOrdersButtonClickEvent()
+        {
+            SelectProductionOrdersPopupVisible = true;
+            await GetProductionOrdersList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void ProductionOrdersOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.ProductionOrderID = Guid.Empty;
+                DataSource.ProductionOrderFicheNo = string.Empty;
+            }
+        }
+
+        public async void ProductionOrdersDoubleClickHandler(RecordDoubleClickEventArgs<ListProductionOrdersDto> args)
+        {
+            var selectedProductionOrder = args.RowData;
+
+            if (selectedProductionOrder != null)
+            {
+                DataSource.ProductionOrderID = selectedProductionOrder.Id;
+                DataSource.ProductionOrderFicheNo = selectedProductionOrder.FicheNo;
+                SelectProductionOrdersPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region Üretim Emri ButtonEdit - Satır
+
+        SfTextBox LineProductionOrdersButtonEdit;
+        List<ListProductionOrdersDto> LineProductionOrdersList = new List<ListProductionOrdersDto>();
+
+        public async Task LineProductionOrdersOnCreateIcon()
+        {
+            var LineProductionOrdersButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, LineProductionOrdersButtonClickEvent);
+            await LineProductionOrdersButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", LineProductionOrdersButtonClick } });
+        }
+
+        public async void LineProductionOrdersButtonClickEvent()
+        {
+            SelectProductionOrdersPopupVisible = true;
+            await GetLineProductionOrdersList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void LineProductionOrdersOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                LineDataSource.ProductionOrderID = Guid.Empty;
+                LineDataSource.ProductionOrderFicheNo = string.Empty;
+            }
+        }
+
+        public async void LineProductionOrdersDoubleClickHandler(RecordDoubleClickEventArgs<ListProductionOrdersDto> args)
+        {
+            var selectedLineProductionOrder = args.RowData;
+
+            if (selectedLineProductionOrder != null)
+            {
+                LineDataSource.ProductionOrderID = selectedLineProductionOrder.Id;
+                LineDataSource.ProductionOrderFicheNo = selectedLineProductionOrder.FicheNo;
+                SelectProductionOrdersPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
         protected override async Task OnInitializedAsync()
         {
             BaseCrudService = PurchaseOrdersAppService;
 
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
-
-            await GetProductsList();
-            await GetProductionOrdersList();
-            await LineGetProductionOrdersList();
         }
 
         #region Teklif Satır Modalı İşlemleri
@@ -567,6 +691,17 @@ namespace TsiErp.ErpUI.Pages.PurchaseOrder
         }
         #endregion
 
+        #region GetList Metotları
+
+        private async Task GetLineProductionOrdersList()
+        {
+            LineProductionOrdersList = (await ProductionOrdersAppService.GetListAsync(new ListProductionOrdersParameterDto())).Data.ToList();
+        }
+
+        private async Task GetProductionOrdersList()
+        {
+            ProductionOrdersList = (await ProductionOrdersAppService.GetListAsync(new ListProductionOrdersParameterDto())).Data.ToList();
+        }
         private async Task GetCurrentAccountCardsList()
         {
             CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
@@ -588,91 +723,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseOrder
             CurrenciesList = (await CurrenciesAppService.GetListAsync(new ListCurrenciesParameterDto())).Data.ToList();
         }
 
-        #region Üretim Emirleri
-        public async Task ProductionOrderFiltering(FilteringEventArgs args)
-        {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await ProductionOrdersComboBox.FilterAsync(ProductionOrdersList, query);
-        }
-
-        private async Task GetProductionOrdersList()
-        {
-            ProductionOrdersList = (await ProductionOrdersAppService.GetListAsync(new ListProductionOrdersParameterDto())).Data.ToList();
-        }
-        public async Task ProductionOrderValueChangeHandler(ChangeEventArgs<string, ListProductionOrdersDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                DataSource.ProductionOrderID = args.ItemData.Id;
-                DataSource.ProductionOrderFicheNo = args.ItemData.FicheNo;
-            }
-            else
-            {
-                DataSource.ProductionOrderID = Guid.Empty;
-                DataSource.ProductionOrderFicheNo = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-        #endregion
-
-        #region Stok Kartları -Sipariş Satırları
-        public async Task ProductFiltering(FilteringEventArgs args)
-        {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await ProductsComboBox.FilterAsync(ProductsList, query);
-        }
-
-        private async Task GetProductsList()
-        {
-            ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
-        }
-        public async Task ProductValueChangeHandler(ChangeEventArgs<string, ListProductsDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                LineDataSource.ProductID = args.ItemData.Id;
-                LineDataSource.ProductCode = args.ItemData.Code;
-                LineDataSource.ProductName = args.ItemData.Name;
-                LineDataSource.UnitSetID = args.ItemData.UnitSetID;
-                LineDataSource.UnitSetCode = args.ItemData.UnitSetCode;
-                LineDataSource.VATrate = args.ItemData.SaleVAT;
-            }
-            else
-            {
-                LineDataSource.ProductID = Guid.Empty;
-                LineDataSource.ProductCode = string.Empty;
-                LineDataSource.ProductName = string.Empty;
-                LineDataSource.UnitSetID = Guid.Empty;
-                LineDataSource.UnitSetCode = string.Empty;
-                LineDataSource.VATrate = 0;
-            }
-            LineCalculate();
-            await InvokeAsync(StateHasChanged);
-        }
-        #endregion
-
         private async Task GetUnitSetsList()
         {
             UnitSetsList = (await UnitSetsAppService.GetListAsync(new ListUnitSetsParameterDto())).Data.ToList();
@@ -683,42 +733,13 @@ namespace TsiErp.ErpUI.Pages.PurchaseOrder
             PaymentPlansList = (await PaymentPlansAppService.GetListAsync(new ListPaymentPlansParameterDto())).Data.ToList();
         }
 
-        #region Üretim Emirleri - Sipariş Satırları
-        public async Task LineProductionOrderFiltering(FilteringEventArgs args)
+        private async Task GetProductsList()
         {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await LineProductionOrdersComboBox.FilterAsync(LineProductionOrdersList, query);
+            ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
         }
 
-        private async Task LineGetProductionOrdersList()
-        {
-            ProductionOrdersList = (await ProductionOrdersAppService.GetListAsync(new ListProductionOrdersParameterDto())).Data.ToList();
-        }
-        public async Task LineProductionOrderValueChangeHandler(ChangeEventArgs<string, ListProductionOrdersDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                LineDataSource.ProductionOrderID = args.ItemData.Id;
-                LineDataSource.ProductionOrderFicheNo = args.ItemData.FicheNo;
-            }
-            else
-            {
-                LineDataSource.ProductionOrderID = Guid.Empty;
-                LineDataSource.ProductionOrderFicheNo = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
         #endregion
+
+       
     }
 }
