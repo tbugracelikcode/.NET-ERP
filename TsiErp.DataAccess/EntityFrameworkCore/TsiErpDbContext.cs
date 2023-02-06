@@ -82,6 +82,8 @@ using TsiErp.Entities.Entities.PlannedMaintenance;
 using TsiErp.Entities.Entities.PlannedMaintenanceLine;
 using TsiErp.Entities.Entities.UnplannedMaintenance;
 using TsiErp.Entities.Entities.UnplannedMaintenanceLine;
+using TsiErp.Entities.Entities.ByDateStockMovement;
+using TsiErp.Entities.Entities.GrandTotalStockMovement;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore
 {
@@ -214,6 +216,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
             builder.ConfigurePlannedMaintenances();
             builder.ConfigureUnplannedMaintenanceLines();
             builder.ConfigureUnplannedMaintenances();
+            builder.ConfigureByDateStockMovements();
+            builder.ConfigureGrandTotalStockMovements();
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -331,6 +335,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
         public DbSet<PlannedMaintenanceLines> PlannedMaintenanceLines { get; set; }
         public DbSet<UnplannedMaintenances> UnplannedMaintenances { get; set; }
         public DbSet<UnplannedMaintenanceLines> UnplannedMaintenanceLines { get; set; }
+        public DbSet<ByDateStockMovements> ByDateStockMovements { get; set; }
+        public DbSet<GrandTotalStockMovements> GrandTotalStockMovements { get; set; }
 
         #endregion
     }

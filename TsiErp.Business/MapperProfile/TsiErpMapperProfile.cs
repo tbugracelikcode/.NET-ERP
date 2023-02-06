@@ -144,6 +144,10 @@ using TsiErp.Entities.Entities.UnplannedMaintenance;
 using TsiErp.Entities.Entities.UnplannedMaintenance.Dtos;
 using TsiErp.Entities.Entities.UnplannedMaintenanceLine;
 using TsiErp.Entities.Entities.UnplannedMaintenanceLine.Dtos;
+using TsiErp.Entities.Entities.GrandTotalStockMovement;
+using TsiErp.Entities.Entities.GrandTotalStockMovement.Dtos;
+using TsiErp.Entities.Entities.ByDateStockMovement;
+using TsiErp.Entities.Entities.ByDateStockMovement.Dtos;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -1066,6 +1070,37 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateUnplannedMaintenanceLinesDto, UnplannedMaintenanceLines>();
             CreateMap<SelectUnplannedMaintenanceLinesDto, UpdateUnplannedMaintenanceLinesDto>();
             CreateMap<SelectUnplannedMaintenanceLinesDto, UnplannedMaintenanceLines>();
+
+            CreateMap<GrandTotalStockMovements, SelectGrandTotalStockMovementsDto>()
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name))
+                .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Code))
+                .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Code));
+            CreateMap<GrandTotalStockMovements, ListGrandTotalStockMovementsDto>()
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name))
+                .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Code))
+                .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Code));
+            CreateMap<CreateGrandTotalStockMovementsDto, GrandTotalStockMovements>();
+            CreateMap<SelectGrandTotalStockMovementsDto, CreateGrandTotalStockMovementsDto>();
+            CreateMap<UpdateGrandTotalStockMovementsDto, GrandTotalStockMovements>();
+            CreateMap<SelectGrandTotalStockMovementsDto, UpdateGrandTotalStockMovementsDto>();
+
+
+            CreateMap<ByDateStockMovements, SelectByDateStockMovementsDto>()
+               .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+               .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name))
+               .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Code))
+               .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Code));
+            CreateMap<ByDateStockMovements, ListByDateStockMovementsDto>()
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name))
+                .ForMember(x => x.BranchCode, y => y.MapFrom(z => z.Branches.Code))
+                .ForMember(x => x.WarehouseCode, y => y.MapFrom(z => z.Warehouses.Code));
+            CreateMap<CreateByDateStockMovementsDto, ByDateStockMovements>();
+            CreateMap<SelectByDateStockMovementsDto, CreateByDateStockMovementsDto>();
+            CreateMap<UpdateByDateStockMovementsDto, ByDateStockMovements>();
+            CreateMap<SelectByDateStockMovementsDto, UpdateByDateStockMovementsDto>();
         }
     }
 }

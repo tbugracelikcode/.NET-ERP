@@ -79,6 +79,8 @@ using TsiErp.Entities.Entities.PlannedMaintenance;
 using TsiErp.Entities.Entities.PlannedMaintenanceLine;
 using TsiErp.Entities.Entities.UnplannedMaintenance;
 using TsiErp.Entities.Entities.UnplannedMaintenanceLine;
+using TsiErp.Entities.Entities.GrandTotalStockMovement;
+using TsiErp.Entities.Entities.ByDateStockMovement;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 {
@@ -2017,6 +2019,68 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasOne(x => x.Products).WithMany(x => x.UnplannedMaintenanceLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.UnplannedMaintenances).WithMany(x => x.UnplannedMaintenanceLines).HasForeignKey(x => x.UnplannedMaintenanceID).OnDelete(DeleteBehavior.Cascade);
                 b.HasOne(x => x.UnitSets).WithMany(x => x.UnplannedMaintenanceLines).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+
+        public static void ConfigureByDateStockMovements(this ModelBuilder builder)
+        {
+            builder.Entity<ByDateStockMovements>(b =>
+            {
+                b.ToTable("ByDateStockMovements");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.Date_).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.TotalPurchaseRequest).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.TotalPurchaseOrder).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.TotalSalesProposition).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.TotalSalesOrder).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.TotalConsumption).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.TotalWastage).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.TotalProduction).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.TotalGoodsReceipt).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.TotalGoodsIssue).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.BranchID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.WarehouseID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+                b.HasIndex(x => x.ProductID);
+                b.HasIndex(x => x.BranchID);
+                b.HasIndex(x => x.WarehouseID);
+
+                b.HasOne(x => x.Products).WithMany(x => x.ByDateStockMovements).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Branches).WithMany(x => x.ByDateStockMovements).HasForeignKey(x => x.BranchID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Warehouses).WithMany(x => x.ByDateStockMovements).HasForeignKey(x => x.WarehouseID).OnDelete(DeleteBehavior.NoAction);
+            });
+        }
+
+        public static void ConfigureGrandTotalStockMovements(this ModelBuilder builder)
+        {
+            builder.Entity<GrandTotalStockMovements>(b =>
+            {
+                b.ToTable("GrandTotalStockMovements");
+                b.ConfigureByConvention();
+
+                b.Property(t => t.TotalReserved).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.TotalPurchaseRequest).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.TotalPurchaseOrder).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.TotalSalesProposition).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.TotalSalesOrder).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.TotalConsumption).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.TotalWastage).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.TotalProduction).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.TotalGoodsReceipt).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.TotalGoodsIssue).HasColumnType(SqlDbType.Decimal.ToString());
+                b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.BranchID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.WarehouseID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+                b.HasIndex(x => x.ProductID);
+                b.HasIndex(x => x.BranchID);
+                b.HasIndex(x => x.WarehouseID);
+
+                b.HasOne(x => x.Products).WithMany(x => x.GrandTotalStockMovements).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Branches).WithMany(x => x.GrandTotalStockMovements).HasForeignKey(x => x.BranchID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Warehouses).WithMany(x => x.GrandTotalStockMovements).HasForeignKey(x => x.WarehouseID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 

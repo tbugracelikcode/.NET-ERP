@@ -20,6 +20,8 @@ using TsiErp.ErpUI.Helpers;
 using TsiErp.Business.Extensions.ObjectMapping;
 using Syncfusion.Blazor.HeatMap.Internal;
 using Syncfusion.Blazor.Calendars;
+using Syncfusion.Blazor.Inputs;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace TsiErp.ErpUI.Pages.ProductionTracking
 {
@@ -28,25 +30,6 @@ namespace TsiErp.ErpUI.Pages.ProductionTracking
 
     public partial class ProductionTrackingsListPage
     {
-        #region ComboBox Listeleri
-
-        SfComboBox<string, ListWorkOrdersDto> WorkOrdersComboBox;
-        List<ListWorkOrdersDto> WorkOrdersList = new List<ListWorkOrdersDto>();
-
-        SfComboBox<Guid, ListEmployeesDto> EmployeesComboBox;
-        List<ListEmployeesDto> EmployeesList = new List<ListEmployeesDto>();
-
-        SfComboBox<string, ListStationsDto> StationsComboBox;
-        List<ListStationsDto> StationsList = new List<ListStationsDto>();
-
-        SfComboBox<string, ListShiftsDto> ShiftsComboBox;
-        List<ListShiftsDto> ShiftsList = new List<ListShiftsDto>();
-
-        SfComboBox<string, ListHaltReasonsDto> HaltsComboBox;
-        List<ListHaltReasonsDto> HaltsList = new List<ListHaltReasonsDto>();
-
-        #endregion
-
         private SfGrid<ListProductionTrackingsDto> _grid;
         private SfGrid<SelectProductionTrackingHaltLinesDto> _LineGrid;
 
@@ -71,12 +54,226 @@ namespace TsiErp.ErpUI.Pages.ProductionTracking
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
 
-            await GetWorkOrdersList();
-            await GetStationsList();
-            await GetShiftsList();
-            await GetHaltsList();
-            await GetEmployeesList();
         }
+
+        #region Vardiya ButtonEdit
+
+        SfTextBox ShiftsButtonEdit;
+        bool SelectShiftsPopupVisible = false;
+        List<ListShiftsDto> ShiftsList = new List<ListShiftsDto>();
+
+        public async Task ShiftsCodeOnCreateIcon()
+        {
+            var ShiftsCodeButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ShiftsButtonClickEvent);
+            await ShiftsButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ShiftsCodeButtonClick } });
+        }
+
+        public async void ShiftsButtonClickEvent()
+        {
+            SelectShiftsPopupVisible = true;
+            await GetShiftsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+
+        public void ShiftsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.ShiftID = Guid.Empty;
+                DataSource.ShiftCode = string.Empty;
+            }
+        }
+
+        public async void ShiftsDoubleClickHandler(RecordDoubleClickEventArgs<ListShiftsDto> args)
+        {
+            var selectedShift = args.RowData;
+
+            if (selectedShift != null)
+            {
+                DataSource.ShiftID = selectedShift.Id;
+                DataSource.ShiftCode = selectedShift.Code;
+                SelectShiftsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region İş İstasyonu ButtonEdit
+
+        SfTextBox StationsButtonEdit;
+        bool SelectStationsPopupVisible = false;
+        List<ListStationsDto> StationsList = new List<ListStationsDto>();
+
+        public async Task StationsCodeOnCreateIcon()
+        {
+            var StationsCodeButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, StationsButtonClickEvent);
+            await StationsButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", StationsCodeButtonClick } });
+        }
+
+        public async void StationsButtonClickEvent()
+        {
+            SelectStationsPopupVisible = true;
+            await GetStationsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+
+        public void StationsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.StationID = Guid.Empty;
+                DataSource.StationCode = string.Empty;
+            }
+        }
+
+        public async void StationsDoubleClickHandler(RecordDoubleClickEventArgs<ListStationsDto> args)
+        {
+            var selectedStation = args.RowData;
+
+            if (selectedStation != null)
+            {
+                DataSource.StationID = selectedStation.Id;
+                DataSource.StationCode = selectedStation.Code;
+                SelectStationsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region Operatör ButtonEdit
+
+        SfTextBox EmployeesButtonEdit;
+        bool SelectEmployeesPopupVisible = false;
+        List<ListEmployeesDto> EmployeesList = new List<ListEmployeesDto>();
+
+        public async Task EmployeesCodeOnCreateIcon()
+        {
+            var EmployeesCodeButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, EmployeesButtonClickEvent);
+            await EmployeesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", EmployeesCodeButtonClick } });
+        }
+
+        public async void EmployeesButtonClickEvent()
+        {
+            SelectEmployeesPopupVisible = true;
+            await GetEmployeesList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+
+        public void EmployeesOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.EmployeeID = Guid.Empty;
+                DataSource.EmployeeName = string.Empty;
+            }
+        }
+
+        public async void EmployeesDoubleClickHandler(RecordDoubleClickEventArgs<ListEmployeesDto> args)
+        {
+            var selectedEmployee = args.RowData;
+
+            if (selectedEmployee != null)
+            {
+                DataSource.EmployeeID = selectedEmployee.Id;
+                DataSource.EmployeeName = selectedEmployee.Name;
+                SelectEmployeesPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region İş Emri ButtonEdit
+
+        SfTextBox WorkOrdersButtonEdit;
+        bool SelectWorkOrdersPopupVisible = false;
+        List<ListWorkOrdersDto> WorkOrdersList = new List<ListWorkOrdersDto>();
+
+        public async Task WorkOrdersCodeOnCreateIcon()
+        {
+            var WorkOrdersCodeButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, WorkOrdersButtonClickEvent);
+            await WorkOrdersButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", WorkOrdersCodeButtonClick } });
+        }
+
+        public async void WorkOrdersButtonClickEvent()
+        {
+            SelectWorkOrdersPopupVisible = true;
+            await GetWorkOrdersList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+
+        public void WorkOrdersOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.WorkOrderID = Guid.Empty;
+                DataSource.WorkOrderCode = string.Empty;
+            }
+        }
+
+        public async void WorkOrdersDoubleClickHandler(RecordDoubleClickEventArgs<ListWorkOrdersDto> args)
+        {
+            var selectedWorkOrder = args.RowData;
+
+            if (selectedWorkOrder != null)
+            {
+                DataSource.WorkOrderID = selectedWorkOrder.Id;
+                DataSource.WorkOrderCode = selectedWorkOrder.Code;
+                SelectWorkOrdersPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region Duruş ButtonEdit
+
+        SfTextBox HaltReasonsButtonEdit;
+        bool SelectHaltReasonsPopupVisible = false;
+        List<ListHaltReasonsDto> HaltReasonsList = new List<ListHaltReasonsDto>();
+
+        public async Task HaltReasonsCodeOnCreateIcon()
+        {
+            var HaltReasonsCodeButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, HaltReasonsButtonClickEvent);
+            await HaltReasonsButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", HaltReasonsCodeButtonClick } });
+        }
+
+        public async void HaltReasonsButtonClickEvent()
+        {
+            SelectHaltReasonsPopupVisible = true;
+            await GetHaltReasonsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+
+        public void HaltReasonsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                LineDataSource.HaltID   = Guid.Empty;
+                LineDataSource.HaltName = string.Empty;
+                LineDataSource.HaltCode = string.Empty;
+            }
+        }
+
+        public async void HaltReasonsDoubleClickHandler(RecordDoubleClickEventArgs<ListHaltReasonsDto> args)
+        {
+            var selectedHaltReason = args.RowData;
+
+            if (selectedHaltReason != null)
+            {
+                LineDataSource.HaltID   = selectedHaltReason.Id;
+                LineDataSource.HaltName = selectedHaltReason.Name;
+                LineDataSource.HaltCode = selectedHaltReason.Code;
+                SelectHaltReasonsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region Fason Üretim Takip Satırları İşlemleri
 
         protected override async Task BeforeInsertAsync()
         {
@@ -314,98 +511,13 @@ namespace TsiErp.ErpUI.Pages.ProductionTracking
             await InvokeAsync(StateHasChanged);
         }
 
-        #region İş Emri
-        public async Task WorkOrderFiltering(FilteringEventArgs args)
-        {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await WorkOrdersComboBox.FilterAsync(WorkOrdersList, query);
-        }
-
-        private async Task GetWorkOrdersList()
-        {
-            WorkOrdersList = (await WorkOrdersAppService.GetListAsync(new ListWorkOrdersParameterDto())).Data.ToList();
-        }
-
-        public async Task WorkOrderValueChangeHandler(ChangeEventArgs<string, ListWorkOrdersDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                DataSource.WorkOrderID = args.ItemData.Id;
-                DataSource.WorkOrderCode = args.ItemData.Code;
-            }
-            else
-            {
-                DataSource.WorkOrderID = Guid.Empty;
-                DataSource.WorkOrderCode = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
         #endregion
 
-        #region Operatör
-        public async Task EmployeeFiltering(FilteringEventArgs args)
+        #region GetList Metotları
+
+        private async Task GetShiftsList()
         {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await EmployeesComboBox.FilterAsync(EmployeesList, query);
-        }
-
-        private async Task GetEmployeesList()
-        {
-            EmployeesList = (await EmployeesAppService.GetListAsync(new ListEmployeesParameterDto())).Data.ToList();
-        }
-
-        public async Task EmployeeValueChangeHandler(ChangeEventArgs<Guid, ListEmployeesDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                DataSource.EmployeeID = args.ItemData.Id;
-                DataSource.EmployeeName = args.ItemData.Name;
-            }
-            else
-            {
-                DataSource.EmployeeID = Guid.Empty;
-                DataSource.EmployeeName = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-        #endregion
-
-        #region Şubeler
-        public async Task StationFiltering(FilteringEventArgs args)
-        {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await StationsComboBox.FilterAsync(StationsList, query);
+            ShiftsList = (await ShiftsAppService.GetListAsync(new ListShiftsParameterDto())).Data.ToList();
         }
 
         private async Task GetStationsList()
@@ -413,101 +525,19 @@ namespace TsiErp.ErpUI.Pages.ProductionTracking
             StationsList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
         }
 
-        public async Task StationValueChangeHandler(ChangeEventArgs<string, ListStationsDto> args)
+        private async Task GetWorkOrdersList()
         {
-            if (args.ItemData != null)
-            {
-                DataSource.StationID = args.ItemData.Id;
-                DataSource.StationCode = args.ItemData.Code;
-            }
-            else
-            {
-                DataSource.StationID = Guid.Empty;
-                DataSource.StationCode = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
+            WorkOrdersList = (await WorkOrdersAppService.GetListAsync(new ListWorkOrdersParameterDto())).Data.ToList();
         }
 
-        #endregion
-
-        #region Duruş
-        public async Task HaltFiltering(FilteringEventArgs args)
+        private async Task GetEmployeesList()
         {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await HaltsComboBox.FilterAsync(HaltsList, query);
+            EmployeesList = (await EmployeesAppService.GetListAsync(new ListEmployeesParameterDto())).Data.ToList();
         }
 
-        private async Task GetHaltsList()
+        private async Task GetHaltReasonsList()
         {
-            HaltsList = (await HaltsAppService.GetListAsync(new ListHaltReasonsParameterDto())).Data.ToList();
-        }
-
-        public async Task HaltValueChangeHandler(ChangeEventArgs<string, ListHaltReasonsDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                LineDataSource.HaltID = args.ItemData.Id;
-                LineDataSource.HaltCode = args.ItemData.Code;
-
-            }
-            else
-            {
-                LineDataSource.HaltID = Guid.Empty;
-                LineDataSource.HaltCode = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-
-        #endregion
-
-        #region Vardiya
-        public async Task ShiftFiltering(FilteringEventArgs args)
-        {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await ShiftsComboBox.FilterAsync(ShiftsList, query);
-        }
-
-        private async Task GetShiftsList()
-        {
-            ShiftsList = (await ShiftsAppService.GetListAsync(new ListShiftsParameterDto())).Data.ToList();
-        }
-
-        public async Task ShiftValueChangeHandler(ChangeEventArgs<string, ListShiftsDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                DataSource.ShiftID = args.ItemData.Id;
-                DataSource.ShiftCode = args.ItemData.Code;
-
-            }
-            else
-            {
-                DataSource.ShiftID = Guid.Empty;
-                DataSource.ShiftCode = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
+            HaltReasonsList = (await HaltsAppService.GetListAsync(new ListHaltReasonsParameterDto())).Data.ToList();
         }
 
         #endregion

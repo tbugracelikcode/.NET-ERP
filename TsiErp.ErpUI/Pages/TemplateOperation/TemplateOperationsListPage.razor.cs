@@ -1,8 +1,10 @@
 ﻿using AutoMapper.Internal.Mappers;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
+using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.Station.Dtos;
 using TsiErp.Entities.Entities.TemplateOperation.Dtos;
@@ -14,12 +16,7 @@ namespace TsiErp.ErpUI.Pages.TemplateOperation
 {
     public partial class TemplateOperationsListPage
     {
-        #region ComboBox Listeleri
-
-        SfComboBox<string, ListStationsDto> LineStationsComboBox;
-        List<ListStationsDto> LineStationsList = new List<ListStationsDto>();
-
-        #endregion
+       
 
         private SfGrid<ListTemplateOperationsDto> _grid;
         private SfGrid<SelectTemplateOperationLinesDto> _LineGrid;
@@ -42,10 +39,65 @@ namespace TsiErp.ErpUI.Pages.TemplateOperation
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
 
-            await GetLineStationsList();
         }
 
-        
+        #region İş İstasyonu ButtonEdit
+
+        SfTextBox StationsCodeButtonEdit;
+        SfTextBox StationsNameButtonEdit;
+        bool SelectStationsPopupVisible = false;
+        List<ListStationsDto> StationsList = new List<ListStationsDto>();
+
+        public async Task StationsCodeOnCreateIcon()
+        {
+            var StationsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, StationsCodeButtonClickEvent);
+            await StationsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", StationsButtonClick } });
+        }
+
+        public async void StationsCodeButtonClickEvent()
+        {
+            SelectStationsPopupVisible = true;
+            await GetStationsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async Task StationsNameOnCreateIcon()
+        {
+            var StationsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, StationsNameButtonClickEvent);
+            await StationsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", StationsButtonClick } });
+        }
+
+        public async void StationsNameButtonClickEvent()
+        {
+            SelectStationsPopupVisible = true;
+            await GetStationsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void StationsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                LineDataSource.StationID = Guid.Empty;
+                LineDataSource.StationCode = string.Empty;
+                LineDataSource.StationName = string.Empty;
+            }
+        }
+
+        public async void StationsDoubleClickHandler(RecordDoubleClickEventArgs<ListStationsDto> args)
+        {
+            var selectedUnitSet = args.RowData;
+
+            if (selectedUnitSet != null)
+            {
+                LineDataSource.StationID = selectedUnitSet.Id;
+                LineDataSource.StationCode = selectedUnitSet.Code;
+                LineDataSource.StationName = selectedUnitSet.Code;
+                SelectStationsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
 
         #region Şablon Operasyon Satır Modalı İşlemleri
         protected override async Task BeforeInsertAsync()
@@ -315,46 +367,11 @@ namespace TsiErp.ErpUI.Pages.TemplateOperation
         }
         #endregion
 
-        #region İş İstasyonları - Operasyon Satırları
+        #region GetList Metotları
 
-        public async Task LineStationFiltering(FilteringEventArgs args)
+        private async Task GetStationsList()
         {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await LineStationsComboBox.FilterAsync(LineStationsList, query);
-        }
-
-        private async Task GetLineStationsList()
-        {
-            LineStationsList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
-        }
-
-        public async Task LineStationValueChangeHandler(ChangeEventArgs<string, ListStationsDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                LineDataSource.StationID = args.ItemData.Id;
-                LineDataSource.StationCode = args.ItemData.Code;
-                LineDataSource.StationName = args.ItemData.Name;
-            }
-            else
-            {
-                LineDataSource.StationID = Guid.Empty;
-                LineDataSource.StationCode = string.Empty;
-                LineDataSource.StationName = string.Empty;
-            }
-            LineCalculate();
-            await InvokeAsync(StateHasChanged);
+            StationsList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
         }
 
         #endregion

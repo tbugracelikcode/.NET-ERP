@@ -27,7 +27,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContextFactory<TsiErpDbContext>(
         options =>
-            options.UseSqlServer(@"Server=192.168.98.4;Database=TsiErpYeni;UID=sa;PWD=Logo1234567890;"), ServiceLifetime.Transient);
+            options.UseSqlServer(@"Server=94.73.145.4;Database=u0364806_TSIERP;UID=u0364806_TSIERP;PWD=u=xfJ@i-7H5-VN23;"), ServiceLifetime.Transient);
 
 builder.Services.AddTransient<ApplicationService>();
 
