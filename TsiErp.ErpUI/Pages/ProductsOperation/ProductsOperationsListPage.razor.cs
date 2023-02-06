@@ -16,16 +16,6 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
 {
     public partial class ProductsOperationsListPage
     {
-        #region ComboBox Listeleri
-
-        SfComboBox<string, ListStationsDto> LineStationsComboBox;
-        List<ListStationsDto> LineStationsList = new List<ListStationsDto>();
-
-        SfComboBox<string, ListTemplateOperationsDto> TemplateOperationsComboBox;
-        List<ListTemplateOperationsDto> TemplateOperationsList = new List<ListTemplateOperationsDto>();
-
-        #endregion
-
         private SfGrid<ListProductsOperationsDto> _grid;
         private SfGrid<SelectProductsOperationLinesDto> _LineGrid;
 
@@ -51,8 +41,6 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
 
             BaseCrudService = ProductsOperationsAppService;
 
-            await GetLineStationsList();
-            await GetTemplateOperationsList();
         }
 
         #region Stok Kartı Button Edit
@@ -110,6 +98,108 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
             }
         }
 
+        #endregion
+
+        #region İş İstasyonu ButtonEdit
+
+        SfTextBox StationsCodeButtonEdit;
+        SfTextBox StationsNameButtonEdit;
+        bool SelectStationsPopupVisible = false;
+        List<ListStationsDto> StationsList = new List<ListStationsDto>();
+
+        public async Task StationsCodeOnCreateIcon()
+        {
+            var StationsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, StationsCodeButtonClickEvent);
+            await StationsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", StationsButtonClick } });
+        }
+
+        public async void StationsCodeButtonClickEvent()
+        {
+            SelectStationsPopupVisible = true;
+            await GetStationsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async Task StationsNameOnCreateIcon()
+        {
+            var StationsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, StationsNameButtonClickEvent);
+            await StationsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", StationsButtonClick } });
+        }
+
+        public async void StationsNameButtonClickEvent()
+        {
+            SelectStationsPopupVisible = true;
+            await GetStationsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void StationsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                LineDataSource.StationID = Guid.Empty;
+                LineDataSource.StationCode = string.Empty;
+                LineDataSource.StationName = string.Empty;
+            }
+        }
+
+        public async void StationsDoubleClickHandler(RecordDoubleClickEventArgs<ListStationsDto> args)
+        {
+            var selectedUnitSet = args.RowData;
+
+            if (selectedUnitSet != null)
+            {
+                LineDataSource.StationID = selectedUnitSet.Id;
+                LineDataSource.StationCode = selectedUnitSet.Code;
+                LineDataSource.StationName = selectedUnitSet.Code;
+                SelectStationsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region Şablon Operasyon ButtonEdit
+
+        SfTextBox TemplateOperationButtonEdit;
+        bool SelectTemplateOperationsPopupVisible = false;
+        List<ListTemplateOperationsDto> TemplateOperationsList = new List<ListTemplateOperationsDto>();
+
+        public async Task TemplateOperationOnCreateIcon()
+        {
+            var TemplateOperationsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, TemplateOperationButtonClickEvent);
+            await TemplateOperationButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", TemplateOperationsButtonClick } });
+        }
+
+        public async void TemplateOperationButtonClickEvent()
+        {
+            SelectTemplateOperationsPopupVisible = true;
+            await GetTemplateOperationsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void TemplateOperationsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.TemplateOperationID = Guid.Empty;
+                DataSource.TemplateOperationCode = string.Empty;
+                DataSource.TemplateOperationName = string.Empty;
+            }
+        }
+
+        public async void TemplateOperationsDoubleClickHandler(RecordDoubleClickEventArgs<ListTemplateOperationsDto> args)
+        {
+            var selectedTemplateOperation = args.RowData;
+
+            if (selectedTemplateOperation != null)
+            {
+                DataSource.TemplateOperationID = selectedTemplateOperation.Id;
+                DataSource.TemplateOperationCode = selectedTemplateOperation.Code;
+                DataSource.TemplateOperationName = selectedTemplateOperation.Code;
+                SelectTemplateOperationsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
         #endregion
 
         #region Ürüne Özel Operasyon Satır Modalı İşlemleri
@@ -383,133 +473,14 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
             ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
         }
 
-        #endregion
-
-        #region Şablon Operasyonlar 
-
-        public async Task TemplateOperationFiltering(FilteringEventArgs args)
+        private async Task GetStationsList()
         {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await TemplateOperationsComboBox.FilterAsync(TemplateOperationsList, query);
+            StationsList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
         }
 
         private async Task GetTemplateOperationsList()
         {
             TemplateOperationsList = (await TemplateOperationsAppService.GetListAsync(new ListTemplateOperationsParameterDto())).Data.ToList();
-        }
-
-        public async Task TemplateOperationValueChangeHandler(ChangeEventArgs<string, ListTemplateOperationsDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                if (DataSource.ProductID != null)
-                {
-                    DataSource.TemplateOperationID = args.ItemData.Id;
-                    DataSource.TemplateOperationCode = args.ItemData.Code;
-                    DataSource.TemplateOperationName = args.ItemData.Name;
-                    DataSource.Name = DataSource.ProductCode + "-" + args.ItemData.Name;
-                    DataSource.Code = DataSource.ProductCode + "-" + args.ItemData.Code;
-
-                    TemplateOperationDataSource = (await TemplateOperationsAppService.GetAsync(args.ItemData.Id)).Data;
-                    TemplateOperationLineList = TemplateOperationDataSource.SelectTemplateOperationLines;
-                    var stationList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
-
-                    foreach (var item in TemplateOperationLineList)
-                    {
-                        SelectProductsOperationLinesDto _productsOperationLine = new SelectProductsOperationLinesDto
-                        {
-                            AdjustmentAndControlTime = item.AdjustmentAndControlTime,
-                            Alternative = item.Alternative,
-                            OperationTime = item.OperationTime,
-                            LineNr = item.LineNr,
-                            Priority = item.Priority,
-                            ProcessQuantity = item.ProcessQuantity,
-                            ProductsOperationCode = DataSource.Code,
-                            ProductsOperationID = DataSource.Id,
-                            ProductsOperationName = DataSource.Name,
-                            StationCode = stationList.Where(t=>t.Id == item.StationID).Select(t=>t.Code).FirstOrDefault(),
-                            StationID = item.StationID,
-                            StationName = stationList.Where(t => t.Id == item.StationID).Select(t => t.Name).FirstOrDefault()
-
-                        };
-                        GridLineList.Add(_productsOperationLine);
-                      
-                       
-                    }
-                    await _LineGrid.Refresh();
-                    await InvokeAsync(StateHasChanged);
-                }
-                else
-                {
-                    await ModalManager.WarningPopupAsync("Uyarı", "Ürün seçmeden şablon operasyon seçilemez.");
-                }
-
-            }
-            else
-            {
-                DataSource.TemplateOperationID = Guid.Empty;
-                DataSource.TemplateOperationCode = string.Empty;
-                DataSource.TemplateOperationName = string.Empty;
-                DataSource.Name = string.Empty;
-                DataSource.Code = string.Empty;
-            }
-            LineCalculate();
-            await InvokeAsync(StateHasChanged);
-        }
-
-        #endregion
-
-        #region İş İstasyonları - Operasyon Satırları
-
-        public async Task LineStationFiltering(FilteringEventArgs args)
-        {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await LineStationsComboBox.FilterAsync(LineStationsList, query);
-        }
-
-        private async Task GetLineStationsList()
-        {
-            LineStationsList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
-        }
-
-        public async Task LineStationValueChangeHandler(ChangeEventArgs<string, ListStationsDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                LineDataSource.StationID = args.ItemData.Id;
-                LineDataSource.StationCode = args.ItemData.Code;
-                LineDataSource.StationName = args.ItemData.Name;
-            }
-            else
-            {
-                LineDataSource.StationID = Guid.Empty;
-                LineDataSource.StationCode = string.Empty;
-                LineDataSource.StationName = string.Empty;
-            }
-            LineCalculate();
-            await InvokeAsync(StateHasChanged);
         }
 
         #endregion

@@ -28,6 +28,8 @@ using TsiErp.Entities.Entities.MaintenanceInstructionLine;
 using TsiErp.Entities.Entities.PlannedMaintenanceLine;
 using TsiErp.Entities.Enums;
 using TsiErp.Entities.Entities.UnplannedMaintenanceLine;
+using TsiErp.Entities.Entities.ByDateStockMovement;
+using TsiErp.Entities.Entities.GrandTotalStockMovement;
 
 namespace TsiErp.Entities.Entities.Product
 {
@@ -162,6 +164,8 @@ namespace TsiErp.Entities.Entities.Product
         public ICollection<MaintenanceInstructionLines> MaintenanceInstructionLines { get; set; }
         public ICollection<PlannedMaintenanceLines> PlannedMaintenanceLines { get; set; }
         public ICollection<UnplannedMaintenanceLines> UnplannedMaintenanceLines { get; set; }
+        public ICollection<ByDateStockMovements> ByDateStockMovements { get; set; }
+        public ICollection<GrandTotalStockMovements> GrandTotalStockMovements { get; set; }
 
     }
 }

@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Entities.ByDateStockMovement;
 using TsiErp.Entities.Entities.Department;
 using TsiErp.Entities.Entities.Forecast;
+using TsiErp.Entities.Entities.GrandTotalStockMovement;
 using TsiErp.Entities.Entities.Period;
 using TsiErp.Entities.Entities.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchasePrice;
@@ -48,6 +50,9 @@ namespace TsiErp.Entities.Entities.Branch
         public ICollection<Forecasts> Forecasts { get; set; }
         public ICollection<PurchasePrices> PurchasePrices { get; set; }
         public ICollection<SalesPrices> SalesPrices { get; set; }
+        public ICollection<ByDateStockMovements> ByDateStockMovements { get; set; }
+        public ICollection<GrandTotalStockMovements> GrandTotalStockMovements { get; set; }
+
 
     }
 }

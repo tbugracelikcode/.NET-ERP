@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Entities.ByDateStockMovement;
+using TsiErp.Entities.Entities.GrandTotalStockMovement;
 using TsiErp.Entities.Entities.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchasePrice;
 using TsiErp.Entities.Entities.PurchaseRequest;
@@ -40,6 +42,8 @@ namespace TsiErp.Entities.Entities.WareHouse
         public ICollection<PurchaseRequests> PurchaseRequests { get; set; }
         public ICollection<PurchasePrices> PurchasePrices { get; set; }
         public ICollection<SalesPrices> SalesPrices { get; set; }
+        public ICollection<ByDateStockMovements> ByDateStockMovements { get; set; }
+        public ICollection<GrandTotalStockMovements> GrandTotalStockMovements { get; set; }
 
 
     }
