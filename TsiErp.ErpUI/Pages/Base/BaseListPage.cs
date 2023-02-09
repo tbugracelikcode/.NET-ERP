@@ -33,7 +33,6 @@ namespace TsiErp.ErpUI.Pages.Base
         public bool SelectFirstDataRow { get; set; }
 
         public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
-
         public TGetListOutputDto SelectedItem { get; set; }
 
         [Inject]
