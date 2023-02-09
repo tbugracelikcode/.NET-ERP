@@ -81,6 +81,8 @@ using TsiErp.Entities.Entities.UnplannedMaintenance;
 using TsiErp.Entities.Entities.UnplannedMaintenanceLine;
 using TsiErp.Entities.Entities.GrandTotalStockMovement;
 using TsiErp.Entities.Entities.ByDateStockMovement;
+using TsiErp.Entities.Entities.TechnicalDrawing;
+using TsiErp.Entities.Entities.ProductReferanceNumber;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 {
@@ -102,6 +104,59 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
 
                 b.HasIndex(x => x.Code);
+
+            });
+        }
+
+        public static void ConfigureTechnicalDrawings(this ModelBuilder builder)
+        {
+            builder.Entity<TechnicalDrawings>(b =>
+            {
+                b.ToTable("TechnicalDrawings");
+                b.ConfigureByConvention();
+
+                //b.HasQueryFilter(x => !x.IsDeleted);
+
+                b.Property(t => t.RevisionDate).HasColumnType(SqlDbType.DateTime.ToString());
+                b.Property(t => t.RevisionNo).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.Drawer).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.DrawingNo).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.Description_).HasColumnType("nvarchar(MAX)");
+                b.Property(t => t.DrawingDomain).HasColumnType("nvarchar(MAX)");
+                b.Property(t => t.DrawingFilePath).HasColumnType("nvarchar(MAX)");
+                b.Property(t => t.IsApproved).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.CustomerApproval).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.SampleApproval).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+                b.HasIndex(x => x.RevisionNo);
+                b.HasIndex(x => x.ProductID);
+
+                b.HasOne(t=>t.Products).WithMany(x=>x.TechnicalDrawings).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
+
+            });
+        }
+
+        public static void ConfigureProductReferanceNumbers(this ModelBuilder builder)
+        {
+            builder.Entity<ProductReferanceNumbers>(b =>
+            {
+                b.ToTable("ProductReferanceNumbers");
+                b.ConfigureByConvention();
+
+                //b.HasQueryFilter(x => !x.IsDeleted);
+
+                b.Property(t => t.ReferanceNo).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
+                b.Property(t => t.Description_).HasColumnType("nvarchar(MAX)");
+                b.Property(t => t.ProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.CurrentAccountCardID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+
+                b.HasIndex(x => x.ReferanceNo);
+                b.HasIndex(x => x.ProductID);
+                b.HasIndex(x => x.CurrentAccountCardID);
+
+                b.HasOne(t => t.CurrentAccountCards).WithMany(x => x.ProductReferanceNumbers).HasForeignKey(x => x.CurrentAccountCardID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(t => t.Products).WithMany(x => x.ProductReferanceNumbers).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
 
             });
         }
@@ -1678,6 +1733,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.WarehouseID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.CurrentAccountCardID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsApproved).HasColumnType(SqlDbType.Bit.ToString());
 
                 b.HasIndex(x => x.Code);
                 b.HasIndex(x => x.CurrencyID);
@@ -1735,6 +1791,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.WarehouseID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.CurrentAccountCardID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
+                b.Property(t => t.IsApproved).HasColumnType(SqlDbType.Bit.ToString());
+
 
                 b.HasIndex(x => x.Code);
                 b.HasIndex(x => x.CurrencyID);

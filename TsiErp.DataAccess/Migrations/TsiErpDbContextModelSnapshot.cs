@@ -3249,6 +3249,67 @@ namespace TsiErp.DataAccess.Migrations
                     b.ToTable("ProductionTrackingHaltLines", (string)null);
                 });
 
+            modelBuilder.Entity("TsiErp.Entities.Entities.ProductReferanceNumber.ProductReferanceNumbers", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<DateTime?>("CreationTime")
+                        .IsRequired()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid>("CurrentAccountCardID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<string>("Description_")
+                        .HasColumnType("nvarchar(MAX)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<string>("ReferanceNo")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("NVarChar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrentAccountCardID");
+
+                    b.HasIndex("ProductID");
+
+                    b.HasIndex("ReferanceNo");
+
+                    b.ToTable("ProductReferanceNumbers", (string)null);
+                });
+
             modelBuilder.Entity("TsiErp.Entities.Entities.ProductsOperation.ProductsOperations", b =>
                 {
                     b.Property<Guid>("Id")
@@ -3676,6 +3737,9 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("DateTime");
 
                     b.Property<bool>("IsActive")
+                        .HasColumnType("Bit");
+
+                    b.Property<bool>("IsApproved")
                         .HasColumnType("Bit");
 
                     b.Property<bool>("IsDeleted")
@@ -4638,6 +4702,9 @@ namespace TsiErp.DataAccess.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("Bit");
 
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("Bit");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -5472,6 +5539,87 @@ namespace TsiErp.DataAccess.Migrations
                     b.HasIndex("StationID");
 
                     b.ToTable("StationInventories", (string)null);
+                });
+
+            modelBuilder.Entity("TsiErp.Entities.Entities.TechnicalDrawing.TechnicalDrawings", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<DateTime?>("CreationTime")
+                        .IsRequired()
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<bool>("CustomerApproval")
+                        .HasColumnType("Bit");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<string>("Description_")
+                        .HasColumnType("nvarchar(MAX)");
+
+                    b.Property<string>("Drawer")
+                        .HasMaxLength(50)
+                        .HasColumnType("NVarChar(50)");
+
+                    b.Property<string>("DrawingDomain")
+                        .HasColumnType("nvarchar(MAX)");
+
+                    b.Property<string>("DrawingFilePath")
+                        .HasColumnType("nvarchar(MAX)");
+
+                    b.Property<string>("DrawingNo")
+                        .HasMaxLength(50)
+                        .HasColumnType("NVarChar(50)");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("Bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("UniqueIdentifier");
+
+                    b.Property<DateTime?>("RevisionDate")
+                        .HasColumnType("DateTime");
+
+                    b.Property<string>("RevisionNo")
+                        .HasMaxLength(50)
+                        .HasColumnType("NVarChar(50)");
+
+                    b.Property<bool>("SampleApproval")
+                        .HasColumnType("Bit");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductID");
+
+                    b.HasIndex("RevisionNo");
+
+                    b.ToTable("TechnicalDrawings", (string)null);
                 });
 
             modelBuilder.Entity("TsiErp.Entities.Entities.TemplateOperation.TemplateOperations", b =>
@@ -6809,6 +6957,25 @@ namespace TsiErp.DataAccess.Migrations
                     b.Navigation("ProductionTrackings");
                 });
 
+            modelBuilder.Entity("TsiErp.Entities.Entities.ProductReferanceNumber.ProductReferanceNumbers", b =>
+                {
+                    b.HasOne("TsiErp.Entities.Entities.CurrentAccountCard.CurrentAccountCards", "CurrentAccountCards")
+                        .WithMany("ProductReferanceNumbers")
+                        .HasForeignKey("CurrentAccountCardID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("TsiErp.Entities.Entities.Product.Products", "Products")
+                        .WithMany("ProductReferanceNumbers")
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("CurrentAccountCards");
+
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("TsiErp.Entities.Entities.ProductsOperation.ProductsOperations", b =>
                 {
                     b.HasOne("TsiErp.Entities.Entities.Product.Products", "Products")
@@ -7418,6 +7585,17 @@ namespace TsiErp.DataAccess.Migrations
                     b.Navigation("Stations");
                 });
 
+            modelBuilder.Entity("TsiErp.Entities.Entities.TechnicalDrawing.TechnicalDrawings", b =>
+                {
+                    b.HasOne("TsiErp.Entities.Entities.Product.Products", "Products")
+                        .WithMany("TechnicalDrawings")
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("TsiErp.Entities.Entities.TemplateOperationLine.TemplateOperationLines", b =>
                 {
                     b.HasOne("TsiErp.Entities.Entities.Station.Stations", "Stations")
@@ -7627,6 +7805,8 @@ namespace TsiErp.DataAccess.Migrations
 
                     b.Navigation("Forecasts");
 
+                    b.Navigation("ProductReferanceNumbers");
+
                     b.Navigation("ProductionOrders");
 
                     b.Navigation("PurchaseOrders");
@@ -7746,6 +7926,8 @@ namespace TsiErp.DataAccess.Migrations
 
                     b.Navigation("PlannedMaintenanceLines");
 
+                    b.Navigation("ProductReferanceNumbers");
+
                     b.Navigation("ProductionOrders");
 
                     b.Navigation("ProductsOperations");
@@ -7767,6 +7949,8 @@ namespace TsiErp.DataAccess.Migrations
                     b.Navigation("SalesPriceLines");
 
                     b.Navigation("SalesPropositionLines");
+
+                    b.Navigation("TechnicalDrawings");
 
                     b.Navigation("UnplannedMaintenanceLines");
 

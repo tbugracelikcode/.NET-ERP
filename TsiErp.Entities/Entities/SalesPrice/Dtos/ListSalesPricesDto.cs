@@ -49,5 +49,9 @@ namespace TsiErp.Entities.Entities.SalesPrice.Dtos
         /// Depo Kodu
         /// </summary>
         public string WarehouseCode { get; set; }
+        /// <summary>
+        /// Onay
+        /// </summary>
+        public bool IsApproved { get; set; }
     }
 }

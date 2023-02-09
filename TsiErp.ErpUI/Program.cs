@@ -21,6 +21,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 using Microsoft.EntityFrameworkCore;
 using Tsi.Blazor.Component.Core.TsiComponents.Extensions;
 using Tsi.Application.Contract.Services.EntityFrameworkCore;
+using TsiErp.ErpUI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,6 +43,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).Conf
 
 builder.Services.AddSyncfusionBlazor();
 builder.Services.AddDevExpressBlazor();
+builder.Services.AddScoped<IFileUploadService, FileUploadService>();
 builder.Services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(SyncfusionLocalizer));
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {

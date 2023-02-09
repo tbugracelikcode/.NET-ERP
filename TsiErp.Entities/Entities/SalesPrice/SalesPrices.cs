@@ -51,6 +51,10 @@ namespace TsiErp.Entities.Entities.SalesPrice
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
+        /// <summary>
+        /// Onay
+        /// </summary>
+        public bool IsApproved { get; set; }
 
         public Currencies Currencies { get; set; }
         public Branches Branches { get; set; }

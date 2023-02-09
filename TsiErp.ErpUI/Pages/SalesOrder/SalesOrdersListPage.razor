@@ -239,6 +239,7 @@ else
                             <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" Placeholder="Brüt Tutarı Yazınız." @bind-Value="DataSource.GrossAmount" Enabled=false></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
+
                     <DxGridLayoutItem Row="7" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>İndirim Toplamı: </strong></label>
@@ -252,6 +253,7 @@ else
                             <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" Placeholder="KDV Hariç Tutarı Yazınız." @bind-Value="DataSource.TotalVatExcludedAmount" Enabled=false></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
+
                     <DxGridLayoutItem Row="8" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>KDV Toplamı: </strong></label>
@@ -265,8 +267,6 @@ else
                             <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" Placeholder="Net Tutarı Yazınız." @bind-Value="DataSource.NetAmount" Enabled=false></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
-
-
 
                 </Items>
             </DxGridLayout>
