@@ -148,6 +148,10 @@ using TsiErp.Entities.Entities.GrandTotalStockMovement;
 using TsiErp.Entities.Entities.GrandTotalStockMovement.Dtos;
 using TsiErp.Entities.Entities.ByDateStockMovement;
 using TsiErp.Entities.Entities.ByDateStockMovement.Dtos;
+using TsiErp.Entities.Entities.TechnicalDrawing;
+using TsiErp.Entities.Entities.TechnicalDrawing.Dtos;
+using TsiErp.Entities.Entities.ProductReferanceNumber;
+using TsiErp.Entities.Entities.ProductReferanceNumber.Dtos;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -169,7 +173,7 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateMaintenancePeriodsDto, MaintenancePeriods>();
             CreateMap<SelectMaintenancePeriodsDto, UpdateMaintenancePeriodsDto>();
 
-            CreateMap<Branches, SelectBranchesDto>(); 
+            CreateMap<Branches, SelectBranchesDto>();
             CreateMap<Branches, ListBranchesDto>();
             CreateMap<CreateBranchesDto, Branches>();
             CreateMap<SelectBranchesDto, CreateBranchesDto>();
@@ -182,6 +186,33 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectStationInventoriesDto, CreateStationInventoriesDto>();
             CreateMap<UpdateStationInventoriesDto, StationInventories>();
             CreateMap<SelectStationInventoriesDto, UpdateStationInventoriesDto>();
+
+
+            CreateMap<ProductReferanceNumbers, SelectProductReferanceNumbersDto>()
+                .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
+                .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name))
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
+            CreateMap<ProductReferanceNumbers, ListProductReferanceNumbersDto>()
+                .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
+                .ForMember(x => x.CurrentAccountCardName, y => y.MapFrom(z => z.CurrentAccountCards.Name))
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
+            CreateMap<CreateProductReferanceNumbersDto, ProductReferanceNumbers>();
+            CreateMap<SelectProductReferanceNumbersDto, CreateProductReferanceNumbersDto>();
+            CreateMap<UpdateProductReferanceNumbersDto, ProductReferanceNumbers>();
+            CreateMap<SelectProductReferanceNumbersDto, UpdateProductReferanceNumbersDto>();
+
+            CreateMap<TechnicalDrawings, SelectTechnicalDrawingsDto>()
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
+            CreateMap<TechnicalDrawings, ListTechnicalDrawingsDto>()
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
+            CreateMap<CreateTechnicalDrawingsDto, TechnicalDrawings>();
+            CreateMap<SelectTechnicalDrawingsDto, CreateTechnicalDrawingsDto>();
+            CreateMap<UpdateTechnicalDrawingsDto, TechnicalDrawings>();
+            CreateMap<SelectTechnicalDrawingsDto, UpdateTechnicalDrawingsDto>();
 
             CreateMap<CalibrationRecords, SelectCalibrationRecordsDto>().ForMember(x => x.Equipment, y => y.MapFrom(z => z.EquipmentRecords.Name));
             CreateMap<CalibrationRecords, ListCalibrationRecordsDto>().ForMember(x => x.Equipment, y => y.MapFrom(z => z.EquipmentRecords.Name));

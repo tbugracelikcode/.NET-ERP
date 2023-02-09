@@ -6,12 +6,20 @@
 @using TsiErp.Business.Entities.Product.Services
 @using TsiErp.Entities.Entities.Product
 @using TsiErp.Entities.Entities.Product.Dtos
+@using TsiErp.Entities.Entities.ProductReferanceNumber.Dtos
 @using TsiErp.ErpUI.Pages.Base
 @using Tsi.Blazor.Component.Core.Components.Layouts
 @using TsiErp.Entities.Entities.ProductGroup.Dtos
+@using TsiErp.Entities.Entities.CurrentAccountCard.Dtos
 @using TsiErp.Entities.Entities.UnitSet.Dtos
+@using TsiErp.Entities.Entities.TechnicalDrawing.Dtos
 @using TsiErp.Business.Entities.ProductGroup.Services
 @using TsiErp.Business.Entities.UnitSet.Services
+@using TsiErp.Business.Entities.TechnicalDrawing.Services
+@using TsiErp.Business.Entities.ProductReferanceNumber.Services
+@using TsiErp.Business.Entities.CurrentAccountCard.Services
+@using TsiErp.ErpUI.Services
+
 @using TsiErp.Entities.Enums
 
 @inherits BaseListPage<SelectProductsDto, ListProductsDto, CreateProductsDto, UpdateProductsDto, ListProductsParameterDto>
@@ -20,6 +28,11 @@
 @inject IProductsAppService ProductService
 @inject IUnitSetsAppService UnitSetsAppService
 @inject IProductGroupsAppService ProductGroupsAppService
+@inject ITechnicalDrawingsAppService TechnicalDrawingsAppService
+@inject IProductReferanceNumbersAppService ProductReferanceNumbersAppService
+@inject ICurrentAccountCardsAppService CurrentAccountCardsAppService
+@inject IFileUploadService FileUploadService
+
 
 @if (!base.IsLoaded)
 {
@@ -46,7 +59,7 @@ else
 
                         <CardContent>
                             <SfGrid ID="Grid" DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
-                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu">
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
@@ -60,55 +73,55 @@ else
                                     <GridColumn Field=@nameof(ListProductsDto.UnitSetCode) HeaderText="BİRİM SETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductsDto.SupplyForm) HeaderText="TEMİN ŞEKLİ" TextAlign="TextAlign.Center" Width="120">
                                         <Template>
-                                          @*  @{
-                                                int productsupplyform = (context as ListProductsDto).SupplyForm;
-                                                string supplyForm = "";
-                                                if (productsupplyform == 1)
-                                                {
-                                                    supplyForm = "Satın Alma";
-                                                }
-                                                else if (productsupplyform == 2)
-                                                {
-                                                    supplyForm = "Üretim";
-                                                }
+                                            @*  @{
+                                        int productsupplyform = (context as ListProductsDto).SupplyForm;
+                                        string supplyForm = "";
+                                        if (productsupplyform == 1)
+                                        {
+                                        supplyForm = "Satın Alma";
+                                        }
+                                        else if (productsupplyform == 2)
+                                        {
+                                        supplyForm = "Üretim";
+                                        }
                                         }
                                         @supplyForm*@
-                                    </Template>
-                                </GridColumn>
-                                <GridColumn Field=@nameof(ListProductsDto.ProductGrp) HeaderText="ÜRÜN GRUBU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ListProductsDto.ProductType) HeaderText="TÜR" TextAlign="TextAlign.Center" Width="120">
-                                    <Template>
-                                     @*   @{
-                                                int producttype = (context as ListProductsDto).ProductType;
-                                                string type = "";
-                                                switch (producttype)
-                                                {
-                                                    case 1: type = "TM"; break;
-                                                    case 10: type = "HM"; break;
-                                                    case 11: type = "YM"; break;
-                                                    case 12: type = "MM"; break;
-                                                    case 30: type = "BP"; break;
-                                                    case 40: type = "TK"; break;
-                                                    case 50: type = "KLP"; break;
-                                                    case 60: type = "APRT"; break;
-                                                    default: break;
-                                                }
+                                        </Template>
+                                    </GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.ProductGrp) HeaderText="ÜRÜN GRUBU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductsDto.ProductType) HeaderText="TÜR" TextAlign="TextAlign.Center" Width="120">
+                                        <Template>
+                                            @*   @{
+                                        int producttype = (context as ListProductsDto).ProductType;
+                                        string type = "";
+                                        switch (producttype)
+                                        {
+                                        case 1: type = "TM"; break;
+                                        case 10: type = "HM"; break;
+                                        case 11: type = "YM"; break;
+                                        case 12: type = "MM"; break;
+                                        case 30: type = "BP"; break;
+                                        case 40: type = "TK"; break;
+                                        case 50: type = "KLP"; break;
+                                        case 60: type = "APRT"; break;
+                                        default: break;
+                                        }
                                         }
                                         @type*@
-                                    </Template>
-                                </GridColumn>
+                                        </Template>
+                                    </GridColumn>
 
 
-                            </GridColumns>
-                        </SfGrid>
-                    </CardContent>
-                    <CardFooter>
-                    </CardFooter>
-                </SfCard>
-            </Template>
-        </DxGridLayoutItem>
-    </GridLayoutItems>
-</DevGridLayout>
+                                </GridColumns>
+                            </SfGrid>
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+        </GridLayoutItems>
+    </DevGridLayout>
 
     <DxPopup @bind-Visible="base.EditPageVisible"
          ShowFooter="true"
@@ -171,8 +184,8 @@ else
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>Stok Türü: </strong></label>
-                         @*   <SfDropDownList TItem="string" TValue="ProductTypeEnum" PopupHeight="230px" Placeholder="Stok Türü Seçiniz" @bind-Value="@DataSource.ProductType" DataSource="@ProductTypesList">
-                            </SfDropDownList>*@
+                            @*   <SfDropDownList TItem="string" TValue="ProductTypeEnum" PopupHeight="230px" Placeholder="Stok Türü Seçiniz" @bind-Value="@DataSource.ProductType" DataSource="@ProductTypesList">
+                        </SfDropDownList>*@
                         </Template>
                     </DxGridLayoutItem>
 
@@ -226,10 +239,10 @@ else
                                                         <Template>
                                                             <br />
                                                             <label class="TSIModalLabel"><strong>Temin Şekli : </strong></label><br />
-                                                          @*  <SfComboBox TValue="string" TItem="SupplyFormModel" Placeholder="Temin Şekli Seçiniz" DataSource="@SupplyData">
-                                                                <ComboBoxEvents TItem="SupplyFormModel" TValue="string" ValueChange="@SupplyValueChangeHandler"></ComboBoxEvents>
-                                                                <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
-                                                            </SfComboBox>*@
+                                                            @*  <SfComboBox TValue="string" TItem="SupplyFormModel" Placeholder="Temin Şekli Seçiniz" DataSource="@SupplyData">
+                                                        <ComboBoxEvents TItem="SupplyFormModel" TValue="string" ValueChange="@SupplyValueChangeHandler"></ComboBoxEvents>
+                                                        <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+                                                        </SfComboBox>*@
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -359,6 +372,375 @@ else
         </FooterContentTemplate>
     </DxPopup>
 
+    <DxPopup @bind-Visible="TechnicalDrawingsPopup"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Teknik Resimler"
+         Width="64%"
+         Height="44%"
+         MinWidth="1220px"
+         MinHeight="470px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="TechnicalDrawingGrid" @ref="@_TechnicalDrawingGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@TechnicalDrawingsList" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@TechnicalDrawingGridContextMenu">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridEvents ContextMenuItemClicked="@OnTechnicalDrawingContextMenuClick" TValue="SelectTechnicalDrawingsDto"></GridEvents>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(SelectTechnicalDrawingsDto.RevisionNo) HeaderText="REVİZYO NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectTechnicalDrawingsDto.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectTechnicalDrawingsDto.ProductName) HeaderText="STOK AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectTechnicalDrawingsDto.Drawer) HeaderText="ÇİZEN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectTechnicalDrawingsDto.RevisionDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="REVİZYON TARİHİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HideTechnicalDrawingPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="TechnicalDrawingsCrudPopup"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Teknik Resim İşlemleri"
+         Width="53%"
+         Height="69%"
+         MinWidth="910px"
+         MinHeight="750px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DxGridLayout CssClass="TSIGridLayout">
+                <Rows>
+                    <DxGridLayoutRow Height="18%" />
+                    <DxGridLayoutRow Height="14%" />
+                    <DxGridLayoutRow Height="14%" />
+                    <DxGridLayoutRow Height="14%" />
+                    <DxGridLayoutRow Height="14%" />
+                    <DxGridLayoutRow Height="20%" />
+                </Rows>
+                <Columns>
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="27%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="27%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="27%" />
+                    <DxGridLayoutColumn Width="4%" />
+                </Columns>
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>Revizyon Numarası: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="TechnicalDrawingsDataSource.RevisionNo" Placeholder="Revizyon Numarasını Yazınız."></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <br />
+                            <center>
+                                <label class="TSIModalLabel"><strong>Müşteri Teknik Onayı: </strong></label><br />
+                                <SfSwitch @bind-Checked="TechnicalDrawingsDataSource.CustomerApproval"></SfSwitch>
+                            </center>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="5" RowSpan="3">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>Açıklama: </strong></label><br />
+                            <SfTextBox Multiline=true CssClass="TSIMemoBox57" @bind-Value="TechnicalDrawingsDataSource.Description_" Placeholder="Açıklama Yazınız."></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Revizyon Tarihi: </strong></label><br />
+                            <SfDatePicker @bind-Value="TechnicalDrawingsDataSource.RevisionDate"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="3">
+                        <Template>
+                            <center>
+                                <label class="TSIModalLabel"><strong>AR-EKS Onayı: </strong></label><br />
+                                <SfSwitch @bind-Checked="TechnicalDrawingsDataSource.IsApproved"></SfSwitch>
+                            </center>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Çizen: </strong></label>
+                            <SfComboBox Placeholder="Çizeni Yazınız." @bind-Value=TechnicalDrawingsDataSource.Drawer DataSource="@Drawers">
+                            </SfComboBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="3">
+                        <Template>
+                            <center>
+                                <label class="TSIModalLabel"><strong>Numune Onayı: </strong></label><br />
+                                <SfSwitch @bind-Checked="TechnicalDrawingsDataSource.SampleApproval"></SfSwitch>
+                            </center>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Çizim Numarası: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="TechnicalDrawingsDataSource.DrawingNo" Placeholder="Çizim Numarasını Yazınız."></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Stok Kodu: </strong></label><br />
+                            <SfTextBox @bind-Value="TechnicalDrawingsDataSource.ProductCode" Enabled=false></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Stok Açıklaması: </strong></label><br />
+                            <SfTextBox @bind-Value="TechnicalDrawingsDataSource.ProductName" Enabled=false></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="4" Column="1">
+                        <Template>
+                            <br />
+                            <center>
+                                <div style="color:transparent">
+                                    <BlazorInputFile.InputFile OnChange="@HandleFileSelectedTechnicalDrawing" />
+                                </div>
+                            </center>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="5" Column="1" ColumnSpan="5">
+                        <Template>
+                            @{
+                                if (files.Count != 0)
+                                {
+                                    <div class="TSI_Paper">
+
+                                        @foreach (var file in files)
+                                        {
+                                            <div class="TSI_Chip"><span onclick="@(()=>PreviewImage(file))">@file.Name</span>&nbsp; <SfIcon onclick="@(()=>Remove(file))" Name="IconName.Trash"></SfIcon></div>
+                                        }
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    <label class="TSIModalLabel"><strong>Dosya Yok.</strong></label>
+                                }
+                            }
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnTechnicalDrawingSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideTechnicalDrawingCrudPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="ProductReferanceNumbersPopup"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Ürün Referans Numaraları"
+         Width="64%"
+         Height="44%"
+         MinWidth="1220px"
+         MinHeight="470px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="ProductReferanceNumberGrid" @ref="@_ProductReferanceNumberGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ProductReferanceNumbersList" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@ProductReferanceNumberGridContextMenu">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridEvents ContextMenuItemClicked="@OnProductReferanceNumberContextMenuClick" TValue="SelectProductReferanceNumbersDto"></GridEvents>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(SelectProductReferanceNumbersDto.CurrentAccountCardName) HeaderText="CARİ HESAP ÜNVANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectProductReferanceNumbersDto.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectProductReferanceNumbersDto.ProductName) HeaderText="STOK AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectProductReferanceNumbersDto.ReferanceNo) HeaderText="TEDARİKÇİ REFERANS NUMARASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectProductReferanceNumbersDto.Description_) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="400"></GridColumn>
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HideProductReferanceNumberPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="ProductReferanceNumbersCrudPopup"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Ürün Referans Numarası İşlemleri"
+         Width="42%"
+         Height="46%"
+         MinWidth="720px"
+         MinHeight="500px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DxGridLayout CssClass="TSIGridLayout">
+                <Rows>
+                    <DxGridLayoutRow Height="25%" />
+                    <DxGridLayoutRow Height="20%" />
+                    <DxGridLayoutRow Height="20%" />
+                    <DxGridLayoutRow Height="40%" />
+                </Rows>
+                <Columns>
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="42%" />
+                    <DxGridLayoutColumn Width="6%" />
+                </Columns>
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>Stok Kodu: </strong></label>
+                            <SfTextBox @bind-Value="ProductReferanceNumbersDataSource.ProductCode" Enabled=false></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>Stok Açıklaması: </strong></label><br />
+                            <SfTextBox @bind-Value="ProductReferanceNumbersDataSource.ProductName" Enabled=false></SfTextBox>
+
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong> Cari Hesap Ünvanı: </strong></label>
+                            <SfTextBox @ref="@CurrentAccountCardsNameButtonEdit" Created="@CurrentAccountCardsNameOnCreateIcon" @bind-Value="ProductReferanceNumbersDataSource.CurrentAccountCardName" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Cari Hesap Kodu: </strong></label><br />
+                            <SfTextBox @ref="@CurrentAccountCardsCodeButtonEdit" Created="@CurrentAccountCardsCodeOnCreateIcon" @bind-Value="ProductReferanceNumbersDataSource.CurrentAccountCardCode" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Tedarikçi Referans Numarası: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" Placeholder="Tedarikçi Referans Numarası Yazınız." @bind-Value="ProductReferanceNumbersDataSource.ReferanceNo"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="1" ColumnSpan="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Açıklama: </strong></label><br />
+                            <SfTextBox CssClass="TSIMemoBox57" @bind-Value="ProductReferanceNumbersDataSource.Description_" Multiline=true Placeholder="Açıklama Yazınız."></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnProductReferanceNumberSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideProductReferanceNumberCrudPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+    <DxPopup @bind-Visible="ImagePreviewPopup"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         ShowCloseButton=false
+         CloseOnOutsideClick="false"
+         HeaderText="@previewImagePopupTitle"
+         MinWidth="1214px"
+         MinHeight="860px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <SfCard class="TSIGridCards">
+                <CardContent>
+                    @if (image)
+                    {
+                        <img style="width:100%; height:800px; margin-left:0% !important" src="@imageDataUri" />
+
+                    }
+                    else
+                    {
+                        <SfPdfViewerServer DocumentPath="@PDFrootPath" Height="800px" Width="1210px"></SfPdfViewerServer>
+                    }
+                </CardContent>
+                <CardFooter>
+                </CardFooter>
+            </SfCard>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HidePreviewPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+
+        </FooterContentTemplate>
+    </DxPopup>
+
 }
 
 @if (SelectProductGroupsPopupVisible)
@@ -466,4 +848,61 @@ else
         </FooterContentTemplate>
     </DxPopup>
 }
+
+@if (SelectCurrentAccountCardsPopupVisible)
+    {
+        <DxPopup @bind-Visible="SelectCurrentAccountCardsPopupVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Cari Hesap Kartları"
+         Width="64%"
+         Height="44%"
+         MinWidth="1220px"
+         MinHeight="470px"
+         HeaderCssClass="HeaderTitleCss">
+            <BodyTemplate>
+
+                <DevGridLayout ColumnCount="1" RowCount="1">
+                    <GridLayoutItems>
+                        <DxGridLayoutItem Row="1" Column="1">
+                            <Template>
+                                <SfCard class="TSIGridCards">
+
+                                    <CardContent>
+                                        <SfGrid ID="CurrentAccountCardsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@CurrentAccountCardsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                        AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                            <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                            <GridEvents OnRecordDoubleClick="@CurrentAccountCardsDoubleClickHandler" TValue="ListCurrentAccountCardsDto"></GridEvents>
+                                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                            <GridPageSettings PageSizes="true"></GridPageSettings>
+                                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                            <GridColumns>
+                                                <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Code) HeaderText="CARİ KOD" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Name) HeaderText="CARİ ÜNVAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Tel1) HeaderText="TELEFON (1)" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Responsible) HeaderText="İLGİLİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Email) HeaderText="E-POSTA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                <GridColumn Field=@nameof(ListCurrentAccountCardsDto.TaxNumber) HeaderText="VERGİ NUMARASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            </GridColumns>
+
+                                        </SfGrid>
+                                    </CardContent>
+                                    <CardFooter>
+                                    </CardFooter>
+                                </SfCard>
+                            </Template>
+                        </DxGridLayoutItem>
+                    </GridLayoutItems>
+                </DevGridLayout>
+
+            </BodyTemplate>
+            <FooterContentTemplate>
+                @*<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>*@
+            </FooterContentTemplate>
+        </DxPopup>
+    }
 

@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Entities.CurrentAccountCard;
+using TsiErp.Entities.Entities.Product;
+
+namespace TsiErp.Entities.Entities.ProductReferanceNumber
+{
+    /// <summary>
+    /// Ürün Referans Numaraları
+    /// </summary>
+    public class ProductReferanceNumbers : FullAuditedEntity
+    {
+        /// <summary>
+        /// Stok ID
+        /// </summary>
+        public Guid ProductID { get; set; }
+        /// <summary>
+        /// Cari ID
+        /// </summary>
+        public Guid CurrentAccountCardID { get; set; }
+        /// <summary>
+        /// Ürün Referans Numarası
+        /// </summary>
+        public string ReferanceNo { get; set; }
+        /// <summary>
+        /// Açıklama
+        /// </summary>
+        public string Description_ { get; set; }
+
+        public Products Products { get; set; }
+        public CurrentAccountCards CurrentAccountCards { get; set; }
+
+    }
+}

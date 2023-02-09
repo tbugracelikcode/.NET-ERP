@@ -66,7 +66,7 @@ else
                                     <GridColumn Field=@nameof(ListPurchasePricesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="BAŞLANGIÇ TARİHİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListPurchasePricesDto.EndDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="BİTİŞ TARİHİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListPurchasePricesDto.CurrencyCode) HeaderText="PARA BİRİMİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-
+                                     <GridColumn Field=@nameof(ListPurchasePricesDto.IsApproved) DisplayAsCheckBox=true HeaderText="ONAYLANAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                 </GridColumns>
                             </SfGrid>
@@ -168,6 +168,13 @@ else
                             <label class="TSIModalLabel"><strong>Cari Hesap Ünvanı: </strong></label><br />
                             <SfTextBox @ref="@CurrentAccountCardsNameButtonEdit" Created="@CurrentAccountCardsNameOnCreateIcon" @bind-Value="DataSource.CurrentAccountCardName" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange"></SfTextBox>
 
+                        </Template>
+                    </DxGridLayoutItem>
+
+                      <DxGridLayoutItem Row="2" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Onay: </strong></label><br />
+                            <SfSwitch @bind-Checked="DataSource.IsApproved"></SfSwitch>
                         </Template>
                     </DxGridLayoutItem>
 

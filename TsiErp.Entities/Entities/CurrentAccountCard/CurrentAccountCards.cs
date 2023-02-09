@@ -20,6 +20,7 @@ using TsiErp.Entities.Entities.SalesPrice;
 using TsiErp.Entities.Entities.SalesPriceLine;
 using TsiErp.Entities.Entities.PurchasePrice;
 using TsiErp.Entities.Entities.PurchasePriceLine;
+using TsiErp.Entities.Entities.ProductReferanceNumber;
 
 namespace TsiErp.Entities.Entities.CurrentAccountCard
 {
@@ -174,5 +175,7 @@ namespace TsiErp.Entities.Entities.CurrentAccountCard
         public ICollection<Forecasts> Forecasts { get; set; }
         public ICollection<PurchasePrices> PurchasePrices { get; set; }
         public ICollection<SalesPrices> SalesPrices { get; set; }
+        public ICollection<ProductReferanceNumbers> ProductReferanceNumbers { get; set; }
+
     }
 }

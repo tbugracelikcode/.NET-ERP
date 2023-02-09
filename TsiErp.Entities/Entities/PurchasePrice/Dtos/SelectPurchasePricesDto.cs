@@ -66,6 +66,10 @@ namespace TsiErp.Entities.Entities.PurchasePrice.Dtos
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
+        /// <summary>
+        /// Onay
+        /// </summary>
+        public bool IsApproved { get; set; }
 
         public List<SelectPurchasePriceLinesDto> SelectPurchasePriceLines { get; set; }
     }
