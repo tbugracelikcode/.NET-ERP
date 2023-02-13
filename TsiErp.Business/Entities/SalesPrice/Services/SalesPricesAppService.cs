@@ -19,6 +19,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
     public class SalesPricesAppService : ApplicationService, ISalesPricesAppService
     {
         private readonly ISalesPricesRepository _repository;
+
         private readonly ISalesPriceLinesRepository _lineRepository;
 
         SalesPriceManager _manager { get; set; } = new SalesPriceManager();

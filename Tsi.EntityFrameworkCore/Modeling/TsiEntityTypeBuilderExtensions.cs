@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Tsi.Core.Entities;
 using Tsi.Core.Entities.CreationEntites;
+using Tsi.Core.Entities.DataConcurrencyEntities;
 using Tsi.Core.Entities.DeleterEntities;
 using Tsi.Core.Entities.ModifierEntities;
 
@@ -25,30 +26,10 @@ namespace Tsi.EntityFrameworkCore.Modeling
             b.TryConfigureLastModificationTime();
             b.TryConfigureDeletionEntity();
             b.TryConfigureDeletionTime();
-            //b.TryConfigureSoftDelete();
+            b.TryConfigureDataConcurrenyDataOpenStatus();
+            b.TryConfigureDataConcurrenyDataOpenStatusUserId();
         }
 
-        //public static void ConfigureLogs(this ModelBuilder builder)
-        //{
-        //    builder.Entity<Logs>(b =>
-        //    {
-        //        b.ToTable("Logs");
-
-
-        //        b.Property(t => t.Id).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-        //        b.Property(t => t.Date_).IsRequired().HasColumnType(SqlDbType.DateTime.ToString()).HasMaxLength(200);
-        //        b.Property(t => t.MethodName).IsRequired().HasColumnType("nvarchar(MAX)");
-        //        b.Property(t => t.BeforeValues).IsRequired().HasColumnType("nvarchar(MAX)");
-        //        b.Property(t => t.AfterValues).IsRequired().HasColumnType("nvarchar(MAX)");
-        //        b.Property(t => t.LogLevel).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
-        //        b.Property(t => t.UserId).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-
-        //        b.HasIndex(x => x.MethodName);
-        //        b.HasIndex(x => x.LogLevel);
-        //        b.HasIndex(x => x.UserId);
-
-        //    });
-        //}
 
         public static void TryConfigureEntityId(this EntityTypeBuilder b)
         {

@@ -4,10 +4,12 @@ using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using Tsi.EntityFrameworkCore.Respositories.UnitOfWork;
 using TsiErp.Business.DependencyResolvers.Autofac;
 using TsiErp.Business.Entities.Branch.BusinessRules;
 using TsiErp.Business.Entities.Branch.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Branch.Dtos;
@@ -17,13 +19,14 @@ namespace TsiErp.Business.Entities.Branch.Services
     [ServiceRegistration(typeof(IBranchesAppService), DependencyInjectionType.Scoped)]
     public class BranchesAppService : ApplicationService, IBranchesAppService
     {
-        private readonly IBranchesRepository _repository;
+        //private readonly IBranchesRepository _repository;
 
         BranchesManager _manager { get; set; } = new BranchesManager();
 
-        public BranchesAppService(IBranchesRepository repository)
+        UnitOfWork _uow { get; set; } = new UnitOfWork();
+
+        public BranchesAppService()
         {
-            _repository = repository;
         }
 
 
@@ -31,13 +34,13 @@ namespace TsiErp.Business.Entities.Branch.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBranchesDto>> CreateAsync(CreateBranchesDto input)
         {
-            await _manager.CodeControl(_repository, input.Code);
+            await _manager.CodeControl(_uow.BranchRepository, input.Code);
 
             var entity = ObjectMapper.Map<CreateBranchesDto, Branches>(input);
 
-            var addedEntity = await _repository.InsertAsync(entity);
+            var addedEntity = await _uow.BranchRepository.InsertAsync(entity);
 
-            await _repository.SaveChanges();
+            await _uow.SaveChanges();
 
             return new SuccessDataResult<SelectBranchesDto>(ObjectMapper.Map<Branches, SelectBranchesDto>(addedEntity));
         }
@@ -46,16 +49,16 @@ namespace TsiErp.Business.Entities.Branch.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            await _manager.DeleteControl(_repository, id);
-            await _repository.DeleteAsync(id);
-            await _repository.SaveChanges();
+            await _manager.DeleteControl(_uow.BranchRepository, id);
+            await _uow.BranchRepository.DeleteAsync(id);
+            await _uow.SaveChanges();
             return new SuccessResult("Silme işlemi başarılı.");
         }
 
 
         public async Task<IDataResult<SelectBranchesDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id, t => t.Periods, t => t.SalesPropositions);
+            var entity = await _uow.BranchRepository.GetAsync(t => t.Id == id, t => t.Periods, t => t.SalesPropositions);
             var mappedEntity = ObjectMapper.Map<Branches, SelectBranchesDto>(entity);
             return new SuccessDataResult<SelectBranchesDto>(mappedEntity);
         }
@@ -64,7 +67,7 @@ namespace TsiErp.Business.Entities.Branch.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListBranchesDto>>> GetListAsync(ListBranchesParameterDto input)
         {
-            var list = await _repository.GetListAsync(t => t.IsActive == input.IsActive, t => t.Periods, t => t.SalesPropositions);
+            var list = await _uow.BranchRepository.GetListAsync(t => t.IsActive == input.IsActive, t => t.Periods, t => t.SalesPropositions);
 
             var mappedEntity = ObjectMapper.Map<List<Branches>, List<ListBranchesDto>>(list.ToList());
 
@@ -77,14 +80,15 @@ namespace TsiErp.Business.Entities.Branch.Services
         public async Task<IDataResult<SelectBranchesDto>> UpdateAsync(UpdateBranchesDto input)
         {
 
-            var entity = await _repository.GetAsync(x => x.Id == input.Id);
+            var entity = await _uow.BranchRepository.GetAsync(x => x.Id == input.Id);
 
-            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
+            await _manager.UpdateControl(_uow.BranchRepository, input.Code, input.Id, entity);
 
             var mappedEntity = ObjectMapper.Map<UpdateBranchesDto, Branches>(input);
 
-            await _repository.UpdateAsync(mappedEntity);
-            await _repository.SaveChanges();
+            await _uow.BranchRepository.UpdateAsync(mappedEntity);
+
+            await _uow.SaveChanges();
 
             return new SuccessDataResult<SelectBranchesDto>(ObjectMapper.Map<Branches, SelectBranchesDto>(mappedEntity));
         }

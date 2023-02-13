@@ -18,7 +18,7 @@ using TsiErp.Entities.Entities.Logging;
 
 namespace Tsi.EntityFrameworkCore.Respositories.EntityFrameworkCore
 {
-    public class EfCoreRepository<TEntity> : IEfCoreRepository<TEntity> where TEntity : class, IEntity, new()
+    public class EfCoreRepository<TEntity> : IEfCoreRepository<TEntity> where TEntity : class, IEntity
     {
 
         private DbContext _dbContext;
@@ -138,12 +138,14 @@ namespace Tsi.EntityFrameworkCore.Respositories.EntityFrameworkCore
 
             _dbContext.ChangeTracker.Clear();
 
+            //_dbContext.Attach(entity);
+
+            //var updatedEntity = _dbContext.Update(entity).Entity;
+
             _dbContext.Attach(entity);
 
-            var updatedEntity = _dbContext.Update(entity).Entity;
-
-
-            return updatedEntity;
+            _dbContext.Entry(entity).State = EntityState.Modified;
+            return _dbContext.Entry(entity).Entity;
         }
 
         public async Task UpdateManyAsync(IEnumerable<TEntity> entities)
