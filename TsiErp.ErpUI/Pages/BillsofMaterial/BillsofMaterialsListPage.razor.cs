@@ -140,7 +140,7 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
                     {
                         item.FinishedProductCode = DataSource.FinishedProductCode;
                         item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
-                        item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
+                        item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
                         item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
                     }
 

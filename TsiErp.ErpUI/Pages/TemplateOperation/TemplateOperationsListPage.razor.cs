@@ -162,7 +162,7 @@ namespace TsiErp.ErpUI.Pages.TemplateOperation
                     foreach (var item in GridLineList)
                     {
                         item.StationCode = (await StationsAppService.GetAsync(item.StationID.GetValueOrDefault())).Data.Code;
-                        item.StationName = (await StationsAppService.GetAsync(item.StationID.GetValueOrDefault())).Data.Code;
+                        item.StationName = (await StationsAppService.GetAsync(item.StationID.GetValueOrDefault())).Data.Name;
                     }
 
                     EditPageVisible = true;

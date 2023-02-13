@@ -35,6 +35,10 @@ namespace TsiErp.Entities.Entities.SalesPriceLine.Dtos
         /// </summary>
         public Guid? CurrentAccountCardID { get; set; }
         /// <summary>
+        /// Cari Ünvan
+        /// </summary>
+        public string CurrentAccountCardName { get; set; }
+        /// <summary>
         /// Para Birimi Kodu
         /// </summary>
         public string CurrencyCode { get; set; }

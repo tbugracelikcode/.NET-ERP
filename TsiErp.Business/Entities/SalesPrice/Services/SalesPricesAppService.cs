@@ -139,5 +139,14 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
 
             return new SuccessDataResult<SelectSalesPricesDto>(ObjectMapper.Map<SalesPrices, SelectSalesPricesDto>(mappedEntity));
         }
+
+        public async Task<IDataResult<IList<SelectSalesPriceLinesDto>>> GetSelectLineListAsync(Guid productId)
+        {
+            var list = await _lineRepository.GetListAsync(t => t.ProductID == productId, t => t.Products);
+
+            var mappedEntity = ObjectMapper.Map<List<SalesPriceLines>, List<SelectSalesPriceLinesDto>>(list.ToList());
+
+            return new SuccessDataResult<IList<SelectSalesPriceLinesDto>>(mappedEntity);
+        }
     }
 }

@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using Tsi.Application.Contract.Services.EntityFrameworkCore;
 using Tsi.Core.Utilities.Results;
 using TsiErp.Entities.Entities.SalesPrice.Dtos;
+using TsiErp.Entities.Entities.SalesPriceLine.Dtos;
 using TsiErp.Entities.Entities.SalesProposition.Dtos;
 
 namespace TsiErp.Business.Entities.SalesPrice.Services
 {
     public interface ISalesPricesAppService : ICrudAppService<SelectSalesPricesDto, ListSalesPricesDto, CreateSalesPricesDto, UpdateSalesPricesDto, ListSalesPricesParameterDto>
     {
-
+        Task<IDataResult<IList<SelectSalesPriceLinesDto>>> GetSelectLineListAsync(Guid productId);
     }
 }

@@ -140,5 +140,18 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
 
             return new SuccessDataResult<SelectBillsofMaterialsDto>(ObjectMapper.Map<BillsofMaterials, SelectBillsofMaterialsDto>(mappedEntity));
         }
+
+        public async Task<IDataResult<SelectBillsofMaterialsDto>> GetSelectListAsync(Guid finishedproductId)
+        {
+            var entity = await _repository.GetAsync(t => t.FinishedProductID == finishedproductId,
+               t => t.BillsofMaterialLines,
+               t => t.Products);
+
+            var mappedEntity = ObjectMapper.Map<BillsofMaterials, SelectBillsofMaterialsDto>(entity);
+
+            mappedEntity.SelectBillsofMaterialLines = ObjectMapper.Map<List<BillsofMaterialLines>, List<SelectBillsofMaterialLinesDto>>(entity.BillsofMaterialLines.ToList());
+
+            return new SuccessDataResult<SelectBillsofMaterialsDto>(mappedEntity);
+        }
     }
 }
