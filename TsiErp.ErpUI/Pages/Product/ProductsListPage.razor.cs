@@ -1,31 +1,23 @@
 ﻿using BlazorInputFile;
-using DevExpress.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
-using Syncfusion.Blazor.DropDowns;
-using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using System.Text;
-using Tsi.Application.Contract.Services.EntityFrameworkCore;
-using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
-using Tsi.Core.Utilities.Results;
-using TsiErp.Business.Entities.Department.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.Entities.Entities.Branch.Dtos;
-using TsiErp.Entities.Entities.Department.Dtos;
 using TsiErp.Entities.Entities.Product.Dtos;
 using TsiErp.Entities.Entities.ProductGroup.Dtos;
-using TsiErp.Entities.Entities.StationGroup.Dtos;
 using TsiErp.Entities.Entities.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Entities.UnitSet.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
-using FluentValidation;
 using TsiErp.Entities.Entities.ProductReferanceNumber.Dtos;
 using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.SalesPriceLine.Dtos;
+using TsiErp.Entities.Entities.PurchasePriceLine.Dtos;
+using TsiErp.Entities.Entities.BillsofMaterial.Dtos;
+using TsiErp.Entities.Entities.BillsofMaterialLine.Dtos;
 
 namespace TsiErp.ErpUI.Pages.Product
 {
@@ -75,19 +67,33 @@ namespace TsiErp.ErpUI.Pages.Product
 
         public SelectTechnicalDrawingsDto TechnicalDrawingsDataSource { get; set; }
         public SelectProductReferanceNumbersDto ProductReferanceNumbersDataSource { get; set; }
+        public SelectBillsofMaterialsDto BillsofMaterialsDataSource { get; set; }
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> TechnicalDrawingGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> ProductReferanceNumberGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+        public List<ContextMenuItemModel> BillsofMaterialGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         public List<SelectTechnicalDrawingsDto> TechnicalDrawingsList = new List<SelectTechnicalDrawingsDto>();
 
         public List<SelectProductReferanceNumbersDto> ProductReferanceNumbersList = new List<SelectProductReferanceNumbersDto>();
+
+        public List<SelectSalesPriceLinesDto> SalesPriceLinesList = new List<SelectSalesPriceLinesDto>();
+
+        public List<SelectPurchasePriceLinesDto> PurchasePriceLinesList = new List<SelectPurchasePriceLinesDto>();
+
+        public List<ListBillsofMaterialsDto> BillsofMaterialsList = new List<ListBillsofMaterialsDto>();
+
+        public List<SelectBillsofMaterialLinesDto> BillsofMaterialLinesList = new List<SelectBillsofMaterialLinesDto>();
 
         [Inject]
         ModalManager ModalManager { get; set; }
 
         private SfGrid<SelectTechnicalDrawingsDto> _TechnicalDrawingGrid;
         private SfGrid<SelectProductReferanceNumbersDto> _ProductReferanceNumberGrid;
+        private SfGrid<SelectSalesPriceLinesDto> _SalesPriceLineGrid;
+        private SfGrid<SelectPurchasePriceLinesDto> _PurchasePriceLineGrid;
+        private SfGrid<ListBillsofMaterialsDto> _BillsofMaterialGrid;
+        private SfGrid<SelectBillsofMaterialLinesDto> _BillsofMaterialLineGrid;
 
         #region Değişkenler
 
@@ -96,6 +102,13 @@ namespace TsiErp.ErpUI.Pages.Product
 
         public bool ProductReferanceNumbersCrudPopup = false;
         public bool ProductReferanceNumbersPopup = false;
+
+        public bool SalesPriceLinesPopup = false;
+
+        public bool PurchasePriceLinesPopup = false;
+
+        public bool BillsofMaterialsPopup = false;
+        public bool BillsofMaterialsCrudPopup = false;
 
         List<string> Drawers = new List<string>();
 
@@ -214,6 +227,10 @@ namespace TsiErp.ErpUI.Pages.Product
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Teknik Resimler", Id = "technicaldrawings" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Ürün Referans Numaraları", Id = "productreferancenumbers" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Satın Alma Fiyatları", Id = "purchaseprices" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Satış Fiyatları", Id = "salesprices" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Stok Reçeteleri", Id = "billsofmaterials" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Ürün Rotaları", Id = "routes" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
             }
@@ -563,6 +580,70 @@ namespace TsiErp.ErpUI.Pages.Product
 
         #endregion
 
+        #region Reçete Modalı İşlemleri
+
+        protected void CreateBillsofMaterialsContextMenuItems()
+        {
+            if (BillsofMaterialGridContextMenu.Count() == 0)
+            {
+                BillsofMaterialGridContextMenu.Add(new ContextMenuItemModel { Text = "İncele", Id = "examine" });
+            }
+        }
+
+        public async void OnBillsofMaterialContextMenuClick(ContextMenuClickEventArgs<ListBillsofMaterialsDto> args)
+        {
+            switch (args.Item.Id)
+            {
+               
+
+                case "examine":
+                    BillsofMaterialsDataSource = (await BillsofMaterialsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    BillsofMaterialLinesList = BillsofMaterialsDataSource.SelectBillsofMaterialLines;
+
+                    foreach (var item in BillsofMaterialLinesList)
+                    {
+                        item.FinishedProductCode = BillsofMaterialsDataSource.FinishedProductCode;
+                        item.ProductCode = (await ProductService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
+                        item.ProductName = (await ProductService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
+                        item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
+                    }
+
+                    BillsofMaterialsCrudPopup = true;
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+
+                default:
+                    break;
+            }
+        }
+
+        public void HideBillsofMaterialCrudPopup()
+        {
+            BillsofMaterialsCrudPopup = false;
+        }
+
+        public void HideBillsofMaterialPopup()
+        {
+            BillsofMaterialsPopup = false;
+        }
+
+        #endregion
+
+        #region Fiyat Listeleri Modalları İşlemleri
+
+        public void HideSalesPricesPopup()
+        {
+            SalesPriceLinesPopup = false;
+        }
+
+        public void HidePurchasePricesPopup()
+        {
+            PurchasePriceLinesPopup = false;
+        }
+
+        #endregion
+
         #region Teknik Çizim Upload İşlemleri
 
         private void HandleFileSelectedTechnicalDrawing(IFileListEntry[] entryFiles)
@@ -733,6 +814,78 @@ namespace TsiErp.ErpUI.Pages.Product
 
                     break;
 
+
+                case "purchaseprices":
+
+                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    PurchasePriceLinesList = (await PurchasePricesAppService.GetSelectLineListAsync(DataSource.Id)).Data.ToList();
+
+                    foreach (var item in PurchasePriceLinesList)
+                    {
+                        item.ProductCode = DataSource.Code;
+                        item.ProductName = DataSource.Name;
+                        item.CurrentAccountCardName = (await CurrentAccountCardsAppService.GetAsync(item.CurrentAccountCardID.GetValueOrDefault())).Data.Name;
+                        item.CurrencyCode = (await CurrenciesAppService.GetAsync(item.CurrencyID.GetValueOrDefault())).Data.Code;
+                    }
+                    PurchasePriceLinesPopup = true;
+
+                    await InvokeAsync(StateHasChanged);
+
+
+                    break;
+
+                case "salesprices":
+
+                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    SalesPriceLinesList = (await SalesPricesAppService.GetSelectLineListAsync(DataSource.Id)).Data.ToList();
+
+                    foreach (var item in SalesPriceLinesList)
+                    {
+                        item.ProductCode = DataSource.Code;
+                        item.ProductName = DataSource.Name;
+                        item.CurrentAccountCardName = (await CurrentAccountCardsAppService.GetAsync(item.CurrentAccountCardID.GetValueOrDefault())).Data.Name;
+                        item.CurrencyCode = (await CurrenciesAppService.GetAsync(item.CurrencyID.GetValueOrDefault())).Data.Code;
+                    }
+                    SalesPriceLinesPopup = true;
+
+                    await InvokeAsync(StateHasChanged);
+
+
+                    break;
+
+
+                case "billsofmaterials":
+
+                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    BillsofMaterialsList = (await BillsofMaterialsAppService.GetListAsync(new ListBillsofMaterialsParameterDto())).Data.Where(t=>t.FinishedProductID == DataSource.Id).ToList();
+
+                    BillsofMaterialsPopup = true;
+
+                    await InvokeAsync(StateHasChanged);
+
+
+                    break;
+
+                case "routes":
+
+                    //DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    //PurchasePriceLinesList = (await PurchasePricesAppService.GetSelectLineListAsync(DataSource.Id)).Data.ToList();
+
+                    //foreach (var item in PurchasePriceLinesList)
+                    //{
+                    //    item.ProductCode = DataSource.Code;
+                    //    item.ProductName = DataSource.Name;
+                    //    item.CurrentAccountCardName = (await CurrentAccountCardsAppService.GetAsync(item.CurrentAccountCardID.GetValueOrDefault())).Data.Name;
+                    //    item.CurrencyCode = (await CurrenciesAppService.GetAsync(item.CurrencyID.GetValueOrDefault())).Data.Code;
+                    //}
+                    //PurchasePriceLinesPopup = true;
+
+                    //await InvokeAsync(StateHasChanged);
+
+
+                    break;
+
+
                 case "delete":
 
                     var res = await ModalManager.ConfirmationAsync("Onay", "Silmek istediğinize emin misiniz ?");
@@ -805,6 +958,7 @@ namespace TsiErp.ErpUI.Pages.Product
             CreateMainContextMenuItems();
             CreateTechnicalDrawingContextMenuItems();
             CreateProductReferanceNumberContextMenuItems();
+            CreateBillsofMaterialsContextMenuItems();
         }
 
         protected override Task BeforeInsertAsync()

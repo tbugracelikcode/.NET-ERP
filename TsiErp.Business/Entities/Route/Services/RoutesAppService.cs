@@ -165,6 +165,20 @@ namespace TsiErp.Business.Entities.Route.Services
             //return new SuccessDataResult<SelectProductsOperationsDto>(mappedEntity);
         }
 
+        public async Task<IDataResult<SelectRoutesDto>> GetSelectListAsync(Guid productId)
+        {
+            var entity = await _repository.GetAsync(t => t.ProductID == productId,
+                t => t.RouteLines,
+                t => t.Products);
+
+            var mappedEntity = ObjectMapper.Map<Routes, SelectRoutesDto>(entity);
+
+            mappedEntity.SelectRouteLines = ObjectMapper.Map<List<RouteLines>, List<SelectRouteLinesDto>>(entity.RouteLines.ToList());
+
+            return new SuccessDataResult<SelectRoutesDto>(mappedEntity);
+        }
+
+
         //public async Task<IDataResult<List<SelectProductsOperationsDto>>> GetProductsOperationLinesAsync(Guid productId)
         //{
         //    var entity = await _productsOperationsRepository.GetListAsync(t => t.ProductID == productId, t => t.ProductsOperationLines);

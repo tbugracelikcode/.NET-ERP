@@ -19,6 +19,10 @@ namespace TsiErp.Entities.Entities.PurchasePriceLine.Dtos
         /// </summary>
         public Guid? CurrentAccountCardID { get; set; }
         /// <summary>
+        /// Cari Ünvan
+        /// </summary>
+        public string CurrentAccountCardName { get; set; }
+        /// <summary>
         /// Stok ID
         /// </summary>
         public Guid? ProductID { get; set; }

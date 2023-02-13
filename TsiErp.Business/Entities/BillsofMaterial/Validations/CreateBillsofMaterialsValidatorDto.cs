@@ -29,9 +29,6 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Validations
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
                .WithMessage("Lütfen mamül seçin.");
 
-            RuleFor(x => x.RouteID)
-                .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("Lütfen mamül seçin.");
 
 
         }

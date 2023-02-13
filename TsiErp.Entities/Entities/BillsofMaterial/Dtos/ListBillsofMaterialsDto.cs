@@ -17,7 +17,11 @@ namespace TsiErp.Entities.Entities.BillsofMaterial.Dtos
         /// Reçete Adı
         /// </summary>
         public string Name { get; set; }
-       
+        /// <summary>
+        /// Mamül ID
+        /// </summary>
+        public Guid? FinishedProductID { get; set; }
+
         /// <summary>
         /// Mamül Kodu
         /// </summary>

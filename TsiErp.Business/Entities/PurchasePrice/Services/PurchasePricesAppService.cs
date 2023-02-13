@@ -141,5 +141,14 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
 
             return new SuccessDataResult<SelectPurchasePricesDto>(ObjectMapper.Map<PurchasePrices, SelectPurchasePricesDto>(mappedEntity));
         }
+
+        public async Task<IDataResult<IList<SelectPurchasePriceLinesDto>>> GetSelectLineListAsync(Guid productId)
+        {
+            var list = await _lineRepository.GetListAsync(t => t.ProductID == productId, t => t.Products);
+
+            var mappedEntity = ObjectMapper.Map<List<PurchasePriceLines>, List<SelectPurchasePriceLinesDto>>(list.ToList());
+
+            return new SuccessDataResult<IList<SelectPurchasePriceLinesDto>>(mappedEntity);
+        }
     }
 }
