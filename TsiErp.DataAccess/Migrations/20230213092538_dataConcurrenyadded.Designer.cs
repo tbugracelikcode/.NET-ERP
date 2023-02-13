@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TsiErp.DataAccess.EntityFrameworkCore;
 
@@ -11,9 +12,10 @@ using TsiErp.DataAccess.EntityFrameworkCore;
 namespace TsiErp.DataAccess.Migrations
 {
     [DbContext(typeof(TsiErpDbContext))]
-    partial class TsiErpDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230213092538_dataConcurrenyadded")]
+    partial class dataConcurrenyadded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,15 +47,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -123,15 +121,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -215,15 +209,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -288,15 +278,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<DateTime?>("Date_")
@@ -401,15 +387,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -488,15 +470,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<DateTime>("Date_")
@@ -552,15 +530,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<DateTime>("Date_")
@@ -634,15 +608,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<DateTime>("Date")
@@ -721,15 +691,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<DateTime>("Date")
@@ -806,15 +772,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -922,15 +884,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -1005,15 +963,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -1096,15 +1050,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("UniqueIdentifier");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -1254,15 +1204,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -1337,15 +1283,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -1423,15 +1365,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -1530,15 +1468,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -1627,15 +1561,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("UniqueIdentifier");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<DateTime>("Date")
@@ -1704,15 +1634,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -1786,15 +1712,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<DateTime?>("Date_")
@@ -1889,15 +1811,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("UniqueIdentifier");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -1976,15 +1894,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("nvarchar(MAX)");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -2049,15 +1963,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -2159,15 +2069,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -2271,15 +2177,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -2355,15 +2257,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -2434,15 +2332,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -2507,15 +2401,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -2573,15 +2463,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -2655,15 +2541,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<DateTime?>("Date_")
@@ -2774,15 +2656,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<int>("Days_")
@@ -2852,15 +2730,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -2926,15 +2800,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -3031,15 +2901,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -3120,15 +2986,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -3259,15 +3121,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -3335,15 +3193,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("NVarChar(200)");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<DateTime?>("Date_")
@@ -3477,15 +3331,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -3559,15 +3409,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -3674,15 +3520,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -3750,15 +3592,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("UniqueIdentifier");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -3825,15 +3663,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -3906,15 +3740,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -3991,15 +3821,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("UniqueIdentifier");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<DateTime>("Date_")
@@ -4121,15 +3947,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -4265,15 +4087,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("UniqueIdentifier");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -4355,15 +4173,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("UniqueIdentifier");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -4446,15 +4260,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("UniqueIdentifier");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<DateTime>("Date_")
@@ -4587,15 +4397,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -4713,15 +4519,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("UniqueIdentifier");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<DateTime?>("Date_")
@@ -4819,15 +4621,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -4905,15 +4703,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -4983,15 +4777,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -5079,15 +4869,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("UniqueIdentifier");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<DateTime>("Date_")
@@ -5206,15 +4992,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -5348,15 +5130,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("UniqueIdentifier");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -5438,15 +5216,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("UniqueIdentifier");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -5529,15 +5303,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("UniqueIdentifier");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<DateTime>("Date_")
@@ -5667,15 +5437,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -5797,15 +5563,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -5878,15 +5640,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -5976,15 +5734,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("UniqueIdentifier");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -6084,15 +5838,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -6203,15 +5953,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -6273,15 +6019,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -6342,15 +6084,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("Bit");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -6437,15 +6175,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -6509,15 +6243,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -6589,15 +6319,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -6658,15 +6384,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -6763,15 +6485,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -6845,15 +6563,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -6933,15 +6647,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -7001,15 +6711,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -7072,15 +6778,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnName("CreatorId");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
@@ -7147,15 +6849,11 @@ namespace TsiErp.DataAccess.Migrations
                         .HasColumnType("UniqueIdentifier");
 
                     b.Property<bool?>("DataOpenStatus")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
                         .HasColumnName("DataOpenStatus");
 
                     b.Property<Guid?>("DataOpenStatusUserId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"))
                         .HasColumnName("DataOpenStatusUserId");
 
                     b.Property<Guid?>("DeleterId")
