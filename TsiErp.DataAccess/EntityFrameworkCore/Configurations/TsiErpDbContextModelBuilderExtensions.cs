@@ -95,6 +95,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("Branches");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 //b.HasQueryFilter(x => !x.IsDeleted);
 
@@ -114,6 +115,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("TechnicalDrawings");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 //b.HasQueryFilter(x => !x.IsDeleted);
 
@@ -143,6 +145,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("ProductReferanceNumbers");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 //b.HasQueryFilter(x => !x.IsDeleted);
 
@@ -167,6 +170,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("MaintenancePeriods");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 //b.HasQueryFilter(x => !x.IsDeleted);
 
@@ -188,6 +192,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("Periods");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
@@ -226,6 +231,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("UnitSets");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
@@ -243,6 +249,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("StationGroups");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
@@ -259,6 +266,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("Stations");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
@@ -294,6 +302,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("Employees");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
@@ -323,6 +332,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("EquipmentRecords");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
@@ -352,6 +362,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("Departments");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
@@ -367,6 +378,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("ContractUnsuitabilityItems");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
@@ -388,6 +400,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("CalibrationVerifications");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
 
 
@@ -413,6 +426,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("CalibrationRecords");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
 
 
@@ -454,6 +468,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("SalesPropositions");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.FicheNo).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Description_).HasColumnType("nvarchar(max)");
@@ -557,6 +572,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("CurrentAccountCards");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
 
 
@@ -607,6 +623,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("Products");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
 
 
@@ -650,6 +667,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("ProductGroups");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
 
 
@@ -668,6 +686,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("CustomerComplaintItems");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
@@ -689,6 +708,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("ProductionOrderChangeItems");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
@@ -710,6 +730,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("PurchasingUnsuitabilityItems");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
@@ -731,6 +752,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("ShippingAdresses");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
 
 
@@ -761,6 +783,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("Currencies");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
@@ -778,6 +801,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("PaymentPlans");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
@@ -795,6 +819,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("OperationUnsuitabilityItems");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
@@ -816,6 +841,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("FinalControlUnsuitabilityItems");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
@@ -837,6 +863,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("Warehouses");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
@@ -853,6 +880,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("TemplateOperations");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 //b.HasQueryFilter(x => !x.IsDeleted);
 
@@ -872,6 +900,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("Routes");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 //b.HasQueryFilter(x => !x.IsDeleted);
 
@@ -948,6 +977,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("Calendars");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
@@ -1017,6 +1047,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("Shifts");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 //b.HasQueryFilter(x => !x.IsDeleted);
 
@@ -1060,6 +1091,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("SalesOrders");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.FicheNo).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Description_).HasColumnType("nvarchar(max)");
@@ -1138,6 +1170,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("PurchaseOrders");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.FicheNo).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Description_).HasColumnType("nvarchar(max)");
@@ -1219,6 +1252,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("ProductsOperations");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
@@ -1263,6 +1297,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("BillsofMaterials");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 //b.HasQueryFilter(x => !x.IsDeleted);
 
@@ -1315,6 +1350,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("ProductionOrders");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 //b.HasQueryFilter(x => !x.IsDeleted);
 
@@ -1367,6 +1403,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("WorkOrders");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 //b.HasQueryFilter(x => !x.IsDeleted);
 
@@ -1416,6 +1453,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("PurchaseRequests");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.FicheNo).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Description_).HasColumnType("nvarchar(max)");
@@ -1497,6 +1535,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("ProductionTrackings");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.WorkOrderID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.ProducedQuantity).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
@@ -1530,6 +1569,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("ContractProductionTrackings");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.WorkOrderID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.ProducedQuantity).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
@@ -1583,6 +1623,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("HaltReasons");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
@@ -1600,6 +1641,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("PurchaseUnsuitabilityReports");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.FicheNo).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Description_).HasColumnType("nvarchar(max)");
@@ -1633,6 +1675,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("OperationUnsuitabilityReports");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.FicheNo).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Description_).HasColumnType("nvarchar(max)");
@@ -1673,6 +1716,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("Forecasts");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Description_).HasColumnType("nvarchar(max)");
@@ -1723,6 +1767,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("SalesPrices");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
@@ -1781,6 +1826,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("PurchasePrices");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
@@ -1840,6 +1886,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("UserGroups");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(300);
@@ -1855,6 +1902,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("Users");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.UserName).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(300);
@@ -1877,6 +1925,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("FinalControlUnsuitabilityReports");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.FicheNo).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.Description_).HasColumnType("nvarchar(max)");
@@ -1925,6 +1974,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("MaintenanceInstructions");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.InstructionName).IsRequired().HasColumnType("nvarchar(max)");
@@ -1974,6 +2024,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("PlannedMaintenances");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.RegistrationNo).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.StationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
@@ -2030,6 +2081,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("UnplannedMaintenances");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.RegistrationNo).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.StationID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
@@ -2148,6 +2200,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
             {
                 b.ToTable("Menus");
                 b.ConfigureByConvention();
+                b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.MenuName).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200); ;
                 b.Property(t => t.ParentMenuId).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
