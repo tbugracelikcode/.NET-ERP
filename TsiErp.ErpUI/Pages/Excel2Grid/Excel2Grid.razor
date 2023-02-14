@@ -1,0 +1,30 @@
+﻿@page "/excel2grid"
+@layout MainLayout
+
+@using TsiErp.ErpUI.Services
+
+@inject IExcelService ExcelService
+
+
+<SfUploader AutoUpload="false">
+    <UploaderEvents ValueChange="OnChange"></UploaderEvents>
+</SfUploader>
+ 
+@if (Columns != null)
+{
+    <SfGrid @ref="Grid" GridLines="GridLine.Both" DataSource="@CustomerList" AllowFiltering="true" AllowPaging="true" class="GridZebra">
+        <GridColumns>
+            @{
+            foreach (var val in Columns)
+            {
+                <GridColumn Field="@val"></GridColumn>
+            }
+        }
+    </GridColumns>
+</SfGrid>
+}
+else
+{
+    <br/>
+    <div>Tabloda görüntülemek üzere bir Excel dosyası yükleyin.</div>
+}

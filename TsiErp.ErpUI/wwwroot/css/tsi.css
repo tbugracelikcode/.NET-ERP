@@ -641,3 +641,109 @@ html {
 .e-grid .e-focused:not(.e-menu-item) {
     box-shadow: 0 0 0 1px #d30000 inset !important;
 }
+
+.e-btn, .e-css.e-btn {
+    -webkit-tap-highlight-color: transparent;
+    background-color: #c73434 !important;
+    border-color: #c70e0e !important;
+    color: #fff !important;
+    font-size: 16px !important;
+    transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.e-upload .e-file-select-wrap .e-file-drop, .e-bigger.e-small .e-upload .e-file-select-wrap .e-file-drop {
+    font-family: inherit;
+    font-size: 16px !important;
+    margin-left: 12px;
+}
+
+.e-upload .e-upload-files .e-upload-file-list .e-file-container .e-file-name, .e-bigger.e-small .e-upload .e-upload-files .e-upload-file-list .e-file-container .e-file-name {
+    float: left;
+    font-family: inherit;
+    font-size: 16px !important;
+    max-width: 75%;
+    overflow: hidden;
+    padding-top: 12px;
+    position: relative;
+    text-overflow: ellipsis;
+    top: 0;
+    white-space: nowrap;
+}
+
+.e-upload .e-upload-files .e-upload-file-list .e-file-container .e-file-size, .e-bigger.e-small .e-upload .e-upload-files .e-upload-file-list .e-file-container .e-file-size {
+    display: block;
+    font-size: 14px !important;
+    padding: 0;
+}
+
+.e-upload .e-upload-files .e-upload-file-list .e-file-container .e-file-status, .e-upload .e-upload-files .e-upload-file-list .e-file-container .e-file-information, .e-bigger.e-small .e-upload .e-upload-files .e-upload-file-list .e-file-container .e-file-status, .e-bigger.e-small .e-upload .e-upload-files .e-upload-file-list .e-file-container .e-file-information {
+    display: block;
+    font-family: inherit;
+    font-size: 14px !important;
+    padding-bottom: 12px;
+}
+
+.e-btn.e-flat.e-primary:disabled, .e-css.e-btn.e-flat.e-primary:disabled {
+    background-color: rgb(253 13 13 / 65%) !important;
+    border-color: transparent;
+    box-shadow: none;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.e-btn.e-flat.e-primary:hover, .e-css.e-btn.e-flat.e-primary:hover {
+    background-color: #d70b0b !important;
+    border-color: #ca0a0a;
+    color: #fff !important;
+}
+
+.e-btn.e-flat.e-primary, .e-css.e-btn.e-flat.e-primary {
+    background-color: transparent;
+    border-color: transparent;
+    color: #fd0d0d !important;
+}
+
+.e-btn.e-primary:hover, .e-css.e-btn.e-primary:hover {
+    background-color: #d70b0b !important;
+    border-color: #ca0a0a !important;
+    box-shadow: none;
+    color: #fff !important;
+}
+
+.e-grid .e-headercelldiv {
+    border: 0 none;
+    display: block;
+    font-size: 14px !important;
+    text-align: center !important;
+    font-weight: bold;
+    height: 18px;
+    line-height: 18px;
+    margin: -7px -7px -7px -8px;
+    overflow: hidden;
+    padding: 0 0.4em;
+    text-transform: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.e-grid .e-rowcell {
+    border-style: solid;
+    border-width: 1px 0 0;
+    display: table-cell;
+    font-size: 15px;
+    text-align: center !important;
+    line-height: 22px;
+    overflow: hidden;
+    padding: 6px 8px;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: auto;
+}
+
+e-upload .e-upload-files .e-file-remove-btn.e-icons:hover, .e-upload .e-upload-files .e-file-delete-btn.e-icons:hover, .e-upload .e-upload-files .e-file-reload-btn.e-icons:hover, .e-upload .e-upload-files .e-file-abort-btn.e-icons:hover, .e-upload .e-upload-files .e-file-pause-btn.e-icons:hover, .e-upload .e-upload-files .e-file-play-btn.e-icons:hover {
+    color: #c72d2d !important;
+}
+
+.e-upload .e-upload-files .e-file-remove-btn.e-icons, .e-upload .e-upload-files .e-file-delete-btn.e-icons, .e-upload .e-upload-files .e-file-reload-btn.e-icons, .e-upload .e-upload-files .e-file-abort-btn.e-icons, .e-upload .e-upload-files .e-file-pause-btn.e-icons, .e-upload .e-upload-files .e-file-play-btn.e-icons {
+    color: #d75151 !important;
+}
