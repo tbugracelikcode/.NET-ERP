@@ -19,63 +19,69 @@ using TsiErp.Entities.Entities.EquipmentRecord.Dtos;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.EquipmentRecord;
 using TsiErp.Business.Entities.EquipmentRecord.BusinessRules;
+using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 
 namespace TsiErp.Business.Entities.EquipmentRecord.Services
 {
     [ServiceRegistration(typeof(IEquipmentRecordsAppService), DependencyInjectionType.Scoped)]
     public class EquipmentRecordsAppService : ApplicationService, IEquipmentRecordsAppService
     {
-        private readonly IEquipmentRecordsRepository _repository;
-
         EquipmentRecordManager _manager { get; set; } = new EquipmentRecordManager();
-
-        public EquipmentRecordsAppService(IEquipmentRecordsRepository repository)
-        {
-            _repository = repository;
-        }
 
 
         [ValidationAspect(typeof(CreateEquipmentRecorsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEquipmentRecordsDto>> CreateAsync(CreateEquipmentRecordsDto input)
         {
-            await _manager.CodeControl(_repository, input.Code);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _manager.CodeControl(_uow.EquipmentRecordsRepository, input.Code);
 
-            var entity = ObjectMapper.Map<CreateEquipmentRecordsDto, EquipmentRecords>(input);
+                var entity = ObjectMapper.Map<CreateEquipmentRecordsDto, EquipmentRecords>(input);
 
-            var addedEntity = await _repository.InsertAsync(entity);
-            await _repository.SaveChanges();
+                var addedEntity = await _uow.EquipmentRecordsRepository.InsertAsync(entity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectEquipmentRecordsDto>(ObjectMapper.Map<EquipmentRecords, SelectEquipmentRecordsDto>(addedEntity));
+                return new SuccessDataResult<SelectEquipmentRecordsDto>(ObjectMapper.Map<EquipmentRecords, SelectEquipmentRecordsDto>(addedEntity));
+            }
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            await _manager.DeleteControl(_repository, id);
-            await _repository.DeleteAsync(id);
-            await _repository.SaveChanges();
-            return new SuccessResult("Silme işlemi başarılı.");
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _manager.DeleteControl(_uow.EquipmentRecordsRepository, id);
+                await _uow.EquipmentRecordsRepository.DeleteAsync(id);
+                await _uow.SaveChanges();
+                return new SuccessResult("Silme işlemi başarılı.");
+            }
         }
 
 
         public async Task<IDataResult<SelectEquipmentRecordsDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id, t => t.Departments, t => t.CalibrationRecords, t => t.CalibrationVerifications);
-            var mappedEntity = ObjectMapper.Map<EquipmentRecords, SelectEquipmentRecordsDto>(entity);
-            return new SuccessDataResult<SelectEquipmentRecordsDto>(mappedEntity);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.EquipmentRecordsRepository.GetAsync(t => t.Id == id, t => t.Departments, t => t.CalibrationRecords, t => t.CalibrationVerifications);
+                var mappedEntity = ObjectMapper.Map<EquipmentRecords, SelectEquipmentRecordsDto>(entity);
+                return new SuccessDataResult<SelectEquipmentRecordsDto>(mappedEntity);
+            }
         }
 
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListEquipmentRecordsDto>>> GetListAsync(ListEquipmentRecordsParameterDto input)
         {
-            var list = await _repository.GetListAsync(t => t.IsActive == input.IsActive, t => t.Departments, t => t.CalibrationRecords, t => t.CalibrationVerifications);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.EquipmentRecordsRepository.GetListAsync(t => t.IsActive == input.IsActive, t => t.Departments, t => t.CalibrationRecords, t => t.CalibrationVerifications);
 
-            var mappedEntity = ObjectMapper.Map<List<EquipmentRecords>, List<ListEquipmentRecordsDto>>(list.ToList());
+                var mappedEntity = ObjectMapper.Map<List<EquipmentRecords>, List<ListEquipmentRecordsDto>>(list.ToList());
 
-            return new SuccessDataResult<IList<ListEquipmentRecordsDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListEquipmentRecordsDto>>(mappedEntity);
+            }
         }
 
 
@@ -83,16 +89,19 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEquipmentRecordsDto>> UpdateAsync(UpdateEquipmentRecordsDto input)
         {
-            var entity = await _repository.GetAsync(x => x.Id == input.Id);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.EquipmentRecordsRepository.GetAsync(x => x.Id == input.Id);
 
-            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.EquipmentRecordsRepository, input.Code, input.Id, entity);
 
-            var mappedEntity = ObjectMapper.Map<UpdateEquipmentRecordsDto, EquipmentRecords>(input);
+                var mappedEntity = ObjectMapper.Map<UpdateEquipmentRecordsDto, EquipmentRecords>(input);
 
-            await _repository.UpdateAsync(mappedEntity);
-            await _repository.SaveChanges();
+                await _uow.EquipmentRecordsRepository.UpdateAsync(mappedEntity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectEquipmentRecordsDto>(ObjectMapper.Map<EquipmentRecords, SelectEquipmentRecordsDto>(mappedEntity));
+                return new SuccessDataResult<SelectEquipmentRecordsDto>(ObjectMapper.Map<EquipmentRecords, SelectEquipmentRecordsDto>(mappedEntity));
+            }
         }
     }
 }

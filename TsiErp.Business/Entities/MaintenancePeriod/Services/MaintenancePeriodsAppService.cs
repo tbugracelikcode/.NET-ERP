@@ -9,63 +9,69 @@ using TsiErp.Entities.Entities.MaintenancePeriod.Dtos;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.MaintenancePeriod;
 using TsiErp.Business.Entities.MaintenancePeriod.BusinessRules;
+using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 
 namespace TsiErp.Business.Entities.MaintenancePeriod.Services
 {
     [ServiceRegistration(typeof(IMaintenancePeriodsAppService), DependencyInjectionType.Scoped)]
     public class MaintenancePeriodsAppService : ApplicationService, IMaintenancePeriodsAppService
     {
-        private readonly IMaintenancePeriodsRepository _repository;
-
         MaintenancePeriodManager _manager { get; set; } = new MaintenancePeriodManager();
-
-        public MaintenancePeriodsAppService(IMaintenancePeriodsRepository repository)
-        {
-            _repository = repository;
-        }
 
 
         [ValidationAspect(typeof(CreateMaintenancePeriodsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMaintenancePeriodsDto>> CreateAsync(CreateMaintenancePeriodsDto input)
         {
-            await _manager.CodeControl(_repository, input.Code);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _manager.CodeControl(_uow.MaintenancePeriodsRepository, input.Code);
 
-            var entity = ObjectMapper.Map<CreateMaintenancePeriodsDto, MaintenancePeriods>(input);
+                var entity = ObjectMapper.Map<CreateMaintenancePeriodsDto, MaintenancePeriods>(input);
 
-            var addedEntity = await _repository.InsertAsync(entity);
-            await _repository.SaveChanges();
+                var addedEntity = await _uow.MaintenancePeriodsRepository.InsertAsync(entity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectMaintenancePeriodsDto>(ObjectMapper.Map<MaintenancePeriods, SelectMaintenancePeriodsDto>(addedEntity));
+                return new SuccessDataResult<SelectMaintenancePeriodsDto>(ObjectMapper.Map<MaintenancePeriods, SelectMaintenancePeriodsDto>(addedEntity));
+            }
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            await _manager.DeleteControl(_repository, id);
-            await _repository.DeleteAsync(id);
-            await _repository.SaveChanges();
-            return new SuccessResult("Silme işlemi başarılı.");
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _manager.DeleteControl(_uow.MaintenancePeriodsRepository, id);
+                await _uow.MaintenancePeriodsRepository.DeleteAsync(id);
+                await _uow.SaveChanges();
+                return new SuccessResult("Silme işlemi başarılı.");
+            }
         }
 
 
         public async Task<IDataResult<SelectMaintenancePeriodsDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id);
-            var mappedEntity = ObjectMapper.Map<MaintenancePeriods, SelectMaintenancePeriodsDto>(entity);
-            return new SuccessDataResult<SelectMaintenancePeriodsDto>(mappedEntity);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.MaintenancePeriodsRepository.GetAsync(t => t.Id == id);
+                var mappedEntity = ObjectMapper.Map<MaintenancePeriods, SelectMaintenancePeriodsDto>(entity);
+                return new SuccessDataResult<SelectMaintenancePeriodsDto>(mappedEntity);
+            }
         }
 
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListMaintenancePeriodsDto>>> GetListAsync(ListMaintenancePeriodsParameterDto input)
         {
-            var list = await _repository.GetListAsync(t => t.IsActive == input.IsActive);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.MaintenancePeriodsRepository.GetListAsync(t => t.IsActive == input.IsActive);
 
-            var mappedEntity = ObjectMapper.Map<List<MaintenancePeriods>, List<ListMaintenancePeriodsDto>>(list.ToList());
+                var mappedEntity = ObjectMapper.Map<List<MaintenancePeriods>, List<ListMaintenancePeriodsDto>>(list.ToList());
 
-            return new SuccessDataResult<IList<ListMaintenancePeriodsDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListMaintenancePeriodsDto>>(mappedEntity);
+            }
         }
 
 
@@ -73,16 +79,19 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMaintenancePeriodsDto>> UpdateAsync(UpdateMaintenancePeriodsDto input)
         {
-            var entity = await _repository.GetAsync(x => x.Id == input.Id);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.MaintenancePeriodsRepository.GetAsync(x => x.Id == input.Id);
 
-            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.MaintenancePeriodsRepository, input.Code, input.Id, entity);
 
-            var mappedEntity = ObjectMapper.Map<UpdateMaintenancePeriodsDto, MaintenancePeriods>(input);
+                var mappedEntity = ObjectMapper.Map<UpdateMaintenancePeriodsDto, MaintenancePeriods>(input);
 
-            await _repository.UpdateAsync(mappedEntity);
-            await _repository.SaveChanges();
+                await _uow.MaintenancePeriodsRepository.UpdateAsync(mappedEntity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectMaintenancePeriodsDto>(ObjectMapper.Map<MaintenancePeriods, SelectMaintenancePeriodsDto>(mappedEntity));
+                return new SuccessDataResult<SelectMaintenancePeriodsDto>(ObjectMapper.Map<MaintenancePeriods, SelectMaintenancePeriodsDto>(mappedEntity));
+            }
         }
     }
 }

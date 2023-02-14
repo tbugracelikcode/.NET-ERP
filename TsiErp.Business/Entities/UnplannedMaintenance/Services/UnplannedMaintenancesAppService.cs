@@ -13,130 +13,132 @@ using TsiErp.Entities.Entities.UnplannedMaintenance;
 using TsiErp.Entities.Entities.UnplannedMaintenance.Dtos;
 using TsiErp.Entities.Entities.UnplannedMaintenanceLine;
 using TsiErp.Entities.Entities.UnplannedMaintenanceLine.Dtos;
+using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 
 namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
 {
     [ServiceRegistration(typeof(IUnplannedMaintenancesAppService), DependencyInjectionType.Scoped)]
     public class UnplannedMaintenancesAppService : ApplicationService, IUnplannedMaintenancesAppService
     {
-        private readonly IUnplannedMaintenancesRepository _repository;
-        private readonly IUnplannedMaintenanceLinesRepository _lineRepository;
-
-
         UnplannedMaintenanceManager _manager { get; set; } = new UnplannedMaintenanceManager();
-        public UnplannedMaintenancesAppService(IUnplannedMaintenancesRepository repository, IUnplannedMaintenanceLinesRepository lineRepository)
-        {
-            _repository = repository;
-            _lineRepository = lineRepository;
-        }
-
 
         [ValidationAspect(typeof(CreateUnplannedMaintenanceValidatorDto), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectUnplannedMaintenancesDto>> CreateAsync(CreateUnplannedMaintenancesDto input)
         {
-            await _manager.CodeControl(_repository, input.RegistrationNo);
-
-            var entity = ObjectMapper.Map<CreateUnplannedMaintenancesDto, UnplannedMaintenances>(input);
-
-            var addedEntity = await _repository.InsertAsync(entity);
-
-            foreach (var item in input.SelectUnplannedMaintenanceLines)
+            using (UnitOfWork _uow = new UnitOfWork())
             {
-                var lineEntity = ObjectMapper.Map<SelectUnplannedMaintenanceLinesDto, UnplannedMaintenanceLines>(item);
-                lineEntity.Id = GuidGenerator.CreateGuid();
-                lineEntity.UnplannedMaintenanceID = addedEntity.Id;
-                await _lineRepository.InsertAsync(lineEntity);
-            }
+                await _manager.CodeControl(_uow.UnplannedMaintenancesRepository, input.RegistrationNo);
 
-            await _repository.SaveChanges();
-            await _lineRepository.SaveChanges();
-            return new SuccessDataResult<SelectUnplannedMaintenancesDto>(ObjectMapper.Map<UnplannedMaintenances, SelectUnplannedMaintenancesDto>(addedEntity));
+                var entity = ObjectMapper.Map<CreateUnplannedMaintenancesDto, UnplannedMaintenances>(input);
+
+                var addedEntity = await _uow.UnplannedMaintenancesRepository.InsertAsync(entity);
+
+                foreach (var item in input.SelectUnplannedMaintenanceLines)
+                {
+                    var lineEntity = ObjectMapper.Map<SelectUnplannedMaintenanceLinesDto, UnplannedMaintenanceLines>(item);
+                    lineEntity.Id = GuidGenerator.CreateGuid();
+                    lineEntity.UnplannedMaintenanceID = addedEntity.Id;
+                    await _uow.UnplannedMaintenanceLinesRepository.InsertAsync(lineEntity);
+                }
+
+                await _uow.SaveChanges();
+                return new SuccessDataResult<SelectUnplannedMaintenancesDto>(ObjectMapper.Map<UnplannedMaintenances, SelectUnplannedMaintenancesDto>(addedEntity));
+            }
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var lines = (await _lineRepository.GetAsync(t => t.Id == id));
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var lines = (await _uow.UnplannedMaintenanceLinesRepository.GetAsync(t => t.Id == id));
 
-            if (lines != null)
-            {
-                await _manager.DeleteControl(_repository, lines.UnplannedMaintenanceID, lines.Id, true);
-                await _lineRepository.DeleteAsync(id);
-                await _repository.SaveChanges();
-                await _lineRepository.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
-            }
-            else
-            {
-                await _manager.DeleteControl(_repository, id, Guid.Empty, false);
-                await _repository.DeleteAsync(id);
-                await _repository.SaveChanges();
-                await _lineRepository.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                if (lines != null)
+                {
+                    await _manager.DeleteControl(_uow.UnplannedMaintenancesRepository, lines.UnplannedMaintenanceID, lines.Id, true);
+                    await _uow.UnplannedMaintenanceLinesRepository.DeleteAsync(id);
+                    await _uow.SaveChanges();
+                    return new SuccessResult("Silme işlemi başarılı.");
+                }
+                else
+                {
+                    await _manager.DeleteControl(_uow.UnplannedMaintenancesRepository, id, Guid.Empty, false);
+                    await _uow.UnplannedMaintenancesRepository.DeleteAsync(id);
+                    await _uow.SaveChanges();
+                    return new SuccessResult("Silme işlemi başarılı.");
+                }
             }
         }
 
         public async Task<IDataResult<SelectUnplannedMaintenancesDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id,
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.UnplannedMaintenancesRepository.GetAsync(t => t.Id == id,
                 t => t.UnplannedMaintenanceLines,
                 t => t.MaintenancePeriods,
                 t => t.Stations);
 
-            var mappedEntity = ObjectMapper.Map<UnplannedMaintenances, SelectUnplannedMaintenancesDto>(entity);
+                var mappedEntity = ObjectMapper.Map<UnplannedMaintenances, SelectUnplannedMaintenancesDto>(entity);
 
-            mappedEntity.SelectUnplannedMaintenanceLines = ObjectMapper.Map<List<UnplannedMaintenanceLines>, List<SelectUnplannedMaintenanceLinesDto>>(entity.UnplannedMaintenanceLines.ToList());
+                mappedEntity.SelectUnplannedMaintenanceLines = ObjectMapper.Map<List<UnplannedMaintenanceLines>, List<SelectUnplannedMaintenanceLinesDto>>(entity.UnplannedMaintenanceLines.ToList());
 
-            return new SuccessDataResult<SelectUnplannedMaintenancesDto>(mappedEntity);
+                return new SuccessDataResult<SelectUnplannedMaintenancesDto>(mappedEntity);
+            }
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListUnplannedMaintenancesDto>>> GetListAsync(ListUnplannedMaintenancesParameterDto input)
         {
-            var list = await _repository.GetListAsync(null,
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.UnplannedMaintenancesRepository.GetListAsync(null,
                 t => t.UnplannedMaintenanceLines,
                 t => t.MaintenancePeriods,
                 t => t.Stations);
 
-            var mappedEntity = ObjectMapper.Map<List<UnplannedMaintenances>, List<ListUnplannedMaintenancesDto>>(list.ToList());
+                var mappedEntity = ObjectMapper.Map<List<UnplannedMaintenances>, List<ListUnplannedMaintenancesDto>>(list.ToList());
 
-            return new SuccessDataResult<IList<ListUnplannedMaintenancesDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListUnplannedMaintenancesDto>>(mappedEntity);
+            }
         }
 
         [ValidationAspect(typeof(UpdateUnplannedMaintenanceValidatorDto), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectUnplannedMaintenancesDto>> UpdateAsync(UpdateUnplannedMaintenancesDto input)
         {
-            var entity = await _repository.GetAsync(x => x.Id == input.Id);
-
-            await _manager.UpdateControl(_repository, input.RegistrationNo, input.Id, entity);
-
-            var mappedEntity = ObjectMapper.Map<UpdateUnplannedMaintenancesDto, UnplannedMaintenances>(input);
-
-            await _repository.UpdateAsync(mappedEntity);
-
-            foreach (var item in input.SelectUnplannedMaintenanceLines)
+            using (UnitOfWork _uow = new UnitOfWork())
             {
-                var lineEntity = ObjectMapper.Map<SelectUnplannedMaintenanceLinesDto, UnplannedMaintenanceLines>(item);
-                lineEntity.UnplannedMaintenanceID = mappedEntity.Id;
+                var entity = await _uow.UnplannedMaintenancesRepository.GetAsync(x => x.Id == input.Id);
 
-                if (lineEntity.Id == Guid.Empty)
+                await _manager.UpdateControl(_uow.UnplannedMaintenancesRepository, input.RegistrationNo, input.Id, entity);
+
+                var mappedEntity = ObjectMapper.Map<UpdateUnplannedMaintenancesDto, UnplannedMaintenances>(input);
+
+                await _uow.UnplannedMaintenancesRepository.UpdateAsync(mappedEntity);
+
+                foreach (var item in input.SelectUnplannedMaintenanceLines)
                 {
-                    lineEntity.Id = GuidGenerator.CreateGuid();
-                    await _lineRepository.InsertAsync(lineEntity);
+                    var lineEntity = ObjectMapper.Map<SelectUnplannedMaintenanceLinesDto, UnplannedMaintenanceLines>(item);
+                    lineEntity.UnplannedMaintenanceID = mappedEntity.Id;
+
+                    if (lineEntity.Id == Guid.Empty)
+                    {
+                        lineEntity.Id = GuidGenerator.CreateGuid();
+                        await _uow.UnplannedMaintenanceLinesRepository.InsertAsync(lineEntity);
+                    }
+                    else
+                    {
+                        await _uow.UnplannedMaintenanceLinesRepository.UpdateAsync(lineEntity);
+                    }
                 }
-                else
-                {
-                    await _lineRepository.UpdateAsync(lineEntity);
-                }
+
+                await _uow.SaveChanges();
+
+                return new SuccessDataResult<SelectUnplannedMaintenancesDto>(ObjectMapper.Map<UnplannedMaintenances, SelectUnplannedMaintenancesDto>(mappedEntity));
             }
-
-            await _repository.SaveChanges();
-            await _lineRepository.SaveChanges();
-
-            return new SuccessDataResult<SelectUnplannedMaintenancesDto>(ObjectMapper.Map<UnplannedMaintenances, SelectUnplannedMaintenancesDto>(mappedEntity));
         }
     }
 }

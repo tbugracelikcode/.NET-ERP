@@ -19,60 +19,66 @@ using TsiErp.Entities.Entities.ByDateStockMovement.Dtos;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.ByDateStockMovement;
 using TsiErp.Business.Entities.ByDateStockMovement.BusinessRules;
+using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 
 namespace TsiErp.Business.Entities.ByDateStockMovement.Services
 {
     [ServiceRegistration(typeof(IByDateStockMovementsAppService), DependencyInjectionType.Scoped)]
     public class ByDateStockMovementsAppService : ApplicationService, IByDateStockMovementsAppService
     {
-        private readonly IByDateStockMovementsRepository _repository;
-
         ByDateStockMovementManager _manager { get; set; } = new ByDateStockMovementManager();
-
-        public ByDateStockMovementsAppService(IByDateStockMovementsRepository repository)
-        {
-            _repository = repository;
-        }
 
 
         [ValidationAspect(typeof(CreateByDateStockMovementsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectByDateStockMovementsDto>> CreateAsync(CreateByDateStockMovementsDto input)
         {
-            var entity = ObjectMapper.Map<CreateByDateStockMovementsDto, ByDateStockMovements>(input);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = ObjectMapper.Map<CreateByDateStockMovementsDto, ByDateStockMovements>(input);
 
-            var addedEntity = await _repository.InsertAsync(entity);
-            await _repository.SaveChanges();
+                var addedEntity = await _uow.ByDateStockMovementsRepository.InsertAsync(entity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectByDateStockMovementsDto>(ObjectMapper.Map<ByDateStockMovements, SelectByDateStockMovementsDto>(addedEntity));
+                return new SuccessDataResult<SelectByDateStockMovementsDto>(ObjectMapper.Map<ByDateStockMovements, SelectByDateStockMovementsDto>(addedEntity));
+            }
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            await _repository.DeleteAsync(id);
-            await _repository.SaveChanges();
-            return new SuccessResult("Silme işlemi başarılı.");
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _uow.ByDateStockMovementsRepository.DeleteAsync(id);
+                await _uow.SaveChanges();
+                return new SuccessResult("Silme işlemi başarılı.");
+            }
         }
 
 
         public async Task<IDataResult<SelectByDateStockMovementsDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id, t => t.Branches, t => t.Warehouses, t => t.Products);
-            var mappedEntity = ObjectMapper.Map<ByDateStockMovements, SelectByDateStockMovementsDto>(entity);
-            return new SuccessDataResult<SelectByDateStockMovementsDto>(mappedEntity);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.ByDateStockMovementsRepository.GetAsync(t => t.Id == id, t => t.Branches, t => t.Warehouses, t => t.Products);
+                var mappedEntity = ObjectMapper.Map<ByDateStockMovements, SelectByDateStockMovementsDto>(entity);
+                return new SuccessDataResult<SelectByDateStockMovementsDto>(mappedEntity);
+            }
         }
 
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListByDateStockMovementsDto>>> GetListAsync(ListByDateStockMovementsParameterDto input)
         {
-            var list = await _repository.GetListAsync(null, t => t.Branches, t => t.Warehouses, t => t.Products);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.ByDateStockMovementsRepository.GetListAsync(null, t => t.Branches, t => t.Warehouses, t => t.Products);
 
-            var mappedEntity = ObjectMapper.Map<List<ByDateStockMovements>, List<ListByDateStockMovementsDto>>(list.ToList());
+                var mappedEntity = ObjectMapper.Map<List<ByDateStockMovements>, List<ListByDateStockMovementsDto>>(list.ToList());
 
-            return new SuccessDataResult<IList<ListByDateStockMovementsDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListByDateStockMovementsDto>>(mappedEntity);
+            }
         }
 
 
@@ -80,14 +86,17 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectByDateStockMovementsDto>> UpdateAsync(UpdateByDateStockMovementsDto input)
         {
-            var entity = await _repository.GetAsync(x => x.Id == input.Id);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.ByDateStockMovementsRepository.GetAsync(x => x.Id == input.Id);
 
-            var mappedEntity = ObjectMapper.Map<UpdateByDateStockMovementsDto, ByDateStockMovements>(input);
+                var mappedEntity = ObjectMapper.Map<UpdateByDateStockMovementsDto, ByDateStockMovements>(input);
 
-            await _repository.UpdateAsync(mappedEntity);
-            await _repository.SaveChanges();
+                await _uow.ByDateStockMovementsRepository.UpdateAsync(mappedEntity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectByDateStockMovementsDto>(ObjectMapper.Map<ByDateStockMovements, SelectByDateStockMovementsDto>(mappedEntity));
+                return new SuccessDataResult<SelectByDateStockMovementsDto>(ObjectMapper.Map<ByDateStockMovements, SelectByDateStockMovementsDto>(mappedEntity));
+            }
         }
     }
 }

@@ -20,21 +20,19 @@ using TsiErp.Business.Entities.Station.BusinessRules;
 using TsiErp.Business.Entities.StationInventory.Services;
 using TsiErp.Entities.Entities.StationInventory.Dtos;
 using TsiErp.Entities.Entities.StationInventory;
+using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 
 namespace TsiErp.Business.Entities.Station.Services
 {
     [ServiceRegistration(typeof(IStationsAppService), DependencyInjectionType.Scoped)]
     public class StationsAppService : ApplicationService, IStationsAppService
     {
-        private readonly IStationsRepository _repository;
-
         private readonly IStationInventoriesAppService _inventioriesRepository;
 
         StationManager _manager { get; set; } = new StationManager();
 
-        public StationsAppService(IStationsRepository repository, IStationInventoriesAppService inventioriesRepository)
+        public StationsAppService(IStationInventoriesAppService inventioriesRepository)
         {
-            _repository = repository;
             _inventioriesRepository = inventioriesRepository;
         }
 
@@ -42,59 +40,71 @@ namespace TsiErp.Business.Entities.Station.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStationsDto>> CreateAsync(CreateStationsDto input)
         {
-            await _manager.CodeControl(_repository, input.Code);
-
-            var entity = ObjectMapper.Map<CreateStationsDto, Stations>(input);
-
-            var addedEntity = await _repository.InsertAsync(entity);
-            await _repository.SaveChanges();
-
-            foreach (var item in input.SelectStationInventoriesDto)
+            using (UnitOfWork _uow = new UnitOfWork())
             {
-                if(item.Id == Guid.Empty)
-                {
-                    var inventories = ObjectMapper.Map<SelectStationInventoriesDto, CreateStationInventoriesDto>(item);
-                    inventories.StationID = addedEntity.Id;
-                    await _inventioriesRepository.CreateAsync(inventories);
-                }
-                else
-                {
-                    var inventories = ObjectMapper.Map<SelectStationInventoriesDto, UpdateStationInventoriesDto>(item);
-                    inventories.StationID = addedEntity.Id;
-                    await _inventioriesRepository.UpdateAsync(inventories);
-                }
-                
-            }
+                await _manager.CodeControl(_uow.StationsRepository, input.Code);
 
-            return new SuccessDataResult<SelectStationsDto>(ObjectMapper.Map<Stations, SelectStationsDto>(addedEntity));
+                var entity = ObjectMapper.Map<CreateStationsDto, Stations>(input);
+
+                var addedEntity = await _uow.StationsRepository.InsertAsync(entity);
+
+                foreach (var item in input.SelectStationInventoriesDto)
+                {
+                    if (item.Id == Guid.Empty)
+                    {
+                        var inventories = ObjectMapper.Map<SelectStationInventoriesDto, CreateStationInventoriesDto>(item);
+                        inventories.StationID = addedEntity.Id;
+                        await _inventioriesRepository.CreateAsync(inventories);
+                    }
+                    else
+                    {
+                        var inventories = ObjectMapper.Map<SelectStationInventoriesDto, UpdateStationInventoriesDto>(item);
+                        inventories.StationID = addedEntity.Id;
+                        await _inventioriesRepository.UpdateAsync(inventories);
+                    }
+
+                }
+
+                await _uow.SaveChanges();
+                return new SuccessDataResult<SelectStationsDto>(ObjectMapper.Map<Stations, SelectStationsDto>(addedEntity));
+            }
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            await _manager.DeleteControl(_repository, id);
-            await _repository.DeleteAsync(id);
-            await _repository.SaveChanges();
-            return new SuccessResult("Silme işlemi başarılı.");
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _manager.DeleteControl(_uow.StationsRepository, id);
+                await _uow.StationsRepository.DeleteAsync(id);
+                await _uow.SaveChanges();
+                return new SuccessResult("Silme işlemi başarılı.");
+            }
         }
 
         public async Task<IDataResult<SelectStationsDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id, t => t.StationGroups, t => t.TemplateOperationLines, t => t.StationInventories);
-            var mappedEntity = ObjectMapper.Map<Stations, SelectStationsDto>(entity);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.StationsRepository.GetAsync(t => t.Id == id, t => t.StationGroups, t => t.TemplateOperationLines, t => t.StationInventories);
+                var mappedEntity = ObjectMapper.Map<Stations, SelectStationsDto>(entity);
 
-            mappedEntity.SelectStationInventoriesDto = ObjectMapper.Map<List<StationInventories>, List<SelectStationInventoriesDto>>(entity.StationInventories.Where(t=>t.StationID == id).ToList());
-            return new SuccessDataResult<SelectStationsDto>(mappedEntity);
+                mappedEntity.SelectStationInventoriesDto = ObjectMapper.Map<List<StationInventories>, List<SelectStationInventoriesDto>>(entity.StationInventories.Where(t => t.StationID == id).ToList());
+                return new SuccessDataResult<SelectStationsDto>(mappedEntity);
+            }
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListStationsDto>>> GetListAsync(ListStationsParameterDto input)
         {
-            var list = await _repository.GetListAsync(t => t.IsActive == input.IsActive, t => t.StationGroups,t=>t.TemplateOperationLines);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.StationsRepository.GetListAsync(t => t.IsActive == input.IsActive, t => t.StationGroups, t => t.TemplateOperationLines);
 
-            var mappedEntity = ObjectMapper.Map<List<Stations>, List<ListStationsDto>>(list.ToList());
+                var mappedEntity = ObjectMapper.Map<List<Stations>, List<ListStationsDto>>(list.ToList());
 
-            return new SuccessDataResult<IList<ListStationsDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListStationsDto>>(mappedEntity);
+            }
         }
 
 
@@ -102,35 +112,39 @@ namespace TsiErp.Business.Entities.Station.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStationsDto>> UpdateAsync(UpdateStationsDto input)
         {
-            var entity = await _repository.GetAsync(x => x.Id == input.Id);
-
-            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
-
-            var mappedEntity = ObjectMapper.Map<UpdateStationsDto, Stations>(input);
-
-            await _repository.UpdateAsync(mappedEntity);
-            await _repository.SaveChanges();
-
-
-
-            foreach (var item in input.SelectStationInventoriesDto)
+            using (UnitOfWork _uow = new UnitOfWork())
             {
-                if(item.Id== Guid.Empty)
+                var entity = await _uow.StationsRepository.GetAsync(x => x.Id == input.Id);
+
+                await _manager.UpdateControl(_uow.StationsRepository, input.Code, input.Id, entity);
+
+                var mappedEntity = ObjectMapper.Map<UpdateStationsDto, Stations>(input);
+
+                await _uow.StationsRepository.UpdateAsync(mappedEntity);
+
+
+
+                foreach (var item in input.SelectStationInventoriesDto)
                 {
-                    var inventories = ObjectMapper.Map<SelectStationInventoriesDto, CreateStationInventoriesDto>(item);
-                    inventories.StationID = mappedEntity.Id;
-                    await _inventioriesRepository.CreateAsync(inventories);
-                }
-                else
-                {
-                    var inventories = ObjectMapper.Map<SelectStationInventoriesDto, UpdateStationInventoriesDto>(item);
-                    inventories.StationID = mappedEntity.Id;
-                    await _inventioriesRepository.UpdateAsync(inventories);
+                    if (item.Id == Guid.Empty)
+                    {
+                        var inventories = ObjectMapper.Map<SelectStationInventoriesDto, CreateStationInventoriesDto>(item);
+                        inventories.StationID = mappedEntity.Id;
+                        await _inventioriesRepository.CreateAsync(inventories);
+                    }
+                    else
+                    {
+                        var inventories = ObjectMapper.Map<SelectStationInventoriesDto, UpdateStationInventoriesDto>(item);
+                        inventories.StationID = mappedEntity.Id;
+                        await _inventioriesRepository.UpdateAsync(inventories);
+                    }
+
                 }
 
+                await _uow.SaveChanges();
+
+                return new SuccessDataResult<SelectStationsDto>(ObjectMapper.Map<Stations, SelectStationsDto>(mappedEntity));
             }
-
-            return new SuccessDataResult<SelectStationsDto>(ObjectMapper.Map<Stations, SelectStationsDto>(mappedEntity));
         }
     }
 }

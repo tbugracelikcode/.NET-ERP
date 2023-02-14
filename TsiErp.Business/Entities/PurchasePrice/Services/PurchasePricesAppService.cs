@@ -6,6 +6,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.Entities.PurchasePrice.BusinessRules;
 using TsiErp.Business.Entities.PurchasePrice.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.PurchasePrice;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.PurchasePriceLine;
 using TsiErp.Entities.Entities.PurchasePrice;
@@ -18,137 +19,141 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
     [ServiceRegistration(typeof(IPurchasePricesAppService), DependencyInjectionType.Scoped)]
     public class PurchasePricesAppService : ApplicationService, IPurchasePricesAppService
     {
-        private readonly IPurchasePricesRepository _repository;
-        private readonly IPurchasePriceLinesRepository _lineRepository;
-
-
         PurchasePriceManager _manager { get; set; } = new PurchasePriceManager();
-        public PurchasePricesAppService(IPurchasePricesRepository repository, IPurchasePriceLinesRepository lineRepository)
-        {
-            _repository = repository;
-            _lineRepository = lineRepository;
-        }
-
 
         [ValidationAspect(typeof(CreatePurchasePricesValidatorDto), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchasePricesDto>> CreateAsync(CreatePurchasePricesDto input)
         {
-            await _manager.CodeControl(_repository, input.Code);
-
-            var entity = ObjectMapper.Map<CreatePurchasePricesDto, PurchasePrices>(input);
-
-            var addedEntity = await _repository.InsertAsync(entity);
-
-            foreach (var item in input.SelectPurchasePriceLines)
+            using (UnitOfWork _uow = new UnitOfWork())
             {
-                var lineEntity = ObjectMapper.Map<SelectPurchasePriceLinesDto, PurchasePriceLines>(item);
-                lineEntity.Id = GuidGenerator.CreateGuid();
-                lineEntity.PurchasePriceID = addedEntity.Id;
-                await _lineRepository.InsertAsync(lineEntity);
-            }
+                await _manager.CodeControl(_uow.PurchasePricesRepository, input.Code);
 
-            await _repository.SaveChanges();
-            await _lineRepository.SaveChanges();
-            return new SuccessDataResult<SelectPurchasePricesDto>(ObjectMapper.Map<PurchasePrices, SelectPurchasePricesDto>(addedEntity));
+                var entity = ObjectMapper.Map<CreatePurchasePricesDto, PurchasePrices>(input);
+
+                var addedEntity = await _uow.PurchasePricesRepository.InsertAsync(entity);
+
+                foreach (var item in input.SelectPurchasePriceLines)
+                {
+                    var lineEntity = ObjectMapper.Map<SelectPurchasePriceLinesDto, PurchasePriceLines>(item);
+                    lineEntity.Id = GuidGenerator.CreateGuid();
+                    lineEntity.PurchasePriceID = addedEntity.Id;
+                    await _uow.PurchasePriceLinesRepository.InsertAsync(lineEntity);
+                }
+
+                await _uow.SaveChanges();
+                return new SuccessDataResult<SelectPurchasePricesDto>(ObjectMapper.Map<PurchasePrices, SelectPurchasePricesDto>(addedEntity));
+            }
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var lines = (await _lineRepository.GetAsync(t => t.Id == id));
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var lines = (await _uow.PurchasePriceLinesRepository.GetAsync(t => t.Id == id));
 
-            if (lines != null)
-            {
-                await _manager.DeleteControl(_repository, lines.PurchasePriceID, lines.Id, true);
-                await _lineRepository.DeleteAsync(id);
-                await _repository.SaveChanges();
-                await _lineRepository.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
-            }
-            else
-            {
-                await _manager.DeleteControl(_repository, id, Guid.Empty, false);
-                await _repository.DeleteAsync(id);
-                await _repository.SaveChanges();
-                await _lineRepository.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                if (lines != null)
+                {
+                    await _manager.DeleteControl(_uow.PurchasePricesRepository, lines.PurchasePriceID, lines.Id, true);
+                    await _uow.PurchasePriceLinesRepository.DeleteAsync(id);
+                    await _uow.SaveChanges();
+                    return new SuccessResult("Silme işlemi başarılı.");
+                }
+                else
+                {
+                    await _manager.DeleteControl(_uow.PurchasePricesRepository, id, Guid.Empty, false);
+                    await _uow.PurchasePricesRepository.DeleteAsync(id);
+                    await _uow.SaveChanges();
+                    return new SuccessResult("Silme işlemi başarılı.");
+                }
             }
         }
 
         public async Task<IDataResult<SelectPurchasePricesDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id,
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.PurchasePricesRepository.GetAsync(t => t.Id == id,
                 t => t.PurchasePriceLines,
                 t => t.Branches,
                 t => t.Warehouses,
                 t => t.Currencies,
                 t => t.CurrentAccountCards);
 
-            var mappedEntity = ObjectMapper.Map<PurchasePrices, SelectPurchasePricesDto>(entity);
+                var mappedEntity = ObjectMapper.Map<PurchasePrices, SelectPurchasePricesDto>(entity);
 
-            mappedEntity.SelectPurchasePriceLines = ObjectMapper.Map<List<PurchasePriceLines>, List<SelectPurchasePriceLinesDto>>(entity.PurchasePriceLines.ToList());
+                mappedEntity.SelectPurchasePriceLines = ObjectMapper.Map<List<PurchasePriceLines>, List<SelectPurchasePriceLinesDto>>(entity.PurchasePriceLines.ToList());
 
-            return new SuccessDataResult<SelectPurchasePricesDto>(mappedEntity);
+                return new SuccessDataResult<SelectPurchasePricesDto>(mappedEntity);
+            }
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPurchasePricesDto>>> GetListAsync(ListPurchasePricesParameterDto input)
         {
-            var list = await _repository.GetListAsync(t => t.IsActive == input.IsActive,
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.PurchasePricesRepository.GetListAsync(t => t.IsActive == input.IsActive,
                 t => t.PurchasePriceLines,
                 t => t.Branches,
                 t => t.Warehouses,
                 t => t.Currencies,
                 t => t.CurrentAccountCards);
 
-            var mappedEntity = ObjectMapper.Map<List<PurchasePrices>, List<ListPurchasePricesDto>>(list.ToList());
+                var mappedEntity = ObjectMapper.Map<List<PurchasePrices>, List<ListPurchasePricesDto>>(list.ToList());
 
-            return new SuccessDataResult<IList<ListPurchasePricesDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListPurchasePricesDto>>(mappedEntity);
+            }
         }
 
         [ValidationAspect(typeof(UpdatePurchasePricesValidatorDto), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchasePricesDto>> UpdateAsync(UpdatePurchasePricesDto input)
         {
-            var entity = await _repository.GetAsync(x => x.Id == input.Id);
-
-            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
-
-            var mappedEntity = ObjectMapper.Map<UpdatePurchasePricesDto, PurchasePrices>(input);
-
-            await _repository.UpdateAsync(mappedEntity);
-
-            foreach (var item in input.SelectPurchasePriceLines)
+            using (UnitOfWork _uow = new UnitOfWork())
             {
-                var lineEntity = ObjectMapper.Map<SelectPurchasePriceLinesDto, PurchasePriceLines>(item);
-                lineEntity.PurchasePriceID = mappedEntity.Id;
+                var entity = await _uow.PurchasePricesRepository.GetAsync(x => x.Id == input.Id);
 
-                if (lineEntity.Id == Guid.Empty)
+                await _manager.UpdateControl(_uow.PurchasePricesRepository, input.Code, input.Id, entity);
+
+                var mappedEntity = ObjectMapper.Map<UpdatePurchasePricesDto, PurchasePrices>(input);
+
+                await _uow.PurchasePricesRepository.UpdateAsync(mappedEntity);
+
+                foreach (var item in input.SelectPurchasePriceLines)
                 {
-                    lineEntity.Id = GuidGenerator.CreateGuid();
-                    await _lineRepository.InsertAsync(lineEntity);
+                    var lineEntity = ObjectMapper.Map<SelectPurchasePriceLinesDto, PurchasePriceLines>(item);
+                    lineEntity.PurchasePriceID = mappedEntity.Id;
+
+                    if (lineEntity.Id == Guid.Empty)
+                    {
+                        lineEntity.Id = GuidGenerator.CreateGuid();
+                        await _uow.PurchasePriceLinesRepository.InsertAsync(lineEntity);
+                    }
+                    else
+                    {
+                        await _uow.PurchasePriceLinesRepository.UpdateAsync(lineEntity);
+                    }
                 }
-                else
-                {
-                    await _lineRepository.UpdateAsync(lineEntity);
-                }
+
+                await _uow.SaveChanges();
+
+                return new SuccessDataResult<SelectPurchasePricesDto>(ObjectMapper.Map<PurchasePrices, SelectPurchasePricesDto>(mappedEntity));
             }
-
-            await _repository.SaveChanges();
-            await _lineRepository.SaveChanges();
-
-            return new SuccessDataResult<SelectPurchasePricesDto>(ObjectMapper.Map<PurchasePrices, SelectPurchasePricesDto>(mappedEntity));
         }
 
         public async Task<IDataResult<IList<SelectPurchasePriceLinesDto>>> GetSelectLineListAsync(Guid productId)
         {
-            var list = await _lineRepository.GetListAsync(t => t.ProductID == productId, t => t.Products);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.PurchasePriceLinesRepository.GetListAsync(t => t.ProductID == productId, t => t.Products);
 
-            var mappedEntity = ObjectMapper.Map<List<PurchasePriceLines>, List<SelectPurchasePriceLinesDto>>(list.ToList());
+                var mappedEntity = ObjectMapper.Map<List<PurchasePriceLines>, List<SelectPurchasePriceLinesDto>>(list.ToList());
 
-            return new SuccessDataResult<IList<SelectPurchasePriceLinesDto>>(mappedEntity);
+                return new SuccessDataResult<IList<SelectPurchasePriceLinesDto>>(mappedEntity);
+            }
         }
     }
 }
