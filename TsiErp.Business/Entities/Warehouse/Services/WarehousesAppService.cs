@@ -15,59 +15,66 @@ using TsiErp.Entities.Entities.WareHouse.Dtos;
 using TsiErp.Entities.Entities.WareHouse;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Business.Entities.Warehouse.BusinessRules;
+using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 
 namespace TsiErp.Business.Entities.Warehouse.Services
 {
     [ServiceRegistration(typeof(IWarehousesAppService), DependencyInjectionType.Scoped)]
     public class WarehousesAppService : ApplicationService, IWarehousesAppService
     {
-        private readonly IWarehousesRepository _repository;
-
         WarehouseManager _manager { get; set; } = new WarehouseManager();
 
-        public WarehousesAppService(IWarehousesRepository repository)
-        {
-            _repository = repository;
-        }
 
         [ValidationAspect(typeof(CreateWarehousesValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectWarehousesDto>> CreateAsync(CreateWarehousesDto input)
         {
-            await _manager.CodeControl(_repository, input.Code);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _manager.CodeControl(_uow.WarehousesRepository, input.Code);
 
-            var entity = ObjectMapper.Map<CreateWarehousesDto, Warehouses>(input);
+                var entity = ObjectMapper.Map<CreateWarehousesDto, Warehouses>(input);
 
-            var addedEntity = await _repository.InsertAsync(entity);
-            await _repository.SaveChanges();
+                var addedEntity = await _uow.WarehousesRepository.InsertAsync(entity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectWarehousesDto>(ObjectMapper.Map<Warehouses, SelectWarehousesDto>(addedEntity));
+                return new SuccessDataResult<SelectWarehousesDto>(ObjectMapper.Map<Warehouses, SelectWarehousesDto>(addedEntity));
+            }
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            await _manager.DeleteControl(_repository, id);
-            await _repository.DeleteAsync(id);
-            await _repository.SaveChanges();
-            return new SuccessResult("Silme işlemi başarılı.");
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _manager.DeleteControl(_uow.WarehousesRepository, id);
+                await _uow.WarehousesRepository.DeleteAsync(id);
+                await _uow.SaveChanges();
+                return new SuccessResult("Silme işlemi başarılı.");
+            }
         }
 
         public async Task<IDataResult<SelectWarehousesDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id, t=>t.SalesPropositions);
-            var mappedEntity = ObjectMapper.Map<Warehouses, SelectWarehousesDto>(entity);
-            return new SuccessDataResult<SelectWarehousesDto>(mappedEntity);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.WarehousesRepository.GetAsync(t => t.Id == id, t => t.SalesPropositions);
+                var mappedEntity = ObjectMapper.Map<Warehouses, SelectWarehousesDto>(entity);
+                return new SuccessDataResult<SelectWarehousesDto>(mappedEntity);
+            }
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListWarehousesDto>>> GetListAsync(ListWarehousesParameterDto input)
         {
-            var list = await _repository.GetListAsync(t => t.IsActive == input.IsActive, t => t.SalesPropositions);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.WarehousesRepository.GetListAsync(t => t.IsActive == input.IsActive, t => t.SalesPropositions);
 
-            var mappedEntity = ObjectMapper.Map<List<Warehouses>, List<ListWarehousesDto>>(list.ToList());
+                var mappedEntity = ObjectMapper.Map<List<Warehouses>, List<ListWarehousesDto>>(list.ToList());
 
-            return new SuccessDataResult<IList<ListWarehousesDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListWarehousesDto>>(mappedEntity);
+            }
         }
 
 
@@ -75,16 +82,19 @@ namespace TsiErp.Business.Entities.Warehouse.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectWarehousesDto>> UpdateAsync(UpdateWarehousesDto input)
         {
-            var entity = await _repository.GetAsync(x => x.Id == input.Id);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.WarehousesRepository.GetAsync(x => x.Id == input.Id);
 
-            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.WarehousesRepository, input.Code, input.Id, entity);
 
-            var mappedEntity = ObjectMapper.Map<UpdateWarehousesDto, Warehouses>(input);
+                var mappedEntity = ObjectMapper.Map<UpdateWarehousesDto, Warehouses>(input);
 
-            await _repository.UpdateAsync(mappedEntity);
-            await _repository.SaveChanges();
+                await _uow.WarehousesRepository.UpdateAsync(mappedEntity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectWarehousesDto>(ObjectMapper.Map<Warehouses, SelectWarehousesDto>(mappedEntity));
+                return new SuccessDataResult<SelectWarehousesDto>(ObjectMapper.Map<Warehouses, SelectWarehousesDto>(mappedEntity));
+            }
         }
     }
 }

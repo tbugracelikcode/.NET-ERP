@@ -23,169 +23,157 @@ using TsiErp.Entities.Entities.ProductsOperation;
 using TsiErp.Entities.Entities.ProductsOperation.Dtos;
 using TsiErp.Entities.Entities.ProductsOperationLine;
 using TsiErp.Entities.Entities.ProductsOperationLine.Dtos;
+using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 
 namespace TsiErp.Business.Entities.Route.Services
 {
     [ServiceRegistration(typeof(IRoutesAppService), DependencyInjectionType.Scoped)]
     public class RoutesAppService : ApplicationService, IRoutesAppService
     {
-        private readonly IRoutesRepository _repository;
-        private readonly IRouteLinesRepository _lineRepository;
-        private readonly IProductsOperationsRepository _productsOperationsRepository;
-
         RouteManager _manager { get; set; } = new RouteManager();
-
-        public RoutesAppService(IRoutesRepository repository, IRouteLinesRepository lineRepository, IProductsOperationsRepository productsOperationsRepository)
-        {
-            _repository = repository;
-            _lineRepository = lineRepository;
-            _productsOperationsRepository = productsOperationsRepository;
-        }
 
         [ValidationAspect(typeof(CreateRoutesValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectRoutesDto>> CreateAsync(CreateRoutesDto input)
         {
-            await _manager.CodeControl(_repository, input.Code);
-
-            var entity = ObjectMapper.Map<CreateRoutesDto, Routes>(input);
-
-            var addedEntity = await _repository.InsertAsync(entity);
-
-            foreach (var item in input.SelectRouteLines)
+            using (UnitOfWork _uow = new UnitOfWork())
             {
-                var lineEntity = ObjectMapper.Map<SelectRouteLinesDto, RouteLines>(item);
-                lineEntity.Id = GuidGenerator.CreateGuid();
-                lineEntity.RouteID = addedEntity.Id;
-                await _lineRepository.InsertAsync(lineEntity);
-            }
+                await _manager.CodeControl(_uow.RoutesRepository, input.Code);
 
-            await _repository.SaveChanges();
-            await _lineRepository.SaveChanges();
-            return new SuccessDataResult<SelectRoutesDto>(ObjectMapper.Map<Routes, SelectRoutesDto>(addedEntity));
+                var entity = ObjectMapper.Map<CreateRoutesDto, Routes>(input);
+
+                var addedEntity = await _uow.RoutesRepository.InsertAsync(entity);
+
+                foreach (var item in input.SelectRouteLines)
+                {
+                    var lineEntity = ObjectMapper.Map<SelectRouteLinesDto, RouteLines>(item);
+                    lineEntity.Id = GuidGenerator.CreateGuid();
+                    lineEntity.RouteID = addedEntity.Id;
+                    await _uow.RouteLinesRepository.InsertAsync(lineEntity);
+                }
+
+                await _uow.SaveChanges();
+                return new SuccessDataResult<SelectRoutesDto>(ObjectMapper.Map<Routes, SelectRoutesDto>(addedEntity));
+            }
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var lines = (await _lineRepository.GetAsync(t => t.Id == id));
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var lines = (await _uow.RouteLinesRepository.GetAsync(t => t.Id == id));
 
-            if (lines != null)
-            {
-                await _manager.DeleteControl(_repository, lines.RouteID, lines.Id, true);
-                await _lineRepository.DeleteAsync(id);
-                await _repository.SaveChanges();
-                await _lineRepository.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
-            }
-            else
-            {
-                await _manager.DeleteControl(_repository, id, Guid.Empty, false);
-                await _repository.DeleteAsync(id);
-                await _repository.SaveChanges();
-                await _lineRepository.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                if (lines != null)
+                {
+                    await _manager.DeleteControl(_uow.RoutesRepository, lines.RouteID, lines.Id, true);
+                    await _uow.RouteLinesRepository.DeleteAsync(id);
+                    await _uow.SaveChanges();
+                    return new SuccessResult("Silme işlemi başarılı.");
+                }
+                else
+                {
+                    await _manager.DeleteControl(_uow.RoutesRepository, id, Guid.Empty, false);
+                    await _uow.RoutesRepository.DeleteAsync(id);
+                    await _uow.SaveChanges();
+                    return new SuccessResult("Silme işlemi başarılı.");
+                }
             }
         }
 
         public async Task<IDataResult<SelectRoutesDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id,
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.RoutesRepository.GetAsync(t => t.Id == id,
                 t => t.RouteLines,
                 t => t.Products);
 
-            var mappedEntity = ObjectMapper.Map<Routes, SelectRoutesDto>(entity);
+                var mappedEntity = ObjectMapper.Map<Routes, SelectRoutesDto>(entity);
 
-            mappedEntity.SelectRouteLines = ObjectMapper.Map<List<RouteLines>, List<SelectRouteLinesDto>>(entity.RouteLines.ToList());
+                mappedEntity.SelectRouteLines = ObjectMapper.Map<List<RouteLines>, List<SelectRouteLinesDto>>(entity.RouteLines.ToList());
 
-            return new SuccessDataResult<SelectRoutesDto>(mappedEntity);
+                return new SuccessDataResult<SelectRoutesDto>(mappedEntity);
+            }
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListRoutesDto>>> GetListAsync(ListRoutesParameterDto input)
         {
-            var list = await _repository.GetListAsync(null,
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.RoutesRepository.GetListAsync(null,
                 t => t.RouteLines,
                 t => t.Products);
 
-            var mappedEntity = ObjectMapper.Map<List<Routes>, List<ListRoutesDto>>(list.ToList());
+                var mappedEntity = ObjectMapper.Map<List<Routes>, List<ListRoutesDto>>(list.ToList());
 
-            return new SuccessDataResult<IList<ListRoutesDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListRoutesDto>>(mappedEntity);
+            }
         }
 
         [ValidationAspect(typeof(UpdateRoutesValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectRoutesDto>> UpdateAsync(UpdateRoutesDto input)
         {
-            var entity = await _repository.GetAsync(x => x.Id == input.Id);
-
-            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
-
-            var mappedEntity = ObjectMapper.Map<UpdateRoutesDto, Routes>(input);
-
-            await _repository.UpdateAsync(mappedEntity);
-
-            foreach (var item in input.SelectRouteLines)
+            using (UnitOfWork _uow = new UnitOfWork())
             {
-                var lineEntity = ObjectMapper.Map<SelectRouteLinesDto, RouteLines>(item);
-                lineEntity.RouteID = mappedEntity.Id;
+                var entity = await _uow.RoutesRepository.GetAsync(x => x.Id == input.Id);
 
-                if (lineEntity.Id == Guid.Empty)
+                await _manager.UpdateControl(_uow.RoutesRepository, input.Code, input.Id, entity);
+
+                var mappedEntity = ObjectMapper.Map<UpdateRoutesDto, Routes>(input);
+
+                await _uow.RoutesRepository.UpdateAsync(mappedEntity);
+
+                foreach (var item in input.SelectRouteLines)
                 {
-                    lineEntity.Id = GuidGenerator.CreateGuid();
-                    await _lineRepository.InsertAsync(lineEntity);
-                    await _lineRepository.SaveChanges();
+                    var lineEntity = ObjectMapper.Map<SelectRouteLinesDto, RouteLines>(item);
+                    lineEntity.RouteID = mappedEntity.Id;
+
+                    if (lineEntity.Id == Guid.Empty)
+                    {
+                        lineEntity.Id = GuidGenerator.CreateGuid();
+                        await _uow.RouteLinesRepository.InsertAsync(lineEntity);
+                    }
+                    else
+                    {
+                        await _uow.RouteLinesRepository.UpdateAsync(lineEntity);
+                    }
                 }
-                else
-                {
-                    await _lineRepository.UpdateAsync(lineEntity);
-                    await _lineRepository.SaveChanges();
-                }
+
+                await _uow.SaveChanges();
+
+                return new SuccessDataResult<SelectRoutesDto>(ObjectMapper.Map<Routes, SelectRoutesDto>(mappedEntity));
             }
-
-            await _repository.SaveChanges();
-
-            return new SuccessDataResult<SelectRoutesDto>(ObjectMapper.Map<Routes, SelectRoutesDto>(mappedEntity));
         }
 
         public async Task<IDataResult<List<ListProductsOperationsDto>>> GetProductsOperationAsync(Guid productId)
         {
-            //var entity = await _productsOperationsRepository.GetAsync(t => t.ProductID == productId,t=>t.ProductsOperationLines);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.ProductsOperationsRepository.GetListAsync(t => t.ProductID == productId, t => t.ProductsOperationLines);
 
-            var entity = await _productsOperationsRepository.GetListAsync(t => t.ProductID == productId, t => t.ProductsOperationLines);
+                var mappedEntity = ObjectMapper.Map<List<ProductsOperations>, List<ListProductsOperationsDto>>(entity.ToList());
 
-            var mappedEntity = ObjectMapper.Map<List<ProductsOperations>, List<ListProductsOperationsDto>>(entity.ToList());
-
-            return new SuccessDataResult<List<ListProductsOperationsDto>>(mappedEntity);
-
-            //var mappedEntity = ObjectMapper.Map<ProductsOperations, SelectProductsOperationsDto>(entity);
-
-            //mappedEntity.SelectProductsOperationLines = ObjectMapper.Map<List<ProductsOperationLines>, List<SelectProductsOperationLinesDto>>(entity.ProductsOperationLines.ToList());
-
-            //return new SuccessDataResult<SelectProductsOperationsDto>(mappedEntity);
+                return new SuccessDataResult<List<ListProductsOperationsDto>>(mappedEntity);
+            }
         }
 
         public async Task<IDataResult<SelectRoutesDto>> GetSelectListAsync(Guid productId)
         {
-            var entity = await _repository.GetAsync(t => t.ProductID == productId,
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.RoutesRepository.GetAsync(t => t.ProductID == productId,
                 t => t.RouteLines,
                 t => t.Products);
 
-            var mappedEntity = ObjectMapper.Map<Routes, SelectRoutesDto>(entity);
+                var mappedEntity = ObjectMapper.Map<Routes, SelectRoutesDto>(entity);
 
-            mappedEntity.SelectRouteLines = ObjectMapper.Map<List<RouteLines>, List<SelectRouteLinesDto>>(entity.RouteLines.ToList());
+                mappedEntity.SelectRouteLines = ObjectMapper.Map<List<RouteLines>, List<SelectRouteLinesDto>>(entity.RouteLines.ToList());
 
-            return new SuccessDataResult<SelectRoutesDto>(mappedEntity);
+                return new SuccessDataResult<SelectRoutesDto>(mappedEntity);
+            }
         }
-
-
-        //public async Task<IDataResult<List<SelectProductsOperationsDto>>> GetProductsOperationLinesAsync(Guid productId)
-        //{
-        //    var entity = await _productsOperationsRepository.GetListAsync(t => t.ProductID == productId, t => t.ProductsOperationLines);
-
-        //    var mappedEntity = ObjectMapper.Map<List<ProductsOperations>, List<SelectProductsOperationsDto>>(entity.ToList());
-
-        //    return new SuccessDataResult<List<SelectProductsOperationsDto>>(mappedEntity);
-        //}
     }
 }

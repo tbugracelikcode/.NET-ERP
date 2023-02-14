@@ -19,59 +19,62 @@ namespace TsiErp.Business.Entities.Branch.Services
     [ServiceRegistration(typeof(IBranchesAppService), DependencyInjectionType.Scoped)]
     public class BranchesAppService : ApplicationService, IBranchesAppService
     {
-        //private readonly IBranchesRepository _repository;
-
         BranchesManager _manager { get; set; } = new BranchesManager();
-
-        UnitOfWork _uow { get; set; } = new UnitOfWork();
-
-        public BranchesAppService()
-        {
-        }
-
 
         [ValidationAspect(typeof(CreateBranchesValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBranchesDto>> CreateAsync(CreateBranchesDto input)
         {
-            await _manager.CodeControl(_uow.BranchRepository, input.Code);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _manager.CodeControl(_uow.BranchRepository, input.Code);
 
-            var entity = ObjectMapper.Map<CreateBranchesDto, Branches>(input);
+                var entity = ObjectMapper.Map<CreateBranchesDto, Branches>(input);
 
-            var addedEntity = await _uow.BranchRepository.InsertAsync(entity);
+                var addedEntity = await _uow.BranchRepository.InsertAsync(entity);
 
-            await _uow.SaveChanges();
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectBranchesDto>(ObjectMapper.Map<Branches, SelectBranchesDto>(addedEntity));
+                return new SuccessDataResult<SelectBranchesDto>(ObjectMapper.Map<Branches, SelectBranchesDto>(addedEntity));
+            }
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            await _manager.DeleteControl(_uow.BranchRepository, id);
-            await _uow.BranchRepository.DeleteAsync(id);
-            await _uow.SaveChanges();
-            return new SuccessResult("Silme işlemi başarılı.");
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _manager.DeleteControl(_uow.BranchRepository, id);
+                await _uow.BranchRepository.DeleteAsync(id);
+                await _uow.SaveChanges();
+                return new SuccessResult("Silme işlemi başarılı.");
+            }
         }
 
 
         public async Task<IDataResult<SelectBranchesDto>> GetAsync(Guid id)
         {
-            var entity = await _uow.BranchRepository.GetAsync(t => t.Id == id, t => t.Periods, t => t.SalesPropositions);
-            var mappedEntity = ObjectMapper.Map<Branches, SelectBranchesDto>(entity);
-            return new SuccessDataResult<SelectBranchesDto>(mappedEntity);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.BranchRepository.GetAsync(t => t.Id == id, t => t.Periods, t => t.SalesPropositions);
+                var mappedEntity = ObjectMapper.Map<Branches, SelectBranchesDto>(entity);
+                return new SuccessDataResult<SelectBranchesDto>(mappedEntity);
+            }
         }
 
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListBranchesDto>>> GetListAsync(ListBranchesParameterDto input)
         {
-            var list = await _uow.BranchRepository.GetListAsync(t => t.IsActive == input.IsActive, t => t.Periods, t => t.SalesPropositions);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.BranchRepository.GetListAsync(t => t.IsActive == input.IsActive, t => t.Periods, t => t.SalesPropositions);
 
-            var mappedEntity = ObjectMapper.Map<List<Branches>, List<ListBranchesDto>>(list.ToList());
+                var mappedEntity = ObjectMapper.Map<List<Branches>, List<ListBranchesDto>>(list.ToList());
 
-            return new SuccessDataResult<IList<ListBranchesDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListBranchesDto>>(mappedEntity);
+            }
         }
 
 
@@ -79,19 +82,21 @@ namespace TsiErp.Business.Entities.Branch.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBranchesDto>> UpdateAsync(UpdateBranchesDto input)
         {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
 
-            var entity = await _uow.BranchRepository.GetAsync(x => x.Id == input.Id);
+                var entity = await _uow.BranchRepository.GetAsync(x => x.Id == input.Id);
 
-            await _manager.UpdateControl(_uow.BranchRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.BranchRepository, input.Code, input.Id, entity);
 
-            var mappedEntity = ObjectMapper.Map<UpdateBranchesDto, Branches>(input);
+                var mappedEntity = ObjectMapper.Map<UpdateBranchesDto, Branches>(input);
 
-            await _uow.BranchRepository.UpdateAsync(mappedEntity);
+                await _uow.BranchRepository.UpdateAsync(mappedEntity);
 
-            await _uow.SaveChanges();
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectBranchesDto>(ObjectMapper.Map<Branches, SelectBranchesDto>(mappedEntity));
+                return new SuccessDataResult<SelectBranchesDto>(ObjectMapper.Map<Branches, SelectBranchesDto>(mappedEntity));
+            }
         }
-
     }
 }

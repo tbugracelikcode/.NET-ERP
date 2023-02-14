@@ -14,63 +14,70 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.Entities.ProductGroup.BusinessRules;
+using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 
 namespace TsiErp.Business.Entities.ProductGroup.Services
 {
     [ServiceRegistration(typeof(IProductGroupsAppService), DependencyInjectionType.Scoped)]
     public class ProductGroupsAppService : ApplicationService, IProductGroupsAppService
     {
-        private readonly IProductGroupsRepository _repository;
 
         ProductGroupManager _manager { get; set; } = new ProductGroupManager();
-
-        public ProductGroupsAppService(IProductGroupsRepository repository)
-        {
-            _repository = repository;
-        }
 
 
         [ValidationAspect(typeof(CreateProductGroupsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductGroupsDto>> CreateAsync(CreateProductGroupsDto input)
         {
-            await _manager.CodeControl(_repository, input.Code);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _manager.CodeControl(_uow.ProductGroupsRepository, input.Code);
 
-            var entity = ObjectMapper.Map<CreateProductGroupsDto, ProductGroups>(input);
+                var entity = ObjectMapper.Map<CreateProductGroupsDto, ProductGroups>(input);
 
-            var addedEntity = await _repository.InsertAsync(entity);
-            await _repository.SaveChanges();
+                var addedEntity = await _uow.ProductGroupsRepository.InsertAsync(entity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectProductGroupsDto>(ObjectMapper.Map<ProductGroups, SelectProductGroupsDto>(addedEntity));
+                return new SuccessDataResult<SelectProductGroupsDto>(ObjectMapper.Map<ProductGroups, SelectProductGroupsDto>(addedEntity));
+            }
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            await _manager.DeleteControl(_repository, id);
-            await _repository.DeleteAsync(id);
-            await _repository.SaveChanges();
-            return new SuccessResult("Silme işlemi başarılı.");
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _manager.DeleteControl(_uow.ProductGroupsRepository, id);
+                await _uow.ProductGroupsRepository.DeleteAsync(id);
+                await _uow.SaveChanges();
+                return new SuccessResult("Silme işlemi başarılı.");
+            }
         }
 
 
         public async Task<IDataResult<SelectProductGroupsDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id, t => t.Products);
-            var mappedEntity = ObjectMapper.Map<ProductGroups, SelectProductGroupsDto>(entity);
-            return new SuccessDataResult<SelectProductGroupsDto>(mappedEntity);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.ProductGroupsRepository.GetAsync(t => t.Id == id, t => t.Products);
+                var mappedEntity = ObjectMapper.Map<ProductGroups, SelectProductGroupsDto>(entity);
+                return new SuccessDataResult<SelectProductGroupsDto>(mappedEntity);
+            }
         }
 
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductGroupsDto>>> GetListAsync(ListProductGroupsParameterDto input)
         {
-            var list = await _repository.GetListAsync(t => t.IsActive == input.IsActive, x => x.Products);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.ProductGroupsRepository.GetListAsync(t => t.IsActive == input.IsActive, x => x.Products);
 
-            var mappedEntity = ObjectMapper.Map<List<ProductGroups>, List<ListProductGroupsDto>>(list.ToList());
+                var mappedEntity = ObjectMapper.Map<List<ProductGroups>, List<ListProductGroupsDto>>(list.ToList());
 
-            return new SuccessDataResult<IList<ListProductGroupsDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListProductGroupsDto>>(mappedEntity);
+            }
         }
 
 
@@ -78,16 +85,19 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductGroupsDto>> UpdateAsync(UpdateProductGroupsDto input)
         {
-            var entity = await _repository.GetAsync(x => x.Id == input.Id);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.ProductGroupsRepository.GetAsync(x => x.Id == input.Id);
 
-            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.ProductGroupsRepository, input.Code, input.Id, entity);
 
-            var mappedEntity = ObjectMapper.Map<UpdateProductGroupsDto, ProductGroups>(input);
+                var mappedEntity = ObjectMapper.Map<UpdateProductGroupsDto, ProductGroups>(input);
 
-            await _repository.UpdateAsync(mappedEntity);
-            await _repository.SaveChanges();
+                await _uow.ProductGroupsRepository.UpdateAsync(mappedEntity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectProductGroupsDto>(ObjectMapper.Map<ProductGroups, SelectProductGroupsDto>(mappedEntity));
+                return new SuccessDataResult<SelectProductGroupsDto>(ObjectMapper.Map<ProductGroups, SelectProductGroupsDto>(mappedEntity));
+            }
         }
     }
 }

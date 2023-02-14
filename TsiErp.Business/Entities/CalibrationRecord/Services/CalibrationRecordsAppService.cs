@@ -19,65 +19,69 @@ using TsiErp.Entities.Entities.CalibrationRecord.Dtos;
 using TsiErp.Entities.Entities.CalibrationRecord;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Business.Entities.CalibrationRecord.BusinessRules;
+using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 
 namespace TsiErp.Business.Entities.CalibrationRecord.Services
 {
     [ServiceRegistration(typeof(ICalibrationRecordsAppService), DependencyInjectionType.Scoped)]
     public class CalibrationRecordsAppService : ApplicationService , ICalibrationRecordsAppService
     {
-        private readonly ICalibrationRecordsRepository _repository;
-
         CalibrationRecordsManager _manager { get; set; } = new CalibrationRecordsManager();
-
-        public CalibrationRecordsAppService(ICalibrationRecordsRepository repository)
-        {
-            _repository = repository;
-        }
-
 
         [ValidationAspect(typeof(CreateCalibrationRecordsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCalibrationRecordsDto>> CreateAsync(CreateCalibrationRecordsDto input)
         {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _manager.CodeControl(_uow.CalibrationRecordsRepository, input.Code);
 
-            await _manager.CodeControl(_repository, input.Code);
+                var entity = ObjectMapper.Map<CreateCalibrationRecordsDto, CalibrationRecords>(input);
 
-            var entity = ObjectMapper.Map<CreateCalibrationRecordsDto, CalibrationRecords>(input);
+                var addedEntity = await _uow.CalibrationRecordsRepository.InsertAsync(entity);
 
-            var addedEntity = await _repository.InsertAsync(entity);
+                await _uow.SaveChanges();
 
-            await _repository.SaveChanges();
-
-            return new SuccessDataResult<SelectCalibrationRecordsDto>(ObjectMapper.Map<CalibrationRecords, SelectCalibrationRecordsDto>(addedEntity));
+                return new SuccessDataResult<SelectCalibrationRecordsDto>(ObjectMapper.Map<CalibrationRecords, SelectCalibrationRecordsDto>(addedEntity));
+            }
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            await _manager.DeleteControl(_repository, id);
-            await _repository.DeleteAsync(id);
-            await _repository.SaveChanges();
-            return new SuccessResult("Silme işlemi başarılı.");
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _manager.DeleteControl(_uow.CalibrationRecordsRepository, id);
+                await _uow.CalibrationRecordsRepository.DeleteAsync(id);
+                await _uow.SaveChanges();
+                return new SuccessResult("Silme işlemi başarılı.");
+            }
         }
 
 
         public async Task<IDataResult<SelectCalibrationRecordsDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id, t => t.EquipmentRecords);
-            var mappedEntity = ObjectMapper.Map<CalibrationRecords, SelectCalibrationRecordsDto>(entity);
-            return new SuccessDataResult<SelectCalibrationRecordsDto>(mappedEntity);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.CalibrationRecordsRepository.GetAsync(t => t.Id == id, t => t.EquipmentRecords);
+                var mappedEntity = ObjectMapper.Map<CalibrationRecords, SelectCalibrationRecordsDto>(entity);
+                return new SuccessDataResult<SelectCalibrationRecordsDto>(mappedEntity);
+            }
         }
 
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCalibrationRecordsDto>>> GetListAsync(ListCalibrationRecordsParameterDto input)
         {
-            var list = await _repository.GetListAsync(null, t => t.EquipmentRecords);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.CalibrationRecordsRepository.GetListAsync(null, t => t.EquipmentRecords);
 
-            var mappedEntity = ObjectMapper.Map<List<CalibrationRecords>, List<ListCalibrationRecordsDto>>(list.ToList());
+                var mappedEntity = ObjectMapper.Map<List<CalibrationRecords>, List<ListCalibrationRecordsDto>>(list.ToList());
 
-            return new SuccessDataResult<IList<ListCalibrationRecordsDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListCalibrationRecordsDto>>(mappedEntity);
+            }
         }
 
 
@@ -85,16 +89,19 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCalibrationRecordsDto>> UpdateAsync(UpdateCalibrationRecordsDto input)
         {
-            var entity = await _repository.GetAsync(x => x.Id == input.Id);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.CalibrationRecordsRepository.GetAsync(x => x.Id == input.Id);
 
-            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.CalibrationRecordsRepository, input.Code, input.Id, entity);
 
-            var mappedEntity = ObjectMapper.Map<UpdateCalibrationRecordsDto, CalibrationRecords>(input);
+                var mappedEntity = ObjectMapper.Map<UpdateCalibrationRecordsDto, CalibrationRecords>(input);
 
-            await _repository.UpdateAsync(mappedEntity);
-            await _repository.SaveChanges();
+                await _uow.CalibrationRecordsRepository.UpdateAsync(mappedEntity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectCalibrationRecordsDto>(ObjectMapper.Map<CalibrationRecords, SelectCalibrationRecordsDto>(mappedEntity));
+                return new SuccessDataResult<SelectCalibrationRecordsDto>(ObjectMapper.Map<CalibrationRecords, SelectCalibrationRecordsDto>(mappedEntity));
+            }
         }
     }
 }

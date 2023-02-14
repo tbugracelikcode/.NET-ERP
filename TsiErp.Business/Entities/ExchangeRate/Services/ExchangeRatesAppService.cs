@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.DependencyResolvers.Autofac;
 using TsiErp.Business.Entities.ExchangeRate.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.ExchangeRate;
 using TsiErp.Entities.Entities.ExchangeRate;
 using TsiErp.Entities.Entities.ExchangeRate.Dtos;
@@ -16,52 +17,57 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
     [ServiceRegistration(typeof(IExchangeRatesAppService), DependencyInjectionType.Scoped)]
     public class ExchangeRatesAppService : ApplicationService, IExchangeRatesAppService
     {
-        private readonly IExchangeRatesRepository _repository;
-
-        public ExchangeRatesAppService(IExchangeRatesRepository repository)
-        {
-            _repository = repository;
-        }
-
 
         [ValidationAspect(typeof(CreateExchangeRatesValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectExchangeRatesDto>> CreateAsync(CreateExchangeRatesDto input)
         {
-            var entity = ObjectMapper.Map<CreateExchangeRatesDto, ExchangeRates>(input);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = ObjectMapper.Map<CreateExchangeRatesDto, ExchangeRates>(input);
 
-            var addedEntity = await _repository.InsertAsync(entity);
-            await _repository.SaveChanges();
+                var addedEntity = await _uow.ExchangeRatesRepository.InsertAsync(entity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectExchangeRatesDto>(ObjectMapper.Map<ExchangeRates, SelectExchangeRatesDto>(addedEntity));
+                return new SuccessDataResult<SelectExchangeRatesDto>(ObjectMapper.Map<ExchangeRates, SelectExchangeRatesDto>(addedEntity));
+            }
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            await _repository.DeleteAsync(id);
-            await _repository.SaveChanges();
-            return new SuccessResult("Silme işlemi başarılı.");
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _uow.ExchangeRatesRepository.DeleteAsync(id);
+                await _uow.SaveChanges();
+                return new SuccessResult("Silme işlemi başarılı.");
+            }
         }
 
 
         public async Task<IDataResult<SelectExchangeRatesDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id, t => t.Currencies);
-            var mappedEntity = ObjectMapper.Map<ExchangeRates, SelectExchangeRatesDto>(entity);
-            return new SuccessDataResult<SelectExchangeRatesDto>(mappedEntity);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.ExchangeRatesRepository.GetAsync(t => t.Id == id, t => t.Currencies);
+                var mappedEntity = ObjectMapper.Map<ExchangeRates, SelectExchangeRatesDto>(entity);
+                return new SuccessDataResult<SelectExchangeRatesDto>(mappedEntity);
+            }
         }
 
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListExchangeRatesDto>>> GetListAsync(ListExchangeRatesParameterDto input)
         {
-            var list = await _repository.GetListAsync(null, t => t.Currencies);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.ExchangeRatesRepository.GetListAsync(null, t => t.Currencies);
 
-            var mappedEntity = ObjectMapper.Map<List<ExchangeRates>, List<ListExchangeRatesDto>>(list.ToList());
+                var mappedEntity = ObjectMapper.Map<List<ExchangeRates>, List<ListExchangeRatesDto>>(list.ToList());
 
-            return new SuccessDataResult<IList<ListExchangeRatesDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListExchangeRatesDto>>(mappedEntity);
+            }
         }
 
 
@@ -69,14 +75,17 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectExchangeRatesDto>> UpdateAsync(UpdateExchangeRatesDto input)
         {
-            var entity = await _repository.GetAsync(x => x.Id == input.Id);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.ExchangeRatesRepository.GetAsync(x => x.Id == input.Id);
 
-            var mappedEntity = ObjectMapper.Map<UpdateExchangeRatesDto, ExchangeRates>(input);
+                var mappedEntity = ObjectMapper.Map<UpdateExchangeRatesDto, ExchangeRates>(input);
 
-            await _repository.UpdateAsync(mappedEntity);
-            await _repository.SaveChanges();
+                await _uow.ExchangeRatesRepository.UpdateAsync(mappedEntity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectExchangeRatesDto>(ObjectMapper.Map<ExchangeRates, SelectExchangeRatesDto>(mappedEntity));
+                return new SuccessDataResult<SelectExchangeRatesDto>(ObjectMapper.Map<ExchangeRates, SelectExchangeRatesDto>(mappedEntity));
+            }
         }
     }
 }

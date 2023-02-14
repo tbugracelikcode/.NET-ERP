@@ -8,6 +8,7 @@ using TsiErp.Business.DependencyResolvers.Autofac;
 using TsiErp.Business.Entities.OperationUnsuitabilityItem.BusinessRules;
 using TsiErp.Business.Entities.OperationUnsuitabilityItem.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.OperationUnsuitabilityItem;
 using TsiErp.Entities.Entities.OperationUnsuitabilityItem;
 using TsiErp.Entities.Entities.OperationUnsuitabilityItem.Dtos;
@@ -17,56 +18,61 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityItem.Services
     [ServiceRegistration(typeof(IOperationUnsuitabilityItemsAppService), DependencyInjectionType.Scoped)]
     public class OperationUnsuitabilityItemsAppService : ApplicationService, IOperationUnsuitabilityItemsAppService
     {
-        private readonly IOperationUnsuitabilityItemsRepository _repository;
-
         OperationUnsuitabilityItemManager _manager { get; set; } = new OperationUnsuitabilityItemManager();
-
-        public OperationUnsuitabilityItemsAppService(IOperationUnsuitabilityItemsRepository repository)
-        {
-            _repository = repository;
-        }
 
 
         [ValidationAspect(typeof(CreateOperationUnsuitabilityItemsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectOperationUnsuitabilityItemsDto>> CreateAsync(CreateOperationUnsuitabilityItemsDto input)
         {
-            await _manager.CodeControl(_repository, input.Code);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _manager.CodeControl(_uow.OperationUnsuitabilityItemsRepository, input.Code);
 
-            var entity = ObjectMapper.Map<CreateOperationUnsuitabilityItemsDto, OperationUnsuitabilityItems>(input);
+                var entity = ObjectMapper.Map<CreateOperationUnsuitabilityItemsDto, OperationUnsuitabilityItems>(input);
 
-            var addedEntity = await _repository.InsertAsync(entity);
-            await _repository.SaveChanges();
+                var addedEntity = await _uow.OperationUnsuitabilityItemsRepository.InsertAsync(entity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectOperationUnsuitabilityItemsDto>(ObjectMapper.Map<OperationUnsuitabilityItems, SelectOperationUnsuitabilityItemsDto>(addedEntity));
+                return new SuccessDataResult<SelectOperationUnsuitabilityItemsDto>(ObjectMapper.Map<OperationUnsuitabilityItems, SelectOperationUnsuitabilityItemsDto>(addedEntity));
+            }
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            await _repository.DeleteAsync(id);
-            await _repository.SaveChanges();
-            return new SuccessResult("Silme işlemi başarılı.");
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _uow.OperationUnsuitabilityItemsRepository.DeleteAsync(id);
+                await _uow.SaveChanges();
+                return new SuccessResult("Silme işlemi başarılı.");
+            }
         }
 
 
         public async Task<IDataResult<SelectOperationUnsuitabilityItemsDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id, null);
-            var mappedEntity = ObjectMapper.Map<OperationUnsuitabilityItems, SelectOperationUnsuitabilityItemsDto>(entity);
-            return new SuccessDataResult<SelectOperationUnsuitabilityItemsDto>(mappedEntity);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.OperationUnsuitabilityItemsRepository.GetAsync(t => t.Id == id, null);
+                var mappedEntity = ObjectMapper.Map<OperationUnsuitabilityItems, SelectOperationUnsuitabilityItemsDto>(entity);
+                return new SuccessDataResult<SelectOperationUnsuitabilityItemsDto>(mappedEntity);
+            }
         }
 
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListOperationUnsuitabilityItemsDto>>> GetListAsync(ListOperationUnsuitabilityItemsParameterDto input)
         {
-            var list = await _repository.GetListAsync(t => t.IsActive == input.IsActive, null);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.OperationUnsuitabilityItemsRepository.GetListAsync(t => t.IsActive == input.IsActive, null);
 
-            var mappedEntity = ObjectMapper.Map<List<OperationUnsuitabilityItems>, List<ListOperationUnsuitabilityItemsDto>>(list.ToList());
+                var mappedEntity = ObjectMapper.Map<List<OperationUnsuitabilityItems>, List<ListOperationUnsuitabilityItemsDto>>(list.ToList());
 
-            return new SuccessDataResult<IList<ListOperationUnsuitabilityItemsDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListOperationUnsuitabilityItemsDto>>(mappedEntity);
+            }
         }
 
 
@@ -74,16 +80,19 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityItem.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectOperationUnsuitabilityItemsDto>> UpdateAsync(UpdateOperationUnsuitabilityItemsDto input)
         {
-            var entity = await _repository.GetAsync(x => x.Id == input.Id);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.OperationUnsuitabilityItemsRepository.GetAsync(x => x.Id == input.Id);
 
-            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.OperationUnsuitabilityItemsRepository, input.Code, input.Id, entity);
 
-            var mappedEntity = ObjectMapper.Map<UpdateOperationUnsuitabilityItemsDto, OperationUnsuitabilityItems>(input);
+                var mappedEntity = ObjectMapper.Map<UpdateOperationUnsuitabilityItemsDto, OperationUnsuitabilityItems>(input);
 
-            await _repository.UpdateAsync(mappedEntity);
-            await _repository.SaveChanges();
+                await _uow.OperationUnsuitabilityItemsRepository.UpdateAsync(mappedEntity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectOperationUnsuitabilityItemsDto>(ObjectMapper.Map<OperationUnsuitabilityItems, SelectOperationUnsuitabilityItemsDto>(mappedEntity));
+                return new SuccessDataResult<SelectOperationUnsuitabilityItemsDto>(ObjectMapper.Map<OperationUnsuitabilityItems, SelectOperationUnsuitabilityItemsDto>(mappedEntity));
+            }
         }
     }
 }

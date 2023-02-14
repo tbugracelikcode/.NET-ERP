@@ -6,72 +6,79 @@ using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Menu;
 using TsiErp.Entities.Entities.Menu.Dtos;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.Menu;
+using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 
 namespace TsiErp.Business.Entities.Menu.Services
 {
     [ServiceRegistration(typeof(IMenusAppService), DependencyInjectionType.Scoped)]
     public class MenusAppService : ApplicationService, IMenusAppService
     {
-        private readonly IMenusRepository _repository;
-
-
-        public MenusAppService(IMenusRepository repository)
-        {
-            _repository = repository;
-        }
-
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMenusDto>> CreateAsync(CreateMenusDto input)
         {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = ObjectMapper.Map<CreateMenusDto, Menus>(input);
 
-            var entity = ObjectMapper.Map<CreateMenusDto, Menus>(input);
+                var addedEntity = await _uow.MenusRepository.InsertAsync(entity);
+                await _uow.SaveChanges();
 
-            var addedEntity = await _repository.InsertAsync(entity);
-            await _repository.SaveChanges();
-
-            return new SuccessDataResult<SelectMenusDto>(ObjectMapper.Map<Menus, SelectMenusDto>(addedEntity));
+                return new SuccessDataResult<SelectMenusDto>(ObjectMapper.Map<Menus, SelectMenusDto>(addedEntity));
+            }
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            await _repository.DeleteAsync(id);
-            await _repository.SaveChanges();
-            return new SuccessResult("Silme işlemi başarılı.");
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _uow.MenusRepository.DeleteAsync(id);
+                await _uow.SaveChanges();
+                return new SuccessResult("Silme işlemi başarılı.");
+            }
         }
 
 
         public async Task<IDataResult<SelectMenusDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id);
-            var mappedEntity = ObjectMapper.Map<Menus, SelectMenusDto>(entity);
-            return new SuccessDataResult<SelectMenusDto>(mappedEntity);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.MenusRepository.GetAsync(t => t.Id == id);
+                var mappedEntity = ObjectMapper.Map<Menus, SelectMenusDto>(entity);
+                return new SuccessDataResult<SelectMenusDto>(mappedEntity);
+            }
         }
 
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListMenusDto>>> GetListAsync(ListMenusParameterDto input)
         {
-            var list = await _repository.GetListAsync(null);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.MenusRepository.GetListAsync(null);
 
-            var mappedEntity = ObjectMapper.Map<List<Menus>, List<ListMenusDto>>(list.ToList());
+                var mappedEntity = ObjectMapper.Map<List<Menus>, List<ListMenusDto>>(list.ToList());
 
-            return new SuccessDataResult<IList<ListMenusDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListMenusDto>>(mappedEntity);
+            }
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMenusDto>> UpdateAsync(UpdateMenusDto input)
         {
-            var entity = await _repository.GetAsync(x => x.Id == input.Id);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.MenusRepository.GetAsync(x => x.Id == input.Id);
 
-            var mappedEntity = ObjectMapper.Map<UpdateMenusDto, Menus>(input);
+                var mappedEntity = ObjectMapper.Map<UpdateMenusDto, Menus>(input);
 
-            await _repository.UpdateAsync(mappedEntity);
-            await _repository.SaveChanges();
+                await _uow.MenusRepository.UpdateAsync(mappedEntity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectMenusDto>(ObjectMapper.Map<Menus, SelectMenusDto>(mappedEntity));
+                return new SuccessDataResult<SelectMenusDto>(ObjectMapper.Map<Menus, SelectMenusDto>(mappedEntity));
+            }
         }
     }
 }

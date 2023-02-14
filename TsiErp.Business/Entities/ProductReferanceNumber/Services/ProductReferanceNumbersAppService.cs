@@ -19,81 +19,90 @@ using TsiErp.Entities.Entities.ProductReferanceNumber.Dtos;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.ProductReferanceNumber;
 using TsiErp.Business.Entities.ProductReferanceNumber.BusinessRules;
+using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 
 namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
 {
     [ServiceRegistration(typeof(IProductReferanceNumbersAppService), DependencyInjectionType.Scoped)]
     public class ProductReferanceNumbersAppService : ApplicationService, IProductReferanceNumbersAppService
     {
-        private readonly IProductReferanceNumbersRepository _repository;
-
         ProductReferanceNumberManager _manager { get; set; } = new ProductReferanceNumberManager();
-
-        public ProductReferanceNumbersAppService(IProductReferanceNumbersRepository repository)
-        {
-            _repository = repository;
-        }
 
 
         [ValidationAspect(typeof(CreateProductReferanceNumbersValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductReferanceNumbersDto>> CreateAsync(CreateProductReferanceNumbersDto input)
         {
-            await _manager.CodeControl(_repository, input.ReferanceNo);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _manager.CodeControl(_uow.ProductReferanceNumbersRepository, input.ReferanceNo);
 
-            var entity = ObjectMapper.Map<CreateProductReferanceNumbersDto, ProductReferanceNumbers>(input);
+                var entity = ObjectMapper.Map<CreateProductReferanceNumbersDto, ProductReferanceNumbers>(input);
 
-            var addedEntity = await _repository.InsertAsync(entity);
-            await _repository.SaveChanges();
+                var addedEntity = await _uow.ProductReferanceNumbersRepository.InsertAsync(entity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectProductReferanceNumbersDto>(ObjectMapper.Map<ProductReferanceNumbers, SelectProductReferanceNumbersDto>(addedEntity));
+                return new SuccessDataResult<SelectProductReferanceNumbersDto>(ObjectMapper.Map<ProductReferanceNumbers, SelectProductReferanceNumbersDto>(addedEntity));
+            }
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            await _manager.DeleteControl(_repository, id);
-            await _repository.DeleteAsync(id);
-            await _repository.SaveChanges();
-            return new SuccessResult("Silme işlemi başarılı.");
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _manager.DeleteControl(_uow.ProductReferanceNumbersRepository, id);
+                await _uow.ProductReferanceNumbersRepository.DeleteAsync(id);
+                await _uow.SaveChanges();
+                return new SuccessResult("Silme işlemi başarılı.");
+            }
         }
 
 
         public async Task<IDataResult<SelectProductReferanceNumbersDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id, t => t.Products, t => t.CurrentAccountCards);
-            var mappedEntity = ObjectMapper.Map<ProductReferanceNumbers, SelectProductReferanceNumbersDto>(entity);
-            return new SuccessDataResult<SelectProductReferanceNumbersDto>(mappedEntity);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.ProductReferanceNumbersRepository.GetAsync(t => t.Id == id, t => t.Products, t => t.CurrentAccountCards);
+                var mappedEntity = ObjectMapper.Map<ProductReferanceNumbers, SelectProductReferanceNumbersDto>(entity);
+                return new SuccessDataResult<SelectProductReferanceNumbersDto>(mappedEntity);
+            }
         }
 
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductReferanceNumbersDto>>> GetListAsync(ListProductReferanceNumbersParameterDto input)
         {
-            IList<ProductReferanceNumbers> list;
-
-            if (input.ProductId == null)
+            using (UnitOfWork _uow = new UnitOfWork())
             {
-                list = await _repository.GetListAsync(null, t => t.Products);
-            }
-            else
-            {
-                list = await _repository.GetListAsync(t => t.ProductID == input.ProductId, t => t.Products);
-            }
+                IList<ProductReferanceNumbers> list;
 
-            var mappedEntity = ObjectMapper.Map<List<ProductReferanceNumbers>, List<ListProductReferanceNumbersDto>>(list.ToList());
+                if (input.ProductId == null)
+                {
+                    list = await _uow.ProductReferanceNumbersRepository.GetListAsync(null, t => t.Products);
+                }
+                else
+                {
+                    list = await _uow.ProductReferanceNumbersRepository.GetListAsync(t => t.ProductID == input.ProductId, t => t.Products);
+                }
 
-            return new SuccessDataResult<IList<ListProductReferanceNumbersDto>>(mappedEntity);
+                var mappedEntity = ObjectMapper.Map<List<ProductReferanceNumbers>, List<ListProductReferanceNumbersDto>>(list.ToList());
+
+                return new SuccessDataResult<IList<ListProductReferanceNumbersDto>>(mappedEntity);
+            }
         }
 
         public async Task<IDataResult<IList<SelectProductReferanceNumbersDto>>> GetSelectListAsync(Guid productId)
         {
-            var list = await _repository.GetListAsync(t => t.ProductID == productId, t => t.Products);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.ProductReferanceNumbersRepository.GetListAsync(t => t.ProductID == productId, t => t.Products);
 
-            var mappedEntity = ObjectMapper.Map<List<ProductReferanceNumbers>, List<SelectProductReferanceNumbersDto>>(list.ToList());
+                var mappedEntity = ObjectMapper.Map<List<ProductReferanceNumbers>, List<SelectProductReferanceNumbersDto>>(list.ToList());
 
-            return new SuccessDataResult<IList<SelectProductReferanceNumbersDto>>(mappedEntity);
+                return new SuccessDataResult<IList<SelectProductReferanceNumbersDto>>(mappedEntity);
+            }
         }
 
 
@@ -101,16 +110,19 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductReferanceNumbersDto>> UpdateAsync(UpdateProductReferanceNumbersDto input)
         {
-            var entity = await _repository.GetAsync(x => x.Id == input.Id);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.ProductReferanceNumbersRepository.GetAsync(x => x.Id == input.Id);
 
-            await _manager.UpdateControl(_repository, input.ReferanceNo, input.Id, entity);
+                await _manager.UpdateControl(_uow.ProductReferanceNumbersRepository, input.ReferanceNo, input.Id, entity);
 
-            var mappedEntity = ObjectMapper.Map<UpdateProductReferanceNumbersDto, ProductReferanceNumbers>(input);
+                var mappedEntity = ObjectMapper.Map<UpdateProductReferanceNumbersDto, ProductReferanceNumbers>(input);
 
-            await _repository.UpdateAsync(mappedEntity);
-            await _repository.SaveChanges();
+                await _uow.ProductReferanceNumbersRepository.UpdateAsync(mappedEntity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectProductReferanceNumbersDto>(ObjectMapper.Map<ProductReferanceNumbers, SelectProductReferanceNumbersDto>(mappedEntity));
+                return new SuccessDataResult<SelectProductReferanceNumbersDto>(ObjectMapper.Map<ProductReferanceNumbers, SelectProductReferanceNumbersDto>(mappedEntity));
+            }
         }
     }
 }

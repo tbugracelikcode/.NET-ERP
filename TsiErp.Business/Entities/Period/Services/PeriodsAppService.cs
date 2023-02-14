@@ -11,6 +11,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.Entities.Period.BusinessRules;
 using TsiErp.Business.Entities.Period.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Period;
 using TsiErp.Entities.Entities.Period;
 using TsiErp.Entities.Entities.Period.Dtos;
@@ -20,68 +21,76 @@ namespace TsiErp.Business.Entities.Period.Services
     [ServiceRegistration(typeof(IPeriodsAppService), DependencyInjectionType.Scoped)]
     public class PeriodsAppService :  IPeriodsAppService
     {
-        private readonly IPeriodsRepository _repository;
-
         PeriodManager _manager { get; set; } = new PeriodManager();
-
-        public PeriodsAppService(IPeriodsRepository repository)
-        {
-            _repository = repository;
-        }
-
 
         [ValidationAspect(typeof(CreatePeriodsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPeriodsDto>> CreateAsync(CreatePeriodsDto input)
         {
-            await _manager.CodeControl(_repository, input.Code);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _manager.CodeControl(_uow.PeriodsRepository, input.Code);
 
-            var entity = ObjectMapper.Map<CreatePeriodsDto, Periods>(input);
+                var entity = ObjectMapper.Map<CreatePeriodsDto, Periods>(input);
 
-            var addedEntity = await _repository.InsertAsync(entity);
-            await _repository.SaveChanges();
+                var addedEntity = await _uow.PeriodsRepository.InsertAsync(entity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectPeriodsDto>(ObjectMapper.Map<Periods, SelectPeriodsDto>(addedEntity));
+
+                return new SuccessDataResult<SelectPeriodsDto>(ObjectMapper.Map<Periods, SelectPeriodsDto>(addedEntity));
+            }
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            await _repository.DeleteAsync(id);
-            await _repository.SaveChanges();
-            return new SuccessResult("Silme işlemi başarılı.");
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _uow.PeriodsRepository.DeleteAsync(id);
+                await _uow.SaveChanges();
+                return new SuccessResult("Silme işlemi başarılı.");
+            }
         }
 
         public async Task<IDataResult<SelectPeriodsDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id,  t => t.Branches);
-            var mappedEntity = ObjectMapper.Map<Periods, SelectPeriodsDto>(entity);
-            return new SuccessDataResult<SelectPeriodsDto>(mappedEntity);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.PeriodsRepository.GetAsync(t => t.Id == id, t => t.Branches);
+                var mappedEntity = ObjectMapper.Map<Periods, SelectPeriodsDto>(entity);
+                return new SuccessDataResult<SelectPeriodsDto>(mappedEntity);
+            }
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPeriodsDto>>> GetListAsync(ListPeriodsParameterDto input)
         {
-            var list = await _repository.GetListAsync(t=>t.IsActive==input.IsActive,t=>t.Branches);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.PeriodsRepository.GetListAsync(t => t.IsActive == input.IsActive, t => t.Branches);
 
-            var mappedEntity = ObjectMapper.Map<List<Periods>, List<ListPeriodsDto>>(list.ToList());
+                var mappedEntity = ObjectMapper.Map<List<Periods>, List<ListPeriodsDto>>(list.ToList());
 
-            return new SuccessDataResult<IList<ListPeriodsDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListPeriodsDto>>(mappedEntity);
+            }
         }
 
         [ValidationAspect(typeof(UpdatePeriodsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPeriodsDto>> UpdateAsync(UpdatePeriodsDto input)
         {
-            var entity = await _repository.GetAsync(x => x.Id == input.Id);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.PeriodsRepository.GetAsync(x => x.Id == input.Id);
 
-            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.PeriodsRepository, input.Code, input.Id, entity);
 
-            var mappedEntity = ObjectMapper.Map<UpdatePeriodsDto, Periods>(input);
+                var mappedEntity = ObjectMapper.Map<UpdatePeriodsDto, Periods>(input);
 
-            await _repository.UpdateAsync(mappedEntity);
-            await _repository.SaveChanges();
-            return new SuccessDataResult<SelectPeriodsDto>(ObjectMapper.Map<Periods, SelectPeriodsDto>(mappedEntity));
+                await _uow.PeriodsRepository.UpdateAsync(mappedEntity);
+                await _uow.SaveChanges();
+                return new SuccessDataResult<SelectPeriodsDto>(ObjectMapper.Map<Periods, SelectPeriodsDto>(mappedEntity));
+            }
         }
     }
 }

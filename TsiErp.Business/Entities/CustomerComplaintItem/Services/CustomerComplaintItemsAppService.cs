@@ -8,6 +8,7 @@ using TsiErp.Business.DependencyResolvers.Autofac;
 using TsiErp.Business.Entities.CustomerComplaintItem.BusinessRules;
 using TsiErp.Business.Entities.CustomerComplaintItem.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.CustomerComplaintItem;
 using TsiErp.Entities.Entities.CustomerComplaintItem;
 using TsiErp.Entities.Entities.CustomerComplaintItem.Dtos;
@@ -17,56 +18,60 @@ namespace TsiErp.Business.Entities.CustomerComplaintItem.Services
     [ServiceRegistration(typeof(ICustomerComplaintItemsAppService), DependencyInjectionType.Scoped)]
     public class CustomerComplaintItemsAppService : ApplicationService, ICustomerComplaintItemsAppService
     {
-        private readonly ICustomerComplaintItemsRepository _repository;
-
         CustomerComplaintItemManager _manager { get; set; } = new CustomerComplaintItemManager();
-
-        public CustomerComplaintItemsAppService(ICustomerComplaintItemsRepository repository)
-        {
-            _repository = repository;
-        }
-
 
         [ValidationAspect(typeof(CreateCustomerComplaintItemsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCustomerComplaintItemsDto>> CreateAsync(CreateCustomerComplaintItemsDto input)
         {
-            await _manager.CodeControl(_repository, input.Code);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _manager.CodeControl(_uow.CustomerComplaintItemsRepository, input.Code);
 
-            var entity = ObjectMapper.Map<CreateCustomerComplaintItemsDto, CustomerComplaintItems>(input);
+                var entity = ObjectMapper.Map<CreateCustomerComplaintItemsDto, CustomerComplaintItems>(input);
 
-            var addedEntity = await _repository.InsertAsync(entity);
-            await _repository.SaveChanges();
+                var addedEntity = await _uow.CustomerComplaintItemsRepository.InsertAsync(entity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectCustomerComplaintItemsDto>(ObjectMapper.Map<CustomerComplaintItems, SelectCustomerComplaintItemsDto>(addedEntity));
+                return new SuccessDataResult<SelectCustomerComplaintItemsDto>(ObjectMapper.Map<CustomerComplaintItems, SelectCustomerComplaintItemsDto>(addedEntity));
+            }
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            await _repository.DeleteAsync(id);
-            await _repository.SaveChanges();
-            return new SuccessResult("Silme işlemi başarılı.");
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _uow.CustomerComplaintItemsRepository.DeleteAsync(id);
+                await _uow.SaveChanges();
+                return new SuccessResult("Silme işlemi başarılı.");
+            }
         }
 
 
         public async Task<IDataResult<SelectCustomerComplaintItemsDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id, null);
-            var mappedEntity = ObjectMapper.Map<CustomerComplaintItems, SelectCustomerComplaintItemsDto>(entity);
-            return new SuccessDataResult<SelectCustomerComplaintItemsDto>(mappedEntity);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.CustomerComplaintItemsRepository.GetAsync(t => t.Id == id, null);
+                var mappedEntity = ObjectMapper.Map<CustomerComplaintItems, SelectCustomerComplaintItemsDto>(entity);
+                return new SuccessDataResult<SelectCustomerComplaintItemsDto>(mappedEntity);
+            }
         }
 
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCustomerComplaintItemsDto>>> GetListAsync(ListCustomerComplaintItemsParameterDto input)
         {
-            var list = await _repository.GetListAsync(t => t.IsActive == input.IsActive, null);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.CustomerComplaintItemsRepository.GetListAsync(t => t.IsActive == input.IsActive, null);
 
-            var mappedEntity = ObjectMapper.Map<List<CustomerComplaintItems>, List<ListCustomerComplaintItemsDto>>(list.ToList());
+                var mappedEntity = ObjectMapper.Map<List<CustomerComplaintItems>, List<ListCustomerComplaintItemsDto>>(list.ToList());
 
-            return new SuccessDataResult<IList<ListCustomerComplaintItemsDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListCustomerComplaintItemsDto>>(mappedEntity);
+            }
         }
 
 
@@ -74,16 +79,19 @@ namespace TsiErp.Business.Entities.CustomerComplaintItem.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCustomerComplaintItemsDto>> UpdateAsync(UpdateCustomerComplaintItemsDto input)
         {
-            var entity = await _repository.GetAsync(x => x.Id == input.Id);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.CustomerComplaintItemsRepository.GetAsync(x => x.Id == input.Id);
 
-            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.CustomerComplaintItemsRepository, input.Code, input.Id, entity);
 
-            var mappedEntity = ObjectMapper.Map<UpdateCustomerComplaintItemsDto, CustomerComplaintItems>(input);
+                var mappedEntity = ObjectMapper.Map<UpdateCustomerComplaintItemsDto, CustomerComplaintItems>(input);
 
-            await _repository.UpdateAsync(mappedEntity);
-            await _repository.SaveChanges();
+                await _uow.CustomerComplaintItemsRepository.UpdateAsync(mappedEntity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectCustomerComplaintItemsDto>(ObjectMapper.Map<CustomerComplaintItems, SelectCustomerComplaintItemsDto>(mappedEntity));
+                return new SuccessDataResult<SelectCustomerComplaintItemsDto>(ObjectMapper.Map<CustomerComplaintItems, SelectCustomerComplaintItemsDto>(mappedEntity));
+            }
         }
     }
 }

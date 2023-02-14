@@ -19,62 +19,67 @@ using TsiErp.Entities.Entities.Employee.Dtos;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.Employee;
 using TsiErp.Business.Entities.Employee.BusinessRules;
+using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 
 namespace TsiErp.Business.Entities.Employee.Services
 {
     [ServiceRegistration(typeof(IEmployeesAppService), DependencyInjectionType.Scoped)]
     public class EmployeesAppService : ApplicationService, IEmployeesAppService
     {
-        private readonly IEmployeesRepository _repository;
-
         EmployeeManager _manager { get; set; } = new EmployeeManager();
-
-        public EmployeesAppService(IEmployeesRepository repository)
-        {
-            _repository = repository;
-        }
-
 
         [ValidationAspect(typeof(CreateEmployeesValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEmployeesDto>> CreateAsync(CreateEmployeesDto input)
         {
-            await _manager.CodeControl(_repository, input.Code);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _manager.CodeControl(_uow.EmployeesRepository, input.Code);
 
-            var entity = ObjectMapper.Map<CreateEmployeesDto, Employees>(input);
+                var entity = ObjectMapper.Map<CreateEmployeesDto, Employees>(input);
 
-            var addedEntity = await _repository.InsertAsync(entity);
-            await _repository.SaveChanges();
+                var addedEntity = await _uow.EmployeesRepository.InsertAsync(entity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectEmployeesDto>(ObjectMapper.Map<Employees, SelectEmployeesDto>(addedEntity));
+                return new SuccessDataResult<SelectEmployeesDto>(ObjectMapper.Map<Employees, SelectEmployeesDto>(addedEntity));
+            }
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            await _repository.DeleteAsync(id);
-            await _repository.SaveChanges();
-            return new SuccessResult("Silme işlemi başarılı.");
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _uow.EmployeesRepository.DeleteAsync(id);
+                await _uow.SaveChanges();
+                return new SuccessResult("Silme işlemi başarılı.");
+            }
         }
 
 
         public async Task<IDataResult<SelectEmployeesDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id, t => t.Departments);
-            var mappedEntity = ObjectMapper.Map<Employees, SelectEmployeesDto>(entity);
-            return new SuccessDataResult<SelectEmployeesDto>(mappedEntity);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.EmployeesRepository.GetAsync(t => t.Id == id, t => t.Departments);
+                var mappedEntity = ObjectMapper.Map<Employees, SelectEmployeesDto>(entity);
+                return new SuccessDataResult<SelectEmployeesDto>(mappedEntity);
+            }
         }
 
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListEmployeesDto>>> GetListAsync(ListEmployeesParameterDto input)
         {
-            var list = await _repository.GetListAsync(t => t.IsActive == input.IsActive, t => t.Departments);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.EmployeesRepository.GetListAsync(t => t.IsActive == input.IsActive, t => t.Departments);
 
-            var mappedEntity = ObjectMapper.Map<List<Employees>, List<ListEmployeesDto>>(list.ToList());
+                var mappedEntity = ObjectMapper.Map<List<Employees>, List<ListEmployeesDto>>(list.ToList());
 
-            return new SuccessDataResult<IList<ListEmployeesDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListEmployeesDto>>(mappedEntity);
+            }
         }
 
 
@@ -82,16 +87,19 @@ namespace TsiErp.Business.Entities.Employee.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEmployeesDto>> UpdateAsync(UpdateEmployeesDto input)
         {
-            var entity = await _repository.GetAsync(x => x.Id == input.Id);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.EmployeesRepository.GetAsync(x => x.Id == input.Id);
 
-            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.EmployeesRepository, input.Code, input.Id, entity);
 
-            var mappedEntity = ObjectMapper.Map<UpdateEmployeesDto, Employees>(input);
+                var mappedEntity = ObjectMapper.Map<UpdateEmployeesDto, Employees>(input);
 
-            await _repository.UpdateAsync(mappedEntity);
-            await _repository.SaveChanges();
+                await _uow.EmployeesRepository.UpdateAsync(mappedEntity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectEmployeesDto>(ObjectMapper.Map<Employees, SelectEmployeesDto>(mappedEntity));
+                return new SuccessDataResult<SelectEmployeesDto>(ObjectMapper.Map<Employees, SelectEmployeesDto>(mappedEntity));
+            }
         }
     }
 }

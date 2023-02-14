@@ -6,7 +6,6 @@
 @using TsiErp.Business.Entities.Employee.Services
 @using TsiErp.Business.Entities.HaltReason.Services
 @using TsiErp.Business.Entities.ProductionTracking.Services
-@using TsiErp.Business.Entities.ProductionTrackingHaltLine.Services
 @using TsiErp.Business.Entities.Shift.Services
 @using TsiErp.Business.Entities.Station.Services
 @using TsiErp.Business.Entities.WorkOrder.Services
@@ -22,7 +21,6 @@
 @inherits BaseListPage<SelectProductionTrackingsDto, ListProductionTrackingsDto, CreateProductionTrackingsDto, UpdateProductionTrackingsDto, ListProductionTrackingsParameterDto>
 
 @inject IProductionTrackingsAppService ProductionTrackingsAppService
-@inject IProductionTrackingHaltLinesAppService ProductionTrackingHaltLinesAppService
 @inject IWorkOrdersAppService WorkOrdersAppService
 @inject IStationsAppService StationsAppService
 @inject IShiftsAppService ShiftsAppService
