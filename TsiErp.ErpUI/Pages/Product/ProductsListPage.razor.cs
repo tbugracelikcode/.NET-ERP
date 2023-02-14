@@ -18,6 +18,9 @@ using TsiErp.Entities.Entities.SalesPriceLine.Dtos;
 using TsiErp.Entities.Entities.PurchasePriceLine.Dtos;
 using TsiErp.Entities.Entities.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.BillsofMaterialLine.Dtos;
+using TsiErp.Entities.Entities.Route.Dtos;
+using TsiErp.Entities.Entities.RouteLine.Dtos;
+using TsiErp.Entities.Entities.ContractProductionTracking.Dtos;
 
 namespace TsiErp.ErpUI.Pages.Product
 {
@@ -68,10 +71,12 @@ namespace TsiErp.ErpUI.Pages.Product
         public SelectTechnicalDrawingsDto TechnicalDrawingsDataSource { get; set; }
         public SelectProductReferanceNumbersDto ProductReferanceNumbersDataSource { get; set; }
         public SelectBillsofMaterialsDto BillsofMaterialsDataSource { get; set; }
+        public SelectRoutesDto RoutesDataSource { get; set; }
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> TechnicalDrawingGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> ProductReferanceNumberGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> BillsofMaterialGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+        public List<ContextMenuItemModel> RouteGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         public List<SelectTechnicalDrawingsDto> TechnicalDrawingsList = new List<SelectTechnicalDrawingsDto>();
 
@@ -83,7 +88,14 @@ namespace TsiErp.ErpUI.Pages.Product
 
         public List<ListBillsofMaterialsDto> BillsofMaterialsList = new List<ListBillsofMaterialsDto>();
 
+        public List<ListRoutesDto> RoutesList = new List<ListRoutesDto>();
+
         public List<SelectBillsofMaterialLinesDto> BillsofMaterialLinesList = new List<SelectBillsofMaterialLinesDto>();
+
+        public List<SelectRouteLinesDto> RouteLinesList = new List<SelectRouteLinesDto>();
+
+        public List<SelectContractProductionTrackingsDto> ContractProductionTrackingsList = new List<SelectContractProductionTrackingsDto>();
+
 
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -94,6 +106,9 @@ namespace TsiErp.ErpUI.Pages.Product
         private SfGrid<SelectPurchasePriceLinesDto> _PurchasePriceLineGrid;
         private SfGrid<ListBillsofMaterialsDto> _BillsofMaterialGrid;
         private SfGrid<SelectBillsofMaterialLinesDto> _BillsofMaterialLineGrid;
+        private SfGrid<ListRoutesDto> _RouteGrid;
+        private SfGrid<SelectRouteLinesDto> _RouteLineGrid;
+        private SfGrid<SelectContractProductionTrackingsDto> _ContractProductionTrackingGrid;
 
         #region Değişkenler
 
@@ -109,6 +124,11 @@ namespace TsiErp.ErpUI.Pages.Product
 
         public bool BillsofMaterialsPopup = false;
         public bool BillsofMaterialsCrudPopup = false;
+
+        public bool RoutesPopup = false;
+        public bool RoutesCrudPopup = false;
+
+        public bool ContractProductionTrackingsPopup = false;
 
         List<string> Drawers = new List<string>();
 
@@ -231,6 +251,7 @@ namespace TsiErp.ErpUI.Pages.Product
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Satış Fiyatları", Id = "salesprices" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Stok Reçeteleri", Id = "billsofmaterials" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Ürün Rotaları", Id = "routes" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Fason Takip Fişleri", Id = "contractproductiontrackings" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
             }
@@ -630,6 +651,56 @@ namespace TsiErp.ErpUI.Pages.Product
 
         #endregion
 
+        #region Rota Modalı İşlemleri
+
+        protected void CreateRoutesContextMenuItems()
+        {
+            if (RouteGridContextMenu.Count() == 0)
+            {
+                RouteGridContextMenu.Add(new ContextMenuItemModel { Text = "İncele", Id = "examine" });
+            }
+        }
+
+        public async void OnRouteContextMenuClick(ContextMenuClickEventArgs<ListRoutesDto> args)
+        {
+            switch (args.Item.Id)
+            {
+
+
+                case "examine":
+                    RoutesDataSource = (await RoutesAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    RouteLinesList = RoutesDataSource.SelectRouteLines;
+
+                    foreach (var item in RouteLinesList)
+                    {
+                        item.ProductCode = DataSource.Code;
+                        item.ProductName = DataSource.Name;
+                        item.OperationCode = (await ProductsOperationsAppService.GetAsync(item.ProductsOperationID)).Data.Code;
+                        item.OperationName = (await ProductsOperationsAppService.GetAsync(item.ProductsOperationID)).Data.Name;
+                    }
+
+                    RoutesCrudPopup = true;
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+
+                default:
+                    break;
+            }
+        }
+
+        public void HideRouteCrudPopup()
+        {
+            RoutesCrudPopup = false;
+        }
+
+        public void HideRoutePopup()
+        {
+            RoutesPopup = false;
+        }
+
+        #endregion
+
         #region Fiyat Listeleri Modalları İşlemleri
 
         public void HideSalesPricesPopup()
@@ -640,6 +711,15 @@ namespace TsiErp.ErpUI.Pages.Product
         public void HidePurchasePricesPopup()
         {
             PurchasePriceLinesPopup = false;
+        }
+
+        #endregion
+
+        #region Fason Üretim Takip Fişleri Modalı İşlemleri
+
+        public void HideContractProductionTrackingsPopup()
+        {
+            ContractProductionTrackingsPopup = false;
         }
 
         #endregion
@@ -868,19 +948,24 @@ namespace TsiErp.ErpUI.Pages.Product
 
                 case "routes":
 
-                    //DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
-                    //PurchasePriceLinesList = (await PurchasePricesAppService.GetSelectLineListAsync(DataSource.Id)).Data.ToList();
+                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    RoutesList = (await RoutesAppService.GetListAsync(new ListRoutesParameterDto())).Data.Where(t => t.ProductID == DataSource.Id).ToList();
 
-                    //foreach (var item in PurchasePriceLinesList)
-                    //{
-                    //    item.ProductCode = DataSource.Code;
-                    //    item.ProductName = DataSource.Name;
-                    //    item.CurrentAccountCardName = (await CurrentAccountCardsAppService.GetAsync(item.CurrentAccountCardID.GetValueOrDefault())).Data.Name;
-                    //    item.CurrencyCode = (await CurrenciesAppService.GetAsync(item.CurrencyID.GetValueOrDefault())).Data.Code;
-                    //}
-                    //PurchasePriceLinesPopup = true;
+                    RoutesPopup = true;
 
-                    //await InvokeAsync(StateHasChanged);
+                    await InvokeAsync(StateHasChanged);
+
+
+                    break;
+
+                case "contractproductiontrackings":
+
+                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    ContractProductionTrackingsList = (await ContractProductionTrackingsAppService.GetSelectListAsync(DataSource.Id)).Data.ToList();
+
+                    ContractProductionTrackingsPopup = true;
+
+                    await InvokeAsync(StateHasChanged);
 
 
                     break;
@@ -959,6 +1044,7 @@ namespace TsiErp.ErpUI.Pages.Product
             CreateTechnicalDrawingContextMenuItems();
             CreateProductReferanceNumberContextMenuItems();
             CreateBillsofMaterialsContextMenuItems();
+            CreateRoutesContextMenuItems();
         }
 
         protected override Task BeforeInsertAsync()

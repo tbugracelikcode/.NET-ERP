@@ -17,9 +17,6 @@ namespace TsiErp.ErpUI.Pages.Route
 {
     public partial class RoutesListPage
     {
-        
-
-        private SfGrid<ListRoutesDto> _grid;
         private SfGrid<SelectRouteLinesDto> _LineGrid;
         private SfGrid<ListProductsOperationsDto> _ProductsOperationGrid;
 

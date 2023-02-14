@@ -15,8 +15,6 @@ namespace TsiErp.ErpUI.Pages.UnplannedMaintenance
 {
     public partial class UnplannedMaintenancesListPage
     {
-
-        private SfGrid<ListUnplannedMaintenancesDto> _grid;
         private SfGrid<SelectUnplannedMaintenanceLinesDto> _LineGrid;
 
         [Inject]

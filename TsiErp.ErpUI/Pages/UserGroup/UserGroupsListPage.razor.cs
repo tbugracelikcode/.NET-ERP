@@ -9,7 +9,6 @@ namespace TsiErp.ErpUI.Pages.UserGroup
 {
     public partial class UserGroupsListPage
     {
-
         protected override async void OnInitialized()
         {
             BaseCrudService = UserGroupsService;

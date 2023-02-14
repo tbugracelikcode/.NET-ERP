@@ -16,9 +16,6 @@ namespace TsiErp.ErpUI.Pages.TemplateOperation
 {
     public partial class TemplateOperationsListPage
     {
-       
-
-        private SfGrid<ListTemplateOperationsDto> _grid;
         private SfGrid<SelectTemplateOperationLinesDto> _LineGrid;
 
         [Inject]

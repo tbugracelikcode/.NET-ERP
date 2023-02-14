@@ -18,6 +18,11 @@ namespace TsiErp.Entities.Entities.ContractProductionTracking.Dtos
         /// İş Emri ID
         /// </summary>
         public Guid WorkOrderID { get; set; }
+
+        /// <summary>
+        /// Stok ID
+        /// </summary>
+        public Guid? ProductID { get; set; }
         [Precision(18, 6)]
         /// <summary>
         /// Üretilen Miktar

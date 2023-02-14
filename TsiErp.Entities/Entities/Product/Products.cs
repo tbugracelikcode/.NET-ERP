@@ -32,6 +32,7 @@ using TsiErp.Entities.Entities.ByDateStockMovement;
 using TsiErp.Entities.Entities.GrandTotalStockMovement;
 using TsiErp.Entities.Entities.TechnicalDrawing;
 using TsiErp.Entities.Entities.ProductReferanceNumber;
+using TsiErp.Entities.Entities.ContractProductionTracking;
 
 namespace TsiErp.Entities.Entities.Product
 {
@@ -170,6 +171,7 @@ namespace TsiErp.Entities.Entities.Product
         public ICollection<GrandTotalStockMovements> GrandTotalStockMovements { get; set; }
         public ICollection<TechnicalDrawings> TechnicalDrawings { get; set; }
         public ICollection<ProductReferanceNumbers> ProductReferanceNumbers { get; set; }
+        public ICollection<ContractProductionTrackings> ContractProductionTrackings { get; set; }
 
     }
 }

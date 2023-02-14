@@ -28,8 +28,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseRequest
 {
     public partial class PurchaseRequestsListPage
     {
-
-        private SfGrid<ListPurchaseRequestsDto> _grid;
         private SfGrid<SelectPurchaseRequestLinesDto> _LineGrid;
         private SfGrid<SelectPurchaseRequestLinesDto> _ConvertToOrderGrid;
 

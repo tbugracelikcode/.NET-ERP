@@ -9,6 +9,7 @@ namespace TsiErp.ErpUI.Pages.UnitSet
 {
     public partial class UnitSetsListPage
     {
+
         protected override async void OnInitialized()
         {
             BaseCrudService = UnitSetsService;
@@ -25,6 +26,7 @@ namespace TsiErp.ErpUI.Pages.UnitSet
 
             return Task.CompletedTask;
         }
+
 
     }
 }

@@ -1572,6 +1572,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.ConfigureByConcurrencyConvention();
 
                 b.Property(t => t.WorkOrderID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
+                b.Property(t => t.ProductID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.ProducedQuantity).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.OperationTime).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.OperationStartDate).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
@@ -1585,12 +1586,14 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.ShiftID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
 
                 b.HasIndex(x => x.WorkOrderID);
+                b.HasIndex(x => x.ProductID);
                 b.HasIndex(x => x.StationID);
                 b.HasIndex(x => x.EmployeeID);
                 b.HasIndex(x => x.ShiftID);
                 b.HasIndex(x => x.CurrentAccountID);
 
                 b.HasOne(x => x.WorkOrders).WithMany(x => x.ContractProductionTrackings).HasForeignKey(x => x.WorkOrderID).OnDelete(DeleteBehavior.NoAction);
+                b.HasOne(x => x.Products).WithMany(x => x.ContractProductionTrackings).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.Stations).WithMany(x => x.ContractProductionTrackings).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.Employees).WithMany(x => x.ContractProductionTrackings).HasForeignKey(x => x.EmployeeID).OnDelete(DeleteBehavior.NoAction);
                 b.HasOne(x => x.Shifts).WithMany(x => x.ContractProductionTrackings).HasForeignKey(x => x.ShiftID).OnDelete(DeleteBehavior.NoAction);

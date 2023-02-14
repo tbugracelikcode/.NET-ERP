@@ -13,7 +13,6 @@ namespace TsiErp.ErpUI.Pages.Shift
     public partial class ShiftsListPage
     {
 
-        private SfGrid<ListShiftsDto> _grid;
         private SfGrid<SelectShiftLinesDto> _LineGrid;
 
         [Inject]

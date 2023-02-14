@@ -56,7 +56,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                var entity = await _uow.ContractProductionTrackingsRepository.GetAsync(t => t.Id == id);
+                var entity = await _uow.ContractProductionTrackingsRepository.GetAsync(t => t.Id == id, t => t.Products, t => t.CurrentAccountCards, t => t.Employees, t => t.Shifts, t => t.Stations);
                 var mappedEntity = ObjectMapper.Map<ContractProductionTrackings, SelectContractProductionTrackingsDto>(entity);
                 return new SuccessDataResult<SelectContractProductionTrackingsDto>(mappedEntity);
             }
@@ -67,7 +67,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                var list = await _uow.ContractProductionTrackingsRepository.GetListAsync();
+                var list = await _uow.ContractProductionTrackingsRepository.GetListAsync(null, t => t.Products, t => t.CurrentAccountCards, t => t.Employees, t => t.Shifts, t => t.Stations);
 
                 var mappedEntity = ObjectMapper.Map<List<ContractProductionTrackings>, List<ListContractProductionTrackingsDto>>(list.ToList());
 
@@ -90,6 +90,18 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                 await _uow.ContractProductionTrackingsRepository.UpdateAsync(mappedEntity);
                 await _uow.SaveChanges();
                 return new SuccessDataResult<SelectContractProductionTrackingsDto>(ObjectMapper.Map<ContractProductionTrackings, SelectContractProductionTrackingsDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<IList<SelectContractProductionTrackingsDto>>> GetSelectListAsync(Guid productId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.ContractProductionTrackingsRepository.GetListAsync(t => t.ProductID == productId, t => t.Products);
+
+                var mappedEntity = ObjectMapper.Map<List<ContractProductionTrackings>, List<SelectContractProductionTrackingsDto>>(list.ToList());
+
+                return new SuccessDataResult<IList<SelectContractProductionTrackingsDto>>(mappedEntity);
             }
         }
     }

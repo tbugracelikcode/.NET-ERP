@@ -217,7 +217,7 @@
     <value>Dosyayı Sil</value>
   </data>
   <data name="Uploader_DropFilesHint" xml:space="preserve">
-    <value>Yada Dosyalrı Buraya Bırakın</value>
+    <value>Yada Dosyaları Buraya Bırakın</value>
   </data>
   <data name="Uploader_FileUploadCancel" xml:space="preserve">
     <value>Dosya Yükleme İptal Edildi</value>

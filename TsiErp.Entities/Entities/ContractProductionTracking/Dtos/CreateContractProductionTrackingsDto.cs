@@ -19,6 +19,11 @@ namespace TsiErp.Entities.Entities.ContractProductionTracking.Dtos
         /// Üretilen Miktar
         /// </summary>
         public decimal ProducedQuantity { get; set; }
+
+        /// <summary>
+        /// Stok ID
+        /// </summary>
+        public Guid? ProductID { get; set; }
         [Precision(18, 6)]
         /// <summary>
         /// Operasyon Süresi

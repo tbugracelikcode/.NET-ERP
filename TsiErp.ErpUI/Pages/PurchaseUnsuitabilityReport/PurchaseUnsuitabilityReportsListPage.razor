@@ -47,12 +47,12 @@
                     <Template>
                         <SfCard class="TSIGridCards">
                             <CardContent>
-                                <SfGrid ID="Grid" DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%"
+                                <SfGrid ID="Grid" @ref="_grid" Toolbar="@ToolBarItems" AllowPdfExport=true DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%"
                                 class="GridZebra" ContextMenuItems="@GridContextMenu">
                                     <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                    <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListPurchaseUnsuitabilityReportsDto"></GridEvents>
+                                    <GridEvents OnToolbarClick="ToolbarClickHandler" ContextMenuItemClicked="@OnContextMenuClick" TValue="ListPurchaseUnsuitabilityReportsDto"></GridEvents>
                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
