@@ -44,10 +44,10 @@ else
                             @{
                                 var _list = ListDataSource.OrderBy(t => t.ShiftOrder).ToList();
                             }
-                            <SfGrid ID="Grid" @ref="@_grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@_list" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"  GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu">
+                            <SfGrid ID="Grid" @ref="_grid" Toolbar="@ToolBarItems" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@_list" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"  GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu">
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                <GridEvents ContextMenuItemClicked="@MainContextMenuClick" TValue="ListShiftsDto"></GridEvents>
+                                <GridEvents OnToolbarClick="ToolbarClickHandler" ContextMenuItemClicked="@MainContextMenuClick" TValue="ListShiftsDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>

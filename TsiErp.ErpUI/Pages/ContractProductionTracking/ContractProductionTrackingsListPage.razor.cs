@@ -29,7 +29,6 @@ namespace TsiErp.ErpUI.Pages.ContractProductionTracking
     public partial class ContractProductionTrackingsListPage
     {
 
-        private SfGrid<ListContractProductionTrackingsDto> _grid;
 
         [Inject]
         ModalManager ModalManager { get; set; }

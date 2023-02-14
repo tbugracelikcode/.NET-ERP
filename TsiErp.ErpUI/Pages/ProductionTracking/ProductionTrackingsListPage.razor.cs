@@ -25,12 +25,8 @@ using Microsoft.AspNetCore.Components.Web;
 
 namespace TsiErp.ErpUI.Pages.ProductionTracking
 {
-
-
-
     public partial class ProductionTrackingsListPage
     {
-        private SfGrid<ListProductionTrackingsDto> _grid;
         private SfGrid<SelectProductionTrackingHaltLinesDto> _LineGrid;
 
         [Inject]

@@ -16,8 +16,6 @@ namespace TsiErp.ErpUI.Pages.MaintenanceInstruction
 {
     public partial class MaintenanceInstructionsListPage
     {
-
-        private SfGrid<ListMaintenanceInstructionsDto> _grid;
         private SfGrid<SelectMaintenanceInstructionLinesDto> _LineGrid;
 
         [Inject]

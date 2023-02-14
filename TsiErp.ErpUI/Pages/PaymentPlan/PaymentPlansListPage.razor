@@ -37,9 +37,9 @@ else
                     <SfCard class="TSIGridCards">
                       
                         <CardContent>
-                            <SfGrid ID="Grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true"  GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                            <SfGrid ID="Grid"  @ref="_grid" Toolbar="@ToolBarItems" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true"  GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
                                  <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
-                            <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListPaymentPlansDto"></GridEvents>
+                            <GridEvents OnToolbarClick="ToolbarClickHandler" ContextMenuItemClicked="@OnContextMenuClick" TValue="ListPaymentPlansDto"></GridEvents>
                             <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                             <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                             <GridPageSettings PageSizes="true"></GridPageSettings>

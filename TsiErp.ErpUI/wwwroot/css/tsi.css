@@ -402,6 +402,7 @@ td, th {
     background-color: #fff;
     box-shadow: rgb(0 0 0 / 35%) 0px 3px 10px;
 }
+
 .TSIWorkStationGroupPopUpCard {
     border: 1px solid #d6d5d5;
     background-color: #fff;
@@ -630,6 +631,7 @@ html {
     content: '\e799' !important;
     font-family: e-icons !important;
 }
+
 .e-pager div.e-icons.e-pager-default {
     color: #c10606 !important;
 }
@@ -638,18 +640,11 @@ html {
     content: '\e7e7' !important;
     font-family: e-icons !important;
 }
+
 .e-grid .e-focused:not(.e-menu-item) {
     box-shadow: 0 0 0 1px #d30000 inset !important;
 }
 
-.e-btn, .e-css.e-btn {
-    -webkit-tap-highlight-color: transparent;
-    background-color: #c73434 !important;
-    border-color: #c70e0e !important;
-    color: #fff !important;
-    font-size: 16px !important;
-    transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
-}
 
 .e-upload .e-file-select-wrap .e-file-drop, .e-bigger.e-small .e-upload .e-file-select-wrap .e-file-drop {
     font-family: inherit;
@@ -687,7 +682,7 @@ html {
     background-color: rgb(253 13 13 / 65%) !important;
     border-color: transparent;
     box-shadow: none;
-    color: rgba(255, 255, 255, 0.65);
+    color: rgba(255, 255, 255, 0.65) !important;
 }
 
 .e-btn.e-flat.e-primary:hover, .e-css.e-btn.e-flat.e-primary:hover {
@@ -747,3 +742,24 @@ e-upload .e-upload-files .e-file-remove-btn.e-icons:hover, .e-upload .e-upload-f
 .e-upload .e-upload-files .e-file-remove-btn.e-icons, .e-upload .e-upload-files .e-file-delete-btn.e-icons, .e-upload .e-upload-files .e-file-reload-btn.e-icons, .e-upload .e-upload-files .e-file-abort-btn.e-icons, .e-upload .e-upload-files .e-file-pause-btn.e-icons, .e-upload .e-upload-files .e-file-play-btn.e-icons {
     color: #d75151 !important;
 }
+
+.e-grid .e-toolbar {
+    border-bottom: 0;
+    border-left: 0;
+    border-right: 0;
+    border-top: 1px solid #dee2e6;
+    border-radius: 0;
+    text-align: right !important;
+}
+
+.e-toolbar .e-tbar-btn {
+    background: #f8f9fa;
+    box-shadow: none;
+    color: #c13030 !important;
+    border: 1px #c13030 solid !important;
+    font-weight: 500 !important;
+}
+
+    .e-toolbar .e-tbar-btn.e-btn .e-icons {
+        color: #bf1212 !important;
+    }

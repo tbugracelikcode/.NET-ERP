@@ -9,6 +9,7 @@ namespace TsiErp.ErpUI.Pages.Warehouse
 {
     public partial class WarehousesListPage
     {
+
         protected override async void OnInitialized()
         {
             BaseCrudService = WarehousesService;
@@ -25,6 +26,7 @@ namespace TsiErp.ErpUI.Pages.Warehouse
 
             return Task.CompletedTask;
         }
+
 
     }
 }

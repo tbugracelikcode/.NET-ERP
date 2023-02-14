@@ -36,12 +36,12 @@ else
                     <Template>
                         <SfCard class="TSIGridCards">
                             <CardContent>
-                                <SfGrid ID="Grid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"  GridLines="GridLine.Both"
+                                <SfGrid ID="Grid" @ref="_grid" Toolbar="@ToolBarItems" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"  GridLines="GridLine.Both"
                                 AllowSorting="true" Height="100%" Width="100%"  ContextMenuItems="@GridContextMenu" class="GridZebra">
                                                                   <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListContractUnsuitabilityItemsDto"></GridEvents>
+                                <GridEvents OnToolbarClick="ToolbarClickHandler" ContextMenuItemClicked="@OnContextMenuClick" TValue="ListContractUnsuitabilityItemsDto"></GridEvents>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>

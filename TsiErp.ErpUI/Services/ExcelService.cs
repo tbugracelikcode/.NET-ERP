@@ -11,7 +11,8 @@
      
         public string GetPath(string filename)
         {
-            string path = Path.Combine(_hostEnvironment.WebRootPath, filename);
+            string filePath = _hostEnvironment.WebRootPath + @"\" + "ExportedGridFiles";
+            string path = Path.Combine(filePath, filename);
             return path;
         }
         

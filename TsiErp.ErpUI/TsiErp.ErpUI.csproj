@@ -90,4 +90,8 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\ExportedGridFiles\" />
+  </ItemGroup>
+
 </Project>

@@ -18,7 +18,6 @@ namespace TsiErp.ErpUI.Pages.PurchasePrice
     public partial class PurchasePricesListPage
     {
 
-        private SfGrid<ListPurchasePricesDto> _grid;
         private SfGrid<SelectPurchasePriceLinesDto> _LineGrid;
 
         [Inject]

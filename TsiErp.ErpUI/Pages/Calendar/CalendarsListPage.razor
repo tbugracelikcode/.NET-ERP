@@ -46,12 +46,12 @@
                     <Template>
                         <SfCard class="TSIGridCards">
                             <CardContent>
-                                <SfGrid ID="Grid" DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%"
+                                <SfGrid ID="Grid" @ref="_grid" Toolbar="@ToolBarItems" AllowPdfExport=true DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%"
                                 class="GridZebra" ContextMenuItems="@MainGridContextMenu">
                                     <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false"></GridEditSettings>
-                                    <GridEvents ContextMenuItemClicked="@MainContextMenuClick" TValue="ListCalendarsDto"></GridEvents>
+                                    <GridEvents OnToolbarClick="ToolbarClickHandler" ContextMenuItemClicked="@MainContextMenuClick" TValue="ListCalendarsDto"></GridEvents>
                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>

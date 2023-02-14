@@ -28,8 +28,6 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
 {
     public partial class SalesPropositionsListPage
     {
-
-        private SfGrid<ListSalesPropositionsDto> _grid;
         private SfGrid<SelectSalesPropositionLinesDto> _LineGrid;
         private SfGrid<SelectSalesPropositionLinesDto> _ConvertToOrderGrid;
 
