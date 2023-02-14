@@ -12,6 +12,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.Entities.TemplateOperation.BusinessRules;
 using TsiErp.Business.Entities.TemplateOperation.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.TemplateOperation;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.TemplateOperationLine;
 using TsiErp.Entities.Entities.TemplateOperation;
@@ -24,119 +25,120 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
     [ServiceRegistration(typeof(ITemplateOperationsAppService), DependencyInjectionType.Scoped)]
     public class TemplateOperationsAppService : ApplicationService, ITemplateOperationsAppService
     {
-        private readonly ITemplateOperationsRepository _repository;
-        private readonly ITemplateOperationLinesRepository _lineRepository;
-
         TemplateOperationManager _manager { get; set; } = new TemplateOperationManager();
-
-        public TemplateOperationsAppService(ITemplateOperationsRepository repository, ITemplateOperationLinesRepository lineRepository)
-        {
-            _repository = repository;
-            _lineRepository = lineRepository;
-        }
 
         [ValidationAspect(typeof(CreateTemplateOperationsValidatorDto), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectTemplateOperationsDto>> CreateAsync(CreateTemplateOperationsDto input)
         {
-            await _manager.CodeControl(_repository, input.Code);
-
-            var entity = ObjectMapper.Map<CreateTemplateOperationsDto, TemplateOperations>(input);
-
-            var addedEntity = await _repository.InsertAsync(entity);
-
-            foreach (var item in input.SelectTemplateOperationLines)
+            using (UnitOfWork _uow = new UnitOfWork())
             {
-                var lineEntity = ObjectMapper.Map<SelectTemplateOperationLinesDto, TemplateOperationLines>(item);
-                lineEntity.Id = GuidGenerator.CreateGuid();
-                lineEntity.TemplateOperationID = addedEntity.Id;
-                await _lineRepository.InsertAsync(lineEntity);
-            }
+                await _manager.CodeControl(_uow.TemplateOperationsRepository, input.Code);
 
-            await _repository.SaveChanges();
-            await _lineRepository.SaveChanges();
-            return new SuccessDataResult<SelectTemplateOperationsDto>(ObjectMapper.Map<TemplateOperations, SelectTemplateOperationsDto>(addedEntity));
+                var entity = ObjectMapper.Map<CreateTemplateOperationsDto, TemplateOperations>(input);
+
+                var addedEntity = await _uow.TemplateOperationsRepository.InsertAsync(entity);
+
+                foreach (var item in input.SelectTemplateOperationLines)
+                {
+                    var lineEntity = ObjectMapper.Map<SelectTemplateOperationLinesDto, TemplateOperationLines>(item);
+                    lineEntity.Id = GuidGenerator.CreateGuid();
+                    lineEntity.TemplateOperationID = addedEntity.Id;
+                    await _uow.TemplateOperationLinesRepository.InsertAsync(lineEntity);
+                }
+
+                await _uow.SaveChanges();
+                return new SuccessDataResult<SelectTemplateOperationsDto>(ObjectMapper.Map<TemplateOperations, SelectTemplateOperationsDto>(addedEntity));
+            }
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var lines = (await _lineRepository.GetAsync(t => t.Id == id));
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var lines = (await _uow.TemplateOperationLinesRepository.GetAsync(t => t.Id == id));
 
-            if (lines != null)
-            {
-                await _manager.DeleteControl(_repository, lines.TemplateOperationID, lines.Id, true);
-                await _lineRepository.DeleteAsync(id);
-                await _repository.SaveChanges();
-                await _lineRepository.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
-            }
-            else
-            {
-                await _manager.DeleteControl(_repository, id, Guid.Empty, false);
-                await _repository.DeleteAsync(id);
-                await _repository.SaveChanges();
-                await _lineRepository.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                if (lines != null)
+                {
+                    await _manager.DeleteControl(_uow.TemplateOperationsRepository, lines.TemplateOperationID, lines.Id, true);
+                    await _uow.TemplateOperationLinesRepository.DeleteAsync(id);
+                    await _uow.SaveChanges();
+                    return new SuccessResult("Silme işlemi başarılı.");
+                }
+                else
+                {
+                    await _manager.DeleteControl(_uow.TemplateOperationsRepository, id, Guid.Empty, false);
+                    await _uow.TemplateOperationsRepository.DeleteAsync(id);
+                    await _uow.SaveChanges();
+                    return new SuccessResult("Silme işlemi başarılı.");
+                }
             }
         }
 
         public async Task<IDataResult<SelectTemplateOperationsDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id,
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.TemplateOperationsRepository.GetAsync(t => t.Id == id,
                 t => t.TemplateOperationLines);
 
-            var mappedEntity = ObjectMapper.Map<TemplateOperations, SelectTemplateOperationsDto>(entity);
+                var mappedEntity = ObjectMapper.Map<TemplateOperations, SelectTemplateOperationsDto>(entity);
 
-            mappedEntity.SelectTemplateOperationLines = ObjectMapper.Map<List<TemplateOperationLines>, List<SelectTemplateOperationLinesDto>>(entity.TemplateOperationLines.ToList());
+                mappedEntity.SelectTemplateOperationLines = ObjectMapper.Map<List<TemplateOperationLines>, List<SelectTemplateOperationLinesDto>>(entity.TemplateOperationLines.ToList());
 
-            return new SuccessDataResult<SelectTemplateOperationsDto>(mappedEntity);
+                return new SuccessDataResult<SelectTemplateOperationsDto>(mappedEntity);
+            }
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListTemplateOperationsDto>>> GetListAsync(ListTemplateOperationsParameterDto input)
         {
-            var list = await _repository.GetListAsync(null,
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.TemplateOperationsRepository.GetListAsync(null,
                 t => t.TemplateOperationLines);
 
-            var mappedEntity = ObjectMapper.Map<List<TemplateOperations>, List<ListTemplateOperationsDto>>(list.ToList());
+                var mappedEntity = ObjectMapper.Map<List<TemplateOperations>, List<ListTemplateOperationsDto>>(list.ToList());
 
-            return new SuccessDataResult<IList<ListTemplateOperationsDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListTemplateOperationsDto>>(mappedEntity);
+            }
         }
 
         [ValidationAspect(typeof(UpdateTemplateOperationsValidatorDto), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectTemplateOperationsDto>> UpdateAsync(UpdateTemplateOperationsDto input)
         {
-            var entity = await _repository.GetAsync(x => x.Id == input.Id);
-
-            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
-
-            var mappedEntity = ObjectMapper.Map<UpdateTemplateOperationsDto, TemplateOperations>(input);
-
-            await _repository.UpdateAsync(mappedEntity);
-
-            foreach (var item in input.SelectTemplateOperationLines)
+            using (UnitOfWork _uow = new UnitOfWork())
             {
-                var lineEntity = ObjectMapper.Map<SelectTemplateOperationLinesDto, TemplateOperationLines>(item);
-                lineEntity.TemplateOperationID = mappedEntity.Id;
+                var entity = await _uow.TemplateOperationsRepository.GetAsync(x => x.Id == input.Id);
 
-                if (lineEntity.Id == Guid.Empty)
+                await _manager.UpdateControl(_uow.TemplateOperationsRepository, input.Code, input.Id, entity);
+
+                var mappedEntity = ObjectMapper.Map<UpdateTemplateOperationsDto, TemplateOperations>(input);
+
+                await _uow.TemplateOperationsRepository.UpdateAsync(mappedEntity);
+
+                foreach (var item in input.SelectTemplateOperationLines)
                 {
-                    lineEntity.Id = GuidGenerator.CreateGuid();
-                    await _lineRepository.InsertAsync(lineEntity);
-                    await _lineRepository.SaveChanges();
+                    var lineEntity = ObjectMapper.Map<SelectTemplateOperationLinesDto, TemplateOperationLines>(item);
+                    lineEntity.TemplateOperationID = mappedEntity.Id;
+
+                    if (lineEntity.Id == Guid.Empty)
+                    {
+                        lineEntity.Id = GuidGenerator.CreateGuid();
+                        await _uow.TemplateOperationLinesRepository.InsertAsync(lineEntity);
+                    }
+                    else
+                    {
+                        await _uow.TemplateOperationLinesRepository.UpdateAsync(lineEntity);
+                    }
                 }
-                else
-                {
-                    await _lineRepository.UpdateAsync(lineEntity);
-                    await _lineRepository.SaveChanges();
-                }
+
+                await _uow.SaveChanges();
+
+                return new SuccessDataResult<SelectTemplateOperationsDto>(ObjectMapper.Map<TemplateOperations, SelectTemplateOperationsDto>(mappedEntity));
             }
-
-            await _repository.SaveChanges();
-
-            return new SuccessDataResult<SelectTemplateOperationsDto>(ObjectMapper.Map<TemplateOperations, SelectTemplateOperationsDto>(mappedEntity));
         }
     }
 }

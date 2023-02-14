@@ -19,49 +19,51 @@ using TsiErp.Entities.Entities.WorkOrder.Dtos;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.WorkOrder;
 using TsiErp.Business.Entities.WorkOrder.BusinessRules;
+using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 
 namespace TsiErp.Business.Entities.WorkOrder.Services
 {
     [ServiceRegistration(typeof(IWorkOrdersAppService), DependencyInjectionType.Scoped)]
     public class WorkOrdersAppService : ApplicationService, IWorkOrdersAppService
     {
-        private readonly IWorkOrdersRepository _repository;
-
         WorkOrderManager _manager { get; set; } = new WorkOrderManager();
-
-        public WorkOrdersAppService(IWorkOrdersRepository repository)
-        {
-            _repository = repository;
-        }
-
 
         [ValidationAspect(typeof(CreateWorkOrdersValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectWorkOrdersDto>> CreateAsync(CreateWorkOrdersDto input)
         {
-            await _manager.CodeControl(_repository, input.Code);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _manager.CodeControl(_uow.WorkOrdersRepository, input.Code);
 
-            var entity = ObjectMapper.Map<CreateWorkOrdersDto, WorkOrders>(input);
+                var entity = ObjectMapper.Map<CreateWorkOrdersDto, WorkOrders>(input);
 
-            var addedEntity = await _repository.InsertAsync(entity);
-            await _repository.SaveChanges();
+                var addedEntity = await _uow.WorkOrdersRepository.InsertAsync(entity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectWorkOrdersDto>(ObjectMapper.Map<WorkOrders, SelectWorkOrdersDto>(addedEntity));
+
+                return new SuccessDataResult<SelectWorkOrdersDto>(ObjectMapper.Map<WorkOrders, SelectWorkOrdersDto>(addedEntity));
+            }
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            await _repository.DeleteAsync(id);
-            await _repository.SaveChanges();
-            return new SuccessResult("Silme işlemi başarılı.");
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _uow.WorkOrdersRepository.DeleteAsync(id);
+                await _uow.SaveChanges();
+                return new SuccessResult("Silme işlemi başarılı.");
+            }
         }
 
 
         public async Task<IDataResult<SelectWorkOrdersDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id, 
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.WorkOrdersRepository.GetAsync(t => t.Id == id,
                 t => t.ProductionOrders,
                 t => t.SalesPropositions,
                 t => t.Routes,
@@ -70,15 +72,18 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 t => t.StationGroups,
                 t => t.Products,
                 t => t.CurrentAccountCards);
-            var mappedEntity = ObjectMapper.Map<WorkOrders, SelectWorkOrdersDto>(entity);
-            return new SuccessDataResult<SelectWorkOrdersDto>(mappedEntity);
+                var mappedEntity = ObjectMapper.Map<WorkOrders, SelectWorkOrdersDto>(entity);
+                return new SuccessDataResult<SelectWorkOrdersDto>(mappedEntity);
+            }
         }
 
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListWorkOrdersDto>>> GetListAsync(ListWorkOrdersParameterDto input)
         {
-            var list = await _repository.GetListAsync(null,
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.WorkOrdersRepository.GetListAsync(null,
                 t => t.ProductionOrders,
                 t => t.SalesPropositions,
                 t => t.Routes,
@@ -88,9 +93,10 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 t => t.Products,
                 t => t.CurrentAccountCards);
 
-            var mappedEntity = ObjectMapper.Map<List<WorkOrders>, List<ListWorkOrdersDto>>(list.ToList());
+                var mappedEntity = ObjectMapper.Map<List<WorkOrders>, List<ListWorkOrdersDto>>(list.ToList());
 
-            return new SuccessDataResult<IList<ListWorkOrdersDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListWorkOrdersDto>>(mappedEntity);
+            }
         }
 
 
@@ -98,16 +104,19 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectWorkOrdersDto>> UpdateAsync(UpdateWorkOrdersDto input)
         {
-            var entity = await _repository.GetAsync(x => x.Id == input.Id);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.WorkOrdersRepository.GetAsync(x => x.Id == input.Id);
 
-            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.WorkOrdersRepository, input.Code, input.Id, entity);
 
-            var mappedEntity = ObjectMapper.Map<UpdateWorkOrdersDto, WorkOrders>(input);
+                var mappedEntity = ObjectMapper.Map<UpdateWorkOrdersDto, WorkOrders>(input);
 
-            await _repository.UpdateAsync(mappedEntity);
-            await _repository.SaveChanges();
+                await _uow.WorkOrdersRepository.UpdateAsync(mappedEntity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectWorkOrdersDto>(ObjectMapper.Map<WorkOrders, SelectWorkOrdersDto>(mappedEntity));
+                return new SuccessDataResult<SelectWorkOrdersDto>(ObjectMapper.Map<WorkOrders, SelectWorkOrdersDto>(mappedEntity));
+            }
         }
     }
 }

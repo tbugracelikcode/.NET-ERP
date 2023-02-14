@@ -19,60 +19,65 @@ using TsiErp.Entities.Entities.GrandTotalStockMovement.Dtos;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.GrandTotalStockMovement;
 using TsiErp.Business.Entities.GrandTotalStockMovement.BusinessRules;
+using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 
 namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
 {
     [ServiceRegistration(typeof(IGrandTotalStockMovementsAppService), DependencyInjectionType.Scoped)]
     public class GrandTotalStockMovementsAppService : ApplicationService, IGrandTotalStockMovementsAppService
     {
-        private readonly IGrandTotalStockMovementsRepository _repository;
-
         GrandTotalStockMovementManager _manager { get; set; } = new GrandTotalStockMovementManager();
-
-        public GrandTotalStockMovementsAppService(IGrandTotalStockMovementsRepository repository)
-        {
-            _repository = repository;
-        }
-
 
         [ValidationAspect(typeof(CreateGrandTotalStockMovementsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectGrandTotalStockMovementsDto>> CreateAsync(CreateGrandTotalStockMovementsDto input)
         {
-            var entity = ObjectMapper.Map<CreateGrandTotalStockMovementsDto, GrandTotalStockMovements>(input);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = ObjectMapper.Map<CreateGrandTotalStockMovementsDto, GrandTotalStockMovements>(input);
 
-            var addedEntity = await _repository.InsertAsync(entity);
-            await _repository.SaveChanges();
+                var addedEntity = await _uow.GrandTotalStockMovementsRepository.InsertAsync(entity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(ObjectMapper.Map<GrandTotalStockMovements, SelectGrandTotalStockMovementsDto>(addedEntity));
+                return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(ObjectMapper.Map<GrandTotalStockMovements, SelectGrandTotalStockMovementsDto>(addedEntity));
+            }
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            await _repository.DeleteAsync(id);
-            await _repository.SaveChanges();
-            return new SuccessResult("Silme işlemi başarılı.");
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _uow.GrandTotalStockMovementsRepository.DeleteAsync(id);
+                await _uow.SaveChanges();
+                return new SuccessResult("Silme işlemi başarılı.");
+            }
         }
 
 
         public async Task<IDataResult<SelectGrandTotalStockMovementsDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id, t => t.Branches, t => t.Warehouses, t => t.Products);
-            var mappedEntity = ObjectMapper.Map<GrandTotalStockMovements, SelectGrandTotalStockMovementsDto>(entity);
-            return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(mappedEntity);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.GrandTotalStockMovementsRepository.GetAsync(t => t.Id == id, t => t.Branches, t => t.Warehouses, t => t.Products);
+                var mappedEntity = ObjectMapper.Map<GrandTotalStockMovements, SelectGrandTotalStockMovementsDto>(entity);
+                return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(mappedEntity);
+            }
         }
 
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListGrandTotalStockMovementsDto>>> GetListAsync(ListGrandTotalStockMovementsParameterDto input)
         {
-            var list = await _repository.GetListAsync(null, t => t.Branches, t => t.Warehouses, t => t.Products);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.GrandTotalStockMovementsRepository.GetListAsync(null, t => t.Branches, t => t.Warehouses, t => t.Products);
 
-            var mappedEntity = ObjectMapper.Map<List<GrandTotalStockMovements>, List<ListGrandTotalStockMovementsDto>>(list.ToList());
+                var mappedEntity = ObjectMapper.Map<List<GrandTotalStockMovements>, List<ListGrandTotalStockMovementsDto>>(list.ToList());
 
-            return new SuccessDataResult<IList<ListGrandTotalStockMovementsDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListGrandTotalStockMovementsDto>>(mappedEntity);
+            }
         }
 
 
@@ -80,14 +85,17 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectGrandTotalStockMovementsDto>> UpdateAsync(UpdateGrandTotalStockMovementsDto input)
         {
-            var entity = await _repository.GetAsync(x => x.Id == input.Id);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.GrandTotalStockMovementsRepository.GetAsync(x => x.Id == input.Id);
 
-            var mappedEntity = ObjectMapper.Map<UpdateGrandTotalStockMovementsDto, GrandTotalStockMovements>(input);
+                var mappedEntity = ObjectMapper.Map<UpdateGrandTotalStockMovementsDto, GrandTotalStockMovements>(input);
 
-            await _repository.UpdateAsync(mappedEntity);
-            await _repository.SaveChanges();
+                await _uow.GrandTotalStockMovementsRepository.UpdateAsync(mappedEntity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(ObjectMapper.Map<GrandTotalStockMovements, SelectGrandTotalStockMovementsDto>(mappedEntity));
+                return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(ObjectMapper.Map<GrandTotalStockMovements, SelectGrandTotalStockMovementsDto>(mappedEntity));
+            }
         }
     }
 }

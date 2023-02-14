@@ -19,60 +19,66 @@ using TsiErp.Entities.Entities.StationGroup.Dtos;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.StationGroup;
 using TsiErp.Business.Entities.StationGroup.BusinessRules;
+using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 
 namespace TsiErp.Business.Entities.StationGroup.Services
 {
     [ServiceRegistration(typeof(IStationGroupsAppService), DependencyInjectionType.Scoped)]
     public class StationGroupsAppService : ApplicationService, IStationGroupsAppService
     {
-
-        private readonly IStationGroupsRepository _repository;
-
         StationGroupManager _manager { get; set; } = new StationGroupManager();
 
-        public StationGroupsAppService(IStationGroupsRepository repository)
-        {
-            _repository = repository;
-        }
 
         [ValidationAspect(typeof(CreateStationGroupsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStationGroupsDto>> CreateAsync(CreateStationGroupsDto input)
         {
-            await _manager.CodeControl(_repository, input.Code);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _manager.CodeControl(_uow.StationGroupsRepository, input.Code);
 
-            var entity = ObjectMapper.Map<CreateStationGroupsDto, StationGroups>(input);
+                var entity = ObjectMapper.Map<CreateStationGroupsDto, StationGroups>(input);
 
-            var addedEntity = await _repository.InsertAsync(entity);
-            await _repository.SaveChanges();
+                var addedEntity = await _uow.StationGroupsRepository.InsertAsync(entity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectStationGroupsDto>(ObjectMapper.Map<StationGroups, SelectStationGroupsDto>(addedEntity));
+                return new SuccessDataResult<SelectStationGroupsDto>(ObjectMapper.Map<StationGroups, SelectStationGroupsDto>(addedEntity));
+            }
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            await _manager.DeleteControl(_repository, id);
-            await _repository.DeleteAsync(id);
-            await _repository.SaveChanges();
-            return new SuccessResult("Silme işlemi başarılı.");
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                await _manager.DeleteControl(_uow.StationGroupsRepository, id);
+                await _uow.StationGroupsRepository.DeleteAsync(id);
+                await _uow.SaveChanges();
+                return new SuccessResult("Silme işlemi başarılı.");
+            }
         }
 
         public async Task<IDataResult<SelectStationGroupsDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id, t => t.Stations);
-            var mappedEntity = ObjectMapper.Map<StationGroups, SelectStationGroupsDto>(entity);
-            return new SuccessDataResult<SelectStationGroupsDto>(mappedEntity);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.StationGroupsRepository.GetAsync(t => t.Id == id, t => t.Stations);
+                var mappedEntity = ObjectMapper.Map<StationGroups, SelectStationGroupsDto>(entity);
+                return new SuccessDataResult<SelectStationGroupsDto>(mappedEntity);
+            }
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListStationGroupsDto>>> GetListAsync(ListStationGroupsParameterDto input)
         {
-            var list = await _repository.GetListAsync(t=>t.IsActive==input.IsActive, t => t.Stations);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.StationGroupsRepository.GetListAsync(t => t.IsActive == input.IsActive, t => t.Stations);
 
-            var mappedEntity = ObjectMapper.Map<List<StationGroups>, List<ListStationGroupsDto>>(list.ToList());
+                var mappedEntity = ObjectMapper.Map<List<StationGroups>, List<ListStationGroupsDto>>(list.ToList());
 
-            return new SuccessDataResult<IList<ListStationGroupsDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListStationGroupsDto>>(mappedEntity);
+            }
         }
 
 
@@ -80,16 +86,19 @@ namespace TsiErp.Business.Entities.StationGroup.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectStationGroupsDto>> UpdateAsync(UpdateStationGroupsDto input)
         {
-            var entity = await _repository.GetAsync(x => x.Id == input.Id);
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.StationGroupsRepository.GetAsync(x => x.Id == input.Id);
 
-            await _manager.UpdateControl(_repository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.StationGroupsRepository, input.Code, input.Id, entity);
 
-            var mappedEntity = ObjectMapper.Map<UpdateStationGroupsDto, StationGroups>(input);
+                var mappedEntity = ObjectMapper.Map<UpdateStationGroupsDto, StationGroups>(input);
 
-            await _repository.UpdateAsync(mappedEntity);
-            await _repository.SaveChanges();
+                await _uow.StationGroupsRepository.UpdateAsync(mappedEntity);
+                await _uow.SaveChanges();
 
-            return new SuccessDataResult<SelectStationGroupsDto>(ObjectMapper.Map<StationGroups, SelectStationGroupsDto>(mappedEntity));
+                return new SuccessDataResult<SelectStationGroupsDto>(ObjectMapper.Map<StationGroups, SelectStationGroupsDto>(mappedEntity));
+            }
         }
     }
 }

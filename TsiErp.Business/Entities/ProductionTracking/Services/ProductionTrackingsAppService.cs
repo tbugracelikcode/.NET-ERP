@@ -18,121 +18,125 @@ using TsiErp.Entities.Entities.ProductionTrackingHaltLine.Dtos;
 using TsiErp.Entities.Entities.ProductionTrackingHaltLine;
 using Tsi.Core.Utilities.Guids;
 using Tsi.Application.Contract.Services.EntityFrameworkCore;
+using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 
 namespace TsiErp.Business.Entities.ProductionTracking.Services
 {
     [ServiceRegistration(typeof(IProductionTrackingsAppService), DependencyInjectionType.Scoped)]
     public class ProductionTrackingsAppService : ApplicationService, IProductionTrackingsAppService
     {
-        private readonly IProductionTrackingsRepository _repository;
-        private readonly IProductionTrackingHaltLinesRepository _lineRepository;
-
         ProductionTrackingManager _manager { get; set; } = new ProductionTrackingManager();
 
-        public ProductionTrackingsAppService(IProductionTrackingsRepository repository, IProductionTrackingHaltLinesRepository lineRepository)
-        {
-            _repository = repository;
-            _lineRepository = lineRepository;
-        }
 
         [ValidationAspect(typeof(CreateProductionTrackingsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionTrackingsDto>> CreateAsync(CreateProductionTrackingsDto input)
         {
-            var entity = ObjectMapper.Map<CreateProductionTrackingsDto, ProductionTrackings>(input);
-
-            var addedEntity = await _repository.InsertAsync(entity);
-
-            foreach (var item in input.SelectProductionTrackingHaltLinesDto)
+            using (UnitOfWork _uow = new UnitOfWork())
             {
-                var lineEntity = ObjectMapper.Map<SelectProductionTrackingHaltLinesDto, ProductionTrackingHaltLines>(item);
-                lineEntity.Id = GuidGenerator.CreateGuid();
-                lineEntity.ProductionTrackingID = addedEntity.Id;
-                await _lineRepository.InsertAsync(lineEntity);
+                var entity = ObjectMapper.Map<CreateProductionTrackingsDto, ProductionTrackings>(input);
+
+                var addedEntity = await _uow.ProductionTrackingsRepository.InsertAsync(entity);
+
+                foreach (var item in input.SelectProductionTrackingHaltLinesDto)
+                {
+                    var lineEntity = ObjectMapper.Map<SelectProductionTrackingHaltLinesDto, ProductionTrackingHaltLines>(item);
+                    lineEntity.Id = GuidGenerator.CreateGuid();
+                    lineEntity.ProductionTrackingID = addedEntity.Id;
+                    await _uow.ProductionTrackingHaltLinesRepository.InsertAsync(lineEntity);
+                }
+
+                await _uow.SaveChanges();
+
+                return new SuccessDataResult<SelectProductionTrackingsDto>(ObjectMapper.Map<ProductionTrackings, SelectProductionTrackingsDto>(addedEntity));
             }
-
-            await _repository.SaveChanges();
-            await _lineRepository.SaveChanges();
-
-            return new SuccessDataResult<SelectProductionTrackingsDto>(ObjectMapper.Map<ProductionTrackings, SelectProductionTrackingsDto>(addedEntity));
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            var lines = (await _lineRepository.GetAsync(t => t.Id == id));
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var lines = (await _uow.ProductionTrackingHaltLinesRepository.GetAsync(t => t.Id == id));
 
-            if (lines != null)
-            {
-                await _manager.DeleteControl(_repository, lines.Id);
-                await _lineRepository.DeleteAsync(id);
-                await _repository.SaveChanges();
-                await _lineRepository.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
-            }
-            else
-            {
-                await _manager.DeleteControl(_repository, id);
-                await _repository.DeleteAsync(id);
-                await _repository.SaveChanges();
-                await _lineRepository.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                if (lines != null)
+                {
+                    await _manager.DeleteControl(_uow.ProductionTrackingsRepository, lines.Id);
+                    await _uow.ProductionTrackingHaltLinesRepository.DeleteAsync(id);
+                    await _uow.SaveChanges();
+                    return new SuccessResult("Silme işlemi başarılı.");
+                }
+                else
+                {
+                    await _manager.DeleteControl(_uow.ProductionTrackingsRepository, id);
+                    await _uow.ProductionTrackingsRepository.DeleteAsync(id);
+                    await _uow.SaveChanges();
+                    return new SuccessResult("Silme işlemi başarılı.");
+                }
             }
         }
 
         public async Task<IDataResult<SelectProductionTrackingsDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id,
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.ProductionTrackingsRepository.GetAsync(t => t.Id == id,
                 t => t.ProductionTrackingHaltLines);
 
-            var mappedEntity = ObjectMapper.Map<ProductionTrackings, SelectProductionTrackingsDto>(entity);
+                var mappedEntity = ObjectMapper.Map<ProductionTrackings, SelectProductionTrackingsDto>(entity);
 
-            mappedEntity.SelectProductionTrackingHaltLines = ObjectMapper.Map<List<ProductionTrackingHaltLines>, List<SelectProductionTrackingHaltLinesDto>>(entity.ProductionTrackingHaltLines.ToList());
+                mappedEntity.SelectProductionTrackingHaltLines = ObjectMapper.Map<List<ProductionTrackingHaltLines>, List<SelectProductionTrackingHaltLinesDto>>(entity.ProductionTrackingHaltLines.ToList());
 
-            return new SuccessDataResult<SelectProductionTrackingsDto>(mappedEntity);
+                return new SuccessDataResult<SelectProductionTrackingsDto>(mappedEntity);
+            }
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductionTrackingsDto>>> GetListAsync(ListProductionTrackingsParameterDto input)
         {
-            var list = await _repository.GetListAsync(null,
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var list = await _uow.ProductionTrackingsRepository.GetListAsync(null,
                 t => t.ProductionTrackingHaltLines);
 
-            var mappedEntity = ObjectMapper.Map<List<ProductionTrackings>, List<ListProductionTrackingsDto>>(list.ToList());
+                var mappedEntity = ObjectMapper.Map<List<ProductionTrackings>, List<ListProductionTrackingsDto>>(list.ToList());
 
-            return new SuccessDataResult<IList<ListProductionTrackingsDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListProductionTrackingsDto>>(mappedEntity);
+            }
         }
 
         [ValidationAspect(typeof(UpdateProductionTrackingsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionTrackingsDto>> UpdateAsync(UpdateProductionTrackingsDto input)
         {
-            var entity = await _repository.GetAsync(x => x.Id == input.Id);
-
-            await _manager.UpdateControl(_repository, input.Id, entity);
-
-            var mappedEntity = ObjectMapper.Map<UpdateProductionTrackingsDto, ProductionTrackings>(input);
-
-            await _repository.UpdateAsync(mappedEntity);
-
-            foreach (var item in input.SelectProductionTrackingHaltLinesDto)
+            using (UnitOfWork _uow = new UnitOfWork())
             {
-                var lineEntity = ObjectMapper.Map<SelectProductionTrackingHaltLinesDto, ProductionTrackingHaltLines>(item);
-                lineEntity.ProductionTrackingID = mappedEntity.Id;
-                if (lineEntity.Id == Guid.Empty)
-                {
-                    lineEntity.Id = GuidGenerator.CreateGuid();
-                    await _lineRepository.InsertAsync(lineEntity);
-                }
-                else
-                {
-                    await _lineRepository.UpdateAsync(lineEntity);
-                }
-            }
+                var entity = await _uow.ProductionTrackingsRepository.GetAsync(x => x.Id == input.Id);
 
-            await _repository.SaveChanges();
-            await _lineRepository.SaveChanges();
-            return new SuccessDataResult<SelectProductionTrackingsDto>(ObjectMapper.Map<ProductionTrackings, SelectProductionTrackingsDto>(mappedEntity));
+                await _manager.UpdateControl(_uow.ProductionTrackingsRepository, input.Id, entity);
+
+                var mappedEntity = ObjectMapper.Map<UpdateProductionTrackingsDto, ProductionTrackings>(input);
+
+                await _uow.ProductionTrackingsRepository.UpdateAsync(mappedEntity);
+
+                foreach (var item in input.SelectProductionTrackingHaltLinesDto)
+                {
+                    var lineEntity = ObjectMapper.Map<SelectProductionTrackingHaltLinesDto, ProductionTrackingHaltLines>(item);
+                    lineEntity.ProductionTrackingID = mappedEntity.Id;
+                    if (lineEntity.Id == Guid.Empty)
+                    {
+                        lineEntity.Id = GuidGenerator.CreateGuid();
+                        await _uow.ProductionTrackingHaltLinesRepository.InsertAsync(lineEntity);
+                    }
+                    else
+                    {
+                        await _uow.ProductionTrackingHaltLinesRepository.UpdateAsync(lineEntity);
+                    }
+                }
+
+                await _uow.SaveChanges();
+                return new SuccessDataResult<SelectProductionTrackingsDto>(ObjectMapper.Map<ProductionTrackings, SelectProductionTrackingsDto>(mappedEntity));
+            }
         }
 
     }
