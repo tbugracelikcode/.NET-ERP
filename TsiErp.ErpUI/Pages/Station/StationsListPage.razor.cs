@@ -22,6 +22,9 @@ namespace TsiErp.ErpUI.Pages.Station
 {
     public partial class StationsListPage
     {
+
+        #region İstasyon Grubu ButtonEdit
+
         SfTextBox StationGroupButtonEdit;
         bool SelectStationGroupPopupVisible = false;
         List<ListStationGroupsDto> StationGroupList = new List<ListStationGroupsDto>();
@@ -60,6 +63,9 @@ namespace TsiErp.ErpUI.Pages.Station
             }
         }
 
+        #endregion
+
+
         SfComboBox<string, ListProductsDto> ProductsComboBox;
         List<ListProductsDto> ProductsList = new List<ListProductsDto>();
 
@@ -72,7 +78,6 @@ namespace TsiErp.ErpUI.Pages.Station
 
 
         private SfGrid<SelectStationInventoriesDto> _InventoryGrid;
-        private SfGrid<ListStationsDto> _grid;
         public List<ContextMenuItemModel> InventoryGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 

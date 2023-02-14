@@ -868,11 +868,15 @@ namespace TsiErp.Business.MapperProfile
 
             CreateMap<ContractProductionTrackings, SelectContractProductionTrackingsDto>()
                 .ForMember(x => x.ShiftCode, y => y.MapFrom(z => z.Shifts.Code))
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name))
                 .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
                 .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
                 .ForMember(x => x.EmployeeName, y => y.MapFrom(z => z.Employees.Name));
             CreateMap<ContractProductionTrackings, ListContractProductionTrackingsDto>()
                 .ForMember(x => x.ShiftCode, y => y.MapFrom(z => z.Shifts.Code))
+                .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name))
                 .ForMember(x => x.CurrentAccountCardCode, y => y.MapFrom(z => z.CurrentAccountCards.Code))
                 .ForMember(x => x.StationCode, y => y.MapFrom(z => z.Stations.Code))
                 .ForMember(x => x.EmployeeName, y => y.MapFrom(z => z.Employees.Name));

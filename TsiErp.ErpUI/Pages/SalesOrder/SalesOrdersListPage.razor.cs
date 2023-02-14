@@ -22,8 +22,6 @@ namespace TsiErp.ErpUI.Pages.SalesOrder
 {
     public partial class SalesOrdersListPage
     {
-
-        private SfGrid<ListSalesOrderDto> _grid;
         private SfGrid<SelectSalesOrderLinesDto> _LineGrid;
         private SfGrid<SelectSalesOrderLinesDto> _ProductionOrderGrid;
         private SfGrid<ProductsTreeDto> _BoMLineGrid;

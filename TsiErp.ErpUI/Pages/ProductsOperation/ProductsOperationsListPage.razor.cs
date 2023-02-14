@@ -16,7 +16,6 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
 {
     public partial class ProductsOperationsListPage
     {
-        private SfGrid<ListProductsOperationsDto> _grid;
         private SfGrid<SelectProductsOperationLinesDto> _LineGrid;
 
         [Inject]

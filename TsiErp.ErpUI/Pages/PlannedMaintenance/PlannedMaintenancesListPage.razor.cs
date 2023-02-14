@@ -17,8 +17,6 @@ namespace TsiErp.ErpUI.Pages.PlannedMaintenance
     {
         List<ListProductsDto> ProductsList = new List<ListProductsDto>();
         List<ListUnitSetsDto> UnitSetsList = new List<ListUnitSetsDto>();
-
-        private SfGrid<ListPlannedMaintenancesDto> _grid;
         private SfGrid<SelectPlannedMaintenanceLinesDto> _LineGrid;
 
         [Inject]

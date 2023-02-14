@@ -44,6 +44,7 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).Conf
 builder.Services.AddSyncfusionBlazor();
 builder.Services.AddDevExpressBlazor();
 builder.Services.AddScoped<IFileUploadService, FileUploadService>();
+builder.Services.AddScoped<IExcelService, ExcelService>();
 builder.Services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(SyncfusionLocalizer));
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {

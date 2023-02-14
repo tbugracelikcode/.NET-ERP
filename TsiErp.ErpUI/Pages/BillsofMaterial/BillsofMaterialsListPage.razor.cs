@@ -21,7 +21,6 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
 
         #endregion
 
-        private SfGrid<ListBillsofMaterialsDto> _grid;
         private SfGrid<SelectBillsofMaterialLinesDto> _LineGrid;
 
         [Inject]

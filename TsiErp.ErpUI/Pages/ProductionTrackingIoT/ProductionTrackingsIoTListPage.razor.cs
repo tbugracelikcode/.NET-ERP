@@ -47,7 +47,6 @@ namespace TsiErp.ErpUI.Pages.ProductionTrackingIoT
 
         #endregion
 
-        private SfGrid<ListProductionTrackingsDto> _grid;
         private SfGrid<SelectProductionTrackingHaltLinesDto> _LineGrid;
 
         [Inject]

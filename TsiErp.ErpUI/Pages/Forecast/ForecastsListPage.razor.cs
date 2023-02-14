@@ -16,8 +16,6 @@ namespace TsiErp.ErpUI.Pages.Forecast
 {
     public partial class ForecastsListPage
     {
-
-        private SfGrid<ListForecastsDto> _grid;
         private SfGrid<SelectForecastLinesDto> _LineGrid;
 
         SelectForecastLinesDto LineDataSource;

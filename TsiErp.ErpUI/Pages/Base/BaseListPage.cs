@@ -33,6 +33,8 @@ namespace TsiErp.ErpUI.Pages.Base
         public bool SelectFirstDataRow { get; set; }
 
         public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
+        public string[] ToolBarItems = new string[] { "ExcelExport" };
         public TGetListOutputDto SelectedItem { get; set; }
 
         [Inject]
@@ -42,6 +44,8 @@ namespace TsiErp.ErpUI.Pages.Base
         ModalManager ModalManager { get; set; }
         public TGetOutputDto DataSource { get; set; }
         public IList<TGetListOutputDto> ListDataSource { get; set; }
+
+        public SfGrid<TGetListOutputDto> _grid;
 
         public List<ContextMenuItemModel> GridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
@@ -161,6 +165,18 @@ namespace TsiErp.ErpUI.Pages.Base
             })).ToList();
 
             IsLoaded = true;
+        }
+
+        protected virtual async Task ToolbarClickHandler(ClickEventArgs args)
+        {
+            if (args.Item.Id == "Grid_excelexport")
+            {
+                await this._grid.ExportToExcelAsync();
+            }
+            else if (args.Item.Id == "Grid_pdfexport")
+            {
+                await this._grid.ExportToPdfAsync();
+            }
         }
 
         protected virtual async Task OnSubmit()

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.CurrentAccountCard;
 using TsiErp.Entities.Entities.Employee;
+using TsiErp.Entities.Entities.Product;
 using TsiErp.Entities.Entities.ProductionTrackingHaltLine;
 using TsiErp.Entities.Entities.Shift;
 using TsiErp.Entities.Entities.Station;
@@ -84,9 +85,15 @@ namespace TsiErp.Entities.Entities.ContractProductionTracking
         /// Cari Hesap ID
         /// </summary>
         public Guid CurrentAccountID { get; set; }
+        /// <summary>
+        /// Stok ID
+        /// </summary>
+        public Guid? ProductID { get; set; }
 
 
         public WorkOrders WorkOrders { get; set; }
+
+        public Products Products { get; set; }
 
         public Stations Stations { get; set; }
 
