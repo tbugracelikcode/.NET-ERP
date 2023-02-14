@@ -97,5 +97,10 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
                 return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(ObjectMapper.Map<GrandTotalStockMovements, SelectGrandTotalStockMovementsDto>(mappedEntity));
             }
         }
+
+        public Task<IDataResult<SelectGrandTotalStockMovementsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

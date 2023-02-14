@@ -20,6 +20,8 @@ using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.EquipmentRecord;
 using TsiErp.Business.Entities.EquipmentRecord.BusinessRules;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.EquipmentRecord.Services
 {
@@ -101,6 +103,22 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectEquipmentRecordsDto>(ObjectMapper.Map<EquipmentRecords, SelectEquipmentRecordsDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<SelectEquipmentRecordsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.EquipmentRecordsRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.EquipmentRecordsRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<EquipmentRecords, SelectEquipmentRecordsDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectEquipmentRecordsDto>(mappedEntity);
             }
         }
     }

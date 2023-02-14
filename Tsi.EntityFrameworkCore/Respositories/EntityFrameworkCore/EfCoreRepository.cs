@@ -148,6 +148,24 @@ namespace Tsi.EntityFrameworkCore.Respositories.EntityFrameworkCore
             return _dbContext.Entry(entity).Entity;
         }
 
+        public async Task<TEntity> LockRow(Guid id, bool lockRow, Guid userId)
+        {
+            var entity = (IFullEntityObject)await GetAsync(t => t.Id == id);
+
+            if(entity!=null)
+            {
+                entity.DataOpenStatus = lockRow;
+                entity.DataOpenStatusUserId = userId;
+
+                _dbContext.ChangeTracker.Clear(); _dbContext.Attach(entity);
+
+                _dbContext.Entry(entity).State = EntityState.Modified;
+                return (TEntity)entity;
+            }
+
+            return default;
+        }
+
         public async Task UpdateManyAsync(IEnumerable<TEntity> entities)
         {
             foreach (var entity in entities)

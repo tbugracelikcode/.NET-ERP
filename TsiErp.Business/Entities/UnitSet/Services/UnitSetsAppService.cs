@@ -19,6 +19,8 @@ using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.UnitSet;
 using TsiErp.Business.Entities.UnitSet.BusinessRules;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.UnitSet.Services
 {
@@ -98,6 +100,22 @@ namespace TsiErp.Business.Entities.UnitSet.Services
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectUnitSetsDto>(ObjectMapper.Map<UnitSets, SelectUnitSetsDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<SelectUnitSetsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.UnitSetsRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.UnitSetsRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<UnitSets, SelectUnitSetsDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectUnitSetsDto>(mappedEntity);
             }
         }
     }

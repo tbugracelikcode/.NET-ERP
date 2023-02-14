@@ -19,6 +19,8 @@ using TsiErp.Entities.Entities.TemplateOperation;
 using TsiErp.Entities.Entities.TemplateOperation.Dtos;
 using TsiErp.Entities.Entities.TemplateOperationLine;
 using TsiErp.Entities.Entities.TemplateOperationLine.Dtos;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.TemplateOperation.Services
 {
@@ -138,6 +140,22 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectTemplateOperationsDto>(ObjectMapper.Map<TemplateOperations, SelectTemplateOperationsDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<SelectTemplateOperationsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.TemplateOperationsRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.TemplateOperationsRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<TemplateOperations, SelectTemplateOperationsDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectTemplateOperationsDto>(mappedEntity);
             }
         }
     }

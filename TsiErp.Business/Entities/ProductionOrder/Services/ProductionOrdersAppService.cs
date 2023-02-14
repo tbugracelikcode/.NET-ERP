@@ -15,6 +15,8 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.ProductionOrder.Services
 {
@@ -108,6 +110,22 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 await _uow.ProductionOrdersRepository.UpdateAsync(mappedEntity);
                 await _uow.SaveChanges();
                 return new SuccessDataResult<SelectProductionOrdersDto>(ObjectMapper.Map<ProductionOrders, SelectProductionOrdersDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<SelectProductionOrdersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.ProductionOrdersRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.ProductionOrdersRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<ProductionOrders, SelectProductionOrdersDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectProductionOrdersDto>(mappedEntity);
             }
         }
     }

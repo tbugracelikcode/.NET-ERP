@@ -15,6 +15,8 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.HaltReason;
 using TsiErp.Entities.Entities.HaltReason;
 using TsiErp.Entities.Entities.HaltReason.Dtos;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.HaltReason.Services
 {
@@ -89,6 +91,22 @@ namespace TsiErp.Business.Entities.HaltReason.Services
                 await _uow.HaltReasonsRepository.UpdateAsync(mappedEntity);
                 await _uow.SaveChanges();
                 return new SuccessDataResult<SelectHaltReasonsDto>(ObjectMapper.Map<HaltReasons, SelectHaltReasonsDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<SelectHaltReasonsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.HaltReasonsRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.HaltReasonsRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<HaltReasons, SelectHaltReasonsDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectHaltReasonsDto>(mappedEntity);
             }
         }
     }

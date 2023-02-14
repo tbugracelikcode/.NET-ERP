@@ -20,6 +20,8 @@ using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.ProductReferanceNumber;
 using TsiErp.Business.Entities.ProductReferanceNumber.BusinessRules;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
 {
@@ -122,6 +124,22 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectProductReferanceNumbersDto>(ObjectMapper.Map<ProductReferanceNumbers, SelectProductReferanceNumbersDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<SelectProductReferanceNumbersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.ProductReferanceNumbersRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.ProductReferanceNumbersRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<ProductReferanceNumbers, SelectProductReferanceNumbersDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectProductReferanceNumbersDto>(mappedEntity);
             }
         }
     }

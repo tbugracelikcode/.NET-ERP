@@ -118,5 +118,21 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 return new SuccessDataResult<SelectWorkOrdersDto>(ObjectMapper.Map<WorkOrders, SelectWorkOrdersDto>(mappedEntity));
             }
         }
+
+        public async Task<IDataResult<SelectWorkOrdersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.WorkOrdersRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.WorkOrdersRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<WorkOrders, SelectWorkOrdersDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectWorkOrdersDto>(mappedEntity);
+            }
+        }
     }
 }

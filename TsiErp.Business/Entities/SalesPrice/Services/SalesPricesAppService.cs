@@ -154,5 +154,21 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                 return new SuccessDataResult<IList<SelectSalesPriceLinesDto>>(mappedEntity);
             }
         }
+
+        public async Task<IDataResult<SelectSalesPricesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.SalesPricesRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.SalesPricesRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<SalesPrices, SelectSalesPricesDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectSalesPricesDto>(mappedEntity);
+            }
+        }
     }
 }

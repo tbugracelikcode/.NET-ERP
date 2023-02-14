@@ -22,6 +22,8 @@ using TsiErp.Entities.Entities.Shift;
 using Tsi.Core.Utilities.Guids;
 using Tsi.Application.Contract.Services.EntityFrameworkCore;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.Shift.Services
 {
@@ -142,6 +144,22 @@ namespace TsiErp.Business.Entities.Shift.Services
 
                 await _uow.SaveChanges();
                 return new SuccessDataResult<SelectShiftsDto>(ObjectMapper.Map<Shifts, SelectShiftsDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<SelectShiftsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.ShiftsRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.ShiftsRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<Shifts, SelectShiftsDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectShiftsDto>(mappedEntity);
             }
         }
     }

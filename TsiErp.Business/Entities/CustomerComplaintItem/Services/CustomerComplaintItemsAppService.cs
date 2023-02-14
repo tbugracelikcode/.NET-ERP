@@ -12,6 +12,8 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.CustomerComplaintItem;
 using TsiErp.Entities.Entities.CustomerComplaintItem;
 using TsiErp.Entities.Entities.CustomerComplaintItem.Dtos;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.CustomerComplaintItem.Services
 {
@@ -91,6 +93,22 @@ namespace TsiErp.Business.Entities.CustomerComplaintItem.Services
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectCustomerComplaintItemsDto>(ObjectMapper.Map<CustomerComplaintItems, SelectCustomerComplaintItemsDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<SelectCustomerComplaintItemsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.CustomerComplaintItemsRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.CustomerComplaintItemsRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<CustomerComplaintItems, SelectCustomerComplaintItemsDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectCustomerComplaintItemsDto>(mappedEntity);
             }
         }
     }

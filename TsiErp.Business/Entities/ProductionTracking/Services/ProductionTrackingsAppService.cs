@@ -19,6 +19,8 @@ using TsiErp.Entities.Entities.ProductionTrackingHaltLine;
 using Tsi.Core.Utilities.Guids;
 using Tsi.Application.Contract.Services.EntityFrameworkCore;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.ProductionTracking.Services
 {
@@ -139,5 +141,20 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             }
         }
 
+        public async Task<IDataResult<SelectProductionTrackingsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.ProductionTrackingsRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.ProductionTrackingsRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<ProductionTrackings, SelectProductionTrackingsDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectProductionTrackingsDto>(mappedEntity);
+            }
+        }
     }
 }

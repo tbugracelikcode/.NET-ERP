@@ -12,6 +12,8 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.PaymentPlan;
 using TsiErp.Entities.Entities.PaymentPlan;
 using TsiErp.Entities.Entities.PaymentPlan.Dtos;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.PaymentPlan.Services
 {
@@ -93,6 +95,22 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectPaymentPlansDto>(ObjectMapper.Map<PaymentPlans, SelectPaymentPlansDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<SelectPaymentPlansDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.PaymentPlansRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.PaymentPlansRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<PaymentPlans, SelectPaymentPlansDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectPaymentPlansDto>(mappedEntity);
             }
         }
     }

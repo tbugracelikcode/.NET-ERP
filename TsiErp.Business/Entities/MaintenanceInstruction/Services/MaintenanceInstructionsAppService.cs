@@ -14,6 +14,8 @@ using TsiErp.Entities.Entities.MaintenanceInstruction;
 using TsiErp.Entities.Entities.MaintenanceInstruction.Dtos;
 using TsiErp.Entities.Entities.MaintenanceInstructionLine;
 using TsiErp.Entities.Entities.MaintenanceInstructionLine.Dtos;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
 {
@@ -153,6 +155,22 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
                 var mappedEntity = ObjectMapper.Map<MaintenanceInstructions, SelectMaintenanceInstructionsDto>(entity);
 
                 mappedEntity.SelectMaintenanceInstructionLines = ObjectMapper.Map<List<MaintenanceInstructionLines>, List<SelectMaintenanceInstructionLinesDto>>(entity.MaintenanceInstructionLines.ToList());
+
+                return new SuccessDataResult<SelectMaintenanceInstructionsDto>(mappedEntity);
+            }
+        }
+
+        public async Task<IDataResult<SelectMaintenanceInstructionsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.MaintenanceInstructionsRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.MaintenanceInstructionsRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<MaintenanceInstructions, SelectMaintenanceInstructionsDto>(updatedEntity);
 
                 return new SuccessDataResult<SelectMaintenanceInstructionsDto>(mappedEntity);
             }

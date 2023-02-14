@@ -15,6 +15,8 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.Entities.Currency.BusinessRules;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.Currency.Services
 {
@@ -95,6 +97,22 @@ namespace TsiErp.Business.Entities.Currency.Services
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectCurrenciesDto>(ObjectMapper.Map<Currencies, SelectCurrenciesDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<SelectCurrenciesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.CurrenciesRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.CurrenciesRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<Currencies, SelectCurrenciesDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectCurrenciesDto>(mappedEntity);
             }
         }
     }

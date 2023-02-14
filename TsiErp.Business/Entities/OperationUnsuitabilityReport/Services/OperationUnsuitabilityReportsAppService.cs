@@ -19,6 +19,8 @@ using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
 using TsiErp.Business.Entities.OperationUnsuitabilityReport.BusinessRules;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
 {
@@ -110,6 +112,22 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectOperationUnsuitabilityReportsDto>(ObjectMapper.Map<OperationUnsuitabilityReports, SelectOperationUnsuitabilityReportsDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<SelectOperationUnsuitabilityReportsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.OperationUnsuitabilityReportsRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.OperationUnsuitabilityReportsRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<OperationUnsuitabilityReports, SelectOperationUnsuitabilityReportsDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectOperationUnsuitabilityReportsDto>(mappedEntity);
             }
         }
     }

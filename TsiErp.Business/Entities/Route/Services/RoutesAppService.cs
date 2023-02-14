@@ -24,6 +24,8 @@ using TsiErp.Entities.Entities.ProductsOperation.Dtos;
 using TsiErp.Entities.Entities.ProductsOperationLine;
 using TsiErp.Entities.Entities.ProductsOperationLine.Dtos;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.Route.Services
 {
@@ -171,6 +173,22 @@ namespace TsiErp.Business.Entities.Route.Services
                 var mappedEntity = ObjectMapper.Map<Routes, SelectRoutesDto>(entity);
 
                 mappedEntity.SelectRouteLines = ObjectMapper.Map<List<RouteLines>, List<SelectRouteLinesDto>>(entity.RouteLines.ToList());
+
+                return new SuccessDataResult<SelectRoutesDto>(mappedEntity);
+            }
+        }
+
+        public async Task<IDataResult<SelectRoutesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.RoutesRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.RoutesRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<Routes, SelectRoutesDto>(updatedEntity);
 
                 return new SuccessDataResult<SelectRoutesDto>(mappedEntity);
             }

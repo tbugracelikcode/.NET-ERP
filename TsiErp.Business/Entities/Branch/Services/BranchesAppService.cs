@@ -13,6 +13,8 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Branch.Dtos;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.Branch.Services
 {
@@ -96,6 +98,22 @@ namespace TsiErp.Business.Entities.Branch.Services
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectBranchesDto>(ObjectMapper.Map<Branches, SelectBranchesDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<SelectBranchesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.BranchRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.BranchRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<Branches, SelectBranchesDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectBranchesDto>(mappedEntity);
             }
         }
     }
