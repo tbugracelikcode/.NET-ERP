@@ -37,12 +37,12 @@ else
             <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
                 <Template>
                     <SfCard class="TSIGridCards">
-                     
+
                         <CardContent>
-                            <SfGrid ID="Grid" @ref="_grid" Toolbar="@ToolBarItems" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true"  DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"  AllowExcelExport="true" ShowColumnChooser="true"  GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
-                                
-                                <GridEvents  OnToolbarClick="ToolbarClickHandler" ContextMenuItemClicked="@OnContextMenuClick" TValue="ListBranchesDto"></GridEvents>
-                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                            <SfGrid ID="Grid" @ref="_grid" Toolbar="@ToolBarItems" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+
+                                <GridEvents OnToolbarClick="ToolbarClickHandler" ContextMenuItemClicked="@OnContextMenuClick" TValue="ListBranchesDto"></GridEvents>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
@@ -73,7 +73,9 @@ else
          Height="44%"
          MinWidth="760px"
          MinHeight="480px"
-         HeaderCssClass="HeaderTitleCss">
+         HeaderCssClass="HeaderTitleCss"
+         Showing="CrudModalShowing"
+         Closing="CrudModalClosing">
 
         <BodyTemplate>
             <DxGridLayout CssClass="TSIGridLayout">
@@ -119,7 +121,7 @@ else
                             <SfSwitch @bind-Checked="@DataSource.IsActive"></SfSwitch>
                         </Template>
                     </DxGridLayoutItem>
-                 
+
 
                     <DxGridLayoutItem Row="4" Column="1" ColumnSpan="4">
                         <Template>
@@ -134,7 +136,7 @@ else
 
         </BodyTemplate>
         <FooterContentTemplate>
-             <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
         </FooterContentTemplate>
     </DxPopup>

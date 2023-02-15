@@ -25,5 +25,10 @@ namespace TsiErp.Entities.Entities.Branch.Dtos
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
+
+        /// <summary>
+        /// Data Concurrency Stamp
+        /// </summary>
+        public bool? DataOpenStatus { get; set; }
     }
 }

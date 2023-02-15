@@ -28,6 +28,5 @@ namespace TsiErp.ErpUI.Pages.Branch
 
             return Task.CompletedTask;
         }
-
     }
 }
