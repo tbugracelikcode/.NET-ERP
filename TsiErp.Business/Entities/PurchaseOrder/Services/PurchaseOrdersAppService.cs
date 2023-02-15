@@ -14,6 +14,8 @@ using TsiErp.Entities.Entities.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseOrderLine;
 using TsiErp.Entities.Entities.PurchaseOrderLine.Dtos;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.PurchaseOrder.Services
 {
@@ -183,6 +185,22 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectPurchaseOrdersDto>(ObjectMapper.Map<PurchaseOrders, SelectPurchaseOrdersDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<SelectPurchaseOrdersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.PurchaseOrdersRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.PurchaseOrdersRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<PurchaseOrders, SelectPurchaseOrdersDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectPurchaseOrdersDto>(mappedEntity);
             }
         }
     }

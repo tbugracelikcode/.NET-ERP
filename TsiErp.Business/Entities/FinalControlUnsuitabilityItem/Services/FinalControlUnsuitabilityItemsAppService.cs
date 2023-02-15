@@ -12,6 +12,8 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.FinalControlUnsuitabilityItem;
 using TsiErp.Entities.Entities.FinalControlUnsuitabilityItem;
 using TsiErp.Entities.Entities.FinalControlUnsuitabilityItem.Dtos;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.FinalControlUnsuitabilityItem.Services
 {
@@ -91,6 +93,22 @@ namespace TsiErp.Business.Entities.FinalControlUnsuitabilityItem.Services
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectFinalControlUnsuitabilityItemsDto>(ObjectMapper.Map<FinalControlUnsuitabilityItems, SelectFinalControlUnsuitabilityItemsDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<SelectFinalControlUnsuitabilityItemsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.FinalControlUnsuitabilityItemsRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.FinalControlUnsuitabilityItemsRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<FinalControlUnsuitabilityItems, SelectFinalControlUnsuitabilityItemsDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectFinalControlUnsuitabilityItemsDto>(mappedEntity);
             }
         }
     }

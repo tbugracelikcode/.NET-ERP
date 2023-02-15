@@ -12,6 +12,8 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.OperationUnsuitabilityItem;
 using TsiErp.Entities.Entities.OperationUnsuitabilityItem;
 using TsiErp.Entities.Entities.OperationUnsuitabilityItem.Dtos;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.OperationUnsuitabilityItem.Services
 {
@@ -92,6 +94,22 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityItem.Services
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectOperationUnsuitabilityItemsDto>(ObjectMapper.Map<OperationUnsuitabilityItems, SelectOperationUnsuitabilityItemsDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<SelectOperationUnsuitabilityItemsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.OperationUnsuitabilityItemsRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.OperationUnsuitabilityItemsRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<OperationUnsuitabilityItems, SelectOperationUnsuitabilityItemsDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectOperationUnsuitabilityItemsDto>(mappedEntity);
             }
         }
     }

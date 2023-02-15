@@ -348,5 +348,10 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
             return new SuccessDataResult<IList<ListCalendarLinesDto>>(mappedEntity);
         }
+
+        public Task<IDataResult<SelectCalendarsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

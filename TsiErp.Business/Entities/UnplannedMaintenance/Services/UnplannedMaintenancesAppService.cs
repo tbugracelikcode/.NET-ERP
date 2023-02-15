@@ -14,6 +14,8 @@ using TsiErp.Entities.Entities.UnplannedMaintenance.Dtos;
 using TsiErp.Entities.Entities.UnplannedMaintenanceLine;
 using TsiErp.Entities.Entities.UnplannedMaintenanceLine.Dtos;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
 {
@@ -138,6 +140,22 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectUnplannedMaintenancesDto>(ObjectMapper.Map<UnplannedMaintenances, SelectUnplannedMaintenancesDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<SelectUnplannedMaintenancesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.UnplannedMaintenancesRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.UnplannedMaintenancesRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<UnplannedMaintenances, SelectUnplannedMaintenancesDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectUnplannedMaintenancesDto>(mappedEntity);
             }
         }
     }

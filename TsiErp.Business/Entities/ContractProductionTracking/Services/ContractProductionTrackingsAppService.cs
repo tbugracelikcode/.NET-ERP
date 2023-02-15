@@ -16,6 +16,8 @@ using TsiErp.Entities.Entities.ContractProductionTracking.Dtos;
 using TsiErp.Entities.Entities.ContractProductionTracking;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.ContractProductionTracking.Services
 {
@@ -102,6 +104,22 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                 var mappedEntity = ObjectMapper.Map<List<ContractProductionTrackings>, List<SelectContractProductionTrackingsDto>>(list.ToList());
 
                 return new SuccessDataResult<IList<SelectContractProductionTrackingsDto>>(mappedEntity);
+            }
+        }
+
+        public async Task<IDataResult<SelectContractProductionTrackingsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.ContractProductionTrackingsRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.ContractProductionTrackingsRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<ContractProductionTrackings, SelectContractProductionTrackingsDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectContractProductionTrackingsDto>(mappedEntity);
             }
         }
     }

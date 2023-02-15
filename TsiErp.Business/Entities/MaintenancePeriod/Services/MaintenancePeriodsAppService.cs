@@ -10,6 +10,8 @@ using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.MaintenancePeriod;
 using TsiErp.Business.Entities.MaintenancePeriod.BusinessRules;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.MaintenancePeriod.Services
 {
@@ -91,6 +93,22 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectMaintenancePeriodsDto>(ObjectMapper.Map<MaintenancePeriods, SelectMaintenancePeriodsDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<SelectMaintenancePeriodsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.MaintenancePeriodsRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.MaintenancePeriodsRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<MaintenancePeriods, SelectMaintenancePeriodsDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectMaintenancePeriodsDto>(mappedEntity);
             }
         }
     }

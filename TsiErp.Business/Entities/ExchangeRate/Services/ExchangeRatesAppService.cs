@@ -11,6 +11,8 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.ExchangeRate;
 using TsiErp.Entities.Entities.ExchangeRate;
 using TsiErp.Entities.Entities.ExchangeRate.Dtos;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.ExchangeRate.Services
 {
@@ -85,6 +87,22 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectExchangeRatesDto>(ObjectMapper.Map<ExchangeRates, SelectExchangeRatesDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<SelectExchangeRatesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.ExchangeRatesRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.ExchangeRatesRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<ExchangeRates, SelectExchangeRatesDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectExchangeRatesDto>(mappedEntity);
             }
         }
     }

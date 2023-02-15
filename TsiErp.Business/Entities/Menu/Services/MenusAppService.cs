@@ -7,6 +7,8 @@ using TsiErp.Entities.Entities.Menu.Dtos;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.Menu;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.Menu.Services
 {
@@ -78,6 +80,22 @@ namespace TsiErp.Business.Entities.Menu.Services
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectMenusDto>(ObjectMapper.Map<Menus, SelectMenusDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<SelectMenusDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.MenusRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.MenusRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<Menus, SelectMenusDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectMenusDto>(mappedEntity);
             }
         }
     }

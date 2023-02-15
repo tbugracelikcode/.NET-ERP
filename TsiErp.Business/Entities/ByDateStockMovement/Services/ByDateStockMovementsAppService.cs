@@ -98,5 +98,10 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
                 return new SuccessDataResult<SelectByDateStockMovementsDto>(ObjectMapper.Map<ByDateStockMovements, SelectByDateStockMovementsDto>(mappedEntity));
             }
         }
+
+        public Task<IDataResult<SelectByDateStockMovementsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

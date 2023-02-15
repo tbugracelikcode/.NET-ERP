@@ -20,6 +20,8 @@ using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.TechnicalDrawing;
 using TsiErp.Business.Entities.TechnicalDrawing.BusinessRules;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.TechnicalDrawing.Services
 {
@@ -123,6 +125,23 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectTechnicalDrawingsDto>(ObjectMapper.Map<TechnicalDrawings, SelectTechnicalDrawingsDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<SelectTechnicalDrawingsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.TechnicalDrawingsRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.TechnicalDrawingsRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<TechnicalDrawings, SelectTechnicalDrawingsDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectTechnicalDrawingsDto>(mappedEntity);
             }
         }
     }

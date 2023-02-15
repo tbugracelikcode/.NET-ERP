@@ -13,6 +13,8 @@ using TsiErp.Entities.Entities.PurchasePrice;
 using TsiErp.Entities.Entities.PurchasePrice.Dtos;
 using TsiErp.Entities.Entities.PurchasePriceLine;
 using TsiErp.Entities.Entities.PurchasePriceLine.Dtos;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.PurchasePrice.Services
 {
@@ -153,6 +155,22 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                 var mappedEntity = ObjectMapper.Map<List<PurchasePriceLines>, List<SelectPurchasePriceLinesDto>>(list.ToList());
 
                 return new SuccessDataResult<IList<SelectPurchasePriceLinesDto>>(mappedEntity);
+            }
+        }
+
+        public async Task<IDataResult<SelectPurchasePricesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.PurchasePricesRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.PurchasePricesRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<PurchasePrices, SelectPurchasePricesDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectPurchasePricesDto>(mappedEntity);
             }
         }
     }

@@ -15,6 +15,8 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.Entities.CurrentAccountCard.BusinessRules;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.CurrentAccountCard.Services
 {
@@ -95,6 +97,22 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectCurrentAccountCardsDto>(ObjectMapper.Map<CurrentAccountCards, SelectCurrentAccountCardsDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<SelectCurrentAccountCardsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.CurrentAccountCardsRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.CurrentAccountCardsRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<CurrentAccountCards, SelectCurrentAccountCardsDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectCurrentAccountCardsDto>(mappedEntity);
             }
         }
     }

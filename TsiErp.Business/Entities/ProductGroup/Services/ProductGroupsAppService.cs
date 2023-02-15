@@ -15,6 +15,8 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.Entities.ProductGroup.BusinessRules;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.ProductGroup.Services
 {
@@ -97,6 +99,22 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectProductGroupsDto>(ObjectMapper.Map<ProductGroups, SelectProductGroupsDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<SelectProductGroupsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.ProductGroupsRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.ProductGroupsRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<ProductGroups, SelectProductGroupsDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectProductGroupsDto>(mappedEntity);
             }
         }
     }

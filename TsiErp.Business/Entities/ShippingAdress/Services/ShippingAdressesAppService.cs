@@ -15,6 +15,8 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.Entities.ShippingAdress.BusinessRules;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.ShippingAdress.Services
 {
@@ -95,6 +97,22 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectShippingAdressesDto>(ObjectMapper.Map<ShippingAdresses, SelectShippingAdressesDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<SelectShippingAdressesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.ShippingAdressesRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.ShippingAdressesRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<ShippingAdresses, SelectShippingAdressesDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectShippingAdressesDto>(mappedEntity);
             }
         }
     }

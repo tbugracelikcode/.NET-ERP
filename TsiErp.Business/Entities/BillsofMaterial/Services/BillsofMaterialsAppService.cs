@@ -159,5 +159,21 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 return new SuccessDataResult<SelectBillsofMaterialsDto>(mappedEntity);
             }
         }
+
+        public async Task<IDataResult<SelectBillsofMaterialsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.BillsofMaterialsRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.BillsofMaterialsRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<BillsofMaterials, SelectBillsofMaterialsDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectBillsofMaterialsDto>(mappedEntity);
+            }
+        }
     }
 }

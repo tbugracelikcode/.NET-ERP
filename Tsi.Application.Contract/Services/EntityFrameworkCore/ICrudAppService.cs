@@ -8,7 +8,8 @@ namespace Tsi.Application.Contract.Services.EntityFrameworkCore
         ICreateAppService<TGetOutputDto, TCreateInput>,
         IUpdateAppService<TGetOutputDto, TUpdateInput>,
         IDeleteAppService,
-        IReadOnlyAppService<TGetOutputDto,TGetListOutputDto,TGetListInput>
+        IReadOnlyAppService<TGetOutputDto,TGetListOutputDto,TGetListInput>,
+        IDataConcurrencyStampUpdate<TGetOutputDto>
     {
     }
 }

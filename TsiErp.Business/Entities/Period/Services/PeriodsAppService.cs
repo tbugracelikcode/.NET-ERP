@@ -15,6 +15,8 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Period;
 using TsiErp.Entities.Entities.Period;
 using TsiErp.Entities.Entities.Period.Dtos;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.Period.Services
 {
@@ -90,6 +92,22 @@ namespace TsiErp.Business.Entities.Period.Services
                 await _uow.PeriodsRepository.UpdateAsync(mappedEntity);
                 await _uow.SaveChanges();
                 return new SuccessDataResult<SelectPeriodsDto>(ObjectMapper.Map<Periods, SelectPeriodsDto>(mappedEntity));
+            }
+        }
+
+        public async Task<IDataResult<SelectPeriodsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            using (UnitOfWork _uow = new UnitOfWork())
+            {
+                var entity = await _uow.PeriodsRepository.GetAsync(x => x.Id == id);
+
+                var updatedEntity = await _uow.PeriodsRepository.LockRow(entity.Id, lockRow, userId);
+
+                await _uow.SaveChanges();
+
+                var mappedEntity = ObjectMapper.Map<Periods, SelectPeriodsDto>(updatedEntity);
+
+                return new SuccessDataResult<SelectPeriodsDto>(mappedEntity);
             }
         }
     }
