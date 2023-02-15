@@ -228,10 +228,26 @@ namespace TsiErp.ErpUI.Pages.Base
             InvokeAsync(StateHasChanged);
         }
 
-        public virtual void ShowEditPage()
+        public async virtual void ShowEditPage()
         {
-            EditPageVisible = true;
-            InvokeAsync(StateHasChanged);
+            var entity = (await BaseCrudService.GetAsync(DataSource.Id)).Data;
+
+            if (entity != null)
+            {
+                bool? dataOpenStatus = (bool?)entity.GetType().GetProperty("DataOpenStatus").GetValue(entity);
+
+                if (dataOpenStatus == true && dataOpenStatus != null)
+                {
+                    EditPageVisible = false;
+                    await ModalManager.MessagePopupAsync("Bilgi", "Seçtiğiniz kayıt ..... tarafından kullanılmaktadır.");
+                    await InvokeAsync(StateHasChanged);
+                }
+                else
+                {
+                    EditPageVisible = true;
+                    await InvokeAsync(StateHasChanged);
+                }
+            }
         }
 
         public async virtual void OnContextMenuClick(ContextMenuClickEventArgs<TGetListOutputDto> args)
@@ -245,7 +261,7 @@ namespace TsiErp.ErpUI.Pages.Base
                 case "changed":
                     SelectFirstDataRow = false;
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
-                    EditPageVisible = true;
+                    ShowEditPage();
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -291,20 +307,7 @@ namespace TsiErp.ErpUI.Pages.Base
         {
             if (DataSource.Id != Guid.Empty)
             {
-                var entity = (await BaseCrudService.GetAsync(DataSource.Id)).Data;
-
-                if (entity != null)
-                {
-                    bool? dataOpenStatus = (bool?)entity.GetType().GetProperty("DataOpenStatus").GetValue(entity);
-
-                    if(dataOpenStatus==true && dataOpenStatus!=null)
-                    {
-                        await ModalManager.MessagePopupAsync("Bilgi", "Seçtiğiniz kayıt ..... tarafından kullanılmaktadır.");
-                        return;
-                    }
-
-                    await BaseCrudService.UpdateConcurrencyFieldsAsync(DataSource.Id, true, Guid.NewGuid());
-                }
+                await BaseCrudService.UpdateConcurrencyFieldsAsync(DataSource.Id, true, Guid.NewGuid());
             }
         }
 
