@@ -23,6 +23,15 @@ namespace TsiErp.Entities.Entities.FinalControlUnsuitabilityReport.Dtos
         /// </summary>
         public string Description_ { get; set; }
         /// <summary>
+        /// Data Concurrency Stamp
+        /// </summary>
+        public bool? DataOpenStatus { get; set; }
+
+        /// <summary>
+        /// Data Concurrency UserID
+        /// </summary>
+        public Guid? DataOpenStatusUserId { get; set; }
+        /// <summary>
         /// Parti No
         /// </summary>
         public string PartyNo { get; set; }

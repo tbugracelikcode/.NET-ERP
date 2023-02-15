@@ -257,6 +257,28 @@ namespace TsiErp.ErpUI.Pages.MaintenanceInstruction
             }
         }
 
+        public async override void ShowEditPage()
+        {
+            var entity = (await MaintenanceInstructionsAppService.GetAsync(DataSource.Id)).Data;
+
+            if (entity != null)
+            {
+                bool? dataOpenStatus = (bool?)entity.GetType().GetProperty("DataOpenStatus").GetValue(entity);
+
+                if (dataOpenStatus == true && dataOpenStatus != null)
+                {
+                    EditPageVisible = false;
+                    await ModalManager.MessagePopupAsync("Bilgi", "Seçtiğiniz kayıt ..... tarafından kullanılmaktadır.");
+                    await InvokeAsync(StateHasChanged);
+                }
+                else
+                {
+                    EditPageVisible = true;
+                    await InvokeAsync(StateHasChanged);
+                }
+            }
+        }
+
         public async void MainContextMenuClick(ContextMenuClickEventArgs<ListMaintenanceInstructionsDto> args)
         {
             switch (args.Item.Id)
@@ -275,7 +297,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceInstruction
                         item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
                     }
 
-                    EditPageVisible = true;
+                    ShowEditPage();
                     await InvokeAsync(StateHasChanged);
                     break;
 

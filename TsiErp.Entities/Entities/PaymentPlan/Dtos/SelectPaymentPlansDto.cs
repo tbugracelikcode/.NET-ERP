@@ -16,6 +16,15 @@ namespace TsiErp.Entities.Entities.PaymentPlan.Dtos
         /// </summary>
         public string Name { get; set; }
         /// <summary>
+        /// Data Concurrency Stamp
+        /// </summary>
+        public bool? DataOpenStatus { get; set; }
+
+        /// <summary>
+        /// Data Concurrency UserID
+        /// </summary>
+        public Guid? DataOpenStatusUserId { get; set; }
+        /// <summary>
         /// Günler
         /// </summary>
         public int Days_ { get; set; }

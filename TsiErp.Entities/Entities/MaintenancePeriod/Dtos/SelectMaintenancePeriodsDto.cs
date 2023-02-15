@@ -18,6 +18,15 @@ namespace TsiErp.Entities.Entities.MaintenancePeriod.Dtos
         /// Periyot Adı
         /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// Data Concurrency Stamp
+        /// </summary>
+        public bool? DataOpenStatus { get; set; }
+
+        /// <summary>
+        /// Data Concurrency UserID
+        /// </summary>
+        public Guid? DataOpenStatusUserId { get; set; }
         [Precision(18, 6)]
         /// <summary>
         /// Bakım Periyot Süresi

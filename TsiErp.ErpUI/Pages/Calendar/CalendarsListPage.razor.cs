@@ -177,6 +177,28 @@ namespace TsiErp.ErpUI.Pages.Calendar
             }
         }
 
+        public async override void ShowEditPage()
+        {
+            var entity = (await CalendarsService.GetAsync(DataSource.Id)).Data;
+
+            if (entity != null)
+            {
+                bool? dataOpenStatus = (bool?)entity.GetType().GetProperty("DataOpenStatus").GetValue(entity);
+
+                if (dataOpenStatus == true && dataOpenStatus != null)
+                {
+                    EditPageVisible = false;
+                    await ModalManager.MessagePopupAsync("Bilgi", "Seçtiğiniz kayıt ..... tarafından kullanılmaktadır.");
+                    await InvokeAsync(StateHasChanged);
+                }
+                else
+                {
+                    EditPageVisible = true;
+                    await InvokeAsync(StateHasChanged);
+                }
+            }
+        }
+
         public async void MainContextMenuClick(ContextMenuClickEventArgs<ListCalendarsDto> args)
         {
             switch (args.Item.Id)
@@ -198,7 +220,7 @@ namespace TsiErp.ErpUI.Pages.Calendar
                 case "changed":
                     SelectFirstDataRow = false;
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
-                    EditPageVisible = true;
+                    ShowEditPage();
                     await InvokeAsync(StateHasChanged);
                     break;
 

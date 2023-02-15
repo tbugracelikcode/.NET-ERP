@@ -19,6 +19,15 @@ namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
         /// İş Emri Kodu
         /// </summary>
         public string WorkOrderCode { get; set; }
+        /// <summary>
+        /// Data Concurrency Stamp
+        /// </summary>
+        public bool? DataOpenStatus { get; set; }
+
+        /// <summary>
+        /// Data Concurrency UserID
+        /// </summary>
+        public Guid? DataOpenStatusUserId { get; set; }
         [Precision(18, 6)]
         /// <summary>
         /// Üretilen Miktar

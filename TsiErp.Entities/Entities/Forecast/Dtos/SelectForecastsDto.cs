@@ -24,6 +24,15 @@ namespace TsiErp.Entities.Entities.Forecast.Dtos
         /// </summary>
         public DateTime? ValidityStartDate { get; set; }
         /// <summary>
+        /// Data Concurrency Stamp
+        /// </summary>
+        public bool? DataOpenStatus { get; set; }
+
+        /// <summary>
+        /// Data Concurrency UserID
+        /// </summary>
+        public Guid? DataOpenStatusUserId { get; set; }
+        /// <summary>
         /// Geçerlilik Bitiş Tarihi
         /// </summary>
         public DateTime? ValidityEndDate { get; set; }

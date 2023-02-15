@@ -101,6 +101,28 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
             await Task.CompletedTask;
         }
 
+        public async override void ShowEditPage()
+        {
+            var entity = (await BillsofMaterialsAppService.GetAsync(DataSource.Id)).Data;
+
+            if (entity != null)
+            {
+                bool? dataOpenStatus = (bool?)entity.GetType().GetProperty("DataOpenStatus").GetValue(entity);
+
+                if (dataOpenStatus == true && dataOpenStatus != null)
+                {
+                    EditPageVisible = false;
+                    await ModalManager.MessagePopupAsync("Bilgi", "Seçtiğiniz kayıt ..... tarafından kullanılmaktadır.");
+                    await InvokeAsync(StateHasChanged);
+                }
+                else
+                {
+                    EditPageVisible = true;
+                    await InvokeAsync(StateHasChanged);
+                }
+            }
+        }
+
         protected void CreateLineContextMenuItems()
         {
             if (LineGridContextMenu.Count() == 0)
@@ -143,7 +165,7 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
                         item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
                     }
 
-                    EditPageVisible = true;
+                    ShowEditPage();
                     await InvokeAsync(StateHasChanged);
                     break;
 

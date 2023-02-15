@@ -31,6 +31,15 @@ namespace TsiErp.Entities.Entities.CustomerComplaintItem.Dtos
         /// </summary>
         public int Severity { get; set; }
         /// <summary>
+        /// Data Concurrency Stamp
+        /// </summary>
+        public bool? DataOpenStatus { get; set; }
+
+        /// <summary>
+        /// Data Concurrency UserID
+        /// </summary>
+        public Guid? DataOpenStatusUserId { get; set; }
+        /// <summary>
         /// İstasyon Verimlilik Analizi
         /// </summary>
         public bool StaProductivityAnalysis { get; set; }
