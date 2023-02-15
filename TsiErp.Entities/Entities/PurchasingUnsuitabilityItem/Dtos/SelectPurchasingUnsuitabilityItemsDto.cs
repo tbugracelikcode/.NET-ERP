@@ -17,6 +17,15 @@ namespace TsiErp.Entities.Entities.PurchasingUnsuitabilityItem.Dtos
         /// Açıklama
         /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// Data Concurrency Stamp
+        /// </summary>
+        public bool? DataOpenStatus { get; set; }
+
+        /// <summary>
+        /// Data Concurrency UserID
+        /// </summary>
+        public Guid? DataOpenStatusUserId { get; set; }
 
         /// <summary>
         /// Resim

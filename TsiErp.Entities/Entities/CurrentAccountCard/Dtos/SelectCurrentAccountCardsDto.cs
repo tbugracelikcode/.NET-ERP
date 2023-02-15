@@ -30,6 +30,15 @@ namespace TsiErp.Entities.Entities.CurrentAccountCard.Dtos
         /// </summary>
         public int Type { get; set; }
         /// <summary>
+        /// Data Concurrency Stamp
+        /// </summary>
+        public bool? DataOpenStatus { get; set; }
+
+        /// <summary>
+        /// Data Concurrency UserID
+        /// </summary>
+        public Guid? DataOpenStatusUserId { get; set; }
+        /// <summary>
         /// Adres1
         /// </summary>
         public string Address1 { get; set; }

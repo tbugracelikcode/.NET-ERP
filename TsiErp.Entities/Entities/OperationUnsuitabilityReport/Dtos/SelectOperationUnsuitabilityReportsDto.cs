@@ -22,6 +22,15 @@ namespace TsiErp.Entities.Entities.OperationUnsuitabilityReport.Dtos
         /// </summary>
         public string Description_ { get; set; }
         /// <summary>
+        /// Data Concurrency Stamp
+        /// </summary>
+        public bool? DataOpenStatus { get; set; }
+
+        /// <summary>
+        /// Data Concurrency UserID
+        /// </summary>
+        public Guid? DataOpenStatusUserId { get; set; }
+        /// <summary>
         /// Uygunsuzluk İş Emri Oluşacak
         /// </summary>
         public bool IsUnsuitabilityWorkOrder { get; set; }

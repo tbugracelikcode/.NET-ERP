@@ -26,6 +26,15 @@ namespace TsiErp.Entities.Entities.HaltReason.Dtos
         /// </summary>
         public bool IsMachine { get; set; }
         /// <summary>
+        /// Data Concurrency Stamp
+        /// </summary>
+        public bool? DataOpenStatus { get; set; }
+
+        /// <summary>
+        /// Data Concurrency UserID
+        /// </summary>
+        public Guid? DataOpenStatusUserId { get; set; }
+        /// <summary>
         /// Operatör Kaynaklı mı?
         /// </summary>
         public bool IsOperator { get; set; }

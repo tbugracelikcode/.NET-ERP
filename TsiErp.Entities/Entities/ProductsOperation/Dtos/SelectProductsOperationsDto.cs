@@ -19,6 +19,15 @@ namespace TsiErp.Entities.Entities.ProductsOperation.Dtos
         /// </summary>
         public string Name { get; set; }
         /// <summary>
+        /// Data Concurrency Stamp
+        /// </summary>
+        public bool? DataOpenStatus { get; set; }
+
+        /// <summary>
+        /// Data Concurrency UserID
+        /// </summary>
+        public Guid? DataOpenStatusUserId { get; set; }
+        /// <summary>
         /// İş Merkezi ID
         /// </summary>
         public Guid? WorkCenterID { get; set; }
