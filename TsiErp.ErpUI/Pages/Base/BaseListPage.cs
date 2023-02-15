@@ -287,5 +287,34 @@ namespace TsiErp.ErpUI.Pages.Base
 
         public virtual void GetTotal() { }
 
+        public virtual async void CrudModalShowing(PopupShowingEventArgs args)
+        {
+            if (DataSource.Id != Guid.Empty)
+            {
+                var entity = (await BaseCrudService.GetAsync(DataSource.Id)).Data;
+
+                if (entity != null)
+                {
+                    bool? dataOpenStatus = (bool?)entity.GetType().GetProperty("DataOpenStatus").GetValue(entity);
+
+                    if(dataOpenStatus==true && dataOpenStatus!=null)
+                    {
+                        await ModalManager.MessagePopupAsync("Bilgi", "Seçtiğiniz kayıt ..... tarafından kullanılmaktadır.");
+                        return;
+                    }
+
+                    await BaseCrudService.UpdateConcurrencyFieldsAsync(DataSource.Id, true, Guid.NewGuid());
+                }
+            }
+        }
+
+        public virtual async void CrudModalClosing(PopupClosingEventArgs args)
+        {
+            if (DataSource.Id != Guid.Empty)
+            {
+                await BaseCrudService.UpdateConcurrencyFieldsAsync(DataSource.Id, false, Guid.Empty);
+            }
+        }
+
     }
 }
