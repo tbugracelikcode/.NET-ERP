@@ -30,5 +30,10 @@ namespace TsiErp.Entities.Entities.Branch.Dtos
         /// Data Concurrency Stamp
         /// </summary>
         public bool? DataOpenStatus { get; set; }
+
+        /// <summary>
+        /// Data Concurrency UserID
+        /// </summary>
+        public Guid? DataOpenStatusUserId { get; set; }
     }
 }
