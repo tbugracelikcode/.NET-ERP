@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Aspects.Autofac.Caching;
-using Tsi.Application.Contract.Services.EntityFrameworkCore;
+using Tsi.Core.Services.BusinessCoreServices;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;

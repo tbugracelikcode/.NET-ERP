@@ -1,7 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
-using Tsi.EntityFrameworkCore.Respositories.EntityFrameworkCore;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Station;

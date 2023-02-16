@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Tsi.EntityFrameworkCore\Tsi.EntityFrameworkCore.csproj" />
     <ProjectReference Include="..\TsiErp.Entities\TsiErp.Entities.csproj" />
   </ItemGroup>
 

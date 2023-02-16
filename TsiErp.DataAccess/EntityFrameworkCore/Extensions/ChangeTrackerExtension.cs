@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 
-namespace Tsi.EntityFrameworkCore.Extensions
+namespace TsiErp.DataAccess.EntityFrameworkCore.Extensions
 {
     public static class ChangeTrackerExtensions
     {

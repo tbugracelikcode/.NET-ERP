@@ -8,7 +8,7 @@ using TsiErp.Business.Entities.ShippingAdress.Validations;
 using TsiErp.Entities.Entities.ShippingAdress.Dtos;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.ShippingAdress;
-using Tsi.Application.Contract.Services.EntityFrameworkCore;
+using Tsi.Core.Services.BusinessCoreServices;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;

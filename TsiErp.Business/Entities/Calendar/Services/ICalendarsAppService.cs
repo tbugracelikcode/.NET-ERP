@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tsi.Application.Contract.Services.EntityFrameworkCore;
+using Tsi.Core.Services.BusinessCoreServices;
 using Tsi.Core.Utilities.Results;
 using TsiErp.Entities.Entities.Calendar.Dtos;
 using TsiErp.Entities.Entities.CalendarDay.Dtos;

@@ -6,8 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
-using Tsi.EntityFrameworkCore.EntityframeworkCore;
-using Tsi.EntityFrameworkCore.Extensions;
 using TsiErp.DataAccess.EntityFrameworkCore.Configurations;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.CalibrationRecord;
@@ -86,6 +84,7 @@ using TsiErp.Entities.Entities.ByDateStockMovement;
 using TsiErp.Entities.Entities.GrandTotalStockMovement;
 using TsiErp.Entities.Entities.TechnicalDrawing;
 using TsiErp.Entities.Entities.ProductReferanceNumber;
+using TsiErp.DataAccess.EntityFrameworkCore.Extensions;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore
 {

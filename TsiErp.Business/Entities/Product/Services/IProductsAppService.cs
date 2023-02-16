@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TsiErp.Entities.Entities.Product.Dtos;
-using Tsi.Application.Contract.Services.EntityFrameworkCore;
+using Tsi.Core.Services.BusinessCoreServices;
 
 namespace TsiErp.Business.Entities.Product.Services
 {

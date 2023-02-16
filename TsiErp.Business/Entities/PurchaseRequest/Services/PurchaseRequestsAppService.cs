@@ -22,7 +22,7 @@ using TsiErp.Entities.Entities.PurchaseRequestLine;
 using Tsi.Core.Entities;
 using TsiErp.Business.Entities.PurchaseRequest.BusinessRules;
 using Microsoft.EntityFrameworkCore;
-using Tsi.Application.Contract.Services.EntityFrameworkCore;
+using Tsi.Core.Services.BusinessCoreServices;
 using Tsi.Core.Utilities.Guids;
 using TsiErp.Entities.Enums;
 using TsiErp.Entities.Entities.PurchaseOrderLine.Dtos;

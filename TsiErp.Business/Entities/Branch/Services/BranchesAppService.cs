@@ -1,10 +1,9 @@
 ﻿using System.Reflection;
-using Tsi.Application.Contract.Services.EntityFrameworkCore;
+using Tsi.Core.Services.BusinessCoreServices;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
-using Tsi.EntityFrameworkCore.Respositories.UnitOfWork;
 using TsiErp.Business.DependencyResolvers.Autofac;
 using TsiErp.Business.Entities.Branch.BusinessRules;
 using TsiErp.Business.Entities.Branch.Validations;

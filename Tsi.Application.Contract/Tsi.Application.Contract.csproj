@@ -8,4 +8,8 @@
     <ProjectReference Include="..\Tsi.Core\Tsi.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\EntityFrameworkCore\" />
+  </ItemGroup>
+
 </Project>

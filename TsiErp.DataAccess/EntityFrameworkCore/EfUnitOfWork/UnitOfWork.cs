@@ -1,4 +1,4 @@
-﻿using Tsi.EntityFrameworkCore.Respositories.UnitOfWork;
+﻿using TsiErp.DataAccess.EntityFrameworkCore.Repositories;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.BillsofMaterial;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.BillsofMaterialLine;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;

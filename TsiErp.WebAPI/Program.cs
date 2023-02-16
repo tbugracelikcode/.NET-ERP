@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using TsiErp.Business.Entities.Branch.Services;
 using Microsoft.Extensions.DependencyInjection;
-using Tsi.Application.Contract.Services.EntityFrameworkCore;
+using Tsi.Core.Services.BusinessCoreServices;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,8 +1,9 @@
 ﻿
+using System;
 using Tsi.Core.Utilities.Guids;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 
-namespace Tsi.Application.Contract.Services.EntityFrameworkCore
+namespace Tsi.Core.Services.BusinessCoreServices
 {
     [ServiceRegistration(typeof(IApplicationService), DependencyInjectionType.Transient)]
     public class ApplicationService : IApplicationService

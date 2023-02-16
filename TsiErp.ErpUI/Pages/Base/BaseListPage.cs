@@ -7,7 +7,7 @@ using Syncfusion.Blazor.HeatMap.Internal;
 using Syncfusion.Blazor.Lists;
 using Syncfusion.Blazor.Navigations;
 using System.Text;
-using Tsi.Application.Contract.Services.EntityFrameworkCore;
+using Tsi.Core.Services.BusinessCoreServices;
 using Tsi.Blazor.Component.Core.Services;
 using Tsi.Core.Entities;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -18,10 +18,11 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 using TsiErp.ErpUI.Utilities.ModalUtilities.ModalComponents;
 using static System.Net.Mime.MediaTypeNames;
 using IResult = Tsi.Core.Utilities.Results.IResult;
+using Tsi.Core.Entities.Auditing;
 
 namespace TsiErp.ErpUI.Pages.Base
 {
-    public abstract class BaseListPage<TGetOutputDto, TGetListOutputDto, TCreateInput, TUpdateInput, TGetListInput> : ComponentBase, ICoreCommonService
+    public abstract class BaseListPage<TGetOutputDto, TGetListOutputDto, TCreateInput, TUpdateInput, TGetListInput> : ComponentBase
          where TGetOutputDto : class, IEntityDto, new()
          where TGetListOutputDto : class, IEntityDto, new()
          where TGetListInput : class, new()
@@ -38,9 +39,6 @@ namespace TsiErp.ErpUI.Pages.Base
         public TGetListOutputDto SelectedItem { get; set; }
 
         [Inject]
-        public ApplicationService ApplicationService { get; set; }
-
-        [Inject]
         ModalManager ModalManager { get; set; }
         public TGetOutputDto DataSource { get; set; }
         public IList<TGetListOutputDto> ListDataSource { get; set; }
@@ -51,9 +49,6 @@ namespace TsiErp.ErpUI.Pages.Base
 
         protected ICrudAppService<TGetOutputDto, TGetListOutputDto, TCreateInput, TUpdateInput, TGetListInput> BaseCrudService { get; set; }
 
-        public ComponentBase ActiveEditComponent { get; set; }
-        public bool IsPopupListPage { get; set; }
-        public Guid PopupListPageFocusedRowId { get; set; }
 
         protected async override Task OnParametersSetAsync()
         {

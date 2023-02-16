@@ -17,7 +17,7 @@ using TsiErp.DataAccess.EntityFrameworkCore.Repositories.ProductionTrackingHaltL
 using TsiErp.Entities.Entities.ProductionTrackingHaltLine.Dtos;
 using TsiErp.Entities.Entities.ProductionTrackingHaltLine;
 using Tsi.Core.Utilities.Guids;
-using Tsi.Application.Contract.Services.EntityFrameworkCore;
+using Tsi.Core.Services.BusinessCoreServices;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.Entities.Entities.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.WorkOrder;
