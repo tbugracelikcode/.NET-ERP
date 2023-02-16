@@ -142,6 +142,8 @@ namespace TsiErp.ErpUI.Pages.Product
 
         bool ImagePreviewPopup = false;
 
+        bool UploadedFile = false;
+
         string previewImagePopupTitle = string.Empty;
 
         string imageDataUri;
@@ -375,16 +377,13 @@ namespace TsiErp.ErpUI.Pages.Product
             await _TechnicalDrawingGrid.Refresh();
 
             HideTechnicalDrawingCrudPopup();
+            HideTechnicalDrawingChangedCrudPopup();
 
             if (TechnicalDrawingsDataSource.Id == Guid.Empty)
             {
                 TechnicalDrawingsDataSource.Id = result.Id;
             }
 
-            //if (savedEntityIndex > -1)
-            //    SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
-            //else
-            //    SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
 
             #endregion
 
@@ -766,13 +765,32 @@ namespace TsiErp.ErpUI.Pages.Product
 
         private void RemoveUploaded(System.IO.FileInfo file)
         {
-            string technicalDrawingPath = @"\UploadedFiles\TechnicalDrawings\" + DataSource.Id + "-" + DataSource.Code + @"\" + TechnicalDrawingsDataSource.Id + @"\";
+            string extention = file.Extension;
+            string rootpath = FileUploadService.GetRootPath();
 
-            if(File.Exists(Path.Combine(technicalDrawingPath, file.Name)))
+            if (extention == ".pdf")
             {
-                File.Delete(Path.Combine(technicalDrawingPath, file.Name));
-                uploadedfiles.Remove(file);
+                PDFrootPath = rootpath+  @"\UploadedFiles\TechnicalDrawings\" + DataSource.Id + "-" + DataSource.Code + @"\" + TechnicalDrawingsDataSource.Id + @"\" + file.Name;
+
+                System.IO.FileInfo pdfFile = new System.IO.FileInfo(PDFrootPath);
+                if (pdfFile.Exists)
+                {
+                    pdfFile.Delete();
+                }
             }
+
+            else
+            {
+                imageDataUri = rootpath + @"\UploadedFiles\TechnicalDrawings\" + DataSource.Id + "-" + DataSource.Code + @"\" + TechnicalDrawingsDataSource.Id + @"\" + file.Name;
+
+                System.IO.FileInfo jpgfile = new System.IO.FileInfo(imageDataUri);
+                if (jpgfile.Exists)
+                {
+                    jpgfile.Delete();
+                }
+            }
+            uploadedfiles.Remove(file);
+            
 
             InvokeAsync(() => StateHasChanged());
         }
@@ -780,6 +798,8 @@ namespace TsiErp.ErpUI.Pages.Product
         private async void PreviewImage(IFileListEntry file)
         {
             string format = file.Type;
+
+            UploadedFile = false;
 
             if (format == "image/jpg" || format == "image/jpeg" || format == "image/png")
             {
@@ -805,9 +825,7 @@ namespace TsiErp.ErpUI.Pages.Product
             {
                 string tempPath = "tempFiles/";
 
-                string rootpath = FileUploadService.GetRootPath();
-
-                PDFrootPath = rootpath + tempPath + file.Name;
+                PDFrootPath = "wwwroot/" + tempPath + file.Name;
 
                 PDFFileName = file.Name;
 
@@ -834,6 +852,8 @@ namespace TsiErp.ErpUI.Pages.Product
         {
             string format = file.Extension;
 
+            UploadedFile = true;
+
             string rootpath = FileUploadService.GetRootPath();
 
             if (format == ".jpg" || format == ".jpeg" || format == ".png")
@@ -850,7 +870,7 @@ namespace TsiErp.ErpUI.Pages.Product
             else if (format == ".pdf")
             {
 
-                PDFrootPath =   "/UploadedFiles/TechnicalDrawings/" + DataSource.Id + "-" + DataSource.Code + "/" + TechnicalDrawingsDataSource.Id + "/" + file.Name;
+                PDFrootPath = "wwwroot/UploadedFiles/TechnicalDrawings/" + DataSource.Id + "-" + DataSource.Code + "/" + TechnicalDrawingsDataSource.Id + "/" + file.Name;
 
                 PDFFileName = file.Name;
 
@@ -873,14 +893,18 @@ namespace TsiErp.ErpUI.Pages.Product
         {
             ImagePreviewPopup = false;
 
-            if (pdf)
+            if(!UploadedFile)
             {
-                System.IO.FileInfo pdfFile = new System.IO.FileInfo(PDFrootPath);
-                if (pdfFile.Exists)
+                if (pdf)
                 {
-                    pdfFile.Delete();
+                    System.IO.FileInfo pdfFile = new System.IO.FileInfo(PDFrootPath);
+                    if (pdfFile.Exists)
+                    {
+                        pdfFile.Delete();
+                    }
                 }
             }
+            
         }
 
         #endregion
