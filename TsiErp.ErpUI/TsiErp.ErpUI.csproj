@@ -69,7 +69,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Tsi.Blazor.Component.Core\Tsi.Blazor.Component.Core.csproj" />
     <ProjectReference Include="..\TsiErp.WebAPI\TsiErp.WebAPI.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -92,6 +91,12 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\ExportedGridFiles\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Components\Commons\Loadings\CircleLoading.razor" />
+    <None Include="Components\Layouts\DevGridLayout.razor" />
+    <None Include="Components\Layouts\DevPopupListPageLayout.razor" />
   </ItemGroup>
 
 </Project>

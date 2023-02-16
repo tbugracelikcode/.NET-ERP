@@ -8,7 +8,6 @@ using Syncfusion.Blazor.Lists;
 using Syncfusion.Blazor.Navigations;
 using System.Text;
 using Tsi.Core.Services.BusinessCoreServices;
-using Tsi.Blazor.Component.Core.Services;
 using Tsi.Core.Entities;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
