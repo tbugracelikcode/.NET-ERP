@@ -89,7 +89,7 @@ namespace TsiErp.ErpUI.Pages.TemplateOperation
             {
                 LineDataSource.StationID = selectedUnitSet.Id;
                 LineDataSource.StationCode = selectedUnitSet.Code;
-                LineDataSource.StationName = selectedUnitSet.Code;
+                LineDataSource.StationName = selectedUnitSet.Name;
                 SelectStationsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
@@ -106,8 +106,7 @@ namespace TsiErp.ErpUI.Pages.TemplateOperation
             DataSource.SelectTemplateOperationLines = new List<SelectTemplateOperationLinesDto>();
             GridLineList = DataSource.SelectTemplateOperationLines;
 
-            ShowEditPage();
-
+            EditPageVisible = true;
 
             await Task.CompletedTask;
         }

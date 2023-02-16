@@ -1,9 +1,11 @@
 ﻿using DevExpress.Blazor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
+using Syncfusion.Blazor.Inputs;
 using Tsi.Core.Utilities.Results;
 using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.Department.Dtos;
@@ -14,9 +16,7 @@ namespace TsiErp.ErpUI.Pages.EquipmentRecord
     public partial class EquipmentRecordsListPage
     {
         bool cancelReasonVisible = false;
-
-        SfComboBox<string, ListDepartmentsDto> DepartmentsComboBox;
-        List<ListDepartmentsDto> DepartmentsList = new List<ListDepartmentsDto>();
+        
 
         protected override async void OnInitialized()
         {
@@ -49,47 +49,60 @@ namespace TsiErp.ErpUI.Pages.EquipmentRecord
                 RecordDate = DateTime.Today
             };
 
-            ShowEditPage();
+            EditPageVisible = true;
 
             return Task.CompletedTask;
         }
 
-        public async Task DepartmentFiltering(FilteringEventArgs args)
+        #region Departman ButtonEdit
+
+        SfTextBox DepartmentButtonEdit;
+        bool SelectDepartmentPopupVisible = false;
+        List<ListDepartmentsDto> DepartmentList = new List<ListDepartmentsDto>();
+
+        public async Task DepartmentOnCreateIcon()
         {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await DepartmentsComboBox.FilterAsync(DepartmentsList, query);
+            var DepartmentButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, DepartmentButtonClickEvent);
+            await DepartmentButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", DepartmentButtonClick } });
         }
 
-        private async Task GetDepartmentsList()
+        public async void DepartmentButtonClickEvent()
         {
-            DepartmentsList = (await DepartmentsAppService.GetListAsync(new ListDepartmentsParameterDto())).Data.ToList();
+            SelectDepartmentPopupVisible = true;
+            DepartmentList = (await DepartmentsAppService.GetListAsync(new ListDepartmentsParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
         }
 
-        public async Task DepartmentValueChangeHandler(ChangeEventArgs<string, ListDepartmentsDto> args)
+        public void DepartmentOnValueChange(ChangedEventArgs args)
         {
-            if (args.ItemData != null)
-            {
-                DataSource.Department = args.ItemData.Id;
-                DataSource.DepartmentName = args.ItemData.Name;
-            }
-            else
+            if (args.Value == null)
             {
                 DataSource.Department = Guid.Empty;
                 DataSource.DepartmentName = string.Empty;
             }
-            await InvokeAsync(StateHasChanged);
         }
+
+        public async void DepartmentDoubleClickHandler(RecordDoubleClickEventArgs<ListDepartmentsDto> args)
+        {
+            var selectedDepartment = args.RowData;
+
+            if (selectedDepartment != null)
+            {
+                DataSource.Department = selectedDepartment.Id;
+                DataSource.DepartmentName = selectedDepartment.Name;
+                SelectDepartmentPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        #endregion
+
+        private async Task GetDepartmentsList()
+        {
+            DepartmentList = (await DepartmentsAppService.GetListAsync(new ListDepartmentsParameterDto())).Data.ToList();
+        }
+
+     
 
     }
 }

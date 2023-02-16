@@ -112,53 +112,16 @@ else
                 
                 <DxGridLayoutItem Row="1" Column="1">
                     <Template>
+                        <center>
                         <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
                         <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                        </center>
                     </Template>
                 </DxGridLayoutItem>
                 <DxGridLayoutItem Row="1" Column="3">
                     <Template>
                         <label class="TSIModalLabel"><strong>Şube : </strong></label><br />
-                       <SfComboBox @ref="BranchesComboBox"
-                                    TValue="string"
-                                    TItem="ListBranchesDto"
-                                    Placeholder="Şube Seçin"
-                                    CssClass="e-multi-column"
-                                    Value="DataSource.BranchName"
-                                    DataSource="@BranchesList"
-                                    AllowFiltering="true"
-                                    PopupWidth="700px"
-                                    PopupHeight="500">
-
-                                    <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
-
-                                    <ComboBoxTemplates TItem="ListBranchesDto">
-                                        <HeaderTemplate>
-                                            <table>
-                                                <tr>
-                                                    <th class="e-text-center">Şube Kodu</th>
-                                                    <th class="e-text-center">Şube Adı</th>
-                                                </tr>
-                                            </table>
-                                        </HeaderTemplate>
-                                        <ItemTemplate Context="cmbContext">
-
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="e-text-center">@((cmbContext as ListBranchesDto).Code)</td>
-                                                    <td class="e-text-center">@((cmbContext as ListBranchesDto).Name)</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </ItemTemplate>
-                                    </ComboBoxTemplates>
-
-                                    <ComboBoxEvents TValue="string"
-                                            TItem="ListBranchesDto"
-                                            Filtering="BranchFiltering"
-                                            ValueChange="BranchValueChangeHandler"></ComboBoxEvents>
-                                </SfComboBox>
+                       <SfTextBox @ref="@BranchButtonEdit" Created="@BranchOnCreateIcon" @bind-Value="DataSource.BranchName" ShowClearButton=true ValueChange="BranchOnValueChange"></SfTextBox>
                     </Template>
                 </DxGridLayoutItem>
                 <DxGridLayoutItem Row="2" Column="1" ColumnSpan="4">
@@ -178,6 +141,60 @@ else
 </DxPopup>
 
 }
+
+ @if (SelectBranchPopupVisible)
+    {
+        <DxPopup @bind-Visible="SelectBranchPopupVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Şubeler"
+         Width="64%"
+         Height="44%"
+         MinWidth="1220px"
+         MinHeight="470px"
+         HeaderCssClass="HeaderTitleCss">
+            <BodyTemplate>
+
+                <DevGridLayout ColumnCount="1" RowCount="1">
+                    <GridLayoutItems>
+                       
+                        <DxGridLayoutItem Row="1" Column="1">
+                            <Template>
+                                <SfCard class="TSIWorkStationGroupPopUpCard">
+
+                                    <CardContent>
+                                        <SfGrid ID="BranchGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@BranchList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                        AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                            <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                            <GridEvents OnRecordDoubleClick="@BranchDoubleClickHandler" TValue="ListBranchesDto"></GridEvents>
+                                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                            <GridPageSettings PageSizes="true"></GridPageSettings>
+                                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                            <GridColumns>
+                                                <GridColumn Field=@nameof(ListBranchesDto.Code) HeaderText="ŞUBE KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                <GridColumn Field=@nameof(ListBranchesDto.Name) HeaderText="ŞUBE ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                            </GridColumns>
+                                        </SfGrid>
+                                    </CardContent>
+                                    <CardFooter>
+                                    </CardFooter>
+                                </SfCard>
+                            </Template>
+                        </DxGridLayoutItem>
+                    </GridLayoutItems>
+                </DevGridLayout>
+
+            </BodyTemplate>
+            <FooterContentTemplate>
+                @*<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>*@
+            </FooterContentTemplate>
+        </DxPopup>
+    }
 
 
 

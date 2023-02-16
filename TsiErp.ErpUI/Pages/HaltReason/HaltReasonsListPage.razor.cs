@@ -25,7 +25,7 @@ namespace TsiErp.ErpUI.Pages.HaltReason
         {
             DataSource = new SelectHaltReasonsDto(){};
 
-            ShowEditPage();
+            EditPageVisible = true;
 
             return Task.CompletedTask;
         }

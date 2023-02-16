@@ -51,7 +51,7 @@ namespace TsiErp.ErpUI.Pages.Route
             DataSource.SelectRouteLines = new List<SelectRouteLinesDto>();
             GridLineList = DataSource.SelectRouteLines;
 
-            ShowEditPage();
+            EditPageVisible = true;
 
 
             await Task.CompletedTask;

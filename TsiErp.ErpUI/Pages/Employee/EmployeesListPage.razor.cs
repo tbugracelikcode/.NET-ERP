@@ -1,9 +1,11 @@
 ﻿using DevExpress.Blazor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
+using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
 using Tsi.Core.Utilities.Results;
 using TsiErp.Entities.Entities.Branch.Dtos;
@@ -32,7 +34,6 @@ namespace TsiErp.ErpUI.Pages.Employee
         protected override async void OnInitialized()
         {
             BaseCrudService = EmployeesService;
-            await GetDepartmentsList();
         }
 
        
@@ -44,51 +45,54 @@ namespace TsiErp.ErpUI.Pages.Employee
                 IsActive = true
             };
 
-            ShowEditPage();
+            EditPageVisible = true;
 
             return Task.CompletedTask;
         }
 
+        #region Departman ButtonEdit
 
-        #region Departmanlar
-        public async Task DepartmentFiltering(FilteringEventArgs args)
+        SfTextBox DepartmentButtonEdit;
+        bool SelectDepartmentPopupVisible = false;
+        List<ListDepartmentsDto> DepartmentList = new List<ListDepartmentsDto>();
+
+        public async Task DepartmentOnCreateIcon()
         {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await DepartmentsComboBox.FilterAsync(DepartmentsList, query);
+            var DepartmentButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, DepartmentButtonClickEvent);
+            await DepartmentButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", DepartmentButtonClick } });
         }
 
-        private async Task GetDepartmentsList()
+        public async void DepartmentButtonClickEvent()
         {
-            DepartmentsList = (await DepartmentsAppService.GetListAsync(new ListDepartmentsParameterDto())).Data.ToList();
+            SelectDepartmentPopupVisible = true;
+            DepartmentList = (await DepartmentsAppService.GetListAsync(new ListDepartmentsParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
         }
 
-        public async Task DepartmentValueChangeHandler(ChangeEventArgs<string, ListDepartmentsDto> args)
+        public void DepartmentOnValueChange(ChangedEventArgs args)
         {
-            if (args.ItemData != null)
-            {
-                DataSource.DepartmentID = args.ItemData.Id;
-                DataSource.Department = args.ItemData.Name;
-            }
-            else
+            if (args.Value == null)
             {
                 DataSource.DepartmentID = Guid.Empty;
                 DataSource.Department = string.Empty;
             }
-            await InvokeAsync(StateHasChanged);
+        }
+
+        public async void DepartmentDoubleClickHandler(RecordDoubleClickEventArgs<ListDepartmentsDto> args)
+        {
+            var selectedDepartment = args.RowData;
+
+            if (selectedDepartment != null)
+            {
+                DataSource.DepartmentID = selectedDepartment.Id;
+                DataSource.Department = selectedDepartment.Name;
+                SelectDepartmentPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
         }
 
         #endregion
+
 
         #region Kan Grubu
         //public async Task BloodTypeFiltering(FilteringEventArgs args)

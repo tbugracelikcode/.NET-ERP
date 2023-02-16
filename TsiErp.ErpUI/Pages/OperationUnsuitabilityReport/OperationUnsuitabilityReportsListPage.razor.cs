@@ -1,5 +1,9 @@
-﻿using Syncfusion.Blazor.Data;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
+using Syncfusion.Blazor.Grids;
+using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.Employee.Dtos;
 using TsiErp.Entities.Entities.OperationUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.Product.Dtos;
@@ -13,30 +17,6 @@ namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityReport
 {
     public partial class OperationUnsuitabilityReportsListPage
     {
-        #region ComboBox Listeleri
-
-        SfComboBox<string, ListWorkOrdersDto> WorkOrdersComboBox;
-        List<ListWorkOrdersDto> WorkOrdersList = new List<ListWorkOrdersDto>();
-
-        SfComboBox<string, ListStationsDto> StationsComboBox;
-        List<ListStationsDto> StationsList = new List<ListStationsDto>();
-
-        SfComboBox<string, ListStationGroupsDto> StationGroupsComboBox;
-        List<ListStationGroupsDto> StationGroupsList = new List<ListStationGroupsDto>();
-
-        SfComboBox<string, ListEmployeesDto> EmployeesComboBox;
-        List<ListEmployeesDto> EmployeesList = new List<ListEmployeesDto>();
-
-        SfComboBox<string, ListProductionOrdersDto> ProductionOrdersComboBox;
-        List<ListProductionOrdersDto> ProductionOrdersList = new List<ListProductionOrdersDto>();
-
-        SfComboBox<string, ListProductsDto> ProductsComboBox;
-        List<ListProductsDto> ProductsList = new List<ListProductsDto>();
-
-        SfComboBox<string, ListProductsOperationsDto> ProductsOperationsComboBox;
-        List<ListProductsOperationsDto> ProductsOperationsList = new List<ListProductsOperationsDto>();
-
-        #endregion
 
         public class UnsComboBox
         {
@@ -71,7 +51,7 @@ namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityReport
                 Date_ = DateTime.Today
             };
 
-            ShowEditPage();
+            EditPageVisible = true;
 
             await Task.CompletedTask;
         }
@@ -102,228 +82,369 @@ namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityReport
             }
         }
 
-        #region Ürünler
-        public async Task ProductFiltering(FilteringEventArgs args)
+        #region Stok Kartı Button Edit
+
+        SfTextBox ProductsCodeButtonEdit;
+        SfTextBox ProductsNameButtonEdit;
+        bool SelectProductsPopupVisible = false;
+        List<ListProductsDto> ProductsList = new List<ListProductsDto>();
+        public async Task ProductsCodeOnCreateIcon()
         {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await ProductsComboBox.FilterAsync(ProductsList, query);
+            var ProductsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductsCodeButtonClickEvent);
+            await ProductsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductsButtonClick } });
         }
 
-        private async Task GetProductsList()
+        public async void ProductsCodeButtonClickEvent()
         {
-            ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
+            SelectProductsPopupVisible = true;
+            await GetProductsList();
+            await InvokeAsync(StateHasChanged);
+        }
+        public async Task ProductsNameOnCreateIcon()
+        {
+            var ProductsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductsNameButtonClickEvent);
+            await ProductsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductsButtonClick } });
         }
 
-        public async Task ProductValueChangeHandler(ChangeEventArgs<string, ListProductsDto> args)
+        public async void ProductsNameButtonClickEvent()
         {
-            if (args.ItemData != null)
-            {
-                DataSource.ProductID = args.ItemData.Id;
-                DataSource.ProductName = args.ItemData.Name;
-                DataSource.ProductCode = args.ItemData.Code;
-            }
-            else
+            SelectProductsPopupVisible = true;
+            await GetProductsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void ProductsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
             {
                 DataSource.ProductID = Guid.Empty;
-                DataSource.ProductName = string.Empty;
                 DataSource.ProductCode = string.Empty;
+                DataSource.ProductName = string.Empty;
             }
-            await InvokeAsync(StateHasChanged);
+        }
+
+        public async void ProductsDoubleClickHandler(RecordDoubleClickEventArgs<ListProductsDto> args)
+        {
+            var selectedProduct = args.RowData;
+
+            if (selectedProduct != null)
+            {
+                DataSource.ProductID = selectedProduct.Id;
+                DataSource.ProductCode = selectedProduct.Code;
+                DataSource.ProductName = selectedProduct.Name;
+                SelectProductsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
         }
 
         #endregion
 
-        #region İş Emirleri
-        public async Task WorkOrderFiltering(FilteringEventArgs args)
+        #region Operasyon Button Edit
+
+        SfTextBox ProductsOperationsCodeButtonEdit;
+        SfTextBox ProductsOperationsNameButtonEdit;
+        bool SelectProductsOperationsPopupVisible = false;
+        List<ListProductsOperationsDto> ProductsOperationsList = new List<ListProductsOperationsDto>();
+        public async Task ProductsOperationsCodeOnCreateIcon()
         {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await WorkOrdersComboBox.FilterAsync(WorkOrdersList, query);
+            var ProductsOperationsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductsOperationsCodeButtonClickEvent);
+            await ProductsOperationsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductsOperationsButtonClick } });
         }
 
-        private async Task GetWorkOrdersList()
+        public async void ProductsOperationsCodeButtonClickEvent()
         {
-            WorkOrdersList = (await WorkOrdersAppService.GetListAsync(new ListWorkOrdersParameterDto())).Data.ToList();
+            SelectProductsOperationsPopupVisible = true;
+            await GetProductsOperationsList();
+            await InvokeAsync(StateHasChanged);
+        }
+        public async Task ProductsOperationsNameOnCreateIcon()
+        {
+            var ProductsOperationsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductsOperationsNameButtonClickEvent);
+            await ProductsOperationsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductsOperationsButtonClick } });
         }
 
-        public async Task WorkOrderValueChangeHandler(ChangeEventArgs<string, ListWorkOrdersDto> args)
+        public async void ProductsOperationsNameButtonClickEvent()
         {
-            if (args.ItemData != null)
+            SelectProductsOperationsPopupVisible = true;
+            await GetProductsOperationsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void ProductsOperationsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
             {
-                DataSource.WorkOrderID = args.ItemData.Id;
-                DataSource.WorkOrderNo = args.ItemData.WorkOrderNo;
+                DataSource.OperationID = Guid.Empty;
+                DataSource.OperationCode = string.Empty;
+                DataSource.OperationName = string.Empty;
             }
-            else
+        }
+
+        public async void ProductsOperationsDoubleClickHandler(RecordDoubleClickEventArgs<ListProductsOperationsDto> args)
+        {
+            var selectedProductsOperation = args.RowData;
+
+            if (selectedProductsOperation != null)
+            {
+                DataSource.OperationID = selectedProductsOperation.Id;
+                DataSource.OperationCode = selectedProductsOperation.Code;
+                DataSource.OperationName = selectedProductsOperation.Name;
+                SelectProductsOperationsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        #endregion
+
+        #region İş Emri ButtonEdit
+
+        SfTextBox WorkOrdersButtonEdit;
+        bool SelectWorkOrdersPopupVisible = false;
+        List<ListWorkOrdersDto> WorkOrdersList = new List<ListWorkOrdersDto>();
+
+        public async Task WorkOrdersOnCreateIcon()
+        {
+            var WorkOrdersButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, WorkOrdersButtonClickEvent);
+            await WorkOrdersButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", WorkOrdersButtonClick } });
+        }
+
+        public async void WorkOrdersButtonClickEvent()
+        {
+            SelectWorkOrdersPopupVisible = true;
+            await GetWorkOrdersList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+
+        public void WorkOrdersOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
             {
                 DataSource.WorkOrderID = Guid.Empty;
                 DataSource.WorkOrderNo = string.Empty;
             }
+        }
+
+        public async void WorkOrdersDoubleClickHandler(RecordDoubleClickEventArgs<ListWorkOrdersDto> args)
+        {
+            var selectedOrder = args.RowData;
+
+            if (selectedOrder != null)
+            {
+                DataSource.WorkOrderID = selectedOrder.Id;
+                DataSource.WorkOrderNo = selectedOrder.WorkOrderNo;
+                SelectWorkOrdersPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region İş İstasyonu ButtonEdit
+
+        SfTextBox StationsCodeButtonEdit;
+        SfTextBox StationsNameButtonEdit;
+        bool SelectStationsPopupVisible = false;
+        List<ListStationsDto> StationsList = new List<ListStationsDto>();
+
+        public async Task StationsCodeOnCreateIcon()
+        {
+            var StationsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, StationsCodeButtonClickEvent);
+            await StationsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", StationsButtonClick } });
+        }
+
+        public async void StationsCodeButtonClickEvent()
+        {
+            SelectStationsPopupVisible = true;
+            await GetStationsList();
             await InvokeAsync(StateHasChanged);
         }
 
-        #endregion
-
-        #region İstasyonlar
-        public async Task StationFiltering(FilteringEventArgs args)
+        public async Task StationsNameOnCreateIcon()
         {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await StationsComboBox.FilterAsync(StationsList, query);
+            var StationsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, StationsNameButtonClickEvent);
+            await StationsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", StationsButtonClick } });
         }
 
-        private async Task GetStationsList()
+        public async void StationsNameButtonClickEvent()
         {
-            StationsList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
+            SelectStationsPopupVisible = true;
+            await GetStationsList();
+            await InvokeAsync(StateHasChanged);
         }
 
-        public async Task StationValueChangeHandler(ChangeEventArgs<string, ListStationsDto> args)
+        public void StationsOnValueChange(ChangedEventArgs args)
         {
-            if (args.ItemData != null)
-            {
-                DataSource.StationID = args.ItemData.Id;
-                DataSource.StationName = args.ItemData.Name;
-                DataSource.StationCode = args.ItemData.Code;
-            }
-            else
+            if (args.Value == null)
             {
                 DataSource.StationID = Guid.Empty;
-                DataSource.StationName = string.Empty;
                 DataSource.StationCode = string.Empty;
+                DataSource.StationName = string.Empty;
             }
+        }
+
+        public async void StationsDoubleClickHandler(RecordDoubleClickEventArgs<ListStationsDto> args)
+        {
+            var selectedUnitSet = args.RowData;
+
+            if (selectedUnitSet != null)
+            {
+                DataSource.StationID = selectedUnitSet.Id;
+                DataSource.StationCode = selectedUnitSet.Code;
+                DataSource.StationName = selectedUnitSet.Name;
+                SelectStationsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region İstasyon Grup Button Edit
+
+        SfTextBox StationGroupsCodeButtonEdit;
+        SfTextBox StationGroupsNameButtonEdit;
+        bool SelectStationGroupsPopupVisible = false;
+        List<ListStationGroupsDto> StationGroupsList = new List<ListStationGroupsDto>();
+        public async Task StationGroupsCodeOnCreateIcon()
+        {
+            var StationGroupsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, StationGroupsCodeButtonClickEvent);
+            await StationGroupsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", StationGroupsButtonClick } });
+        }
+
+        public async void StationGroupsCodeButtonClickEvent()
+        {
+            SelectStationGroupsPopupVisible = true;
+            await GetStationGroupsList();
+            await InvokeAsync(StateHasChanged);
+        }
+        public async Task StationGroupsNameOnCreateIcon()
+        {
+            var StationGroupsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, StationGroupsNameButtonClickEvent);
+            await StationGroupsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", StationGroupsButtonClick } });
+        }
+
+        public async void StationGroupsNameButtonClickEvent()
+        {
+            SelectStationGroupsPopupVisible = true;
+            await GetStationGroupsList();
             await InvokeAsync(StateHasChanged);
         }
 
-        #endregion
-
-        #region İstasyon Grupları
-        public async Task StationGroupFiltering(FilteringEventArgs args)
+        public void StationGroupsOnValueChange(ChangedEventArgs args)
         {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await StationGroupsComboBox.FilterAsync(StationGroupsList, query);
-        }
-
-        private async Task GetStationGroupsList()
-        {
-            StationGroupsList = (await StationGroupsAppService.GetListAsync(new ListStationGroupsParameterDto())).Data.ToList();
-        }
-
-        public async Task StationGroupValueChangeHandler(ChangeEventArgs<string, ListStationGroupsDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                DataSource.StationGroupID = args.ItemData.Id;
-                DataSource.StationGroupName = args.ItemData.Name;
-                DataSource.StationGroupCode = args.ItemData.Code;
-            }
-            else
+            if (args.Value == null)
             {
                 DataSource.StationGroupID = Guid.Empty;
                 DataSource.StationGroupCode = string.Empty;
                 DataSource.StationGroupName = string.Empty;
             }
-            await InvokeAsync(StateHasChanged);
+        }
+
+        public async void StationGroupsDoubleClickHandler(RecordDoubleClickEventArgs<ListStationGroupsDto> args)
+        {
+            var selectedStationGroup = args.RowData;
+
+            if (selectedStationGroup != null)
+            {
+                DataSource.StationGroupID = selectedStationGroup.Id;
+                DataSource.StationGroupCode = selectedStationGroup.Code;
+                DataSource.StationGroupName = selectedStationGroup.Name;
+                SelectStationGroupsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
         }
 
         #endregion
 
-        #region Çalışanlar
-        public async Task EmployeeFiltering(FilteringEventArgs args)
+        #region Personel ButtonEdit
+
+        SfTextBox EmployeesButtonEdit;
+        bool SelectEmployeesPopupVisible = false;
+        List<ListEmployeesDto> EmployeesList = new List<ListEmployeesDto>();
+
+        public async Task EmployeesOnCreateIcon()
         {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await EmployeesComboBox.FilterAsync(EmployeesList, query);
+            var EmployeesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, EmployeesButtonClickEvent);
+            await EmployeesButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", EmployeesButtonClick } });
         }
 
-        private async Task GetEmployeesList()
+        public async void EmployeesButtonClickEvent()
         {
-            EmployeesList = (await EmployeesAppService.GetListAsync(new ListEmployeesParameterDto())).Data.ToList();
+            SelectEmployeesPopupVisible = true;
+            await GetEmployeesList();
+            await InvokeAsync(StateHasChanged);
         }
 
-        public async Task EmployeeValueChangeHandler(ChangeEventArgs<string, ListEmployeesDto> args)
+
+        public void EmployeesOnValueChange(ChangedEventArgs args)
         {
-            if (args.ItemData != null)
-            {
-                DataSource.EmployeeID = args.ItemData.Id;
-                DataSource.EmployeeName = args.ItemData.Name;
-            }
-            else
+            if (args.Value == null)
             {
                 DataSource.EmployeeID = Guid.Empty;
                 DataSource.EmployeeName = string.Empty;
             }
+        }
+
+        public async void EmployeesDoubleClickHandler(RecordDoubleClickEventArgs<ListEmployeesDto> args)
+        {
+            var selectedOrder = args.RowData;
+
+            if (selectedOrder != null)
+            {
+                DataSource.EmployeeID = selectedOrder.Id;
+                DataSource.EmployeeName = selectedOrder.Name;
+                SelectEmployeesPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region Üretim Emri Emri ButtonEdit
+
+        SfTextBox ProductionOrdersButtonEdit;
+        bool SelectProductionOrdersPopupVisible = false;
+        List<ListProductionOrdersDto> ProductionOrdersList = new List<ListProductionOrdersDto>();
+
+        public async Task ProductionOrdersOnCreateIcon()
+        {
+            var ProductionOrdersButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductionOrdersButtonClickEvent);
+            await ProductionOrdersButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductionOrdersButtonClick } });
+        }
+
+        public async void ProductionOrdersButtonClickEvent()
+        {
+            SelectProductionOrdersPopupVisible = true;
+            await GetProductionOrdersList();
             await InvokeAsync(StateHasChanged);
         }
 
+
+        public void ProductionOrdersOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.ProductionOrderID = Guid.Empty;
+                DataSource.ProductionOrderFicheNo = string.Empty;
+            }
+        }
+
+        public async void ProductionOrdersDoubleClickHandler(RecordDoubleClickEventArgs<ListProductionOrdersDto> args)
+        {
+            var selectedOrder = args.RowData;
+
+            if (selectedOrder != null)
+            {
+                DataSource.ProductionOrderID = selectedOrder.Id;
+                DataSource.ProductionOrderFicheNo = selectedOrder.FicheNo;
+                SelectProductionOrdersPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
         #endregion
 
-        #region Üretim Emirleri
-        public async Task ProductionOrderFiltering(FilteringEventArgs args)
+        #region GetList Metotları
+
+        private async Task GetProductsOperationsList()
         {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await ProductionOrdersComboBox.FilterAsync(ProductionOrdersList, query);
+            ProductsOperationsList = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.ToList();
         }
 
         private async Task GetProductionOrdersList()
@@ -331,61 +452,29 @@ namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityReport
             ProductionOrdersList = (await ProductionOrdersAppService.GetListAsync(new ListProductionOrdersParameterDto())).Data.ToList();
         }
 
-        public async Task ProductionOrderValueChangeHandler(ChangeEventArgs<string, ListProductionOrdersDto> args)
+        private async Task GetEmployeesList()
         {
-            if (args.ItemData != null)
-            {
-                DataSource.ProductionOrderID = args.ItemData.Id;
-                DataSource.ProductionOrderFicheNo = args.ItemData.FicheNo;
-            }
-            else
-            {
-                DataSource.ProductionOrderID = Guid.Empty;
-                DataSource.ProductionOrderFicheNo = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
+            EmployeesList = (await EmployeesAppService.GetListAsync(new ListEmployeesParameterDto())).Data.ToList();
         }
 
-        #endregion
-
-        #region Operasyonlar
-        public async Task ProductsOperationFiltering(FilteringEventArgs args)
+        private async Task GetStationGroupsList()
         {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await ProductsOperationsComboBox.FilterAsync(ProductsOperationsList, query);
+            StationGroupsList = (await StationGroupsAppService.GetListAsync(new ListStationGroupsParameterDto())).Data.ToList();
         }
 
-        private async Task GetProductsOperationsList()
+        private async Task GetStationsList()
         {
-            ProductsOperationsList = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.ToList();
+            StationsList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
         }
 
-        public async Task ProductsOperationValueChangeHandler(ChangeEventArgs<string, ListProductsOperationsDto> args)
+        private async Task GetWorkOrdersList()
         {
-            if (args.ItemData != null)
-            {
-                DataSource.OperationID = args.ItemData.Id;
-                DataSource.OperationName = args.ItemData.Name;
-                DataSource.OperationCode = args.ItemData.Code;
-            }
-            else
-            {
-                DataSource.OperationID = Guid.Empty;
-                DataSource.OperationName = string.Empty;
-                DataSource.OperationCode = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
+            WorkOrdersList = (await WorkOrdersAppService.GetListAsync(new ListWorkOrdersParameterDto())).Data.ToList();
+        }
+
+        private async Task GetProductsList()
+        {
+            ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
         }
 
         #endregion

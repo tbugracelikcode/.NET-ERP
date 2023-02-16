@@ -294,7 +294,7 @@ namespace TsiErp.ErpUI.Pages.Base
         {
             DataSource = new TGetOutputDto();
 
-            ShowEditPage();
+            EditPageVisible = true;
 
             await Task.CompletedTask;
         }

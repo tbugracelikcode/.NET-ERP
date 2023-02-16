@@ -37,7 +37,7 @@ namespace TsiErp.ErpUI.Pages.User
                 IsActive = true
             };
 
-            ShowEditPage();
+            EditPageVisible = true;
 
             return Task.CompletedTask;
         }

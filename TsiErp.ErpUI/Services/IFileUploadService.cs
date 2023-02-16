@@ -7,5 +7,7 @@ namespace TsiErp.ErpUI.Services
         Task<string> UploadTechnicalDrawing(IFileListEntry file, string rootPath, string fileName);
         Task<string> UploadTechnicalDrawingPDF(IFileListEntry file, string rootPath, string fileName);
 
+        string GetRootPath();
+
     }
 }

@@ -1,5 +1,9 @@
-﻿using Syncfusion.Blazor.Data;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
+using Syncfusion.Blazor.Grids;
+using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.Product.Dtos;
 using TsiErp.Entities.Entities.PurchaseOrder.Dtos;
@@ -10,18 +14,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseUnsuitabilityReport
     public partial class PurchaseUnsuitabilityReportsListPage
     {
 
-        #region ComboBox Listeleri
-
-        SfComboBox<string, ListProductsDto> ProductsComboBox;
-        List<ListProductsDto> ProductsList = new List<ListProductsDto>();
-
-        SfComboBox<string, ListPurchaseOrdersDto> PurchaseOrdersComboBox;
-        List<ListPurchaseOrdersDto> PurchaseOrdersList = new List<ListPurchaseOrdersDto>();
-
-        SfComboBox<string, ListCurrentAccountCardsDto> CurrentAccountCardsComboBox;
-        List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
-
-        #endregion
 
         public class UnsComboBox
         {
@@ -41,9 +33,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseUnsuitabilityReport
         {
             BaseCrudService = PurchaseUnsuitabilityReportsService;
 
-            await GetProductsList();
-            await GetPurchaseOrdersList();
-            await GetCurrentAccountCardsList();
         }
 
         private void UnsComboBoxValueChangeHandler(ChangeEventArgs<string, UnsComboBox> args)
@@ -89,27 +78,172 @@ namespace TsiErp.ErpUI.Pages.PurchaseUnsuitabilityReport
                 Date_ = DateTime.Today
             };
 
-            ShowEditPage();
+            EditPageVisible = true;
 
             await Task.CompletedTask;
         }
 
-        #region Ürünler
-        public async Task ProductFiltering(FilteringEventArgs args)
+        #region Stok Kartı Button Edit
+
+        SfTextBox ProductsCodeButtonEdit;
+        SfTextBox ProductsNameButtonEdit;
+        bool SelectProductsPopupVisible = false;
+        List<ListProductsDto> ProductsList = new List<ListProductsDto>();
+        public async Task ProductsCodeOnCreateIcon()
         {
+            var ProductsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductsCodeButtonClickEvent);
+            await ProductsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductsButtonClick } });
+        }
 
-            args.PreventDefaultAction = true;
+        public async void ProductsCodeButtonClickEvent()
+        {
+            SelectProductsPopupVisible = true;
+            await GetProductsList();
+            await InvokeAsync(StateHasChanged);
+        }
+        public async Task ProductsNameOnCreateIcon()
+        {
+            var ProductsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductsNameButtonClickEvent);
+            await ProductsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductsButtonClick } });
+        }
 
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
+        public async void ProductsNameButtonClickEvent()
+        {
+            SelectProductsPopupVisible = true;
+            await GetProductsList();
+            await InvokeAsync(StateHasChanged);
+        }
 
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
+        public void ProductsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.ProductID = Guid.Empty;
+                DataSource.ProductCode = string.Empty;
+                DataSource.ProductName = string.Empty;
+            }
+        }
 
-            await ProductsComboBox.FilterAsync(ProductsList, query);
+        public async void ProductsDoubleClickHandler(RecordDoubleClickEventArgs<ListProductsDto> args)
+        {
+            var selectedProduct = args.RowData;
+
+            if (selectedProduct != null)
+            {
+                DataSource.ProductID = selectedProduct.Id;
+                DataSource.ProductCode = selectedProduct.Code;
+                DataSource.ProductName = selectedProduct.Name;
+                SelectProductsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        #endregion
+
+        #region Satın Alma Siparişleri ButtonEdit
+
+        SfTextBox PurchaseOrdersButtonEdit;
+        bool SelectPurchaseOrdersPopupVisible = false;
+        List<ListPurchaseOrdersDto> PurchaseOrdersList = new List<ListPurchaseOrdersDto>();
+
+        public async Task PurchaseOrdersOnCreateIcon()
+        {
+            var PurchaseOrdersButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, PurchaseOrdersButtonClickEvent);
+            await PurchaseOrdersButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", PurchaseOrdersButtonClick } });
+        }
+
+        public async void PurchaseOrdersButtonClickEvent()
+        {
+            SelectPurchaseOrdersPopupVisible = true;
+            await GetPurchaseOrdersList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+
+        public void PurchaseOrdersOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.OrderID = Guid.Empty;
+                DataSource.OrderFicheNo = string.Empty;
+            }
+        }
+
+        public async void PurchaseOrdersDoubleClickHandler(RecordDoubleClickEventArgs<ListPurchaseOrdersDto> args)
+        {
+            var selectedOrder = args.RowData;
+
+            if (selectedOrder != null)
+            {
+                DataSource.OrderID = selectedOrder.Id;
+                DataSource.OrderFicheNo = selectedOrder.FicheNo;
+                SelectPurchaseOrdersPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        #region Cari Hesap ButtonEdit
+
+        SfTextBox CurrentAccountCardsCodeButtonEdit;
+        SfTextBox CurrentAccountCardsNameButtonEdit;
+        bool SelectCurrentAccountCardsPopupVisible = false;
+        List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
+
+        public async Task CurrentAccountCardsCodeOnCreateIcon()
+        {
+            var CurrentAccountCardsCodeButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CurrentAccountCardsCodeButtonClickEvent);
+            await CurrentAccountCardsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CurrentAccountCardsCodeButtonClick } });
+        }
+
+        public async void CurrentAccountCardsCodeButtonClickEvent()
+        {
+            SelectCurrentAccountCardsPopupVisible = true;
+            await GetCurrentAccountCardsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async Task CurrentAccountCardsNameOnCreateIcon()
+        {
+            var CurrentAccountCardsNameButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CurrentAccountCardsNameButtonClickEvent);
+            await CurrentAccountCardsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CurrentAccountCardsNameButtonClick } });
+        }
+
+        public async void CurrentAccountCardsNameButtonClickEvent()
+        {
+            SelectCurrentAccountCardsPopupVisible = true;
+            await GetCurrentAccountCardsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void CurrentAccountCardsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.CurrentAccountCardID = Guid.Empty;
+                DataSource.CurrentAccountCardCode = string.Empty;
+                DataSource.CurrentAccountCardName = string.Empty;
+            }
+        }
+
+        public async void CurrentAccountCardsDoubleClickHandler(RecordDoubleClickEventArgs<ListCurrentAccountCardsDto> args)
+        {
+            var selectedUnitSet = args.RowData;
+
+            if (selectedUnitSet != null)
+            {
+                DataSource.CurrentAccountCardID = selectedUnitSet.Id;
+                DataSource.CurrentAccountCardCode = selectedUnitSet.Code;
+                DataSource.CurrentAccountCardName = selectedUnitSet.Name;
+                SelectCurrentAccountCardsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        private async Task GetCurrentAccountCardsList()
+        {
+            CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
         }
 
         private async Task GetProductsList()
@@ -117,105 +251,9 @@ namespace TsiErp.ErpUI.Pages.PurchaseUnsuitabilityReport
             ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
         }
 
-        public async Task ProductValueChangeHandler(ChangeEventArgs<string, ListProductsDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                DataSource.ProductID = args.ItemData.Id;
-                DataSource.ProductName = args.ItemData.Name;
-                DataSource.ProductCode = args.ItemData.Code;
-            }
-            else
-            {
-                DataSource.ProductID = Guid.Empty;
-                DataSource.ProductName = string.Empty;
-                DataSource.ProductCode = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-
-        #endregion
-
-        #region Satın Alma Siparişleri
-        public async Task PurchaseOrderFiltering(FilteringEventArgs args)
-        {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await PurchaseOrdersComboBox.FilterAsync(PurchaseOrdersList, query);
-        }
-
         private async Task GetPurchaseOrdersList()
         {
             PurchaseOrdersList = (await PurchaseOrdersAppService.GetListAsync(new ListPurchaseOrdersParameterDto())).Data.ToList();
         }
-
-        public async Task PurchaseOrderValueChangeHandler(ChangeEventArgs<string, ListPurchaseOrdersDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                DataSource.OrderID = args.ItemData.Id;
-                DataSource.OrderFicheNo = args.ItemData.FicheNo;
-            }
-            else
-            {
-                DataSource.OrderID = Guid.Empty;
-                DataSource.OrderFicheNo = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-
-        #endregion
-
-        #region Cari Hesap Kartları
-        public async Task CurrentAccountCardFiltering(FilteringEventArgs args)
-        {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await CurrentAccountCardsComboBox.FilterAsync(CurrentAccountCardsList, query);
-        }
-
-        private async Task GetCurrentAccountCardsList()
-        {
-            CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
-        }
-
-        public async Task CurrentAccountCardValueChangeHandler(ChangeEventArgs<string, ListCurrentAccountCardsDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                DataSource.CurrentAccountCardID = args.ItemData.Id;
-                DataSource.CurrentAccountCardName = args.ItemData.Name;
-                DataSource.CurrentAccountCardCode = args.ItemData.Code;
-            }
-            else
-            {
-                DataSource.CurrentAccountCardID = Guid.Empty;
-                DataSource.CurrentAccountCardName = string.Empty;
-                DataSource.CurrentAccountCardCode = string.Empty;
-            }
-            await InvokeAsync(StateHasChanged);
-        }
-
-        #endregion
     }
 }

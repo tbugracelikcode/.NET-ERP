@@ -23,7 +23,7 @@ namespace TsiErp.ErpUI.Pages.CustomerComplaintItem
                 IsActive = true
             };
 
-            ShowEditPage();
+            EditPageVisible = true;
 
             return Task.CompletedTask;
         }

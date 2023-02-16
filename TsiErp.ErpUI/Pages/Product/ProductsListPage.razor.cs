@@ -101,6 +101,7 @@ namespace TsiErp.ErpUI.Pages.Product
         ModalManager ModalManager { get; set; }
 
         private SfGrid<SelectTechnicalDrawingsDto> _TechnicalDrawingGrid;
+        private SfGrid<SelectTechnicalDrawingsDto> _TechnicalDrawingChangeGrid;
         private SfGrid<SelectProductReferanceNumbersDto> _ProductReferanceNumberGrid;
         private SfGrid<SelectSalesPriceLinesDto> _SalesPriceLineGrid;
         private SfGrid<SelectPurchasePriceLinesDto> _PurchasePriceLineGrid;
@@ -113,6 +114,7 @@ namespace TsiErp.ErpUI.Pages.Product
         #region Değişkenler
 
         public bool TechnicalDrawingsCrudPopup = false;
+        public bool TechnicalDrawingsChangedCrudPopup = false;
         public bool TechnicalDrawingsPopup = false;
 
         public bool ProductReferanceNumbersCrudPopup = false;
@@ -133,6 +135,8 @@ namespace TsiErp.ErpUI.Pages.Product
         List<string> Drawers = new List<string>();
 
         List<IFileListEntry> files = new List<IFileListEntry>();
+
+        List<System.IO.FileInfo> uploadedfiles = new List<System.IO.FileInfo>();
 
         bool disable;
 
@@ -288,7 +292,20 @@ namespace TsiErp.ErpUI.Pages.Product
 
                 case "changed":
                     TechnicalDrawingsDataSource = args.RowInfo.RowData;
-                    TechnicalDrawingsCrudPopup = true;
+                    string rootpath = FileUploadService.GetRootPath();
+                    string technicalDrawingPath = @"\UploadedFiles\TechnicalDrawings\" + DataSource.Id + "-" + DataSource.Code + @"\" + TechnicalDrawingsDataSource.Id + @"\";
+                    DirectoryInfo technicalDrawing = new DirectoryInfo(rootpath + technicalDrawingPath);
+                    if(technicalDrawing.Exists)
+                    {
+                        System.IO.FileInfo[] exactFilesTechnicalDrawing = technicalDrawing.GetFiles();
+
+                        foreach(System.IO.FileInfo fileinfo in exactFilesTechnicalDrawing)
+                        {
+                            uploadedfiles.Add(fileinfo);
+                        }
+
+                    }
+                    TechnicalDrawingsChangedCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -404,6 +421,11 @@ namespace TsiErp.ErpUI.Pages.Product
         public void HideTechnicalDrawingCrudPopup()
         {
             TechnicalDrawingsCrudPopup = false;
+        }
+
+        public void HideTechnicalDrawingChangedCrudPopup()
+        {
+            TechnicalDrawingsChangedCrudPopup = false;
         }
 
         public void HideTechnicalDrawingPopup()
@@ -621,7 +643,7 @@ namespace TsiErp.ErpUI.Pages.Product
                     BillsofMaterialsDataSource = (await BillsofMaterialsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     BillsofMaterialLinesList = BillsofMaterialsDataSource.SelectBillsofMaterialLines;
 
-                    foreach (var item in BillsofMaterialLinesList)
+                    foreach (SelectBillsofMaterialLinesDto item in BillsofMaterialLinesList)
                     {
                         item.FinishedProductCode = BillsofMaterialsDataSource.FinishedProductCode;
                         item.ProductCode = (await ProductService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
@@ -671,7 +693,7 @@ namespace TsiErp.ErpUI.Pages.Product
                     RoutesDataSource = (await RoutesAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     RouteLinesList = RoutesDataSource.SelectRouteLines;
 
-                    foreach (var item in RouteLinesList)
+                    foreach (SelectRouteLinesDto item in RouteLinesList)
                     {
                         item.ProductCode = DataSource.Code;
                         item.ProductName = DataSource.Name;
@@ -742,6 +764,19 @@ namespace TsiErp.ErpUI.Pages.Product
             InvokeAsync(() => StateHasChanged());
         }
 
+        private void RemoveUploaded(System.IO.FileInfo file)
+        {
+            string technicalDrawingPath = @"\UploadedFiles\TechnicalDrawings\" + DataSource.Id + "-" + DataSource.Code + @"\" + TechnicalDrawingsDataSource.Id + @"\";
+
+            if(File.Exists(Path.Combine(technicalDrawingPath, file.Name)))
+            {
+                File.Delete(Path.Combine(technicalDrawingPath, file.Name));
+                uploadedfiles.Remove(file);
+            }
+
+            InvokeAsync(() => StateHasChanged());
+        }
+
         private async void PreviewImage(IFileListEntry file)
         {
             string format = file.Type;
@@ -768,15 +803,56 @@ namespace TsiErp.ErpUI.Pages.Product
 
             else if (format == "application/pdf")
             {
-                string rootPath = "tempFiles/";
+                string tempPath = "tempFiles/";
 
-                PDFrootPath = "wwwroot/" + rootPath + file.Name;
+                string rootpath = FileUploadService.GetRootPath();
+
+                PDFrootPath = rootpath + tempPath + file.Name;
 
                 PDFFileName = file.Name;
 
                 List<string> _result = new List<string>();
 
-                _result.Add(await FileUploadService.UploadTechnicalDrawingPDF(file, rootPath, PDFFileName));
+                _result.Add(await FileUploadService.UploadTechnicalDrawingPDF(file, tempPath, PDFFileName));
+
+                previewImagePopupTitle = file.Name;
+
+                pdf = true;
+
+                image = false;
+
+                ImagePreviewPopup = true;
+
+            }
+
+
+            await InvokeAsync(() => StateHasChanged());
+
+        }
+
+        private async void PreviewUploadedImage(System.IO.FileInfo file)
+        {
+            string format = file.Extension;
+
+            string rootpath = FileUploadService.GetRootPath();
+
+            if (format == ".jpg" || format == ".jpeg" || format == ".png")
+            {
+                imageDataUri = @"\UploadedFiles\TechnicalDrawings\" + DataSource.Id + "-" + DataSource.Code + @"\" + TechnicalDrawingsDataSource.Id + @"\" + file.Name;
+
+                image = true;
+
+                pdf = false;
+
+                ImagePreviewPopup = true;
+            }
+
+            else if (format == ".pdf")
+            {
+
+                PDFrootPath =   "/UploadedFiles/TechnicalDrawings/" + DataSource.Id + "-" + DataSource.Code + "/" + TechnicalDrawingsDataSource.Id + "/" + file.Name;
+
+                PDFFileName = file.Name;
 
                 previewImagePopupTitle = file.Name;
 

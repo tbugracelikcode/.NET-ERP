@@ -280,7 +280,7 @@ namespace TsiErp.ErpUI.Pages.ProductionTracking
             DataSource.SelectProductionTrackingHaltLines = new List<SelectProductionTrackingHaltLinesDto>();
             GridLineList = DataSource.SelectProductionTrackingHaltLines;
 
-            ShowEditPage();
+            EditPageVisible = true;
 
 
             await Task.CompletedTask;

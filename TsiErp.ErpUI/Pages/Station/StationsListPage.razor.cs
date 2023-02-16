@@ -38,6 +38,7 @@ namespace TsiErp.ErpUI.Pages.Station
         public async void StationGroupButtonClickEvent()
         {
             SelectStationGroupPopupVisible = true;
+            StationGroupList = (await StationGroupsService.GetListAsync(new ListStationGroupsParameterDto())).Data.ToList();
             await InvokeAsync(StateHasChanged);
         }
 
@@ -65,8 +66,50 @@ namespace TsiErp.ErpUI.Pages.Station
 
         #endregion
 
+        #region Stok ButtonEdit
 
-        SfComboBox<string, ListProductsDto> ProductsComboBox;
+        SfTextBox ProductButtonEdit;
+        bool SelectProductPopupVisible = false;
+        List<ListProductsDto> ProductList = new List<ListProductsDto>();
+
+        public async Task ProductOnCreateIcon()
+        {
+            var ProductButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductButtonClickEvent);
+            await ProductButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductButtonClick } });
+        }
+
+        public async void ProductButtonClickEvent()
+        {
+            SelectProductPopupVisible = true;
+            ProductList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void ProductOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                InventoryDataSource.ProductID = Guid.Empty;
+                InventoryDataSource.ProductCode = string.Empty;
+            }
+        }
+
+        public async void ProductDoubleClickHandler(RecordDoubleClickEventArgs<ListProductsDto> args)
+        {
+            var selectedProduct = args.RowData;
+
+            if (selectedProduct != null)
+            {
+                InventoryDataSource.ProductID = selectedProduct.Id;
+                InventoryDataSource.ProductCode = selectedProduct.Code;
+                SelectProductPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        #endregion
+
+
         List<ListProductsDto> ProductsList = new List<ListProductsDto>();
 
     
@@ -86,12 +129,13 @@ namespace TsiErp.ErpUI.Pages.Station
 
         protected override async void OnInitialized()
         {
+            BaseCrudService = StationsService;
+
+
             CreateLineContextMenuItems();
             CreateMainContextMenuItems();
 
-            await GetProductsList();
 
-            BaseCrudService = StationsService;
         }
 
         protected void CreateMainContextMenuItems()
@@ -162,9 +206,11 @@ namespace TsiErp.ErpUI.Pages.Station
                 IsActive = true
             };
 
+            DataSource.SelectStationInventoriesDto = new List<SelectStationInventoriesDto>();
+
             InventoryList = DataSource.SelectStationInventoriesDto;
 
-            ShowEditPage();
+            EditPageVisible=true;
 
         }
 
@@ -225,14 +271,20 @@ namespace TsiErp.ErpUI.Pages.Station
                 else
                 {
                     line = InventoryDataSource;
+
                     await ModalManager.WarningPopupAsync("Uyarı", "Envanterde aynı stok kodlu bir satır bulunmaktadır.");
+
                     InventoryDataSource = new SelectStationInventoriesDto();
+
                     await _InventoryGrid.Refresh();
                 }
             }
             else
             {
                 InventoryList.Add(InventoryDataSource);
+
+                InventoryDataSource = new SelectStationInventoriesDto();
+
                 await _InventoryGrid.Refresh();
 
             }
@@ -285,44 +337,11 @@ namespace TsiErp.ErpUI.Pages.Station
                 SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
         }
 
-        #region Ürünler 
-
-        public async Task ProductFiltering(FilteringEventArgs args)
-        {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await ProductsComboBox.FilterAsync(ProductsList, query);
-        }
+        #region GetList Metotları 
 
         private async Task GetProductsList()
         {
             ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
-        }
-
-        public async Task ProductValueChangeHandler(ChangeEventArgs<string, ListProductsDto> args)
-        {
-            if (args.ItemData != null)
-            {
-                InventoryDataSource.ProductID = args.ItemData.Id;
-                InventoryDataSource.ProductCode = args.ItemData.Code; ;
-            }
-            else
-            {
-                InventoryDataSource.ProductID = Guid.Empty;
-                InventoryDataSource.ProductCode = string.Empty;
-            }
-            LineCalculate();
-            await InvokeAsync(StateHasChanged);
         }
 
         #endregion

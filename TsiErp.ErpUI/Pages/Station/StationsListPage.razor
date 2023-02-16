@@ -296,46 +296,7 @@ else
                                                         <Template>
                                                             <br />
                                                             <label class="TSIModalLabel"><strong>Stok Kodu: </strong></label>
-                                                            <SfComboBox @ref="ProductsComboBox"
-                                                                    TValue="string"
-                                                                    TItem="ListProductsDto"
-                                                                    Placeholder="Stok Seçiniz"
-                                                                    CssClass="e-multi-column"
-                                                                    Value="@InventoryDataSource.ProductCode"
-                                                                    DataSource="@ProductsList"
-                                                                    AllowFiltering="true"
-                                                                    PopupWidth="700px"
-                                                                    PopupHeight="500">
-
-                                                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
-
-                                                                <ComboBoxTemplates TItem="ListProductsDto">
-                                                                    <HeaderTemplate>
-                                                                        <table>
-                                                                            <tr>
-                                                                                <th class="e-text-center">Stok Kodu</th>
-                                                                                <th class="e-text-center">Stok Açıklaması</th>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate Context="cmbContext">
-
-                                                                        <table>
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td class="e-text-center">@((cmbContext as ListProductsDto).Code)</td>
-                                                                                    <td class="e-text-center">@((cmbContext as ListProductsDto).Name)</td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </ItemTemplate>
-                                                                </ComboBoxTemplates>
-
-                                                                <ComboBoxEvents TValue="string"
-                                                                            TItem="ListProductsDto"
-                                                                            Filtering="ProductFiltering"
-                                                                            ValueChange="ProductValueChangeHandler"></ComboBoxEvents>
-                                                            </SfComboBox>
+                                                              <SfTextBox @ref="@ProductButtonEdit" Created="@ProductOnCreateIcon" @bind-Value="InventoryDataSource.ProductCode" ShowClearButton=true ValueChange="ProductOnValueChange"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -442,6 +403,60 @@ else
                                                 <GridColumn Field=@nameof(ListStationGroupsDto.Code) HeaderText="İŞ İSTASYON GRUBU KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                                 <GridColumn Field=@nameof(ListStationGroupsDto.Name) HeaderText="İŞ İSTASYON GRUBU AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                                 <GridColumn Field=@nameof(ListStationGroupsDto.TotalEmployees) Type="ColumnType.Number" HeaderText="TOPLAM ÇALIŞAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                            </GridColumns>
+                                        </SfGrid>
+                                    </CardContent>
+                                    <CardFooter>
+                                    </CardFooter>
+                                </SfCard>
+                            </Template>
+                        </DxGridLayoutItem>
+                    </GridLayoutItems>
+                </DevGridLayout>
+
+            </BodyTemplate>
+            <FooterContentTemplate>
+                @*<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>*@
+            </FooterContentTemplate>
+        </DxPopup>
+    }
+
+    @if (SelectProductPopupVisible)
+    {
+        <DxPopup @bind-Visible="SelectProductPopupVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Stok Kartları"
+         Width="64%"
+         Height="44%"
+         MinWidth="1220px"
+         MinHeight="470px"
+         HeaderCssClass="HeaderTitleCss">
+            <BodyTemplate>
+
+                <DevGridLayout ColumnCount="1" RowCount="1">
+                    <GridLayoutItems>
+                       
+                        <DxGridLayoutItem Row="1" Column="1">
+                            <Template>
+                                <SfCard class="TSIWorkStationGroupPopUpCard">
+
+                                    <CardContent>
+                                        <SfGrid ID="ProductGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ProductList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                        AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                            <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                            <GridEvents OnRecordDoubleClick="@ProductDoubleClickHandler" TValue="ListProductsDto"></GridEvents>
+                                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                            <GridPageSettings PageSizes="true"></GridPageSettings>
+                                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                            <GridColumns>
+                                                <GridColumn Field=@nameof(ListProductsDto.Code) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                <GridColumn Field=@nameof(ListProductsDto.Name) HeaderText="STOK AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                             </GridColumns>
                                         </SfGrid>

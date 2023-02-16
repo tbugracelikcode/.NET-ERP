@@ -144,22 +144,28 @@ else
 
                     <DxGridLayoutItem Row="1" Column="5">
                         <Template>
+                            <center>
                             <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
                             <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                            </center>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
+                            <center>
                             <label class="TSIModalLabel"><strong>Onay: </strong></label><br />
                             <SfSwitch @bind-Checked="DataSource.Approval"></SfSwitch>
+                            </center>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
+                            <center>
                             <label class="TSIModalLabel"><strong>Teknik Onay: </strong></label><br />
                             <SfSwitch @bind-Checked="DataSource.TechnicalApproval"></SfSwitch>
+                            </center>
                         </Template>
                     </DxGridLayoutItem>
 

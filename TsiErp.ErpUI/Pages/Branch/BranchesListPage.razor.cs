@@ -24,7 +24,7 @@ namespace TsiErp.ErpUI.Pages.Branch
                 IsActive = true
             };
 
-            ShowEditPage();
+            EditPageVisible = true;
 
             return Task.CompletedTask;
         }

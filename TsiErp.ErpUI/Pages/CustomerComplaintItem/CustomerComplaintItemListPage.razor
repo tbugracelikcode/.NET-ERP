@@ -128,22 +128,28 @@ else
                                 <SfNumericTextBox Min="0" TValue="int" @bind-Value="@DataSource.Detection" CssClass="TSITxtBox"></SfNumericTextBox>
                             </Template>
                         </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="2" Column="1">
+                         <DxGridLayoutItem Row="2" Column="1">
                             <Template>
+                            <center>
                                 <label class="TSIModalLabel"><strong>İstasyon Verimlilik Analizi: </strong></label><br />
                                 <SfSwitch @bind-Checked="DataSource.StaProductivityAnalysis"></SfSwitch>
+                                </center>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="2" Column="3">
                             <Template>
+                            <center>
                                 <label class="TSIModalLabel"><strong>Personel Verimlilik Analizi: </strong></label><br />
                                 <SfSwitch @bind-Checked="DataSource.PerProductivityAnalysis"></SfSwitch>
+                                </center>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="2" Column="5">
                             <Template>
+                            <center>
                                 <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
                                 <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                                </center>
                             </Template>
                         </DxGridLayoutItem>
 

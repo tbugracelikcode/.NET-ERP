@@ -22,7 +22,7 @@ namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityItem
                 IsActive = true
             };
 
-            ShowEditPage();
+            EditPageVisible = true;
 
             return Task.CompletedTask;
         }

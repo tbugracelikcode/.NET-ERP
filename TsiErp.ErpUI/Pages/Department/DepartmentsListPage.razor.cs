@@ -21,8 +21,7 @@ namespace TsiErp.ErpUI.Pages.Department
                 IsActive = true
             };
 
-            ShowEditPage();
-
+            EditPageVisible = true;
             return Task.CompletedTask;
         }
 

@@ -95,7 +95,7 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
             DataSource.SelectBillsofMaterialLines = new List<SelectBillsofMaterialLinesDto>();
             GridLineList = DataSource.SelectBillsofMaterialLines;
 
-            ShowEditPage();
+            EditPageVisible = true;
 
 
             await Task.CompletedTask;

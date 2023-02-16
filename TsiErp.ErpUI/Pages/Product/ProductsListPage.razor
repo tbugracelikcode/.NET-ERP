@@ -276,7 +276,7 @@ else
                                                         <Template>
                                                             <br />
                                                             <label class="TSIModalLabel"><strong>Stok Boyu : </strong></label><br />
-                                                            <SfNumericTextBox TValue="decimal" @bind-Value="DataSource.ProductSize" Placeholder="Stok Boyunu Yazınız."></SfNumericTextBox>
+                                                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.ProductSize" Placeholder="Stok Boyunu Yazınız."></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -298,7 +298,7 @@ else
                                                     <DxGridLayoutItem Row="1" Column="2">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong> Testere Fire: </strong></label><br />
-                                                            <SfNumericTextBox TValue="decimal" @bind-Value="DataSource.SawWastage" Placeholder=" Testere Fireyi Yazınız."></SfNumericTextBox>
+                                                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.SawWastage" Placeholder=" Testere Fireyi Yazınız."></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -312,14 +312,14 @@ else
                                                     <DxGridLayoutItem Row="1" Column="6">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>Satış KDV: </strong></label>
-                                                            <SfNumericTextBox @bind-Value="DataSource.SaleVAT" Placeholder="Satış KDV Yazınız."></SfNumericTextBox>
+                                                            <SfNumericTextBox Min="0" @bind-Value="DataSource.SaleVAT" Placeholder="Satış KDV Yazınız."></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="2" Column="0">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>Satın Alma KDV: </strong></label>
-                                                            <SfNumericTextBox @bind-Value="DataSource.PurchaseVAT" Placeholder="Satın Alma KDV Yazınız."></SfNumericTextBox>
+                                                            <SfNumericTextBox Min="0" @bind-Value="DataSource.PurchaseVAT" Placeholder="Satın Alma KDV Yazınız."></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -333,49 +333,53 @@ else
                                                     <DxGridLayoutItem Row="2" Column="4">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>OemRefNo: </strong></label><br />
-                                                            <SfTextBox @bind-Value="DataSource.OemRefNo" Placeholder=" OemRefNo Yazınız."></SfTextBox>
+                                                            <SfTextBox @bind-Value="DataSource.OemRefNo" ></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="2" Column="6">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>OemRefNo2: </strong></label><br />
-                                                            <SfTextBox @bind-Value="DataSource.OemRefNo2" Placeholder=" OemRefNo Yazınız."></SfTextBox>
+                                                            <SfTextBox @bind-Value="DataSource.OemRefNo2" ></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="3" Column="0">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>OemRefNo3: </strong></label><br />
-                                                            <SfTextBox @bind-Value="DataSource.OemRefNo3" Placeholder=" OemRefNo Yazınız."></SfTextBox>
+                                                            <SfTextBox @bind-Value="DataSource.OemRefNo3"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="3" Column="2">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>Planlanan Fire: </strong></label>
-                                                            <SfNumericTextBox @bind-Value="DataSource.PlannedWastage" Placeholder="Planlanan Fireyi Yazınız."></SfNumericTextBox>
+                                                            <SfNumericTextBox Min="0"  @bind-Value="DataSource.PlannedWastage" Placeholder="Planlanan Fireyi Yazınız."></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="3" Column="4">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>Kaplama Ağırlığı: </strong></label><br />
-                                                            <SfNumericTextBox TValue="decimal" @bind-Value="DataSource.CoatingWeight" Placeholder=" Kaplama Ağırlığını Yazınız."></SfNumericTextBox>
+                                                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="DataSource.CoatingWeight" Placeholder=" Kaplama Ağırlığını Yazınız."></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="3" Column="6">
                                                         <Template>
+                                                            <center>
                                                             <label class="TSIModalLabel"><strong>Onay: </strong></label><br />
                                                             <SfSwitch @bind-Checked="DataSource.Confirmation"></SfSwitch>
+                                                            </center>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="4" Column="0">
                                                         <Template>
+                                                            <center>
                                                             <label class="TSIModalLabel"><strong>Teknik Onay: </strong></label><br />
                                                             <SfSwitch @bind-Checked="DataSource.TechnicalConfirmation"></SfSwitch>
+                                                            </center>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -600,6 +604,186 @@ else
         <FooterContentTemplate>
             <SfButton CssClass="TSISaveButton" OnClick="OnTechnicalDrawingSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HideTechnicalDrawingCrudPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+
+      <DxPopup @bind-Visible="TechnicalDrawingsChangedCrudPopup"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Teknik Resim İşlemleri"
+         Width="53%"
+         Height="76%"
+         MinWidth="910px"
+         MinHeight="850px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DxGridLayout CssClass="TSIGridLayout">
+                <Rows>
+                    <DxGridLayoutRow Height="16%" />
+                    <DxGridLayoutRow Height="12%" />
+                    <DxGridLayoutRow Height="12%" />
+                    <DxGridLayoutRow Height="12%" />
+                    <DxGridLayoutRow Height="12%" />
+                    <DxGridLayoutRow Height="18%" />
+                    <DxGridLayoutRow Height="18%" />
+                </Rows>
+                <Columns>
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="27%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="27%" />
+                    <DxGridLayoutColumn Width="4%" />
+                    <DxGridLayoutColumn Width="27%" />
+                    <DxGridLayoutColumn Width="4%" />
+                </Columns>
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>Revizyon Numarası: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="TechnicalDrawingsDataSource.RevisionNo" Placeholder="Revizyon Numarasını Yazınız."></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <br />
+                            <center>
+                                <label class="TSIModalLabel"><strong>Müşteri Teknik Onayı: </strong></label><br />
+                                <SfSwitch @bind-Checked="TechnicalDrawingsDataSource.CustomerApproval"></SfSwitch>
+                            </center>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="5" RowSpan="3">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>Açıklama: </strong></label><br />
+                            <SfTextBox Multiline=true CssClass="TSIMemoBox57" @bind-Value="TechnicalDrawingsDataSource.Description_" Placeholder="Açıklama Yazınız."></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Revizyon Tarihi: </strong></label><br />
+                            <SfDatePicker @bind-Value="TechnicalDrawingsDataSource.RevisionDate"></SfDatePicker>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="3">
+                        <Template>
+                            <center>
+                                <label class="TSIModalLabel"><strong>AR-EKS Onayı: </strong></label><br />
+                                <SfSwitch @bind-Checked="TechnicalDrawingsDataSource.IsApproved"></SfSwitch>
+                            </center>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Çizen: </strong></label>
+                            <SfComboBox Placeholder="Çizeni Yazınız." @bind-Value=TechnicalDrawingsDataSource.Drawer DataSource="@Drawers">
+                            </SfComboBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="3">
+                        <Template>
+                            <center>
+                                <label class="TSIModalLabel"><strong>Numune Onayı: </strong></label><br />
+                                <SfSwitch @bind-Checked="TechnicalDrawingsDataSource.SampleApproval"></SfSwitch>
+                            </center>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Çizim Numarası: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="TechnicalDrawingsDataSource.DrawingNo" Placeholder="Çizim Numarasını Yazınız."></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="3">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Stok Kodu: </strong></label><br />
+                            <SfTextBox @bind-Value="TechnicalDrawingsDataSource.ProductCode" Enabled=false></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Stok Açıklaması: </strong></label><br />
+                            <SfTextBox @bind-Value="TechnicalDrawingsDataSource.ProductName" Enabled=false></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="4" Column="1">
+                        <Template>
+                            <br />
+                            <center>
+                                <div style="color:transparent">
+                                    <BlazorInputFile.InputFile OnChange="@HandleFileSelectedTechnicalDrawing" />
+                                </div>
+                            </center>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="5" Column="1" ColumnSpan="5">
+                        <Template>
+                             <label class="TSIModalLabel"><strong>Yüklenecek Dosyalar: </strong></label><br />
+                            @{
+                                if (files.Count != 0)
+                                {
+                                    <div class="TSI_Paper">
+
+                                        @foreach (var file in files)
+                                        {
+                                            <div class="TSI_Chip"><span onclick="@(()=>PreviewImage(file))">@file.Name</span>&nbsp; <SfIcon onclick="@(()=>Remove(file))" Name="IconName.Trash"></SfIcon></div>
+                                        }
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    <label class="TSIModalLabel"><strong>Dosya Yok.</strong></label>
+                                }
+                            }
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="6" Column="1" ColumnSpan="5">
+                        <Template>
+                             <label class="TSIModalLabel"><strong>Yüklenmiş Dosyalar: </strong></label><br />
+                            @{
+                                if (uploadedfiles.Count != 0)
+                                {
+                                    <div class="TSI_Paper">
+
+                                        @foreach (var file in uploadedfiles)
+                                        {
+                                            <div class="TSI_Chip"><span onclick="@(()=>PreviewUploadedImage(file))">@file.Name</span>&nbsp; <SfIcon onclick="@(()=>RemoveUploaded(file))" Name="IconName.Trash"></SfIcon></div>
+                                        }
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    <label class="TSIModalLabel"><strong>Dosya Yok.</strong></label>
+                                }
+                            }
+                        </Template>
+                    </DxGridLayoutItem>
+
+
+
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnTechnicalDrawingSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideTechnicalDrawingChangedCrudPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 

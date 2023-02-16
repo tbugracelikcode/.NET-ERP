@@ -25,7 +25,7 @@ namespace TsiErp.ErpUI.Pages.MaintenancePeriod
                 IsActive = true
             };
 
-            ShowEditPage();
+            EditPageVisible = true;
 
             return Task.CompletedTask;
         }
