@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Utilities.Results;
 
-namespace Tsi.Application.Contract.Services.EntityFrameworkCore
+namespace Tsi.Core.Services.BusinessCoreServices
 {
     public interface ICreateAppService<TGetOutputDto, in TCreateInput> : IApplicationService
     {

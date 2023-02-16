@@ -19,8 +19,7 @@ using Blazored.Modal;
 using Blazored.Modal.Services;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 using Microsoft.EntityFrameworkCore;
-using Tsi.Blazor.Component.Core.TsiComponents.Extensions;
-using Tsi.Application.Contract.Services.EntityFrameworkCore;
+using Tsi.Core.Services.BusinessCoreServices;
 using TsiErp.ErpUI.Services;
 
 var builder = WebApplication.CreateBuilder(args);

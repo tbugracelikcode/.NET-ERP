@@ -22,7 +22,7 @@ using TsiErp.Entities.Entities.SalesPropositionLine;
 using Tsi.Core.Entities;
 using TsiErp.Business.Entities.SalesProposition.BusinessRules;
 using Microsoft.EntityFrameworkCore;
-using Tsi.Application.Contract.Services.EntityFrameworkCore;
+using Tsi.Core.Services.BusinessCoreServices;
 using Tsi.Core.Utilities.Guids;
 using TsiErp.Entities.Enums;
 using TsiErp.Entities.Entities.SalesOrderLine.Dtos;

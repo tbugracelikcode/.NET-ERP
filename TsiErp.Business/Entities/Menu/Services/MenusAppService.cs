@@ -1,4 +1,4 @@
-﻿using Tsi.Application.Contract.Services.EntityFrameworkCore;
+﻿using Tsi.Core.Services.BusinessCoreServices;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;

@@ -20,7 +20,7 @@ using TsiErp.Business.Entities.Shift.BusinessRules;
 using TsiErp.Entities.Entities.Shift.Dtos;
 using TsiErp.Entities.Entities.Shift;
 using Tsi.Core.Utilities.Guids;
-using Tsi.Application.Contract.Services.EntityFrameworkCore;
+using Tsi.Core.Services.BusinessCoreServices;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.Entities.Entities.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.WorkOrder;

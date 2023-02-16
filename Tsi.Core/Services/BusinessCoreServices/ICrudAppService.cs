@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Tsi.Application.Contract.Services.EntityFrameworkCore
+namespace Tsi.Core.Services.BusinessCoreServices
 {
     public interface ICrudAppService< TGetOutputDto, TGetListOutputDto, in TCreateInput, in TUpdateInput, in TGetListInput> :
         ICreateAppService<TGetOutputDto, TCreateInput>,

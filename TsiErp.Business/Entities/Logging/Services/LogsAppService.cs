@@ -1,13 +1,13 @@
-﻿using Newtonsoft.Json;
-using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+﻿using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using Tsi.Core.Utilities.IoC;
 using Microsoft.Extensions.DependencyInjection;
 using Tsi.Core.Utilities.Guids;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Logging;
 using TsiErp.Entities.Entities.Logging.Dtos;
 using TsiErp.Entities.Entities.Logging;
-using Tsi.Application.Contract.Services.EntityFrameworkCore;
+using Tsi.Core.Services.BusinessCoreServices;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using Newtonsoft.Json;
 
 namespace TsiErp.Business.Entities.Logging.Services
 {
