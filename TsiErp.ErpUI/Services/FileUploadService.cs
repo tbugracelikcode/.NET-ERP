@@ -11,6 +11,12 @@ namespace TsiErp.ErpUI.Services
             _webHostEnvironment = webHostEnvironment;
         }
 
+        public string GetRootPath()
+        {
+            string rootpath = _webHostEnvironment.WebRootPath;
+            return rootpath;
+        }
+
         public async Task<string> UploadTechnicalDrawing(IFileListEntry file, string rootPath, string fileName)
         {
             string result = "";

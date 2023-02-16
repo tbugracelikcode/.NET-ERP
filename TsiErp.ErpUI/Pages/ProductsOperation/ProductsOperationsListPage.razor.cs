@@ -213,7 +213,7 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
             DataSource.SelectProductsOperationLines = new List<SelectProductsOperationLinesDto>();
             GridLineList = DataSource.SelectProductsOperationLines;
 
-            ShowEditPage();
+            EditPageVisible = true;
 
 
             await Task.CompletedTask;

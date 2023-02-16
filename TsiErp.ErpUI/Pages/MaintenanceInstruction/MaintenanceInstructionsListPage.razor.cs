@@ -230,7 +230,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceInstruction
             DataSource.SelectMaintenanceInstructionLines = new List<SelectMaintenanceInstructionLinesDto>();
             GridLineList = DataSource.SelectMaintenanceInstructionLines;
 
-            ShowEditPage();
+            EditPageVisible = true;
 
             await Task.CompletedTask;
         }

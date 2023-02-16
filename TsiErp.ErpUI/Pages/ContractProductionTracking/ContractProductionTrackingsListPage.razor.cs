@@ -55,7 +55,7 @@ namespace TsiErp.ErpUI.Pages.ContractProductionTracking
             DataSource.OperationStartDate = _date;
             DataSource.OperationEndDate = null;
 
-            ShowEditPage();
+            EditPageVisible = true;
 
 
             await Task.CompletedTask;

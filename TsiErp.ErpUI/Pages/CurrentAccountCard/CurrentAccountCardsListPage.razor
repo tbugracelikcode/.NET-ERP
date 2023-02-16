@@ -169,7 +169,7 @@ else
                                                         <Template>
                                                             <br />
                                                             <label class="TSIModalLabel"><strong>Artı Yüzde Oran: </strong></label>
-                                                            <SfNumericTextBox Placeholder="Artı Yüzde Oranı Yazınız" @bind-Value="DataSource.PlusPercentage"></SfNumericTextBox>
+                                                            <SfNumericTextBox Min="0" Placeholder="Artı Yüzde Oranı Yazınız" @bind-Value="DataSource.PlusPercentage"></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -177,7 +177,7 @@ else
                                                         <Template>
                                                             <br />
                                                             <label class="TSIModalLabel"><strong>Tür: </strong></label>
-                                                            <SfNumericTextBox Placeholder="Türü Yazınız." @bind-Value="DataSource.Type"></SfNumericTextBox>
+                                                            <SfNumericTextBox Min="0" Placeholder="Türü Yazınız." @bind-Value="DataSource.Type"></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -248,22 +248,28 @@ else
 
                                                     <DxGridLayoutItem Row="3" Column="0">
                                                         <Template>
+                                                            <center>
                                                             <label class="TSIModalLabel"><strong>Kaplama Müşterisi: </strong></label><br />
                                                             <SfSwitch @bind-Checked="DataSource.CoatingCustomer"></SfSwitch>
+                                                            </center>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="3" Column="2">
                                                         <Template>
+                                                            <center>
                                                             <label class="TSIModalLabel"><strong>Tedarikçi: </strong></label><br />
                                                             <SfSwitch @bind-Checked="@DataSource.Supplier"></SfSwitch>
+                                                            </center>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="3" Column="4">
                                                         <Template>
+                                                            <center>
                                                             <label class="TSIModalLabel"><strong>Fason Tedarikçi: </strong></label><br />
                                                             <SfSwitch @bind-Checked="@DataSource.ContractSupplier"></SfSwitch>
+                                                            </center>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -428,8 +434,10 @@ else
 
                                                     <DxGridLayoutItem Row="3" Column="0">
                                                         <Template>
+                                                            <center>
                                                             <label class="TSIModalLabel"><strong>Şahıs Şirketi: </strong></label><br />
                                                             <SfSwitch @bind-Checked="@DataSource.SoleProprietorship"></SfSwitch>
+                                                            </center>
                                                         </Template>
                                                     </DxGridLayoutItem>
 

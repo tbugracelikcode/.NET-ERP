@@ -135,7 +135,7 @@ else
                             </Template>
                         </DxGridLayoutItem>
                         
-                        <DxGridLayoutItem Row="0" Column="5">
+                        <DxGridLayoutItem Row="2" Column="5">
                             <Template>
                                 <label class="TSIModalLabel"><strong>Tamamlandı: </strong></label><br />
                                 <SfSwitch @bind-Checked="DataSource.IsFinished">
@@ -266,9 +266,11 @@ else
 
                         <DxGridLayoutItem Row="1" Column="1">
                             <Template>
+                                <center>
                                 <label class="TSIModalLabel"><strong>Planlı: </strong></label><br />
                                 <SfSwitch @bind-Checked="LineDataSource.IsPlanned">
                                 </SfSwitch>
+                                </center>
                             </Template>
                         </DxGridLayoutItem>
 
@@ -469,7 +471,7 @@ else
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                         <GridColumns>
                                             <GridColumn Field=@nameof(ListWorkOrdersDto.Code) HeaderText="İŞ EMRİ KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderNo) HeaderText="İŞ EMRİ ADNOI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderNo) HeaderText="İŞ EMRİ NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(ListWorkOrdersDto.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(ListWorkOrdersDto.ProductName) HeaderText="STOK AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         </GridColumns>

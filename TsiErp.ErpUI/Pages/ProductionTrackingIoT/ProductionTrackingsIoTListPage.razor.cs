@@ -86,7 +86,7 @@ namespace TsiErp.ErpUI.Pages.ProductionTrackingIoT
             DataSource.SelectProductionTrackingHaltLines = new List<SelectProductionTrackingHaltLinesDto>();
             GridLineList = DataSource.SelectProductionTrackingHaltLines;
 
-            ShowEditPage();
+            EditPageVisible = true;
 
 
             await Task.CompletedTask;

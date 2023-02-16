@@ -24,7 +24,7 @@ namespace TsiErp.ErpUI.Pages.Currency
                 IsActive = true
             };
 
-            ShowEditPage();
+            EditPageVisible = true;
 
             return Task.CompletedTask;
         }

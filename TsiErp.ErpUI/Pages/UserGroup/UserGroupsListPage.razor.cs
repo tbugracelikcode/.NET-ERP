@@ -21,7 +21,7 @@ namespace TsiErp.ErpUI.Pages.UserGroup
                 IsActive = true
             };
 
-            ShowEditPage();
+            EditPageVisible = true;
 
             return Task.CompletedTask;
         }

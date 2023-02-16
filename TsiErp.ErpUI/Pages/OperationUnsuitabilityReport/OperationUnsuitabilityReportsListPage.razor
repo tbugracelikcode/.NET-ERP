@@ -161,8 +161,10 @@
                         <DxGridLayoutItem Row="0" Column="7">
                             <Template>
                                 <br />
+                                <center>
                                 <label class="TSIModalLabel"><strong>Uygunsuzluk İş Emri Oluşacak: </strong></label><br />
                                 <SfSwitch @bind-Checked="DataSource.IsUnsuitabilityWorkOrder"></SfSwitch>
+                                </center>
                             </Template>
                         </DxGridLayoutItem>
 
@@ -178,494 +180,71 @@
                         <DxGridLayoutItem Row="1" Column="3">
                             <Template>
                                 <label class="TSIModalLabel"><strong>Operasyon Kodu: </strong></label><br />
-                                <SfComboBox @ref="ProductsOperationsComboBox"
-                                    TValue="string"
-                                    TItem="ListProductsOperationsDto"
-                                    Placeholder="Operasyon Seçin"
-                                    CssClass="e-multi-column"
-                                    Value="DataSource.OperationCode"
-                                    DataSource="@ProductsOperationsList"
-                                    AllowFiltering="true"
-                                    PopupWidth="700px"
-                                    PopupHeight="500">
-
-                                    <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
-
-                                    <ComboBoxTemplates TItem="ListProductsOperationsDto">
-                                        <HeaderTemplate>
-                                            <table>
-                                                <tr>
-                                                    <th class="e-text-center">Operasyon Kodu</th>
-                                                    <th class="e-text-center">Operasyon Açıklaması</th>
-                                                </tr>
-                                            </table>
-                                        </HeaderTemplate>
-                                        <ItemTemplate Context="cmbContext">
-
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="e-text-center">@((cmbContext as ListProductsOperationsDto).Code)</td>
-                                                        <td class="e-text-center">@((cmbContext as ListProductsOperationsDto).Name)</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </ItemTemplate>
-                                    </ComboBoxTemplates>
-
-                                    <ComboBoxEvents TValue="string"
-                                            TItem="ListProductsOperationsDto"
-                                            Filtering="ProductsOperationFiltering"
-                                            ValueChange="ProductsOperationValueChangeHandler"></ComboBoxEvents>
-                                </SfComboBox>
+                                <SfTextBox @ref="@ProductsOperationsCodeButtonEdit" Created="@ProductsOperationsCodeOnCreateIcon" @bind-Value="DataSource.OperationCode" ShowClearButton=true ValueChange="ProductsOperationsOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="1" Column="5">
                             <Template>
                                 <label class="TSIModalLabel"><strong>Operasyon Açıklaması: </strong></label><br />
-                                <SfComboBox @ref="ProductsOperationsComboBox"
-                                    TValue="string"
-                                    TItem="ListProductsOperationsDto"
-                                    Placeholder="Operasyon Seçin"
-                                    CssClass="e-multi-column"
-                                    Value="DataSource.OperationName"
-                                    DataSource="@ProductsOperationsList"
-                                    AllowFiltering="true"
-                                    PopupWidth="700px"
-                                    PopupHeight="500">
-
-                                    <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
-
-                                    <ComboBoxTemplates TItem="ListProductsOperationsDto">
-                                        <HeaderTemplate>
-                                            <table>
-                                                <tr>
-                                                    <th class="e-text-center">Operasyon Kodu</th>
-                                                    <th class="e-text-center">Operasyon Açıklaması</th>
-                                                </tr>
-                                            </table>
-                                        </HeaderTemplate>
-                                        <ItemTemplate Context="cmbContext">
-
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="e-text-center">@((cmbContext as ListProductsOperationsDto).Code)</td>
-                                                        <td class="e-text-center">@((cmbContext as ListProductsOperationsDto).Name)</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </ItemTemplate>
-                                    </ComboBoxTemplates>
-
-                                    <ComboBoxEvents TValue="string"
-                                            TItem="ListProductsOperationsDto"
-                                            Filtering="ProductsOperationFiltering"
-                                            ValueChange="ProductsOperationValueChangeHandler"></ComboBoxEvents>
-                                </SfComboBox>
+                                <SfTextBox @ref="@ProductsOperationsNameButtonEdit" Created="@ProductsOperationsNameOnCreateIcon" @bind-Value="DataSource.OperationName" ShowClearButton=true ValueChange="ProductsOperationsOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="1" Column="7">
                             <Template>
                                 <label class="TSIModalLabel"><strong>Ürün Kodu: </strong></label>
-                                <SfComboBox @ref="ProductsComboBox"
-                                    TValue="string"
-                                    TItem="ListProductsDto"
-                                    Placeholder="Ürün Seçin"
-                                    CssClass="e-multi-column"
-                                    Value="DataSource.ProductCode"
-                                    DataSource="@ProductsList"
-                                    AllowFiltering="true"
-                                    PopupWidth="700px"
-                                    PopupHeight="500">
-
-                                    <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
-
-                                    <ComboBoxTemplates TItem="ListProductsDto">
-                                        <HeaderTemplate>
-                                            <table>
-                                                <tr>
-                                                    <th class="e-text-center">Ürün Kodu</th>
-                                                    <th class="e-text-center">Ürün Açıklaması</th>
-                                                </tr>
-                                            </table>
-                                        </HeaderTemplate>
-                                        <ItemTemplate Context="cmbContext">
-
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="e-text-center">@((cmbContext as ListProductsDto).Code)</td>
-                                                        <td class="e-text-center">@((cmbContext as ListProductsDto).Name)</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </ItemTemplate>
-                                    </ComboBoxTemplates>
-
-                                    <ComboBoxEvents TValue="string"
-                                            TItem="ListProductsDto"
-                                            Filtering="ProductFiltering"
-                                            ValueChange="ProductValueChangeHandler"></ComboBoxEvents>
-                                </SfComboBox>
+                                <SfTextBox @ref="@ProductsCodeButtonEdit" Created="@ProductsCodeOnCreateIcon" @bind-Value="DataSource.ProductCode" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="2" Column="1">
                             <Template>
                                 <label class="TSIModalLabel"><strong>Ürün Açıklaması: </strong></label>
-                                <SfComboBox @ref="ProductsComboBox"
-                                    TValue="string"
-                                    TItem="ListProductsDto"
-                                    Placeholder="Ürün Seçin"
-                                    CssClass="e-multi-column"
-                                    Value="DataSource.ProductName"
-                                    DataSource="@ProductsList"
-                                    AllowFiltering="true"
-                                    PopupWidth="700px"
-                                    PopupHeight="500">
-
-                                    <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
-
-                                    <ComboBoxTemplates TItem="ListProductsDto">
-                                        <HeaderTemplate>
-                                            <table>
-                                                <tr>
-                                                    <th class="e-text-center">Ürün Kodu</th>
-                                                    <th class="e-text-center">Ürün Açıklaması</th>
-                                                </tr>
-                                            </table>
-                                        </HeaderTemplate>
-                                        <ItemTemplate Context="cmbContext">
-
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="e-text-center">@((cmbContext as ListProductsDto).Code)</td>
-                                                        <td class="e-text-center">@((cmbContext as ListProductsDto).Name)</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </ItemTemplate>
-                                    </ComboBoxTemplates>
-
-                                    <ComboBoxEvents TValue="string"
-                                            TItem="ListProductsDto"
-                                            Filtering="ProductFiltering"
-                                            ValueChange="ProductValueChangeHandler"></ComboBoxEvents>
-                                </SfComboBox>
+                                <SfTextBox @ref="@ProductsNameButtonEdit" Created="@ProductsNameOnCreateIcon" @bind-Value="DataSource.ProductName" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="2" Column="3">
                             <Template>
                                 <label class="TSIModalLabel"><strong>İş Emri Numarası: </strong></label><br />
-                                <SfComboBox @ref="WorkOrdersComboBox"
-                                    TValue="string"
-                                    TItem="ListWorkOrdersDto"
-                                    Placeholder="İş Emri Seçin"
-                                    CssClass="e-multi-column"
-                                    Value="DataSource.WorkOrderNo"
-                                    DataSource="@WorkOrdersList"
-                                    AllowFiltering="true"
-                                    PopupWidth="700px"
-                                    PopupHeight="500">
-
-                                    <ComboBoxFieldSettings Text="WorkOrderNo" Value="WorkOrderNo"></ComboBoxFieldSettings>
-
-                                    <ComboBoxTemplates TItem="ListWorkOrdersDto">
-                                        <HeaderTemplate>
-                                            <table>
-                                                <tr>
-                                                    <th class="e-text-center">İş Emri No</th>
-                                                </tr>
-                                            </table>
-                                        </HeaderTemplate>
-                                        <ItemTemplate Context="cmbContext">
-
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="e-text-center">@((cmbContext as ListWorkOrdersDto).WorkOrderNo)</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </ItemTemplate>
-                                    </ComboBoxTemplates>
-
-                                    <ComboBoxEvents TValue="string"
-                                            TItem="ListWorkOrdersDto"
-                                            Filtering="WorkOrderFiltering"
-                                            ValueChange="WorkOrderValueChangeHandler"></ComboBoxEvents>
-                                </SfComboBox>
+                                <SfTextBox @ref="@WorkOrdersButtonEdit" Created="@WorkOrdersOnCreateIcon" @bind-Value="DataSource.WorkOrderNo" ShowClearButton=true ValueChange="WorkOrdersOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="2" Column="5">
                             <Template>
                                 <label class="TSIModalLabel"><strong>İstasyon Kodu: </strong></label><br />
-                                <SfComboBox @ref="StationsComboBox"
-                                    TValue="string"
-                                    TItem="ListStationsDto"
-                                    Placeholder="İstasyon Seçin"
-                                    CssClass="e-multi-column"
-                                    Value="DataSource.StationCode"
-                                    DataSource="@StationsList"
-                                    AllowFiltering="true"
-                                    PopupWidth="700px"
-                                    PopupHeight="500">
-
-                                    <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
-
-                                    <ComboBoxTemplates TItem="ListStationsDto">
-                                        <HeaderTemplate>
-                                            <table>
-                                                <tr>
-                                                    <th class="e-text-center">İstasyon Kodu</th>
-                                                    <th class="e-text-center">İstasyon Açıklaması</th>
-                                                </tr>
-                                            </table>
-                                        </HeaderTemplate>
-                                        <ItemTemplate Context="cmbContext">
-
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="e-text-center">@((cmbContext as ListStationsDto).Code)</td>
-                                                        <td class="e-text-center">@((cmbContext as ListStationsDto).Name)</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </ItemTemplate>
-                                    </ComboBoxTemplates>
-
-                                    <ComboBoxEvents TValue="string"
-                                            TItem="ListStationsDto"
-                                            Filtering="StationFiltering"
-                                            ValueChange="StationValueChangeHandler"></ComboBoxEvents>
-                                </SfComboBox>
+                                <SfTextBox @ref="@StationsCodeButtonEdit" Created="@StationsCodeOnCreateIcon" @bind-Value="DataSource.StationCode" ShowClearButton=true ValueChange="StationsOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="2" Column="7">
                             <Template>
                                 <label class="TSIModalLabel"><strong>İstasyon Açıklaması: </strong></label><br />
-                                <SfComboBox @ref="StationsComboBox"
-                                    TValue="string"
-                                    TItem="ListStationsDto"
-                                    Placeholder="İstasyon Seçin"
-                                    CssClass="e-multi-column"
-                                    Value="DataSource.StationName"
-                                    DataSource="@StationsList"
-                                    AllowFiltering="true"
-                                    PopupWidth="700px"
-                                    PopupHeight="500">
-
-                                    <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
-
-                                    <ComboBoxTemplates TItem="ListStationsDto">
-                                        <HeaderTemplate>
-                                            <table>
-                                                <tr>
-                                                    <th class="e-text-center">İstasyon Kodu</th>
-                                                    <th class="e-text-center">İstasyon Açıklaması</th>
-                                                </tr>
-                                            </table>
-                                        </HeaderTemplate>
-                                        <ItemTemplate Context="cmbContext">
-
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="e-text-center">@((cmbContext as ListStationsDto).Code)</td>
-                                                        <td class="e-text-center">@((cmbContext as ListStationsDto).Name)</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </ItemTemplate>
-                                    </ComboBoxTemplates>
-
-                                    <ComboBoxEvents TValue="string"
-                                            TItem="ListStationsDto"
-                                            Filtering="StationFiltering"
-                                            ValueChange="StationValueChangeHandler"></ComboBoxEvents>
-                                </SfComboBox>
+                                 <SfTextBox @ref="@StationsNameButtonEdit" Created="@StationsNameOnCreateIcon" @bind-Value="DataSource.StationName" ShowClearButton=true ValueChange="StationsOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
                         <DxGridLayoutItem Row="3" Column="1">
                             <Template>
                                 <label class="TSIModalLabel"><strong>İstasyon Grup Kodu: </strong></label><br />
-                                <SfComboBox @ref="StationGroupsComboBox"
-                                    TValue="string"
-                                    TItem="ListStationGroupsDto"
-                                    Placeholder="İstasyon Grubu Seçin"
-                                    CssClass="e-multi-column"
-                                    Value="DataSource.StationGroupCode"
-                                    DataSource="@StationGroupsList"
-                                    AllowFiltering="true"
-                                    PopupWidth="700px"
-                                    PopupHeight="500">
-
-                                    <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
-
-                                    <ComboBoxTemplates TItem="ListStationGroupsDto">
-                                        <HeaderTemplate>
-                                            <table>
-                                                <tr>
-                                                    <th class="e-text-center">İstasyon Grup Kodu</th>
-                                                    <th class="e-text-center">İstasyon Grup Açıklaması</th>
-                                                </tr>
-                                            </table>
-                                        </HeaderTemplate>
-                                        <ItemTemplate Context="cmbContext">
-
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="e-text-center">@((cmbContext as ListStationGroupsDto).Code)</td>
-                                                        <td class="e-text-center">@((cmbContext as ListStationGroupsDto).Name)</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </ItemTemplate>
-                                    </ComboBoxTemplates>
-
-                                    <ComboBoxEvents TValue="string"
-                                            TItem="ListStationGroupsDto"
-                                            Filtering="StationGroupFiltering"
-                                            ValueChange="StationGroupValueChangeHandler"></ComboBoxEvents>
-                                </SfComboBox>
+                                <SfTextBox @ref="@StationGroupsCodeButtonEdit" Created="@StationGroupsCodeOnCreateIcon" @bind-Value="DataSource.StationGroupCode" ShowClearButton=true ValueChange="StationGroupsOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
                         <DxGridLayoutItem Row="3" Column="3">
                             <Template>
                                 <label class="TSIModalLabel"><strong>İstasyon Grup Açıklaması: </strong></label><br />
-                                <SfComboBox @ref="StationGroupsComboBox"
-                                    TValue="string"
-                                    TItem="ListStationGroupsDto"
-                                    Placeholder="İstasyon Grubu Seçin"
-                                    CssClass="e-multi-column"
-                                    Value="DataSource.StationGroupName"
-                                    DataSource="@StationGroupsList"
-                                    AllowFiltering="true"
-                                    PopupWidth="700px"
-                                    PopupHeight="500">
-
-                                    <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
-
-                                    <ComboBoxTemplates TItem="ListStationGroupsDto">
-                                        <HeaderTemplate>
-                                            <table>
-                                                <tr>
-                                                    <th class="e-text-center">İstasyon Grup Kodu</th>
-                                                    <th class="e-text-center">İstasyon Grup Açıklaması</th>
-                                                </tr>
-                                            </table>
-                                        </HeaderTemplate>
-                                        <ItemTemplate Context="cmbContext">
-
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="e-text-center">@((cmbContext as ListStationGroupsDto).Code)</td>
-                                                        <td class="e-text-center">@((cmbContext as ListStationGroupsDto).Name)</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </ItemTemplate>
-                                    </ComboBoxTemplates>
-
-                                    <ComboBoxEvents TValue="string"
-                                            TItem="ListStationGroupsDto"
-                                            Filtering="StationGroupFiltering"
-                                            ValueChange="StationGroupValueChangeHandler"></ComboBoxEvents>
-                                </SfComboBox>
+                                <SfTextBox @ref="@StationGroupsNameButtonEdit" Created="@StationGroupsNameOnCreateIcon" @bind-Value="DataSource.StationGroupName" ShowClearButton=true ValueChange="StationGroupsOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
                         <DxGridLayoutItem Row="3" Column="5">
                             <Template>
                                 <label class="TSIModalLabel"><strong>Çalışan Adı: </strong></label><br />
-                                <SfComboBox @ref="EmployeesComboBox"
-                                    TValue="string"
-                                    TItem="ListEmployeesDto"
-                                    Placeholder="Çalışan Seçin"
-                                    CssClass="e-multi-column"
-                                    Value="DataSource.EmployeeName"
-                                    DataSource="@EmployeesList"
-                                    AllowFiltering="true"
-                                    PopupWidth="700px"
-                                    PopupHeight="500">
-
-                                    <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
-
-                                    <ComboBoxTemplates TItem="ListEmployeesDto">
-                                        <HeaderTemplate>
-                                            <table>
-                                                <tr>
-                                                    <th class="e-text-center">Çalışan Adı</th>
-                                                </tr>
-                                            </table>
-                                        </HeaderTemplate>
-                                        <ItemTemplate Context="cmbContext">
-
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="e-text-center">@((cmbContext as ListEmployeesDto).Name)</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </ItemTemplate>
-                                    </ComboBoxTemplates>
-
-                                    <ComboBoxEvents TValue="string"
-                                            TItem="ListEmployeesDto"
-                                            Filtering="EmployeeFiltering"
-                                            ValueChange="EmployeeValueChangeHandler"></ComboBoxEvents>
-                                </SfComboBox>
+                                <SfTextBox @ref="@EmployeesButtonEdit" Created="@EmployeesOnCreateIcon" @bind-Value="DataSource.EmployeeName" ShowClearButton=true ValueChange="EmployeesOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
                         <DxGridLayoutItem Row="3" Column="7">
                             <Template>
                                 <label class="TSIModalLabel"><strong>Üretim Emri Fiş Numarası: </strong></label><br />
-                                <SfComboBox @ref="ProductionOrdersComboBox"
-                                    TValue="string"
-                                    TItem="ListProductionOrdersDto"
-                                    Placeholder="Üretim Emri Seçin"
-                                    CssClass="e-multi-column"
-                                    Value="DataSource.ProductionOrderFicheNo"
-                                    DataSource="@ProductionOrdersList"
-                                    AllowFiltering="true"
-                                    PopupWidth="700px"
-                                    PopupHeight="500">
-
-                                    <ComboBoxFieldSettings Text="FicheNo" Value="FicheNo"></ComboBoxFieldSettings>
-
-                                    <ComboBoxTemplates TItem="ListProductionOrdersDto">
-                                        <HeaderTemplate>
-                                            <table>
-                                                <tr>
-                                                    <th class="e-text-center">Üretim Emri Fiş No</th>
-                                                </tr>
-                                            </table>
-                                        </HeaderTemplate>
-                                        <ItemTemplate Context="cmbContext">
-
-                                            <table>
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="e-text-center">@((cmbContext as ListProductionOrdersDto).FicheNo)</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </ItemTemplate>
-                                    </ComboBoxTemplates>
-
-                                    <ComboBoxEvents TValue="string"
-                                            TItem="ListProductionOrdersDto"
-                                            Filtering="ProductionOrderFiltering"
-                                            ValueChange="ProductionOrderValueChangeHandler"></ComboBoxEvents>
-                                </SfComboBox>
+                                 <SfTextBox @ref="@ProductionOrdersButtonEdit" Created="@ProductionOrdersOnCreateIcon" @bind-Value="DataSource.ProductionOrderFicheNo" ShowClearButton=true ValueChange="ProductionOrdersOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
@@ -688,4 +267,364 @@
         </DxPopup>
 
     }
+}
+
+ @if (SelectProductsPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectProductsPopupVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Stok Kartları"
+         Width="64%"
+         Height="44%"
+         MinWidth="1220px"
+         MinHeight="470px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="ProductsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ProductsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                        AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@ProductsDoubleClickHandler" TValue="ListProductsDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListProductsDto.Code) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListProductsDto.Name) HeaderText="STOK AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectStationsPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectStationsPopupVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="İş İstasyonları"
+         Width="64%"
+         Height="44%"
+         MinWidth="1220px"
+         MinHeight="470px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="StationsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@StationsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@StationsDoubleClickHandler" TValue="ListStationsDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListStationsDto.Code) HeaderText="İSTASYON KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListStationsDto.Name) HeaderText="İSTASYON AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+            @*<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>*@
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+ @if (SelectStationGroupsPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectStationGroupsPopupVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="İş İstasyon Grupları"
+         Width="64%"
+         Height="44%"
+         MinWidth="1220px"
+         MinHeight="470px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="StationGroupsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@StationGroupsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@StationGroupsDoubleClickHandler" TValue="ListStationGroupsDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListStationGroupsDto.Code) HeaderText="İSTASYON GRUP KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListStationGroupsDto.Name) HeaderText="İSTASYON GRUP AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+            @*<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>*@
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectProductsOperationsPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectProductsOperationsPopupVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Ürün Oeprasyon Kayıtları"
+         Width="64%"
+         Height="44%"
+         MinWidth="1220px"
+         MinHeight="470px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="ProductsOperationsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ProductsOperationsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@ProductsOperationsDoubleClickHandler" TValue="ListProductsOperationsDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListProductsOperationsDto.Code) HeaderText="OPERASYON KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListProductsOperationsDto.Name) HeaderText="OPERASYON AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+            @*<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>*@
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectEmployeesPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectEmployeesPopupVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Çalışanlar"
+         Width="64%"
+         Height="44%"
+         MinWidth="1220px"
+         MinHeight="470px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="EmployeesGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@EmployeesList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@EmployeesDoubleClickHandler" TValue="ListEmployeesDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListEmployeesDto.Code) HeaderText="ÇALIŞAN KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListEmployeesDto.Name) HeaderText="ÇALIŞAN ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+            @*<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>*@
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectWorkOrdersPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectWorkOrdersPopupVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="İş Emirleri"
+         Width="64%"
+         Height="44%"
+         MinWidth="1220px"
+         MinHeight="470px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="WorkOrdersGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@WorkOrdersList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@WorkOrdersDoubleClickHandler" TValue="ListWorkOrdersDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderNo) HeaderText="İŞ EMRİ NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListWorkOrdersDto.ProductsOperationCode) HeaderText="OPERASYON KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+            @*<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>*@
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectProductionOrdersPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectProductionOrdersPopupVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="İş İstasyonları"
+         Width="64%"
+         Height="44%"
+         MinWidth="1220px"
+         MinHeight="470px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="ProductionOrdersGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ProductionOrdersList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@ProductionOrdersDoubleClickHandler" TValue="ListProductionOrdersDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListProductionOrdersDto.FicheNo) HeaderText="FİŞ NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListProductionOrdersDto.FinishedProductCode) HeaderText="MAMÜL KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListProductionOrdersDto.FinishedProductName) HeaderText="MAMÜL AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListProductionOrdersDto.BOMName) HeaderText="REÇETE AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListProductionOrdersDto.OrderFicheNo) HeaderText="SİPARİŞ FİŞ NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+            @*<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>*@
+        </FooterContentTemplate>
+    </DxPopup>
 }

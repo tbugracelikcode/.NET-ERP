@@ -1,9 +1,11 @@
 ﻿using DevExpress.Blazor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
+using Syncfusion.Blazor.Inputs;
 using Tsi.Core.Utilities.Results;
 using TsiErp.Business.Entities.Department.Services;
 using TsiErp.Entities.Entities.Branch.Dtos;
@@ -15,8 +17,7 @@ namespace TsiErp.ErpUI.Pages.Period
 
     public partial class PeriodsListPage
     {
-        SfComboBox<string, ListBranchesDto> BranchesComboBox;
-        List<ListBranchesDto> BranchesList = new List<ListBranchesDto>();
+       
 
         protected override async void OnInitialized()
         {
@@ -31,50 +32,61 @@ namespace TsiErp.ErpUI.Pages.Period
                 IsActive = true
             };
 
-            ShowEditPage();
+            EditPageVisible = true;
 
             return Task.CompletedTask;
         }
 
+        #region Şube ButtonEdit
 
-        public async Task BranchFiltering(FilteringEventArgs args)
+        SfTextBox BranchButtonEdit;
+        bool SelectBranchPopupVisible = false;
+        List<ListBranchesDto> BranchList = new List<ListBranchesDto>();
+
+        public async Task BranchOnCreateIcon()
         {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await BranchesComboBox.FilterAsync(BranchesList, query);
+            var BranchButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, BranchButtonClickEvent);
+            await BranchButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", BranchButtonClick } });
         }
 
-        private async Task GetBranchsList()
+        public async void BranchButtonClickEvent()
         {
-            BranchesList = (await BranchesAppService.GetListAsync(new ListBranchesParameterDto())).Data.ToList();
+            SelectBranchPopupVisible = true;
+            BranchList = (await BranchesAppService.GetListAsync(new ListBranchesParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
         }
 
-        public async Task BranchValueChangeHandler(ChangeEventArgs<string, ListBranchesDto> args)
+        public void BranchOnValueChange(ChangedEventArgs args)
         {
-            if (args.ItemData != null)
-            {
-                DataSource.BranchID = args.ItemData.Id;
-                DataSource.BranchName = args.ItemData.Name;
-            }
-            else
+            if (args.Value == null)
             {
                 DataSource.BranchID = Guid.Empty;
                 DataSource.BranchName = string.Empty;
             }
-            await InvokeAsync(StateHasChanged);
         }
 
+        public async void BranchDoubleClickHandler(RecordDoubleClickEventArgs<ListBranchesDto> args)
+        {
+            var selectedBranch = args.RowData;
 
+            if (selectedBranch != null)
+            {
+                DataSource.BranchID = selectedBranch.Id;
+                DataSource.BranchName = selectedBranch.Name;
+                SelectBranchPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        #endregion
+
+
+        private async Task GetBranchsList()
+        {
+            BranchList = (await BranchesAppService.GetListAsync(new ListBranchesParameterDto())).Data.ToList();
+        }
+
+      
 
     }
 }

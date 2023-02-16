@@ -108,13 +108,15 @@ else
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>Toplam Çalışan: </strong></label><br />
-                            <SfNumericTextBox @bind-Value="DataSource.TotalEmployees" TValue="int"></SfNumericTextBox>
+                            <SfNumericTextBox Min="0" @bind-Value="DataSource.TotalEmployees" TValue="int"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
+                            <center>
                             <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
                             <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                            </center>
                         </Template>
                     </DxGridLayoutItem>
 

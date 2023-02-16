@@ -110,7 +110,7 @@ namespace TsiErp.ErpUI.Pages.Shift
             DataSource.SelectShiftLinesDto = new List<SelectShiftLinesDto>();
             GridLineList = DataSource.SelectShiftLinesDto;
 
-            ShowEditPage();
+            EditPageVisible = true;
 
 
             await Task.CompletedTask;

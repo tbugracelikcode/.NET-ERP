@@ -122,27 +122,35 @@
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="1" Column="1">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Makina Kaynaklı: </strong></label><br />
-                                <SfSwitch @bind-Checked="DataSource.IsMachine"></SfSwitch>
+                                <center>
+                                    <label class="TSIModalLabel"><strong>Makina Kaynaklı: </strong></label><br />
+                                    <SfSwitch @bind-Checked="DataSource.IsMachine"></SfSwitch>
+                                </center>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="1" Column="3">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Operatör Kaynaklı: </strong></label><br />
-                                <SfSwitch @bind-Checked="DataSource.IsOperator"></SfSwitch>
+                                <center>
+                                    <label class="TSIModalLabel"><strong>Operatör Kaynaklı: </strong></label><br />
+                                    <SfSwitch @bind-Checked="DataSource.IsOperator"></SfSwitch>
+                                </center>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="1" Column="5">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Yönetim Kaynaklı: </strong></label><br />
-                                <SfSwitch @bind-Checked="DataSource.IsManagement"></SfSwitch>
+                                <center>
+                                    <label class="TSIModalLabel"><strong>Yönetim Kaynaklı: </strong></label><br />
+                                    <SfSwitch @bind-Checked="DataSource.IsManagement"></SfSwitch>
+                                </center>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="2" Column="1">
                             <Template>
                                 <br />
-                                <label class="TSIModalLabel"><strong>Planlı: </strong></label><br />
-                                <SfSwitch @bind-Checked="DataSource.IsPlanned"></SfSwitch>
+                                <center>
+                                    <label class="TSIModalLabel"><strong>Planlı: </strong></label><br />
+                                    <SfSwitch @bind-Checked="DataSource.IsPlanned"></SfSwitch>
+                                </center>
                             </Template>
                         </DxGridLayoutItem>
                     </Items>
