@@ -76,7 +76,7 @@ namespace TsiErp.ErpUI.Pages.CurrentAccountCard
                 IsActive = true
             };
 
-            ShowEditPage();
+            EditPageVisible = true;
 
             return Task.CompletedTask;
         }

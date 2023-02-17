@@ -293,7 +293,7 @@ namespace TsiErp.ErpUI.Pages.PurchasePrice
             DataSource.SelectPurchasePriceLines = new List<SelectPurchasePriceLinesDto>();
             GridLineList = DataSource.SelectPurchasePriceLines;
 
-            ShowEditPage();
+            EditPageVisible = true;
 
 
             await Task.CompletedTask;

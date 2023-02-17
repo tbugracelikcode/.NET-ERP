@@ -336,8 +336,12 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdatePurchasingUnsuitabilityItemsDto, PurchasingUnsuitabilityItems>();
             CreateMap<SelectPurchasingUnsuitabilityItemsDto, UpdatePurchasingUnsuitabilityItemsDto>();
 
-            CreateMap<Stations, SelectStationsDto>().ForMember(x => x.StationGroup, y => y.MapFrom(z => z.StationGroups.Name));
-            CreateMap<Stations, ListStationsDto>().ForMember(x => x.StationGroup, y => y.MapFrom(z => z.StationGroups.Name));
+            CreateMap<Stations, SelectStationsDto>()
+                .ForMember(x => x.StationGroup, y => y.MapFrom(z => z.StationGroups.Name))
+                .ForMember(x => x.StationGroupCode, y => y.MapFrom(z => z.StationGroups.Code));
+            CreateMap<Stations, ListStationsDto>()
+                .ForMember(x => x.StationGroup, y => y.MapFrom(z => z.StationGroups.Name))
+                .ForMember(x => x.StationGroupCode, y => y.MapFrom(z => z.StationGroups.Code));
             CreateMap<CreateStationsDto, Stations>();
             CreateMap<SelectStationsDto, CreateStationsDto>();
             CreateMap<UpdateStationsDto, Stations>();

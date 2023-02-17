@@ -22,7 +22,7 @@ namespace TsiErp.ErpUI.Pages.PaymentPlan
                 IsActive = true
             };
 
-            ShowEditPage();
+            EditPageVisible = true;
 
             return Task.CompletedTask;
         }

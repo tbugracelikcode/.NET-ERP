@@ -29,6 +29,11 @@ namespace TsiErp.Entities.Entities.Station.Dtos
         /// Marka
         /// </summary>
         public string Brand { get; set; }
+
+        /// <summary>
+        /// Grup Kodu
+        /// </summary>
+        public string StationGroupCode { get; set; }
         /// <summary>
         /// Model
         /// </summary>

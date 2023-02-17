@@ -559,7 +559,7 @@ namespace TsiErp.ErpUI.Pages.SalesOrder
             DataSource.SelectSalesOrderLines = new List<SelectSalesOrderLinesDto>();
             GridLineList = DataSource.SelectSalesOrderLines;
 
-            ShowEditPage();
+            EditPageVisible = true;
 
 
             await Task.CompletedTask;
@@ -753,6 +753,10 @@ namespace TsiErp.ErpUI.Pages.SalesOrder
             else if (LineDataSource.ProductID == Guid.Empty)
             {
                 await ModalManager.WarningPopupAsync("Uyarı", "Stok kartı seçilmeden satır kaydetme işlemi yapılamaz.");
+            }
+            else if(LineDataSource.Quantity == 0)
+            {
+                await ModalManager.WarningPopupAsync("Uyarı", "Miktar 0 olduğu için satır kaydetme işlemi yapılamamaktadır.");
             }
             else
             {

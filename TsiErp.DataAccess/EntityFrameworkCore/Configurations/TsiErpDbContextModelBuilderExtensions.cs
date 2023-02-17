@@ -1324,7 +1324,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
                 b.Property(t => t.BoMID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.FinishedProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.RouteID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.UnitSetID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.MaterialType).IsRequired().HasColumnType(SqlDbType.Int.ToString());
                 b.Property(t => t.LineNr).IsRequired().HasColumnType(SqlDbType.Int.ToString());

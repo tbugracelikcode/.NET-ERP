@@ -82,7 +82,7 @@ namespace TsiErp.ErpUI.Pages.Calendar
         {
             GridDaysList.Clear();
             DataSource = new SelectCalendarsDto() { };
-            ShowEditPage();
+            EditPageVisible = true;
 
             return Task.CompletedTask;
         }

@@ -8,6 +8,7 @@ using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.Product.Dtos;
 using TsiErp.Entities.Entities.TechnicalDrawing.Dtos;
 using TsiErp.ErpUI.Helpers;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.TechnicalDrawing
 {
@@ -15,7 +16,18 @@ namespace TsiErp.ErpUI.Pages.TechnicalDrawing
     {
         List<string> Drawers = new List<string>();
 
+        [Inject]
+        ModalManager ModalManager { get; set; }
+
         List<IFileListEntry> files = new List<IFileListEntry>();
+
+        private SfGrid<SelectTechnicalDrawingsDto> _TechnicalDrawingChangeGrid;
+
+        public bool TechnicalDrawingsChangedCrudPopup = false;
+
+        List<System.IO.FileInfo> uploadedfiles = new List<System.IO.FileInfo>();
+
+        bool UploadedFile = false;
 
         bool disable;
 
@@ -48,9 +60,62 @@ namespace TsiErp.ErpUI.Pages.TechnicalDrawing
                 RevisionDate = DateTime.Today,
             };
 
-            ShowEditPage();
+            EditPageVisible = true;
 
             return Task.CompletedTask;
+        }
+
+        public async override void OnContextMenuClick(ContextMenuClickEventArgs<ListTechnicalDrawingsDto> args)
+        {
+            switch (args.Item.Id)
+            {
+                case "new":
+                    await BeforeInsertAsync();
+                    break;
+
+                case "changed":
+                    SelectFirstDataRow = false;
+                    DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    string rootpath = FileUploadService.GetRootPath();
+                    string technicalDrawingPath = @"\UploadedFiles\TechnicalDrawings\" + DataSource.ProductID + "-" + DataSource.ProductCode + @"\" + DataSource.Id + @"\";
+                    DirectoryInfo technicalDrawing = new DirectoryInfo(rootpath + technicalDrawingPath);
+                    if (technicalDrawing.Exists)
+                    {
+                        System.IO.FileInfo[] exactFilesTechnicalDrawing = technicalDrawing.GetFiles();
+
+                        foreach (System.IO.FileInfo fileinfo in exactFilesTechnicalDrawing)
+                        {
+                            uploadedfiles.Add(fileinfo);
+                        }
+
+                    }
+                    TechnicalDrawingsChangedCrudPopup = true;
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "delete":
+
+                    var res = await ModalManager.ConfirmationAsync("Onay", "Silmek istediğinize emin misiniz ?");
+
+
+                    if (res == true)
+                    {
+                        SelectFirstDataRow = false;
+                        await DeleteAsync(args.RowInfo.RowData.Id);
+                        await GetListDataSourceAsync();
+                        await InvokeAsync(StateHasChanged);
+                    }
+
+                    break;
+
+                case "refresh":
+                    await GetListDataSourceAsync();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         public override void HideEditPage()
@@ -127,11 +192,18 @@ namespace TsiErp.ErpUI.Pages.TechnicalDrawing
 
         #region Teknik Çizim Upload İşlemleri
 
-        private void HandleFileSelectedTechnicalDrawing(IFileListEntry[] entryFiles)
+        private async void HandleFileSelectedTechnicalDrawing(IFileListEntry[] entryFiles)
         {
-            foreach (var file in entryFiles)
+            if (uploadedfiles != null && uploadedfiles.Count == 0)
             {
-                files.Add(file);
+                foreach (var file in entryFiles)
+                {
+                    files.Add(file);
+                }
+            }
+            else
+            {
+                await ModalManager.WarningPopupAsync("Uyarı", "Bu kayıtta yüklenmiş bir teknik resim dosyası mevcut");
             }
         }
 
@@ -140,6 +212,39 @@ namespace TsiErp.ErpUI.Pages.TechnicalDrawing
             files.Remove(file);
 
             InvokeAsync(() => StateHasChanged());
+        }
+
+        private async void RemoveUploaded(System.IO.FileInfo file)
+        {
+            string extention = file.Extension;
+            string rootpath = FileUploadService.GetRootPath();
+
+            if (extention == ".pdf")
+            {
+                PDFrootPath = rootpath + @"\UploadedFiles\TechnicalDrawings\" + DataSource.ProductID + "-" + DataSource.ProductCode + @"\" + DataSource.Id + @"\" + file.Name;
+
+                System.IO.FileInfo pdfFile = new System.IO.FileInfo(PDFrootPath);
+                if (pdfFile.Exists)
+                {
+                    pdfFile.Delete();
+                }
+            }
+
+            else
+            {
+                imageDataUri = rootpath + @"\UploadedFiles\TechnicalDrawings\" + DataSource.ProductID + "-" + DataSource.ProductCode + @"\" + DataSource.Id + @"\" + file.Name;
+
+                System.IO.FileInfo jpgfile = new System.IO.FileInfo(imageDataUri);
+                if (jpgfile.Exists)
+                {
+                    jpgfile.Delete();
+                }
+            }
+            uploadedfiles.Remove(file);
+
+            await InvokeAsync(() => StateHasChanged());
+
+            await ModalManager.MessagePopupAsync("Bilgilendirme", "Yüklenmiş teknik resim dosyası, başarıyla silinmiştir.");
         }
 
         private async void PreviewImage(IFileListEntry file)
@@ -193,18 +298,69 @@ namespace TsiErp.ErpUI.Pages.TechnicalDrawing
 
         }
 
+        private async void PreviewUploadedImage(System.IO.FileInfo file)
+        {
+            string format = file.Extension;
+
+            UploadedFile = true;
+
+            string rootpath = FileUploadService.GetRootPath();
+
+            if (format == ".jpg" || format == ".jpeg" || format == ".png")
+            {
+                imageDataUri = @"\UploadedFiles\TechnicalDrawings\" + DataSource.ProductID + "-" + DataSource.ProductCode + @"\" + DataSource.Id + @"\" + file.Name;
+
+                image = true;
+
+                pdf = false;
+
+                ImagePreviewPopup = true;
+            }
+
+            else if (format == ".pdf")
+            {
+
+                PDFrootPath = "wwwroot/UploadedFiles/TechnicalDrawings/" + DataSource.ProductID + "-" + DataSource.ProductCode + "/" + DataSource.Id + "/" + file.Name;
+
+                PDFFileName = file.Name;
+
+                previewImagePopupTitle = file.Name;
+
+                pdf = true;
+
+                image = false;
+
+                ImagePreviewPopup = true;
+
+            }
+
+
+            await InvokeAsync(() => StateHasChanged());
+
+        }
+
         public void HidePreviewPopup()
         {
             ImagePreviewPopup = false;
 
-            if (pdf)
+            if (!UploadedFile)
             {
-                System.IO.FileInfo pdfFile = new System.IO.FileInfo(PDFrootPath);
-                if (pdfFile.Exists)
+                if (pdf)
                 {
-                    pdfFile.Delete();
+                    System.IO.FileInfo pdfFile = new System.IO.FileInfo(PDFrootPath);
+                    if (pdfFile.Exists)
+                    {
+                        pdfFile.Delete();
+                    }
                 }
             }
+        }
+
+        public void HideTechnicalDrawingChangedCrudPopup()
+        {
+            TechnicalDrawingsChangedCrudPopup = false;
+            uploadedfiles.Clear();
+            InvokeAsync(StateHasChanged);
         }
 
 
@@ -242,7 +398,7 @@ namespace TsiErp.ErpUI.Pages.TechnicalDrawing
 
             var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
 
-            HideEditPage();
+            
 
             if (DataSource.Id == Guid.Empty)
             {
@@ -276,6 +432,9 @@ namespace TsiErp.ErpUI.Pages.TechnicalDrawing
                 await InvokeAsync(() => StateHasChanged());
 
             }
+
+            HideEditPage();
+            HideTechnicalDrawingChangedCrudPopup();
 
             disable = false;
 

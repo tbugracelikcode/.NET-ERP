@@ -110,10 +110,8 @@ else
 
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
-                            <center>
-                            <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
-                            <SfSwitch @bind-Checked="@DataSource.IsActive"></SfSwitch>
-                            </center>
+                            <label class="TSIModalLabel"><strong>Gecikme Vade Farkı Oranı: </strong></label><br />
+                            <SfNumericTextBox Min="0" TValue="decimal" Placeholder="Gecikme Vade Farkı Oranını Yazınız." @bind-Value="DataSource.DelayMaturityDifference"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="2" Column="3">
@@ -124,8 +122,10 @@ else
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="4" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Gecikme Vade Farkı Oranı: </strong></label><br />
-                            <SfNumericTextBox Min="0" TValue="decimal" Placeholder="Gecikme Vade Farkı Oranını Yazınız." @bind-Value="DataSource.DelayMaturityDifference"></SfNumericTextBox>
+                            <center>
+                            <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
+                            <SfSwitch @bind-Checked="@DataSource.IsActive"></SfSwitch>
+                            </center>
                         </Template>
                     </DxGridLayoutItem>
 

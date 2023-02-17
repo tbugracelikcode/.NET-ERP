@@ -51,7 +51,7 @@ namespace TsiErp.ErpUI.Pages.UnplannedMaintenance
             DataSource.SelectUnplannedMaintenanceLines = new List<SelectUnplannedMaintenanceLinesDto>();
             GridLineList = DataSource.SelectUnplannedMaintenanceLines;
 
-            ShowEditPage();
+            EditPageVisible = true;
 
             await Task.CompletedTask;
         }
@@ -212,38 +212,46 @@ namespace TsiErp.ErpUI.Pages.UnplannedMaintenance
 
         protected async Task OnLineSubmit()
         {
-            if (LineDataSource.Id == Guid.Empty)
+            if (LineDataSource.Amount == 0)
             {
-                if (DataSource.SelectUnplannedMaintenanceLines.Contains(LineDataSource))
+                await ModalManager.WarningPopupAsync("Uyarı", "Miktar 0 olduğu için satır kaydetme işlemi yapılamamaktadır.");
+            }
+            else
+            {
+                if (LineDataSource.Id == Guid.Empty)
                 {
-                    int selectedLineIndex = DataSource.SelectUnplannedMaintenanceLines.FindIndex(t => t.LineNr == LineDataSource.LineNr);
+                    if (DataSource.SelectUnplannedMaintenanceLines.Contains(LineDataSource))
+                    {
+                        int selectedLineIndex = DataSource.SelectUnplannedMaintenanceLines.FindIndex(t => t.LineNr == LineDataSource.LineNr);
+
+                        if (selectedLineIndex > -1)
+                        {
+                            DataSource.SelectUnplannedMaintenanceLines[selectedLineIndex] = LineDataSource;
+                        }
+                    }
+                    else
+                    {
+                        DataSource.SelectUnplannedMaintenanceLines.Add(LineDataSource);
+                    }
+                }
+                else
+                {
+                    int selectedLineIndex = DataSource.SelectUnplannedMaintenanceLines.FindIndex(t => t.Id == LineDataSource.Id);
 
                     if (selectedLineIndex > -1)
                     {
                         DataSource.SelectUnplannedMaintenanceLines[selectedLineIndex] = LineDataSource;
                     }
                 }
-                else
-                {
-                    DataSource.SelectUnplannedMaintenanceLines.Add(LineDataSource);
-                }
-            }
-            else
-            {
-                int selectedLineIndex = DataSource.SelectUnplannedMaintenanceLines.FindIndex(t => t.Id == LineDataSource.Id);
 
-                if (selectedLineIndex > -1)
-                {
-                    DataSource.SelectUnplannedMaintenanceLines[selectedLineIndex] = LineDataSource;
-                }
+                GridLineList = DataSource.SelectUnplannedMaintenanceLines;
+                GetTotal();
+                await _LineGrid.Refresh();
+
+                HideLinesPopup();
+                await InvokeAsync(StateHasChanged);
             }
 
-            GridLineList = DataSource.SelectUnplannedMaintenanceLines;
-            GetTotal();
-            await _LineGrid.Refresh();
-
-            HideLinesPopup();
-            await InvokeAsync(StateHasChanged);
         }
 
         #endregion
@@ -286,7 +294,7 @@ namespace TsiErp.ErpUI.Pages.UnplannedMaintenance
                 SelectStationsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
 
-               
+
             }
         }
 

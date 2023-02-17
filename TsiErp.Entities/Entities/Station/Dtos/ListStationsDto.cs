@@ -17,6 +17,10 @@ namespace TsiErp.Entities.Entities.Station.Dtos
         /// </summary>
         public string Name { get; set; }
         /// <summary>
+        /// Grup ID
+        /// </summary>
+        public Guid GroupID { get; set; }
+        /// <summary>
         /// Marka
         /// </summary>
         public string Brand { get; set; }
@@ -36,6 +40,10 @@ namespace TsiErp.Entities.Entities.Station.Dtos
         /// Grup ID
         /// </summary>
         public string StationGroup { get; set; }
+        /// <summary>
+        /// Grup Kodu
+        /// </summary>
+        public string StationGroupCode { get; set; }
         /// <summary>
         /// X
         /// </summary>
