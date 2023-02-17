@@ -21,7 +21,7 @@ namespace TsiErp.ErpUI.Pages.ProductReferanceNumber
         {
             DataSource = new SelectProductReferanceNumbersDto() { };
 
-            ShowEditPage();
+            EditPageVisible = true;
 
             return Task.CompletedTask;
         }

@@ -341,6 +341,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseOrder
                 LineDataSource.ProductID = Guid.Empty;
                 LineDataSource.ProductCode = string.Empty;
                 LineDataSource.ProductName = string.Empty;
+                LineDataSource.UnitSetID = Guid.Empty;
+                LineDataSource.UnitSetCode = string.Empty;
             }
         }
 
@@ -353,6 +355,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseOrder
                 LineDataSource.ProductID = selectedProduct.Id;
                 LineDataSource.ProductCode = selectedProduct.Code;
                 LineDataSource.ProductName = selectedProduct.Name;
+                LineDataSource.UnitSetCode = selectedProduct.UnitSetCode;
+                LineDataSource.UnitSetID = selectedProduct.UnitSetID;
                 SelectProductsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
@@ -462,7 +466,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseOrder
             DataSource.SelectPurchaseOrderLinesDto = new List<SelectPurchaseOrderLinesDto>();
             GridLineList = DataSource.SelectPurchaseOrderLinesDto;
 
-            ShowEditPage();
+            EditPageVisible = true;
 
 
             await Task.CompletedTask;
@@ -634,6 +638,10 @@ namespace TsiErp.ErpUI.Pages.PurchaseOrder
             else if (LineDataSource.ProductID == Guid.Empty)
             {
                 await ModalManager.WarningPopupAsync("Uyarı", "Stok kartı seçilmeden satır kaydetme işlemi yapılamaz.");
+            }
+            else if(LineDataSource.Quantity == 0)
+            {
+                await ModalManager.WarningPopupAsync("Uyarı", "Miktar 0 olduğu için satır kaydetme işlemi yapılamamaktadır.");
             }
             else
             {

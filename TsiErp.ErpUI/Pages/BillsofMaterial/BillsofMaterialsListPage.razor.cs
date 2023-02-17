@@ -276,6 +276,10 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
             {
                 await ModalManager.WarningPopupAsync("Uyarı", "Birim seti seçilmeden satır kaydetme işlemi yapılamaz.");
             }
+            else if(LineDataSource.Quantity == 0)
+            {
+                await ModalManager.WarningPopupAsync("Uyarı", "Miktar 0 olduğu için satır kaydetme işlemi yapılamamaktadır.");
+            }
             else
             {
                 if (LineDataSource.Id == Guid.Empty)
@@ -355,6 +359,8 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
                 LineDataSource.ProductID = Guid.Empty;
                 LineDataSource.ProductCode = string.Empty;
                 LineDataSource.ProductName = string.Empty;
+                LineDataSource.UnitSetCode = string.Empty;
+                LineDataSource.UnitSetID = Guid.Empty;
             }
         }
 
@@ -367,6 +373,8 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
                 LineDataSource.ProductID = selectedProduct.Id;
                 LineDataSource.ProductCode = selectedProduct.Code;
                 LineDataSource.ProductName = selectedProduct.Name;
+                LineDataSource.UnitSetID = selectedProduct.UnitSetID;
+                LineDataSource.UnitSetCode = selectedProduct.UnitSetCode;
                 SelectProductsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }

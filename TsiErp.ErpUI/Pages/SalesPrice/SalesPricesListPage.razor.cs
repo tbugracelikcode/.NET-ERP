@@ -290,7 +290,7 @@ namespace TsiErp.ErpUI.Pages.SalesPrice
             DataSource.SelectSalesPriceLines = new List<SelectSalesPriceLinesDto>();
             GridLineList = DataSource.SelectSalesPriceLines;
 
-            ShowEditPage();
+            EditPageVisible = true;
 
 
             await Task.CompletedTask;

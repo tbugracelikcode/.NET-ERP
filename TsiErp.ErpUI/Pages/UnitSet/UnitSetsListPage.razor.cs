@@ -22,7 +22,7 @@ namespace TsiErp.ErpUI.Pages.UnitSet
                 IsActive = true
             };
 
-            ShowEditPage();
+            EditPageVisible = true;
 
             return Task.CompletedTask;
         }

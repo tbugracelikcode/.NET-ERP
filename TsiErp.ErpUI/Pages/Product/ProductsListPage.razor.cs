@@ -376,8 +376,6 @@ namespace TsiErp.ErpUI.Pages.Product
 
             await _TechnicalDrawingGrid.Refresh();
 
-            HideTechnicalDrawingCrudPopup();
-            HideTechnicalDrawingChangedCrudPopup();
 
             if (TechnicalDrawingsDataSource.Id == Guid.Empty)
             {
@@ -408,6 +406,10 @@ namespace TsiErp.ErpUI.Pages.Product
 
             }
 
+
+            HideTechnicalDrawingCrudPopup();
+            HideTechnicalDrawingChangedCrudPopup();
+
             disable = false;
 
             files.Clear();
@@ -425,6 +427,8 @@ namespace TsiErp.ErpUI.Pages.Product
         public void HideTechnicalDrawingChangedCrudPopup()
         {
             TechnicalDrawingsChangedCrudPopup = false;
+            uploadedfiles.Clear();
+            InvokeAsync(StateHasChanged);
         }
 
         public void HideTechnicalDrawingPopup()
@@ -747,13 +751,21 @@ namespace TsiErp.ErpUI.Pages.Product
 
         #region Teknik Çizim Upload İşlemleri
 
-        private void HandleFileSelectedTechnicalDrawing(IFileListEntry[] entryFiles)
+        private async void HandleFileSelectedTechnicalDrawing(IFileListEntry[] entryFiles)
         {
-
-            foreach (var file in entryFiles)
+            if(uploadedfiles != null && uploadedfiles.Count == 0)
             {
-                files.Add(file);
+                foreach (var file in entryFiles)
+                {
+                    files.Add(file);
+                }
             }
+            else
+            {
+                await ModalManager.WarningPopupAsync("Uyarı", "Bu kayıtta yüklenmiş bir teknik resim dosyası mevcut");
+            }
+
+           
         }
 
         private void Remove(IFileListEntry file)
@@ -763,7 +775,7 @@ namespace TsiErp.ErpUI.Pages.Product
             InvokeAsync(() => StateHasChanged());
         }
 
-        private void RemoveUploaded(System.IO.FileInfo file)
+        private async void RemoveUploaded(System.IO.FileInfo file)
         {
             string extention = file.Extension;
             string rootpath = FileUploadService.GetRootPath();
@@ -790,9 +802,10 @@ namespace TsiErp.ErpUI.Pages.Product
                 }
             }
             uploadedfiles.Remove(file);
-            
 
-            InvokeAsync(() => StateHasChanged());
+            await InvokeAsync(() => StateHasChanged());
+
+            await ModalManager.MessagePopupAsync("Bilgilendirme", "Yüklenmiş teknik resim dosyası, başarıyla silinmiştir.");
         }
 
         private async void PreviewImage(IFileListEntry file)
@@ -1154,7 +1167,7 @@ namespace TsiErp.ErpUI.Pages.Product
                 IsActive = true
             };
 
-            ShowEditPage();
+            EditPageVisible = true;
 
             return Task.CompletedTask;
         }

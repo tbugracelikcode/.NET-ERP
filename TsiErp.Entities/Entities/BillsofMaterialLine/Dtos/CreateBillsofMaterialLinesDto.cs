@@ -18,10 +18,6 @@ namespace TsiErp.Entities.Entities.BillsofMaterialLine.Dtos
         /// </summary>
         public Guid? FinishedProductID { get; set; }
         /// <summary>
-        /// Rota ID
-        /// </summary>
-        public Guid? RouteID { get; set; }
-        /// <summary>
         /// Malzeme Türü
         /// </summary>
         public int MaterialType { get; set; }

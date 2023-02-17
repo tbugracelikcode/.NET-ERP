@@ -291,6 +291,9 @@ namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityReport
                 DataSource.StationID = selectedUnitSet.Id;
                 DataSource.StationCode = selectedUnitSet.Code;
                 DataSource.StationName = selectedUnitSet.Name;
+                DataSource.StationGroupID = selectedUnitSet.GroupID;
+                DataSource.StationGroupName = selectedUnitSet.StationGroup;
+                DataSource.StationGroupCode = selectedUnitSet.StationGroupCode;
                 SelectStationsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
