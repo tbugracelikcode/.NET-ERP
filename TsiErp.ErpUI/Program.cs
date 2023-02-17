@@ -21,6 +21,7 @@ using TsiErp.ErpUI.Utilities.ModalUtilities;
 using Microsoft.EntityFrameworkCore;
 using Tsi.Core.Services.BusinessCoreServices;
 using TsiErp.ErpUI.Services;
+using TsiErp.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,8 @@ ConfigureBusiness(builder);
 
 ConfigureDataAccess(builder);
 
+ConfigureErpUI(builder);
+
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).ConfigureContainer<ContainerBuilder>(container =>
 {
     container.RegisterModule(new AutofacBusinessModule());
@@ -42,8 +45,8 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).Conf
 
 builder.Services.AddSyncfusionBlazor();
 builder.Services.AddDevExpressBlazor();
-builder.Services.AddScoped<IFileUploadService, FileUploadService>();
-builder.Services.AddScoped<IExcelService, ExcelService>();
+
+
 builder.Services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(SyncfusionLocalizer));
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
@@ -124,4 +127,17 @@ static void ConfigureBusiness(WebApplicationBuilder builder)
 static void ConfigureDataAccess(WebApplicationBuilder builder)
 {
     builder.Services.RegisterDependencies(Assembly.Load("TsiErp.DataAccess"));
+
+    var instance = (TsiDataAccessModule)Activator.CreateInstance(typeof(TsiDataAccessModule));
+
+    instance.ConfigureServices(builder.Services);
+}
+
+static void ConfigureErpUI(WebApplicationBuilder builder)
+{
+    builder.Services.RegisterDependencies(Assembly.Load("TsiErp.ErpUI"));
+
+    var instance = (TsiBusinessModule)Activator.CreateInstance(typeof(TsiBusinessModule));
+
+    instance.ConfigureServices(builder.Services);
 }

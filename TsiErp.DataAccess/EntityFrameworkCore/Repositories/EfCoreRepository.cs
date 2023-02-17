@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Tsi.Core.Entities;
 using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.Guids;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.Logging;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Repositories
@@ -21,8 +22,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Repositories
         private DbContext _dbContext;
 
         private DbSet<TEntity> _dbset;
-
-        public IGuidGenerator GuidGenerator { get; set; } = new SequentialGuidGenerator();
 
         public EfCoreRepository(DbContext dbContext)
         {
@@ -74,7 +73,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Repositories
         {
             if (entity is IFullEntityObject)
             {
-                entity.GetType().GetProperty("CreatorId").SetValue(entity, GuidGenerator.CreateGuid());
+                entity.GetType().GetProperty("CreatorId").SetValue(entity, LoginedUserService.UserId);
                 entity.GetType().GetProperty("CreationTime").SetValue(entity, DateTime.Now);
                 entity.GetType().GetProperty("IsDeleted").SetValue(entity, false);
                 entity.GetType().GetProperty("DeleterId").SetValue(entity, null);
@@ -85,7 +84,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Repositories
 
             if (entity is IEntity)
             {
-                entity.GetType().GetProperty("Id").SetValue(entity, GuidGenerator.CreateGuid());
+                entity.GetType().GetProperty("Id").SetValue(entity, LoginedUserService.UserId);
             }
 
             await _dbset.AddAsync(entity);
@@ -113,13 +112,13 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Repositories
                 entity.GetType().GetProperty("IsDeleted").SetValue(entity, previousEntity.IsDeleted);
                 entity.GetType().GetProperty("DeleterId").SetValue(entity, previousEntity.DeleterId);
                 entity.GetType().GetProperty("DeletionTime").SetValue(entity, previousEntity.DeletionTime);
-                entity.GetType().GetProperty("LastModifierId").SetValue(entity, Guid.NewGuid());
+                entity.GetType().GetProperty("LastModifierId").SetValue(entity, LoginedUserService.UserId);
                 entity.GetType().GetProperty("LastModificationTime").SetValue(entity, DateTime.Now);
             }
 
             if (entity is IFullEntityObject && previousEntity == null)
             {
-                entity.GetType().GetProperty("CreatorId").SetValue(entity, GuidGenerator.CreateGuid());
+                entity.GetType().GetProperty("CreatorId").SetValue(entity, LoginedUserService.UserId);
                 entity.GetType().GetProperty("CreationTime").SetValue(entity, DateTime.Now);
                 entity.GetType().GetProperty("IsDeleted").SetValue(entity, false);
                 entity.GetType().GetProperty("DeleterId").SetValue(entity, null);

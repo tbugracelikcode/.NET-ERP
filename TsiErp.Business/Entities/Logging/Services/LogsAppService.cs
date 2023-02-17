@@ -8,11 +8,12 @@ using TsiErp.Entities.Entities.Logging;
 using Tsi.Core.Services.BusinessCoreServices;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using Newtonsoft.Json;
+using TsiErp.DataAccess.Services.Login;
 
 namespace TsiErp.Business.Entities.Logging.Services
 {
     [ServiceRegistration(typeof(ILogsAppService), DependencyInjectionType.Scoped)]
-    public class LogsAppService : ApplicationService, ILogsAppService
+    public class LogsAppService :  ILogsAppService
     {
         public CreateLogsDto CreateLog(object beforeValues, object afterValues, string logLevel, string methodName, Guid userId)
         {
@@ -21,7 +22,7 @@ namespace TsiErp.Business.Entities.Logging.Services
                 AfterValues = JsonConvert.SerializeObject(afterValues, Formatting.Indented),
                 BeforeValues = JsonConvert.SerializeObject(beforeValues, Formatting.Indented),
                 Date_ = DateTime.Now,
-                Id = GuidGenerator.CreateGuid(),
+                Id = LoginedUserService.UserId,
                 LogLevel_ = logLevel,
                 MethodName_ = methodName,
                 UserId = userId
