@@ -755,13 +755,13 @@ e-upload .e-upload-files .e-file-remove-btn.e-icons:hover, .e-upload .e-upload-f
 .e-toolbar .e-tbar-btn {
     background: #f8f9fa;
     box-shadow: none;
-    color: #c13030 !important;
-    border: 1px #c13030 solid !important;
+    color: #30c153 !important;
+    border: 1px #31c130 solid !important;
     font-weight: 500 !important;
 }
 
     .e-toolbar .e-tbar-btn.e-btn .e-icons {
-        color: #bf1212 !important;
+        color: #2fbf12 !important;
     }
 
 .e-input-group.e-input-focus:hover:not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled),
@@ -773,4 +773,9 @@ e-upload .e-upload-files .e-file-remove-btn.e-icons:hover, .e-upload .e-upload-f
 .e-float-input.e-input-focus:hover:not(.e-input-group):not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled) textarea:not([disabled]),
 .e-float-input.e-control-wrapper.e-input-focus:hover:not(.e-input-group):not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled) textarea:not([disabled]) {
     border-color: #FE8686 !important;
+}
+
+.e-switch-wrapper .e-switch-inner.e-switch-active, .e-css.e-switch-wrapper .e-switch-inner.e-switch-active {
+    background-color: #201b1b !important;
+    border-color: #483737 !important;
 }
