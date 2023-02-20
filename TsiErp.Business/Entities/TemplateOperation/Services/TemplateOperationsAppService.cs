@@ -1,26 +1,16 @@
-﻿using AutoMapper.Internal.Mappers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Services.BusinessCoreServices;
-using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.TemplateOperation.BusinessRules;
 using TsiErp.Business.Entities.TemplateOperation.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.TemplateOperation;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.TemplateOperationLine;
 using TsiErp.Entities.Entities.TemplateOperation;
 using TsiErp.Entities.Entities.TemplateOperation.Dtos;
 using TsiErp.Entities.Entities.TemplateOperationLine;
 using TsiErp.Entities.Entities.TemplateOperationLine.Dtos;
-using TsiErp.Entities.Entities.WorkOrder.Dtos;
-using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.TemplateOperation.Services
 {

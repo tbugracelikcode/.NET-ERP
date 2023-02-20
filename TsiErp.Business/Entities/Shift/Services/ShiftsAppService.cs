@@ -1,29 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
-using TsiErp.Business.Entities.Shift.Services;
-using TsiErp.Business.Entities.Shift.Validations;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Shift;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.ShiftLine;
-using TsiErp.Entities.Entities.ShiftLine.Dtos;
-using TsiErp.Entities.Entities.ShiftLine;
-using Tsi.Core.Entities;
-using Microsoft.EntityFrameworkCore;
+using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Shift.BusinessRules;
-using TsiErp.Entities.Entities.Shift.Dtos;
-using TsiErp.Entities.Entities.Shift;
-using Tsi.Core.Utilities.Guids;
-using Tsi.Core.Services.BusinessCoreServices;
+using TsiErp.Business.Entities.Shift.Validations;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
-using TsiErp.Entities.Entities.WorkOrder.Dtos;
-using TsiErp.Entities.Entities.WorkOrder;
+using TsiErp.Entities.Entities.Shift;
+using TsiErp.Entities.Entities.Shift.Dtos;
+using TsiErp.Entities.Entities.ShiftLine;
+using TsiErp.Entities.Entities.ShiftLine.Dtos;
 
 namespace TsiErp.Business.Entities.Shift.Services
 {

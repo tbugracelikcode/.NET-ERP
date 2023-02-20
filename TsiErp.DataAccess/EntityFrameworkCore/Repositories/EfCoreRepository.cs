@@ -23,6 +23,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Repositories
 
         private DbSet<TEntity> _dbset;
 
+        public IGuidGenerator GuidGenerator { get; set; } = new SequentialGuidGenerator();
+
         public EfCoreRepository(DbContext dbContext)
         {
             _dbContext = dbContext;
@@ -84,7 +86,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Repositories
 
             if (entity is IEntity)
             {
-                entity.GetType().GetProperty("Id").SetValue(entity, LoginedUserService.UserId);
+                entity.GetType().GetProperty("Id").SetValue(entity, GuidGenerator.CreateGuid());
             }
 
             await _dbset.AddAsync(entity);

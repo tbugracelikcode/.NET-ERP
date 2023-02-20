@@ -1,20 +1,14 @@
-﻿using AutoMapper.Internal.Mappers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Services.BusinessCoreServices;
-using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.BillsofMaterial.BusinessRules;
 using TsiErp.Business.Entities.BillsofMaterial.Validations;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.BillsofMaterial;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.BillsofMaterialLine;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.BillsofMaterial;
 using TsiErp.Entities.Entities.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.BillsofMaterialLine;
@@ -40,6 +34,10 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 var entity = ObjectMapper.Map<CreateBillsofMaterialsDto, BillsofMaterials>(input);
 
                 var addedEntity = await _uow.BillsofMaterialsRepository.InsertAsync(entity);
+
+                var log = LogsAppService.CreateLogObject(entity, addedEntity, LoginedUserService.UserId, "BillsofMaterials", addedEntity.Id, Guid.Empty);
+
+                await _uow.LogsRepository.InsertAsync(log);
 
                 foreach (var item in input.SelectBillsofMaterialLines)
                 {

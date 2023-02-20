@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Services.BusinessCoreServices;
-using TsiErp.Entities.Entities.Department.Dtos;
-using TsiErp.Entities.Entities.Department;
-using TsiErp.Entities.Entities.Employee;
+﻿using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Entities.Entities.Employee.Dtos;
 
 namespace TsiErp.Business.Entities.Employee.Services

@@ -1,19 +1,14 @@
-﻿using System.Reflection;
-using Tsi.Core.Services.BusinessCoreServices;
-using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
-using TsiErp.Business.DependencyResolvers.Autofac;
+using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.CustomerComplaintItem.BusinessRules;
 using TsiErp.Business.Entities.CustomerComplaintItem.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.CustomerComplaintItem;
 using TsiErp.Entities.Entities.CustomerComplaintItem;
 using TsiErp.Entities.Entities.CustomerComplaintItem.Dtos;
-using TsiErp.Entities.Entities.WorkOrder.Dtos;
-using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.CustomerComplaintItem.Services
 {

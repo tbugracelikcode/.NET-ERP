@@ -1,27 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Services.BusinessCoreServices;
-using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
-using TsiErp.Business.Entities.Station.Services;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Station;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.StationGroup;
-using TsiErp.Entities.Entities.Station.Dtos;
-using TsiErp.Entities.Entities.Station;
-using TsiErp.EntityContracts.Station;
-using TsiErp.EntityContracts.StationGroup;
-using TsiErp.Entities.Entities.StationGroup.Dtos;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.Entities.Entities.StationGroup;
+using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.StationGroup.BusinessRules;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
-using TsiErp.Entities.Entities.WorkOrder.Dtos;
-using TsiErp.Entities.Entities.WorkOrder;
+using TsiErp.Entities.Entities.StationGroup;
+using TsiErp.Entities.Entities.StationGroup.Dtos;
+using TsiErp.EntityContracts.StationGroup;
 
 namespace TsiErp.Business.Entities.StationGroup.Services
 {

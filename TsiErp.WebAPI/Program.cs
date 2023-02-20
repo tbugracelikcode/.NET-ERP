@@ -1,15 +1,10 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using System.Reflection;
+using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business;
 using TsiErp.Business.DependencyResolvers.Autofac;
 using TsiErp.DataAccess.EntityFrameworkCore;
-using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
-using System.Reflection;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using TsiErp.Business.Entities.Branch.Services;
-using Microsoft.Extensions.DependencyInjection;
-using Tsi.Core.Services.BusinessCoreServices;
 
 var builder = WebApplication.CreateBuilder(args);
 

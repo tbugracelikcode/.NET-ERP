@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Services.BusinessCoreServices;
-using TsiErp.Entities.Entities.SalesOrderLine.Dtos;
-using TsiErp.Entities.Entities.PurchaseRequest.Dtos;
-using TsiErp.Entities.Entities.PurchaseRequestLine.Dtos;
-using TsiErp.Entities.Enums;
+﻿using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Entities.Entities.PurchaseOrderLine.Dtos;
+using TsiErp.Entities.Entities.PurchaseRequest.Dtos;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Business.Entities.PurchaseRequest.Services
 {
