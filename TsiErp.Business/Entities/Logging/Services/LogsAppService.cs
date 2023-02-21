@@ -14,89 +14,82 @@ namespace TsiErp.Business.Entities.Logging.Services
 
     public static class LogsAppService
     {
-        public static Logs CreateLogObject(object beforeValues, object afterValues, Guid userId, string logLevel, Guid recordId)
+
+        public static Logs InsertLogToDatabase<TSource, TDestination>(TSource before, TSource after, Guid userId, string logLevel, LogType logType, Guid recordId)
         {
-            var log = new Logs
+
+            Logs log = new Logs();
+
+            switch (logType)
             {
-                AfterValues = JsonConvert.SerializeObject(afterValues, Formatting.Indented),
-                BeforeValues = JsonConvert.SerializeObject(beforeValues, Formatting.Indented),
-                Date_ = DateTime.Now,
-                Id = LoginedUserService.UserId,
-                LogLevel_ = logLevel,
-                MethodName_ = "Insert",
-                UserId = userId,
-                RecordId = recordId
-            };
+                case LogType.Insert:
+                    var beforeInsertEntity = ObjectMapper.Map<TSource, TDestination>(before);
 
-            return log;
-        }
+                    var afterInsertEntity = ObjectMapper.Map<TSource, TDestination>(after);
 
-        public static Logs UpdateLogObject(object beforeValues, object afterValues, Guid userId, string logLevel, Guid recordId)
-        {
-            var log = new Logs
-            {
-                AfterValues = JsonConvert.SerializeObject(afterValues, Formatting.Indented),
-                BeforeValues = JsonConvert.SerializeObject(beforeValues, Formatting.Indented),
-                Date_ = DateTime.Now,
-                Id = LoginedUserService.UserId,
-                LogLevel_ = logLevel,
-                MethodName_ = "Update",
-                UserId = userId,
-                RecordId = recordId
-            };
+                    log = new Logs
+                    {
+                        AfterValues = JsonConvert.SerializeObject(afterInsertEntity, Formatting.Indented),
+                        BeforeValues = JsonConvert.SerializeObject(beforeInsertEntity, Formatting.Indented),
+                        Date_ = DateTime.Now,
+                        Id = LoginedUserService.UserId,
+                        LogLevel_ = logLevel,
+                        MethodName_ = logType.GetType().GetEnumName(logType),
+                        UserId = userId,
+                        RecordId = recordId
+                    };
+                    break;
+                case LogType.Update:
+                    var beforeUpdateEntity = ObjectMapper.Map<TSource, TDestination>(before);
 
-            return log;
-        }
+                    var afterUpdateEntity = ObjectMapper.Map<TSource, TDestination>(after);
 
-        public static Logs DeleteLogObject(object beforeValues, object afterValues, Guid userId, string logLevel, Guid recordId)
-        {
-            var log = new Logs
-            {
-                AfterValues = JsonConvert.SerializeObject(afterValues, Formatting.Indented),
-                BeforeValues = JsonConvert.SerializeObject(beforeValues, Formatting.Indented),
-                Date_ = DateTime.Now,
-                Id = LoginedUserService.UserId,
-                LogLevel_ = logLevel,
-                MethodName_ = "Delete",
-                UserId = userId,
-                RecordId = recordId
-            };
+                    log = new Logs
+                    {
+                        AfterValues = JsonConvert.SerializeObject(afterUpdateEntity, Formatting.Indented),
+                        BeforeValues = JsonConvert.SerializeObject(beforeUpdateEntity, Formatting.Indented),
+                        Date_ = DateTime.Now,
+                        Id = LoginedUserService.UserId,
+                        LogLevel_ = logLevel,
+                        MethodName_ = logType.GetType().GetEnumName(logType),
+                        UserId = userId,
+                        RecordId = recordId
+                    };
+                    break;
+                case LogType.Delete:
 
-            return log;
-        }
+                    log = new Logs
+                    {
+                        AfterValues = recordId,
+                        BeforeValues = recordId,
+                        Date_ = DateTime.Now,
+                        Id = LoginedUserService.UserId,
+                        LogLevel_ = logLevel,
+                        MethodName_ = logType.GetType().GetEnumName(logType),
+                        UserId = userId,
+                        RecordId = recordId
+                    };
+                    break;
+                case LogType.Get:
+                    var beforeGetEntity = ObjectMapper.Map<TSource, TDestination>(before);
 
-        public static Logs GetLogObject(object beforeValues, object afterValues, Guid userId, string logLevel, Guid recordId)
-        {
-            var log = new Logs
-            {
-                AfterValues = JsonConvert.SerializeObject(afterValues, Formatting.Indented),
-                BeforeValues = JsonConvert.SerializeObject(beforeValues, Formatting.Indented),
-                Date_ = DateTime.Now,
-                Id = LoginedUserService.UserId,
-                LogLevel_ = logLevel,
-                MethodName_ = "Get",
-                UserId = userId,
-                RecordId = recordId
-            };
+                    var afterGetEntity = ObjectMapper.Map<TSource, TDestination>(after);
 
-            return log;
-        }
-
-        public static Logs InsertLogToDatabase<TSource, TDestination>(this TSource input, Guid userId, string logLevel, LogType logType, Guid recordId)
-        {
-            var mappedEntity = ObjectMapper.Map<TSource, TDestination>(input);
-
-            var log = new Logs
-            {
-                AfterValues = JsonConvert.SerializeObject(input, Formatting.Indented),
-                BeforeValues = JsonConvert.SerializeObject(mappedEntity, Formatting.Indented),
-                Date_ = DateTime.Now,
-                Id = LoginedUserService.UserId,
-                LogLevel_ = logLevel,
-                MethodName_ = logType.GetType().GetEnumName(logType),
-                UserId = userId,
-                RecordId = recordId
-            };
+                    log = new Logs
+                    {
+                        AfterValues = JsonConvert.SerializeObject(afterGetEntity, Formatting.Indented),
+                        BeforeValues = JsonConvert.SerializeObject(beforeGetEntity, Formatting.Indented),
+                        Date_ = DateTime.Now,
+                        Id = LoginedUserService.UserId,
+                        LogLevel_ = logLevel,
+                        MethodName_ = logType.GetType().GetEnumName(logType),
+                        UserId = userId,
+                        RecordId = recordId
+                    };
+                    break;
+                default:
+                    break;
+            }
 
             return log;
         }
