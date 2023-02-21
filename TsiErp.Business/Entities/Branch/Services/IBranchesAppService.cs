@@ -1,11 +1,4 @@
-﻿using Autofac.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Services.BusinessCoreServices;
-using TsiErp.Entities.Entities.Branch;
+﻿using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Entities.Entities.Branch.Dtos;
 
 namespace TsiErp.Business.Entities.Branch.Services

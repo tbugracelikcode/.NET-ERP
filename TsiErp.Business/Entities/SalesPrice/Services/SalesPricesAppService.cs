@@ -1,14 +1,12 @@
-﻿using Tsi.Core.Services.BusinessCoreServices;
-using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.SalesPrice.BusinessRules;
 using TsiErp.Business.Entities.SalesPrice.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.SalesPrice;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.SalesPriceLine;
 using TsiErp.Entities.Entities.SalesPrice;
 using TsiErp.Entities.Entities.SalesPrice.Dtos;
 using TsiErp.Entities.Entities.SalesPriceLine;

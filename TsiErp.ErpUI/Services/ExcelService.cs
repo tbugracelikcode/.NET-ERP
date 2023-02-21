@@ -1,5 +1,9 @@
-﻿namespace TsiErp.ErpUI.Services
+﻿using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TsiErp.DataAccess.Services.Login;
+
+namespace TsiErp.ErpUI.Services
 {
+    [ServiceRegistration(typeof(IExcelService), DependencyInjectionType.Scoped)]
     public class ExcelService : IExcelService
     {
         private IWebHostEnvironment _hostEnvironment;

@@ -1,26 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Services.BusinessCoreServices;
-using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
-using TsiErp.Business.Entities.Branch.Services;
-using TsiErp.Business.Entities.Branch.Validations;
-using TsiErp.Business.Entities.OperationUnsuitabilityReport.Validations;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.OperationUnsuitabilityReport;
-using TsiErp.Entities.Entities.Branch.Dtos;
-using TsiErp.Entities.Entities.Branch;
-using TsiErp.Entities.Entities.OperationUnsuitabilityReport.Dtos;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
+using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.OperationUnsuitabilityReport.BusinessRules;
+using TsiErp.Business.Entities.OperationUnsuitabilityReport.Validations;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
-using TsiErp.Entities.Entities.WorkOrder.Dtos;
-using TsiErp.Entities.Entities.WorkOrder;
+using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
+using TsiErp.Entities.Entities.OperationUnsuitabilityReport.Dtos;
 
 namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
 {

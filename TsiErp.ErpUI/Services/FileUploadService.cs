@@ -1,7 +1,9 @@
 ﻿using BlazorInputFile;
+using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 
 namespace TsiErp.ErpUI.Services
 {
+    [ServiceRegistration(typeof(IFileUploadService), DependencyInjectionType.Scoped)]
     public class FileUploadService : IFileUploadService
     {
         private readonly IWebHostEnvironment _webHostEnvironment;

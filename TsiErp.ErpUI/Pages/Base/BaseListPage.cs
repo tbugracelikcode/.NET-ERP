@@ -1,23 +1,17 @@
-﻿using Blazored.Modal.Services;
-using DevExpress.Blazor;
+﻿using DevExpress.Blazor;
 using FluentValidation;
 using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Grids;
-using Syncfusion.Blazor.HeatMap.Internal;
-using Syncfusion.Blazor.Lists;
 using Syncfusion.Blazor.Navigations;
 using System.Text;
-using Tsi.Core.Services.BusinessCoreServices;
 using Tsi.Core.Entities;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
+using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
-using TsiErp.ErpUI.Utilities.ModalUtilities.ModalComponents;
-using static System.Net.Mime.MediaTypeNames;
 using IResult = Tsi.Core.Utilities.Results.IResult;
-using Tsi.Core.Entities.Auditing;
 
 namespace TsiErp.ErpUI.Pages.Base
 {

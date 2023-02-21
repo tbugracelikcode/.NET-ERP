@@ -1,15 +1,8 @@
-﻿using AutoMapper.Internal.Mappers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Services.BusinessCoreServices;
-using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Guids;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Calendar.BusinessRules;
 using TsiErp.Business.Entities.Calendar.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
@@ -24,7 +17,6 @@ using TsiErp.Entities.Entities.CalendarDay;
 using TsiErp.Entities.Entities.CalendarDay.Dtos;
 using TsiErp.Entities.Entities.CalendarLine;
 using TsiErp.Entities.Entities.CalendarLine.Dtos;
-using TsiErp.Entities.Enums;
 
 namespace TsiErp.Business.Entities.Calendar.Services
 {

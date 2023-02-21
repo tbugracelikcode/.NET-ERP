@@ -1,22 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Product;
-using TsiErp.Business.Entities.Product.Validations;
-using TsiErp.Entities.Entities.Product.Dtos;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.Entities.Entities.Product;
-using Tsi.Core.Services.BusinessCoreServices;
-using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Product.BusinessRules;
+using TsiErp.Business.Entities.Product.Validations;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
-using TsiErp.Entities.Entities.WorkOrder.Dtos;
-using TsiErp.Entities.Entities.WorkOrder;
+using TsiErp.Entities.Entities.Product;
+using TsiErp.Entities.Entities.Product.Dtos;
 
 namespace TsiErp.Business.Entities.Product.Services
 {

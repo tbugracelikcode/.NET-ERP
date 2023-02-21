@@ -1,21 +1,16 @@
-﻿using Tsi.Core.Services.BusinessCoreServices;
-using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Forecast.BusinessRules;
 using TsiErp.Business.Entities.Forecast.Validations;
-using TsiErp.Business.Entities.SalesProposition.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Forecast;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.ForecastLine;
 using TsiErp.Entities.Entities.Forecast;
 using TsiErp.Entities.Entities.Forecast.Dtos;
 using TsiErp.Entities.Entities.ForecastLine;
 using TsiErp.Entities.Entities.ForecastLine.Dtos;
-using TsiErp.Entities.Entities.WorkOrder.Dtos;
-using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.Forecast.Services
 {
