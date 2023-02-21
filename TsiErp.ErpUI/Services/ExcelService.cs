@@ -12,13 +12,17 @@ namespace TsiErp.ErpUI.Services
         {
             _hostEnvironment = environment;
         }
-     
+
+       
+
         public string GetPath(string filename)
         {
             string filePath = _hostEnvironment.WebRootPath + @"\" + "ExportedGridFiles";
             string path = Path.Combine(filePath, filename);
             return path;
         }
-        
+
+       
+
     }
 }

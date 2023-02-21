@@ -41,12 +41,29 @@ else
                 <Template>
                     <SfCard class="TSIGridCards">
                         <CardContent>
-                            <SfGrid ID="Grid" @ref="_grid" Toolbar="@ToolBarItems" AllowPdfExport=true  ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"  GridLines="GridLine.Both"
+                            <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
                                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
-                               
-                                <GridEvents OnToolbarClick="ToolbarClickHandler" ContextMenuItemClicked="@OnContextMenuClick" TValue="ListEquipmentRecordsDto"></GridEvents>
-                                                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
+                                <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListEquipmentRecordsDto"></GridEvents>
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                <SfToolbar>
+                                    <ToolbarItems>
+                                        <ToolbarItem Type="ItemType.Button">
+                                            <Template>
+
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", "Ekipmanlar", "Ekipmanlar"))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
+                                            </Template>
+                                        </ToolbarItem>
+
+                                        <ToolbarItem Type="ItemType.Button">
+                                            <Template>
+
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", "Ekipmanlar", "Ekipmanlar"))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
+                                            </Template>
+                                        </ToolbarItem>
+
+                                    </ToolbarItems>
+                                </SfToolbar>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
@@ -55,15 +72,15 @@ else
                                     <GridColumn Field=@nameof(ListEquipmentRecordsDto.Code) HeaderText="EKİPMAN KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListEquipmentRecordsDto.Name) HeaderText="EKİPMAN ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     @*<GridColumn Field=@nameof(ListEquipmentRecordsDto.MeasuringRange) HeaderText="ÖLÇME ARALIĞI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.MeasuringAccuracy) HeaderText="ÖLÇME HASSASİYETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>*@
+                                <GridColumn Field=@nameof(ListEquipmentRecordsDto.MeasuringAccuracy) HeaderText="ÖLÇME HASSASİYETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>*@
                                     <GridColumn Field=@nameof(ListEquipmentRecordsDto.DepartmentName) HeaderText="DEPARTMAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListEquipmentRecordsDto.Responsible) HeaderText="SORUMLU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                   @* <GridColumn Field=@nameof(ListEquipmentRecordsDto.Frequency) HeaderText="SIKLIK" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.EquipmentSerialNo) HeaderText="EKİPMAN SERİ NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>*@
+                                    @* <GridColumn Field=@nameof(ListEquipmentRecordsDto.Frequency) HeaderText="SIKLIK" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListEquipmentRecordsDto.EquipmentSerialNo) HeaderText="EKİPMAN SERİ NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>*@
                                     <GridColumn Field=@nameof(ListEquipmentRecordsDto.RecordDate) Type="ColumnType.Date" Format="dd.MM.yyyy" HeaderText="KAYIT TARİHİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                   @* <GridColumn Field=@nameof(ListEquipmentRecordsDto.Cancel) DisplayAsCheckBox="true" HeaderText="İPTAL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.CancellationDate) Type="ColumnType.Date" Format="dd.MM.yyyy" HeaderText="İPTAL TARİHİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListEquipmentRecordsDto.CancellationReason)  HeaderText="İPTAL NEDENİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>*@
+                                    @* <GridColumn Field=@nameof(ListEquipmentRecordsDto.Cancel) DisplayAsCheckBox="true" HeaderText="İPTAL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListEquipmentRecordsDto.CancellationDate) Type="ColumnType.Date" Format="dd.MM.yyyy" HeaderText="İPTAL TARİHİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListEquipmentRecordsDto.CancellationReason)  HeaderText="İPTAL NEDENİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>*@
 
                                 </GridColumns>
                             </SfGrid>
@@ -137,7 +154,7 @@ else
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>Departman: </strong></label>
-                             <SfTextBox @ref="@DepartmentButtonEdit" Created="@DepartmentOnCreateIcon" @bind-Value="DataSource.DepartmentName" ShowClearButton=true ValueChange="DepartmentOnValueChange"></SfTextBox>
+                            <SfTextBox @ref="@DepartmentButtonEdit" Created="@DepartmentOnCreateIcon" @bind-Value="DataSource.DepartmentName" ShowClearButton=true ValueChange="DepartmentOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="5">
@@ -167,16 +184,16 @@ else
                     <DxGridLayoutItem Row="3" Column="1">
                         <Template>
                             <center>
-                            <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
-                            <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                                <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
+                                <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
                             </center>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="3" Column="3">
                         <Template>
                             <center>
-                            <label class="TSIModalLabel"><strong>İptal: </strong></label><br />
-                            <SfSwitch @bind-Checked="DataSource.Cancel" @onchange="CancelValueChanged"></SfSwitch>
+                                <label class="TSIModalLabel"><strong>İptal: </strong></label><br />
+                                <SfSwitch @bind-Checked="DataSource.Cancel" @onchange="CancelValueChanged"></SfSwitch>
                             </center>
                         </Template>
                     </DxGridLayoutItem>
@@ -204,9 +221,9 @@ else
 
 }
 
- @if (SelectDepartmentPopupVisible)
-    {
-        <DxPopup @bind-Visible="SelectDepartmentPopupVisible"
+@if (SelectDepartmentPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectDepartmentPopupVisible"
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
@@ -216,47 +233,47 @@ else
          MinWidth="1220px"
          MinHeight="470px"
          HeaderCssClass="HeaderTitleCss">
-            <BodyTemplate>
+        <BodyTemplate>
 
-                <DevGridLayout ColumnCount="1" RowCount="1">
-                    <GridLayoutItems>
-                       
-                        <DxGridLayoutItem Row="1" Column="1">
-                            <Template>
-                                <SfCard class="TSIWorkStationGroupPopUpCard">
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
 
-                                    <CardContent>
-                                        <SfGrid ID="DepartmentGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@DepartmentList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIWorkStationGroupPopUpCard">
+
+                                <CardContent>
+                                    <SfGrid ID="DepartmentGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@DepartmentList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
                                         AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
-                                            <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                            <GridEvents OnRecordDoubleClick="@DepartmentDoubleClickHandler" TValue="ListDepartmentsDto"></GridEvents>
-                                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                            <GridPageSettings PageSizes="true"></GridPageSettings>
-                                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
-                                            <GridColumns>
-                                                <GridColumn Field=@nameof(ListDepartmentsDto.Code) HeaderText="DEPARTMAN KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                                <GridColumn Field=@nameof(ListDepartmentsDto.Name) HeaderText="DEPARTMAN ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridEvents OnRecordDoubleClick="@DepartmentDoubleClickHandler" TValue="ListDepartmentsDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListDepartmentsDto.Code) HeaderText="DEPARTMAN KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListDepartmentsDto.Name) HeaderText="DEPARTMAN ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
-                                            </GridColumns>
-                                        </SfGrid>
-                                    </CardContent>
-                                    <CardFooter>
-                                    </CardFooter>
-                                </SfCard>
-                            </Template>
-                        </DxGridLayoutItem>
-                    </GridLayoutItems>
-                </DevGridLayout>
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
 
-            </BodyTemplate>
-            <FooterContentTemplate>
-                @*<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            @*<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
         <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>*@
-            </FooterContentTemplate>
-        </DxPopup>
-    }
+        </FooterContentTemplate>
+    </DxPopup>
+}
 
 
 

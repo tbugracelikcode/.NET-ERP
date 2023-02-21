@@ -41,10 +41,27 @@ else
                     <SfCard class="TSIGridCards">
 
                         <CardContent>
-                            <SfGrid ID="Grid"  @ref="_grid" Toolbar="@ToolBarItems" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"  GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu">
+                            <SfGrid ID="Grid"  @ref="_grid"   AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"  GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu">
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                <SfToolbar>
+                                    <ToolbarItems>
+                                        <ToolbarItem Type="ItemType.Button">
+                                            <Template>
 
-                                <GridEvents OnToolbarClick="ToolbarClickHandler" ContextMenuItemClicked="@MainContextMenuClick" TValue="ListTemplateOperationsDto"></GridEvents>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", "Şablon Operasyonlar", "SablonOpr"))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
+                                            </Template>
+                                        </ToolbarItem>
+
+                                        <ToolbarItem Type="ItemType.Button">
+                                            <Template>
+
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", "Şablon Operasyonlar", "SablonOpr"))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
+                                            </Template>
+                                        </ToolbarItem>
+
+                                    </ToolbarItems>
+                                </SfToolbar>
+                                <GridEvents   ContextMenuItemClicked="@MainContextMenuClick" TValue="ListTemplateOperationsDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>

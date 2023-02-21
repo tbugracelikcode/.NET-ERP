@@ -69,6 +69,68 @@
         border: 2px solid;
     }
 
+.TSIExcelButton {
+    border-color: transparent !important;
+    background-color: transparent !important;
+    color: #505050 !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    text-align: left !important;
+    width: 70px;
+    border-radius: 5px;
+    height: 35px;
+    border: 2px solid;
+}
+
+    .TSIExcelButton:hover {
+        border-color: #A3A3A3 !important;
+        background-color: #C4C4C4 !important;
+        color: white !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        width: 70px;
+        border-radius: 5px;
+        height: 35px;
+        border: 2px solid;
+    }
+
+.TSIExcelIcon {
+    width:25px !important;
+    height:25px !important;
+}
+
+.TSIPdfButton {
+    border-color: transparent !important;
+    background-color: transparent !important;
+    color: #505050 !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    text-align: left !important;
+    width: 70px;
+    border-radius: 5px;
+    height: 35px;
+    border: 2px solid;
+}
+
+    .TSIPdfButton:hover {
+        border-color: #A3A3A3 !important;
+        background-color: #C4C4C4 !important;
+        color: white !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        width: 70px;
+        border-radius: 5px;
+        height: 35px;
+        border: 2px solid;
+    }
+
+.TSIPdfIcon {
+    width: 25px !important;
+    height: 25px !important;
+}
+
 
 .TSICancelButton {
     border-color: #565656 !important;

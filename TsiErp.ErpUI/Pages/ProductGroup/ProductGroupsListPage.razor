@@ -36,14 +36,31 @@ else
             <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
                 <Template>
                     <SfCard class="TSIGridCards">
-                        
-                        <CardContent>
-                            <SfGrid ID="Grid"  @ref="_grid" Toolbar="@ToolBarItems" AllowPdfExport=true DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true"  AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"  GridLines="GridLine.Both"
-                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
-                                                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
+                        <CardContent>
+                            <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                <SfToolbar>
+                                    <ToolbarItems>
+                                        <ToolbarItem Type="ItemType.Button">
+                                            <Template>
+
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", "Ürün Grupları", "UrunGruplari"))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
+                                            </Template>
+                                        </ToolbarItem>
+
+                                        <ToolbarItem Type="ItemType.Button">
+                                            <Template>
+
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", "Ürün Grupları", "UrunGruplari"))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
+                                            </Template>
+                                        </ToolbarItem>
+
+                                    </ToolbarItems>
+                                </SfToolbar>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                <GridEvents OnToolbarClick="ToolbarClickHandler" ContextMenuItemClicked="@OnContextMenuClick" TValue="ListProductGroupsDto"></GridEvents>
+                                <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListProductGroupsDto"></GridEvents>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
@@ -61,8 +78,8 @@ else
         </GridLayoutItems>
     </DevGridLayout>
 
-    
-<DxPopup @bind-Visible="base.EditPageVisible"
+
+    <DxPopup @bind-Visible="base.EditPageVisible"
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
@@ -74,50 +91,50 @@ else
          HeaderCssClass="HeaderTitleCss"
          Showing="CrudModalShowing"
          Closing="CrudModalClosing">
-    <BodyTemplate>
+        <BodyTemplate>
 
-        <DxGridLayout CssClass="TSIGridLayout">
-            <Rows>
-                <DxGridLayoutRow Height="55%" />
-                <DxGridLayoutRow Height="25%" />
-            </Rows>
-            <Columns>
-                <DxGridLayoutColumn Width="5%" />
-                <DxGridLayoutColumn Width="40%" />
-                <DxGridLayoutColumn Width="5%" />
-                <DxGridLayoutColumn Width="40%" />
-                <DxGridLayoutColumn Width="5%" />
-            </Columns>
-            <Items>
-                <DxGridLayoutItem Row="0" Column="1">
-                    <Template>
-                        <br />
-                        <label class="TSIModalLabel"><strong>Ürün Grubu Kodu: </strong></label>
-                        <SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.Code" Placeholder="Ürün Grubu Kodunu Yazınız."></SfTextBox>
-                    </Template>
-                </DxGridLayoutItem>
-                <DxGridLayoutItem Row="0" Column="3">
-                    <Template>
-                        <br />
-                        <label class="TSIModalLabel"><strong>Ürün Grubu Açıklaması: </strong></label>
-                        <SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.Name" Placeholder="Ürün Grubu Açıklaması Yazınız."></SfTextBox>
-                    </Template>
-                </DxGridLayoutItem>
-                <DxGridLayoutItem Row="1" Column="1">
-                    <Template>
-                        <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
-                        <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
-                    </Template>
-                </DxGridLayoutItem>
+            <DxGridLayout CssClass="TSIGridLayout">
+                <Rows>
+                    <DxGridLayoutRow Height="55%" />
+                    <DxGridLayoutRow Height="25%" />
+                </Rows>
+                <Columns>
+                    <DxGridLayoutColumn Width="5%" />
+                    <DxGridLayoutColumn Width="40%" />
+                    <DxGridLayoutColumn Width="5%" />
+                    <DxGridLayoutColumn Width="40%" />
+                    <DxGridLayoutColumn Width="5%" />
+                </Columns>
+                <Items>
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>Ürün Grubu Kodu: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Ürün Grubu Kodunu Yazınız."></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>Ürün Grubu Açıklaması: </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="Ürün Grubu Açıklaması Yazınız."></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
+                            <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                        </Template>
+                    </DxGridLayoutItem>
 
-            </Items>
-        </DxGridLayout>
-    </BodyTemplate>
-    <FooterContentTemplate>
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
             <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
             <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
-    </FooterContentTemplate>
-</DxPopup>
+        </FooterContentTemplate>
+    </DxPopup>
 
 }
 
