@@ -19,9 +19,9 @@ namespace TsiErp.Business.Entities.Currency.Validations
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen para birimi  adını yazın.")
+                .WithMessage("Lütfen para birimi  açıklamasını yazın.")
                 .MaximumLength(200)
-                .WithMessage("Para birimi  adı 200 karakterden fazla olamaz."); ;
+                .WithMessage("Para birimi  açıklaması 200 karakterden fazla olamaz."); ;
 
         }
     }

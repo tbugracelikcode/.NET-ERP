@@ -25,7 +25,7 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Validations
 
             RuleFor(x => x.PeriodID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("Lütfenbakım türü seçin.");
+               .WithMessage("Lütfen bakım türü seçin.");
 
         }
     }

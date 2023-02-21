@@ -21,9 +21,9 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityItem.Validations
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen operasyon uygunsuzluk adını yazın.")
+                .WithMessage("Lütfen operasyon uygunsuzluk açıklamasını yazın.")
                 .MaximumLength(200)
-                .WithMessage("Operasyon uygunsuzluk adı 200 karakterden fazla olamaz."); ;
+                .WithMessage("Operasyon uygunsuzluk açıklaması 200 karakterden fazla olamaz."); ;
 
         }
     }

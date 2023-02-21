@@ -21,9 +21,9 @@ namespace TsiErp.Business.Entities.PurchasingUnsuitabilityItem.Validations
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen satın alma uygunsuzluk adını yazın.")
+                .WithMessage("Lütfen satın alma uygunsuzluk açıklamasını yazın.")
                 .MaximumLength(200)
-                .WithMessage("Satın alma uygunsuzluk adı 200 karakterden fazla olamaz."); ;
+                .WithMessage("Satın alma uygunsuzluk açıklaması 200 karakterden fazla olamaz."); ;
 
         }
     }

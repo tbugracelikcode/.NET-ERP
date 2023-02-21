@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentValidation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,17 @@ namespace TsiErp.Business.Entities.ProductionTracking.Validations
     {
         public CreateProductionTrackingsValidator()
         {
+            RuleFor(x => x.StationID)
+                .Must(x => x.HasValue && x.Value != Guid.Empty)
+               .WithMessage("Lütfeniş istasyonu seçin.");
 
+            RuleFor(x => x.EmployeeID)
+                .Must(x => x.HasValue && x.Value != Guid.Empty)
+               .WithMessage("Lütfen çalışan seçin.");
+
+            RuleFor(x => x.ShiftID)
+                .Must(x => x.HasValue && x.Value != Guid.Empty)
+               .WithMessage("Lütfen vardiya seçin.");
         }
     }
 }

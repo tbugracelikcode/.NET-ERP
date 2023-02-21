@@ -12,16 +12,16 @@ namespace TsiErp.Business.Entities.Product.Validations
         public UpdateProductsValidator()
         {
             RuleFor(x => x.Code)
-                .NotEmpty()
-                .WithMessage("Lütfen ürün kodunu yazın.")
-                .MaximumLength(17)
-                .WithMessage("Ürün kodu 17 karakterden fazla olamaz.");
+               .NotEmpty()
+               .WithMessage("Lütfen stok kodunu yazın.")
+               .MaximumLength(17)
+               .WithMessage("Stok kodu 17 karakterden fazla olamaz.");
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen ürün adını yazın.")
+                .WithMessage("Lütfen stok açıklamasını yazın.")
                 .MaximumLength(200)
-                .WithMessage("Ürün adı 200 karakterden fazla olamaz.");
+                .WithMessage("Stok açıklaması 200 karakterden fazla olamaz.");
 
             RuleFor(x => x.ProductGrpID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen ürün grubunu seçin.");
 
