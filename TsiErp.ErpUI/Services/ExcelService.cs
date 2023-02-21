@@ -1,4 +1,7 @@
-﻿namespace TsiErp.ErpUI.Services
+﻿using Syncfusion.XlsIO;
+using System.Data;
+
+namespace TsiErp.ErpUI.Services
 {
     public class ExcelService : IExcelService
     {
@@ -8,13 +11,17 @@
         {
             _hostEnvironment = environment;
         }
-     
+
+       
+
         public string GetPath(string filename)
         {
             string filePath = _hostEnvironment.WebRootPath + @"\" + "ExportedGridFiles";
             string path = Path.Combine(filePath, filename);
             return path;
         }
-        
+
+       
+
     }
 }

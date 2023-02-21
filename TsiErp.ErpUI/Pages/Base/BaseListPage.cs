@@ -18,6 +18,8 @@ using TsiErp.ErpUI.Utilities.ModalUtilities.ModalComponents;
 using static System.Net.Mime.MediaTypeNames;
 using IResult = Tsi.Core.Utilities.Results.IResult;
 using Tsi.Core.Entities.Auditing;
+using Syncfusion.XlsIO;
+using System.Data;
 
 namespace TsiErp.ErpUI.Pages.Base
 {
@@ -33,8 +35,6 @@ namespace TsiErp.ErpUI.Pages.Base
         public bool SelectFirstDataRow { get; set; }
 
         public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
-
-        public string[] ToolBarItems = new string[] { "ExcelExport" };
         public TGetListOutputDto SelectedItem { get; set; }
 
         [Inject]
@@ -161,15 +161,21 @@ namespace TsiErp.ErpUI.Pages.Base
             IsLoaded = true;
         }
 
-        protected virtual async Task ToolbarClickHandler(ClickEventArgs args)
+        public async void OnToolbarClicked(string toolbar, string header, string filename)
         {
-            if (args.Item.Id == "Grid_excelexport")
+            
+            if (toolbar == "ExcelExport")
             {
-                await this._grid.ExportToExcelAsync();
+                ExcelExportProperties ExcelExportProperties = new ExcelExportProperties();
+                ExcelExportProperties.FileName = filename + ".xlsx";
+                await this._grid.ExportToExcelAsync(ExcelExportProperties);
             }
-            else if (args.Item.Id == "Grid_pdfexport")
+            else if (toolbar == "PDFExport")
             {
-                await this._grid.ExportToPdfAsync();
+                PdfExportProperties PdfExportProperties = new PdfExportProperties();
+                PdfExportProperties.PageOrientation = PageOrientation.Landscape;
+                PdfExportProperties.FileName = filename + ".pdf";
+                await this._grid.ExportToPdfAsync(PdfExportProperties);
             }
         }
 

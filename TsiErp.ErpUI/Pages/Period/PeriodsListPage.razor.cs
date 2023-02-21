@@ -6,6 +6,7 @@ using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using Syncfusion.Blazor.Navigations;
 using Tsi.Core.Utilities.Results;
 using TsiErp.Business.Entities.Department.Services;
 using TsiErp.Entities.Entities.Branch.Dtos;
@@ -17,7 +18,6 @@ namespace TsiErp.ErpUI.Pages.Period
 
     public partial class PeriodsListPage
     {
-       
 
         protected override async void OnInitialized()
         {
@@ -86,7 +86,6 @@ namespace TsiErp.ErpUI.Pages.Period
             BranchList = (await BranchesAppService.GetListAsync(new ListBranchesParameterDto())).Data.ToList();
         }
 
-      
 
     }
 }

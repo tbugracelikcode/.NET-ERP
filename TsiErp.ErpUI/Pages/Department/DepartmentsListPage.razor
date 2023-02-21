@@ -14,13 +14,14 @@
 
 @inject IDepartmentsAppService DepartmentsService
 
-@{if (!base.IsLoaded)
-{
-    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
-}
-else
-{
-    <DevGridLayout ColumnCount="1" RowCount="3">
+@{
+    if (!base.IsLoaded)
+    {
+        <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+    }
+    else
+    {
+        <DevGridLayout ColumnCount="1" RowCount="3">
             <GridLayoutItems>
                 <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
                     <Template>
@@ -37,12 +38,29 @@ else
                     <Template>
                         <SfCard class="TSIGridCards">
                             <CardContent>
-                                <SfGrid ID="Grid" @ref="_grid" Toolbar="@ToolBarItems" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"  GridLines="GridLine.Both"
+                                <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
                                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
-                                                           <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                    <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                    <SfToolbar>
+                                        <ToolbarItems>
+                                            <ToolbarItem Type="ItemType.Button">
+                                                <Template>
 
+                                                    <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", "Departmanlar", "Departmanlar"))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
+                                                </Template>
+                                            </ToolbarItem>
+
+                                        <ToolbarItem Type="ItemType.Button">
+                                            <Template>
+
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", "Departmanlar", "Departmanlar"))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
+                                            </Template>
+                                        </ToolbarItem>
+
+                                        </ToolbarItems>
+                                    </SfToolbar>
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                     <GridEvents OnToolbarClick="ToolbarClickHandler" ContextMenuItemClicked="@OnContextMenuClick" TValue="ListDepartmentsDto"></GridEvents>
+                                    <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListDepartmentsDto"></GridEvents>
                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
@@ -59,9 +77,9 @@ else
                     </Template>
                 </DxGridLayoutItem>
             </GridLayoutItems>
-    </DevGridLayout>
+        </DevGridLayout>
 
-    <DxPopup @bind-Visible="base.EditPageVisible"
+        <DxPopup @bind-Visible="base.EditPageVisible"
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
@@ -116,8 +134,8 @@ else
                 <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
                 <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
             </FooterContentTemplate>
-    </DxPopup>
+        </DxPopup>
 
-}
+    }
 }
 

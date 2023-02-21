@@ -13,13 +13,14 @@
 
 @inject IOperationUnsuitabilityItemsAppService OperationUnsuitabilityItemsService
 
-@{if (!base.IsLoaded)
-{
-    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
-}
-else
-{
-    <DevGridLayout ColumnCount="1" RowCount="3">
+@{
+    if (!base.IsLoaded)
+    {
+        <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+    }
+    else
+    {
+        <DevGridLayout ColumnCount="1" RowCount="3">
             <GridLayoutItems>
                 <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
                     <Template>
@@ -35,28 +36,45 @@ else
                 <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
                     <Template>
                         <SfCard class="TSIGridCards">
-                        
+
                             <CardContent>
-                                <SfGrid ID="Grid" @ref="_grid" Toolbar="@ToolBarItems" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"  GridLines="GridLine.Both"
-                                AllowSorting="true" Height="100%" Width="100%"  ContextMenuItems="@GridContextMenu" class="GridZebra">
-                                                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                AllowSorting="true" Height="100%" Width="100%" ContextMenuItems="@GridContextMenu" class="GridZebra">
+                                    <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+                                    <SfToolbar>
+                                        <ToolbarItems>
+                                            <ToolbarItem Type="ItemType.Button">
+                                                <Template>
 
-                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                <GridEvents OnToolbarClick="ToolbarClickHandler" ContextMenuItemClicked="@OnContextMenuClick" TValue="ListOperationUnsuitabilityItemsDto"></GridEvents>
-                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                <GridPageSettings PageSizes="true"></GridPageSettings>
-                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
-                                <GridColumns>
-                                    <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.Code) HeaderText="OPERASYON UYGUNSUZLUK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.Name) HeaderText="OPERASYON UYGUNSUZLUK AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.Detection) Type="ColumnType.Number" HeaderText="TESPİT" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.Severity) Type="ColumnType.Number" HeaderText="ŞİDDET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.StaProductivityAnalysis) DisplayAsCheckBox="true" HeaderText="İSTASYON VERİMLİLİK ANALİZİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.PerProductivityAnalysis) DisplayAsCheckBox="true" HeaderText="PERSONEL VERİMLİLİK ANALİZİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.Image) HeaderText="RESİM" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                    <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", "Operasyon Uygunsuzluk Başlıkları", "OprUygBasliklari"))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
+                                                </Template>
+                                            </ToolbarItem>
 
-                                </GridColumns>
-                            </SfGrid>
+                                        <ToolbarItem Type="ItemType.Button">
+                                            <Template>
+
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", "Operasyon Uygunsuzluk Başlıkları", "OprUygBasliklari"))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
+                                            </Template>
+                                        </ToolbarItem>
+
+                                        </ToolbarItems>
+                                    </SfToolbar>
+                                    <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                    <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListOperationUnsuitabilityItemsDto"></GridEvents>
+                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                    <GridPageSettings PageSizes="true"></GridPageSettings>
+                                    <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                    <GridColumns>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.Code) HeaderText="OPERASYON UYGUNSUZLUK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.Name) HeaderText="OPERASYON UYGUNSUZLUK AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.Detection) Type="ColumnType.Number" HeaderText="TESPİT" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.Severity) Type="ColumnType.Number" HeaderText="ŞİDDET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.StaProductivityAnalysis) DisplayAsCheckBox="true" HeaderText="İSTASYON VERİMLİLİK ANALİZİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.PerProductivityAnalysis) DisplayAsCheckBox="true" HeaderText="PERSONEL VERİMLİLİK ANALİZİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.Image) HeaderText="RESİM" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    </GridColumns>
+                                </SfGrid>
                             </CardContent>
                             <CardFooter>
                             </CardFooter>
@@ -64,14 +82,14 @@ else
                     </Template>
                 </DxGridLayoutItem>
             </GridLayoutItems>
-    </DevGridLayout>
+        </DevGridLayout>
 
-    <DxPopup @bind-Visible="base.EditPageVisible"
+        <DxPopup @bind-Visible="base.EditPageVisible"
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="Operasyon Uygunsuzluk Başlıkları"
-        Width="52%"
+         Width="52%"
          Height="32%"
          MinWidth="980px"
          MinHeight="350px"
@@ -131,25 +149,25 @@ else
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="2" Column="1">
                             <Template>
-                            <center>
-                                <label class="TSIModalLabel"><strong>İstasyon Verimlilik Analizi: </strong></label><br />
-                                <SfSwitch @bind-Checked="DataSource.StaProductivityAnalysis"></SfSwitch>
+                                <center>
+                                    <label class="TSIModalLabel"><strong>İstasyon Verimlilik Analizi: </strong></label><br />
+                                    <SfSwitch @bind-Checked="DataSource.StaProductivityAnalysis"></SfSwitch>
                                 </center>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="2" Column="3">
                             <Template>
-                            <center>
-                                <label class="TSIModalLabel"><strong>Personel Verimlilik Analizi: </strong></label><br />
-                                <SfSwitch @bind-Checked="DataSource.PerProductivityAnalysis"></SfSwitch>
+                                <center>
+                                    <label class="TSIModalLabel"><strong>Personel Verimlilik Analizi: </strong></label><br />
+                                    <SfSwitch @bind-Checked="DataSource.PerProductivityAnalysis"></SfSwitch>
                                 </center>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="2" Column="5">
                             <Template>
-                            <center>
-                                <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
-                                <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                                <center>
+                                    <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
+                                    <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
                                 </center>
                             </Template>
                         </DxGridLayoutItem>
@@ -161,7 +179,7 @@ else
                 <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
                 <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
             </FooterContentTemplate>
-    </DxPopup>
+        </DxPopup>
 
-}
+    }
 }
