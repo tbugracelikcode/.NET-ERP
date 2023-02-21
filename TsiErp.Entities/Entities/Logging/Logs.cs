@@ -25,8 +25,6 @@ namespace TsiErp.Entities.Entities.Logging
 
         public Guid RecordId { get; set; }
 
-        public Guid RegisteredId { get; set; }
-
 
     }
 }

@@ -222,7 +222,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.LogLevel_).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
                 b.Property(t => t.UserId).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.RecordId).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.RegisteredId).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
 
             });
         }

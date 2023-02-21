@@ -35,10 +35,6 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
 
                 var addedEntity = await _uow.BillsofMaterialsRepository.InsertAsync(entity);
 
-                var log = LogsAppService.CreateLogObject(entity, addedEntity, LoginedUserService.UserId, "BillsofMaterials", addedEntity.Id, Guid.Empty);
-
-                await _uow.LogsRepository.InsertAsync(log);
-
                 foreach (var item in input.SelectBillsofMaterialLines)
                 {
                     var lineEntity = ObjectMapper.Map<SelectBillsofMaterialLinesDto, BillsofMaterialLines>(item);
@@ -46,6 +42,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     lineEntity.BoMID = addedEntity.Id;
                     await _uow.BillsofMaterialLinesRepository.InsertAsync(lineEntity);
                 }
+
 
                 await _uow.SaveChanges();
                 return new SuccessDataResult<SelectBillsofMaterialsDto>(ObjectMapper.Map<BillsofMaterials, SelectBillsofMaterialsDto>(addedEntity));
