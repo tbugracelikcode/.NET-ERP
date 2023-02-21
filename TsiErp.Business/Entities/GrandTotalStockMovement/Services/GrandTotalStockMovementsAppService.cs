@@ -1,25 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Services.BusinessCoreServices;
-using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
-using TsiErp.Business.Entities.Branch.Services;
-using TsiErp.Business.Entities.Branch.Validations;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
-using TsiErp.Entities.Entities.Branch.Dtos;
-using TsiErp.Entities.Entities.Branch;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.GrandTotalStockMovement;
-using TsiErp.Business.Entities.GrandTotalStockMovement.Validations;
-using TsiErp.Entities.Entities.GrandTotalStockMovement.Dtos;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.Entities.Entities.GrandTotalStockMovement;
+using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GrandTotalStockMovement.BusinessRules;
+using TsiErp.Business.Entities.GrandTotalStockMovement.Validations;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.Entities.Entities.GrandTotalStockMovement;
+using TsiErp.Entities.Entities.GrandTotalStockMovement.Dtos;
 
 namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
 {

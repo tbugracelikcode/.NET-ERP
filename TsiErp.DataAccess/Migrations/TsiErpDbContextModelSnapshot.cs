@@ -2242,6 +2242,9 @@ namespace TsiErp.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(MAX)");
 
+                    b.Property<Guid>("RecordId")
+                        .HasColumnType("UniqueIdentifier");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("UniqueIdentifier");
 

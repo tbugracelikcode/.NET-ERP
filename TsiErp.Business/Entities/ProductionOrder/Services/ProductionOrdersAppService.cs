@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Services.BusinessCoreServices;
-using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
@@ -12,11 +6,8 @@ using TsiErp.Business.Entities.ProductionOrder.BusinessRules;
 using TsiErp.Business.Entities.ProductionOrder.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionOrder.Dtos;
-using TsiErp.Entities.Entities.WorkOrder.Dtos;
-using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.ProductionOrder.Services
 {

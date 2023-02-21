@@ -1,21 +1,16 @@
-﻿using Tsi.Core.Services.BusinessCoreServices;
-using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.UnplannedMaintenance.BusinessRules;
 using TsiErp.Business.Entities.UnplannedMaintenance.Validations;
-using TsiErp.Business.Entities.SalesProposition.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.UnplannedMaintenance;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.UnplannedMaintenanceLine;
+using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.Entities.Entities.UnplannedMaintenance;
 using TsiErp.Entities.Entities.UnplannedMaintenance.Dtos;
 using TsiErp.Entities.Entities.UnplannedMaintenanceLine;
 using TsiErp.Entities.Entities.UnplannedMaintenanceLine.Dtos;
-using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
-using TsiErp.Entities.Entities.WorkOrder.Dtos;
-using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
 {

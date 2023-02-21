@@ -1,23 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Services.BusinessCoreServices;
-using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Guids;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.Entities.ContractProductionTracking.BusinessRules;
 using TsiErp.Business.Entities.ContractProductionTracking.Validations;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.ContractProductionTracking;
-using TsiErp.Entities.Entities.ContractProductionTracking.Dtos;
-using TsiErp.Entities.Entities.ContractProductionTracking;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
-using TsiErp.Entities.Entities.WorkOrder.Dtos;
-using TsiErp.Entities.Entities.WorkOrder;
+using TsiErp.Entities.Entities.ContractProductionTracking;
+using TsiErp.Entities.Entities.ContractProductionTracking.Dtos;
 
 namespace TsiErp.Business.Entities.ContractProductionTracking.Services
 {

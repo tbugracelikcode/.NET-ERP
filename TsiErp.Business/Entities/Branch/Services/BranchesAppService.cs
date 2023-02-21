@@ -1,19 +1,17 @@
-﻿using System.Reflection;
-using Tsi.Core.Services.BusinessCoreServices;
-using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
+using Tsi.Core.Entities;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
-using TsiErp.Business.DependencyResolvers.Autofac;
+using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Branch.BusinessRules;
 using TsiErp.Business.Entities.Branch.Validations;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Branch.Dtos;
-using TsiErp.Entities.Entities.WorkOrder.Dtos;
-using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.Branch.Services
 {
@@ -34,6 +32,13 @@ namespace TsiErp.Business.Entities.Branch.Services
 
                 var addedEntity = await _uow.BranchRepository.InsertAsync(entity);
 
+                var beforeLogEntity = ObjectMapper.Map<Branches,SelectBranchesDto >(addedEntity);
+
+                //var log = LogsAppService.CreateLogObject(beforeLogEntity, beforeLogEntity, LoginedUserService.UserId, "Branches", addedEntity.Id);
+                var log = LogsAppService.InsertLogToDatabase<Branches, SelectBranchesDto>(addedEntity, LoginedUserService.UserId, "Branches", LogType.Insert, addedEntity.Id);
+
+                await _uow.LogsRepository.InsertAsync(log);
+
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectBranchesDto>(ObjectMapper.Map<Branches, SelectBranchesDto>(addedEntity));
@@ -48,6 +53,9 @@ namespace TsiErp.Business.Entities.Branch.Services
             {
                 await _manager.DeleteControl(_uow.BranchRepository, id);
                 await _uow.BranchRepository.DeleteAsync(id);
+                //var log = LogsAppService.DeleteLogObject(null, null, LoginedUserService.UserId, "Branches", id);
+                var log = LogsAppService.InsertLogToDatabase<Branches, SelectBranchesDto>(null, LoginedUserService.UserId, "Branches", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -60,6 +68,10 @@ namespace TsiErp.Business.Entities.Branch.Services
             {
                 var entity = await _uow.BranchRepository.GetAsync(t => t.Id == id, t => t.Periods, t => t.SalesPropositions);
                 var mappedEntity = ObjectMapper.Map<Branches, SelectBranchesDto>(entity);
+                //var log = LogsAppService.GetLogObject(mappedEntity, mappedEntity, LoginedUserService.UserId, "Branches", id);
+                var log = LogsAppService.InsertLogToDatabase<Branches, SelectBranchesDto>(entity, LoginedUserService.UserId, "Branches", LogType.Get, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
                 return new SuccessDataResult<SelectBranchesDto>(mappedEntity);
             }
         }
@@ -93,6 +105,12 @@ namespace TsiErp.Business.Entities.Branch.Services
                 var mappedEntity = ObjectMapper.Map<UpdateBranchesDto, Branches>(input);
 
                 await _uow.BranchRepository.UpdateAsync(mappedEntity);
+
+                //var log = LogsAppService.UpdateLogObject(entity, input, LoginedUserService.UserId, "Branches", mappedEntity.Id);
+
+                var log = LogsAppService.InsertLogToDatabase<Branches, SelectBranchesDto>(mappedEntity, LoginedUserService.UserId, "Branches", LogType.Update, mappedEntity.Id);
+
+                await _uow.LogsRepository.InsertAsync(log);
 
                 await _uow.SaveChanges();
 

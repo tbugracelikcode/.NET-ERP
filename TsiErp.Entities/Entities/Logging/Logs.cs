@@ -23,6 +23,8 @@ namespace TsiErp.Entities.Entities.Logging
 
         public Guid UserId { get; set; }
 
+        public Guid RecordId { get; set; }
+
 
     }
 }

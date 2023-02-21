@@ -1,6 +1,5 @@
 ﻿@page "/"
 
-@inject NavigationManager NavigationManager
 @using Syncfusion.Blazor.Buttons
 @using Syncfusion.Blazor.Popups
 @using Syncfusion.Blazor.Cards
@@ -11,6 +10,9 @@
 @using Syncfusion.Blazor.Grids
 @using Syncfusion.Blazor.Navigations
 @using System.Timers
+@using TsiErp.DataAccess.Services.Login
+
+@inject NavigationManager NavigationManager
 
 <style>
     body,
@@ -117,6 +119,8 @@
         if (User == "admin" && Password == "admin")
         {
             VisibleSpinner = true;
+
+            LoginedUserService.UserId = Guid.Parse("d71be8fe-07ce-4ff0-940f-f6d778c16181");
 
             NavigationManager.NavigateTo("/home");
         }

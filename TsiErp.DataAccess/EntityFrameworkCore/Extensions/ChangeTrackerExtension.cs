@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.DataAccess.Services.Login;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Extensions
 {
@@ -23,7 +24,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Extensions
                 {
                     IFullEntityObject entity = (IFullEntityObject)entry.Entity;
                     entity.IsDeleted = true;
-                    entity.DeleterId = Guid.NewGuid();
+                    entity.DeleterId = LoginedUserService.UserId;
                     entity.DeletionTime = DateTime.Now;
                     entry.State = EntityState.Modified;
                 }

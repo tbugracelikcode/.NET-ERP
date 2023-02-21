@@ -1,26 +1,21 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+﻿using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Blazored.Modal;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json.Serialization;
 using Syncfusion.Blazor;
 using System.Globalization;
-using TsiErp.ErpUI.Shared;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Localization;
- using Newtonsoft.Json.Serialization;
-using Autofac.Extensions.DependencyInjection;
-using TsiErp.Business.DependencyResolvers.Autofac;
-using Autofac;
 using System.Reflection;
-using TsiErp.Business;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
-using TsiErp.Business.Entities.Branch.Services;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
+using TsiErp.Business;
+using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.DependencyResolvers.Autofac;
+using TsiErp.DataAccess;
 using TsiErp.DataAccess.EntityFrameworkCore;
-using Blazored.Modal;
-using Blazored.Modal.Services;
+using TsiErp.ErpUI.Shared;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
-using Microsoft.EntityFrameworkCore;
-using Tsi.Core.Services.BusinessCoreServices;
-using TsiErp.ErpUI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +30,8 @@ ConfigureBusiness(builder);
 
 ConfigureDataAccess(builder);
 
+ConfigureErpUI(builder);
+
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).ConfigureContainer<ContainerBuilder>(container =>
 {
     container.RegisterModule(new AutofacBusinessModule());
@@ -42,8 +39,8 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).Conf
 
 builder.Services.AddSyncfusionBlazor();
 builder.Services.AddDevExpressBlazor();
-builder.Services.AddScoped<IFileUploadService, FileUploadService>();
-builder.Services.AddScoped<IExcelService, ExcelService>();
+
+
 builder.Services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(SyncfusionLocalizer));
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
@@ -124,4 +121,17 @@ static void ConfigureBusiness(WebApplicationBuilder builder)
 static void ConfigureDataAccess(WebApplicationBuilder builder)
 {
     builder.Services.RegisterDependencies(Assembly.Load("TsiErp.DataAccess"));
+
+    var instance = (TsiDataAccessModule)Activator.CreateInstance(typeof(TsiDataAccessModule));
+
+    instance.ConfigureServices(builder.Services);
+}
+
+static void ConfigureErpUI(WebApplicationBuilder builder)
+{
+    builder.Services.RegisterDependencies(Assembly.Load("TsiErp.ErpUI"));
+
+    var instance = (TsiBusinessModule)Activator.CreateInstance(typeof(TsiBusinessModule));
+
+    instance.ConfigureServices(builder.Services);
 }

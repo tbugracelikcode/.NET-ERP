@@ -1,20 +1,16 @@
-﻿using Tsi.Core.Services.BusinessCoreServices;
-using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.PurchasePrice.BusinessRules;
 using TsiErp.Business.Entities.PurchasePrice.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.PurchasePrice;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.PurchasePriceLine;
 using TsiErp.Entities.Entities.PurchasePrice;
 using TsiErp.Entities.Entities.PurchasePrice.Dtos;
 using TsiErp.Entities.Entities.PurchasePriceLine;
 using TsiErp.Entities.Entities.PurchasePriceLine.Dtos;
-using TsiErp.Entities.Entities.WorkOrder.Dtos;
-using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Business.Entities.PurchasePrice.Services
 {
