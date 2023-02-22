@@ -152,7 +152,7 @@
                         </DxGridLayoutItem>
 
                         <DxGridLayoutItem Row="2" Column="1">
-                            <Template>
+                            <Template>  
                                 <label class="TSIModalLabel"><strong>Personel Soyadı: </strong></label>
                                 <SfTextBox Placeholder="Çalışan Soyadı Yazınız." @bind-Value="DataSource.Surname" CssClass="TSITxtBox"></SfTextBox>
                             </Template>
@@ -219,9 +219,9 @@
                                                         <DxGridLayoutItem Row="1" Column="0">
                                                             <Template>
                                                                 <label class="TSIModalLabel"><strong>Kan Grubu: </strong></label><br />
-                                                                <SfDropDownList PopupHeight="230px" Placeholder="Kan Grubu Seçiniz" @bind-Value="@DataSource.BloodType" DataSource="@EnumValues">
-                                                                    <DropDownListFieldSettings Text="Name" Value="Name"></DropDownListFieldSettings>
-                                                                </SfDropDownList>
+                                                               <SfDropDownList TItem="SelectEmployeesDto" TValue="BloodTypeEnum?" PopupHeight="230px" Placeholder="Kan Grubu Seçiniz" @bind-Value="@DataSource.BloodType" DataSource="@bloodtypes">
+                                <DropDownListFieldSettings Text="BloodTypeName" Value="BloodType"></DropDownListFieldSettings>
+                            </SfDropDownList>
                                                             </Template>
                                                         </DxGridLayoutItem>
 

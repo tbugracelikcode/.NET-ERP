@@ -7,6 +7,7 @@ using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.BillsofMaterial;
 using TsiErp.Entities.Entities.Product;
 using TsiErp.Entities.Entities.UnitSet;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.BillsofMaterialLine
 {
@@ -26,7 +27,7 @@ namespace TsiErp.Entities.Entities.BillsofMaterialLine
         /// <summary>
         /// Malzeme Türü
         /// </summary>
-        public int MaterialType { get; set; }
+        public ProductTypeEnum MaterialType { get; set; }
         /// <summary>
         /// Ürün ID
         /// </summary>

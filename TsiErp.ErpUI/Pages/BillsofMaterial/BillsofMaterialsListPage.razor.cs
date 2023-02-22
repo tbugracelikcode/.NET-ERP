@@ -162,6 +162,7 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
                         item.FinishedProductCode = DataSource.FinishedProductCode;
                         item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
                         item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
+                        item.MaterialType = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.ProductType;
                         item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
                     }
 
@@ -360,6 +361,7 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
                 LineDataSource.ProductCode = string.Empty;
                 LineDataSource.ProductName = string.Empty;
                 LineDataSource.UnitSetCode = string.Empty;
+                LineDataSource.MaterialType = 0;
                 LineDataSource.UnitSetID = Guid.Empty;
             }
         }
@@ -375,6 +377,7 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
                 LineDataSource.ProductName = selectedProduct.Name;
                 LineDataSource.UnitSetID = selectedProduct.UnitSetID;
                 LineDataSource.UnitSetCode = selectedProduct.UnitSetCode;
+                LineDataSource.MaterialType = selectedProduct.ProductType;
                 SelectProductsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }

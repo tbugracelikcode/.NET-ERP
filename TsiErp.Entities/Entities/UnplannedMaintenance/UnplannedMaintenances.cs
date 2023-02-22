@@ -8,6 +8,7 @@ using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.MaintenancePeriod;
 using TsiErp.Entities.Entities.UnplannedMaintenanceLine;
 using TsiErp.Entities.Entities.Station;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.UnplannedMaintenance
 {
@@ -31,7 +32,7 @@ namespace TsiErp.Entities.Entities.UnplannedMaintenance
         /// <summary>
         /// Durum
         /// </summary>
-        public int Status { get; set; }
+        public UnplannedMaintenanceStateEnum? Status { get; set; }
         /// <summary>
         /// Bakımı Yapan
         /// </summary>

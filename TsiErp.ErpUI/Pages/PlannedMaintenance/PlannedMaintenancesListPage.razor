@@ -1,8 +1,7 @@
 ﻿@page "/planned-maintenances"
 @layout MainLayout
 
-
-
+@using TsiErp.Entities.Enums
 @using TsiErp.Business.Entities.Product.Services
 @using TsiErp.Business.Entities.UnitSet.Services
 @using TsiErp.Business.Entities.Station.Services
@@ -232,7 +231,9 @@ else
                     <DxGridLayoutItem Row="3" Column="7">
                         <Template>
                             <label class="TSIModalLabel"><strong>Durum: </strong></label><br />
-                            @*<SfNumericTextBox @bind-che="DataSource.Status"></SfNumericTextBox>*@
+                            <SfDropDownList TItem="SelectPlannedMaintenancesDto" TValue="PlannedMaintenanceStateEnum?" PopupHeight="230px" Placeholder="Durum Seçiniz" @bind-Value="@DataSource.Status" DataSource="@status">
+                                <DropDownListFieldSettings Text="StatusName" Value="Status"></DropDownListFieldSettings>
+                            </SfDropDownList>
                         </Template>
                     </DxGridLayoutItem>
 

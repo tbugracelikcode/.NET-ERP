@@ -147,9 +147,14 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
                 t => t.MaintenancePeriods,
                 t => t.Stations);
 
-                var mappedEntity = ObjectMapper.Map<MaintenanceInstructions, SelectMaintenanceInstructionsDto>(entity);
+                SelectMaintenanceInstructionsDto mappedEntity = new SelectMaintenanceInstructionsDto();
 
-                mappedEntity.SelectMaintenanceInstructionLines = ObjectMapper.Map<List<MaintenanceInstructionLines>, List<SelectMaintenanceInstructionLinesDto>>(entity.MaintenanceInstructionLines.ToList());
+                if(entity != null)
+                {
+                    mappedEntity = ObjectMapper.Map<MaintenanceInstructions, SelectMaintenanceInstructionsDto>(entity);
+
+                    mappedEntity.SelectMaintenanceInstructionLines = ObjectMapper.Map<List<MaintenanceInstructionLines>, List<SelectMaintenanceInstructionLinesDto>>(entity.MaintenanceInstructionLines.ToList());
+                }
 
                 return new SuccessDataResult<SelectMaintenanceInstructionsDto>(mappedEntity);
             }

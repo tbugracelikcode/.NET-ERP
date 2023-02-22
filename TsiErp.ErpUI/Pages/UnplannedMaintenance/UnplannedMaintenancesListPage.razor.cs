@@ -2,19 +2,43 @@
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using TsiErp.Entities.Entities.MaintenanceInstruction.Dtos;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using TsiErp.Entities.Entities.MaintenancePeriod.Dtos;
-using TsiErp.Entities.Entities.UnplannedMaintenance.Dtos;
-using TsiErp.Entities.Entities.UnplannedMaintenanceLine.Dtos;
 using TsiErp.Entities.Entities.Product.Dtos;
 using TsiErp.Entities.Entities.Station.Dtos;
 using TsiErp.Entities.Entities.UnitSet.Dtos;
+using TsiErp.Entities.Entities.UnplannedMaintenance.Dtos;
+using TsiErp.Entities.Entities.UnplannedMaintenanceLine.Dtos;
+using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.UnplannedMaintenance
 {
     public partial class UnplannedMaintenancesListPage
     {
+
+        #region Combobox İşlemleri
+
+        public IEnumerable<SelectUnplannedMaintenancesDto> status = GetEnumDisplayStatusNames<UnplannedMaintenanceStateEnum>();
+
+        public static List<SelectUnplannedMaintenancesDto> GetEnumDisplayStatusNames<T>()
+        {
+            var type = typeof(T);
+            return Enum.GetValues(type)
+                       .Cast<T>()
+                       .Select(x => new SelectUnplannedMaintenancesDto
+                       {
+                           Status = x as UnplannedMaintenanceStateEnum?,
+                           StatusName = type.GetMember(x.ToString())
+                       .First()
+                       .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
+
+                       }).ToList();
+        }
+
+        #endregion
+
         private SfGrid<SelectUnplannedMaintenanceLinesDto> _LineGrid;
 
         [Inject]

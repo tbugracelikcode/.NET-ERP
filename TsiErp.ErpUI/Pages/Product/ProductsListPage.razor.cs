@@ -21,6 +21,8 @@ using TsiErp.Entities.Entities.BillsofMaterialLine.Dtos;
 using TsiErp.Entities.Entities.Route.Dtos;
 using TsiErp.Entities.Entities.RouteLine.Dtos;
 using TsiErp.Entities.Entities.ContractProductionTracking.Dtos;
+using System.Reflection;
+using System.ComponentModel.DataAnnotations;
 
 namespace TsiErp.ErpUI.Pages.Product
 {
@@ -34,37 +36,40 @@ namespace TsiErp.ErpUI.Pages.Product
         #endregion
 
         #region Combobox İşlemleri
-        public class SupplyFormModel
+
+        public IEnumerable<SelectProductsDto> types = GetEnumDisplayTypeNames<ProductTypeEnum>();
+
+        public IEnumerable<SelectProductsDto> supplyforms = GetEnumDisplaySupplyFormNames<ProductSupplyFormEnum>();
+
+        public static List<SelectProductsDto> GetEnumDisplayTypeNames<T>()
         {
-            public string ID { get; set; }
-            public string Text { get; set; }
+            var type = typeof(T);
+            return Enum.GetValues(type)
+                       .Cast<T>()
+                       .Select(x => new SelectProductsDto
+                       {
+                           ProductType = x as ProductTypeEnum?,
+                           ProductTypeName = type.GetMember(x.ToString())
+                       .First()
+                       .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
+
+                       }).ToList();
         }
 
-        public class TypeModel
+        public static List<SelectProductsDto> GetEnumDisplaySupplyFormNames<T>()
         {
-            public string ID { get; set; }
-            public string Text { get; set; }
+            var type = typeof(T);
+            return Enum.GetValues(type)
+                       .Cast<T>()
+                       .Select(x => new SelectProductsDto
+                       {
+                           SupplyForm = x as ProductSupplyFormEnum?,
+                           SupplyFormName = type.GetMember(x.ToString())
+                       .First()
+                       .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
+
+                       }).ToList();
         }
-
-        List<SupplyFormModel> SupplyData = new List<SupplyFormModel> {
-      new SupplyFormModel() { ID= "Form1", Text= "Satın Alma" },
-      new SupplyFormModel() { ID= "Form2", Text= "Üretim" } };
-
-        List<TypeModel> TypeData = new List<TypeModel> {
-      new TypeModel() { ID= "TM", Text= "Ticari Mal" },
-      new TypeModel() { ID= "HM", Text= "Hammadde" },
-      new TypeModel() { ID= "YM", Text= "Yarı Mamül" },
-      new TypeModel() { ID= "MM", Text= "Mamül" },
-      new TypeModel() { ID= "BP", Text= "Yedek Parça" },
-      new TypeModel() { ID= "TK", Text= "Takım" },
-      new TypeModel() { ID= "KLP", Text= "Kalıp" },
-      new TypeModel() { ID= "APRT", Text= "Aparat" },
-  };
-
-        List<ComboBoxEnumItem<ProductTypeEnum>> ProductTypesList = new List<ComboBoxEnumItem<ProductTypeEnum>>();
-        public string[] ProductTypes { get; set; }
-
-        public string[] ProductEnumValues = Enum.GetNames(typeof(ProductTypeEnum));
 
         #endregion
 
@@ -158,41 +163,7 @@ namespace TsiErp.ErpUI.Pages.Product
 
         #endregion
 
-        //private void SupplyValueChangeHandler(ChangeEventArgs<string, SupplyFormModel> args)
-        //{
-        //    switch (args.Value)
-        //    {
-        //        case "Form1":
-        //            DataSource.SupplyForm = 1;break;
-        //        case "Form2":
-        //            DataSource.SupplyForm = 2; break;
-
-        //    }
-        //}
-
-        //private void TypeValueChangeHandler(ChangeEventArgs<string, TypeModel> args)
-        //{
-        //    switch (args.Value)
-        //    {
-        //        case "TM":
-        //            DataSource.ProductType = 1; break;
-        //        case "HM":
-        //            DataSource.ProductType = 10; break;
-        //        case "YM":
-        //            DataSource.ProductType = 11; break;
-        //        case "MM":
-        //            DataSource.ProductType = 12; break;
-        //        case "BP":
-        //            DataSource.ProductType = 30; break;
-        //        case "TK":
-        //            DataSource.ProductType = 40; break;
-        //        case "KLP":
-        //            DataSource.ProductType = 50; break;
-        //        case "APRT":
-        //            DataSource.ProductType = 60; break;
-
-        //    }
-        //}
+       
 
         protected override async Task OnSubmit()
         {
@@ -967,6 +938,8 @@ namespace TsiErp.ErpUI.Pages.Product
             {
                 case "new":
                     await BeforeInsertAsync();
+                    DataSource.ProductType = ProductTypeEnum.TM;
+                    DataSource.SupplyForm = ProductSupplyFormEnum.Üretim;
                     break;
 
                 case "changed":

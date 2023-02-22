@@ -82,7 +82,7 @@ else
                     <SfCard class="TSIGridCards">
 
                         <CardContent>
-                            <SfGrid ID="Grid"@ref="_grid"   AllowPdfExport=true DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                            <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
                                 AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu">
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
                                 <SfToolbar>
@@ -104,7 +104,7 @@ else
                                     </ToolbarItems>
                                 </SfToolbar>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                <GridEvents   ContextMenuItemClicked="@OnContextMenuClick" TValue="ListProductsDto"></GridEvents>
+                                <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListProductsDto"></GridEvents>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
@@ -114,55 +114,55 @@ else
                                     <GridColumn Field=@nameof(ListProductsDto.UnitSetCode) HeaderText="BİRİM SETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListProductsDto.SupplyForm) HeaderText="TEMİN ŞEKLİ" TextAlign="TextAlign.Center" Width="120">
                                         <Template>
-                                            @*  @{
-                                        int productsupplyform = (context as ListProductsDto).SupplyForm;
-                                        string supplyForm = "";
-                                        if (productsupplyform == 1)
-                                        {
-                                        supplyForm = "Satın Alma";
+                                            @{
+                                                ProductSupplyFormEnum productsupplyform = (context as ListProductsDto).SupplyForm;
+                                                string supplyForm = "";
+                                                if (productsupplyform == ProductSupplyFormEnum.Satınalma)
+                                                {
+                                                    supplyForm = "Satın Alma";
+                                                }
+                                                else if (productsupplyform == ProductSupplyFormEnum.Üretim)
+                                                {
+                                                    supplyForm = "Üretim";
+                                                }
                                         }
-                                        else if (productsupplyform == 2)
-                                        {
-                                        supplyForm = "Üretim";
+                                        @supplyForm
+                                    </Template>
+                                </GridColumn>
+                                <GridColumn Field=@nameof(ListProductsDto.ProductGrp) HeaderText="ÜRÜN GRUBU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListProductsDto.ProductType) HeaderText="TÜR" TextAlign="TextAlign.Center" Width="120">
+                                    <Template>
+                                        @{
+                                                ProductTypeEnum producttype = (context as ListProductsDto).ProductType;
+                                                string type = "";
+                                                switch (producttype)
+                                                {
+                                                    case ProductTypeEnum.TM: type = "TM"; break;
+                                                    case ProductTypeEnum.HM: type = "HM"; break;
+                                                    case ProductTypeEnum.YM: type = "YM"; break;
+                                                    case ProductTypeEnum.MM: type = "MM"; break;
+                                                    case ProductTypeEnum.BP: type = "BP"; break;
+                                                    case ProductTypeEnum.TK: type = "TK"; break;
+                                                    case ProductTypeEnum.KLP: type = "KLP"; break;
+                                                    case ProductTypeEnum.APRT: type = "APRT"; break;
+                                                    default: break;
+                                                }
                                         }
-                                        }
-                                        @supplyForm*@
-                                        </Template>
-                                    </GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.ProductGrp) HeaderText="ÜRÜN GRUBU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductsDto.ProductType) HeaderText="TÜR" TextAlign="TextAlign.Center" Width="120">
-                                        <Template>
-                                            @*   @{
-                                        int producttype = (context as ListProductsDto).ProductType;
-                                        string type = "";
-                                        switch (producttype)
-                                        {
-                                        case 1: type = "TM"; break;
-                                        case 10: type = "HM"; break;
-                                        case 11: type = "YM"; break;
-                                        case 12: type = "MM"; break;
-                                        case 30: type = "BP"; break;
-                                        case 40: type = "TK"; break;
-                                        case 50: type = "KLP"; break;
-                                        case 60: type = "APRT"; break;
-                                        default: break;
-                                        }
-                                        }
-                                        @type*@
-                                        </Template>
-                                    </GridColumn>
+                                        @type
+                                    </Template>
+                                </GridColumn>
 
 
-                                </GridColumns>
-                            </SfGrid>
-                        </CardContent>
-                        <CardFooter>
-                        </CardFooter>
-                    </SfCard>
-                </Template>
-            </DxGridLayoutItem>
-        </GridLayoutItems>
-    </DevGridLayout>
+                            </GridColumns>
+                        </SfGrid>
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+    </GridLayoutItems>
+</DevGridLayout>
 
     <DxPopup @bind-Visible="base.EditPageVisible"
          ShowFooter="true"
@@ -227,8 +227,9 @@ else
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>Stok Türü: </strong></label>
-                            @*   <SfDropDownList TItem="string" TValue="ProductTypeEnum" PopupHeight="230px" Placeholder="Stok Türü Seçiniz" @bind-Value="@DataSource.ProductType" DataSource="@ProductTypesList">
-                        </SfDropDownList>*@
+                            <SfDropDownList TItem="SelectProductsDto" TValue="ProductTypeEnum?" PopupHeight="230px" Placeholder="Stok Türünü Seçiniz" @bind-Value="@DataSource.ProductType" DataSource="@types">
+                                <DropDownListFieldSettings Text="ProductTypeName" Value="ProductType"></DropDownListFieldSettings>
+                            </SfDropDownList>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -282,10 +283,9 @@ else
                                                         <Template>
                                                             <br />
                                                             <label class="TSIModalLabel"><strong>Temin Şekli : </strong></label><br />
-                                                            @*  <SfComboBox TValue="string" TItem="SupplyFormModel" Placeholder="Temin Şekli Seçiniz" DataSource="@SupplyData">
-                                                        <ComboBoxEvents TItem="SupplyFormModel" TValue="string" ValueChange="@SupplyValueChangeHandler"></ComboBoxEvents>
-                                                        <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
-                                                        </SfComboBox>*@
+                                                            <SfDropDownList TItem="SelectProductsDto" TValue="ProductSupplyFormEnum?" PopupHeight="230px" Placeholder="Temin Şeklini Seçiniz" @bind-Value="@DataSource.SupplyForm" DataSource="@supplyforms">
+                                                                <DropDownListFieldSettings Text="SupplyFormName" Value="SupplyForm"></DropDownListFieldSettings>
+                                                            </SfDropDownList>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -350,14 +350,14 @@ else
                                                     <DxGridLayoutItem Row="2" Column="4">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>OemRefNo: </strong></label><br />
-                                                            <SfTextBox @bind-Value="DataSource.OemRefNo" ></SfTextBox>
+                                                            <SfTextBox @bind-Value="DataSource.OemRefNo"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="2" Column="6">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>OemRefNo2: </strong></label><br />
-                                                            <SfTextBox @bind-Value="DataSource.OemRefNo2" ></SfTextBox>
+                                                            <SfTextBox @bind-Value="DataSource.OemRefNo2"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -371,7 +371,7 @@ else
                                                     <DxGridLayoutItem Row="3" Column="2">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>Planlanan Fire: </strong></label>
-                                                            <SfNumericTextBox Min="0"  @bind-Value="DataSource.PlannedWastage" Placeholder="Planlanan Fireyi Yazınız."></SfNumericTextBox>
+                                                            <SfNumericTextBox Min="0" @bind-Value="DataSource.PlannedWastage" Placeholder="Planlanan Fireyi Yazınız."></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -385,8 +385,8 @@ else
                                                     <DxGridLayoutItem Row="3" Column="6">
                                                         <Template>
                                                             <center>
-                                                            <label class="TSIModalLabel"><strong>Onay: </strong></label><br />
-                                                            <SfSwitch @bind-Checked="DataSource.Confirmation"></SfSwitch>
+                                                                <label class="TSIModalLabel"><strong>Onay: </strong></label><br />
+                                                                <SfSwitch @bind-Checked="DataSource.Confirmation"></SfSwitch>
                                                             </center>
                                                         </Template>
                                                     </DxGridLayoutItem>
@@ -394,8 +394,8 @@ else
                                                     <DxGridLayoutItem Row="4" Column="0">
                                                         <Template>
                                                             <center>
-                                                            <label class="TSIModalLabel"><strong>Teknik Onay: </strong></label><br />
-                                                            <SfSwitch @bind-Checked="DataSource.TechnicalConfirmation"></SfSwitch>
+                                                                <label class="TSIModalLabel"><strong>Teknik Onay: </strong></label><br />
+                                                                <SfSwitch @bind-Checked="DataSource.TechnicalConfirmation"></SfSwitch>
                                                             </center>
                                                         </Template>
                                                     </DxGridLayoutItem>
@@ -624,7 +624,7 @@ else
         </FooterContentTemplate>
     </DxPopup>
 
-      <DxPopup @bind-Visible="TechnicalDrawingsChangedCrudPopup"
+    <DxPopup @bind-Visible="TechnicalDrawingsChangedCrudPopup"
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
@@ -749,7 +749,7 @@ else
 
                     <DxGridLayoutItem Row="5" Column="1" ColumnSpan="5">
                         <Template>
-                             <label class="TSIModalLabel"><strong>Yüklenecek Dosyalar: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>Yüklenecek Dosyalar: </strong></label><br />
                             @{
                                 if (files.Count != 0)
                                 {
@@ -772,7 +772,7 @@ else
 
                     <DxGridLayoutItem Row="6" Column="1" ColumnSpan="5">
                         <Template>
-                             <label class="TSIModalLabel"><strong>Yüklenmiş Dosyalar: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>Yüklenmiş Dosyalar: </strong></label><br />
                             @{
                                 if (uploadedfiles.Count != 0)
                                 {
@@ -1205,12 +1205,12 @@ else
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                         <GridColumns>
                                             <GridColumn Field=@nameof(ListRoutesDto.Code) HeaderText="ROTA KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                                    <GridColumn Field=@nameof(ListRoutesDto.Name) HeaderText="ROTA AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                                    <GridColumn Field=@nameof(ListRoutesDto.ProductCode) HeaderText="ÜRÜN KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                                    <GridColumn Field=@nameof(ListRoutesDto.ProductName) HeaderText="ÜRÜN AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                                    <GridColumn Field=@nameof(ListRoutesDto.ProductionStart) HeaderText="ÜRETİM BAŞLANGIÇ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                                    <GridColumn Field=@nameof(ListRoutesDto.Approval) DisplayAsCheckBox=true HeaderText="ONAY" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                                    <GridColumn Field=@nameof(ListRoutesDto.TechnicalApproval) HeaderText="TEKNİK ONAY" DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListRoutesDto.Name) HeaderText="ROTA AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListRoutesDto.ProductCode) HeaderText="ÜRÜN KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListRoutesDto.ProductName) HeaderText="ÜRÜN AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListRoutesDto.ProductionStart) HeaderText="ÜRETİM BAŞLANGIÇ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListRoutesDto.Approval) DisplayAsCheckBox=true HeaderText="ONAY" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListRoutesDto.TechnicalApproval) HeaderText="TEKNİK ONAY" DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         </GridColumns>
                                     </SfGrid>
                                 </CardContent>
@@ -1285,17 +1285,17 @@ else
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>Ürün Kodu: </strong></label><br />
-                            <SfTextBox Enabled=false @bind-Value="RoutesDataSource.ProductCode" ></SfTextBox>
+                            <SfTextBox Enabled=false @bind-Value="RoutesDataSource.ProductCode"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>Ürün Açıklaması: </strong></label><br />
-                             <SfTextBox Enabled=false @bind-Value="RoutesDataSource.ProductName"></SfTextBox>
+                            <SfTextBox Enabled=false @bind-Value="RoutesDataSource.ProductName"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
-                   
+
 
                     <DxGridLayoutItem Row="1" Column="5">
                         <Template>
@@ -1377,7 +1377,7 @@ else
                                             <GridColumn Field=@nameof(SelectContractProductionTrackingsDto.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(SelectContractProductionTrackingsDto.CurrentAccountCardCode) HeaderText="CARİ HESAP" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(SelectContractProductionTrackingsDto.OperationStartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="OPERASYON BAŞLANGIÇ TARİHİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(SelectContractProductionTrackingsDto.PlannedQuantity) Type="ColumnType.Number"  Format="N2" HeaderText="PLANLANAN MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectContractProductionTrackingsDto.PlannedQuantity) Type="ColumnType.Number" Format="N2" HeaderText="PLANLANAN MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(SelectContractProductionTrackingsDto.ProducedQuantity) Type="ColumnType.Number" Format="N2" HeaderText="ÜRETİLEN MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         </GridColumns>
                                     </SfGrid>

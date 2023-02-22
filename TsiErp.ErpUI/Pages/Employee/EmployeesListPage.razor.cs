@@ -7,6 +7,7 @@ using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using Tsi.Core.Utilities.Results;
 using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.Department.Dtos;
@@ -18,18 +19,27 @@ namespace TsiErp.ErpUI.Pages.Employee
 {
     public partial class EmployeesListPage
     {
-        SfComboBox<string, ListDepartmentsDto> DepartmentsComboBox;
 
-        List<ListDepartmentsDto> DepartmentsList = new List<ListDepartmentsDto>();
+        #region Combobox İşlemleri
 
-        List<ComboBoxEnumItem<BloodTypeEnum>> BloodTypesList = new List<ComboBoxEnumItem<BloodTypeEnum>>();
+        public IEnumerable<SelectEmployeesDto> bloodtypes = GetEnumDisplayBloodTypesNames<BloodTypeEnum>();
 
-        public string[] Types { get; set; }
+        public static List<SelectEmployeesDto> GetEnumDisplayBloodTypesNames<T>()
+        {
+            var type = typeof(T);
+            return Enum.GetValues(type)
+                       .Cast<T>()
+                       .Select(x => new SelectEmployeesDto
+                       {
+                           BloodType = x as BloodTypeEnum?,
+                           BloodTypeName = type.GetMember(x.ToString())
+                       .First()
+                       .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
 
-        public string[] EnumValues = Enum.GetNames(typeof(BloodTypeEnum));
+                       }).ToList();
+        }
 
-
-
+        #endregion
 
         protected override async void OnInitialized()
         {
@@ -93,44 +103,6 @@ namespace TsiErp.ErpUI.Pages.Employee
 
         #endregion
 
-
-        #region Kan Grubu
-        //public async Task BloodTypeFiltering(FilteringEventArgs args)
-        //{
-
-        //    args.PreventDefaultAction = true;
-
-        //    var pre = new WhereFilter();
-        //    var predicate = new List<WhereFilter>();
-        //    //predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-        //    predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-        //    pre = WhereFilter.Or(predicate);
-
-        //    var query = new Query();
-        //    query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-        //    await BloodTypesComboBox.FilterAsync(BloodTypesList, query);
-        //}
-
-        //private async Task GetBloodTypesList()
-        //{
-        //    BloodTypesList = (await DepartmentsAppService.GetListAsync(new ListDepartmentsParameterDto())).Data.ToList();
-        //}
-
-        //public async Task BloodTypeOpened(PopupEventArgs args)
-        //{
-        //    if (DepartmentsList.Count == 0)
-        //    {
-        //        await GetEquipmentRecordsList();
-        //    }
-        //}
-
-        //private void BloodTypeValueChanged(ChangeEventArgs<string, ListDepartmentsDto> args)
-        //{
-        //    DataSource.DepartmentID = args.ItemData.Id;
-        //    DataSource.Department = args.ItemData.Name;
-        //}
-        #endregion
 
 
     }
