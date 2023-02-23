@@ -8,6 +8,8 @@ using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Logging;
 using TsiErp.Entities.Entities.Logging.Dtos;
 using TsiErp.Business.Extensions.ObjectMapping;
+using Newtonsoft.Json.Linq;
+using JsonDiffer;
 
 namespace TsiErp.Business.Entities.Logging.Services
 {
@@ -15,7 +17,7 @@ namespace TsiErp.Business.Entities.Logging.Services
     public static class LogsAppService
     {
 
-        public static Logs InsertLogToDatabase<TSource, TDestination>(TSource before, TSource after, Guid userId, string logLevel, LogType logType, Guid recordId)
+        public static Logs InsertLogToDatabase(object before, object after, Guid userId, string logLevel, LogType logType, Guid recordId)
         {
 
             Logs log = new Logs();
@@ -23,37 +25,38 @@ namespace TsiErp.Business.Entities.Logging.Services
             switch (logType)
             {
                 case LogType.Insert:
-                    var beforeInsertEntity = ObjectMapper.Map<TSource, TDestination>(before);
-
-                    var afterInsertEntity = ObjectMapper.Map<TSource, TDestination>(after);
 
                     log = new Logs
                     {
-                        AfterValues = JsonConvert.SerializeObject(afterInsertEntity, Formatting.Indented),
-                        BeforeValues = JsonConvert.SerializeObject(beforeInsertEntity, Formatting.Indented),
+                        AfterValues = JsonConvert.SerializeObject(after, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
+                        BeforeValues = JsonConvert.SerializeObject(before, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
                         Date_ = DateTime.Now,
                         Id = LoginedUserService.UserId,
                         LogLevel_ = logLevel,
                         MethodName_ = logType.GetType().GetEnumName(logType),
                         UserId = userId,
-                        RecordId = recordId
+                        RecordId = recordId,
+                        DiffValues = ""
                     };
                     break;
                 case LogType.Update:
-                    var beforeUpdateEntity = ObjectMapper.Map<TSource, TDestination>(before);
 
-                    var afterUpdateEntity = ObjectMapper.Map<TSource, TDestination>(after);
+                    var j1 = JToken.Parse(JsonConvert.SerializeObject(before, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                    var j2 = JToken.Parse(JsonConvert.SerializeObject(after, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+
+                    var diff = JsonConvert.SerializeObject(JsonDifferentiator.Differentiate(j1, j2, OutputMode.Symbol, showOriginalValues: false));
 
                     log = new Logs
                     {
-                        AfterValues = JsonConvert.SerializeObject(afterUpdateEntity, Formatting.Indented),
-                        BeforeValues = JsonConvert.SerializeObject(beforeUpdateEntity, Formatting.Indented),
+                        AfterValues = JsonConvert.SerializeObject(after, Formatting.Indented,new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
+                        BeforeValues = JsonConvert.SerializeObject(before, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
                         Date_ = DateTime.Now,
                         Id = LoginedUserService.UserId,
                         LogLevel_ = logLevel,
                         MethodName_ = logType.GetType().GetEnumName(logType),
                         UserId = userId,
-                        RecordId = recordId
+                        RecordId = recordId,
+                        DiffValues = diff
                     };
                     break;
                 case LogType.Delete:
@@ -67,24 +70,22 @@ namespace TsiErp.Business.Entities.Logging.Services
                         LogLevel_ = logLevel,
                         MethodName_ = logType.GetType().GetEnumName(logType),
                         UserId = userId,
-                        RecordId = recordId
+                        RecordId = recordId,
+                        DiffValues = ""
                     };
                     break;
                 case LogType.Get:
-                    var beforeGetEntity = ObjectMapper.Map<TSource, TDestination>(before);
-
-                    var afterGetEntity = ObjectMapper.Map<TSource, TDestination>(after);
-
                     log = new Logs
                     {
-                        AfterValues = JsonConvert.SerializeObject(afterGetEntity, Formatting.Indented),
-                        BeforeValues = JsonConvert.SerializeObject(beforeGetEntity, Formatting.Indented),
+                        AfterValues = JsonConvert.SerializeObject(after, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
+                        BeforeValues = JsonConvert.SerializeObject(before, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
                         Date_ = DateTime.Now,
                         Id = LoginedUserService.UserId,
                         LogLevel_ = logLevel,
                         MethodName_ = logType.GetType().GetEnumName(logType),
                         UserId = userId,
-                        RecordId = recordId
+                        RecordId = recordId,
+                        DiffValues = ""
                     };
                     break;
                 default:

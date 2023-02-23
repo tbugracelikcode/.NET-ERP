@@ -154,6 +154,7 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
                     break;
 
                 case "changed":
+                    IsChanged = true;
                     DataSource = (await BillsofMaterialsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectBillsofMaterialLines;
 

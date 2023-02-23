@@ -23,6 +23,8 @@ namespace TsiErp.ErpUI.Pages.Base
         public string LoadingText { get; set; } = "Kayıtlar Yükleniyor...";
         public bool EditPageVisible { get; set; }
         public bool IsLoaded { get; set; }
+
+        public bool IsChanged { get; set; } = false;
         public bool SelectFirstDataRow { get; set; }
 
         public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
@@ -154,7 +156,7 @@ namespace TsiErp.ErpUI.Pages.Base
 
         public async void OnToolbarClicked(string toolbar, string header, string filename)
         {
-            
+
             if (toolbar == "ExcelExport")
             {
                 ExcelExportProperties ExcelExportProperties = new ExcelExportProperties();
@@ -250,6 +252,7 @@ namespace TsiErp.ErpUI.Pages.Base
                     break;
 
                 case "changed":
+                    IsChanged = true;
                     SelectFirstDataRow = false;
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
                     ShowEditPage();
@@ -304,9 +307,10 @@ namespace TsiErp.ErpUI.Pages.Base
 
         public virtual async void CrudModalClosing(PopupClosingEventArgs args)
         {
-            if (DataSource.Id != Guid.Empty)
+            if (IsChanged)
             {
                 await BaseCrudService.UpdateConcurrencyFieldsAsync(DataSource.Id, false, Guid.Empty);
+                IsChanged = false;
             }
         }
 
