@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TsiErp.DataAccess.EntityFrameworkCore;
 
@@ -11,9 +12,10 @@ using TsiErp.DataAccess.EntityFrameworkCore;
 namespace TsiErp.DataAccess.Migrations
 {
     [DbContext(typeof(TsiErpDbContext))]
-    partial class TsiErpDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230222131229_logTableUpdated4")]
+    partial class logTableUpdated4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2233,10 +2235,8 @@ namespace TsiErp.DataAccess.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("DateTime");
 
-                    b.Property<object>("DiffValues")
-                        .IsRequired()
-                        .HasMaxLength(5000)
-                        .HasColumnType("sql_variant");
+                    b.Property<Guid>("LinkedRecordId")
+                        .HasColumnType("UniqueIdentifier");
 
                     b.Property<string>("LogLevel_")
                         .IsRequired()

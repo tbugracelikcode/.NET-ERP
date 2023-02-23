@@ -19,12 +19,12 @@ namespace TsiErp.Entities.Entities.Logging
 
         public object AfterValues { get; set; }
 
+        public object DiffValues { get; set; }
+
         public string LogLevel_ { get; set; }
 
         public Guid UserId { get; set; }
 
         public Guid RecordId { get; set; }
-
-
     }
 }
