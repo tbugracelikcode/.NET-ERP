@@ -97,6 +97,11 @@ namespace TsiErp.ErpUI.Pages.Base
                 await ModalManager.MessagePopupAsync("Bilgi", sb.ToString());
                 return new ErrorDataResult<TGetOutputDto>();
             }
+            catch (Exception exp)
+            {
+                await ModalManager.MessagePopupAsync("Hata", exp.Message + "\n" + exp.InnerException.Message);
+                return new ErrorDataResult<TGetOutputDto>();
+            }
         }
 
         protected async virtual Task<IDataResult<TGetOutputDto>> UpdateAsync(TUpdateInput input)
@@ -127,6 +132,11 @@ namespace TsiErp.ErpUI.Pages.Base
                 await ModalManager.MessagePopupAsync("Bilgi", sb.ToString());
                 return new ErrorDataResult<TGetOutputDto>();
             }
+            catch (Exception exp)
+            {
+                await ModalManager.MessagePopupAsync("Hata", exp.Message + "\n" + exp.InnerException.Message);
+                return new ErrorDataResult<TGetOutputDto>();
+            }
         }
 
         protected async virtual Task<IResult> DeleteAsync(Guid id)
@@ -137,7 +147,7 @@ namespace TsiErp.ErpUI.Pages.Base
             }
             catch (Exception exp)
             {
-                await ModalManager.MessagePopupAsync("Bilgi", exp.Message);
+                await ModalManager.MessagePopupAsync("Hata", exp.Message + "\n" + exp.InnerException.Message);
                 return new ErrorDataResult<TGetOutputDto>();
             }
         }
