@@ -1,4 +1,5 @@
-﻿using TsiErp.DataAccess.EntityFrameworkCore.Repositories;
+﻿using Tsi.Core.Entities;
+using TsiErp.DataAccess.EntityFrameworkCore.Repositories;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.BillsofMaterial;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.BillsofMaterialLine;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
@@ -78,6 +79,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         private readonly TsiErpDbContext _dbContext;
+
 
         public UnitOfWork()
         {

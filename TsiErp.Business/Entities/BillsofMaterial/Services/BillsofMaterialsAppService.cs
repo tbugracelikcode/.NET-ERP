@@ -13,6 +13,8 @@ using TsiErp.Entities.Entities.BillsofMaterial;
 using TsiErp.Entities.Entities.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.BillsofMaterialLine;
 using TsiErp.Entities.Entities.BillsofMaterialLine.Dtos;
+using TsiErp.Entities.Entities.Branch;
+using TsiErp.Entities.Entities.Branch.Dtos;
 
 namespace TsiErp.Business.Entities.BillsofMaterial.Services
 {
@@ -29,6 +31,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
+
                 await _manager.CodeControl(_uow.BillsofMaterialsRepository, input.Code);
 
                 var entity = ObjectMapper.Map<CreateBillsofMaterialsDto, BillsofMaterials>(input);
@@ -38,11 +41,13 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 foreach (var item in input.SelectBillsofMaterialLines)
                 {
                     var lineEntity = ObjectMapper.Map<SelectBillsofMaterialLinesDto, BillsofMaterialLines>(item);
-                    lineEntity.Id = GuidGenerator.CreateGuid();
                     lineEntity.BoMID = addedEntity.Id;
                     await _uow.BillsofMaterialLinesRepository.InsertAsync(lineEntity);
                 }
 
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "BillsofMaterials", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
 
                 await _uow.SaveChanges();
                 return new SuccessDataResult<SelectBillsofMaterialsDto>(ObjectMapper.Map<BillsofMaterials, SelectBillsofMaterialsDto>(addedEntity));
@@ -67,6 +72,9 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 {
                     await _manager.DeleteControl(_uow.BillsofMaterialsRepository, id, Guid.Empty, false);
                     await _uow.BillsofMaterialsRepository.DeleteAsync(id);
+
+                    var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "BillsofMaterials", LogType.Delete, id);
+                    await _uow.LogsRepository.InsertAsync(log);
                     await _uow.SaveChanges();
                     return new SuccessResult("Silme işlemi başarılı.");
                 }
@@ -84,6 +92,19 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 var mappedEntity = ObjectMapper.Map<BillsofMaterials, SelectBillsofMaterialsDto>(entity);
 
                 mappedEntity.SelectBillsofMaterialLines = ObjectMapper.Map<List<BillsofMaterialLines>, List<SelectBillsofMaterialLinesDto>>(entity.BillsofMaterialLines.ToList());
+
+                foreach (var item in mappedEntity.SelectBillsofMaterialLines)
+                {
+                    item.ProductCode = (await _uow.ProductsRepository.GetAsync(t => t.Id == item.ProductID)).Code;
+                    item.ProductName = (await _uow.ProductsRepository.GetAsync(t => t.Id == item.ProductID)).Name;
+                }
+
+                //var before = ObjectMapper.Map<BillsofMaterials, SelectBillsofMaterialsDto>(entity);
+                //before.SelectBillsofMaterialLines = ObjectMapper.Map<List<BillsofMaterialLines>, List<SelectBillsofMaterialLinesDto>>(entity.BillsofMaterialLines.ToList());
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "BillsofMaterials", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+
+                await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectBillsofMaterialsDto>(mappedEntity);
             }
@@ -110,7 +131,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                var entity = await _uow.BillsofMaterialsRepository.GetAsync(x => x.Id == input.Id);
+                var entity = await _uow.BillsofMaterialsRepository.GetAsync(x => x.Id == input.Id, t => t.BillsofMaterialLines);
 
                 await _manager.UpdateControl(_uow.BillsofMaterialsRepository, input.Code, input.Id, entity);
 
@@ -125,7 +146,6 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
 
                     if (lineEntity.Id == Guid.Empty)
                     {
-                        lineEntity.Id = GuidGenerator.CreateGuid();
                         await _uow.BillsofMaterialLinesRepository.InsertAsync(lineEntity);
                     }
                     else
@@ -133,6 +153,11 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                         await _uow.BillsofMaterialLinesRepository.UpdateAsync(lineEntity);
                     }
                 }
+
+                var before = ObjectMapper.Map<BillsofMaterials, UpdateBillsofMaterialsDto>(entity);
+                before.SelectBillsofMaterialLines = ObjectMapper.Map<List<BillsofMaterialLines>, List<SelectBillsofMaterialLinesDto>>(entity.BillsofMaterialLines.ToList());
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "BillsofMaterials", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
 
                 await _uow.SaveChanges();
                 return new SuccessDataResult<SelectBillsofMaterialsDto>(ObjectMapper.Map<BillsofMaterials, SelectBillsofMaterialsDto>(mappedEntity));

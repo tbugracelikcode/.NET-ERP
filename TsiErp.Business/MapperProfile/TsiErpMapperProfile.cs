@@ -152,6 +152,7 @@ using TsiErp.Entities.Entities.TechnicalDrawing;
 using TsiErp.Entities.Entities.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Entities.ProductReferanceNumber;
 using TsiErp.Entities.Entities.ProductReferanceNumber.Dtos;
+using AutoMapper.EquivalencyExpression;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -179,6 +180,7 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectBranchesDto, CreateBranchesDto>();
             CreateMap<UpdateBranchesDto, Branches>();
             CreateMap<SelectBranchesDto, UpdateBranchesDto>();
+            CreateMap<Branches, UpdateBranchesDto>();
 
             CreateMap<StationInventories, SelectStationInventoriesDto>();
             CreateMap<StationInventories, ListStationInventoriesDto>();
@@ -619,6 +621,7 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<CreateBillsofMaterialsDto, BillsofMaterials>();
             CreateMap<SelectBillsofMaterialsDto, CreateBillsofMaterialsDto>();
             CreateMap<SelectBillsofMaterialsDto, UpdateBillsofMaterialsDto>();
+            CreateMap<BillsofMaterials, UpdateBillsofMaterialsDto>();
 
 
             CreateMap<BillsofMaterialLines, SelectBillsofMaterialLinesDto>()
@@ -626,6 +629,7 @@ namespace TsiErp.Business.MapperProfile
                 .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code))
                 .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
                 .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
+
             CreateMap<BillsofMaterialLines, ListBillsofMaterialLinesDto>()
                 .ForMember(x => x.FinishedProductCode, y => y.MapFrom(z => z.Products.Code))
                 .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code))
