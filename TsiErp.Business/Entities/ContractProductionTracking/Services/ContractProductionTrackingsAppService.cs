@@ -4,8 +4,10 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.Entities.ContractProductionTracking.BusinessRules;
 using TsiErp.Business.Entities.ContractProductionTracking.Validations;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.ContractProductionTracking;
 using TsiErp.Entities.Entities.ContractProductionTracking.Dtos;
 
@@ -27,6 +29,11 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                 var entity = ObjectMapper.Map<CreateContractProductionTrackingsDto, ContractProductionTrackings>(input);
 
                 var addedEntity = await _uow.ContractProductionTrackingsRepository.InsertAsync(entity);
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "ContractProductionTrackings", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
+
+
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectContractProductionTrackingsDto>(ObjectMapper.Map<ContractProductionTrackings, SelectContractProductionTrackingsDto>(addedEntity));
@@ -39,6 +46,9 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
             using (UnitOfWork _uow = new UnitOfWork())
             {
                 await _uow.ContractProductionTrackingsRepository.DeleteAsync(id);
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "ContractProductionTrackings", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
+
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -50,6 +60,10 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
             {
                 var entity = await _uow.ContractProductionTrackingsRepository.GetAsync(t => t.Id == id, t => t.Products, t => t.CurrentAccountCards, t => t.Employees, t => t.Shifts, t => t.Stations);
                 var mappedEntity = ObjectMapper.Map<ContractProductionTrackings, SelectContractProductionTrackingsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "ContractProductionTrackings", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+
+                await _uow.SaveChanges();
                 return new SuccessDataResult<SelectContractProductionTrackingsDto>(mappedEntity);
             }
         }
@@ -80,6 +94,10 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                 var mappedEntity = ObjectMapper.Map<UpdateContractProductionTrackingsDto, ContractProductionTrackings>(input);
 
                 await _uow.ContractProductionTrackingsRepository.UpdateAsync(mappedEntity);
+                var before = ObjectMapper.Map<ContractProductionTrackings, UpdateContractProductionTrackingsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "ContractProductionTrackings", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
+
                 await _uow.SaveChanges();
                 return new SuccessDataResult<SelectContractProductionTrackingsDto>(ObjectMapper.Map<ContractProductionTrackings, SelectContractProductionTrackingsDto>(mappedEntity));
             }

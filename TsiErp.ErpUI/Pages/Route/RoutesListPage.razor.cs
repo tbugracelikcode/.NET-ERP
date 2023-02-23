@@ -99,6 +99,7 @@ namespace TsiErp.ErpUI.Pages.Route
                     break;
 
                 case "changed":
+                    IsChanged = true;
                     DataSource = (await RoutesAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectRouteLines;
                     GridProductsOperationList = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.Where(t => t.ProductId == DataSource.ProductID).ToList();
@@ -107,8 +108,7 @@ namespace TsiErp.ErpUI.Pages.Route
 
                     foreach (var item in GridLineList)
                     {
-                        item.OperationCode = GridProductsOperationList.Where(t => t.Id == item.ProductsOperationID).Select(t => t.Code).FirstOrDefault();
-                        item.OperationName = GridProductsOperationList.Where(t => t.Id == item.ProductsOperationID).Select(t => t.Name).FirstOrDefault();
+                       
 
                         if (GridProductsOperationList.Any(t => t.Id == item.ProductsOperationID))
                         {

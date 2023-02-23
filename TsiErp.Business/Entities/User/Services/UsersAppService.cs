@@ -3,9 +3,11 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.User.BusinessRules;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.User;
 using TsiErp.Entities.Entities.User.Dtos;
 using TsiErp.EntityContracts.User;
@@ -28,6 +30,9 @@ namespace TsiErp.Business.Entities.User.Services
                 var entity = ObjectMapper.Map<CreateUsersDto, Users>(input);
 
                 var addedEntity = await _uow.UsersRepository.InsertAsync(entity);
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "Users", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectUsersDto>(ObjectMapper.Map<Users, SelectUsersDto>(addedEntity));
@@ -41,6 +46,8 @@ namespace TsiErp.Business.Entities.User.Services
             {
                 await _manager.DeleteControl(_uow.UsersRepository, id);
                 await _uow.UsersRepository.DeleteAsync(id);
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Users", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -52,6 +59,9 @@ namespace TsiErp.Business.Entities.User.Services
             {
                 var entity = await _uow.UsersRepository.GetAsync(t => t.Id == id, t => t.UserGroups);
                 var mappedEntity = ObjectMapper.Map<Users, SelectUsersDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "Users", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
                 return new SuccessDataResult<SelectUsersDto>(mappedEntity);
             }
         }
@@ -83,6 +93,9 @@ namespace TsiErp.Business.Entities.User.Services
                 var mappedEntity = ObjectMapper.Map<UpdateUsersDto, Users>(input);
 
                 await _uow.UsersRepository.UpdateAsync(mappedEntity);
+                var before = ObjectMapper.Map<Users, UpdateUsersDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "Users", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectUsersDto>(ObjectMapper.Map<Users, SelectUsersDto>(mappedEntity));

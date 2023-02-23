@@ -3,10 +3,12 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.ShippingAdress.BusinessRules;
 using TsiErp.Business.Entities.ShippingAdress.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.ShippingAdress;
 using TsiErp.Entities.Entities.ShippingAdress.Dtos;
 
@@ -28,6 +30,9 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
                 var entity = ObjectMapper.Map<CreateShippingAdressesDto, ShippingAdresses>(input);
 
                 var addedEntity = await _uow.ShippingAdressesRepository.InsertAsync(entity);
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "ShippingAdresses", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectShippingAdressesDto>(ObjectMapper.Map<ShippingAdresses, SelectShippingAdressesDto>(addedEntity));
@@ -42,6 +47,8 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
             {
                 await _manager.DeleteControl(_uow.ShippingAdressesRepository, id);
                 await _uow.ShippingAdressesRepository.DeleteAsync(id);
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "ShippingAdresses", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -54,6 +61,10 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
             {
                 var entity = await _uow.ShippingAdressesRepository.GetAsync(t => t.Id == id, t => t.CurrentAccountCards, t => t.SalesPropositions);
                 var mappedEntity = ObjectMapper.Map<ShippingAdresses, SelectShippingAdressesDto>(entity);
+
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "ShippingAdresses", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
                 return new SuccessDataResult<SelectShippingAdressesDto>(mappedEntity);
             }
         }
@@ -86,6 +97,10 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
                 var mappedEntity = ObjectMapper.Map<UpdateShippingAdressesDto, ShippingAdresses>(input);
 
                 await _uow.ShippingAdressesRepository.UpdateAsync(mappedEntity);
+
+                var before = ObjectMapper.Map<ShippingAdresses, UpdateShippingAdressesDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "ShippingAdresses", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectShippingAdressesDto>(ObjectMapper.Map<ShippingAdresses, SelectShippingAdressesDto>(mappedEntity));

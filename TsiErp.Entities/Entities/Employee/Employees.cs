@@ -46,7 +46,7 @@ namespace TsiErp.Entities.Entities.Employee
         /// <summary>
         /// Kan Grubu
         /// </summary>
-        public BloodTypeEnum BloodType { get; set; }
+        public BloodTypeEnum? BloodType { get; set; }
         /// <summary>
         /// Adres
         /// </summary>

@@ -71,6 +71,11 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 else
                 {
                     await _manager.DeleteControl(_uow.BillsofMaterialsRepository, id, Guid.Empty, false);
+                    var list = (await _uow.BillsofMaterialLinesRepository.GetListAsync(t => t.BoMID == id));
+                    foreach (var line in list)
+                    {
+                        await _uow.BillsofMaterialLinesRepository.DeleteAsync(line.Id);
+                    }
                     await _uow.BillsofMaterialsRepository.DeleteAsync(id);
 
                     var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "BillsofMaterials", LogType.Delete, id);
@@ -95,15 +100,15 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
 
                 foreach (var item in mappedEntity.SelectBillsofMaterialLines)
                 {
+                    item.FinishedProductCode = mappedEntity.FinishedProductCode;
                     item.ProductCode = (await _uow.ProductsRepository.GetAsync(t => t.Id == item.ProductID)).Code;
                     item.ProductName = (await _uow.ProductsRepository.GetAsync(t => t.Id == item.ProductID)).Name;
+                    item.UnitSetCode = (await _uow.UnitSetsRepository.GetAsync(t => t.Id == item.UnitSetID)).Code;
+                    item.MaterialType = (await _uow.ProductsRepository.GetAsync(t => t.Id == item.ProductID)).ProductType;
                 }
 
-                //var before = ObjectMapper.Map<BillsofMaterials, SelectBillsofMaterialsDto>(entity);
-                //before.SelectBillsofMaterialLines = ObjectMapper.Map<List<BillsofMaterialLines>, List<SelectBillsofMaterialLinesDto>>(entity.BillsofMaterialLines.ToList());
                 var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "BillsofMaterials", LogType.Get, id);
                 await _uow.LogsRepository.InsertAsync(log);
-
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectBillsofMaterialsDto>(mappedEntity);

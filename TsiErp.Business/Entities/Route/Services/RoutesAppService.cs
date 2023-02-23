@@ -3,10 +3,12 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Route.BusinessRules;
 using TsiErp.Business.Entities.Route.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.ProductsOperation;
 using TsiErp.Entities.Entities.ProductsOperation.Dtos;
 using TsiErp.Entities.Entities.Route;
@@ -36,11 +38,12 @@ namespace TsiErp.Business.Entities.Route.Services
                 foreach (var item in input.SelectRouteLines)
                 {
                     var lineEntity = ObjectMapper.Map<SelectRouteLinesDto, RouteLines>(item);
-                    lineEntity.Id = GuidGenerator.CreateGuid();
                     lineEntity.RouteID = addedEntity.Id;
                     await _uow.RouteLinesRepository.InsertAsync(lineEntity);
                 }
-
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "Routes", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessDataResult<SelectRoutesDto>(ObjectMapper.Map<Routes, SelectRoutesDto>(addedEntity));
             }
@@ -63,7 +66,15 @@ namespace TsiErp.Business.Entities.Route.Services
                 else
                 {
                     await _manager.DeleteControl(_uow.RoutesRepository, id, Guid.Empty, false);
+                    var list = (await _uow.RouteLinesRepository.GetListAsync(t => t.RouteID == id));
+                    foreach (var line in list)
+                    {
+                        await _uow.RouteLinesRepository.DeleteAsync(line.Id);
+                    }
+
                     await _uow.RoutesRepository.DeleteAsync(id);
+                    var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Routes", LogType.Delete, id);
+                    await _uow.LogsRepository.InsertAsync(log);
                     await _uow.SaveChanges();
                     return new SuccessResult("Silme işlemi başarılı.");
                 }
@@ -81,6 +92,16 @@ namespace TsiErp.Business.Entities.Route.Services
                 var mappedEntity = ObjectMapper.Map<Routes, SelectRoutesDto>(entity);
 
                 mappedEntity.SelectRouteLines = ObjectMapper.Map<List<RouteLines>, List<SelectRouteLinesDto>>(entity.RouteLines.ToList());
+
+                foreach (var item in mappedEntity.SelectRouteLines)
+                {
+                    item.OperationCode = (await _uow.ProductsOperationsRepository.GetAsync(t => t.Id == item.ProductsOperationID)).Code;
+                    item.OperationName = (await _uow.ProductsOperationsRepository.GetAsync(t => t.Id == item.ProductsOperationID)).Name;
+                }
+
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "Routes", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectRoutesDto>(mappedEntity);
             }
@@ -122,7 +143,6 @@ namespace TsiErp.Business.Entities.Route.Services
 
                     if (lineEntity.Id == Guid.Empty)
                     {
-                        lineEntity.Id = GuidGenerator.CreateGuid();
                         await _uow.RouteLinesRepository.InsertAsync(lineEntity);
                     }
                     else
@@ -130,6 +150,10 @@ namespace TsiErp.Business.Entities.Route.Services
                         await _uow.RouteLinesRepository.UpdateAsync(lineEntity);
                     }
                 }
+                var before = ObjectMapper.Map<Routes, UpdateRoutesDto>(entity);
+                before.SelectRouteLines = ObjectMapper.Map<List<RouteLines>, List<SelectRouteLinesDto>>(entity.RouteLines.ToList());
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "Routes", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
 
                 await _uow.SaveChanges();
 

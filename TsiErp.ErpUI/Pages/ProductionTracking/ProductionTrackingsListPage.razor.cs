@@ -339,6 +339,7 @@ namespace TsiErp.ErpUI.Pages.ProductionTracking
                     break;
 
                 case "changed":
+                    IsChanged = true;
                     DataSource = (await ProductionTrackingsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectProductionTrackingHaltLines;
 

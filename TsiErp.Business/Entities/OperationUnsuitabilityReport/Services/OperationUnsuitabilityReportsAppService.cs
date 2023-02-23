@@ -3,10 +3,12 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.OperationUnsuitabilityReport.BusinessRules;
 using TsiErp.Business.Entities.OperationUnsuitabilityReport.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.OperationUnsuitabilityReport.Dtos;
 
@@ -28,6 +30,9 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 var entity = ObjectMapper.Map<CreateOperationUnsuitabilityReportsDto, OperationUnsuitabilityReports>(input);
 
                 var addedEntity = await _uow.OperationUnsuitabilityReportsRepository.InsertAsync(entity);
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "OperationUnsuitabilityReports", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectOperationUnsuitabilityReportsDto>(ObjectMapper.Map<OperationUnsuitabilityReports, SelectOperationUnsuitabilityReportsDto>(addedEntity));
@@ -41,6 +46,8 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
             {
                 await _manager.DeleteControl(_uow.OperationUnsuitabilityReportsRepository, id);
                 await _uow.OperationUnsuitabilityReportsRepository.DeleteAsync(id);
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "OperationUnsuitabilityReports", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -59,6 +66,9 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 t => t.Employees,
                 t => t.Stations);
                 var mappedEntity = ObjectMapper.Map<OperationUnsuitabilityReports, SelectOperationUnsuitabilityReportsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "OperationUnsuitabilityReports", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
                 return new SuccessDataResult<SelectOperationUnsuitabilityReportsDto>(mappedEntity);
             }
         }
@@ -97,6 +107,9 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 var mappedEntity = ObjectMapper.Map<UpdateOperationUnsuitabilityReportsDto, OperationUnsuitabilityReports>(input);
 
                 await _uow.OperationUnsuitabilityReportsRepository.UpdateAsync(mappedEntity);
+                var before = ObjectMapper.Map<OperationUnsuitabilityReports, UpdateOperationUnsuitabilityReportsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "OperationUnsuitabilityReports", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectOperationUnsuitabilityReportsDto>(ObjectMapper.Map<OperationUnsuitabilityReports, SelectOperationUnsuitabilityReportsDto>(mappedEntity));

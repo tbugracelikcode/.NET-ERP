@@ -3,10 +3,12 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.ProductionTracking.BusinessRules;
 using TsiErp.Business.Entities.ProductionTracking.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.ProductionTracking;
 using TsiErp.Entities.Entities.ProductionTracking.Dtos;
 using TsiErp.Entities.Entities.ProductionTrackingHaltLine;
@@ -33,10 +35,12 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 foreach (var item in input.SelectProductionTrackingHaltLinesDto)
                 {
                     var lineEntity = ObjectMapper.Map<SelectProductionTrackingHaltLinesDto, ProductionTrackingHaltLines>(item);
-                    lineEntity.Id = GuidGenerator.CreateGuid();
                     lineEntity.ProductionTrackingID = addedEntity.Id;
                     await _uow.ProductionTrackingHaltLinesRepository.InsertAsync(lineEntity);
                 }
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "ProductionTrackings", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
 
                 await _uow.SaveChanges();
 
@@ -61,7 +65,15 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 else
                 {
                     await _manager.DeleteControl(_uow.ProductionTrackingsRepository, id);
+
+                    var list = (await _uow.ProductionTrackingHaltLinesRepository.GetListAsync(t => t.ProductionTrackingID == id));
+                    foreach (var line in list)
+                    {
+                        await _uow.ProductionTrackingHaltLinesRepository.DeleteAsync(line.Id);
+                    }
                     await _uow.ProductionTrackingsRepository.DeleteAsync(id);
+                    var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "ProductionTrackings", LogType.Delete, id);
+                    await _uow.LogsRepository.InsertAsync(log);
                     await _uow.SaveChanges();
                     return new SuccessResult("Silme işlemi başarılı.");
                 }
@@ -78,6 +90,14 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 var mappedEntity = ObjectMapper.Map<ProductionTrackings, SelectProductionTrackingsDto>(entity);
 
                 mappedEntity.SelectProductionTrackingHaltLines = ObjectMapper.Map<List<ProductionTrackingHaltLines>, List<SelectProductionTrackingHaltLinesDto>>(entity.ProductionTrackingHaltLines.ToList());
+
+                foreach (var item in mappedEntity.SelectProductionTrackingHaltLines)
+                {
+                    item.HaltCode = (await _uow.HaltReasonsRepository.GetAsync(t => t.Id == item.HaltID)).Code;
+                    item.HaltName = (await _uow.HaltReasonsRepository.GetAsync(t => t.Id == item.HaltID)).Name;
+                }
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "ProductionTrackings", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
 
                 return new SuccessDataResult<SelectProductionTrackingsDto>(mappedEntity);
             }
@@ -117,7 +137,6 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     lineEntity.ProductionTrackingID = mappedEntity.Id;
                     if (lineEntity.Id == Guid.Empty)
                     {
-                        lineEntity.Id = GuidGenerator.CreateGuid();
                         await _uow.ProductionTrackingHaltLinesRepository.InsertAsync(lineEntity);
                     }
                     else
@@ -125,6 +144,11 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                         await _uow.ProductionTrackingHaltLinesRepository.UpdateAsync(lineEntity);
                     }
                 }
+
+                var before = ObjectMapper.Map<ProductionTrackings, UpdateProductionTrackingsDto>(entity);
+                before.SelectProductionTrackingHaltLinesDto = ObjectMapper.Map<List<ProductionTrackingHaltLines>, List<SelectProductionTrackingHaltLinesDto>>(entity.ProductionTrackingHaltLines.ToList());
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "ProductionTrackings", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
 
                 await _uow.SaveChanges();
                 return new SuccessDataResult<SelectProductionTrackingsDto>(ObjectMapper.Map<ProductionTrackings, SelectProductionTrackingsDto>(mappedEntity));

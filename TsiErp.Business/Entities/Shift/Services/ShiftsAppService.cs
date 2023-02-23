@@ -3,10 +3,12 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Shift.BusinessRules;
 using TsiErp.Business.Entities.Shift.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.Shift;
 using TsiErp.Entities.Entities.Shift.Dtos;
 using TsiErp.Entities.Entities.ShiftLine;
@@ -34,10 +36,13 @@ namespace TsiErp.Business.Entities.Shift.Services
                 foreach (var item in input.SelectShiftLinesDto)
                 {
                     var lineEntity = ObjectMapper.Map<SelectShiftLinesDto, ShiftLines>(item);
-                    lineEntity.Id = GuidGenerator.CreateGuid();
                     lineEntity.ShiftID = addedEntity.Id;
                     await _uow.ShiftLinesRepository.InsertAsync(lineEntity);
                 }
+
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "Shifts", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
 
                 await _uow.SaveChanges();
 
@@ -62,7 +67,17 @@ namespace TsiErp.Business.Entities.Shift.Services
                 else
                 {
                     await _manager.DeleteControl(_uow.ShiftsRepository, id);
+
+                    var list = (await _uow.ShiftLinesRepository.GetListAsync(t => t.ShiftID == id));
+                    foreach (var line in list)
+                    {
+                        await _uow.ShiftLinesRepository.DeleteAsync(line.Id);
+
+
+                    }
                     await _uow.ShiftsRepository.DeleteAsync(id);
+                    var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Shifts", LogType.Delete, id);
+                    await _uow.LogsRepository.InsertAsync(log);
                     await _uow.SaveChanges();
                     return new SuccessResult("Silme işlemi başarılı.");
                 }
@@ -74,12 +89,15 @@ namespace TsiErp.Business.Entities.Shift.Services
             using (UnitOfWork _uow = new UnitOfWork())
             {
                 var entity = await _uow.ShiftsRepository.GetAsync(t => t.Id == id,
-                t => t.ShiftLines,
-                t => t.CalendarLines);
+                t => t.ShiftLines);
 
                 var mappedEntity = ObjectMapper.Map<Shifts, SelectShiftsDto>(entity);
 
                 mappedEntity.SelectShiftLinesDto = ObjectMapper.Map<List<ShiftLines>, List<SelectShiftLinesDto>>(entity.ShiftLines.ToList());
+
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "Shifts", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectShiftsDto>(mappedEntity);
             }
@@ -91,8 +109,7 @@ namespace TsiErp.Business.Entities.Shift.Services
             using (UnitOfWork _uow = new UnitOfWork())
             {
                 var list = await _uow.ShiftsRepository.GetListAsync(null,
-                t => t.ShiftLines,
-                t => t.CalendarLines);
+                t => t.ShiftLines);
 
                 var mappedEntity = ObjectMapper.Map<List<Shifts>, List<ListShiftsDto>>(list.ToList());
 
@@ -120,7 +137,6 @@ namespace TsiErp.Business.Entities.Shift.Services
                     lineEntity.ShiftID = mappedEntity.Id;
                     if (lineEntity.Id == Guid.Empty)
                     {
-                        lineEntity.Id = GuidGenerator.CreateGuid();
                         await _uow.ShiftLinesRepository.InsertAsync(lineEntity);
                     }
                     else
@@ -128,6 +144,10 @@ namespace TsiErp.Business.Entities.Shift.Services
                         await _uow.ShiftLinesRepository.UpdateAsync(lineEntity);
                     }
                 }
+                var before = ObjectMapper.Map<Shifts, UpdateShiftsDto>(entity);
+                before.SelectShiftLinesDto = ObjectMapper.Map<List<ShiftLines>, List<SelectShiftLinesDto>>(entity.ShiftLines.ToList());
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "Shifts", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
 
                 await _uow.SaveChanges();
                 return new SuccessDataResult<SelectShiftsDto>(ObjectMapper.Map<Shifts, SelectShiftsDto>(mappedEntity));

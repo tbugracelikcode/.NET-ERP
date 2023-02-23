@@ -58,18 +58,18 @@ namespace TsiErp.Entities.Entities.ContractProductionTracking.Dtos
         /// <summary>
         /// İş İstasyonu ID
         /// </summary>
-        public Guid StationID { get; set; }
+        public Guid? StationID { get; set; }
         /// <summary>
         /// Çalışan ID
         /// </summary>
-        public Guid EmployeeID { get; set; }
+        public Guid? EmployeeID { get; set; }
         /// <summary>
         /// Vardiya ID
         /// </summary>
-        public Guid ShiftID { get; set; }
+        public Guid? ShiftID { get; set; }
         /// <summary>
         /// Cari Hesap ID
         /// </summary>
-        public Guid CurrentAccountID { get; set; }
+        public Guid? CurrentAccountID { get; set; }
     }    
 }

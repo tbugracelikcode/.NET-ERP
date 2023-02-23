@@ -19,9 +19,9 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityItem.Validations
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen fason uygunsuzluk adını yazın.")
+                .WithMessage("Lütfen fason uygunsuzluk açıklamasını yazın.")
                 .MaximumLength(200)
-                .WithMessage("Fason uygunsuzluk adı 200 karakterden fazla olamaz."); ;
+                .WithMessage("Fason uygunsuzluk açıklaması 200 karakterden fazla olamaz."); ;
 
         }
     }

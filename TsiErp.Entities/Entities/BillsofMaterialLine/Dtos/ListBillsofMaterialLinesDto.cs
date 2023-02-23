@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.BillsofMaterialLine.Dtos
 {
@@ -18,7 +19,7 @@ namespace TsiErp.Entities.Entities.BillsofMaterialLine.Dtos
         /// <summary>
         /// Malzeme Türü
         /// </summary>
-        public int MaterialType { get; set; }
+        public ProductTypeEnum MaterialType { get; set; }
         
         /// <summary>
         /// Ürün Kodu

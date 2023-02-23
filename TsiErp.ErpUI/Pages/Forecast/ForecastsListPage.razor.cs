@@ -314,14 +314,10 @@ namespace TsiErp.ErpUI.Pages.Forecast
                     break;
 
                 case "changed":
+                    IsChanged = true;
                     DataSource = (await ForecastsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectForecastLines;
 
-                    foreach (var item in GridLineList)
-                    {
-                        item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
-                        item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
-                    }
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);

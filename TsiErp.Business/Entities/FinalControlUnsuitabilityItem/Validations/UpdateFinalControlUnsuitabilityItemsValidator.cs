@@ -21,9 +21,9 @@ namespace TsiErp.Business.Entities.FinalControlUnsuitabilityItem.Validations
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen final kontrol uygunsuzluk adını yazın.")
+                .WithMessage("Lütfen final kontrol uygunsuzluk açıklamasını yazın.")
                 .MaximumLength(200)
-                .WithMessage("Final kontrol uygunsuzluk adı 200 karakterden fazla olamaz."); ;
+                .WithMessage("Final kontrol uygunsuzluk açıklaması 200 karakterden fazla olamaz."); ;
 
         }
     }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.PlannedMaintenanceLine.Dtos;
+using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.PlannedMaintenance.Dtos
 {
@@ -43,7 +44,11 @@ namespace TsiErp.Entities.Entities.PlannedMaintenance.Dtos
         /// <summary>
         /// Durum
         /// </summary>
-        public int Status { get; set; }
+        public PlannedMaintenanceStateEnum? Status { get; set; }
+        /// <summary>
+        /// Durum Adı
+        /// </summary>
+        public string StatusName { get; set; }
         /// <summary>
         /// Bakımı Yapan
         /// </summary>

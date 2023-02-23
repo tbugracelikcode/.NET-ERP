@@ -28,9 +28,9 @@ namespace TsiErp.Business.Entities.ProductsOperation.Validations
                .Must(x => x.HasValue && x.Value != Guid.Empty)
               .WithMessage("Lütfen ürün seçin.");
 
-            RuleFor(x => x.WorkCenterID)
-               .Must(x => x.HasValue && x.Value != Guid.Empty)
-              .WithMessage("Lütfen ürün seçin.");
+            //RuleFor(x => x.WorkCenterID)
+            //   .Must(x => x.HasValue && x.Value != Guid.Empty)
+            //  .WithMessage("Lütfen ürün seçin.");
 
         }
     }

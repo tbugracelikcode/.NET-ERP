@@ -3,10 +3,12 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.UnplannedMaintenance.BusinessRules;
 using TsiErp.Business.Entities.UnplannedMaintenance.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.UnplannedMaintenance;
 using TsiErp.Entities.Entities.UnplannedMaintenance.Dtos;
 using TsiErp.Entities.Entities.UnplannedMaintenanceLine;
@@ -34,11 +36,12 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
                 foreach (var item in input.SelectUnplannedMaintenanceLines)
                 {
                     var lineEntity = ObjectMapper.Map<SelectUnplannedMaintenanceLinesDto, UnplannedMaintenanceLines>(item);
-                    lineEntity.Id = GuidGenerator.CreateGuid();
                     lineEntity.UnplannedMaintenanceID = addedEntity.Id;
                     await _uow.UnplannedMaintenanceLinesRepository.InsertAsync(lineEntity);
                 }
-
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "UnplannedMaintenances", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessDataResult<SelectUnplannedMaintenancesDto>(ObjectMapper.Map<UnplannedMaintenances, SelectUnplannedMaintenancesDto>(addedEntity));
             }
@@ -62,7 +65,17 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
                 else
                 {
                     await _manager.DeleteControl(_uow.UnplannedMaintenancesRepository, id, Guid.Empty, false);
+
+                    var list = (await _uow.UnplannedMaintenanceLinesRepository.GetListAsync(t => t.UnplannedMaintenanceID == id));
+                    foreach (var line in list)
+                    {
+                        await _uow.UnplannedMaintenanceLinesRepository.DeleteAsync(line.Id);
+
+
+                    }
                     await _uow.UnplannedMaintenancesRepository.DeleteAsync(id);
+                    var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "UnplannedMaintenances", LogType.Delete, id);
+                    await _uow.LogsRepository.InsertAsync(log);
                     await _uow.SaveChanges();
                     return new SuccessResult("Silme işlemi başarılı.");
                 }
@@ -82,6 +95,15 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
 
                 mappedEntity.SelectUnplannedMaintenanceLines = ObjectMapper.Map<List<UnplannedMaintenanceLines>, List<SelectUnplannedMaintenanceLinesDto>>(entity.UnplannedMaintenanceLines.ToList());
 
+                foreach (var item in mappedEntity.SelectUnplannedMaintenanceLines)
+                {
+                    item.ProductCode = (await _uow.ProductsRepository.GetAsync(t => t.Id == item.ProductID)).Code;
+                    item.ProductName = (await _uow.ProductsRepository.GetAsync(t => t.Id == item.ProductID)).Name;
+                    item.UnitSetCode = (await _uow.UnitSetsRepository.GetAsync(t => t.Id == item.UnitSetID)).Code;
+                }
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "UnplannedMaintenances", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
                 return new SuccessDataResult<SelectUnplannedMaintenancesDto>(mappedEntity);
             }
         }
@@ -123,7 +145,6 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
 
                     if (lineEntity.Id == Guid.Empty)
                     {
-                        lineEntity.Id = GuidGenerator.CreateGuid();
                         await _uow.UnplannedMaintenanceLinesRepository.InsertAsync(lineEntity);
                     }
                     else
@@ -131,7 +152,10 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
                         await _uow.UnplannedMaintenanceLinesRepository.UpdateAsync(lineEntity);
                     }
                 }
-
+                var before = ObjectMapper.Map<UnplannedMaintenances, UpdateUnplannedMaintenancesDto>(entity);
+                before.SelectUnplannedMaintenanceLines = ObjectMapper.Map<List<UnplannedMaintenanceLines>, List<SelectUnplannedMaintenanceLinesDto>>(entity.UnplannedMaintenanceLines.ToList());
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "UnplannedMaintenances", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectUnplannedMaintenancesDto>(ObjectMapper.Map<UnplannedMaintenances, SelectUnplannedMaintenancesDto>(mappedEntity));

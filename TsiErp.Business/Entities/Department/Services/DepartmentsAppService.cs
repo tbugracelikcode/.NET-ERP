@@ -5,8 +5,10 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Department.BusinessRules;
 using TsiErp.Business.Entities.Department.Validations;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.Department;
 using TsiErp.Entities.Entities.Department.Dtos;
 
@@ -29,6 +31,10 @@ namespace TsiErp.Business.Entities.Department.Services
                 var entity = ObjectMapper.Map<CreateDepartmentsDto, Departments>(input);
 
                 var addedEntity = await _uow.DepartmentsRepository.InsertAsync(entity);
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "Departments", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
+
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectDepartmentsDto>(ObjectMapper.Map<Departments, SelectDepartmentsDto>(addedEntity));
@@ -43,6 +49,8 @@ namespace TsiErp.Business.Entities.Department.Services
             {
                 await _manager.DeleteControl(_uow.DepartmentsRepository, id);
                 await _uow.DepartmentsRepository.DeleteAsync(id);
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Departments", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -55,6 +63,9 @@ namespace TsiErp.Business.Entities.Department.Services
             {
                 var entity = await _uow.DepartmentsRepository.GetAsync(t => t.Id == id, t => t.Employees, t => t.EquipmentRecords);
                 var mappedEntity = ObjectMapper.Map<Departments, SelectDepartmentsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "Departments", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
                 return new SuccessDataResult<SelectDepartmentsDto>(mappedEntity);
             }
         }
@@ -87,6 +98,9 @@ namespace TsiErp.Business.Entities.Department.Services
                 var mappedEntity = ObjectMapper.Map<UpdateDepartmentsDto, Departments>(input);
 
                 await _uow.DepartmentsRepository.UpdateAsync(mappedEntity);
+                var before = ObjectMapper.Map<Departments, UpdateDepartmentsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "Departments", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectDepartmentsDto>(ObjectMapper.Map<Departments, SelectDepartmentsDto>(mappedEntity));

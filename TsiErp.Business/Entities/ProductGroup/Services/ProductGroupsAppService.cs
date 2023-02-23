@@ -3,10 +3,12 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.ProductGroup.BusinessRules;
 using TsiErp.Business.Entities.ProductGroup.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.ProductGroup;
 using TsiErp.Entities.Entities.ProductGroup.Dtos;
 
@@ -30,6 +32,9 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
                 var entity = ObjectMapper.Map<CreateProductGroupsDto, ProductGroups>(input);
 
                 var addedEntity = await _uow.ProductGroupsRepository.InsertAsync(entity);
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "ProductGroups", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectProductGroupsDto>(ObjectMapper.Map<ProductGroups, SelectProductGroupsDto>(addedEntity));
@@ -44,6 +49,8 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
             {
                 await _manager.DeleteControl(_uow.ProductGroupsRepository, id);
                 await _uow.ProductGroupsRepository.DeleteAsync(id);
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "ProductGroups", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -56,6 +63,10 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
             {
                 var entity = await _uow.ProductGroupsRepository.GetAsync(t => t.Id == id, t => t.Products);
                 var mappedEntity = ObjectMapper.Map<ProductGroups, SelectProductGroupsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "ProductGroups", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
+
                 return new SuccessDataResult<SelectProductGroupsDto>(mappedEntity);
             }
         }
@@ -88,6 +99,9 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
                 var mappedEntity = ObjectMapper.Map<UpdateProductGroupsDto, ProductGroups>(input);
 
                 await _uow.ProductGroupsRepository.UpdateAsync(mappedEntity);
+                var before = ObjectMapper.Map<ProductGroups, UpdateProductGroupsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "ProductGroups", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectProductGroupsDto>(ObjectMapper.Map<ProductGroups, SelectProductGroupsDto>(mappedEntity));

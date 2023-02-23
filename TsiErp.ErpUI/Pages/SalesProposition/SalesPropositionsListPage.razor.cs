@@ -760,15 +760,9 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
                     break;
 
                 case "changed":
+                    IsChanged = true;
                     DataSource = (await SalesPropositionsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectSalesPropositionLines;
-
-                    foreach (var item in GridLineList)
-                    {
-                        item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
-                        item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
-                        item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
-                    }
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);

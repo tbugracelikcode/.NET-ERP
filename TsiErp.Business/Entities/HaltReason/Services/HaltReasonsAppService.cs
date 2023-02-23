@@ -17,6 +17,8 @@ using TsiErp.Entities.Entities.HaltReason;
 using TsiErp.Entities.Entities.HaltReason.Dtos;
 using TsiErp.Entities.Entities.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.WorkOrder;
+using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.DataAccess.Services.Login;
 
 namespace TsiErp.Business.Entities.HaltReason.Services
 {
@@ -36,6 +38,9 @@ namespace TsiErp.Business.Entities.HaltReason.Services
                 var entity = ObjectMapper.Map<CreateHaltReasonsDto, HaltReasons>(input);
 
                 var addedEntity = await _uow.HaltReasonsRepository.InsertAsync(entity);
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "HaltReasons", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectHaltReasonsDto>(ObjectMapper.Map<HaltReasons, SelectHaltReasonsDto>(addedEntity));
@@ -48,6 +53,8 @@ namespace TsiErp.Business.Entities.HaltReason.Services
             using (UnitOfWork _uow = new UnitOfWork())
             {
                 await _uow.HaltReasonsRepository.DeleteAsync(id);
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "HaltReasons", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -59,6 +66,9 @@ namespace TsiErp.Business.Entities.HaltReason.Services
             {
                 var entity = await _uow.HaltReasonsRepository.GetAsync(t => t.Id == id);
                 var mappedEntity = ObjectMapper.Map<HaltReasons, SelectHaltReasonsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "HaltReasons", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
                 return new SuccessDataResult<SelectHaltReasonsDto>(mappedEntity);
             }
         }
@@ -89,6 +99,10 @@ namespace TsiErp.Business.Entities.HaltReason.Services
                 var mappedEntity = ObjectMapper.Map<UpdateHaltReasonsDto, HaltReasons>(input);
 
                 await _uow.HaltReasonsRepository.UpdateAsync(mappedEntity);
+                var before = ObjectMapper.Map<HaltReasons, UpdateHaltReasonsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "HaltReasons", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
+
                 await _uow.SaveChanges();
                 return new SuccessDataResult<SelectHaltReasonsDto>(ObjectMapper.Map<HaltReasons, SelectHaltReasonsDto>(mappedEntity));
             }

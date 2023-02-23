@@ -39,7 +39,7 @@ namespace TsiErp.Entities.Entities.Employee.Dtos
         /// <summary>
         /// Kan Grubu Enum
         /// </summary>
-        public BloodTypeEnum BloodType { get; set; }
+        public BloodTypeEnum? BloodType { get; set; }
         /// <summary>
         /// Kan Grubu
         /// </summary>

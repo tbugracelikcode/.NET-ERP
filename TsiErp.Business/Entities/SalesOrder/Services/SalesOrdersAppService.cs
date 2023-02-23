@@ -3,11 +3,13 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.SalesOrder.BusinessRules;
 using TsiErp.Business.Entities.SalesOrder.Validations;
 using TsiErp.Business.Entities.SalesProposition.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.SalesOrder;
 using TsiErp.Entities.Entities.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesOrderLine;
@@ -42,11 +44,12 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 foreach (var item in input.SelectSalesOrderLines)
                 {
                     var lineEntity = ObjectMapper.Map<SelectSalesOrderLinesDto, SalesOrderLines>(item);
-                    lineEntity.Id = GuidGenerator.CreateGuid();
                     lineEntity.SalesOrderID = addedEntity.Id;
                     await _uow.SalesOrderLinesRepository.InsertAsync(lineEntity);
                 }
-
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "SalesOrders", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessDataResult<SelectSalesOrderDto>(ObjectMapper.Map<SalesOrders, SelectSalesOrderDto>(addedEntity));
             }
@@ -69,7 +72,6 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     foreach (var item in input.SelectSalesOrderLines)
                     {
                         var lineEntity = ObjectMapper.Map<SelectSalesOrderLinesDto, SalesOrderLines>(item);
-                        lineEntity.Id = GuidGenerator.CreateGuid();
                         lineEntity.SalesOrderID = addedEntity.Id;
                         await _uow.SalesOrderLinesRepository.InsertAsync(lineEntity);
 
@@ -102,7 +104,17 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 else
                 {
                     await _manager.DeleteControl(_uow.SalesOrdersRepository, id, Guid.Empty, false);
+
+                    var list = (await _uow.SalesOrderLinesRepository.GetListAsync(t => t.SalesOrderID == id));
+                    foreach (var line in list)
+                    {
+                        await _uow.SalesOrderLinesRepository.DeleteAsync(line.Id);
+
+
+                    }
                     await _uow.SalesOrdersRepository.DeleteAsync(id);
+                    var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "SalesOrders", LogType.Delete, id);
+                    await _uow.LogsRepository.InsertAsync(log);
                     await _uow.SaveChanges();
                     return new SuccessResult("Silme işlemi başarılı.");
                 }
@@ -124,6 +136,16 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 var mappedEntity = ObjectMapper.Map<SalesOrders, SelectSalesOrderDto>(entity);
 
                 mappedEntity.SelectSalesOrderLines = ObjectMapper.Map<List<SalesOrderLines>, List<SelectSalesOrderLinesDto>>(entity.SalesOrderLines.ToList());
+
+                foreach (var item in mappedEntity.SelectSalesOrderLines)
+                {
+                    item.ProductCode = (await _uow.ProductsRepository.GetAsync(t => t.Id == item.ProductID)).Code;
+                    item.ProductName = (await _uow.ProductsRepository.GetAsync(t => t.Id == item.ProductID)).Name;
+                    item.UnitSetCode = (await _uow.UnitSetsRepository.GetAsync(t => t.Id == item.UnitSetID)).Code;
+                }
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "SalesOrders", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectSalesOrderDto>(mappedEntity);
             }
@@ -169,7 +191,6 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
 
                     if (lineEntity.Id == Guid.Empty)
                     {
-                        lineEntity.Id = GuidGenerator.CreateGuid();
                         await _uow.SalesOrderLinesRepository.InsertAsync(lineEntity);
                     }
                     else
@@ -177,6 +198,11 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                         await _uow.SalesOrderLinesRepository.UpdateAsync(lineEntity);
                     }
                 }
+
+                var before = ObjectMapper.Map<SalesOrders, UpdateSalesOrderDto>(entity);
+                before.SelectSalesOrderLines = ObjectMapper.Map<List<SalesOrderLines>, List<SelectSalesOrderLinesDto>>(entity.SalesOrderLines.ToList());
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "SalesOrders", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
 
                 await _uow.SaveChanges();
 

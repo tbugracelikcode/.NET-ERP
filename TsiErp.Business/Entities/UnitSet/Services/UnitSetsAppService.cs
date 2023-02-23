@@ -3,10 +3,12 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.UnitSet.BusinessRules;
 using TsiErp.Business.Entities.UnitSet.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.UnitSet;
 using TsiErp.Entities.Entities.UnitSet.Dtos;
 
@@ -28,6 +30,9 @@ namespace TsiErp.Business.Entities.UnitSet.Services
                 var entity = ObjectMapper.Map<CreateUnitSetsDto, UnitSets>(input);
 
                 var addedEntity = await _uow.UnitSetsRepository.InsertAsync(entity);
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "UnitSets", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectUnitSetsDto>(ObjectMapper.Map<UnitSets, SelectUnitSetsDto>(addedEntity));
@@ -41,6 +46,8 @@ namespace TsiErp.Business.Entities.UnitSet.Services
             {
                 await _manager.DeleteControl(_uow.UnitSetsRepository, id);
                 await _uow.UnitSetsRepository.DeleteAsync(id);
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "UnitSets", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -53,6 +60,9 @@ namespace TsiErp.Business.Entities.UnitSet.Services
                 var entity = await _uow.UnitSetsRepository.GetAsync(t => t.Id == id,
                 t => t.Products);
                 var mappedEntity = ObjectMapper.Map<UnitSets, SelectUnitSetsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "UnitSets", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
                 return new SuccessDataResult<SelectUnitSetsDto>(mappedEntity);
             }
         }
@@ -85,6 +95,9 @@ namespace TsiErp.Business.Entities.UnitSet.Services
                 var mappedEntity = ObjectMapper.Map<UpdateUnitSetsDto, UnitSets>(input);
 
                 await _uow.UnitSetsRepository.UpdateAsync(mappedEntity);
+                var before = ObjectMapper.Map<UnitSets, UpdateUnitSetsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "UnitSets", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectUnitSetsDto>(ObjectMapper.Map<UnitSets, SelectUnitSetsDto>(mappedEntity));

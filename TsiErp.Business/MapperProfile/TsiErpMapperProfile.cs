@@ -626,12 +626,14 @@ namespace TsiErp.Business.MapperProfile
 
             CreateMap<BillsofMaterialLines, SelectBillsofMaterialLinesDto>()
                 .ForMember(x => x.FinishedProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.MaterialType, y => y.MapFrom(z => z.Products.ProductType))
                 .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code))
                 .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
                 .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));
 
             CreateMap<BillsofMaterialLines, ListBillsofMaterialLinesDto>()
                 .ForMember(x => x.FinishedProductCode, y => y.MapFrom(z => z.Products.Code))
+                .ForMember(x => x.MaterialType, y => y.MapFrom(z => z.Products.ProductType))
                 .ForMember(x => x.UnitSetCode, y => y.MapFrom(z => z.UnitSets.Code))
                 .ForMember(x => x.ProductCode, y => y.MapFrom(z => z.Products.Code))
                 .ForMember(x => x.ProductName, y => y.MapFrom(z => z.Products.Name));

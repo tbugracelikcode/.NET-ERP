@@ -3,10 +3,12 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.WorkOrder.BusinessRules;
 using TsiErp.Business.Entities.WorkOrder.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.WorkOrder;
 using TsiErp.Entities.Entities.WorkOrder.Dtos;
 
@@ -28,6 +30,10 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 var entity = ObjectMapper.Map<CreateWorkOrdersDto, WorkOrders>(input);
 
                 var addedEntity = await _uow.WorkOrdersRepository.InsertAsync(entity);
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "WorkOrders", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
+
                 await _uow.SaveChanges();
 
 
@@ -42,6 +48,8 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
             using (UnitOfWork _uow = new UnitOfWork())
             {
                 await _uow.WorkOrdersRepository.DeleteAsync(id);
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "WorkOrders", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -62,6 +70,9 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 t => t.Products,
                 t => t.CurrentAccountCards);
                 var mappedEntity = ObjectMapper.Map<WorkOrders, SelectWorkOrdersDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "WorkOrders", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
                 return new SuccessDataResult<SelectWorkOrdersDto>(mappedEntity);
             }
         }
@@ -102,6 +113,9 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 var mappedEntity = ObjectMapper.Map<UpdateWorkOrdersDto, WorkOrders>(input);
 
                 await _uow.WorkOrdersRepository.UpdateAsync(mappedEntity);
+                var before = ObjectMapper.Map<WorkOrders, UpdateWorkOrdersDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "WorkOrders", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectWorkOrdersDto>(ObjectMapper.Map<WorkOrders, SelectWorkOrdersDto>(mappedEntity));

@@ -2,7 +2,6 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Grids;
-using Syncfusion.Blazor.Navigations;
 using System.Text;
 using Tsi.Core.Entities;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -12,9 +11,6 @@ using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 using IResult = Tsi.Core.Utilities.Results.IResult;
-using Tsi.Core.Entities.Auditing;
-using Syncfusion.XlsIO;
-using System.Data;
 
 namespace TsiErp.ErpUI.Pages.Base
 {

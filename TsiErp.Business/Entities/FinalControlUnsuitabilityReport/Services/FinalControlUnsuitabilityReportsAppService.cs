@@ -5,8 +5,10 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.FinalControlUnsuitabilityReport.BusinessRules;
 using TsiErp.Business.Entities.FinalControlUnsuitabilityReport.Validations;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinalControlUnsuitabilityReport;
 using TsiErp.Entities.Entities.FinalControlUnsuitabilityReport.Dtos;
 
@@ -28,6 +30,9 @@ namespace TsiErp.Business.Entities.FinalControlUnsuitabilityReport.Services
                 var entity = ObjectMapper.Map<CreateFinalControlUnsuitabilityReportsDto, FinalControlUnsuitabilityReports>(input);
 
                 var addedEntity = await _uow.FinalControlUnsuitabilityReportsRepository.InsertAsync(entity);
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "FinalControlUnsuitabilityReports", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectFinalControlUnsuitabilityReportsDto>(ObjectMapper.Map<FinalControlUnsuitabilityReports, SelectFinalControlUnsuitabilityReportsDto>(addedEntity));
@@ -41,6 +46,8 @@ namespace TsiErp.Business.Entities.FinalControlUnsuitabilityReport.Services
             {
                 await _manager.DeleteControl(_uow.FinalControlUnsuitabilityReportsRepository, id);
                 await _uow.FinalControlUnsuitabilityReportsRepository.DeleteAsync(id);
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "FinalControlUnsuitabilityReports", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -54,6 +61,10 @@ namespace TsiErp.Business.Entities.FinalControlUnsuitabilityReport.Services
                 t => t.Products,
                 t => t.Employees);
                 var mappedEntity = ObjectMapper.Map<FinalControlUnsuitabilityReports, SelectFinalControlUnsuitabilityReportsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "FinalControlUnsuitabilityReports", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
+
                 return new SuccessDataResult<SelectFinalControlUnsuitabilityReportsDto>(mappedEntity);
             }
         }
@@ -87,6 +98,9 @@ namespace TsiErp.Business.Entities.FinalControlUnsuitabilityReport.Services
                 var mappedEntity = ObjectMapper.Map<UpdateFinalControlUnsuitabilityReportsDto, FinalControlUnsuitabilityReports>(input);
 
                 await _uow.FinalControlUnsuitabilityReportsRepository.UpdateAsync(mappedEntity);
+                var before = ObjectMapper.Map<FinalControlUnsuitabilityReports, UpdateFinalControlUnsuitabilityReportsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "FinalControlUnsuitabilityReports", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectFinalControlUnsuitabilityReportsDto>(ObjectMapper.Map<FinalControlUnsuitabilityReports, SelectFinalControlUnsuitabilityReportsDto>(mappedEntity));

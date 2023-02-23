@@ -48,7 +48,11 @@ namespace TsiErp.Entities.Entities.Employee.Dtos
         /// <summary>
         /// Kan Grubu
         /// </summary>
-        public BloodTypeEnum BloodType { get; set; }
+        public BloodTypeEnum? BloodType { get; set; }
+        /// <summary>
+        /// Kan Grubu Adı
+        /// </summary>
+        public string BloodTypeName { get; set; }
         /// <summary>
         /// Adres
         /// </summary>
