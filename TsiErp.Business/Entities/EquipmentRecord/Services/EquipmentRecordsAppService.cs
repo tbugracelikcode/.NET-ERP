@@ -5,8 +5,10 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.EquipmentRecord.BusinessRules;
 using TsiErp.Business.Entities.EquipmentRecord.Validations;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.EquipmentRecord;
 using TsiErp.Entities.Entities.EquipmentRecord.Dtos;
 
@@ -29,6 +31,9 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
                 var entity = ObjectMapper.Map<CreateEquipmentRecordsDto, EquipmentRecords>(input);
 
                 var addedEntity = await _uow.EquipmentRecordsRepository.InsertAsync(entity);
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "EquipmentRecords", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectEquipmentRecordsDto>(ObjectMapper.Map<EquipmentRecords, SelectEquipmentRecordsDto>(addedEntity));
@@ -43,6 +48,8 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
             {
                 await _manager.DeleteControl(_uow.EquipmentRecordsRepository, id);
                 await _uow.EquipmentRecordsRepository.DeleteAsync(id);
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "EquipmentRecords", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -55,6 +62,10 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
             {
                 var entity = await _uow.EquipmentRecordsRepository.GetAsync(t => t.Id == id, t => t.Departments, t => t.CalibrationRecords, t => t.CalibrationVerifications);
                 var mappedEntity = ObjectMapper.Map<EquipmentRecords, SelectEquipmentRecordsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "EquipmentRecords", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
+
                 return new SuccessDataResult<SelectEquipmentRecordsDto>(mappedEntity);
             }
         }
@@ -87,6 +98,9 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
                 var mappedEntity = ObjectMapper.Map<UpdateEquipmentRecordsDto, EquipmentRecords>(input);
 
                 await _uow.EquipmentRecordsRepository.UpdateAsync(mappedEntity);
+                var before = ObjectMapper.Map<EquipmentRecords, UpdateEquipmentRecordsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "EquipmentRecords", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectEquipmentRecordsDto>(ObjectMapper.Map<EquipmentRecords, SelectEquipmentRecordsDto>(mappedEntity));

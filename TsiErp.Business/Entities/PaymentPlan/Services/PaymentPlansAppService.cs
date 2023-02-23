@@ -3,10 +3,12 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.PaymentPlan.BusinessRules;
 using TsiErp.Business.Entities.PaymentPlan.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.PaymentPlan;
 using TsiErp.Entities.Entities.PaymentPlan.Dtos;
 
@@ -29,6 +31,9 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
                 var entity = ObjectMapper.Map<CreatePaymentPlansDto, PaymentPlans>(input);
 
                 var addedEntity = await _uow.PaymentPlansRepository.InsertAsync(entity);
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "PaymentPlans", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectPaymentPlansDto>(ObjectMapper.Map<PaymentPlans, SelectPaymentPlansDto>(addedEntity));
@@ -43,6 +48,8 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
             {
                 await _manager.DeleteControl(_uow.PaymentPlansRepository, id);
                 await _uow.PaymentPlansRepository.DeleteAsync(id);
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "PaymentPlans", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -55,6 +62,9 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
             {
                 var entity = await _uow.PaymentPlansRepository.GetAsync(t => t.Id == id, t => t.SalesPropositions, t => t.SalesPropositionLines);
                 var mappedEntity = ObjectMapper.Map<PaymentPlans, SelectPaymentPlansDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "PaymentPlans", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
                 return new SuccessDataResult<SelectPaymentPlansDto>(mappedEntity);
             }
         }
@@ -87,6 +97,9 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
                 var mappedEntity = ObjectMapper.Map<UpdatePaymentPlansDto, PaymentPlans>(input);
 
                 await _uow.PaymentPlansRepository.UpdateAsync(mappedEntity);
+                var before = ObjectMapper.Map<PaymentPlans, UpdatePaymentPlansDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "PaymentPlans", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectPaymentPlansDto>(ObjectMapper.Map<PaymentPlans, SelectPaymentPlansDto>(mappedEntity));

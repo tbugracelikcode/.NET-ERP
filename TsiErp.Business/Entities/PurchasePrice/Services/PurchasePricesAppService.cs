@@ -3,10 +3,12 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.PurchasePrice.BusinessRules;
 using TsiErp.Business.Entities.PurchasePrice.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.PurchasePrice;
 using TsiErp.Entities.Entities.PurchasePrice.Dtos;
 using TsiErp.Entities.Entities.PurchasePriceLine;
@@ -34,10 +36,12 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                 foreach (var item in input.SelectPurchasePriceLines)
                 {
                     var lineEntity = ObjectMapper.Map<SelectPurchasePriceLinesDto, PurchasePriceLines>(item);
-                    lineEntity.Id = GuidGenerator.CreateGuid();
                     lineEntity.PurchasePriceID = addedEntity.Id;
                     await _uow.PurchasePriceLinesRepository.InsertAsync(lineEntity);
                 }
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "PurchasePrices", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
 
                 await _uow.SaveChanges();
                 return new SuccessDataResult<SelectPurchasePricesDto>(ObjectMapper.Map<PurchasePrices, SelectPurchasePricesDto>(addedEntity));
@@ -62,7 +66,14 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                 else
                 {
                     await _manager.DeleteControl(_uow.PurchasePricesRepository, id, Guid.Empty, false);
+                    var list = (await _uow.PurchasePriceLinesRepository.GetListAsync(t => t.PurchasePriceID == id));
+                    foreach (var line in list)
+                    {
+                        await _uow.PurchasePriceLinesRepository.DeleteAsync(line.Id);
+                    }
                     await _uow.PurchasePricesRepository.DeleteAsync(id);
+                    var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "PurchasePrices", LogType.Delete, id);
+                    await _uow.LogsRepository.InsertAsync(log);
                     await _uow.SaveChanges();
                     return new SuccessResult("Silme işlemi başarılı.");
                 }
@@ -83,6 +94,16 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                 var mappedEntity = ObjectMapper.Map<PurchasePrices, SelectPurchasePricesDto>(entity);
 
                 mappedEntity.SelectPurchasePriceLines = ObjectMapper.Map<List<PurchasePriceLines>, List<SelectPurchasePriceLinesDto>>(entity.PurchasePriceLines.ToList());
+
+                foreach (var item in mappedEntity.SelectPurchasePriceLines)
+                {
+                    item.ProductCode = (await _uow.ProductsRepository.GetAsync(t => t.Id == item.ProductID)).Code;
+                    item.ProductName = (await _uow.ProductsRepository.GetAsync(t => t.Id == item.ProductID)).Name;
+                    item.CurrencyCode = (await _uow.CurrenciesRepository.GetAsync(t => t.Id == item.CurrencyID)).Code;
+                }
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "PurchasePrices", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectPurchasePricesDto>(mappedEntity);
             }
@@ -127,7 +148,6 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
 
                     if (lineEntity.Id == Guid.Empty)
                     {
-                        lineEntity.Id = GuidGenerator.CreateGuid();
                         await _uow.PurchasePriceLinesRepository.InsertAsync(lineEntity);
                     }
                     else
@@ -135,7 +155,10 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                         await _uow.PurchasePriceLinesRepository.UpdateAsync(lineEntity);
                     }
                 }
-
+                var before = ObjectMapper.Map<PurchasePrices, UpdatePurchasePricesDto>(entity);
+                before.SelectPurchasePriceLines = ObjectMapper.Map<List<PurchasePriceLines>, List<SelectPurchasePriceLinesDto>>(entity.PurchasePriceLines.ToList());
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "PurchasePrices", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectPurchasePricesDto>(ObjectMapper.Map<PurchasePrices, SelectPurchasePricesDto>(mappedEntity));

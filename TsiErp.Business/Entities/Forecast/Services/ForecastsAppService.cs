@@ -5,8 +5,10 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Forecast.BusinessRules;
 using TsiErp.Business.Entities.Forecast.Validations;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.Forecast;
 using TsiErp.Entities.Entities.Forecast.Dtos;
 using TsiErp.Entities.Entities.ForecastLine;
@@ -34,10 +36,12 @@ namespace TsiErp.Business.Entities.Forecast.Services
                 foreach (var item in input.SelectForecastLines)
                 {
                     var lineEntity = ObjectMapper.Map<SelectForecastLinesDto, ForecastLines>(item);
-                    lineEntity.Id = GuidGenerator.CreateGuid();
                     lineEntity.ForecastID = addedEntity.Id;
                     await _uow.ForecastLinesRepository.InsertAsync(lineEntity);
                 }
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "Forecasts", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
 
                 await _uow.SaveChanges();
                 return new SuccessDataResult<SelectForecastsDto>(ObjectMapper.Map<Forecasts, SelectForecastsDto>(addedEntity));
@@ -61,7 +65,15 @@ namespace TsiErp.Business.Entities.Forecast.Services
                 else
                 {
                     await _manager.DeleteControl(_uow.ForecastsRepository, id, Guid.Empty, false);
+
+                    var list = (await _uow.ForecastLinesRepository.GetListAsync(t => t.ForecastID == id));
+                    foreach (var line in list)
+                    {
+                        await _uow.ForecastLinesRepository.DeleteAsync(line.Id);
+                    }
                     await _uow.ForecastsRepository.DeleteAsync(id);
+                    var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Forecasts", LogType.Delete, id);
+                    await _uow.LogsRepository.InsertAsync(log);
                     await _uow.SaveChanges();
                     return new SuccessResult("Silme işlemi başarılı.");
                 }
@@ -81,6 +93,17 @@ namespace TsiErp.Business.Entities.Forecast.Services
                 var mappedEntity = ObjectMapper.Map<Forecasts, SelectForecastsDto>(entity);
 
                 mappedEntity.SelectForecastLines = ObjectMapper.Map<List<ForecastLines>, List<SelectForecastLinesDto>>(entity.ForecastLines.ToList());
+
+                foreach (var item in mappedEntity.SelectForecastLines)
+                {
+                    item.ProductCode = (await _uow.ProductsRepository.GetAsync(t => t.Id == item.ProductID)).Code;
+                    item.ProductName = (await _uow.ProductsRepository.GetAsync(t => t.Id == item.ProductID)).Name;
+                }
+
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "Forecasts", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+
+                await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectForecastsDto>(mappedEntity);
             }
@@ -124,7 +147,6 @@ namespace TsiErp.Business.Entities.Forecast.Services
 
                     if (lineEntity.Id == Guid.Empty)
                     {
-                        lineEntity.Id = GuidGenerator.CreateGuid();
                         await _uow.ForecastLinesRepository.InsertAsync(lineEntity);
                     }
                     else
@@ -132,6 +154,11 @@ namespace TsiErp.Business.Entities.Forecast.Services
                         await _uow.ForecastLinesRepository.UpdateAsync(lineEntity);
                     }
                 }
+
+                var before = ObjectMapper.Map<Forecasts, UpdateForecastsDto>(entity);
+                before.SelectForecastLines = ObjectMapper.Map<List<ForecastLines>, List<SelectForecastLinesDto>>(entity.ForecastLines.ToList());
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "Forecasts", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
 
                 await _uow.SaveChanges();
 

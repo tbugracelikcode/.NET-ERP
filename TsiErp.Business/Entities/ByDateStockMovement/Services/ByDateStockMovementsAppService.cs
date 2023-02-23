@@ -5,8 +5,10 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.ByDateStockMovement.BusinessRules;
 using TsiErp.Business.Entities.ByDateStockMovement.Validations;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.ByDateStockMovement;
 using TsiErp.Entities.Entities.ByDateStockMovement.Dtos;
 
@@ -27,6 +29,11 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
                 var entity = ObjectMapper.Map<CreateByDateStockMovementsDto, ByDateStockMovements>(input);
 
                 var addedEntity = await _uow.ByDateStockMovementsRepository.InsertAsync(entity);
+
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "ByDateStockMovements", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
+
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectByDateStockMovementsDto>(ObjectMapper.Map<ByDateStockMovements, SelectByDateStockMovementsDto>(addedEntity));
@@ -40,6 +47,10 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
             using (UnitOfWork _uow = new UnitOfWork())
             {
                 await _uow.ByDateStockMovementsRepository.DeleteAsync(id);
+
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "ByDateStockMovements", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
+
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -52,6 +63,11 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
             {
                 var entity = await _uow.ByDateStockMovementsRepository.GetAsync(t => t.Id == id, t => t.Branches, t => t.Warehouses, t => t.Products);
                 var mappedEntity = ObjectMapper.Map<ByDateStockMovements, SelectByDateStockMovementsDto>(entity);
+
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "ByDateStockMovements", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
+
                 return new SuccessDataResult<SelectByDateStockMovementsDto>(mappedEntity);
             }
         }
@@ -82,6 +98,11 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
                 var mappedEntity = ObjectMapper.Map<UpdateByDateStockMovementsDto, ByDateStockMovements>(input);
 
                 await _uow.ByDateStockMovementsRepository.UpdateAsync(mappedEntity);
+
+                var before = ObjectMapper.Map<ByDateStockMovements, UpdateByDateStockMovementsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "ByDateStockMovements", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
+
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectByDateStockMovementsDto>(ObjectMapper.Map<ByDateStockMovements, SelectByDateStockMovementsDto>(mappedEntity));

@@ -5,8 +5,10 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GrandTotalStockMovement.BusinessRules;
 using TsiErp.Business.Entities.GrandTotalStockMovement.Validations;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GrandTotalStockMovement;
 using TsiErp.Entities.Entities.GrandTotalStockMovement.Dtos;
 
@@ -26,6 +28,9 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
                 var entity = ObjectMapper.Map<CreateGrandTotalStockMovementsDto, GrandTotalStockMovements>(input);
 
                 var addedEntity = await _uow.GrandTotalStockMovementsRepository.InsertAsync(entity);
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "GrandTotalStockMovements", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(ObjectMapper.Map<GrandTotalStockMovements, SelectGrandTotalStockMovementsDto>(addedEntity));
@@ -39,6 +44,10 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
             using (UnitOfWork _uow = new UnitOfWork())
             {
                 await _uow.GrandTotalStockMovementsRepository.DeleteAsync(id);
+
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "GrandTotalStockMovements", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
+
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -51,6 +60,9 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
             {
                 var entity = await _uow.GrandTotalStockMovementsRepository.GetAsync(t => t.Id == id, t => t.Branches, t => t.Warehouses, t => t.Products);
                 var mappedEntity = ObjectMapper.Map<GrandTotalStockMovements, SelectGrandTotalStockMovementsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "GrandTotalStockMovements", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
                 return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(mappedEntity);
             }
         }
@@ -81,6 +93,10 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
                 var mappedEntity = ObjectMapper.Map<UpdateGrandTotalStockMovementsDto, GrandTotalStockMovements>(input);
 
                 await _uow.GrandTotalStockMovementsRepository.UpdateAsync(mappedEntity);
+                var before = ObjectMapper.Map<GrandTotalStockMovements, UpdateGrandTotalStockMovementsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "GrandTotalStockMovements", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
+
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(ObjectMapper.Map<GrandTotalStockMovements, SelectGrandTotalStockMovementsDto>(mappedEntity));

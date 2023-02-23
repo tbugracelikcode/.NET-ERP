@@ -284,14 +284,9 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
                     break;
 
                 case "changed":
+                    IsChanged = true;
                     DataSource = (await ProductsOperationsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectProductsOperationLines.OrderBy(t => t.Priority).ToList();
-
-                    foreach (var item in GridLineList)
-                    {
-                        item.StationCode = (await StationsAppService.GetAsync(item.StationID.GetValueOrDefault())).Data.Code;
-                        item.StationName = (await StationsAppService.GetAsync(item.StationID.GetValueOrDefault())).Data.Name;
-                    }
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);

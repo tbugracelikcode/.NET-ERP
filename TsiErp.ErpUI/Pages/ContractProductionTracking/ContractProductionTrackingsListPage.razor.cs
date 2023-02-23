@@ -82,6 +82,7 @@ namespace TsiErp.ErpUI.Pages.ContractProductionTracking
                     break;
 
                 case "changed":
+                    IsChanged = true;
                     DataSource = (await ContractProductionTrackingsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     EditPageVisible = true;
                     await InvokeAsync(StateHasChanged);

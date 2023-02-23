@@ -5,8 +5,10 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Currency.BusinessRules;
 using TsiErp.Business.Entities.Currency.Validations;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.Currency;
 using TsiErp.Entities.Entities.Currency.Dtos;
 
@@ -28,6 +30,9 @@ namespace TsiErp.Business.Entities.Currency.Services
                 var entity = ObjectMapper.Map<CreateCurrenciesDto, Currencies>(input);
 
                 var addedEntity = await _uow.CurrenciesRepository.InsertAsync(entity);
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "Currencies", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectCurrenciesDto>(ObjectMapper.Map<Currencies, SelectCurrenciesDto>(addedEntity));
@@ -42,6 +47,9 @@ namespace TsiErp.Business.Entities.Currency.Services
             {
                 await _manager.DeleteControl(_uow.CurrenciesRepository, id);
                 await _uow.CurrenciesRepository.DeleteAsync(id);
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Currencies", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
+
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -54,6 +62,13 @@ namespace TsiErp.Business.Entities.Currency.Services
             {
                 var entity = await _uow.CurrenciesRepository.GetAsync(t => t.Id == id, t => t.CurrentAccountCards, y => y.ExchangeRates, y => y.SalesPropositions);
                 var mappedEntity = ObjectMapper.Map<Currencies, SelectCurrenciesDto>(entity);
+
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "Currencies", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+
+
+
+                await _uow.SaveChanges();
                 return new SuccessDataResult<SelectCurrenciesDto>(mappedEntity);
             }
         }
@@ -86,6 +101,10 @@ namespace TsiErp.Business.Entities.Currency.Services
                 var mappedEntity = ObjectMapper.Map<UpdateCurrenciesDto, Currencies>(input);
 
                 await _uow.CurrenciesRepository.UpdateAsync(mappedEntity);
+                var before = ObjectMapper.Map<Currencies, UpdateCurrenciesDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "Currencies", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
+
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectCurrenciesDto>(ObjectMapper.Map<Currencies, SelectCurrenciesDto>(mappedEntity));

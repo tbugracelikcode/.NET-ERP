@@ -2,10 +2,12 @@
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Period.BusinessRules;
 using TsiErp.Business.Entities.Period.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.Period;
 using TsiErp.Entities.Entities.Period.Dtos;
 
@@ -27,6 +29,9 @@ namespace TsiErp.Business.Entities.Period.Services
                 var entity = ObjectMapper.Map<CreatePeriodsDto, Periods>(input);
 
                 var addedEntity = await _uow.PeriodsRepository.InsertAsync(entity);
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "Periods", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
 
@@ -40,6 +45,8 @@ namespace TsiErp.Business.Entities.Period.Services
             using (UnitOfWork _uow = new UnitOfWork())
             {
                 await _uow.PeriodsRepository.DeleteAsync(id);
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Periods", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -51,6 +58,9 @@ namespace TsiErp.Business.Entities.Period.Services
             {
                 var entity = await _uow.PeriodsRepository.GetAsync(t => t.Id == id, t => t.Branches);
                 var mappedEntity = ObjectMapper.Map<Periods, SelectPeriodsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "Periods", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
                 return new SuccessDataResult<SelectPeriodsDto>(mappedEntity);
             }
         }
@@ -81,6 +91,9 @@ namespace TsiErp.Business.Entities.Period.Services
                 var mappedEntity = ObjectMapper.Map<UpdatePeriodsDto, Periods>(input);
 
                 await _uow.PeriodsRepository.UpdateAsync(mappedEntity);
+                var before = ObjectMapper.Map<Periods, UpdatePeriodsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "Periods", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessDataResult<SelectPeriodsDto>(ObjectMapper.Map<Periods, SelectPeriodsDto>(mappedEntity));
             }

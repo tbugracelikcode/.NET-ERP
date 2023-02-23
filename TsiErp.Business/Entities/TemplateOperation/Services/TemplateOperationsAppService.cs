@@ -3,10 +3,12 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.TemplateOperation.BusinessRules;
 using TsiErp.Business.Entities.TemplateOperation.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.TemplateOperation;
 using TsiErp.Entities.Entities.TemplateOperation.Dtos;
 using TsiErp.Entities.Entities.TemplateOperationLine;
@@ -34,11 +36,12 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                 foreach (var item in input.SelectTemplateOperationLines)
                 {
                     var lineEntity = ObjectMapper.Map<SelectTemplateOperationLinesDto, TemplateOperationLines>(item);
-                    lineEntity.Id = GuidGenerator.CreateGuid();
                     lineEntity.TemplateOperationID = addedEntity.Id;
                     await _uow.TemplateOperationLinesRepository.InsertAsync(lineEntity);
                 }
-
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "TemplateOperations", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessDataResult<SelectTemplateOperationsDto>(ObjectMapper.Map<TemplateOperations, SelectTemplateOperationsDto>(addedEntity));
             }
@@ -61,7 +64,17 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                 else
                 {
                     await _manager.DeleteControl(_uow.TemplateOperationsRepository, id, Guid.Empty, false);
+
+                    var list = (await _uow.TemplateOperationLinesRepository.GetListAsync(t => t.TemplateOperationID == id));
+                    foreach (var line in list)
+                    {
+                        await _uow.TemplateOperationLinesRepository.DeleteAsync(line.Id);
+
+
+                    }
                     await _uow.TemplateOperationsRepository.DeleteAsync(id);
+                    var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "TemplateOperations", LogType.Delete, id);
+                    await _uow.LogsRepository.InsertAsync(log);
                     await _uow.SaveChanges();
                     return new SuccessResult("Silme işlemi başarılı.");
                 }
@@ -79,6 +92,14 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
 
                 mappedEntity.SelectTemplateOperationLines = ObjectMapper.Map<List<TemplateOperationLines>, List<SelectTemplateOperationLinesDto>>(entity.TemplateOperationLines.ToList());
 
+                foreach (var item in mappedEntity.SelectTemplateOperationLines)
+                {
+                    item.StationCode = (await _uow.StationsRepository.GetAsync(t => t.Id == item.StationID)).Code;
+                    item.StationName = (await _uow.StationsRepository.GetAsync(t => t.Id == item.StationID)).Name;
+                }
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "TemplateOperations", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
                 return new SuccessDataResult<SelectTemplateOperationsDto>(mappedEntity);
             }
         }
@@ -118,7 +139,6 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
 
                     if (lineEntity.Id == Guid.Empty)
                     {
-                        lineEntity.Id = GuidGenerator.CreateGuid();
                         await _uow.TemplateOperationLinesRepository.InsertAsync(lineEntity);
                     }
                     else
@@ -126,7 +146,10 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                         await _uow.TemplateOperationLinesRepository.UpdateAsync(lineEntity);
                     }
                 }
-
+                var before = ObjectMapper.Map<TemplateOperations, UpdateTemplateOperationsDto>(entity);
+                before.SelectTemplateOperationLines = ObjectMapper.Map<List<TemplateOperationLines>, List<SelectTemplateOperationLinesDto>>(entity.TemplateOperationLines.ToList());
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "TemplateOperations", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectTemplateOperationsDto>(ObjectMapper.Map<TemplateOperations, SelectTemplateOperationsDto>(mappedEntity));

@@ -3,10 +3,12 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.ProductionOrderChangeItem.BusinessRules;
 using TsiErp.Business.Entities.ProductionOrderChangeItem.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.ProductionOrderChangeItem;
 using TsiErp.Entities.Entities.ProductionOrderChangeItem.Dtos;
 
@@ -28,6 +30,9 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeItem.Services
                 var entity = ObjectMapper.Map<CreateProductionOrderChangeItemsDto, ProductionOrderChangeItems>(input);
 
                 var addedEntity = await _uow.ProductionOrderChangeItemsRepository.InsertAsync(entity);
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "ProductionOrderChangeItems", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectProductionOrderChangeItemsDto>(ObjectMapper.Map<ProductionOrderChangeItems, SelectProductionOrderChangeItemsDto>(addedEntity));
@@ -41,6 +46,8 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeItem.Services
             using (UnitOfWork _uow = new UnitOfWork())
             {
                 await _uow.ProductionOrderChangeItemsRepository.DeleteAsync(id);
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "ProductionOrderChangeItems", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -53,6 +60,9 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeItem.Services
             {
                 var entity = await _uow.ProductionOrderChangeItemsRepository.GetAsync(t => t.Id == id, null);
                 var mappedEntity = ObjectMapper.Map<ProductionOrderChangeItems, SelectProductionOrderChangeItemsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "ProductionOrderChangeItems", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
                 return new SuccessDataResult<SelectProductionOrderChangeItemsDto>(mappedEntity);
             }
         }
@@ -85,6 +95,9 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeItem.Services
                 var mappedEntity = ObjectMapper.Map<UpdateProductionOrderChangeItemsDto, ProductionOrderChangeItems>(input);
 
                 await _uow.ProductionOrderChangeItemsRepository.UpdateAsync(mappedEntity);
+                var before = ObjectMapper.Map<ProductionOrderChangeItems, UpdateProductionOrderChangeItemsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "ProductionOrderChangeItems", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectProductionOrderChangeItemsDto>(ObjectMapper.Map<ProductionOrderChangeItems, SelectProductionOrderChangeItemsDto>(mappedEntity));

@@ -5,8 +5,10 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.CalibrationVerification.BusinessRules;
 using TsiErp.Business.Entities.CalibrationVerification.Validations;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.CalibrationVerification;
 using TsiErp.Entities.Entities.CalibrationVerification.Dtos;
 
@@ -28,6 +30,10 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
                 var entity = ObjectMapper.Map<CreateCalibrationVerificationsDto, CalibrationVerifications>(input);
 
                 var addedEntity = await _uow.CalibrationVerificationsRepository.InsertAsync(entity);
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "CalibrationVerifications", LogType.Insert, addedEntity.Id);
+
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectCalibrationVerificationsDto>(ObjectMapper.Map<CalibrationVerifications, SelectCalibrationVerificationsDto>(addedEntity));
@@ -41,6 +47,9 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
             using (UnitOfWork _uow = new UnitOfWork())
             {
                 await _uow.CalibrationVerificationsRepository.DeleteAsync(id);
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "CalibrationVerifications", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
+
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -53,6 +62,11 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
             {
                 var entity = await _uow.CalibrationVerificationsRepository.GetAsync(t => t.Id == id, t => t.EquipmentRecords);
                 var mappedEntity = ObjectMapper.Map<CalibrationVerifications, SelectCalibrationVerificationsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "CalibrationVerifications", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+
+
+                await _uow.SaveChanges();
                 return new SuccessDataResult<SelectCalibrationVerificationsDto>(mappedEntity);
             }
         }
@@ -85,6 +99,10 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
                 var mappedEntity = ObjectMapper.Map<UpdateCalibrationVerificationsDto, CalibrationVerifications>(input);
 
                 await _uow.CalibrationVerificationsRepository.UpdateAsync(mappedEntity);
+                var before = ObjectMapper.Map<CalibrationVerifications, UpdateCalibrationVerificationsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "CalibrationVerifications", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
+
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectCalibrationVerificationsDto>(ObjectMapper.Map<CalibrationVerifications, SelectCalibrationVerificationsDto>(mappedEntity));

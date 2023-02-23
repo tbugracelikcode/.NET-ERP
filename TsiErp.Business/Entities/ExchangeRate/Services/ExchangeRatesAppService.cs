@@ -4,8 +4,10 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.ExchangeRate.Validations;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.ExchangeRate;
 using TsiErp.Entities.Entities.ExchangeRate.Dtos;
 
@@ -24,6 +26,9 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
                 var entity = ObjectMapper.Map<CreateExchangeRatesDto, ExchangeRates>(input);
 
                 var addedEntity = await _uow.ExchangeRatesRepository.InsertAsync(entity);
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "ExchangeRates", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectExchangeRatesDto>(ObjectMapper.Map<ExchangeRates, SelectExchangeRatesDto>(addedEntity));
@@ -37,6 +42,8 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
             using (UnitOfWork _uow = new UnitOfWork())
             {
                 await _uow.ExchangeRatesRepository.DeleteAsync(id);
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "ExchangeRates", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -49,6 +56,9 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
             {
                 var entity = await _uow.ExchangeRatesRepository.GetAsync(t => t.Id == id, t => t.Currencies);
                 var mappedEntity = ObjectMapper.Map<ExchangeRates, SelectExchangeRatesDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "ExchangeRates", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
                 return new SuccessDataResult<SelectExchangeRatesDto>(mappedEntity);
             }
         }
@@ -79,6 +89,9 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
                 var mappedEntity = ObjectMapper.Map<UpdateExchangeRatesDto, ExchangeRates>(input);
 
                 await _uow.ExchangeRatesRepository.UpdateAsync(mappedEntity);
+                var before = ObjectMapper.Map<ExchangeRates, UpdateExchangeRatesDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "ExchangeRates", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectExchangeRatesDto>(ObjectMapper.Map<ExchangeRates, SelectExchangeRatesDto>(mappedEntity));

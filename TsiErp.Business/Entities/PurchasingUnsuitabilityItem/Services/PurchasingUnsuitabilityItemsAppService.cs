@@ -3,10 +3,12 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.PurchasingUnsuitabilityItem.BusinessRules;
 using TsiErp.Business.Entities.PurchasingUnsuitabilityItem.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.PurchasingUnsuitabilityItem;
 using TsiErp.Entities.Entities.PurchasingUnsuitabilityItem.Dtos;
 
@@ -28,6 +30,9 @@ namespace TsiErp.Business.Entities.PurchasingUnsuitabilityItem.Services
                 var entity = ObjectMapper.Map<CreatePurchasingUnsuitabilityItemsDto, PurchasingUnsuitabilityItems>(input);
 
                 var addedEntity = await _uow.PurchasingUnsuitabilityItemsRepository.InsertAsync(entity);
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "PurchasingUnsuitabilityItems", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectPurchasingUnsuitabilityItemsDto>(ObjectMapper.Map<PurchasingUnsuitabilityItems, SelectPurchasingUnsuitabilityItemsDto>(addedEntity));
@@ -41,6 +46,8 @@ namespace TsiErp.Business.Entities.PurchasingUnsuitabilityItem.Services
             using (UnitOfWork _uow = new UnitOfWork())
             {
                 await _uow.PurchasingUnsuitabilityItemsRepository.DeleteAsync(id);
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "PurchasingUnsuitabilityItems", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -53,6 +60,9 @@ namespace TsiErp.Business.Entities.PurchasingUnsuitabilityItem.Services
             {
                 var entity = await _uow.PurchasingUnsuitabilityItemsRepository.GetAsync(t => t.Id == id, null);
                 var mappedEntity = ObjectMapper.Map<PurchasingUnsuitabilityItems, SelectPurchasingUnsuitabilityItemsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "PurchasingUnsuitabilityItems", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
                 return new SuccessDataResult<SelectPurchasingUnsuitabilityItemsDto>(mappedEntity);
             }
         }
@@ -85,6 +95,9 @@ namespace TsiErp.Business.Entities.PurchasingUnsuitabilityItem.Services
                 var mappedEntity = ObjectMapper.Map<UpdatePurchasingUnsuitabilityItemsDto, PurchasingUnsuitabilityItems>(input);
 
                 await _uow.PurchasingUnsuitabilityItemsRepository.UpdateAsync(mappedEntity);
+                var before = ObjectMapper.Map<PurchasingUnsuitabilityItems, UpdatePurchasingUnsuitabilityItemsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "PurchasingUnsuitabilityItems", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectPurchasingUnsuitabilityItemsDto>(ObjectMapper.Map<PurchasingUnsuitabilityItems, SelectPurchasingUnsuitabilityItemsDto>(mappedEntity));

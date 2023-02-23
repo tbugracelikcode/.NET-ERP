@@ -5,8 +5,10 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.CurrentAccountCard.BusinessRules;
 using TsiErp.Business.Entities.CurrentAccountCard.Validations;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.CurrentAccountCard;
 using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
 
@@ -28,6 +30,9 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                 var entity = ObjectMapper.Map<CreateCurrentAccountCardsDto, CurrentAccountCards>(input);
 
                 var addedEntity = await _uow.CurrentAccountCardsRepository.InsertAsync(entity);
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "CurrentAccountCards", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectCurrentAccountCardsDto>(ObjectMapper.Map<CurrentAccountCards, SelectCurrentAccountCardsDto>(addedEntity));
@@ -42,6 +47,9 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
             {
                 await _manager.DeleteControl(_uow.CurrentAccountCardsRepository, id);
                 await _uow.CurrentAccountCardsRepository.DeleteAsync(id);
+
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "CurrentAccountCards", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -54,6 +62,9 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
             {
                 var entity = await _uow.CurrentAccountCardsRepository.GetAsync(t => t.Id == id, t => t.Currencies, y => y.ShippingAdresses, y => y.SalesPropositions);
                 var mappedEntity = ObjectMapper.Map<CurrentAccountCards, SelectCurrentAccountCardsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "CurrentAccountCards", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
                 return new SuccessDataResult<SelectCurrentAccountCardsDto>(mappedEntity);
             }
         }
@@ -86,6 +97,10 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                 var mappedEntity = ObjectMapper.Map<UpdateCurrentAccountCardsDto, CurrentAccountCards>(input);
 
                 await _uow.CurrentAccountCardsRepository.UpdateAsync(mappedEntity);
+                var before = ObjectMapper.Map<CurrentAccountCards, UpdateCurrentAccountCardsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "CurrentAccountCards", LogType.Update, mappedEntity.Id);
+
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectCurrentAccountCardsDto>(ObjectMapper.Map<CurrentAccountCards, SelectCurrentAccountCardsDto>(mappedEntity));

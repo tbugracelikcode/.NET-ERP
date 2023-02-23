@@ -74,6 +74,7 @@ namespace TsiErp.ErpUI.Pages.TechnicalDrawing
                     break;
 
                 case "changed":
+                    IsChanged = true;
                     SelectFirstDataRow = false;
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
                     string rootpath = FileUploadService.GetRootPath();

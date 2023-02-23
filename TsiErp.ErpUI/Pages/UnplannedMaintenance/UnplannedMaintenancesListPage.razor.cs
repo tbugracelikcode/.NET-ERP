@@ -133,14 +133,9 @@ namespace TsiErp.ErpUI.Pages.UnplannedMaintenance
                     break;
 
                 case "changed":
+                    IsChanged = true;
                     DataSource = (await UnplannedMaintenancesAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectUnplannedMaintenanceLines;
-
-                    foreach (var item in GridLineList)
-                    {
-                        item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
-                        item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
-                    }
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);

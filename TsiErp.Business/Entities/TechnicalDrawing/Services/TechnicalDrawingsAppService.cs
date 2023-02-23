@@ -3,10 +3,12 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.TechnicalDrawing.BusinessRules;
 using TsiErp.Business.Entities.TechnicalDrawing.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.TechnicalDrawing;
 using TsiErp.Entities.Entities.TechnicalDrawing.Dtos;
 
@@ -28,6 +30,9 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                 var entity = ObjectMapper.Map<CreateTechnicalDrawingsDto, TechnicalDrawings>(input);
 
                 var addedEntity = await _uow.TechnicalDrawingsRepository.InsertAsync(entity);
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "TechnicalDrawings", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectTechnicalDrawingsDto>(ObjectMapper.Map<TechnicalDrawings, SelectTechnicalDrawingsDto>(addedEntity));
@@ -42,6 +47,8 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
             {
                 await _manager.DeleteControl(_uow.TechnicalDrawingsRepository, id);
                 await _uow.TechnicalDrawingsRepository.DeleteAsync(id);
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "TechnicalDrawings", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -54,6 +61,9 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
             {
                 var entity = await _uow.TechnicalDrawingsRepository.GetAsync(t => t.Id == id, t => t.Products);
                 var mappedEntity = ObjectMapper.Map<TechnicalDrawings, SelectTechnicalDrawingsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "TechnicalDrawings", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
                 return new SuccessDataResult<SelectTechnicalDrawingsDto>(mappedEntity);
             }
         }
@@ -109,6 +119,9 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                 var mappedEntity = ObjectMapper.Map<UpdateTechnicalDrawingsDto, TechnicalDrawings>(input);
 
                 await _uow.TechnicalDrawingsRepository.UpdateAsync(mappedEntity);
+                var before = ObjectMapper.Map<TechnicalDrawings, UpdateTechnicalDrawingsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "TechnicalDrawings", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectTechnicalDrawingsDto>(ObjectMapper.Map<TechnicalDrawings, SelectTechnicalDrawingsDto>(mappedEntity));

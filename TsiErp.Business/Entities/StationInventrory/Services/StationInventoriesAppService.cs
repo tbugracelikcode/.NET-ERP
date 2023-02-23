@@ -3,10 +3,12 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.StationInventory.BusinessRules;
 using TsiErp.Business.Entities.StationInventory.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.StationInventory;
 using TsiErp.Entities.Entities.StationInventory.Dtos;
 
@@ -28,6 +30,9 @@ namespace TsiErp.Business.Entities.StationInventory.Services
                 var entity = ObjectMapper.Map<CreateStationInventoriesDto, StationInventories>(input);
 
                 var addedEntity = await _uow.StationInventoriesRepository.InsertAsync(entity);
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "StationInventories", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectStationInventoriesDto>(ObjectMapper.Map<StationInventories, SelectStationInventoriesDto>(addedEntity));
@@ -42,6 +47,8 @@ namespace TsiErp.Business.Entities.StationInventory.Services
             {
                 await _manager.DeleteControl(_uow.StationInventoriesRepository, id);
                 await _uow.StationInventoriesRepository.DeleteAsync(id);
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "StationInventories", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -54,6 +61,9 @@ namespace TsiErp.Business.Entities.StationInventory.Services
             {
                 var entity = await _uow.StationInventoriesRepository.GetAsync(t => t.Id == id, t => t.Stations);
                 var mappedEntity = ObjectMapper.Map<StationInventories, SelectStationInventoriesDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "StationInventories", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
                 return new SuccessDataResult<SelectStationInventoriesDto>(mappedEntity);
             }
         }
@@ -86,6 +96,9 @@ namespace TsiErp.Business.Entities.StationInventory.Services
                 var mappedEntity = ObjectMapper.Map<UpdateStationInventoriesDto, StationInventories>(input);
 
                 await _uow.StationInventoriesRepository.UpdateAsync(mappedEntity);
+                var before = ObjectMapper.Map<StationInventories, UpdateStationInventoriesDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "StationInventories", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectStationInventoriesDto>(ObjectMapper.Map<StationInventories, SelectStationInventoriesDto>(mappedEntity));

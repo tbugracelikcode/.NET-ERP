@@ -145,6 +145,7 @@ namespace TsiErp.ErpUI.Pages.ProductionTrackingIoT
                     break;
 
                 case "changed":
+                    IsChanged = true;
                     DataSource = (await ProductionTrackingsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectProductionTrackingHaltLines;
 

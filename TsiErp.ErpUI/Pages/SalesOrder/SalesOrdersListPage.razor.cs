@@ -619,15 +619,10 @@ namespace TsiErp.ErpUI.Pages.SalesOrder
                     break;
 
                 case "changed":
+                    IsChanged = true;
                     DataSource = (await SalesOrdersAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectSalesOrderLines;
 
-                    foreach (var item in GridLineList)
-                    {
-                        item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
-                        item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
-                        item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
-                    }
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);

@@ -3,9 +3,11 @@ using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.StationGroup.BusinessRules;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.StationGroup;
 using TsiErp.Entities.Entities.StationGroup.Dtos;
 using TsiErp.EntityContracts.StationGroup;
@@ -29,6 +31,9 @@ namespace TsiErp.Business.Entities.StationGroup.Services
                 var entity = ObjectMapper.Map<CreateStationGroupsDto, StationGroups>(input);
 
                 var addedEntity = await _uow.StationGroupsRepository.InsertAsync(entity);
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "StationGroups", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectStationGroupsDto>(ObjectMapper.Map<StationGroups, SelectStationGroupsDto>(addedEntity));
@@ -42,6 +47,8 @@ namespace TsiErp.Business.Entities.StationGroup.Services
             {
                 await _manager.DeleteControl(_uow.StationGroupsRepository, id);
                 await _uow.StationGroupsRepository.DeleteAsync(id);
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "StationGroups", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -53,6 +60,9 @@ namespace TsiErp.Business.Entities.StationGroup.Services
             {
                 var entity = await _uow.StationGroupsRepository.GetAsync(t => t.Id == id, t => t.Stations);
                 var mappedEntity = ObjectMapper.Map<StationGroups, SelectStationGroupsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "StationGroups", LogType.Get, id);
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
                 return new SuccessDataResult<SelectStationGroupsDto>(mappedEntity);
             }
         }
@@ -65,6 +75,8 @@ namespace TsiErp.Business.Entities.StationGroup.Services
                 var list = await _uow.StationGroupsRepository.GetListAsync(t => t.IsActive == input.IsActive, t => t.Stations);
 
                 var mappedEntity = ObjectMapper.Map<List<StationGroups>, List<ListStationGroupsDto>>(list.ToList());
+
+               
 
                 return new SuccessDataResult<IList<ListStationGroupsDto>>(mappedEntity);
             }
@@ -84,6 +96,9 @@ namespace TsiErp.Business.Entities.StationGroup.Services
                 var mappedEntity = ObjectMapper.Map<UpdateStationGroupsDto, StationGroups>(input);
 
                 await _uow.StationGroupsRepository.UpdateAsync(mappedEntity);
+                var before = ObjectMapper.Map<StationGroups, UpdateStationGroupsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "StationGroups", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectStationGroupsDto>(ObjectMapper.Map<StationGroups, SelectStationGroupsDto>(mappedEntity));

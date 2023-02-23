@@ -158,15 +158,6 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
                     DataSource = (await BillsofMaterialsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectBillsofMaterialLines;
 
-                    foreach (var item in GridLineList)
-                    {
-                        item.FinishedProductCode = DataSource.FinishedProductCode;
-                        item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
-                        item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
-                        item.MaterialType = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.ProductType;
-                        item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
-                    }
-
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
                     break;

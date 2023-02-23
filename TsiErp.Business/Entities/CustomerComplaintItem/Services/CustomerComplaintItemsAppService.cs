@@ -5,8 +5,10 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.CustomerComplaintItem.BusinessRules;
 using TsiErp.Business.Entities.CustomerComplaintItem.Validations;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.CustomerComplaintItem;
 using TsiErp.Entities.Entities.CustomerComplaintItem.Dtos;
 
@@ -28,6 +30,9 @@ namespace TsiErp.Business.Entities.CustomerComplaintItem.Services
                 var entity = ObjectMapper.Map<CreateCustomerComplaintItemsDto, CustomerComplaintItems>(input);
 
                 var addedEntity = await _uow.CustomerComplaintItemsRepository.InsertAsync(entity);
+                input.Id = addedEntity.Id;
+                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "CustomerComplaintItems", LogType.Insert, addedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectCustomerComplaintItemsDto>(ObjectMapper.Map<CustomerComplaintItems, SelectCustomerComplaintItemsDto>(addedEntity));
@@ -41,6 +46,9 @@ namespace TsiErp.Business.Entities.CustomerComplaintItem.Services
             using (UnitOfWork _uow = new UnitOfWork())
             {
                 await _uow.CustomerComplaintItemsRepository.DeleteAsync(id);
+                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "CustomerComplaintItems", LogType.Delete, id);
+                await _uow.LogsRepository.InsertAsync(log);
+
                 await _uow.SaveChanges();
                 return new SuccessResult("Silme işlemi başarılı.");
             }
@@ -53,6 +61,10 @@ namespace TsiErp.Business.Entities.CustomerComplaintItem.Services
             {
                 var entity = await _uow.CustomerComplaintItemsRepository.GetAsync(t => t.Id == id, null);
                 var mappedEntity = ObjectMapper.Map<CustomerComplaintItems, SelectCustomerComplaintItemsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "CustomerComplaintItems", LogType.Get, id);
+
+                await _uow.LogsRepository.InsertAsync(log);
+                await _uow.SaveChanges();
                 return new SuccessDataResult<SelectCustomerComplaintItemsDto>(mappedEntity);
             }
         }
@@ -85,6 +97,9 @@ namespace TsiErp.Business.Entities.CustomerComplaintItem.Services
                 var mappedEntity = ObjectMapper.Map<UpdateCustomerComplaintItemsDto, CustomerComplaintItems>(input);
 
                 await _uow.CustomerComplaintItemsRepository.UpdateAsync(mappedEntity);
+                var before = ObjectMapper.Map<CustomerComplaintItems, UpdateCustomerComplaintItemsDto>(entity);
+                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "CustomerComplaintItems", LogType.Update, mappedEntity.Id);
+                await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
 
                 return new SuccessDataResult<SelectCustomerComplaintItemsDto>(ObjectMapper.Map<CustomerComplaintItems, SelectCustomerComplaintItemsDto>(mappedEntity));

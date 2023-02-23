@@ -169,6 +169,7 @@ namespace TsiErp.ErpUI.Pages.Shift
                     break;
 
                 case "changed":
+                    IsChanged = true;
                     DataSource = (await ShiftsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectShiftLinesDto;
                     ShowEditPage();

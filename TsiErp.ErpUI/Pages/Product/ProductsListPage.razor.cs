@@ -943,6 +943,7 @@ namespace TsiErp.ErpUI.Pages.Product
                     break;
 
                 case "changed":
+                    IsChanged = true;
                     SelectFirstDataRow = false;
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
 

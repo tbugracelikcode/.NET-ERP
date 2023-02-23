@@ -134,14 +134,10 @@ namespace TsiErp.ErpUI.Pages.PlannedMaintenance
                     break;
 
                 case "changed":
+                    IsChanged = true;
                     DataSource = (await PlannedMaintenancesAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectPlannedMaintenanceLines;
 
-                    foreach (var item in GridLineList)
-                    {
-                        item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
-                        item.UnitSetCode = (await UnitSetsAppService.GetAsync(item.UnitSetID.GetValueOrDefault())).Data.Code;
-                    }
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
