@@ -324,7 +324,7 @@ else
                             <SfCard class="TSIGridCards">
 
                                 <CardContent>
-                                    <SfGrid ID="StationsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@StationsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                    <SfGrid ID="StationsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@StationsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                         <GridEvents OnRecordDoubleClick="@StationsDoubleClickHandler" TValue="ListStationsDto"></GridEvents>

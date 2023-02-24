@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using System.Drawing;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.Product.Dtos;
 using TsiErp.Entities.Entities.TechnicalDrawing.Dtos;

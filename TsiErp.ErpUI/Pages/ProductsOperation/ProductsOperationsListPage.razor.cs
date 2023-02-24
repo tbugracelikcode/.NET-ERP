@@ -1,16 +1,15 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
-using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
-using TsiErp.Entities.Entities.Station.Dtos;
+using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.Product.Dtos;
 using TsiErp.Entities.Entities.ProductsOperation.Dtos;
 using TsiErp.Entities.Entities.ProductsOperationLine.Dtos;
-using TsiErp.ErpUI.Utilities.ModalUtilities;
+using TsiErp.Entities.Entities.Station.Dtos;
 using TsiErp.Entities.Entities.TemplateOperation.Dtos;
 using TsiErp.Entities.Entities.TemplateOperationLine.Dtos;
-using Syncfusion.Blazor.Inputs;
-using Microsoft.AspNetCore.Components.Web;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.ProductsOperation
 {
@@ -255,11 +254,10 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
 
         public async override void ShowEditPage()
         {
-            var entity = (await ProductsOperationsAppService.GetAsync(DataSource.Id)).Data;
 
-            if (entity != null)
+            if (DataSource != null)
             {
-                bool? dataOpenStatus = (bool?)entity.GetType().GetProperty("DataOpenStatus").GetValue(entity);
+                bool? dataOpenStatus = (bool?)DataSource.GetType().GetProperty("DataOpenStatus").GetValue(DataSource);
 
                 if (dataOpenStatus == true && dataOpenStatus != null)
                 {

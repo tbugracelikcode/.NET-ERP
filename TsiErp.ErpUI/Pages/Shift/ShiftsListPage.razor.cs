@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.Shift.Dtos;
 using TsiErp.Entities.Entities.ShiftLine.Dtos;
-using TsiErp.ErpUI.Utilities.ModalUtilities;
 using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Helpers;
-using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.Shift
 {
@@ -91,11 +93,22 @@ namespace TsiErp.ErpUI.Pages.Shift
 
         #region Vardiya Satır Enum Combobox
 
-        List<ComboBoxEnumItem<ShiftLinesTypeEnum>> ShiftTypesList = new List<ComboBoxEnumItem<ShiftLinesTypeEnum>>();
+        public IEnumerable<SelectShiftLinesDto> shifttypes = GetEnumDisplayShiftTypesNames<ShiftLinesTypeEnum>();
 
-        public string[] Types { get; set; }
+        public static List<SelectShiftLinesDto> GetEnumDisplayShiftTypesNames<T>()
+        {
+            var type = typeof(T);
+            return Enum.GetValues(type)
+                       .Cast<T>()
+                       .Select(x => new SelectShiftLinesDto
+                       {
+                           Type = x as ShiftLinesTypeEnum?,
+                           TypeName = type.GetMember(x.ToString())
+                       .First()
+                       .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
 
-        public string[] EnumValues = Enum.GetNames(typeof(ShiftLinesTypeEnum));
+                       }).ToList();
+        }
 
 
         #endregion
@@ -140,11 +153,10 @@ namespace TsiErp.ErpUI.Pages.Shift
 
         public async override void ShowEditPage()
         {
-            var entity = (await ShiftsAppService.GetAsync(DataSource.Id)).Data;
 
-            if (entity != null)
+            if (DataSource != null)
             {
-                bool? dataOpenStatus = (bool?)entity.GetType().GetProperty("DataOpenStatus").GetValue(entity);
+                bool? dataOpenStatus = (bool?)DataSource.GetType().GetProperty("DataOpenStatus").GetValue(DataSource);
 
                 if (dataOpenStatus == true && dataOpenStatus != null)
                 {

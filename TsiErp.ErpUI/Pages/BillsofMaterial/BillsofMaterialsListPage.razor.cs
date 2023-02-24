@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
-using TsiErp.Entities.Entities.UnitSet.Dtos;
-using TsiErp.Entities.Entities.Product.Dtos;
+using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.BillsofMaterialLine.Dtos;
+using TsiErp.Entities.Entities.Product.Dtos;
+using TsiErp.Entities.Entities.UnitSet.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
-using Syncfusion.Blazor.Inputs;
-using Microsoft.AspNetCore.Components.Web;
 
 namespace TsiErp.ErpUI.Pages.BillsofMaterial
 {
@@ -103,11 +103,10 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
 
         public async override void ShowEditPage()
         {
-            var entity = (await BillsofMaterialsAppService.GetAsync(DataSource.Id)).Data;
 
-            if (entity != null)
+            if (DataSource != null)
             {
-                bool? dataOpenStatus = (bool?)entity.GetType().GetProperty("DataOpenStatus").GetValue(entity);
+                bool? dataOpenStatus = (bool?)DataSource.GetType().GetProperty("DataOpenStatus").GetValue(DataSource);
 
                 if (dataOpenStatus == true && dataOpenStatus != null)
                 {

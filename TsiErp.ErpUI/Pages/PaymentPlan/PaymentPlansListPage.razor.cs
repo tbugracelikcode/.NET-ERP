@@ -1,9 +1,4 @@
-﻿using DevExpress.Blazor;
-using Microsoft.AspNetCore.Components;
-using Syncfusion.Blazor.Gantt;
-using Syncfusion.Blazor.Grids;
-using Tsi.Core.Utilities.Results;
-using TsiErp.Entities.Entities.PaymentPlan.Dtos;
+﻿using TsiErp.Entities.Entities.PaymentPlan.Dtos;
 
 namespace TsiErp.ErpUI.Pages.PaymentPlan
 {

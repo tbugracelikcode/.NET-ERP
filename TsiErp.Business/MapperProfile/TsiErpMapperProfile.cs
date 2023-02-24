@@ -509,6 +509,7 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<CreateShiftsDto, Shifts>();
             CreateMap<SelectShiftsDto, CreateShiftsDto>();
             CreateMap<SelectShiftsDto, UpdateShiftsDto>();
+            CreateMap<Shifts, UpdateShiftsDto>();
 
 
             CreateMap<ShiftLines, SelectShiftLinesDto>();

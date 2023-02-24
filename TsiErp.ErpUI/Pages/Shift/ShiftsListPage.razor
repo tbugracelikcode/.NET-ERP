@@ -43,7 +43,7 @@ else
                             @{
                                 var _list = ListDataSource.OrderBy(t => t.ShiftOrder).ToList();
                             }
-                            <SfGrid ID="Grid" @ref="_grid"   AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@_list" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"  GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu">
+                            <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@_list" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu">
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
                                 <SfToolbar>
                                     <ToolbarItems>
@@ -63,7 +63,7 @@ else
 
                                     </ToolbarItems>
                                 </SfToolbar>
-                                <GridEvents   ContextMenuItemClicked="@MainContextMenuClick" TValue="ListShiftsDto"></GridEvents>
+                                <GridEvents ContextMenuItemClicked="@MainContextMenuClick" TValue="ListShiftsDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
@@ -172,8 +172,8 @@ else
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <center>
-                            <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br>
-                            <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                                <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br>
+                                <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
                             </center>
                         </Template>
                     </DxGridLayoutItem>
@@ -194,18 +194,27 @@ else
                                     <GridColumn Field=@nameof(SelectShiftLinesDto.EndHour) HeaderText="BİTİŞ SAATİ" TextAlign="TextAlign.Center" Width="120" Context="linecontext"> </GridColumn>
 
                                     <GridColumn Field=@nameof(SelectShiftLinesDto.Type) HeaderText="TÜR" TextAlign="TextAlign.Center" Width="120" Context="linecontext">
-                                     @*   <Template>
-                                    @{
-                                    var a = (linecontext as SelectShiftLinesDto);
-                                    List<ShiftLinesTypeEnum> _list = Enum.GetValues(typeof(ShiftLinesTypeEnum)).Cast<ShiftLinesTypeEnum>().ToString().ToList();
-                                   _list.Contains(t=>t.)
-                                    }
-                                    @_list
-                                    </Template>*@
-                                    </GridColumn>
-                                    <GridColumn Field=@nameof(SelectShiftLinesDto.Coefficient) Type="ColumnType.Number" HeaderText="KATSAYI" TextAlign="TextAlign.Center" Width="120">
-                                    </GridColumn>
-                                   
+                                        <Template>
+                                            @{
+                                                ShiftLinesTypeEnum? shifttype = (linecontext as SelectShiftLinesDto).Type;
+                                                string typest = "";
+
+                                                switch (shifttype)
+                                                {
+                                                    case ShiftLinesTypeEnum.Calisma: typest = "Çalışma"; break;
+                                                    case ShiftLinesTypeEnum.FazlaMesai: typest = "Fazla Mesai"; break;
+                                                    case ShiftLinesTypeEnum.Mola: typest = "Mola"; break;
+                                                    case ShiftLinesTypeEnum.Temizlik: typest = "Temizlik"; break;
+                                                    default: break;
+                                                }
+
+                                        }
+                                        @typest
+                                    </Template>
+                                </GridColumn>
+                                <GridColumn Field=@nameof(SelectShiftLinesDto.Coefficient) Type="ColumnType.Number" HeaderText="KATSAYI" TextAlign="TextAlign.Center" Width="120">
+                                </GridColumn>
+
                             </GridColumns>
                         </SfGrid>
                     </Template>
@@ -267,8 +276,8 @@ else
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>Tür: </strong></label><br />
-                            <SfDropDownList PopupHeight="230px" Placeholder="Vardiya Türü Seçiniz" @bind-Value="@LineDataSource.Type" DataSource="@EnumValues">
-                                <DropDownListFieldSettings Text="Name" Value="Value"></DropDownListFieldSettings>
+                            <SfDropDownList TItem="SelectShiftLinesDto" TValue="ShiftLinesTypeEnum?" PopupHeight="230px" Placeholder="Tür Seçiniz" @bind-Value="@LineDataSource.Type" DataSource="@shifttypes">
+                                <DropDownListFieldSettings Text="TypeName" Value="Type"></DropDownListFieldSettings>
                             </SfDropDownList>
                         </Template>
                     </DxGridLayoutItem>

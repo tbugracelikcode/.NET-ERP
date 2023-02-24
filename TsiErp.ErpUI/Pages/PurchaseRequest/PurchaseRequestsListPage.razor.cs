@@ -1,28 +1,22 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
-using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
+using Syncfusion.Blazor.Inputs;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.Currency.Dtos;
-using TsiErp.Entities.Entities.UnitSet.Dtos;
 using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
-using TsiErp.Entities.Entities.Product.Dtos;
-using TsiErp.Entities.Entities.PurchaseRequest.Dtos;
-using TsiErp.Entities.Entities.PurchaseRequestLine.Dtos;
-using TsiErp.Entities.Entities.WareHouse.Dtos;
 using TsiErp.Entities.Entities.PaymentPlan.Dtos;
+using TsiErp.Entities.Entities.Product.Dtos;
+using TsiErp.Entities.Entities.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseOrderLine.Dtos;
-using TsiErp.Entities.Entities.BillsofMaterial.Dtos;
-using TsiErp.Entities.Entities.BillsofMaterialLine.Dtos;
+using TsiErp.Entities.Entities.PurchaseRequest.Dtos;
+using TsiErp.Entities.Entities.PurchaseRequestLine.Dtos;
+using TsiErp.Entities.Entities.UnitSet.Dtos;
+using TsiErp.Entities.Entities.WareHouse.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.ErpUI.Helpers;
-using Syncfusion.Blazor.Navigations;
-using Syncfusion.Blazor.TreeGrid;
-using TsiErp.Entities.Entities.ProductionOrder.Dtos;
-using Syncfusion.Blazor.Inputs;
-using Microsoft.AspNetCore.Components.Web;
 
 namespace TsiErp.ErpUI.Pages.PurchaseRequest
 {
@@ -770,11 +764,10 @@ namespace TsiErp.ErpUI.Pages.PurchaseRequest
 
         public async override void ShowEditPage()
         {
-            var entity = (await PurchaseRequestsAppService.GetAsync(DataSource.Id)).Data;
 
-            if (entity != null)
+            if (DataSource != null)
             {
-                bool? dataOpenStatus = (bool?)entity.GetType().GetProperty("DataOpenStatus").GetValue(entity);
+                bool? dataOpenStatus = (bool?)DataSource.GetType().GetProperty("DataOpenStatus").GetValue(DataSource);
 
                 if (dataOpenStatus == true && dataOpenStatus != null)
                 {

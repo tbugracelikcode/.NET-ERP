@@ -1,9 +1,4 @@
-﻿using DevExpress.Blazor;
-using Microsoft.AspNetCore.Components;
-using Syncfusion.Blazor.Gantt;
-using Syncfusion.Blazor.Grids;
-using Tsi.Core.Utilities.Results;
-using TsiErp.Entities.Entities.ProductionOrderChangeItem.Dtos;
+﻿using TsiErp.Entities.Entities.ProductionOrderChangeItem.Dtos;
 
 namespace TsiErp.ErpUI.Pages.ProductionOrderChangeItem
 {
