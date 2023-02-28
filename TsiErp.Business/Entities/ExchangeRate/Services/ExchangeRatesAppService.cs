@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.ExchangeRate.Validations;
@@ -10,12 +10,16 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.ExchangeRate;
 using TsiErp.Entities.Entities.ExchangeRate.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.ExchangeRate.Services
 {
     [ServiceRegistration(typeof(IExchangeRatesAppService), DependencyInjectionType.Scoped)]
-    public class ExchangeRatesAppService : ApplicationService, IExchangeRatesAppService
+    public class ExchangeRatesAppService : ApplicationService<BranchesResource>, IExchangeRatesAppService
     {
+        public ExchangeRatesAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
 
         [ValidationAspect(typeof(CreateExchangeRatesValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]

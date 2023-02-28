@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GrandTotalStockMovement.BusinessRules;
@@ -11,12 +11,17 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GrandTotalStockMovement;
 using TsiErp.Entities.Entities.GrandTotalStockMovement.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
 {
     [ServiceRegistration(typeof(IGrandTotalStockMovementsAppService), DependencyInjectionType.Scoped)]
-    public class GrandTotalStockMovementsAppService : ApplicationService, IGrandTotalStockMovementsAppService
+    public class GrandTotalStockMovementsAppService : ApplicationService<BranchesResource>, IGrandTotalStockMovementsAppService
     {
+        public GrandTotalStockMovementsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         GrandTotalStockMovementManager _manager { get; set; } = new GrandTotalStockMovementManager();
 
         [ValidationAspect(typeof(CreateGrandTotalStockMovementsValidator), Priority = 1)]

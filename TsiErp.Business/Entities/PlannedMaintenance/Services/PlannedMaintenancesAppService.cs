@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -13,12 +13,17 @@ using TsiErp.Entities.Entities.PlannedMaintenance;
 using TsiErp.Entities.Entities.PlannedMaintenance.Dtos;
 using TsiErp.Entities.Entities.PlannedMaintenanceLine;
 using TsiErp.Entities.Entities.PlannedMaintenanceLine.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.PlannedMaintenance.Services
 {
     [ServiceRegistration(typeof(IPlannedMaintenancesAppService), DependencyInjectionType.Scoped)]
-    public class PlannedMaintenancesAppService : ApplicationService, IPlannedMaintenancesAppService
+    public class PlannedMaintenancesAppService : ApplicationService<BranchesResource>, IPlannedMaintenancesAppService
     {
+        public PlannedMaintenancesAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         PlannedMaintenanceManager _manager { get; set; } = new PlannedMaintenanceManager();
 
         [ValidationAspect(typeof(CreatePlannedMaintenanceValidatorDto), Priority = 1)]

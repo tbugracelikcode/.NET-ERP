@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -11,12 +11,17 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.UnitSet;
 using TsiErp.Entities.Entities.UnitSet.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.UnitSet.Services
 {
     [ServiceRegistration(typeof(IUnitSetsAppService), DependencyInjectionType.Scoped)]
-    public class UnitSetsAppService : ApplicationService, IUnitSetsAppService
+    public class UnitSetsAppService : ApplicationService<BranchesResource>, IUnitSetsAppService
     {
+        public UnitSetsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         UnitSetManager _manager { get; set; } = new UnitSetManager();
 
         [ValidationAspect(typeof(CreateUnitSetsValidator), Priority = 1)]

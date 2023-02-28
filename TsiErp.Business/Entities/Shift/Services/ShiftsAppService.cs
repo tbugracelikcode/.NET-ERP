@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -13,12 +13,17 @@ using TsiErp.Entities.Entities.Shift;
 using TsiErp.Entities.Entities.Shift.Dtos;
 using TsiErp.Entities.Entities.ShiftLine;
 using TsiErp.Entities.Entities.ShiftLine.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.Shift.Services
 {
     [ServiceRegistration(typeof(IShiftsAppService), DependencyInjectionType.Scoped)]
-    public class ShiftsAppService : ApplicationService, IShiftsAppService
+    public class ShiftsAppService : ApplicationService<BranchesResource>, IShiftsAppService
     {
+        public ShiftsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         ShiftManager _manager { get; set; } = new ShiftManager();
 
         [ValidationAspect(typeof(CreateShiftsValidatorDto), Priority = 1)]

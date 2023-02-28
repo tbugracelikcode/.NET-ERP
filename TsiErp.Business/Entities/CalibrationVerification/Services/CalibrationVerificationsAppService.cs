@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.CalibrationVerification.BusinessRules;
@@ -11,12 +11,17 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.CalibrationVerification;
 using TsiErp.Entities.Entities.CalibrationVerification.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.CalibrationVerification.Services
 {
     [ServiceRegistration(typeof(ICalibrationVerificationsAppService), DependencyInjectionType.Scoped)]
-    public class CalibrationVerificationsAppService : ApplicationService, ICalibrationVerificationsAppService
+    public class CalibrationVerificationsAppService : ApplicationService<BranchesResource>, ICalibrationVerificationsAppService
     {
+        public CalibrationVerificationsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         CalibrationVerificationManager _manager { get; set; } = new CalibrationVerificationManager();
 
         [ValidationAspect(typeof(CreateCalibrationVerifcationsValidator), Priority = 1)]

@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Employee.BusinessRules;
@@ -11,12 +11,17 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.Employee;
 using TsiErp.Entities.Entities.Employee.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.Employee.Services
 {
     [ServiceRegistration(typeof(IEmployeesAppService), DependencyInjectionType.Scoped)]
-    public class EmployeesAppService : ApplicationService, IEmployeesAppService
+    public class EmployeesAppService : ApplicationService<BranchesResource>, IEmployeesAppService
     {
+        public EmployeesAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         EmployeeManager _manager { get; set; } = new EmployeeManager();
 
         [ValidationAspect(typeof(CreateEmployeesValidator), Priority = 1)]

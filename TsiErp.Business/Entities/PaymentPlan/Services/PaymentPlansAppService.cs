@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -11,12 +11,17 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.PaymentPlan;
 using TsiErp.Entities.Entities.PaymentPlan.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.PaymentPlan.Services
 {
     [ServiceRegistration(typeof(IPaymentPlansAppService), DependencyInjectionType.Scoped)]
-    public class PaymentPlansAppService : ApplicationService, IPaymentPlansAppService
+    public class PaymentPlansAppService : ApplicationService<BranchesResource>, IPaymentPlansAppService
     {
+        public PaymentPlansAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         PaymentPlanManager _manager { get; set; } = new PaymentPlanManager();
 
 

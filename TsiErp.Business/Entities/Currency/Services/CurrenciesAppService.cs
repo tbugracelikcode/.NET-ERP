@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Currency.BusinessRules;
@@ -11,12 +11,17 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.Currency;
 using TsiErp.Entities.Entities.Currency.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.Currency.Services
 {
     [ServiceRegistration(typeof(ICurrenciesAppService), DependencyInjectionType.Scoped)]
-    public class CurrenciesAppService : ApplicationService, ICurrenciesAppService
+    public class CurrenciesAppService : ApplicationService<BranchesResource>, ICurrenciesAppService
     {
+        public CurrenciesAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         CurrencyManager _manager { get; set; } = new CurrencyManager();
 
         [ValidationAspect(typeof(CreateCurrenciesValidator), Priority = 1)]

@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.CalibrationRecord.BusinessRules;
@@ -11,12 +11,17 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.CalibrationRecord;
 using TsiErp.Entities.Entities.CalibrationRecord.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.CalibrationRecord.Services
 {
     [ServiceRegistration(typeof(ICalibrationRecordsAppService), DependencyInjectionType.Scoped)]
-    public class CalibrationRecordsAppService : ApplicationService , ICalibrationRecordsAppService
+    public class CalibrationRecordsAppService : ApplicationService<BranchesResource> , ICalibrationRecordsAppService
     {
+        public CalibrationRecordsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         CalibrationRecordsManager _manager { get; set; } = new CalibrationRecordsManager();
 
         [ValidationAspect(typeof(CreateCalibrationRecordsValidator), Priority = 1)]

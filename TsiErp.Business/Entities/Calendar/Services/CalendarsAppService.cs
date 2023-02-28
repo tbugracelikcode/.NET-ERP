@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Calendar.BusinessRules;
@@ -17,11 +18,12 @@ using TsiErp.Entities.Entities.CalendarDay;
 using TsiErp.Entities.Entities.CalendarDay.Dtos;
 using TsiErp.Entities.Entities.CalendarLine;
 using TsiErp.Entities.Entities.CalendarLine.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.Calendar.Services
 {
     [ServiceRegistration(typeof(ICalendarsAppService), DependencyInjectionType.Scoped)]
-    public class CalendarsAppService : ApplicationService, ICalendarsAppService
+    public class CalendarsAppService : ApplicationService<BranchesResource>, ICalendarsAppService
     {
         private readonly ICalendarsRepository _repository;
         private readonly ICalendarLinesRepository _lineRepository;
@@ -29,9 +31,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
         private readonly IShiftsRepository _shiftsRepository;
         private readonly IStationsRepository _stationsRepository;
 
-        CalendarManager _manager { get; set; } = new CalendarManager();
-
-        public CalendarsAppService(ICalendarsRepository repository, ICalendarLinesRepository lineRepository, ICalendarDaysRepository dayRepository, IShiftsRepository shiftsRepository, IStationsRepository stationsRepository)
+        public CalendarsAppService(IStringLocalizer<BranchesResource> l, ICalendarsRepository repository, ICalendarLinesRepository lineRepository, ICalendarDaysRepository dayRepository, IShiftsRepository shiftsRepository, IStationsRepository stationsRepository) : base(l)
         {
             _repository = repository;
             _lineRepository = lineRepository;
@@ -39,6 +39,10 @@ namespace TsiErp.Business.Entities.Calendar.Services
             _shiftsRepository = shiftsRepository;
             _stationsRepository = stationsRepository;
         }
+
+        CalendarManager _manager { get; set; } = new CalendarManager();
+
+
 
         [ValidationAspect(typeof(CreateCalendarsValidatorDto), Priority = 1)]
         [CacheRemoveAspect("Get")]

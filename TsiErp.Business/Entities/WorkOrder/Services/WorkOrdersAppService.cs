@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -11,12 +11,17 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.WorkOrder;
 using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.WorkOrder.Services
 {
     [ServiceRegistration(typeof(IWorkOrdersAppService), DependencyInjectionType.Scoped)]
-    public class WorkOrdersAppService : ApplicationService, IWorkOrdersAppService
+    public class WorkOrdersAppService : ApplicationService<BranchesResource>, IWorkOrdersAppService
     {
+        public WorkOrdersAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         WorkOrderManager _manager { get; set; } = new WorkOrderManager();
 
         [ValidationAspect(typeof(CreateWorkOrdersValidator), Priority = 1)]

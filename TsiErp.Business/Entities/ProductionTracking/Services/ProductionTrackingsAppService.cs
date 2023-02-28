@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -13,12 +13,17 @@ using TsiErp.Entities.Entities.ProductionTracking;
 using TsiErp.Entities.Entities.ProductionTracking.Dtos;
 using TsiErp.Entities.Entities.ProductionTrackingHaltLine;
 using TsiErp.Entities.Entities.ProductionTrackingHaltLine.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.ProductionTracking.Services
 {
     [ServiceRegistration(typeof(IProductionTrackingsAppService), DependencyInjectionType.Scoped)]
-    public class ProductionTrackingsAppService : ApplicationService, IProductionTrackingsAppService
+    public class ProductionTrackingsAppService : ApplicationService<BranchesResource>, IProductionTrackingsAppService
     {
+        public ProductionTrackingsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         ProductionTrackingManager _manager { get; set; } = new ProductionTrackingManager();
 
 

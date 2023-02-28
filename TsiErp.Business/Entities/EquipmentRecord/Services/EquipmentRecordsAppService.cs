@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.EquipmentRecord.BusinessRules;
@@ -11,12 +11,17 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.EquipmentRecord;
 using TsiErp.Entities.Entities.EquipmentRecord.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.EquipmentRecord.Services
 {
     [ServiceRegistration(typeof(IEquipmentRecordsAppService), DependencyInjectionType.Scoped)]
-    public class EquipmentRecordsAppService : ApplicationService, IEquipmentRecordsAppService
+    public class EquipmentRecordsAppService : ApplicationService<BranchesResource>, IEquipmentRecordsAppService
     {
+        public EquipmentRecordsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         EquipmentRecordManager _manager { get; set; } = new EquipmentRecordManager();
 
 

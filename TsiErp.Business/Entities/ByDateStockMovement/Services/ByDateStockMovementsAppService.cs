@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.ByDateStockMovement.BusinessRules;
@@ -11,12 +11,17 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.ByDateStockMovement;
 using TsiErp.Entities.Entities.ByDateStockMovement.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.ByDateStockMovement.Services
 {
     [ServiceRegistration(typeof(IByDateStockMovementsAppService), DependencyInjectionType.Scoped)]
-    public class ByDateStockMovementsAppService : ApplicationService, IByDateStockMovementsAppService
+    public class ByDateStockMovementsAppService : ApplicationService<BranchesResource>, IByDateStockMovementsAppService
     {
+        public ByDateStockMovementsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         ByDateStockMovementManager _manager { get; set; } = new ByDateStockMovementManager();
 
 

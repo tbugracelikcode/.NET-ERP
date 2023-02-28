@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -14,20 +14,20 @@ using TsiErp.Entities.Entities.Station.Dtos;
 using TsiErp.Entities.Entities.StationInventory;
 using TsiErp.Entities.Entities.StationInventory.Dtos;
 using TsiErp.EntityContracts.Station;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.Station.Services
 {
     [ServiceRegistration(typeof(IStationsAppService), DependencyInjectionType.Scoped)]
-    public class StationsAppService : ApplicationService, IStationsAppService
+    public class StationsAppService : ApplicationService<BranchesResource>, IStationsAppService
     {
-        private readonly IStationInventoriesAppService _inventioriesRepository;
+        public StationsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
 
         StationManager _manager { get; set; } = new StationManager();
 
-        public StationsAppService(IStationInventoriesAppService inventioriesRepository)
-        {
-            _inventioriesRepository = inventioriesRepository;
-        }
 
         [ValidationAspect(typeof(CreateStationsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
@@ -45,15 +45,15 @@ namespace TsiErp.Business.Entities.Station.Services
                 {
                     if (item.Id == Guid.Empty)
                     {
-                        var inventories = ObjectMapper.Map<SelectStationInventoriesDto, CreateStationInventoriesDto>(item);
+                        var inventories = ObjectMapper.Map<SelectStationInventoriesDto, StationInventories>(item);
                         inventories.StationID = addedEntity.Id;
-                        await _inventioriesRepository.CreateAsync(inventories);
+                        await _uow.StationInventoriesRepository.InsertAsync(inventories);
                     }
                     else
                     {
-                        var inventories = ObjectMapper.Map<SelectStationInventoriesDto, UpdateStationInventoriesDto>(item);
+                        var inventories = ObjectMapper.Map<SelectStationInventoriesDto, StationInventories>(item);
                         inventories.StationID = addedEntity.Id;
-                        await _inventioriesRepository.UpdateAsync(inventories);
+                        await _uow.StationInventoriesRepository.UpdateAsync(inventories);
                     }
 
                 }
@@ -129,15 +129,15 @@ namespace TsiErp.Business.Entities.Station.Services
                 {
                     if (item.Id == Guid.Empty)
                     {
-                        var inventories = ObjectMapper.Map<SelectStationInventoriesDto, CreateStationInventoriesDto>(item);
+                        var inventories = ObjectMapper.Map<SelectStationInventoriesDto, StationInventories>(item);
                         inventories.StationID = mappedEntity.Id;
-                        await _inventioriesRepository.CreateAsync(inventories);
+                        await _uow.StationInventoriesRepository.InsertAsync(inventories);
                     }
                     else
                     {
-                        var inventories = ObjectMapper.Map<SelectStationInventoriesDto, UpdateStationInventoriesDto>(item);
+                        var inventories = ObjectMapper.Map<SelectStationInventoriesDto, StationInventories>(item);
                         inventories.StationID = mappedEntity.Id;
-                        await _inventioriesRepository.UpdateAsync(inventories);
+                        await _uow.StationInventoriesRepository.UpdateAsync(inventories);
                     }
 
                 }

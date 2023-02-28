@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -15,12 +15,17 @@ using TsiErp.Entities.Entities.SalesProposition.Dtos;
 using TsiErp.Entities.Entities.SalesPropositionLine;
 using TsiErp.Entities.Entities.SalesPropositionLine.Dtos;
 using TsiErp.Entities.Enums;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.SalesProposition.Services
 {
     [ServiceRegistration(typeof(ISalesPropositionsAppService), DependencyInjectionType.Scoped)]
-    public class SalesPropositionsAppService : ApplicationService, ISalesPropositionsAppService
+    public class SalesPropositionsAppService : ApplicationService<BranchesResource>, ISalesPropositionsAppService
     {
+        public SalesPropositionsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         SalesPropositionManager _manager { get; set; } = new SalesPropositionManager();
 
         [ValidationAspect(typeof(CreateSalesPropositionsValidatorDto), Priority = 1)]

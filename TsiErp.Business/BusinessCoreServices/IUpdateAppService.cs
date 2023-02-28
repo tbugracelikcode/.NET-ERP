@@ -6,7 +6,7 @@ using Tsi.Core.Utilities.Results;
 
 namespace TsiErp.Business.BusinessCoreServices
 {
-    public interface IUpdateAppService<TGetOutputDto, in TUpdateInput> : IApplicationService
+    public interface IUpdateAppService<TGetOutputDto, in TUpdateInput>
     {
         Task<IDataResult<TGetOutputDto>> UpdateAsync(TUpdateInput input);
     }

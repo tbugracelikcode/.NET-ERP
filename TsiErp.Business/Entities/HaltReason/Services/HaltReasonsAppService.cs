@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.Entities.HaltReason.BusinessRules;
 using TsiErp.Business.Entities.HaltReason.Validations;

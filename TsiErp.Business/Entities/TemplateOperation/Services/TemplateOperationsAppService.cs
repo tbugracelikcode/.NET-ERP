@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -13,12 +13,17 @@ using TsiErp.Entities.Entities.TemplateOperation;
 using TsiErp.Entities.Entities.TemplateOperation.Dtos;
 using TsiErp.Entities.Entities.TemplateOperationLine;
 using TsiErp.Entities.Entities.TemplateOperationLine.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.TemplateOperation.Services
 {
     [ServiceRegistration(typeof(ITemplateOperationsAppService), DependencyInjectionType.Scoped)]
-    public class TemplateOperationsAppService : ApplicationService, ITemplateOperationsAppService
+    public class TemplateOperationsAppService : ApplicationService<BranchesResource>, ITemplateOperationsAppService
     {
+        public TemplateOperationsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         TemplateOperationManager _manager { get; set; } = new TemplateOperationManager();
 
         [ValidationAspect(typeof(CreateTemplateOperationsValidatorDto), Priority = 1)]

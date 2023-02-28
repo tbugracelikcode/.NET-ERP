@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -11,12 +11,17 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.OperationUnsuitabilityItem;
 using TsiErp.Entities.Entities.OperationUnsuitabilityItem.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.OperationUnsuitabilityItem.Services
 {
     [ServiceRegistration(typeof(IOperationUnsuitabilityItemsAppService), DependencyInjectionType.Scoped)]
-    public class OperationUnsuitabilityItemsAppService : ApplicationService, IOperationUnsuitabilityItemsAppService
+    public class OperationUnsuitabilityItemsAppService : ApplicationService<BranchesResource>, IOperationUnsuitabilityItemsAppService
     {
+        public OperationUnsuitabilityItemsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         OperationUnsuitabilityItemManager _manager { get; set; } = new OperationUnsuitabilityItemManager();
 
 

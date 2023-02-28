@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -11,12 +11,17 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.PurchaseUnsuitabilityReport;
 using TsiErp.Entities.Entities.PurchaseUnsuitabilityReport.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
 {
     [ServiceRegistration(typeof(IPurchaseUnsuitabilityReportsAppService), DependencyInjectionType.Scoped)]
-    public class PurchaseUnsuitabilityReportsAppService : ApplicationService, IPurchaseUnsuitabilityReportsAppService
+    public class PurchaseUnsuitabilityReportsAppService : ApplicationService<BranchesResource>, IPurchaseUnsuitabilityReportsAppService
     {
+        public PurchaseUnsuitabilityReportsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         PurchaseUnsuitabilityReportManager _manager { get; set; } = new PurchaseUnsuitabilityReportManager();
 
         [ValidationAspect(typeof(CreatePurchaseUnsuitabilityReportsValidator), Priority = 1)]

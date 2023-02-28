@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -11,12 +11,16 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.ProductGroup;
 using TsiErp.Entities.Entities.ProductGroup.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.ProductGroup.Services
 {
     [ServiceRegistration(typeof(IProductGroupsAppService), DependencyInjectionType.Scoped)]
-    public class ProductGroupsAppService : ApplicationService, IProductGroupsAppService
+    public class ProductGroupsAppService : ApplicationService<BranchesResource>, IProductGroupsAppService
     {
+        public ProductGroupsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
 
         ProductGroupManager _manager { get; set; } = new ProductGroupManager();
 
