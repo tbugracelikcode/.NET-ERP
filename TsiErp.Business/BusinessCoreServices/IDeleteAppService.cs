@@ -6,7 +6,7 @@ using Tsi.Core.Utilities.Results;
 
 namespace TsiErp.Business.BusinessCoreServices
 {
-    public interface IDeleteAppService : IApplicationService
+    public interface IDeleteAppService
     {
         Task<IResult> DeleteAsync(Guid id);
     }

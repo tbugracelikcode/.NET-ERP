@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -11,12 +11,17 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.ShippingAdress;
 using TsiErp.Entities.Entities.ShippingAdress.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.ShippingAdress.Services
 {
     [ServiceRegistration(typeof(IShippingAdressesAppService), DependencyInjectionType.Scoped)]
-    public class ShippingAdressesAppService : ApplicationService, IShippingAdressesAppService
+    public class ShippingAdressesAppService : ApplicationService<BranchesResource>, IShippingAdressesAppService
     {
+        public ShippingAdressesAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         ShippingAdressesManager _manager { get; set; } = new ShippingAdressesManager();
 
         [ValidationAspect(typeof(CreateShippingAdressesValidator), Priority = 1)]

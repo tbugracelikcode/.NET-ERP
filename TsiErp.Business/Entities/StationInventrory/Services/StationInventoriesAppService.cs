@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -11,12 +11,17 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.StationInventory;
 using TsiErp.Entities.Entities.StationInventory.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.StationInventory.Services
 {
     [ServiceRegistration(typeof(IStationInventoriesAppService), DependencyInjectionType.Scoped)]
-    public class StationInventoriesAppService : ApplicationService, IStationInventoriesAppService
+    public class StationInventoriesAppService : ApplicationService<BranchesResource>, IStationInventoriesAppService
     {
+        public StationInventoriesAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         StationInventoryManager _manager { get; set; } = new StationInventoryManager();
 
         [ValidationAspect(typeof(CreateStationInventoriesValidator), Priority = 1)]

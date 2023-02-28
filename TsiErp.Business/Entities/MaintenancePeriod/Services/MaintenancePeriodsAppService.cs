@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -11,12 +11,17 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MaintenancePeriod;
 using TsiErp.Entities.Entities.MaintenancePeriod.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.MaintenancePeriod.Services
 {
     [ServiceRegistration(typeof(IMaintenancePeriodsAppService), DependencyInjectionType.Scoped)]
-    public class MaintenancePeriodsAppService : ApplicationService, IMaintenancePeriodsAppService
+    public class MaintenancePeriodsAppService : ApplicationService<BranchesResource>, IMaintenancePeriodsAppService
     {
+        public MaintenancePeriodsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         MaintenancePeriodManager _manager { get; set; } = new MaintenancePeriodManager();
 
 

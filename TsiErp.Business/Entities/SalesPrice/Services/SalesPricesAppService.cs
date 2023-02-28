@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -13,12 +13,17 @@ using TsiErp.Entities.Entities.SalesPrice;
 using TsiErp.Entities.Entities.SalesPrice.Dtos;
 using TsiErp.Entities.Entities.SalesPriceLine;
 using TsiErp.Entities.Entities.SalesPriceLine.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.SalesPrice.Services
 {
     [ServiceRegistration(typeof(ISalesPricesAppService), DependencyInjectionType.Scoped)]
-    public class SalesPricesAppService : ApplicationService, ISalesPricesAppService
+    public class SalesPricesAppService : ApplicationService<BranchesResource>, ISalesPricesAppService
     {
+        public SalesPricesAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         SalesPriceManager _manager { get; set; } = new SalesPriceManager();
 
 

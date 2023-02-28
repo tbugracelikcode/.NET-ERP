@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -13,12 +13,17 @@ using TsiErp.Entities.Entities.UnplannedMaintenance;
 using TsiErp.Entities.Entities.UnplannedMaintenance.Dtos;
 using TsiErp.Entities.Entities.UnplannedMaintenanceLine;
 using TsiErp.Entities.Entities.UnplannedMaintenanceLine.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
 {
     [ServiceRegistration(typeof(IUnplannedMaintenancesAppService), DependencyInjectionType.Scoped)]
-    public class UnplannedMaintenancesAppService : ApplicationService, IUnplannedMaintenancesAppService
+    public class UnplannedMaintenancesAppService : ApplicationService<BranchesResource>, IUnplannedMaintenancesAppService
     {
+        public UnplannedMaintenancesAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         UnplannedMaintenanceManager _manager { get; set; } = new UnplannedMaintenanceManager();
 
         [ValidationAspect(typeof(CreateUnplannedMaintenanceValidatorDto), Priority = 1)]

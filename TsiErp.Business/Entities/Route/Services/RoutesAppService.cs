@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -15,12 +15,17 @@ using TsiErp.Entities.Entities.Route;
 using TsiErp.Entities.Entities.Route.Dtos;
 using TsiErp.Entities.Entities.RouteLine;
 using TsiErp.Entities.Entities.RouteLine.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.Route.Services
 {
     [ServiceRegistration(typeof(IRoutesAppService), DependencyInjectionType.Scoped)]
-    public class RoutesAppService : ApplicationService, IRoutesAppService
+    public class RoutesAppService : ApplicationService<BranchesResource>, IRoutesAppService
     {
+        public RoutesAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         RouteManager _manager { get; set; } = new RouteManager();
 
         [ValidationAspect(typeof(CreateRoutesValidator), Priority = 1)]

@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.BillsofMaterial.BusinessRules;
@@ -15,12 +15,16 @@ using TsiErp.Entities.Entities.BillsofMaterialLine;
 using TsiErp.Entities.Entities.BillsofMaterialLine.Dtos;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Branch.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.BillsofMaterial.Services
 {
     [ServiceRegistration(typeof(IBillsofMaterialsAppService), DependencyInjectionType.Scoped)]
-    public class BillsofMaterialsAppService : ApplicationService, IBillsofMaterialsAppService
+    public class BillsofMaterialsAppService : ApplicationService<BranchesResource>, IBillsofMaterialsAppService
     {
+        public BillsofMaterialsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
 
         BillsofMaterialManager _manager { get; set; } = new BillsofMaterialManager();
 

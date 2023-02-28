@@ -6,7 +6,7 @@ using Tsi.Core.Utilities.Results;
 
 namespace TsiErp.Business.BusinessCoreServices
 {
-    public interface ICreateAppService<TGetOutputDto, in TCreateInput> : IApplicationService
+    public interface ICreateAppService<TGetOutputDto, in TCreateInput>
     {
         Task<IDataResult<TGetOutputDto>> CreateAsync(TCreateInput input);
     }

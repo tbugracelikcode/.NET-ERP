@@ -1,7 +1,8 @@
-﻿using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Microsoft.JSInterop;
+using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Entities;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Branch.BusinessRules;
@@ -12,13 +13,21 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Branch.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.Branch.Services
 {
     [ServiceRegistration(typeof(IBranchesAppService), DependencyInjectionType.Scoped)]
-    public class BranchesAppService : ApplicationService, IBranchesAppService
+    public class BranchesAppService : ApplicationService<BranchesResource>, IBranchesAppService
     {
+
         BranchesManager _manager { get; set; } = new BranchesManager();
+
+
+        public BranchesAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+            
+        }
 
         [ValidationAspect(typeof(CreateBranchesValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
@@ -54,7 +63,7 @@ namespace TsiErp.Business.Entities.Branch.Services
                 await _uow.LogsRepository.InsertAsync(log);
 
                 await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                return new SuccessResult(L["DeleteSuccessMessage"]);
             }
         }
 
@@ -82,6 +91,7 @@ namespace TsiErp.Business.Entities.Branch.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
+
                 var list = await _uow.BranchRepository.GetListAsync(t => t.IsActive == input.IsActive, t => t.Periods, t => t.SalesPropositions);
 
                 var mappedEntity = ObjectMapper.Map<List<Branches>, List<ListBranchesDto>>(list.ToList());

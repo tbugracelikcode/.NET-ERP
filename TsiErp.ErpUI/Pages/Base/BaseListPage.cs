@@ -1,6 +1,7 @@
 ﻿using DevExpress.Blazor;
 using FluentValidation;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.Grids;
 using System.Text;
 using Tsi.Core.Entities;
@@ -19,8 +20,9 @@ namespace TsiErp.ErpUI.Pages.Base
          where TGetListOutputDto : class, IEntityDto, new()
          where TGetListInput : class, new()
     {
-        public string LoadingCaption { get; set; } = "Lütfen Bekleyin..";
-        public string LoadingText { get; set; } = "Kayıtlar Yükleniyor...";
+
+        public string LoadingCaption { get; set; }
+        public string LoadingText { get; set; }
         public bool EditPageVisible { get; set; }
         public bool IsLoaded { get; set; }
 
@@ -37,6 +39,10 @@ namespace TsiErp.ErpUI.Pages.Base
 
         public SfGrid<TGetListOutputDto> _grid;
 
+
+        public object _L { get; set; }
+
+
         public List<ContextMenuItemModel> GridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         protected ICrudAppService<TGetOutputDto, TGetListOutputDto, TCreateInput, TUpdateInput, TGetListInput> BaseCrudService { get; set; }
@@ -44,17 +50,22 @@ namespace TsiErp.ErpUI.Pages.Base
 
         protected async override Task OnParametersSetAsync()
         {
-            CreateContextMenuItems();
+            var loc = (IStringLocalizer)_L;
+
+            LoadingCaption = loc["LoadingCaption"];
+            LoadingText = loc["LoadingText"];
+
+            CreateContextMenuItems(loc);
             await GetListDataSourceAsync();
             await InvokeAsync(StateHasChanged);
         }
 
-        protected virtual void CreateContextMenuItems()
+        protected virtual void CreateContextMenuItems(IStringLocalizer loc)
         {
-            GridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle", Id = "new" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = loc["ContextAdd"], Id = "new" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = loc["ContextChange"], Id = "changed" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = loc["ContextDelete"], Id = "delete" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = loc["ContextRefresh"], Id = "refresh" });
         }
 
         #region Crud Operations

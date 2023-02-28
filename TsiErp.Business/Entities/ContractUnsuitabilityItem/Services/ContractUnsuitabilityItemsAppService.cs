@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.ContractUnsuitabilityItem.BusinessRules;
@@ -11,12 +11,17 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.ContractUnsuitabilityItem;
 using TsiErp.Entities.Entities.ContractUnsuitabilityItem.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.ContractUnsuitabilityItem.Services
 {
     [ServiceRegistration(typeof(IContractUnsuitabilityItemsAppService), DependencyInjectionType.Scoped)]
-    public class ContractUnsuitabilityItemsAppService : ApplicationService, IContractUnsuitabilityItemsAppService
+    public class ContractUnsuitabilityItemsAppService : ApplicationService<BranchesResource>, IContractUnsuitabilityItemsAppService
     {
+        public ContractUnsuitabilityItemsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         ContractUnsuitabilityItemManager _manager { get; set; } = new ContractUnsuitabilityItemManager();
 
 

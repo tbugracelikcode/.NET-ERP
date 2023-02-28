@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -13,12 +13,17 @@ using TsiErp.Entities.Entities.PurchasePrice;
 using TsiErp.Entities.Entities.PurchasePrice.Dtos;
 using TsiErp.Entities.Entities.PurchasePriceLine;
 using TsiErp.Entities.Entities.PurchasePriceLine.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.PurchasePrice.Services
 {
     [ServiceRegistration(typeof(IPurchasePricesAppService), DependencyInjectionType.Scoped)]
-    public class PurchasePricesAppService : ApplicationService, IPurchasePricesAppService
+    public class PurchasePricesAppService : ApplicationService<BranchesResource>, IPurchasePricesAppService
     {
+        public PurchasePricesAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         PurchasePriceManager _manager { get; set; } = new PurchasePriceManager();
 
         [ValidationAspect(typeof(CreatePurchasePricesValidatorDto), Priority = 1)]
