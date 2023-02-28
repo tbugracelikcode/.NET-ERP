@@ -633,7 +633,9 @@ else
          Height="76%"
          MinWidth="910px"
          MinHeight="850px"
-         HeaderCssClass="HeaderTitleCss">
+         HeaderCssClass="HeaderTitleCss"
+         Showing="TechnicalDrawingCrudModalShowing"
+         Closing="TechnicalDrawingCrudModalClosing">
         <BodyTemplate>
 
             <DxGridLayout CssClass="TSIGridLayout">
@@ -862,7 +864,9 @@ else
          Height="46%"
          MinWidth="720px"
          MinHeight="500px"
-         HeaderCssClass="HeaderTitleCss">
+         HeaderCssClass="HeaderTitleCss"
+         Showing="ProductReferanceNumberCrudModalShowing"
+         Closing="ProductReferanceNumberCrudModalClosing">
         <BodyTemplate>
 
             <DxGridLayout CssClass="TSIGridLayout">
@@ -1455,7 +1459,7 @@ else
 
                                 <CardContent>
                                     <SfGrid ID="ProductGroupGrid" DataSource="@ProductGroupsList" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
-                                        AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                        AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                         <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
@@ -1507,7 +1511,7 @@ else
 
                                 <CardContent>
                                     <SfGrid ID="UnitSetGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@UnitSetsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
-                                        AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                        AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                         <GridEvents OnRecordDoubleClick="@UnitSetsDoubleClickHandler" TValue="ListUnitSetsDto"></GridEvents>
@@ -1560,7 +1564,7 @@ else
 
                                 <CardContent>
                                     <SfGrid ID="CurrentAccountCardsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@CurrentAccountCardsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
-                                        AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                        AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                         <GridEvents OnRecordDoubleClick="@CurrentAccountCardsDoubleClickHandler" TValue="ListCurrentAccountCardsDto"></GridEvents>

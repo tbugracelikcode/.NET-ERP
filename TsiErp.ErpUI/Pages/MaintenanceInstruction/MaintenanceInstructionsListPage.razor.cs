@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
-using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.MaintenanceInstruction.Dtos;
@@ -259,11 +258,10 @@ namespace TsiErp.ErpUI.Pages.MaintenanceInstruction
 
         public async override void ShowEditPage()
         {
-            var entity = (await MaintenanceInstructionsAppService.GetAsync(DataSource.Id)).Data;
 
-            if (entity != null)
+            if (DataSource != null)
             {
-                bool? dataOpenStatus = (bool?)entity.GetType().GetProperty("DataOpenStatus").GetValue(entity);
+                bool? dataOpenStatus = (bool?)DataSource.GetType().GetProperty("DataOpenStatus").GetValue(DataSource);
 
                 if (dataOpenStatus == true && dataOpenStatus != null)
                 {

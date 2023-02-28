@@ -1,25 +1,18 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
-using TsiErp.Entities.Entities.BillsofMaterial.Dtos;
-using TsiErp.Entities.Entities.BillsofMaterialLine.Dtos;
-using TsiErp.Entities.Entities.Station.Dtos;
-using TsiErp.Entities.Entities.Currency.Dtos;
-using TsiErp.Entities.Entities.WorkOrder.Dtos;
-using TsiErp.Entities.Entities.Shift.Dtos;
-using TsiErp.Entities.Entities.Product.Dtos;
-using TsiErp.Entities.Entities.ProductionTracking.Dtos;
-using TsiErp.Entities.Entities.ProductionTrackingHaltLine.Dtos;
-using TsiErp.Entities.Entities.UnitSet.Dtos;
-using TsiErp.Entities.Entities.WareHouse.Dtos;
-using TsiErp.ErpUI.Utilities.ModalUtilities;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.Employee.Dtos;
 using TsiErp.Entities.Entities.HaltReason.Dtos;
+using TsiErp.Entities.Entities.ProductionTracking.Dtos;
+using TsiErp.Entities.Entities.ProductionTrackingHaltLine.Dtos;
+using TsiErp.Entities.Entities.Shift.Dtos;
+using TsiErp.Entities.Entities.Station.Dtos;
+using TsiErp.Entities.Entities.WorkOrder.Dtos;
 using TsiErp.ErpUI.Helpers;
-using TsiErp.Business.Extensions.ObjectMapping;
-using Syncfusion.Blazor.HeatMap.Internal;
-using Syncfusion.Blazor.Calendars;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.ProductionTrackingIoT
 {
@@ -116,11 +109,10 @@ namespace TsiErp.ErpUI.Pages.ProductionTrackingIoT
 
         public async override void ShowEditPage()
         {
-            var entity = (await ProductionTrackingsAppService.GetAsync(DataSource.Id)).Data;
 
-            if (entity != null)
+            if (DataSource != null)
             {
-                bool? dataOpenStatus = (bool?)entity.GetType().GetProperty("DataOpenStatus").GetValue(entity);
+                bool? dataOpenStatus = (bool?)DataSource.GetType().GetProperty("DataOpenStatus").GetValue(DataSource);
 
                 if (dataOpenStatus == true && dataOpenStatus != null)
                 {

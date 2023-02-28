@@ -1,17 +1,9 @@
-﻿using DevExpress.Blazor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Syncfusion.Blazor.Data;
-using Syncfusion.Blazor.DropDowns;
-using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using Tsi.Core.Utilities.Results;
-using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.CalibrationVerification.Dtos;
-using TsiErp.Entities.Entities.Department.Dtos;
 using TsiErp.Entities.Entities.EquipmentRecord.Dtos;
-using TsiErp.Entities.Entities.StationGroup.Dtos;
 
 namespace TsiErp.ErpUI.Pages.CalibrationVerification
 {

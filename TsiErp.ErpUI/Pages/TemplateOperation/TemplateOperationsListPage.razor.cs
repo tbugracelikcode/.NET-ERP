@@ -1,15 +1,11 @@
-﻿using AutoMapper.Internal.Mappers;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
-using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.Station.Dtos;
 using TsiErp.Entities.Entities.TemplateOperation.Dtos;
 using TsiErp.Entities.Entities.TemplateOperationLine.Dtos;
-using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.TemplateOperation
@@ -145,11 +141,10 @@ namespace TsiErp.ErpUI.Pages.TemplateOperation
 
         public async override void ShowEditPage()
         {
-            var entity = (await TemplateOperationsAppService.GetAsync(DataSource.Id)).Data;
 
-            if (entity != null)
+            if (DataSource != null)
             {
-                bool? dataOpenStatus = (bool?)entity.GetType().GetProperty("DataOpenStatus").GetValue(entity);
+                bool? dataOpenStatus = (bool?)DataSource.GetType().GetProperty("DataOpenStatus").GetValue(DataSource);
 
                 if (dataOpenStatus == true && dataOpenStatus != null)
                 {

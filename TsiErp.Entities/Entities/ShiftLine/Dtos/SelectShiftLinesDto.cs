@@ -29,7 +29,11 @@ namespace TsiErp.Entities.Entities.ShiftLine.Dtos
         /// <summary>
         /// Tür Enum
         /// </summary>
-        public ShiftLinesTypeEnum Type { get; set; }
+        public ShiftLinesTypeEnum? Type { get; set; }
+        /// <summary>
+        /// Tür Enum Adı
+        /// </summary>
+        public string TypeName { get; set; }
         /// <summary>
         /// Katsayı
         /// </summary>

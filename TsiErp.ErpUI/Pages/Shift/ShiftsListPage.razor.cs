@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
+using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.Shift.Dtos;
 using TsiErp.Entities.Entities.ShiftLine.Dtos;
-using TsiErp.ErpUI.Utilities.ModalUtilities;
 using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Helpers;
-using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.Shift
 {
@@ -37,7 +39,7 @@ namespace TsiErp.ErpUI.Pages.Shift
 
         protected override async Task OnSubmit()
         {
-            decimal toplamVardiyaSure = ListDataSource.Sum(t => t.TotalWorkTime);
+            decimal toplamVardiyaSure = DataSource.TotalWorkTime;
             if (toplamVardiyaSure > 86400)
             {
                 await ModalManager.WarningPopupAsync("Uyarı", "Vardiyaların toplam çalışma süreleri, 24 saati geçemez.");
@@ -91,11 +93,22 @@ namespace TsiErp.ErpUI.Pages.Shift
 
         #region Vardiya Satır Enum Combobox
 
-        List<ComboBoxEnumItem<ShiftLinesTypeEnum>> ShiftTypesList = new List<ComboBoxEnumItem<ShiftLinesTypeEnum>>();
+        public IEnumerable<SelectShiftLinesDto> shifttypes = GetEnumDisplayShiftTypesNames<ShiftLinesTypeEnum>();
 
-        public string[] Types { get; set; }
+        public static List<SelectShiftLinesDto> GetEnumDisplayShiftTypesNames<T>()
+        {
+            var type = typeof(T);
+            return Enum.GetValues(type)
+                       .Cast<T>()
+                       .Select(x => new SelectShiftLinesDto
+                       {
+                           Type = x as ShiftLinesTypeEnum?,
+                           TypeName = type.GetMember(x.ToString())
+                       .First()
+                       .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
 
-        public string[] EnumValues = Enum.GetNames(typeof(ShiftLinesTypeEnum));
+                       }).ToList();
+        }
 
 
         #endregion
@@ -140,11 +153,10 @@ namespace TsiErp.ErpUI.Pages.Shift
 
         public async override void ShowEditPage()
         {
-            var entity = (await ShiftsAppService.GetAsync(DataSource.Id)).Data;
 
-            if (entity != null)
+            if (DataSource != null)
             {
-                bool? dataOpenStatus = (bool?)entity.GetType().GetProperty("DataOpenStatus").GetValue(entity);
+                bool? dataOpenStatus = (bool?)DataSource.GetType().GetProperty("DataOpenStatus").GetValue(DataSource);
 
                 if (dataOpenStatus == true && dataOpenStatus != null)
                 {
@@ -353,7 +365,6 @@ namespace TsiErp.ErpUI.Pages.Shift
 
             if (commonEndHour == 0)
             {
-                
                 #region Vardiya 24 Saat Kontrolü
 
                 if (DataSource.TotalWorkTime > 86400)
@@ -389,7 +400,16 @@ namespace TsiErp.ErpUI.Pages.Shift
 
             else if(commonEndHour != 0)
             {
-                string typeException = GridLineList.Where(t => t.EndHour == LineDataSource.StartHour).Select(t => t.Type).FirstOrDefault().ToString();
+                ShiftLinesTypeEnum? shifttype = GridLineList.Where(t => t.EndHour == LineDataSource.StartHour).Select(t => t.Type).FirstOrDefault();
+                string typeException = "";
+                switch (shifttype)
+                {
+                    case ShiftLinesTypeEnum.Calisma: typeException = "Çalışma"; break;
+                    case ShiftLinesTypeEnum.FazlaMesai: typeException = "Fazla Mesai"; break;
+                    case ShiftLinesTypeEnum.Mola: typeException = "Mola"; break;
+                    case ShiftLinesTypeEnum.Temizlik: typeException = "Temizlik"; break;
+                    default: break;
+                }
                 string hourException = GridLineList.Where(t => t.EndHour == LineDataSource.StartHour).Select(t => t.EndHour).FirstOrDefault().ToString();
                 await ModalManager.WarningPopupAsync("Uyarı", "Bitiş saati " + hourException + " olan " + typeException + " ile aynı başlangıç saatine ait başka bir kayıt yapılamaz.");
             }

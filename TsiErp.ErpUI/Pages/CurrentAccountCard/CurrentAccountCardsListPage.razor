@@ -502,7 +502,7 @@ else
                             <SfCard class="TSIGridCards">
 
                                 <CardContent>
-                                    <SfGrid ID="CurrenciesGrid" DataSource="@CurrenciesList" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                    <SfGrid ID="CurrenciesGrid" DataSource="@CurrenciesList" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                         <GridEvents OnRecordDoubleClick="@CurrenciesDoubleClickHandler" TValue="ListCurrenciesDto"></GridEvents>

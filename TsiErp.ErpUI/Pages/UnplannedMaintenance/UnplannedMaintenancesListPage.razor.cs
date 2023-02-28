@@ -104,11 +104,10 @@ namespace TsiErp.ErpUI.Pages.UnplannedMaintenance
 
         public async override void ShowEditPage()
         {
-            var entity = (await UnplannedMaintenancesAppService.GetAsync(DataSource.Id)).Data;
 
-            if (entity != null)
+            if (DataSource != null)
             {
-                bool? dataOpenStatus = (bool?)entity.GetType().GetProperty("DataOpenStatus").GetValue(entity);
+                bool? dataOpenStatus = (bool?)DataSource.GetType().GetProperty("DataOpenStatus").GetValue(DataSource);
 
                 if (dataOpenStatus == true && dataOpenStatus != null)
                 {

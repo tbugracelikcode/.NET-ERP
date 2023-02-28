@@ -296,7 +296,7 @@ else
 
                                 <CardContent>
                                     <SfGrid ID="CurrentAccountCardsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@CurrentAccountCardsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
-                                        AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                        AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
                                         <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                         <GridEvents OnRecordDoubleClick="@CurrentAccountCardsDoubleClickHandler" TValue="ListCurrentAccountCardsDto"></GridEvents>

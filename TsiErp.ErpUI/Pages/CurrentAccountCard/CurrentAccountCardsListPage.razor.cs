@@ -1,14 +1,9 @@
-﻿using DevExpress.Blazor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
-using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using Tsi.Core.Utilities.Results;
-using TsiErp.Business.Entities.Department.Services;
-using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.Currency.Dtos;
 using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.ShippingAdress.Dtos;

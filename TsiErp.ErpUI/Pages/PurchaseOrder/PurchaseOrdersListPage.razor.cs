@@ -1,20 +1,19 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
-using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
+using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.Currency.Dtos;
 using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.PaymentPlan.Dtos;
 using TsiErp.Entities.Entities.Product.Dtos;
-using TsiErp.Entities.Entities.UnitSet.Dtos;
-using TsiErp.Entities.Entities.WareHouse.Dtos;
 using TsiErp.Entities.Entities.ProductionOrder.Dtos;
-using TsiErp.ErpUI.Utilities.ModalUtilities;
 using TsiErp.Entities.Entities.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseOrderLine.Dtos;
-using Syncfusion.Blazor.Inputs;
-using Microsoft.AspNetCore.Components.Web;
+using TsiErp.Entities.Entities.UnitSet.Dtos;
+using TsiErp.Entities.Entities.WareHouse.Dtos;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.PurchaseOrder
 {
@@ -496,11 +495,10 @@ namespace TsiErp.ErpUI.Pages.PurchaseOrder
 
         public async override void ShowEditPage()
         {
-            var entity = (await PurchaseOrdersAppService.GetAsync(DataSource.Id)).Data;
 
-            if (entity != null)
+            if (DataSource != null)
             {
-                bool? dataOpenStatus = (bool?)entity.GetType().GetProperty("DataOpenStatus").GetValue(entity);
+                bool? dataOpenStatus = (bool?)DataSource.GetType().GetProperty("DataOpenStatus").GetValue(DataSource);
 
                 if (dataOpenStatus == true && dataOpenStatus != null)
                 {

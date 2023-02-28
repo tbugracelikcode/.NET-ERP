@@ -96,9 +96,7 @@
          Height="69%"
          MinWidth="910px"
          MinHeight="750px"
-         HeaderCssClass="HeaderTitleCss"
-         Showing="CrudModalShowing"
-         Closing="CrudModalClosing">
+         HeaderCssClass="HeaderTitleCss">
             <BodyTemplate>
 
                 <DxGridLayout CssClass="TSIGridLayout">
@@ -254,7 +252,9 @@
          Height="76%"
          MinWidth="910px"
          MinHeight="850px"
-         HeaderCssClass="HeaderTitleCss">
+         HeaderCssClass="HeaderTitleCss"
+         Showing="CrudModalShowing"
+         Closing="CrudModalClosing">
             <BodyTemplate>
 
                 <DxGridLayout CssClass="TSIGridLayout">
@@ -483,7 +483,7 @@
 
                                     <CardContent>
                                         <SfGrid ID="ProductsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ProductsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
-                                        AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                                        AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
                                             <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                             <GridEvents OnRecordDoubleClick="@ProductsDoubleClickHandler" TValue="ListProductsDto"></GridEvents>

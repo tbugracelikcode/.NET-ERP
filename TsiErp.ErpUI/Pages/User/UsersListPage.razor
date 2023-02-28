@@ -193,47 +193,7 @@ else
                                                     <DxGridLayoutItem Row="1" Column="1">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>Kullanıcı Grubu: </strong></label><br />
-
-                                                            <SfComboBox @ref="UserGroupComboBox"
-                                                                    TValue="string"
-                                                                    TItem="ListUserGroupsDto"
-                                                                    Placeholder="İstasyon Grubu"
-                                                                    CssClass="e-multi-column"
-                                                                    Value="@DataSource.GroupName"
-                                                                    DataSource="@UserGroupList"
-                                                                    AllowFiltering="true"
-                                                                    PopupWidth="700px"
-                                                                    PopupHeight="500">
-
-                                                                <ComboBoxFieldSettings Text="Name" Value="Name"></ComboBoxFieldSettings>
-
-                                                                <ComboBoxTemplates TItem="ListUserGroupsDto">
-                                                                    <HeaderTemplate>
-                                                                        <table>
-                                                                            <tr>
-                                                                                <th class="e-text-center">Grup Kodu</th>
-                                                                                <th class="e-text-center">Grup Adı</th>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate Context="cmbContext">
-
-                                                                        <table>
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td class="e-text-center">@((cmbContext as ListUserGroupsDto).Code)</td>
-                                                                                    <td class="e-text-center">@((cmbContext as ListUserGroupsDto).Name)</td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </ItemTemplate>
-                                                                </ComboBoxTemplates>
-
-                                                                <ComboBoxEvents TValue="string"
-                                                                            TItem="ListUserGroupsDto"
-                                                                            Filtering="UserGroupFiltering"
-                                                                            ValueChange="UserGroupValueChangeHandler"></ComboBoxEvents>
-                                                            </SfComboBox>
+                                                                <SfTextBox @ref="@UserGroupButtonEdit" Created="@UserGroupOnCreateIcon" @bind-Value="DataSource.GroupName" ShowClearButton=true ValueChange="UserGroupOnValueChange"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -269,3 +229,56 @@ else
         </FooterContentTemplate>
     </DxPopup>
 }
+
+@if (SelectUserGroupPopupVisible)
+    {
+        <DxPopup @bind-Visible="SelectUserGroupPopupVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="Kullanıcı Grupları"
+         Width="64%"
+         Height="44%"
+         MinWidth="1220px"
+         MinHeight="470px"
+         HeaderCssClass="HeaderTitleCss">
+            <BodyTemplate>
+
+                <DevGridLayout ColumnCount="1" RowCount="1">
+                    <GridLayoutItems>
+                       
+                        <DxGridLayoutItem Row="1" Column="1">
+                            <Template>
+                                <SfCard class="TSIWorkUserGroupPopUpCard">
+
+                                    <CardContent>
+                                        <SfGrid ID="GroupGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@UserGroupList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                        AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                            <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                            <GridEvents OnRecordDoubleClick="@UserGroupDoubleClickHandler" TValue="ListUserGroupsDto"></GridEvents>
+                                            <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                            <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                            <GridPageSettings PageSizes="true"></GridPageSettings>
+                                            <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                            <GridColumns>
+                                                <GridColumn Field=@nameof(ListUserGroupsDto.Code) HeaderText="KULLANICI GRUBU KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                <GridColumn Field=@nameof(ListUserGroupsDto.Name) HeaderText="KULLANICI GRUBU ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            </GridColumns>
+                                        </SfGrid>
+                                    </CardContent>
+                                    <CardFooter>
+                                    </CardFooter>
+                                </SfCard>
+                            </Template>
+                        </DxGridLayoutItem>
+                    </GridLayoutItems>
+                </DevGridLayout>
+
+            </BodyTemplate>
+            <FooterContentTemplate>
+                @*<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>*@
+            </FooterContentTemplate>
+        </DxPopup>
+    }

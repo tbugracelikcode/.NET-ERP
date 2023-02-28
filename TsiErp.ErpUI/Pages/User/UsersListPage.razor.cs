@@ -1,23 +1,16 @@
-﻿using Castle.Core.Resource;
-using DevExpress.Blazor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
-using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
-using Tsi.Core.Utilities.Results;
-using TsiErp.Entities.Entities.Branch.Dtos;
+using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.User.Dtos;
-using TsiErp.Entities.Entities.UserGroup;
 using TsiErp.Entities.Entities.UserGroup.Dtos;
 
 namespace TsiErp.ErpUI.Pages.User
 {
     public partial class UsersListPage
     {
-
-        SfComboBox<string, ListUserGroupsDto> UserGroupComboBox;
-        List<ListUserGroupsDto> UserGroupList = new List<ListUserGroupsDto>();
 
         protected override async void OnInitialized()
         {
@@ -42,36 +35,47 @@ namespace TsiErp.ErpUI.Pages.User
             return Task.CompletedTask;
         }
 
-        public async Task UserGroupFiltering(FilteringEventArgs args)
+        #region Kullanıcı Grubu ButtonEdit
+
+        SfTextBox UserGroupButtonEdit;
+        bool SelectUserGroupPopupVisible = false;
+        List<ListUserGroupsDto> UserGroupList = new List<ListUserGroupsDto>();
+
+        public async Task UserGroupOnCreateIcon()
         {
-
-            args.PreventDefaultAction = true;
-
-            var pre = new WhereFilter();
-            var predicate = new List<WhereFilter>();
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Code", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            predicate.Add(new WhereFilter() { Condition = "or", Field = "Name", value = args.Text, Operator = "contains", IgnoreAccent = true, IgnoreCase = true });
-            pre = WhereFilter.Or(predicate);
-
-            var query = new Query();
-            query = args.Text == "" ? new Query() : new Query().Where(pre);
-
-            await UserGroupComboBox.FilterAsync(UserGroupList, query);
+            var UserGroupButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, UserGroupButtonClickEvent);
+            await UserGroupButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", UserGroupButtonClick } });
         }
 
-        public async Task UserGroupValueChangeHandler(ChangeEventArgs<string, ListUserGroupsDto> args)
+        public async void UserGroupButtonClickEvent()
         {
-            if (args.ItemData != null)
-            {
-                DataSource.GroupID = args.ItemData.Id;
-                DataSource.GroupName = args.ItemData.Name;
-            }
-            else
+            SelectUserGroupPopupVisible = true;
+            UserGroupList = (await UserGroupsService.GetListAsync(new ListUserGroupsParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void UserGroupOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
             {
                 DataSource.GroupID = Guid.Empty;
                 DataSource.GroupName = string.Empty;
             }
-            await InvokeAsync(StateHasChanged);
         }
+
+        public async void UserGroupDoubleClickHandler(RecordDoubleClickEventArgs<ListUserGroupsDto> args)
+        {
+            var selectedUserGroup = args.RowData;
+
+            if (selectedUserGroup != null)
+            {
+                DataSource.GroupID = selectedUserGroup.Id;
+                DataSource.GroupName = selectedUserGroup.Name;
+                SelectUserGroupPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        #endregion
     }
 }

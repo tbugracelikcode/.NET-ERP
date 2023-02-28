@@ -1,5 +1,4 @@
-﻿using DevExpress.Blazor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
@@ -11,7 +10,6 @@ using TsiErp.Entities.Entities.CalendarDay.Dtos;
 using TsiErp.Entities.Entities.Shift.Dtos;
 using TsiErp.Entities.Entities.Station.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
-using Action = System.Action;
 
 namespace TsiErp.ErpUI.Pages.Calendar
 {
@@ -179,11 +177,10 @@ namespace TsiErp.ErpUI.Pages.Calendar
 
         public async override void ShowEditPage()
         {
-            var entity = (await CalendarsService.GetAsync(DataSource.Id)).Data;
 
-            if (entity != null)
+            if (DataSource != null)
             {
-                bool? dataOpenStatus = (bool?)entity.GetType().GetProperty("DataOpenStatus").GetValue(entity);
+                bool? dataOpenStatus = (bool?)DataSource.GetType().GetProperty("DataOpenStatus").GetValue(DataSource);
 
                 if (dataOpenStatus == true && dataOpenStatus != null)
                 {

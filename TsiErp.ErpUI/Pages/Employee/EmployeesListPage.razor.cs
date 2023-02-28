@@ -1,19 +1,13 @@
-﻿using DevExpress.Blazor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
-using Syncfusion.Blazor.DropDowns;
-using Syncfusion.Blazor.Gantt;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using Tsi.Core.Utilities.Results;
-using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.Department.Dtos;
 using TsiErp.Entities.Entities.Employee.Dtos;
 using TsiErp.Entities.Enums;
-using TsiErp.ErpUI.Helpers;
 
 namespace TsiErp.ErpUI.Pages.Employee
 {
