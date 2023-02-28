@@ -39,7 +39,7 @@ namespace TsiErp.ErpUI.Pages.Shift
 
         protected override async Task OnSubmit()
         {
-            decimal toplamVardiyaSure = ListDataSource.Sum(t => t.TotalWorkTime);
+            decimal toplamVardiyaSure = DataSource.TotalWorkTime;
             if (toplamVardiyaSure > 86400)
             {
                 await ModalManager.WarningPopupAsync("Uyarı", "Vardiyaların toplam çalışma süreleri, 24 saati geçemez.");
@@ -365,7 +365,6 @@ namespace TsiErp.ErpUI.Pages.Shift
 
             if (commonEndHour == 0)
             {
-                
                 #region Vardiya 24 Saat Kontrolü
 
                 if (DataSource.TotalWorkTime > 86400)
@@ -401,7 +400,16 @@ namespace TsiErp.ErpUI.Pages.Shift
 
             else if(commonEndHour != 0)
             {
-                string typeException = GridLineList.Where(t => t.EndHour == LineDataSource.StartHour).Select(t => t.Type).FirstOrDefault().ToString();
+                ShiftLinesTypeEnum? shifttype = GridLineList.Where(t => t.EndHour == LineDataSource.StartHour).Select(t => t.Type).FirstOrDefault();
+                string typeException = "";
+                switch (shifttype)
+                {
+                    case ShiftLinesTypeEnum.Calisma: typeException = "Çalışma"; break;
+                    case ShiftLinesTypeEnum.FazlaMesai: typeException = "Fazla Mesai"; break;
+                    case ShiftLinesTypeEnum.Mola: typeException = "Mola"; break;
+                    case ShiftLinesTypeEnum.Temizlik: typeException = "Temizlik"; break;
+                    default: break;
+                }
                 string hourException = GridLineList.Where(t => t.EndHour == LineDataSource.StartHour).Select(t => t.EndHour).FirstOrDefault().ToString();
                 await ModalManager.WarningPopupAsync("Uyarı", "Bitiş saati " + hourException + " olan " + typeException + " ile aynı başlangıç saatine ait başka bir kayıt yapılamaz.");
             }

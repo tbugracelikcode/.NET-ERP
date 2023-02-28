@@ -123,7 +123,7 @@ namespace TsiErp.Business.Entities.Shift.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                var entity = await _uow.ShiftsRepository.GetAsync(x => x.Id == input.Id);
+                var entity = await _uow.ShiftsRepository.GetAsync(x => x.Id == input.Id, x => x.ShiftLines);
 
                 await _manager.UpdateControl(_uow.ShiftsRepository, input.Code, input.Id, entity, input.ShiftOrder);
 

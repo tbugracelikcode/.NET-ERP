@@ -64,6 +64,27 @@ namespace TsiErp.ErpUI.Pages.TechnicalDrawing
             return Task.CompletedTask;
         }
 
+        public async void TechnicalDrawingShowEditPage()
+        {
+
+            if (DataSource != null)
+            {
+                bool? dataOpenStatus = (bool?)DataSource.GetType().GetProperty("DataOpenStatus").GetValue(DataSource);
+
+                if (dataOpenStatus == true && dataOpenStatus != null)
+                {
+                    TechnicalDrawingsChangedCrudPopup = false;
+                    await ModalManager.MessagePopupAsync("Bilgi", "Seçtiğiniz kayıt ..... tarafından kullanılmaktadır.");
+                    await InvokeAsync(StateHasChanged);
+                }
+                else
+                {
+                    TechnicalDrawingsChangedCrudPopup = true;
+                    await InvokeAsync(StateHasChanged);
+                }
+            }
+        }
+
         public async override void OnContextMenuClick(ContextMenuClickEventArgs<ListTechnicalDrawingsDto> args)
         {
             switch (args.Item.Id)
@@ -89,7 +110,7 @@ namespace TsiErp.ErpUI.Pages.TechnicalDrawing
                         }
 
                     }
-                    TechnicalDrawingsChangedCrudPopup = true;
+                    TechnicalDrawingShowEditPage();
                     await InvokeAsync(StateHasChanged);
                     break;
 

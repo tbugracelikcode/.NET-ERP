@@ -1,4 +1,5 @@
 ﻿using BlazorInputFile;
+using DevExpress.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
@@ -136,6 +137,8 @@ namespace TsiErp.ErpUI.Pages.Product
         public bool RoutesCrudPopup = false;
 
         public bool ContractProductionTrackingsPopup = false;
+        public bool TechnicalDrawingIsChange = false;
+        public bool ProductReferanceNumberIsChange = false;
 
         List<string> Drawers = new List<string>();
 
@@ -163,7 +166,7 @@ namespace TsiErp.ErpUI.Pages.Product
 
         #endregion
 
-       
+
 
         protected override async Task OnSubmit()
         {
@@ -236,6 +239,44 @@ namespace TsiErp.ErpUI.Pages.Product
 
         #region Teknik Resim Modalı İşlemleri
 
+        public async Task TechnicalDrawingBeforeInsertAsync()
+        {
+            TechnicalDrawingsDataSource = new SelectTechnicalDrawingsDto()
+            {
+                ProductID = DataSource.Id,
+                ProductCode = DataSource.Code,
+                ProductName = DataSource.Name,
+                RevisionDate = DateTime.Today
+            };
+
+            Drawers = TechnicalDrawingsList.Select(t => t.Drawer).Distinct().ToList();
+
+            TechnicalDrawingsCrudPopup = true;
+
+            await Task.CompletedTask;
+        }
+
+        public async void TechnicalDrawingShowEditPage()
+        {
+
+            if (TechnicalDrawingsDataSource != null)
+            {
+                bool? dataOpenStatus = (bool?)TechnicalDrawingsDataSource.GetType().GetProperty("DataOpenStatus").GetValue(TechnicalDrawingsDataSource);
+
+                if (dataOpenStatus == true && dataOpenStatus != null)
+                {
+                    TechnicalDrawingsChangedCrudPopup = false;
+                    await ModalManager.MessagePopupAsync("Bilgi", "Seçtiğiniz kayıt ..... tarafından kullanılmaktadır.");
+                    await InvokeAsync(StateHasChanged);
+                }
+                else
+                {
+                    TechnicalDrawingsChangedCrudPopup = true;
+                    await InvokeAsync(StateHasChanged);
+                }
+            }
+        }
+
         protected void CreateTechnicalDrawingContextMenuItems()
         {
             if (TechnicalDrawingGridContextMenu.Count() == 0)
@@ -252,33 +293,29 @@ namespace TsiErp.ErpUI.Pages.Product
             switch (args.Item.Id)
             {
                 case "new":
-                    TechnicalDrawingsDataSource = new SelectTechnicalDrawingsDto();
-                    TechnicalDrawingsCrudPopup = true;
-                    TechnicalDrawingsDataSource.ProductID = DataSource.Id;
-                    TechnicalDrawingsDataSource.ProductCode = DataSource.Code;
-                    TechnicalDrawingsDataSource.ProductName = DataSource.Name;
-                    TechnicalDrawingsDataSource.RevisionDate = DateTime.Today; 
-                    Drawers = TechnicalDrawingsList.Select(t => t.Drawer).Distinct().ToList();
+                    await TechnicalDrawingBeforeInsertAsync();
 
                     await InvokeAsync(StateHasChanged);
+
                     break;
 
                 case "changed":
+                    TechnicalDrawingIsChange = true;
                     TechnicalDrawingsDataSource = args.RowInfo.RowData;
                     string rootpath = FileUploadService.GetRootPath();
                     string technicalDrawingPath = @"\UploadedFiles\TechnicalDrawings\" + DataSource.Id + "-" + DataSource.Code + @"\" + TechnicalDrawingsDataSource.Id + @"\";
                     DirectoryInfo technicalDrawing = new DirectoryInfo(rootpath + technicalDrawingPath);
-                    if(technicalDrawing.Exists)
+                    if (technicalDrawing.Exists)
                     {
                         System.IO.FileInfo[] exactFilesTechnicalDrawing = technicalDrawing.GetFiles();
 
-                        foreach(System.IO.FileInfo fileinfo in exactFilesTechnicalDrawing)
+                        foreach (System.IO.FileInfo fileinfo in exactFilesTechnicalDrawing)
                         {
                             uploadedfiles.Add(fileinfo);
                         }
 
                     }
-                    TechnicalDrawingsChangedCrudPopup = true;
+                    TechnicalDrawingShowEditPage();
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -339,7 +376,7 @@ namespace TsiErp.ErpUI.Pages.Product
                 return;
             }
 
-             await TechnicalDrawingsAppService.GetListAsync(new ListTechnicalDrawingsParameterDto() { ProductId = DataSource.Id});
+            await TechnicalDrawingsAppService.GetListAsync(new ListTechnicalDrawingsParameterDto() { ProductId = DataSource.Id });
 
             var savedEntityIndex = TechnicalDrawingsList.FindIndex(x => x.Id == TechnicalDrawingsDataSource.Id);
 
@@ -407,9 +444,62 @@ namespace TsiErp.ErpUI.Pages.Product
             TechnicalDrawingsPopup = false;
         }
 
+        public virtual async void TechnicalDrawingCrudModalShowing(PopupShowingEventArgs args)
+        {
+            if (TechnicalDrawingsDataSource.Id != Guid.Empty)
+            {
+                await TechnicalDrawingsAppService.UpdateConcurrencyFieldsAsync(TechnicalDrawingsDataSource.Id, true, Guid.NewGuid());
+            }
+        }
+
+        public virtual async void TechnicalDrawingCrudModalClosing(PopupClosingEventArgs args)
+        {
+            if (TechnicalDrawingIsChange)
+            {
+                await TechnicalDrawingsAppService.UpdateConcurrencyFieldsAsync(TechnicalDrawingsDataSource.Id, false, Guid.Empty);
+                TechnicalDrawingIsChange = false;
+            }
+        }
+
         #endregion
 
         #region Ürün Referans Numarası Modalı İşlemleri
+
+        public async Task ProductReferanceNumberBeforeInsertAsync()
+        {
+            ProductReferanceNumbersDataSource = new SelectProductReferanceNumbersDto()
+            {
+                ProductID = DataSource.Id,
+                ProductCode = DataSource.Code,
+                ProductName = DataSource.Name
+            };
+
+
+            ProductReferanceNumbersCrudPopup = true;
+
+            await Task.CompletedTask;
+        }
+
+        public async void ProductReferanceNumberShowEditPage()
+        {
+
+            if (ProductReferanceNumbersDataSource != null)
+            {
+                bool? dataOpenStatus = (bool?)ProductReferanceNumbersDataSource.GetType().GetProperty("DataOpenStatus").GetValue(ProductReferanceNumbersDataSource);
+
+                if (dataOpenStatus == true && dataOpenStatus != null)
+                {
+                    ProductReferanceNumbersCrudPopup = false;
+                    await ModalManager.MessagePopupAsync("Bilgi", "Seçtiğiniz kayıt ..... tarafından kullanılmaktadır.");
+                    await InvokeAsync(StateHasChanged);
+                }
+                else
+                {
+                    ProductReferanceNumbersCrudPopup = true;
+                    await InvokeAsync(StateHasChanged);
+                }
+            }
+        }
 
         protected void CreateProductReferanceNumberContextMenuItems()
         {
@@ -427,18 +517,14 @@ namespace TsiErp.ErpUI.Pages.Product
             switch (args.Item.Id)
             {
                 case "new":
-                    ProductReferanceNumbersDataSource = new SelectProductReferanceNumbersDto();
-                    ProductReferanceNumbersCrudPopup = true;
-                    ProductReferanceNumbersDataSource.ProductID = DataSource.Id;
-                    ProductReferanceNumbersDataSource.ProductCode = DataSource.Code;
-                    ProductReferanceNumbersDataSource.ProductName = DataSource.Name;
+                    await ProductReferanceNumberBeforeInsertAsync();
 
                     await InvokeAsync(StateHasChanged);
                     break;
 
                 case "changed":
                     ProductReferanceNumbersDataSource = args.RowInfo.RowData;
-                    ProductReferanceNumbersCrudPopup = true;
+                    ProductReferanceNumberShowEditPage();
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -536,6 +622,23 @@ namespace TsiErp.ErpUI.Pages.Product
             ProductReferanceNumbersPopup = false;
         }
 
+        public virtual async void ProductReferanceNumberCrudModalShowing(PopupShowingEventArgs args)
+        {
+            if (ProductReferanceNumbersDataSource.Id != Guid.Empty)
+            {
+                await ProductReferanceNumbersAppService.UpdateConcurrencyFieldsAsync(ProductReferanceNumbersDataSource.Id, true, Guid.NewGuid());
+            }
+        }
+
+        public virtual async void ProductReferanceNumberCrudModalClosing(PopupClosingEventArgs args)
+        {
+            if (ProductReferanceNumberIsChange)
+            {
+                await ProductReferanceNumbersAppService.UpdateConcurrencyFieldsAsync(ProductReferanceNumbersDataSource.Id, false, Guid.Empty);
+                ProductReferanceNumberIsChange = false;
+            }
+        }
+
         #region Cari Hesap ButtonEdit
 
         SfTextBox CurrentAccountCardsCodeButtonEdit;
@@ -611,7 +714,7 @@ namespace TsiErp.ErpUI.Pages.Product
         {
             switch (args.Item.Id)
             {
-               
+
 
                 case "examine":
                     BillsofMaterialsDataSource = (await BillsofMaterialsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
@@ -724,7 +827,7 @@ namespace TsiErp.ErpUI.Pages.Product
 
         private async void HandleFileSelectedTechnicalDrawing(IFileListEntry[] entryFiles)
         {
-            if(uploadedfiles != null && uploadedfiles.Count == 0)
+            if (uploadedfiles != null && uploadedfiles.Count == 0)
             {
                 foreach (var file in entryFiles)
                 {
@@ -736,7 +839,7 @@ namespace TsiErp.ErpUI.Pages.Product
                 await ModalManager.WarningPopupAsync("Uyarı", "Bu kayıtta yüklenmiş bir teknik resim dosyası mevcut");
             }
 
-           
+
         }
 
         private void Remove(IFileListEntry file)
@@ -753,7 +856,7 @@ namespace TsiErp.ErpUI.Pages.Product
 
             if (extention == ".pdf")
             {
-                PDFrootPath = rootpath+  @"\UploadedFiles\TechnicalDrawings\" + DataSource.Id + "-" + DataSource.Code + @"\" + TechnicalDrawingsDataSource.Id + @"\" + file.Name;
+                PDFrootPath = rootpath + @"\UploadedFiles\TechnicalDrawings\" + DataSource.Id + "-" + DataSource.Code + @"\" + TechnicalDrawingsDataSource.Id + @"\" + file.Name;
 
                 System.IO.FileInfo pdfFile = new System.IO.FileInfo(PDFrootPath);
                 if (pdfFile.Exists)
@@ -877,7 +980,7 @@ namespace TsiErp.ErpUI.Pages.Product
         {
             ImagePreviewPopup = false;
 
-            if(!UploadedFile)
+            if (!UploadedFile)
             {
                 if (pdf)
                 {
@@ -888,7 +991,7 @@ namespace TsiErp.ErpUI.Pages.Product
                     }
                 }
             }
-            
+
         }
 
         #endregion
@@ -946,8 +1049,7 @@ namespace TsiErp.ErpUI.Pages.Product
                     IsChanged = true;
                     SelectFirstDataRow = false;
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
-
-                    EditPageVisible = true;
+                    ShowEditPage();
                     await InvokeAsync(StateHasChanged);
                     break;
 
@@ -1024,7 +1126,7 @@ namespace TsiErp.ErpUI.Pages.Product
                 case "billsofmaterials":
 
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
-                    BillsofMaterialsList = (await BillsofMaterialsAppService.GetListAsync(new ListBillsofMaterialsParameterDto())).Data.Where(t=>t.FinishedProductID == DataSource.Id).ToList();
+                    BillsofMaterialsList = (await BillsofMaterialsAppService.GetListAsync(new ListBillsofMaterialsParameterDto())).Data.Where(t => t.FinishedProductID == DataSource.Id).ToList();
 
                     BillsofMaterialsPopup = true;
 
