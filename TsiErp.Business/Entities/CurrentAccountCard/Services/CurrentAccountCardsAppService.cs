@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.CurrentAccountCard.BusinessRules;
@@ -11,12 +11,17 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.CurrentAccountCard;
 using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.CurrentAccountCard.Services
 {
     [ServiceRegistration(typeof(ICurrentAccountCardsAppService), DependencyInjectionType.Scoped)]
-    public class CurrentAccountCardsAppService : ApplicationService, ICurrentAccountCardsAppService
+    public class CurrentAccountCardsAppService : ApplicationService<BranchesResource>, ICurrentAccountCardsAppService
     {
+        public CurrentAccountCardsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         CurrentAccountCardManager _manager { get; set; } = new CurrentAccountCardManager();
 
         [ValidationAspect(typeof(CreateCurrentAccountCardsValidator), Priority = 1)]

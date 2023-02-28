@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.FinalControlUnsuitabilityReport.BusinessRules;
@@ -11,12 +11,17 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinalControlUnsuitabilityReport;
 using TsiErp.Entities.Entities.FinalControlUnsuitabilityReport.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.FinalControlUnsuitabilityReport.Services
 {
     [ServiceRegistration(typeof(IFinalControlUnsuitabilityReportsAppService), DependencyInjectionType.Scoped)]
-    public class FinalControlUnsuitabilityReportsAppService : ApplicationService, IFinalControlUnsuitabilityReportsAppService
+    public class FinalControlUnsuitabilityReportsAppService : ApplicationService<BranchesResource>, IFinalControlUnsuitabilityReportsAppService
     {
+        public FinalControlUnsuitabilityReportsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         FinalControlUnsuitabilityReportManager _manager { get; set; } = new FinalControlUnsuitabilityReportManager();
 
         [ValidationAspect(typeof(CreateFinalControlUnsuitabilityReportsValidator), Priority = 1)]

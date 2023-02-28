@@ -1,14 +1,16 @@
 ﻿@page "/branches"
 @layout MainLayout
 
+
 @using Syncfusion.Blazor.Buttons
 
 @using TsiErp.Business.Entities.Branch.Services
 @using TsiErp.Entities.Entities.Branch
 @using TsiErp.Entities.Entities.Branch.Dtos
 @using TsiErp.ErpUI.Pages.Base
+@using TsiErp.Localizations.Resources.Branches.Page
 
-
+@inject IStringLocalizer<BranchesResource> L 
 @inherits BaseListPage<SelectBranchesDto, ListBranchesDto, CreateBranchesDto, UpdateBranchesDto, ListBranchesParameterDto>
 
 @inject IBranchesAppService BranchesService
@@ -25,7 +27,7 @@ else
                 <Template>
                     <SfCard class="TSIListPageTitleCard">
                         <CardContent>
-                            <TsiBreadCrumb PreviousMenus="Genel Sistem Tanımlamarı" CurrentMenu="Şube Tanımlamaları" />
+                            <TsiBreadCrumb PreviousMenus="Genel Sistem Tanımlamarı" CurrentMenu="@L["BranchesTitle"]" />
                         </CardContent>
                         <CardFooter>
                         </CardFooter>
@@ -63,8 +65,8 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ListBranchesDto.Code) HeaderText="ŞUBE KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListBranchesDto.Name) HeaderText="ŞUBE ADI" TextAlign="TextAlign.Center" Width="120">
+                                    <GridColumn Field=@nameof(ListBranchesDto.Code) HeaderText=@L["Code"] TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListBranchesDto.Name) HeaderText=@L["Name"] TextAlign="TextAlign.Center" Width="120">
 
                                     </GridColumn>
                                     <GridColumn Field=@nameof(ListBranchesDto.Description_) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>

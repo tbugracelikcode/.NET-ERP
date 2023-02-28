@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -11,12 +11,17 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.ProductionOrderChangeItem;
 using TsiErp.Entities.Entities.ProductionOrderChangeItem.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.ProductionOrderChangeItem.Services
 {
     [ServiceRegistration(typeof(IProductionOrderChangeItemsAppService), DependencyInjectionType.Scoped)]
-    public class ProductionOrderChangeItemsAppService : ApplicationService, IProductionOrderChangeItemsAppService
+    public class ProductionOrderChangeItemsAppService : ApplicationService<BranchesResource>, IProductionOrderChangeItemsAppService
     {
+        public ProductionOrderChangeItemsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         ProductionOrderChangeItemManager _manager { get; set; } = new ProductionOrderChangeItemManager();
 
         [ValidationAspect(typeof(CreateProductionOrderChangeItemsValidator), Priority = 1)]

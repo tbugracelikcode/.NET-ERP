@@ -6,6 +6,7 @@ using System.Reflection;
 using Tsi.Core.CrossCuttingConcerns.Caching;
 using Tsi.Core.Modularity;
 using Tsi.Core.Modularity.Extension;
+using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Business.MapperProfile;
 
@@ -20,6 +21,10 @@ namespace TsiErp.Business
         public override void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddScoped<CookieServices>();
+
+            services.AddLocalization();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

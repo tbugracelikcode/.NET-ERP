@@ -1,8 +1,10 @@
 ﻿using Autofac;
+using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using Blazored.Modal;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Serialization;
 using Syncfusion.Blazor;
@@ -24,7 +26,7 @@ builder.Services.AddDbContextFactory<TsiErpDbContext>(
         options =>
             options.UseSqlServer(@"Server=94.73.145.4;Database=u0364806_TSIERP;UID=u0364806_TSIERP;PWD=u=xfJ@i-7H5-VN23;"), ServiceLifetime.Transient);
 
-builder.Services.AddTransient<ApplicationService>();
+//builder.Services.AddTransient<ApplicationService>();
 
 ConfigureBusiness(builder);
 
@@ -40,11 +42,12 @@ builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()).Conf
 builder.Services.AddSyncfusionBlazor();
 builder.Services.AddDevExpressBlazor();
 
+builder.Services.AddLocalization();
 
 builder.Services.AddSingleton(typeof(ISyncfusionStringLocalizer), typeof(SyncfusionLocalizer));
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
-                // Define the list of cultures your app will support
+    // Define the list of cultures your app will support
     var supportedCultures = new List<CultureInfo>()
     {
                     new CultureInfo("en-US"),
@@ -55,7 +58,7 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
                     new CultureInfo("tr"),
     };
 
-                // Set the default culture
+    // Set the default culture
     options.DefaultRequestCulture = new RequestCulture("tr");
     options.SupportedCultures = supportedCultures;
     options.SupportedUICultures = supportedCultures;
@@ -66,12 +69,12 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 
 
 builder.Services.AddRazorPages();
-            builder.Services.AddControllers().AddNewtonsoftJson(options => { options.SerializerSettings.ContractResolver = new DefaultContractResolver(); });
-            builder.Services.AddSignalR(e => { e.MaximumReceiveMessageSize = 102400000; });
-            builder.Services.AddSignalR(e => { e.MaximumReceiveMessageSize = 102400000; });
-builder.Services.AddServerSideBlazor().AddHubOptions(o=>
+builder.Services.AddControllers().AddNewtonsoftJson(options => { options.SerializerSettings.ContractResolver = new DefaultContractResolver(); });
+builder.Services.AddSignalR(e => { e.MaximumReceiveMessageSize = 102400000; });
+builder.Services.AddSignalR(e => { e.MaximumReceiveMessageSize = 102400000; });
+builder.Services.AddServerSideBlazor().AddHubOptions(o =>
             {
-                o.MaximumReceiveMessageSize=102400000;
+                o.MaximumReceiveMessageSize = 102400000;
             });
 
 
@@ -99,11 +102,11 @@ app.UseStaticFiles();
 
 
 app.UseRouting();
-            app.UseCors();
+app.UseCors();
 
 app.MapDefaultControllerRoute();
-            app.MapControllers();
-            app.MapBlazorHub();
+app.MapControllers();
+app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
 app.Run();

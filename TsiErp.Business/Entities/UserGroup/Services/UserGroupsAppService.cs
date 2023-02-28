@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -11,12 +11,16 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.UserGroup;
 using TsiErp.Entities.Entities.UserGroup.Dtos;
 using TsiErp.EntityContracts.UserGroup;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.UserGroup.Services
 {
     [ServiceRegistration(typeof(IUserGroupsAppService), DependencyInjectionType.Scoped)]
-    public class UserGroupsAppService : ApplicationService, IUserGroupsAppService
+    public class UserGroupsAppService : ApplicationService<BranchesResource>, IUserGroupsAppService
     {
+        public UserGroupsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
 
         UserGroupManager _manager { get; set; } = new UserGroupManager();
 

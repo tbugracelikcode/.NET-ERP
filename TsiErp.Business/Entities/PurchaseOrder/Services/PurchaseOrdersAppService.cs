@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -14,19 +14,22 @@ using TsiErp.Entities.Entities.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseOrderLine;
 using TsiErp.Entities.Entities.PurchaseOrderLine.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.PurchaseOrder.Services
 {
     [ServiceRegistration(typeof(IPurchaseOrdersAppService), DependencyInjectionType.Scoped)]
-    public class PurchaseOrdersAppService : ApplicationService, IPurchaseOrdersAppService
+    public class PurchaseOrdersAppService : ApplicationService<BranchesResource>, IPurchaseOrdersAppService
     {
         private readonly IPurchaseRequestsAppService _PurchaseRequestsAppService;
 
-        PurchaseOrderManager _manager { get; set; } = new PurchaseOrderManager();
-        public PurchaseOrdersAppService(IPurchaseRequestsAppService PurchaseRequestsAppService)
+        public PurchaseOrdersAppService(IStringLocalizer<BranchesResource> l, IPurchaseRequestsAppService PurchaseRequestsAppService) : base(l)
         {
             _PurchaseRequestsAppService = PurchaseRequestsAppService;
         }
+
+        PurchaseOrderManager _manager { get; set; } = new PurchaseOrderManager();
+       
 
 
         [ValidationAspect(typeof(CreatePurchaseOrdersValidator), Priority = 1)]

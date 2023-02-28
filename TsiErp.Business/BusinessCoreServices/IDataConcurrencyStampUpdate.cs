@@ -6,7 +6,7 @@ using Tsi.Core.Utilities.Results;
 
 namespace TsiErp.Business.BusinessCoreServices
 {
-    public interface IDataConcurrencyStampUpdate<TGetOutputDto> : IApplicationService
+    public interface IDataConcurrencyStampUpdate<TGetOutputDto>
     {
         Task<IDataResult<TGetOutputDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow,Guid userId);
     }

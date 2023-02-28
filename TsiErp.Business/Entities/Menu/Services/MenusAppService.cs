@@ -1,17 +1,22 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.Entities.Entities.Menu;
 using TsiErp.Entities.Entities.Menu.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.Menu.Services
 {
     [ServiceRegistration(typeof(IMenusAppService), DependencyInjectionType.Scoped)]
-    public class MenusAppService : ApplicationService, IMenusAppService
+    public class MenusAppService : ApplicationService<BranchesResource>, IMenusAppService
     {
+        public MenusAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMenusDto>> CreateAsync(CreateMenusDto input)
         {

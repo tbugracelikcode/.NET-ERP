@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Forecast.BusinessRules;
@@ -13,12 +13,17 @@ using TsiErp.Entities.Entities.Forecast;
 using TsiErp.Entities.Entities.Forecast.Dtos;
 using TsiErp.Entities.Entities.ForecastLine;
 using TsiErp.Entities.Entities.ForecastLine.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.Forecast.Services
 {
     [ServiceRegistration(typeof(IForecastsAppService), DependencyInjectionType.Scoped)]
-    public class ForecastsAppService : ApplicationService, IForecastsAppService
+    public class ForecastsAppService : ApplicationService<BranchesResource>, IForecastsAppService
     {
+        public ForecastsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         ForecastManager _manager { get; set; } = new ForecastManager();
 
         [ValidationAspect(typeof(CreateForecastsValidatorDto), Priority = 1)]

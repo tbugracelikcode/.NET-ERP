@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.CustomerComplaintItem.BusinessRules;
@@ -11,12 +11,17 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.CustomerComplaintItem;
 using TsiErp.Entities.Entities.CustomerComplaintItem.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.CustomerComplaintItem.Services
 {
     [ServiceRegistration(typeof(ICustomerComplaintItemsAppService), DependencyInjectionType.Scoped)]
-    public class CustomerComplaintItemsAppService : ApplicationService, ICustomerComplaintItemsAppService
+    public class CustomerComplaintItemsAppService : ApplicationService<BranchesResource>, ICustomerComplaintItemsAppService
     {
+        public CustomerComplaintItemsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        {
+        }
+
         CustomerComplaintItemManager _manager { get; set; } = new CustomerComplaintItemManager();
 
         [ValidationAspect(typeof(CreateCustomerComplaintItemsValidator), Priority = 1)]

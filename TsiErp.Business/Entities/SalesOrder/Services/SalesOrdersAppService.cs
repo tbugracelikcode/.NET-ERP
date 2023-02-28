@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results;
+using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -14,20 +14,21 @@ using TsiErp.Entities.Entities.SalesOrder;
 using TsiErp.Entities.Entities.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesOrderLine;
 using TsiErp.Entities.Entities.SalesOrderLine.Dtos;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.SalesOrder.Services
 {
     [ServiceRegistration(typeof(ISalesOrdersAppService), DependencyInjectionType.Scoped)]
-    public class SalesOrdersAppService : ApplicationService, ISalesOrdersAppService
+    public class SalesOrdersAppService : ApplicationService<BranchesResource>, ISalesOrdersAppService
     {
         private readonly ISalesPropositionsAppService _salesPropositionsAppService;
 
-        SalesOrderManager _manager { get; set; } = new SalesOrderManager();
-        public SalesOrdersAppService(ISalesPropositionsAppService salesPropositionsAppService)
+        public SalesOrdersAppService(IStringLocalizer<BranchesResource> l, ISalesPropositionsAppService salesPropositionsAppService) : base(l)
         {
             _salesPropositionsAppService = salesPropositionsAppService;
         }
 
+        SalesOrderManager _manager { get; set; } = new SalesOrderManager();
 
         [ValidationAspect(typeof(CreateSalesOrderValidatorDto), Priority = 1)]
         [CacheRemoveAspect("Get")]
