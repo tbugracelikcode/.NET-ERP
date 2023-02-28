@@ -244,6 +244,7 @@ namespace TsiErp.ErpUI.Pages.Base
 
         public async virtual void ShowEditPage()
         {
+            var loc = (IStringLocalizer)_L; 
 
             if (DataSource != null)
             {
@@ -252,7 +253,7 @@ namespace TsiErp.ErpUI.Pages.Base
                 if (dataOpenStatus == true && dataOpenStatus != null)
                 {
                     EditPageVisible = false;
-                    await ModalManager.MessagePopupAsync("Bilgi", "Seçtiğiniz kayıt ..... tarafından kullanılmaktadır.");
+                    await ModalManager.MessagePopupAsync(loc["MessagePopupInformationTitleBase"], loc["MessagePopupInformationDescriptionBase"]);
                     await InvokeAsync(StateHasChanged);
                 }
                 else
@@ -265,6 +266,8 @@ namespace TsiErp.ErpUI.Pages.Base
 
         public async virtual void OnContextMenuClick(ContextMenuClickEventArgs<TGetListOutputDto> args)
         {
+            var loc = (IStringLocalizer)_L;
+
             switch (args.Item.Id)
             {
                 case "new":
@@ -281,7 +284,7 @@ namespace TsiErp.ErpUI.Pages.Base
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync("Onay", "Silmek istediğinize emin misiniz ?");
+                    var res = await ModalManager.ConfirmationAsync(loc["DeleteConfirmationTitleBase"], loc["DeleteConfirmationDescriptionBase"]);
 
 
                     if (res == true)

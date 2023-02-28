@@ -1,6 +1,7 @@
-﻿using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Microsoft.Extensions.Localization;
+using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.BillsofMaterial.BusinessRules;
@@ -13,16 +14,14 @@ using TsiErp.Entities.Entities.BillsofMaterial;
 using TsiErp.Entities.Entities.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.BillsofMaterialLine;
 using TsiErp.Entities.Entities.BillsofMaterialLine.Dtos;
-using TsiErp.Entities.Entities.Branch;
-using TsiErp.Entities.Entities.Branch.Dtos;
-using Microsoft.Extensions.Localization;
+using TsiErp.Localizations.Resources.BillsofMaterials.Page;
 
 namespace TsiErp.Business.Entities.BillsofMaterial.Services
 {
     [ServiceRegistration(typeof(IBillsofMaterialsAppService), DependencyInjectionType.Scoped)]
-    public class BillsofMaterialsAppService : ApplicationService<BranchesResource>, IBillsofMaterialsAppService
+    public class BillsofMaterialsAppService : ApplicationService<BillsofMaterialsResource>, IBillsofMaterialsAppService
     {
-        public BillsofMaterialsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public BillsofMaterialsAppService(IStringLocalizer<BillsofMaterialsResource> l) : base(l)
         {
         }
 
@@ -36,7 +35,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
             using (UnitOfWork _uow = new UnitOfWork())
             {
 
-                await _manager.CodeControl(_uow.BillsofMaterialsRepository, input.Code);
+                await _manager.CodeControl(_uow.BillsofMaterialsRepository, input.Code, L);
 
                 var entity = ObjectMapper.Map<CreateBillsofMaterialsDto, BillsofMaterials>(input);
 
@@ -70,7 +69,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     await _manager.DeleteControl(_uow.BillsofMaterialsRepository, lines.BoMID, lines.Id, true);
                     await _uow.BillsofMaterialLinesRepository.DeleteAsync(id);
                     await _uow.SaveChanges();
-                    return new SuccessResult("Silme işlemi başarılı.");
+                    return new SuccessResult(L["DeleteSuccessMessage"]);
                 }
                 else
                 {
@@ -85,7 +84,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "BillsofMaterials", LogType.Delete, id);
                     await _uow.LogsRepository.InsertAsync(log);
                     await _uow.SaveChanges();
-                    return new SuccessResult("Silme işlemi başarılı.");
+                    return new SuccessResult(L["DeleteSuccessMessage"]);
                 }
             }
         }
@@ -142,7 +141,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
             {
                 var entity = await _uow.BillsofMaterialsRepository.GetAsync(x => x.Id == input.Id, t => t.BillsofMaterialLines);
 
-                await _manager.UpdateControl(_uow.BillsofMaterialsRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.BillsofMaterialsRepository, input.Code, input.Id, entity, L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateBillsofMaterialsDto, BillsofMaterials>(input);
 

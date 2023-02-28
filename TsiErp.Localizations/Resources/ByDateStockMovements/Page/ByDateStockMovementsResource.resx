@@ -117,70 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BranchesTitle" xml:space="preserve">
-    <value>Şubeler</value>
-  </data>
-  <data name="Code" xml:space="preserve">
-    <value>ŞUBE KODU</value>
-  </data>
-  <data name="CodeControlManager" xml:space="preserve">
-    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
-  </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
-  <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
-    <value>Silmek istediğinize emin misiniz ?</value>
-  </data>
-  <data name="DeleteConfirmationTitleBase" xml:space="preserve">
-    <value>Onay</value>
-  </data>
-  <data name="DeleteControlManager" xml:space="preserve">
-    <value>Hareket gören kayıtlar silinemez.</value>
-  </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
-  </data>
-  <data name="Error" xml:space="preserve">
-    <value>error</value>
-  </data>
-  <data name="LoadingCaption" xml:space="preserve">
-    <value>Lütfen Bekleyin..</value>
-  </data>
-  <data name="LoadingText" xml:space="preserve">
-    <value>Kayıtlar Yükleniyor..</value>
-  </data>
-  <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
-    <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
-  </data>
-  <data name="MessagePopupInformationTitleBase" xml:space="preserve">
-    <value>Bilgi</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>ŞUBE ADI</value>
-  </data>
-  <data name="UpdateControlManager" xml:space="preserve">
-    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
-  </data>
-  <data name="ValidatorCodeEmpty" xml:space="preserve">
-    <value>Lütfen şube kodunu yazın.</value>
-  </data>
-  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
-    <value>Şube kodu 17 karakterden fazla olamaz.</value>
-  </data>
-  <data name="ValidatorNameEmpty" xml:space="preserve">
-    <value>Lütfen şube adını yazın.</value>
-  </data>
-  <data name="ValidatorNameMaxLenght" xml:space="preserve">
-    <value>Şube adı 200 karakterden fazla olamaz.</value>
   </data>
 </root>

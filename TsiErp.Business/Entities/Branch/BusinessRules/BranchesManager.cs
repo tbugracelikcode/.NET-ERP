@@ -1,43 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
-using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
 using TsiErp.Entities.Entities.Branch;
+using TsiErp.Localizations.Resources.Branches.Page;
 
 namespace TsiErp.Business.Entities.Branch.BusinessRules
 {
-    public class BranchesManager
+    public class BranchesManager 
     {
-        public async Task CodeControl(IBranchesRepository _repository, string code)
+        public async Task CodeControl(IBranchesRepository _repository, string code, IStringLocalizer<BranchesResource>L)
         {
             if (await _repository.AnyAsync(t => t.Code == code))
             {
-                throw new DuplicateCodeException("Aynı kodlu bir kayıt bulunmaktadır.");
+                throw new DuplicateCodeException(L["CodeControlManager"]);
             }
         }
 
-        public async Task UpdateControl(IBranchesRepository _repository, string code,Guid id, Branches entity)
+        public async Task UpdateControl(IBranchesRepository _repository, string code,Guid id, Branches entity, IStringLocalizer<BranchesResource> L)
         {
             if (await _repository.AnyAsync(t => t.Id != id && t.Code==code) && entity.Code!=code)
             {
-                throw new DuplicateCodeException("Aynı kodlu bir kayıt bulunmaktadır.");
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
             }
         }
 
-        public async Task DeleteControl(IBranchesRepository _repository, Guid id)
+        public async Task DeleteControl(IBranchesRepository _repository, Guid id, IStringLocalizer<BranchesResource> L)
         {
             if (await _repository.AnyAsync(t => t.Periods.Any(x => x.BranchID == id)))
             {
-                throw new Exception("Hareket gören kayıtlar silinemez.");
+                throw new Exception(L["DeleteControlManager"]);
             }
 
             if (await _repository.AnyAsync(t => t.SalesPropositions.Any(x => x.BranchID == id)))
             {
-                throw new Exception("Hareket gören kayıtlar silinemez.");
+                throw new Exception(L["DeleteControlManager"]);
             }
         }
     }

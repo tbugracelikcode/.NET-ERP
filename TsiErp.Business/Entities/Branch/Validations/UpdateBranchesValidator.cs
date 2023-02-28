@@ -1,29 +1,26 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Localization;
 using Tsi.Core.CrossCuttingConcerns.Validation;
 using TsiErp.Entities.Entities.Branch.Dtos;
+using TsiErp.Localizations.Resources.Branches.Page;
 
 namespace TsiErp.Business.Entities.Branch.Validations
 {
     public class UpdateBranchesValidator : TsiAbstractValidatorBase<UpdateBranchesDto>
     {
-        public UpdateBranchesValidator()
+        public UpdateBranchesValidator(IStringLocalizer<BranchesResource>L)
         {
             RuleFor(x => x.Code)
                 .NotEmpty()
-                .WithMessage("Lütfen şube kodunu yazın.")
+                .WithMessage(L["ValidatorCodeEmpty"])
                 .MaximumLength(17)
-                .WithMessage("Şube kodu 17 karakterden fazla olamaz.");
+                .WithMessage(L["ValidatorCodeMaxLenght"]);
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen şube adını yazın.")
+                .WithMessage(L["ValidatorNameEmpty"])
                 .MaximumLength(200)
-                .WithMessage("Şube adı 200 karakterden fazla olamaz."); ;
+                .WithMessage(L["ValidatorNameMaxLenght"]); ;
         }
     }
 }

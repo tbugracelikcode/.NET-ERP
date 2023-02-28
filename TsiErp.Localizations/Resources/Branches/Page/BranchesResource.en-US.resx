@@ -123,6 +123,9 @@
   <data name="Code" xml:space="preserve">
     <value>BRANCH CODE</value>
   </data>
+  <data name="CodeControlManager" xml:space="preserve">
+    <value>There is a record with the same code.</value>
+  </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
@@ -135,8 +138,17 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
+    <value>Are you sure you want to delete?</value>
+  </data>
+  <data name="DeleteConfirmationTitleBase" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
+  <data name="DeleteControlManager" xml:space="preserve">
+    <value>Records with transaction cannot be deleted.</value>
+  </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
-    <value>The record deleted successfully</value>
+    <value>The record deleted successfully.</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>error</value>
@@ -147,7 +159,28 @@
   <data name="LoadingText" xml:space="preserve">
     <value>The records are loading..</value>
   </data>
+  <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
+    <value>The record you selected is using by {0}.</value>
+  </data>
+  <data name="MessagePopupInformationTitleBase" xml:space="preserve">
+    <value>Information</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>BRANCH NAME</value>
+  </data>
+  <data name="UpdateControlManager" xml:space="preserve">
+    <value>There is a record with the same code.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Please enter the branch code.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Branch code cannot exceed 17 characters.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Please enter the branch name.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>Branch code cannot exceed 200 characters.</value>
   </data>
 </root>

@@ -7,14 +7,45 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Resources\BreadCrumb\**" />
+    <Compile Remove="Resources\Menu\**" />
+    <EmbeddedResource Remove="Resources\BreadCrumb\**" />
+    <EmbeddedResource Remove="Resources\Menu\**" />
+    <None Remove="Resources\BreadCrumb\**" />
+    <None Remove="Resources\Menu\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\BillsofMaterials\Page\BillsofMaterialsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>BillsofMaterialsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Branches\Page\BranchesResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>BranchesResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\ByDateStockMovements\Page\ByDateStockMovementsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ByDateStockMovementsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\CalibrationRecords\Page\CalibrationRecordsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CalibrationRecordsResource.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\BillsofMaterials\Page\BillsofMaterialsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\BillsofMaterials\Page\BillsofMaterialsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>BillsofMaterialsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Branches\Page\BranchesResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
@@ -22,11 +53,20 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>BranchesResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Resources\Menu\" />
-    <Folder Include="Resources\BreadCrumb\" />
+    <EmbeddedResource Update="Resources\ByDateStockMovements\Page\ByDateStockMovementsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ByDateStockMovements\Page\ByDateStockMovementsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ByDateStockMovementsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\CalibrationRecords\Page\CalibrationRecords.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\CalibrationRecords\Page\CalibrationRecordsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CalibrationRecordsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
