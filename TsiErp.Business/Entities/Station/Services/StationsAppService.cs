@@ -1,11 +1,11 @@
-﻿using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Microsoft.Extensions.Localization;
+using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Station.BusinessRules;
-using TsiErp.Business.Entities.StationInventory.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
@@ -14,14 +14,14 @@ using TsiErp.Entities.Entities.Station.Dtos;
 using TsiErp.Entities.Entities.StationInventory;
 using TsiErp.Entities.Entities.StationInventory.Dtos;
 using TsiErp.EntityContracts.Station;
-using Microsoft.Extensions.Localization;
+using TsiErp.Localizations.Resources.Stations.Page;
 
 namespace TsiErp.Business.Entities.Station.Services
 {
     [ServiceRegistration(typeof(IStationsAppService), DependencyInjectionType.Scoped)]
-    public class StationsAppService : ApplicationService<BranchesResource>, IStationsAppService
+    public class StationsAppService : ApplicationService<StationsResource>, IStationsAppService
     {
-        public StationsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public StationsAppService(IStringLocalizer<StationsResource> l) : base(l)
         {
         }
 
@@ -35,7 +35,7 @@ namespace TsiErp.Business.Entities.Station.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.StationsRepository, input.Code);
+                await _manager.CodeControl(_uow.StationsRepository, input.Code,L);
 
                 var entity = ObjectMapper.Map<CreateStationsDto, Stations>(input);
 
@@ -71,12 +71,12 @@ namespace TsiErp.Business.Entities.Station.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.DeleteControl(_uow.StationsRepository, id);
+                await _manager.DeleteControl(_uow.StationsRepository, id,L);
                 await _uow.StationsRepository.DeleteAsync(id);
                 var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Stations", LogType.Delete, id);
                 await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                return new SuccessResult(L["DeleteSuccessMessage"]);
             }
         }
 
@@ -117,7 +117,7 @@ namespace TsiErp.Business.Entities.Station.Services
             {
                 var entity = await _uow.StationsRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.StationsRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.StationsRepository, input.Code, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateStationsDto, Stations>(input);
 

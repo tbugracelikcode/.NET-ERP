@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.Routes.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -20,9 +21,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.Route.Services
 {
     [ServiceRegistration(typeof(IRoutesAppService), DependencyInjectionType.Scoped)]
-    public class RoutesAppService : ApplicationService<BranchesResource>, IRoutesAppService
+    public class RoutesAppService : ApplicationService<RoutesResource>, IRoutesAppService
     {
-        public RoutesAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public RoutesAppService(IStringLocalizer<RoutesResource> l) : base(l)
         {
         }
 
@@ -34,7 +35,7 @@ namespace TsiErp.Business.Entities.Route.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.RoutesRepository, input.Code);
+                await _manager.CodeControl(_uow.RoutesRepository, input.Code,L);
 
                 var entity = ObjectMapper.Map<CreateRoutesDto, Routes>(input);
 
@@ -66,7 +67,7 @@ namespace TsiErp.Business.Entities.Route.Services
                     await _manager.DeleteControl(_uow.RoutesRepository, lines.RouteID, lines.Id, true);
                     await _uow.RouteLinesRepository.DeleteAsync(id);
                     await _uow.SaveChanges();
-                    return new SuccessResult("Silme işlemi başarılı.");
+                    return new SuccessResult(L["DeleteSuccessMessage"]);
                 }
                 else
                 {
@@ -81,7 +82,7 @@ namespace TsiErp.Business.Entities.Route.Services
                     var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Routes", LogType.Delete, id);
                     await _uow.LogsRepository.InsertAsync(log);
                     await _uow.SaveChanges();
-                    return new SuccessResult("Silme işlemi başarılı.");
+                    return new SuccessResult(L["DeleteSuccessMessage"]);
                 }
             }
         }
@@ -135,7 +136,7 @@ namespace TsiErp.Business.Entities.Route.Services
             {
                 var entity = await _uow.RoutesRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.RoutesRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.RoutesRepository, input.Code, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateRoutesDto, Routes>(input);
 

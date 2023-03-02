@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results; 
+using TsiErp.Localizations.Resources.CurrentAccountCards.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.CurrentAccountCard.BusinessRules;
@@ -16,9 +17,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.CurrentAccountCard.Services
 {
     [ServiceRegistration(typeof(ICurrentAccountCardsAppService), DependencyInjectionType.Scoped)]
-    public class CurrentAccountCardsAppService : ApplicationService<BranchesResource>, ICurrentAccountCardsAppService
+    public class CurrentAccountCardsAppService : ApplicationService<CurrentAccountCardsResource>, ICurrentAccountCardsAppService
     {
-        public CurrentAccountCardsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public CurrentAccountCardsAppService(IStringLocalizer<CurrentAccountCardsResource> l) : base(l)
         {
         }
 
@@ -30,7 +31,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.CurrentAccountCardsRepository, input.Code);
+                await _manager.CodeControl(_uow.CurrentAccountCardsRepository, input.Code,L);
 
                 var entity = ObjectMapper.Map<CreateCurrentAccountCardsDto, CurrentAccountCards>(input);
 
@@ -50,13 +51,13 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.DeleteControl(_uow.CurrentAccountCardsRepository, id);
+                await _manager.DeleteControl(_uow.CurrentAccountCardsRepository, id,L);
                 await _uow.CurrentAccountCardsRepository.DeleteAsync(id);
 
                 var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "CurrentAccountCards", LogType.Delete, id);
                 await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                return new SuccessResult(L["DeleteSuccessMessage"]);
             }
         }
 
@@ -97,7 +98,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
             {
                 var entity = await _uow.CurrentAccountCardsRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.CurrentAccountCardsRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.CurrentAccountCardsRepository, input.Code, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateCurrentAccountCardsDto, CurrentAccountCards>(input);
 

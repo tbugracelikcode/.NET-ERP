@@ -1398,7 +1398,7 @@ namespace TsiErp.DataAccess.Migrations
                     b.Property<DateTime?>("Birthday")
                         .HasColumnType("DateTime");
 
-                    b.Property<int>("BloodType")
+                    b.Property<int?>("BloodType")
                         .HasColumnType("Int");
 
                     b.Property<string>("CellPhone")
@@ -3005,7 +3005,7 @@ namespace TsiErp.DataAccess.Migrations
                     b.Property<Guid>("StationID")
                         .HasColumnType("UniqueIdentifier");
 
-                    b.Property<int>("Status")
+                    b.Property<int?>("Status")
                         .HasColumnType("Int");
 
                     b.HasKey("Id");
@@ -3557,6 +3557,11 @@ namespace TsiErp.DataAccess.Migrations
                     b.Property<decimal>("AdjustmentTime")
                         .HasPrecision(18, 6)
                         .HasColumnType("Decimal(18,6)");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(17)
+                        .HasColumnType("NVarChar(17)");
 
                     b.Property<DateTime?>("CreationTime")
                         .IsRequired()
@@ -6730,7 +6735,7 @@ namespace TsiErp.DataAccess.Migrations
                     b.Property<Guid>("StationID")
                         .HasColumnType("UniqueIdentifier");
 
-                    b.Property<int>("Status")
+                    b.Property<int?>("Status")
                         .HasColumnType("Int");
 
                     b.Property<DateTime?>("UnplannedDate")

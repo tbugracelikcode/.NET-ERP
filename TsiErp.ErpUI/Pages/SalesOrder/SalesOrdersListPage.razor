@@ -23,9 +23,11 @@
 @using TsiErp.Entities.Entities.PaymentPlan.Dtos
 @using TsiErp.Business.Entities.BillsofMaterial.Services
 @using TsiErp.Business.Entities.ShippingAdress.Services
+@using TsiErp.Localizations.Resources.SalesOrders.Page
 
 @inherits BaseListPage<SelectSalesOrderDto, ListSalesOrderDto, CreateSalesOrderDto, UpdateSalesOrderDto, ListSalesOrderParameterDto>
 
+@inject IStringLocalizer<SalesOrdersResource> L 
 @inject ISalesOrdersAppService SalesOrdersAppService
 @inject ICurrentAccountCardsAppService CurrentAccountCardsAppService
 @inject IBranchesAppService BranchesAppService

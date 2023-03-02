@@ -13,6 +13,10 @@ namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
     public class ListProductionTrackingsDto : FullAuditedEntityDto
     {
         /// <summary>
+        /// Üretim Takip Kodu
+        /// </summary>
+        public string Code { get; set; }
+        /// <summary>
         /// İş Emri ID
         /// </summary>
         public Guid WorkOrderID { get; set; }

@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results; 
+using TsiErp.Localizations.Resources.ProductionTrackings.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -18,9 +19,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.ProductionTracking.Services
 {
     [ServiceRegistration(typeof(IProductionTrackingsAppService), DependencyInjectionType.Scoped)]
-    public class ProductionTrackingsAppService : ApplicationService<BranchesResource>, IProductionTrackingsAppService
+    public class ProductionTrackingsAppService : ApplicationService<ProductionTrackingsResource>, IProductionTrackingsAppService
     {
-        public ProductionTrackingsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public ProductionTrackingsAppService(IStringLocalizer<ProductionTrackingsResource> l) : base(l)
         {
         }
 
@@ -33,6 +34,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
+                await _manager.CodeControl(_uow.ProductionTrackingsRepository, input.Code, L);
+
                 var entity = ObjectMapper.Map<CreateProductionTrackingsDto, ProductionTrackings>(input);
 
                 var addedEntity = await _uow.ProductionTrackingsRepository.InsertAsync(entity);
@@ -65,7 +68,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     await _manager.DeleteControl(_uow.ProductionTrackingsRepository, lines.Id);
                     await _uow.ProductionTrackingHaltLinesRepository.DeleteAsync(id);
                     await _uow.SaveChanges();
-                    return new SuccessResult("Silme işlemi başarılı.");
+                    return new SuccessResult(L["DeleteSuccessMessage"]);
                 }
                 else
                 {
@@ -80,7 +83,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "ProductionTrackings", LogType.Delete, id);
                     await _uow.LogsRepository.InsertAsync(log);
                     await _uow.SaveChanges();
-                    return new SuccessResult("Silme işlemi başarılı.");
+                    return new SuccessResult(L["DeleteSuccessMessage"]);
                 }
             }
         }
@@ -130,7 +133,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
             {
                 var entity = await _uow.ProductionTrackingsRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.ProductionTrackingsRepository, input.Id, entity);
+                await _manager.UpdateControl(_uow.ProductionTrackingsRepository, input.Code, input.Id, entity, L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateProductionTrackingsDto, ProductionTrackings>(input);
 

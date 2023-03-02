@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.OperationUnsuitabilityReports.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -16,9 +17,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
 {
     [ServiceRegistration(typeof(IOperationUnsuitabilityReportsAppService), DependencyInjectionType.Scoped)]
-    public class OperationUnsuitabilityReportsAppService : ApplicationService<BranchesResource>, IOperationUnsuitabilityReportsAppService
+    public class OperationUnsuitabilityReportsAppService : ApplicationService<OperationUnsuitabilityReportsResource>, IOperationUnsuitabilityReportsAppService
     {
-        public OperationUnsuitabilityReportsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public OperationUnsuitabilityReportsAppService(IStringLocalizer<OperationUnsuitabilityReportsResource> l) : base(l)
         {
         }
 
@@ -30,7 +31,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.OperationUnsuitabilityReportsRepository, input.FicheNo);
+                await _manager.CodeControl(_uow.OperationUnsuitabilityReportsRepository, input.FicheNo,L);
 
                 var entity = ObjectMapper.Map<CreateOperationUnsuitabilityReportsDto, OperationUnsuitabilityReports>(input);
 
@@ -54,7 +55,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                 var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "OperationUnsuitabilityReports", LogType.Delete, id);
                 await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                return new SuccessResult(L["DeleteSuccessMessage"]);
             }
         }
 
@@ -107,7 +108,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
             {
                 var entity = await _uow.OperationUnsuitabilityReportsRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.OperationUnsuitabilityReportsRepository, input.FicheNo, input.Id, entity);
+                await _manager.UpdateControl(_uow.OperationUnsuitabilityReportsRepository, input.FicheNo, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateOperationUnsuitabilityReportsDto, OperationUnsuitabilityReports>(input);
 

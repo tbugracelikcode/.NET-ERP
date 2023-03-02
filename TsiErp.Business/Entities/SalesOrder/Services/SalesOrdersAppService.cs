@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.SalesOrders.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -19,11 +20,11 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.SalesOrder.Services
 {
     [ServiceRegistration(typeof(ISalesOrdersAppService), DependencyInjectionType.Scoped)]
-    public class SalesOrdersAppService : ApplicationService<BranchesResource>, ISalesOrdersAppService
+    public class SalesOrdersAppService : ApplicationService<SalesOrdersResource>, ISalesOrdersAppService
     {
         private readonly ISalesPropositionsAppService _salesPropositionsAppService;
 
-        public SalesOrdersAppService(IStringLocalizer<BranchesResource> l, ISalesPropositionsAppService salesPropositionsAppService) : base(l)
+        public SalesOrdersAppService(IStringLocalizer<SalesOrdersResource> l, ISalesPropositionsAppService salesPropositionsAppService) : base(l)
         {
             _salesPropositionsAppService = salesPropositionsAppService;
         }
@@ -36,7 +37,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.SalesOrdersRepository, input.FicheNo);
+                await _manager.CodeControl(_uow.SalesOrdersRepository, input.FicheNo,L);
 
                 var entity = ObjectMapper.Map<CreateSalesOrderDto, SalesOrders>(input);
 
@@ -62,7 +63,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.SalesOrdersRepository, input.FicheNo);
+                await _manager.CodeControl(_uow.SalesOrdersRepository, input.FicheNo,L);
 
                 var entity = ObjectMapper.Map<CreateSalesOrderDto, SalesOrders>(input);
 
@@ -97,14 +98,14 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
 
                 if (lines != null)
                 {
-                    await _manager.DeleteControl(_uow.SalesOrdersRepository, lines.SalesOrderID, lines.Id, true);
+                    await _manager.DeleteControl(_uow.SalesOrdersRepository, lines.SalesOrderID, lines.Id, true,L);
                     await _uow.SalesOrderLinesRepository.DeleteAsync(id);
                     await _uow.SaveChanges();
-                    return new SuccessResult("Silme işlemi başarılı.");
+                    return new SuccessResult(L["DeleteSuccessMessage"]);
                 }
                 else
                 {
-                    await _manager.DeleteControl(_uow.SalesOrdersRepository, id, Guid.Empty, false);
+                    await _manager.DeleteControl(_uow.SalesOrdersRepository, id, Guid.Empty, false,L);
 
                     var list = (await _uow.SalesOrderLinesRepository.GetListAsync(t => t.SalesOrderID == id));
                     foreach (var line in list)
@@ -117,7 +118,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "SalesOrders", LogType.Delete, id);
                     await _uow.LogsRepository.InsertAsync(log);
                     await _uow.SaveChanges();
-                    return new SuccessResult("Silme işlemi başarılı.");
+                    return new SuccessResult(L["DeleteSuccessMessage"]);
                 }
             }
         }
@@ -179,7 +180,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
             {
                 var entity = await _uow.SalesOrdersRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.SalesOrdersRepository, input.FicheNo, input.Id, entity);
+                await _manager.UpdateControl(_uow.SalesOrdersRepository, input.FicheNo, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateSalesOrderDto, SalesOrders>(input);
 

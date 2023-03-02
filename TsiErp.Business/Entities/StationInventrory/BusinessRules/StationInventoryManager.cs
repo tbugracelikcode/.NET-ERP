@@ -1,31 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.StationInventory;
-using TsiErp.Entities.Entities.Branch;
-using TsiErp.Entities.Entities.StationInventory;
+using TsiErp.Localizations.Resources.StationInventrories.Page;
 
 namespace TsiErp.Business.Entities.StationInventory.BusinessRules
 {
     public class StationInventoryManager
     {
-        public async Task ProductControl(IStationInventoriesRepository _repository, Guid productID, Guid stationID)
+        public async Task ProductControl(IStationInventoriesRepository _repository, Guid productID, Guid stationID, IStringLocalizer<StationInventroriesResource> L)
         {
             if (await _repository.AnyAsync(t => t.ProductID == productID && t.StationID == stationID))
             {
-                throw new DuplicateCodeException("Aynı stok kodlu bir kayıt bulunmaktadır.");
+                throw new DuplicateCodeException(L["CodeControlManager"]);
             }
         }
 
-        public async Task UpdateProductControl(IStationInventoriesRepository _repository, Guid productID, Guid stationID, Guid id)
+        public async Task UpdateProductControl(IStationInventoriesRepository _repository, Guid productID, Guid stationID, Guid id, IStringLocalizer<StationInventroriesResource> L)
         {
             if (await _repository.AnyAsync(t => t.ProductID == productID && t.StationID == stationID && t.Id !=id))
             {
-                throw new DuplicateCodeException("Aynı stok kodlu bir kayıt bulunmaktadır.");
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
             }
         }
 

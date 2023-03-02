@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.TemplateOperations.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -18,9 +19,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.TemplateOperation.Services
 {
     [ServiceRegistration(typeof(ITemplateOperationsAppService), DependencyInjectionType.Scoped)]
-    public class TemplateOperationsAppService : ApplicationService<BranchesResource>, ITemplateOperationsAppService
+    public class TemplateOperationsAppService : ApplicationService<TemplateOperationsResource>, ITemplateOperationsAppService
     {
-        public TemplateOperationsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public TemplateOperationsAppService(IStringLocalizer<TemplateOperationsResource> l) : base(l)
         {
         }
 
@@ -32,7 +33,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.TemplateOperationsRepository, input.Code);
+                await _manager.CodeControl(_uow.TemplateOperationsRepository, input.Code,L);
 
                 var entity = ObjectMapper.Map<CreateTemplateOperationsDto, TemplateOperations>(input);
 
@@ -64,7 +65,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                     await _manager.DeleteControl(_uow.TemplateOperationsRepository, lines.TemplateOperationID, lines.Id, true);
                     await _uow.TemplateOperationLinesRepository.DeleteAsync(id);
                     await _uow.SaveChanges();
-                    return new SuccessResult("Silme işlemi başarılı.");
+                    return new SuccessResult(L["DeleteSuccessMessage"]);
                 }
                 else
                 {
@@ -81,7 +82,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                     var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "TemplateOperations", LogType.Delete, id);
                     await _uow.LogsRepository.InsertAsync(log);
                     await _uow.SaveChanges();
-                    return new SuccessResult("Silme işlemi başarılı.");
+                    return new SuccessResult(L["DeleteSuccessMessage"]);
                 }
             }
         }
@@ -131,7 +132,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
             {
                 var entity = await _uow.TemplateOperationsRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.TemplateOperationsRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.TemplateOperationsRepository, input.Code, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateTemplateOperationsDto, TemplateOperations>(input);
 

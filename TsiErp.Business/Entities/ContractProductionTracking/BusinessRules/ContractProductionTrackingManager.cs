@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Localization;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.ContractProductionTracking;
 using TsiErp.Entities.Entities.ContractProductionTracking;
+using TsiErp.Localizations.Resources.ContractProductionTrackings.Page;
 
 namespace TsiErp.Business.Entities.ContractProductionTracking.BusinessRules
 {
     public class ContractProductionTrackingManager
     {
-        public async Task CodeControl(IContractProductionTrackingsRepository _repository)
+        public async Task CodeControl(IContractProductionTrackingsRepository _repository, IStringLocalizer<ContractProductionTrackingsResource> L)
         {
         }
 
-        public async Task UpdateControl(IContractProductionTrackingsRepository _repository, Guid id, ContractProductionTrackings entity)
+        public async Task UpdateControl(IContractProductionTrackingsRepository _repository, Guid id, ContractProductionTrackings entity, IStringLocalizer<ContractProductionTrackingsResource> L)
         {
         }
 

@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.CalibrationVerifications.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.CalibrationVerification.BusinessRules;
@@ -16,9 +17,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.CalibrationVerification.Services
 {
     [ServiceRegistration(typeof(ICalibrationVerificationsAppService), DependencyInjectionType.Scoped)]
-    public class CalibrationVerificationsAppService : ApplicationService<BranchesResource>, ICalibrationVerificationsAppService
+    public class CalibrationVerificationsAppService : ApplicationService<CalibrationVerificationsResource>, ICalibrationVerificationsAppService
     {
-        public CalibrationVerificationsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public CalibrationVerificationsAppService(IStringLocalizer<CalibrationVerificationsResource> l) : base(l)
         {
         }
 
@@ -30,7 +31,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.CalibrationVerificationsRepository, input.Code);
+                await _manager.CodeControl(_uow.CalibrationVerificationsRepository, input.Code, L);
 
                 var entity = ObjectMapper.Map<CreateCalibrationVerificationsDto, CalibrationVerifications>(input);
 
@@ -56,7 +57,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
                 await _uow.LogsRepository.InsertAsync(log);
 
                 await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                return new SuccessResult(L["DeleteSuccessMessage"]);
             }
         }
 
@@ -99,7 +100,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
             {
                 var entity = await _uow.CalibrationVerificationsRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.CalibrationVerificationsRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.CalibrationVerificationsRepository, input.Code, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateCalibrationVerificationsDto, CalibrationVerifications>(input);
 

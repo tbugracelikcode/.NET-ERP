@@ -9,7 +9,7 @@
 @using TsiErp.Entities.Entities.PurchaseRequestLine
 @using TsiErp.Entities.Entities.PurchaseRequestLine.Dtos
 @using TsiErp.ErpUI.Pages.Base
-
+@using TsiErp.Localizations.Resources.PurchaseRequests.Page
 @using TsiErp.Entities.Entities.CurrentAccountCard.Dtos
 @using TsiErp.Business.Entities.CurrentAccountCard.Services
 @using TsiErp.Entities.Entities.Branch.Dtos
@@ -32,6 +32,7 @@
 
 @inherits BaseListPage<SelectPurchaseRequestsDto, ListPurchaseRequestsDto, CreatePurchaseRequestsDto, UpdatePurchaseRequestsDto, ListPurchaseRequestsParameterDto>
 
+@inject IStringLocalizer<PurchaseRequestsResource> L 
 @inject IPurchaseRequestsAppService PurchaseRequestsAppService
 @inject IPurchaseOrdersAppService PurchaseOrdersAppService
 @inject ICurrentAccountCardsAppService CurrentAccountCardsAppService

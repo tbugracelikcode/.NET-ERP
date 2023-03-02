@@ -1,39 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Warehouse;
-using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.WareHouse;
+using TsiErp.Localizations.Resources.Warehouses.Page;
 
 namespace TsiErp.Business.Entities.Warehouse.BusinessRules
 {
     public class WarehouseManager
     {
-        public async Task CodeControl(IWarehousesRepository _repository, string code)
+        public async Task CodeControl(IWarehousesRepository _repository, string code, IStringLocalizer<WarehousesResource> L)
         {
             if (await _repository.AnyAsync(t => t.Code == code))
             {
-                throw new DuplicateCodeException("Aynı kodlu bir kayıt bulunmaktadır.");
+                throw new DuplicateCodeException(L["CodeControlManager"]);
             }
         }
 
-        public async Task UpdateControl(IWarehousesRepository _repository, string code, Guid id, Warehouses entity)
+        public async Task UpdateControl(IWarehousesRepository _repository, string code, Guid id, Warehouses entity, IStringLocalizer<WarehousesResource> L)
         {
             if (await _repository.AnyAsync(t => t.Id != id && t.Code == code) && entity.Code != code)
             {
-                throw new DuplicateCodeException("Aynı kodlu bir kayıt bulunmaktadır.");
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
             }
         }
 
-        public async Task DeleteControl(IWarehousesRepository _repository, Guid id)
+        public async Task DeleteControl(IWarehousesRepository _repository, Guid id, IStringLocalizer<WarehousesResource> L)
         {
             if (await _repository.AnyAsync(t => t.SalesPropositions.Any(x => x.BranchID == id)))
             {
-                throw new Exception("Hareket gören kayıtlar silinemez.");
+                throw new Exception(L["DeleteControlManager"]);
             }
         }
     }

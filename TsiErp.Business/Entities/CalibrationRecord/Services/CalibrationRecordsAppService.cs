@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.CalibrationRecords.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.CalibrationRecord.BusinessRules;
@@ -16,9 +17,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.CalibrationRecord.Services
 {
     [ServiceRegistration(typeof(ICalibrationRecordsAppService), DependencyInjectionType.Scoped)]
-    public class CalibrationRecordsAppService : ApplicationService<BranchesResource> , ICalibrationRecordsAppService
+    public class CalibrationRecordsAppService : ApplicationService<CalibrationRecordsResource> , ICalibrationRecordsAppService
     {
-        public CalibrationRecordsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public CalibrationRecordsAppService(IStringLocalizer<CalibrationRecordsResource> l) : base(l)
         {
         }
 
@@ -30,7 +31,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.CalibrationRecordsRepository, input.Code);
+                await _manager.CodeControl(_uow.CalibrationRecordsRepository, input.Code,L);
 
                 var entity = ObjectMapper.Map<CreateCalibrationRecordsDto, CalibrationRecords>(input);
 
@@ -58,7 +59,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
 
                 await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                return new SuccessResult(L["DeleteSuccessMessage"]);
             }
         }
 
@@ -102,7 +103,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
             {
                 var entity = await _uow.CalibrationRecordsRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.CalibrationRecordsRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.CalibrationRecordsRepository, input.Code, input.Id, entity, L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateCalibrationRecordsDto, CalibrationRecords>(input);
 

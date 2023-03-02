@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.ProductionOrders.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.ProductionOrder.BusinessRules;
@@ -10,12 +11,18 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionOrder.Dtos;
+using TsiErp.Business.BusinessCoreServices;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.ProductionOrder.Services
 {
     [ServiceRegistration(typeof(IProductionOrdersAppService), DependencyInjectionType.Scoped)]
-    public class ProductionOrdersAppService : IProductionOrdersAppService
+    public class ProductionOrdersAppService :ApplicationService<ProductionOrdersResource>, IProductionOrdersAppService
     {
+        public ProductionOrdersAppService(IStringLocalizer<ProductionOrdersResource> l) : base(l)
+        {
+        }
+
         ProductionOrderManager _manager { get; set; } = new ProductionOrderManager();
 
 
@@ -25,7 +32,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.ProductionOrdersRepository, input.FicheNo);
+                await _manager.CodeControl(_uow.ProductionOrdersRepository, input.FicheNo,L);
 
                 var entity = ObjectMapper.Map<CreateProductionOrdersDto, ProductionOrders>(input);
 
@@ -48,7 +55,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                 var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "ProductionOrders", LogType.Delete, id);
                 await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                return new SuccessResult(L["DeleteSuccessMessage"]);
             }
         }
 
@@ -104,7 +111,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
             {
                 var entity = await _uow.ProductionOrdersRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.ProductionOrdersRepository, input.FicheNo, input.Id, entity);
+                await _manager.UpdateControl(_uow.ProductionOrdersRepository, input.FicheNo, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateProductionOrdersDto, ProductionOrders>(input);
 

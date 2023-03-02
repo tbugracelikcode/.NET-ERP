@@ -7,14 +7,300 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Resources\BreadCrumb\**" />
+    <Compile Remove="Resources\Menu\**" />
+    <EmbeddedResource Remove="Resources\BreadCrumb\**" />
+    <EmbeddedResource Remove="Resources\Menu\**" />
+    <None Remove="Resources\BreadCrumb\**" />
+    <None Remove="Resources\Menu\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\BillsofMaterials\Page\BillsofMaterialsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>BillsofMaterialsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Branches\Page\BranchesResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>BranchesResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\ByDateStockMovements\Page\ByDateStockMovementsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ByDateStockMovementsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\CalibrationRecords\Page\CalibrationRecordsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CalibrationRecordsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\CalibrationVerifications\Page\CalibrationVerificationsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CalibrationVerificationsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\ContractProductionTrackings\Page\ContractProductionTrackingsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ContractProductionTrackingsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\ContractUnsuitabilityItems\Page\ContractUnsuitabilityItemsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ContractUnsuitabilityItemsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Currencies\Page\CurrenciesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CurrenciesResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\CurrentAccountCards\Page\CurrentAccountCardsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CurrentAccountCardsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\CustomerComplaintItems\Page\CustomerComplaintItemsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CustomerComplaintItemsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Departments\Page\DepartmentsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DepartmentsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Employees\Page\EmployeesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EmployeesResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\EquipmentRecords\Page\EquipmentRecordsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>EquipmentRecordsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\ExchangeRates\Page\ExchangeRatesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ExchangeRatesResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\FinalControlUnsuitabilityItems\Page\FinalControlUnsuitabilityItemsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FinalControlUnsuitabilityItemsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\FinalControlUnsuitabilityReports\Page\FinalControlUnsuitabilityReportsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FinalControlUnsuitabilityReportsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Forecasts\Page\ForecastsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ForecastsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\GrandTotalStockMovements\Page\GrandTotalStockMovementsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>GrandTotalStockMovementsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\HaltReasons\Page\HaltReasonsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>HaltReasonsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\MaintenanceInstructions\Page\MaintenanceInstructionsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MaintenanceInstructionsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\MaintenancePeriods\Page\MaintenancePeriodsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MaintenancePeriodsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\OperationUnsuitabilityItems\Page\OperationUnsuitabilityItemsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>OperationUnsuitabilityItemsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\OperationUnsuitabilityReports\Page\OperationUnsuitabilityReportsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>OperationUnsuitabilityReportsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\PaymentPlans\Page\PaymentPlansResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PaymentPlansResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Periods\Page\PeriodsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PeriodsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\PlannedMaintenances\Page\PlannedMaintenancesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PlannedMaintenancesResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\ProductGroups\Page\ProductGroupsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProductGroupsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\ProductionOrderChangeItems\Page\ProductionOrderChangeItemsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProductionOrderChangeItemsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\ProductionOrders\Page\ProductionOrdersResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProductionOrdersResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\ProductionTrackings\Page\ProductionTrackingsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProductionTrackingsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\ProductReferanceNumbers\Page\ProductReferanceNumbersResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProductReferanceNumbersResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\ProductsOperations\Page\ProductsOperationsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProductsOperationsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Products\Page\ProductsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProductsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\PurchaseOrders\Page\PurchaseOrdersResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PurchaseOrdersResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\PurchasePrices\Page\PurchasePricesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PurchasePricesResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\PurchaseRequests\Page\PurchaseRequestsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PurchaseRequestsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\PurchaseUnsuitabilityReports\Page\PurchaseUnsuitabilityReportsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PurchaseUnsuitabilityReportsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\PurchasingUnsuitabilityItems\Page\PurchasingUnsuitabilityItemsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PurchasingUnsuitabilityItemsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Routes\Page\RoutesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>RoutesResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\SalesOrders\Page\SalesOrdersResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SalesOrdersResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\SalesPrices\Page\SalesPricesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SalesPricesResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\SalesPropositions\Page\SalesPropositionsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SalesPropositionsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Shifts\Page\ShiftsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ShiftsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\ShippingAdresses\Page\ShippingAdressesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ShippingAdressesResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\StationGroups\Page\StationGroupsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StationGroupsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\StationInventrories\Page\StationInventroriesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StationInventroriesResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Stations\Page\StationsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StationsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\TechnicalDrawings\Page\TechnicalDrawingsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TechnicalDrawingsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\TemplateOperations\Page\TemplateOperationsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TemplateOperationsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\UnitSets\Page\UnitSetsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UnitSetsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\UnplannedMaintenances\Page\UnplannedMaintenancesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UnplannedMaintenancesResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\UserGroups\Page\UserGroupsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UserGroupsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Users\Page\UsersResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UsersResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\Warehouses\Page\WarehousesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>WarehousesResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\WorkOrders\Page\WorkOrdersResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>WorkOrdersResource.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\BillsofMaterials\Page\BillsofMaterialsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\BillsofMaterials\Page\BillsofMaterialsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>BillsofMaterialsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Branches\Page\BranchesResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
@@ -22,11 +308,335 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>BranchesResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Resources\Menu\" />
-    <Folder Include="Resources\BreadCrumb\" />
+    <EmbeddedResource Update="Resources\ByDateStockMovements\Page\ByDateStockMovementsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ByDateStockMovements\Page\ByDateStockMovementsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ByDateStockMovementsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\CalibrationRecords\Page\CalibrationRecords.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\CalibrationRecords\Page\CalibrationRecordsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CalibrationRecordsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\CalibrationVerifications\Page\CalibrationVerificationsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\CalibrationVerifications\Page\CalibrationVerificationsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CalibrationVerificationsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ContractProductionTrackings\Page\ContractProductionTrackingsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ContractProductionTrackings\Page\ContractProductionTrackingsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ContractProductionTrackingsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ContractUnsuitabilityItems\Page\ContractUnsuitabilityItemsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ContractUnsuitabilityItems\Page\ContractUnsuitabilityItemsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ContractUnsuitabilityItemsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Currencies\Page\CurrenciesResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Currencies\Page\CurrenciesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CurrenciesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\CurrentAccountCards\Page\CurrentAccountCardsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\CurrentAccountCards\Page\CurrentAccountCardsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CurrentAccountCardsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\CustomerComplaintItems\Page\CustomerComplaintItemsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\CustomerComplaintItems\Page\CustomerComplaintItemsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CustomerComplaintItemsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Departments\Page\DepartmentsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Departments\Page\DepartmentsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>DepartmentsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Employees\Page\EmployeesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EmployeesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\EquipmentRecords\Page\EquipmentRecordsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\EquipmentRecords\Page\EquipmentRecordsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EquipmentRecordsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ExchangeRates\Page\ExchangeRatesResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ExchangeRates\Page\ExchangeRatesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ExchangeRatesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\FinalControlUnsuitabilityItems\Page\FinalControlUnsuitabilityItemsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FinalControlUnsuitabilityItemsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\FinalControlUnsuitabilityReports\Page\FinalControlUnsuitabilityReportsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\FinalControlUnsuitabilityReports\Page\FinalControlUnsuitabilityReportsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FinalControlUnsuitabilityReportsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Forecasts\Page\ForecastsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Forecasts\Page\ForecastsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ForecastsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\GrandTotalStockMovements\Page\GrandTotalStockMovementsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\GrandTotalStockMovements\Page\GrandTotalStockMovementsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GrandTotalStockMovementsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\HaltReasons\Page\HaltReasonsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\HaltReasons\Page\HaltReasonsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>HaltReasonsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\MaintenanceInstructions\Page\MaintenanceInstructionsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MaintenanceInstructionsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\MaintenancePeriods\Page\MaintenancePeriodsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\MaintenancePeriods\Page\MaintenancePeriodsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MaintenancePeriodsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\OperationUnsuitabilityItems\Page\OperationUnsuitabilityItemsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\OperationUnsuitabilityItems\Page\OperationUnsuitabilityItemsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>OperationUnsuitabilityItemsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\OperationUnsuitabilityReports\Page\OperationUnsuitabilityReportsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>OperationUnsuitabilityReportsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PaymentPlans\Page\PaymentPlansResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PaymentPlans\Page\PaymentPlansResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PaymentPlansResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Periods\Page\PeriodsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Periods\Page\PeriodsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PeriodsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PlannedMaintenances\Page\PlannedMaintenancesResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PlannedMaintenances\Page\PlannedMaintenancesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PlannedMaintenancesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ProductGroups\Page\ProductGroupsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ProductGroups\Page\ProductGroupsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProductGroupsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ProductionOrderChangeItems\Page\ProductionOrderChangeItemsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ProductionOrderChangeItems\Page\ProductionOrderChangeItemsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProductionOrderChangeItemsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ProductionOrders\Page\ProductionOrdersResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ProductionOrders\Page\ProductionOrdersResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProductionOrdersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ProductionTrackings\Page\ProductionTrackingsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ProductionTrackings\Page\ProductionTrackingsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProductionTrackingsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ProductReferanceNumbers\Page\ProductReferanceNumbersResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ProductReferanceNumbers\Page\ProductReferanceNumbersResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProductReferanceNumbersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ProductsOperations\Page\ProductsOperationsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ProductsOperations\Page\ProductsOperationsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProductsOperationsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Products\Page\ProductsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProductsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PurchaseOrders\Page\PurchaseOrdersResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PurchaseOrders\Page\PurchaseOrdersResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PurchaseOrdersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PurchasePrices\Page\PurchasePricesResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PurchasePrices\Page\PurchasePricesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PurchasePricesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PurchaseRequests\Page\PurchaseRequestsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PurchaseRequests\Page\PurchaseRequestsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PurchaseRequestsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PurchaseUnsuitabilityReports\Page\PurchaseUnsuitabilityReportsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PurchaseUnsuitabilityReports\Page\PurchaseUnsuitabilityReportsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PurchaseUnsuitabilityReportsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PurchasingUnsuitabilityItems\Page\PurchasingUnsuitabilityItemsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PurchasingUnsuitabilityItems\Page\PurchasingUnsuitabilityItemsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PurchasingUnsuitabilityItemsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Routes\Page\RoutesResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Routes\Page\RoutesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RoutesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\SalesOrders\Page\SalesOrdersResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\SalesOrders\Page\SalesOrdersResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SalesOrdersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\SalesPrices\Page\SalesPricesResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\SalesPrices\Page\SalesPricesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SalesPricesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\SalesPropositions\Page\SalesPropositionsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\SalesPropositions\Page\SalesPropositionsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SalesPropositionsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Shifts\Page\ShiftsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ShiftsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ShippingAdresses\Page\ShippingAdressesResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ShippingAdresses\Page\ShippingAdressesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ShippingAdressesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\StationGroups\Page\StationGroupsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>StationGroupsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\StationInventrories\Page\StationInventroriesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>StationInventroriesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Stations\Page\StationsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>StationsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\TechnicalDrawings\Page\TechnicalDrawingsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\TechnicalDrawings\Page\TechnicalDrawingsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TechnicalDrawingsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\TemplateOperations\Page\TemplateOperationsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TemplateOperationsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\UnitSets\Page\UnitSetsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\UnitSets\Page\UnitSetsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UnitSetsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\UnplannedMaintenances\Page\UnplannedMaintenancesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UnplannedMaintenancesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\UserGroups\Page\UserGroupsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UserGroupsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Users\Page\UsersResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Users\Page\UsersResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UsersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Warehouses\Page\WarehousesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>WarehousesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\WorkOrders\Page\WorkOrdersResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>WorkOrdersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

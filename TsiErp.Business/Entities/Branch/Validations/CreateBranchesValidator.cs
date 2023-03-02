@@ -15,19 +15,19 @@ namespace TsiErp.Business.Entities.Branch.Validations
 {
     public class CreateBranchesValidator : TsiAbstractValidatorBase<CreateBranchesDto>
     {
-        public CreateBranchesValidator()
+        public CreateBranchesValidator(IStringLocalizer<BranchesResource> L)
         {
             RuleFor(x => x.Code)
                 .NotEmpty()
-                .WithMessage("Lütfen şube kodunu yazın.")
+                .WithMessage(L["ValidatorCodeEmpty"])
                 .MaximumLength(17)
-                .WithMessage("Şube kodu 17 karakterden fazla olamaz.");
+                .WithMessage(L["ValidatorCodeMaxLenght"]);
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen şube adını yazın.")
+                .WithMessage(L["ValidatorNameEmpty"])
                 .MaximumLength(200)
-                .WithMessage("Şube adı 200 karakterden fazla olamaz."); ;
+                .WithMessage(L["ValidatorNameMaxLenght"]); ;
         }
     }
 }

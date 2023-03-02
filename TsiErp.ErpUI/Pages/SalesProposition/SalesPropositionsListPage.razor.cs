@@ -427,6 +427,7 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
             CreateConvertToOrderContextMenuItems();
 
             BaseCrudService = SalesPropositionsAppService;
+            _L = L;
 
         }
 

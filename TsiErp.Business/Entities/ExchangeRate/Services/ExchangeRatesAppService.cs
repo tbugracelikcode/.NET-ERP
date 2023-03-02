@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results; 
+using TsiErp.Localizations.Resources.ExchangeRates.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.ExchangeRate.Validations;
@@ -15,9 +16,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.ExchangeRate.Services
 {
     [ServiceRegistration(typeof(IExchangeRatesAppService), DependencyInjectionType.Scoped)]
-    public class ExchangeRatesAppService : ApplicationService<BranchesResource>, IExchangeRatesAppService
+    public class ExchangeRatesAppService : ApplicationService<ExchangeRatesResource>, IExchangeRatesAppService
     {
-        public ExchangeRatesAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public ExchangeRatesAppService(IStringLocalizer<ExchangeRatesResource> l) : base(l)
         {
         }
 
@@ -49,7 +50,7 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
                 var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "ExchangeRates", LogType.Delete, id);
                 await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                return new SuccessResult(L["DeleteSuccessMessage"]);
             }
         }
 

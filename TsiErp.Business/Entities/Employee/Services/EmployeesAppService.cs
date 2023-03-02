@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results; 
+using TsiErp.Localizations.Resources.Employees.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Employee.BusinessRules;
@@ -16,9 +17,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.Employee.Services
 {
     [ServiceRegistration(typeof(IEmployeesAppService), DependencyInjectionType.Scoped)]
-    public class EmployeesAppService : ApplicationService<BranchesResource>, IEmployeesAppService
+    public class EmployeesAppService : ApplicationService<EmployeesResource>, IEmployeesAppService
     {
-        public EmployeesAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public EmployeesAppService(IStringLocalizer<EmployeesResource> l) : base(l)
         {
         }
 
@@ -30,7 +31,7 @@ namespace TsiErp.Business.Entities.Employee.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.EmployeesRepository, input.Code);
+                await _manager.CodeControl(_uow.EmployeesRepository, input.Code,L);
 
                 var entity = ObjectMapper.Map<CreateEmployeesDto, Employees>(input);
 
@@ -55,7 +56,7 @@ namespace TsiErp.Business.Entities.Employee.Services
                 var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Employees", LogType.Delete, id);
                 await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                return new SuccessResult(L["DeleteSuccessMessage"]);
             }
         }
 
@@ -96,7 +97,7 @@ namespace TsiErp.Business.Entities.Employee.Services
             {
                 var entity = await _uow.EmployeesRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.EmployeesRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.EmployeesRepository, input.Code, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateEmployeesDto, Employees>(input);
 

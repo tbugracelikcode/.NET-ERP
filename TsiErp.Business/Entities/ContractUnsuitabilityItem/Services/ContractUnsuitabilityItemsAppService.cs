@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.ContractUnsuitabilityItems.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.ContractUnsuitabilityItem.BusinessRules;
@@ -16,9 +17,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.ContractUnsuitabilityItem.Services
 {
     [ServiceRegistration(typeof(IContractUnsuitabilityItemsAppService), DependencyInjectionType.Scoped)]
-    public class ContractUnsuitabilityItemsAppService : ApplicationService<BranchesResource>, IContractUnsuitabilityItemsAppService
+    public class ContractUnsuitabilityItemsAppService : ApplicationService<ContractUnsuitabilityItemsResource>, IContractUnsuitabilityItemsAppService
     {
-        public ContractUnsuitabilityItemsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public ContractUnsuitabilityItemsAppService(IStringLocalizer<ContractUnsuitabilityItemsResource> l) : base(l)
         {
         }
 
@@ -31,7 +32,7 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityItem.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.ContractUnsuitabilityItemsRepository, input.Code);
+                await _manager.CodeControl(_uow.ContractUnsuitabilityItemsRepository, input.Code,L);
 
                 var entity = ObjectMapper.Map<CreateContractUnsuitabilityItemsDto, ContractUnsuitabilityItems>(input);
 
@@ -63,7 +64,7 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityItem.Services
 
 
                 await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                return new SuccessResult(L["DeleteSuccessMessage"]);
             }
         }
 
@@ -108,7 +109,7 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityItem.Services
             {
                 var entity = await _uow.ContractUnsuitabilityItemsRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.ContractUnsuitabilityItemsRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.ContractUnsuitabilityItemsRepository, input.Code, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateContractUnsuitabilityItemsDto, ContractUnsuitabilityItems>(input);
 

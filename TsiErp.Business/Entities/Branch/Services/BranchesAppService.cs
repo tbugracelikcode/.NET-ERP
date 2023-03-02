@@ -35,7 +35,7 @@ namespace TsiErp.Business.Entities.Branch.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.BranchRepository, input.Code);
+                await _manager.CodeControl(_uow.BranchRepository, input.Code, L);
 
                 var entity = ObjectMapper.Map<CreateBranchesDto, Branches>(input);
 
@@ -57,7 +57,7 @@ namespace TsiErp.Business.Entities.Branch.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.DeleteControl(_uow.BranchRepository, id);
+                await _manager.DeleteControl(_uow.BranchRepository, id, L);
                 await _uow.BranchRepository.DeleteAsync(id);
                 var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Branches", LogType.Delete, id);
                 await _uow.LogsRepository.InsertAsync(log);
@@ -110,7 +110,7 @@ namespace TsiErp.Business.Entities.Branch.Services
 
                 var entity = await _uow.BranchRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.BranchRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.BranchRepository, input.Code, input.Id, entity, L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateBranchesDto, Branches>(input);
 

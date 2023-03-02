@@ -1,32 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.UnplannedMaintenance;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.SalesProposition;
 using TsiErp.Entities.Entities.UnplannedMaintenance;
-using TsiErp.Entities.Entities.SalesProposition;
-using TsiErp.Entities.Enums;
+using TsiErp.Localizations.Resources.UnplannedMaintenances.Page;
 
 namespace TsiErp.Business.Entities.UnplannedMaintenance.BusinessRules
 {
     public class UnplannedMaintenanceManager
     {
-        public async Task CodeControl(IUnplannedMaintenancesRepository _repository, string registrationNo)
+        public async Task CodeControl(IUnplannedMaintenancesRepository _repository, string registrationNo, IStringLocalizer<UnplannedMaintenancesResource> L)
         {
             if (await _repository.AnyAsync(t => t.RegistrationNo == registrationNo))
             {
-                throw new DuplicateCodeException("Aynı kayıt numaralı bir kayıt bulunmaktadır.");
+                throw new DuplicateCodeException(L["CodeControlManager"]);
             }
         }
 
-        public async Task UpdateControl(IUnplannedMaintenancesRepository _repository, string registrationNo, Guid id, UnplannedMaintenances entity)
+        public async Task UpdateControl(IUnplannedMaintenancesRepository _repository, string registrationNo, Guid id, UnplannedMaintenances entity, IStringLocalizer<UnplannedMaintenancesResource> L)
         {
             if (await _repository.AnyAsync(t => t.Id != id && t.RegistrationNo == registrationNo) && entity.RegistrationNo != registrationNo)
             {
-                throw new DuplicateCodeException("Aynı kayıt numaralı bir kayıt bulunmaktadır.");
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
             }
         }
 

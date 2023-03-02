@@ -79,6 +79,15 @@ namespace TsiErp.Localizations.Resources.Branches.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aynı kodlu bir kayıt bulunmaktadır..
+        /// </summary>
+        public static string CodeControlManager {
+            get {
+                return ResourceManager.GetString("CodeControlManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string ContextAdd {
@@ -115,7 +124,34 @@ namespace TsiErp.Localizations.Resources.Branches.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kayıt başarıyla silindi.
+        ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
+        /// </summary>
+        public static string DeleteConfirmationDescriptionBase {
+            get {
+                return ResourceManager.GetString("DeleteConfirmationDescriptionBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onay.
+        /// </summary>
+        public static string DeleteConfirmationTitleBase {
+            get {
+                return ResourceManager.GetString("DeleteConfirmationTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hareket gören kayıtlar silinemez..
+        /// </summary>
+        public static string DeleteControlManager {
+            get {
+                return ResourceManager.GetString("DeleteControlManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kayıt başarıyla silindi..
         /// </summary>
         public static string DeleteSuccessMessage {
             get {
@@ -124,7 +160,7 @@ namespace TsiErp.Localizations.Resources.Branches.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to error.
+        ///   Looks up a localized string similar to Hata.
         /// </summary>
         public static string Error {
             get {
@@ -151,11 +187,74 @@ namespace TsiErp.Localizations.Resources.Branches.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seçtiğiniz kayıt {0} tarafından kullanılmaktadır..
+        /// </summary>
+        public static string MessagePopupInformationDescriptionBase {
+            get {
+                return ResourceManager.GetString("MessagePopupInformationDescriptionBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bilgi.
+        /// </summary>
+        public static string MessagePopupInformationTitleBase {
+            get {
+                return ResourceManager.GetString("MessagePopupInformationTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ŞUBE ADI.
         /// </summary>
         public static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aynı kodlu bir kayıt bulunmaktadır..
+        /// </summary>
+        public static string UpdateControlManager {
+            get {
+                return ResourceManager.GetString("UpdateControlManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen şube kodunu yazın..
+        /// </summary>
+        public static string ValidatorCodeEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorCodeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şube kodu 17 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorCodeMaxLenght {
+            get {
+                return ResourceManager.GetString("ValidatorCodeMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen şube adını yazın..
+        /// </summary>
+        public static string ValidatorNameEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorNameEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şube adı 200 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorNameMaxLenght {
+            get {
+                return ResourceManager.GetString("ValidatorNameMaxLenght", resourceCulture);
             }
         }
     }
