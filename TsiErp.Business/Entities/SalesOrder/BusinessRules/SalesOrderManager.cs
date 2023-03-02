@@ -1,36 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.SalesOrder;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.SalesProposition;
 using TsiErp.Entities.Entities.SalesOrder;
-using TsiErp.Entities.Entities.SalesProposition;
 using TsiErp.Entities.Enums;
+using TsiErp.Localizations.Resources.SalesOrders.Page;
 
 namespace TsiErp.Business.Entities.SalesOrder.BusinessRules
 {
     public class SalesOrderManager
     {
-        public async Task CodeControl(ISalesOrdersRepository _repository, string ficheNo)
+        public async Task CodeControl(ISalesOrdersRepository _repository, string ficheNo, IStringLocalizer<SalesOrdersResource> L)
         {
             if (await _repository.AnyAsync(t => t.FicheNo == ficheNo))
             {
-                throw new DuplicateCodeException("Aynı numaralı bir kayıt bulunmaktadır.");
+                throw new DuplicateCodeException(L["CodeControlManager"]);
             }
         }
 
-        public async Task UpdateControl(ISalesOrdersRepository _repository, string ficheNo, Guid id, SalesOrders entity)
+        public async Task UpdateControl(ISalesOrdersRepository _repository, string ficheNo, Guid id, SalesOrders entity, IStringLocalizer<SalesOrdersResource> L)
         {
             if (await _repository.AnyAsync(t => t.Id != id && t.FicheNo == ficheNo) && entity.FicheNo != ficheNo)
             {
-                throw new DuplicateCodeException("Aynı numaralı bir kayıt bulunmaktadır.");
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
             }
         }
 
-        public async Task DeleteControl(ISalesOrdersRepository _repository, Guid id, Guid lineId, bool lineDelete)
+        public async Task DeleteControl(ISalesOrdersRepository _repository, Guid id, Guid lineId, bool lineDelete, IStringLocalizer<SalesOrdersResource> L)
         {
             if (lineDelete)
             {
@@ -42,7 +37,7 @@ namespace TsiErp.Business.Entities.SalesOrder.BusinessRules
                 {
                     if (line.SalesOrderLineStateEnum == SalesOrderLineStateEnum.Onaylandı)
                     {
-                        throw new Exception("Onaylanan satış teklifi satırları silinemez.");
+                        throw new Exception(L["DeleteSalesOrderLineManager"]);
                     }
                 }
             }
@@ -52,17 +47,17 @@ namespace TsiErp.Business.Entities.SalesOrder.BusinessRules
 
                 if (entity.SalesOrderState == SalesOrderStateEnum.Onaylandı)
                 {
-                    throw new Exception("Onaylanan satış siparişleri silinemez.");
+                    throw new Exception(L["DeleteSalesOrderManager"]);
                 }
 
                 if (entity.SalesOrderState == SalesOrderStateEnum.KismiUretimeVerildi)
                 {
-                    throw new Exception("Kısmi üretime verilen satış siparişleri silinemez.");
+                    throw new Exception(L["DeleteSalesOrderConvertPartialProductionManager"]);
                 }
 
                 if (entity.SalesOrderState == SalesOrderStateEnum.UretimeVerildi)
                 {
-                    throw new Exception("Üretime verilen satış siparişleri silinemez.");
+                    throw new Exception(L["DeleteSalesOrderConvertProductionManager"]);
                 }
             }
         }

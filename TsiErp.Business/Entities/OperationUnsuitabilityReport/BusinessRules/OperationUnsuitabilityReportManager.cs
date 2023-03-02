@@ -1,29 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
+using TsiErp.Localizations.Resources.OperationUnsuitabilityReports.Page;
 
 namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.BusinessRules
 {
     public class OperationUnsuitabilityReportManager
     {
-        public async Task CodeControl(IOperationUnsuitabilityReportsRepository _repository, string ficheno)
+        public async Task CodeControl(IOperationUnsuitabilityReportsRepository _repository, string ficheno, IStringLocalizer<OperationUnsuitabilityReportsResource> L)
         {
             if (await _repository.AnyAsync(t => t.FicheNo == ficheno))
             {
-                throw new DuplicateCodeException("Aynı numaralı bir kayıt bulunmaktadır.");
+                throw new DuplicateCodeException(L["CodeControlManager"]);
             }
         }
 
-        public async Task UpdateControl(IOperationUnsuitabilityReportsRepository _repository, string ficheno, Guid id, OperationUnsuitabilityReports entity)
+        public async Task UpdateControl(IOperationUnsuitabilityReportsRepository _repository, string ficheno, Guid id, OperationUnsuitabilityReports entity, IStringLocalizer<OperationUnsuitabilityReportsResource> L)
         {
             if (await _repository.AnyAsync(t => t.Id != id && t.FicheNo == ficheno) && entity.FicheNo != ficheno)
             {
-                throw new DuplicateCodeException("Aynı numaralı bir kayıt bulunmaktadır.");
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
             }
         }
 

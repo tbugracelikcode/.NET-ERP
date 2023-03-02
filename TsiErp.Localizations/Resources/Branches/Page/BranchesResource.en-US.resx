@@ -151,7 +151,7 @@
     <value>The record deleted successfully.</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>error</value>
+    <value>Error</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>

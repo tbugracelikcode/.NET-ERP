@@ -70,11 +70,110 @@ namespace TsiErp.Localizations.Resources.BillsofMaterials.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ContextAdd {
+            get {
+                return ResourceManager.GetString("ContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ContextChange {
+            get {
+                return ResourceManager.GetString("ContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ContextDelete {
+            get {
+                return ResourceManager.GetString("ContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ContextRefresh {
+            get {
+                return ResourceManager.GetString("ContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
+        /// </summary>
+        public static string DeleteConfirmationDescriptionBase {
+            get {
+                return ResourceManager.GetString("DeleteConfirmationDescriptionBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onay.
+        /// </summary>
+        public static string DeleteConfirmationTitleBase {
+            get {
+                return ResourceManager.GetString("DeleteConfirmationTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kayıt başarıyla silindi..
         /// </summary>
         public static string DeleteSuccessMessage {
             get {
                 return ResourceManager.GetString("DeleteSuccessMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hata.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen Bekleyin...
+        /// </summary>
+        public static string LoadingCaption {
+            get {
+                return ResourceManager.GetString("LoadingCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kayıtlar Yükleniyor...
+        /// </summary>
+        public static string LoadingText {
+            get {
+                return ResourceManager.GetString("LoadingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçtiğiniz kayıt {0} tarafından kullanılmaktadır..
+        /// </summary>
+        public static string MessagePopupInformationDescriptionBase {
+            get {
+                return ResourceManager.GetString("MessagePopupInformationDescriptionBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bilgi.
+        /// </summary>
+        public static string MessagePopupInformationTitleBase {
+            get {
+                return ResourceManager.GetString("MessagePopupInformationTitleBase", resourceCulture);
             }
         }
         

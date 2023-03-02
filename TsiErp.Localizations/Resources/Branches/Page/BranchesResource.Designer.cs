@@ -160,7 +160,7 @@ namespace TsiErp.Localizations.Resources.Branches.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to error.
+        ///   Looks up a localized string similar to Hata.
         /// </summary>
         public static string Error {
             get {

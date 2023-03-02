@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.EquipmentRecords.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.EquipmentRecord.BusinessRules;
@@ -16,9 +17,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.EquipmentRecord.Services
 {
     [ServiceRegistration(typeof(IEquipmentRecordsAppService), DependencyInjectionType.Scoped)]
-    public class EquipmentRecordsAppService : ApplicationService<BranchesResource>, IEquipmentRecordsAppService
+    public class EquipmentRecordsAppService : ApplicationService<EquipmentRecordsResource>, IEquipmentRecordsAppService
     {
-        public EquipmentRecordsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public EquipmentRecordsAppService(IStringLocalizer<EquipmentRecordsResource> l) : base(l)
         {
         }
 
@@ -31,7 +32,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.EquipmentRecordsRepository, input.Code);
+                await _manager.CodeControl(_uow.EquipmentRecordsRepository, input.Code,L);
 
                 var entity = ObjectMapper.Map<CreateEquipmentRecordsDto, EquipmentRecords>(input);
 
@@ -51,12 +52,12 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.DeleteControl(_uow.EquipmentRecordsRepository, id);
+                await _manager.DeleteControl(_uow.EquipmentRecordsRepository, id,L);
                 await _uow.EquipmentRecordsRepository.DeleteAsync(id);
                 var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "EquipmentRecords", LogType.Delete, id);
                 await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                return new SuccessResult(L["DeleteSuccessMessage"]);
             }
         }
 
@@ -98,7 +99,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
             {
                 var entity = await _uow.EquipmentRecordsRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.EquipmentRecordsRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.EquipmentRecordsRepository, input.Code, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateEquipmentRecordsDto, EquipmentRecords>(input);
 

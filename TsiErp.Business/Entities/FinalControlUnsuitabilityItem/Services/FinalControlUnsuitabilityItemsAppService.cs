@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results; 
+using TsiErp.Localizations.Resources.FinalControlUnsuitabilityItems.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.FinalControlUnsuitabilityItem.BusinessRules;
@@ -16,9 +17,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.FinalControlUnsuitabilityItem.Services
 {
     [ServiceRegistration(typeof(IFinalControlUnsuitabilityItemsAppService), DependencyInjectionType.Scoped)]
-    public class FinalControlUnsuitabilityItemsAppService : ApplicationService<BranchesResource>, IFinalControlUnsuitabilityItemsAppService
+    public class FinalControlUnsuitabilityItemsAppService : ApplicationService<FinalControlUnsuitabilityItemsResource>, IFinalControlUnsuitabilityItemsAppService
     {
-        public FinalControlUnsuitabilityItemsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public FinalControlUnsuitabilityItemsAppService(IStringLocalizer<FinalControlUnsuitabilityItemsResource> l) : base(l)
         {
         }
 
@@ -30,7 +31,7 @@ namespace TsiErp.Business.Entities.FinalControlUnsuitabilityItem.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.FinalControlUnsuitabilityItemsRepository, input.Code);
+                await _manager.CodeControl(_uow.FinalControlUnsuitabilityItemsRepository, input.Code,L);
 
                 var entity = ObjectMapper.Map<CreateFinalControlUnsuitabilityItemsDto, FinalControlUnsuitabilityItems>(input);
 
@@ -54,7 +55,7 @@ namespace TsiErp.Business.Entities.FinalControlUnsuitabilityItem.Services
                 var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "FinalControlUnsuitabilityItems", LogType.Delete, id);
                 await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                return new SuccessResult(L["DeleteSuccessMessage"]);
             }
         }
 
@@ -95,7 +96,7 @@ namespace TsiErp.Business.Entities.FinalControlUnsuitabilityItem.Services
             {
                 var entity = await _uow.FinalControlUnsuitabilityItemsRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.FinalControlUnsuitabilityItemsRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.FinalControlUnsuitabilityItemsRepository, input.Code, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateFinalControlUnsuitabilityItemsDto, FinalControlUnsuitabilityItems>(input);
 

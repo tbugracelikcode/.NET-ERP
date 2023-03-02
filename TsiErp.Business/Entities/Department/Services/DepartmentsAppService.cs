@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.Departments.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Department.BusinessRules;
@@ -16,9 +17,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.Department.Services
 {
     [ServiceRegistration(typeof(IDepartmentsAppService), DependencyInjectionType.Scoped)]
-    public class DepartmentsAppService : ApplicationService<BranchesResource>, IDepartmentsAppService
+    public class DepartmentsAppService : ApplicationService<DepartmentsResource>, IDepartmentsAppService
     {
-        public DepartmentsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public DepartmentsAppService(IStringLocalizer<DepartmentsResource> l) : base(l)
         {
         }
 
@@ -31,7 +32,7 @@ namespace TsiErp.Business.Entities.Department.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.DepartmentsRepository, input.Code);
+                await _manager.CodeControl(_uow.DepartmentsRepository, input.Code,L);
 
                 var entity = ObjectMapper.Map<CreateDepartmentsDto, Departments>(input);
 
@@ -52,12 +53,12 @@ namespace TsiErp.Business.Entities.Department.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.DeleteControl(_uow.DepartmentsRepository, id);
+                await _manager.DeleteControl(_uow.DepartmentsRepository, id,L);
                 await _uow.DepartmentsRepository.DeleteAsync(id);
                 var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Departments", LogType.Delete, id);
                 await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                return new SuccessResult(L["DeleteSuccessMessage"]);
             }
         }
 
@@ -98,7 +99,7 @@ namespace TsiErp.Business.Entities.Department.Services
             {
                 var entity = await _uow.DepartmentsRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.DepartmentsRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.DepartmentsRepository, input.Code, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateDepartmentsDto, Departments>(input);
 

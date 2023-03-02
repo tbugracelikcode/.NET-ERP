@@ -1,36 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.SalesProposition;
-using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.SalesProposition;
 using TsiErp.Entities.Enums;
+using TsiErp.Localizations.Resources.SalesPropositions.Page;
 
 namespace TsiErp.Business.Entities.SalesProposition.BusinessRules
 {
     public class SalesPropositionManager
     {
-        public async Task CodeControl(ISalesPropositionsRepository _repository, string ficheNo)
+        public async Task CodeControl(ISalesPropositionsRepository _repository, string ficheNo, IStringLocalizer<SalesPropositionsResource> L)
         {
             if (await _repository.AnyAsync(t => t.FicheNo == ficheNo))
             {
-                throw new DuplicateCodeException("Aynı numaralı bir kayıt bulunmaktadır.");
+                throw new DuplicateCodeException(L["CodeControlManager"]);
             }
         }
 
-        public async Task UpdateControl(ISalesPropositionsRepository _repository, string ficheNo, Guid id, SalesPropositions entity)
+        public async Task UpdateControl(ISalesPropositionsRepository _repository, string ficheNo, Guid id, SalesPropositions entity, IStringLocalizer<SalesPropositionsResource> L)
         {
             if (await _repository.AnyAsync(t => t.Id != id && t.FicheNo == ficheNo) && entity.FicheNo != ficheNo)
             {
-                throw new DuplicateCodeException("Aynı numaralı bir kayıt bulunmaktadır.");
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
             }
         }
 
-        public async Task DeleteControl(ISalesPropositionsRepository _repository, Guid id,  Guid lineId,bool lineDelete)
+        public async Task DeleteControl(ISalesPropositionsRepository _repository, Guid id,  Guid lineId,bool lineDelete, IStringLocalizer<SalesPropositionsResource> L)
         {
             if (lineDelete)
             {
@@ -42,7 +37,7 @@ namespace TsiErp.Business.Entities.SalesProposition.BusinessRules
                 {
                     if (line.SalesPropositionLineState == SalesPropositionLineStateEnum.Onaylandı)
                     {
-                        throw new Exception("Onaylanan satış teklifi satırları silinemez.");
+                        throw new Exception(L["DeleteSalesPropositionLineManager"]);
                     }
                 }
             }
@@ -52,17 +47,17 @@ namespace TsiErp.Business.Entities.SalesProposition.BusinessRules
 
                 if (entity.SalesPropositionState == SalesPropositionStateEnum.Onaylandı)
                 {
-                    throw new Exception("Onaylanan satış teklifleri silinemez.");
+                    throw new Exception(L["DeleteSalesPropositionManager"]);
                 }
 
                 if (entity.SalesPropositionState == SalesPropositionStateEnum.Siparis)
                 {
-                    throw new Exception("Siparişe dönüşen satış teklifleri silinemez.");
+                    throw new Exception(L["DeleteSalesPropositionConvertManager"]);
                 }
 
                 if (entity.SalesPropositionState == SalesPropositionStateEnum.KismiSiparis)
                 {
-                    throw new Exception("Siparişe dönüşen satış teklifleri silinemez.");
+                    throw new Exception(L["DeleteSalesPropositionConvertManager"]);
                 }
             }
         }

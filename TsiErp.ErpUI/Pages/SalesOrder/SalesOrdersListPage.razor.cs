@@ -431,6 +431,7 @@ namespace TsiErp.ErpUI.Pages.SalesOrder
         protected override async Task OnInitializedAsync()
         {
             BaseCrudService = SalesOrdersAppService;
+            _L = L;
 
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();

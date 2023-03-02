@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results; 
+using TsiErp.Localizations.Resources.PurchaseRequests.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -20,9 +21,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.PurchaseRequest.Services
 {
     [ServiceRegistration(typeof(IPurchaseRequestsAppService), DependencyInjectionType.Scoped)]
-    public class PurchaseRequestsAppService : ApplicationService<BranchesResource>, IPurchaseRequestsAppService
+    public class PurchaseRequestsAppService : ApplicationService<PurchaseRequestsResource>, IPurchaseRequestsAppService
     {
-        public PurchaseRequestsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public PurchaseRequestsAppService(IStringLocalizer<PurchaseRequestsResource> l) : base(l)
         {
         }
 
@@ -34,7 +35,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.PurchaseRequestsRepository, input.FicheNo);
+                await _manager.CodeControl(_uow.PurchaseRequestsRepository, input.FicheNo,L);
 
                 var entity = ObjectMapper.Map<CreatePurchaseRequestsDto, PurchaseRequests>(input);
 
@@ -64,14 +65,14 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
                 if (lines != null)
                 {
-                    await _manager.DeleteControl(_uow.PurchaseRequestsRepository, lines.PurchaseRequestID, lines.Id, true);
+                    await _manager.DeleteControl(_uow.PurchaseRequestsRepository, lines.PurchaseRequestID, lines.Id, true,L);
                     await _uow.PurchaseRequestLinesRepository.DeleteAsync(id);
                     await _uow.SaveChanges();
-                    return new SuccessResult("Silme işlemi başarılı.");
+                    return new SuccessResult(L["DeleteSuccessMessage"]);
                 }
                 else
                 {
-                    await _manager.DeleteControl(_uow.PurchaseRequestsRepository, id, Guid.Empty, false);
+                    await _manager.DeleteControl(_uow.PurchaseRequestsRepository, id, Guid.Empty, false,L);
                     var list = (await _uow.PurchaseRequestLinesRepository.GetListAsync(t => t.PurchaseRequestID == id));
                     foreach (var line in list)
                     {
@@ -82,7 +83,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                     var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "PurchaseRequests", LogType.Delete, id);
                     await _uow.LogsRepository.InsertAsync(log);
                     await _uow.SaveChanges();
-                    return new SuccessResult("Silme işlemi başarılı.");
+                    return new SuccessResult(L["DeleteSuccessMessage"]);
                 }
             }
         }
@@ -147,7 +148,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
             {
                 var entity = await _uow.PurchaseRequestsRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.PurchaseRequestsRepository, input.FicheNo, input.Id, entity);
+                await _manager.UpdateControl(_uow.PurchaseRequestsRepository, input.FicheNo, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdatePurchaseRequestsDto, PurchaseRequests>(input);
 

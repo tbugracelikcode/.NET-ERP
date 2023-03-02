@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.GrandTotalStockMovements.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GrandTotalStockMovement.BusinessRules;
@@ -16,9 +17,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
 {
     [ServiceRegistration(typeof(IGrandTotalStockMovementsAppService), DependencyInjectionType.Scoped)]
-    public class GrandTotalStockMovementsAppService : ApplicationService<BranchesResource>, IGrandTotalStockMovementsAppService
+    public class GrandTotalStockMovementsAppService : ApplicationService<GrandTotalStockMovementsResource>, IGrandTotalStockMovementsAppService
     {
-        public GrandTotalStockMovementsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public GrandTotalStockMovementsAppService(IStringLocalizer<GrandTotalStockMovementsResource> l) : base(l)
         {
         }
 
@@ -54,7 +55,7 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
                 await _uow.LogsRepository.InsertAsync(log);
 
                 await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                return new SuccessResult(L["DeleteSuccessMessage"]);
             }
         }
 

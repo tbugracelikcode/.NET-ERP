@@ -460,6 +460,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseRequest
         protected override async void OnInitialized()
         {
             BaseCrudService = PurchaseRequestsAppService;
+            _L = L;
 
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();

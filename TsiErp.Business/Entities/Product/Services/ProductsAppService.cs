@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.Products.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -16,9 +17,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.Product.Services
 {
     [ServiceRegistration(typeof(IProductsAppService), DependencyInjectionType.Scoped)]
-    public class ProductsAppService : ApplicationService<BranchesResource>, IProductsAppService
+    public class ProductsAppService : ApplicationService<ProductsResource>, IProductsAppService
     {
-        public ProductsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public ProductsAppService(IStringLocalizer<ProductsResource> l) : base(l)
         {
         }
 
@@ -30,7 +31,7 @@ namespace TsiErp.Business.Entities.Product.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.ProductsRepository, input.Code);
+                await _manager.CodeControl(_uow.ProductsRepository, input.Code,L);
 
                 var entity = ObjectMapper.Map<CreateProductsDto, Products>(input);
 
@@ -56,7 +57,7 @@ namespace TsiErp.Business.Entities.Product.Services
                 var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Products", LogType.Delete, id);
                 await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                return new SuccessResult(L["DeleteSuccessMessage"]);
             }
         }
 
@@ -97,7 +98,7 @@ namespace TsiErp.Business.Entities.Product.Services
             {
                 var entity = await _uow.ProductsRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.ProductsRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.ProductsRepository, input.Code, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateProductsDto, Products>(input);
 

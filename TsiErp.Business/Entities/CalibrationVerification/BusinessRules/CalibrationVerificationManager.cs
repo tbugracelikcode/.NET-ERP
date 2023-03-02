@@ -1,31 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.CalibrationVerification;
-using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.CalibrationVerification;
+using TsiErp.Localizations.Resources.CalibrationVerifications.Page;
 
 namespace TsiErp.Business.Entities.CalibrationVerification.BusinessRules
 {
     public class CalibrationVerificationManager
     {
-        public async Task CodeControl(ICalibrationVerificationsRepository _repository, string code)
+        public async Task CodeControl(ICalibrationVerificationsRepository _repository, string code, IStringLocalizer<CalibrationVerificationsResource> L)
         {
             if (await _repository.AnyAsync(t => t.Code == code))
             {
-                throw new DuplicateCodeException("Aynı kodlu bir kayıt bulunmaktadır.");
+                throw new DuplicateCodeException(L["CodeControlManager"]);
             }
         }
 
-        public async Task UpdateControl(ICalibrationVerificationsRepository _repository, string code, Guid id, CalibrationVerifications entity)
+        public async Task UpdateControl(ICalibrationVerificationsRepository _repository, string code, Guid id, CalibrationVerifications entity, IStringLocalizer<CalibrationVerificationsResource> L)
         {
             if (await _repository.AnyAsync(t => t.Id != id && t.Code == code) && entity.Code != code)
             {
-                throw new DuplicateCodeException("Aynı kodlu bir kayıt bulunmaktadır.");
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
             }
         }
 

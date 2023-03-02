@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.Forecasts.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Forecast.BusinessRules;
@@ -18,9 +19,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.Forecast.Services
 {
     [ServiceRegistration(typeof(IForecastsAppService), DependencyInjectionType.Scoped)]
-    public class ForecastsAppService : ApplicationService<BranchesResource>, IForecastsAppService
+    public class ForecastsAppService : ApplicationService<ForecastsResource>, IForecastsAppService
     {
-        public ForecastsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public ForecastsAppService(IStringLocalizer<ForecastsResource> l) : base(l)
         {
         }
 
@@ -32,7 +33,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.ForecastsRepository, input.Code);
+                await _manager.CodeControl(_uow.ForecastsRepository, input.Code,L);
 
                 var entity = ObjectMapper.Map<CreateForecastsDto, Forecasts>(input);
 
@@ -65,7 +66,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                     await _manager.DeleteControl(_uow.ForecastsRepository, lines.ForecastID, lines.Id, true);
                     await _uow.ForecastLinesRepository.DeleteAsync(id);
                     await _uow.SaveChanges();
-                    return new SuccessResult("Silme işlemi başarılı.");
+                    return new SuccessResult(L["DeleteSuccessMessage"]);
                 }
                 else
                 {
@@ -139,7 +140,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
             {
                 var entity = await _uow.ForecastsRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.ForecastsRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.ForecastsRepository, input.Code, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateForecastsDto, Forecasts>(input);
 

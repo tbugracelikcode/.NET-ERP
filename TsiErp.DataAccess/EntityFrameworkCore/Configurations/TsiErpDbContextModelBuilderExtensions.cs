@@ -1538,6 +1538,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.ConfigureByConvention();
                 b.ConfigureByConcurrencyConvention();
 
+                b.Property(t => t.Code).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(17);
                 b.Property(t => t.WorkOrderID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.ProducedQuantity).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.OperationTime).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());

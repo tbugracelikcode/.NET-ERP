@@ -449,6 +449,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseOrder
         protected override async Task OnInitializedAsync()
         {
             BaseCrudService = PurchaseOrdersAppService;
+            _L = L;
 
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();

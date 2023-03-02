@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.ContractProductionTrackings.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.Entities.ContractProductionTracking.BusinessRules;
 using TsiErp.Business.Entities.ContractProductionTracking.Validations;
@@ -10,13 +11,20 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.ContractProductionTracking;
 using TsiErp.Entities.Entities.ContractProductionTracking.Dtos;
+using Microsoft.Extensions.Localization;
+using TsiErp.Business.BusinessCoreServices;
 
 namespace TsiErp.Business.Entities.ContractProductionTracking.Services
 {
     [ServiceRegistration(typeof(IContractProductionTrackingsAppService), DependencyInjectionType.Scoped)]
-    public class ContractProductionTrackingsAppService : IContractProductionTrackingsAppService
+    public class ContractProductionTrackingsAppService : ApplicationService<ContractProductionTrackingsResource>, IContractProductionTrackingsAppService
     {
         ContractProductionTrackingManager _manager { get; set; } = new ContractProductionTrackingManager();
+
+        public ContractProductionTrackingsAppService(IStringLocalizer<ContractProductionTrackingsResource> l) : base(l)
+        {
+
+        }
 
         [ValidationAspect(typeof(CreateContractProductionTrackingsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
@@ -24,7 +32,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.ContractProductionTrackingsRepository);
+                await _manager.CodeControl(_uow.ContractProductionTrackingsRepository, L);
 
                 var entity = ObjectMapper.Map<CreateContractProductionTrackingsDto, ContractProductionTrackings>(input);
 
@@ -50,7 +58,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                 await _uow.LogsRepository.InsertAsync(log);
 
                 await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                return new SuccessResult(L["DeleteSuccessMessage"]);
             }
         }
 
@@ -89,7 +97,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
             {
                 var entity = await _uow.ContractProductionTrackingsRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.ContractProductionTrackingsRepository, input.Id, entity);
+                await _manager.UpdateControl(_uow.ContractProductionTrackingsRepository, input.Id, entity, L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateContractProductionTrackingsDto, ContractProductionTrackings>(input);
 

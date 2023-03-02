@@ -1,44 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.EquipmentRecord;
-using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.EquipmentRecord;
+using TsiErp.Localizations.Resources.EquipmentRecords.Page;
 
 namespace TsiErp.Business.Entities.EquipmentRecord.BusinessRules
 {
     public class EquipmentRecordManager
     {
-        public async Task CodeControl(IEquipmentRecordsRepository _repository, string code)
+        public async Task CodeControl(IEquipmentRecordsRepository _repository, string code, IStringLocalizer<EquipmentRecordsResource> L)
         {
             if (await _repository.AnyAsync(t => t.Code == code))
             {
-                throw new DuplicateCodeException("Aynı kodlu bir kayıt bulunmaktadır.");
+                throw new DuplicateCodeException(L["CodeControlManager"]);
             }
         }
 
-        public async Task UpdateControl(IEquipmentRecordsRepository _repository, string code, Guid id, EquipmentRecords entity)
+        public async Task UpdateControl(IEquipmentRecordsRepository _repository, string code, Guid id, EquipmentRecords entity, IStringLocalizer<EquipmentRecordsResource> L)
         {
             if (await _repository.AnyAsync(t => t.Id != id && t.Code == code) && entity.Code != code)
             {
-                throw new DuplicateCodeException("Aynı kodlu bir kayıt bulunmaktadır.");
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
             }
         }
 
-        public async Task DeleteControl(IEquipmentRecordsRepository _repository, Guid id)
+        public async Task DeleteControl(IEquipmentRecordsRepository _repository, Guid id, IStringLocalizer<EquipmentRecordsResource> L)
         {
             if (await _repository.AnyAsync(t => t.CalibrationRecords.Any(x => x.EquipmentID == id)))
             {
-                throw new Exception("Hareket gören kayıtlar silinemez.");
+                throw new Exception(L["DeleteControlManager"]);
             }
 
             if (await _repository.AnyAsync(t => t.CalibrationVerifications.Any(x => x.EquipmentID == id)))
             {
-                throw new Exception("Hareket gören kayıtlar silinemez.");
+                throw new Exception(L["DeleteControlManager"]);
             }
         }
     }

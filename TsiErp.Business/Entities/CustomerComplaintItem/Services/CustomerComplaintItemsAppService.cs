@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results; 
+using TsiErp.Localizations.Resources.CustomerComplaintItems.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.CustomerComplaintItem.BusinessRules;
@@ -16,9 +17,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.CustomerComplaintItem.Services
 {
     [ServiceRegistration(typeof(ICustomerComplaintItemsAppService), DependencyInjectionType.Scoped)]
-    public class CustomerComplaintItemsAppService : ApplicationService<BranchesResource>, ICustomerComplaintItemsAppService
+    public class CustomerComplaintItemsAppService : ApplicationService<CustomerComplaintItemsResource>, ICustomerComplaintItemsAppService
     {
-        public CustomerComplaintItemsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public CustomerComplaintItemsAppService(IStringLocalizer<CustomerComplaintItemsResource> l) : base(l)
         {
         }
 
@@ -30,7 +31,7 @@ namespace TsiErp.Business.Entities.CustomerComplaintItem.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.CustomerComplaintItemsRepository, input.Code);
+                await _manager.CodeControl(_uow.CustomerComplaintItemsRepository, input.Code,L);
 
                 var entity = ObjectMapper.Map<CreateCustomerComplaintItemsDto, CustomerComplaintItems>(input);
 
@@ -55,7 +56,7 @@ namespace TsiErp.Business.Entities.CustomerComplaintItem.Services
                 await _uow.LogsRepository.InsertAsync(log);
 
                 await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                return new SuccessResult(L["DeleteSuccessMessage"]);
             }
         }
 
@@ -97,7 +98,7 @@ namespace TsiErp.Business.Entities.CustomerComplaintItem.Services
             {
                 var entity = await _uow.CustomerComplaintItemsRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.CustomerComplaintItemsRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.CustomerComplaintItemsRepository, input.Code, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateCustomerComplaintItemsDto, CustomerComplaintItems>(input);
 

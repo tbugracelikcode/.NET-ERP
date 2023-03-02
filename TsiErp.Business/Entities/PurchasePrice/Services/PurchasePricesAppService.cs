@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.PurchasePrices.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -18,9 +19,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.PurchasePrice.Services
 {
     [ServiceRegistration(typeof(IPurchasePricesAppService), DependencyInjectionType.Scoped)]
-    public class PurchasePricesAppService : ApplicationService<BranchesResource>, IPurchasePricesAppService
+    public class PurchasePricesAppService : ApplicationService<PurchasePricesResource>, IPurchasePricesAppService
     {
-        public PurchasePricesAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public PurchasePricesAppService(IStringLocalizer<PurchasePricesResource> l) : base(l)
         {
         }
 
@@ -32,7 +33,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.PurchasePricesRepository, input.Code);
+                await _manager.CodeControl(_uow.PurchasePricesRepository, input.Code,L);
 
                 var entity = ObjectMapper.Map<CreatePurchasePricesDto, PurchasePrices>(input);
 
@@ -66,7 +67,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                     await _manager.DeleteControl(_uow.PurchasePricesRepository, lines.PurchasePriceID, lines.Id, true);
                     await _uow.PurchasePriceLinesRepository.DeleteAsync(id);
                     await _uow.SaveChanges();
-                    return new SuccessResult("Silme işlemi başarılı.");
+                    return new SuccessResult(L["DeleteSuccessMessage"]);
                 }
                 else
                 {
@@ -80,7 +81,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                     var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "PurchasePrices", LogType.Delete, id);
                     await _uow.LogsRepository.InsertAsync(log);
                     await _uow.SaveChanges();
-                    return new SuccessResult("Silme işlemi başarılı.");
+                    return new SuccessResult(L["DeleteSuccessMessage"]);
                 }
             }
         }
@@ -140,7 +141,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
             {
                 var entity = await _uow.PurchasePricesRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.PurchasePricesRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.PurchasePricesRepository, input.Code, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdatePurchasePricesDto, PurchasePrices>(input);
 

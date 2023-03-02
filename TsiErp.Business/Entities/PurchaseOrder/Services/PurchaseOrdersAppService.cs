@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results; 
+using TsiErp.Localizations.Resources.PurchaseOrders.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -19,11 +20,11 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.PurchaseOrder.Services
 {
     [ServiceRegistration(typeof(IPurchaseOrdersAppService), DependencyInjectionType.Scoped)]
-    public class PurchaseOrdersAppService : ApplicationService<BranchesResource>, IPurchaseOrdersAppService
+    public class PurchaseOrdersAppService : ApplicationService<PurchaseOrdersResource>, IPurchaseOrdersAppService
     {
         private readonly IPurchaseRequestsAppService _PurchaseRequestsAppService;
 
-        public PurchaseOrdersAppService(IStringLocalizer<BranchesResource> l, IPurchaseRequestsAppService PurchaseRequestsAppService) : base(l)
+        public PurchaseOrdersAppService(IStringLocalizer<PurchaseOrdersResource> l, IPurchaseRequestsAppService PurchaseRequestsAppService) : base(l)
         {
             _PurchaseRequestsAppService = PurchaseRequestsAppService;
         }
@@ -38,7 +39,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.PurchaseOrdersRepository, input.FicheNo);
+                await _manager.CodeControl(_uow.PurchaseOrdersRepository, input.FicheNo,L);
 
                 var entity = ObjectMapper.Map<CreatePurchaseOrdersDto, PurchaseOrders>(input);
 
@@ -66,7 +67,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.PurchaseOrdersRepository, input.FicheNo);
+                await _manager.CodeControl(_uow.PurchaseOrdersRepository, input.FicheNo,L);
 
                 var entity = ObjectMapper.Map<CreatePurchaseOrdersDto, PurchaseOrders>(input);
 
@@ -104,7 +105,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                     await _manager.DeleteControl(_uow.PurchaseOrdersRepository, lines.PurchaseOrderID, lines.Id, true);
                     await _uow.PurchaseOrderLinesRepository.DeleteAsync(id);
                     await _uow.SaveChanges();
-                    return new SuccessResult("Silme işlemi başarılı.");
+                    return new SuccessResult(L["DeleteSuccessMessage"]);
                 }
                 else
                 {
@@ -120,7 +121,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                     var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "PurchaseOrders", LogType.Delete, id);
                     await _uow.LogsRepository.InsertAsync(log);
                     await _uow.SaveChanges();
-                    return new SuccessResult("Silme işlemi başarılı.");
+                    return new SuccessResult(L["DeleteSuccessMessage"]);
                 }
             }
         }
@@ -182,7 +183,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
             {
                 var entity = await _uow.PurchaseOrdersRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.PurchaseOrdersRepository, input.FicheNo, input.Id, entity);
+                await _manager.UpdateControl(_uow.PurchaseOrdersRepository, input.FicheNo, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdatePurchaseOrdersDto, PurchaseOrders>(input);
 

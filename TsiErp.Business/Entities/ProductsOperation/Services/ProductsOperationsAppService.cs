@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results; 
+using TsiErp.Localizations.Resources.ProductsOperations.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -19,9 +20,9 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
 {
     [ServiceRegistration(typeof(IProductsOperationsAppService), DependencyInjectionType.Scoped)]
 
-    public class ProductsOperationsAppService : ApplicationService<BranchesResource>, IProductsOperationsAppService
+    public class ProductsOperationsAppService : ApplicationService<ProductsOperationsResource>, IProductsOperationsAppService
     {
-        public ProductsOperationsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public ProductsOperationsAppService(IStringLocalizer<ProductsOperationsResource> l) : base(l)
         {
         }
 
@@ -33,7 +34,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.ProductsOperationsRepository, input.Code);
+                await _manager.CodeControl(_uow.ProductsOperationsRepository, input.Code,L);
 
                 var entity = ObjectMapper.Map<CreateProductsOperationsDto, ProductsOperations>(input);
 
@@ -66,7 +67,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                     await _manager.DeleteControl(_uow.ProductsOperationsRepository, lines.ProductsOperationID, lines.Id, true);
                     await _uow.ProductsOperationLinesRepository.DeleteAsync(id);
                     await _uow.SaveChanges();
-                    return new SuccessResult("Silme işlemi başarılı.");
+                    return new SuccessResult(L["DeleteSuccessMessage"]);
                 }
                 else
                 {
@@ -81,7 +82,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                     var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "ProductsOperations", LogType.Delete, id);
                     await _uow.LogsRepository.InsertAsync(log);
                     await _uow.SaveChanges();
-                    return new SuccessResult("Silme işlemi başarılı.");
+                    return new SuccessResult(L["DeleteSuccessMessage"]);
                 }
             }
         }
@@ -132,7 +133,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
             {
                 var entity = await _uow.ProductsOperationsRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.ProductsOperationsRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.ProductsOperationsRepository, input.Code, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateProductsOperationsDto, ProductsOperations>(input);
 

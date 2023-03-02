@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.WorkOrders.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -16,9 +17,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.WorkOrder.Services
 {
     [ServiceRegistration(typeof(IWorkOrdersAppService), DependencyInjectionType.Scoped)]
-    public class WorkOrdersAppService : ApplicationService<BranchesResource>, IWorkOrdersAppService
+    public class WorkOrdersAppService : ApplicationService<WorkOrdersResource>, IWorkOrdersAppService
     {
-        public WorkOrdersAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public WorkOrdersAppService(IStringLocalizer<WorkOrdersResource> l) : base(l)
         {
         }
 
@@ -30,7 +31,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.WorkOrdersRepository, input.Code);
+                await _manager.CodeControl(_uow.WorkOrdersRepository, input.Code,L);
 
                 var entity = ObjectMapper.Map<CreateWorkOrdersDto, WorkOrders>(input);
 
@@ -56,7 +57,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "WorkOrders", LogType.Delete, id);
                 await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                return new SuccessResult(L["DeleteSuccessMessage"]);
             }
         }
 
@@ -113,7 +114,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
             {
                 var entity = await _uow.WorkOrdersRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.WorkOrdersRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.WorkOrdersRepository, input.Code, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateWorkOrdersDto, WorkOrders>(input);
 
