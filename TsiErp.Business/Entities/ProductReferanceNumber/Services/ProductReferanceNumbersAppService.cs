@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.ProductReferanceNumbers.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -16,9 +17,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
 {
     [ServiceRegistration(typeof(IProductReferanceNumbersAppService), DependencyInjectionType.Scoped)]
-    public class ProductReferanceNumbersAppService : ApplicationService<BranchesResource>, IProductReferanceNumbersAppService
+    public class ProductReferanceNumbersAppService : ApplicationService<ProductReferanceNumbersResource>, IProductReferanceNumbersAppService
     {
-        public ProductReferanceNumbersAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public ProductReferanceNumbersAppService(IStringLocalizer<ProductReferanceNumbersResource> l) : base(l)
         {
         }
 
@@ -31,7 +32,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.ProductReferanceNumbersRepository, input.ReferanceNo);
+                await _manager.CodeControl(_uow.ProductReferanceNumbersRepository, input.ReferanceNo,L);
 
                 var entity = ObjectMapper.Map<CreateProductReferanceNumbersDto, ProductReferanceNumbers>(input);
 
@@ -56,7 +57,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
                 var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "ProductReferanceNumbers", LogType.Delete, id);
                 await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                return new SuccessResult(L["DeleteSuccessMessage"]);
             }
         }
 
@@ -118,7 +119,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
             {
                 var entity = await _uow.ProductReferanceNumbersRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.ProductReferanceNumbersRepository, input.ReferanceNo, input.Id, entity);
+                await _manager.UpdateControl(_uow.ProductReferanceNumbersRepository, input.ReferanceNo, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateProductReferanceNumbersDto, ProductReferanceNumbers>(input);
 

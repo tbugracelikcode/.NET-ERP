@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results; 
+using TsiErp.Localizations.Resources.UnplannedMaintenances.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -18,9 +19,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
 {
     [ServiceRegistration(typeof(IUnplannedMaintenancesAppService), DependencyInjectionType.Scoped)]
-    public class UnplannedMaintenancesAppService : ApplicationService<BranchesResource>, IUnplannedMaintenancesAppService
+    public class UnplannedMaintenancesAppService : ApplicationService<UnplannedMaintenancesResource>, IUnplannedMaintenancesAppService
     {
-        public UnplannedMaintenancesAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public UnplannedMaintenancesAppService(IStringLocalizer<UnplannedMaintenancesResource> l) : base(l)
         {
         }
 
@@ -32,7 +33,7 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.UnplannedMaintenancesRepository, input.RegistrationNo);
+                await _manager.CodeControl(_uow.UnplannedMaintenancesRepository, input.RegistrationNo,L);
 
                 var entity = ObjectMapper.Map<CreateUnplannedMaintenancesDto, UnplannedMaintenances>(input);
 
@@ -65,7 +66,7 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
                     await _manager.DeleteControl(_uow.UnplannedMaintenancesRepository, lines.UnplannedMaintenanceID, lines.Id, true);
                     await _uow.UnplannedMaintenanceLinesRepository.DeleteAsync(id);
                     await _uow.SaveChanges();
-                    return new SuccessResult("Silme işlemi başarılı.");
+                    return new SuccessResult(L["DeleteSuccessMessage"]);
                 }
                 else
                 {
@@ -82,7 +83,7 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
                     var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "UnplannedMaintenances", LogType.Delete, id);
                     await _uow.LogsRepository.InsertAsync(log);
                     await _uow.SaveChanges();
-                    return new SuccessResult("Silme işlemi başarılı.");
+                    return new SuccessResult(L["DeleteSuccessMessage"]);
                 }
             }
         }
@@ -137,7 +138,7 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
             {
                 var entity = await _uow.UnplannedMaintenancesRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.UnplannedMaintenancesRepository, input.RegistrationNo, input.Id, entity);
+                await _manager.UpdateControl(_uow.UnplannedMaintenancesRepository, input.RegistrationNo, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateUnplannedMaintenancesDto, UnplannedMaintenances>(input);
 

@@ -82,13 +82,15 @@ namespace TsiErp.ErpUI.Pages.Base
 
         protected async virtual Task<IDataResult<TGetOutputDto>> CreateAsync(TCreateInput input)
         {
+            var loc = (IStringLocalizer)_L;
+
             try
             {
                 return await BaseCrudService.CreateAsync(input);
             }
             catch (DuplicateCodeException exp)
             {
-                await ModalManager.MessagePopupAsync("Bilgi", exp.Message);
+                await ModalManager.MessagePopupAsync(loc["MessagePopupInformationTitleBase"], exp.Message);
                 return new ErrorDataResult<TGetOutputDto>();
             }
             catch (ValidationException exp)
@@ -105,25 +107,26 @@ namespace TsiErp.ErpUI.Pages.Base
 
                 sb.AppendLine("</ul>");
 
-                await ModalManager.MessagePopupAsync("Bilgi", sb.ToString());
+                await ModalManager.MessagePopupAsync(loc["MessagePopupInformationTitleBase"], sb.ToString());
                 return new ErrorDataResult<TGetOutputDto>();
             }
             catch (Exception exp)
             {
-                await ModalManager.MessagePopupAsync("Hata", exp.Message + "\n" + exp.InnerException.Message);
+                await ModalManager.MessagePopupAsync(loc["Error"], exp.Message + "\n" + exp.InnerException.Message);
                 return new ErrorDataResult<TGetOutputDto>();
             }
         }
 
         protected async virtual Task<IDataResult<TGetOutputDto>> UpdateAsync(TUpdateInput input)
         {
+            var loc = (IStringLocalizer)_L;
             try
             {
                 return await BaseCrudService.UpdateAsync(input);
             }
             catch (DuplicateCodeException exp)
             {
-                await ModalManager.MessagePopupAsync("Bilgi", exp.Message);
+                await ModalManager.MessagePopupAsync(loc["MessagePopupInformationTitleBase"], exp.Message);
                 return new ErrorDataResult<TGetOutputDto>();
             }
             catch (ValidationException exp)
@@ -140,25 +143,26 @@ namespace TsiErp.ErpUI.Pages.Base
 
                 sb.AppendLine("</ul>");
 
-                await ModalManager.MessagePopupAsync("Bilgi", sb.ToString());
+                await ModalManager.MessagePopupAsync(loc["MessagePopupInformationTitleBase"], sb.ToString());
                 return new ErrorDataResult<TGetOutputDto>();
             }
             catch (Exception exp)
             {
-                await ModalManager.MessagePopupAsync("Hata", exp.Message + "\n" + exp.InnerException.Message);
+                await ModalManager.MessagePopupAsync(loc["Error"], exp.Message + "\n" + exp.InnerException.Message);
                 return new ErrorDataResult<TGetOutputDto>();
             }
         }
 
         protected async virtual Task<IResult> DeleteAsync(Guid id)
         {
+            var loc = (IStringLocalizer)_L;
             try
             {
                 return await BaseCrudService.DeleteAsync(id);
             }
             catch (Exception exp)
             {
-                await ModalManager.MessagePopupAsync("Hata", exp.Message + "\n" + exp.InnerException.Message);
+                await ModalManager.MessagePopupAsync(loc["Error"], exp.Message + "\n" + exp.InnerException.Message);
                 return new ErrorDataResult<TGetOutputDto>();
             }
         }

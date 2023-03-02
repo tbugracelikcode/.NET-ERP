@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.Periods.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Period.BusinessRules;
@@ -10,12 +11,18 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.Period;
 using TsiErp.Entities.Entities.Period.Dtos;
+using TsiErp.Business.BusinessCoreServices;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.Business.Entities.Period.Services
 {
     [ServiceRegistration(typeof(IPeriodsAppService), DependencyInjectionType.Scoped)]
-    public class PeriodsAppService :  IPeriodsAppService
+    public class PeriodsAppService : ApplicationService<PeriodsResource>,  IPeriodsAppService
     {
+        public PeriodsAppService(IStringLocalizer<PeriodsResource> l) : base(l)
+        {
+        }
+
         PeriodManager _manager { get; set; } = new PeriodManager();
 
         [ValidationAspect(typeof(CreatePeriodsValidator), Priority = 1)]
@@ -24,7 +31,7 @@ namespace TsiErp.Business.Entities.Period.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.PeriodsRepository, input.Code);
+                await _manager.CodeControl(_uow.PeriodsRepository, input.Code,L);
 
                 var entity = ObjectMapper.Map<CreatePeriodsDto, Periods>(input);
 
@@ -48,7 +55,7 @@ namespace TsiErp.Business.Entities.Period.Services
                 var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Periods", LogType.Delete, id);
                 await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                return new SuccessResult(L["DeleteSuccessMessage"]);
             }
         }
 
@@ -86,7 +93,7 @@ namespace TsiErp.Business.Entities.Period.Services
             {
                 var entity = await _uow.PeriodsRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.PeriodsRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.PeriodsRepository, input.Code, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdatePeriodsDto, Periods>(input);
 

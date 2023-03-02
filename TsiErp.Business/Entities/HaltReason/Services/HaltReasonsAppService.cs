@@ -1,30 +1,28 @@
-﻿using AutoMapper.Internal.Mappers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.HaltReason.BusinessRules;
 using TsiErp.Business.Entities.HaltReason.Validations;
+using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.HaltReason;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.HaltReason;
 using TsiErp.Entities.Entities.HaltReason.Dtos;
-using TsiErp.Entities.Entities.WorkOrder.Dtos;
-using TsiErp.Entities.Entities.WorkOrder;
-using TsiErp.Business.Entities.Logging.Services;
-using TsiErp.DataAccess.Services.Login;
+using TsiErp.Localizations.Resources.HaltReasons.Page;
 
 namespace TsiErp.Business.Entities.HaltReason.Services
 {
     [ServiceRegistration(typeof(IHaltReasonsAppService), DependencyInjectionType.Scoped)]
-    public class HaltReasonsAppService : IHaltReasonsAppService
+    public class HaltReasonsAppService : ApplicationService<HaltReasonsResource>, IHaltReasonsAppService
     {
+        public HaltReasonsAppService(IStringLocalizer<HaltReasonsResource> l) : base(l)
+        {
+        }
+
         HaltReasonManager _manager { get; set; } = new HaltReasonManager();
 
         [ValidationAspect(typeof(CreateHaltReasonsValidator), Priority = 1)]
@@ -33,7 +31,7 @@ namespace TsiErp.Business.Entities.HaltReason.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.HaltReasonsRepository, input.Code);
+                await _manager.CodeControl(_uow.HaltReasonsRepository, input.Code,L);
 
                 var entity = ObjectMapper.Map<CreateHaltReasonsDto, HaltReasons>(input);
 
@@ -56,7 +54,7 @@ namespace TsiErp.Business.Entities.HaltReason.Services
                 var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "HaltReasons", LogType.Delete, id);
                 await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                return new SuccessResult(L["DeleteSuccessMessage"]);
             }
         }
 
@@ -94,7 +92,7 @@ namespace TsiErp.Business.Entities.HaltReason.Services
             {
                 var entity = await _uow.HaltReasonsRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.HaltReasonsRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.HaltReasonsRepository, input.Code, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateHaltReasonsDto, HaltReasons>(input);
 

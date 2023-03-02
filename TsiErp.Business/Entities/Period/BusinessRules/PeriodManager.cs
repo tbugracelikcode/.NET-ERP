@@ -1,31 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Period;
-using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Period;
+using TsiErp.Localizations.Resources.Periods.Page;
 
 namespace TsiErp.Business.Entities.Period.BusinessRules
 {
     public class PeriodManager
     {
-        public async Task CodeControl(IPeriodsRepository _repository, string code)
+        public async Task CodeControl(IPeriodsRepository _repository, string code, IStringLocalizer<PeriodsResource> L)
         {
             if (await _repository.AnyAsync(t => t.Code == code))
             {
-                throw new DuplicateCodeException("Aynı kodlu bir kayıt bulunmaktadır.");
+                throw new DuplicateCodeException(L["CodeControlManager"]);
             }
         }
 
-        public async Task UpdateControl(IPeriodsRepository _repository, string code, Guid id, Periods entity)
+        public async Task UpdateControl(IPeriodsRepository _repository, string code, Guid id, Periods entity, IStringLocalizer<PeriodsResource> L)
         {
             if (await _repository.AnyAsync(t => t.Id != id && t.Code == code) && entity.Code != code)
             {
-                throw new DuplicateCodeException("Aynı kodlu bir kayıt bulunmaktadır.");
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
             }
         }
 

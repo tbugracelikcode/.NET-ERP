@@ -1,43 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.ShippingAdress;
-using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.ShippingAdress;
+using TsiErp.Localizations.Resources.ShippingAdresses.Page;
 
 namespace TsiErp.Business.Entities.ShippingAdress.BusinessRules
 {
     public class ShippingAdressesManager
     {
-        public async Task CodeControl(IShippingAdressesRepository _repository, string code)
+        public async Task CodeControl(IShippingAdressesRepository _repository, string code, IStringLocalizer<ShippingAdressesResource> L)
         {
             if (await _repository.AnyAsync(t => t.Code == code))
             {
-                throw new DuplicateCodeException("Aynı kodlu bir kayıt bulunmaktadır.");
+                throw new DuplicateCodeException(L["CodeControlManager"]);
             }
         }
 
-        public async Task UpdateControl(IShippingAdressesRepository _repository, string code, Guid id, ShippingAdresses entity)
+        public async Task UpdateControl(IShippingAdressesRepository _repository, string code, Guid id, ShippingAdresses entity, IStringLocalizer<ShippingAdressesResource> L)
         {
             if (await _repository.AnyAsync(t => t.Id != id && t.Code == code) && entity.Code != code)
             {
-                throw new DuplicateCodeException("Aynı kodlu bir kayıt bulunmaktadır.");
+                throw new DuplicateCodeException(L["UpdateControlManager"]);
             }
         }
 
-        public async Task DeleteControl(IShippingAdressesRepository _repository, Guid id)
+        public async Task DeleteControl(IShippingAdressesRepository _repository, Guid id, IStringLocalizer<ShippingAdressesResource> L)
         {
             if (await _repository.AnyAsync(t => t.SalesPropositions.Any(x => x.ShippingAdressID == id)))
             {
-                throw new Exception("Hareket gören kayıtlar silinemez.");
+                throw new Exception(L["DeleteControlManager"]);
             }
             if (await _repository.AnyAsync(t => t.CurrentAccountCards.ShippingAdresses.Any(x=>x.Id==id)))
             {
-                throw new Exception("Hareket gören kayıtlar silinemez.");
+                throw new Exception(L["DeleteControlManager"]);
             }
         }
     }

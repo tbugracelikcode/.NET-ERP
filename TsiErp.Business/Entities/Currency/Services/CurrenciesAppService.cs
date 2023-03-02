@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.Currencies.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Currency.BusinessRules;
@@ -16,9 +17,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.Currency.Services
 {
     [ServiceRegistration(typeof(ICurrenciesAppService), DependencyInjectionType.Scoped)]
-    public class CurrenciesAppService : ApplicationService<BranchesResource>, ICurrenciesAppService
+    public class CurrenciesAppService : ApplicationService<CurrenciesResource>, ICurrenciesAppService
     {
-        public CurrenciesAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public CurrenciesAppService(IStringLocalizer<CurrenciesResource> l) : base(l)
         {
         }
 
@@ -30,7 +31,7 @@ namespace TsiErp.Business.Entities.Currency.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.CurrenciesRepository, input.Code);
+                await _manager.CodeControl(_uow.CurrenciesRepository, input.Code,L);
 
                 var entity = ObjectMapper.Map<CreateCurrenciesDto, Currencies>(input);
 
@@ -50,13 +51,13 @@ namespace TsiErp.Business.Entities.Currency.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.DeleteControl(_uow.CurrenciesRepository, id);
+                await _manager.DeleteControl(_uow.CurrenciesRepository, id,L);
                 await _uow.CurrenciesRepository.DeleteAsync(id);
                 var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Currencies", LogType.Delete, id);
                 await _uow.LogsRepository.InsertAsync(log);
 
                 await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                return new SuccessResult(L["DeleteSuccessMessage"]);
             }
         }
 
@@ -101,7 +102,7 @@ namespace TsiErp.Business.Entities.Currency.Services
             {
                 var entity = await _uow.CurrenciesRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.CurrenciesRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.CurrenciesRepository, input.Code, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateCurrenciesDto, Currencies>(input);
 

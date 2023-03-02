@@ -13,6 +13,12 @@ namespace TsiErp.Business.Entities.ProductionTracking.Validations
     {
         public CreateProductionTrackingsValidator()
         {
+            RuleFor(x => x.Code)
+               .NotEmpty()
+               .WithMessage("Lütfen üretim takip kodunu yazın.")
+               .MaximumLength(17)
+               .WithMessage("Üretim takip kodu 17 karakterden fazla olamaz.");
+
             RuleFor(x => x.StationID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
                .WithMessage("Lütfeniş istasyonu seçin.");

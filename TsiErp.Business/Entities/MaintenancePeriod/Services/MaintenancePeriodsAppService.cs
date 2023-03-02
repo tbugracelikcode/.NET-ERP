@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.MaintenancePeriods.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -16,9 +17,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.MaintenancePeriod.Services
 {
     [ServiceRegistration(typeof(IMaintenancePeriodsAppService), DependencyInjectionType.Scoped)]
-    public class MaintenancePeriodsAppService : ApplicationService<BranchesResource>, IMaintenancePeriodsAppService
+    public class MaintenancePeriodsAppService : ApplicationService<MaintenancePeriodsResource>, IMaintenancePeriodsAppService
     {
-        public MaintenancePeriodsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public MaintenancePeriodsAppService(IStringLocalizer<MaintenancePeriodsResource> l) : base(l)
         {
         }
 
@@ -31,7 +32,7 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.MaintenancePeriodsRepository, input.Code);
+                await _manager.CodeControl(_uow.MaintenancePeriodsRepository, input.Code,L);
 
                 var entity = ObjectMapper.Map<CreateMaintenancePeriodsDto, MaintenancePeriods>(input);
 
@@ -56,7 +57,7 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
                 var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "MaintenancePeriods", LogType.Delete, id);
                 await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                return new SuccessResult(L["DeleteSuccessMessage"]);
             }
         }
 
@@ -97,7 +98,7 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
             {
                 var entity = await _uow.MaintenancePeriodsRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.MaintenancePeriodsRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.MaintenancePeriodsRepository, input.Code, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateMaintenancePeriodsDto, MaintenancePeriods>(input);
 

@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.UserGroups.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
@@ -16,9 +17,9 @@ using Microsoft.Extensions.Localization;
 namespace TsiErp.Business.Entities.UserGroup.Services
 {
     [ServiceRegistration(typeof(IUserGroupsAppService), DependencyInjectionType.Scoped)]
-    public class UserGroupsAppService : ApplicationService<BranchesResource>, IUserGroupsAppService
+    public class UserGroupsAppService : ApplicationService<UserGroupsResource>, IUserGroupsAppService
     {
-        public UserGroupsAppService(IStringLocalizer<BranchesResource> l) : base(l)
+        public UserGroupsAppService(IStringLocalizer<UserGroupsResource> l) : base(l)
         {
         }
 
@@ -30,7 +31,7 @@ namespace TsiErp.Business.Entities.UserGroup.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.UserGroupsRepository, input.Code);
+                await _manager.CodeControl(_uow.UserGroupsRepository, input.Code,L);
 
                 var entity = ObjectMapper.Map<CreateUserGroupsDto, UserGroups>(input);
 
@@ -49,12 +50,12 @@ namespace TsiErp.Business.Entities.UserGroup.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.DeleteControl(_uow.UserGroupsRepository, id);
+                await _manager.DeleteControl(_uow.UserGroupsRepository, id,L);
                 await _uow.UserGroupsRepository.DeleteAsync(id);
                 var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "UserGroups", LogType.Delete, id);
                 await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+                return new SuccessResult(L["DeleteSuccessMessage"]);
             }
         }
 
@@ -93,7 +94,7 @@ namespace TsiErp.Business.Entities.UserGroup.Services
             {
                 var entity = await _uow.UserGroupsRepository.GetAsync(x => x.Id == input.Id);
 
-                await _manager.UpdateControl(_uow.UserGroupsRepository, input.Code, input.Id, entity);
+                await _manager.UpdateControl(_uow.UserGroupsRepository, input.Code, input.Id, entity,L);
 
                 var mappedEntity = ObjectMapper.Map<UpdateUserGroupsDto, UserGroups>(input);
 

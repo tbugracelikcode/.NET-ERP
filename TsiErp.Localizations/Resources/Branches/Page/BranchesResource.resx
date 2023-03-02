@@ -151,7 +151,7 @@
     <value>Kayıt başarıyla silindi.</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>error</value>
+    <value>Hata</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
