@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>KALİBRASYON TAKİP KODU</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Kalibrasyon Takip Kodu:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -132,6 +141,12 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="Date" xml:space="preserve">
+    <value>TARİH</value>
+  </data>
+  <data name="DateLabel" xml:space="preserve">
+    <value>Tarih:</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -141,8 +156,38 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Kalibrasyon Takip Kayıtları</value>
+  </data>
+  <data name="Equipment" xml:space="preserve">
+    <value>EKİPMAN</value>
+  </data>
+  <data name="EquipmentLabel" xml:space="preserve">
+    <value>Ekipman:</value>
+  </data>
+  <data name="EquipmentsModalCode" xml:space="preserve">
+    <value>EKİPMAN KODU</value>
+  </data>
+  <data name="EquipmentsModalName" xml:space="preserve">
+    <value>EKİPMAN AÇIKLAMASI</value>
+  </data>
+  <data name="EquipmentsModalTitle" xml:space="preserve">
+    <value>Ekipmanlar</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="ExportFileName" xml:space="preserve">
+    <value>KalibrasyonTakip</value>
+  </data>
+  <data name="ExportTitle" xml:space="preserve">
+    <value>Kalibrasyon Takip Kayıtları</value>
+  </data>
+  <data name="InfinitiveCertificateNo" xml:space="preserve">
+    <value>MASTAR SERTİFİKA NO</value>
+  </data>
+  <data name="InfinitiveCertificateNoLabel" xml:space="preserve">
+    <value>Mastar Sertifika No:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -156,7 +201,55 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>KALİBRASYON TAKİP AÇIKLAMASI</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Kalibrasyon Takip Açıklaması:</value>
+  </data>
+  <data name="NextControl" xml:space="preserve">
+    <value>SONRAKİ KONTROL</value>
+  </data>
+  <data name="NextControlLabel" xml:space="preserve">
+    <value>Bir Sonraki Kontrol:</value>
+  </data>
+  <data name="ReceiptLabel" xml:space="preserve">
+    <value>Fiş No:</value>
+  </data>
+  <data name="ReceiptNo" xml:space="preserve">
+    <value>FİŞ NO</value>
+  </data>
+  <data name="Result" xml:space="preserve">
+    <value>SONUÇ</value>
+  </data>
+  <data name="ResultLabel" xml:space="preserve">
+    <value>Sonuç:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Kalibrasyon Takip Kayıtları</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Kalite Kontrol &gt; İşlemler &gt; Kalibrasyon Takip Kayıtları</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen kalibrasyon takip kodunu yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Kalibrasyon takip kodu, 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorEquipmentID" xml:space="preserve">
+    <value>Lütfen ekipman seçin.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Lütfen kalibrasyon takip açıklaması yazın.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>Kalibrasyon takip açıklaması, 200 karakterden fazla olamaz.</value>
   </data>
 </root>

@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>REÇETE KODU</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Reçete Kodu:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -133,16 +142,67 @@
     <value>Güncelle</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
-    <value>Silmek istediğinize emin misiniz ?</value>
+    <value>Seçtiğiniz reçete, kalıcı olarak silinecektir.</value>
   </data>
   <data name="DeleteConfirmationTitleBase" xml:space="preserve">
-    <value>Onay</value>
+    <value>Dikkat</value>
   </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="DescriptionLineLabel" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Reçeteler</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="FinishedProductCode" xml:space="preserve">
+    <value>MAMÜL KODU</value>
+  </data>
+  <data name="FinishedProductCodeLabel" xml:space="preserve">
+    <value>Mamül Kodu:</value>
+  </data>
+  <data name="FinishedProductCodeLineLabel" xml:space="preserve">
+    <value>Mamül Kodu:</value>
+  </data>
+  <data name="FinishedProductModalTitle" xml:space="preserve">
+    <value>Mamüller</value>
+  </data>
+  <data name="FinishedProductNameLabel" xml:space="preserve">
+    <value>Mamül Açıklaması:</value>
+  </data>
+  <data name="FinishedProductPopupGridCode" xml:space="preserve">
+    <value>MAMÜL KODU</value>
+  </data>
+  <data name="FinishedProductPopupGridName" xml:space="preserve">
+    <value>MAMÜL AÇIKLAMASI</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Aktiflik:</value>
+  </data>
+  <data name="LineGridFinishedProductCode" xml:space="preserve">
+    <value>MAMÜL KODU</value>
+  </data>
+  <data name="LineGridMaterialType" xml:space="preserve">
+    <value>MALZEME TÜRÜ</value>
+  </data>
+  <data name="LineGridProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="LineGridQuantity" xml:space="preserve">
+    <value>MİKTAR</value>
+  </data>
+  <data name="LineGridSize" xml:space="preserve">
+    <value>BOY</value>
+  </data>
+  <data name="LineGridUnitSetCode" xml:space="preserve">
+    <value>BİRİM SETİ</value>
+  </data>
+  <data name="LineModalTitle" xml:space="preserve">
+    <value>Reçete Satırları</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -156,7 +216,91 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>REÇETE ADI</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Reçete Adı:</value>
+  </data>
+  <data name="ProductCodeLineLabel" xml:space="preserve">
+    <value>Stok Kodu:</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Stok Kartları</value>
+  </data>
+  <data name="ProductNameLineLabel" xml:space="preserve">
+    <value>Stok Açıklaması:</value>
+  </data>
+  <data name="ProductPopupGridCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductPopupGridName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="QuantityLineLabel" xml:space="preserve">
+    <value>Miktar:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Üretim Reçeteleri</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>Receteler</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Reçeteler</value>
+  </data>
+  <data name="UILineDeleteConfirmation" xml:space="preserve">
+    <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UILineDeleteContextAttentionTitle" xml:space="preserve">
+    <value>Dikkat</value>
+  </data>
+  <data name="UILineNewContextWarning" xml:space="preserve">
+    <value>Mamül seçmeden satır eklenemez.</value>
+  </data>
+  <data name="UILineSubmitQuantityZero" xml:space="preserve">
+    <value>Miktar 0 olduğu için satır kaydetme işlemi yapılamamaktadır.</value>
+  </data>
+  <data name="UILineSubmitWithoutUnitset" xml:space="preserve">
+    <value>Birim seti seçilmeden satır kaydetme işlemi yapılamaz.</value>
+  </data>
+  <data name="UIPreviousMenus" xml:space="preserve">
+    <value>Üretim Yönetimi &gt; Ana Kayıtlar</value>
+  </data>
+  <data name="UnitSetLineLabel" xml:space="preserve">
+    <value>Birim Seti:</value>
+  </data>
+  <data name="UnitSetModalTitle" xml:space="preserve">
+    <value>Birim Setleri</value>
+  </data>
+  <data name="UnitSetPopupGridCode" xml:space="preserve">
+    <value>BİRİM SETİ KODU</value>
+  </data>
+  <data name="UnitSetPopupGridName" xml:space="preserve">
+    <value>BİRİM SETİ AÇIKLAMASI</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen reçete kodunu yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Reçete kodu 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorFinishedProductID" xml:space="preserve">
+    <value>Lütfen mamül seçin.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Lütfen reçete adını yazın.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>Reçete adı 200 karakterden fazla olamaz.</value>
+  </data>
+  <data name="_Description" xml:space="preserve">
+    <value>AÇIKLAMA</value>
   </data>
 </root>

@@ -12,18 +12,18 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Validations
         public CreateCalibrationVerifcationsValidator()
         {
             RuleFor(x => x.Code)
-                .NotEmpty()
-                .WithMessage("Lütfen kalibrasyon doğrulama kodunu yazın.")
-                .MaximumLength(17)
-                .WithMessage("Kalibrasyon doğrulama kodu, 17 karakterden fazla olamaz.");
+                  .NotEmpty()
+                  .WithMessage("ValidatorCodeEmpty")
+                  .MaximumLength(17)
+                  .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen kalibrasyon doğrulama açıklamasını yazın.")
+                .WithMessage("ValidatorNameEmpty")
                 .MaximumLength(200)
-                .WithMessage("Kalibrasyon doğrulama açıklaması, 200 karakterden fazla olamaz.");
+                .WithMessage("ValidatorNameMaxLenght");
 
-            RuleFor(x => x.EquipmentID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen ekipman seçin.");
+            RuleFor(x => x.EquipmentID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorEquipmentID");
 
         }
     }

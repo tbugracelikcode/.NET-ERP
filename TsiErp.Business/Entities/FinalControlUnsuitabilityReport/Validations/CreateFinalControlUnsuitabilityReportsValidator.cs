@@ -15,17 +15,17 @@ namespace TsiErp.Business.Entities.FinalControlUnsuitabilityReport.Validations
         {
             RuleFor(x => x.FicheNo)
                 .NotEmpty()
-                .WithMessage("Lütfen fiş numarasını yazın.")
+                .WithMessage("ValidatorFicheNoEmpty")
                 .MaximumLength(17)
-                .WithMessage("Fiş numarası, 17 karakterden fazla olamaz.");
+                .WithMessage("ValidatorFicheNoMaxLenght");
 
             RuleFor(x => x.Date_)
               .NotEmpty()
-              .WithMessage("Lütfen tarihi seçin.");
+              .WithMessage("ValidatorDate");
 
-            RuleFor(x => x.ProductID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen ürün seçin.");
+            RuleFor(x => x.ProductID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorProductID");
 
-            RuleFor(x => x.EmployeeID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen çalışan seçin.");
+            RuleFor(x => x.EmployeeID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorEmployeeID");
 
         }
     }

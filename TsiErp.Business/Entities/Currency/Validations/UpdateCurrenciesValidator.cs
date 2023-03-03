@@ -12,17 +12,16 @@ namespace TsiErp.Business.Entities.Currency.Validations
         public UpdateCurrenciesValidator()
         {
             RuleFor(x => x.Code)
-                .NotEmpty()
-                .WithMessage("Lütfen para birimi kodunu yazın.")
-                .MaximumLength(17)
-                .WithMessage("Para birimi kodu 17 karakterden fazla olamaz.");
+               .NotEmpty()
+               .WithMessage("ValidatorCodeEmpty")
+               .MaximumLength(17)
+               .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen para birimi  açıklamasını yazın.")
+                .WithMessage("ValidatorNameEmpty")
                 .MaximumLength(200)
-                .WithMessage("Para birimi  açıklaması 200 karakterden fazla olamaz."); ;
-
+                .WithMessage("ValidatorNameMaxLenght"); ;
         }
     }
 }

@@ -62,9 +62,9 @@ namespace TsiErp.ErpUI.Pages.Base
 
         protected virtual void CreateContextMenuItems(IStringLocalizer loc)
         {
-            GridContextMenu.Add(new ContextMenuItemModel { Text = loc["ContextAdd"], Id = "new" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = loc["ContextChange"], Id = "changed" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = loc["ContextDelete"], Id = "delete" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = loc["ContextAdd"]    , Id = "new" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = loc["ContextChange"] , Id = "changed" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = loc["ContextDelete"] , Id = "delete" });
             GridContextMenu.Add(new ContextMenuItemModel { Text = loc["ContextRefresh"], Id = "refresh" });
         }
 
@@ -102,7 +102,7 @@ namespace TsiErp.ErpUI.Pages.Base
 
                 for (int i = 0; i < errorList.Count; i++)
                 {
-                    sb.AppendLine("<li>" + errorList[i].ErrorMessage + "</li>");
+                    sb.AppendLine("<li>" + loc.GetString(errorList[i].ErrorMessage) + "</li>");
                 }
 
                 sb.AppendLine("</ul>");
@@ -112,7 +112,15 @@ namespace TsiErp.ErpUI.Pages.Base
             }
             catch (Exception exp)
             {
-                await ModalManager.MessagePopupAsync(loc["Error"], exp.Message + "\n" + exp.InnerException.Message);
+                if(exp.InnerException != null)
+                {
+                    await ModalManager.MessagePopupAsync(loc["Error"], exp.Message + "\n" + exp.InnerException.Message);
+                }
+                else
+                {
+                    await ModalManager.MessagePopupAsync(loc["Error"], exp.Message );
+                }
+                
                 return new ErrorDataResult<TGetOutputDto>();
             }
         }
@@ -138,7 +146,7 @@ namespace TsiErp.ErpUI.Pages.Base
 
                 for (int i = 0; i < errorList.Count; i++)
                 {
-                    sb.AppendLine("<li>" + errorList[i].ErrorMessage + "</li>");
+                    sb.AppendLine("<li>" + loc.GetString(errorList[i].ErrorMessage) + "</li>");
                 }
 
                 sb.AppendLine("</ul>");
@@ -148,7 +156,14 @@ namespace TsiErp.ErpUI.Pages.Base
             }
             catch (Exception exp)
             {
-                await ModalManager.MessagePopupAsync(loc["Error"], exp.Message + "\n" + exp.InnerException.Message);
+                if (exp.InnerException != null)
+                {
+                    await ModalManager.MessagePopupAsync(loc["Error"], exp.Message + "\n" + exp.InnerException.Message);
+                }
+                else
+                {
+                    await ModalManager.MessagePopupAsync(loc["Error"], exp.Message);
+                }
                 return new ErrorDataResult<TGetOutputDto>();
             }
         }

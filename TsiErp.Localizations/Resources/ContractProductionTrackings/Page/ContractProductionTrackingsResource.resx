@@ -159,4 +159,16 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="ValidatorCurrentAccountID" xml:space="preserve">
+    <value>Lütfen cari hesap kartı seçin.</value>
+  </data>
+  <data name="ValidatorEmployeeID" xml:space="preserve">
+    <value>Lütfen çalışan seçin.</value>
+  </data>
+  <data name="ValidatorShiftID" xml:space="preserve">
+    <value>Lütfen vardiya seçin.</value>
+  </data>
+  <data name="ValidatorStationID" xml:space="preserve">
+    <value>Lütfen iş istasyonu seçin.</value>
+  </data>
 </root>

@@ -10,19 +10,19 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Validations
         {
             RuleFor(x => x.StationID)
               .Must(x => x.HasValue && x.Value != Guid.Empty)
-             .WithMessage("Lütfeniş istasyonu seçin.");
+             .WithMessage("ValidatorStationID");
 
             RuleFor(x => x.EmployeeID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("Lütfen çalışan seçin.");
+               .WithMessage("ValidatorEmployeeID");
 
             RuleFor(x => x.ShiftID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("Lütfen vardiya seçin.");
+               .WithMessage("ValidatorShiftID");
 
             RuleFor(x => x.CurrentAccountID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("Lütfen cari hesap kartı seçin.");
+               .WithMessage("ValidatorCurrentAccountID");
         }
     }
 }

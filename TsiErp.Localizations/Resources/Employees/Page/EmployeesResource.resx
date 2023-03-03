@@ -159,4 +159,31 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen çalışan kodunu yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Çalışan kodu, 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorDepartmentID" xml:space="preserve">
+    <value>Lütfen departman seçin.</value>
+  </data>
+  <data name="ValidatorIDEmpty" xml:space="preserve">
+    <value>Lütfen T.C. kimlik numarasını yazın.</value>
+  </data>
+  <data name="ValidatorIDMaxLenght" xml:space="preserve">
+    <value>T.C. kimlik numarası, 11 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Lütfen çalışan adını yazın.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>Çalışan adı, 200 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorSurnameEmpty" xml:space="preserve">
+    <value>Lütfen çalışan soyadını yazın.</value>
+  </data>
+  <data name="ValidatorSurnameMaxLength" xml:space="preserve">
+    <value>Çalışan soyadı, 100 karakterden fazla olamaz.</value>
+  </data>
 </root>
