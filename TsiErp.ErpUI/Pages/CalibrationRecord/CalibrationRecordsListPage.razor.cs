@@ -12,7 +12,9 @@ namespace TsiErp.ErpUI.Pages.CalibrationRecord
 
         protected override async void OnInitialized()
         {
+            _L = L;
             BaseCrudService = CalibrationRecordsService;
+
         }
 
         #region Ekipman ButtonEdit
@@ -59,12 +61,6 @@ namespace TsiErp.ErpUI.Pages.CalibrationRecord
         #endregion
 
 
-        private async Task GetEquipmentRecordsList()
-        {
-            EquipmentRecordList = (await EquipmentRecordsService.GetListAsync(new ListEquipmentRecordsParameterDto())).Data.ToList();
-        }
-
-     
 
         protected override Task BeforeInsertAsync()
         {

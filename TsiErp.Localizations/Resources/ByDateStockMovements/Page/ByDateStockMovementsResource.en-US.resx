@@ -153,4 +153,13 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="ValidatorBranchID" xml:space="preserve">
+    <value>Please select a branch.</value>
+  </data>
+  <data name="ValidatorProductID" xml:space="preserve">
+    <value>Please select a product.</value>
+  </data>
+  <data name="ValidatorWarehouseID" xml:space="preserve">
+    <value>Please select a warehouse.</value>
+  </data>
 </root>

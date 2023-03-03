@@ -14,16 +14,16 @@ namespace TsiErp.Business.Entities.FinalControlUnsuitabilityItem.Validations
         public UpdateFinalControlUnsuitabilityItemsValidator()
         {
             RuleFor(x => x.Code)
-                .NotEmpty()
-                .WithMessage("Lütfen final kontrol uygunsuzluk kodunu yazın.")
-                .MaximumLength(17)
-                .WithMessage("Final kontrol uygunsuzluk kodu 17 karakterden fazla olamaz.");
+               .NotEmpty()
+               .WithMessage("ValidatorCodeEmpty")
+               .MaximumLength(17)
+               .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen final kontrol uygunsuzluk açıklamasını yazın.")
+                .WithMessage("ValidatorNameEmpty")
                 .MaximumLength(200)
-                .WithMessage("Final kontrol uygunsuzluk açıklaması 200 karakterden fazla olamaz."); ;
+                .WithMessage("ValidatorNameMaxLenght");
 
         }
     }

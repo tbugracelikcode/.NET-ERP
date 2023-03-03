@@ -315,7 +315,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ByDateStockMovementsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\CalibrationRecords\Page\CalibrationRecords.en-US.resx">
+    <EmbeddedResource Update="Resources\CalibrationRecords\Page\CalibrationRecordsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\CalibrationRecords\Page\CalibrationRecordsResource.resx">

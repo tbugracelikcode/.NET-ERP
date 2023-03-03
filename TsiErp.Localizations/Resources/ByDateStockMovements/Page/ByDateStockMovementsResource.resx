@@ -153,4 +153,13 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="ValidatorBranchID" xml:space="preserve">
+    <value>Lütfen şube seçin.</value>
+  </data>
+  <data name="ValidatorProductID" xml:space="preserve">
+    <value>Lütfen ürün seçin.</value>
+  </data>
+  <data name="ValidatorWarehouseID" xml:space="preserve">
+    <value>Lütfen depo seçin.</value>
+  </data>
 </root>

@@ -14,20 +14,20 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Validations
         {
             RuleFor(x => x.Code)
                .NotEmpty()
-               .WithMessage("Lütfen reçete kodunu yazın.")
+               .WithMessage("ValidatorCodeEmpty")
                .MaximumLength(17)
-               .WithMessage("Reçete kodu 17 karakterden fazla olamaz.");
+               .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.Name)
                .NotEmpty()
-               .WithMessage("Lütfen reçete adını yazın.")
+               .WithMessage("ValidatorNameEmpty")
                .MaximumLength(200)
-               .WithMessage("Reçete adı 200 karakterden fazla olamaz.");
+               .WithMessage("ValidatorNameMaxLenght");
 
 
             RuleFor(x => x.FinishedProductID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("Lütfen mamül seçin.");
+               .WithMessage("ValidatorFinishedProductID");
 
 
 

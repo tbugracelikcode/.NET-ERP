@@ -162,4 +162,19 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen ekipman kodunu yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Ekipman kodu, 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorDepartmentID" xml:space="preserve">
+    <value>Lütfen departman seçin.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Lütfen ekipman adını yazın.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>Ekipman adı, 200 karakterden fazla olamaz.</value>
+  </data>
 </root>

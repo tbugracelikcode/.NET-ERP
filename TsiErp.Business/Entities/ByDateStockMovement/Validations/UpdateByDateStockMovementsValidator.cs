@@ -11,11 +11,11 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Validations
     {
         public UpdateByDateStockMovementsValidator()
         {
-            RuleFor(x => x.ProductID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen ürün seçin.");
+            RuleFor(x => x.ProductID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorProductID");
 
-            RuleFor(x => x.WarehouseID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen depo seçin.");
+            RuleFor(x => x.WarehouseID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorWarehouseID");
 
-            RuleFor(x => x.BranchID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen şube seçin.");
+            RuleFor(x => x.BranchID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorBranchID");
 
         }
     }

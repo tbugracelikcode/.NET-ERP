@@ -14,31 +14,31 @@ namespace TsiErp.Business.Entities.Employee.Validations
 
             RuleFor(x => x.Code)
                 .NotEmpty()
-                .WithMessage("Lütfen çalışan kodunu yazın.")
+                .WithMessage("ValidatorCodeEmpty")
                 .MaximumLength(17)
-                .WithMessage("Çalışan kodu 17 karakterden fazla olamaz.");
+                .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen çalışan adını yazın.")
+                .WithMessage("ValidatorNameEmpty")
                 .MaximumLength(200)
-                .WithMessage("Çalışan adı 200 karakterden fazla olamaz.");
+                .WithMessage("ValidatorNameMaxLenght");
 
             RuleFor(x => x.Surname)
                 .NotEmpty()
-                .WithMessage("Lütfen çalışan soyadını yazın.")
+                .WithMessage("ValidatorSurnameEmpty")
                 .MaximumLength(100)
-                .WithMessage("Çalışan soyadı 100 karakterden fazla olamaz.");
+                .WithMessage("ValidatorSurnameMaxLength");
 
             RuleFor(x => x.IDnumber)
                 .NotEmpty()
-                .WithMessage("T.C. Kimlik numarasını yazın.")
+                .WithMessage("ValidatorIDEmpty")
                 .MaximumLength(11)
-                .WithMessage("T.C. Kimlik numarası 11 karakter olmalıdır.");
+                .WithMessage("ValidatorIDMaxLenght");
 
             RuleFor(x => x.DepartmentID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
-                .WithMessage("Çalışanın bağlı olduğu departmanı seçmelisiniz.");
+                .WithMessage("ValidatorDepartmentID");
 
         }
     }

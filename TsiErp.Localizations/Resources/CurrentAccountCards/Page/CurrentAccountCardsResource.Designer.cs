@@ -195,5 +195,86 @@ namespace TsiErp.Localizations.Resources.CurrentAccountCards.Page {
                 return ResourceManager.GetString("UpdateControlManager", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen cari kodu yazın..
+        /// </summary>
+        public static string ValidatorCodeEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorCodeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cari kod, 17 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorCodeMaxLenght {
+            get {
+                return ResourceManager.GetString("ValidatorCodeMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen para birimi seçin..
+        /// </summary>
+        public static string ValidatorCurrencyID {
+            get {
+                return ResourceManager.GetString("ValidatorCurrencyID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen cari ünvanı yazın..
+        /// </summary>
+        public static string ValidatorNameEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorNameEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cari ünvan, 200 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorNameMaxLenght {
+            get {
+                return ResourceManager.GetString("ValidatorNameMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen vergi dairesini yazın..
+        /// </summary>
+        public static string ValidatorTaxAdminEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorTaxAdminEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vergi dairesi, 75 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorTaxAdminMaxLenght {
+            get {
+                return ResourceManager.GetString("ValidatorTaxAdminMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen vergi numarasını yazın..
+        /// </summary>
+        public static string ValidatorTaxNoEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorTaxNoEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vergi numarası, 10 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorTaxNoMaxLenght {
+            get {
+                return ResourceManager.GetString("ValidatorTaxNoMaxLenght", resourceCulture);
+            }
+        }
     }
 }

@@ -12,30 +12,30 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Validations
         public UpdateCurrentAccountCardsValidator()
         {
             RuleFor(x => x.Code)
-                .NotEmpty()
-                .WithMessage("Lütfen cari kodu yazın.")
-                .MaximumLength(17)
-                .WithMessage("Cari kod, 17 karakterden fazla olamaz.");
+               .NotEmpty()
+               .WithMessage("ValidatorCodeEmpty")
+               .MaximumLength(17)
+               .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen cari ünvanı yazın.")
+                .WithMessage("ValidatorNameEmpty")
                 .MaximumLength(200)
-                .WithMessage("Cari ünvan, 200 karakterden fazla olamaz.");
+                .WithMessage("ValidatorNameMaxLenght");
 
             RuleFor(x => x.TaxAdministration)
                 .NotEmpty()
-                .WithMessage("Lütfen vergi dairesini yazın.")
+                .WithMessage("ValidatorTaxAdminEmpty")
                 .MaximumLength(75)
-                .WithMessage("Vergi dairesi, 75 karakterden fazla olamaz.");
+                .WithMessage("ValidatorTaxAdminMaxLenght");
 
             RuleFor(x => x.TaxNumber)
                 .NotEmpty()
-                .WithMessage("Lütfen vergi numarasını yazın.")
+                .WithMessage("ValidatorTaxNoEmpty")
                 .MaximumLength(10)
-                .WithMessage("Vergi numarası, 10 karakterden fazla olamaz.");
+                .WithMessage("ValidatorTaxNoMaxLenght");
 
-            RuleFor(x => x.CurrencyID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen para birimi seçin.");
+            RuleFor(x => x.CurrencyID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorCurrencyID");
 
 
         }

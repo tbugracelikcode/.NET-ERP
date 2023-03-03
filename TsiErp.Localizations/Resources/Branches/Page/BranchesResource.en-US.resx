@@ -120,11 +120,17 @@
   <data name="BranchesTitle" xml:space="preserve">
     <value>Branches</value>
   </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
   <data name="Code" xml:space="preserve">
     <value>BRANCH CODE</value>
   </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Branch Code:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -150,8 +156,26 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="DescriptionLabel" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="Description_" xml:space="preserve">
+    <value>DESCRIPTION</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Branches</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="ExportFileName" xml:space="preserve">
+    <value>Branches</value>
+  </data>
+  <data name="ExportTitle" xml:space="preserve">
+    <value>Branches</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Activity:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -167,6 +191,15 @@
   </data>
   <data name="Name" xml:space="preserve">
     <value>BRANCH NAME</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Branch Name:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>General System Identifications</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>

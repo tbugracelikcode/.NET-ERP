@@ -159,4 +159,16 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
+  <data name="ValidatorCurrentAccountID" xml:space="preserve">
+    <value>Please select a current account card.</value>
+  </data>
+  <data name="ValidatorEmployeeID" xml:space="preserve">
+    <value>Please select a employee.</value>
+  </data>
+  <data name="ValidatorShiftID" xml:space="preserve">
+    <value>Please select a shift.</value>
+  </data>
+  <data name="ValidatorStationID" xml:space="preserve">
+    <value>Please select a station.</value>
+  </data>
 </root>

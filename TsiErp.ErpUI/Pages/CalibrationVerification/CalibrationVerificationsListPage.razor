@@ -9,11 +9,12 @@
 @using TsiErp.Entities.Entities.CalibrationVerification.Dtos
 @using TsiErp.Entities.Entities.EquipmentRecord.Dtos
 @using TsiErp.ErpUI.Pages.Base
+@using TsiErp.Localizations.Resources.CalibrationVerifications.Page
 
 
 @inherits BaseListPage<SelectCalibrationVerificationsDto, ListCalibrationVerificationsDto, CreateCalibrationVerificationsDto, UpdateCalibrationVerificationsDto, ListCalibrationVerificationsParameterDto>
 
-
+@inject IStringLocalizer<CalibrationVerificationsResource> L 
 @inject ICalibrationVerificationsAppService CalibrationVerificationsService
 @inject IEquipmentRecordsAppService EquipmentRecordsService
 
@@ -30,7 +31,7 @@
                     <Template>
                         <SfCard class="TSIListPageTitleCard">
                             <CardContent>
-                                <TsiBreadCrumb PreviousMenus="Kalite Kontrol > İşlemler > Ekipman İşlemleri" CurrentMenu="Kalibrasyon Doğrulama Kayıtları" />
+                                <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
                             </CardContent>
                             <CardFooter>
                             </CardFooter>
@@ -49,14 +50,14 @@
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", "Kalibrasyon Doğrulama Kayıtları", "KalibrasyonDogrulama"))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport",@L["ExportTitle"], @L["ExportFileName"]))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", "Kalibrasyon Takip Kayıtları", "KalibrasyonDogrulama"))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", @L["ExportTitle"], @L["ExportFileName"]))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
@@ -68,14 +69,14 @@
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Code) HeaderText="KALİBRASYON DOĞRULAMA KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Name) HeaderText="KALİBRASYON DOĞRULAMA AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.ReceiptNo) HeaderText="FİŞ NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Equipment) HeaderText="EKİPMAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Date) HeaderText="TARİH" Format="dd.MM.yyyy" Type="ColumnType.Date" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.NextControl) HeaderText="SONRAKİ KONTROL" Format="dd.MM.yyyy" Type="ColumnType.Date" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.InfinitiveCertificateNo) HeaderText="MASTAR SERTİFİKA NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Result) HeaderText="SONUÇ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.ReceiptNo) HeaderText="@L["ReceiptNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Equipment) HeaderText="@L["Equipment"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Date) HeaderText="@L["Date"]" Format="dd.MM.yyyy" Type="ColumnType.Date" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.NextControl) HeaderText="@L["NextControl"]" Format="dd.MM.yyyy" Type="ColumnType.Date" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.InfinitiveCertificateNo) HeaderText="@L["InfinitiveCertificateNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Result) HeaderText="@L["Result"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                     </GridColumns>
                                 </SfGrid>
@@ -92,7 +93,7 @@
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Kalibrasyon Doğrulama Kayıtları"
+         HeaderText="@L["EditModalTitle"]"
          Width="57%"
          Height="36%"
          MinWidth="1080px"
@@ -122,55 +123,55 @@
                         <DxGridLayoutColumn Width="4%" />
                     </Columns>
                     <Items>
-                        <DxGridLayoutItem Row="0" Column="1">
+                       <DxGridLayoutItem Row="0" Column="1">
                             <Template>
                                 <br />
-                                <label class="TSIModalLabel"><strong>Kalibrasyon Doğrulama Kodu: </strong></label>
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Kalibrasyon Takip Kodunu Yazınız."></SfTextBox>
+                                <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" ></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="0" Column="3">
                             <Template>
                                 <br />
-                                <label class="TSIModalLabel"><strong>Kalibrasyon Doğrulama Açıklaması: </strong></label>
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="Kalibrasyon Takip Açıklamasını Yazınız."></SfTextBox>
+                                <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" ></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="0" Column="5">
                             <Template>
                                 <br />
-                                <label class="TSIModalLabel"><strong>Fiş No: </strong></label>
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.ReceiptNo" Placeholder="Fiş Numarasını Yazınız."></SfTextBox>
+                                <label class="TSIModalLabel"><strong>@L["ReceiptLabel"] </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.ReceiptNo" ></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="2" Column="1">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Mastar Sertifika No: </strong></label><br />
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.InfinitiveCertificateNo" Placeholder="Mastar Sertifika Numarasını Yazınız."></SfTextBox>
+                                <label class="TSIModalLabel"><strong>@L["InfinitiveCertificateNoLabel"] </strong></label><br />
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.InfinitiveCertificateNo" ></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="2" Column="3">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Ekipman: </strong></label><br />
-                                  <SfTextBox @ref="@EquipmentRecordButtonEdit" Created="@EquipmentRecordOnCreateIcon" @bind-Value="DataSource.Equipment" ShowClearButton=true ValueChange="EquipmentRecordOnValueChange"></SfTextBox>
+                                <label class="TSIModalLabel"><strong>@L["EquipmentLabel"] </strong></label><br />
+                                 <SfTextBox @ref="@EquipmentRecordButtonEdit" Created="@EquipmentRecordOnCreateIcon" @bind-Value="DataSource.Equipment" ShowClearButton=true ValueChange="EquipmentRecordOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="2" Column="5">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Tarih: </strong></label><br />
+                                <label class="TSIModalLabel"><strong>@L["DateLabel"] </strong></label><br />
                                 <SfDatePicker @bind-Value="DataSource.Date"></SfDatePicker>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="4" Column="1">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Bir Sonraki Kontrol: </strong></label>
+                                <label class="TSIModalLabel"><strong>@L["NextControlLabel"] </strong></label>
                                 <SfDatePicker @bind-Value="DataSource.NextControl"></SfDatePicker>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="4" Column="3">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Sonuç: </strong></label><br />
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Result" Placeholder="Sonucu Yazınız."></SfTextBox>
+                                <label class="TSIModalLabel"><strong>@L["ResultLabel"] </strong></label><br />
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Result"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="4" Column="5">
@@ -183,8 +184,8 @@
                 </DxGridLayout>
             </BodyTemplate>
             <FooterContentTemplate>
-                <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-                <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+                <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
             </FooterContentTemplate>
         </DxPopup>
     }
@@ -196,7 +197,7 @@
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Departmanlar"
+         HeaderText="@L["EquipmentsModalTitle"]"
          Width="64%"
          Height="44%"
          MinWidth="1220px"
@@ -222,8 +223,8 @@
                                             <GridPageSettings PageSizes="true"></GridPageSettings>
                                             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                             <GridColumns>
-                                                <GridColumn Field=@nameof(ListEquipmentRecordsDto.Code) HeaderText="EKİPMAN KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                                <GridColumn Field=@nameof(ListEquipmentRecordsDto.Name) HeaderText="EKİPMAN TANIMI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                <GridColumn Field=@nameof(ListEquipmentRecordsDto.Code) HeaderText="@L["EquipmentsModalCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                <GridColumn Field=@nameof(ListEquipmentRecordsDto.Name) HeaderText="@L["EquipmentsModalName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                             </GridColumns>
                                         </SfGrid>
@@ -238,8 +239,6 @@
 
             </BodyTemplate>
             <FooterContentTemplate>
-                @*<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>*@
             </FooterContentTemplate>
         </DxPopup>
     }

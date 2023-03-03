@@ -13,19 +13,19 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Validations
         {
             RuleFor(x => x.Code)
                 .NotEmpty()
-                .WithMessage("Lütfen ekipman kodunu yazın.")
+                .WithMessage("ValidatorCodeEmpty")
                 .MaximumLength(17)
-                .WithMessage("Ekipman kodu 17 karakterden fazla olamaz.");
+                .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen ekipman adını yazın.")
+                .WithMessage("ValidatorNameEmpty")
                 .MaximumLength(200)
-                .WithMessage("Ekipman adı 200 karakterden fazla olamaz.");
+                .WithMessage("ValidatorNameMaxLenght");
 
             RuleFor(x => x.Department)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("Lütfen departman seçin.");
+               .WithMessage("ValidatorDepartmentID");
         }
     }
 }

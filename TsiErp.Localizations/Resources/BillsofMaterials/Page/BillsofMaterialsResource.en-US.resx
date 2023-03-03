@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>CODE</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Code:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -133,10 +142,10 @@
     <value>Refresh</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
-    <value>Are you sure you want to delete?</value>
+    <value>The bill of material you selected will be permanently deleted.</value>
   </data>
   <data name="DeleteConfirmationTitleBase" xml:space="preserve">
-    <value>Confirmation</value>
+    <value>Warning</value>
   </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
@@ -144,8 +153,59 @@
   <data name="DeleteSuccessMessage1" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="DescriptionLineLabel" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Bills of Materials</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="FinishedProductCode" xml:space="preserve">
+    <value>FINISHED PRODUCT CODE</value>
+  </data>
+  <data name="FinishedProductCodeLabel" xml:space="preserve">
+    <value>Finished Product Code:</value>
+  </data>
+  <data name="FinishedProductCodeLineLabel" xml:space="preserve">
+    <value>Finished Product Code:</value>
+  </data>
+  <data name="FinishedProductModalTitle" xml:space="preserve">
+    <value>Finished Products</value>
+  </data>
+  <data name="FinishedProductNameLabel" xml:space="preserve">
+    <value>Finished Product Name:</value>
+  </data>
+  <data name="FinishedProductPopupGridCode" xml:space="preserve">
+    <value>FINISHED PRODUCT CODE</value>
+  </data>
+  <data name="FinishedProductPopupGridName" xml:space="preserve">
+    <value>FINISHED PRODUCT NAME</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Activity:</value>
+  </data>
+  <data name="LineGridFinishedProductCode" xml:space="preserve">
+    <value>FINISHED PRODUCT CODE</value>
+  </data>
+  <data name="LineGridMaterialType" xml:space="preserve">
+    <value>MATERIAL TYPE</value>
+  </data>
+  <data name="LineGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="LineGridQuantity" xml:space="preserve">
+    <value>QUANTITY</value>
+  </data>
+  <data name="LineGridSize" xml:space="preserve">
+    <value>SIZE</value>
+  </data>
+  <data name="LineGridUnitSetCode" xml:space="preserve">
+    <value>UNIT SET</value>
+  </data>
+  <data name="LineModalTitle" xml:space="preserve">
+    <value>Bills of Material Lines</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -159,7 +219,91 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>NAME</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="ProductCodeLineLabel" xml:space="preserve">
+    <value>Product Code:</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="ProductNameLineLabel" xml:space="preserve">
+    <value>Product Name:</value>
+  </data>
+  <data name="ProductPopupGridCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="ProductPopupGridName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="QuantityLineLabel" xml:space="preserve">
+    <value>Quantity:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Bills of Materials</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>BillsofMaterials</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Bills of Materials</value>
+  </data>
+  <data name="UILineDeleteConfirmation" xml:space="preserve">
+    <value>The line you selected will be permanently deleted.</value>
+  </data>
+  <data name="UILineDeleteContextAttentionTitle" xml:space="preserve">
+    <value>Attention</value>
+  </data>
+  <data name="UILineNewContextWarning" xml:space="preserve">
+    <value>A new line cannot be added without selecting a product.</value>
+  </data>
+  <data name="UILineSubmitQuantityZero" xml:space="preserve">
+    <value>Linesave operation cannot be performed because the amount is 0.</value>
+  </data>
+  <data name="UILineSubmitWithoutUnitset" xml:space="preserve">
+    <value>It is not possible to save lines without selecting the unit set.</value>
+  </data>
+  <data name="UIPreviousMenus" xml:space="preserve">
+    <value>Production Management &gt; Main Records</value>
+  </data>
+  <data name="UnitSetLineLabel" xml:space="preserve">
+    <value>Unit Set:</value>
+  </data>
+  <data name="UnitSetModalTitle" xml:space="preserve">
+    <value>Unit Sets</value>
+  </data>
+  <data name="UnitSetPopupGridCode" xml:space="preserve">
+    <value>UNIT SET CODE</value>
+  </data>
+  <data name="UnitSetPopupGridName" xml:space="preserve">
+    <value>UNIT SET NAME</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Please enter the bills of material code.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Bills of material code cannot exceed 17 characters.</value>
+  </data>
+  <data name="ValidatorFinishedProductID" xml:space="preserve">
+    <value>Please select a finished product.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Please enter the bills of material name.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>Bills of material name cannot exceed 200 characters.</value>
+  </data>
+  <data name="_Description" xml:space="preserve">
+    <value>DESCRIPTION</value>
   </data>
 </root>

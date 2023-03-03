@@ -13,6 +13,8 @@ namespace TsiErp.ErpUI.Pages.CalibrationVerification
         protected override async void OnInitialized()
         {
             BaseCrudService = CalibrationVerificationsService;
+            _L = L;
+
         }
 
         protected override Task BeforeInsertAsync()
@@ -70,11 +72,6 @@ namespace TsiErp.ErpUI.Pages.CalibrationVerification
         }
 
         #endregion
-
-        private async Task GetEquipmentRecordsList()
-        {
-            EquipmentRecordList = (await EquipmentRecordsService.GetListAsync(new ListEquipmentRecordsParameterDto())).Data.ToList();
-        }
 
     
     }

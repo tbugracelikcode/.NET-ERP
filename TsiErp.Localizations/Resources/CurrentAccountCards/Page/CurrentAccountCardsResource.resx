@@ -162,4 +162,31 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen cari kodu yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Cari kod, 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorCurrencyID" xml:space="preserve">
+    <value>Lütfen para birimi seçin.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Lütfen cari ünvanı yazın.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>Cari ünvan, 200 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorTaxAdminEmpty" xml:space="preserve">
+    <value>Lütfen vergi dairesini yazın.</value>
+  </data>
+  <data name="ValidatorTaxAdminMaxLenght" xml:space="preserve">
+    <value>Vergi dairesi, 75 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorTaxNoEmpty" xml:space="preserve">
+    <value>Lütfen vergi numarasını yazın.</value>
+  </data>
+  <data name="ValidatorTaxNoMaxLenght" xml:space="preserve">
+    <value>Vergi numarası, 10 karakterden fazla olamaz.</value>
+  </data>
 </root>
