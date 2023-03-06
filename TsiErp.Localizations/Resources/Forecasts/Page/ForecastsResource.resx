@@ -159,4 +159,19 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="ValidatorBranchID" xml:space="preserve">
+    <value>Lütfen şube seçin.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen kodu yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Kod, 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorCurrentAccountCardID" xml:space="preserve">
+    <value>Lütfen cari hesap kartı seçin.</value>
+  </data>
+  <data name="ValidatorPeriodID" xml:space="preserve">
+    <value>Lütfen dönem seçin.</value>
+  </data>
 </root>

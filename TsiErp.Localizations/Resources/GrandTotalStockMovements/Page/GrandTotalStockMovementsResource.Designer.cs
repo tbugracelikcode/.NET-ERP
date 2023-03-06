@@ -186,5 +186,32 @@ namespace TsiErp.Localizations.Resources.GrandTotalStockMovements.Page {
                 return ResourceManager.GetString("UpdateControlManager", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen şube seçin..
+        /// </summary>
+        public static string ValidatorBranchID {
+            get {
+                return ResourceManager.GetString("ValidatorBranchID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen ürün seçin..
+        /// </summary>
+        public static string ValidatorProductID {
+            get {
+                return ResourceManager.GetString("ValidatorProductID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen depo seçin..
+        /// </summary>
+        public static string ValidatorWarehouseID {
+            get {
+                return ResourceManager.GetString("ValidatorWarehouseID", resourceCulture);
+            }
+        }
     }
 }

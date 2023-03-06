@@ -159,4 +159,19 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same number.</value>
   </data>
+  <data name="ValidatorBranchID" xml:space="preserve">
+    <value>Please select a branch.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Please enter the code.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>The code cannot exceed 17 characters.</value>
+  </data>
+  <data name="ValidatorCurrentAccountCardID" xml:space="preserve">
+    <value>Please select a current account.</value>
+  </data>
+  <data name="ValidatorPeriodID" xml:space="preserve">
+    <value>Please select a period.</value>
+  </data>
 </root>

@@ -185,5 +185,50 @@ namespace TsiErp.Localizations.Resources.Forecasts.Page {
                 return ResourceManager.GetString("UpdateControlManager", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen şube seçin..
+        /// </summary>
+        public static string ValidatorBranchID {
+            get {
+                return ResourceManager.GetString("ValidatorBranchID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen kodu yazın..
+        /// </summary>
+        public static string ValidatorCodeEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorCodeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kod, 17 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorCodeMaxLenght {
+            get {
+                return ResourceManager.GetString("ValidatorCodeMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen cari hesap kartı seçin..
+        /// </summary>
+        public static string ValidatorCurrentAccountCardID {
+            get {
+                return ResourceManager.GetString("ValidatorCurrentAccountCardID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen dönem seçin..
+        /// </summary>
+        public static string ValidatorPeriodID {
+            get {
+                return ResourceManager.GetString("ValidatorPeriodID", resourceCulture);
+            }
+        }
     }
 }

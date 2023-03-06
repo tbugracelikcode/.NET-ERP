@@ -16,15 +16,15 @@ namespace TsiErp.Business.Entities.HaltReason.Validations
         {
             RuleFor(x => x.Code)
                 .NotEmpty()
-                .WithMessage("Lütfen duruş sebebi kodunu yazın.")
+                .WithMessage("ValidatorCodeEmpty")
                 .MaximumLength(17)
-                .WithMessage("Duruş sebebi kodu 17 karakterden fazla olamaz.");
+                .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen duruş sebebi adını yazın.")
+                .WithMessage("ValidatorNameEmpty")
                 .MaximumLength(200)
-                .WithMessage("Duruş sebebi adı 200 karakterden fazla olamaz.");
+                .WithMessage("ValidatorNameMaxLenght");
 
         }
     }
