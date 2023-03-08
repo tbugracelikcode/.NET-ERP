@@ -194,5 +194,41 @@ namespace TsiErp.Localizations.Resources.UnitSets.Page {
                 return ResourceManager.GetString("UpdateControlManager", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen birim seti kodunu yazın..
+        /// </summary>
+        public static string ValidatorCodeEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorCodeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Birim seti kodu, 17 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorCodeMaxLenght {
+            get {
+                return ResourceManager.GetString("ValidatorCodeMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen birim seti adını yazın..
+        /// </summary>
+        public static string ValidatorNameEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorNameEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Birim seti adı, 200 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorNameMaxLenght {
+            get {
+                return ResourceManager.GetString("ValidatorNameMaxLenght", resourceCulture);
+            }
+        }
     }
 }

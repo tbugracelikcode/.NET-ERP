@@ -194,5 +194,59 @@ namespace TsiErp.Localizations.Resources.Shifts.Page {
                 return ResourceManager.GetString("UpdateControlManager", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen vardiya kodunu yazın..
+        /// </summary>
+        public static string ValidatorCodeEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorCodeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vardiya  kodu, 17 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorCodeMaxLenght {
+            get {
+                return ResourceManager.GetString("ValidatorCodeMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen vardiya  açıklaması yazın..
+        /// </summary>
+        public static string ValidatorNameEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorNameEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vardiya  açıklaması, 200 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorNameMaxLenght {
+            get {
+                return ResourceManager.GetString("ValidatorNameMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toplam mola süresi, 0&apos;dan büyük olmalıdır..
+        /// </summary>
+        public static string ValidatorTotalBreakTimeMin {
+            get {
+                return ResourceManager.GetString("ValidatorTotalBreakTimeMin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toplam çalışma süresi, 0&apos;dan büyük olmalıdır..
+        /// </summary>
+        public static string ValidatorTotalWorkTimeMin {
+            get {
+                return ResourceManager.GetString("ValidatorTotalWorkTimeMin", resourceCulture);
+            }
+        }
     }
 }

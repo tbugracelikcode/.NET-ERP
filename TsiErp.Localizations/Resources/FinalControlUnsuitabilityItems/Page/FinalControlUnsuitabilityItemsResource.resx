@@ -160,15 +160,15 @@
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
-    <value>Lütfen final kontrol uygunsuzluk kodunu yazın.</value>
+    <value>Lütfen final kontrol uygunsuzluk başlığı kodunu yazın.</value>
   </data>
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
-    <value>Final kontrol uygunsuzluk kodu, 17 karakterden fazla olamaz.</value>
+    <value>Final kontrol uygunsuzluk başlığı kodu, 17 karakterden fazla olamaz.</value>
   </data>
   <data name="ValidatorNameEmpty" xml:space="preserve">
-    <value>Lütfen final kontrol uygunsuzluk açıklaması yazın.</value>
+    <value>Lütfen final kontrol uygunsuzluk başlığı açıklaması yazın.</value>
   </data>
   <data name="ValidatorNameMaxLenght" xml:space="preserve">
-    <value>Final kontrol uygunsuzluk açıklaması, 200 karakterden fazla olamaz.</value>
+    <value>Final kontrol uygunsuzluk başlığı açıklaması, 200 karakterden fazla olamaz.</value>
   </data>
 </root>

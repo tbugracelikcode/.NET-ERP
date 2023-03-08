@@ -159,4 +159,25 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen kullanıcı kodunu yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Kullanıcı kodu, 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorNameSurnameEmpty" xml:space="preserve">
+    <value>Lütfen ad ve soyad yazın.</value>
+  </data>
+  <data name="ValidatorNameSurnameMaxLength" xml:space="preserve">
+    <value>Adı ve soyad, 300 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorUserGroupID" xml:space="preserve">
+    <value>Lütfen kullanıcı grubu seçin.</value>
+  </data>
+  <data name="ValidatorUserNameEmpty" xml:space="preserve">
+    <value>Lütfen kullanıcı adını yazın.</value>
+  </data>
+  <data name="ValidatorUserNameMaxLenght" xml:space="preserve">
+    <value>Kullanıcı adı, 300 karakterden fazla olamaz.</value>
+  </data>
 </root>

@@ -159,4 +159,19 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="ValidatorBranchID" xml:space="preserve">
+    <value>Lütfen döneme ait şubeyi seçin.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen dönem kodunu yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Dönem kodu, 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Lütfen dönem adını yazın.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>Dönem adı, 200 karakterden fazla olamaz.</value>
+  </data>
 </root>

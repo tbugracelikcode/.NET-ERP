@@ -159,4 +159,16 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same number.</value>
   </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Please enter the registration number.</value>
+  </data>
+  <data name="ValidatorCodeMaxLength" xml:space="preserve">
+    <value>Registration number cannot exceed 17 characters.</value>
+  </data>
+  <data name="ValidatorPeriodID" xml:space="preserve">
+    <value>Please select a maintenance type.</value>
+  </data>
+  <data name="ValidatorStationID" xml:space="preserve">
+    <value>Please select a station.</value>
+  </data>
 </root>

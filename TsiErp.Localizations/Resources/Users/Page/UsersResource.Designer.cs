@@ -185,5 +185,68 @@ namespace TsiErp.Localizations.Resources.Users.Page {
                 return ResourceManager.GetString("UpdateControlManager", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen kullanıcı kodunu yazın..
+        /// </summary>
+        public static string ValidatorCodeEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorCodeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı kodu, 17 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorCodeMaxLenght {
+            get {
+                return ResourceManager.GetString("ValidatorCodeMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen ad ve soyad yazın..
+        /// </summary>
+        public static string ValidatorNameSurnameEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorNameSurnameEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adı ve soyad, 300 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorNameSurnameMaxLength {
+            get {
+                return ResourceManager.GetString("ValidatorNameSurnameMaxLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen kullanıcı grubu seçin..
+        /// </summary>
+        public static string ValidatorUserGroupID {
+            get {
+                return ResourceManager.GetString("ValidatorUserGroupID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen kullanıcı adını yazın..
+        /// </summary>
+        public static string ValidatorUserNameEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorUserNameEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kullanıcı adı, 300 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorUserNameMaxLenght {
+            get {
+                return ResourceManager.GetString("ValidatorUserNameMaxLenght", resourceCulture);
+            }
+        }
     }
 }

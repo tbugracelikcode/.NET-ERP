@@ -168,4 +168,34 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="ValidatorBranchID" xml:space="preserve">
+    <value>Lütfen şube seçin.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen talep numarasını yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLength" xml:space="preserve">
+    <value>Talep numarası 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorCurrencyID" xml:space="preserve">
+    <value>Lütfen para birimi seçin.</value>
+  </data>
+  <data name="ValidatorCurrentAccountID" xml:space="preserve">
+    <value>Lütfen cari hesap seçin.</value>
+  </data>
+  <data name="ValidatorDate" xml:space="preserve">
+    <value>Lütfen tarihi seçin.</value>
+  </data>
+  <data name="ValidatorExchangeRateEmpty" xml:space="preserve">
+    <value>Lütfen kur tutarını yazın.</value>
+  </data>
+  <data name="ValidatorExchangeRateMin" xml:space="preserve">
+    <value>Kur tutarı 0'dan büyük olmalıdır.</value>
+  </data>
+  <data name="ValidatorValidityDate" xml:space="preserve">
+    <value>Lütfen talep geçerlilik tarihi seçin.</value>
+  </data>
+  <data name="ValidatorWarehouseID" xml:space="preserve">
+    <value>Lütfen depo seçin.</value>
+  </data>
 </root>

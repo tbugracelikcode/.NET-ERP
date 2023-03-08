@@ -186,5 +186,41 @@ namespace TsiErp.Localizations.Resources.ProductReferanceNumbers.Page {
                 return ResourceManager.GetString("UpdateControlManager", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen ürün referans numarasını yazın..
+        /// </summary>
+        public static string ValidatorCodeEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorCodeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün referans numarası, 17 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorCodeMaxLenght {
+            get {
+                return ResourceManager.GetString("ValidatorCodeMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen cari hesap kartı seçin..
+        /// </summary>
+        public static string ValidatorCurrentAccountID {
+            get {
+                return ResourceManager.GetString("ValidatorCurrentAccountID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen ürün seçin..
+        /// </summary>
+        public static string ValidatorProductID {
+            get {
+                return ResourceManager.GetString("ValidatorProductID", resourceCulture);
+            }
+        }
     }
 }

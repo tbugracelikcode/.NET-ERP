@@ -13,15 +13,15 @@ namespace TsiErp.Business.Entities.ProductGroup.Validations
         {
             RuleFor(x => x.Code)
                 .NotEmpty()
-                .WithMessage("Lütfen ürün grubu kodu yazın.")
+                .WithMessage("ValidatorCodeEmpty")
                 .MaximumLength(17)
-                .WithMessage("Ürün grubu kodu, 17 karakterden fazla olamaz.");
+                .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen ürün grubu açıklaması yazın.")
+                .WithMessage("ValidatorNameEmpty")
                 .MaximumLength(200)
-                .WithMessage("Ürün grubu açıklaması, 200 karakterden fazla olamaz."); ;
+                .WithMessage("ValidatorNameMaxLenght"); ;
 
         }
     }

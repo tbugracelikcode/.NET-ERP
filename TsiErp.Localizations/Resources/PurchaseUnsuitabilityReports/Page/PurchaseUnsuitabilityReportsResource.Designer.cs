@@ -186,5 +186,59 @@ namespace TsiErp.Localizations.Resources.PurchaseUnsuitabilityReports.Page {
                 return ResourceManager.GetString("UpdateControlManager", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen fiş numarasını yazın..
+        /// </summary>
+        public static string ValidatorCodeEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorCodeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fiş numarası, 17 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorCodeMaxLenght {
+            get {
+                return ResourceManager.GetString("ValidatorCodeMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen cari hesap kartı seçin..
+        /// </summary>
+        public static string ValidatorCurrentAccountID {
+            get {
+                return ResourceManager.GetString("ValidatorCurrentAccountID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen tarihi seçin..
+        /// </summary>
+        public static string ValidatorDate {
+            get {
+                return ResourceManager.GetString("ValidatorDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen sipariş seçin..
+        /// </summary>
+        public static string ValidatorOrderID {
+            get {
+                return ResourceManager.GetString("ValidatorOrderID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen ürün seçin..
+        /// </summary>
+        public static string ValidatorProductID {
+            get {
+                return ResourceManager.GetString("ValidatorProductID", resourceCulture);
+            }
+        }
     }
 }

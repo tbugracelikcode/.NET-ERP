@@ -159,4 +159,16 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Please enter the route code.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Route code cannot exceed 17 characters.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Please enter the route  name.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>Route  name cannot exceed 200 characters.</value>
+  </data>
 </root>

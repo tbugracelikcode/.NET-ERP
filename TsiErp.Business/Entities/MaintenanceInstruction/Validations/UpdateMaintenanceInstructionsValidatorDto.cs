@@ -14,18 +14,18 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Validations
         public UpdateMaintenanceInstructionValidatorDto()
         {
             RuleFor(x => x.Code)
-              .NotEmpty()
-              .WithMessage("Lütfen bakım talimatı kodunu yazın.")
-              .MaximumLength(17)
-              .WithMessage("Bakım talimatı kodu, 17 karakterden fazla olamaz.");
+               .NotEmpty()
+               .WithMessage("ValidatorCodeEmpty")
+               .MaximumLength(17)
+               .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.StationID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("Lütfen istasyon seçin.");
+               .WithMessage("ValidatorStationID");
 
             RuleFor(x => x.PeriodID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("Lütfen bakım türü seçin.");
+               .WithMessage("ValidatorPeriodID");
 
         }
     }

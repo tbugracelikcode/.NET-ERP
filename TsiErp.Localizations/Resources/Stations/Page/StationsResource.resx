@@ -162,4 +162,19 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen istasyon kodunu yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>İstasyon kodu, 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Lütfen istasyon açıklaması yazın.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>İstasyon açıklaması, 200 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorStationGroupID" xml:space="preserve">
+    <value>Lütfen istasyon grubu seçin.</value>
+  </data>
 </root>

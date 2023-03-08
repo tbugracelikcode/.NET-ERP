@@ -162,4 +162,19 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Please enter the payment plan code.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Payment plan code cannot exceed 17 characters.</value>
+  </data>
+  <data name="ValidatorDay" xml:space="preserve">
+    <value>Payment plan due date must be greater than 0.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Please enter the payment plan name.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>Payment plan name cannot exceed 200 characters.</value>
+  </data>
 </root>

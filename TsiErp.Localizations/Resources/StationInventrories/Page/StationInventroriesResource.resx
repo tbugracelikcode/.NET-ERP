@@ -159,4 +159,7 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="ValidatorProductID" xml:space="preserve">
+    <value>Lütfen envanter ürününü seçin.</value>
+  </data>
 </root>

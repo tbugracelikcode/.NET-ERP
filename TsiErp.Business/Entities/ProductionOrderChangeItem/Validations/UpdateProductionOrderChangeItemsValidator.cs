@@ -14,16 +14,16 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeItem.Validations
         public UpdateProductionOrderChangeItemsValidator()
         {
             RuleFor(x => x.Code)
-                .NotEmpty()
-                .WithMessage("Lütfen üretim emri değişiklik kodunu yazın.")
-                .MaximumLength(17)
-                .WithMessage("Üretim emri değişiklik kodu 17 karakterden fazla olamaz.");
+                 .NotEmpty()
+                 .WithMessage("ValidatorCodeEmpty")
+                 .MaximumLength(17)
+                 .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen üretim emri değişiklik adını yazın.")
+                .WithMessage("ValidatorNameEmpty")
                 .MaximumLength(200)
-                .WithMessage("Üretim emri değişiklik adı 200 karakterden fazla olamaz."); ;
+                .WithMessage("ValidatorNameMaxLenght"); ;
 
         }
     }

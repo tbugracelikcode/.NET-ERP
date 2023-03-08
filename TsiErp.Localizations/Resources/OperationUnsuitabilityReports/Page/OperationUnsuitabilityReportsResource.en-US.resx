@@ -159,4 +159,34 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same number.</value>
   </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Please enter the receipt number.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Receipt number cannot exceed 17 characters.</value>
+  </data>
+  <data name="ValidatorDate" xml:space="preserve">
+    <value>Please select a date.</value>
+  </data>
+  <data name="ValidatorEmployeeID" xml:space="preserve">
+    <value>Please select an employee.</value>
+  </data>
+  <data name="ValidatorOperationID" xml:space="preserve">
+    <value>Please select an operation.</value>
+  </data>
+  <data name="ValidatorProductID" xml:space="preserve">
+    <value>Please select a product.</value>
+  </data>
+  <data name="ValidatorProductionOrderID" xml:space="preserve">
+    <value>Please select a production order.</value>
+  </data>
+  <data name="ValidatorStationGroupID" xml:space="preserve">
+    <value>Please select a station group.</value>
+  </data>
+  <data name="ValidatorStationID" xml:space="preserve">
+    <value>Please select a station.</value>
+  </data>
+  <data name="ValidatorWorkOrderID" xml:space="preserve">
+    <value>Please select a work order.</value>
+  </data>
 </root>

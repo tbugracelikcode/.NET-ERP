@@ -160,15 +160,15 @@
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
-    <value>Lütfen fason uygunsuzluk kodunu yazın.</value>
+    <value>Lütfen fason uygunsuzluk başlığı kodunu yazın.</value>
   </data>
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
-    <value>Fason uygunsuzluk kodu 17 karakterden fazla olamaz.</value>
+    <value>Fason uygunsuzluk başlığı kodu 17 karakterden fazla olamaz.</value>
   </data>
   <data name="ValidatorNameEmpty" xml:space="preserve">
-    <value>Lütfen fason uygunsuzluk açıklamasını yazın.</value>
+    <value>Lütfen fason uygunsuzluk başlığı  açıklamasını yazın.</value>
   </data>
   <data name="ValidatorNameMaxLenght" xml:space="preserve">
-    <value>Fason uygunsuzluk açıklaması 200 karakterden fazla olamaz.</value>
+    <value>Fason uygunsuzluk başlığı açıklaması 200 karakterden fazla olamaz.</value>
   </data>
 </root>

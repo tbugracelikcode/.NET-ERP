@@ -159,4 +159,22 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen stok kodunu yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Stok kodu, 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Lütfen stok açıklaması yazın.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>Stok açıklaması, 200 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorProductGroupID" xml:space="preserve">
+    <value>Lütfen ürün grubu seçin.</value>
+  </data>
+  <data name="ValidatorUnitSetID" xml:space="preserve">
+    <value>Lütfen birim seti seçin.</value>
+  </data>
 </root>

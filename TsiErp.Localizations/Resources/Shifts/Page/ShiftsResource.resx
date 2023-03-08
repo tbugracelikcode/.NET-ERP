@@ -162,4 +162,22 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen vardiya kodunu yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Vardiya  kodu, 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Lütfen vardiya  açıklaması yazın.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>Vardiya  açıklaması, 200 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorTotalBreakTimeMin" xml:space="preserve">
+    <value>Toplam mola süresi, 0'dan büyük olmalıdır.</value>
+  </data>
+  <data name="ValidatorTotalWorkTimeMin" xml:space="preserve">
+    <value>Toplam çalışma süresi, 0'dan büyük olmalıdır.</value>
+  </data>
 </root>

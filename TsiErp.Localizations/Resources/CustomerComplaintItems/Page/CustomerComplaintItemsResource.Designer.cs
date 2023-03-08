@@ -188,7 +188,7 @@ namespace TsiErp.Localizations.Resources.CustomerComplaintItems.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lütfen müşteri şikayet kodunu yazın..
+        ///   Looks up a localized string similar to Lütfen müşteri şikayet başlığı kodunu yazın..
         /// </summary>
         public static string ValidatorCodeEmpty {
             get {
@@ -197,7 +197,7 @@ namespace TsiErp.Localizations.Resources.CustomerComplaintItems.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Müşteri şikayet kodu, 17 karakterden fazla olamaz..
+        ///   Looks up a localized string similar to Müşteri şikayet başlığı kodu, 17 karakterden fazla olamaz..
         /// </summary>
         public static string ValidatorCodeMaxLenght {
             get {
@@ -206,7 +206,7 @@ namespace TsiErp.Localizations.Resources.CustomerComplaintItems.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lütfen müşteri şikayet açıklaması yazın..
+        ///   Looks up a localized string similar to Lütfen müşteri şikayet başlığı açıklaması yazın..
         /// </summary>
         public static string ValidatorNameEmpty {
             get {
@@ -215,7 +215,7 @@ namespace TsiErp.Localizations.Resources.CustomerComplaintItems.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Müşteri şikayet açıklaması, 200 karakterden fazla olamaz..
+        ///   Looks up a localized string similar to Müşteri şikayet başlığı açıklaması, 200 karakterden fazla olamaz..
         /// </summary>
         public static string ValidatorNameMaxLenght {
             get {

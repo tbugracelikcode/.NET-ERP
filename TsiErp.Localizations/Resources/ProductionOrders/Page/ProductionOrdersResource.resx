@@ -159,4 +159,31 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="ValidatorBoMID" xml:space="preserve">
+    <value>Lütfen reçete seçin.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen fiş numarasını yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Fiş numarası, 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorCurrentAccountID" xml:space="preserve">
+    <value>Lütfen cari hesap seçin.</value>
+  </data>
+  <data name="ValidatorFinishedProductID" xml:space="preserve">
+    <value>Lütfen mamül seçin.</value>
+  </data>
+  <data name="ValidatorOrderID" xml:space="preserve">
+    <value>Lütfen siparişi seçin.</value>
+  </data>
+  <data name="ValidatorPropositionID" xml:space="preserve">
+    <value>Lütfen teklif seçin</value>
+  </data>
+  <data name="ValidatorRouteID" xml:space="preserve">
+    <value>Lütfen rota seçin.</value>
+  </data>
+  <data name="ValidatorUnitSetID" xml:space="preserve">
+    <value>Lütfen birim seti seçin.</value>
+  </data>
 </root>

@@ -186,5 +186,50 @@ namespace TsiErp.Localizations.Resources.ProductionTrackings.Page {
                 return ResourceManager.GetString("UpdateControlManager", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen üretim takip kodunu yazın..
+        /// </summary>
+        public static string ValidatorCodeEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorCodeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim takip kodu 17 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorCodeMaxLength {
+            get {
+                return ResourceManager.GetString("ValidatorCodeMaxLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen çalışan seçin..
+        /// </summary>
+        public static string ValidatorEmployeeID {
+            get {
+                return ResourceManager.GetString("ValidatorEmployeeID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen vardiya seçin..
+        /// </summary>
+        public static string ValidatorShiftID {
+            get {
+                return ResourceManager.GetString("ValidatorShiftID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen iş istasyonu seçin..
+        /// </summary>
+        public static string ValidatorStationID {
+            get {
+                return ResourceManager.GetString("ValidatorStationID", resourceCulture);
+            }
+        }
     }
 }

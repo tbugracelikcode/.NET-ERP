@@ -13,51 +13,51 @@ namespace TsiErp.Business.Entities.ShippingAdress.Validations
         {
             RuleFor(x => x.Code)
                 .NotEmpty()
-                .WithMessage("Lütfen kodu yazın.")
+                .WithMessage("ValidatorCodeEmpty")
                 .MaximumLength(17)
-                .WithMessage("Makina kodu 17 karakterden fazla olamaz.");
+                .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen açıklamayı yazın.")
+                .WithMessage("ValidatorNameEmpty")
                 .MaximumLength(200)
-                .WithMessage("Açıklama 200 karakterden fazla olamaz.");
+                .WithMessage("ValidatorNameMaxLenght");
 
-            RuleFor(x => x.CustomerCardID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen müşteri kartını seçin.");
+            RuleFor(x => x.CustomerCardID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorCurrentAccountID");
 
             RuleFor(x => x.Adress1)
                .NotEmpty()
-               .WithMessage("Lütfen adresi yazın.");
+               .WithMessage("ValidatorAdress1Empty");
 
             RuleFor(x => x.District)
                 .NotEmpty()
-                .WithMessage("Lütfen ilçeyi yazın.")
+                .WithMessage("ValidatorDistrictEmpty")
                 .MaximumLength(50)
-                .WithMessage("İlçe, 50 karakterden fazla olamaz.");
+                .WithMessage("ValidatorDistrictMaxLength");
 
             RuleFor(x => x.City)
                 .NotEmpty()
-                .WithMessage("Lütfen şehri yazın.")
+                .WithMessage("ValidatorCityEmpty")
                 .MaximumLength(50)
-                .WithMessage("Şehir, 50 karakterden fazla olamaz.");
+                .WithMessage("ValidatorCityMaxLength");
 
             RuleFor(x => x.Country)
                 .NotEmpty()
-                .WithMessage("Lütfen ülkeyi yazın.")
+                .WithMessage("ValidatorCountryEmpty")
                 .MaximumLength(50)
-                .WithMessage("Ülke, 50 karakterden fazla olamaz.");
+                .WithMessage("ValidatorCountryMaxLength");
 
             RuleFor(x => x.Phone)
                 .NotEmpty()
-                .WithMessage("Lütfen telefon numarasını yazın.")
+                .WithMessage("ValidatorPhoneEmpty")
                 .MaximumLength(100)
-                .WithMessage("Telefon numarası, 100 karakterden fazla olamaz.");
+                .WithMessage("ValidatorPhoneMaxLength");
 
             RuleFor(x => x.PostCode)
                .NotEmpty()
-               .WithMessage("Lütfen posta kodunu yazın.")
+               .WithMessage("ValidatorPostEmpty")
                .MaximumLength(50)
-               .WithMessage("Posta kodu, 50 karakterden fazla olamaz.");
+               .WithMessage("ValidatorPostMaxLength");
 
 
 

@@ -188,7 +188,7 @@ namespace TsiErp.Localizations.Resources.FinalControlUnsuitabilityItems.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lütfen final kontrol uygunsuzluk kodunu yazın..
+        ///   Looks up a localized string similar to Lütfen final kontrol uygunsuzluk başlığı kodunu yazın..
         /// </summary>
         public static string ValidatorCodeEmpty {
             get {
@@ -197,7 +197,7 @@ namespace TsiErp.Localizations.Resources.FinalControlUnsuitabilityItems.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Final kontrol uygunsuzluk kodu, 17 karakterden fazla olamaz..
+        ///   Looks up a localized string similar to Final kontrol uygunsuzluk başlığı kodu, 17 karakterden fazla olamaz..
         /// </summary>
         public static string ValidatorCodeMaxLenght {
             get {
@@ -206,7 +206,7 @@ namespace TsiErp.Localizations.Resources.FinalControlUnsuitabilityItems.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lütfen final kontrol uygunsuzluk açıklaması yazın..
+        ///   Looks up a localized string similar to Lütfen final kontrol uygunsuzluk başlığı açıklaması yazın..
         /// </summary>
         public static string ValidatorNameEmpty {
             get {
@@ -215,7 +215,7 @@ namespace TsiErp.Localizations.Resources.FinalControlUnsuitabilityItems.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Final kontrol uygunsuzluk açıklaması, 200 karakterden fazla olamaz..
+        ///   Looks up a localized string similar to Final kontrol uygunsuzluk başlığı açıklaması, 200 karakterden fazla olamaz..
         /// </summary>
         public static string ValidatorNameMaxLenght {
             get {

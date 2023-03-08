@@ -13,20 +13,20 @@ namespace TsiErp.Business.Entities.Shift.Validations
         public UpdateShiftsValidatorDto()
         {
             RuleFor(x => x.Code)
-               .NotEmpty()
-               .WithMessage("Lütfen vardiya kodunu yazın.")
-               .MaximumLength(17)
-               .WithMessage("Vardiya kodu 17 karakterden fazla olamaz.");
+              .NotEmpty()
+              .WithMessage("ValidatorCodeEmpty")
+              .MaximumLength(17)
+              .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.Name)
                .NotEmpty()
-               .WithMessage("Lütfen vardiya açıklamasını yazın.")
+               .WithMessage("ValidatorNameEmpty")
                .MaximumLength(200)
-               .WithMessage("Vardiya açıklaması 200 karakterden fazla olamaz.");
+               .WithMessage("ValidatorNameMaxLenght");
 
-            RuleFor(x => x.TotalWorkTime).GreaterThanOrEqualTo(1).WithMessage("Toplam çalışma süresi, 0'dan büyük olmalıdır.");
+            RuleFor(x => x.TotalWorkTime).GreaterThanOrEqualTo(1).WithMessage("ValidatorTotalWorkTimeMin");
 
-            RuleFor(x => x.TotalBreakTime).GreaterThanOrEqualTo(1).WithMessage("Toplam mola süresi, 0'dan büyük olmalıdır.");
+            RuleFor(x => x.TotalBreakTime).GreaterThanOrEqualTo(1).WithMessage("ValidatorTotalBreakTimeMin");
 
 
         }

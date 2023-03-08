@@ -13,17 +13,17 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Validations
         {
             RuleFor(x => x.ReferanceNo)
                 .NotEmpty()
-                .WithMessage("Lütfen ürün referans numarasını yazın.")
+                .WithMessage("ValidatorCodeEmpty")
                 .MaximumLength(17)
-                .WithMessage("Ürün referans numarası, 17 karakterden fazla olamaz.");
+                .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.ProductID)
                  .Must(x => x.HasValue && x.Value != Guid.Empty)
-                .WithMessage("Lütfen ürün seçin.");
+                .WithMessage("ValidatorProductID");
 
             RuleFor(x => x.CurrentAccountCardID)
                .Must(x => x.HasValue && x.Value != Guid.Empty)
-              .WithMessage("Lütfen cari hesap kartı seçin.");
+              .WithMessage("ValidatorCurrentAccountID");
 
         }
     }

@@ -14,19 +14,19 @@ namespace TsiErp.Business.Entities.PurchasePrice.Validations
         {
             RuleFor(x => x.Code)
                .NotEmpty()
-               .WithMessage("Lütfen fiyat listesi kodunu yazın.")
+               .WithMessage("ValidatorCodeEmpty")
                .MaximumLength(17)
-               .WithMessage("Fiyat listesi kodu, 17 karakterden fazla olamaz.");
+               .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.Name)
                .NotEmpty()
-               .WithMessage("Lütfen fiyat listesi açıklaması yazın.")
+               .WithMessage("ValidatorNameEmpty")
                .MaximumLength(200)
-               .WithMessage("Fiyat listesi açıklaması, 200 karakterden fazla olamaz.");
+               .WithMessage("ValidatorNameMaxLenght");
 
             RuleFor(x => x.CurrencyID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("Lütfen para birimi seçin.");
+               .WithMessage("ValidatorCurrencyID");
         }
     }
 }

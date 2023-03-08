@@ -12,16 +12,16 @@ namespace TsiErp.Business.Entities.Warehouse.Validations
         public UpdateWarehousesValidator()
         {
             RuleFor(x => x.Code)
-                .NotEmpty()
-                .WithMessage("Lütfen depo kodunu yazın.")
-                .MaximumLength(17)
-                .WithMessage("Depo kodu 17 karakterden fazla olamaz.");
+               .NotEmpty()
+               .WithMessage("ValidatorCodeEmpty")
+               .MaximumLength(17)
+               .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen depo adını yazın.")
+                .WithMessage("ValidatorNameEmpty")
                 .MaximumLength(200)
-                .WithMessage("Depo adı 200 karakterden fazla olamaz."); ;
+                .WithMessage("ValidatorNameMaxLenght"); ;
 
         }
     }

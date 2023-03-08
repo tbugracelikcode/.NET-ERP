@@ -162,4 +162,19 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Please enter the station code.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Station code cannot exceed 17 characters.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Please enter the station name.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>Station name cannot exceed 200 characters.</value>
+  </data>
+  <data name="ValidatorStationGroupID" xml:space="preserve">
+    <value>Please select a station group.</value>
+  </data>
 </root>

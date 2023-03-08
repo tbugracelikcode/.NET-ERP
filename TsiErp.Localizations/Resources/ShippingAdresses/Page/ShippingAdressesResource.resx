@@ -162,4 +162,52 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="ValidatorAdress1Empty" xml:space="preserve">
+    <value>Lütfen adresi yazın.</value>
+  </data>
+  <data name="ValidatorCityEmpty" xml:space="preserve">
+    <value>Lütfen şehri yazın.</value>
+  </data>
+  <data name="ValidatorCityMaxLength" xml:space="preserve">
+    <value>Şehir, 50 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen sevkiyat adresi kodunu yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Sevkiyat adresi kodu, 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorCountryEmpty" xml:space="preserve">
+    <value>Lütfen ülkeyi yazın.</value>
+  </data>
+  <data name="ValidatorCountryMaxLength" xml:space="preserve">
+    <value>Ülke, 50 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorCurrentAccountID" xml:space="preserve">
+    <value>Lütfen müşteri seçin.</value>
+  </data>
+  <data name="ValidatorDistrictEmpty" xml:space="preserve">
+    <value>Lütfen ilçeyi yazın.</value>
+  </data>
+  <data name="ValidatorDistrictMaxLength" xml:space="preserve">
+    <value>İlçe, 50 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Lütfen sevkiyat adresi açıklaması yazın.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>Sevkiyat adresi açıklaması, 200 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorPhoneEmpty" xml:space="preserve">
+    <value>Lütfen telefon numarasını yazın.</value>
+  </data>
+  <data name="ValidatorPhoneMaxLength" xml:space="preserve">
+    <value>Telefon numarası, 100 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorPostEmpty" xml:space="preserve">
+    <value>Lütfen posta kodunu yazın.</value>
+  </data>
+  <data name="ValidatorPostMaxLength" xml:space="preserve">
+    <value>Posta kodu, 50 karakterden fazla olamaz.</value>
+  </data>
 </root>

@@ -159,4 +159,19 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen üretim takip kodunu yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLength" xml:space="preserve">
+    <value>Üretim takip kodu 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorEmployeeID" xml:space="preserve">
+    <value>Lütfen çalışan seçin.</value>
+  </data>
+  <data name="ValidatorShiftID" xml:space="preserve">
+    <value>Lütfen vardiya seçin.</value>
+  </data>
+  <data name="ValidatorStationID" xml:space="preserve">
+    <value>Lütfen iş istasyonu seçin.</value>
+  </data>
 </root>

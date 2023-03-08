@@ -13,19 +13,19 @@ namespace TsiErp.Business.Entities.Product.Validations
         {
             RuleFor(x => x.Code)
                .NotEmpty()
-               .WithMessage("Lütfen stok kodunu yazın.")
+               .WithMessage("ValidatorCodeEmpty")
                .MaximumLength(17)
-               .WithMessage("Stok kodu 17 karakterden fazla olamaz.");
+               .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen stok açıklamasını yazın.")
+                .WithMessage("ValidatorNameEmpty")
                 .MaximumLength(200)
-                .WithMessage("Stok açıklaması 200 karakterden fazla olamaz.");
+                .WithMessage("ValidatorNameMaxLenght");
 
-            RuleFor(x => x.ProductGrpID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen ürün grubunu seçin.");
+            RuleFor(x => x.ProductGrpID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorProductGroupID");
 
-            RuleFor(x => x.UnitSetID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen birim setini seçin.");
+            RuleFor(x => x.UnitSetID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorUnitSetID");
         }
     }
 }

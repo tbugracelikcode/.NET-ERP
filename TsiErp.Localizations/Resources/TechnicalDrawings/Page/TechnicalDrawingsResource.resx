@@ -159,4 +159,13 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı revizyon numaralı bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen revizyon numarası yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLength" xml:space="preserve">
+    <value>Revizyon numarası, 50 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorProductID" xml:space="preserve">
+    <value>Lütfen stok seçin.</value>
+  </data>
 </root>

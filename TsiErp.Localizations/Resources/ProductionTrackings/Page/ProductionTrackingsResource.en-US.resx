@@ -159,4 +159,19 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Enter the production tracking code.</value>
+  </data>
+  <data name="ValidatorCodeMaxLength" xml:space="preserve">
+    <value>Production tracking code cannot exceed 17 characters.</value>
+  </data>
+  <data name="ValidatorEmployeeID" xml:space="preserve">
+    <value>Please select an employee.</value>
+  </data>
+  <data name="ValidatorShiftID" xml:space="preserve">
+    <value>Please select a shift.</value>
+  </data>
+  <data name="ValidatorStationID" xml:space="preserve">
+    <value>Please select a station.</value>
+  </data>
 </root>

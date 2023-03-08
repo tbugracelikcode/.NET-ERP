@@ -159,4 +159,28 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen iş emri kodunu yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>İş emri kodu, 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Lütfen iş emri numarasını yazın.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>İş emri numarası, 200 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorProductID" xml:space="preserve">
+    <value>Lütfen ürün seçin.</value>
+  </data>
+  <data name="ValidatorProductionOrderID" xml:space="preserve">
+    <value>Lütfen üretim emri seçin.</value>
+  </data>
+  <data name="ValidatorProductsOperationID" xml:space="preserve">
+    <value>Lütfen operasyon seçin.</value>
+  </data>
+  <data name="ValidatorPropositionID" xml:space="preserve">
+    <value>Lütfen teklif seçin.</value>
+  </data>
 </root>

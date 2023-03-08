@@ -162,4 +162,16 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Please enter the user group code.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>User group code cannot exceed 17 characters.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Please enter the user group name.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>User group name cannot exceed 300 characters.</value>
+  </data>
 </root>

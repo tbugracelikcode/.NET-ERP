@@ -159,4 +159,16 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen bakım talimatı kodunu yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Bakım talimatı kodu, 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorPeriodID" xml:space="preserve">
+    <value>Lütfen dönem seçin.</value>
+  </data>
+  <data name="ValidatorStationID" xml:space="preserve">
+    <value>Lütfen iş istasyonu seçin.</value>
+  </data>
 </root>

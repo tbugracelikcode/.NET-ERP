@@ -186,5 +186,41 @@ namespace TsiErp.Localizations.Resources.MaintenanceInstructions.Page {
                 return ResourceManager.GetString("UpdateControlManager", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen bakım talimatı kodunu yazın..
+        /// </summary>
+        public static string ValidatorCodeEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorCodeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bakım talimatı kodu, 17 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorCodeMaxLenght {
+            get {
+                return ResourceManager.GetString("ValidatorCodeMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen dönem seçin..
+        /// </summary>
+        public static string ValidatorPeriodID {
+            get {
+                return ResourceManager.GetString("ValidatorPeriodID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen iş istasyonu seçin..
+        /// </summary>
+        public static string ValidatorStationID {
+            get {
+                return ResourceManager.GetString("ValidatorStationID", resourceCulture);
+            }
+        }
     }
 }

@@ -194,5 +194,149 @@ namespace TsiErp.Localizations.Resources.ShippingAdresses.Page {
                 return ResourceManager.GetString("UpdateControlManager", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen adresi yazın..
+        /// </summary>
+        public static string ValidatorAdress1Empty {
+            get {
+                return ResourceManager.GetString("ValidatorAdress1Empty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen şehri yazın..
+        /// </summary>
+        public static string ValidatorCityEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorCityEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şehir, 50 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorCityMaxLength {
+            get {
+                return ResourceManager.GetString("ValidatorCityMaxLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen sevkiyat adresi kodunu yazın..
+        /// </summary>
+        public static string ValidatorCodeEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorCodeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sevkiyat adresi kodu, 17 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorCodeMaxLenght {
+            get {
+                return ResourceManager.GetString("ValidatorCodeMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen ülkeyi yazın..
+        /// </summary>
+        public static string ValidatorCountryEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorCountryEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ülke, 50 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorCountryMaxLength {
+            get {
+                return ResourceManager.GetString("ValidatorCountryMaxLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen müşteri seçin..
+        /// </summary>
+        public static string ValidatorCurrentAccountID {
+            get {
+                return ResourceManager.GetString("ValidatorCurrentAccountID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen ilçeyi yazın..
+        /// </summary>
+        public static string ValidatorDistrictEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorDistrictEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İlçe, 50 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorDistrictMaxLength {
+            get {
+                return ResourceManager.GetString("ValidatorDistrictMaxLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen sevkiyat adresi açıklaması yazın..
+        /// </summary>
+        public static string ValidatorNameEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorNameEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sevkiyat adresi açıklaması, 200 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorNameMaxLenght {
+            get {
+                return ResourceManager.GetString("ValidatorNameMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen telefon numarasını yazın..
+        /// </summary>
+        public static string ValidatorPhoneEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorPhoneEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Telefon numarası, 100 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorPhoneMaxLength {
+            get {
+                return ResourceManager.GetString("ValidatorPhoneMaxLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen posta kodunu yazın..
+        /// </summary>
+        public static string ValidatorPostEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorPostEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Posta kodu, 50 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorPostMaxLength {
+            get {
+                return ResourceManager.GetString("ValidatorPostMaxLength", resourceCulture);
+            }
+        }
     }
 }

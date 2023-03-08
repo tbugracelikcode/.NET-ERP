@@ -188,7 +188,7 @@ namespace TsiErp.Localizations.Resources.ContractUnsuitabilityItems.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lütfen fason uygunsuzluk kodunu yazın..
+        ///   Looks up a localized string similar to Lütfen fason uygunsuzluk başlığı kodunu yazın..
         /// </summary>
         public static string ValidatorCodeEmpty {
             get {
@@ -197,7 +197,7 @@ namespace TsiErp.Localizations.Resources.ContractUnsuitabilityItems.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fason uygunsuzluk kodu 17 karakterden fazla olamaz..
+        ///   Looks up a localized string similar to Fason uygunsuzluk başlığı kodu 17 karakterden fazla olamaz..
         /// </summary>
         public static string ValidatorCodeMaxLenght {
             get {
@@ -206,7 +206,7 @@ namespace TsiErp.Localizations.Resources.ContractUnsuitabilityItems.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lütfen fason uygunsuzluk açıklamasını yazın..
+        ///   Looks up a localized string similar to Lütfen fason uygunsuzluk başlığı  açıklamasını yazın..
         /// </summary>
         public static string ValidatorNameEmpty {
             get {
@@ -215,7 +215,7 @@ namespace TsiErp.Localizations.Resources.ContractUnsuitabilityItems.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fason uygunsuzluk açıklaması 200 karakterden fazla olamaz..
+        ///   Looks up a localized string similar to Fason uygunsuzluk başlığı açıklaması 200 karakterden fazla olamaz..
         /// </summary>
         public static string ValidatorNameMaxLenght {
             get {
