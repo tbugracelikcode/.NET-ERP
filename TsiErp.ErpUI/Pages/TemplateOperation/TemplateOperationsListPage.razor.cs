@@ -29,6 +29,7 @@ namespace TsiErp.ErpUI.Pages.TemplateOperation
         protected override async void OnInitialized()
         {
             BaseCrudService = TemplateOperationsAppService;
+            _L = L;
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
 

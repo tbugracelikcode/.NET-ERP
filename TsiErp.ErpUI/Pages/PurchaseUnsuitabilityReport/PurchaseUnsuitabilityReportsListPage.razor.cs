@@ -31,6 +31,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseUnsuitabilityReport
         protected override async void OnInitialized()
         {
             BaseCrudService = PurchaseUnsuitabilityReportsService;
+            _L = L;
 
         }
 

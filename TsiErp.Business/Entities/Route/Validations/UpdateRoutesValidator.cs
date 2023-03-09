@@ -13,6 +13,7 @@ namespace TsiErp.Business.Entities.Route.Validations
     {
         public UpdateRoutesValidator()
         {
+            RuleFor(x => x.Code)
                 .NotEmpty()
                 .WithMessage("ValidatorCodeEmpty")
                 .MaximumLength(17)

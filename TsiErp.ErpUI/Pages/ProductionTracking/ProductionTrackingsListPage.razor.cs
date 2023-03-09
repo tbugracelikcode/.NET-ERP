@@ -39,6 +39,7 @@ namespace TsiErp.ErpUI.Pages.ProductionTracking
         protected override async Task OnInitializedAsync()
         {
             BaseCrudService = ProductionTrackingsAppService;
+            _L = L;
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
 

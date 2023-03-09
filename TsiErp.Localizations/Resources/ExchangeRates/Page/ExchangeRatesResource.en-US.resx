@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BuyingRate" xml:space="preserve">
+    <value>BUYING RATE</value>
+  </data>
+  <data name="BuyingRateLabel" xml:space="preserve">
+    <value>Buying Rate:</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
@@ -132,6 +141,27 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="CurrencyCode" xml:space="preserve">
+    <value>CURRENCY CODE</value>
+  </data>
+  <data name="CurrencyCodeLabel" xml:space="preserve">
+    <value>Currency Code:</value>
+  </data>
+  <data name="CurrencyModalGridCode" xml:space="preserve">
+    <value>CURRENCY CODE</value>
+  </data>
+  <data name="CurrencyModalGridName" xml:space="preserve">
+    <value>CURRENCY NAME</value>
+  </data>
+  <data name="CurrencyModalTitle" xml:space="preserve">
+    <value>Currencies</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>DATE</value>
+  </data>
+  <data name="DateLabel" xml:space="preserve">
+    <value>Date:</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -140,6 +170,21 @@
   </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Exchange Rates</value>
+  </data>
+  <data name="EffectiveBuyingRate" xml:space="preserve">
+    <value>EFFECTIVE BUYING RATE</value>
+  </data>
+  <data name="EffectiveBuyingRateLabel" xml:space="preserve">
+    <value>Effective Buying Rate:</value>
+  </data>
+  <data name="EffectiveSaleRate" xml:space="preserve">
+    <value>EFFEKTIVE SALE RATE</value>
+  </data>
+  <data name="EffectiveSaleRateLabel" xml:space="preserve">
+    <value>Effective Sale Rate:</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
@@ -155,6 +200,27 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="SaleRate" xml:space="preserve">
+    <value>SALE RATE</value>
+  </data>
+  <data name="SaleRateLabel" xml:space="preserve">
+    <value>Sale Rate:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Exchange Rates</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>ExchangeRates</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Exchange Rates</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>General System Identifications</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>

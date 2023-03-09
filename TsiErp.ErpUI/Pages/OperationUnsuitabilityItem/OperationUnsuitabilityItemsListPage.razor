@@ -2,6 +2,7 @@
 @layout MainLayout
 
 @using Syncfusion.Blazor.Buttons
+@using TsiErp.Localizations.Resources.OperationUnsuitabilityItems.Page
 
 @using TsiErp.Business.Entities.OperationUnsuitabilityItem.Services
 @using TsiErp.Entities.Entities.OperationUnsuitabilityItem
@@ -12,6 +13,8 @@
 @inherits BaseListPage<SelectOperationUnsuitabilityItemsDto, ListOperationUnsuitabilityItemsDto, CreateOperationUnsuitabilityItemsDto, UpdateOperationUnsuitabilityItemsDto, ListOperationUnsuitabilityItemsParameterDto>
 
 @inject IOperationUnsuitabilityItemsAppService OperationUnsuitabilityItemsService
+@inject IStringLocalizer<OperationUnsuitabilityItemsResource> L 
+
 
 @{
     if (!base.IsLoaded)

@@ -778,6 +778,7 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectPurchaseRequestsDto, UpdatePurchaseRequestsDto>();
             CreateMap<SelectPurchaseRequestsDto, PurchaseRequests>();
             CreateMap<UpdatePurchaseRequestsDto, PurchaseRequests>();
+            CreateMap<PurchaseRequests, UpdatePurchaseRequestsDto>();
 
 
             CreateMap<PurchaseRequestLines, SelectPurchaseRequestLinesDto>()

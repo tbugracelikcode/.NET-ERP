@@ -11,7 +11,8 @@
 @using TsiErp.Entities.Entities.RouteLine.Dtos
 @using TsiErp.Entities.Entities.ProductsOperation.Dtos
 @using TsiErp.ErpUI.Pages.Base
-
+@using TsiErp.Localizations.Resources.Routes.Page
+@inject IStringLocalizer<RoutesResource> L 
 @inherits BaseListPage<SelectRoutesDto, ListRoutesDto, CreateRoutesDto, UpdateRoutesDto, ListRoutesParameterDto>
 
 @inject IRoutesAppService RoutesAppService

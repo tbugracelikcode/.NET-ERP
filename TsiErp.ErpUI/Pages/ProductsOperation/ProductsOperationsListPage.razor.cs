@@ -38,6 +38,7 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
             CreateLineContextMenuItems();
 
             BaseCrudService = ProductsOperationsAppService;
+            _L = L;
 
         }
 

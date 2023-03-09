@@ -15,6 +15,7 @@ namespace TsiErp.ErpUI.Pages.User
         protected override async void OnInitialized()
         {
             BaseCrudService = UsersService;
+            _L = L;
             await GetUserGroupsList();
         }
 

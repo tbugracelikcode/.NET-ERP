@@ -10,7 +10,8 @@
 @using TsiErp.Entities.Entities.TemplateOperationLine.Dtos
 @using TsiErp.Business.Entities.Station.Services
 @using TsiErp.Entities.Entities.Station.Dtos
-
+@using TsiErp.Localizations.Resources.TemplateOperations.Page
+@inject IStringLocalizer<TemplateOperationsResource> L 
 
 @inherits BaseListPage<SelectTemplateOperationsDto, ListTemplateOperationsDto, CreateTemplateOperationsDto, UpdateTemplateOperationsDto, ListTemplateOperationsParameterDto>
 

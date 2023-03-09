@@ -38,6 +38,7 @@ namespace TsiErp.ErpUI.Pages.Employee
         protected override async void OnInitialized()
         {
             BaseCrudService = EmployeesService;
+            _L = L;
         }
 
        

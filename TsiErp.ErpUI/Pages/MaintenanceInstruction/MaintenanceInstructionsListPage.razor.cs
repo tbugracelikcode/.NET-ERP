@@ -32,7 +32,7 @@ namespace TsiErp.ErpUI.Pages.MaintenanceInstruction
         protected override async Task OnInitializedAsync()
         {
             BaseCrudService = MaintenanceInstructionsAppService;
-
+            _L = L;
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
 

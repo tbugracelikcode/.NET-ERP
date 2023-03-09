@@ -47,6 +47,7 @@ namespace TsiErp.ErpUI.Pages.TechnicalDrawing
         protected override async void OnInitialized()
         {
             BaseCrudService = TechnicalDrawingsService;
+            _L = L;
             ListDataSource = (await TechnicalDrawingsService.GetListAsync(new ListTechnicalDrawingsParameterDto())).Data.ToList();
         }
 

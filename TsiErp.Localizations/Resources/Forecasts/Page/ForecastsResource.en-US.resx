@@ -117,8 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AmountLineLabel" xml:space="preserve">
+    <value>Amount:</value>
+  </data>
+  <data name="BranchName" xml:space="preserve">
+    <value>BRANCH NAME</value>
+  </data>
+  <data name="BranchNameLabel" xml:space="preserve">
+    <value>Branch Code:</value>
+  </data>
+  <data name="BranchPopupGridCode" xml:space="preserve">
+    <value>BRANCH CODE</value>
+  </data>
+  <data name="BranchPopupGridName" xml:space="preserve">
+    <value>BRANCH NAME</value>
+  </data>
+  <data name="BranchPopupTitle" xml:space="preserve">
+    <value>Branches</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>FORECAST CODE</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same number.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Forecast Code:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -132,6 +159,39 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="CurrentAccountCardCodeLabel" xml:space="preserve">
+    <value>Current Account Code:</value>
+  </data>
+  <data name="CurrentAccountCardName" xml:space="preserve">
+    <value>CURRENT ACCOUN NAME</value>
+  </data>
+  <data name="CurrentAccountCardNameLabel" xml:space="preserve">
+    <value>Current Account Name:</value>
+  </data>
+  <data name="CurrentAccountPopupGridCode" xml:space="preserve">
+    <value>CURRENT ACCOUNT CODE</value>
+  </data>
+  <data name="CurrentAccountPopupGridEmail" xml:space="preserve">
+    <value>E-MAIL</value>
+  </data>
+  <data name="CurrentAccountPopupGridName" xml:space="preserve">
+    <value>CURRENT ACCOUNT NAME</value>
+  </data>
+  <data name="CurrentAccountPopupGridResponsible" xml:space="preserve">
+    <value>RESPONSIBLE</value>
+  </data>
+  <data name="CurrentAccountPopupGridTaxNumber" xml:space="preserve">
+    <value>TAX NUMBER</value>
+  </data>
+  <data name="CurrentAccountPopupGridTel1" xml:space="preserve">
+    <value>PHONE (1)</value>
+  </data>
+  <data name="CurrentAccountPopupTitle" xml:space="preserve">
+    <value>Current Account Cards</value>
+  </data>
+  <data name="CustomerProductCodeLineLabel" xml:space="preserve">
+    <value>Customer Product Code:</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -141,8 +201,32 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="Description_" xml:space="preserve">
+    <value>DESCRIPTION</value>
+  </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Sales Forecast Records</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="LineGridAmount" xml:space="preserve">
+    <value>AMOUNT</value>
+  </data>
+  <data name="LineGridCustomerProductCode" xml:space="preserve">
+    <value>CUSTOMER PRODUCT CODE</value>
+  </data>
+  <data name="LineGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="LineGridProductName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="LinePopupTitle" xml:space="preserve">
+    <value>Forecast Lines</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -155,6 +239,72 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="PeriodCode" xml:space="preserve">
+    <value>PERIOD CODE</value>
+  </data>
+  <data name="PeriodNameLabel" xml:space="preserve">
+    <value>Period Code:</value>
+  </data>
+  <data name="PeriodPopupGridCode" xml:space="preserve">
+    <value>PERIOD CODE</value>
+  </data>
+  <data name="PeriodPopupGridName" xml:space="preserve">
+    <value>PERIOD NAME</value>
+  </data>
+  <data name="PeriodPopupTitle" xml:space="preserve">
+    <value>Periods</value>
+  </data>
+  <data name="ProductCodeLineLabel" xml:space="preserve">
+    <value>Product Code:</value>
+  </data>
+  <data name="ProductNameLineLabel" xml:space="preserve">
+    <value>Product Name:</value>
+  </data>
+  <data name="ProductPopupGridCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="ProductPopupGridName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="ProductPopupTitle" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>TOTAL</value>
+  </data>
+  <data name="TotalLabel" xml:space="preserve">
+    <value>Total:</value>
+  </data>
+  <data name="UIConfirmationPopupLineMessage" xml:space="preserve">
+    <value>The line you selected will be permanently deleted.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>The forecast you selected will be permanently deleted.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Attention</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Sales Forecast Records</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>ForecastRecords</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Forecast Records</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Sales Management &gt; Transactions</value>
+  </data>
+  <data name="UIWarningPopupMessageBase" xml:space="preserve">
+    <value>Since the amount is 0, line saving cannot be performed.</value>
+  </data>
+  <data name="UIWarningPopupTitleBase" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same number.</value>
@@ -173,5 +323,17 @@
   </data>
   <data name="ValidatorPeriodID" xml:space="preserve">
     <value>Please select a period.</value>
+  </data>
+  <data name="ValidityEndDate" xml:space="preserve">
+    <value>VALIDITY END DATE</value>
+  </data>
+  <data name="ValidityEndDateLabel" xml:space="preserve">
+    <value>Validity End Date:</value>
+  </data>
+  <data name="ValidityStartDate" xml:space="preserve">
+    <value>VALIDITY START DATE</value>
+  </data>
+  <data name="ValidityStartDateLabel" xml:space="preserve">
+    <value>Validity Start Date:</value>
   </data>
 </root>

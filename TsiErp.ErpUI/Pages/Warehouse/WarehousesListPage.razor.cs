@@ -8,6 +8,7 @@ namespace TsiErp.ErpUI.Pages.Warehouse
         protected override async void OnInitialized()
         {
             BaseCrudService = WarehousesService;
+            _L = L;
         }
 
         protected override Task BeforeInsertAsync()

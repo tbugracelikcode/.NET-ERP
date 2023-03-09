@@ -7,7 +7,8 @@
 @using TsiErp.Entities.Entities.ProductionOrderChangeItem
 @using TsiErp.Entities.Entities.ProductionOrderChangeItem.Dtos
 @using TsiErp.ErpUI.Pages.Base
-
+@using TsiErp.Localizations.Resources.ProductionOrderChangeItems.Page
+@inject IStringLocalizer<ProductionOrderChangeItemsResource> L 
 
 @inherits BaseListPage<SelectProductionOrderChangeItemsDto, ListProductionOrderChangeItemsDto, CreateProductionOrderChangeItemsDto, UpdateProductionOrderChangeItemsDto, ListProductionOrderChangeItemsParameterDto>
 

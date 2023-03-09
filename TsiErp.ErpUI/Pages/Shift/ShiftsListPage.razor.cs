@@ -31,7 +31,7 @@ namespace TsiErp.ErpUI.Pages.Shift
         protected override async void OnInitialized()
         {
             BaseCrudService = ShiftsAppService;
-
+            _L = L;
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
 

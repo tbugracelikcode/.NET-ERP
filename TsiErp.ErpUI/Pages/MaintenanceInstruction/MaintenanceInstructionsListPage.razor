@@ -2,6 +2,7 @@
 @layout MainLayout
 
 
+@using TsiErp.Localizations.Resources.MaintenanceInstructions.Page
 
 @using TsiErp.Business.Entities.Product.Services
 @using TsiErp.Business.Entities.UnitSet.Services
@@ -17,6 +18,7 @@
 @using TsiErp.ErpUI.Pages.Base
 
 @inherits BaseListPage<SelectMaintenanceInstructionsDto, ListMaintenanceInstructionsDto, CreateMaintenanceInstructionsDto, UpdateMaintenanceInstructionsDto, ListMaintenanceInstructionsParameterDto>
+@inject IStringLocalizer<MaintenanceInstructionsResource> L 
 
 @inject IMaintenanceInstructionsAppService MaintenanceInstructionsAppService
 @inject IStationsAppService StationsAppService

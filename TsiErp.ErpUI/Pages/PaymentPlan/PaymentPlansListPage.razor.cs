@@ -8,6 +8,7 @@ namespace TsiErp.ErpUI.Pages.PaymentPlan
         protected override async void OnInitialized()
         {
             BaseCrudService = PaymentPlansService;
+            _L = L;
         }
 
         protected override Task BeforeInsertAsync()

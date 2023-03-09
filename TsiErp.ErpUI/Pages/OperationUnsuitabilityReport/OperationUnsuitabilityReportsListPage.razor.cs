@@ -33,7 +33,7 @@ namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityReport
         protected override async void OnInitialized()
         {
             BaseCrudService = OperationUnsuitabilityReportsService;
-
+            _L = L;
             await GetProductsList();
             await GetWorkOrdersList();
             await GetStationsList();

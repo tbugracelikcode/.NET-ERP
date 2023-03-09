@@ -7,7 +7,8 @@
 @using TsiErp.Entities.Entities.ProductGroup
 @using TsiErp.Entities.Entities.ProductGroup.Dtos
 @using TsiErp.ErpUI.Pages.Base
-
+@using TsiErp.Localizations.Resources.ProductGroups.Page
+@inject IStringLocalizer<ProductGroupsResource> L 
 
 @inherits BaseListPage<SelectProductGroupsDto, ListProductGroupsDto, CreateProductGroupsDto, UpdateProductGroupsDto, ListProductGroupsParameterDto>
 

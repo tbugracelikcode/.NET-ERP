@@ -2,6 +2,7 @@
 @layout MainLayout
 
 @using Syncfusion.Blazor.Buttons
+@using TsiErp.Localizations.Resources.PaymentPlans.Page
 
 @using TsiErp.Business.Entities.PaymentPlan.Services
 @using TsiErp.Entities.Entities.PaymentPlan
@@ -12,6 +13,7 @@
 @inherits BaseListPage<SelectPaymentPlansDto, ListPaymentPlansDto, CreatePaymentPlansDto, UpdatePaymentPlansDto, ListPaymentPlansParameterDto>
 
 @inject IPaymentPlansAppService PaymentPlansService
+@inject IStringLocalizer<PaymentPlansResource> L 
 
 @if (!base.IsLoaded)
 {

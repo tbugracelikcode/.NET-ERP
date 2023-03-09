@@ -123,7 +123,7 @@ namespace TsiErp.ErpUI.Pages.Station
         protected override async void OnInitialized()
         {
             BaseCrudService = StationsService;
-
+            _L = L;
 
             CreateLineContextMenuItems();
             CreateMainContextMenuItems();

@@ -1229,6 +1229,7 @@ namespace TsiErp.ErpUI.Pages.Product
         protected override async void OnInitialized()
         {
             BaseCrudService = ProductService;
+            _L = L;
             CreateMainContextMenuItems();
             CreateTechnicalDrawingContextMenuItems();
             CreateProductReferanceNumberContextMenuItems();

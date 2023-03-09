@@ -16,7 +16,8 @@
 @using TsiErp.Entities.Entities.StationGroup.Dtos
 @using TsiErp.Entities.Entities.Product.Dtos
 @using TsiErp.Entities.Entities.StationInventory.Dtos
-
+@using TsiErp.Localizations.Resources.Stations.Page
+@inject IStringLocalizer<StationsResource> L 
 
 @inherits BaseListPage<SelectStationsDto, ListStationsDto, CreateStationsDto, UpdateStationsDto, ListStationsParameterDto>
 

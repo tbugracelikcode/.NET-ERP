@@ -11,6 +11,7 @@ namespace TsiErp.ErpUI.Pages.MaintenancePeriod
         protected override async void OnInitialized()
         {
             BaseCrudService = MaintenancePeriodsService;
+            _L = L;
         }
 
         protected override Task BeforeInsertAsync()

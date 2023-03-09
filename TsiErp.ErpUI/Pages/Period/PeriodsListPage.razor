@@ -2,6 +2,7 @@
 @layout MainLayout
 
 @using Syncfusion.Blazor.Buttons
+@using TsiErp.Localizations.Resources.Periods.Page
 
 @using TsiErp.Business.Entities.Period.Services
 @using TsiErp.Business.Entities.Branch.Services
@@ -16,6 +17,8 @@
 
 @inject IPeriodsAppService PeriodsService
 @inject IBranchesAppService BranchesAppService
+@inject IStringLocalizer<PeriodsResource> L 
+
 
 @if (!base.IsLoaded)
 {

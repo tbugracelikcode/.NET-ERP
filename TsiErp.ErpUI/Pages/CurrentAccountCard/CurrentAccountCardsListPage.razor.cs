@@ -61,6 +61,7 @@ namespace TsiErp.ErpUI.Pages.CurrentAccountCard
         protected override async void OnInitialized()
         {
             BaseCrudService = CurrentAccountCardsService;
+            _L = L;
             await GetShippingAdressesList();
         }
 

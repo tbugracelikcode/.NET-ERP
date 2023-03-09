@@ -38,7 +38,8 @@
 @using TsiErp.ErpUI.Services
 
 @using TsiErp.Entities.Enums
-
+@using TsiErp.Localizations.Resources.Products.Page
+@inject IStringLocalizer<ProductsResource> L 
 @inherits BaseListPage<SelectProductsDto, ListProductsDto, CreateProductsDto, UpdateProductsDto, ListProductsParameterDto>
 
 

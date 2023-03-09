@@ -7,12 +7,15 @@
 @using TsiErp.Entities.Entities.MaintenancePeriod
 @using TsiErp.Entities.Entities.MaintenancePeriod.Dtos
 @using TsiErp.ErpUI.Pages.Base
+@using TsiErp.Localizations.Resources.MaintenancePeriods.Page
 
 
 @inherits BaseListPage<SelectMaintenancePeriodsDto, ListMaintenancePeriodsDto, CreateMaintenancePeriodsDto, UpdateMaintenancePeriodsDto, ListMaintenancePeriodsParameterDto>
 
 
 @inject IMaintenancePeriodsAppService MaintenancePeriodsService
+@inject IStringLocalizer<MaintenancePeriodsResource> L 
+
 
 @{
     if (!base.IsLoaded)

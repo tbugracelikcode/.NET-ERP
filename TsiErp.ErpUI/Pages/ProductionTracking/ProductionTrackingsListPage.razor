@@ -16,7 +16,8 @@
 @using TsiErp.Entities.Entities.Station.Dtos
 @using TsiErp.Entities.Entities.Shift.Dtos
 @using TsiErp.ErpUI.Pages.Base
-
+@using TsiErp.Localizations.Resources.ProductionTrackings.Page
+@inject IStringLocalizer<ProductionTrackingsResource> L 
 @inherits BaseListPage<SelectProductionTrackingsDto, ListProductionTrackingsDto, CreateProductionTrackingsDto, UpdateProductionTrackingsDto, ListProductionTrackingsParameterDto>
 
 @inject IProductionTrackingsAppService ProductionTrackingsAppService

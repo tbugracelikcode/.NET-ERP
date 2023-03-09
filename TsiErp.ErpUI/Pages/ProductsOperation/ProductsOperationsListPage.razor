@@ -14,7 +14,8 @@
 @using TsiErp.Entities.Entities.Product.Dtos
 @using TsiErp.Business.Entities.TemplateOperation.Services
 @using TsiErp.Entities.Entities.TemplateOperation.Dtos
-
+@using TsiErp.Localizations.Resources.ProductsOperations.Page
+@inject IStringLocalizer<ProductsOperationsResource> L 
 
 @inherits BaseListPage<SelectProductsOperationsDto, ListProductsOperationsDto, CreateProductsOperationsDto, UpdateProductsOperationsDto, ListProductsOperationsParameterDto>
 

@@ -2,6 +2,7 @@
 @layout MainLayout
 
 @using Syncfusion.Blazor.Buttons
+@using TsiErp.Localizations.Resources.OperationUnsuitabilityReports.Page
 
 @using TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
 @using TsiErp.Entities.Entities.OperationUnsuitabilityReport
@@ -25,6 +26,7 @@
 
 @inherits BaseListPage<SelectOperationUnsuitabilityReportsDto, ListOperationUnsuitabilityReportsDto, CreateOperationUnsuitabilityReportsDto, UpdateOperationUnsuitabilityReportsDto, ListOperationUnsuitabilityReportsParameterDto>
 
+@inject IStringLocalizer<OperationUnsuitabilityReportsResource> L 
 
 @inject IOperationUnsuitabilityReportsAppService OperationUnsuitabilityReportsService
 @inject IWorkOrdersAppService WorkOrdersAppService

@@ -32,6 +32,7 @@ namespace TsiErp.ErpUI.Pages.Route
         protected override async Task OnInitializedAsync()
         {
             BaseCrudService = RoutesAppService;
+            _L = L;
             CreateMainContextMenuItems();
 
         }
