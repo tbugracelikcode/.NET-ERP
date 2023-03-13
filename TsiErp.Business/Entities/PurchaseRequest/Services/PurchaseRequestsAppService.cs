@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; 
+using Tsi.Core.Utilities.Results;
 using TsiErp.Localizations.Resources.PurchaseRequests.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
@@ -17,6 +17,9 @@ using TsiErp.Entities.Entities.PurchaseRequestLine;
 using TsiErp.Entities.Entities.PurchaseRequestLine.Dtos;
 using TsiErp.Entities.Enums;
 using Microsoft.Extensions.Localization;
+using TsiErp.Entities.Entities.ByDateStockMovement;
+using TsiErp.DataAccess.EntityFrameworkCore.Repositories.GrandTotalStockMovement;
+using TsiErp.Entities.Entities.GrandTotalStockMovement;
 
 namespace TsiErp.Business.Entities.PurchaseRequest.Services
 {
@@ -35,7 +38,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                await _manager.CodeControl(_uow.PurchaseRequestsRepository, input.FicheNo,L);
+                await _manager.CodeControl(_uow.PurchaseRequestsRepository, input.FicheNo, L);
 
                 var entity = ObjectMapper.Map<CreatePurchaseRequestsDto, PurchaseRequests>(input);
 
@@ -46,6 +49,8 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                     var lineEntity = ObjectMapper.Map<SelectPurchaseRequestLinesDto, PurchaseRequestLines>(item);
                     lineEntity.PurchaseRequestID = addedEntity.Id;
                     await _uow.PurchaseRequestLinesRepository.InsertAsync(lineEntity);
+
+                    await StockMovementInsert(input, _uow, lineEntity);
                 }
                 input.Id = addedEntity.Id;
                 var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "PurchaseRequests", LogType.Insert, addedEntity.Id);
@@ -65,19 +70,27 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
                 if (lines != null)
                 {
-                    await _manager.DeleteControl(_uow.PurchaseRequestsRepository, lines.PurchaseRequestID, lines.Id, true,L);
+                    var entity = await _uow.PurchaseRequestsRepository.GetAsync(t => t.Id == lines.PurchaseRequestID);
+
+                    await _manager.DeleteControl(_uow.PurchaseRequestsRepository, lines.PurchaseRequestID, lines.Id, true, L);
                     await _uow.PurchaseRequestLinesRepository.DeleteAsync(id);
+
+                    await StockMovementLineDelete(_uow, lines, entity);
+
                     await _uow.SaveChanges();
                     return new SuccessResult(L["DeleteSuccessMessage"]);
                 }
                 else
                 {
-                    await _manager.DeleteControl(_uow.PurchaseRequestsRepository, id, Guid.Empty, false,L);
+                    var entity = await _uow.PurchaseRequestsRepository.GetAsync(t => t.Id == id);
+
+                    await _manager.DeleteControl(_uow.PurchaseRequestsRepository, id, Guid.Empty, false, L);
                     var list = (await _uow.PurchaseRequestLinesRepository.GetListAsync(t => t.PurchaseRequestID == id));
                     foreach (var line in list)
                     {
                         await _uow.PurchaseRequestLinesRepository.DeleteAsync(line.Id);
 
+                        await StockMovementDelete(_uow, entity, line);
                     }
                     await _uow.PurchaseRequestsRepository.DeleteAsync(id);
                     var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "PurchaseRequests", LogType.Delete, id);
@@ -146,18 +159,24 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                var entity = await _uow.PurchaseRequestsRepository.GetAsync(x => x.Id == input.Id);
+                var entity = await _uow.PurchaseRequestsRepository.GetAsync(x => x.Id == input.Id, x => x.PurchaseRequestLines);
 
-                await _manager.UpdateControl(_uow.PurchaseRequestsRepository, input.FicheNo, input.Id, entity,L);
+                await _manager.UpdateControl(_uow.PurchaseRequestsRepository, input.FicheNo, input.Id, entity, L);
 
                 var mappedEntity = ObjectMapper.Map<UpdatePurchaseRequestsDto, PurchaseRequests>(input);
 
                 await _uow.PurchaseRequestsRepository.UpdateAsync(mappedEntity);
 
+
                 foreach (var item in input.SelectPurchaseRequestLines)
                 {
                     var lineEntity = ObjectMapper.Map<SelectPurchaseRequestLinesDto, PurchaseRequestLines>(item);
+
                     lineEntity.PurchaseRequestID = mappedEntity.Id;
+
+
+                    await StockMovementInsertOrUpdate(input, _uow, entity, item, lineEntity);
+
 
                     if (lineEntity.Id == Guid.Empty)
                     {
@@ -168,11 +187,16 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                         await _uow.PurchaseRequestLinesRepository.UpdateAsync(lineEntity);
                     }
                 }
+
+
+                //throw new Exception("Hata");
+
                 var before = ObjectMapper.Map<PurchaseRequests, UpdatePurchaseRequestsDto>(entity);
                 before.SelectPurchaseRequestLines = ObjectMapper.Map<List<PurchaseRequestLines>, List<SelectPurchaseRequestLinesDto>>(entity.PurchaseRequestLines.ToList());
                 var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "PurchaseRequests", LogType.Update, mappedEntity.Id);
                 await _uow.LogsRepository.InsertAsync(log);
                 await _uow.SaveChanges();
+
 
                 return new SuccessDataResult<SelectPurchaseRequestsDto>(ObjectMapper.Map<PurchaseRequests, SelectPurchaseRequestsDto>(mappedEntity));
             }
@@ -216,5 +240,223 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                 }
             }
         }
+
+
+
+        #region Stock Movement Transactions
+        private static async Task StockMovementDelete(UnitOfWork _uow, PurchaseRequests entity, PurchaseRequestLines line)
+        {
+            #region ByDateStockMovement
+            var byDateStockMovement = await _uow.ByDateStockMovementsRepository.GetAsync(t => t.BranchID == entity.BranchID && t.WarehouseID == entity.WarehouseID && t.ProductID == line.ProductID && t.Date_ == entity.Date_);
+
+            if (byDateStockMovement != null)
+            {
+                byDateStockMovement.TotalPurchaseRequest -= line.Quantity;
+            }
+            #endregion
+
+            #region GrandTotalStockMovement
+            var grandTotalStockMovement = await _uow.GrandTotalStockMovementsRepository.GetAsync(t => t.BranchID == entity.BranchID && t.WarehouseID == entity.WarehouseID && t.ProductID == line.ProductID);
+
+            if (grandTotalStockMovement != null)
+            {
+                grandTotalStockMovement.TotalPurchaseRequest -= line.Quantity;
+            }
+            #endregion
+        }
+
+        private static async Task StockMovementLineDelete(UnitOfWork _uow, PurchaseRequestLines lines, PurchaseRequests entity)
+        {
+            #region ByDateStockMovement
+            var byDateStockMovement = await _uow.ByDateStockMovementsRepository.GetAsync(t => t.BranchID == entity.BranchID && t.WarehouseID == entity.WarehouseID && t.ProductID == lines.ProductID && t.Date_ == entity.Date_);
+
+            if (byDateStockMovement != null)
+            {
+                byDateStockMovement.TotalPurchaseRequest -= lines.Quantity;
+            }
+            #endregion
+
+            #region GrandTotalStockMovement
+            var grandTotalStockMovement = await _uow.GrandTotalStockMovementsRepository.GetAsync(t => t.BranchID == entity.BranchID && t.WarehouseID == entity.WarehouseID && t.ProductID == lines.ProductID);
+
+            if (grandTotalStockMovement != null)
+            {
+                grandTotalStockMovement.TotalPurchaseRequest -= lines.Quantity;
+            }
+            #endregion
+        }
+
+        private static async Task StockMovementInsert(CreatePurchaseRequestsDto input, UnitOfWork _uow, PurchaseRequestLines lineEntity)
+        {
+            #region ByDateStockMovement
+            var byDateStockMovement = await _uow.ByDateStockMovementsRepository.GetAsync(t => t.BranchID == input.BranchID && t.WarehouseID == input.WarehouseID && t.ProductID == lineEntity.ProductID && t.Date_ == input.Date_);
+
+            if (byDateStockMovement == null)
+            {
+                await _uow.ByDateStockMovementsRepository.InsertAsync(new ByDateStockMovements
+                {
+                    BranchID = input.BranchID.GetValueOrDefault(),
+                    Date_ = input.Date_,
+                    ProductID = lineEntity.ProductID,
+                    TotalPurchaseOrder = 0,
+                    WarehouseID = input.WarehouseID.GetValueOrDefault(),
+                    TotalSalesProposition = 0,
+                    TotalProduction = 0,
+                    TotalSalesOrder = 0,
+                    TotalWastage = 0,
+                    TotalPurchaseRequest = lineEntity.Quantity,
+                    TotalGoodsReceipt = 0,
+                    TotalGoodsIssue = 0,
+                    TotalConsumption = 0,
+                    Amount = 0
+
+                });
+            }
+            else
+            {
+                byDateStockMovement.TotalPurchaseRequest = lineEntity.Quantity;
+            }
+            #endregion
+
+            #region GrandTotalStockMovement
+            var grandTotalStockMovement = await _uow.GrandTotalStockMovementsRepository.GetAsync(t => t.BranchID == input.BranchID && t.WarehouseID == input.WarehouseID && t.ProductID == lineEntity.ProductID);
+
+            if (grandTotalStockMovement == null)
+            {
+                await _uow.GrandTotalStockMovementsRepository.InsertAsync(new GrandTotalStockMovements
+                {
+                    BranchID = input.BranchID.GetValueOrDefault(),
+                    ProductID = lineEntity.ProductID,
+                    TotalPurchaseOrder = 0,
+                    WarehouseID = input.WarehouseID.GetValueOrDefault(),
+                    TotalSalesProposition = 0,
+                    TotalProduction = 0,
+                    TotalSalesOrder = 0,
+                    TotalWastage = 0,
+                    TotalPurchaseRequest = lineEntity.Quantity,
+                    TotalGoodsReceipt = 0,
+                    TotalGoodsIssue = 0,
+                    TotalConsumption = 0,
+                    Amount = 0,
+                    TotalReserved = 0
+
+                });
+            }
+            else
+            {
+                grandTotalStockMovement.TotalPurchaseRequest = lineEntity.Quantity;
+            }
+            #endregion
+        }
+
+        private static async Task StockMovementInsertOrUpdate(UpdatePurchaseRequestsDto input, UnitOfWork _uow, PurchaseRequests entity, SelectPurchaseRequestLinesDto item, PurchaseRequestLines lineEntity)
+        {
+            var oldLine = entity.PurchaseRequestLines.FirstOrDefault(t => t.Id == item.Id);
+
+            var branchId = input.BranchID == entity.BranchID ? entity.BranchID : input.BranchID;
+            var warehouseId = input.WarehouseID == entity.WarehouseID ? entity.WarehouseID : input.WarehouseID;
+            var date = input.Date_ == entity.Date_ ? entity.Date_ : input.Date_;
+            var productId = lineEntity.ProductID == oldLine.ProductID ? oldLine.ProductID : lineEntity.ProductID;
+
+            #region ByDateStockMovement
+            var deletedByDateStockMovement = await _uow.ByDateStockMovementsRepository.GetAsync(t => t.BranchID == entity.BranchID && t.WarehouseID == entity.WarehouseID && t.ProductID == productId && t.Date_ == entity.Date_);
+
+            if(deletedByDateStockMovement != null) 
+            {
+                deletedByDateStockMovement.TotalPurchaseRequest = deletedByDateStockMovement.TotalPurchaseRequest - lineEntity.Quantity;
+            }
+
+            var byDateStockMovement = await _uow.ByDateStockMovementsRepository.GetAsync(t => t.BranchID == branchId && t.WarehouseID == warehouseId && t.ProductID == productId && t.Date_ == date);
+
+            if (byDateStockMovement == null)
+            {
+                await _uow.ByDateStockMovementsRepository.InsertAsync(new ByDateStockMovements
+                {
+                    BranchID = branchId.GetValueOrDefault(),
+                    Date_ = date,
+                    ProductID = productId,
+                    TotalPurchaseOrder = 0,
+                    WarehouseID = warehouseId.GetValueOrDefault(),
+                    TotalSalesProposition = 0,
+                    TotalProduction = 0,
+                    TotalSalesOrder = 0,
+                    TotalWastage = 0,
+                    TotalPurchaseRequest = lineEntity.Quantity,
+                    TotalGoodsReceipt = 0,
+                    TotalGoodsIssue = 0,
+                    TotalConsumption = 0,
+                    Amount = 0
+                });
+            }
+            else
+            {
+                if (oldLine.Quantity > lineEntity.Quantity)
+                {
+                    decimal lineValue = oldLine.Quantity - lineEntity.Quantity;
+                    var totalPurchaseRequest = byDateStockMovement.TotalPurchaseRequest - lineValue;
+                    byDateStockMovement.TotalPurchaseRequest = totalPurchaseRequest;
+                }
+
+                if (oldLine.Quantity < lineEntity.Quantity)
+                {
+                    decimal lineValue = lineEntity.Quantity - oldLine.Quantity;
+                    var totalPurchaseRequest = byDateStockMovement.TotalPurchaseRequest + lineValue;
+                    byDateStockMovement.TotalPurchaseRequest = totalPurchaseRequest;
+                }
+
+            }
+            #endregion
+
+            #region GrandTotalStockMovement
+
+            var deletedGrandTotalStockMovement = await _uow.GrandTotalStockMovementsRepository.GetAsync(t => t.BranchID == entity.BranchID && t.WarehouseID == entity.WarehouseID && t.ProductID == productId);
+
+            if (deletedGrandTotalStockMovement != null)
+            {
+                deletedGrandTotalStockMovement.TotalPurchaseRequest = deletedGrandTotalStockMovement.TotalPurchaseRequest - lineEntity.Quantity;
+            }
+
+
+            var grandTotalStockMovement = await _uow.GrandTotalStockMovementsRepository.GetAsync(t => t.BranchID == branchId && t.WarehouseID == warehouseId && t.ProductID == productId);
+
+            if (grandTotalStockMovement == null)
+            {
+                await _uow.GrandTotalStockMovementsRepository.InsertAsync(new GrandTotalStockMovements
+                {
+                    BranchID = branchId.GetValueOrDefault(),
+                    ProductID = productId,
+                    TotalPurchaseOrder = 0,
+                    WarehouseID = warehouseId.GetValueOrDefault(),
+                    TotalSalesProposition = 0,
+                    TotalProduction = 0,
+                    TotalSalesOrder = 0,
+                    TotalWastage = 0,
+                    TotalPurchaseRequest = lineEntity.Quantity,
+                    TotalGoodsReceipt = 0,
+                    TotalGoodsIssue = 0,
+                    TotalConsumption = 0,
+                    Amount = 0,
+                    TotalReserved = 0
+                });
+            }
+            else
+            {
+                if (oldLine.Quantity > lineEntity.Quantity)
+                {
+                    decimal lineValue = oldLine.Quantity - lineEntity.Quantity;
+                    var totalPurchaseRequest = grandTotalStockMovement.TotalPurchaseRequest - lineValue;
+                    grandTotalStockMovement.TotalPurchaseRequest = totalPurchaseRequest;
+                }
+
+                if (oldLine.Quantity < lineEntity.Quantity)
+                {
+                    decimal lineValue = lineEntity.Quantity - oldLine.Quantity;
+                    var totalPurchaseRequest = grandTotalStockMovement.TotalPurchaseRequest + lineValue;
+                    grandTotalStockMovement.TotalPurchaseRequest = totalPurchaseRequest;
+                }
+            }
+            #endregion
+        } 
+        #endregion
     }
 }

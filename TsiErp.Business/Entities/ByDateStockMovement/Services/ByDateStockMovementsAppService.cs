@@ -62,7 +62,6 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
             }
         }
 
-
         public async Task<IDataResult<SelectByDateStockMovementsDto>> GetAsync(Guid id)
         {
             using (UnitOfWork _uow = new UnitOfWork())
@@ -78,7 +77,6 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
             }
         }
 
-
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListByDateStockMovementsDto>>> GetListAsync(ListByDateStockMovementsParameterDto input)
         {
@@ -91,7 +89,6 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
                 return new SuccessDataResult<IList<ListByDateStockMovementsDto>>(mappedEntity);
             }
         }
-
 
         [ValidationAspect(typeof(UpdateByDateStockMovementsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]

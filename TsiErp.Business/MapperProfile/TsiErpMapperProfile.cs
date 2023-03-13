@@ -778,6 +778,7 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectPurchaseRequestsDto, UpdatePurchaseRequestsDto>();
             CreateMap<SelectPurchaseRequestsDto, PurchaseRequests>();
             CreateMap<UpdatePurchaseRequestsDto, PurchaseRequests>();
+            CreateMap<PurchaseRequests, UpdatePurchaseRequestsDto>();
 
 
             CreateMap<PurchaseRequestLines, SelectPurchaseRequestLinesDto>()
@@ -1146,6 +1147,7 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<CreateByDateStockMovementsDto, ByDateStockMovements>();
             CreateMap<SelectByDateStockMovementsDto, CreateByDateStockMovementsDto>();
             CreateMap<UpdateByDateStockMovementsDto, ByDateStockMovements>();
+            CreateMap<ByDateStockMovements, UpdateByDateStockMovementsDto>();
             CreateMap<SelectByDateStockMovementsDto, UpdateByDateStockMovementsDto>();
         }
     }
