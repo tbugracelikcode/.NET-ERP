@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>MAINTENANCE PERIOD CODE</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Maintenance Period Code:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -132,6 +141,9 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="DailyMainLabel" xml:space="preserve">
+    <value>Daily Maintenance:</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -141,8 +153,20 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="Description_" xml:space="preserve">
+    <value>DESCRIPTION</value>
+  </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Desciption:</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Maintenance Periods</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Activity:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -155,6 +179,33 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>MAINTENANCE PERIOD NAME</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Maintenance Period Name:</value>
+  </data>
+  <data name="PeriodTime" xml:space="preserve">
+    <value>PERIOD TIME</value>
+  </data>
+  <data name="PeriodTimeLabel" xml:space="preserve">
+    <value>Maintenance Period Time:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Maintenance Periods</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>MaintenancePeriods</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Maintenance Periods</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Maintenance Management &gt; Main Records</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>

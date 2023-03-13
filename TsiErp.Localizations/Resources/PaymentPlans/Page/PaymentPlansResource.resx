@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>ÖDEME PLANI KODU</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Ödeme Planı Kodu:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -132,6 +141,18 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="Days_" xml:space="preserve">
+    <value>VADE GÜNÜ</value>
+  </data>
+  <data name="Days_Label" xml:space="preserve">
+    <value>Vade Günü:</value>
+  </data>
+  <data name="DelayMaturityDifference" xml:space="preserve">
+    <value>GECİKME VADE FARKI ORANI</value>
+  </data>
+  <data name="DelayMaturityDifferenceLabel" xml:space="preserve">
+    <value>Gecikme Vade Farkı Oranı:</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -144,8 +165,14 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Ödeme Planları</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Aktiflik:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -158,6 +185,27 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>ÖDEME PLANI AÇIKLAMASI</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Ödeme Planı Açıklaması:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Ödeme Planları</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>OdemePlanlari</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Ödeme Planları</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Finans Yönetimi &gt; Ana Kayıtlar</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>

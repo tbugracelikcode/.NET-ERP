@@ -30,17 +30,12 @@ namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityReport
             new UnsComboBox(){ID = "ToBeUsedAs", Text="Olduğu Gibi Kullanılacak"}
         };
 
+
+
         protected override async void OnInitialized()
         {
             BaseCrudService = OperationUnsuitabilityReportsService;
             _L = L;
-            await GetProductsList();
-            await GetWorkOrdersList();
-            await GetStationsList();
-            await GetStationGroupsList();
-            await GetEmployeesList();
-            await GetProductionOrdersList();
-            await GetProductsOperationsList();
         }
 
         protected override async Task BeforeInsertAsync()
@@ -61,7 +56,7 @@ namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityReport
             {
                 case "Scrap": 
                     DataSource.IsScrap = true; 
-                    DataSource.IsCorrection = false; 
+                    DataSource.IsCorrection = false;
                     DataSource.IsToBeUsedAs = false;
                     break;
 

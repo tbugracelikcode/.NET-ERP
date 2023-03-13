@@ -184,10 +184,10 @@
     <value>Calibration Verifications</value>
   </data>
   <data name="InfinitiveCertificateNo" xml:space="preserve">
-    <value>INFINITIVE CERTIFICATE NO</value>
+    <value>INFINITIVE CERTIFICATE NR</value>
   </data>
   <data name="InfinitiveCertificateNoLabel" xml:space="preserve">
-    <value>Infinitive Certificate No:</value>
+    <value>Infinitive Certificate Nr:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -214,10 +214,10 @@
     <value>Next Control:</value>
   </data>
   <data name="ReceiptLabel" xml:space="preserve">
-    <value>Fiche No:</value>
+    <value>Fiche Nr:</value>
   </data>
   <data name="ReceiptNo" xml:space="preserve">
-    <value>FICHE NO</value>
+    <value>FICHE NR</value>
   </data>
   <data name="Result" xml:space="preserve">
     <value>RESULT</value>

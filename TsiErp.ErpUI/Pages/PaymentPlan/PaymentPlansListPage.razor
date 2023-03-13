@@ -27,7 +27,7 @@ else
                 <Template>
                     <SfCard class="TSIListPageTitleCard">
                         <CardContent>
-                            <TsiBreadCrumb PreviousMenus="Finans Yönetimi > Ana Kayıtlar" CurrentMenu="Ödeme Planları" />
+                            <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
                         </CardContent>
                         <CardFooter>
                         </CardFooter>
@@ -47,14 +47,14 @@ else
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", "Ödeme Planları", "OdemePlanlari"))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport",@L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", "Ödeme Planları", "OdemePlanlari"))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
@@ -65,10 +65,10 @@ else
                             <GridPageSettings PageSizes="true"></GridPageSettings>
                             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                             <GridColumns>
-                                <GridColumn Field=@nameof(ListPaymentPlansDto.Code) HeaderText="ÖDEME PLANI KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ListPaymentPlansDto.Name) HeaderText="ÖDEME PLANI AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ListPaymentPlansDto.Days_) Type="ColumnType.Number" HeaderText="VADE GÜNÜ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                <GridColumn Field=@nameof(ListPaymentPlansDto.DelayMaturityDifference) Format="N2" Type="ColumnType.Number" HeaderText="GECİKME VADE FARKI ORANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListPaymentPlansDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListPaymentPlansDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListPaymentPlansDto.Days_) Type="ColumnType.Number" HeaderText="@L["Days_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                <GridColumn Field=@nameof(ListPaymentPlansDto.DelayMaturityDifference) Format="N2" Type="ColumnType.Number" HeaderText="@L["DelayMaturityDifference"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                             </GridColumns>
                         </SfGrid>
                     </CardContent>
@@ -84,7 +84,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Ödeme Planı"
+         HeaderText="@L["EditModalTitle"]"
          Width="40%"
          Height="32%"
          MinWidth="760px"
@@ -116,34 +116,34 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>Ödeme Planı Kodu: </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" Placeholder="Ödeme Planı Kodu Yazınız." @bind-Value="DataSource.Code"></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>Ödeme Planı Açıklaması: </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" Placeholder="Ödeme Planı Açıklaması Yazınız." @bind-Value="DataSource.Name"></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Gecikme Vade Farkı Oranı: </strong></label><br />
-                            <SfNumericTextBox Min="0" TValue="decimal" Placeholder="Gecikme Vade Farkı Oranını Yazınız." @bind-Value="DataSource.DelayMaturityDifference"></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>@L["DelayMaturityDifferenceLabel"]</strong></label><br />
+                            <SfNumericTextBox Min="0" TValue="decimal"  @bind-Value="DataSource.DelayMaturityDifference"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Vade Günü: </strong></label><br />
-                            <SfNumericTextBox Min="0" Placeholder="Vade Günü Yazınız." @bind-Value="DataSource.Days_"></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>@L["Days_Label"] </strong></label><br />
+                            <SfNumericTextBox Min="0"  @bind-Value="DataSource.Days_"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="4" Column="1">
                         <Template>
                             <center>
-                            <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
                             <SfSwitch @bind-Checked="@DataSource.IsActive"></SfSwitch>
                             </center>
                         </Template>
@@ -153,8 +153,8 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 }

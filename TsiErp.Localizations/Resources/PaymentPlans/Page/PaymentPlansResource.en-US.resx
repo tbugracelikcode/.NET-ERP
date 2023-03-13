@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>PAYMENT PLAN CODE</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Payment Plan Code:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -132,6 +141,18 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="Days_" xml:space="preserve">
+    <value>TERM DAY</value>
+  </data>
+  <data name="Days_Label" xml:space="preserve">
+    <value>Term day:</value>
+  </data>
+  <data name="DelayMaturityDifference" xml:space="preserve">
+    <value>DELAY DIFFERENCE RATE</value>
+  </data>
+  <data name="DelayMaturityDifferenceLabel" xml:space="preserve">
+    <value>Delay Difference Rate:</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -144,8 +165,14 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Payment Plans</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Activity:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -158,6 +185,27 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>PAYMENT PLAN NAME</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Payment Plan Name:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Payment Plans</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>PaymentPlans</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Payment Plans</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Financial Management &gt; Main Records</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>

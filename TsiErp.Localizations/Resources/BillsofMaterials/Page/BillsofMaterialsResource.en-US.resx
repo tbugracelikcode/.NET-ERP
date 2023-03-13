@@ -265,7 +265,7 @@
     <value>A new line cannot be added without selecting a product.</value>
   </data>
   <data name="UILineSubmitQuantityZero" xml:space="preserve">
-    <value>Linesave operation cannot be performed because the amount is 0.</value>
+    <value>Line save operation cannot be performed because the amount is 0.</value>
   </data>
   <data name="UILineSubmitWithoutUnitset" xml:space="preserve">
     <value>It is not possible to save lines without selecting the unit set.</value>

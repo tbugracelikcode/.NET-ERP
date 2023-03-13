@@ -334,7 +334,7 @@
     <value>Work Order Code:</value>
   </data>
   <data name="WorkOrderCode" xml:space="preserve">
-    <value>WORK ORDER NO</value>
+    <value>WORK ORDER NR</value>
   </data>
   <data name="WorkOrderPopupGridCode" xml:space="preserve">
     <value>WORK ORDER CODE</value>
@@ -346,7 +346,7 @@
     <value>PRODUCT NAME</value>
   </data>
   <data name="WorkOrderPopupGridWorkOrderNo" xml:space="preserve">
-    <value>WORK ORDER NO</value>
+    <value>WORK ORDER NR</value>
   </data>
   <data name="WorkOrderPopupTitle" xml:space="preserve">
     <value>Work Orders</value>

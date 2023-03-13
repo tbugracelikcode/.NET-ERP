@@ -172,7 +172,7 @@ namespace TsiErp.ErpUI.Pages.Product
         {
             if (DataSource.ProductType == 0)
             {
-                await ModalManager.WarningPopupAsync("Uyarı", "Stok türü seçilmeden kaydetme işlemi yapılamaz.");
+                await ModalManager.WarningPopupAsync(L["UIWarningPopupTitleBase"], L["UIWarningPopupMessageBase"]);
             }
             else
             {
@@ -223,17 +223,17 @@ namespace TsiErp.ErpUI.Pages.Product
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle", Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Teknik Resimler", Id = "technicaldrawings" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Ürün Referans Numaraları", Id = "productreferancenumbers" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Satın Alma Fiyatları", Id = "purchaseprices" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Satış Fiyatları", Id = "salesprices" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Stok Reçeteleri", Id = "billsofmaterials" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Ürün Rotaları", Id = "routes" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Fason Takip Fişleri", Id = "contractproductiontrackings" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextTechnicalDrawings"], Id = "technicaldrawings" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextProductRefNr"], Id = "productreferancenumbers" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextPurchasePrices"], Id = "purchaseprices" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextSalesPrices"], Id = "salesprices" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextBOMs"], Id = "billsofmaterials" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRoutes"], Id = "routes" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextContProdTrackings"], Id = "contractproductiontrackings" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -266,7 +266,7 @@ namespace TsiErp.ErpUI.Pages.Product
                 if (dataOpenStatus == true && dataOpenStatus != null)
                 {
                     TechnicalDrawingsChangedCrudPopup = false;
-                    await ModalManager.MessagePopupAsync("Bilgi", "Seçtiğiniz kayıt ..... tarafından kullanılmaktadır.");
+                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);
                     await InvokeAsync(StateHasChanged);
                 }
                 else
@@ -281,10 +281,10 @@ namespace TsiErp.ErpUI.Pages.Product
         {
             if (TechnicalDrawingGridContextMenu.Count() == 0)
             {
-                TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle", Id = "new" });
-                TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
-                TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
-                TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
+                TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
+                TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
+                TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
+                TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -321,7 +321,7 @@ namespace TsiErp.ErpUI.Pages.Product
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync("Dikkat", "Seçtiğiniz teknik resim, kalıcı olarak silinecektir.");
+                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
 
                     if (res == true)
                     {
@@ -490,7 +490,7 @@ namespace TsiErp.ErpUI.Pages.Product
                 if (dataOpenStatus == true && dataOpenStatus != null)
                 {
                     ProductReferanceNumbersCrudPopup = false;
-                    await ModalManager.MessagePopupAsync("Bilgi", "Seçtiğiniz kayıt ..... tarafından kullanılmaktadır.");
+                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);
                     await InvokeAsync(StateHasChanged);
                 }
                 else
@@ -505,10 +505,10 @@ namespace TsiErp.ErpUI.Pages.Product
         {
             if (ProductReferanceNumberGridContextMenu.Count() == 0)
             {
-                ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle", Id = "new" });
-                ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
-                ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
-                ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
+                ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
+                ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
+                ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
+                ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -530,7 +530,7 @@ namespace TsiErp.ErpUI.Pages.Product
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync("Dikkat", "Seçtiğiniz ürün referans numarası, kalıcı olarak silinecektir.");
+                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBaseProdRefNr"]);
 
                     if (res == true)
                     {
@@ -706,7 +706,7 @@ namespace TsiErp.ErpUI.Pages.Product
         {
             if (BillsofMaterialGridContextMenu.Count() == 0)
             {
-                BillsofMaterialGridContextMenu.Add(new ContextMenuItemModel { Text = "İncele", Id = "examine" });
+                BillsofMaterialGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextExamine"], Id = "examine" });
             }
         }
 
@@ -756,7 +756,7 @@ namespace TsiErp.ErpUI.Pages.Product
         {
             if (RouteGridContextMenu.Count() == 0)
             {
-                RouteGridContextMenu.Add(new ContextMenuItemModel { Text = "İncele", Id = "examine" });
+                RouteGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextExamine"], Id = "examine" });
             }
         }
 
@@ -836,7 +836,7 @@ namespace TsiErp.ErpUI.Pages.Product
             }
             else
             {
-                await ModalManager.WarningPopupAsync("Uyarı", "Bu kayıtta yüklenmiş bir teknik resim dosyası mevcut");
+                await ModalManager.WarningPopupAsync(L["UIWarningPopupTitleBase"], L["UIWarningPopupMessageBaseTechDraw"]);
             }
 
 
@@ -879,7 +879,7 @@ namespace TsiErp.ErpUI.Pages.Product
 
             await InvokeAsync(() => StateHasChanged());
 
-            await ModalManager.MessagePopupAsync("Bilgilendirme", "Yüklenmiş teknik resim dosyası, başarıyla silinmiştir.");
+            await ModalManager.MessagePopupAsync(L["UIInformationPopupTitleBase"], L["UIInformationPopupMessageBase"]);
         }
 
         private async void PreviewImage(IFileListEntry file)
@@ -1162,7 +1162,7 @@ namespace TsiErp.ErpUI.Pages.Product
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync("Onay", "Silmek istediğinize emin misiniz ?");
+                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
 
 
                     if (res == true)

@@ -62,11 +62,38 @@ namespace TsiErp.Localizations.Resources.OperationUnsuitabilityItems.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kapat.
+        /// </summary>
+        public static string CloseButton {
+            get {
+                return ResourceManager.GetString("CloseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OPERASYON UYGUNSUZLUK KODU.
+        /// </summary>
+        public static string Code {
+            get {
+                return ResourceManager.GetString("Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aynı kodlu bir kayıt bulunmaktadır..
         /// </summary>
         public static string CodeControlManager {
             get {
                 return ResourceManager.GetString("CodeControlManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kod:.
+        /// </summary>
+        public static string CodeLabel {
+            get {
+                return ResourceManager.GetString("CodeLabel", resourceCulture);
             }
         }
         
@@ -134,11 +161,65 @@ namespace TsiErp.Localizations.Resources.OperationUnsuitabilityItems.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to TESPİT.
+        /// </summary>
+        public static string Detection {
+            get {
+                return ResourceManager.GetString("Detection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tespit:.
+        /// </summary>
+        public static string DetectionLabel {
+            get {
+                return ResourceManager.GetString("DetectionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operasyon Uygunsuzluk Başlıkları.
+        /// </summary>
+        public static string EditModalTitle {
+            get {
+                return ResourceManager.GetString("EditModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hata.
         /// </summary>
         public static string Error {
             get {
                 return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RESİM.
+        /// </summary>
+        public static string Image {
+            get {
+                return ResourceManager.GetString("Image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resim:.
+        /// </summary>
+        public static string ImageLabel {
+            get {
+                return ResourceManager.GetString("ImageLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aktiflik:.
+        /// </summary>
+        public static string IsActiveLabel {
+            get {
+                return ResourceManager.GetString("IsActiveLabel", resourceCulture);
             }
         }
         
@@ -175,6 +256,123 @@ namespace TsiErp.Localizations.Resources.OperationUnsuitabilityItems.Page {
         public static string MessagePopupInformationTitleBase {
             get {
                 return ResourceManager.GetString("MessagePopupInformationTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OPERASYON UYGUNSUZLUK AÇIKLAMASI.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Açıklama:.
+        /// </summary>
+        public static string NameLabel {
+            get {
+                return ResourceManager.GetString("NameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PERSONEL VERİMLİLİK ANALİZİ.
+        /// </summary>
+        public static string PerProductivityAnalysis {
+            get {
+                return ResourceManager.GetString("PerProductivityAnalysis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Personel Verimlilik Analizi:.
+        /// </summary>
+        public static string PerProductivityAnalysisLabel {
+            get {
+                return ResourceManager.GetString("PerProductivityAnalysisLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kaydet.
+        /// </summary>
+        public static string SaveButton {
+            get {
+                return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ŞİDDET.
+        /// </summary>
+        public static string Severity {
+            get {
+                return ResourceManager.GetString("Severity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şiddet:.
+        /// </summary>
+        public static string SeverityLabel {
+            get {
+                return ResourceManager.GetString("SeverityLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İSTASYON VERİMLİLİK ANALİZİ.
+        /// </summary>
+        public static string StaProductivityAnalysis {
+            get {
+                return ResourceManager.GetString("StaProductivityAnalysis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İstasyon Verimlilik Analizi:.
+        /// </summary>
+        public static string StaProductivityAnalysisLabel {
+            get {
+                return ResourceManager.GetString("StaProductivityAnalysisLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operasyon Uygunsuzluk Başlıkları.
+        /// </summary>
+        public static string UICurrentMenu {
+            get {
+                return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OprUygBasliklari.
+        /// </summary>
+        public static string UIExportFileName {
+            get {
+                return ResourceManager.GetString("UIExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operasyon Uygunsuzluk Başlıkları.
+        /// </summary>
+        public static string UIExportTitle {
+            get {
+                return ResourceManager.GetString("UIExportTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kalite Kontrol &gt; Ana Kayıtlar &gt; Uygunsuzluk Başlıkları.
+        /// </summary>
+        public static string UIPreviousMenu {
+            get {
+                return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
             }
         }
         

@@ -178,7 +178,7 @@
     <value>Equipment Records</value>
   </data>
   <data name="EquipmentSerialNoLabel" xml:space="preserve">
-    <value>Equipment Serial No:</value>
+    <value>Equipment Serial Nr:</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
