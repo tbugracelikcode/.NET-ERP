@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AdjustmentTime" xml:space="preserve">
+    <value>AYAR SÜRESİ</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
@@ -141,8 +147,74 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="EditLineModalTitle" xml:space="preserve">
+    <value>Üretim Takip Duruş Satırları</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Üretim Takip Yönetimi (Manuel)</value>
+  </data>
+  <data name="EditModalTitleIoT" xml:space="preserve">
+    <value>Üretim Takip Yönetimi (IoT)</value>
+  </data>
+  <data name="EmployeeModalGridCode" xml:space="preserve">
+    <value>OPERATÖR KODU</value>
+  </data>
+  <data name="EmployeeModalGridName" xml:space="preserve">
+    <value>OPERATÖR ADI</value>
+  </data>
+  <data name="EmployeeModalGridSurName" xml:space="preserve">
+    <value>OPERATÖR SOYADI</value>
+  </data>
+  <data name="EmployeeModalTitle" xml:space="preserve">
+    <value>Operatörler</value>
+  </data>
+  <data name="EmployeeName" xml:space="preserve">
+    <value>OPERATÖR</value>
+  </data>
+  <data name="EmployeeNameLabel" xml:space="preserve">
+    <value>Operatör:</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="HaltModalGridCode" xml:space="preserve">
+    <value>DURUŞ SEBEBİ KODU</value>
+  </data>
+  <data name="HaltModalGridIsPlanned" xml:space="preserve">
+    <value>PLANLANAN</value>
+  </data>
+  <data name="HaltModalGridName" xml:space="preserve">
+    <value>DURUŞ SEBEBİ ADI</value>
+  </data>
+  <data name="HaltModalTitle" xml:space="preserve">
+    <value>Duruş Kodları</value>
+  </data>
+  <data name="HaltNameLineLabel" xml:space="preserve">
+    <value>Duruş Kodu:</value>
+  </data>
+  <data name="HaltTime" xml:space="preserve">
+    <value>DURUŞ SÜRESİ</value>
+  </data>
+  <data name="HaltTimeLineLabel" xml:space="preserve">
+    <value>Duruş Süresi:</value>
+  </data>
+  <data name="IsFinished" xml:space="preserve">
+    <value>TAMAMLANDI</value>
+  </data>
+  <data name="IsFinishedLabel" xml:space="preserve">
+    <value>Tamamlandı:</value>
+  </data>
+  <data name="IsPlannedLineLabel" xml:space="preserve">
+    <value>Planlı:</value>
+  </data>
+  <data name="LineGridHaltCode" xml:space="preserve">
+    <value>DURUŞ KODU</value>
+  </data>
+  <data name="LineGridHaltTime" xml:space="preserve">
+    <value>DURUŞ SÜRESİ</value>
+  </data>
+  <data name="LineGridIsPlanned" xml:space="preserve">
+    <value>PLANLI</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -155,6 +227,105 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="OperationEndDate" xml:space="preserve">
+    <value>BİTİŞ TARİHİ</value>
+  </data>
+  <data name="OperationEndDateLabel" xml:space="preserve">
+    <value>Bitiş Tarihi:</value>
+  </data>
+  <data name="OperationEndTimeLabel" xml:space="preserve">
+    <value>Bitiş Saati:</value>
+  </data>
+  <data name="OperationStartDate" xml:space="preserve">
+    <value>BAŞLANGIÇ TARİHİ</value>
+  </data>
+  <data name="OperationStartDateLabel" xml:space="preserve">
+    <value>Başlangıç Tarihi:</value>
+  </data>
+  <data name="OperationStartTimeLabel" xml:space="preserve">
+    <value>Başlangıç Saati:</value>
+  </data>
+  <data name="OperationTime" xml:space="preserve">
+    <value>OPERASYON SÜRESİ</value>
+  </data>
+  <data name="OperationTimeLabel" xml:space="preserve">
+    <value>Operasyon Süresi:</value>
+  </data>
+  <data name="PlannedQuantity" xml:space="preserve">
+    <value>PLANLANAN MİKTAR</value>
+  </data>
+  <data name="ProducedQuantity" xml:space="preserve">
+    <value>ÜRETİLEN MİKTAR</value>
+  </data>
+  <data name="ProducedQuantityLabel" xml:space="preserve">
+    <value>Üretilen Miktar:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="ShiftCode" xml:space="preserve">
+    <value>VARDİYA KODU</value>
+  </data>
+  <data name="ShiftCodeLabel" xml:space="preserve">
+    <value>Vardiya:</value>
+  </data>
+  <data name="ShiftModalGridCode" xml:space="preserve">
+    <value>VARDİYA KODU</value>
+  </data>
+  <data name="ShiftModalGridName" xml:space="preserve">
+    <value>VARDİYA ADI</value>
+  </data>
+  <data name="ShiftModalTitle" xml:space="preserve">
+    <value>Vardiyalar</value>
+  </data>
+  <data name="StationCode" xml:space="preserve">
+    <value>İSTASYON KODU</value>
+  </data>
+  <data name="StationCodeLabel" xml:space="preserve">
+    <value>İstasyon:</value>
+  </data>
+  <data name="StationModalGridCode" xml:space="preserve">
+    <value>İSTASYON KODU</value>
+  </data>
+  <data name="StationModalGridName" xml:space="preserve">
+    <value>İSTASYON AÇIKLAMASI</value>
+  </data>
+  <data name="StationModalTitle" xml:space="preserve">
+    <value>İş İstasyonları</value>
+  </data>
+  <data name="UIConfirmationModalMessageBase" xml:space="preserve">
+    <value>Seçtiğiniz üretim takip kaydı, kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationModalMessageLineBase" xml:space="preserve">
+    <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationModalTitleBase" xml:space="preserve">
+    <value>Dikkat</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Üretim Takip Yönetimi (Manuel)</value>
+  </data>
+  <data name="UICurrentMenuIoT" xml:space="preserve">
+    <value>Üretim Takip Yönetimi (IoT)</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>UretimTakip</value>
+  </data>
+  <data name="UIExportFileNameIoT" xml:space="preserve">
+    <value>UretimTakipIoT</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Üretim Takip</value>
+  </data>
+  <data name="UIExportTitleIoT" xml:space="preserve">
+    <value>Üretim Takip (IoT)</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Üretim Yönetimi &gt; Üretim Takip Kayıtları</value>
+  </data>
+  <data name="UIWarningPopupMessageBase" xml:space="preserve">
+    <value>Lütfen önce başlangıç tarihini seçiniz.</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
@@ -173,5 +344,26 @@
   </data>
   <data name="ValidatorStationID" xml:space="preserve">
     <value>Lütfen iş istasyonu seçin.</value>
+  </data>
+  <data name="WordOrderModalGridCode" xml:space="preserve">
+    <value>İŞ EMRİ KODU</value>
+  </data>
+  <data name="WordOrderModalGridProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="WordOrderModalGridProductName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="WordOrderModalGridWorkOrderNr" xml:space="preserve">
+    <value>İŞ EMRİ NO</value>
+  </data>
+  <data name="WordOrderModalTitle" xml:space="preserve">
+    <value>İş Emirleri</value>
+  </data>
+  <data name="WorkOrderCode" xml:space="preserve">
+    <value>İŞ EMRİ KODU</value>
+  </data>
+  <data name="WorkOrderCodeLabel" xml:space="preserve">
+    <value>İş Emri Kodu:</value>
   </data>
 </root>

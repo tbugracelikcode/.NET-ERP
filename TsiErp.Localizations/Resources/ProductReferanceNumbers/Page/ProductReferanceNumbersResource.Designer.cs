@@ -62,6 +62,15 @@ namespace TsiErp.Localizations.Resources.ProductReferanceNumbers.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kapat.
+        /// </summary>
+        public static string CloseButton {
+            get {
+                return ResourceManager.GetString("CloseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aynı numaralı bir kayıt bulunmaktadır..
         /// </summary>
         public static string CodeControlManager {
@@ -107,6 +116,96 @@ namespace TsiErp.Localizations.Resources.ProductReferanceNumbers.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cari Hesap Kodu:.
+        /// </summary>
+        public static string CurrentAccountCardCodeLabel {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CARİ HESAP ÜNVANI.
+        /// </summary>
+        public static string CurrentAccountCardName {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cari Hesap Ünvanı:.
+        /// </summary>
+        public static string CurrentAccountCardNameLabel {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CARİ KOD.
+        /// </summary>
+        public static string CurrentAccountModalGridCode {
+            get {
+                return ResourceManager.GetString("CurrentAccountModalGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-POSTA.
+        /// </summary>
+        public static string CurrentAccountModalGridEmail {
+            get {
+                return ResourceManager.GetString("CurrentAccountModalGridEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CARİ ÜNVAN.
+        /// </summary>
+        public static string CurrentAccountModalGridName {
+            get {
+                return ResourceManager.GetString("CurrentAccountModalGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İLGİLİ.
+        /// </summary>
+        public static string CurrentAccountModalGridResponsible {
+            get {
+                return ResourceManager.GetString("CurrentAccountModalGridResponsible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VERGİ NUMARASI.
+        /// </summary>
+        public static string CurrentAccountModalGridTaxNumber {
+            get {
+                return ResourceManager.GetString("CurrentAccountModalGridTaxNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TELEFON (1).
+        /// </summary>
+        public static string CurrentAccountModalGridTel {
+            get {
+                return ResourceManager.GetString("CurrentAccountModalGridTel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cari Hesap Kartları.
+        /// </summary>
+        public static string CurrentAccountModalTitle {
+            get {
+                return ResourceManager.GetString("CurrentAccountModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
         /// </summary>
         public static string DeleteConfirmationDescriptionBase {
@@ -130,6 +229,33 @@ namespace TsiErp.Localizations.Resources.ProductReferanceNumbers.Page {
         public static string DeleteSuccessMessage {
             get {
                 return ResourceManager.GetString("DeleteSuccessMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AÇIKLAMA.
+        /// </summary>
+        public static string Description_ {
+            get {
+                return ResourceManager.GetString("Description_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Açıklama:.
+        /// </summary>
+        public static string Description_Label {
+            get {
+                return ResourceManager.GetString("Description_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Referans Numaraları.
+        /// </summary>
+        public static string EditModaltTitle {
+            get {
+                return ResourceManager.GetString("EditModaltTitle", resourceCulture);
             }
         }
         
@@ -175,6 +301,132 @@ namespace TsiErp.Localizations.Resources.ProductReferanceNumbers.Page {
         public static string MessagePopupInformationTitleBase {
             get {
                 return ResourceManager.GetString("MessagePopupInformationTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK KODU.
+        /// </summary>
+        public static string ProductCode {
+            get {
+                return ResourceManager.GetString("ProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Kodu:.
+        /// </summary>
+        public static string ProductCodeLabel {
+            get {
+                return ResourceManager.GetString("ProductCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK KODU.
+        /// </summary>
+        public static string ProductModalGridCode {
+            get {
+                return ResourceManager.GetString("ProductModalGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK AÇIKLAMASI.
+        /// </summary>
+        public static string ProductModalGridName {
+            get {
+                return ResourceManager.GetString("ProductModalGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Kartları.
+        /// </summary>
+        public static string ProductModalTitle {
+            get {
+                return ResourceManager.GetString("ProductModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK AÇIKLAMASI.
+        /// </summary>
+        public static string ProductName {
+            get {
+                return ResourceManager.GetString("ProductName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Açıklaması:.
+        /// </summary>
+        public static string ProductNameLabel {
+            get {
+                return ResourceManager.GetString("ProductNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TEDARİKÇİ REFERANS NUMARASI.
+        /// </summary>
+        public static string ReferanceNo {
+            get {
+                return ResourceManager.GetString("ReferanceNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tedarikçi Referans Numarası:.
+        /// </summary>
+        public static string ReferanceNoLabel {
+            get {
+                return ResourceManager.GetString("ReferanceNoLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kaydet.
+        /// </summary>
+        public static string SaveButton {
+            get {
+                return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Referans Numaraları.
+        /// </summary>
+        public static string UICurrentMenu {
+            get {
+                return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UrunRefNumaralari.
+        /// </summary>
+        public static string UIExportFileName {
+            get {
+                return ResourceManager.GetString("UIExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Referans Numaraları.
+        /// </summary>
+        public static string UIExportTitle {
+            get {
+                return ResourceManager.GetString("UIExportTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Yönetimi &gt; Ana Kayıtlar.
+        /// </summary>
+        public static string UIPreviousMenu {
+            get {
+                return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
             }
         }
         

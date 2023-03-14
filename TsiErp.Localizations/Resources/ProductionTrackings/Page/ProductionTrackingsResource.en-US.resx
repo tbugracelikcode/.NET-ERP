@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AdjustmentTime" xml:space="preserve">
+    <value>ADJUSTMENT TIME</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
@@ -141,8 +147,74 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="EditLineModalTitle" xml:space="preserve">
+    <value>Production Tracking Management Lines</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Production Tracking Management (Manual)</value>
+  </data>
+  <data name="EditModalTitleIoT" xml:space="preserve">
+    <value>Production Tracking Management (IoT)</value>
+  </data>
+  <data name="EmployeeModalGridCode" xml:space="preserve">
+    <value>OPERATOR CODE</value>
+  </data>
+  <data name="EmployeeModalGridName" xml:space="preserve">
+    <value>OPERATOR NAME</value>
+  </data>
+  <data name="EmployeeModalGridSurName" xml:space="preserve">
+    <value>OPERATOR SURNAME</value>
+  </data>
+  <data name="EmployeeModalTitle" xml:space="preserve">
+    <value>Operators</value>
+  </data>
+  <data name="EmployeeName" xml:space="preserve">
+    <value>OPERATOR</value>
+  </data>
+  <data name="EmployeeNameLabel" xml:space="preserve">
+    <value>Operator:</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="HaltModalGridCode" xml:space="preserve">
+    <value>HALT REASON CODE</value>
+  </data>
+  <data name="HaltModalGridIsPlanned" xml:space="preserve">
+    <value>PLANNED</value>
+  </data>
+  <data name="HaltModalGridName" xml:space="preserve">
+    <value>HALT REASON NAME</value>
+  </data>
+  <data name="HaltModalTitle" xml:space="preserve">
+    <value>Halt Codes</value>
+  </data>
+  <data name="HaltNameLineLabel" xml:space="preserve">
+    <value>Halt Code:</value>
+  </data>
+  <data name="HaltTime" xml:space="preserve">
+    <value>HALT TIME</value>
+  </data>
+  <data name="HaltTimeLineLabel" xml:space="preserve">
+    <value>Halt Time:</value>
+  </data>
+  <data name="IsFinished" xml:space="preserve">
+    <value>FINISHED</value>
+  </data>
+  <data name="IsFinishedLabel" xml:space="preserve">
+    <value>Finished:</value>
+  </data>
+  <data name="IsPlannedLineLabel" xml:space="preserve">
+    <value>Planned:</value>
+  </data>
+  <data name="LineGridHaltCode" xml:space="preserve">
+    <value>HALT CODE</value>
+  </data>
+  <data name="LineGridHaltTime" xml:space="preserve">
+    <value>HALT TIME</value>
+  </data>
+  <data name="LineGridIsPlanned" xml:space="preserve">
+    <value>PLANNED</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -155,6 +227,105 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="OperationEndDate" xml:space="preserve">
+    <value>END DATE</value>
+  </data>
+  <data name="OperationEndDateLabel" xml:space="preserve">
+    <value>End Date:</value>
+  </data>
+  <data name="OperationEndTimeLabel" xml:space="preserve">
+    <value>End Time:</value>
+  </data>
+  <data name="OperationStartDate" xml:space="preserve">
+    <value>START DATE</value>
+  </data>
+  <data name="OperationStartDateLabel" xml:space="preserve">
+    <value>Start Date:</value>
+  </data>
+  <data name="OperationStartTimeLabel" xml:space="preserve">
+    <value>Start Time:</value>
+  </data>
+  <data name="OperationTime" xml:space="preserve">
+    <value>OPERAYION TIME</value>
+  </data>
+  <data name="OperationTimeLabel" xml:space="preserve">
+    <value>Operation Time:</value>
+  </data>
+  <data name="PlannedQuantity" xml:space="preserve">
+    <value>PLANNED QUANTITY</value>
+  </data>
+  <data name="ProducedQuantity" xml:space="preserve">
+    <value>PRODUCED QUANTITY</value>
+  </data>
+  <data name="ProducedQuantityLabel" xml:space="preserve">
+    <value>Produced Quantity:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ShiftCode" xml:space="preserve">
+    <value>SHIFT CODE</value>
+  </data>
+  <data name="ShiftCodeLabel" xml:space="preserve">
+    <value>Shift:</value>
+  </data>
+  <data name="ShiftModalGridCode" xml:space="preserve">
+    <value>SHIFT CODE</value>
+  </data>
+  <data name="ShiftModalGridName" xml:space="preserve">
+    <value>SHIFT NAME</value>
+  </data>
+  <data name="ShiftModalTitle" xml:space="preserve">
+    <value>Shifts</value>
+  </data>
+  <data name="StationCode" xml:space="preserve">
+    <value>STATION CODE</value>
+  </data>
+  <data name="StationCodeLabel" xml:space="preserve">
+    <value>Station:</value>
+  </data>
+  <data name="StationModalGridCode" xml:space="preserve">
+    <value>STATION CODE</value>
+  </data>
+  <data name="StationModalGridName" xml:space="preserve">
+    <value>STATION NAME</value>
+  </data>
+  <data name="StationModalTitle" xml:space="preserve">
+    <value>Stations</value>
+  </data>
+  <data name="UIConfirmationModalMessageBase" xml:space="preserve">
+    <value>The production tracking record you selected will be permanently deleted.</value>
+  </data>
+  <data name="UIConfirmationModalMessageLineBase" xml:space="preserve">
+    <value>The line you selected will be permanently deleted.</value>
+  </data>
+  <data name="UIConfirmationModalTitleBase" xml:space="preserve">
+    <value>Attention</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Production Tracking Management (Manual)</value>
+  </data>
+  <data name="UICurrentMenuIoT" xml:space="preserve">
+    <value>Production Tracking Management (IoT)</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>ProductionTracking</value>
+  </data>
+  <data name="UIExportFileNameIoT" xml:space="preserve">
+    <value>ProductionTrackingIoT</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Production Tracking </value>
+  </data>
+  <data name="UIExportTitleIoT" xml:space="preserve">
+    <value>Production Tracking  (IoT)</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Production Management &gt; Production Tracking Records</value>
+  </data>
+  <data name="UIWarningPopupMessageBase" xml:space="preserve">
+    <value>Please select the start date first.</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
@@ -173,5 +344,26 @@
   </data>
   <data name="ValidatorStationID" xml:space="preserve">
     <value>Please select a station.</value>
+  </data>
+  <data name="WordOrderModalGridCode" xml:space="preserve">
+    <value>WORK ORDER CODE</value>
+  </data>
+  <data name="WordOrderModalGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="WordOrderModalGridProductName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="WordOrderModalGridWorkOrderNr" xml:space="preserve">
+    <value>WORK ORDER NR</value>
+  </data>
+  <data name="WordOrderModalTitle" xml:space="preserve">
+    <value>Work Orders</value>
+  </data>
+  <data name="WorkOrderCode" xml:space="preserve">
+    <value>WORK ORDER CODE</value>
+  </data>
+  <data name="WorkOrderCodeLabel" xml:space="preserve">
+    <value>Work Order Code:</value>
   </data>
 </root>

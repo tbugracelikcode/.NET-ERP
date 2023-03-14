@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>ÜRÜN GRUBU KODU</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Ürün Grubu Kodu:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -144,8 +153,14 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Ürün Grupları</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Aktiflik:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -158,6 +173,27 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>ÜRÜN GRUBU AÇIKLAMASI</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Ürün Grubu Açıklaması:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Ürün Grupları</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>UrunGruplari</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Ürün Grupları</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Stok Yönetimi &gt; Ana Kayıtlar</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>

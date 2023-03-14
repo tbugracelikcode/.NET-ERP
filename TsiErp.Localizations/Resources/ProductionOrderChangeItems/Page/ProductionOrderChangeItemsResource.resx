@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>ÜRETİM EMRİ DEĞİŞİKLİK KODU</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Kod:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -141,8 +150,26 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="Detection" xml:space="preserve">
+    <value>TESPİT</value>
+  </data>
+  <data name="DetectionLabel" xml:space="preserve">
+    <value>Tespit:</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Üretim Emri Değişiklik Başlıkları</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>RESİM</value>
+  </data>
+  <data name="ImageLabel" xml:space="preserve">
+    <value>Resim:</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Aktiflik:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -155,6 +182,45 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>ÜRETİM EMRİ DEĞİŞİKLİK AÇIKLAMASI</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
+  <data name="PerProductivityAnalysis" xml:space="preserve">
+    <value>PERSONEL VERİMLİLİK ANALİZİ</value>
+  </data>
+  <data name="PerProductivityAnalysisLabel" xml:space="preserve">
+    <value>Personel Verimlilik Analizi:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="Severity" xml:space="preserve">
+    <value>ŞİDDET</value>
+  </data>
+  <data name="SeverityLabel" xml:space="preserve">
+    <value>Şiddet:</value>
+  </data>
+  <data name="StaProductivityAnalysis" xml:space="preserve">
+    <value>İSTASYON VERİMLİLİK ANALİZİ</value>
+  </data>
+  <data name="StaProductivityAnalysisLabel" xml:space="preserve">
+    <value>İstasyon Verimlilik Analizi:</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Üretim Emri Değişiklik Başlıkları</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>UretimEmriDegisiklikBasliklari</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Üretim Emri Değişiklik Başlıkları</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Kalite Kontrol &gt; Ana Kayıtlar &gt; Uygunsuzluk Başlıkları</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>

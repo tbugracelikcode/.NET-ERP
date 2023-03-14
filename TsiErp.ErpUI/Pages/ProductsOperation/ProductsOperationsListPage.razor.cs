@@ -235,10 +235,10 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle", Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -246,10 +246,10 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle", Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -263,7 +263,7 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
                 if (dataOpenStatus == true && dataOpenStatus != null)
                 {
                     EditPageVisible = false;
-                    await ModalManager.MessagePopupAsync("Bilgi", "Seçtiğiniz kayıt ..... tarafından kullanılmaktadır.");
+                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);
                     await InvokeAsync(StateHasChanged);
                 }
                 else
@@ -292,7 +292,7 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync("Dikkat", "Seçtiğiniz ürüne özel operasyon kalıcı olarak silinecektir.");
+                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
                     if (res == true)
                     {
                         await DeleteAsync(args.RowInfo.RowData.Id);
@@ -332,7 +332,7 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync("Dikkat", "Seçtiğiniz satır kalıcı olarak silinecektir.");
+                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
 
                     if (res == true)
                     {
