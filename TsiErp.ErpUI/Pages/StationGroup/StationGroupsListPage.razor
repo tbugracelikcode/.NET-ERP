@@ -25,7 +25,7 @@ else
                 <Template>
                     <SfCard class="TSIListPageTitleCard">
                         <CardContent>
-                            <TsiBreadCrumb PreviousMenus="Makine & İş Gücü Yönetimi > Ana Kayıtlar" CurrentMenu="İş İstasyonu Grupları" />
+                            <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
                         </CardContent>
                         <CardFooter>
                         </CardFooter>
@@ -45,14 +45,14 @@ else
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", "İş İstasyonu Grupları", "IsIstasyonGruplari"))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", "İş İstasyonu Grupları", "IsIstasyonGruplari"))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
@@ -64,9 +64,9 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ListStationGroupsDto.Code) HeaderText="İŞ İSTASYON GRUBU KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationGroupsDto.Name) HeaderText="İŞ İSTASYON GRUBU AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListStationGroupsDto.TotalEmployees) Type="ColumnType.Number" HeaderText="TOPLAM ÇALIŞAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationGroupsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationGroupsDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListStationGroupsDto.TotalEmployees) Type="ColumnType.Number" HeaderText="@L["TotalEmployees"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                 </GridColumns>
                             </SfGrid>
@@ -84,7 +84,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="İş İstasyonu Grupları"
+         HeaderText="@L["EditModalTitle"]"
          Width="39%"
          Height="24%"
          MinWidth="750px"
@@ -110,27 +110,27 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>İş İstasyonu Grubu Kodu: </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="İş İstasyonu Grubu Kodu Yazınız."></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" ></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>İş İstasyonu Grubu Açıklaması: </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="İş İstasyonu Grubu Açıklaması Yazınız."></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" ></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Toplam Çalışan: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>@L["TotalEmployeesLabel"] </strong></label><br />
                             <SfNumericTextBox Min="0" @bind-Value="DataSource.TotalEmployees" TValue="int"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <center>
-                                <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
+                                <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
                                 <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
                             </center>
                         </Template>
@@ -140,8 +140,8 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 

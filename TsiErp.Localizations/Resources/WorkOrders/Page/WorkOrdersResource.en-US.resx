@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AdjustmentAndControlTime" xml:space="preserve">
+    <value>ADJUSTMENT AND CONTROL TIME</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>WORK ORDER CODE</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
@@ -131,6 +137,9 @@
   </data>
   <data name="ContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="CurrentAccountCardName" xml:space="preserve">
+    <value>CURRENT ACCOUNT NAME</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
@@ -155,6 +164,54 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="OccuredFinishDate" xml:space="preserve">
+    <value>OCCURED END DATE</value>
+  </data>
+  <data name="OccuredStartDate" xml:space="preserve">
+    <value>OCCURED START DATE</value>
+  </data>
+  <data name="OperationTime" xml:space="preserve">
+    <value>OPERATION TIME</value>
+  </data>
+  <data name="PlannedQuantity" xml:space="preserve">
+    <value>PLANNED QUANTITY</value>
+  </data>
+  <data name="ProducedQuantity" xml:space="preserve">
+    <value>PRODUCED QUANTITY</value>
+  </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="ProductionOrderFicheNo" xml:space="preserve">
+    <value>PRODUCTION ORDER RECEIPT NR</value>
+  </data>
+  <data name="ProductsOperationCode" xml:space="preserve">
+    <value>OPERATION</value>
+  </data>
+  <data name="PropositionFicheNo" xml:space="preserve">
+    <value>ORDER NR</value>
+  </data>
+  <data name="RouteCode" xml:space="preserve">
+    <value>ROUTE</value>
+  </data>
+  <data name="StationCode" xml:space="preserve">
+    <value>STATION</value>
+  </data>
+  <data name="StationGroupCode" xml:space="preserve">
+    <value>STATION GROUP</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Work Orders</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>WorkOrders</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Work Orders</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Production Management &gt; İşlemler</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
@@ -182,5 +239,11 @@
   </data>
   <data name="ValidatorPropositionID" xml:space="preserve">
     <value>Please select a proposition.</value>
+  </data>
+  <data name="WorkOrderNo" xml:space="preserve">
+    <value>WORK ORDER NR</value>
+  </data>
+  <data name="WorkOrderState" xml:space="preserve">
+    <value>STATE</value>
   </data>
 </root>

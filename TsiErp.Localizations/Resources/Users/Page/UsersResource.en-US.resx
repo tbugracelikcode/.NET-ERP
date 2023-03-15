@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>USER CODE</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>User Code:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -141,8 +150,32 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>User Identifications</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-MAIL</value>
+  </data>
+  <data name="EmailLabel" xml:space="preserve">
+    <value>E-Mail:</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="GroupName" xml:space="preserve">
+    <value>USER GROUP</value>
+  </data>
+  <data name="GroupNameLabel" xml:space="preserve">
+    <value>User Group:</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Activity:</value>
+  </data>
+  <data name="IsEmailApproved" xml:space="preserve">
+    <value>E-MAIL APPROVAL</value>
+  </data>
+  <data name="IsEmailApprovedLabel" xml:space="preserve">
+    <value>E-Mail Approval:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -156,8 +189,50 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="NameSurname" xml:space="preserve">
+    <value>NAME SURNAME</value>
+  </data>
+  <data name="NameSurnameLabel" xml:space="preserve">
+    <value>Name Surname:</value>
+  </data>
+  <data name="PasswordLabel" xml:space="preserve">
+    <value>Password:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Tab1Name" xml:space="preserve">
+    <value>General Information</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>User Identifications</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>General System Identifications</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="UserGroupModalGridCode" xml:space="preserve">
+    <value>USER GROUP CODE</value>
+  </data>
+  <data name="UserGroupModalGridName" xml:space="preserve">
+    <value>USER GROUP NAME</value>
+  </data>
+  <data name="UserGroupModalTitle" xml:space="preserve">
+    <value>User Groups</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>USER NAME</value>
+  </data>
+  <data name="UserNameLabel" xml:space="preserve">
+    <value>User Name:</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
     <value>Please enter the user code.</value>

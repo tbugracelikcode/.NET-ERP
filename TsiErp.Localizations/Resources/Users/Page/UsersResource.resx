@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>KULLANICI KODU</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Kullanıcı Kodu:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -141,8 +150,32 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Kullanıcı Tanımlamaları</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-POSTA</value>
+  </data>
+  <data name="EmailLabel" xml:space="preserve">
+    <value>E-Posta:</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="GroupName" xml:space="preserve">
+    <value>KULLANICI GRUBU</value>
+  </data>
+  <data name="GroupNameLabel" xml:space="preserve">
+    <value>Kullanıcı Grubu:</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Aktiflik:</value>
+  </data>
+  <data name="IsEmailApproved" xml:space="preserve">
+    <value>E-POSTA ONAY</value>
+  </data>
+  <data name="IsEmailApprovedLabel" xml:space="preserve">
+    <value>E-Posta Onay:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -156,8 +189,50 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="NameSurname" xml:space="preserve">
+    <value>ADI SOYADI</value>
+  </data>
+  <data name="NameSurnameLabel" xml:space="preserve">
+    <value>Adı Soyadı:</value>
+  </data>
+  <data name="PasswordLabel" xml:space="preserve">
+    <value>Parola:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="Tab1Name" xml:space="preserve">
+    <value>Genel Bilgiler</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Kullanıcı Tanımlamaları</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>Kullanicilar</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Kullanıcılar</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Genel Sistem Tanımlamaları</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="UserGroupModalGridCode" xml:space="preserve">
+    <value>KULLANICI GRUBU KODU</value>
+  </data>
+  <data name="UserGroupModalGridName" xml:space="preserve">
+    <value>KULLANICI GRUBU ADI</value>
+  </data>
+  <data name="UserGroupModalTitle" xml:space="preserve">
+    <value>Kullanıcı Grupları</value>
+  </data>
+  <data name="UserName" xml:space="preserve">
+    <value>KULLANICI ADI</value>
+  </data>
+  <data name="UserNameLabel" xml:space="preserve">
+    <value>Kullanıcı Adı:</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
     <value>Lütfen kullanıcı kodunu yazın.</value>

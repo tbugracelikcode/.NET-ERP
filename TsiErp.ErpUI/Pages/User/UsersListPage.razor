@@ -33,7 +33,7 @@ else
                 <Template>
                     <SfCard class="TSIListPageTitleCard">
                         <CardContent>
-                            <TsiBreadCrumb PreviousMenus="Genel Sistem Tanımlamaları" CurrentMenu="Kullanıcı Tanımlamaları" />
+                            <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
                         </CardContent>
                         <CardFooter>
                         </CardFooter>
@@ -53,14 +53,14 @@ else
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", "Kullanıcılar", "Kullanicilar"))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", "Kullanıcılar", "Kullanicilar"))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
@@ -72,12 +72,12 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ListUsersDto.Code) HeaderText="KULLANICI KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListUsersDto.UserName) HeaderText="KULLANICI ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListUsersDto.NameSurname) HeaderText="ADI SOYADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListUsersDto.Email) HeaderText="E-POSTA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListUsersDto.GroupName) HeaderText="KULLANICI GRUBU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListUsersDto.IsEmailApproved) DisplayAsCheckBox="true" HeaderText="E-POSTA ONAY" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListUsersDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListUsersDto.UserName) HeaderText="@L["UserName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListUsersDto.NameSurname) HeaderText="@L["NameSurname"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListUsersDto.Email) HeaderText="@L["Email"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListUsersDto.GroupName) HeaderText="@L["GroupName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListUsersDto.IsEmailApproved) DisplayAsCheckBox="true" HeaderText="@L["IsEmailApproved"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </CardContent>
@@ -94,7 +94,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Kullanıcılar"
+         HeaderText="@L["EditModalTitle"]"
          Width="56%"
          Height="52%"
          MinWidth="990px"
@@ -121,22 +121,22 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>Kullanıcı Kodu: </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Kullanıcı Kodunu Yazınız."></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" ></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Kullanıcı Adı: </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.UserName" Placeholder="Kullanıcı Adı Yazınız."></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["UserNameLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.UserName" ></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="2">
                         <Template>
                             <center>
-                                <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
+                                <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
                                 <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
                             </center>
                         </Template>
@@ -148,7 +148,7 @@ else
                                 <TabItems>
                                     <TabItem>
                                         <ChildContent>
-                                            <TabHeader Text="Genel Bilgiler"></TabHeader>
+                                            <TabHeader Text="@L["Tab1Name"]"></TabHeader>
                                         </ChildContent>
                                         <ContentTemplate>
 
@@ -170,30 +170,30 @@ else
                                                     <DxGridLayoutItem Row="0" Column="1">
                                                         <Template>
                                                             <br />
-                                                            <label class="TSIModalLabel"><strong>Adı Soyadı: </strong></label>
-                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.NameSurname" Placeholder="Adı ve Soyadını Yazınız."></SfTextBox>
+                                                            <label class="TSIModalLabel"><strong>@L["NameSurnameLabel"] </strong></label>
+                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.NameSurname"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="0" Column="3">
                                                         <Template>
                                                             <br />
-                                                            <label class="TSIModalLabel"><strong>E-Posta: </strong></label>
-                                                            <SfTextBox Placeholder="E-Postayı Yazınız." @bind-Value="DataSource.Email" CssClass="TSITxtBox"></SfTextBox>
+                                                            <label class="TSIModalLabel"><strong>@L["EmailLabel"] </strong></label>
+                                                            <SfTextBox @bind-Value="DataSource.Email" CssClass="TSITxtBox"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="0" Column="5">
                                                         <Template>
                                                             <br />
-                                                            <label class="TSIModalLabel"><strong>Parola: </strong></label>
-                                                            <SfTextBox Placeholder="Parolayı Yazınız." @bind-Value="DataSource.Password" CssClass="TSITxtBox"></SfTextBox>
+                                                            <label class="TSIModalLabel"><strong>@L["PasswordLabel"]</strong></label>
+                                                            <SfTextBox @bind-Value="DataSource.Password" CssClass="TSITxtBox"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="1" Column="1">
                                                         <Template>
-                                                            <label class="TSIModalLabel"><strong>Kullanıcı Grubu: </strong></label><br />
+                                                            <label class="TSIModalLabel"><strong>@L["GroupNameLabel"] </strong></label><br />
                                                                 <SfTextBox @ref="@UserGroupButtonEdit" Created="@UserGroupOnCreateIcon" @bind-Value="DataSource.GroupName" ShowClearButton=true ValueChange="UserGroupOnValueChange"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
@@ -201,7 +201,7 @@ else
                                                     <DxGridLayoutItem Row="1" Column="3">
                                                         <Template>
                                                             <center>
-                                                                <label class="TSIModalLabel"><strong>E-Posta Onay: </strong></label><br />
+                                                                <label class="TSIModalLabel"><strong>@L["IsEmailApprovedLabel"] </strong></label><br />
                                                                 <SfSwitch @bind-Checked="DataSource.IsEmailApproved"></SfSwitch>
                                                                 </center>
                                                         </Template>
@@ -225,8 +225,8 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 }
@@ -237,7 +237,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Kullanıcı Grupları"
+         HeaderText="@L["UserGroupModalTitle"]"
          Width="64%"
          Height="44%"
          MinWidth="1220px"
@@ -263,8 +263,8 @@ else
                                             <GridPageSettings PageSizes="true"></GridPageSettings>
                                             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                             <GridColumns>
-                                                <GridColumn Field=@nameof(ListUserGroupsDto.Code) HeaderText="KULLANICI GRUBU KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                                <GridColumn Field=@nameof(ListUserGroupsDto.Name) HeaderText="KULLANICI GRUBU ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                <GridColumn Field=@nameof(ListUserGroupsDto.Code) HeaderText="@L["UserGroupModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                <GridColumn Field=@nameof(ListUserGroupsDto.Name) HeaderText="@L["UserGroupModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             </GridColumns>
                                         </SfGrid>
                                     </CardContent>
@@ -278,8 +278,6 @@ else
 
             </BodyTemplate>
             <FooterContentTemplate>
-                @*<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>*@
             </FooterContentTemplate>
         </DxPopup>
     }
