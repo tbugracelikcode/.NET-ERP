@@ -304,7 +304,7 @@
     <value>Maintenance Management &gt; İşlemler</value>
   </data>
   <data name="UIWarningPopupMessageBase" xml:space="preserve">
-    <value>Since the amount is 0, line saving cannot be performed.</value>
+    <value>Since the quantiy is 0, line saving cannot be performed.</value>
   </data>
   <data name="UIWarningPopupTitleBase" xml:space="preserve">
     <value>Warning</value>

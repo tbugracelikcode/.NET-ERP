@@ -418,7 +418,7 @@
     <value>It is not possible to save lines without selecting the product.</value>
   </data>
   <data name="UIWarningPopupMessageBase3" xml:space="preserve">
-    <value>Since the amount is 0, line saving cannot be performed.</value>
+    <value>Since the quantiy is 0, line saving cannot be performed.</value>
   </data>
   <data name="UIWarningPopupTitleBase" xml:space="preserve">
     <value>Warning</value>

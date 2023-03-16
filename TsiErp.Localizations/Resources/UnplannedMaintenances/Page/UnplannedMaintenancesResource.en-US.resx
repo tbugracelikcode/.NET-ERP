@@ -117,8 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AmountLineLabel" xml:space="preserve">
+    <value>Quantity:</value>
+  </data>
+  <data name="Caregiver" xml:space="preserve">
+    <value>CAREGIVER</value>
+  </data>
+  <data name="CaregiverLabel" xml:space="preserve">
+    <value>Caregiver:</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same number.</value>
+  </data>
+  <data name="CompletionDateLabel" xml:space="preserve">
+    <value>Completion Date:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -141,8 +156,35 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="EditLineModalTitle" xml:space="preserve">
+    <value>Failure / Unplanned Maintenance Lines</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Failure / Unplanned Maintenance Records</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="InstructionDescriptionLineLabel" xml:space="preserve">
+    <value>Instruction Description:</value>
+  </data>
+  <data name="LineGridAmount" xml:space="preserve">
+    <value>QUANTITY</value>
+  </data>
+  <data name="LineGridInsDesc" xml:space="preserve">
+    <value>INSTRUCTION DESCRIPTION</value>
+  </data>
+  <data name="LineGridLineNr" xml:space="preserve">
+    <value>LINE NR</value>
+  </data>
+  <data name="LineGridMaintenanceNote" xml:space="preserve">
+    <value>MAINTENANCE NOTE</value>
+  </data>
+  <data name="LineGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="LineGridUnitSet" xml:space="preserve">
+    <value>UNIT SET</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -150,11 +192,143 @@
   <data name="LoadingText" xml:space="preserve">
     <value>The records are loading..</value>
   </data>
+  <data name="MainPeriodModalGridCode" xml:space="preserve">
+    <value>MAINTENANCE PERIOD CODE</value>
+  </data>
+  <data name="MainPeriodModalGridName" xml:space="preserve">
+    <value>MAINTENANCE PERIOD NAME</value>
+  </data>
+  <data name="MainPeriodModalGridPeriodTime" xml:space="preserve">
+    <value>PERIOD TIME</value>
+  </data>
+  <data name="MainPeriodModalTitle" xml:space="preserve">
+    <value>Maintenance Periods</value>
+  </data>
+  <data name="MaintenanceNoteLineLabel" xml:space="preserve">
+    <value>Maintenance Note:</value>
+  </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>The record you selected is using by {0}.</value>
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="Note_Label" xml:space="preserve">
+    <value>Note:</value>
+  </data>
+  <data name="NumberofCaregiversLabel" xml:space="preserve">
+    <value>Number of Caregivers:</value>
+  </data>
+  <data name="OccuredTimeLabel" xml:space="preserve">
+    <value>Occured Time:</value>
+  </data>
+  <data name="PeriodName" xml:space="preserve">
+    <value>PERIOD NAME</value>
+  </data>
+  <data name="PeriodNameLabel" xml:space="preserve">
+    <value>Maintenance Type:</value>
+  </data>
+  <data name="PeriodTimeLabel" xml:space="preserve">
+    <value>Period Time:</value>
+  </data>
+  <data name="ProductCodeLineLabel" xml:space="preserve">
+    <value>Product Code:</value>
+  </data>
+  <data name="ProductModalGridCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="ProductModalGridName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="ProductNameLineLabel" xml:space="preserve">
+    <value>Product Name:</value>
+  </data>
+  <data name="RegistrationNo" xml:space="preserve">
+    <value>REGISTRATION NUMBER</value>
+  </data>
+  <data name="RegistrationNoLabel" xml:space="preserve">
+    <value>Registration Number:</value>
+  </data>
+  <data name="RemainingTimeLabel" xml:space="preserve">
+    <value>Remaining Time:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>START DATE</value>
+  </data>
+  <data name="StartDateLabel" xml:space="preserve">
+    <value>Start Date:</value>
+  </data>
+  <data name="StationCode" xml:space="preserve">
+    <value>STATION CODE</value>
+  </data>
+  <data name="StationCodeLabel" xml:space="preserve">
+    <value>Station:</value>
+  </data>
+  <data name="StationModalGridCode" xml:space="preserve">
+    <value>STATION CODE</value>
+  </data>
+  <data name="StationModalGridName" xml:space="preserve">
+    <value>STATION NAME</value>
+  </data>
+  <data name="StationModalTitle" xml:space="preserve">
+    <value>Stations</value>
+  </data>
+  <data name="StatusLabel" xml:space="preserve">
+    <value>State:</value>
+  </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>The unplanned maintenance you selected will be permanently deleted.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>The line you selected will be permanently deleted.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Attention</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Failure / Unplanned Maintenance Records</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>UnplannedMaintenances</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Unplanned Maintenances</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Maintenance Management &gt; İşlemler</value>
+  </data>
+  <data name="UIWarningPopupMessageBase" xml:space="preserve">
+    <value>Since the quantity is 0, line saving cannot be performed.</value>
+  </data>
+  <data name="UIWarningPopupTitleBase" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UnitSetCodeLineLabel" xml:space="preserve">
+    <value>Unit Set:</value>
+  </data>
+  <data name="UnitSetModalGridCode" xml:space="preserve">
+    <value>UNIT SET CODE</value>
+  </data>
+  <data name="UnitSetModalGridName" xml:space="preserve">
+    <value>UNIT SET NAME</value>
+  </data>
+  <data name="UnitSetModalTitle" xml:space="preserve">
+    <value>Unit Sets</value>
+  </data>
+  <data name="UnplannedDate" xml:space="preserve">
+    <value>END DATE</value>
+  </data>
+  <data name="UnplannedDateLabel" xml:space="preserve">
+    <value>Planned Date:</value>
+  </data>
+  <data name="UnplannedTimeLabel" xml:space="preserve">
+    <value>Planned Time:</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same number.</value>
