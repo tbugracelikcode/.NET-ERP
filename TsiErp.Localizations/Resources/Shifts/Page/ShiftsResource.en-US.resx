@@ -117,8 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>SHIFT CODE</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Shift Code:</value>
+  </data>
+  <data name="CoefficientLineLabel" xml:space="preserve">
+    <value>Coefficient:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -141,8 +153,32 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="EditLineModalTitle" xml:space="preserve">
+    <value>Shift Lines</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Shifts</value>
+  </data>
+  <data name="EndHourLineLabel" xml:space="preserve">
+    <value>End Hour:</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Activity:</value>
+  </data>
+  <data name="LineGridCoefficient" xml:space="preserve">
+    <value>COEFFICIENT</value>
+  </data>
+  <data name="LineGridEndHour" xml:space="preserve">
+    <value>END HOUR</value>
+  </data>
+  <data name="LineGridStartHour" xml:space="preserve">
+    <value>START HOUR</value>
+  </data>
+  <data name="LineGridType" xml:space="preserve">
+    <value>TYPE</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -156,8 +192,77 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>SHIFT NAME</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Shift Name:</value>
+  </data>
+  <data name="NetWorkTime" xml:space="preserve">
+    <value>NET WORK TIME</value>
+  </data>
+  <data name="NetWorkTimeLabel" xml:space="preserve">
+    <value>Net Work Time:</value>
+  </data>
   <data name="OrderNoControlManager" xml:space="preserve">
     <value>There is a record with the same order number.</value>
+  </data>
+  <data name="Overtime" xml:space="preserve">
+    <value>OVERTIME</value>
+  </data>
+  <data name="OvertimeLabel" xml:space="preserve">
+    <value>Overtime:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ShiftOrder" xml:space="preserve">
+    <value>SHIFT SEQUENCE</value>
+  </data>
+  <data name="ShiftOrderLabel" xml:space="preserve">
+    <value>Shift Sequence:</value>
+  </data>
+  <data name="StartHourLineLabel" xml:space="preserve">
+    <value>Start Hour:</value>
+  </data>
+  <data name="TotalBreakTime" xml:space="preserve">
+    <value>TOTAL BREAK TIME</value>
+  </data>
+  <data name="TotalBreakTimeLabel" xml:space="preserve">
+    <value>Total Break Time:</value>
+  </data>
+  <data name="TotalWorkTime" xml:space="preserve">
+    <value>TOTAL WORK TIME</value>
+  </data>
+  <data name="TotalWorkTimeLabel" xml:space="preserve">
+    <value>Total Work Time:</value>
+  </data>
+  <data name="TypeLineLabel" xml:space="preserve">
+    <value>Type:</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>The line you selected will be permanently deleted.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Attention</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Shifts</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>Shifts</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Shifts</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>General System Identifications</value>
+  </data>
+  <data name="UIWarningPopupTitle24HourBase" xml:space="preserve">
+    <value>The total working time of the shifts cannot exceed 24 hours.</value>
+  </data>
+  <data name="UIWarningPopupTitleBase" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>

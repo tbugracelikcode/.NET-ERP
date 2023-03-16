@@ -28,7 +28,7 @@ else
                 <Template>
                     <SfCard class="TSIListPageTitleCard">
                         <CardContent>
-                            <TsiBreadCrumb PreviousMenus="Sevkiyat Yönetimi > Ana Kayıtlar" CurrentMenu="Sevkiyat Adresleri" />
+                            <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
                         </CardContent>
                         <CardFooter>
                         </CardFooter>
@@ -47,14 +47,14 @@ else
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", "Sevkiya Adresleri", "SevkiyatAdresleri"))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", "Sevkiya Adresleri", "SevkiyatAdresleri"))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
@@ -68,13 +68,13 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ListShippingAdressesDto.Code) HeaderText="SEVKİYAT ADRESİ KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListShippingAdressesDto.Name) HeaderText="SEVKİYAT ADRESİ AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListShippingAdressesDto.CustomerCardCode) HeaderText="MÜŞTERİ KARTI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListShippingAdressesDto.Country) HeaderText="ÜLKE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListShippingAdressesDto.City) HeaderText="ŞEHİR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListShippingAdressesDto.District) HeaderText="İLÇE" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListShippingAdressesDto._Default) DisplayAsCheckBox="true" HeaderText="VARSAYILAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListShippingAdressesDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListShippingAdressesDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListShippingAdressesDto.CustomerCardCode) HeaderText="@L["CustomerCardCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListShippingAdressesDto.Country) HeaderText="@L["Country"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListShippingAdressesDto.City) HeaderText="@L["City"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListShippingAdressesDto.District) HeaderText="@L["District"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListShippingAdressesDto._Default) DisplayAsCheckBox="true" HeaderText="@L["_Default"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </CardContent>
@@ -91,7 +91,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Sevkiyat Adresleri"
+         HeaderText="@L["EditModalTitle"]"
          Width="54%"
          Height="54%"
          MinWidth="930px"
@@ -120,15 +120,15 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>Sevkiyat Adresi Kodu: </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Sevkiyat Adresi Kodu Yazınız."></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <br/>
-                            <label class="TSIModalLabel"><strong>Cari Hesap Kodu: </strong></label>
+                            <label class="TSIModalLabel"><strong>@L["CustomerCardCodeLabel"] </strong></label>
 
                             <SfTextBox @ref="@CurrentAccountCardsCodeButtonEdit" Created="@CurrentAccountCardsCodeOnCreateIcon" @bind-Value="DataSource.CustomerCardCode" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange"></SfTextBox>
                         </Template>
@@ -136,14 +136,14 @@ else
 
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Sevkiyat Adresi Açıklaması: </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="Sevkiyat Adresi Açıklaması Yazınız."></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" ></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Cari Hesap Kodu: </strong></label>
+                            <label class="TSIModalLabel"><strong>@L["CustomerCardNameLabel"] </strong></label>
                             
                             <SfTextBox @ref="@CurrentAccountCardsNameButtonEdit" Created="@CurrentAccountCardsNameOnCreateIcon" @bind-Value="DataSource.CustomerCardName" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange"></SfTextBox>
                         </Template>
@@ -155,7 +155,7 @@ else
                                 <TabItems>
                                     <TabItem>
                                         <ChildContent>
-                                            <TabHeader Text="Genel Bilgiler"></TabHeader>
+                                            <TabHeader Text="@L["Tab1Name"]"></TabHeader>
                                         </ChildContent>
                                         <ContentTemplate>
 
@@ -179,74 +179,74 @@ else
                                                     <DxGridLayoutItem Row="0" Column="0">
                                                         <Template>
                                                             <br/>
-                                                            <label class="TSIModalLabel"><strong>Adres 1: </strong></label>
-                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Adress1" Placeholder="Adres 1 Yazınız."></SfTextBox>
+                                                            <label class="TSIModalLabel"><strong>@L["Adress1Label"] </strong></label>
+                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Adress1" ></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="0" Column="2">
                                                         <Template>
                                                               <br/>
-                                                            <label class="TSIModalLabel"><strong>Adres 2: </strong></label>
-                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Adress2" Placeholder="Adres 2 Yazınız."></SfTextBox>
+                                                            <label class="TSIModalLabel"><strong>@L["Adress2Label"] </strong></label>
+                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Adress2" ></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="0" Column="4">
                                                         <Template>
                                                               <br/>
-                                                            <label class="TSIModalLabel"><strong>Ülke: </strong></label>
-                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Country" Placeholder="Ülke Yazınız."></SfTextBox>
+                                                            <label class="TSIModalLabel"><strong>@L["CountryLabel"] </strong></label>
+                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Country" ></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="0" Column="6">
                                                         <Template>
                                                               <br/>
-                                                            <label class="TSIModalLabel"><strong>İl: </strong></label>
-                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.City" Placeholder="İli Yazınız."></SfTextBox>
+                                                            <label class="TSIModalLabel"><strong>@L["CityLabel"] </strong></label>
+                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.City" ></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="1" Column="0">
                                                         <Template>
-                                                            <label class="TSIModalLabel"><strong>İlçe: </strong></label>
-                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.District" Placeholder="İlçe Yazınız."></SfTextBox>
+                                                            <label class="TSIModalLabel"><strong>@L["DistrictLabel"] </strong></label>
+                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.District"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="1" Column="2">
                                                         <Template>
-                                                            <label class="TSIModalLabel"><strong>Posta Kodu: </strong></label>
-                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.PostCode" Placeholder="Posta Kodu Yazınız."></SfTextBox>
+                                                            <label class="TSIModalLabel"><strong>@L["PostCodeLabel"] </strong></label>
+                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.PostCode" ></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="1" Column="4">
                                                         <Template>
-                                                            <label class="TSIModalLabel"><strong>Telefon: </strong></label>
-                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Phone" Placeholder="Telefon Numarasını Yazınız."></SfTextBox>
+                                                            <label class="TSIModalLabel"><strong>@L["PhoneLabel"] </strong></label>
+                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Phone" ></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="1" Column="6">
                                                         <Template>
-                                                            <label class="TSIModalLabel"><strong>E-Posta: </strong></label>
-                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.EMail" Placeholder="E-Posta Yazınız."></SfTextBox>
+                                                            <label class="TSIModalLabel"><strong>@L["EMailLabel"] </strong></label>
+                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.EMail" ></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="2" Column="0">
                                                         <Template>
-                                                            <label class="TSIModalLabel"><strong>Faks: </strong></label>
-                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Fax" Placeholder="Faks Numarasını Yazınız."></SfTextBox>
+                                                            <label class="TSIModalLabel"><strong>@L["FaxLabel"] </strong></label>
+                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Fax" ></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="2" Column="2">
                                                         <Template>
                                                             <center>
-                                                            <label class="TSIModalLabel"><strong>Varsayılan: </strong></label><br/>
+                                                            <label class="TSIModalLabel"><strong>@L["_DefaultLabel"] </strong></label><br/>
                                                             <SfSwitch @bind-Checked="DataSource._Default"></SfSwitch>
                                                             </center>
                                                         </Template>
@@ -267,8 +267,8 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 
@@ -281,7 +281,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Cari Hesap Kartları"
+         HeaderText="@L["CurrentAccountModalTitle"]"
          Width="64%"
          Height="44%"
          MinWidth="1220px"
@@ -306,12 +306,12 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Code) HeaderText="CARİ KOD" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Name) HeaderText="CARİ ÜNVAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Tel1) HeaderText="TELEFON (1)" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Responsible) HeaderText="İLGİLİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Email) HeaderText="E-POSTA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.TaxNumber) HeaderText="VERGİ NUMARASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Code) HeaderText="@L["CurrentAccountModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Name) HeaderText="@L["CurrentAccountModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Tel1) HeaderText="@L["CurrentAccountModalGridTel"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Responsible) HeaderText="@L["CurrentAccountModalGridResponsible"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Email) HeaderText="@L["CurrentAccountModalGridEmail"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.TaxNumber) HeaderText="@L["CurrentAccountModalGridTaxNumber"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         </GridColumns>
 
                                     </SfGrid>
@@ -326,8 +326,6 @@ else
 
         </BodyTemplate>
         <FooterContentTemplate>
-            @*<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>*@
         </FooterContentTemplate>
     </DxPopup>
 }

@@ -33,7 +33,7 @@
                     <Template>
                         <SfCard class="TSIListPageTitleCard">
                             <CardContent>
-                                <TsiBreadCrumb PreviousMenus="Stok Yönetimi > Ana Kayıtlar" CurrentMenu="Teknik Resimler" />
+                                <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
                             </CardContent>
                             <CardFooter>
                             </CardFooter>
@@ -52,14 +52,14 @@
                                             <ToolbarItem Type="ItemType.Button">
                                                 <Template>
 
-                                                    <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", "Teknik Resimler", "TeknikResimler"))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
+                                                    <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
                                                 </Template>
                                             </ToolbarItem>
 
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", "Teknik Resimler", "TeknikResimler"))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
@@ -71,11 +71,11 @@
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(ListTechnicalDrawingsDto.RevisionNo) HeaderText="REVİZYO NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListTechnicalDrawingsDto.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListTechnicalDrawingsDto.ProductName) HeaderText="STOK AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListTechnicalDrawingsDto.Drawer) HeaderText="ÇİZEN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListTechnicalDrawingsDto.RevisionDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="REVİZYON TARİHİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListTechnicalDrawingsDto.RevisionNo) HeaderText="@L["RevisionNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListTechnicalDrawingsDto.ProductCode) HeaderText="@L["ProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListTechnicalDrawingsDto.ProductName) HeaderText="@L["ProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListTechnicalDrawingsDto.Drawer) HeaderText="@L["Drawer"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListTechnicalDrawingsDto.RevisionDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["RevisionDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                     </GridColumns>
                                 </SfGrid>
@@ -92,7 +92,7 @@
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Teknik Resimler"
+         HeaderText="@L["EditModalTitle"]"
          Width="53%"
          Height="69%"
          MinWidth="910px"
@@ -122,8 +122,8 @@
                         <DxGridLayoutItem Row="0" Column="1">
                             <Template>
                                 <br />
-                                <label class="TSIModalLabel"><strong>Revizyon Numarası: </strong></label>
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.RevisionNo" Placeholder="Revizyon Numarasını Yazınız."></SfTextBox>
+                                <label class="TSIModalLabel"><strong>@L["RevisionNoLabel"] </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.RevisionNo"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
@@ -131,7 +131,7 @@
                             <Template>
                                 <br />
                                 <center>
-                                    <label class="TSIModalLabel"><strong>Müşteri Teknik Onayı: </strong></label><br />
+                                    <label class="TSIModalLabel"><strong>@L["CustomerApprovalLabel"] </strong></label><br />
                                     <SfSwitch @bind-Checked="DataSource.CustomerApproval"></SfSwitch>
                                 </center>
                             </Template>
@@ -140,14 +140,14 @@
                         <DxGridLayoutItem Row="0" Column="5" RowSpan="3">
                             <Template>
                                 <br />
-                                <label class="TSIModalLabel"><strong>Açıklama: </strong></label><br />
-                                <SfTextBox Multiline=true CssClass="TSIMemoBox57" @bind-Value="DataSource.Description_" Placeholder="Açıklama Yazınız."></SfTextBox>
+                                <label class="TSIModalLabel"><strong>@L["Description_Label"] </strong></label><br />
+                                <SfTextBox Multiline=true CssClass="TSIMemoBox57" @bind-Value="DataSource.Description_" ></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
                         <DxGridLayoutItem Row="1" Column="1">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Revizyon Tarihi: </strong></label><br />
+                                <label class="TSIModalLabel"><strong>@L["RevisionDateLabel"] </strong></label><br />
                                 <SfDatePicker @bind-Value="DataSource.RevisionDate"></SfDatePicker>
                             </Template>
                         </DxGridLayoutItem>
@@ -155,7 +155,7 @@
                         <DxGridLayoutItem Row="1" Column="3">
                             <Template>
                                 <center>
-                                    <label class="TSIModalLabel"><strong>AR-EKS Onayı: </strong></label><br />
+                                    <label class="TSIModalLabel"><strong>@L["IsApprovedLabel"] </strong></label><br />
                                     <SfSwitch @bind-Checked="DataSource.IsApproved"></SfSwitch>
                                 </center>
                             </Template>
@@ -163,8 +163,8 @@
 
                         <DxGridLayoutItem Row="2" Column="1">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Çizen: </strong></label>
-                                <SfComboBox Placeholder="Çizeni Yazınız." @bind-Value=DataSource.Drawer DataSource="@Drawers">
+                                <label class="TSIModalLabel"><strong>@L["DrawerLabel"] </strong></label>
+                                <SfComboBox @bind-Value=DataSource.Drawer DataSource="@Drawers">
                                 </SfComboBox>
                             </Template>
                         </DxGridLayoutItem>
@@ -172,7 +172,7 @@
                         <DxGridLayoutItem Row="2" Column="3">
                             <Template>
                                 <center>
-                                    <label class="TSIModalLabel"><strong>Numune Onayı: </strong></label><br />
+                                    <label class="TSIModalLabel"><strong>@L["SampleApprovalLabel"] </strong></label><br />
                                     <SfSwitch @bind-Checked="DataSource.SampleApproval"></SfSwitch>
                                 </center>
                             </Template>
@@ -180,21 +180,21 @@
 
                         <DxGridLayoutItem Row="3" Column="1">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Çizim Numarası: </strong></label>
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.DrawingNo" Placeholder="Çizim Numarasını Yazınız."></SfTextBox>
+                                <label class="TSIModalLabel"><strong>@L["DrawingNoLabel"] </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.DrawingNo"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
                         <DxGridLayoutItem Row="3" Column="3">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Stok Kodu: </strong></label><br />
+                                <label class="TSIModalLabel"><strong>@L["ProductCodeLabel"] </strong></label><br />
                                 <SfTextBox @ref="@ProductsCodeButtonEdit" Created="@ProductsCodeOnCreateIcon" @bind-Value="DataSource.ProductCode" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
                         <DxGridLayoutItem Row="3" Column="5">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Stok Açıklaması: </strong></label><br />
+                                <label class="TSIModalLabel"><strong>@L["ProductNameLabel"] </strong></label><br />
                                 <SfTextBox @ref="@ProductsNameButtonEdit" Created="@ProductsNameOnCreateIcon" @bind-Value="DataSource.ProductName" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
@@ -227,7 +227,7 @@
                                     }
                                     else
                                     {
-                                        <label class="TSIModalLabel"><strong>Dosya Yok.</strong></label>
+                                        <label class="TSIModalLabel"><strong>@L["NoFile"]</strong></label>
                                     }
                                 }
                             </Template>
@@ -239,8 +239,8 @@
                 </DxGridLayout>
             </BodyTemplate>
             <FooterContentTemplate>
-                <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-                <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+                <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
             </FooterContentTemplate>
         </DxPopup>
 
@@ -248,7 +248,7 @@
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Teknik Resim İşlemleri"
+         HeaderText="@L["EditModalTitle"]"
          Width="53%"
          Height="76%"
          MinWidth="910px"
@@ -281,8 +281,8 @@
                         <DxGridLayoutItem Row="0" Column="1">
                             <Template>
                                 <br />
-                                <label class="TSIModalLabel"><strong>Revizyon Numarası: </strong></label>
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.RevisionNo" Placeholder="Revizyon Numarasını Yazınız."></SfTextBox>
+                                <label class="TSIModalLabel"><strong>@L["RevisionNoLabel"] </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.RevisionNo" ></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
@@ -290,7 +290,7 @@
                             <Template>
                                 <br />
                                 <center>
-                                    <label class="TSIModalLabel"><strong>Müşteri Teknik Onayı: </strong></label><br />
+                                    <label class="TSIModalLabel"><strong>@L["CustomerApprovalLabel"] </strong></label><br />
                                     <SfSwitch @bind-Checked="DataSource.CustomerApproval"></SfSwitch>
                                 </center>
                             </Template>
@@ -299,14 +299,14 @@
                         <DxGridLayoutItem Row="0" Column="5" RowSpan="3">
                             <Template>
                                 <br />
-                                <label class="TSIModalLabel"><strong>Açıklama: </strong></label><br />
-                                <SfTextBox Multiline=true CssClass="TSIMemoBox57" @bind-Value="DataSource.Description_" Placeholder="Açıklama Yazınız."></SfTextBox>
+                                <label class="TSIModalLabel"><strong>@L["Description_Label"] </strong></label><br />
+                                <SfTextBox Multiline=true CssClass="TSIMemoBox57" @bind-Value="DataSource.Description_"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
                         <DxGridLayoutItem Row="1" Column="1">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Revizyon Tarihi: </strong></label><br />
+                                <label class="TSIModalLabel"><strong>@L["RevisionDateLabel"] </strong></label><br />
                                 <SfDatePicker @bind-Value="DataSource.RevisionDate"></SfDatePicker>
                             </Template>
                         </DxGridLayoutItem>
@@ -314,7 +314,7 @@
                         <DxGridLayoutItem Row="1" Column="3">
                             <Template>
                                 <center>
-                                    <label class="TSIModalLabel"><strong>AR-EKS Onayı: </strong></label><br />
+                                    <label class="TSIModalLabel"><strong>@L["IsApprovedLabel"] </strong></label><br />
                                     <SfSwitch @bind-Checked="DataSource.IsApproved"></SfSwitch>
                                 </center>
                             </Template>
@@ -322,8 +322,8 @@
 
                         <DxGridLayoutItem Row="2" Column="1">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Çizen: </strong></label>
-                                <SfComboBox Placeholder="Çizeni Yazınız." @bind-Value=DataSource.Drawer DataSource="@Drawers">
+                                <label class="TSIModalLabel"><strong>@L["DrawerLabel"] </strong></label>
+                                <SfComboBox  @bind-Value=DataSource.Drawer DataSource="@Drawers">
                                 </SfComboBox>
                             </Template>
                         </DxGridLayoutItem>
@@ -331,7 +331,7 @@
                         <DxGridLayoutItem Row="2" Column="3">
                             <Template>
                                 <center>
-                                    <label class="TSIModalLabel"><strong>Numune Onayı: </strong></label><br />
+                                    <label class="TSIModalLabel"><strong>@L["SampleApprovalLabel"] </strong></label><br />
                                     <SfSwitch @bind-Checked="DataSource.SampleApproval"></SfSwitch>
                                 </center>
                             </Template>
@@ -339,21 +339,21 @@
 
                         <DxGridLayoutItem Row="3" Column="1">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Çizim Numarası: </strong></label>
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.DrawingNo" Placeholder="Çizim Numarasını Yazınız."></SfTextBox>
+                                <label class="TSIModalLabel"><strong>@L["DrawingNoLabel"] </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.DrawingNo" ></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
                         <DxGridLayoutItem Row="3" Column="3">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Stok Kodu: </strong></label><br />
+                                <label class="TSIModalLabel"><strong>@L["ProductCodeLabel"] </strong></label><br />
                                 <SfTextBox @bind-Value="DataSource.ProductCode" Enabled=false></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
                         <DxGridLayoutItem Row="3" Column="5">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Stok Açıklaması: </strong></label><br />
+                                <label class="TSIModalLabel"><strong>@L["ProductNameLabel"] </strong></label><br />
                                 <SfTextBox @bind-Value="DataSource.ProductName" Enabled=false></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
@@ -371,7 +371,7 @@
 
                         <DxGridLayoutItem Row="5" Column="1" ColumnSpan="5">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Yüklenecek Dosyalar: </strong></label><br />
+                                <label class="TSIModalLabel"><strong>@L["FilestoUpload"] </strong></label><br />
                                 @{
                                     if (files.Count != 0)
                                     {
@@ -386,7 +386,7 @@
                                     }
                                     else
                                     {
-                                        <label class="TSIModalLabel"><strong>Dosya Yok.</strong></label>
+                                        <label class="TSIModalLabel"><strong>@L["NoFile"]</strong></label>
                                     }
                                 }
                             </Template>
@@ -394,7 +394,7 @@
 
                         <DxGridLayoutItem Row="6" Column="1" ColumnSpan="5">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Yüklenmiş Dosyalar: </strong></label><br />
+                                <label class="TSIModalLabel"><strong>@L["UploadedFiles"]</strong></label><br />
                                 @{
                                     if (uploadedfiles.Count != 0)
                                     {
@@ -409,7 +409,7 @@
                                     }
                                     else
                                     {
-                                        <label class="TSIModalLabel"><strong>Dosya Yok.</strong></label>
+                                        <label class="TSIModalLabel"><strong>@L["NoFile"]</strong></label>
                                     }
                                 }
                             </Template>
@@ -421,8 +421,8 @@
                 </DxGridLayout>
             </BodyTemplate>
             <FooterContentTemplate>
-                <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-                <SfButton CssClass="TSICancelButton" OnClick="HideTechnicalDrawingChangedCrudPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+                <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideTechnicalDrawingChangedCrudPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
             </FooterContentTemplate>
         </DxPopup>
 
@@ -455,7 +455,7 @@
 
             </BodyTemplate>
             <FooterContentTemplate>
-                <SfButton CssClass="TSICancelButton" OnClick="HidePreviewPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HidePreviewPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
 
             </FooterContentTemplate>
         </DxPopup>
@@ -468,7 +468,7 @@
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Stok Kartları"
+         HeaderText="@L["ProductModalTitle"]"
          Width="64%"
          Height="44%"
          MinWidth="1220px"
@@ -493,8 +493,8 @@
                                             <GridPageSettings PageSizes="true"></GridPageSettings>
                                             <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                             <GridColumns>
-                                                <GridColumn Field=@nameof(ListProductsDto.Code) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                                <GridColumn Field=@nameof(ListProductsDto.Name) HeaderText="STOK AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                <GridColumn Field=@nameof(ListProductsDto.Code) HeaderText="@L["ProductModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                <GridColumn Field=@nameof(ListProductsDto.Name) HeaderText="@L["ProductModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             </GridColumns>
 
                                         </SfGrid>

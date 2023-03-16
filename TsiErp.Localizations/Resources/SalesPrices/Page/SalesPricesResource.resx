@@ -117,8 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BranchCodeLabel" xml:space="preserve">
+    <value>Şube:</value>
+  </data>
+  <data name="BranchModalGridCode" xml:space="preserve">
+    <value>ŞUBE KODU</value>
+  </data>
+  <data name="BranchModalGridName" xml:space="preserve">
+    <value>ŞUBE ADI</value>
+  </data>
+  <data name="BranchModalTitle" xml:space="preserve">
+    <value>Şubeler</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>FİYAT LİSTESİ KODU</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Fiyat Listesi Kodu:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -132,6 +153,51 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="CurrencyCode" xml:space="preserve">
+    <value>PARA BİRİMİ</value>
+  </data>
+  <data name="CurrencyCodeLabel" xml:space="preserve">
+    <value>Para Birimi:</value>
+  </data>
+  <data name="CurrencyCodeLineLabel" xml:space="preserve">
+    <value>Para Birimi:</value>
+  </data>
+  <data name="CurrencyModalGridCode" xml:space="preserve">
+    <value>PARA BİRİMİ KODU</value>
+  </data>
+  <data name="CurrencyModalGridName" xml:space="preserve">
+    <value>PARA BİRİMİ AÇIKLAMASI</value>
+  </data>
+  <data name="CurrencyModalTitle" xml:space="preserve">
+    <value>Para Birimleri</value>
+  </data>
+  <data name="CurrentAccountCardCodeLabel" xml:space="preserve">
+    <value>Cari Hesap Kodu:</value>
+  </data>
+  <data name="CurrentAccountCardNameLabel" xml:space="preserve">
+    <value>Cari Hesap Ünvanı:</value>
+  </data>
+  <data name="CurrentAccountModalGridCode" xml:space="preserve">
+    <value>CARİ KOD</value>
+  </data>
+  <data name="CurrentAccountModalGridEmail" xml:space="preserve">
+    <value>E-POSTA</value>
+  </data>
+  <data name="CurrentAccountModalGridName" xml:space="preserve">
+    <value>CARİ ÜNVAN</value>
+  </data>
+  <data name="CurrentAccountModalGridResponsible" xml:space="preserve">
+    <value>İLGİLİ</value>
+  </data>
+  <data name="CurrentAccountModalGridTaxNumber" xml:space="preserve">
+    <value>VERGİ NUMARASI</value>
+  </data>
+  <data name="CurrentAccountModalGridTel" xml:space="preserve">
+    <value>TELEFON (1)</value>
+  </data>
+  <data name="CurrentAccountModalTitle" xml:space="preserve">
+    <value>Cari Hesap Kartları</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -141,8 +207,47 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="EditLineModalTitle" xml:space="preserve">
+    <value>Satış Fiyat Listesi Satırları</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Satış Fiyat Listeleri</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>BİTİŞ TARİHİ</value>
+  </data>
+  <data name="EndDateLabel" xml:space="preserve">
+    <value>Bitiş Tarihi:</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Aktiflik:</value>
+  </data>
+  <data name="IsApproved" xml:space="preserve">
+    <value>ONAYLANAN</value>
+  </data>
+  <data name="IsApprovedLabel" xml:space="preserve">
+    <value>Onay:</value>
+  </data>
+  <data name="LineGridCurrency" xml:space="preserve">
+    <value>PARA BİRİMİ</value>
+  </data>
+  <data name="LineGridEndDate" xml:space="preserve">
+    <value>BİTİŞ TARİHİ</value>
+  </data>
+  <data name="LineGridPrice" xml:space="preserve">
+    <value>FİYAT</value>
+  </data>
+  <data name="LineGridProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="LineGridProductName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="LineGridStartDate" xml:space="preserve">
+    <value>BAŞLANGIÇ TARİHİ</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -155,6 +260,66 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>FİYAT LİSTESİ AÇIKLAMASI</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Fiyat Listesi Açıklaması:</value>
+  </data>
+  <data name="PriceLineLabel" xml:space="preserve">
+    <value>Fiyat:</value>
+  </data>
+  <data name="ProductCodeLineLabel" xml:space="preserve">
+    <value>Stok Kodu:</value>
+  </data>
+  <data name="ProductModalGridCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductModalGridName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Stok Kartları</value>
+  </data>
+  <data name="ProductNameLineLabel" xml:space="preserve">
+    <value>Stok Açıklaması:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>BAŞLANGIÇ TARİHİ</value>
+  </data>
+  <data name="StartDateLabel" xml:space="preserve">
+    <value>Başlangıç Tarihi:</value>
+  </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>Seçtiğiniz satış fiyat listesi, kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Dikkat</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Satış Fiyat Listeleri</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>SatisFiyatlari</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Satış Fiyat Listeleri</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Satış Yönetimi &gt; Ana Kayıtlar</value>
+  </data>
+  <data name="UIWarningMessageBase" xml:space="preserve">
+    <value>Para birimi seçilmeden satır eklenemez.</value>
+  </data>
+  <data name="UIWarningTitleBase" xml:space="preserve">
+    <value>Uyarı</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
@@ -173,5 +338,17 @@
   </data>
   <data name="ValidatorNameMaxLenght" xml:space="preserve">
     <value>Fiyat listesiaçıklaması, 200 karakterden fazla olamaz.</value>
+  </data>
+  <data name="WarehouseCodeLabel" xml:space="preserve">
+    <value>Depo:</value>
+  </data>
+  <data name="WarehouseModalGridCode" xml:space="preserve">
+    <value>DEPO KODU</value>
+  </data>
+  <data name="WarehouseModalGridName" xml:space="preserve">
+    <value>DEPO ADI</value>
+  </data>
+  <data name="WarehouseModalTitle" xml:space="preserve">
+    <value>Depolar</value>
   </data>
 </root>

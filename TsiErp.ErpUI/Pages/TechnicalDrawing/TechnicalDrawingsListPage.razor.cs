@@ -75,7 +75,7 @@ namespace TsiErp.ErpUI.Pages.TechnicalDrawing
                 if (dataOpenStatus == true && dataOpenStatus != null)
                 {
                     TechnicalDrawingsChangedCrudPopup = false;
-                    await ModalManager.MessagePopupAsync("Bilgi", "Seçtiğiniz kayıt ..... tarafından kullanılmaktadır.");
+                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);
                     await InvokeAsync(StateHasChanged);
                 }
                 else
@@ -117,7 +117,7 @@ namespace TsiErp.ErpUI.Pages.TechnicalDrawing
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync("Onay", "Silmek istediğinize emin misiniz ?");
+                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
 
 
                     if (res == true)
@@ -266,7 +266,7 @@ namespace TsiErp.ErpUI.Pages.TechnicalDrawing
 
             await InvokeAsync(() => StateHasChanged());
 
-            await ModalManager.MessagePopupAsync("Bilgilendirme", "Yüklenmiş teknik resim dosyası, başarıyla silinmiştir.");
+            await ModalManager.MessagePopupAsync(L["UIInformationPopupTitleBase"], L["UIInformationPopupMessageBase"]);
         }
 
         private async void PreviewImage(IFileListEntry file)

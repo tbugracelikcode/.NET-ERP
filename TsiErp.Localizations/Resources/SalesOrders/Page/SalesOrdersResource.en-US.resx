@@ -418,13 +418,13 @@
     <value>ADRESS</value>
   </data>
   <data name="ShippingAdressModalGridCode" xml:space="preserve">
-    <value>SHIPPING ADRESS CODE</value>
+    <value>SHIPPING ADDRESS CODE</value>
   </data>
   <data name="ShippingAdressModalGridName" xml:space="preserve">
-    <value>SHIPPING ADRESS NAME</value>
+    <value>SHIPPING ADDRESS NAME</value>
   </data>
   <data name="ShippingAdressModalTitle" xml:space="preserve">
-    <value>Shipping Adresses</value>
+    <value>Shipping Addresses</value>
   </data>
   <data name="SpecialCodeLabel" xml:space="preserve">
     <value>Private Code:</value>
