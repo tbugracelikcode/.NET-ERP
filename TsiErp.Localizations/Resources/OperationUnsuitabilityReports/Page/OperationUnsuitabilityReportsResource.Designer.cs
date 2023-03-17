@@ -89,6 +89,33 @@ namespace TsiErp.Localizations.Resources.OperationUnsuitabilityReports.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Düzeltme.
+        /// </summary>
+        public static string ComboboxCorrection {
+            get {
+                return ResourceManager.GetString("ComboboxCorrection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hurda.
+        /// </summary>
+        public static string ComboboxScrap {
+            get {
+                return ResourceManager.GetString("ComboboxScrap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Olduğu Gibi Kullanılacak.
+        /// </summary>
+        public static string ComboboxToBeUsedAs {
+            get {
+                return ResourceManager.GetString("ComboboxToBeUsedAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string ContextAdd {

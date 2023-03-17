@@ -162,6 +162,18 @@
   <data name="EndHourLineLabel" xml:space="preserve">
     <value>Bitiş Saati:</value>
   </data>
+  <data name="EnumBreak" xml:space="preserve">
+    <value>Mola</value>
+  </data>
+  <data name="EnumCleaning" xml:space="preserve">
+    <value>Temizlik</value>
+  </data>
+  <data name="EnumOvertime" xml:space="preserve">
+    <value>Fazla Mesai</value>
+  </data>
+  <data name="EnumWork" xml:space="preserve">
+    <value>Çalışma</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>

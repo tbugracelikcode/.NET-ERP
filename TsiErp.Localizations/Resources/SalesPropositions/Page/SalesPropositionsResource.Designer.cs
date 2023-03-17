@@ -439,6 +439,51 @@ namespace TsiErp.Localizations.Resources.SalesPropositions.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Onaylandı.
+        /// </summary>
+        public static string EnumApproved {
+            get {
+                return ResourceManager.GetString("EnumApproved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sipariş.
+        /// </summary>
+        public static string EnumOrder {
+            get {
+                return ResourceManager.GetString("EnumOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kısmi Onaylandı.
+        /// </summary>
+        public static string EnumPartiallyApproved {
+            get {
+                return ResourceManager.GetString("EnumPartiallyApproved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kısmi Sipariş.
+        /// </summary>
+        public static string EnumPartialOrder {
+            get {
+                return ResourceManager.GetString("EnumPartialOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beklemede.
+        /// </summary>
+        public static string EnumWaiting {
+            get {
+                return ResourceManager.GetString("EnumWaiting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hata.
         /// </summary>
         public static string Error {

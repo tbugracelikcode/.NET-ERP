@@ -9,9 +9,9 @@ namespace TsiErp.Entities.Enums
 {
     public enum ProductSupplyFormEnum
     {
-        [Display(Name = "Satın Alma")]
+        [Display(Name = "EnumPurchase")]
         Satınalma = 1,
-        [Display(Name = "Üretim")]
+        [Display(Name = "EnumProduction")]
         Üretim = 2,
     }
 }

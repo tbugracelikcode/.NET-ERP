@@ -74,6 +74,11 @@ namespace TsiErp.ErpUI.Pages.PlannedMaintenance
                 CompletionDate = DateTime.Today
             };
 
+            foreach(var item in status)
+            {
+                item.StatusName = L[item.StatusName];
+            }
+
             DataSource.SelectPlannedMaintenanceLines = new List<SelectPlannedMaintenanceLinesDto>();
             GridLineList = DataSource.SelectPlannedMaintenanceLines;
 
@@ -105,6 +110,10 @@ namespace TsiErp.ErpUI.Pages.PlannedMaintenance
 
         public async override void ShowEditPage()
         {
+            foreach (var item in status)
+            {
+                item.StatusName = L[item.StatusName];
+            }
 
             if (DataSource != null)
             {

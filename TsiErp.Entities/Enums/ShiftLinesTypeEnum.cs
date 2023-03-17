@@ -9,13 +9,13 @@ namespace TsiErp.Entities.Enums
 {
     public enum ShiftLinesTypeEnum
     {
-        [Display(Name = "Çalışma")]
+        [Display(Name = "EnumWork")]
         Calisma = 1,
-        [Display(Name = "Mola")]
+        [Display(Name = "EnumBreak")]
         Mola = 2,
-        [Display(Name = "Fazla Mesai")]
+        [Display(Name = "EnumOvertime")]
         FazlaMesai = 3,
-        [Display(Name = "Temizlik")]
+        [Display(Name = "EnumCleaning")]
         Temizlik = 4
     }
 }

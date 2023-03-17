@@ -179,6 +179,15 @@ namespace TsiErp.Localizations.Resources.PlannedMaintenances.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Yapıldı.
+        /// </summary>
+        public static string Done {
+            get {
+                return ResourceManager.GetString("Done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Önleyici / Planlı Bakım Kayıtları.
         /// </summary>
         public static string EditModalTitle {
@@ -346,6 +355,15 @@ namespace TsiErp.Localizations.Resources.PlannedMaintenances.Page {
         public static string MessagePopupInformationTitleBase {
             get {
                 return ResourceManager.GetString("MessagePopupInformationTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yapılmadı.
+        /// </summary>
+        public static string NotDone {
+            get {
+                return ResourceManager.GetString("NotDone", resourceCulture);
             }
         }
         

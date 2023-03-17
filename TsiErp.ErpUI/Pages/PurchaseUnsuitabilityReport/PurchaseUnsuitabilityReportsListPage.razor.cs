@@ -7,12 +7,14 @@ using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.Product.Dtos;
 using TsiErp.Entities.Entities.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseUnsuitabilityReport.Dtos;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.PurchaseUnsuitabilityReport
 {
     public partial class PurchaseUnsuitabilityReportsListPage
     {
-
+        [Inject]
+        ModalManager ModalManager { get; set; }
 
         public class UnsComboBox
         {
@@ -22,10 +24,10 @@ namespace TsiErp.ErpUI.Pages.PurchaseUnsuitabilityReport
 
         List<UnsComboBox> _unsComboBox = new List<UnsComboBox>
         {
-            new UnsComboBox(){ID = "Rejection", Text="Red"},
-            new UnsComboBox(){ID = "Correction", Text="Düzeltme"},
-            new UnsComboBox(){ID = "ToBeUsedAs", Text="Olduğu Gibi Kullanılacak"},
-            new UnsComboBox(){ID = "ContactSupplier", Text="Tedarikçi ile İrtibat"}
+            new UnsComboBox(){ID = "Rejection", Text="ComboboxRejection"},
+            new UnsComboBox(){ID = "Correction", Text="ComboboxCorrection"},
+            new UnsComboBox(){ID = "ToBeUsedAs", Text="ComboboxToBeUsedAs"},
+            new UnsComboBox(){ID = "ContactSupplier", Text="ComboboxContactSupplier"}
         };
 
         protected override async void OnInitialized()
@@ -78,9 +80,39 @@ namespace TsiErp.ErpUI.Pages.PurchaseUnsuitabilityReport
                 Date_ = DateTime.Today
             };
 
+            foreach(var item in _unsComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
             EditPageVisible = true;
 
             await Task.CompletedTask;
+        }
+
+        public override async void ShowEditPage()
+        {
+            foreach (var item in _unsComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            if (DataSource != null)
+            {
+                bool? dataOpenStatus = (bool?)DataSource.GetType().GetProperty("DataOpenStatus").GetValue(DataSource);
+
+                if (dataOpenStatus == true && dataOpenStatus != null)
+                {
+                    EditPageVisible = false;
+                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);
+                    await InvokeAsync(StateHasChanged);
+                }
+                else
+                {
+                    EditPageVisible = true;
+                    await InvokeAsync(StateHasChanged);
+                }
+            }
         }
 
         #region Stok Kartı Button Edit

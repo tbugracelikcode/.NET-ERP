@@ -156,6 +156,9 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="Done" xml:space="preserve">
+    <value>Done</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Preventive / Planned Maintenance Records</value>
   </data>
@@ -212,6 +215,9 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="NotDone" xml:space="preserve">
+    <value>Not Done</value>
   </data>
   <data name="Note_Label" xml:space="preserve">
     <value>Note:</value>

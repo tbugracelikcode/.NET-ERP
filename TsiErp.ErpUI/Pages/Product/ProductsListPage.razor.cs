@@ -1049,6 +1049,15 @@ namespace TsiErp.ErpUI.Pages.Product
                     IsChanged = true;
                     SelectFirstDataRow = false;
                     DataSource = (await GetAsync(args.RowInfo.RowData.Id)).Data;
+                    foreach (var item in supplyforms)
+                    {
+                        item.SupplyFormName = L[item.SupplyFormName];
+                    }
+
+                    foreach (var item in types)
+                    {
+                        item.ProductTypeName = L[item.ProductTypeName];
+                    }
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
                     break;
@@ -1243,6 +1252,16 @@ namespace TsiErp.ErpUI.Pages.Product
             {
                 IsActive = true
             };
+
+            foreach(var item in supplyforms)
+            {
+                item.SupplyFormName = L[item.SupplyFormName];
+            }
+
+            foreach(var item in types)
+            {
+                item.ProductTypeName = L[item.ProductTypeName];
+            }
 
             EditPageVisible = true;
 

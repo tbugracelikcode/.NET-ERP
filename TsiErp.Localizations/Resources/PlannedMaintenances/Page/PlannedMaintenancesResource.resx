@@ -156,6 +156,9 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="Done" xml:space="preserve">
+    <value>Yapıldı</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Önleyici / Planlı Bakım Kayıtları</value>
   </data>
@@ -212,6 +215,9 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="NotDone" xml:space="preserve">
+    <value>Yapılmadı</value>
   </data>
   <data name="Note_Label" xml:space="preserve">
     <value>Not:</value>

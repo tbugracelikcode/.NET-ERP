@@ -9,11 +9,11 @@ namespace TsiErp.Entities.Enums
 {
     public enum PurchaseRequestLineStateEnum
     {
-        [Display(Name = "Beklemede")]
+        [Display(Name = "EnumWaiting")]
         Beklemede = 1,
-        [Display(Name = "Onaylandı")]
+        [Display(Name = "EnumApproved")]
         Onaylandı = 2,
-        [Display(Name = "Satın Alma")]
+        [Display(Name = "EnumPurchase")]
         SatinAlma = 3
     }
 }

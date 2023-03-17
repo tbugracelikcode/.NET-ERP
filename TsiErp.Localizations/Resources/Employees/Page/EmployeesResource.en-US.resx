@@ -117,8 +117,32 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="0+" xml:space="preserve">
+    <value>0 Rh(+)</value>
+  </data>
+  <data name="0-" xml:space="preserve">
+    <value>0 Rh(-)</value>
+  </data>
+  <data name="A+" xml:space="preserve">
+    <value>A Rh(+)</value>
+  </data>
+  <data name="A-" xml:space="preserve">
+    <value>A Rh(-)</value>
+  </data>
+  <data name="AB+" xml:space="preserve">
+    <value>AB Rh(+)</value>
+  </data>
+  <data name="AB-" xml:space="preserve">
+    <value>AB Rh(-)</value>
+  </data>
   <data name="AddressLabel" xml:space="preserve">
     <value>Address:</value>
+  </data>
+  <data name="B+" xml:space="preserve">
+    <value>B Rh(+)</value>
+  </data>
+  <data name="B-" xml:space="preserve">
+    <value>B Rh(-)</value>
   </data>
   <data name="BirthdayLabel" xml:space="preserve">
     <value>Birthday:</value>

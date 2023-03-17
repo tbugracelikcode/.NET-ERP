@@ -159,6 +159,30 @@
   <data name="EditModalTitle" xml:space="preserve">
     <value>Bills of Materials</value>
   </data>
+  <data name="EnumAparatus" xml:space="preserve">
+    <value>(APRT) Aparatus</value>
+  </data>
+  <data name="EnumCommercialProduct" xml:space="preserve">
+    <value>(CP) Commercial Product</value>
+  </data>
+  <data name="EnumKit" xml:space="preserve">
+    <value>(KT) Kit</value>
+  </data>
+  <data name="EnumMaterial" xml:space="preserve">
+    <value>(MT) Material</value>
+  </data>
+  <data name="EnumMold" xml:space="preserve">
+    <value>(MLD) Mold</value>
+  </data>
+  <data name="EnumProduct" xml:space="preserve">
+    <value>(FP) Finished Product</value>
+  </data>
+  <data name="EnumSemiProduct" xml:space="preserve">
+    <value>(SP) Semi-Product</value>
+  </data>
+  <data name="EnumSparePart" xml:space="preserve">
+    <value>(SPR) Spare Part</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>

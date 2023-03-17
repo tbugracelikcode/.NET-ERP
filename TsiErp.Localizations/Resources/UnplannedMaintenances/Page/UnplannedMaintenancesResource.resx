@@ -162,6 +162,12 @@
   <data name="EditModalTitle" xml:space="preserve">
     <value>Arıza / Plansız Bakım Kayıtları</value>
   </data>
+  <data name="EnumDone" xml:space="preserve">
+    <value>Yapıldı</value>
+  </data>
+  <data name="EnumNotDone" xml:space="preserve">
+    <value>Yapılmadı</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>

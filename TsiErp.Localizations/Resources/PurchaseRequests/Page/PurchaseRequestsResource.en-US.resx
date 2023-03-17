@@ -270,6 +270,21 @@
   <data name="EditModalTitle" xml:space="preserve">
     <value>Purchase Requests</value>
   </data>
+  <data name="EnumApproved" xml:space="preserve">
+    <value>Approved</value>
+  </data>
+  <data name="EnumPartiallyApproved" xml:space="preserve">
+    <value>Partially Approved</value>
+  </data>
+  <data name="EnumPartialPurchase" xml:space="preserve">
+    <value>Partial Purchase</value>
+  </data>
+  <data name="EnumPurchase" xml:space="preserve">
+    <value>Purchase</value>
+  </data>
+  <data name="EnumWaiting" xml:space="preserve">
+    <value>Waiting</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>

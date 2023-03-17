@@ -162,6 +162,12 @@
   <data name="EditModalTitle" xml:space="preserve">
     <value>Failure / Unplanned Maintenance Records</value>
   </data>
+  <data name="EnumDone" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="EnumNotDone" xml:space="preserve">
+    <value>Not Done</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>

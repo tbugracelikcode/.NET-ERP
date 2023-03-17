@@ -231,6 +231,21 @@
   <data name="EditModalTitle" xml:space="preserve">
     <value>Satın Alma Siparişleri</value>
   </data>
+  <data name="EnumApproved" xml:space="preserve">
+    <value>Onaylandı</value>
+  </data>
+  <data name="EnumCancel" xml:space="preserve">
+    <value>İptal</value>
+  </data>
+  <data name="EnumInPartialProduction" xml:space="preserve">
+    <value>Kısmi Üretime Verildi</value>
+  </data>
+  <data name="EnumInProduction" xml:space="preserve">
+    <value>Üretime Verildi</value>
+  </data>
+  <data name="EnumWaiting" xml:space="preserve">
+    <value>Beklemede</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>

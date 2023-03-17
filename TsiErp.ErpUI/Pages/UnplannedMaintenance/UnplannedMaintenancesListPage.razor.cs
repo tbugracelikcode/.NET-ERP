@@ -125,6 +125,11 @@ namespace TsiErp.ErpUI.Pages.UnplannedMaintenance
 
         public async void MainContextMenuClick(ContextMenuClickEventArgs<ListUnplannedMaintenancesDto> args)
         {
+            foreach(var item in status)
+            {
+                item.StatusName = L[item.StatusName];
+            }
+
             switch (args.Item.Id)
             {
                 case "new":

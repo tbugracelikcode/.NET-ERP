@@ -197,6 +197,24 @@ namespace TsiErp.Localizations.Resources.UnplannedMaintenances.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Yapıldı.
+        /// </summary>
+        public static string EnumDone {
+            get {
+                return ResourceManager.GetString("EnumDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yapılmadı.
+        /// </summary>
+        public static string EnumNotDone {
+            get {
+                return ResourceManager.GetString("EnumNotDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hata.
         /// </summary>
         public static string Error {

@@ -4,15 +4,15 @@ namespace TsiErp.Entities.Enums
 {
     public enum SalesOrderStateEnum
     {
-        [Display(Name = "Beklemede")]
+        [Display(Name = "EnumWaiting")]
         Beklemede = 1,
-        [Display(Name = "Onaylandı")]
+        [Display(Name = "EnumApproved")]
         Onaylandı = 2,
-        [Display(Name = "Üretime Verildi")]
+        [Display(Name = "EnumInProduction")]
         UretimeVerildi = 3,
-        [Display(Name = "İptal")]
+        [Display(Name = "EnumCancel")]
         Iptal = 4,
-        [Display(Name = "Kısmi Üretime Verildi")]
+        [Display(Name = "EnumInPartialProduction")]
         KismiUretimeVerildi = 5
         
     }

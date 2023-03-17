@@ -10,15 +10,15 @@ namespace TsiErp.Entities.Enums
 {
     public enum SalesPropositionStateEnum
     {
-        [Display(Name = "Beklemede")]
+        [Display(Name = "EnumWaiting")]
         Beklemede = 1,
-        [Display(Name = "Onaylandı")]
+        [Display(Name = "EnumApproved")]
         Onaylandı = 2,
-        [Display(Name = "Sipariş")]
+        [Display(Name = "EnumOrder")]
         Siparis = 3,
-        [Display(Name = "Kısmi Sipariş")]
+        [Display(Name = "EnumPartialOrder")]
         KismiSiparis = 4,
-        [Display(Name = "Kısmi Onaylandı")]
+        [Display(Name = "EnumPartiallyApproved")]
         KismiOnaylandi = 5
     }
 }

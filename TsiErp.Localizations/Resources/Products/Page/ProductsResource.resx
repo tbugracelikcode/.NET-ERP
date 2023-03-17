@@ -312,6 +312,36 @@
   <data name="EnglishDefinitionLabel" xml:space="preserve">
     <value>İngilizce Tanım:</value>
   </data>
+  <data name="EnumAparatus" xml:space="preserve">
+    <value>(APRT) Aparat</value>
+  </data>
+  <data name="EnumCommercialProduct" xml:space="preserve">
+    <value>(TM) Ticari Mal</value>
+  </data>
+  <data name="EnumKit" xml:space="preserve">
+    <value>(TK) Takım</value>
+  </data>
+  <data name="EnumMaterial" xml:space="preserve">
+    <value>(HM) Hammadde</value>
+  </data>
+  <data name="EnumMold" xml:space="preserve">
+    <value>(KLP) Kalıp</value>
+  </data>
+  <data name="EnumProduct" xml:space="preserve">
+    <value>(MM) Mamül</value>
+  </data>
+  <data name="EnumProduction" xml:space="preserve">
+    <value>Üretim</value>
+  </data>
+  <data name="EnumPurchase" xml:space="preserve">
+    <value>Satın Alma</value>
+  </data>
+  <data name="EnumSemiProduct" xml:space="preserve">
+    <value>(YM) Yarı Mamül</value>
+  </data>
+  <data name="EnumSparePart" xml:space="preserve">
+    <value>(BP) Yedek Parça</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>

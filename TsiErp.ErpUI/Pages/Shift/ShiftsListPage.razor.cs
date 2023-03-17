@@ -210,6 +210,11 @@ namespace TsiErp.ErpUI.Pages.Shift
             string control;
             decimal result;
 
+            foreach(var item in shifttypes)
+            {
+                item.TypeName = L[item.TypeName];
+            }
+
             switch (args.Item.Id)
             {
                 case "new":

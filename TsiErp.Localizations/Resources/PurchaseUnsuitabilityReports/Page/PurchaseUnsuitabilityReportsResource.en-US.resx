@@ -126,6 +126,18 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same number.</value>
   </data>
+  <data name="ComboboxContactSupplier" xml:space="preserve">
+    <value>Contact with Supplier</value>
+  </data>
+  <data name="ComboboxCorrection" xml:space="preserve">
+    <value>Correction</value>
+  </data>
+  <data name="ComboboxRejection" xml:space="preserve">
+    <value>Rejection</value>
+  </data>
+  <data name="ComboboxToBeUsedAs" xml:space="preserve">
+    <value>To Be Used As</value>
+  </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>

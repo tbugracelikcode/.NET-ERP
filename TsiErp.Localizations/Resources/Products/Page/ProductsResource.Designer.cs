@@ -646,6 +646,96 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to (APRT) Aparat.
+        /// </summary>
+        public static string EnumAparatus {
+            get {
+                return ResourceManager.GetString("EnumAparatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (TM) Ticari Mal.
+        /// </summary>
+        public static string EnumCommercialProduct {
+            get {
+                return ResourceManager.GetString("EnumCommercialProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (TK) Takım.
+        /// </summary>
+        public static string EnumKit {
+            get {
+                return ResourceManager.GetString("EnumKit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (HM) Hammadde.
+        /// </summary>
+        public static string EnumMaterial {
+            get {
+                return ResourceManager.GetString("EnumMaterial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (KLP) Kalıp.
+        /// </summary>
+        public static string EnumMold {
+            get {
+                return ResourceManager.GetString("EnumMold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (MM) Mamül.
+        /// </summary>
+        public static string EnumProduct {
+            get {
+                return ResourceManager.GetString("EnumProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretim.
+        /// </summary>
+        public static string EnumProduction {
+            get {
+                return ResourceManager.GetString("EnumProduction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Alma.
+        /// </summary>
+        public static string EnumPurchase {
+            get {
+                return ResourceManager.GetString("EnumPurchase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (YM) Yarı Mamül.
+        /// </summary>
+        public static string EnumSemiProduct {
+            get {
+                return ResourceManager.GetString("EnumSemiProduct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (BP) Yedek Parça.
+        /// </summary>
+        public static string EnumSparePart {
+            get {
+                return ResourceManager.GetString("EnumSparePart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hata.
         /// </summary>
         public static string Error {

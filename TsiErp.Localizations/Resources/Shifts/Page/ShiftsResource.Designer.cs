@@ -196,6 +196,42 @@ namespace TsiErp.Localizations.Resources.Shifts.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mola.
+        /// </summary>
+        public static string EnumBreak {
+            get {
+                return ResourceManager.GetString("EnumBreak", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Temizlik.
+        /// </summary>
+        public static string EnumCleaning {
+            get {
+                return ResourceManager.GetString("EnumCleaning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fazla Mesai.
+        /// </summary>
+        public static string EnumOvertime {
+            get {
+                return ResourceManager.GetString("EnumOvertime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çalışma.
+        /// </summary>
+        public static string EnumWork {
+            get {
+                return ResourceManager.GetString("EnumWork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hata.
         /// </summary>
         public static string Error {

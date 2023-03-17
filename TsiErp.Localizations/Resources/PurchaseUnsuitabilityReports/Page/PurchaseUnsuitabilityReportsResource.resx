@@ -126,6 +126,18 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="ComboboxContactSupplier" xml:space="preserve">
+    <value>Tedarikçi ile İrtibat</value>
+  </data>
+  <data name="ComboboxCorrection" xml:space="preserve">
+    <value>Düzeltme</value>
+  </data>
+  <data name="ComboboxRejection" xml:space="preserve">
+    <value>Red</value>
+  </data>
+  <data name="ComboboxToBeUsedAs" xml:space="preserve">
+    <value>Olduğu Gibi Kullanılacak</value>
+  </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>

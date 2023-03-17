@@ -120,11 +120,11 @@ else
                                                 string supplyForm = "";
                                                 if (productsupplyform == ProductSupplyFormEnum.Satınalma)
                                                 {
-                                                    supplyForm = "Satın Alma";
+                                                    supplyForm = L["EnumPurchase"];
                                                 }
                                                 else if (productsupplyform == ProductSupplyFormEnum.Üretim)
                                                 {
-                                                    supplyForm = "Üretim";
+                                                    supplyForm = L["EnumProduction"];
                                                 }
                                         }
                                         @supplyForm
@@ -138,14 +138,14 @@ else
                                                 string type = "";
                                                 switch (producttype)
                                                 {
-                                                    case ProductTypeEnum.TM: type = "TM"; break;
-                                                    case ProductTypeEnum.HM: type = "HM"; break;
-                                                    case ProductTypeEnum.YM: type = "YM"; break;
-                                                    case ProductTypeEnum.MM: type = "MM"; break;
-                                                    case ProductTypeEnum.BP: type = "BP"; break;
-                                                    case ProductTypeEnum.TK: type = "TK"; break;
-                                                    case ProductTypeEnum.KLP: type = "KLP"; break;
-                                                    case ProductTypeEnum.APRT: type = "APRT"; break;
+                                                    case ProductTypeEnum.TM: type = L["EnumCommercialProduct"]; break;
+                                                    case ProductTypeEnum.HM: type = L["EnumMaterial"]; break;
+                                                    case ProductTypeEnum.YM: type = L["EnumSemiProduct"]; break;
+                                                    case ProductTypeEnum.MM: type = L["EnumProduct"]; break;
+                                                    case ProductTypeEnum.BP: type = L["EnumSparePart"]; break;
+                                                    case ProductTypeEnum.TK: type = L["EnumKit"]; break;
+                                                    case ProductTypeEnum.KLP: type = L["EnumMold"]; break;
+                                                    case ProductTypeEnum.APRT: type = L["EnumAparatus"]; break;
                                                     default: break;
                                                 }
                                         }
