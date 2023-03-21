@@ -9,21 +9,21 @@ namespace TsiErp.Entities.Enums
 {
     public enum ProductTypeEnum
     {
-        [Display(Name = "(TM) Ticari Mal")]
+        [Display(Name = "EnumCommercialProduct")]
         TM = 1,
-        [Display(Name = "(HM) Hammadde")]
+        [Display(Name = "EnumMaterial")]
         HM = 10,
-        [Display(Name = "(YM) Yarı Mamül")]
+        [Display(Name = "EnumSemiProduct")]
         YM = 11,
-        [Display(Name = "(MM) Mamül")]
+        [Display(Name = "EnumProduct")]
         MM = 12,
-        [Display(Name = "(BP) Yedek Parça")]
+        [Display(Name = "EnumSparePart")]
         BP = 30,
-        [Display(Name = "(TK) Takım")]
+        [Display(Name = "EnumKit")]
         TK = 40,
-        [Display(Name = "(KLP) Kalıp")]
+        [Display(Name = "EnumMold")]
         KLP = 50,
-        [Display(Name = "(APRT) Aparat")]
+        [Display(Name = "EnumAparatus")]
         APRT = 60
     }
 }

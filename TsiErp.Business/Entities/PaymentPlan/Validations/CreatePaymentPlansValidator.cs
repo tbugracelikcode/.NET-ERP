@@ -15,17 +15,17 @@ namespace TsiErp.Business.Entities.PaymentPlan.Validations
         {
             RuleFor(x => x.Code)
                 .NotEmpty()
-                .WithMessage("Lütfen ödeme planı kodunu yazın.")
+                .WithMessage("ValidatorCodeEmpty")
                 .MaximumLength(17)
-                .WithMessage("Ödeme planı kodu 17 karakterden fazla olamaz.");
+                .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen ödeme planı adını yazın.")
+                .WithMessage("ValidatorNameEmpty")
                 .MaximumLength(200)
-                .WithMessage("Ödeme planı adı 200 karakterden fazla olamaz.");
+                .WithMessage("ValidatorNameMaxLenght");
 
-            RuleFor(x => x.Days_).GreaterThanOrEqualTo(1).WithMessage("Ödeme planı vade günü, 0'dan büyük olmalıdır.");
+            RuleFor(x => x.Days_).GreaterThanOrEqualTo(1).WithMessage("ValidatorDay");
 
         }
     }

@@ -14,6 +14,7 @@ namespace TsiErp.ErpUI.Pages.Period
         protected override async void OnInitialized()
         {
             BaseCrudService = PeriodsService;
+            _L = L;
             await GetBranchsList();
         }
 

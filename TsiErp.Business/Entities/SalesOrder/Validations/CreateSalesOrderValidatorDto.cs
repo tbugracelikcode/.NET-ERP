@@ -15,33 +15,33 @@ namespace TsiErp.Business.Entities.SalesOrder.Validations
         {
             RuleFor(x => x.FicheNo)
                .NotEmpty()
-               .WithMessage("Lütfen teklif numarasını yazın.")
+               .WithMessage("ValidatorCodeEmpty")
                .MaximumLength(17)
-               .WithMessage("Teklif numarası 17 karakterden fazla olamaz.");
+               .WithMessage("ValidatorCodeMaxLength");
 
 
             RuleFor(x => x.CurrentAccountCardID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("Lütfen cari hesap seçin.");
+               .WithMessage("ValidatorCurrentAccountID");
 
             RuleFor(x => x.CurrencyID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("Lütfen para birimi seçin.");
+               .WithMessage("ValidatorCurrencyID");
 
             RuleFor(x => x.WarehouseID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("Lütfen depo seçin.");
+               .WithMessage("ValidatorWarehouseID");
 
 
             RuleFor(x => x.BranchID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("Lütfen şube seçin.");
+               .WithMessage("ValidatorBranchID");
 
             RuleFor(x => x.ExchangeRate)
                 .NotNull()
-                .WithMessage("Lütfen kur tutarını yazın.")
+                .WithMessage("ValidatorExchangeRateEmpty")
                 .GreaterThanOrEqualTo(1)
-                .WithMessage("Kur tutarı 0'dan büyük olmalıdır.");
+                .WithMessage("ValidatorExchangeRateMin");
         }
     }
 }

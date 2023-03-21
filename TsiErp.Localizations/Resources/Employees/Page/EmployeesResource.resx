@@ -117,8 +117,56 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="0+" xml:space="preserve">
+    <value>0 Rh(+)</value>
+  </data>
+  <data name="0-" xml:space="preserve">
+    <value>0 Rh(-)</value>
+  </data>
+  <data name="A+" xml:space="preserve">
+    <value>A Rh(+)</value>
+  </data>
+  <data name="A-" xml:space="preserve">
+    <value>A Rh(-)</value>
+  </data>
+  <data name="AB+" xml:space="preserve">
+    <value>AB Rh(+)</value>
+  </data>
+  <data name="AB-" xml:space="preserve">
+    <value>AB Rh(-)</value>
+  </data>
+  <data name="AddressLabel" xml:space="preserve">
+    <value>Adres:</value>
+  </data>
+  <data name="B+" xml:space="preserve">
+    <value>B Rh(+)</value>
+  </data>
+  <data name="B-" xml:space="preserve">
+    <value>B Rh(-)</value>
+  </data>
+  <data name="BirthdayLabel" xml:space="preserve">
+    <value>Doğum Günü:</value>
+  </data>
+  <data name="BloodTypeLabel" xml:space="preserve">
+    <value>Kan Grubu:</value>
+  </data>
+  <data name="CellPhoneLabel" xml:space="preserve">
+    <value>GSM:</value>
+  </data>
+  <data name="CityLabel" xml:space="preserve">
+    <value>İl:</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>PERSONEL KODU</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Personel Kodu:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -141,8 +189,47 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="DepartmentLabel" xml:space="preserve">
+    <value>Departman:</value>
+  </data>
+  <data name="DepartmentModalGridCode" xml:space="preserve">
+    <value>DEPARTMAN KODU</value>
+  </data>
+  <data name="DepartmentModalGridName" xml:space="preserve">
+    <value>DEPARTMAN ADI</value>
+  </data>
+  <data name="DepartmentModalTitle" xml:space="preserve">
+    <value>Departmanlar</value>
+  </data>
+  <data name="DistrictLabel" xml:space="preserve">
+    <value>İlçe:</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Personeller</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-POSTA</value>
+  </data>
+  <data name="EmailLabel" xml:space="preserve">
+    <value>E-Posta:</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="HomePhoneLabel" xml:space="preserve">
+    <value>Ev Telefonu:</value>
+  </data>
+  <data name="IDnumberLabel" xml:space="preserve">
+    <value>TC Kimlik No:</value>
+  </data>
+  <data name="ImageLabel" xml:space="preserve">
+    <value>Resim:</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>AKTİFLİK</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Aktiflik:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -155,6 +242,33 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>PERSONEL ADI</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Personel Adı:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="SurnameLabel" xml:space="preserve">
+    <value>Personel Soyadı:</value>
+  </data>
+  <data name="Tab1Name" xml:space="preserve">
+    <value>Genel Bilgiler</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Personel Kayıtları</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>Personeller</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Personeller</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Makine &amp; İş Gücü Yönetimi Yönetimi &gt; Ana Kayıtlar</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>

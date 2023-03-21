@@ -117,8 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Approval" xml:space="preserve">
+    <value>ONAY</value>
+  </data>
+  <data name="ApprovalLabel" xml:space="preserve">
+    <value>Onay:</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>ROTA KODU</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Rota Kodu:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -141,8 +156,35 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Üretim Rotaları</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Aktiflik:</value>
+  </data>
+  <data name="LineGridAdjustment" xml:space="preserve">
+    <value>AYAR VE KONTROL SÜRESİ</value>
+  </data>
+  <data name="LineGridLineNr" xml:space="preserve">
+    <value>SIRA NO</value>
+  </data>
+  <data name="LineGridOprCode" xml:space="preserve">
+    <value>OPERASYON KODU</value>
+  </data>
+  <data name="LineGridOprName" xml:space="preserve">
+    <value>OPERASYON AÇIKLAMASI</value>
+  </data>
+  <data name="LineGridOprTime" xml:space="preserve">
+    <value>OPERASYON SÜRESİ</value>
+  </data>
+  <data name="LineGridProductCode" xml:space="preserve">
+    <value>ÜRÜN KODU</value>
+  </data>
+  <data name="LineGridProductName" xml:space="preserve">
+    <value>ÜRÜN AÇIKLAMASI</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -156,7 +198,88 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>ROTA AÇIKLAMASI</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Rota Açıklaması:</value>
+  </data>
+  <data name="OperationGridCode" xml:space="preserve">
+    <value>OPERASYON KODU</value>
+  </data>
+  <data name="OperationGridName" xml:space="preserve">
+    <value>OPERASYON AÇIKLAMASI</value>
+  </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>ÜRÜN KODU</value>
+  </data>
+  <data name="ProductCodeLabel" xml:space="preserve">
+    <value>Ürün Kodu:</value>
+  </data>
+  <data name="ProductionStart" xml:space="preserve">
+    <value>ÜRETİM BAŞLANGIÇ</value>
+  </data>
+  <data name="ProductionStartLabel" xml:space="preserve">
+    <value>Üretim Başlangıç:</value>
+  </data>
+  <data name="ProductModalGridCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductModalGridName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Stok Kartları</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>ÜRÜN AÇIKLAMASI</value>
+  </data>
+  <data name="ProductNameLabel" xml:space="preserve">
+    <value>Ürün Açıklaması:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="TechnicalApproval" xml:space="preserve">
+    <value>TEKNİK ONAY</value>
+  </data>
+  <data name="TechnicalApprovalLabel" xml:space="preserve">
+    <value>Teknik Onay:</value>
+  </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>Seçtiğiniz rota, kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Dikkat</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Üretim Rotaları</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>Rotalar</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Rotalar</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Üretim Yönetimi &gt; Ana Kayıtlar</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen rota kodunu yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Rota kodu, 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Lütfen rota açıklaması yazın.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>Rota açıklaması, 200 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorProductID" xml:space="preserve">
+    <value>Lütfen ürün seçin.</value>
   </data>
 </root>

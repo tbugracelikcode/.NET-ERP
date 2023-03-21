@@ -14,17 +14,17 @@ namespace TsiErp.Business.Entities.TemplateOperation.Validations
         {
             RuleFor(x => x.Code)
                .NotEmpty()
-               .WithMessage("Lütfen operasyon kodunu yazın.")
+               .WithMessage("ValidatorCodeEmpty")
                .MaximumLength(17)
-               .WithMessage("Operasyon kodu 17 karakterden fazla olamaz.");
+               .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.Name)
                .NotEmpty()
-               .WithMessage("Lütfen operasyon açıklamasını yazın.")
+               .WithMessage("ValidatorNameEmpty")
                .MaximumLength(200)
-               .WithMessage("Operasyon açıklaması 200 karakterden fazla olamaz.");
+               .WithMessage("OValidatorNameMaxLenght");
 
-            RuleFor(x => x.WorkCenterID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen ürün grubunu seçin.");
+            //RuleFor(x => x.WorkCenterID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen ürün grubunu seçin.");
 
         }
 

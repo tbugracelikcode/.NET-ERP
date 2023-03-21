@@ -5,9 +5,9 @@ namespace TsiErp.Entities.Enums
 {
     public enum PlannedMaintenanceStateEnum
     {
-        [Display(Name = "Yapıldı")]
+        [Display(Name = "Done")]
         Yapıldı = 1,
-        [Display(Name = "Yapılmadı")]
+        [Display(Name = "NotDone")]
         Yapılmadı = 2,
     }
 }

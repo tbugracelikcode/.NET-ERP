@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
@@ -132,6 +135,33 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="CurrentAccountCardCode" xml:space="preserve">
+    <value>CURRENT ACCOUNT CODE</value>
+  </data>
+  <data name="CurrentAccountCardCodeLabel" xml:space="preserve">
+    <value>Current Account Code:</value>
+  </data>
+  <data name="CurrentAccountPopupGridCode" xml:space="preserve">
+    <value>CURRENT ACCOUNT CODE</value>
+  </data>
+  <data name="CurrentAccountPopupGridEmail" xml:space="preserve">
+    <value>E-MAIL</value>
+  </data>
+  <data name="CurrentAccountPopupGridName" xml:space="preserve">
+    <value>CURRENT ACCOUNT NAME</value>
+  </data>
+  <data name="CurrentAccountPopupGridResponsible" xml:space="preserve">
+    <value>RESPONSIBLE</value>
+  </data>
+  <data name="CurrentAccountPopupGridTaxNumber" xml:space="preserve">
+    <value>TAX NUMBER</value>
+  </data>
+  <data name="CurrentAccountPopupGridTel1" xml:space="preserve">
+    <value>PHONE (1)</value>
+  </data>
+  <data name="CurrentAccountPopupTitle" xml:space="preserve">
+    <value>Current Account Cards</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -141,8 +171,32 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Contract Production Tracking Records</value>
+  </data>
+  <data name="EmployeeName" xml:space="preserve">
+    <value>OPERATOR</value>
+  </data>
+  <data name="EmployeeNameLabel" xml:space="preserve">
+    <value>Operator:</value>
+  </data>
+  <data name="EmployeePopupGridCode" xml:space="preserve">
+    <value>OPERATOR CODE</value>
+  </data>
+  <data name="EmployeePopupGridName" xml:space="preserve">
+    <value>OPERATOR NAME</value>
+  </data>
+  <data name="EmployeePopupTitle" xml:space="preserve">
+    <value>Operators</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="IsFinished" xml:space="preserve">
+    <value>FINISHED</value>
+  </data>
+  <data name="IsFinishedLabel" xml:space="preserve">
+    <value>Finished:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -155,6 +209,111 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="OperationEndDate" xml:space="preserve">
+    <value>END DATE</value>
+  </data>
+  <data name="OperationEndDateLabel" xml:space="preserve">
+    <value>End Date:</value>
+  </data>
+  <data name="OperationEndTimeLabel" xml:space="preserve">
+    <value>End Time:</value>
+  </data>
+  <data name="OperationStartDate" xml:space="preserve">
+    <value>START DATE</value>
+  </data>
+  <data name="OperationStartDateLabel" xml:space="preserve">
+    <value>Start Date:</value>
+  </data>
+  <data name="OperationStartTimeLabel" xml:space="preserve">
+    <value>Start Time:</value>
+  </data>
+  <data name="OperationTime" xml:space="preserve">
+    <value>OPERATION TIME</value>
+  </data>
+  <data name="OperationTimeLabel" xml:space="preserve">
+    <value>Operation Time:</value>
+  </data>
+  <data name="PlannedQuantity" xml:space="preserve">
+    <value>PLANNED QUANTITY</value>
+  </data>
+  <data name="ProducedQuantity" xml:space="preserve">
+    <value>PRODUCED QUANTITY</value>
+  </data>
+  <data name="ProducedQuantityLabel" xml:space="preserve">
+    <value>Produced Quantity:</value>
+  </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="ProductCodeLabel" xml:space="preserve">
+    <value>Product Code:</value>
+  </data>
+  <data name="ProductNameLabel" xml:space="preserve">
+    <value>Product Name:</value>
+  </data>
+  <data name="ProductPopupGridCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="ProductPopupGridName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="ProductPopupTitle" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ShiftCode" xml:space="preserve">
+    <value>SHIFT CODE</value>
+  </data>
+  <data name="ShiftCodeLabel" xml:space="preserve">
+    <value>Shift:</value>
+  </data>
+  <data name="ShiftPopupGridCode" xml:space="preserve">
+    <value>SHIFT CODE</value>
+  </data>
+  <data name="ShiftPopupGridName" xml:space="preserve">
+    <value>SHIFT NAME</value>
+  </data>
+  <data name="ShiftPopupTitle" xml:space="preserve">
+    <value>Shifts</value>
+  </data>
+  <data name="StationCode" xml:space="preserve">
+    <value>STATION CODE</value>
+  </data>
+  <data name="StationCodeLabel" xml:space="preserve">
+    <value>Station:</value>
+  </data>
+  <data name="StationPopupGridCode" xml:space="preserve">
+    <value>STATION CODE</value>
+  </data>
+  <data name="StationPopupGridName" xml:space="preserve">
+    <value>STATION NAME</value>
+  </data>
+  <data name="StationPopupTitle" xml:space="preserve">
+    <value>Stations</value>
+  </data>
+  <data name="UIConfirmationPopupDateBase" xml:space="preserve">
+    <value>Please select a start date first.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>The record you selected will be permanently deleted.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Contract Production Tracking Records</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>ContractProduction</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Contract Production Tracking Records</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Production Management &gt; Production Tracking Records</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
@@ -170,5 +329,26 @@
   </data>
   <data name="ValidatorStationID" xml:space="preserve">
     <value>Please select a station.</value>
+  </data>
+  <data name="WordOrderCodeLabel" xml:space="preserve">
+    <value>Work Order Code:</value>
+  </data>
+  <data name="WorkOrderCode" xml:space="preserve">
+    <value>WORK ORDER NR</value>
+  </data>
+  <data name="WorkOrderPopupGridCode" xml:space="preserve">
+    <value>WORK ORDER CODE</value>
+  </data>
+  <data name="WorkOrderPopupGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="WorkOrderPopupGridProductName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="WorkOrderPopupGridWorkOrderNo" xml:space="preserve">
+    <value>WORK ORDER NR</value>
+  </data>
+  <data name="WorkOrderPopupTitle" xml:space="preserve">
+    <value>Work Orders</value>
   </data>
 </root>

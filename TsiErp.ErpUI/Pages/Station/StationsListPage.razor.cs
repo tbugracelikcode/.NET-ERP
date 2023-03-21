@@ -123,7 +123,7 @@ namespace TsiErp.ErpUI.Pages.Station
         protected override async void OnInitialized()
         {
             BaseCrudService = StationsService;
-
+            _L = L;
 
             CreateLineContextMenuItems();
             CreateMainContextMenuItems();
@@ -135,10 +135,10 @@ namespace TsiErp.ErpUI.Pages.Station
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle", Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -171,7 +171,7 @@ namespace TsiErp.ErpUI.Pages.Station
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync("Dikkat", "Seçtiğiniz istasyon, kalıcı olarak silinecektir.");
+                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
                     if (res == true)
                     {
                         await DeleteAsync(args.RowInfo.RowData.Id);
@@ -211,8 +211,8 @@ namespace TsiErp.ErpUI.Pages.Station
         {
             if (InventoryGridContextMenu.Count() == 0)
             {
-                InventoryGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
-                InventoryGridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
+                InventoryGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
+                InventoryGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
             }
         }
 
@@ -229,7 +229,7 @@ namespace TsiErp.ErpUI.Pages.Station
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync("Dikkat", "Seçtiğiniz satır, kalıcı olarak silinecektir.");
+                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
                     if (res == true)
                     {
                         await DeleteAsync(args.RowInfo.RowData.Id);
@@ -265,7 +265,7 @@ namespace TsiErp.ErpUI.Pages.Station
                 {
                     line = InventoryDataSource;
 
-                    await ModalManager.WarningPopupAsync("Uyarı", "Envanterde aynı stok kodlu bir satır bulunmaktadır.");
+                    await ModalManager.WarningPopupAsync(L["UIWarningPopupTitleBase"], L["UIWarningPopupMessageBase"]);
 
                     InventoryDataSource = new SelectStationInventoriesDto();
 

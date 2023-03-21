@@ -8,6 +8,7 @@ namespace TsiErp.ErpUI.Pages.StationGroup
         protected override async void OnInitialized()
         {
             BaseCrudService = StationGroupsService;
+            _L = L;
         }
 
         protected override Task BeforeInsertAsync()

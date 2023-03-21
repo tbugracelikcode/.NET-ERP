@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>PRODUCTION ORDER CHANGE CODE</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Code:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -141,8 +150,26 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="Detection" xml:space="preserve">
+    <value>DETECTION</value>
+  </data>
+  <data name="DetectionLabel" xml:space="preserve">
+    <value>Detection:</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Production Order Change Items</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>IMAGE</value>
+  </data>
+  <data name="ImageLabel" xml:space="preserve">
+    <value>Image:</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Activity:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -156,7 +183,58 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>PRODUCTION ORDER CHANGE NAME</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="PerProductivityAnalysis" xml:space="preserve">
+    <value>EMPLOYEE PRODUCTIVITY ANALYSIS</value>
+  </data>
+  <data name="PerProductivityAnalysisLabel" xml:space="preserve">
+    <value>Employee Productivity Analysis:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Severity" xml:space="preserve">
+    <value>SEVERITY</value>
+  </data>
+  <data name="SeverityLabel" xml:space="preserve">
+    <value>Severity:</value>
+  </data>
+  <data name="StaProductivityAnalysis" xml:space="preserve">
+    <value>STATION PRODUCTIVITY ANALYSIS</value>
+  </data>
+  <data name="StaProductivityAnalysisLabel" xml:space="preserve">
+    <value>Station Productivity Analysis:</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Production Order Change Items</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>ProductionOrderChangeItems</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Production Order Change Items</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Quality Control &gt; Main Records &gt; Unsuitability Items</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Please enter the production order change item code.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Pproduction order change item code cannot exceed 17 characters.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Please enter the production order change item name.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>Production order change item name cannot exceed 200 characters.</value>
   </data>
 </root>

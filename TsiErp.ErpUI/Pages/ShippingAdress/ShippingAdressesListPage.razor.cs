@@ -12,6 +12,7 @@ namespace TsiErp.ErpUI.Pages.ShippingAdress
         protected override async void OnInitialized()
         {
             BaseCrudService = ShippingAdressesAppService;
+            _L = L;
         }
 
         #region Cari Hesap ButtonEdit

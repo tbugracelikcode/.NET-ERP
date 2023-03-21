@@ -159,4 +159,7 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
+  <data name="ValidatorProductID" xml:space="preserve">
+    <value>Please select a product.</value>
+  </data>
 </root>

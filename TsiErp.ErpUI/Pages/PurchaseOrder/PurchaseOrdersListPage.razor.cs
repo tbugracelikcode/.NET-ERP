@@ -476,10 +476,10 @@ namespace TsiErp.ErpUI.Pages.PurchaseOrder
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle", Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -487,10 +487,10 @@ namespace TsiErp.ErpUI.Pages.PurchaseOrder
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle", Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -504,7 +504,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseOrder
                 if (dataOpenStatus == true && dataOpenStatus != null)
                 {
                     EditPageVisible = false;
-                    await ModalManager.MessagePopupAsync("Bilgi", "Seçtiğiniz kayıt ..... tarafından kullanılmaktadır.");
+                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);
                     await InvokeAsync(StateHasChanged);
                 }
                 else
@@ -533,7 +533,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseOrder
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync("Dikkat", "Seçtiğiniz satın alma talebi kalıcı olarak silinecektir.");
+                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
                     if (res == true)
                     {
                         await DeleteAsync(args.RowInfo.RowData.Id);
@@ -575,7 +575,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseOrder
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync("Dikkat", "Seçtiğiniz satır kalıcı olarak silinecektir.");
+                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
 
                     if (res == true)
                     {
@@ -626,15 +626,15 @@ namespace TsiErp.ErpUI.Pages.PurchaseOrder
         {
             if (LineDataSource.UnitSetID == Guid.Empty)
             {
-                await ModalManager.WarningPopupAsync("Uyarı", "Birim seti seçilmeden satır kaydetme işlemi yapılamaz.");
+                await ModalManager.WarningPopupAsync(L["UIWarningPopupTitleBase"], L["UIWarningPopupMessageBase1"]);
             }
             else if (LineDataSource.ProductID == Guid.Empty)
             {
-                await ModalManager.WarningPopupAsync("Uyarı", "Stok kartı seçilmeden satır kaydetme işlemi yapılamaz.");
+                await ModalManager.WarningPopupAsync(L["UIWarningPopupTitleBase"], L["UIWarningPopupMessageBase2"]);
             }
             else if(LineDataSource.Quantity == 0)
             {
-                await ModalManager.WarningPopupAsync("Uyarı", "Miktar 0 olduğu için satır kaydetme işlemi yapılamamaktadır.");
+                await ModalManager.WarningPopupAsync(L["UIWarningPopupTitleBase"], L["UIWarningPopupMessageBase3"]);
             }
             else
             {

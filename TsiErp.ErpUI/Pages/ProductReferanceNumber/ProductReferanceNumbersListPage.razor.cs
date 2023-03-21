@@ -13,6 +13,7 @@ namespace TsiErp.ErpUI.Pages.ProductReferanceNumber
         protected override async void OnInitialized()
         {
             BaseCrudService = ProductReferanceNumbersService;
+            _L = L;
         }
 
         protected override Task BeforeInsertAsync()

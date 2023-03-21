@@ -159,4 +159,13 @@
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="ValidatorBranchID" xml:space="preserve">
+    <value>Lütfen şube seçin.</value>
+  </data>
+  <data name="ValidatorProductID" xml:space="preserve">
+    <value>Lütfen ürün seçin.</value>
+  </data>
+  <data name="ValidatorWarehouseID" xml:space="preserve">
+    <value>Lütfen depo seçin.</value>
+  </data>
 </root>

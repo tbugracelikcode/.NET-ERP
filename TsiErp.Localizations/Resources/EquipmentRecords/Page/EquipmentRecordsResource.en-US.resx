@@ -117,8 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CancelLabel" xml:space="preserve">
+    <value>Cancel:</value>
+  </data>
+  <data name="CancellationReasonLabel" xml:space="preserve">
+    <value>Cancellation Reason:</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>EQUIPMENT CODE</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Equipment Code:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -144,8 +159,35 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="DepartmentName" xml:space="preserve">
+    <value>DEPARTMENT</value>
+  </data>
+  <data name="DepartmentNameLabel" xml:space="preserve">
+    <value>Deparment:</value>
+  </data>
+  <data name="DepartmentPopupGridCode" xml:space="preserve">
+    <value>DEPARTMENT CODE</value>
+  </data>
+  <data name="DepartmentPopupGridName" xml:space="preserve">
+    <value>DEPARTMENT NAME</value>
+  </data>
+  <data name="DepartmentPopupTitle" xml:space="preserve">
+    <value>Deparments</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Equipment Records</value>
+  </data>
+  <data name="EquipmentSerialNoLabel" xml:space="preserve">
+    <value>Equipment Serial Nr:</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="FrequencyLabel" xml:space="preserve">
+    <value>Frequency:</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Activity:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -153,11 +195,50 @@
   <data name="LoadingText" xml:space="preserve">
     <value>The records are loading..</value>
   </data>
+  <data name="MeasuringAccuracyLabel" xml:space="preserve">
+    <value>Measuring Accuracy:</value>
+  </data>
+  <data name="MeasuringRangeLabel" xml:space="preserve">
+    <value>Measuring Range:</value>
+  </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>The record you selected is using by {0}.</value>
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>EQUIPMENT NAME</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Equipment Name:</value>
+  </data>
+  <data name="RecordDate" xml:space="preserve">
+    <value>RECORD DATE</value>
+  </data>
+  <data name="RecordDateLabel" xml:space="preserve">
+    <value>Record Date:</value>
+  </data>
+  <data name="Responsible" xml:space="preserve">
+    <value>RESPONSIBLE</value>
+  </data>
+  <data name="ResponsibleLabel" xml:space="preserve">
+    <value>Responsible:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Equipment Records</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>Equipments</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Equipments</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Quality Control &gt; Equipment Management</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>

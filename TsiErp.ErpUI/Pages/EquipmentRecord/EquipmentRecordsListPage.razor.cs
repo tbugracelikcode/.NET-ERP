@@ -15,6 +15,7 @@ namespace TsiErp.ErpUI.Pages.EquipmentRecord
         protected override async void OnInitialized()
         {
             BaseCrudService = EquipmentRecordsService;
+            _L = L;
             await GetDepartmentsList();
         }
 

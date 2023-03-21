@@ -117,8 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AmortizationLabel" xml:space="preserve">
+    <value>Amortisman:</value>
+  </data>
+  <data name="AmountLabel" xml:space="preserve">
+    <value>Miktar:</value>
+  </data>
+  <data name="AreaCoveredLabel" xml:space="preserve">
+    <value>Kapladığı Alan:</value>
+  </data>
+  <data name="Brand" xml:space="preserve">
+    <value>MARKA</value>
+  </data>
+  <data name="BrandLabel" xml:space="preserve">
+    <value>Marka:</value>
+  </data>
+  <data name="CapacityLabel" xml:space="preserve">
+    <value>Kapasite:</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>İSTASYON KODU</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>İstasyon Kodu:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -144,8 +171,26 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>İş İstasyonları</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="InventoryGridAmount" xml:space="preserve">
+    <value>MİKTAR</value>
+  </data>
+  <data name="InventoryGridProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Aktiflik:</value>
+  </data>
+  <data name="KWALabel" xml:space="preserve">
+    <value>KWA:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -153,13 +198,124 @@
   <data name="LoadingText" xml:space="preserve">
     <value>Kayıtlar Yükleniyor..</value>
   </data>
+  <data name="MachineCostLabel" xml:space="preserve">
+    <value>Makina Maliyeti:</value>
+  </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="ModelLabel" xml:space="preserve">
+    <value>Model:</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>İSTASYON AÇIKLAMASI</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>İstasyon Açıklaması:</value>
+  </data>
+  <data name="PowerFactorLabel" xml:space="preserve">
+    <value>Güç Faktörü:</value>
+  </data>
+  <data name="ProductCodeLabel" xml:space="preserve">
+    <value>Stok Kodu:</value>
+  </data>
+  <data name="ProductModalGridCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductModalGridName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Stok Kartları</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="ShiftLabel" xml:space="preserve">
+    <value>Vardiya:</value>
+  </data>
+  <data name="ShiftWorkingTimeLabel" xml:space="preserve">
+    <value>Vardiya Çalışma Süresi:</value>
+  </data>
+  <data name="StationGroup" xml:space="preserve">
+    <value>İŞ İSTASYONU GRUBU</value>
+  </data>
+  <data name="StationGroupLabel" xml:space="preserve">
+    <value>İş İstasyonu Grubu:</value>
+  </data>
+  <data name="StationGroupModalGridCode" xml:space="preserve">
+    <value>İŞ İSTASYON GRUBU KODU</value>
+  </data>
+  <data name="StationGroupModalGridName" xml:space="preserve">
+    <value>İŞ İSTASYON GRUBU AÇIKLAMASI</value>
+  </data>
+  <data name="StationGroupModalGridTotalEmployees" xml:space="preserve">
+    <value>TOPLAM ÇALIŞAN</value>
+  </data>
+  <data name="StationGroupModalTitle" xml:space="preserve">
+    <value>İş İstasyon Grupları</value>
+  </data>
+  <data name="Tab1Name" xml:space="preserve">
+    <value>Genel Bilgiler</value>
+  </data>
+  <data name="Tab2Name" xml:space="preserve">
+    <value>İş İstasyonu Envanteri</value>
+  </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>Seçtiğiniz istasyon, kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>Seçtiğiniz satır, kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Dikkat</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>İş İstasyonları</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>IsIstasyonlari</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>İş İstasyonları</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Makine &amp; İş Gücü Yönetimi Yönetimi &gt; Ana Kayıtlar</value>
+  </data>
+  <data name="UIWarningPopupMessageBase" xml:space="preserve">
+    <value>Envanterde aynı stok kodlu bir satır bulunmaktadır.</value>
+  </data>
+  <data name="UIWarningPopupTitleBase" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="UsageAreaLabel" xml:space="preserve">
+    <value>Kullanım Alanı:</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen istasyon kodunu yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>İstasyon kodu, 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Lütfen istasyon açıklaması yazın.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>İstasyon açıklaması, 200 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorStationGroupID" xml:space="preserve">
+    <value>Lütfen istasyon grubu seçin.</value>
+  </data>
+  <data name="XLabel" xml:space="preserve">
+    <value>X:</value>
+  </data>
+  <data name="YLabel" xml:space="preserve">
+    <value>Y:</value>
   </data>
 </root>

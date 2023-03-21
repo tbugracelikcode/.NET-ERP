@@ -5,6 +5,7 @@
         protected override void OnInitialized()
         {
             BaseCrudService = WorkOrdersAppService;
+            _L = L;
 
         }
 

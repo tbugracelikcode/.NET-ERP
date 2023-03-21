@@ -17,7 +17,8 @@
 @using TsiErp.Entities.Entities.Station.Dtos
 @using TsiErp.Entities.Entities.Shift.Dtos
 @using TsiErp.ErpUI.Pages.Base
-
+@using TsiErp.Localizations.Resources.ProductionTrackings.Page
+@inject IStringLocalizer<ProductionTrackingsResource> L 
 @inherits BaseListPage<SelectProductionTrackingsDto, ListProductionTrackingsDto, CreateProductionTrackingsDto, UpdateProductionTrackingsDto, ListProductionTrackingsParameterDto>
 
 @inject IProductionTrackingsAppService ProductionTrackingsAppService
@@ -39,7 +40,7 @@ else
                 <Template>
                     <SfCard class="TSIListPageTitleCard">
                         <CardContent>
-                            <TsiBreadCrumb PreviousMenus="Üretim Yönetimi > Üretim Yönetimi" CurrentMenu="Üretim Takip Yönetimi (IoT)" />
+                            <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
                         </CardContent>
                         <CardFooter>
                         </CardFooter>
@@ -58,14 +59,15 @@ else
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", "Üretim Takip (IoT)", "UretimTakipIoT"))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
+                                               
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", @L["UIExportTitleIoT"], @L["UIExportFileNameIoT"]))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", "Üretim Takip (IoT)", "UretimTakipIoT"))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", @L["UIExportTitleIoT"], @L["UIExportFileNameIoT"]))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
@@ -77,18 +79,18 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.WorkOrderCode) HeaderText="İŞ EMRİ NO." TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.OperationStartDate) Format="dd.MM.yyyy" HeaderText="BAŞLANGIÇ TARİHİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.OperationEndDate) Format="dd.MM.yyyy" HeaderText="BİTİŞ TARİHİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.ProducedQuantity) HeaderText="ÜRETİLEN MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.OperationTime) HeaderText="OPERASYON SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.HaltTime) Type="ColumnType.Number" HeaderText="DURUŞ SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.AdjustmentTime) Type="ColumnType.Number" HeaderText="AYAR SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.PlannedQuantity) Type="ColumnType.Number" HeaderText="PLANLANAN MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.StationCode) HeaderText="İSTASYON KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.EmployeeName) HeaderText="OPERATÖR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.ShiftCode) HeaderText="VARDİYA KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.IsFinished) HeaderText="TAMAMLANDI" TextAlign="TextAlign.Center" DisplayAsCheckBox="true" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.WorkOrderCode) HeaderText="@L["WorkOrderCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListProductionTrackingsDto.OperationStartDate) Format="dd.MM.yyyy" HeaderText="@L["OperationStartDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListProductionTrackingsDto.OperationEndDate) Format="dd.MM.yyyy" HeaderText="@L["OperationEndDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListProductionTrackingsDto.ProducedQuantity) HeaderText="@L["ProducedQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListProductionTrackingsDto.OperationTime) HeaderText="@L["OperationTime"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.HaltTime) Type="ColumnType.Number" HeaderText="@L["HaltTime"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.AdjustmentTime) Type="ColumnType.Number" HeaderText="@L["AdjustmentTime"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.PlannedQuantity) Type="ColumnType.Number" HeaderText="@L["PlannedQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListProductionTrackingsDto.StationCode) HeaderText="@L["StationCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListProductionTrackingsDto.EmployeeName) HeaderText="@L["EmployeeName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.ShiftCode) HeaderText="@L["ShiftCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListProductionTrackingsDto.IsFinished) HeaderText="@L["IsFinished"]" TextAlign="TextAlign.Center" DisplayAsCheckBox="true" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </CardContent>
@@ -105,7 +107,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Üretim Takip"
+         HeaderText="@L["EditModalTitleIoT"]"
          Width="53%"
          Height="83%"
          MinWidth="800px"
@@ -140,357 +142,424 @@ else
                 <Items>
 
                     <DxGridLayoutItem Row="0" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["WorkOrderCodeLabel"] </strong></label><br />
+                                 <SfTextBox @ref="@WorkOrdersButtonEdit" Created="@WorkOrdersCodeOnCreateIcon" @bind-Value="DataSource.WorkOrderCode" ShowClearButton=true ValueChange="WorkOrdersOnValueChange"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="0" Column="3">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["ProducedQuantityLabel"] </strong></label>
+                                <SfNumericTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.ProducedQuantity"></SfNumericTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                        
+                        <DxGridLayoutItem Row="2" Column="5">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["IsFinishedLabel"] </strong></label><br />
+                                <SfSwitch @bind-Checked="DataSource.IsFinished">
+                                </SfSwitch>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="1" Column="1">
+                            <Template>
+                            <label class="TSIModalLabel"><strong>@L["OperationStartDateLabel"] </strong></label><br />
+                                <SfDatePicker @bind-Value="@DataSource.OperationStartDate" OnChange="OnDateChange"></SfDatePicker>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="1" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>İş Emri Kodu: </strong></label><br />
-                            <SfComboBox @ref="WorkOrdersComboBox"
-                                    TValue="string"
-                                    TItem="ListWorkOrdersDto"
-                                    Placeholder="İş Emri Kodu"
-                                    CssClass="e-multi-column"
-                                    DataSource="@WorkOrdersList"
-                                    AllowFiltering="true"
-                                    PopupWidth="700px"
-                                    PopupHeight="500"
-                                    Value="DataSource.WorkOrderCode">
-
-                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
-
-                                <ComboBoxTemplates TItem="ListWorkOrdersDto">
-                                    <HeaderTemplate>
-                                        <table>
-                                            <tr>
-                                                <th class="e-text-center">İş Emri Kodu</th>
-                                            </tr>
-                                        </table>
-                                    </HeaderTemplate>
-                                    <ItemTemplate Context="cmbContext">
-
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="e-text-center">@((cmbContext as ListWorkOrdersDto).Code)</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </ItemTemplate>
-                                </ComboBoxTemplates>
-
-                                <ComboBoxEvents TValue="string"
-                                            TItem="ListWorkOrdersDto"
-                                            Filtering="WorkOrderFiltering"
-                                            ValueChange="WorkOrderValueChangeHandler"></ComboBoxEvents>
-                            </SfComboBox>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="0" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>Üretilen Miktar: </strong></label>
-                            <SfNumericTextBox CssClass="TSITxtBox" Placeholder="Üretilen Miktar" @bind-Value="DataSource.ProducedQuantity"></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                    <DxGridLayoutItem Row="0" Column="5">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>Tamamlandı: </strong></label><br />
-                            <SfSwitch @bind-Checked="DataSource.IsFinished">
-                            </SfSwitch>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="1" Column="1">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>Başlangıç Tarihi: </strong></label><br />
-                            <SfDatePicker @bind-Value="@DataSource.OperationStartDate" OnChange="OnDateChange" Placeholder="Başlangıç Tarihi"></SfDatePicker>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="1" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>Başlangıç Saati: </strong></label>
+                            <label class="TSIModalLabel"><strong>@L["OperationStartTimeLabel"] </strong></label>
                             <SfTimePicker Step="15" Format="@("hh\\:mm\\:ss")" TValue="TimeSpan?" @bind-Value="@DataSource.OperationStartTime"></SfTimePicker>
                         </Template>
                     </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="2" Column="1">
+                        <DxGridLayoutItem Row="2" Column="1">
+                            <Template>
+                            <label class="TSIModalLabel"><strong>@L["OperationEndDateLabel"] </strong></label><br />
+                                <SfDatePicker @ref="@_endDatePicker" @bind-Value="@DataSource.OperationEndDate" OnFocus="OnDateFocus" Min="@Convert.ToDateTime(DataSource.OperationStartDate)" ></SfDatePicker>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="2" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Bitiş Tarihi: </strong></label><br />
-                            <SfDatePicker @ref="@_endDatePicker" @bind-Value="@DataSource.OperationEndDate" OnFocus="OnDateFocus" Min="@Convert.ToDateTime(DataSource.OperationStartDate)" Placeholder="Bitiş Tarihi"></SfDatePicker>
+                            <label class="TSIModalLabel"><strong>@L["OperationEndTimeLabel"] </strong></label>
+                            <SfTimePicker Step="15" Format="@("hh\\:mm\\:ss")" TValue="TimeSpan?" @bind-Value="@DataSource.OperationEndTime"></SfTimePicker>
                         </Template>
                     </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="2" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>Başlangıç Saati: </strong></label>
-                            <SfTimePicker Step="15" Format="@("hh\\:mm\\:ss")" TValue="TimeSpan?" @bind-Value="@DataSource.OperationStartTime"></SfTimePicker>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="3" Column="1">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>Operasyon Süresi: </strong></label>
-                            <SfNumericTextBox CssClass="TSITxtBox" Placeholder="Operasyon Süresi" @bind-Value="DataSource.OperationTime"></SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="3" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong> Operatör: </strong></label>
-                            <SfComboBox @ref="EmployeesComboBox"
-                                    TValue="Guid"
-                                    TItem="ListEmployeesDto"
-                                    Placeholder="Operatör"
-                                    CssClass="e-multi-column"
-                                    DataSource="@EmployeesList"
-                                    AllowFiltering="true"
-                                    PopupWidth="700px"
-                                    PopupHeight="500"
-                                    @bind-Value="DataSource.EmployeeID">
+                        <DxGridLayoutItem Row="3" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["OperationTimeLabel"] </strong></label>
+                                <SfNumericTextBox CssClass="TSITxtBox" @bind-Value="DataSource.OperationTime"></SfNumericTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="3" Column="3">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["EmployeeNameLabel"] </strong></label>
+                                <SfTextBox @ref="@EmployeesButtonEdit" Created="@EmployeesCodeOnCreateIcon" @bind-Value="DataSource.EmployeeName" ShowClearButton=true ValueChange="EmployeesOnValueChange"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
 
-                                <ComboBoxFieldSettings Text="Name" Value="Id"></ComboBoxFieldSettings>
+                        <DxGridLayoutItem Row="4" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["StationCodeLabel"] </strong></label>
+                                <SfTextBox @ref="@StationsButtonEdit" Created="@StationsCodeOnCreateIcon" @bind-Value="DataSource.StationCode" ShowClearButton=true ValueChange="StationsOnValueChange"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+                        <DxGridLayoutItem Row="4" Column="3">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["ShiftCodeLabel"] </strong></label>
+                                 <SfTextBox @ref="@ShiftsButtonEdit" Created="@ShiftsCodeOnCreateIcon" @bind-Value="DataSource.ShiftCode" ShowClearButton=true ValueChange="ShiftsOnValueChange"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>   
 
-                                <ComboBoxTemplates TItem="ListEmployeesDto">
-                                    <HeaderTemplate>
-                                        <table>
-                                            <tr>
-                                                <th class="e-text-center">Operatör Adı</th>
-                                                <th class="e-text-center">Operatör Soyadı</th>
-                                            </tr>
-                                        </table>
-                                    </HeaderTemplate>
-                                    <ItemTemplate Context="cmbContext">
+                     <DxGridLayoutItem Row="5" Column="1" ColumnSpan="5">
+                            <Template>
+                                <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
+                                    <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectProductionTrackingHaltLinesDto"></GridEvents>
+                                    <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="e-text-center">@((cmbContext as ListEmployeesDto).Name)</td>
-                                                    <td class="e-text-center">@((cmbContext as ListEmployeesDto).Surname)</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </ItemTemplate>
-                                </ComboBoxTemplates>
-
-                                <ComboBoxEvents TValue="Guid"
-                                            TItem="ListEmployeesDto"
-                                            Filtering="EmployeeFiltering"
-                                            ValueChange="EmployeeValueChangeHandler"></ComboBoxEvents>
-                            </SfComboBox>
-
-                        </Template>
-                    </DxGridLayoutItem>
-
-                    <DxGridLayoutItem Row="4" Column="1">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>İstasyon: </strong></label>
-                            <SfComboBox @ref="StationsComboBox"
-                                    TValue="string"
-                                    TItem="ListStationsDto"
-                                    Placeholder="İstasyon"
-                                    CssClass="e-multi-column"
-                                    DataSource="@StationsList"
-                                    AllowFiltering="true"
-                                    PopupWidth="700px"
-                                    PopupHeight="500"
-                                    Value="DataSource.StationCode">
-
-
-                                <ComboBoxTemplates TItem="ListStationsDto">
-                                    <HeaderTemplate>
-                                        <table>
-                                            <tr>
-                                                <th class="e-text-center">İstasyon Kodu</th>
-                                                <th class="e-text-center">İstasyon Adı</th>
-                                            </tr>
-                                        </table>
-                                    </HeaderTemplate>
-                                    <ItemTemplate Context="cmbContext">
-
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="e-text-center">@((cmbContext as ListStationsDto).Code)</td>
-                                                    <td class="e-text-center">@((cmbContext as ListStationsDto).Name)</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </ItemTemplate>
-                                </ComboBoxTemplates>
-
-                                <ComboBoxEvents TValue="string"
-                                            TItem="ListStationsDto"
-                                            Filtering="StationFiltering"
-                                            ValueChange="StationValueChangeHandler"></ComboBoxEvents>
-
-
-                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
-                            </SfComboBox>
-                        </Template>
-                    </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="4" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong> Vardiya: </strong></label>
-                            <SfComboBox @ref="ShiftsComboBox"
-                                    TValue="string"
-                                    TItem="ListShiftsDto"
-                                    Placeholder="Vardiya"
-                                    CssClass="e-multi-column"
-                                    DataSource="@ShiftsList"
-                                    AllowFiltering="true"
-                                    PopupWidth="700px"
-                                    PopupHeight="500"
-                                    Value="DataSource.ShiftCode">
-
-                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
-
-                                <ComboBoxTemplates TItem="ListShiftsDto">
-                                    <HeaderTemplate>
-                                        <table>
-                                            <tr>
-                                                <th class="e-text-center">Vardiya Kodu</th>
-                                                <th class="e-text-center">Vardiya Adı</th>
-                                            </tr>
-                                        </table>
-                                    </HeaderTemplate>
-                                    <ItemTemplate Context="cmbContext">
-
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="e-text-center">@((cmbContext as ListShiftsDto).Code)</td>
-                                                    <td class="e-text-center">@((cmbContext as ListShiftsDto).Name)</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </ItemTemplate>
-                                </ComboBoxTemplates>
-
-                                <ComboBoxEvents TValue="string"
-                                            TItem="ListShiftsDto"
-                                            Filtering="ShiftFiltering"
-                                            ValueChange="ShiftValueChangeHandler"></ComboBoxEvents>
-                            </SfComboBox>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                    <DxGridLayoutItem Row="5" Column="1" ColumnSpan="5">
-                        <Template>
-                            <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
-                                <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectProductionTrackingHaltLinesDto"></GridEvents>
-                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
-
-                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
-                                <GridColumns>
-                                    <GridColumn Field=@nameof(SelectProductionTrackingHaltLinesDto.HaltCode) HeaderText="DURUŞ KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectProductionTrackingHaltLinesDto.HaltTime) HeaderText="DURUŞ SÜRESİ" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectProductionTrackingHaltLinesDto.IsPlanned) HeaderText="PLANLI" TextAlign="TextAlign.Center" Width="120" DisplayAsCheckBox="true"></GridColumn>
-                                </GridColumns>
-                            </SfGrid>
-                        </Template>
-                    </DxGridLayoutItem>
+                                    <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                    <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                    <GridColumns>
+                                        <GridColumn Field=@nameof(SelectProductionTrackingHaltLinesDto.HaltCode) HeaderText="@L["LineGridHaltCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectProductionTrackingHaltLinesDto.HaltTime) HeaderText="@L["LineGridHaltTime"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(SelectProductionTrackingHaltLinesDto.IsPlanned)  HeaderText="@L["LineGridIsPlanned"]" TextAlign="TextAlign.Center" Width="120" DisplayAsCheckBox="true"></GridColumn>
+                                    </GridColumns>
+                                </SfGrid>
+                            </Template>
+                        </DxGridLayoutItem>
                 </Items>
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+           <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 
 
-    <DxPopup @bind-Visible="LineCrudPopup"
+     <DxPopup @bind-Visible="LineCrudPopup"
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Üretim Takip Duruş Satırları"
+         HeaderText="@L["EditLineModalTitle"]"
          Width="40%"
          Height="25%"
          MinWidth="460px"
          MinHeight="100px"
          HeaderCssClass="HeaderTitleCss">
 
+            <BodyTemplate>
+                <DxGridLayout CssClass="TSIGridLayout">
+
+                    <Rows>
+                        <DxGridLayoutRow Height="45%" />
+                        <DxGridLayoutRow Height="45%" />
+                        <DxGridLayoutRow Height="10%" />
+                    </Rows>
+
+                    <Columns>
+                        <DxGridLayoutColumn Width="5%" />
+                        <DxGridLayoutColumn Width="42%" />
+                        <DxGridLayoutColumn Width="6%" />
+                        <DxGridLayoutColumn Width="42%" />
+                        <DxGridLayoutColumn Width="5%" />
+                    </Columns>
+
+                    <Items>
+                        <br />
+                        <DxGridLayoutItem Row="0" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["HaltNameLineLabel"] </strong></label>
+                                 <SfTextBox @ref="@HaltReasonsButtonEdit" Created="@HaltReasonsCodeOnCreateIcon" @bind-Value="LineDataSource.HaltName" ShowClearButton=true ValueChange="HaltReasonsOnValueChange"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="0" Column="3">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["HaltTimeLineLabel"] </strong></label>
+                                <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.HaltTime">
+                                </SfNumericTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="1" Column="1">
+                            <Template>
+                                <center>
+                                <label class="TSIModalLabel"><strong>@L["IsPlannedLineLabel"] </strong></label><br />
+                                <SfSwitch @bind-Checked="LineDataSource.IsPlanned">
+                                </SfSwitch>
+                                </center>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                    </Items>
+                </DxGridLayout>
+            </BodyTemplate>
+            <FooterContentTemplate>
+                <SfButton CssClass="TSISaveButton" OnClick="OnLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideLinesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+            </FooterContentTemplate>
+        </DxPopup>       
+}
+
+
+
+@if (SelectShiftsPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectShiftsPopupVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@L["ShiftModalTitle"]"
+         Width="64%"
+         Height="44%"
+         MinWidth="1220px"
+         MinHeight="470px"
+         HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
-            <DxGridLayout CssClass="TSIGridLayout">
 
-                <Rows>
-                    <DxGridLayoutRow Height="45%" />
-                    <DxGridLayoutRow Height="45%" />
-                    <DxGridLayoutRow Height="10%" />
-                </Rows>
-
-                <Columns>
-                    <DxGridLayoutColumn Width="5%" />
-                    <DxGridLayoutColumn Width="42%" />
-                    <DxGridLayoutColumn Width="6%" />
-                    <DxGridLayoutColumn Width="42%" />
-                    <DxGridLayoutColumn Width="5%" />
-                </Columns>
-
-                <Items>
-                    <br />
-                    <DxGridLayoutItem Row="0" Column="1">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>Duruş Kodu: </strong></label>
-                            <SfComboBox @ref="HaltsComboBox"
-                                    TValue="string"
-                                    TItem="ListHaltReasonsDto"
-                                    Placeholder="Duruş Sebebi Seçin"
-                                    CssClass="e-multi-column"
-                                    DataSource="@HaltsList"
-                                    AllowFiltering="true"
-                                    PopupWidth="700px"
-                                    PopupHeight="500"
-                                    Value="LineDataSource.HaltCode">
-
-                                <ComboBoxFieldSettings Text="Code" Value="Code"></ComboBoxFieldSettings>
-
-                                <ComboBoxTemplates TItem="ListHaltReasonsDto">
-                                    <HeaderTemplate>
-                                        <table>
-                                            <tr>
-                                                <th class="e-text-center">Duruş Kodu</th>
-                                                <th class="e-text-center">Duruş Adı</th>
-                                            </tr>
-                                        </table>
-                                    </HeaderTemplate>
-                                    <ItemTemplate Context="cmbContext">
-
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="e-text-center">@((cmbContext as ListHaltReasonsDto).Code)</td>
-                                                    <td class="e-text-center">@((cmbContext as ListHaltReasonsDto).Name)</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </ItemTemplate>
-                                </ComboBoxTemplates>
-
-                                <ComboBoxEvents TValue="string"
-                                            TItem="ListHaltReasonsDto"
-                                            Filtering="HaltFiltering"
-                                            ValueChange="HaltValueChangeHandler"></ComboBoxEvents>
-                            </SfComboBox>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                    <DxGridLayoutItem Row="0" Column="3">
-                        <Template>
-                            <label class="TSIModalLabel"><strong>Duruş Süresi: </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.HaltTime" Placeholder="Duruş Süresini Yazınız.">
-                            </SfNumericTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Planlı: </strong></label><br />
-                            <SfSwitch @bind-Checked="LineDataSource.IsPlanned">
-                            </SfSwitch>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="ShiftsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ShiftsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                        AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@ShiftsDoubleClickHandler" TValue="ListShiftsDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListShiftsDto.Code) HeaderText="@L["ShiftModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListShiftsDto.Name) HeaderText="@L["ShiftModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
                         </Template>
                     </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
 
-                </Items>
-            </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSISaveButton" OnClick="OnLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-            <SfButton CssClass="TSICancelButton" OnClick="HideLinesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectStationsPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectStationsPopupVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@L["StationModalTitle"]"
+         Width="64%"
+         Height="44%"
+         MinWidth="1220px"
+         MinHeight="470px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="StationsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@StationsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                        AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@StationsDoubleClickHandler" TValue="ListStationsDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListStationsDto.Code) HeaderText="@L["StationModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListStationsDto.Name) HeaderText="@L["StationModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectEmployeesPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectEmployeesPopupVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@L["EmployeeModalTitle"]"
+         Width="64%"
+         Height="44%"
+         MinWidth="1220px"
+         MinHeight="470px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="EmployeesGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@EmployeesList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                        AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@EmployeesDoubleClickHandler" TValue="ListEmployeesDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListEmployeesDto.Code) HeaderText="@L["EmployeeModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListEmployeesDto.Name) HeaderText="@L["EmployeeModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListEmployeesDto.Surname) HeaderText="@L["EmployeeModalGridSurName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectWorkOrdersPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectWorkOrdersPopupVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@L["WordOrderModalTitle"]"
+         Width="64%"
+         Height="44%"
+         MinWidth="1220px"
+         MinHeight="470px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="WorkOrdersGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@WorkOrdersList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                        AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@WorkOrdersDoubleClickHandler" TValue="ListWorkOrdersDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListWorkOrdersDto.Code) HeaderText="@L["WordOrderModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderNo) HeaderText="@L["WordOrderModalGridWorkOrderNr"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListWorkOrdersDto.ProductCode) HeaderText="@L["WordOrderModalGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListWorkOrdersDto.ProductName) HeaderText="@L["WordOrderModalGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectHaltReasonsPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectHaltReasonsPopupVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@L["HaltModalTitle"]"
+         Width="64%"
+         Height="44%"
+         MinWidth="1220px"
+         MinHeight="470px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIGridCards">
+
+                                <CardContent>
+                                    <SfGrid ID="HaltReasonsGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@HaltReasonsList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                        AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@HaltReasonsDoubleClickHandler" TValue="ListHaltReasonsDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListHaltReasonsDto.Code) HeaderText="@L["HaltModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListHaltReasonsDto.Name) HeaderText="@L["HaltModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListHaltReasonsDto.IsPlanned) DisplayAsCheckBox=true HeaderText="@L["HaltModalGridIsPlanned"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
         </FooterContentTemplate>
     </DxPopup>
 }

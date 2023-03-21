@@ -15,19 +15,19 @@ namespace TsiErp.Business.Entities.Route.Validations
         {
             RuleFor(x => x.Code)
                 .NotEmpty()
-                .WithMessage("Lütfen rota kodunu yazın.")
+                .WithMessage("ValidatorCodeEmpty")
                 .MaximumLength(17)
-                .WithMessage("Rota kodu 17 karakterden fazla olamaz.");
+                .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen rota açıklamasını yazın.")
+                .WithMessage("ValidatorNameEmpty")
                 .MaximumLength(200)
-                .WithMessage("Rota açıklaması 200 karakterden fazla olamaz.");
+                .WithMessage("ValidatorNameMaxLenght");
 
             RuleFor(x => x.ProductID)
-               .Must(x => x.HasValue && x.Value != Guid.Empty)
-              .WithMessage("Lütfen üretilecek ürünü seçin.");
+                .Must(x => x.HasValue && x.Value != Guid.Empty)
+               .WithMessage("ValidatorProductID");
         }
     }
 }

@@ -117,8 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AmortizationLabel" xml:space="preserve">
+    <value>Amortization:</value>
+  </data>
+  <data name="AmountLabel" xml:space="preserve">
+    <value>Quantity:</value>
+  </data>
+  <data name="AreaCoveredLabel" xml:space="preserve">
+    <value>Area Covered:</value>
+  </data>
+  <data name="Brand" xml:space="preserve">
+    <value>BRAND</value>
+  </data>
+  <data name="BrandLabel" xml:space="preserve">
+    <value>Brand:</value>
+  </data>
+  <data name="CapacityLabel" xml:space="preserve">
+    <value>Capacity:</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>STATION CODE</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Station Code:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -144,8 +171,26 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Stations</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="InventoryGridAmount" xml:space="preserve">
+    <value>QUANTITY</value>
+  </data>
+  <data name="InventoryGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Activity:</value>
+  </data>
+  <data name="KWALabel" xml:space="preserve">
+    <value>KWA:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -153,13 +198,124 @@
   <data name="LoadingText" xml:space="preserve">
     <value>The records are loading..</value>
   </data>
+  <data name="MachineCostLabel" xml:space="preserve">
+    <value>Machine Cost:</value>
+  </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>The record you selected is using by {0}.</value>
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="ModelLabel" xml:space="preserve">
+    <value>Model:</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>STATION NAME</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Station Name:</value>
+  </data>
+  <data name="PowerFactorLabel" xml:space="preserve">
+    <value>Power Factor:</value>
+  </data>
+  <data name="ProductCodeLabel" xml:space="preserve">
+    <value>Product Code:</value>
+  </data>
+  <data name="ProductModalGridCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="ProductModalGridName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ShiftLabel" xml:space="preserve">
+    <value>Shift:</value>
+  </data>
+  <data name="ShiftWorkingTimeLabel" xml:space="preserve">
+    <value>Shift Working Time:</value>
+  </data>
+  <data name="StationGroup" xml:space="preserve">
+    <value>STATION GROUP</value>
+  </data>
+  <data name="StationGroupLabel" xml:space="preserve">
+    <value>Station Group:</value>
+  </data>
+  <data name="StationGroupModalGridCode" xml:space="preserve">
+    <value>STATION GROUP CODE</value>
+  </data>
+  <data name="StationGroupModalGridName" xml:space="preserve">
+    <value>STATION GROUP NAME</value>
+  </data>
+  <data name="StationGroupModalGridTotalEmployees" xml:space="preserve">
+    <value>TOTAL EMPLOYEES</value>
+  </data>
+  <data name="StationGroupModalTitle" xml:space="preserve">
+    <value>Station Groups</value>
+  </data>
+  <data name="Tab1Name" xml:space="preserve">
+    <value>General Information</value>
+  </data>
+  <data name="Tab2Name" xml:space="preserve">
+    <value>Station Inventory</value>
+  </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>The station you selected will be permanently deleted.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>The line you selected will be permanently deleted.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Attention</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Stations</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>Stations</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Stations</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Machinery &amp; Workforce Management Management &gt; Main Records</value>
+  </data>
+  <data name="UIWarningPopupMessageBase" xml:space="preserve">
+    <value>There is a line in the inventory with the same product code.</value>
+  </data>
+  <data name="UIWarningPopupTitleBase" xml:space="preserve">
+    <value>Warning</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="UsageAreaLabel" xml:space="preserve">
+    <value>Usage Area:</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Please enter the station code.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Station code cannot exceed 17 characters.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Please enter the station name.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>Station name cannot exceed 200 characters.</value>
+  </data>
+  <data name="ValidatorStationGroupID" xml:space="preserve">
+    <value>Please select a station group.</value>
+  </data>
+  <data name="XLabel" xml:space="preserve">
+    <value>X:</value>
+  </data>
+  <data name="YLabel" xml:space="preserve">
+    <value>Y:</value>
   </data>
 </root>

@@ -15,17 +15,17 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Validations
         {
             RuleFor(x => x.RegistrationNo)
               .NotEmpty()
-              .WithMessage("Lütfen bakım kayıt numarasını yazın.")
+              .WithMessage("ValidatorCodeEmpty")
               .MaximumLength(17)
-              .WithMessage("Bakım kayıt numarası, 17 karakterden fazla olamaz.");
+              .WithMessage("ValidatorCodeMaxLength");
 
             RuleFor(x => x.StationID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("Lütfen istasyon seçin.");
+               .WithMessage("ValidatorStationID");
 
             RuleFor(x => x.PeriodID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("Lütfen bakım türü seçin.");
+               .WithMessage("ValidatorPeriodID");
 
         }
     }

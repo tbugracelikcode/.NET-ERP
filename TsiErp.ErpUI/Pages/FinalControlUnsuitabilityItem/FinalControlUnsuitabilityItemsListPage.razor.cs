@@ -8,6 +8,7 @@ namespace TsiErp.ErpUI.Pages.FinalControlUnsuitabilityItem
         protected override async void OnInitialized()
         {
             BaseCrudService = FinalControlUnsuitabilityItemsService;
+            _L = L;
         }
 
         protected override Task BeforeInsertAsync()

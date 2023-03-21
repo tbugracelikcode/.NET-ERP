@@ -9,6 +9,7 @@ namespace TsiErp.ErpUI.Pages.CustomerComplaintItem
         protected override async void OnInitialized()
         {
             BaseCrudService = CustomerComplaintItemsService;
+            _L = L;
         }
 
         protected override Task BeforeInsertAsync()

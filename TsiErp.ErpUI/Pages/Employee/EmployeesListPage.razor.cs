@@ -8,11 +8,21 @@ using System.Reflection;
 using TsiErp.Entities.Entities.Department.Dtos;
 using TsiErp.Entities.Entities.Employee.Dtos;
 using TsiErp.Entities.Enums;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.Employee
 {
     public partial class EmployeesListPage
     {
+
+        [Inject]
+        ModalManager ModalManager { get; set; }
+
+        protected override async void OnInitialized()
+        {
+            BaseCrudService = EmployeesService;
+            _L = L;
+        }
 
         #region Combobox İşlemleri
 
@@ -31,16 +41,10 @@ namespace TsiErp.ErpUI.Pages.Employee
                        .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
 
                        }).ToList();
+
         }
 
         #endregion
-
-        protected override async void OnInitialized()
-        {
-            BaseCrudService = EmployeesService;
-        }
-
-       
 
         protected override Task BeforeInsertAsync()
         {
@@ -49,9 +53,39 @@ namespace TsiErp.ErpUI.Pages.Employee
                 IsActive = true
             };
 
+            foreach (var item in bloodtypes)
+            {
+                item.BloodTypeName = L[item.BloodTypeName];
+            }
+
             EditPageVisible = true;
 
             return Task.CompletedTask;
+        }
+
+        public override async void ShowEditPage()
+        {
+            foreach(var item in bloodtypes)
+            {
+                item.BloodTypeName = L[item.BloodTypeName];
+            }
+
+            if (DataSource != null)
+            {
+                bool? dataOpenStatus = (bool?)DataSource.GetType().GetProperty("DataOpenStatus").GetValue(DataSource);
+
+                if (dataOpenStatus == true && dataOpenStatus != null)
+                {
+                    EditPageVisible = false;
+                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);
+                    await InvokeAsync(StateHasChanged);
+                }
+                else
+                {
+                    EditPageVisible = true;
+                    await InvokeAsync(StateHasChanged);
+                }
+            }
         }
 
         #region Departman ButtonEdit

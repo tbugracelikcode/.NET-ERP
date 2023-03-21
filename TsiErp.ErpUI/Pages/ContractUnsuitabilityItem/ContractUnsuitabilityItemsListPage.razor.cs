@@ -8,6 +8,7 @@ namespace TsiErp.ErpUI.Pages.ContractUnsuitabilityItem
         protected override async void OnInitialized()
         {
             BaseCrudService = ContractUnsuitabilityItemsService;
+            _L = L;
         }
 
         protected override Task BeforeInsertAsync()

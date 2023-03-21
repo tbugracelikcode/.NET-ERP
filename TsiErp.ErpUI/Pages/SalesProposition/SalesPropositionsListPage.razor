@@ -57,7 +57,7 @@ else
                 <Template>
                     <SfCard class="TSIListPageTitleCard">
                         <CardContent>
-                            <TsiBreadCrumb PreviousMenus="Satış Yönetimi > İşlemler" CurrentMenu="Verilen Teklifler" />
+                            <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
                         </CardContent>
                         <CardFooter>
                         </CardFooter>
@@ -76,14 +76,14 @@ else
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", "Verilen Teklifler", "VerilenTeklifler"))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", "Verilen Teklifler", "VerilenTeklifler"))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
@@ -95,15 +95,15 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ListSalesPropositionsDto.FicheNo) HeaderText="TEKLİF NO." TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListSalesPropositionsDto.Date_) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="TARİH" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListSalesPropositionsDto.FicheNo) HeaderText="@L["FicheNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListSalesPropositionsDto.Date_) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["Date_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
-                                    <GridColumn Field=@nameof(ListSalesPropositionsDto.CurrentAccountCardCode) HeaderText="CARİ HESAP KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListSalesPropositionsDto.CurrentAccountCardName) HeaderText="CARİ HESAP ÜNVANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListSalesPropositionsDto.CurrencyCode) HeaderText="PARA BİRİMİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListSalesPropositionsDto.PaymentPlanName) Type="ColumnType.Number" HeaderText="ÖDEME PLANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListSalesPropositionsDto.BranchCode) HeaderText="ŞUBE KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListSalesPropositionsDto.WarehouseCode) HeaderText="DEPO KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListSalesPropositionsDto.CurrentAccountCardCode) HeaderText="@L["CurrentAccountCardCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListSalesPropositionsDto.CurrentAccountCardName) HeaderText="@L["CurrentAccountCardName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListSalesPropositionsDto.CurrencyCode) HeaderText="@L["CurrencyCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListSalesPropositionsDto.PaymentPlanName) Type="ColumnType.Number" HeaderText="@L["PaymentPlanName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListSalesPropositionsDto.BranchCode) HeaderText="@L["BranchCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListSalesPropositionsDto.WarehouseCode) HeaderText="@L["WarehouseCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
 
                                 </GridColumns>
@@ -121,7 +121,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Verilen Teklifler"
+         HeaderText="@L["EditModalTitle"]"
          Width="53%"
          Height="83%"
          MinWidth="1000px"
@@ -158,35 +158,35 @@ else
 
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Teklif No: </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" Placeholder="Teklif Numarası" @bind-Value="DataSource.FicheNo"></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["FicheNoLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.FicheNo"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Cari Hesap Kodu: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>@L["CurrentAccountCardCodeLabel"] </strong></label><br />
                             <SfTextBox @ref="@CurrentAccountCardsCodeButtonEdit" Created="@CurrentAccountCardsCodeOnCreateIcon" @bind-Value="DataSource.CurrentAccountCardCode" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="0" Column="5">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Özel Kod: </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" Placeholder="Özel Kod" @bind-Value="DataSource.SpecialCode"></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["SpecialCodeLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.SpecialCode"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Tarih: </strong></label><br />
-                            <SfDatePicker @bind-Value="@DataSource.Date_" Placeholder="Teklif Tarihi"></SfDatePicker>
+                            <label class="TSIModalLabel"><strong>@L["Date_Label"]</strong></label><br />
+                            <SfDatePicker @bind-Value="@DataSource.Date_" ></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong> Cari Hesap Ünvanı: </strong></label>
+                            <label class="TSIModalLabel"><strong>@L["CurrentAccountCardNameLabel"] </strong></label>
                             <SfTextBox @ref="@CurrentAccountCardsNameButtonEdit" Created="@CurrentAccountCardsNameOnCreateIcon" @bind-Value="DataSource.CurrentAccountCardName" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange"></SfTextBox>
 
                         </Template>
@@ -194,14 +194,14 @@ else
 
                     <DxGridLayoutItem Row="1" Column="5">
                         <Template>
-                          <label class="TSIModalLabel"><strong>Seviyat Adresi: </strong></label><br />
+                          <label class="TSIModalLabel"><strong>@L["ShippingAdressCodeLabel"] </strong></label><br />
                             <SfTextBox Enabled=@ShippingAdressEnable @ref="@ShippingAdressesButtonEdit" Created="@ShippingAdressesOnCreateIcon" @bind-Value="DataSource.ShippingAdressCode" ShowClearButton=true ValueChange="ShippingAdressesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Şube: </strong></label>
+                            <label class="TSIModalLabel"><strong>@L["BranchCodeLabel"] </strong></label>
 
                             <SfTextBox @ref="@BranchesButtonEdit" Created="@BranchesOnCreateIcon" @bind-Value="DataSource.BranchCode" ShowClearButton=true ValueChange="BranchesOnValueChange"></SfTextBox>
                         </Template>
@@ -209,28 +209,28 @@ else
 
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong> Ödeme Planı: </strong></label>
+                            <label class="TSIModalLabel"><strong>@L["PaymentPlanNameLabel"]</strong></label>
                             <SfTextBox @ref="@PaymentPlansButtonEdit" Created="@PaymentPlansOnCreateIcon" @bind-Value="DataSource.PaymentPlanName" ShowClearButton=true ValueChange="PaymentPlansOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="2" Column="5">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Açıklama: </strong></label><br />
-                            <SfTextBox Multiline=true Placeholder="Teklif Açıklaması" @bind-Value="@DataSource.Description_"></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["Description_Label"]</strong></label><br />
+                            <SfTextBox Multiline=true @bind-Value="@DataSource.Description_"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="3" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Depo: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>@L["WarehouseCodeLabel"] </strong></label><br />
                             <SfTextBox @ref="@WarehousesButtonEdit" Created="@WarehousesOnCreateIcon" @bind-Value="DataSource.WarehouseCode" ShowClearButton=true ValueChange="WarehousesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="3" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Para Birimi: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>@L["CurrencyCodeLabel"] </strong></label><br />
 
                             <SfTextBox @ref="@CurrenciesButtonEdit" Created="@CurrenciesOnCreateIcon" @bind-Value="DataSource.CurrencyCode" ShowClearButton=true ValueChange="CurrenciesOnValueChange"></SfTextBox>
 
@@ -239,15 +239,15 @@ else
 
                     <DxGridLayoutItem Row="3" Column="5">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Kur Tutarı: </strong></label>
-                            <SfNumericTextBox CssClass="TSITxtBox" Min="0" TValue="decimal" @bind-Value="DataSource.ExchangeRate" Placeholder="Kur Tutarı"></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>@L["ExchangeRateLabel"] </strong></label>
+                            <SfNumericTextBox CssClass="TSITxtBox" Min="0" TValue="decimal" @bind-Value="DataSource.ExchangeRate" ></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                      <DxGridLayoutItem Row="4" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Geçerlilik Tarihi: </strong></label>
-                            <SfDatePicker @bind-Value="@DataSource.ValidityDate_" Placeholder="Geçerlilik Tarihi"></SfDatePicker>
+                            <label class="TSIModalLabel"><strong>@L["ValidityDate_Label"]</strong></label>
+                            <SfDatePicker @bind-Value="@DataSource.ValidityDate_" ></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -261,12 +261,12 @@ else
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.ProductName) HeaderText="STOK AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.UnitSetCode) HeaderText="BİRİM SETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.UnitPrice) Format="N2" Type="ColumnType.Number" HeaderText="BİRİM FİYAT" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.LineAmount) Format="N2" Type="ColumnType.Number" HeaderText="SATIR TUTARI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.ProductName) HeaderText="@L["LineGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.UnitSetCode) HeaderText="@L["LineGridUnitSet"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.UnitPrice) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridUnitPrice"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.LineAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridLineAmount"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>
@@ -274,36 +274,36 @@ else
 
                     <DxGridLayoutItem Row="7" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Brüt Toplam: </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" Placeholder="Brüt Tutarı Yazınız." @bind-Value="DataSource.GrossAmount" Enabled=false></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>@L["GrossAmountLabel"] </strong></label>
+                            <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox"  @bind-Value="DataSource.GrossAmount" Enabled=false></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="7" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>İndirim Toplamı: </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" Placeholder=" Toplam İndirimli Tutarı Yazınız." @bind-Value="DataSource.TotalDiscountAmount" Enabled=false></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>@L["TotalDiscountAmountLabel"] </strong></label>
+                            <SfNumericTextBox Min="0" TValue="decimal"  @bind-Value="DataSource.TotalDiscountAmount" Enabled=false></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="7" Column="5">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Toplam Tutar: </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" Placeholder="KDV Hariç Tutarı Yazınız." @bind-Value="DataSource.TotalVatExcludedAmount" Enabled=false></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>@L["TotalVatExcludedAmountLabel"] </strong></label>
+                            <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox"  @bind-Value="DataSource.TotalVatExcludedAmount" Enabled=false></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="8" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>KDV Toplamı: </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" Placeholder="KDV Tutarı Yazınız." @bind-Value="DataSource.TotalVatAmount" Enabled=false></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>@L["TotalVatAmountLabel"] </strong></label>
+                            <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" @bind-Value="DataSource.TotalVatAmount" Enabled=false></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="8" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Net Toplam: </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" Placeholder="Net Tutarı Yazınız." @bind-Value="DataSource.NetAmount" Enabled=false></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>@L["NetAmountLabel"] </strong></label>
+                            <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox"  @bind-Value="DataSource.NetAmount" Enabled=false></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -311,8 +311,8 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 
@@ -320,7 +320,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Teklif Satırları"
+         HeaderText="@L["EditLineModalTitle"]"
          Width="40%"
          Height="65%"
          MinWidth="760px"
@@ -354,37 +354,37 @@ else
                     <br />
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Stok Kodu: </strong></label>
+                            <label class="TSIModalLabel"><strong>@L["ProductCodeLineLabel"] </strong></label>
                                <SfTextBox @ref="@ProductsCodeButtonEdit" Created="@ProductsCodeOnCreateIcon" @bind-Value="LineDataSource.ProductCode" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Stok Adı: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>@L["ProductNameLineLabel"]</strong></label><br />
                              <SfTextBox @ref="@ProductsNameButtonEdit" Created="@ProductsNameOnCreateIcon" @bind-Value="LineDataSource.ProductName" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Birim Seti Kodu: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>@L["UnitSetCodeLineLabel"] </strong></label><br />
                             <SfTextBox @ref="@UnitSetsButtonEdit" Created="@UnitSetsOnCreateIcon" @bind-Value="LineDataSource.UnitSetCode" ShowClearButton=true ValueChange="UnitSetsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="3" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Satır Açıklaması: </strong></label><br />
-                            <SfTextBox @bind-Value="LineDataSource.LineDescription" Placeholder="Satır Açıklamasını Yazınız." Multiline=true></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["LineDescriptionLineLabel"] </strong></label><br />
+                            <SfTextBox @bind-Value="LineDataSource.LineDescription" Multiline=true></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
 
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Birim Fiyat: </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.UnitPrice" Placeholder="Birim Fiyatı Yazınız." OnChange="LineCalculate">
+                            <label class="TSIModalLabel"><strong>@L["UnitPriceLineLabel"] </strong></label>
+                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.UnitPrice"OnChange="LineCalculate">
 
 
                             </SfNumericTextBox>
@@ -393,50 +393,50 @@ else
 
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Miktar: </strong></label>
-                            <SfNumericTextBox TValue="decimal" @bind-Value="LineDataSource.Quantity" Placeholder="Miktarı Yazınız." OnChange="LineCalculate"></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>@L["QuantityLineLabel"]</strong></label>
+                            <SfNumericTextBox TValue="decimal" @bind-Value="LineDataSource.Quantity" OnChange="LineCalculate"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong> KDV Oranı: </strong></label>
-                            <SfNumericTextBox Min="0" @bind-Value="LineDataSource.VATrate" Placeholder="KDV Oranı Yazınız." OnChange="LineCalculate"></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>@L["VATrateLineLabel"] </strong></label>
+                            <SfNumericTextBox Min="0" @bind-Value="LineDataSource.VATrate"  OnChange="LineCalculate"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="3" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>KDV Tutarı: </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.VATamount" Placeholder="KDV Tutarı Yazınız."></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>@L["VATamountLineLabel"] </strong></label>
+                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.VATamount" ></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="4" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>İndirim Oranı: </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.DiscountRate" Placeholder="İndirim Oranını Yazınız." Enabled=false></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>@L["DiscountRateLineLabel"] </strong></label>
+                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.DiscountRate"  Enabled=false></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="5" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>İndirim Tutarı: </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.DiscountAmount" Placeholder="İndirim Tutarı Yazınız." OnChange="LineCalculate"></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>@L["DiscountAmountLineLabel"] </strong></label>
+                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.DiscountAmount" OnChange="LineCalculate"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="6" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Satır Tutarı: </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.LineAmount" Placeholder="Satır Tutarı Yazınız." Enabled=false style="font-size:16px; font-weight:bold;"></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>@L["LineAmountLineLabel"] </strong></label>
+                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.LineAmount" Enabled=false style="font-size:16px; font-weight:bold;"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="7" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Satır Toplam Tutarı: </strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.LineTotalAmount" Placeholder="Satır Toplam Tutarı Yazınız." Enabled=false style="font-size:16px; font-weight:bold;"></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>@L["LineTotalAmountLineLabel"]</strong></label>
+                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.LineTotalAmount"  Enabled=false style="font-size:16px; font-weight:bold;"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -444,8 +444,8 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSISaveButton" OnClick="OnLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-            <SfButton CssClass="TSICancelButton" OnClick="HideLinesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+            <SfButton CssClass="TSISaveButton" OnClick="OnLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideLinesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 
@@ -453,7 +453,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Siparişe Dönüştür"
+         HeaderText="@L["EditConverttoOrderModalTitle"]"
          Width="68%"
          Height="47%"
          MinWidth="1300px"
@@ -499,13 +499,13 @@ else
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Type="ColumnType.CheckBox" Width="50" HeaderText="SİPARİŞ"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.ProductName) HeaderText="STOK AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.UnitSetCode) HeaderText="BİRİM SETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.UnitPrice) Format="N2" Type="ColumnType.Number" HeaderText="BİRİM FİYAT" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.LineAmount) Format="N2" Type="ColumnType.Number" HeaderText="SATIR TUTARI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.SalesPropositionLineState) HeaderText="DURUM" TextAlign="TextAlign.Center" Width="120" Context="convert2OrderContext">
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.ProductCode) HeaderText="@L["OrderGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.ProductName) HeaderText="@L["OrderGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.UnitSetCode) HeaderText="@L["OrderGridUnitSet"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.Quantity) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderGridQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.UnitPrice) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderGridUnitPrice"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.LineAmount) Format="N2" Type="ColumnType.Number" HeaderText="@L["OrderGridLineAmount"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectSalesPropositionLinesDto.SalesPropositionLineState) HeaderText="@L["OrderGridState"]" TextAlign="TextAlign.Center" Width="120" Context="convert2OrderContext">
                                     </GridColumn>
 
                                 </GridColumns>
@@ -517,7 +517,7 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSICancelButton" OnClick="HideConvertToOrderPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideConvertToOrderPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 
@@ -530,7 +530,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Birim Setleri"
+         HeaderText="@L["UnitSetModalTitle"]"
          Width="64%"
          Height="44%"
          MinWidth="1220px"
@@ -555,8 +555,8 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(ListUnitSetsDto.Code) HeaderText="BİRİM SETİ KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListUnitSetsDto.Name) HeaderText="BİRİM SETİ AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListUnitSetsDto.Code) HeaderText="@L["UnitSetModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListUnitSetsDto.Name) HeaderText="@L["UnitSetModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                         </GridColumns>
                                     </SfGrid>
@@ -571,8 +571,6 @@ else
 
         </BodyTemplate>
         <FooterContentTemplate>
-            @*<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>*@
         </FooterContentTemplate>
     </DxPopup>
 }
@@ -583,7 +581,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Para Birimleri"
+         HeaderText="@L["CurrencyModalTitle"]"
          Width="64%"
          Height="44%"
          MinWidth="1220px"
@@ -607,8 +605,8 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(ListCurrenciesDto.Code) HeaderText="PARA BİRİMİ KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrenciesDto.Name) HeaderText="PARA BİRİMİ ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrenciesDto.Code) HeaderText="@L["CurrencyModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrenciesDto.Name) HeaderText="@L["CurrencyModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         </GridColumns>
                                     </SfGrid>
                                 </CardContent>
@@ -622,8 +620,6 @@ else
 
         </BodyTemplate>
         <FooterContentTemplate>
-            @*<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>*@
         </FooterContentTemplate>
     </DxPopup>
 }
@@ -634,7 +630,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Şubeler"
+         HeaderText="@L["BranchModalTitle"]"
          Width="64%"
          Height="44%"
          MinWidth="1220px"
@@ -658,11 +654,10 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(ListBranchesDto.Code) HeaderText="ŞUBE KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListBranchesDto.Name) HeaderText="ŞUBE ADI" TextAlign="TextAlign.Center" Width="120">
+                                            <GridColumn Field=@nameof(ListBranchesDto.Code) HeaderText="@L["BranchModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListBranchesDto.Name) HeaderText="@L["BranchModalGridName"]" TextAlign="TextAlign.Center" Width="120">
 
                                             </GridColumn>
-                                            <GridColumn Field=@nameof(ListBranchesDto.Description_) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         </GridColumns>
                                     </SfGrid>
                                 </CardContent>
@@ -676,8 +671,6 @@ else
 
         </BodyTemplate>
         <FooterContentTemplate>
-            @*<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>*@
         </FooterContentTemplate>
     </DxPopup>
 }
@@ -688,7 +681,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Ödeme Planları"
+         HeaderText="@L["PaymentPlanModalTitle"]"
          Width="64%"
          Height="44%"
          MinWidth="1220px"
@@ -711,10 +704,10 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(ListPaymentPlansDto.Code) HeaderText="ÖDEME PLANI KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListPaymentPlansDto.Name) HeaderText="ÖDEME PLANI AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListPaymentPlansDto.Days_) Type="ColumnType.Number" HeaderText="VADE GÜNÜ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListPaymentPlansDto.DelayMaturityDifference) Format="N2" Type="ColumnType.Number" HeaderText="GECİKME VADE FARKI ORANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListPaymentPlansDto.Code) HeaderText="@L["PaymentPlanModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListPaymentPlansDto.Name) HeaderText="@L["PaymentPlanModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListPaymentPlansDto.Days_) Type="ColumnType.Number" HeaderText="@L["PaymentPlanModalGridDays"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListPaymentPlansDto.DelayMaturityDifference) Format="N2" Type="ColumnType.Number" HeaderText="@L["PaymentPlanModalGridDelayMat"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         </GridColumns>
                                     </SfGrid>
                                 </CardContent>
@@ -728,8 +721,6 @@ else
 
         </BodyTemplate>
         <FooterContentTemplate>
-            @*<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>*@
         </FooterContentTemplate>
     </DxPopup>
 }
@@ -740,7 +731,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Depolar"
+         HeaderText="@L["WarehouseModalTitle"]"
          Width="64%"
          Height="44%"
          MinWidth="1220px"
@@ -764,8 +755,8 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(ListWarehousesDto.Code) HeaderText="DEPO KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListWarehousesDto.Name) HeaderText="DEPO ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListWarehousesDto.Code) HeaderText="@L["WarehouseModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListWarehousesDto.Name) HeaderText="@L["WarehouseModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         </GridColumns>
                                     </SfGrid>
                                 </CardContent>
@@ -779,8 +770,6 @@ else
 
         </BodyTemplate>
         <FooterContentTemplate>
-            @*<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>*@
         </FooterContentTemplate>
     </DxPopup>
 }
@@ -791,7 +780,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Cari Hesap Kartları"
+         HeaderText="@L["CurrentAccountModalTitle"]"
          Width="64%"
          Height="44%"
          MinWidth="1220px"
@@ -816,12 +805,12 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Code) HeaderText="CARİ KOD" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Name) HeaderText="CARİ ÜNVAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Tel1) HeaderText="TELEFON (1)" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Responsible) HeaderText="İLGİLİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Email) HeaderText="E-POSTA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.TaxNumber) HeaderText="VERGİ NUMARASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Code) HeaderText="@L["CurrentAccountModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Name) HeaderText="@L["CurrentAccountModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Tel1) HeaderText="@L["CurrentAccountModalGridTel"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Responsible) HeaderText="@L["CurrentAccountModalGridResponsible"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Email) HeaderText="@L["CurrentAccountModalGridEmail"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.TaxNumber) HeaderText="@L["CurrentAccountModalGridTaxNumber"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         </GridColumns>
 
                                     </SfGrid>
@@ -836,8 +825,6 @@ else
 
         </BodyTemplate>
         <FooterContentTemplate>
-            @*<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>*@
         </FooterContentTemplate>
     </DxPopup>
 }
@@ -848,7 +835,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Sevkiyat Adresleri"
+         HeaderText="@L["ShippingAdressModalTitle"]"
          Width="64%"
          Height="44%"
          MinWidth="1220px"
@@ -873,9 +860,9 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(ListShippingAdressesDto.Code) HeaderText="SEVKİYAT ADRESİ KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListShippingAdressesDto.Name) HeaderText="SEVKİYAT ADRESİ AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListShippingAdressesDto.Adress1) HeaderText="ADRES" TextAlign="TextAlign.Center" Width="400"></GridColumn>
+                                            <GridColumn Field=@nameof(ListShippingAdressesDto.Code) HeaderText="@L["ShippingAdressModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListShippingAdressesDto.Name) HeaderText="@L["ShippingAdressModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListShippingAdressesDto.Adress1) HeaderText="@L["ShippingAdressModalGridAdress"]" TextAlign="TextAlign.Center" Width="400"></GridColumn>
                                         </GridColumns>
 
                                     </SfGrid>
@@ -900,7 +887,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Stok Kartları"
+         HeaderText="@L["ProductModalTitle"]"
          Width="64%"
          Height="44%"
          MinWidth="1220px"
@@ -925,8 +912,8 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(ListProductsDto.Code) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListProductsDto.Name) HeaderText="STOK AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListProductsDto.Code) HeaderText="@L["ProductModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListProductsDto.Name) HeaderText="@L["ProductModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         </GridColumns>
 
                                     </SfGrid>
