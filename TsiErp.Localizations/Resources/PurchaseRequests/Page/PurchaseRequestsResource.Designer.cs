@@ -1024,7 +1024,7 @@ namespace TsiErp.Localizations.Resources.PurchaseRequests.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Satın Alma Yönetimi &gt; İşlemler.
+        ///   Looks up a localized string similar to Satın Alma Yönetimi &gt; Hareketler.
         /// </summary>
         public static string UIPreviousMenu {
             get {

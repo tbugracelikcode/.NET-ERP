@@ -439,7 +439,7 @@
     <value>Purchase Requests</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Purchasing Management &gt; İşlemler</value>
+    <value>Purchasing Management &gt; Transactions</value>
   </data>
   <data name="UIWarningPopupMessageBase1" xml:space="preserve">
     <value>It is not possible to save rows without selecting the unit set.</value>

@@ -472,7 +472,7 @@
     <value>Satış Siparişleri</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Satış Yönetimi &gt; İşlemler</value>
+    <value>Satış Yönetimi &gt; Hareketler</value>
   </data>
   <data name="UIWarningPopupMessageBase1" xml:space="preserve">
     <value>Birim seti seçilmeden satır kaydetme işlemi yapılamaz.</value>

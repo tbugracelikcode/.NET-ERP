@@ -307,7 +307,7 @@
     <value>Önleyici / Planlı Bakım Kayıtları</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Bakım Yönetimi &gt; İşlemler</value>
+    <value>Bakım Yönetimi &gt; Hareketler</value>
   </data>
   <data name="UIWarningPopupMessageBase" xml:space="preserve">
     <value>Miktar 0 olduğu için satır kaydetme işlemi yapılamamaktadır.</value>

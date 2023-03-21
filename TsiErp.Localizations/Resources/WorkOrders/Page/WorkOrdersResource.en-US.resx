@@ -211,7 +211,7 @@
     <value>Work Orders</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Production Management &gt; İşlemler</value>
+    <value>Production Management &gt; Transactions</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>

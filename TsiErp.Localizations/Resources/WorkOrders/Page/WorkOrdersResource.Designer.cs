@@ -340,7 +340,7 @@ namespace TsiErp.Localizations.Resources.WorkOrders.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Üretim Yönetimi &gt; İşlemler.
+        ///   Looks up a localized string similar to Üretim Yönetimi &gt; Hareketler.
         /// </summary>
         public static string UIPreviousMenu {
             get {

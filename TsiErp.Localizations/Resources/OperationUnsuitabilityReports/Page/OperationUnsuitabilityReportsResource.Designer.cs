@@ -710,7 +710,7 @@ namespace TsiErp.Localizations.Resources.OperationUnsuitabilityReports.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kalite Kontrol &gt; İşlemler &gt; Uygunsuzluk Kayıtları.
+        ///   Looks up a localized string similar to Kalite Kontrol &gt; Hareketler &gt; Uygunsuzluk Kayıtları.
         /// </summary>
         public static string UIPreviousMenu {
             get {
