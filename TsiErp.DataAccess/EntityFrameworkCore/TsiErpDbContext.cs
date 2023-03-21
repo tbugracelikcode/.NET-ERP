@@ -106,15 +106,20 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
 
         public TsiErpDbContext()
         {
+            Database.AutoTransactionsEnabled = true;
+
             this.BasePath = Directory.GetCurrentDirectory();
             this.JsonFile = "appsettings.json";
             this.SoftDeleteSectionName = "AppParams";
             this.SoftDeleteKey = "IsSoftDelete";
             this.ConnectionStringKey = "AppConnectionString";
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            
+
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(BasePath)
                 .AddJsonFile(JsonFile)
@@ -133,6 +138,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            
+
             if (_IsSoftDelete)
             {
                 foreach (var entityType in builder.Model.GetEntityTypes())

@@ -1,18 +1,9 @@
-﻿using Castle.Components.DictionaryAdapter.Xml;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Tsi.Core.Entities;
 using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.Guids;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.Logging;
 
 namespace TsiErp.DataAccess.EntityFrameworkCore.Repositories
 {
@@ -132,10 +123,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Repositories
 
             _dbContext.ChangeTracker.Clear();
 
-            //_dbContext.Attach(entity);
-
-            //var updatedEntity = _dbContext.Update(entity).Entity;
-
             _dbContext.Attach(entity);
 
             _dbContext.Entry(entity).State = EntityState.Modified;
@@ -151,7 +138,8 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Repositories
                 entity.DataOpenStatus = lockRow;
                 entity.DataOpenStatusUserId = userId;
 
-                _dbContext.ChangeTracker.Clear(); _dbContext.Attach(entity);
+                _dbContext.ChangeTracker.Clear(); 
+                _dbContext.Attach(entity);
 
                 _dbContext.Entry(entity).State = EntityState.Modified;
                 return (TEntity)entity;
@@ -207,6 +195,11 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Repositories
         public async Task<int> SaveChanges()
         {
             return await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<IList<TEntity>> FromSqlRawAsync(string sql, params object[] parameters)
+        {
+            return await _dbContext.Set<TEntity>().FromSqlRaw(sql, parameters).IgnoreQueryFilters().ToListAsync();
         }
     }
 }

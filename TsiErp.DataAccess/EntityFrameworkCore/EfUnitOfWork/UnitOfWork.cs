@@ -80,7 +80,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork
     {
         private readonly TsiErpDbContext _dbContext;
 
-
         public UnitOfWork()
         {
             _dbContext = new TsiErpDbContext();
@@ -108,13 +107,19 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork
         #endregion
 
         #region SaveChanges Method
+
+        //public int ContextSaveChanges()
+        //{
+        //    return _dbContext.SaveChanges();
+        //}
+
         public async Task<int> SaveChanges()
         {
             using (var dbContextTransaction = _dbContext.Database.BeginTransaction())
             {
                 try
                 {
-                    int returnValue = await _dbContext.SaveChangesAsync();
+                    int returnValue = await _dbContext.SaveChangesAsync(true);
                     dbContextTransaction.Commit();
                     return returnValue;
                 }

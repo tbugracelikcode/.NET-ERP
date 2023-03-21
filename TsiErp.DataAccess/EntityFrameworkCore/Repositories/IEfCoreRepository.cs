@@ -14,5 +14,7 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Repositories
         Task<IQueryable<TEntity>> WithDetailsAsync(params Expression<Func<TEntity, object>>[] propertySelectors);
 
         Task<TEntity> LockRow(Guid id, bool lockRow, Guid userId);
+
+        Task<IList<TEntity>> FromSqlRawAsync(string sql, params object[] parameters);
     }
 }

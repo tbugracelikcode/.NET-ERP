@@ -8,19 +8,19 @@ namespace TsiErp.Business.Entities.Branch.Validations
 {
     public class UpdateBranchesValidator : TsiAbstractValidatorBase<UpdateBranchesDto>
     {
-        public UpdateBranchesValidator(IStringLocalizer<BranchesResource>L)
+        public UpdateBranchesValidator()
         {
             RuleFor(x => x.Code)
                 .NotEmpty()
-                .WithMessage(L["ValidatorCodeEmpty"])
+                .WithMessage("ValidatorCodeEmpty")
                 .MaximumLength(17)
-                .WithMessage(L["ValidatorCodeMaxLenght"]);
+                .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage(L["ValidatorNameEmpty"])
+                .WithMessage("ValidatorNameEmpty")
                 .MaximumLength(200)
-                .WithMessage(L["ValidatorNameMaxLenght"]); ;
+                .WithMessage("ValidatorNameMaxLenght");
         }
     }
 }
