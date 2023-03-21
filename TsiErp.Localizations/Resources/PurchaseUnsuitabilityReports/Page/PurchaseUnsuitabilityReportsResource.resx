@@ -117,8 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ActionLabel" xml:space="preserve">
+    <value>Uygunsuzluk Aksiyonu:</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="ComboboxContactSupplier" xml:space="preserve">
+    <value>Tedarikçi ile İrtibat</value>
+  </data>
+  <data name="ComboboxCorrection" xml:space="preserve">
+    <value>Düzeltme</value>
+  </data>
+  <data name="ComboboxRejection" xml:space="preserve">
+    <value>Red</value>
+  </data>
+  <data name="ComboboxToBeUsedAs" xml:space="preserve">
+    <value>Olduğu Gibi Kullanılacak</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -132,6 +150,42 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="CurrentAccountCardCodeLabel" xml:space="preserve">
+    <value>Cari Hesap Kodu:</value>
+  </data>
+  <data name="CurrentAccountCardName" xml:space="preserve">
+    <value>CARİ ÜNVAN</value>
+  </data>
+  <data name="CurrentAccountCardNameLabel" xml:space="preserve">
+    <value>Cari Hesap Ünvanı:</value>
+  </data>
+  <data name="CurrentAccountModalGridCode" xml:space="preserve">
+    <value>CARİ KOD</value>
+  </data>
+  <data name="CurrentAccountModalGridEmail" xml:space="preserve">
+    <value>E-POSTA</value>
+  </data>
+  <data name="CurrentAccountModalGridName" xml:space="preserve">
+    <value>CARİ ÜNVAN</value>
+  </data>
+  <data name="CurrentAccountModalGridResponsible" xml:space="preserve">
+    <value>İLGİLİ</value>
+  </data>
+  <data name="CurrentAccountModalGridTaxNumber" xml:space="preserve">
+    <value>VERGİ NUMARASI</value>
+  </data>
+  <data name="CurrentAccountModalGridTel" xml:space="preserve">
+    <value>TELEFON (1)</value>
+  </data>
+  <data name="CurrentAccountModalTitle" xml:space="preserve">
+    <value>Cari Hesap Kartları</value>
+  </data>
+  <data name="Date_" xml:space="preserve">
+    <value>TARİH</value>
+  </data>
+  <data name="Date_Label" xml:space="preserve">
+    <value>Tarih:</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -141,8 +195,41 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="Description_" xml:space="preserve">
+    <value>AÇIKLAMA</value>
+  </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Satın Alma Uygunsuzluk Kayıtları</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="FicheNo" xml:space="preserve">
+    <value>UYGUNSUZLUK FİŞ NO</value>
+  </data>
+  <data name="FicheNoLabel" xml:space="preserve">
+    <value>Uygunsuzluk Fiş Numarası:</value>
+  </data>
+  <data name="IsContactSupplier" xml:space="preserve">
+    <value>TEDARİKÇİ İLE İRTİBAT</value>
+  </data>
+  <data name="IsCorrection" xml:space="preserve">
+    <value>DÜZELTME</value>
+  </data>
+  <data name="IsReject" xml:space="preserve">
+    <value>RED</value>
+  </data>
+  <data name="IsToBeUsedAs" xml:space="preserve">
+    <value>OLDUĞU GİBİ KULLANILACAK</value>
+  </data>
+  <data name="IsUnsuitabilityWorkOrder" xml:space="preserve">
+    <value>UYGUNSUZLUK İŞ EMRİ OLUŞACAK</value>
+  </data>
+  <data name="IsUnsuitabilityWorkOrderLabel" xml:space="preserve">
+    <value>Uygunsuzluk İş Emri Oluşacak:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -156,7 +243,109 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="OrderFicheNo" xml:space="preserve">
+    <value>SİPARİŞ NO</value>
+  </data>
+  <data name="OrderFicheNoLabel" xml:space="preserve">
+    <value>Sipariş Numarası:</value>
+  </data>
+  <data name="PartyNo" xml:space="preserve">
+    <value>PARTİ NO</value>
+  </data>
+  <data name="PartyNoLabel" xml:space="preserve">
+    <value>Parti Numarası:</value>
+  </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>ÜRÜN KODU</value>
+  </data>
+  <data name="ProductCodeLabel" xml:space="preserve">
+    <value>Ürün Kodu:</value>
+  </data>
+  <data name="ProductModalGridCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductModalGridName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Stok Kartları</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>ÜRÜN AÇIKLAMASI</value>
+  </data>
+  <data name="ProductNameLabel" xml:space="preserve">
+    <value>Ürün Açıklaması:</value>
+  </data>
+  <data name="PurchaseOrderModalGridBranch" xml:space="preserve">
+    <value>ŞUBE KODU</value>
+  </data>
+  <data name="PurchaseOrderModalGridCurrency" xml:space="preserve">
+    <value>PARA BİRİMİ</value>
+  </data>
+  <data name="PurchaseOrderModalGridCurrentAccountCode" xml:space="preserve">
+    <value>CARİ HESAP KODU</value>
+  </data>
+  <data name="PurchaseOrderModalGridCurrentAccountName" xml:space="preserve">
+    <value>CARİ HESAP ÜNVANI</value>
+  </data>
+  <data name="PurchaseOrderModalGridDate" xml:space="preserve">
+    <value>TARİH</value>
+  </data>
+  <data name="PurchaseOrderModalGridFicheNo" xml:space="preserve">
+    <value>SİPARİŞ NO</value>
+  </data>
+  <data name="PurchaseOrderModalGridPaymentPlan" xml:space="preserve">
+    <value>ÖDEME PLANI</value>
+  </data>
+  <data name="PurchaseOrderModalGridProdOrder" xml:space="preserve">
+    <value>ÜRETİM EMRİ FİŞ NO</value>
+  </data>
+  <data name="PurchaseOrderModalGridWarehouse" xml:space="preserve">
+    <value>DEPO KODU</value>
+  </data>
+  <data name="PurchaseOrderModalTitle" xml:space="preserve">
+    <value>Satın Alma Sipariş Fişleri</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Satın Alma Uygunsuzluk Kayıtları</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>SatinAlmaUygKayitlari</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Satın Alma Uygunsuzluk Kayıtları</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Kalite Kontrol &gt; İşlemler &gt; Uygunsuzluk Kayıtları</value>
+  </data>
+  <data name="UnsuitableAmount" xml:space="preserve">
+    <value>UYGUN OLMAYAN MİKTAR</value>
+  </data>
+  <data name="UnsuitableAmountLabel" xml:space="preserve">
+    <value>Uygun Olmayan Miktar:</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen fiş numarasını yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Fiş numarası, 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorCurrentAccountID" xml:space="preserve">
+    <value>Lütfen cari hesap kartı seçin.</value>
+  </data>
+  <data name="ValidatorDate" xml:space="preserve">
+    <value>Lütfen tarihi seçin.</value>
+  </data>
+  <data name="ValidatorOrderID" xml:space="preserve">
+    <value>Lütfen sipariş seçin.</value>
+  </data>
+  <data name="ValidatorProductID" xml:space="preserve">
+    <value>Lütfen ürün seçin.</value>
   </data>
 </root>

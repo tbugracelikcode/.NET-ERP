@@ -8,6 +8,7 @@ namespace TsiErp.ErpUI.Pages.ProductionOrderChangeItem
         protected override async void OnInitialized()
         {
             BaseCrudService = ProductionOrderChangeItemsService;
+            _L = L;
         }
 
         protected override Task BeforeInsertAsync()

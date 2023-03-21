@@ -117,8 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>VARDİYA KODU</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Vardiya Kodu:</value>
+  </data>
+  <data name="CoefficientLineLabel" xml:space="preserve">
+    <value>Katsayı:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -141,8 +153,44 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="EditLineModalTitle" xml:space="preserve">
+    <value>Vardiya Satırları</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Vardiyalar</value>
+  </data>
+  <data name="EndHourLineLabel" xml:space="preserve">
+    <value>Bitiş Saati:</value>
+  </data>
+  <data name="EnumBreak" xml:space="preserve">
+    <value>Mola</value>
+  </data>
+  <data name="EnumCleaning" xml:space="preserve">
+    <value>Temizlik</value>
+  </data>
+  <data name="EnumOvertime" xml:space="preserve">
+    <value>Fazla Mesai</value>
+  </data>
+  <data name="EnumWork" xml:space="preserve">
+    <value>Çalışma</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Aktiflik:</value>
+  </data>
+  <data name="LineGridCoefficient" xml:space="preserve">
+    <value>KATSAYI</value>
+  </data>
+  <data name="LineGridEndHour" xml:space="preserve">
+    <value>BİTİŞ SAATİ</value>
+  </data>
+  <data name="LineGridStartHour" xml:space="preserve">
+    <value>BAŞLANGIÇ SAATİ</value>
+  </data>
+  <data name="LineGridType" xml:space="preserve">
+    <value>TÜR</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -156,10 +204,97 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>VARDİYA AÇIKLAMASI</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Vardiya Açıklaması:</value>
+  </data>
+  <data name="NetWorkTime" xml:space="preserve">
+    <value>NET ÇALIŞMA SÜRESİ</value>
+  </data>
+  <data name="NetWorkTimeLabel" xml:space="preserve">
+    <value>Net Çalışma Süresi:</value>
+  </data>
   <data name="OrderNoControlManager" xml:space="preserve">
     <value>Aynı vardiya sıra numaralı bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="Overtime" xml:space="preserve">
+    <value>FAZLA MESAİ SÜRESİ</value>
+  </data>
+  <data name="OvertimeLabel" xml:space="preserve">
+    <value>Fazla Mesai Süresi:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="ShiftOrder" xml:space="preserve">
+    <value>VARDİYA SIRASI</value>
+  </data>
+  <data name="ShiftOrderLabel" xml:space="preserve">
+    <value>Vardiya Sırası:</value>
+  </data>
+  <data name="StartHourLineLabel" xml:space="preserve">
+    <value>Başlangıç Saati:</value>
+  </data>
+  <data name="TotalBreakTime" xml:space="preserve">
+    <value>TOPLAM MOLA SÜRESİ</value>
+  </data>
+  <data name="TotalBreakTimeLabel" xml:space="preserve">
+    <value>Toplam Mola Süresi:</value>
+  </data>
+  <data name="TotalWorkTime" xml:space="preserve">
+    <value>TOPLAM ÇALIŞMA SÜRESİ</value>
+  </data>
+  <data name="TotalWorkTimeLabel" xml:space="preserve">
+    <value>Toplam Çalışma Süresi:</value>
+  </data>
+  <data name="TypeLineLabel" xml:space="preserve">
+    <value>Tür:</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Dikkat</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Vardiyalar</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>Vardiyalar</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Vardiyalar</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Genel Sistem Tanımlamaları</value>
+  </data>
+  <data name="UIWarningPopupTitle24HourBase" xml:space="preserve">
+    <value>Vardiyaların toplam çalışma süreleri, 24 saati geçemez.</value>
+  </data>
+  <data name="UIWarningPopupTitleBase" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen vardiya kodunu yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Vardiya  kodu, 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Lütfen vardiya  açıklaması yazın.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>Vardiya  açıklaması, 200 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorTotalBreakTimeMin" xml:space="preserve">
+    <value>Toplam mola süresi, 0'dan büyük olmalıdır.</value>
+  </data>
+  <data name="ValidatorTotalWorkTimeMin" xml:space="preserve">
+    <value>Toplam çalışma süresi, 0'dan büyük olmalıdır.</value>
   </data>
 </root>

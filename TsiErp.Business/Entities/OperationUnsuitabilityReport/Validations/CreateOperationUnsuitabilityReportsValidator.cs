@@ -15,27 +15,27 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Validations
         {
             RuleFor(x => x.FicheNo)
                 .NotEmpty()
-                .WithMessage("Lütfen fiş numarasını yazın.")
+                .WithMessage("ValidatorCodeEmpty")
                 .MaximumLength(17)
-                .WithMessage("Fiş numarası, 17 karakterden fazla olamaz.");
+                .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.Date_)
               .NotEmpty()
-              .WithMessage("Lütfen tarihi seçin.");
+              .WithMessage("ValidatorDate");
 
-            RuleFor(x => x.ProductID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen ürün seçin.");
+            RuleFor(x => x.ProductID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorProductID");
 
-            RuleFor(x => x.OperationID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen operasyon seçin.");
+            RuleFor(x => x.OperationID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorOperationID");
 
-            RuleFor(x => x.EmployeeID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen çalışan seçin.");
+            RuleFor(x => x.EmployeeID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorEmployeeID");
 
-            RuleFor(x => x.StationID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen istasyon seçin.");
+            RuleFor(x => x.StationID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorStationID");
 
-            RuleFor(x => x.StationGroupID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen istasyon grubu seçin.");
+            RuleFor(x => x.StationGroupID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorStationGroupID");
 
-            RuleFor(x => x.WorkOrderID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen iş emri seçin.");
+            RuleFor(x => x.WorkOrderID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorWorkOrderID");
 
-            RuleFor(x => x.ProductionOrderID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen üretim emri seçin.");
+            RuleFor(x => x.ProductionOrderID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorProductionOrderID");
 
         }
     }

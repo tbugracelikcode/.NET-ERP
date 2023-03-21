@@ -11,11 +11,14 @@ using TsiErp.Entities.Entities.ProductsOperation.Dtos;
 using TsiErp.Entities.Entities.Station.Dtos;
 using TsiErp.Entities.Entities.StationGroup.Dtos;
 using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityReport
 {
     public partial class OperationUnsuitabilityReportsListPage
     {
+        [Inject]
+        ModalManager ModalManager { get; set; }
 
         public class UnsComboBox
         {
@@ -25,22 +28,17 @@ namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityReport
 
         List<UnsComboBox> _unsComboBox = new List<UnsComboBox>
         {
-            new UnsComboBox(){ID = "Scrap", Text="Hurda"},
-            new UnsComboBox(){ID = "Correction", Text="Düzeltme"},
-            new UnsComboBox(){ID = "ToBeUsedAs", Text="Olduğu Gibi Kullanılacak"}
+            new UnsComboBox(){ID = "Scrap", Text="ComboboxScrap"},
+            new UnsComboBox(){ID = "Correction", Text="ComboboxCorrection"},
+            new UnsComboBox(){ID = "ToBeUsedAs", Text="ComboboxToBeUsedAs"}
         };
+
+
 
         protected override async void OnInitialized()
         {
             BaseCrudService = OperationUnsuitabilityReportsService;
-
-            await GetProductsList();
-            await GetWorkOrdersList();
-            await GetStationsList();
-            await GetStationGroupsList();
-            await GetEmployeesList();
-            await GetProductionOrdersList();
-            await GetProductsOperationsList();
+            _L = L;
         }
 
         protected override async Task BeforeInsertAsync()
@@ -50,9 +48,39 @@ namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityReport
                 Date_ = DateTime.Today
             };
 
+            foreach (var item in _unsComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
             EditPageVisible = true;
 
             await Task.CompletedTask;
+        }
+
+        public override async void ShowEditPage()
+        {
+            foreach(var item in _unsComboBox)
+            {
+                item.Text = L[item.Text];
+            }
+
+            if (DataSource != null)
+            {
+                bool? dataOpenStatus = (bool?)DataSource.GetType().GetProperty("DataOpenStatus").GetValue(DataSource);
+
+                if (dataOpenStatus == true && dataOpenStatus != null)
+                {
+                    EditPageVisible = false;
+                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);
+                    await InvokeAsync(StateHasChanged);
+                }
+                else
+                {
+                    EditPageVisible = true;
+                    await InvokeAsync(StateHasChanged);
+                }
+            }
         }
 
         private void UnsComboBoxValueChangeHandler(ChangeEventArgs<string, UnsComboBox> args)
@@ -61,7 +89,7 @@ namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityReport
             {
                 case "Scrap": 
                     DataSource.IsScrap = true; 
-                    DataSource.IsCorrection = false; 
+                    DataSource.IsCorrection = false;
                     DataSource.IsToBeUsedAs = false;
                     break;
 

@@ -7,7 +7,8 @@
 @using TsiErp.Entities.Entities.UnitSet
 @using TsiErp.Entities.Entities.UnitSet.Dtos
 @using TsiErp.ErpUI.Pages.Base
-
+@using TsiErp.Localizations.Resources.UnitSets.Page
+@inject IStringLocalizer<UnitSetsResource> L 
 
 @inherits BaseListPage<SelectUnitSetsDto, ListUnitSetsDto, CreateUnitSetsDto, UpdateUnitSetsDto, ListUnitSetsParameterDto>
 
@@ -26,7 +27,7 @@ else
                 <Template>
                     <SfCard class="TSIListPageTitleCard">
                         <CardContent>
-                            <TsiBreadCrumb PreviousMenus="Stok Yönetimi > Ana Kayıtlar" CurrentMenu="Birim Setleri" />
+                            <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
                         </CardContent>
                         <CardFooter>
                         </CardFooter>
@@ -46,14 +47,14 @@ else
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", "Birim Setleri", "BirimSetleri"))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", "Birim Setleri", "BirimSetleri"))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
@@ -65,8 +66,8 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ListUnitSetsDto.Code) HeaderText="BİRİM SETİ KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListUnitSetsDto.Name) HeaderText="BİRİM SETİ AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListUnitSetsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListUnitSetsDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </CardContent>
@@ -83,7 +84,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Birim Setleri"
+         HeaderText="@L["EditModalTitle"]"
          Width="39%"
          Height="24%"
          MinWidth="750px"
@@ -109,20 +110,20 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>Birim Seti Kodu: </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Birim Seti Kodu Yazınız."></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>Birim Seti Açıklaması: </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="Birim Seti Açıklaması Yazınız."></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" ></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
                             <SfSwitch @bind-Checked="@DataSource.IsActive"></SfSwitch>
                         </Template>
                     </DxGridLayoutItem>
@@ -131,8 +132,8 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 

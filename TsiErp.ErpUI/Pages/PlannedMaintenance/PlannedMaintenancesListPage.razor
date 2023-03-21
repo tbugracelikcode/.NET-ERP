@@ -17,6 +17,9 @@
 @using TsiErp.Entities.Entities.MaintenanceInstruction.Dtos
 @using TsiErp.Entities.Entities.MaintenanceInstructionLine.Dtos
 @using TsiErp.ErpUI.Pages.Base
+@using TsiErp.Localizations.Resources.PlannedMaintenances.Page
+@inject IStringLocalizer<PlannedMaintenancesResource> L 
+
 
 @inherits BaseListPage<SelectPlannedMaintenancesDto, ListPlannedMaintenancesDto, CreatePlannedMaintenancesDto, UpdatePlannedMaintenancesDto, ListPlannedMaintenancesParameterDto>
 
@@ -39,7 +42,7 @@ else
                 <Template>
                     <SfCard class="TSIListPageTitleCard">
                         <CardContent>
-                            <TsiBreadCrumb PreviousMenus="Bakım Yönetimi > İşlemler" CurrentMenu="Önleyici / Planlı Bakım Kayıtları" />
+                            <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
                         </CardContent>
                         <CardFooter>
                         </CardFooter>
@@ -58,14 +61,14 @@ else
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", "Planlı Bakımlar", "PlanliBakimlar"))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", "Planlı Bakımlar", "PlanliBakimlar"))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
@@ -77,12 +80,12 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.RegistrationNo) HeaderText="KAYIT NUMARASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.StationCode) HeaderText="İSTASYON KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.PeriodName) HeaderText="PERİYOT ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.Caregiver) HeaderText="BAKIMI YAPAN" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="BAŞLANGIÇ TARİHİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.PlannedDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="BİTİŞ TARİHİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.RegistrationNo) HeaderText="@L["RegistrationNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.StationCode) HeaderText="@L["StationCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.PeriodName) HeaderText="@L["PeriodName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.Caregiver) HeaderText="@L["Caregiver"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.StartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["StartDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListPlannedMaintenancesDto.PlannedDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["PlannedDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
 
                                 </GridColumns>
@@ -101,7 +104,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Önleyici / Planlı Bakım Kayıtları"
+         HeaderText="@L["EditModalTitle"]"
          Width="67%"
          Height="65%"
          MinWidth="1160px"
@@ -138,56 +141,56 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>Kayıt Numarası: </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" Placeholder="Kayıt Numarasını Yazınız" @bind-Value="DataSource.RegistrationNo"></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["RegistrationNoLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.RegistrationNo"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>Bakımı Yapan: </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" Placeholder="Bakımı Yapanı Yazınız" @bind-Value="DataSource.Caregiver"></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["CaregiverLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Caregiver"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="5">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>Planlanan Tarihi: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>@L["PlannedDateLabel"] </strong></label><br />
                             <SfDatePicker @bind-Value="DataSource.PlannedDate"></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="7" RowSpan="2">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>Not: </strong></label><br />
-                            <SfTextBox CssClass="TSIMemoBox57" @bind-Value="DataSource.Note_" Multiline=true Placeholder="Not Yazınız."></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["Note_Label"] </strong></label><br />
+                            <SfTextBox CssClass="TSIMemoBox57" @bind-Value="DataSource.Note_" Multiline=true ></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>İş İstasyonu: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>@L["StationCodeLabel"] </strong></label><br />
                              <SfTextBox @ref="@StationsButtonEdit" Created="@StationsOnCreateIcon" @bind-Value="DataSource.StationCode" ShowClearButton=true ValueChange="StationsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Bakımı Yapan Kişi Sayısı: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>@L["NumberofCaregiversLabel"] </strong></label><br />
                             <SfNumericTextBox TValue="int" Min="0" @bind-Value="DataSource.NumberofCaregivers"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="5">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Tamamlanma Tarihi: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>@L["CompletionDateLabel"] </strong></label><br />
                             <SfDatePicker @bind-Value="DataSource.CompletionDate"></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Bakım Türü: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>@L["PeriodNameLabel"] </strong></label><br />
                             <SfTextBox @ref="@MaintenancePeriodsButtonEdit" Created="@MaintenancePeriodsOnCreateIcon" @bind-Value="DataSource.PeriodName" ShowClearButton=true ValueChange="MaintenancePeriodsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
@@ -195,43 +198,43 @@ else
 
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Planlanan Süre: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>@L["PlannedTimeLabel"] </strong></label><br />
                             <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="DataSource.PlannedTime"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="2" Column="5">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Kalan Süre: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>@L["RemainingTimeLabel"] </strong></label><br />
                             <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="DataSource.RemainingTime"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                       <DxGridLayoutItem Row="3" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Periyot Süresi: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>@L["PeriodTimeLabel"] </strong></label><br />
                             <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="DataSource.PeriodTime" Enabled=false></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="3" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Başlangıç Tarihi: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>@L["StartDateLabel"] </strong></label><br />
                             <SfDatePicker @bind-Value="DataSource.StartDate"></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
 
                      <DxGridLayoutItem Row="3" Column="5">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Gerçekleşen Süre: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>@L["OccuredTimeLabel"] </strong></label><br />
                             <SfNumericTextBox TValue="decimal" Min="0" @bind-Value="DataSource.OccuredTime"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="3" Column="7">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Durum: </strong></label><br />
-                            <SfDropDownList TItem="SelectPlannedMaintenancesDto" TValue="PlannedMaintenanceStateEnum?" PopupHeight="230px" Placeholder="Durum Seçiniz" @bind-Value="@DataSource.Status" DataSource="@status">
+                            <label class="TSIModalLabel"><strong>@L["StatusLabel"] </strong></label><br />
+                            <SfDropDownList TItem="SelectPlannedMaintenancesDto" TValue="PlannedMaintenanceStateEnum?" PopupHeight="230px" @bind-Value="@DataSource.Status" DataSource="@status">
                                 <DropDownListFieldSettings Text="StatusName" Value="Status"></DropDownListFieldSettings>
                             </SfDropDownList>
                         </Template>
@@ -247,12 +250,12 @@ else
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.LineNr) Type="ColumnType.Number" HeaderText="SATIR NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.UnitSetCode) HeaderText="BİRİM SETİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.Amount) Format="N2" Type="ColumnType.Number" HeaderText="MİKTAR" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.InstructionDescription) HeaderText="TALİMAT AÇIKLAMASI" TextAlign="TextAlign.Center" Width="400"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.MaintenanceNote) HeaderText="BAKIM NOTU" TextAlign="TextAlign.Center" Width="400"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.LineNr) Type="ColumnType.Number" HeaderText="@L["LineGridLineNr"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.UnitSetCode) HeaderText="@L["LineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.Amount) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridAmount"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.InstructionDescription) HeaderText="@L["LineGridInstructionDescription"]" TextAlign="TextAlign.Center" Width="400"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectPlannedMaintenanceLinesDto.MaintenanceNote) HeaderText="@L["LineGridMaintenanceNote"]" TextAlign="TextAlign.Center" Width="400"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </Template>
@@ -263,8 +266,8 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 
@@ -273,7 +276,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Önleyici / Planlı Bakım Satırları"
+         HeaderText="@L["LineEditModalTitle"]"
          Width="42%"
          Height="52%"
          MinWidth="720px"
@@ -302,43 +305,43 @@ else
                     <br />
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Stok Kodu: </strong></label>
+                            <label class="TSIModalLabel"><strong>@L["ProductCodeLineLabel"] </strong></label>
                             <SfTextBox Enabled=false @bind-Value="LineDataSource.ProductCode"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                         <DxGridLayoutItem Row="0" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Stok Açıklaması: </strong></label>
+                            <label class="TSIModalLabel"><strong>@L["ProductNameLineLabel"] </strong></label>
                             <SfTextBox  Enabled=false @bind-Value="LineDataSource.ProductName" ></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Birim Seti: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>@L["UnitSetCodeLineLabel"] </strong></label><br />
                              <SfTextBox Enabled=false @bind-Value="LineDataSource.UnitSetCode"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Miktar: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>@L["AmountLineLabel"] </strong></label><br />
                              <SfNumericTextBox Min="0" TValue="decimal" CssClass="TSITxtBox" Enabled=false @bind-Value="LineDataSource.Amount"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="2" Column="1" ColumnSpan="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Talimat Açıklaması: </strong></label><br />
+                            <label class="TSIModalLabel"><strong>@L["InstructionDescriptionLineLabel"] </strong></label><br />
                             <SfTextBox @bind-Value="LineDataSource.InstructionDescription" CssClass="TSIMemoBox70" Enabled=false Multiline=true></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                      <DxGridLayoutItem Row="3" Column="1" ColumnSpan="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Bakım Notu: </strong></label><br />
-                            <SfTextBox @bind-Value="LineDataSource.MaintenanceNote" CssClass="TSIMemoBox70" Placeholder="Bakım Notunu Yazınız." Multiline=true></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["MaintenanceNoteLineLabel"] </strong></label><br />
+                            <SfTextBox @bind-Value="LineDataSource.MaintenanceNote" CssClass="TSIMemoBox70" Multiline=true></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -347,8 +350,8 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSISaveButton" OnClick="OnLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-            <SfButton CssClass="TSICancelButton" OnClick="HideLinesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+            <SfButton CssClass="TSISaveButton" OnClick="OnLineSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideLinesPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 }
@@ -359,7 +362,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="İş İstasyonları"
+         HeaderText="@L["StationModalTitle"]"
          Width="64%"
          Height="44%"
          MinWidth="1220px"
@@ -383,8 +386,8 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(ListStationsDto.Code) HeaderText="İSTASYON KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListStationsDto.Name) HeaderText="İSTASYON AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListStationsDto.Code) HeaderText="@L["StationModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListStationsDto.Name) HeaderText="@L["StationModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         </GridColumns>
                                     </SfGrid>
                                 </CardContent>
@@ -408,7 +411,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Bakım Periyotları"
+         HeaderText="@L["MaintenancePeriodModalTitle"]"
          Width="64%"
          Height="44%"
          MinWidth="1220px"
@@ -432,9 +435,9 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(ListMaintenancePeriodsDto.Code) HeaderText="BAKIM PERİYODU KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListMaintenancePeriodsDto.Name) HeaderText="BAKIM PERİYODU AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListMaintenancePeriodsDto.PeriodTime) Format="N2" Type="ColumnType.Number" HeaderText="PERİYOT SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListMaintenancePeriodsDto.Code) HeaderText="@L["MaintenancePeriodModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListMaintenancePeriodsDto.Name) HeaderText="@L["MaintenancePeriodModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListMaintenancePeriodsDto.PeriodTime) Format="N2" Type="ColumnType.Number" HeaderText="@L["MaintenancePeriodModalGridPeriodTime"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         </GridColumns>
                                     </SfGrid>
                                 </CardContent>

@@ -117,8 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AdjustmentAndControlTimeLineLabel" xml:space="preserve">
+    <value>Ayar ve Kontrol Süresi:</value>
+  </data>
+  <data name="AlternativeLineLabel" xml:space="preserve">
+    <value>Alternatif:</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>OPERASYON KODU</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Operasyon Kodu:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -141,8 +156,38 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="EditLineModalTitle" xml:space="preserve">
+    <value>Şablon Operasyon Satırları</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Şablon Operasyon Kayıtları</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Aktiflik:</value>
+  </data>
+  <data name="LineGridAdjustment" xml:space="preserve">
+    <value>AYAR KONTROL SÜRESİ</value>
+  </data>
+  <data name="LineGridAlternative" xml:space="preserve">
+    <value>ALTERNATİF</value>
+  </data>
+  <data name="LineGridOprTime" xml:space="preserve">
+    <value>OPERASYON SÜRESİ</value>
+  </data>
+  <data name="LineGridPriority" xml:space="preserve">
+    <value>ÖNCELİK</value>
+  </data>
+  <data name="LineGridProcessQuantity" xml:space="preserve">
+    <value>İŞLEM ADET</value>
+  </data>
+  <data name="LineGridStationCode" xml:space="preserve">
+    <value>İSTASYON KODU</value>
+  </data>
+  <data name="LineGridStationName" xml:space="preserve">
+    <value>İSTASYON AÇIKLAMASI</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -156,7 +201,79 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>OPERASYON AÇIKLAMASI</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Operasyon Açıklaması:</value>
+  </data>
+  <data name="OperationTimeLineLabel" xml:space="preserve">
+    <value>Operasyon Süresi:</value>
+  </data>
+  <data name="PriorityLineLabel" xml:space="preserve">
+    <value>Öncelik:</value>
+  </data>
+  <data name="ProcessQuantityLineLabel" xml:space="preserve">
+    <value>İşlem Adet:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="StationCodeLineLabel" xml:space="preserve">
+    <value>İstasyon Kodu:</value>
+  </data>
+  <data name="StationModalGridCode" xml:space="preserve">
+    <value>İSTASYON KODU</value>
+  </data>
+  <data name="StationModalGridName" xml:space="preserve">
+    <value>İSTASYON AÇIKLAMASI</value>
+  </data>
+  <data name="StationModalTitle" xml:space="preserve">
+    <value>İş İstasyonları</value>
+  </data>
+  <data name="StationNameLineLabel" xml:space="preserve">
+    <value>İstasyon Açıklaması: </value>
+  </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>Seçtiğiniz şablon operasyon, kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Dikkat</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Şablon Operasyon Kayıtları</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>SablonOpr</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Şablon Operasyon Kayıtları</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Üretim Yönetimi &gt; Ana Kayıtlar &gt; Operasyonlar</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen operasyon kodunu yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Operasyon  kodu, 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Lütfen operasyon  açıklaması yazın.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>Operasyon  açıklaması, 200 karakterden fazla olamaz.</value>
+  </data>
+  <data name="WorkCenterCode" xml:space="preserve">
+    <value>İŞ MERKEZİ KODU</value>
+  </data>
+  <data name="WorkCenterCodeLabel" xml:space="preserve">
+    <value>İş Merkezi Kodu:</value>
   </data>
 </root>

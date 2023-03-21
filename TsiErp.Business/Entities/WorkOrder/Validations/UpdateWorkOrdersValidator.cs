@@ -15,20 +15,20 @@ namespace TsiErp.Business.Entities.WorkOrder.Validations
         {
             RuleFor(x => x.Code)
                 .NotEmpty()
-                .WithMessage("Lütfen iş emri kodunu yazın.")
+                .WithMessage("ValidatorCodeEmpty")
                 .MaximumLength(17)
-                .WithMessage("İş emri kodu 17 karakterden fazla olamaz.");
+                .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.WorkOrderNo)
                 .NotEmpty()
-                .WithMessage("Lütfen iş emri numarasını yazın.")
+                .WithMessage("ValidatorNameEmpty")
                 .MaximumLength(200)
-                .WithMessage("İş emri numarası, 200 karakterden fazla olamaz.");
+                .WithMessage("ValidatorNameMaxLenght");
 
-            RuleFor(x => x.ProductionOrderID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen iş emri seçin.");
-            RuleFor(x => x.PropositionID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen sipariş seçin.");
-            RuleFor(x => x.ProductsOperationID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen operasyon seçin.");
-            RuleFor(x => x.ProductID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen ürün seçin.");
+            RuleFor(x => x.ProductionOrderID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorProductionOrderID");
+            RuleFor(x => x.PropositionID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorPropositionID");
+            RuleFor(x => x.ProductsOperationID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorProductsOperationID");
+            RuleFor(x => x.ProductID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorProductID");
 
 
 

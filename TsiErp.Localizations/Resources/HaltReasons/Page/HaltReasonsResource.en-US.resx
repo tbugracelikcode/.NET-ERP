@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>HALT CODE</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Halt Code:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -141,8 +150,35 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Halt Reasons</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="IsMachine" xml:space="preserve">
+    <value>CAUSED BY MACHINE</value>
+  </data>
+  <data name="IsMachineLabel" xml:space="preserve">
+    <value>Caused by Machine:</value>
+  </data>
+  <data name="IsManagement" xml:space="preserve">
+    <value>CAUSED BY MANAGEMENT</value>
+  </data>
+  <data name="IsManagementLabel" xml:space="preserve">
+    <value>Caused by Management:</value>
+  </data>
+  <data name="IsOperator" xml:space="preserve">
+    <value>CAUSED BY OPERATOR</value>
+  </data>
+  <data name="IsOperatorLabel" xml:space="preserve">
+    <value>Caused by Operator:</value>
+  </data>
+  <data name="IsPlanned" xml:space="preserve">
+    <value>PLANNED</value>
+  </data>
+  <data name="IsPlannedLabel" xml:space="preserve">
+    <value>Planned:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -156,7 +192,40 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>HALT NAME</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Halt Name:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Halt Reasons</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>HaltReasons</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Halt Reasons</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Production Management &gt; Main Records</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Please enter the halt reason code.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Halt reason code cannot exceed 17 characters.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Please enter the halt reason name.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>Halt reason name cannot exceed 200 characters.</value>
   </data>
 </root>

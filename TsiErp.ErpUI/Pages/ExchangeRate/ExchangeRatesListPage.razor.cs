@@ -14,6 +14,7 @@ namespace TsiErp.ErpUI.Pages.ExchangeRate
         protected override async void OnInitialized()
         {
             BaseCrudService = ExchangeRatesService;
+            _L = L;
             await GetCurrenciesList();
         }
 

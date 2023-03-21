@@ -8,6 +8,7 @@
 @using TsiErp.Entities.Entities.HaltReason.Dtos
 @using TsiErp.ErpUI.Helpers
 @using TsiErp.ErpUI.Pages.Base
+@using TsiErp.Localizations.Resources.HaltReasons.Page
 
 @using TsiErp.Entities.Entities.Department.Dtos
 @using TsiErp.Business.Entities.Department.Services
@@ -15,6 +16,7 @@
 
 @inherits BaseListPage<SelectHaltReasonsDto, ListHaltReasonsDto, CreateHaltReasonsDto, UpdateHaltReasonsDto, ListHaltReasonsParameterDto>
 
+@inject IStringLocalizer<HaltReasonsResource> L 
 
 @inject IHaltReasonsAppService HaltReasonsService
 
@@ -31,7 +33,7 @@
                     <Template>
                         <SfCard class="TSIListPageTitleCard">
                             <CardContent>
-                                <TsiBreadCrumb PreviousMenus="Üretim Yönetimi > Ana Kayıtlar" CurrentMenu="Duruş Kodları" />
+                                <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
                             </CardContent>
                             <CardFooter>
                             </CardFooter>
@@ -50,14 +52,14 @@
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", "Duruş Kodları", "DurusKodlari"))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", "Duruş Kodları", "DurusKodlari"))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
@@ -69,17 +71,17 @@
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(ListHaltReasonsDto.Code) HeaderText="DURUŞ KODU" TextAlign="TextAlign.Center" Width="120">
+                                        <GridColumn Field=@nameof(ListHaltReasonsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120">
                                         </GridColumn>
-                                        <GridColumn Field=@nameof(ListHaltReasonsDto.Name) HeaderText="DURUŞ ADI" TextAlign="TextAlign.Center" Width="120">
+                                        <GridColumn Field=@nameof(ListHaltReasonsDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="120">
                                         </GridColumn>
-                                        <GridColumn Field=@nameof(ListHaltReasonsDto.IsPlanned) DisplayAsCheckBox="true" HeaderText="PLANLANAN" TextAlign="TextAlign.Center" Width="120">
+                                        <GridColumn Field=@nameof(ListHaltReasonsDto.IsPlanned) DisplayAsCheckBox="true" HeaderText="@L["IsPlanned"]" TextAlign="TextAlign.Center" Width="120">
                                         </GridColumn>
-                                        <GridColumn Field=@nameof(ListHaltReasonsDto.IsMachine) DisplayAsCheckBox="true" HeaderText="MAKİNE KAYNAKLI" TextAlign="TextAlign.Center" Width="120">
+                                        <GridColumn Field=@nameof(ListHaltReasonsDto.IsMachine) DisplayAsCheckBox="true" HeaderText="@L["IsMachine"]" TextAlign="TextAlign.Center" Width="120">
                                         </GridColumn>
-                                        <GridColumn Field=@nameof(ListHaltReasonsDto.IsOperator) DisplayAsCheckBox="true" HeaderText="OPERATÖR KAYNAKLI" TextAlign="TextAlign.Center" Width="120">
+                                        <GridColumn Field=@nameof(ListHaltReasonsDto.IsOperator) DisplayAsCheckBox="true" HeaderText="@L["IsOperator"]" TextAlign="TextAlign.Center" Width="120">
                                         </GridColumn>
-                                        <GridColumn Field=@nameof(ListHaltReasonsDto.IsManagement) DisplayAsCheckBox="true" HeaderText="YÖNETİM KAYNAKLI" TextAlign="TextAlign.Center" Width="120">
+                                        <GridColumn Field=@nameof(ListHaltReasonsDto.IsManagement) DisplayAsCheckBox="true" HeaderText="@L["IsManagement"]" TextAlign="TextAlign.Center" Width="120">
                                         </GridColumn>
                                     </GridColumns>
                                 </SfGrid>
@@ -97,7 +99,7 @@
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Duruş Sebebi"
+         HeaderText="@L["EditModalTitle"]"
          Width="30%"
          Height="40%"
          MinWidth="450px"
@@ -126,21 +128,21 @@
                         <DxGridLayoutItem Row="0" Column="1">
                             <Template>
                                 <br />
-                                <label class="TSIModalLabel"><strong>Duruş Kodu: </strong></label>
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Duruş Sebebi Kodu Yazınız."></SfTextBox>
+                                <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" ></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="0" Column="3" ColumnSpan="3">
                             <Template>
                                 <br />
-                                <label class="TSIModalLabel"><strong>Duruş Adı: </strong></label>
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="Duruş Sebebi Adı Yazınız."></SfTextBox>
+                                <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" ></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="1" Column="1">
                             <Template>
                                 <center>
-                                    <label class="TSIModalLabel"><strong>Makina Kaynaklı: </strong></label><br />
+                                    <label class="TSIModalLabel"><strong>@L["IsMachineLabel"] </strong></label><br />
                                     <SfSwitch @bind-Checked="DataSource.IsMachine"></SfSwitch>
                                 </center>
                             </Template>
@@ -148,7 +150,7 @@
                         <DxGridLayoutItem Row="1" Column="3">
                             <Template>
                                 <center>
-                                    <label class="TSIModalLabel"><strong>Operatör Kaynaklı: </strong></label><br />
+                                    <label class="TSIModalLabel"><strong>@L["IsOperatorLabel"] </strong></label><br />
                                     <SfSwitch @bind-Checked="DataSource.IsOperator"></SfSwitch>
                                 </center>
                             </Template>
@@ -156,7 +158,7 @@
                         <DxGridLayoutItem Row="1" Column="5">
                             <Template>
                                 <center>
-                                    <label class="TSIModalLabel"><strong>Yönetim Kaynaklı: </strong></label><br />
+                                    <label class="TSIModalLabel"><strong>@L["IsManagementLabel"] </strong></label><br />
                                     <SfSwitch @bind-Checked="DataSource.IsManagement"></SfSwitch>
                                 </center>
                             </Template>
@@ -165,7 +167,7 @@
                             <Template>
                                 <br />
                                 <center>
-                                    <label class="TSIModalLabel"><strong>Planlı: </strong></label><br />
+                                    <label class="TSIModalLabel"><strong>@L["IsPlannedLabel"] </strong></label><br />
                                     <SfSwitch @bind-Checked="DataSource.IsPlanned"></SfSwitch>
                                 </center>
                             </Template>
@@ -174,8 +176,8 @@
                 </DxGridLayout>
             </BodyTemplate>
             <FooterContentTemplate>
-                <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-                <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+                <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
             </FooterContentTemplate>
         </DxPopup>
 

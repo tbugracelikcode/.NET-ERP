@@ -117,8 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AdjustmentAndControlTimeLineLabel" xml:space="preserve">
+    <value>Adjustment and Control Time:</value>
+  </data>
+  <data name="AlternativeLineLabel" xml:space="preserve">
+    <value>Alternative:</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>OPERATION CODE</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Operation Code:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -141,8 +156,38 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="EditLineModalTitle" xml:space="preserve">
+    <value>Template Operation Lines</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Template Operations</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Activity:</value>
+  </data>
+  <data name="LineGridAdjustment" xml:space="preserve">
+    <value>ADJUSTMENT AND CONTROL TIME</value>
+  </data>
+  <data name="LineGridAlternative" xml:space="preserve">
+    <value>ALTERNATIVE</value>
+  </data>
+  <data name="LineGridOprTime" xml:space="preserve">
+    <value>OPERATION TIME</value>
+  </data>
+  <data name="LineGridPriority" xml:space="preserve">
+    <value>PRIORITY</value>
+  </data>
+  <data name="LineGridProcessQuantity" xml:space="preserve">
+    <value>PROCESS QUANTITY</value>
+  </data>
+  <data name="LineGridStationCode" xml:space="preserve">
+    <value>STATION CODE</value>
+  </data>
+  <data name="LineGridStationName" xml:space="preserve">
+    <value>STATION NAME</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -156,7 +201,79 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>OPERATION NAME</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Operation Name:</value>
+  </data>
+  <data name="OperationTimeLineLabel" xml:space="preserve">
+    <value>Operation Time:</value>
+  </data>
+  <data name="PriorityLineLabel" xml:space="preserve">
+    <value>Priority:</value>
+  </data>
+  <data name="ProcessQuantityLineLabel" xml:space="preserve">
+    <value>Process Quantity:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="StationCodeLineLabel" xml:space="preserve">
+    <value>Station Code:</value>
+  </data>
+  <data name="StationModalGridCode" xml:space="preserve">
+    <value>STATION CODE</value>
+  </data>
+  <data name="StationModalGridName" xml:space="preserve">
+    <value>STATION NAME</value>
+  </data>
+  <data name="StationModalTitle" xml:space="preserve">
+    <value>Stations</value>
+  </data>
+  <data name="StationNameLineLabel" xml:space="preserve">
+    <value>Station Name:</value>
+  </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>The template operation you selected will be permanently deleted.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>The line you selected will be permanently deleted.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Attention</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Template Operations</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>TemplateOpr</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Template Operations</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Production Management &gt; Main Records &gt; Operations</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Please enter the operation code.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Operation code cannot exceed 17 characters.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Please enter the operation  name.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>Operation  name cannot exceed 200 characters.</value>
+  </data>
+  <data name="WorkCenterCode" xml:space="preserve">
+    <value>WORK CENTER CODE</value>
+  </data>
+  <data name="WorkCenterCodeLabel" xml:space="preserve">
+    <value>Work Center Code:</value>
   </data>
 </root>

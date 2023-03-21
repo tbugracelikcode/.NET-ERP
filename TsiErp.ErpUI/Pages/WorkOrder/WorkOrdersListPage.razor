@@ -22,7 +22,8 @@
 @using TsiErp.Entities.Entities.CurrentAccountCard.Dtos
 @using TsiErp.Business.Entities.CurrentAccountCard.Services
 @using TsiErp.ErpUI.Pages.Base
-
+@using TsiErp.Localizations.Resources.WorkOrders.Page
+@inject IStringLocalizer<WorkOrdersResource> L 
 @inherits BaseListPage<SelectWorkOrdersDto, ListWorkOrdersDto, CreateWorkOrdersDto, UpdateWorkOrdersDto, ListWorkOrdersParameterDto>
 
 
@@ -48,7 +49,7 @@ else
                 <Template>
                     <SfCard class="TSIListPageTitleCard">
                         <CardContent>
-                            <TsiBreadCrumb PreviousMenus="Üretim Yönetimi > İşlemler" CurrentMenu="İş Emirleri" />
+                            <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
                         </CardContent>
                         <CardFooter>
                         </CardFooter>
@@ -68,14 +69,14 @@ else
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", "İş Emirleri", "IsEmirleri"))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", "İş Emirleri", "IsEmirleri"))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
@@ -85,26 +86,25 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ListWorkOrdersDto.Code) HeaderText="İŞ EMRİ KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderNo) HeaderText="İŞ EMRİ FİŞ NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderState) HeaderText="DURUM" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListWorkOrdersDto.AdjustmentAndControlTime) HeaderText="AYAR VE KONTROL SÜRESİ" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListWorkOrdersDto.OperationTime) HeaderText="OPERASYON SÜRESİ" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListWorkOrdersDto.OccuredStartDate) HeaderText="GERÇEKLEŞEN BAŞLANGIÇ TARİHİ" Type="ColumnType.DateTime" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListWorkOrdersDto.OccuredFinishDate) HeaderText="GERÇEKLEŞEN BİTİŞ TARİHİ" Type="ColumnType.DateTime" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListWorkOrdersDto.PlannedQuantity) HeaderText="PLANLANAN MİKTAR" TextAlign="TextAlign.Center" Type="ColumnType.Number" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListWorkOrdersDto.ProducedQuantity) HeaderText="GERÇEKLEŞEN MİKTAR" TextAlign="TextAlign.Center" Type="ColumnType.Number" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListWorkOrdersDto.ProductionOrderFicheNo) HeaderText="ÜRETİM EMRİ FİŞ NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListWorkOrdersDto.PropositionFicheNo) HeaderText="SİPARİŞ FİŞ NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListWorkOrdersDto.RouteCode) HeaderText="ROTA KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListWorkOrdersDto.ProductsOperationCode) HeaderText="OPERASYON KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListWorkOrdersDto.StationCode) HeaderText="İSTASYON KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListWorkOrdersDto.StationName) HeaderText="İSTASYON AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListWorkOrdersDto.StationGroupCode) HeaderText="İSTASYON GRUBU KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListWorkOrdersDto.ProductCode) HeaderText="STOK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListWorkOrdersDto.ProductName) HeaderText="STOK ADI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListWorkOrdersDto.CurrentAccountCardCode) HeaderText="CARİ HESAP KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListWorkOrdersDto.CurrentAccountCardName) HeaderText="CARİ HESAP ÜNVANI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderNo) HeaderText="@L["WorkOrderNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.WorkOrderState) HeaderText="@L["WorkOrderState"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.AdjustmentAndControlTime) HeaderText="@L["AdjustmentAndControlTime"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.OperationTime) HeaderText="@L["OperationTime"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.OccuredStartDate) HeaderText="@L["OccuredStartDate"]" Type="ColumnType.DateTime" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.OccuredFinishDate) HeaderText="@L["OccuredFinishDate"]" Type="ColumnType.DateTime" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.PlannedQuantity) HeaderText="@L["PlannedQuantity"]" TextAlign="TextAlign.Center" Type="ColumnType.Number" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.ProducedQuantity) HeaderText="@L["ProducedQuantity"]" TextAlign="TextAlign.Center" Type="ColumnType.Number" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.ProductionOrderFicheNo) HeaderText="@L["ProductionOrderFicheNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.PropositionFicheNo) HeaderText="@L["PropositionFicheNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.RouteCode) HeaderText="@L["RouteCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.ProductsOperationCode) HeaderText="@L["ProductsOperationCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.StationCode) HeaderText="@L["StationCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.StationGroupCode) HeaderText="@L["StationGroupCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.ProductCode) HeaderText="@L["ProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                            
+                                    <GridColumn Field=@nameof(ListWorkOrdersDto.CurrentAccountCardName) HeaderText="@L["CurrentAccountCardName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </CardContent>

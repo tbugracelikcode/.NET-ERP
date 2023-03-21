@@ -1,30 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace TsiErp.Entities.Enums
 {
     public enum BloodTypeEnum
     {
-        [Display(Name = "0 Rh(+)")]
+        [Display(Name = "0+")]
         SifirRhPozitif = 1,
-        [Display(Name = "0 Rh(-)")]
+        [Display(Name = "0-")]
         SifirRhNegatif = 2,
-        [Display(Name = "AB Rh(+)")]
+        [Display(Name = "AB+")]
         AbRhPozitif = 3,
-        [Display(Name = "AB Rh(-)")]
+        [Display(Name = "AB-")]
         AbRhNegatif = 4,
-        [Display(Name = "A Rh(+)")]
+        [Display(Name = "A+")]
         ARhPozitif = 5,
-        [Display(Name = "A Rh(-)")]
+        [Display(Name = "A-")]
         ARhNegatif = 6,
-        [Display(Name = "B Rh(+)")]
+        [Display(Name = "B+")]
         BRhPozitif = 7,
-        [Display(Name = "B Rh(-)")]
+        [Display(Name = "B-")]
         BRhNegatif = 8
     }
 }

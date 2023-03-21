@@ -185,5 +185,86 @@ namespace TsiErp.Localizations.Resources.ProductionOrders.Page {
                 return ResourceManager.GetString("UpdateControlManager", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen reçete seçin..
+        /// </summary>
+        public static string ValidatorBoMID {
+            get {
+                return ResourceManager.GetString("ValidatorBoMID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen fiş numarasını yazın..
+        /// </summary>
+        public static string ValidatorCodeEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorCodeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fiş numarası, 17 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorCodeMaxLenght {
+            get {
+                return ResourceManager.GetString("ValidatorCodeMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen cari hesap seçin..
+        /// </summary>
+        public static string ValidatorCurrentAccountID {
+            get {
+                return ResourceManager.GetString("ValidatorCurrentAccountID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen mamül seçin..
+        /// </summary>
+        public static string ValidatorFinishedProductID {
+            get {
+                return ResourceManager.GetString("ValidatorFinishedProductID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen siparişi seçin..
+        /// </summary>
+        public static string ValidatorOrderID {
+            get {
+                return ResourceManager.GetString("ValidatorOrderID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen teklif seçin.
+        /// </summary>
+        public static string ValidatorPropositionID {
+            get {
+                return ResourceManager.GetString("ValidatorPropositionID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen rota seçin..
+        /// </summary>
+        public static string ValidatorRouteID {
+            get {
+                return ResourceManager.GetString("ValidatorRouteID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen birim seti seçin..
+        /// </summary>
+        public static string ValidatorUnitSetID {
+            get {
+                return ResourceManager.GetString("ValidatorUnitSetID", resourceCulture);
+            }
+        }
     }
 }

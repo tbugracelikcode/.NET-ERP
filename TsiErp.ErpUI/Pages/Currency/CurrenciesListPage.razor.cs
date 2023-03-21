@@ -10,6 +10,7 @@ namespace TsiErp.ErpUI.Pages.Currency
         protected override async void OnInitialized()
         {
             BaseCrudService = CurrenciesService;
+            _L = L;
         }
 
         protected override Task BeforeInsertAsync()

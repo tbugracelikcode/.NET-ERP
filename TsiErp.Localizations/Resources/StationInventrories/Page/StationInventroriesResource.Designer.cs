@@ -186,5 +186,14 @@ namespace TsiErp.Localizations.Resources.StationInventrories.Page {
                 return ResourceManager.GetString("UpdateControlManager", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen envanter ürününü seçin..
+        /// </summary>
+        public static string ValidatorProductID {
+            get {
+                return ResourceManager.GetString("ValidatorProductID", resourceCulture);
+            }
+        }
     }
 }

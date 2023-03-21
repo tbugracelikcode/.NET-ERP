@@ -12,16 +12,16 @@ namespace TsiErp.EntityContracts.UserGroup
         public UpdateUserGroupsValidator()
         {
             RuleFor(x => x.Code)
-                .NotEmpty()
-                .WithMessage("Lütfen kullanıcı grubu kodunu yazın.")
-                .MaximumLength(17)
-                .WithMessage("Kullanıcı grubu kodu 17 karakterden fazla olamaz.");
+               .NotEmpty()
+               .WithMessage("ValidatorCodeEmpty")
+               .MaximumLength(17)
+               .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen kullanıcı grubu adını yazın.")
+                .WithMessage("ValidatorNameEmpty")
                 .MaximumLength(300)
-                .WithMessage("Kullanıcı grubu adı 300 karakterden fazla olamaz."); ;
+                .WithMessage("ValidatorNameMaxLenght"); ;
 
         }
     }

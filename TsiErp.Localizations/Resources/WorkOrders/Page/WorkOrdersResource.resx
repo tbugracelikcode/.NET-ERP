@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AdjustmentAndControlTime" xml:space="preserve">
+    <value>AYAR VE KONTROL SÜRESİ</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>İŞ EMRİ KODU</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
@@ -131,6 +137,9 @@
   </data>
   <data name="ContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="CurrentAccountCardName" xml:space="preserve">
+    <value>CARİ HESAP ÜNVANI</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
@@ -156,7 +165,85 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="OccuredFinishDate" xml:space="preserve">
+    <value>GERÇEKLEŞEN BİTİŞ TARİHİ</value>
+  </data>
+  <data name="OccuredStartDate" xml:space="preserve">
+    <value>GERÇEKLEŞEN BAŞLANGIÇ TARİHİ</value>
+  </data>
+  <data name="OperationTime" xml:space="preserve">
+    <value>OPERASYON SÜRESİ</value>
+  </data>
+  <data name="PlannedQuantity" xml:space="preserve">
+    <value>PLANLANAN MİKTAR</value>
+  </data>
+  <data name="ProducedQuantity" xml:space="preserve">
+    <value>GERÇEKLEŞEN MİKTAR</value>
+  </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductionOrderFicheNo" xml:space="preserve">
+    <value>ÜRETİM EMRİ FİŞ NO</value>
+  </data>
+  <data name="ProductsOperationCode" xml:space="preserve">
+    <value>OPERASYON</value>
+  </data>
+  <data name="PropositionFicheNo" xml:space="preserve">
+    <value>SİPARİŞ NO</value>
+  </data>
+  <data name="RouteCode" xml:space="preserve">
+    <value>ROTA </value>
+  </data>
+  <data name="StationCode" xml:space="preserve">
+    <value>İSTASYON</value>
+  </data>
+  <data name="StationGroupCode" xml:space="preserve">
+    <value>İSTASYON GRUBU</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>İş Emirleri</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>IsEmirleri</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>İş Emirleri</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Üretim Yönetimi &gt; İşlemler</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen iş emri kodunu yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>İş emri kodu, 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Lütfen iş emri numarasını yazın.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>İş emri numarası, 200 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorProductID" xml:space="preserve">
+    <value>Lütfen ürün seçin.</value>
+  </data>
+  <data name="ValidatorProductionOrderID" xml:space="preserve">
+    <value>Lütfen üretim emri seçin.</value>
+  </data>
+  <data name="ValidatorProductsOperationID" xml:space="preserve">
+    <value>Lütfen operasyon seçin.</value>
+  </data>
+  <data name="ValidatorPropositionID" xml:space="preserve">
+    <value>Lütfen teklif seçin.</value>
+  </data>
+  <data name="WorkOrderNo" xml:space="preserve">
+    <value>İŞ EMRİ NO</value>
+  </data>
+  <data name="WorkOrderState" xml:space="preserve">
+    <value>DURUM</value>
   </data>
 </root>

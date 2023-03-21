@@ -31,6 +31,7 @@ namespace TsiErp.ErpUI.Pages.ContractProductionTracking
         protected override async Task OnInitializedAsync()
         {
             BaseCrudService = ContractProductionTrackingsAppService;
+            _L = L;
             CreateMainContextMenuItems();
 
         }
@@ -55,10 +56,10 @@ namespace TsiErp.ErpUI.Pages.ContractProductionTracking
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle", Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -78,7 +79,7 @@ namespace TsiErp.ErpUI.Pages.ContractProductionTracking
                     break;
 
                 case "delete":
-                    var res = await ModalManager.ConfirmationAsync("Dikkat", "Seçtiğiniz satış teklifi kalıcı olarak silinecektir.");
+                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
                     if (res == true)
                     {
                         await DeleteAsync(args.RowInfo.RowData.Id);
@@ -104,7 +105,7 @@ namespace TsiErp.ErpUI.Pages.ContractProductionTracking
             if (DataSource.OperationStartDate == DateTime.MinValue || DataSource.OperationStartDate == null)
             {
                 _endDatePicker.Enabled = false;
-                ModalManager.WarningPopupAsync("Dikkat!", "Lütfen önce başlangıç tarihini seçiniz.");
+                ModalManager.WarningPopupAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupDateBase"]);
             }
         }
         public void OnDateChange()

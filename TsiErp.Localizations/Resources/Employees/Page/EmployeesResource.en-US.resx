@@ -117,8 +117,56 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="0+" xml:space="preserve">
+    <value>0 Rh(+)</value>
+  </data>
+  <data name="0-" xml:space="preserve">
+    <value>0 Rh(-)</value>
+  </data>
+  <data name="A+" xml:space="preserve">
+    <value>A Rh(+)</value>
+  </data>
+  <data name="A-" xml:space="preserve">
+    <value>A Rh(-)</value>
+  </data>
+  <data name="AB+" xml:space="preserve">
+    <value>AB Rh(+)</value>
+  </data>
+  <data name="AB-" xml:space="preserve">
+    <value>AB Rh(-)</value>
+  </data>
+  <data name="AddressLabel" xml:space="preserve">
+    <value>Address:</value>
+  </data>
+  <data name="B+" xml:space="preserve">
+    <value>B Rh(+)</value>
+  </data>
+  <data name="B-" xml:space="preserve">
+    <value>B Rh(-)</value>
+  </data>
+  <data name="BirthdayLabel" xml:space="preserve">
+    <value>Birthday:</value>
+  </data>
+  <data name="BloodTypeLabel" xml:space="preserve">
+    <value>Blood Type:</value>
+  </data>
+  <data name="CellPhoneLabel" xml:space="preserve">
+    <value>GSM:</value>
+  </data>
+  <data name="CityLabel" xml:space="preserve">
+    <value>City:</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>EMPLOYEE CODE</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Employee Code:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -141,8 +189,47 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="DepartmentLabel" xml:space="preserve">
+    <value>Department:</value>
+  </data>
+  <data name="DepartmentModalGridCode" xml:space="preserve">
+    <value>DEPARTMENT CODE</value>
+  </data>
+  <data name="DepartmentModalGridName" xml:space="preserve">
+    <value>DEPARTMENT NAME</value>
+  </data>
+  <data name="DepartmentModalTitle" xml:space="preserve">
+    <value>Departments</value>
+  </data>
+  <data name="DistrictLabel" xml:space="preserve">
+    <value>District:</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Employees</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>E-MAIL</value>
+  </data>
+  <data name="EmailLabel" xml:space="preserve">
+    <value>E-Mail:</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="HomePhoneLabel" xml:space="preserve">
+    <value>Home Phone:</value>
+  </data>
+  <data name="IDnumberLabel" xml:space="preserve">
+    <value>ID Number:</value>
+  </data>
+  <data name="ImageLabel" xml:space="preserve">
+    <value>Image:</value>
+  </data>
+  <data name="IsActive" xml:space="preserve">
+    <value>ACTIVITY</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Activity:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -155,6 +242,33 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>EMPLOYEE NAME</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Employee Name:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SurnameLabel" xml:space="preserve">
+    <value>Employee Surname:</value>
+  </data>
+  <data name="Tab1Name" xml:space="preserve">
+    <value>General Informations</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Employee Records</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>Employees</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Employees</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Machinery and Workforce Management Management &gt; Main Records</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>

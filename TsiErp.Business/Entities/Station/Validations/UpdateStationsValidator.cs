@@ -12,19 +12,18 @@ namespace TsiErp.EntityContracts.Station
         public UpdateStationsValidator()
         {
             RuleFor(x => x.Code)
-                .NotEmpty()
-                .WithMessage("Lütfen makina kodunu yazın.")
-                .MaximumLength(17)
-                .WithMessage("Makina kodu 17 karakterden fazla olamaz.");
+               .NotEmpty()
+               .WithMessage("ValidatorCodeEmpty")
+               .MaximumLength(17)
+               .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen makina açıklamasını yazın.")
+                .WithMessage("ValidatorNameEmpty")
                 .MaximumLength(200)
-                .WithMessage("Makina açıklaması 200 karakterden fazla olamaz.");
+                .WithMessage("ValidatorNameMaxLenght");
 
-
-            RuleFor(x => x.GroupID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("Lütfen makina grubunu seçin.");
+            RuleFor(x => x.GroupID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorStationGroupID");
         }
     }
 }

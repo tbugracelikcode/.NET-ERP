@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Code" xml:space="preserve">
+    <value>STATION GROUP CODE</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Station Group Code:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -144,8 +153,14 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Station Groups</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="IsActiveLabel" xml:space="preserve">
+    <value>Activity:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -159,7 +174,46 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="Name" xml:space="preserve">
+    <value>STATION GROUP NAME</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Station Group Name:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="TotalEmployees" xml:space="preserve">
+    <value>TOTAL EMPLOYEES</value>
+  </data>
+  <data name="TotalEmployeesLabel" xml:space="preserve">
+    <value>Total Employees:</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Station Groups</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>StationGroups</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Station Groups</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Machinery and Workforce Management &gt; Main Records</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Please enter the station group code.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Station group code cannot exceed 17 characters.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Please enter the station group name.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>Station group name cannot exceed 200 characters.</value>
   </data>
 </root>

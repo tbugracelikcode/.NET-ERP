@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
@@ -132,6 +135,33 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="CurrentAccountCardCode" xml:space="preserve">
+    <value>CARİ HESAP KODU</value>
+  </data>
+  <data name="CurrentAccountCardCodeLabel" xml:space="preserve">
+    <value>Cari Hesap Kodu:</value>
+  </data>
+  <data name="CurrentAccountPopupGridCode" xml:space="preserve">
+    <value>CARİ KOD</value>
+  </data>
+  <data name="CurrentAccountPopupGridEmail" xml:space="preserve">
+    <value>E-POSTA</value>
+  </data>
+  <data name="CurrentAccountPopupGridName" xml:space="preserve">
+    <value>CARİ ÜNVAN</value>
+  </data>
+  <data name="CurrentAccountPopupGridResponsible" xml:space="preserve">
+    <value>İLGİLİ</value>
+  </data>
+  <data name="CurrentAccountPopupGridTaxNumber" xml:space="preserve">
+    <value>VERGİ NUMARASI</value>
+  </data>
+  <data name="CurrentAccountPopupGridTel1" xml:space="preserve">
+    <value>TELEFON (1)</value>
+  </data>
+  <data name="CurrentAccountPopupTitle" xml:space="preserve">
+    <value>Cari Hesap Kartları</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -141,8 +171,32 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Fason Üretim Takip Kayıtları</value>
+  </data>
+  <data name="EmployeeName" xml:space="preserve">
+    <value>OPERATÖR</value>
+  </data>
+  <data name="EmployeeNameLabel" xml:space="preserve">
+    <value>Operatör:</value>
+  </data>
+  <data name="EmployeePopupGridCode" xml:space="preserve">
+    <value>OPERATÖR KODU</value>
+  </data>
+  <data name="EmployeePopupGridName" xml:space="preserve">
+    <value>OPERATÖR ADI</value>
+  </data>
+  <data name="EmployeePopupTitle" xml:space="preserve">
+    <value>Operatörler</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="IsFinished" xml:space="preserve">
+    <value>TAMAMLANDI</value>
+  </data>
+  <data name="IsFinishedLabel" xml:space="preserve">
+    <value>Tamamlandı:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -155,6 +209,111 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="OperationEndDate" xml:space="preserve">
+    <value>BİTİŞ TARİHİ</value>
+  </data>
+  <data name="OperationEndDateLabel" xml:space="preserve">
+    <value>Bitiş Tarihi:</value>
+  </data>
+  <data name="OperationEndTimeLabel" xml:space="preserve">
+    <value>Bitiş Saati:</value>
+  </data>
+  <data name="OperationStartDate" xml:space="preserve">
+    <value>BAŞLANGIÇ TARİHİ</value>
+  </data>
+  <data name="OperationStartDateLabel" xml:space="preserve">
+    <value>Başlangıç Tarihi:</value>
+  </data>
+  <data name="OperationStartTimeLabel" xml:space="preserve">
+    <value>Başlangıç Saati:</value>
+  </data>
+  <data name="OperationTime" xml:space="preserve">
+    <value>OPERASYON SÜRESİ</value>
+  </data>
+  <data name="OperationTimeLabel" xml:space="preserve">
+    <value>Operasyon Süresi:</value>
+  </data>
+  <data name="PlannedQuantity" xml:space="preserve">
+    <value>PLANLANAN MİKTAR</value>
+  </data>
+  <data name="ProducedQuantity" xml:space="preserve">
+    <value>ÜRETİLEN MİKTAR</value>
+  </data>
+  <data name="ProducedQuantityLabel" xml:space="preserve">
+    <value>Üretilen Miktar:</value>
+  </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductCodeLabel" xml:space="preserve">
+    <value>Stok Kodu:</value>
+  </data>
+  <data name="ProductNameLabel" xml:space="preserve">
+    <value>Stok Açıklaması:</value>
+  </data>
+  <data name="ProductPopupGridCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductPopupGridName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="ProductPopupTitle" xml:space="preserve">
+    <value>Stok Kartları</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="ShiftCode" xml:space="preserve">
+    <value>VARDİYA KODU</value>
+  </data>
+  <data name="ShiftCodeLabel" xml:space="preserve">
+    <value>Vardiya:</value>
+  </data>
+  <data name="ShiftPopupGridCode" xml:space="preserve">
+    <value>VARDİYA KODU</value>
+  </data>
+  <data name="ShiftPopupGridName" xml:space="preserve">
+    <value>VARDİYA ADI</value>
+  </data>
+  <data name="ShiftPopupTitle" xml:space="preserve">
+    <value>Vardiyalar</value>
+  </data>
+  <data name="StationCode" xml:space="preserve">
+    <value>İSTASYON KODU</value>
+  </data>
+  <data name="StationCodeLabel" xml:space="preserve">
+    <value>İstasyon:</value>
+  </data>
+  <data name="StationPopupGridCode" xml:space="preserve">
+    <value>İSTASYON KODU</value>
+  </data>
+  <data name="StationPopupGridName" xml:space="preserve">
+    <value>İSTASYON AÇIKLAMASI</value>
+  </data>
+  <data name="StationPopupTitle" xml:space="preserve">
+    <value>İş İstasyonları</value>
+  </data>
+  <data name="UIConfirmationPopupDateBase" xml:space="preserve">
+    <value>Lütfen önce başlangıç tarihini seçiniz.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>Seçtiğiniz kayıt kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Dikkat</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Fason İmalat Takip Kayıtları</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>FasonImalat</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Fason İmalat Takip Kayıtları</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Üretim Yönetimi &gt; Üretim Takip Kayıtları</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
@@ -170,5 +329,26 @@
   </data>
   <data name="ValidatorStationID" xml:space="preserve">
     <value>Lütfen iş istasyonu seçin.</value>
+  </data>
+  <data name="WordOrderCodeLabel" xml:space="preserve">
+    <value>İş Emri Kodu:</value>
+  </data>
+  <data name="WorkOrderCode" xml:space="preserve">
+    <value>İŞ EMRİ NO</value>
+  </data>
+  <data name="WorkOrderPopupGridCode" xml:space="preserve">
+    <value>İŞ EMRİ KODU</value>
+  </data>
+  <data name="WorkOrderPopupGridProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="WorkOrderPopupGridProductName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="WorkOrderPopupGridWorkOrderNo" xml:space="preserve">
+    <value>İŞ EMRİ NO</value>
+  </data>
+  <data name="WorkOrderPopupTitle" xml:space="preserve">
+    <value>İş Emirleri</value>
   </data>
 </root>

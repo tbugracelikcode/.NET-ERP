@@ -15,15 +15,15 @@ namespace TsiErp.Business.Entities.PurchasingUnsuitabilityItem.Validations
         {
             RuleFor(x => x.Code)
                 .NotEmpty()
-                .WithMessage("Lütfen satın alma uygunsuzluk kodunu yazın.")
+                .WithMessage("ValidatorCodeEmpty")
                 .MaximumLength(17)
-                .WithMessage("Satın alma uygunsuzluk kodu 17 karakterden fazla olamaz.");
+                .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .WithMessage("Lütfen satın alma uygunsuzluk açıklamasını yazın.")
+                .WithMessage("ValidatorNameEmpty")
                 .MaximumLength(200)
-                .WithMessage("Satın alma uygunsuzluk açıklaması 200 karakterden fazla olamaz."); ;
+                .WithMessage("ValidatorNameMaxLenght"); ;
 
         }
     }

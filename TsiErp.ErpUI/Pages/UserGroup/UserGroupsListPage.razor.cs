@@ -7,6 +7,7 @@ namespace TsiErp.ErpUI.Pages.UserGroup
         protected override async void OnInitialized()
         {
             BaseCrudService = UserGroupsService;
+            _L = L;
         }
 
         protected override Task BeforeInsertAsync()

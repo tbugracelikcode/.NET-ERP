@@ -7,6 +7,7 @@
 @using TsiErp.Entities.Entities.ExchangeRate
 @using TsiErp.Entities.Entities.ExchangeRate.Dtos
 @using TsiErp.ErpUI.Pages.Base
+@using TsiErp.Localizations.Resources.ExchangeRates.Page
 
 @using TsiErp.Entities.Entities.Currency.Dtos
 @using TsiErp.Business.Entities.Currency.Services
@@ -15,6 +16,7 @@
 
 @inject IExchangeRatesAppService ExchangeRatesService
 @inject ICurrenciesAppService CurrenciesAppService
+@inject IStringLocalizer<ExchangeRatesResource> L 
 
 
 @if (!base.IsLoaded)
@@ -29,7 +31,7 @@ else
                 <Template>
                     <SfCard class="TSIListPageTitleCard">
                         <CardContent>
-                            <TsiBreadCrumb PreviousMenus="Genel Sistem Tanımlamarı" CurrentMenu="Döviz Kuru Tablosu" />
+                            <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
                         </CardContent>
                         <CardFooter>
                         </CardFooter>
@@ -49,14 +51,14 @@ else
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", "Döviz Kurları", "DovizKurlari"))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", "Döviz Kurları", "DovizKurlari"))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
@@ -67,12 +69,12 @@ else
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ListExchangeRatesDto.CurrencyCode) HeaderText="PARA BİRİMİ KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListExchangeRatesDto.Date) HeaderText="TARİH" Format="dd.MM.yyyy" Type="ColumnType.Date" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListExchangeRatesDto.BuyingRate) HeaderText="ALIŞ KURU" Format="N2" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListExchangeRatesDto.EffectiveBuyingRate) HeaderText="EFEKTİF ALIŞ KURU" Format="N2" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListExchangeRatesDto.SaleRate) HeaderText="SATIŞ KURU" Format="N2" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListExchangeRatesDto.EffectiveSaleRate) HeaderText="EFEKTİF SATIŞ KURU" Format="N2" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListExchangeRatesDto.CurrencyCode) HeaderText="@L["CurrencyCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListExchangeRatesDto.Date) HeaderText="@L["Date"]" Format="dd.MM.yyyy" Type="ColumnType.Date" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListExchangeRatesDto.BuyingRate) HeaderText="@L["BuyingRate"]" Format="N2" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListExchangeRatesDto.EffectiveBuyingRate) HeaderText="@L["EffectiveBuyingRate"]" Format="N2" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListExchangeRatesDto.SaleRate) HeaderText="@L["SaleRate"]" Format="N2" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListExchangeRatesDto.EffectiveSaleRate) HeaderText="@L["EffectiveSaleRate"]" Format="N2" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </CardContent>
@@ -88,7 +90,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Kurlar"
+         HeaderText="@L["EditModalTitle"]"
          Width="39%"
          Height="31%"
          MinWidth="740px"
@@ -120,43 +122,43 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>Para Birimi Kodu: </strong></label>
+                            <label class="TSIModalLabel"><strong>@L["CurrencyCodeLabel"] </strong></label>
                             <SfTextBox @ref="@CurrenciesButtonEdit" Created="@CurrenciesOnCreateIcon" @bind-Value="DataSource.CurrencyCode" ShowClearButton=true ValueChange="CurrenciesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>Tarih: </strong></label>
+                            <label class="TSIModalLabel"><strong>@L["DateLabel"] </strong></label>
                             <SfDatePicker @bind-Value="DataSource.Date"></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Alış Kuru: </strong></label><br />
-                            <SfNumericTextBox Min="0" TValue="decimal" Placeholder="Alış Kurunu Yazınız." @bind-Value="DataSource.BuyingRate"></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>@L["BuyingRateLabel"] </strong></label><br />
+                            <SfNumericTextBox Min="0" TValue="decimal"  @bind-Value="DataSource.BuyingRate"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Satış Kuru: </strong></label><br />
-                            <SfNumericTextBox Min="0" TValue="decimal" Placeholder="Satış Kurunu Yazınız." @bind-Value="DataSource.SaleRate"></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>@L["SaleRateLabel"] </strong></label><br />
+                            <SfNumericTextBox Min="0" TValue="decimal"  @bind-Value="DataSource.SaleRate"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="4" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Efektif Alış Kuru: </strong></label><br />
-                            <SfNumericTextBox Min="0" TValue="decimal" Placeholder="Alış Kurunu Yazınız." @bind-Value="DataSource.EffectiveBuyingRate"></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>@L["EffectiveBuyingRateLabel"] </strong></label><br />
+                            <SfNumericTextBox Min="0" TValue="decimal"  @bind-Value="DataSource.EffectiveBuyingRate"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="4" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Efektif Satış Kuru: </strong></label><br />
-                            <SfNumericTextBox Min="0" TValue="decimal" Placeholder="Satış Kurunu Yazınız." @bind-Value="DataSource.EffectiveSaleRate"></SfNumericTextBox>
+                            <label class="TSIModalLabel"><strong>@L["EffectiveSaleRateLabel"] </strong></label><br />
+                            <SfNumericTextBox Min="0" TValue="decimal"  @bind-Value="DataSource.EffectiveSaleRate"></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -164,8 +166,8 @@ else
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 }
@@ -176,7 +178,7 @@ else
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Para Birimleri"
+         HeaderText="@L["CurrencyModalTitle"]"
          Width="64%"
          Height="44%"
          MinWidth="1220px"
@@ -202,8 +204,8 @@ else
                                         <GridPageSettings PageSizes="true"></GridPageSettings>
                                         <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                         <GridColumns>
-                                            <GridColumn Field=@nameof(ListCurrenciesDto.Code) HeaderText="PARA BİRİMİ KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrenciesDto.Name) HeaderText="PARA BİRİMİ AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrenciesDto.Code) HeaderText="@L["CurrencyModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrenciesDto.Name) HeaderText="@L["CurrencyModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                         </GridColumns>
                                     </SfGrid>
@@ -218,8 +220,6 @@ else
 
         </BodyTemplate>
         <FooterContentTemplate>
-            @*<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-        <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>*@
         </FooterContentTemplate>
     </DxPopup>
 }

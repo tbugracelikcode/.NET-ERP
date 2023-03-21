@@ -7,6 +7,7 @@ namespace TsiErp.ErpUI.Pages.Department
         protected override async void OnInitialized()
         {
             BaseCrudService = DepartmentsService;
+            _L = L;
         }
 
         protected override Task BeforeInsertAsync()

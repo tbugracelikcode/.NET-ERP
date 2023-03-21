@@ -15,17 +15,17 @@ namespace TsiErp.Business.Entities.ProductionTracking.Validations
         {
             RuleFor(x => x.Code)
               .NotEmpty()
-              .WithMessage("Lütfen üretim takip kodunu yazın.")
+              .WithMessage("ValidatorCodeEmpty")
               .MaximumLength(17)
-              .WithMessage("Üretim takip kodu 17 karakterden fazla olamaz.");
+              .WithMessage("ValidatorCodeMaxLength");
 
             RuleFor(x => x.StationID)
-               .Must(x => x.HasValue && x.Value != Guid.Empty)
-              .WithMessage("Lütfeniş istasyonu seçin.");
+                .Must(x => x.HasValue && x.Value != Guid.Empty)
+               .WithMessage("ValidatorStationID");
 
             RuleFor(x => x.EmployeeID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("Lütfen çalışan seçin.");
+               .WithMessage("ValidatorEmployeeID");
 
             RuleFor(x => x.ShiftID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)

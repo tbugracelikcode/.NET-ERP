@@ -7,6 +7,7 @@ namespace TsiErp.ErpUI.Pages.HaltReason
         protected override void OnInitialized()
         {
             BaseCrudService = HaltReasonsService;
+            _L = L;
         }
 
         protected override Task BeforeInsertAsync()

@@ -2,6 +2,7 @@
 @layout MainLayout
 
 @using Syncfusion.Blazor.Buttons
+@using TsiErp.Localizations.Resources.OperationUnsuitabilityItems.Page
 
 @using TsiErp.Business.Entities.OperationUnsuitabilityItem.Services
 @using TsiErp.Entities.Entities.OperationUnsuitabilityItem
@@ -12,6 +13,8 @@
 @inherits BaseListPage<SelectOperationUnsuitabilityItemsDto, ListOperationUnsuitabilityItemsDto, CreateOperationUnsuitabilityItemsDto, UpdateOperationUnsuitabilityItemsDto, ListOperationUnsuitabilityItemsParameterDto>
 
 @inject IOperationUnsuitabilityItemsAppService OperationUnsuitabilityItemsService
+@inject IStringLocalizer<OperationUnsuitabilityItemsResource> L 
+
 
 @{
     if (!base.IsLoaded)
@@ -26,7 +29,7 @@
                     <Template>
                         <SfCard class="TSIListPageTitleCard">
                             <CardContent>
-                                <TsiBreadCrumb PreviousMenus="Kalite Kontrol > Ana Kayıtlar > Uygunsuzluk Başlıkları" CurrentMenu="Operasyon Uygunsuzluk Başlıkları" />
+                                <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
                             </CardContent>
                             <CardFooter>
                             </CardFooter>
@@ -46,14 +49,14 @@
                                             <ToolbarItem Type="ItemType.Button">
                                                 <Template>
 
-                                                    <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", "Operasyon Uygunsuzluk Başlıkları", "OprUygBasliklari"))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
+                                                    <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport",@L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
                                                 </Template>
                                             </ToolbarItem>
 
                                         <ToolbarItem Type="ItemType.Button">
                                             <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", "Operasyon Uygunsuzluk Başlıkları", "OprUygBasliklari"))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
+                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", @L["UIExportTitle"],@L["UIExportFileName"]))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
                                             </Template>
                                         </ToolbarItem>
 
@@ -65,13 +68,13 @@
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.Code) HeaderText="OPERASYON UYGUNSUZLUK KODU" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.Name) HeaderText="OPERASYON UYGUNSUZLUK AÇIKLAMASI" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.Detection) Type="ColumnType.Number" HeaderText="TESPİT" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.Severity) Type="ColumnType.Number" HeaderText="ŞİDDET" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.StaProductivityAnalysis) DisplayAsCheckBox="true" HeaderText="İSTASYON VERİMLİLİK ANALİZİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.PerProductivityAnalysis) DisplayAsCheckBox="true" HeaderText="PERSONEL VERİMLİLİK ANALİZİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.Image) HeaderText="RESİM" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.Detection) Type="ColumnType.Number" HeaderText="@L["Detection"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.Severity) Type="ColumnType.Number" HeaderText="@L["Severity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.StaProductivityAnalysis) DisplayAsCheckBox="true" HeaderText="@L["StaProductivityAnalysis"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.PerProductivityAnalysis) DisplayAsCheckBox="true" HeaderText="@L["PerProductivityAnalysis"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityItemsDto.Image) HeaderText="@L["Image"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                     </GridColumns>
                                 </SfGrid>
@@ -88,7 +91,7 @@
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Operasyon Uygunsuzluk Başlıkları"
+         HeaderText="@L["EditModalTitle"]"
          Width="52%"
          Height="32%"
          MinWidth="980px"
@@ -117,40 +120,40 @@
                         <DxGridLayoutItem Row="0" Column="1">
                             <Template>
                                 <br />
-                                <label class="TSIModalLabel"><strong>Kod: </strong></label>
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="@DataSource.Code" Placeholder="Kodu Yazınız."></SfTextBox>
+                                <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="@DataSource.Code" ></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="0" Column="3">
                             <Template>
                                 <br />
-                                <label class="TSIModalLabel"><strong>Açıklama: </strong></label>
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="@DataSource.Name" Placeholder="Açıklama Yazınız."></SfTextBox>
+                                <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="@DataSource.Name" ></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="0" Column="5" RowSpan="1">
                             <Template>
                                 <br />
-                                <label class="TSIModalLabel"><strong>Resim: </strong></label>
+                                <label class="TSIModalLabel"><strong>@L["ImageLabel"] </strong></label>
                                 <DxImage></DxImage>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="1" Column="1">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Şiddet: </strong></label>
+                                <label class="TSIModalLabel"><strong>@L["SeverityLabel"] </strong></label>
                                 <SfNumericTextBox Min="0" TValue="int" @bind-Value="@DataSource.Severity" CssClass="TSITxtBox"></SfNumericTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="1" Column="3">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Tespit: </strong></label>
+                                <label class="TSIModalLabel"><strong>@L["DetectionLabel"] </strong></label>
                                 <SfNumericTextBox Min="0" TValue="int" @bind-Value="@DataSource.Detection" CssClass="TSITxtBox"></SfNumericTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="2" Column="1">
                             <Template>
                                 <center>
-                                    <label class="TSIModalLabel"><strong>İstasyon Verimlilik Analizi: </strong></label><br />
+                                    <label class="TSIModalLabel"><strong>@L["StaProductivityAnalysisLabel"] </strong></label><br />
                                     <SfSwitch @bind-Checked="DataSource.StaProductivityAnalysis"></SfSwitch>
                                 </center>
                             </Template>
@@ -158,7 +161,7 @@
                         <DxGridLayoutItem Row="2" Column="3">
                             <Template>
                                 <center>
-                                    <label class="TSIModalLabel"><strong>Personel Verimlilik Analizi: </strong></label><br />
+                                    <label class="TSIModalLabel"><strong>@L["PerProductivityAnalysisLabel"] </strong></label><br />
                                     <SfSwitch @bind-Checked="DataSource.PerProductivityAnalysis"></SfSwitch>
                                 </center>
                             </Template>
@@ -166,7 +169,7 @@
                         <DxGridLayoutItem Row="2" Column="5">
                             <Template>
                                 <center>
-                                    <label class="TSIModalLabel"><strong>Aktiflik: </strong></label><br />
+                                    <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
                                     <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
                                 </center>
                             </Template>
@@ -176,8 +179,8 @@
                 </DxGridLayout>
             </BodyTemplate>
             <FooterContentTemplate>
-                <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-                <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+                <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
             </FooterContentTemplate>
         </DxPopup>
 

@@ -8,6 +8,7 @@ namespace TsiErp.ErpUI.Pages.UnitSet
         protected override async void OnInitialized()
         {
             BaseCrudService = UnitSetsService;
+            _L = L;
         }
 
         protected override Task BeforeInsertAsync()

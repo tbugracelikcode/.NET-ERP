@@ -13,7 +13,7 @@ namespace TsiErp.Business.Entities.StationInventory.Validations
         {
             RuleFor(x => x.ProductID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("Lütfen envanter ürününü seçin.");
+               .WithMessage("ValidatorProductID");
 
         }
     }

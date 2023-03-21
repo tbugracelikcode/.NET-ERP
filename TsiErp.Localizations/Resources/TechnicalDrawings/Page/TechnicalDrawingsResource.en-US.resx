@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Close</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same revision number.</value>
   </data>
@@ -132,6 +135,9 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="CustomerApprovalLabel" xml:space="preserve">
+    <value>Customer Technical Approval:</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -141,8 +147,29 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Description:</value>
+  </data>
+  <data name="Drawer" xml:space="preserve">
+    <value>DRAWER</value>
+  </data>
+  <data name="DrawerLabel" xml:space="preserve">
+    <value>Drawer:</value>
+  </data>
+  <data name="DrawingNoLabel" xml:space="preserve">
+    <value>Drawing Number:</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Technical Drawings</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="FilestoUpload" xml:space="preserve">
+    <value>Files to Upload:</value>
+  </data>
+  <data name="IsApprovedLabel" xml:space="preserve">
+    <value>AR-EKS Approval:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -156,7 +183,79 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="NoFile" xml:space="preserve">
+    <value>No File</value>
+  </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="ProductCodeLabel" xml:space="preserve">
+    <value>Product Code:</value>
+  </data>
+  <data name="ProductModalGridCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="ProductModalGridName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="ProductNameLabel" xml:space="preserve">
+    <value>Product Name:</value>
+  </data>
+  <data name="RevisionDate" xml:space="preserve">
+    <value>REVISION DATE</value>
+  </data>
+  <data name="RevisionDateLabel" xml:space="preserve">
+    <value>Revision Date:</value>
+  </data>
+  <data name="RevisionNo" xml:space="preserve">
+    <value>REVISION NR</value>
+  </data>
+  <data name="RevisionNoLabel" xml:space="preserve">
+    <value>Revision Number:</value>
+  </data>
+  <data name="SampleApprovalLabel" xml:space="preserve">
+    <value>Sample Approval:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Technical Drawings</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>TechnicalDrawings</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Technical Drawings</value>
+  </data>
+  <data name="UIInformationPopupMessageBase" xml:space="preserve">
+    <value>The uploaded technical drawing file has been deleted successfully.</value>
+  </data>
+  <data name="UIInformationPopupTitleBase" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Inventory Management &gt; Main Records</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same revision number.</value>
+  </data>
+  <data name="UploadedFiles" xml:space="preserve">
+    <value>Uploaded Files:</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Please enter the revision number.</value>
+  </data>
+  <data name="ValidatorCodeMaxLength" xml:space="preserve">
+    <value>Revision number cannot exceed 50 characters.</value>
+  </data>
+  <data name="ValidatorProductID" xml:space="preserve">
+    <value>Please select a product.</value>
   </data>
 </root>

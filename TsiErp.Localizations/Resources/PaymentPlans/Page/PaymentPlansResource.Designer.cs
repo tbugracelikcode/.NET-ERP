@@ -61,11 +61,38 @@ namespace TsiErp.Localizations.Resources.PaymentPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kapat.
+        /// </summary>
+        public static string CloseButton {
+            get {
+                return ResourceManager.GetString("CloseButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ÖDEME PLANI KODU.
+        /// </summary>
+        public static string Code {
+            get {
+                return ResourceManager.GetString("Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aynı kodlu bir kayıt bulunmaktadır..
         /// </summary>
         public static string CodeControlManager {
             get {
                 return ResourceManager.GetString("CodeControlManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ödeme Planı Kodu:.
+        /// </summary>
+        public static string CodeLabel {
+            get {
+                return ResourceManager.GetString("CodeLabel", resourceCulture);
             }
         }
         
@@ -106,6 +133,42 @@ namespace TsiErp.Localizations.Resources.PaymentPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to VADE GÜNÜ.
+        /// </summary>
+        public static string Days_ {
+            get {
+                return ResourceManager.GetString("Days_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vade Günü:.
+        /// </summary>
+        public static string Days_Label {
+            get {
+                return ResourceManager.GetString("Days_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GECİKME VADE FARKI ORANI.
+        /// </summary>
+        public static string DelayMaturityDifference {
+            get {
+                return ResourceManager.GetString("DelayMaturityDifference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gecikme Vade Farkı Oranı:.
+        /// </summary>
+        public static string DelayMaturityDifferenceLabel {
+            get {
+                return ResourceManager.GetString("DelayMaturityDifferenceLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
         /// </summary>
         public static string DeleteConfirmationDescriptionBase {
@@ -142,11 +205,29 @@ namespace TsiErp.Localizations.Resources.PaymentPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ödeme Planları.
+        /// </summary>
+        public static string EditModalTitle {
+            get {
+                return ResourceManager.GetString("EditModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hata.
         /// </summary>
         public static string Error {
             get {
                 return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aktiflik:.
+        /// </summary>
+        public static string IsActiveLabel {
+            get {
+                return ResourceManager.GetString("IsActiveLabel", resourceCulture);
             }
         }
         
@@ -187,11 +268,119 @@ namespace TsiErp.Localizations.Resources.PaymentPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ÖDEME PLANI AÇIKLAMASI.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ödeme Planı Açıklaması:.
+        /// </summary>
+        public static string NameLabel {
+            get {
+                return ResourceManager.GetString("NameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kaydet.
+        /// </summary>
+        public static string SaveButton {
+            get {
+                return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ödeme Planları.
+        /// </summary>
+        public static string UICurrentMenu {
+            get {
+                return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OdemePlanlari.
+        /// </summary>
+        public static string UIExportFileName {
+            get {
+                return ResourceManager.GetString("UIExportFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ödeme Planları.
+        /// </summary>
+        public static string UIExportTitle {
+            get {
+                return ResourceManager.GetString("UIExportTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finans Yönetimi &gt; Ana Kayıtlar.
+        /// </summary>
+        public static string UIPreviousMenu {
+            get {
+                return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aynı kodlu bir kayıt bulunmaktadır..
         /// </summary>
         public static string UpdateControlManager {
             get {
                 return ResourceManager.GetString("UpdateControlManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen ödeme planı kodunu yazın..
+        /// </summary>
+        public static string ValidatorCodeEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorCodeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ödeme planı kodu, 17 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorCodeMaxLenght {
+            get {
+                return ResourceManager.GetString("ValidatorCodeMaxLenght", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ödeme planı vade günü, 0&apos;dan büyük olmalıdır..
+        /// </summary>
+        public static string ValidatorDay {
+            get {
+                return ResourceManager.GetString("ValidatorDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen ödeme planı adını yazın..
+        /// </summary>
+        public static string ValidatorNameEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorNameEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ödeme planı adı, 200 karakterden fazla olamaz..
+        /// </summary>
+        public static string ValidatorNameMaxLenght {
+            get {
+                return ResourceManager.GetString("ValidatorNameMaxLenght", resourceCulture);
             }
         }
     }

@@ -8,6 +8,7 @@ namespace TsiErp.ErpUI.Pages.ProductGroup
         protected override async void OnInitialized()
         {
             BaseCrudService = ProductGroupsService;
+            _L = L;
         }
 
         protected override Task BeforeInsertAsync()

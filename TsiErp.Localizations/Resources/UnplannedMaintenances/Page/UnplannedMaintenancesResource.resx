@@ -117,8 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AmountLineLabel" xml:space="preserve">
+    <value>Miktar:</value>
+  </data>
+  <data name="Caregiver" xml:space="preserve">
+    <value>BAKIMI YAPAN</value>
+  </data>
+  <data name="CaregiverLabel" xml:space="preserve">
+    <value>Bakımı Yapan:</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CompletionDateLabel" xml:space="preserve">
+    <value>Tamamlanma Tarihi:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -141,8 +156,41 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="EditLineModalTitle" xml:space="preserve">
+    <value>Arıza / Plansız Bakım Satırları</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Arıza / Plansız Bakım Kayıtları</value>
+  </data>
+  <data name="EnumDone" xml:space="preserve">
+    <value>Yapıldı</value>
+  </data>
+  <data name="EnumNotDone" xml:space="preserve">
+    <value>Yapılmadı</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="InstructionDescriptionLineLabel" xml:space="preserve">
+    <value>Talimat Açıklaması:</value>
+  </data>
+  <data name="LineGridAmount" xml:space="preserve">
+    <value>MİKTAR</value>
+  </data>
+  <data name="LineGridInsDesc" xml:space="preserve">
+    <value>TALİMAT AÇIKLAMASI</value>
+  </data>
+  <data name="LineGridLineNr" xml:space="preserve">
+    <value>SATIR NO</value>
+  </data>
+  <data name="LineGridMaintenanceNote" xml:space="preserve">
+    <value>BAKIM NOTU</value>
+  </data>
+  <data name="LineGridProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="LineGridUnitSet" xml:space="preserve">
+    <value>BİRİM SETİ</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
@@ -150,13 +198,157 @@
   <data name="LoadingText" xml:space="preserve">
     <value>Kayıtlar Yükleniyor..</value>
   </data>
+  <data name="MainPeriodModalGridCode" xml:space="preserve">
+    <value>BAKIM PERİYODU KODU</value>
+  </data>
+  <data name="MainPeriodModalGridName" xml:space="preserve">
+    <value>BAKIM PERİYODU AÇIKLAMASI</value>
+  </data>
+  <data name="MainPeriodModalGridPeriodTime" xml:space="preserve">
+    <value>PERİYOT SÜRESİ</value>
+  </data>
+  <data name="MainPeriodModalTitle" xml:space="preserve">
+    <value>Bakım Periyotları</value>
+  </data>
+  <data name="MaintenanceNoteLineLabel" xml:space="preserve">
+    <value>Bakım Notu:</value>
+  </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="Note_Label" xml:space="preserve">
+    <value>Not:</value>
+  </data>
+  <data name="NumberofCaregiversLabel" xml:space="preserve">
+    <value>Bakımı Yapan Kişi Sayısı:</value>
+  </data>
+  <data name="OccuredTimeLabel" xml:space="preserve">
+    <value>Gerçekleşen Süre:</value>
+  </data>
+  <data name="PeriodName" xml:space="preserve">
+    <value>PERİYOT ADI</value>
+  </data>
+  <data name="PeriodNameLabel" xml:space="preserve">
+    <value>Bakım Türü:</value>
+  </data>
+  <data name="PeriodTimeLabel" xml:space="preserve">
+    <value>Periyot Süresi:</value>
+  </data>
+  <data name="ProductCodeLineLabel" xml:space="preserve">
+    <value>Stok Kodu:</value>
+  </data>
+  <data name="ProductModalGridCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductModalGridName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Stok Kartları</value>
+  </data>
+  <data name="ProductNameLineLabel" xml:space="preserve">
+    <value>Stok Açıklaması:</value>
+  </data>
+  <data name="RegistrationNo" xml:space="preserve">
+    <value>KAYIT NUMARASI</value>
+  </data>
+  <data name="RegistrationNoLabel" xml:space="preserve">
+    <value>Kayıt Numarası:</value>
+  </data>
+  <data name="RemainingTimeLabel" xml:space="preserve">
+    <value>Kalan Süre:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>BAŞLANGIÇ TARİHİ</value>
+  </data>
+  <data name="StartDateLabel" xml:space="preserve">
+    <value>Başlangıç Tarihi:</value>
+  </data>
+  <data name="StationCode" xml:space="preserve">
+    <value>İSTASYON KODU</value>
+  </data>
+  <data name="StationCodeLabel" xml:space="preserve">
+    <value>İş İstasyonu:</value>
+  </data>
+  <data name="StationModalGridCode" xml:space="preserve">
+    <value>İSTASYON KODU</value>
+  </data>
+  <data name="StationModalGridName" xml:space="preserve">
+    <value>İSTASYON AÇIKLAMASI</value>
+  </data>
+  <data name="StationModalTitle" xml:space="preserve">
+    <value>İş İstasyonları</value>
+  </data>
+  <data name="StatusLabel" xml:space="preserve">
+    <value>Durum:</value>
+  </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>Seçtiğiniz plansız bakım, kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Dikkat</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Arıza / Plansız Bakım Kayıtları</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>PlansizBakimlar</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Plansız Bakımlar</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Bakım Yönetimi &gt; İşlemler</value>
+  </data>
+  <data name="UIWarningPopupMessageBase" xml:space="preserve">
+    <value>Miktar 0 olduğu için satır kaydetme işlemi yapılamamaktadır.</value>
+  </data>
+  <data name="UIWarningPopupTitleBase" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UnitSetCodeLineLabel" xml:space="preserve">
+    <value>Birim Seti:</value>
+  </data>
+  <data name="UnitSetModalGridCode" xml:space="preserve">
+    <value>BİRİM SETİ KODU</value>
+  </data>
+  <data name="UnitSetModalGridName" xml:space="preserve">
+    <value>BİRİM SETİ AÇIKLAMASI</value>
+  </data>
+  <data name="UnitSetModalTitle" xml:space="preserve">
+    <value>Birim Setleri</value>
+  </data>
+  <data name="UnplannedDate" xml:space="preserve">
+    <value>BİTİŞ TARİHİ</value>
+  </data>
+  <data name="UnplannedDateLabel" xml:space="preserve">
+    <value>Planlanan Tarihi:</value>
+  </data>
+  <data name="UnplannedTimeLabel" xml:space="preserve">
+    <value>Planlanan Süre:</value>
+  </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen bakım kayıt numarasını yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLength" xml:space="preserve">
+    <value>Bakım kayıt numarası, 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorPeriodID" xml:space="preserve">
+    <value>Lütfen bakım türü seçin.</value>
+  </data>
+  <data name="ValidatorStationID" xml:space="preserve">
+    <value>Lütfen iş istasyonu seçin.</value>
   </data>
 </root>

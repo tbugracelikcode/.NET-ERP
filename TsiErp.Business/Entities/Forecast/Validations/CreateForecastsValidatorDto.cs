@@ -14,22 +14,22 @@ namespace TsiErp.Business.Entities.Forecast.Validations
         {
             RuleFor(x => x.Code)
                .NotEmpty()
-               .WithMessage("Lütfen kodu yazın.")
+               .WithMessage("ValidatorCodeEmpty")
                .MaximumLength(17)
-               .WithMessage("Kod, 17 karakterden fazla olamaz.");
+               .WithMessage("ValidatorCodeMaxLenght");
 
 
             RuleFor(x => x.CurrentAccountCardID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("Lütfen cari hesap seçin.");
+               .WithMessage("ValidatorCurrentAccountCardID");
 
             RuleFor(x => x.BranchID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("Lütfen şube seçin.");
+               .WithMessage("ValidatorBranchID");
 
             RuleFor(x => x.PeriodID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
-               .WithMessage("Lütfen dönem seçin.");
+               .WithMessage("ValidatorPeriodID");
 
 
          

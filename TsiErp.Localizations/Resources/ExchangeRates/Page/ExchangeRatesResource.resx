@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BuyingRate" xml:space="preserve">
+    <value>ALIŞ KURU</value>
+  </data>
+  <data name="BuyingRateLabel" xml:space="preserve">
+    <value>Alış Kuru:</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
@@ -132,6 +141,27 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="CurrencyCode" xml:space="preserve">
+    <value>PARA BİRİMİ KODU</value>
+  </data>
+  <data name="CurrencyCodeLabel" xml:space="preserve">
+    <value>Para Birimi Kodu:</value>
+  </data>
+  <data name="CurrencyModalGridCode" xml:space="preserve">
+    <value>PARA BİRİMİ KODU</value>
+  </data>
+  <data name="CurrencyModalGridName" xml:space="preserve">
+    <value>PARA BİRİMİ AÇIKLAMASI</value>
+  </data>
+  <data name="CurrencyModalTitle" xml:space="preserve">
+    <value>Para Birimleri</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>TARİH</value>
+  </data>
+  <data name="DateLabel" xml:space="preserve">
+    <value>Tarih:</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -140,6 +170,21 @@
   </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Kurlar</value>
+  </data>
+  <data name="EffectiveBuyingRate" xml:space="preserve">
+    <value>EFEKTİF ALIŞ KURU</value>
+  </data>
+  <data name="EffectiveBuyingRateLabel" xml:space="preserve">
+    <value>Efektif Alış Kuru:</value>
+  </data>
+  <data name="EffectiveSaleRate" xml:space="preserve">
+    <value>EFEKTİF SATIŞ KURU</value>
+  </data>
+  <data name="EffectiveSaleRateLabel" xml:space="preserve">
+    <value>Efektif Satış Kuru:</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
@@ -155,6 +200,27 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="SaleRate" xml:space="preserve">
+    <value>SATIŞ KURU</value>
+  </data>
+  <data name="SaleRateLabel" xml:space="preserve">
+    <value>Satış Kuru:</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Döviz Kuru Tablosu</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>DovizKurlari</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Döviz Kurları</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Genel Sistem Tanımlamaları</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
