@@ -629,7 +629,7 @@ namespace TsiErp.Localizations.Resources.UnplannedMaintenances.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bakım Yönetimi &gt; İşlemler.
+        ///   Looks up a localized string similar to Bakım Yönetimi &gt; Hareketler.
         /// </summary>
         public static string UIPreviousMenu {
             get {

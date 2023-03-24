@@ -979,7 +979,7 @@ namespace TsiErp.Localizations.Resources.SalesPropositions.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Satış Yönetimi &gt; İşlemler.
+        ///   Looks up a localized string similar to Satış Yönetimi &gt; Hareketler.
         /// </summary>
         public static string UIPreviousMenu {
             get {

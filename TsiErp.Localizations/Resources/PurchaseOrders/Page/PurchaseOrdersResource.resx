@@ -400,7 +400,7 @@
     <value>Satın Alma Siparişleri</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Satın Alma Yönetimi &gt; İşlemler</value>
+    <value>Satın Alma Yönetimi &gt; Hareketler</value>
   </data>
   <data name="UIWarningPopupMessageBase1" xml:space="preserve">
     <value>Birim seti seçilmeden satır kaydetme işlemi yapılamaz.</value>
