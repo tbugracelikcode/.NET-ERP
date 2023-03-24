@@ -1,5 +1,4 @@
 ﻿using System.Data.SqlClient;
-using TSI.QueryBuilder;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Models;
 
@@ -13,15 +12,15 @@ var query = db.Query().From("Employees").Select(new string[] { "FirstName", "Las
 var query2 = db.Query().From("Employees");
 var query3 = db.Query().From("Employees").OrderBy("Extension");
 var query4 = db.Query().From("Employees").OrderByDescending("Extension");
-var query5 = db.Query().From("Employees").Take("", 3);
+var query5 = db.Query().From("Employees").Take("FirstName", 3);
 var query6 = db.Query().From("Employees").Distinct("City");
-var employess = db.GetList<Employees>(query6);
+var employess = db.GetList<Employees>(query5);
 
 foreach (var item in employess)
 {
     Console.WriteLine("First Name: " + item.FirstName + " " + "Last Name: " + item.LastName + " " + "Title: " + item.Title + " " + "City: " + item.City);
 }
 
-Console.WriteLine(query6.Sql);
+Console.WriteLine(query5.Sql);
 
 Console.ReadLine();
