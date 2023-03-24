@@ -6,18 +6,16 @@ namespace TSI.QueryBuilder
 {
     public partial class Query
     {
-        public Query Take(string column, int limit)
+        public Query Take(int limit)
         {
             Method = "select";
 
-            if(column == "")
-            {
-                column = "*";
-            }
+            string replacingvalue = " top " + limit.ToString() + " ";
 
-            string replacingvalue = "top " + limit.ToString() + " " + column;
+            //Sql = Sql.Replace("*", replacingvalue);
 
-            Sql = Sql.Replace("*", replacingvalue);
+
+            Sql = Sql.Insert(6, replacingvalue).Remove(6 + replacingvalue.Length, 1);
 
             return this;
         }
