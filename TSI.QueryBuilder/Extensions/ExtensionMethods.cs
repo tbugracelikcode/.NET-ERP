@@ -14,6 +14,9 @@ namespace TSI.QueryBuilder.Extensions
             while (@this.Read())
             {
                 obj = Activator.CreateInstance<T>();
+
+                int counter = 0;
+
                 foreach (PropertyInfo prop in obj.GetType().GetProperties())
                 {
                     if (!object.Equals(@this[prop.Name], DBNull.Value))
@@ -22,6 +25,7 @@ namespace TSI.QueryBuilder.Extensions
                     }
                 }
                 list.Add(obj);
+                counter++;
             }
             return list;
         }
