@@ -331,7 +331,7 @@
     <value>Operation Unsuitability Records</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Quality Control &gt; İşlemler &gt; Unsuitability Records</value>
+    <value>Quality Control &gt; Transactions &gt; Unsuitability Records</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same number.</value>

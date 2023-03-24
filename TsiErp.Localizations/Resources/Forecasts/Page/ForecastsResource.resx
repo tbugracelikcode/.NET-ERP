@@ -298,7 +298,7 @@
     <value>Forecast Kayıtları</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Satış Yönetimi &gt; İşlemler</value>
+    <value>Satış Yönetimi &gt; Hareketler</value>
   </data>
   <data name="UIWarningPopupMessageBase" xml:space="preserve">
     <value>Miktar 0 olduğu için satır kaydetme işlemi yapılamamaktadır.</value>

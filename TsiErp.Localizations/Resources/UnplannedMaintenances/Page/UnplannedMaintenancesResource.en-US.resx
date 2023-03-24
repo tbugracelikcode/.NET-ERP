@@ -307,7 +307,7 @@
     <value>Unplanned Maintenances</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Maintenance Management &gt; İşlemler</value>
+    <value>Maintenance Management &gt; Transactions</value>
   </data>
   <data name="UIWarningPopupMessageBase" xml:space="preserve">
     <value>Since the quantity is 0, line saving cannot be performed.</value>

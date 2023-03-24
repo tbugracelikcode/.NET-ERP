@@ -424,7 +424,7 @@
     <value>Sales Propositions</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Sales Management &gt; İşlemler</value>
+    <value>Sales Management &gt; Transactions</value>
   </data>
   <data name="UIWarningPopupMessageBase1" xml:space="preserve">
     <value>It is not possible to save lines without selecting the unit set.</value>

@@ -319,7 +319,7 @@
     <value>Purchase Unsuitability Records</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Quality Control &gt; İşlemler &gt; Unsuitability Records</value>
+    <value>Quality Control &gt; Transactions &gt; Unsuitability Records</value>
   </data>
   <data name="UnsuitableAmount" xml:space="preserve">
     <value>UNSUITABLE AMOUNT</value>
