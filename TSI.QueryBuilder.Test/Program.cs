@@ -9,12 +9,16 @@ if (connection.State == System.Data.ConnectionState.Closed)
 
 var db = new QueryFactory(connection);
 
-var query = db.Query().From("Employees").Select(new string[] { "FirstName", "LastName" });
-var query2 = db.Query().From("Employees");
+//var query = db.Query().From("Employees").Select(new string[] { "FirstName", "LastName","Title" });
+var query2 = db.Query().From("Employees").Where("FirstName","Janet");
 var employess = db.GetList<Employees>(query2);
-
-
-Console.WriteLine(query.Sql);
 Console.WriteLine(query2.Sql);
+
+//foreach (var item in employess)
+//{
+//    Console.WriteLine("First Name: " + item.FirstName + " " + "Last Name: " + item.LastName + " " + "Title: " + item.Title);
+//}
+
+
 
 Console.ReadLine();
