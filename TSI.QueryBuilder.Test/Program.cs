@@ -8,6 +8,7 @@ if (connection.State == System.Data.ConnectionState.Closed)
 
 var db = new QueryFactory(connection);
 
+
 //var query = db.Query().From("Employees");
 //var query2 = db.Query().From("Employees");
 //var query3 = db.Query().From("Employees").OrderBy("Extension");
@@ -15,9 +16,12 @@ var db = new QueryFactory(connection);
 //var query5 = db.Query().From("Employees").Select("EmployeeID","FirstName","LastName").Take(3).OrderByDescending("EmployeeID");
 //var query6 = db.Query().From("Employees").Distinct("City");
 var query7 = db.Query().ExecuteSql("select * from Employees where Title={0} and FirstName={1}", "'Sales Representative'", "'Janet'");
+
 var employess = db.GetList<Employees>(query7);
 
-foreach (var item in employess)
+var employess2 = db.GetArray<Employees>(query7);
+
+foreach (var item in employess2)
 {
     Console.WriteLine("ID: "+item.EmployeeID +" "+ "First Name: " + item.FirstName + " " + "Last Name: " + item.LastName + " " + "Title: " + item.Title + " " + "City: " + item.City);
 }

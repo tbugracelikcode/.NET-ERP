@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
+using TSI.QueryBuilder.BaseClasses;
 
 namespace TSI.QueryBuilder.Extensions
 {
@@ -24,7 +26,7 @@ namespace TSI.QueryBuilder.Extensions
                 foreach (PropertyInfo prop in obj.GetType().GetProperties())
                 {
 
-                    if(columns.Contains(prop.Name))
+                    if (columns.Contains(prop.Name))
                     {
                         if (!object.Equals(@this[prop.Name], DBNull.Value))
                         {
@@ -36,6 +38,20 @@ namespace TSI.QueryBuilder.Extensions
                 counter++;
             }
             return list;
+        }
+
+        public static T[] DataReaderMapToArray<T>(this IDataReader @this)
+        {
+            return DataReaderMapToList<T>(@this).ToArray();
+        }
+
+
+        public static string ToJsonObject<T>(this Query query, IDataReader @this)
+        {
+            var data = DataReaderMapToList<T>(@this);
+
+
+            return JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
         }
     }
 }
