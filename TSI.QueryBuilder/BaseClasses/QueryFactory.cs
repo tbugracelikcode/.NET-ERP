@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
@@ -29,13 +30,65 @@ namespace TSI.QueryBuilder.BaseClasses
             if (command != null)
             {
                 command.CommandText = query.Sql;
-                return command.ExecuteReader().DataReaderMapToList<T>();
+
+                query.SqlResult = command.ExecuteReader().DataReaderMapToList<T>();
+
+                return query.SqlResult as IEnumerable<T>;
             }
             else
             {
 
                 return null;
             }
+        }
+
+
+        public IEnumerable<T>? GetList<T>(Query query,bool toJsonObject)
+        {
+            var command = Connection.CreateCommand();
+
+            if (command != null)
+            {
+                command.CommandText = query.Sql;
+
+                query.SqlResult = command.ExecuteReader().DataReaderMapToList<T>();
+
+                if(toJsonObject)
+                {
+                    query.JsonData = JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
+                }
+
+                return query.SqlResult as IEnumerable<T>;
+            }
+            else
+            {
+
+                return null;
+            }
+        }
+
+        public IEnumerable<T>? GetArray<T>(Query query)
+        {
+            var command = Connection.CreateCommand();
+
+            if (command != null)
+            {
+                command.CommandText = query.Sql;
+
+                query.SqlResult = command.ExecuteReader().DataReaderMapToArray<T>();
+
+                return query.SqlResult as IEnumerable<T>;
+            }
+            else
+            {
+
+                return null;
+            }
+        }
+
+        public string ToJsonObject(object sqlResult)
+        {
+            return JsonConvert.SerializeObject(sqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
         }
     }
 }
