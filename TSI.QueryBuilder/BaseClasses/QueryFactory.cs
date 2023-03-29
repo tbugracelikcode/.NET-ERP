@@ -12,6 +12,8 @@ namespace TSI.QueryBuilder.BaseClasses
     {
         public IDbConnection Connection { get; set; }
 
+        public int CommandTimeOut { get; set; } = 60;
+
 
         public QueryFactory(IDbConnection connection)
         {
@@ -26,6 +28,8 @@ namespace TSI.QueryBuilder.BaseClasses
         public IEnumerable<T>? GetList<T>(Query query)
         {
             var command = Connection.CreateCommand();
+
+            command.CommandTimeout = CommandTimeOut;
 
             if (command != null)
             {
@@ -46,6 +50,8 @@ namespace TSI.QueryBuilder.BaseClasses
         public IEnumerable<T>? GetList<T>(Query query,bool toJsonObject)
         {
             var command = Connection.CreateCommand();
+
+            command.CommandTimeout = CommandTimeOut;
 
             if (command != null)
             {
@@ -70,6 +76,8 @@ namespace TSI.QueryBuilder.BaseClasses
         public IEnumerable<T>? GetArray<T>(Query query)
         {
             var command = Connection.CreateCommand();
+
+            command.CommandTimeout = CommandTimeOut;
 
             if (command != null)
             {

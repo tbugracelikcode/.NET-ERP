@@ -1,5 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 
@@ -7,29 +12,23 @@ namespace TSI.QueryBuilder
 {
     public partial class Query
     {
-        public Query Where(object constraints)
+        public Query Where<T>(Expression<Func<T, bool>> predicate)
         {
-            var dictionary = new Dictionary<string, object>();
+            string where = predicate.Body.ToString();
 
-            foreach (var item in constraints.GetType().GetRuntimeProperties())
-            {
-                dictionary.Add(item.Name, item.GetValue(constraints));
-            }
+            var paramName = predicate.Parameters[0].Name;
+            var paramTypeName = predicate.Parameters[0].Type.Name;
+            where = " where " + where.Replace(paramName + ".", paramTypeName + ".")
+                         .Replace("AndAlso", "And")
+                         .Replace("OrElse", "Or")
+                         .Replace("\"", "'")
+                         .Replace("==", "=");
 
-            return Where(dictionary);
-        }
+            WhereSentence = where;
 
-        public Query Where(IEnumerable<KeyValuePair<string, object>> values)
-        {
-            var query = (Query)this;
+            Sql = Sql + WhereSentence;
 
-
-            foreach (var tuple in values)
-            {
-
-            }
-
-            return query;
+            return this;
         }
 
         public Query Where(string column, object value)
@@ -45,10 +44,81 @@ namespace TSI.QueryBuilder
 
             if (!string.IsNullOrEmpty(tableName))
             {
-                int insertPoint = Sql.LastIndexOf(tableName);
-                Sql = Sql.Insert(insertPoint, " where " + column + " " + op + " " + value);
+                string where = " where " + column + op + " " + "'" + value.ToString() + "'";
+
+                WhereSentence = where;
+
+                Sql = Sql + WhereSentence;
             }
 
+            return this;
+        }
+
+        public Query WhereIn(string column, params string[] values)
+        {
+            if (values.Length > 0)
+            {
+                string tableName = TableName;
+
+                if (!string.IsNullOrEmpty(tableName))
+                {
+                    string inSentence = "";
+
+                    for (int i = 0; i < values.Length; i++)
+                    {
+                        if (i == 0)
+                        {
+                            inSentence = "'" + values[i].ToString() + "'";
+                        }
+                        else
+                        {
+                            inSentence = inSentence + " , " + "'" + values[i].ToString() + "'";
+                        }
+                    }
+
+                    inSentence = " in " + "(" + inSentence + ")";
+
+                    string where = " where " + column + inSentence;
+
+                    WhereSentence = where;
+
+                    Sql = Sql + WhereSentence;
+                }
+            }
+            return this;
+        }
+
+        public Query WhereNotIn(string column, params string[] values)
+        {
+            if (values.Length > 0)
+            {
+                string tableName = TableName;
+
+                if (!string.IsNullOrEmpty(tableName))
+                {
+                    string inSentence = "";
+
+                    for (int i = 0; i < values.Length; i++)
+                    {
+                        if (i == 0)
+                        {
+                            inSentence = "'" + values[i].ToString() + "'";
+                        }
+                        else
+                        {
+                            inSentence = inSentence + " , " + "'" + values[i].ToString() + "'";
+                        }
+                    }
+
+                    inSentence = " not in " + "(" + inSentence + ")";
+
+                    string where = " where " + column + inSentence;
+
+                    WhereSentence = where;
+
+                    Sql = Sql + WhereSentence;
+                }
+            }
             return this;
         }
     }
