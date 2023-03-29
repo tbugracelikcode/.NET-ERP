@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using TSI.QueryBuilder.BaseClasses;
 
@@ -44,7 +45,6 @@ namespace TSI.QueryBuilder.Extensions
         {
             return DataReaderMapToList<T>(@this).ToArray();
         }
-
 
         public static string ToJsonObject<T>(this Query query, IDataReader @this)
         {

@@ -17,5 +17,7 @@ namespace TSI.QueryBuilder
         public object SqlResult { get; set; }
 
         public string JsonData { get; set; }
+
+        public string WhereSentence { get; set; }
     }
 }
