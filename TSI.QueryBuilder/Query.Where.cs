@@ -121,5 +121,53 @@ namespace TSI.QueryBuilder
             }
             return this;
         }
+
+        public Query WhereContains(string column, string value)
+        {
+            string tableName = TableName;
+
+            if(!string.IsNullOrEmpty(tableName))
+            {
+                string containsSentence =  column + " like '%" + value + "%'";
+
+                string whereSentence = " where " + containsSentence;
+
+                Sql = Sql + whereSentence;
+            }
+
+            return this;
+        }
+
+        public Query WhereStartingWith(string column, string value)
+        {
+            string tableName = TableName;
+
+            if(!string.IsNullOrEmpty(tableName))
+            {
+                string startingwithSentence = column + " like '" + value + "%'";
+
+                string whereSentence = " where " + startingwithSentence;
+
+                Sql = Sql + whereSentence;
+            }
+
+            return this;
+        }
+
+        public Query WhereEndingWith(string column, string value)
+        {
+            string tableName = TableName;
+
+            if(!string.IsNullOrEmpty(tableName))
+            {
+                string endingwithSentence = column + " like '%" + value + "'";
+
+                string whereSentence = " where " + endingwithSentence;
+
+                Sql = Sql + whereSentence;
+            }
+
+            return this;
+        }
     }
 }

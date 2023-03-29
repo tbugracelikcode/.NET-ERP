@@ -18,6 +18,9 @@ db.CommandTimeOut = 600;
 //var query2 = db.Query().From("Employees").Select("EmployeeID", "FirstName", "LastName").Where<Employees>(t => t.FirstName == "Janet");
 var query2 = db.Query().From("Employees").Select("EmployeeID", "FirstName", "LastName").WhereIn("City", "Seattle", "London");
 var query3 = db.Query().From("Employees").Select("EmployeeID", "FirstName", "LastName").WhereNotIn("City", "Seattle", "London");
+var query4 = db.Query().From("Employees").WhereContains("Title", "Representative");
+var query5 = db.Query().From("Employees").WhereStartingWith("LastName", "Pe");
+var query6 = db.Query().From("Employees").WhereEndingWith("LastName", "n");
 //var query3 = db.Query().From("Employees").OrderBy("Extension");
 //var query4 = db.Query().From("Employees").OrderByDescending("Extension");
 //var query5 = db.Query().From("Employees").Select("EmployeeID","FirstName","LastName").Take(3).OrderByDescending("EmployeeID");
@@ -26,7 +29,7 @@ var query3 = db.Query().From("Employees").Select("EmployeeID", "FirstName", "Las
 
 
 
-var employess = db.GetList<Employees>(query2);
+var employess = db.GetList<Employees>(query6);
 
 //var employess2 = db.GetArray<Employees>(query7);
 
