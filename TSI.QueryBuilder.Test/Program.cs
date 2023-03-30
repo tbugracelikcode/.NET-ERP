@@ -21,6 +21,7 @@ var query3 = db.Query().From("Employees").Select("EmployeeID", "FirstName", "Las
 var query4 = db.Query().From("Employees").WhereContains("Title", "Representative");
 var query5 = db.Query().From("Employees").WhereStartingWith("LastName", "Pe");
 var query6 = db.Query().From("Employees").WhereEndingWith("LastName", "n");
+var query7 = db.Insert().Into("Employees", "Title", "TitleOfCourtesy").Values("Electronics and Communication Engineer", "Mr.");
 //var query3 = db.Query().From("Employees").OrderBy("Extension");
 //var query4 = db.Query().From("Employees").OrderByDescending("Extension");
 //var query5 = db.Query().From("Employees").Select("EmployeeID","FirstName","LastName").Take(3).OrderByDescending("EmployeeID");
@@ -29,14 +30,17 @@ var query6 = db.Query().From("Employees").WhereEndingWith("LastName", "n");
 
 
 
-var employess = db.GetList<Employees>(query6);
+ db.Create<Employees>(query7);
+
+Console.WriteLine(query7.Sql);
+//var employess = db.GetList<Employees>(query6);
 
 //var employess2 = db.GetArray<Employees>(query7);
 
-foreach (var item in employess)
-{
-    Console.WriteLine("ID: " + item.EmployeeID + " " + "First Name: " + item.FirstName + " " + "Last Name: " + item.LastName + " " + "Title: " + item.Title + " " + "City: " + item.City);
-}
+//foreach (var item in employess)
+//{
+//    Console.WriteLine("ID: " + item.EmployeeID + " " + "First Name: " + item.FirstName + " " + "Last Name: " + item.LastName + " " + "Title: " + item.Title + " " + "City: " + item.City);
+//}
 
 //Console.WriteLine(query7.Sql);
 
