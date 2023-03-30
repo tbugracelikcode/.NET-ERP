@@ -25,6 +25,26 @@ namespace TSI.QueryBuilder.BaseClasses
             return new Query();
         }
 
+        public Insert Insert()
+        {
+            return new Insert();
+        }
+
+        public void Create<T>(Insert insert)
+        {
+            var command = Connection.CreateCommand();
+
+            command.CommandTimeout = CommandTimeOut;
+
+            if(command != null)
+            {
+                command.CommandText = insert.Sql;
+
+                command.ExecuteNonQuery();
+
+            }
+        }
+
         public IEnumerable<T>? GetList<T>(Query query)
         {
             var command = Connection.CreateCommand();
