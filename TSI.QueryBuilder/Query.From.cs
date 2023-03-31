@@ -8,11 +8,11 @@ namespace TSI.QueryBuilder
     {
         public Query From(string table)
         {
-            Method = "select";
+            //Method = "select";
 
             TableName = table;
 
-            Sql = Method + " * " + "from " + table;
+            //Sql = Method + " * " + "from " + table;
 
             return this;
         }

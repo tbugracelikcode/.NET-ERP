@@ -8,7 +8,7 @@ namespace TSI.QueryBuilder
     {
         public Query Take(int limit)
         {
-            Method = "select";
+            //Method = "select";
 
             string replacingvalue = " top " + limit.ToString() + " ";
 

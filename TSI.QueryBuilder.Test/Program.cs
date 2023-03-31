@@ -11,29 +11,38 @@ var db = new QueryFactory(connection);
 db.CommandTimeOut = 600;
 
 
-//var query = db.Query().From("Employees");
+//var query = db.Query().From("Employees").Select().Where("FirstName", "Janet");
 //var query2 = db.Query().From("Employees").Select("EmployeeID","FirstName","LastName").Where("FirstName", "Janet");
 //var query2 = db.Query().From("Employees").Select("EmployeeID", "FirstName", "LastName").Where("FirstName", "aaaa");
 //var query2 = db.Query().From("Employees").Select("EmployeeID", "FirstName", "LastName").Where("Age", ">","45");
 //var query2 = db.Query().From("Employees").Select("EmployeeID", "FirstName", "LastName").Where<Employees>(t => t.FirstName == "Janet");
-var query2 = db.Query().From("Employees").Select("EmployeeID", "FirstName", "LastName").WhereIn("City", "Seattle", "London");
-var query3 = db.Query().From("Employees").Select("EmployeeID", "FirstName", "LastName").WhereNotIn("City", "Seattle", "London");
-var query4 = db.Query().From("Employees").WhereContains("Title", "Representative");
-var query5 = db.Query().From("Employees").WhereStartingWith("LastName", "Pe");
-var query6 = db.Query().From("Employees").WhereEndingWith("LastName", "n");
-var query7 = db.Insert().Into("Employees", "Title", "TitleOfCourtesy").Values("Electronics and Communication Engineer", "Mr.");
+//var query2 = db.Query().From("Employees").Select("EmployeeID", "FirstName", "LastName").WhereIn("City", "Seattle", "London");
+//var query3 = db.Query().From("Employees").Select("EmployeeID", "FirstName", "LastName").WhereNotIn("City", "Seattle", "London");
+//var query4 = db.Query().From("Employees").WhereContains("Title", "Representative");
+//var query5 = db.Query().From("Employees").WhereStartingWith("LastName", "Pe");
+//var query6 = db.Query().From("Employees").WhereEndingWith("LastName", "n");
+//var query7 = db.Insert().Into("Employees", "Title", "TitleOfCourtesy").Values("Electronics and Communication Engineer", "Mr.");
 //var query3 = db.Query().From("Employees").OrderBy("Extension");
 //var query4 = db.Query().From("Employees").OrderByDescending("Extension");
 //var query5 = db.Query().From("Employees").Select("EmployeeID","FirstName","LastName").Take(3).OrderByDescending("EmployeeID");
 //var query6 = db.Query().From("Employees").Distinct("City");
 //var query7 = db.Query().ExecuteSql("select * from Employees where Title={0} and FirstName={1}", "'Sales Representative'", "'Janet'");
 
+//var query8 = db.Query().From("Employees").Insert(new[] { "FirstName", "LastName" }, new[] { "Hüseyin", "Özsüzer" });
+var query8 = db.Query().From("Employees").Insert(new CreateEmployeesDto
+{
+    Address = "adres",
+    City = "İstanbul",
+    FirstName = "Hüseyin",
+    LastName = "Özsüzer",
+    Title = "Müdür",
+    TitleOfCourtesy = "Mr."
+});
 
+//db.Create<Employees>(query7);
 
- db.Create<Employees>(query7);
-
-Console.WriteLine(query7.Sql);
-//var employess = db.GetList<Employees>(query6);
+//Console.WriteLine(query7.Sql);
+//var employess = db.GetList<Employees>(query5);
 
 //var employess2 = db.GetArray<Employees>(query7);
 
@@ -43,6 +52,5 @@ Console.WriteLine(query7.Sql);
 //}
 
 //Console.WriteLine(query7.Sql);
-
 
 Console.ReadLine();
