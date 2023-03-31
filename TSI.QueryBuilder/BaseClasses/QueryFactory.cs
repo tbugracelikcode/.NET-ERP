@@ -25,25 +25,6 @@ namespace TSI.QueryBuilder.BaseClasses
             return new Query();
         }
 
-        public Insert Insert()
-        {
-            return new Insert();
-        }
-
-        public void Create<T>(Insert insert)
-        {
-            var command = Connection.CreateCommand();
-
-            command.CommandTimeout = CommandTimeOut;
-
-            if(command != null)
-            {
-                command.CommandText = insert.Sql;
-
-                command.ExecuteNonQuery();
-
-            }
-        }
 
         public IEnumerable<T>? GetList<T>(Query query)
         {
@@ -61,13 +42,33 @@ namespace TSI.QueryBuilder.BaseClasses
             }
             else
             {
-
                 return null;
             }
         }
 
 
-        public IEnumerable<T>? GetList<T>(Query query,bool toJsonObject)
+
+        public int? Create(Query query, string returnIdCaption)
+        {
+            var command = Connection.CreateCommand();
+
+            command.CommandTimeout = CommandTimeOut;
+
+            if (command != null)
+            {
+                query.Sql = query.Sql.Replace("values", "output INSERTED." + returnIdCaption + " values");
+                command.CommandText = query.Sql;
+                int _id = (int)command.ExecuteScalar();
+                return _id;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
+        public IEnumerable<T>? GetList<T>(Query query, bool toJsonObject)
         {
             var command = Connection.CreateCommand();
 
@@ -79,7 +80,7 @@ namespace TSI.QueryBuilder.BaseClasses
 
                 query.SqlResult = command.ExecuteReader().DataReaderMapToList<T>();
 
-                if(toJsonObject)
+                if (toJsonObject)
                 {
                     query.JsonData = JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
                 }
