@@ -8,7 +8,7 @@ namespace TSI.QueryBuilder
     {
         public Query OrderBy( string column)
         {
-            Method = "select";
+            //Method = "select";
 
             string order = " order by ";
 

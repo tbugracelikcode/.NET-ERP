@@ -8,7 +8,7 @@ namespace TSI.QueryBuilder
 {
     public partial class Query : BaseQueryBuilder<Query>
     {
-        public string Method { get; set; }
+        //public string Method { get; set; }
 
         public string Sql { get; set; }
 

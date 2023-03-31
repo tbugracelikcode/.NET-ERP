@@ -38,7 +38,7 @@ namespace TSI.QueryBuilder
 
         public Query Where(string column, string op, object value)
         {
-            Method = "select";
+            //Method = "select";
 
             string tableName = TableName;
 

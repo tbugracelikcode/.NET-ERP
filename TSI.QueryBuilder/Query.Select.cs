@@ -10,7 +10,7 @@ namespace TSI.QueryBuilder
     {
         public Query Select(params string[] columns)
         {
-            Method = "select";
+            //Method = "select";
 
             string queryColumns = "";
 
@@ -26,9 +26,20 @@ namespace TSI.QueryBuilder
                 }
             }
 
+            Sql = "select" + " * "+ "from " + TableName;
+
             var insertPoint = Sql.IndexOf('*');
 
             Sql = Sql.Insert(insertPoint, queryColumns).Remove(insertPoint + queryColumns.Length, 1);
+
+            return this;
+        }
+
+        public Query Select()
+        {
+            //Method = "select";
+
+            Sql = "select" + " * " + "from " + TableName;
 
             return this;
         }

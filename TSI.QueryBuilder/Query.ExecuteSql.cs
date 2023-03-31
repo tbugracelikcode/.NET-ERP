@@ -8,7 +8,7 @@ namespace TSI.QueryBuilder
     {
         public Query ExecuteSql(string command, params string[] columns)
         {
-            Method = "select";
+            //Method = "select";
 
 
             Sql = command;

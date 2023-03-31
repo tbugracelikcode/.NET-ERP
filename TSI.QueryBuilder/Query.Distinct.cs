@@ -8,7 +8,7 @@ namespace TSI.QueryBuilder
     {
         public Query Distinct(string column)
         {
-            Method = "select";
+            //Method = "select";
 
             if (column != "")
             {

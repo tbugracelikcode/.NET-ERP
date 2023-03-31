@@ -8,7 +8,7 @@ namespace TSI.QueryBuilder
     {
         public Query LeftJoin(string secondtable, string column)
         {
-            Method = "select";
+            //Method = "select";
 
             int point = Sql.IndexOf('*') + 6;
 
