@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace TSI.QueryBuilder
@@ -76,7 +77,19 @@ namespace TSI.QueryBuilder
         {
             var valuesList = dto.GetType().GetProperties();
 
+            string[] columns = new string[valuesList.Length];
+
+            int counter = 0;
+
+            foreach (PropertyInfo prop in dto.GetType().GetProperties())
+            {
+                columns[counter] = prop.Name;
+                counter++;
+            }
+
             string valuesQuery = string.Empty;
+
+            string columnsQuery = string.Empty;
 
             string insertQuery = "insert into " + TableName;
 
@@ -86,6 +99,7 @@ namespace TSI.QueryBuilder
                 {
                     if (i == 0)
                     {
+                        columnsQuery = " (" + columns[i] + ")";
                         valuesQuery = " (" + "'" + valuesList[i].GetValue(dto,null) + "'" + ")";
                     }
                 }
@@ -93,18 +107,22 @@ namespace TSI.QueryBuilder
                 {
                     if (i == 0)
                     {
+                        columnsQuery = " (" + columns[i] + ",";
                         valuesQuery = " (" + "'" + valuesList[i].GetValue(dto, null) + "'" + ",";
                     }
                     else
                     {
+                        columnsQuery = columnsQuery + columns[i] + ",";
                         valuesQuery = valuesQuery + "'" + valuesList[i].GetValue(dto, null) + "'" + ",";
+                       
                     }
                 }
             }
 
             valuesQuery = valuesQuery.Substring(0, valuesQuery.Length - 1);
+            columnsQuery = columnsQuery.Substring(0, columnsQuery.Length - 1);
 
-            insertQuery = insertQuery  + " values " + valuesQuery + ")";
+            insertQuery = insertQuery + columnsQuery + ")" + " values " + valuesQuery + ")";
 
             Sql = insertQuery;
 

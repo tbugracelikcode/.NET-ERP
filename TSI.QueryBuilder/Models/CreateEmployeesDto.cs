@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Tsi.Core.Entities.Auditing;
 
 namespace TSI.QueryBuilder.Models
 {
-    public class CreateEmployeesDto
+    public class CreateEmployeesDto 
     {
         public string FirstName { get; set; }
 
@@ -17,5 +18,30 @@ namespace TSI.QueryBuilder.Models
         public string Address { get; set; }
 
         public string City { get; set; }
+
+        public int EmployeeID { get; set; } 
+
+        public DateTime BirthDate { get; set; }
+
+        public DateTime HireDate { get; set; }
+
+        public string Region { get; set; }
+
+        public string PostalCode { get; set; }
+
+        public string Country { get; set; }
+
+        public string HomePhone { get; set; }
+        public string Extension { get; set; }
+
+        public byte[] Photo { get; set; }
+
+        public string Notes { get; set; }
+
+        public int ReportsTo { get; set; }
+
+        public string PhotoPath { get; set; }
+
+
     }
 }

@@ -3,7 +3,7 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Extensions;
 using TSI.QueryBuilder.Models;
 
-var connection = new SqlConnection("Server=DESKTOP-C5H9A88\\SQLEXPRESS;Database=Northwind;UID=sa;PWD=Logo1234567890;MultipleActiveResultSets=True;");
+var connection = new SqlConnection("Server=DESKTOP-683VE2G\\SQLEXPRESS;Database=Northwind;UID=sa;PWD=Logo1234567890;MultipleActiveResultSets=True;");
 if (connection.State == System.Data.ConnectionState.Closed)
     connection.Open();
 
@@ -38,6 +38,8 @@ var query8 = db.Query().From("Employees").Insert(new CreateEmployeesDto
     Title = "Müdür",
     TitleOfCourtesy = "Mr."
 });
+
+db.Create(query8, "EmployeeID");
 
 //db.Create<Employees>(query7);
 
