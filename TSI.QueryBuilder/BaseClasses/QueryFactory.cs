@@ -133,5 +133,71 @@ namespace TSI.QueryBuilder.BaseClasses
                 return default(T);
             }
         }
+
+        public int? Update(Query query, string returnIdCaption)
+        {
+            var command = Connection.CreateCommand();
+
+            command.CommandTimeout = CommandTimeOut;
+
+            if (command != null)
+            {
+                query.Sql = query.Sql.Replace("where", "output INSERTED." + returnIdCaption + " where");
+                command.CommandText = query.Sql;
+                int _id = (int)command.ExecuteScalar();
+                return _id;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public T Update<T>(Query query, string returnIdCaption)
+        {
+            var command = Connection.CreateCommand();
+
+            command.CommandTimeout = CommandTimeOut;
+
+            if (command != null)
+            {
+                query.Sql = query.Sql.Replace("where", "output INSERTED." + returnIdCaption + " where");
+
+                command.CommandText = query.Sql;
+
+                int _id = (int)command.ExecuteScalar();
+
+                var resultSql = query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString());
+
+                var result = Get<T>(resultSql);
+
+                return (T)result;
+            }
+            else
+            {
+                return default(T);
+            }
+        }
+
+        public bool HardDelete(Query query)
+        {
+            var command = Connection.CreateCommand();
+
+            command.CommandTimeout = CommandTimeOut;
+
+            if (command != null)
+            {
+                command.CommandText = query.Sql;
+
+                query.SqlResult = command.ExecuteReader();
+
+                return true;
+            }
+            else
+            {
+
+                return false;
+            }
+        }
     }
 }
