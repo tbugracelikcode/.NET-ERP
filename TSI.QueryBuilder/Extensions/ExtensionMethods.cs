@@ -41,17 +41,35 @@ namespace TSI.QueryBuilder.Extensions
             return list;
         }
 
+        public static T DataReaderMapToGet<T>(this IDataReader @this)
+        {
+            T obj = Activator.CreateInstance<T>();
+
+            var columns = Enumerable.Range(0, @this.FieldCount).Select(@this.GetName).ToList();
+
+            while (@this.Read())
+            {
+                int counter = 0;
+
+                foreach (PropertyInfo prop in obj.GetType().GetProperties())
+                {
+
+                    if (columns.Contains(prop.Name))
+                    {
+                        if (!object.Equals(@this[prop.Name], DBNull.Value))
+                        {
+                            prop.SetValue(obj, @this[prop.Name], null);
+                        }
+                    }
+                }
+                counter++;
+            }
+            return obj;
+        }
+
         public static T[] DataReaderMapToArray<T>(this IDataReader @this)
         {
             return DataReaderMapToList<T>(@this).ToArray();
-        }
-
-        public static string ToJsonObject<T>(this Query query, IDataReader @this)
-        {
-            var data = DataReaderMapToList<T>(@this);
-
-
-            return JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
         }
     }
 }

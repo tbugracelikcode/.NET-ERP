@@ -3,7 +3,7 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Extensions;
 using TSI.QueryBuilder.Models;
 
-var connection = new SqlConnection("Server=DESKTOP-683VE2G\\SQLEXPRESS;Database=Northwind;UID=sa;PWD=Logo1234567890;MultipleActiveResultSets=True;");
+var connection = new SqlConnection("Server=DESKTOP-C5H9A88\\SQLEXPRESS;Database=Northwind;UID=sa;PWD=Logo1234567890;MultipleActiveResultSets=True;");
 if (connection.State == System.Data.ConnectionState.Closed)
     connection.Open();
 
@@ -29,19 +29,25 @@ db.CommandTimeOut = 600;
 //var query7 = db.Query().ExecuteSql("select * from Employees where Title={0} and FirstName={1}", "'Sales Representative'", "'Janet'");
 
 //var query8 = db.Query().From("Employees").Insert(new[] { "FirstName", "LastName" }, new[] { "Hüseyin", "Özsüzer" });
-var query8 = db.Query().From("Employees").Insert(new CreateEmployeesDto
-{
-    Address = "adres",
-    City = "İstanbul",
-    FirstName = "Hüseyin",
-    LastName = "Özsüzer",
-    Title = "Müdür",
-    TitleOfCourtesy = "Mr."
-});
+//var query8 = db.Query().From("Employees").Insert(new CreateEmployeesDto
+//{
+//    Address = "adres",
+//    City = "İstanbul",
+//    FirstName = "Hüseyin",
+//    LastName = "Özsüzer",
+//    Title = "Müdür",
+//    TitleOfCourtesy = "Mr.",
+//    BirthDate = null,
+//    HireDate = null,
+//    Photo = null
+//});
 
-db.Create(query8, "EmployeeID");
+//int id = db.Insert(query8, "EmployeeID").GetValueOrDefault();
 
 //db.Create<Employees>(query7);
+
+//var query = db.Query().From("Employees").Select().Where<SelectEmployeesDto>(t => t.LastName == "Fuller");
+//var a = db.Get<SelectEmployeesDto>(query);
 
 //Console.WriteLine(query7.Sql);
 //var employess = db.GetList<Employees>(query5);
@@ -53,6 +59,20 @@ db.Create(query8, "EmployeeID");
 //    Console.WriteLine("ID: " + item.EmployeeID + " " + "First Name: " + item.FirstName + " " + "Last Name: " + item.LastName + " " + "Title: " + item.Title + " " + "City: " + item.City);
 //}
 
-//Console.WriteLine(query7.Sql);
+var query8 = db.Query().From("Employees").Insert(new CreateEmployeesDto
+{
+    Address = "adres",
+    City = "İstanbul",
+    FirstName = "Hüseyin2",
+    LastName = "Özsüzer",
+    Title = "Müdür",
+    TitleOfCourtesy = "Mr.",
+    BirthDate = null,
+    HireDate = null,
+    Photo = null
+});
+
+var a = db.Insert<SelectEmployeesDto>(query8, "EmployeeID");
+
 
 Console.ReadLine();

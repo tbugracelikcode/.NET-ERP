@@ -18,7 +18,7 @@ namespace TSI.QueryBuilder
 
             var paramName = predicate.Parameters[0].Name;
             var paramTypeName = predicate.Parameters[0].Type.Name;
-            where = " where " + where.Replace(paramName + ".", paramTypeName + ".")
+            where = " where " + where.Replace("t.", "")
                          .Replace("AndAlso", "And")
                          .Replace("OrElse", "Or")
                          .Replace("\"", "'")
