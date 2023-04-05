@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TSI.QueryBuilder.MappingAttributes;
 
 namespace TSI.QueryBuilder.Models
 {
-    public class Employees
+    public class SelectEmployeesDto
     {
         public string LastName { get; set; }
 

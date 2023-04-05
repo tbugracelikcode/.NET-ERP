@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using TSI.QueryBuilder.MappingAttributes;
 
 namespace TSI.QueryBuilder
 {
@@ -57,7 +58,7 @@ namespace TSI.QueryBuilder
                     }
                     else
                     {
-                        columnsQuery = columnsQuery +  columnsList[i] + ",";
+                        columnsQuery = columnsQuery + columnsList[i] + ",";
                         valuesQuery = valuesQuery + "'" + valuesList[i] + "'" + ",";
                     }
                 }
@@ -75,13 +76,13 @@ namespace TSI.QueryBuilder
 
         public Query Insert(object dto)
         {
-            var valuesList = dto.GetType().GetProperties();
+            var valuesList = dto.GetType().GetProperties().Where(t=>t.CustomAttributes.Count() == 0).ToList();
 
-            string[] columns = new string[valuesList.Length];
+            string[] columns = new string[valuesList.Count];
 
             int counter = 0;
 
-            foreach (PropertyInfo prop in dto.GetType().GetProperties())
+            foreach (PropertyInfo prop in dto.GetType().GetProperties().Where(t => t.CustomAttributes.Count() == 0).ToList())
             {
                 columns[counter] = prop.Name;
                 counter++;
@@ -93,14 +94,14 @@ namespace TSI.QueryBuilder
 
             string insertQuery = "insert into " + TableName;
 
-            for (int i = 0; i < valuesList.Length; i++)
+            for (int i = 0; i < valuesList.Count; i++)
             {
-                if (valuesList.Length == 1)
+                if (valuesList.Count == 1)
                 {
                     if (i == 0)
                     {
                         columnsQuery = " (" + columns[i] + ")";
-                        valuesQuery = " (" + "'" + valuesList[i].GetValue(dto,null) + "'" + ")";
+                        valuesQuery = " (" + "'" + valuesList[i].GetValue(dto, null) + "'" + ")";
                     }
                 }
                 else
@@ -114,7 +115,7 @@ namespace TSI.QueryBuilder
                     {
                         columnsQuery = columnsQuery + columns[i] + ",";
                         valuesQuery = valuesQuery + "'" + valuesList[i].GetValue(dto, null) + "'" + ",";
-                       
+
                     }
                 }
             }
