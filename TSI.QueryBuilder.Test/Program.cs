@@ -3,13 +3,28 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Extensions;
 using TSI.QueryBuilder.Models;
 
-var connection = new SqlConnection("Server=DESKTOP-683VE2G\\SQLEXPRESS;Database=Northwind;UID=sa;PWD=Logo1234567890;MultipleActiveResultSets=True;");
-if (connection.State == System.Data.ConnectionState.Closed)
-    connection.Open();
+//var connection = new SqlConnection("Server=DESKTOP-C5H9A88\\SQLEXPRESS;Database=Northwind;UID=sa;PWD=Logo1234567890;MultipleActiveResultSets=True;");
+//if (connection.State == System.Data.ConnectionState.Closed)
+//    connection.Open();
 
-var db = new QueryFactory(connection);
-db.CommandTimeOut = 600;
+var factory = new QueryFactory();
+var connected = factory.ConnectToDatabase();
+factory.CommandTimeOut = 600;
 
+var query = factory.Query().From("Employees").Insert(new CreateEmployeesDto
+{
+    Address = "adres",
+    City = "İstanbul",
+    FirstName = "Hüseyin",
+    LastName = "Özsüzer",
+    Title = "Müdür",
+    TitleOfCourtesy = "Mr.",
+    BirthDate = null,
+    HireDate = null,
+    Photo = null
+});
+
+var employee = factory.Insert<SelectEmployeesDto>(query, "EmployeeID", true);
 
 //var query = db.Query().From("Employees").Select().Where("FirstName", "Janet");
 //var query2 = db.Query().From("Employees").Select("EmployeeID","FirstName","LastName").Where("FirstName", "Janet");
@@ -46,7 +61,7 @@ db.CommandTimeOut = 600;
 
 //db.Create<Employees>(query7);
 
-//var query = db.Query().From("Employees").Select().Where<SelectEmployeesDto>(t => t.LastName == "Fuller");
+//var query = db.Query().From("Employees").Select().Where<SelectEmployeesDto>(t => t.LastName == "Fuller" && t.FirstName== "Andrew");
 //var a = db.Get<SelectEmployeesDto>(query);
 
 //Console.WriteLine(query7.Sql);
@@ -88,9 +103,8 @@ db.CommandTimeOut = 600;
 //var a = db.Insert<SelectEmployeesDto>(query8, "EmployeeID");
 //var a = db.Update<SelectEmployeesDto>(query8, "EmployeeID");
 
-var query8 = db.Query().From("Employees").HardDelete().Where("EmployeeID", "21");
+//var query8 = db.Query().From("Employees").Delete(Guid.NewGuid()).Where("EmployeeID", "17");
 
-var a = db.HardDelete(query8);
-
+//var ab = db.Delete(query8);
 
 Console.ReadLine();

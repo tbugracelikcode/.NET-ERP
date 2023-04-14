@@ -1,15 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TSI.QueryBuilder.BaseClasses;
 
 namespace TSI.QueryBuilder
 {
     public partial class Query
     {
-        public Query HardDelete()
+        public Query Delete(object deleterId)
         {
-            string deleteQuery = " delete from " + TableName;
-            Sql = deleteQuery;
+            if (!_IsSoftDelete)
+            {
+                string deleteQuery = " delete from " + TableName;
+                Sql = deleteQuery;
+            }
+            else
+            {
+                string deleteQuery = "update " + TableName + " set " + IsDeletedField + "=" + "'" + "1" + "'" + ", " + DeleterIdField + "=" + "'" + deleterId + "'" + ", " + DeletionTimeField + "=" + "'" + DateTime.Now.ToString() + "'";
+                Sql = deleteQuery;
+            }
+
             return this;
         }
     }
