@@ -6,7 +6,7 @@ using TSI.QueryBuilder.BaseClasses;
 
 namespace TSI.QueryBuilder
 {
-    public partial class Query : BaseQueryBuilder<Query>
+    public partial class Query : QueryFactory
     {
         //public string Method { get; set; }
 

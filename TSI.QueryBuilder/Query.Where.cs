@@ -16,8 +16,8 @@ namespace TSI.QueryBuilder
         {
             string where = predicate.Body.ToString();
 
-            var paramName = predicate.Parameters[0].Name;
-            var paramTypeName = predicate.Parameters[0].Type.Name;
+            //var paramName = predicate.Parameters[0].Name;
+            //var paramTypeName = predicate.Parameters[0].Type.Name;
             where = " where " + where.Replace("t.", "")
                          .Replace("AndAlso", "And")
                          .Replace("OrElse", "Or")
@@ -26,7 +26,7 @@ namespace TSI.QueryBuilder
 
             WhereSentence = where;
 
-            Sql = Sql + WhereSentence;
+            //Sql = Sql + WhereSentence;
 
             return this;
         }
@@ -48,7 +48,7 @@ namespace TSI.QueryBuilder
 
                 WhereSentence = where;
 
-                Sql = Sql + WhereSentence;
+                //Sql = Sql + WhereSentence;
             }
 
             return this;
@@ -82,7 +82,7 @@ namespace TSI.QueryBuilder
 
                     WhereSentence = where;
 
-                    Sql = Sql + WhereSentence;
+                    //Sql = Sql + WhereSentence;
                 }
             }
             return this;
@@ -116,7 +116,7 @@ namespace TSI.QueryBuilder
 
                     WhereSentence = where;
 
-                    Sql = Sql + WhereSentence;
+                    //Sql = Sql + WhereSentence;
                 }
             }
             return this;
@@ -132,7 +132,9 @@ namespace TSI.QueryBuilder
 
                 string whereSentence = " where " + containsSentence;
 
-                Sql = Sql + whereSentence;
+                WhereSentence = whereSentence;
+
+                //Sql = Sql + whereSentence;
             }
 
             return this;
@@ -148,7 +150,8 @@ namespace TSI.QueryBuilder
 
                 string whereSentence = " where " + startingwithSentence;
 
-                Sql = Sql + whereSentence;
+                WhereSentence = whereSentence;
+                //Sql = Sql + whereSentence;
             }
 
             return this;
@@ -164,7 +167,9 @@ namespace TSI.QueryBuilder
 
                 string whereSentence = " where " + endingwithSentence;
 
-                Sql = Sql + whereSentence;
+                WhereSentence = whereSentence;
+
+                //Sql = Sql + whereSentence;
             }
 
             return this;
