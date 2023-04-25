@@ -17,6 +17,10 @@ using TsiErp.Entities.Entities.Branch.Dtos;
 using Microsoft.Extensions.Localization;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Entities.TableConstant;
+using TsiErp.Entities.Entities.Period;
+using TsiErp.Entities.Entities.SalesProposition;
+using TsiErp.Entities.Entities.Period.Dtos;
+using TsiErp.Entities.Entities.SalesProposition.Dtos;
 
 namespace TsiErp.Business.Entities.Branch.Services
 {
@@ -79,15 +83,21 @@ namespace TsiErp.Business.Entities.Branch.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using(var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.DeleteControl(_uow.BranchRepository, id, L);
-                await _uow.BranchRepository.DeleteAsync(id);
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Branches", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
+                var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = id }, true, "And");
+                var entity = queryFactory.Get<Branches>(entityQuery);
 
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
+                var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(null, true, "And");
+                var list = queryFactory.GetList<Branches>(listQuery).ToList();
+
+                await _manager.DeleteControl(list,entity.Periods, entity.SalesPropositions, id, L);
+
+                var query = queryFactory.Query().From(Tables.Branches).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, "And");
+
+                var branches = queryFactory.Update<SelectBranchesDto>(query, "Id", true);
+
+                return new SuccessDataResult<SelectBranchesDto>(branches);
             }
         }
 
@@ -127,6 +137,7 @@ namespace TsiErp.Business.Entities.Branch.Services
             {
                 var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = input.Id }, true, "And");
                 var entity = queryFactory.Get<Branches>(entityQuery);
+                
 
                 var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(null, true, "And");
                 var list = queryFactory.GetList<Branches>(listQuery).ToList();

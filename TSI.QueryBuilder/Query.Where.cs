@@ -73,39 +73,39 @@ namespace TSI.QueryBuilder
             return this;
         }
 
-        public Query Where(object constraints, string op)
-        {
-            string where = "";
+        //public Query Where(object constraints, string op)
+        //{
+        //    string where = "";
 
-            var dictionary = new Dictionary<string, object>();
+        //    var dictionary = new Dictionary<string, object>();
 
-            if (constraints != null)
-            {
-                foreach (var item in constraints.GetType().GetRuntimeProperties())
-                {
-                    dictionary.Add(item.Name, item.GetValue(constraints));
-                }
+        //    if (constraints != null)
+        //    {
+        //        foreach (var item in constraints.GetType().GetRuntimeProperties())
+        //        {
+        //            dictionary.Add(item.Name, item.GetValue(constraints));
+        //        }
 
-                int counter = 0;
+        //        int counter = 0;
 
-                foreach (var dict in dictionary)
-                {
-                    if (counter == 0)
-                    {
-                        where = dict.Key + "=" + "'" + dict.Value + "'";
-                        counter++;
-                    }
-                    else
-                    {
-                        where = where + " " + op + " " + dict.Key + "=" + "'" + dict.Value + "'";
-                    }
-                }
-            }
+        //        foreach (var dict in dictionary)
+        //        {
+        //            if (counter == 0)
+        //            {
+        //                where = dict.Key + "=" + "'" + dict.Value + "'";
+        //                counter++;
+        //            }
+        //            else
+        //            {
+        //                where = where + " " + op + " " + dict.Key + "=" + "'" + dict.Value + "'";
+        //            }
+        //        }
+        //    }
 
-            WhereSentence = where;
+        //    WhereSentence = where;
 
-            return this;
-        }
+        //    return this;
+        //}
 
         public Query Where(string query)
         {
