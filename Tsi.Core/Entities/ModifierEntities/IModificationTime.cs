@@ -6,6 +6,6 @@ namespace Tsi.Core.Entities.ModifierEntities
 {
     public interface IModificationTime
     {
-        DateTime? LastModificationTime { get; }
+        DateTime? LastModificationTime { get; set; }
     }
 }
