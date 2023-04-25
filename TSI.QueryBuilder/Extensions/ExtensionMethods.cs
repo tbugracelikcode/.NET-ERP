@@ -26,12 +26,14 @@ namespace TSI.QueryBuilder.Extensions
 
                 foreach (PropertyInfo prop in obj.GetType().GetProperties())
                 {
-
                     if (columns.Contains(prop.Name))
                     {
-                        if (!object.Equals(@this[prop.Name], DBNull.Value))
+                        if (@this.GetValue(@this.GetOrdinal(prop.Name)) != DBNull.Value)
                         {
-                            prop.SetValue(obj, @this[prop.Name], null);
+                            if (!object.Equals(@this[prop.Name], DBNull.Value))
+                            {
+                                prop.SetValue(obj, @this[prop.Name], null);
+                            }
                         }
                     }
                 }

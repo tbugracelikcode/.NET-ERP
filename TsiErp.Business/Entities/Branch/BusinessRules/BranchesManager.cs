@@ -8,17 +8,17 @@ namespace TsiErp.Business.Entities.Branch.BusinessRules
 {
     public class BranchesManager 
     {
-        public async Task CodeControl(IBranchesRepository _repository, string code, IStringLocalizer<BranchesResource>L)
+        public async Task CodeControl(List<Branches> branches, string code, IStringLocalizer<BranchesResource>L)
         {
-            if (await _repository.AnyAsync(t => t.Code == code))
+            if (branches.Any(t => t.Code == code))
             {
                 throw new DuplicateCodeException(L["CodeControlManager"]);
             }
         }
 
-        public async Task UpdateControl(IBranchesRepository _repository, string code,Guid id, Branches entity, IStringLocalizer<BranchesResource> L)
+        public async Task UpdateControl(List<Branches> branches, string code,Guid id, Branches entity, IStringLocalizer<BranchesResource> L)
         {
-            if (await _repository.AnyAsync(t => t.Id != id && t.Code==code) && entity.Code!=code)
+            if (branches.Any(t => t.Id != id && t.Code==code) && entity.Code!=code)
             {
                 throw new DuplicateCodeException(L["UpdateControlManager"]);
             }

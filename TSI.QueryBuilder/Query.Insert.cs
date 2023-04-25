@@ -76,7 +76,7 @@ namespace TSI.QueryBuilder
 
         public Query Insert(object dto)
         {
-            var valuesList = dto.GetType().GetProperties().Where(t=>t.CustomAttributes.Count() == 0).ToList();
+            var valuesList = dto.GetType().GetProperties().Where(t => t.CustomAttributes.Count() == 0).ToList();
 
             string[] columns = new string[valuesList.Count];
 

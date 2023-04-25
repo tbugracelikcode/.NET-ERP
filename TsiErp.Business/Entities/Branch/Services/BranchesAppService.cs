@@ -2,7 +2,8 @@
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Entities;
-using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Branch.BusinessRules;
@@ -14,6 +15,8 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Branch.Dtos;
 using Microsoft.Extensions.Localization;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Entities.TableConstant;
 
 namespace TsiErp.Business.Entities.Branch.Services
 {
@@ -24,30 +27,51 @@ namespace TsiErp.Business.Entities.Branch.Services
         BranchesManager _manager { get; set; } = new BranchesManager();
 
 
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
+
         public BranchesAppService(IStringLocalizer<BranchesResource> l) : base(l)
         {
-            
+
         }
 
         [ValidationAspect(typeof(CreateBranchesValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBranchesDto>> CreateAsync(CreateBranchesDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.CodeControl(_uow.BranchRepository, input.Code, L);
+                var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(null, true, "And");
+                var list = queryFactory.GetList<Branches>(listQuery).ToList();
 
-                var entity = ObjectMapper.Map<CreateBranchesDto, Branches>(input);
+                await _manager.CodeControl(list, input.Code, L);
 
-                var addedEntity = await _uow.BranchRepository.InsertAsync(entity);
+                var query = queryFactory.Query().From(Tables.Branches).Insert(new CreateBranchesDto
+                {
+                    Code = input.Code,
+                    Description_ = input.Description_,
+                    Name = input.Name,
+                    IsActive = true,
+                    Id = GuidGenerator.CreateGuid(),
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                    IsDeleted = false
+                });
 
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "Branches", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
 
-                await _uow.SaveChanges();
+                var branches = queryFactory.Insert<SelectBranchesDto>(query, "Id", true);
 
-                return new SuccessDataResult<SelectBranchesDto>(ObjectMapper.Map<Branches, SelectBranchesDto>(addedEntity));
+                //    input.Id = addedEntity.Id;
+                //    var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "Branches", LogType.Insert, addedEntity.Id);
+                //    await _uow.LogsRepository.InsertAsync(log);
+
+                return new SuccessDataResult<SelectBranchesDto>(branches);
             }
         }
 
@@ -70,18 +94,15 @@ namespace TsiErp.Business.Entities.Branch.Services
 
         public async Task<IDataResult<SelectBranchesDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.BranchRepository.GetAsync(t => t.Id == id, t => t.Periods, t => t.SalesPropositions);
-
-                var mappedEntity = ObjectMapper.Map<Branches, SelectBranchesDto>(entity);
-
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "Branches", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
-
-                await _uow.SaveChanges();
-
-                return new SuccessDataResult<SelectBranchesDto>(mappedEntity);
+                var query = queryFactory.Query().From(Tables.Branches).Select("*").Where(
+                    new 
+                    { 
+                        Id = id 
+                    }, true, "And");
+                var branch = queryFactory.Get<SelectBranchesDto>(query);
+                return new SuccessDataResult<SelectBranchesDto>(branch);
             }
         }
 
@@ -89,14 +110,11 @@ namespace TsiErp.Business.Entities.Branch.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListBranchesDto>>> GetListAsync(ListBranchesParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-
-                var list = await _uow.BranchRepository.GetListAsync(t => t.IsActive == input.IsActive, t => t.Periods, t => t.SalesPropositions);
-
-                var mappedEntity = ObjectMapper.Map<List<Branches>, List<ListBranchesDto>>(list.ToList());
-
-                return new SuccessDataResult<IList<ListBranchesDto>>(mappedEntity);
+                var query = queryFactory.Query().From(Tables.Branches).Select("*").Where(null, true, "And");
+                var branches = queryFactory.GetList<ListBranchesDto>(query).ToList();
+                return new SuccessDataResult<IList<ListBranchesDto>>(branches);
             }
         }
 
@@ -105,24 +123,40 @@ namespace TsiErp.Business.Entities.Branch.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBranchesDto>> UpdateAsync(UpdateBranchesDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
+                var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = input.Id }, true, "And");
+                var entity = queryFactory.Get<Branches>(entityQuery);
 
-                var entity = await _uow.BranchRepository.GetAsync(x => x.Id == input.Id);
+                var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(null, true, "And");
+                var list = queryFactory.GetList<Branches>(listQuery).ToList();
 
-                await _manager.UpdateControl(_uow.BranchRepository, input.Code, input.Id, entity, L);
+                await _manager.UpdateControl(list, input.Code, input.Id, entity, L);
 
-                var mappedEntity = ObjectMapper.Map<UpdateBranchesDto, Branches>(input);
+                var query = queryFactory.Query().From(Tables.Branches).Update(new UpdateBranchesDto
+                {
+                    Code = input.Code,
+                    Description_ = input.Description_,
+                    Name = input.Name,
+                    Id = input.Id,
+                    IsActive = input.IsActive,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId
+                }).Where(new { Id = input.Id }, true, "And");
 
-                await _uow.BranchRepository.UpdateAsync(mappedEntity);
+                var branches = queryFactory.Update<SelectBranchesDto>(query, "Id", true);
 
-                var before = ObjectMapper.Map<Branches, UpdateBranchesDto >(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "Branches", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
+                //var log = LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, "Branches", LogType.Update, entity.Id);
 
-                await _uow.SaveChanges();
 
-                return new SuccessDataResult<SelectBranchesDto>(ObjectMapper.Map<Branches, SelectBranchesDto>(mappedEntity));
+                return new SuccessDataResult<SelectBranchesDto>(branches);
             }
         }
 

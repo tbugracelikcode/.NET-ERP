@@ -52,17 +52,17 @@ namespace TSI.QueryBuilder.BaseClasses
             }
         }
 
-        public bool ConnectToDatabase()
+        public IDbConnection ConnectToDatabase()
         {
             Connection = new SqlConnection();
             Connection.ConnectionString = ConnectionString;
             if (Connection.State == ConnectionState.Closed)
             {
                 Connection.Open();
-                return true;
+                return Connection;
             }
 
-            return false;
+            return null;
         }
 
         public bool DisconnectToDatabase()
@@ -101,11 +101,11 @@ namespace TSI.QueryBuilder.BaseClasses
                         else
                         {
                             query.WhereSentence = query.WhereSentence + " and " + IsDeletedField + "=" + "'" + "0" + "'";
-                            query.Sql = query.Sql + " " + query.WhereSentence;
+                            query.Sql = query.Sql + " where " + query.WhereSentence;
                         }
                     }
 
-                    command.CommandText = query.Sql +" "+ query.WhereSentence;
+                    command.CommandText = query.Sql;
 
 
 
@@ -146,12 +146,12 @@ namespace TSI.QueryBuilder.BaseClasses
                         else
                         {
                             query.WhereSentence = query.WhereSentence + " and " + IsDeletedField + "=" + "'" + "0" + "'";
-                            query.Sql = query.Sql + " " + query.WhereSentence;
+                            query.Sql = query.Sql + " where " + query.WhereSentence;
                         }
                     }
 
 
-                    command.CommandText = query.Sql + " " + query.WhereSentence;
+                    command.CommandText = query.Sql;
 
                     query.SqlResult = command.ExecuteReader().DataReaderMapToList<T>();
 
@@ -190,12 +190,12 @@ namespace TSI.QueryBuilder.BaseClasses
                         else
                         {
                             query.WhereSentence = query.WhereSentence + " and " + IsDeletedField + "=" + "'" + "0" + "'";
-                            query.Sql = query.Sql + " " + query.WhereSentence;
+                            query.Sql = query.Sql + " where " + query.WhereSentence;
                         }
                     }
 
 
-                    command.CommandText = query.Sql + " " + query.WhereSentence;
+                    command.CommandText = query.Sql;
 
                     query.SqlResult = command.ExecuteReader().DataReaderMapToArray<T>();
 
@@ -214,7 +214,7 @@ namespace TSI.QueryBuilder.BaseClasses
             }
         }
 
-        public int? Insert(Query query, string returnIdCaption)
+        public Guid? Insert(Query query, string returnIdCaption)
         {
             try
             {
@@ -227,7 +227,7 @@ namespace TSI.QueryBuilder.BaseClasses
                 {
                     query.Sql = query.Sql.Replace("values", "output INSERTED." + returnIdCaption + " values");
                     command.CommandText = query.Sql;
-                    int _id = (int)command.ExecuteScalar();
+                    Guid _id = (Guid)command.ExecuteScalar();
                     return _id;
                 }
                 else
@@ -242,7 +242,7 @@ namespace TSI.QueryBuilder.BaseClasses
             }
         }
 
-        public int? Insert(Query query, string returnIdCaption, bool useTransaction = true)
+        public Guid? Insert(Query query, string returnIdCaption, bool useTransaction = true)
         {
             IDbTransaction transaction = Connection.BeginTransaction();
 
@@ -257,7 +257,7 @@ namespace TSI.QueryBuilder.BaseClasses
                 {
                     query.Sql = query.Sql.Replace("values", "output INSERTED." + returnIdCaption + " values");
                     command.CommandText = query.Sql;
-                    int _id = (int)command.ExecuteScalar();
+                    Guid _id = (Guid)command.ExecuteScalar();
                     transaction.Commit();
                     return _id;
                 }
@@ -289,7 +289,7 @@ namespace TSI.QueryBuilder.BaseClasses
 
                     command.CommandText = query.Sql;
 
-                    int _id = (int)command.ExecuteScalar();
+                    Guid _id = (Guid)command.ExecuteScalar();
 
                     var resultSql = query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString());
 
@@ -331,7 +331,7 @@ namespace TSI.QueryBuilder.BaseClasses
                     command.CommandText = query.Sql;
                     command.Transaction = transaction;
 
-                    int _id = (int)command.ExecuteScalar();
+                    Guid _id = (Guid)command.ExecuteScalar();
 
                     transaction.Commit();
 
@@ -359,7 +359,7 @@ namespace TSI.QueryBuilder.BaseClasses
             }
         }
 
-        public int? Update(Query query, string returnIdCaption)
+        public Guid? Update(Query query, string returnIdCaption)
         {
             try
             {
@@ -371,7 +371,7 @@ namespace TSI.QueryBuilder.BaseClasses
                 {
                     query.Sql = query.Sql.Replace("where", "output INSERTED." + returnIdCaption + " where");
                     command.CommandText = query.Sql;
-                    int _id = (int)command.ExecuteScalar();
+                    Guid _id = (Guid)command.ExecuteScalar();
                     return _id;
                 }
                 else
@@ -387,7 +387,7 @@ namespace TSI.QueryBuilder.BaseClasses
 
         }
 
-        public int? Update(Query query, string returnIdCaption, bool useTransaction = true)
+        public Guid? Update(Query query, string returnIdCaption, bool useTransaction = true)
         {
             IDbTransaction transaction = Connection.BeginTransaction();
             try
@@ -398,10 +398,11 @@ namespace TSI.QueryBuilder.BaseClasses
 
                 if (command != null)
                 {
+                    query.Sql = query.Sql + " where " + query.WhereSentence;
                     query.Sql = query.Sql.Replace("where", "output INSERTED." + returnIdCaption + " where");
                     command.CommandText = query.Sql;
                     command.Transaction = transaction;
-                    int _id = (int)command.ExecuteScalar();
+                    Guid _id = (Guid)command.ExecuteScalar();
                     transaction.Commit();
                     return _id;
                 }
@@ -430,11 +431,12 @@ namespace TSI.QueryBuilder.BaseClasses
 
                 if (command != null)
                 {
+                    query.Sql = query.Sql + " where " + query.WhereSentence;
                     query.Sql = query.Sql.Replace("where", "output INSERTED." + returnIdCaption + " where");
 
                     command.CommandText = query.Sql;
 
-                    int _id = (int)command.ExecuteScalar();
+                    Guid _id = (Guid)command.ExecuteScalar();
 
                     var resultSql = query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString());
 
@@ -469,12 +471,15 @@ namespace TSI.QueryBuilder.BaseClasses
 
                 if (command != null)
                 {
+                    query.Sql = query.Sql + " where " + query.WhereSentence;
+
                     query.Sql = query.Sql.Replace("where", "output INSERTED." + returnIdCaption + " where");
 
                     command.CommandText = query.Sql;
+
                     command.Transaction = transaction;
 
-                    int _id = (int)command.ExecuteScalar();
+                    Guid _id = (Guid)command.ExecuteScalar();
 
                     transaction.Commit();
 
@@ -562,5 +567,6 @@ namespace TSI.QueryBuilder.BaseClasses
                 return false;
             }
         }
+
     }
 }
