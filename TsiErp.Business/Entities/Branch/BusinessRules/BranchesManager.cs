@@ -2,6 +2,10 @@
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using TsiErp.DataAccess.EntityFrameworkCore.Repositories.Branch;
 using TsiErp.Entities.Entities.Branch;
+using TsiErp.Entities.Entities.Period;
+using TsiErp.Entities.Entities.Period.Dtos;
+using TsiErp.Entities.Entities.SalesProposition;
+using TsiErp.Entities.Entities.SalesProposition.Dtos;
 using TsiErp.Localizations.Resources.Branches.Page;
 
 namespace TsiErp.Business.Entities.Branch.BusinessRules
@@ -24,17 +28,22 @@ namespace TsiErp.Business.Entities.Branch.BusinessRules
             }
         }
 
-        public async Task DeleteControl(IBranchesRepository _repository, Guid id, IStringLocalizer<BranchesResource> L)
+        public async Task DeleteControl(List<Branches> branches, ICollection<Periods> periods, ICollection<SalesPropositions> salespropositions, Guid id, IStringLocalizer<BranchesResource> L)
         {
-            if (await _repository.AnyAsync(t => t.Periods.Any(x => x.BranchID == id)))
+            if (branches.Any(t => t.Periods == periods))
             {
                 throw new Exception(L["DeleteControlManager"]);
             }
 
-            if (await _repository.AnyAsync(t => t.SalesPropositions.Any(x => x.BranchID == id)))
+            if (branches.Any(t => t.SalesPropositions == salespropositions))
             {
                 throw new Exception(L["DeleteControlManager"]);
             }
+
+            //if (salespropositions == null)
+            //{
+            //    throw new Exception(L["DeleteControlManager"]);
+            //}
         }
     }
 }
