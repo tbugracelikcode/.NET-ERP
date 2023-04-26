@@ -77,15 +77,21 @@ namespace TSI.QueryBuilder
 
             for (int i = 0; i < valuesList.Count; i++)
             {
-                if(i==0)
+                TypeCode type = Type.GetTypeCode(valuesList[i].PropertyType);
+                string nullValue = ValidateProperty(type);
+                var value = valuesList[i].GetValue(dto,null);
+
+                if(value.ToString() != nullValue)
                 {
-                    valuesQuery = columns[i] + "=" + "'" + valuesList[i].GetValue(dto, null) + "'";
+                    if (i == 0)
+                    {
+                        valuesQuery = columns[i] + "=" + "'" + valuesList[i].GetValue(dto, null) + "'";
+                    }
+                    else
+                    {
+                        valuesQuery = valuesQuery + "," + columns[i] + "=" + "'" + valuesList[i].GetValue(dto, null) + "'";
+                    }
                 }
-                else
-                {
-                    valuesQuery = valuesQuery + "," + columns[i] + "=" + "'" + valuesList[i].GetValue(dto, null) + "'";
-                }
-               
             }
 
             updateQuery = updateQuery + valuesQuery;
@@ -93,6 +99,47 @@ namespace TSI.QueryBuilder
             Sql = updateQuery;
 
             return this;
+        }
+
+        private string ValidateProperty(TypeCode type)
+        {
+            switch (type)
+            {
+                case TypeCode.String:
+                    return default(string);
+                    break;
+
+                case TypeCode.DateTime:
+                    return default(DateTime).ToString();
+                    break;
+
+                case TypeCode.Object:
+                    return default(object).ToString();
+                    break;
+
+                case TypeCode.SByte:
+                    return default(sbyte).ToString();
+                    break;
+
+                case TypeCode.Boolean:
+                    return default(bool).ToString();
+                    break;
+
+                case TypeCode.Byte:
+                    return default(byte).ToString();
+                    break;
+
+                case TypeCode.Decimal:
+                    return default(decimal).ToString();
+                    break;
+
+                case TypeCode.Double:
+                    return default(double).ToString();
+                    break;
+                default:
+                    return "";
+                    break;
+            }
         }
     }
 }
