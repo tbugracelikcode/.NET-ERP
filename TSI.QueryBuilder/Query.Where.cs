@@ -77,7 +77,6 @@ namespace TSI.QueryBuilder
             return this;
         }
 
-
         public Query Where(string query)
         {
             WhereSentence = query;
@@ -88,6 +87,119 @@ namespace TSI.QueryBuilder
         public Query Where(string column, object value)
         {
             return Where(column, "=", value);
+        }
+
+        public Query OrWhere(object constraints)
+        {
+            string where = "";
+
+            var dictionary = new Dictionary<string, object>();
+
+            if (constraints != null)
+            {
+                foreach (var item in constraints.GetType().GetRuntimeProperties())
+                {
+                    dictionary.Add(item.Name, item.GetValue(constraints));
+                }
+
+                int counter = 0;
+
+                foreach (var dict in dictionary)
+                {
+                    if (counter == 0)
+                    {
+                        if (string.IsNullOrEmpty(WhereSentence))
+                        {
+                            where = dict.Key + "=" + "'" + dict.Value + "'";
+                            counter++;
+                        }
+                        else
+                        {
+                            where = " Or " + dict.Key + "=" + "'" + dict.Value + "'";
+                            counter++;
+                        }
+                    }
+                    else
+                    {
+                        where = where + " Or " + dict.Key + "=" + "'" + dict.Value + "'";
+                    }
+                }
+            }
+
+            WhereSentence = WhereSentence + " " + where;
+
+            return this;
+        }
+
+        public Query OrWhere(object constraints, bool useIsActive, bool IsActive)
+        {
+            string where = "";
+
+            var dictionary = new Dictionary<string, object>();
+
+            if (constraints != null)
+            {
+                foreach (var item in constraints.GetType().GetRuntimeProperties())
+                {
+                    dictionary.Add(item.Name, item.GetValue(constraints));
+                }
+
+                int counter = 0;
+
+                foreach (var dict in dictionary)
+                {
+                    if (counter == 0)
+                    {
+                        if (string.IsNullOrEmpty(WhereSentence))
+                        {
+                            where = dict.Key + "=" + "'" + dict.Value + "'";
+                            counter++;
+                        }
+                        else
+                        {
+                            where = " Or " + dict.Key + "=" + "'" + dict.Value + "'";
+                            counter++;
+                        }
+                    }
+                    else
+                    {
+                        where = where + " Or " + dict.Key + "=" + "'" + dict.Value + "'";
+                    }
+                }
+            }
+
+            if(string.IsNullOrEmpty(WhereSentence))
+            {
+                if (useIsActive)
+                {
+                    if (IsActive)
+                    {
+                        if (!string.IsNullOrEmpty(where))
+                        {
+                            where = where + " And" + " IsActive='1'";
+                        }
+                        else
+                        {
+                            where = " IsActive='1'";
+                        }
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(where))
+                        {
+                            where = where + " And" + " IsActive='0'";
+                        }
+                        else
+                        {
+                            where = " IsActive='0'";
+                        }
+                    }
+                }
+            }
+
+            WhereSentence = WhereSentence + " " + where;
+
+            return this;
         }
 
         public Query Where(string column, string op, object value)
@@ -101,8 +213,6 @@ namespace TSI.QueryBuilder
                 string where = column + op + " " + "'" + value.ToString() + "'";
 
                 WhereSentence = where;
-
-                //Sql = Sql + WhereSentence;
             }
 
             return this;

@@ -43,7 +43,7 @@ namespace TsiErp.Business.Entities.Branch.Services
             {
 
                 var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Code = input.Code }, false, false);
-
+                
                 var list = queryFactory.ControlList<Branches>(listQuery).ToList();
 
                 #region Code Control 
