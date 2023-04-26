@@ -95,19 +95,34 @@ namespace TsiErp.Business.Entities.Branch.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using(var connection = queryFactory.ConnectToDatabase())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
                 var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = id }, true, "And");
                 var entity = queryFactory.Get<Branches>(entityQuery);
 
-                var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(null, true, "And");
-                var list = queryFactory.GetList<Branches>(listQuery).ToList();
+                var periodQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { BranchID = id }, true, "And");
+                var periods = queryFactory.Get<Periods>(periodQuery);
 
-                await _manager.DeleteControl(list,entity.Periods, entity.SalesPropositions, id, L);
+                if (periods.Id != Guid.Empty)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new Exception(L["DeleteControlManager"]);
+                }
+
+
+
+                //SalesPropositions Delete Kontrol
+
 
                 var query = queryFactory.Query().From(Tables.Branches).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, "And");
 
                 var branches = queryFactory.Update<SelectBranchesDto>(query, "Id", true);
+
+
+                //Log Kayıt
+
+
 
                 return new SuccessDataResult<SelectBranchesDto>(branches);
             }
@@ -119,9 +134,9 @@ namespace TsiErp.Business.Entities.Branch.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
                 var query = queryFactory.Query().From(Tables.Branches).Select("*").Where(
-                    new 
-                    { 
-                        Id = id 
+                    new
+                    {
+                        Id = id
                     }, true, "And");
                 var branch = queryFactory.Get<SelectBranchesDto>(query);
                 return new SuccessDataResult<SelectBranchesDto>(branch);
@@ -149,7 +164,7 @@ namespace TsiErp.Business.Entities.Branch.Services
             {
                 var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = input.Id }, true, "And");
                 var entity = queryFactory.Get<Branches>(entityQuery);
-                
+
 
                 var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(null, true, "And");
                 var list = queryFactory.GetList<Branches>(listQuery).ToList();

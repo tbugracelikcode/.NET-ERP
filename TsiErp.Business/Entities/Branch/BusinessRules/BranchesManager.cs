@@ -27,23 +27,5 @@ namespace TsiErp.Business.Entities.Branch.BusinessRules
                 throw new DuplicateCodeException(L["UpdateControlManager"]);
             }
         }
-
-        public async Task DeleteControl(List<Branches> branches, ICollection<Periods> periods, ICollection<SalesPropositions> salespropositions, Guid id, IStringLocalizer<BranchesResource> L)
-        {
-            if (branches.Any(t => t.Periods == periods))
-            {
-                throw new Exception(L["DeleteControlManager"]);
-            }
-
-            if (branches.Any(t => t.SalesPropositions == salespropositions))
-            {
-                throw new Exception(L["DeleteControlManager"]);
-            }
-
-            //if (salespropositions == null)
-            //{
-            //    throw new Exception(L["DeleteControlManager"]);
-            //}
-        }
     }
 }
