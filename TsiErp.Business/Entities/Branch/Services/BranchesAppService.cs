@@ -46,10 +46,14 @@ namespace TsiErp.Business.Entities.Branch.Services
 
                 var list = queryFactory.ControlList<Branches>(listQuery).ToList();
 
+                #region Code Control 
+
                 if (list.Count > 0)
                 {
                     throw new DuplicateCodeException(L["CodeControlManager"]);
                 }
+
+                #endregion
 
 
                 var query = queryFactory.Query().From(Tables.Branches).Insert(new CreateBranchesDto
@@ -86,8 +90,7 @@ namespace TsiErp.Business.Entities.Branch.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = id }, true, true);
-                var entity = queryFactory.Get<Branches>(entityQuery);
+                #region Delete Control
 
                 var periodQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { BranchID = id }, true, true);
                 var periods = queryFactory.Get<Periods>(periodQuery);
@@ -109,16 +112,13 @@ namespace TsiErp.Business.Entities.Branch.Services
                     throw new Exception(L["DeleteControlManager"]);
                 }
 
+                #endregion
+
                 var query = queryFactory.Query().From(Tables.Branches).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true);
 
                 var branches = queryFactory.Update<SelectBranchesDto>(query, "Id", true);
 
-
-
-
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Branches", LogType.Delete, id);
-
-
 
                 return new SuccessDataResult<SelectBranchesDto>(branches);
             }
@@ -168,6 +168,7 @@ namespace TsiErp.Business.Entities.Branch.Services
                 var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = input.Id }, true, true);
                 var entity = queryFactory.Get<Branches>(entityQuery);
 
+                #region Update Control
 
                 var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Code = input.Code }, true, true);
                 var list = queryFactory.GetList<Branches>(listQuery).ToList();
@@ -176,6 +177,8 @@ namespace TsiErp.Business.Entities.Branch.Services
                 {
                     throw new DuplicateCodeException(L["UpdateControlManager"]);
                 }
+
+                #endregion
 
                 var query = queryFactory.Query().From(Tables.Branches).Update(new UpdateBranchesDto
                 {
