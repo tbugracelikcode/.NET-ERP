@@ -1,10 +1,10 @@
-﻿using Microsoft.JSInterop;
+﻿using Microsoft.Extensions.Localization;
+using Newtonsoft.Json;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Entities;
 using Tsi.Core.Utilities.Results;
-using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Branch.BusinessRules;
 using TsiErp.Business.Entities.Branch.Validations;
@@ -14,13 +14,9 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Branch.Dtos;
-using Microsoft.Extensions.Localization;
-using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Entities.Entities.Logging.Dtos;
 using TsiErp.Entities.TableConstant;
-using TsiErp.Entities.Entities.Period;
-using TsiErp.Entities.Entities.SalesProposition;
-using TsiErp.Entities.Entities.Period.Dtos;
-using TsiErp.Entities.Entities.SalesProposition.Dtos;
+using TsiErp.Localizations.Resources.Branches.Page;
 
 namespace TsiErp.Business.Entities.Branch.Services
 {
@@ -71,8 +67,24 @@ namespace TsiErp.Business.Entities.Branch.Services
 
                 var branches = queryFactory.Insert<SelectBranchesDto>(query, "Id", true);
 
+
+                var logInsertQuery = queryFactory.Query().From(Tables.Logs).Insert(new CreateLogsDto
+                {
+                    AfterValues = JsonConvert.SerializeObject(input, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
+                    BeforeValues = JsonConvert.SerializeObject(input, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
+                    Date_ = DateTime.Now,
+                    Id = LoginedUserService.UserId,
+                    LogLevel_ = "Branches",
+                    MethodName_ = LogType.Insert.GetType().GetEnumName(LogType.Insert),
+                    UserId = LoginedUserService.UserId,
+                    RecordId = LoginedUserService.UserId,
+                    DiffValues = ""
+                });
+
+                var branchInsertLog = queryFactory.Insert<CreateLogsDto>(logInsertQuery, "Id", true);
+
                 //    input.Id = addedEntity.Id;
-                //    var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "Branches", LogType.Insert, addedEntity.Id);
+                 // var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "Branches", LogType.Insert, addedEntity.Id);
                 //    await _uow.LogsRepository.InsertAsync(log);
 
                 return new SuccessDataResult<SelectBranchesDto>(branches);
