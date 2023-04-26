@@ -177,7 +177,14 @@ namespace TsiErp.ErpUI.Pages.Base
             }
             catch (Exception exp)
             {
-                await ModalManager.MessagePopupAsync(loc["Error"], exp.Message + "\n" + exp.InnerException.Message);
+                if (exp.InnerException != null)
+                {
+                    await ModalManager.MessagePopupAsync(loc["Error"], exp.Message + "\n" + exp.InnerException.Message);
+                }
+                else
+                {
+                    await ModalManager.MessagePopupAsync(loc["Error"], exp.Message);
+                }
                 return new ErrorDataResult<TGetOutputDto>();
             }
         }
