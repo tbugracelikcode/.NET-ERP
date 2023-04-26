@@ -1,21 +1,21 @@
-﻿using Newtonsoft.Json;
-using System.Runtime.CompilerServices;
-using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
-using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
+﻿using JsonDiffer;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Tsi.Core.Utilities.Guids;
+using TSI.QueryBuilder.BaseClasses;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.Branch.Dtos;
-using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Logging;
 using TsiErp.Entities.Entities.Logging.Dtos;
-using TsiErp.Business.Extensions.ObjectMapping;
-using Newtonsoft.Json.Linq;
-using JsonDiffer;
+using TsiErp.Entities.TableConstant;
 
 namespace TsiErp.Business.Entities.Logging.Services
 {
 
     public static class LogsAppService
     {
+        static QueryFactory queryFactory { get; set; } = new QueryFactory();
+
+        public static IGuidGenerator GuidGenerator { get; set; } = new SequentialGuidGenerator();
 
         public static Logs InsertLogToDatabase(object before, object after, Guid userId, string logLevel, LogType logType, Guid recordId)
         {
@@ -25,68 +25,95 @@ namespace TsiErp.Business.Entities.Logging.Services
             switch (logType)
             {
                 case LogType.Insert:
-
-                    log = new Logs
+                    using (var connection = queryFactory.ConnectToDatabase())
                     {
-                        AfterValues = JsonConvert.SerializeObject(after, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                        BeforeValues = JsonConvert.SerializeObject(before, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                        Date_ = DateTime.Now,
-                        Id = LoginedUserService.UserId,
-                        LogLevel_ = logLevel,
-                        MethodName_ = logType.GetType().GetEnumName(logType),
-                        UserId = userId,
-                        RecordId = recordId,
-                        DiffValues = ""
-                    };
+                        var logInsertQuery = queryFactory.Query().From(Tables.Logs).Insert(new CreateLogsDto
+                        {
+                            AfterValues = JsonConvert.SerializeObject(after, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
+                            BeforeValues = JsonConvert.SerializeObject(before, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
+                            Date_ = DateTime.Now,
+                            Id = GuidGenerator.CreateGuid(),
+                            LogLevel_ = "Branches",
+                            MethodName_ = LogType.Insert.GetType().GetEnumName(LogType.Insert),
+                            UserId = userId,
+                            RecordId = recordId,
+                            DiffValues = ""
+                        });
+
+                        var InsertLog = queryFactory.Insert<CreateLogsDto>(logInsertQuery, "Id", true);
+                    }
+                    
+
                     break;
                 case LogType.Update:
 
-                    var j1 = JToken.Parse(JsonConvert.SerializeObject(before, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
-                    var j2 = JToken.Parse(JsonConvert.SerializeObject(after, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
-
-                    var diff = JsonConvert.SerializeObject(JsonDifferentiator.Differentiate(j1, j2, OutputMode.Symbol, showOriginalValues: false));
-
-                    log = new Logs
+                    using (var connection = queryFactory.ConnectToDatabase())
                     {
-                        AfterValues = JsonConvert.SerializeObject(after, Formatting.Indented,new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                        BeforeValues = JsonConvert.SerializeObject(before, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                        Date_ = DateTime.Now,
-                        Id = LoginedUserService.UserId,
-                        LogLevel_ = logLevel,
-                        MethodName_ = logType.GetType().GetEnumName(logType),
-                        UserId = userId,
-                        RecordId = recordId,
-                        DiffValues = diff
-                    };
+                        var j1 = JToken.Parse(JsonConvert.SerializeObject(before, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+                        var j2 = JToken.Parse(JsonConvert.SerializeObject(after, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }));
+
+                        var diff = JsonConvert.SerializeObject(JsonDifferentiator.Differentiate(j1, j2, OutputMode.Symbol, showOriginalValues: false));
+
+                        var logUpdateQuery = queryFactory.Query().From(Tables.Logs).Insert(new CreateLogsDto
+                        {
+                            AfterValues = JsonConvert.SerializeObject(after, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
+                            BeforeValues = JsonConvert.SerializeObject(before, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
+                            Date_ = DateTime.Now,
+                            Id = GuidGenerator.CreateGuid(),
+                            LogLevel_ = "Branches",
+                            MethodName_ = LogType.Update.GetType().GetEnumName(LogType.Update),
+                            UserId = userId,
+                            RecordId = recordId,
+                            DiffValues = diff
+                        });
+
+                        var UpdateLog = queryFactory.Insert<CreateLogsDto>(logUpdateQuery, "Id", true);
+
+                    }
                     break;
                 case LogType.Delete:
 
-                    log = new Logs
+                    using (var connection = queryFactory.ConnectToDatabase())
                     {
-                        AfterValues = recordId,
-                        BeforeValues = recordId,
-                        Date_ = DateTime.Now,
-                        Id = LoginedUserService.UserId,
-                        LogLevel_ = logLevel,
-                        MethodName_ = logType.GetType().GetEnumName(logType),
-                        UserId = userId,
-                        RecordId = recordId,
-                        DiffValues = ""
-                    };
+
+                        var logDeleteQuery = queryFactory.Query().From(Tables.Logs).Insert(new CreateLogsDto
+                        {
+                            AfterValues = recordId,
+                            BeforeValues = recordId,
+                            Date_ = DateTime.Now,
+                            Id = GuidGenerator.CreateGuid(),
+                            LogLevel_ = "Branches",
+                            MethodName_ = LogType.Delete.GetType().GetEnumName(LogType.Delete),
+                            UserId = userId,
+                            RecordId = recordId,
+                            DiffValues = ""
+                        });
+
+                        var DeleteLog = queryFactory.Insert<CreateLogsDto>(logDeleteQuery, "Id", true);
+
+                    }
+
                     break;
                 case LogType.Get:
-                    log = new Logs
+
+                    using (var connection = queryFactory.ConnectToDatabase())
                     {
-                        AfterValues = JsonConvert.SerializeObject(after, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                        BeforeValues = JsonConvert.SerializeObject(before, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
-                        Date_ = DateTime.Now,
-                        Id = LoginedUserService.UserId,
-                        LogLevel_ = logLevel,
-                        MethodName_ = logType.GetType().GetEnumName(logType),
-                        UserId = userId,
-                        RecordId = recordId,
-                        DiffValues = ""
-                    };
+                        var logGetQuery = queryFactory.Query().From(Tables.Logs).Insert(new CreateLogsDto
+                        {
+                            AfterValues = JsonConvert.SerializeObject(after, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
+                            BeforeValues = JsonConvert.SerializeObject(before, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }),
+                            Date_ = DateTime.Now,
+                            Id = GuidGenerator.CreateGuid(),
+                            LogLevel_ = "Branches",
+                            MethodName_ = LogType.Get.GetType().GetEnumName(LogType.Get),
+                            UserId = userId,
+                            RecordId = recordId,
+                            DiffValues = ""
+                        });
+
+                        var GetLog = queryFactory.Insert<CreateLogsDto>(logGetQuery, "Id", true);
+
+                    }
                     break;
                 default:
                     break;

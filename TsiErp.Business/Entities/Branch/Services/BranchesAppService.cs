@@ -1,10 +1,13 @@
-﻿using Microsoft.JSInterop;
+﻿using JsonDiffer;
+using Microsoft.Extensions.Localization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Entities;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
-using TsiErp.Localizations.Resources.Branches.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Branch.BusinessRules;
 using TsiErp.Business.Entities.Branch.Validations;
@@ -14,25 +17,18 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Branch.Dtos;
-using Microsoft.Extensions.Localization;
-using TSI.QueryBuilder.BaseClasses;
-using TsiErp.Entities.TableConstant;
+using TsiErp.Entities.Entities.Logging.Dtos;
 using TsiErp.Entities.Entities.Period;
 using TsiErp.Entities.Entities.SalesProposition;
-using TsiErp.Entities.Entities.Period.Dtos;
-using TsiErp.Entities.Entities.SalesProposition.Dtos;
+using TsiErp.Entities.TableConstant;
+using TsiErp.Localizations.Resources.Branches.Page;
 
 namespace TsiErp.Business.Entities.Branch.Services
 {
     [ServiceRegistration(typeof(IBranchesAppService), DependencyInjectionType.Scoped)]
     public class BranchesAppService : ApplicationService<BranchesResource>, IBranchesAppService
     {
-
-        BranchesManager _manager { get; set; } = new BranchesManager();
-
-
         QueryFactory queryFactory { get; set; } = new QueryFactory();
-
 
         public BranchesAppService(IStringLocalizer<BranchesResource> l) : base(l)
         {
@@ -45,10 +41,16 @@ namespace TsiErp.Business.Entities.Branch.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(null, true, "And");
-                var list = queryFactory.GetList<Branches>(listQuery).ToList();
 
-                await _manager.CodeControl(list, input.Code, L);
+                var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Code = input.Code }, false, false);
+
+                var list = queryFactory.ControlList<Branches>(listQuery).ToList();
+
+                if (list.Count > 0)
+                {
+                    throw new DuplicateCodeException(L["CodeControlManager"]);
+                }
+
 
                 var query = queryFactory.Query().From(Tables.Branches).Insert(new CreateBranchesDto
                 {
@@ -71,12 +73,11 @@ namespace TsiErp.Business.Entities.Branch.Services
 
                 var branches = queryFactory.Insert<SelectBranchesDto>(query, "Id", true);
 
-                //    input.Id = addedEntity.Id;
-                //    var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "Branches", LogType.Insert, addedEntity.Id);
-                //    await _uow.LogsRepository.InsertAsync(log);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "Branches", LogType.Insert, branches.Id);
 
                 return new SuccessDataResult<SelectBranchesDto>(branches);
             }
+
         }
 
 
@@ -85,30 +86,37 @@ namespace TsiErp.Business.Entities.Branch.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = id }, true, "And");
+                var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = id }, true, true);
                 var entity = queryFactory.Get<Branches>(entityQuery);
 
-                var periodQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { BranchID = id }, true, "And");
+                var periodQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { BranchID = id }, true, true);
                 var periods = queryFactory.Get<Periods>(periodQuery);
 
-                if (periods.Id != Guid.Empty)
+                if (periods != null && periods.Id != Guid.Empty)
                 {
                     connection.Close();
                     connection.Dispose();
                     throw new Exception(L["DeleteControlManager"]);
                 }
 
+                var salesPropositionQuery = queryFactory.Query().From(Tables.SalesPropositions).Select("*").Where(new { BranchID = id }, false, false);
+                var salesPropositions = queryFactory.Get<SalesPropositions>(salesPropositionQuery);
 
+                if (salesPropositions != null && salesPropositions.Id != Guid.Empty)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new Exception(L["DeleteControlManager"]);
+                }
 
-                //SalesPropositions Delete Kontrol
-
-
-                var query = queryFactory.Query().From(Tables.Branches).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, "And");
+                var query = queryFactory.Query().From(Tables.Branches).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true);
 
                 var branches = queryFactory.Update<SelectBranchesDto>(query, "Id", true);
 
 
-                //Log Kayıt
+
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Branches", LogType.Delete, id);
 
 
 
@@ -121,15 +129,22 @@ namespace TsiErp.Business.Entities.Branch.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
+
                 var query = queryFactory.Query().From(Tables.Branches).Select("*").Where(
-                    new
-                    {
-                        Id = id
-                    }, true, "And");
+                new
+                {
+                    Id = id
+                }, true, true);
                 var branch = queryFactory.Get<SelectBranchesDto>(query);
+
+
+                LogsAppService.InsertLogToDatabase(branch, branch, LoginedUserService.UserId, "Branches", LogType.Get, id);
+
                 return new SuccessDataResult<SelectBranchesDto>(branch);
+
             }
         }
+
 
 
         [CacheAspect(duration: 60)]
@@ -137,7 +152,7 @@ namespace TsiErp.Business.Entities.Branch.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var query = queryFactory.Query().From(Tables.Branches).Select("*").Where(null, true, "And");
+                var query = queryFactory.Query().From(Tables.Branches).Select("*").Where(null, true, true);
                 var branches = queryFactory.GetList<ListBranchesDto>(query).ToList();
                 return new SuccessDataResult<IList<ListBranchesDto>>(branches);
             }
@@ -150,14 +165,17 @@ namespace TsiErp.Business.Entities.Branch.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = input.Id }, true, "And");
+                var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = input.Id }, true, true);
                 var entity = queryFactory.Get<Branches>(entityQuery);
 
 
-                var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(null, true, "And");
+                var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Code = input.Code }, true, true);
                 var list = queryFactory.GetList<Branches>(listQuery).ToList();
 
-                await _manager.UpdateControl(list, input.Code, input.Id, entity, L);
+                if (list.Count > 0)
+                {
+                    throw new DuplicateCodeException(L["UpdateControlManager"]);
+                }
 
                 var query = queryFactory.Query().From(Tables.Branches).Update(new UpdateBranchesDto
                 {
@@ -175,11 +193,12 @@ namespace TsiErp.Business.Entities.Branch.Services
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = DateTime.Now,
                     LastModifierId = LoginedUserService.UserId
-                }).Where(new { Id = input.Id }, true, "And");
+                }).Where(new { Id = input.Id }, true, true);
 
                 var branches = queryFactory.Update<SelectBranchesDto>(query, "Id", true);
 
-                //var log = LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, "Branches", LogType.Update, entity.Id);
+
+                LogsAppService.InsertLogToDatabase(entity, branches, LoginedUserService.UserId, "Branches", LogType.Update, entity.Id);
 
 
                 return new SuccessDataResult<SelectBranchesDto>(branches);
