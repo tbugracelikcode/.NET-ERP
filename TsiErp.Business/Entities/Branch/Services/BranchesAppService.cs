@@ -43,13 +43,15 @@ namespace TsiErp.Business.Entities.Branch.Services
             {
 
                 var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Code = input.Code }, false, false);
-                
+
                 var list = queryFactory.ControlList<Branches>(listQuery).ToList();
 
                 #region Code Control 
 
                 if (list.Count > 0)
                 {
+                    connection.Close();
+                    connection.Dispose();
                     throw new DuplicateCodeException(L["CodeControlManager"]);
                 }
 
@@ -83,7 +85,6 @@ namespace TsiErp.Business.Entities.Branch.Services
             }
 
         }
-
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
@@ -124,7 +125,6 @@ namespace TsiErp.Business.Entities.Branch.Services
             }
         }
 
-
         public async Task<IDataResult<SelectBranchesDto>> GetAsync(Guid id)
         {
             using (var connection = queryFactory.ConnectToDatabase())
@@ -145,8 +145,6 @@ namespace TsiErp.Business.Entities.Branch.Services
             }
         }
 
-
-
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListBranchesDto>>> GetListAsync(ListBranchesParameterDto input)
         {
@@ -158,7 +156,6 @@ namespace TsiErp.Business.Entities.Branch.Services
             }
         }
 
-
         [ValidationAspect(typeof(UpdateBranchesValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBranchesDto>> UpdateAsync(UpdateBranchesDto input)
@@ -168,17 +165,19 @@ namespace TsiErp.Business.Entities.Branch.Services
                 var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = input.Id }, true, true);
                 var entity = queryFactory.Get<Branches>(entityQuery);
 
-                #region Update Control
+                //#region Update Control
 
-                var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Code = input.Code }, true, true);
-                var list = queryFactory.GetList<Branches>(listQuery).ToList();
+                //var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Code = input.Code }, false, false);
+                //var list = queryFactory.GetList<Branches>(listQuery).ToList();
 
-                if (list.Count > 0)
-                {
-                    throw new DuplicateCodeException(L["UpdateControlManager"]);
-                }
+                //if (list.Count > 0)
+                //{
+                //    connection.Close();
+                //    connection.Dispose();
+                //    throw new DuplicateCodeException(L["UpdateControlManager"]);
+                //}
 
-                #endregion
+                //#endregion
 
                 var query = queryFactory.Query().From(Tables.Branches).Update(new UpdateBranchesDto
                 {
@@ -210,18 +209,36 @@ namespace TsiErp.Business.Entities.Branch.Services
 
         public async Task<IDataResult<SelectBranchesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.BranchRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = id}, true, true);
+                var entity = queryFactory.Get<Branches>(entityQuery);
 
-                var updatedEntity = await _uow.BranchRepository.LockRow(entity.Id, lockRow, userId);
+                var query = queryFactory.Query().From(Tables.Branches).Update(new UpdateBranchesDto
+                {
+                    //Code = entity.Code,
+                    //Description_ = entity.Description_,
+                    //Name = entity.Name,
+                    //IsActive = entity.IsActive,
+                    //CreationTime = entity.CreationTime.Value,
+                    //CreatorId = entity.CreatorId.Value,
+                    //DeleterId = entity.DeleterId.Value,
+                    //DeletionTime = entity.DeletionTime.Value,
+                    //IsDeleted = entity.IsDeleted,
+                    //LastModificationTime = DateTime.Now,
+                    //LastModifierId = userId,
+                   // Id = id,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId,
 
-                await _uow.SaveChanges();
+                }).Where(new { Id = id }, true, true);
 
-                var mappedEntity = ObjectMapper.Map<Branches, SelectBranchesDto>(updatedEntity);
+                var branches = queryFactory.Update<SelectBranchesDto>(query, "Id", true);
+                return new SuccessDataResult<SelectBranchesDto>(branches);
 
-                return new SuccessDataResult<SelectBranchesDto>(mappedEntity);
             }
+
+
         }
     }
 }
