@@ -15,13 +15,13 @@ namespace TSI.QueryBuilder
 {
     public partial class Query
     {
-        public Query Where(object constraints, bool IsActive, string op)
+        public Query Where(object constraints, bool useIsActive, bool IsActive)
         {
             string where = "";
 
             var dictionary = new Dictionary<string, object>();
 
-            if(constraints != null)
+            if (constraints != null)
             {
                 foreach (var item in constraints.GetType().GetRuntimeProperties())
                 {
@@ -39,125 +39,48 @@ namespace TSI.QueryBuilder
                     }
                     else
                     {
-                        where = where + " " + op + " " + dict.Key + "=" + "'" + dict.Value + "'";
+                        where = where + " And " + dict.Key + "=" + "'" + dict.Value + "'";
                     }
                 }
             }
-           
 
-            if (IsActive)
+            if (useIsActive)
             {
-                if (!string.IsNullOrEmpty(where))
+                if (IsActive)
                 {
-                    where = where + " And" + " IsActive='1'";
+                    if (!string.IsNullOrEmpty(where))
+                    {
+                        where = where + " And" + " IsActive='1'";
+                    }
+                    else
+                    {
+                        where = " IsActive='1'";
+                    }
                 }
                 else
                 {
-                    where = " IsActive='1'";
+                    if (!string.IsNullOrEmpty(where))
+                    {
+                        where = where + " And" + " IsActive='0'";
+                    }
+                    else
+                    {
+                        where = " IsActive='0'";
+                    }
                 }
             }
-            else
-            {
-                if (!string.IsNullOrEmpty(where))
-                {
-                    where = where + " And" + " IsActive='0'";
-                }
-                else
-                {
-                    where = " IsActive='0'";
-                }
-            }
+
+
 
             WhereSentence = where;
 
             return this;
         }
 
-        //public Query Where(object constraints, string op)
-        //{
-        //    string where = "";
-
-        //    var dictionary = new Dictionary<string, object>();
-
-        //    if (constraints != null)
-        //    {
-        //        foreach (var item in constraints.GetType().GetRuntimeProperties())
-        //        {
-        //            dictionary.Add(item.Name, item.GetValue(constraints));
-        //        }
-
-        //        int counter = 0;
-
-        //        foreach (var dict in dictionary)
-        //        {
-        //            if (counter == 0)
-        //            {
-        //                where = dict.Key + "=" + "'" + dict.Value + "'";
-        //                counter++;
-        //            }
-        //            else
-        //            {
-        //                where = where + " " + op + " " + dict.Key + "=" + "'" + dict.Value + "'";
-        //            }
-        //        }
-        //    }
-
-        //    WhereSentence = where;
-
-        //    return this;
-        //}
 
         public Query Where(string query)
         {
             WhereSentence = query;
-
-            return this;
-        }
-
-        public Query Where<T>(Expression<Func<T, bool>> predicate, bool IsActive)
-        {
-            string where = "";
-
-            //"((Id = 278d3684-a800-feeb-101f-3a06d571d66e) And (Name = 'Şube-1'))"
-
-            if (predicate != null)
-            {
-                var visitor = new Visitor();
-
-                var queryExpression = (Expression<Func<T, bool>>)visitor.Visit(predicate);
-                //var queryExpression2 = visitor.Visit(predicate);
-
-                //where = queryExpression.Body.ToString().Replace("t.", "")
-                //         .Replace("AndAlso", "And")
-                //         .Replace("OrElse", "Or")
-                //         .Replace("\"", "'")
-                //         .Replace("==", "=");
-            }
-
-            if (IsActive)
-            {
-                if (!string.IsNullOrEmpty(where))
-                {
-                    where = where + " And" + " IsActive='1'";
-                }
-                else
-                {
-                    where = " IsActive='1'";
-                }
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(where))
-                {
-                    where = where + " And" + " IsActive='0'";
-                }
-                else
-                {
-                    where = " IsActive='0'";
-                }
-            }
-
-            WhereSentence = where;
 
             return this;
         }

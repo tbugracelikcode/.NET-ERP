@@ -171,6 +171,39 @@ namespace TSI.QueryBuilder.BaseClasses
             }
         }
 
+        public IEnumerable<T>? ControlList<T>(Query query)
+        {
+            try
+            {
+                var command = Connection.CreateCommand();
+
+                command.CommandTimeout = CommandTimeOut;
+
+                if (command != null)
+                {
+
+                    query.Sql = query.Sql + " where " + query.WhereSentence;
+
+                    command.CommandText = query.Sql;
+
+                    query.SqlResult = command.ExecuteReader().DataReaderMapToList<T>();
+
+                    query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
+
+                    return query.SqlResult as IEnumerable<T>;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception exp)
+            {
+                var error = ErrorException.ThrowException(exp);
+                return null;
+            }
+        }
+
         public IEnumerable<T>? GetArray<T>(Query query)
         {
             try
@@ -221,7 +254,7 @@ namespace TSI.QueryBuilder.BaseClasses
                 var command = Connection.CreateCommand();
 
                 command.CommandTimeout = CommandTimeOut;
-                
+
 
                 if (command != null)
                 {
@@ -317,7 +350,7 @@ namespace TSI.QueryBuilder.BaseClasses
         public T Insert<T>(Query query, string returnIdCaption, bool useTransaction = true)
         {
             IDbTransaction transaction = Connection.BeginTransaction();
-            
+
             try
             {
                 var command = Connection.CreateCommand();
@@ -337,8 +370,8 @@ namespace TSI.QueryBuilder.BaseClasses
 
                     var resultSql = query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString());
 
-                    var result = Get<T>(resultSql); 
-                    
+                    var result = Get<T>(resultSql);
+
                     query.SqlResult = result;
 
                     query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
@@ -440,8 +473,8 @@ namespace TSI.QueryBuilder.BaseClasses
 
                     var resultSql = query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString());
 
-                    var result = Get<T>(resultSql); 
-                    
+                    var result = Get<T>(resultSql);
+
                     query.SqlResult = result;
 
                     query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
