@@ -165,19 +165,19 @@ namespace TsiErp.Business.Entities.Branch.Services
                 var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = input.Id }, true, true);
                 var entity = queryFactory.Get<Branches>(entityQuery);
 
-                //#region Update Control
+                #region Update Control
 
-                //var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Code = input.Code }, false, false);
-                //var list = queryFactory.GetList<Branches>(listQuery).ToList();
+                var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Code = input.Code }, false, false);
+                var list = queryFactory.GetList<Branches>(listQuery).ToList();
 
-                //if (list.Count > 0)
-                //{
-                //    connection.Close();
-                //    connection.Dispose();
-                //    throw new DuplicateCodeException(L["UpdateControlManager"]);
-                //}
+                if (list.Count > 0 && entity.Code != input.Code)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["UpdateControlManager"]);
+                }
 
-                //#endregion
+                #endregion
 
                 var query = queryFactory.Query().From(Tables.Branches).Update(new UpdateBranchesDto
                 {
@@ -216,18 +216,18 @@ namespace TsiErp.Business.Entities.Branch.Services
 
                 var query = queryFactory.Query().From(Tables.Branches).Update(new UpdateBranchesDto
                 {
-                    //Code = entity.Code,
-                    //Description_ = entity.Description_,
-                    //Name = entity.Name,
-                    //IsActive = entity.IsActive,
-                    //CreationTime = entity.CreationTime.Value,
-                    //CreatorId = entity.CreatorId.Value,
-                    //DeleterId = entity.DeleterId.Value,
-                    //DeletionTime = entity.DeletionTime.Value,
-                    //IsDeleted = entity.IsDeleted,
-                    //LastModificationTime = DateTime.Now,
-                    //LastModifierId = userId,
-                   // Id = id,
+                    Code = entity.Code,
+                    Description_ = entity.Description_,
+                    Name = entity.Name,
+                    IsActive = entity.IsActive,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = userId,
+                    Id = id,
                     DataOpenStatus = lockRow,
                     DataOpenStatusUserId = userId,
 

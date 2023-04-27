@@ -13,12 +13,5 @@ namespace TsiErp.Business.Entities.Branch.BusinessRules
     public class BranchesManager 
     {
 
-        //public async Task UpdateControl(List<Branches> branches, string code,Guid id, Branches entity, IStringLocalizer<BranchesResource> L)
-        //{
-        //    if (branches.Any(t => t.Id != id && t.Code==code) && entity.Code!=code)
-        //    {
-        //        throw new DuplicateCodeException(L["UpdateControlManager"]);
-        //    }
-        //}
     }
 }

@@ -1,15 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Linq.Dynamic.Core.Parser;
+﻿using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace TSI.QueryBuilder
 {
@@ -168,7 +159,7 @@ namespace TSI.QueryBuilder
                 }
             }
 
-            if(string.IsNullOrEmpty(WhereSentence))
+            if (string.IsNullOrEmpty(WhereSentence))
             {
                 if (useIsActive)
                 {
@@ -204,15 +195,25 @@ namespace TSI.QueryBuilder
 
         public Query Where(string column, string op, object value)
         {
-            //Method = "select";
+            //Method = "select * from Branches where Code<>'001'";
 
             string tableName = TableName;
 
+            string where = "";
+
             if (!string.IsNullOrEmpty(tableName))
             {
-                string where = column + op + " " + "'" + value.ToString() + "'";
+                if (string.IsNullOrEmpty(WhereSentence))
+                {
+                    where = column + op + " " + "'" + value.ToString() + "'";
+                    WhereSentence = where;
+                }
+                else
+                {
+                    where = column + op + " " + "'" + value.ToString() + "'";
+                    WhereSentence = WhereSentence + " And " + where;
+                }
 
-                WhereSentence = where;
             }
 
             return this;
@@ -224,9 +225,12 @@ namespace TSI.QueryBuilder
             {
                 string tableName = TableName;
 
+
                 if (!string.IsNullOrEmpty(tableName))
                 {
                     string inSentence = "";
+
+                    string where = "";
 
                     for (int i = 0; i < values.Length; i++)
                     {
@@ -242,11 +246,16 @@ namespace TSI.QueryBuilder
 
                     inSentence = " in " + "(" + inSentence + ")";
 
-                    string where = column + inSentence;
+                    where = column + inSentence;
 
-                    WhereSentence = where;
-
-                    //Sql = Sql + WhereSentence;
+                    if (string.IsNullOrEmpty(WhereSentence))
+                    {
+                        WhereSentence = where;
+                    }
+                    else
+                    {
+                        WhereSentence = WhereSentence + " And "+ where;
+                    }
                 }
             }
             return this;
@@ -278,9 +287,14 @@ namespace TSI.QueryBuilder
 
                     string where = column + inSentence;
 
-                    WhereSentence = where;
-
-                    //Sql = Sql + WhereSentence;
+                    if (string.IsNullOrEmpty(WhereSentence))
+                    {
+                        WhereSentence = where;
+                    }
+                    else
+                    {
+                        WhereSentence = WhereSentence + " And " + where;
+                    }
                 }
             }
             return this;
@@ -296,9 +310,14 @@ namespace TSI.QueryBuilder
 
                 string whereSentence = containsSentence;
 
-                WhereSentence = whereSentence;
-
-                //Sql = Sql + whereSentence;
+                if (string.IsNullOrEmpty(WhereSentence))
+                {
+                    WhereSentence = whereSentence;
+                }
+                else
+                {
+                    WhereSentence = WhereSentence + " And " + whereSentence;
+                }
             }
 
             return this;
@@ -314,8 +333,14 @@ namespace TSI.QueryBuilder
 
                 string whereSentence = startingwithSentence;
 
-                WhereSentence = whereSentence;
-                //Sql = Sql + whereSentence;
+                if (string.IsNullOrEmpty(WhereSentence))
+                {
+                    WhereSentence = whereSentence;
+                }
+                else
+                {
+                    WhereSentence = WhereSentence + " And " + whereSentence;
+                }
             }
 
             return this;
@@ -331,9 +356,14 @@ namespace TSI.QueryBuilder
 
                 string whereSentence = endingwithSentence;
 
-                WhereSentence = whereSentence;
-
-                //Sql = Sql + whereSentence;
+                if (string.IsNullOrEmpty(WhereSentence))
+                {
+                    WhereSentence = whereSentence;
+                }
+                else
+                {
+                    WhereSentence = WhereSentence + " And " + whereSentence;
+                }
             }
 
             return this;

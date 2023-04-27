@@ -13,12 +13,18 @@ using TsiErp.Entities.Entities.Period;
 using TsiErp.Entities.Entities.Period.Dtos;
 using TsiErp.Business.BusinessCoreServices;
 using Microsoft.Extensions.Localization;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Entities.TableConstant;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
+using TsiErp.Entities.Entities.Branch.Dtos;
 
 namespace TsiErp.Business.Entities.Period.Services
 {
     [ServiceRegistration(typeof(IPeriodsAppService), DependencyInjectionType.Scoped)]
-    public class PeriodsAppService : ApplicationService<PeriodsResource>,  IPeriodsAppService
+    public class PeriodsAppService : ApplicationService<PeriodsResource>, IPeriodsAppService
     {
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
         public PeriodsAppService(IStringLocalizer<PeriodsResource> l) : base(l)
         {
         }
@@ -29,59 +35,100 @@ namespace TsiErp.Business.Entities.Period.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPeriodsDto>> CreateAsync(CreatePeriodsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.CodeControl(_uow.PeriodsRepository, input.Code,L);
+                var listQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { Code = input.Code }, false, false);
 
-                var entity = ObjectMapper.Map<CreatePeriodsDto, Periods>(input);
+                var list = queryFactory.ControlList<Periods>(listQuery).ToList();
 
-                var addedEntity = await _uow.PeriodsRepository.InsertAsync(entity);
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "Periods", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                #region Code Control 
 
+                if (list.Count > 0)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["CodeControlManager"]);
+                }
 
-                return new SuccessDataResult<SelectPeriodsDto>(ObjectMapper.Map<Periods, SelectPeriodsDto>(addedEntity));
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.Periods).Insert(new CreatePeriodsDto
+                {
+                    Code = input.Code,
+                    BranchID = input.BranchID,
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    Description_ = input.Description_,
+                    Id = GuidGenerator.CreateGuid(),
+                    IsActive = true,
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                    Name = input.Name
+                });
+
+                var periods = queryFactory.Insert<SelectPeriodsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "Periods", LogType.Insert, periods.Id);
+
+                return new SuccessDataResult<SelectPeriodsDto>(periods);
             }
+
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _uow.PeriodsRepository.DeleteAsync(id);
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Periods", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
+                var query = queryFactory.Query().From(Tables.Periods).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true);
+
+                var periods = queryFactory.Update<SelectPeriodsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Periods", LogType.Delete, id);
+
+                return new SuccessDataResult<SelectPeriodsDto>(periods);
             }
         }
 
         public async Task<IDataResult<SelectPeriodsDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.PeriodsRepository.GetAsync(t => t.Id == id, t => t.Branches);
-                var mappedEntity = ObjectMapper.Map<Periods, SelectPeriodsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "Periods", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectPeriodsDto>(mappedEntity);
+
+                var query = queryFactory.Query().From(Tables.Periods).Select("*").Where(
+                new
+                {
+                    Id = id
+                }, true, true);
+
+                var period = queryFactory.Get<SelectPeriodsDto>(query);
+
+                var querybranch = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = period.BranchID }, true, true);
+
+                var branch = queryFactory.Get<SelectBranchesDto>(querybranch);
+
+                period.BranchName = branch.Name;
+
+                LogsAppService.InsertLogToDatabase(period, period, LoginedUserService.UserId, "Periods", LogType.Get, id);
+
+                return new SuccessDataResult<SelectPeriodsDto>(period);
+
             }
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPeriodsDto>>> GetListAsync(ListPeriodsParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.PeriodsRepository.GetListAsync(t => t.IsActive == input.IsActive, t => t.Branches);
-
-                var mappedEntity = ObjectMapper.Map<List<Periods>, List<ListPeriodsDto>>(list.ToList());
-
-                return new SuccessDataResult<IList<ListPeriodsDto>>(mappedEntity);
+                var query = queryFactory.Query().From(Tables.Periods).Select("*").Where(null, true, true);
+                var periods = queryFactory.GetList<ListPeriodsDto>(query).ToList();
+                return new SuccessDataResult<IList<ListPeriodsDto>>(periods);
             }
         }
 
@@ -89,36 +136,86 @@ namespace TsiErp.Business.Entities.Period.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPeriodsDto>> UpdateAsync(UpdatePeriodsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.PeriodsRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { Id = input.Id }, true, true);
+                var entity = queryFactory.Get<Periods>(entityQuery);
 
-                await _manager.UpdateControl(_uow.PeriodsRepository, input.Code, input.Id, entity,L);
+                #region Update Control
 
-                var mappedEntity = ObjectMapper.Map<UpdatePeriodsDto, Periods>(input);
+                var listQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { Code = input.Code }, false, false);
+                var list = queryFactory.GetList<Periods>(listQuery).ToList();
 
-                await _uow.PeriodsRepository.UpdateAsync(mappedEntity);
-                var before = ObjectMapper.Map<Periods, UpdatePeriodsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "Periods", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectPeriodsDto>(ObjectMapper.Map<Periods, SelectPeriodsDto>(mappedEntity));
+                if (list.Count > 0 && entity.Code != input.Code)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["UpdateControlManager"]);
+                }
+
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.Periods).Update(new UpdatePeriodsDto
+                {
+                    Code = input.Code,
+                    Description_ = input.Description_,
+                    Name = input.Name,
+                    Id = input.Id,
+                    IsActive = input.IsActive,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    BranchID = input.BranchID,
+                    LastModifierId = LoginedUserService.UserId
+                }).Where(new { Id = input.Id }, true, true);
+
+                var periods = queryFactory.Update<SelectPeriodsDto>(query, "Id", true);
+
+
+                LogsAppService.InsertLogToDatabase(entity, periods, LoginedUserService.UserId, "Periods", LogType.Update, entity.Id);
+
+
+                return new SuccessDataResult<SelectPeriodsDto>(periods);
             }
         }
 
         public async Task<IDataResult<SelectPeriodsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.PeriodsRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { Id = id }, true, true);
+                var entity = queryFactory.Get<Periods>(entityQuery);
 
-                var updatedEntity = await _uow.PeriodsRepository.LockRow(entity.Id, lockRow, userId);
+                var query = queryFactory.Query().From(Tables.Periods).Update(new UpdatePeriodsDto
+                {
+                    Code = entity.Code,
+                    Description_ = entity.Description_,
+                    Name = entity.Name,
+                    IsActive = entity.IsActive,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = userId,
+                    Id = id,
+                    BranchID = entity.BranchID,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId,
 
-                await _uow.SaveChanges();
+                }).Where(new { Id = id }, true, true);
 
-                var mappedEntity = ObjectMapper.Map<Periods, SelectPeriodsDto>(updatedEntity);
+                var periods = queryFactory.Update<SelectPeriodsDto>(query, "Id", true);
 
-                return new SuccessDataResult<SelectPeriodsDto>(mappedEntity);
+                return new SuccessDataResult<SelectPeriodsDto>(periods);
+
             }
         }
     }
