@@ -6,9 +6,11 @@ namespace TSI.QueryBuilder
 {
     public partial class Query
     {
-        public Query Where(object constraints, bool useIsActive, bool IsActive)
+        public Query Where(object constraints, bool useIsActive, bool IsActive, string joinSeperator)
         {
             string where = "";
+
+            JoinSeperator = joinSeperator;
 
             var dictionary = new Dictionary<string, object>();
 
@@ -23,14 +25,21 @@ namespace TSI.QueryBuilder
 
                 foreach (var dict in dictionary)
                 {
+                    string whereClause = dict.Key + "=" + "'" + dict.Value + "'";
+
+                    if (!string.IsNullOrEmpty(joinSeperator))
+                    {
+                        whereClause = joinSeperator + "." + dict.Key + "=" + "'" + dict.Value + "'";
+                    }
+
                     if (counter == 0)
                     {
-                        where = dict.Key + "=" + "'" + dict.Value + "'";
+                        where = whereClause;
                         counter++;
                     }
                     else
                     {
-                        where = where + " And " + dict.Key + "=" + "'" + dict.Value + "'";
+                        where = where + " And " + whereClause;
                     }
                 }
             }
@@ -39,9 +48,16 @@ namespace TSI.QueryBuilder
             {
                 if (IsActive)
                 {
+                    string isActiveField = " IsActive='1'";
+
+                    if (!string.IsNullOrEmpty(joinSeperator))
+                    {
+                        isActiveField = joinSeperator + "." + isActiveField;
+                    }
+
                     if (!string.IsNullOrEmpty(where))
                     {
-                        where = where + " And" + " IsActive='1'";
+                        where = where + " And " + isActiveField;
                     }
                     else
                     {
@@ -50,13 +66,20 @@ namespace TSI.QueryBuilder
                 }
                 else
                 {
+                    string isActiveField = " IsActive='0'";
+
+                    if (!string.IsNullOrEmpty(joinSeperator))
+                    {
+                        isActiveField = joinSeperator + "." + isActiveField;
+                    }
+
                     if (!string.IsNullOrEmpty(where))
                     {
-                        where = where + " And" + " IsActive='0'";
+                        where = where + " And " + isActiveField;
                     }
                     else
                     {
-                        where = " IsActive='0'";
+                        where = isActiveField;
                     }
                 }
             }
@@ -254,7 +277,7 @@ namespace TSI.QueryBuilder
                     }
                     else
                     {
-                        WhereSentence = WhereSentence + " And "+ where;
+                        WhereSentence = WhereSentence + " And " + where;
                     }
                 }
             }

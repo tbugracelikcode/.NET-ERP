@@ -19,5 +19,7 @@ namespace TSI.QueryBuilder
         public string JsonData { get; set; }
 
         public string WhereSentence { get; set; }
+
+        public string JoinSeperator { get; set; }     
     }
 }

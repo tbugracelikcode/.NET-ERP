@@ -94,13 +94,20 @@ namespace TSI.QueryBuilder.BaseClasses
                 {
                     if (_IsSoftDelete)
                     {
+                        string isDeleted = IsDeletedField + "=" + "'" + "0" + "'";
+
+                        if (!string.IsNullOrEmpty(query.JoinSeperator))
+                        {
+                            isDeleted = query.JoinSeperator + "." + isDeleted;
+                        }
+
                         if (string.IsNullOrEmpty(query.WhereSentence))
                         {
-                            query.Sql = query.Sql + " where " + IsDeletedField + "=" + "'" + "0" + "'";
+                            query.Sql = query.Sql + " where " + isDeleted;
                         }
                         else
                         {
-                            query.WhereSentence = query.WhereSentence + " and " + IsDeletedField + "=" + "'" + "0" + "'";
+                            query.WhereSentence = query.WhereSentence + " and " + isDeleted;
                             query.Sql = query.Sql + " where " + query.WhereSentence;
                         }
                     }
@@ -139,13 +146,20 @@ namespace TSI.QueryBuilder.BaseClasses
                 {
                     if (_IsSoftDelete)
                     {
+                        string isDeleted = IsDeletedField + "=" + "'" + "0" + "'";
+
+                        if(!string.IsNullOrEmpty(query.JoinSeperator))
+                        {
+                            isDeleted = query.JoinSeperator +"."+ isDeleted;
+                        }
+
                         if (string.IsNullOrEmpty(query.WhereSentence))
                         {
-                            query.Sql = query.Sql + " where " + IsDeletedField + "=" + "'" + "0" + "'";
+                            query.Sql = query.Sql + " where " + isDeleted;
                         }
                         else
                         {
-                            query.WhereSentence = query.WhereSentence + " and " + IsDeletedField + "=" + "'" + "0" + "'";
+                            query.WhereSentence = query.WhereSentence + " and "+ isDeleted;
                             query.Sql = query.Sql + " where " + query.WhereSentence;
                         }
                     }
@@ -216,13 +230,20 @@ namespace TSI.QueryBuilder.BaseClasses
                 {
                     if (_IsSoftDelete)
                     {
+                        string isDeleted = IsDeletedField + "=" + "'" + "0" + "'";
+
+                        if (!string.IsNullOrEmpty(query.JoinSeperator))
+                        {
+                            isDeleted = query.JoinSeperator + "." + isDeleted;
+                        }
+
                         if (string.IsNullOrEmpty(query.WhereSentence))
                         {
-                            query.Sql = query.Sql + " where " + IsDeletedField + "=" + "'" + "0" + "'";
+                            query.Sql = query.Sql + " where " + isDeleted;
                         }
                         else
                         {
-                            query.WhereSentence = query.WhereSentence + " and " + IsDeletedField + "=" + "'" + "0" + "'";
+                            query.WhereSentence = query.WhereSentence + " and " + isDeleted;
                             query.Sql = query.Sql + " where " + query.WhereSentence;
                         }
                     }
