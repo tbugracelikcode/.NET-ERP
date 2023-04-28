@@ -17,6 +17,10 @@ using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Entities.TableConstant;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using TsiErp.Entities.Entities.Branch.Dtos;
+using TsiErp.Entities.Entities.Branch;
+using System.Reflection;
+using TsiErp.Entities.Entities.WareHouse;
+using TSI.QueryBuilder.Constants.Join;
 
 namespace TsiErp.Business.Entities.Period.Services
 {
@@ -37,7 +41,7 @@ namespace TsiErp.Business.Entities.Period.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var listQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { Code = input.Code }, false, false);
+                var listQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { Code = input.Code }, false, false, "");
 
                 var list = queryFactory.ControlList<Periods>(listQuery).ToList();
 
@@ -73,7 +77,7 @@ namespace TsiErp.Business.Entities.Period.Services
 
                 var periods = queryFactory.Insert<SelectPeriodsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "Periods", LogType.Insert, periods.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Periods, LogType.Insert, periods.Id);
 
                 return new SuccessDataResult<SelectPeriodsDto>(periods);
             }
@@ -85,11 +89,11 @@ namespace TsiErp.Business.Entities.Period.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var query = queryFactory.Query().From(Tables.Periods).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true);
+                var query = queryFactory.Query().From(Tables.Periods).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
 
                 var periods = queryFactory.Update<SelectPeriodsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Periods", LogType.Delete, id);
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Periods, LogType.Delete, id);
 
                 return new SuccessDataResult<SelectPeriodsDto>(periods);
             }
@@ -99,22 +103,20 @@ namespace TsiErp.Business.Entities.Period.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-
-                var query = queryFactory.Query().From(Tables.Periods).Select("*").Where(
-                new
-                {
-                    Id = id
-                }, true, true);
+                var query = queryFactory
+                        .Query()
+                            .Join<Periods, Branches>
+                            (
+                                p => new { p.Id, p.Code, p.Name, p.IsActive },
+                                b => new { BranchName = b.Name, BranchID = b.Id },
+                                pc => new { pc.BranchID },
+                                bc => new { bc.Id },
+                                JoinType.Left
+                            ).Where(new { Id = id }, true, true, Tables.Periods);
 
                 var period = queryFactory.Get<SelectPeriodsDto>(query);
 
-                var querybranch = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = period.BranchID }, true, true);
-
-                var branch = queryFactory.Get<SelectBranchesDto>(querybranch);
-
-                period.BranchName = branch.Name;
-
-                LogsAppService.InsertLogToDatabase(period, period, LoginedUserService.UserId, "Periods", LogType.Get, id);
+                LogsAppService.InsertLogToDatabase(period, period, LoginedUserService.UserId, Tables.Periods, LogType.Get, id);
 
                 return new SuccessDataResult<SelectPeriodsDto>(period);
 
@@ -126,7 +128,7 @@ namespace TsiErp.Business.Entities.Period.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var query = queryFactory.Query().From(Tables.Periods).Select("*").Where(null, true, true);
+                var query = queryFactory.Query().From(Tables.Periods).Select("*").Where(null, true, true, "");
                 var periods = queryFactory.GetList<ListPeriodsDto>(query).ToList();
                 return new SuccessDataResult<IList<ListPeriodsDto>>(periods);
             }
@@ -138,12 +140,12 @@ namespace TsiErp.Business.Entities.Period.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entityQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { Id = input.Id }, true, true);
+                var entityQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { Id = input.Id }, true, true, "");
                 var entity = queryFactory.Get<Periods>(entityQuery);
 
                 #region Update Control
 
-                var listQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { Code = input.Code }, false, false);
+                var listQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { Code = input.Code }, false, false, "");
                 var list = queryFactory.GetList<Periods>(listQuery).ToList();
 
                 if (list.Count > 0 && entity.Code != input.Code)
@@ -172,12 +174,12 @@ namespace TsiErp.Business.Entities.Period.Services
                     LastModificationTime = DateTime.Now,
                     BranchID = input.BranchID,
                     LastModifierId = LoginedUserService.UserId
-                }).Where(new { Id = input.Id }, true, true);
+                }).Where(new { Id = input.Id }, true, true, "");
 
                 var periods = queryFactory.Update<SelectPeriodsDto>(query, "Id", true);
 
 
-                LogsAppService.InsertLogToDatabase(entity, periods, LoginedUserService.UserId, "Periods", LogType.Update, entity.Id);
+                LogsAppService.InsertLogToDatabase(entity, periods, LoginedUserService.UserId, Tables.Periods, LogType.Update, entity.Id);
 
 
                 return new SuccessDataResult<SelectPeriodsDto>(periods);
@@ -189,7 +191,7 @@ namespace TsiErp.Business.Entities.Period.Services
 
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entityQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { Id = id }, true, true);
+                var entityQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { Id = id }, true, true, "");
                 var entity = queryFactory.Get<Periods>(entityQuery);
 
                 var query = queryFactory.Query().From(Tables.Periods).Update(new UpdatePeriodsDto
@@ -210,7 +212,7 @@ namespace TsiErp.Business.Entities.Period.Services
                     DataOpenStatus = lockRow,
                     DataOpenStatusUserId = userId,
 
-                }).Where(new { Id = id }, true, true);
+                }).Where(new { Id = id }, true, true, "");
 
                 var periods = queryFactory.Update<SelectPeriodsDto>(query, "Id", true);
 

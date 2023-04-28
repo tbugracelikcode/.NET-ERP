@@ -42,7 +42,7 @@ namespace TsiErp.Business.Entities.Branch.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
 
-                var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Code = input.Code }, false, false);
+                var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Code = input.Code }, false, false,"");
 
                 var list = queryFactory.ControlList<Branches>(listQuery).ToList();
 
@@ -93,7 +93,7 @@ namespace TsiErp.Business.Entities.Branch.Services
             {
                 #region Delete Control
 
-                var periodQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { BranchID = id }, true, true);
+                var periodQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { BranchID = id }, true, true, "");
                 var periods = queryFactory.Get<Periods>(periodQuery);
 
                 if (periods != null && periods.Id != Guid.Empty)
@@ -103,7 +103,7 @@ namespace TsiErp.Business.Entities.Branch.Services
                     throw new Exception(L["DeleteControlManager"]);
                 }
 
-                var salesPropositionQuery = queryFactory.Query().From(Tables.SalesPropositions).Select("*").Where(new { BranchID = id }, false, false);
+                var salesPropositionQuery = queryFactory.Query().From(Tables.SalesPropositions).Select("*").Where(new { BranchID = id }, false, false, "");
                 var salesPropositions = queryFactory.Get<SalesPropositions>(salesPropositionQuery);
 
                 if (salesPropositions != null && salesPropositions.Id != Guid.Empty)
@@ -115,7 +115,7 @@ namespace TsiErp.Business.Entities.Branch.Services
 
                 #endregion
 
-                var query = queryFactory.Query().From(Tables.Branches).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true);
+                var query = queryFactory.Query().From(Tables.Branches).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true,"");
 
                 var branches = queryFactory.Update<SelectBranchesDto>(query, "Id", true);
 
@@ -134,7 +134,7 @@ namespace TsiErp.Business.Entities.Branch.Services
                 new
                 {
                     Id = id
-                }, true, true);
+                }, true, true, "");
                 var branch = queryFactory.Get<SelectBranchesDto>(query);
 
 
@@ -150,7 +150,7 @@ namespace TsiErp.Business.Entities.Branch.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var query = queryFactory.Query().From(Tables.Branches).Select("*").Where(null, true, true);
+                var query = queryFactory.Query().From(Tables.Branches).Select("*").Where(null, true, true, "");
                 var branches = queryFactory.GetList<ListBranchesDto>(query).ToList();
                 return new SuccessDataResult<IList<ListBranchesDto>>(branches);
             }
@@ -162,12 +162,12 @@ namespace TsiErp.Business.Entities.Branch.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = input.Id }, true, true);
+                var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = input.Id }, true, true, "");
                 var entity = queryFactory.Get<Branches>(entityQuery);
 
                 #region Update Control
 
-                var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Code = input.Code }, false, false);
+                var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Code = input.Code }, false, false, "");
                 var list = queryFactory.GetList<Branches>(listQuery).ToList();
 
                 if (list.Count > 0 && entity.Code != input.Code)
@@ -195,7 +195,7 @@ namespace TsiErp.Business.Entities.Branch.Services
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = DateTime.Now,
                     LastModifierId = LoginedUserService.UserId
-                }).Where(new { Id = input.Id }, true, true);
+                }).Where(new { Id = input.Id }, true, true, "");
 
                 var branches = queryFactory.Update<SelectBranchesDto>(query, "Id", true);
 
@@ -211,7 +211,7 @@ namespace TsiErp.Business.Entities.Branch.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = id}, true, true);
+                var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = id}, true, true, "");
                 var entity = queryFactory.Get<Branches>(entityQuery);
 
                 var query = queryFactory.Query().From(Tables.Branches).Update(new UpdateBranchesDto
@@ -231,7 +231,7 @@ namespace TsiErp.Business.Entities.Branch.Services
                     DataOpenStatus = lockRow,
                     DataOpenStatusUserId = userId,
 
-                }).Where(new { Id = id }, true, true);
+                }).Where(new { Id = id }, true, true, "");
 
                 var branches = queryFactory.Update<SelectBranchesDto>(query, "Id", true);
                 return new SuccessDataResult<SelectBranchesDto>(branches);
