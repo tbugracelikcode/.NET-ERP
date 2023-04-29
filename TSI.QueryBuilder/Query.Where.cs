@@ -52,7 +52,7 @@ namespace TSI.QueryBuilder
 
                     if (!string.IsNullOrEmpty(joinSeperator))
                     {
-                        isActiveField = joinSeperator + "." + isActiveField;
+                        isActiveField = joinSeperator + "." + isActiveField.Trim(); ;
                     }
 
                     if (!string.IsNullOrEmpty(where))
@@ -70,7 +70,7 @@ namespace TSI.QueryBuilder
 
                     if (!string.IsNullOrEmpty(joinSeperator))
                     {
-                        isActiveField = joinSeperator + "." + isActiveField;
+                        isActiveField = joinSeperator + "." + isActiveField.Trim() ;
                     }
 
                     if (!string.IsNullOrEmpty(where))
