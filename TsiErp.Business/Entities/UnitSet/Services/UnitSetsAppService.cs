@@ -1,89 +1,147 @@
-﻿using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Microsoft.Extensions.Localization;
+using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; 
-using TsiErp.Localizations.Resources.UnitSets.Page;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
+using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
-using TsiErp.Business.Entities.UnitSet.BusinessRules;
 using TsiErp.Business.Entities.UnitSet.Validations;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.Product;
+using TsiErp.Entities.Entities.SalesPropositionLine;
 using TsiErp.Entities.Entities.UnitSet;
 using TsiErp.Entities.Entities.UnitSet.Dtos;
-using Microsoft.Extensions.Localization;
+using TsiErp.Entities.TableConstant;
+using TsiErp.Localizations.Resources.UnitSets.Page;
 
 namespace TsiErp.Business.Entities.UnitSet.Services
 {
     [ServiceRegistration(typeof(IUnitSetsAppService), DependencyInjectionType.Scoped)]
     public class UnitSetsAppService : ApplicationService<UnitSetsResource>, IUnitSetsAppService
     {
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
         public UnitSetsAppService(IStringLocalizer<UnitSetsResource> l) : base(l)
         {
         }
 
-        UnitSetManager _manager { get; set; } = new UnitSetManager();
 
         [ValidationAspect(typeof(CreateUnitSetsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectUnitSetsDto>> CreateAsync(CreateUnitSetsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.CodeControl(_uow.UnitSetsRepository, input.Code,L);
+                var listQuery = queryFactory.Query().From(Tables.UnitSets).Select("*").Where(new { Code = input.Code }, false, false, "");
 
-                var entity = ObjectMapper.Map<CreateUnitSetsDto, UnitSets>(input);
+                var list = queryFactory.ControlList<UnitSets>(listQuery).ToList();
 
-                var addedEntity = await _uow.UnitSetsRepository.InsertAsync(entity);
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "UnitSets", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                #region Code Control 
 
-                return new SuccessDataResult<SelectUnitSetsDto>(ObjectMapper.Map<UnitSets, SelectUnitSetsDto>(addedEntity));
+                if (list.Count > 0)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["CodeControlManager"]);
+                }
+
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.UnitSets).Insert(new CreateUnitSetsDto
+                {
+                    Code = input.Code,
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    Id = GuidGenerator.CreateGuid(),
+                    IsActive = true,
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                    Name = input.Name
+                });
+
+                var unitsets = queryFactory.Insert<SelectUnitSetsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.UnitSets, LogType.Insert, unitsets.Id);
+
+                return new SuccessDataResult<SelectUnitSetsDto>(unitsets);
             }
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.DeleteControl(_uow.UnitSetsRepository, id,L);
-                await _uow.UnitSetsRepository.DeleteAsync(id);
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "UnitSets", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
+                #region Delete Control
+
+                var salesPropositionLineQuery = queryFactory.Query().From(Tables.SalesPropositionLines).Select("*").Where(new { UnitSetID = id }, true, true, "");
+                var salesPropositionLines = queryFactory.Get<SalesPropositionLines>(salesPropositionLineQuery);
+
+                if (salesPropositionLines != null && salesPropositionLines.Id != Guid.Empty)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new Exception(L["DeleteControlManager"]);
+                }
+
+                var productQuery = queryFactory.Query().From(Tables.Products).Select("*").Where(new { UnitSetID = id }, false, false, "");
+                var products = queryFactory.Get<Products>(productQuery);
+
+                if (products != null && products.Id != Guid.Empty)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new Exception(L["DeleteControlManager"]);
+                }
+
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.UnitSets).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+
+                var unitsets = queryFactory.Update<SelectUnitSetsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.UnitSets, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectUnitSetsDto>(unitsets);
             }
+
         }
 
         public async Task<IDataResult<SelectUnitSetsDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.UnitSetsRepository.GetAsync(t => t.Id == id,
-                t => t.Products);
-                var mappedEntity = ObjectMapper.Map<UnitSets, SelectUnitSetsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "UnitSets", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectUnitSetsDto>(mappedEntity);
+                var query = queryFactory.Query().From(Tables.UnitSets).Select("*").Where(
+               new
+               {
+                   Id = id
+               }, true, true, "");
+                var unitset = queryFactory.Get<SelectUnitSetsDto>(query);
+
+
+                LogsAppService.InsertLogToDatabase(unitset, unitset, LoginedUserService.UserId, Tables.UnitSets, LogType.Get, id);
+
+                return new SuccessDataResult<SelectUnitSetsDto>(unitset);
+
             }
+
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListUnitSetsDto>>> GetListAsync(ListUnitSetsParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.UnitSetsRepository.GetListAsync(t => t.IsActive == input.IsActive,
-                t => t.Products);
-
-                var mappedEntity = ObjectMapper.Map<List<UnitSets>, List<ListUnitSetsDto>>(list.ToList());
-
-                return new SuccessDataResult<IList<ListUnitSetsDto>>(mappedEntity);
+                var query = queryFactory.Query().From(Tables.UnitSets).Select("*").Where(null, true, true, "");
+                var unitsets = queryFactory.GetList<ListUnitSetsDto>(query).ToList();
+                return new SuccessDataResult<IList<ListUnitSetsDto>>(unitsets);
             }
         }
 
@@ -92,37 +150,82 @@ namespace TsiErp.Business.Entities.UnitSet.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectUnitSetsDto>> UpdateAsync(UpdateUnitSetsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.UnitSetsRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory.Query().From(Tables.UnitSets).Select("*").Where(new { Id = input.Id }, true, true, "");
+                var entity = queryFactory.Get<UnitSets>(entityQuery);
 
-                await _manager.UpdateControl(_uow.UnitSetsRepository, input.Code, input.Id, entity,L);
+                #region Update Control
 
-                var mappedEntity = ObjectMapper.Map<UpdateUnitSetsDto, UnitSets>(input);
+                var listQuery = queryFactory.Query().From(Tables.UnitSets).Select("*").Where(new { Code = input.Code }, false, false, "");
+                var list = queryFactory.GetList<UnitSets>(listQuery).ToList();
 
-                await _uow.UnitSetsRepository.UpdateAsync(mappedEntity);
-                var before = ObjectMapper.Map<UnitSets, UpdateUnitSetsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "UnitSets", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                if (list.Count > 0 && entity.Code != input.Code)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["UpdateControlManager"]);
+                }
 
-                return new SuccessDataResult<SelectUnitSetsDto>(ObjectMapper.Map<UnitSets, SelectUnitSetsDto>(mappedEntity));
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.UnitSets).Update(new UpdateUnitSetsDto
+                {
+                    Code = input.Code,
+                    Name = input.Name,
+                    Id = input.Id,
+                    IsActive = input.IsActive,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId
+                }).Where(new { Id = input.Id }, true, true, "");
+
+                var unitsets = queryFactory.Update<SelectUnitSetsDto>(query, "Id", true);
+
+
+                LogsAppService.InsertLogToDatabase(entity, unitsets, LoginedUserService.UserId, Tables.UnitSets, LogType.Update, entity.Id);
+
+
+                return new SuccessDataResult<SelectUnitSetsDto>(unitsets);
             }
         }
 
         public async Task<IDataResult<SelectUnitSetsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.UnitSetsRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.UnitSets).Select("*").Where(new { Id = id }, true, true, "");
+                var entity = queryFactory.Get<UnitSets>(entityQuery);
 
-                var updatedEntity = await _uow.UnitSetsRepository.LockRow(entity.Id, lockRow, userId);
+                var query = queryFactory.Query().From(Tables.UnitSets).Update(new UpdateUnitSetsDto
+                {
+                    Code = entity.Code,
+                    Name = entity.Name,
+                    IsActive = entity.IsActive,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = userId,
+                    Id = id,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId,
 
-                await _uow.SaveChanges();
+                }).Where(new { Id = id }, true, true, "");
 
-                var mappedEntity = ObjectMapper.Map<UnitSets, SelectUnitSetsDto>(updatedEntity);
+                var unitsets = queryFactory.Update<SelectUnitSetsDto>(query, "Id", true);
 
-                return new SuccessDataResult<SelectUnitSetsDto>(mappedEntity);
+                return new SuccessDataResult<SelectUnitSetsDto>(unitsets);
+
             }
         }
     }
