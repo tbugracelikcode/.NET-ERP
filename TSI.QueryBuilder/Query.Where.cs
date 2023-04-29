@@ -61,7 +61,7 @@ namespace TSI.QueryBuilder
                     }
                     else
                     {
-                        where = " IsActive='1'";
+                        where = isActiveField;
                     }
                 }
                 else
@@ -84,8 +84,6 @@ namespace TSI.QueryBuilder
                 }
             }
 
-
-
             WhereSentence = where;
 
             return this;
@@ -103,9 +101,11 @@ namespace TSI.QueryBuilder
             return Where(column, "=", value);
         }
 
-        public Query OrWhere(object constraints)
+        public Query OrWhere(object constraints, string joinSeperator)
         {
             string where = "";
+
+            JoinSeperator = joinSeperator;
 
             var dictionary = new Dictionary<string, object>();
 
@@ -120,22 +120,29 @@ namespace TSI.QueryBuilder
 
                 foreach (var dict in dictionary)
                 {
+                    string whereClause = dict.Key + "=" + "'" + dict.Value + "'";
+
+                    if (!string.IsNullOrEmpty(joinSeperator))
+                    {
+                        whereClause = joinSeperator + "." + dict.Key + "=" + "'" + dict.Value + "'";
+                    }
+
                     if (counter == 0)
                     {
                         if (string.IsNullOrEmpty(WhereSentence))
                         {
-                            where = dict.Key + "=" + "'" + dict.Value + "'";
+                            where = whereClause;
                             counter++;
                         }
                         else
                         {
-                            where = " Or " + dict.Key + "=" + "'" + dict.Value + "'";
+                            where = " Or " + whereClause;
                             counter++;
                         }
                     }
                     else
                     {
-                        where = where + " Or " + dict.Key + "=" + "'" + dict.Value + "'";
+                        where = where + " Or " + whereClause;
                     }
                 }
             }
@@ -145,9 +152,11 @@ namespace TSI.QueryBuilder
             return this;
         }
 
-        public Query OrWhere(object constraints, bool useIsActive, bool IsActive)
+        public Query OrWhere(object constraints, bool useIsActive, bool IsActive, string joinSeperator)
         {
             string where = "";
+
+            JoinSeperator = joinSeperator;
 
             var dictionary = new Dictionary<string, object>();
 
@@ -162,22 +171,29 @@ namespace TSI.QueryBuilder
 
                 foreach (var dict in dictionary)
                 {
+                    string whereClause = dict.Key + "=" + "'" + dict.Value + "'";
+
+                    if (!string.IsNullOrEmpty(joinSeperator))
+                    {
+                        whereClause = joinSeperator + "." + dict.Key + "=" + "'" + dict.Value + "'";
+                    }
+
                     if (counter == 0)
                     {
                         if (string.IsNullOrEmpty(WhereSentence))
                         {
-                            where = dict.Key + "=" + "'" + dict.Value + "'";
+                            where = whereClause;
                             counter++;
                         }
                         else
                         {
-                            where = " Or " + dict.Key + "=" + "'" + dict.Value + "'";
+                            where = " Or " + whereClause;
                             counter++;
                         }
                     }
                     else
                     {
-                        where = where + " Or " + dict.Key + "=" + "'" + dict.Value + "'";
+                        where = where + " Or " + whereClause;
                     }
                 }
             }
@@ -188,24 +204,38 @@ namespace TSI.QueryBuilder
                 {
                     if (IsActive)
                     {
+                        string isActiveField = " IsActive='1'";
+
+                        if (!string.IsNullOrEmpty(joinSeperator))
+                        {
+                            isActiveField = joinSeperator + "." + isActiveField;
+                        }
+
                         if (!string.IsNullOrEmpty(where))
                         {
-                            where = where + " And" + " IsActive='1'";
+                            where = where + " And" + isActiveField;
                         }
                         else
                         {
-                            where = " IsActive='1'";
+                            where = isActiveField;
                         }
                     }
                     else
                     {
+                        string isActiveField = " IsActive='0'";
+
+                        if (!string.IsNullOrEmpty(joinSeperator))
+                        {
+                            isActiveField = joinSeperator + "." + isActiveField;
+                        }
+
                         if (!string.IsNullOrEmpty(where))
                         {
-                            where = where + " And" + " IsActive='0'";
+                            where = where + " And" + isActiveField;
                         }
                         else
                         {
-                            where = " IsActive='0'";
+                            where = isActiveField;
                         }
                     }
                 }
@@ -216,7 +246,7 @@ namespace TSI.QueryBuilder
             return this;
         }
 
-        public Query Where(string column, string op, object value)
+        public Query Where(string column, string op, object value, string joinSeperator)
         {
             //Method = "select * from Branches where Code<>'001'";
 
@@ -224,16 +254,26 @@ namespace TSI.QueryBuilder
 
             string where = "";
 
+            JoinSeperator = joinSeperator;
+
+
             if (!string.IsNullOrEmpty(tableName))
             {
+                string whereClause = column + op + " " + "'" + value.ToString() + "'";
+
+                if (!string.IsNullOrEmpty(joinSeperator))
+                {
+                    whereClause = joinSeperator + "." + column + op + " " + "'" + value.ToString() + "'";
+                }
+
                 if (string.IsNullOrEmpty(WhereSentence))
                 {
-                    where = column + op + " " + "'" + value.ToString() + "'";
+                    where = whereClause;
                     WhereSentence = where;
                 }
                 else
                 {
-                    where = column + op + " " + "'" + value.ToString() + "'";
+                    where = whereClause;
                     WhereSentence = WhereSentence + " And " + where;
                 }
 
@@ -242,8 +282,10 @@ namespace TSI.QueryBuilder
             return this;
         }
 
-        public Query WhereIn(string column, params string[] values)
+        public Query WhereIn(string column, string joinSeperator, params string[] values)
         {
+            JoinSeperator = joinSeperator;
+
             if (values.Length > 0)
             {
                 string tableName = TableName;
@@ -271,6 +313,11 @@ namespace TSI.QueryBuilder
 
                     where = column + inSentence;
 
+                    if (!string.IsNullOrEmpty(joinSeperator))
+                    {
+                        where = joinSeperator + "." + column + inSentence;
+                    }
+
                     if (string.IsNullOrEmpty(WhereSentence))
                     {
                         WhereSentence = where;
@@ -284,8 +331,10 @@ namespace TSI.QueryBuilder
             return this;
         }
 
-        public Query WhereNotIn(string column, params string[] values)
+        public Query WhereNotIn(string column, string joinSeperator, params string[] values)
         {
+            JoinSeperator = joinSeperator;
+
             if (values.Length > 0)
             {
                 string tableName = TableName;
@@ -310,6 +359,11 @@ namespace TSI.QueryBuilder
 
                     string where = column + inSentence;
 
+                    if (!string.IsNullOrEmpty(joinSeperator))
+                    {
+                        where = joinSeperator + "." + column + inSentence;
+                    }
+
                     if (string.IsNullOrEmpty(WhereSentence))
                     {
                         WhereSentence = where;
@@ -323,14 +377,21 @@ namespace TSI.QueryBuilder
             return this;
         }
 
-        public Query WhereContains(string column, string value)
+        public Query WhereContains(string column, string value, string joinSeperator)
         {
             string tableName = TableName;
+
+            JoinSeperator = joinSeperator;
 
             if (!string.IsNullOrEmpty(tableName))
             {
                 string containsSentence = column + " like '%" + value + "%'";
 
+                if (!string.IsNullOrEmpty(joinSeperator))
+                {
+                    containsSentence = joinSeperator + "." + column + " like '%" + value + "%'";
+                }
+              
                 string whereSentence = containsSentence;
 
                 if (string.IsNullOrEmpty(WhereSentence))
@@ -346,13 +407,20 @@ namespace TSI.QueryBuilder
             return this;
         }
 
-        public Query WhereStartingWith(string column, string value)
+        public Query WhereStartingWith(string column, string value, string joinSeperator)
         {
             string tableName = TableName;
+
+            JoinSeperator = joinSeperator;
 
             if (!string.IsNullOrEmpty(tableName))
             {
                 string startingwithSentence = column + " like '" + value + "%'";
+
+                if (!string.IsNullOrEmpty(joinSeperator))
+                {
+                    startingwithSentence = joinSeperator + "." + column + " like '" + value + "%'";
+                }
 
                 string whereSentence = startingwithSentence;
 
@@ -369,13 +437,20 @@ namespace TSI.QueryBuilder
             return this;
         }
 
-        public Query WhereEndingWith(string column, string value)
+        public Query WhereEndingWith(string column, string value, string joinSeperator)
         {
             string tableName = TableName;
+
+            JoinSeperator = joinSeperator;
 
             if (!string.IsNullOrEmpty(tableName))
             {
                 string endingwithSentence = column + " like '%" + value + "'";
+
+                if (!string.IsNullOrEmpty(joinSeperator))
+                {
+                    endingwithSentence = joinSeperator + "." + column + " like '%" + value + "'";
+                }
 
                 string whereSentence = endingwithSentence;
 
