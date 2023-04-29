@@ -1,7 +1,4 @@
-﻿using JsonDiffer;
-using Microsoft.Extensions.Localization;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -9,15 +6,11 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Business.Entities.Branch.BusinessRules;
 using TsiErp.Business.Entities.Branch.Validations;
 using TsiErp.Business.Entities.Logging.Services;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Branch.Dtos;
-using TsiErp.Entities.Entities.Logging.Dtos;
 using TsiErp.Entities.Entities.Period;
 using TsiErp.Entities.Entities.SalesProposition;
 using TsiErp.Entities.TableConstant;
@@ -79,7 +72,7 @@ namespace TsiErp.Business.Entities.Branch.Services
 
                 var branches = queryFactory.Insert<SelectBranchesDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "Branches", LogType.Insert, branches.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Branches, LogType.Insert, branches.Id);
 
                 return new SuccessDataResult<SelectBranchesDto>(branches);
             }
@@ -119,7 +112,7 @@ namespace TsiErp.Business.Entities.Branch.Services
 
                 var branches = queryFactory.Update<SelectBranchesDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Branches", LogType.Delete, id);
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Branches, LogType.Delete, id);
 
                 return new SuccessDataResult<SelectBranchesDto>(branches);
             }
@@ -138,7 +131,7 @@ namespace TsiErp.Business.Entities.Branch.Services
                 var branch = queryFactory.Get<SelectBranchesDto>(query);
 
 
-                LogsAppService.InsertLogToDatabase(branch, branch, LoginedUserService.UserId, "Branches", LogType.Get, id);
+                LogsAppService.InsertLogToDatabase(branch, branch, LoginedUserService.UserId, Tables.Branches, LogType.Get, id);
 
                 return new SuccessDataResult<SelectBranchesDto>(branch);
 
@@ -200,7 +193,7 @@ namespace TsiErp.Business.Entities.Branch.Services
                 var branches = queryFactory.Update<SelectBranchesDto>(query, "Id", true);
 
 
-                LogsAppService.InsertLogToDatabase(entity, branches, LoginedUserService.UserId, "Branches", LogType.Update, entity.Id);
+                LogsAppService.InsertLogToDatabase(entity, branches, LoginedUserService.UserId, Tables.Branches, LogType.Update, entity.Id);
 
 
                 return new SuccessDataResult<SelectBranchesDto>(branches);
