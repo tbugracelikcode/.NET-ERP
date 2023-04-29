@@ -3,6 +3,8 @@ using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TSI.QueryBuilder.BaseClasses;
+using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.BillsofMaterial.BusinessRules;
 using TsiErp.Business.Entities.BillsofMaterial.Validations;
@@ -14,6 +16,11 @@ using TsiErp.Entities.Entities.BillsofMaterial;
 using TsiErp.Entities.Entities.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.BillsofMaterialLine;
 using TsiErp.Entities.Entities.BillsofMaterialLine.Dtos;
+using TsiErp.Entities.Entities.Branch;
+using TsiErp.Entities.Entities.Period;
+using TsiErp.Entities.Entities.Period.Dtos;
+using TsiErp.Entities.Entities.Product;
+using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.BillsofMaterials.Page;
 
 namespace TsiErp.Business.Entities.BillsofMaterial.Services
@@ -21,6 +28,8 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
     [ServiceRegistration(typeof(IBillsofMaterialsAppService), DependencyInjectionType.Scoped)]
     public class BillsofMaterialsAppService : ApplicationService<BillsofMaterialsResource>, IBillsofMaterialsAppService
     {
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
         public BillsofMaterialsAppService(IStringLocalizer<BillsofMaterialsResource> l) : base(l)
         {
         }
@@ -40,12 +49,14 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 var entity = ObjectMapper.Map<CreateBillsofMaterialsDto, BillsofMaterials>(input);
 
                 var addedEntity = await _uow.BillsofMaterialsRepository.InsertAsync(entity);
+                await _uow.SaveChanges();
 
                 foreach (var item in input.SelectBillsofMaterialLines)
                 {
                     var lineEntity = ObjectMapper.Map<SelectBillsofMaterialLinesDto, BillsofMaterialLines>(item);
                     lineEntity.BoMID = addedEntity.Id;
                     await _uow.BillsofMaterialLinesRepository.InsertAsync(lineEntity);
+                    await _uow.SaveChanges();
                 }
 
                 input.Id = addedEntity.Id;
@@ -121,16 +132,37 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListBillsofMaterialsDto>>> GetListAsync(ListBillsofMaterialsParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.BillsofMaterialsRepository.GetListAsync(null,
-                t => t.BillsofMaterialLines,
-                t => t.Products);
+                var query = queryFactory
+                       .Query()
+                           .Join<BillsofMaterials, Products>
+                           (
+                               p => new { p.Id, p.Code, p.Name, p._Description },
+                               b => new { FinishedProductCode = b.Code, FinishedProducName = b.Name },
+                               pc => new { pc.FinishedProductID },
+                               bc => new { bc.Id },
+                               JoinType.Left
+                           ).Where(null, true, true, Tables.BillsofMaterials);
 
-                var mappedEntity = ObjectMapper.Map<List<BillsofMaterials>, List<ListBillsofMaterialsDto>>(list.ToList());
+                var billsOfMaterials = queryFactory.GetList<ListBillsofMaterialsDto>(query).ToList();
+                return new SuccessDataResult<IList<ListBillsofMaterialsDto>>(billsOfMaterials);
 
-                return new SuccessDataResult<IList<ListBillsofMaterialsDto>>(mappedEntity);
+                //var query = queryFactory.Query().From(Tables.BillsofMaterials).Select("*").Where(null, true, true, "");
+                //var billsOfMaterials = queryFactory.GetList<ListBillsofMaterialsDto>(query).ToList();
+                //return new SuccessDataResult<IList<ListBillsofMaterialsDto>>(billsOfMaterials);
             }
+
+            //using (UnitOfWork _uow = new UnitOfWork())
+            //{
+            //    var list = await _uow.BillsofMaterialsRepository.GetListAsync(null,
+            //    t => t.BillsofMaterialLines,
+            //    t => t.Products);
+
+            //    var mappedEntity = ObjectMapper.Map<List<BillsofMaterials>, List<ListBillsofMaterialsDto>>(list.ToList());
+
+            //    return new SuccessDataResult<IList<ListBillsofMaterialsDto>>(mappedEntity);
+            //}
         }
 
         [ValidationAspect(typeof(UpdateBillsofMaterialsValidatorDto), Priority = 1)]
