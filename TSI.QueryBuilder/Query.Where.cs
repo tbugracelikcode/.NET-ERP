@@ -52,7 +52,7 @@ namespace TSI.QueryBuilder
 
                     if (!string.IsNullOrEmpty(joinSeperator))
                     {
-                        isActiveField = joinSeperator + "." + isActiveField;
+                        isActiveField = joinSeperator + "." + isActiveField.Trim();
                     }
 
                     if (!string.IsNullOrEmpty(where))
@@ -70,7 +70,7 @@ namespace TSI.QueryBuilder
 
                     if (!string.IsNullOrEmpty(joinSeperator))
                     {
-                        isActiveField = joinSeperator + "." + isActiveField;
+                        isActiveField = joinSeperator + "." + isActiveField.Trim();
                     }
 
                     if (!string.IsNullOrEmpty(where))
@@ -96,9 +96,9 @@ namespace TSI.QueryBuilder
             return this;
         }
 
-        public Query Where(string column, object value)
+        public Query Where(string column, object value, string joinSeperator)
         {
-            return Where(column, "=", value);
+            return Where(column, "=", value, joinSeperator);
         }
 
         public Query OrWhere(object constraints, string joinSeperator)
@@ -208,7 +208,7 @@ namespace TSI.QueryBuilder
 
                         if (!string.IsNullOrEmpty(joinSeperator))
                         {
-                            isActiveField = joinSeperator + "." + isActiveField;
+                            isActiveField = joinSeperator + "." + isActiveField.Trim();
                         }
 
                         if (!string.IsNullOrEmpty(where))
@@ -226,7 +226,7 @@ namespace TSI.QueryBuilder
 
                         if (!string.IsNullOrEmpty(joinSeperator))
                         {
-                            isActiveField = joinSeperator + "." + isActiveField;
+                            isActiveField = joinSeperator + "." + isActiveField.Trim();
                         }
 
                         if (!string.IsNullOrEmpty(where))
@@ -391,7 +391,7 @@ namespace TSI.QueryBuilder
                 {
                     containsSentence = joinSeperator + "." + column + " like '%" + value + "%'";
                 }
-              
+
                 string whereSentence = containsSentence;
 
                 if (string.IsNullOrEmpty(WhereSentence))
