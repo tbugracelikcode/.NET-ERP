@@ -148,9 +148,9 @@ namespace TSI.QueryBuilder.BaseClasses
                     {
                         string isDeleted = IsDeletedField + "=" + "'" + "0" + "'";
 
-                        if(!string.IsNullOrEmpty(query.JoinSeperator))
+                        if (!string.IsNullOrEmpty(query.JoinSeperator))
                         {
-                            isDeleted = query.JoinSeperator +"."+ isDeleted;
+                            isDeleted = query.JoinSeperator + "." + isDeleted;
                         }
 
                         if (string.IsNullOrEmpty(query.WhereSentence))
@@ -159,7 +159,7 @@ namespace TSI.QueryBuilder.BaseClasses
                         }
                         else
                         {
-                            query.WhereSentence = query.WhereSentence + " and "+ isDeleted;
+                            query.WhereSentence = query.WhereSentence + " and " + isDeleted;
                             query.Sql = query.Sql + " where " + query.WhereSentence;
                         }
                     }
@@ -345,7 +345,7 @@ namespace TSI.QueryBuilder.BaseClasses
 
                     Guid _id = (Guid)command.ExecuteScalar();
 
-                    var resultSql = query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString());
+                    var resultSql = query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator);
 
                     var result = Get<T>(resultSql);
 
@@ -389,7 +389,7 @@ namespace TSI.QueryBuilder.BaseClasses
 
                     transaction.Commit();
 
-                    var resultSql = query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString());
+                    var resultSql = query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator);
 
                     var result = Get<T>(resultSql);
 
@@ -492,7 +492,7 @@ namespace TSI.QueryBuilder.BaseClasses
 
                     Guid _id = (Guid)command.ExecuteScalar();
 
-                    var resultSql = query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString());
+                    var resultSql = query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator);
 
                     var result = Get<T>(resultSql);
 
@@ -537,7 +537,7 @@ namespace TSI.QueryBuilder.BaseClasses
 
                     transaction.Commit();
 
-                    var resultSql = query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString());
+                    var resultSql = query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator);
 
                     var result = Get<T>(resultSql);
 
