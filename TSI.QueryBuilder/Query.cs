@@ -14,12 +14,16 @@ namespace TSI.QueryBuilder
 
         public string TableName { get; set; }
 
+        public string Columns { get; set; }
+
         public object SqlResult { get; set; }
 
         public string JsonData { get; set; }
 
         public string WhereSentence { get; set; }
 
-        public string JoinSeperator { get; set; }     
+        public string JoinSeperator { get; set; }
+
+        public string TablesJoinKeywords { get; set; }
     }
 }
