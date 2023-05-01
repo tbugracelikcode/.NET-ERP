@@ -101,6 +101,11 @@ namespace TSI.QueryBuilder.BaseClasses
                             isDeleted = query.JoinSeperator + "." + isDeleted;
                         }
 
+                        if (!string.IsNullOrEmpty(query.TablesJoinKeywords))
+                        {
+                            query.Sql = "select " + query.Columns + " from " + query.TableName + " as " + query.TableName + " " + query.TablesJoinKeywords;
+                        }
+
                         if (string.IsNullOrEmpty(query.WhereSentence))
                         {
                             query.Sql = query.Sql + " where " + isDeleted;
@@ -113,8 +118,6 @@ namespace TSI.QueryBuilder.BaseClasses
                     }
 
                     command.CommandText = query.Sql;
-
-
 
                     query.SqlResult = command.ExecuteReader().DataReaderMapToGet<T>();
 
@@ -151,6 +154,11 @@ namespace TSI.QueryBuilder.BaseClasses
                         if (!string.IsNullOrEmpty(query.JoinSeperator))
                         {
                             isDeleted = query.JoinSeperator + "." + isDeleted;
+                        }
+
+                        if (!string.IsNullOrEmpty(query.TablesJoinKeywords))
+                        {
+                            query.Sql = "select " + query.Columns + " from " + query.TableName + " as " + query.TableName + " " + query.TablesJoinKeywords;
                         }
 
                         if (string.IsNullOrEmpty(query.WhereSentence))
