@@ -35,7 +35,7 @@ namespace TsiErp.Business.Entities.Branch.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
 
-                var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Code = input.Code }, false, false,"");
+                var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Code = input.Code }, false, false, "");
 
                 var list = queryFactory.ControlList<Branches>(listQuery).ToList();
 
@@ -108,7 +108,7 @@ namespace TsiErp.Business.Entities.Branch.Services
 
                 #endregion
 
-                var query = queryFactory.Query().From(Tables.Branches).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true,"");
+                var query = queryFactory.Query().From(Tables.Branches).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
 
                 var branches = queryFactory.Update<SelectBranchesDto>(query, "Id", true);
 
@@ -192,9 +192,7 @@ namespace TsiErp.Business.Entities.Branch.Services
 
                 var branches = queryFactory.Update<SelectBranchesDto>(query, "Id", true);
 
-
                 LogsAppService.InsertLogToDatabase(entity, branches, LoginedUserService.UserId, Tables.Branches, LogType.Update, entity.Id);
-
 
                 return new SuccessDataResult<SelectBranchesDto>(branches);
             }
@@ -204,7 +202,8 @@ namespace TsiErp.Business.Entities.Branch.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = id}, true, true, "");
+                var entityQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Id = id }, true, true, "");
+
                 var entity = queryFactory.Get<Branches>(entityQuery);
 
                 var query = queryFactory.Query().From(Tables.Branches).Update(new UpdateBranchesDto
@@ -215,14 +214,14 @@ namespace TsiErp.Business.Entities.Branch.Services
                     IsActive = entity.IsActive,
                     CreationTime = entity.CreationTime.Value,
                     CreatorId = entity.CreatorId.Value,
-                    DeleterId = entity.DeleterId.Value,
-                    DeletionTime = entity.DeletionTime.Value,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = DateTime.Now,
                     LastModifierId = userId,
                     Id = id,
                     DataOpenStatus = lockRow,
-                    DataOpenStatusUserId = userId,
+                    DataOpenStatusUserId = userId
 
                 }).Where(new { Id = id }, true, true, "");
 

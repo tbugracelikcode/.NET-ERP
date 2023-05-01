@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Localization;
+using System.Threading.Channels;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -10,9 +11,11 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Period.Validations;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.BillsofMaterial;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Period;
 using TsiErp.Entities.Entities.Period.Dtos;
+using TsiErp.Entities.Entities.WareHouse;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.Periods.Page;
 
@@ -96,15 +99,15 @@ namespace TsiErp.Business.Entities.Period.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
                 var query = queryFactory
-                        .Query()
-                            .Join<Periods, Branches>
+                        .Query().From(Tables.Periods).Select<Periods>(p => new { p.Id, p.Code, p.Name, p.IsActive })
+                            .Join<Branches>
                             (
-                                p => new { p.Id, p.Code, p.Name, p.IsActive },
                                 b => new { BranchName = b.Name, BranchID = b.Id },
-                                pc => new { pc.BranchID },
+                                nameof(Periods.BranchID),
                                 bc => new { bc.Id },
                                 JoinType.Left
-                            ).Where(new { Id = id }, true, true, Tables.Periods);
+                            )
+                            .Where(new { Id = id }, true, true, Tables.Periods);
 
                 var period = queryFactory.Get<SelectPeriodsDto>(query);
 
@@ -120,7 +123,21 @@ namespace TsiErp.Business.Entities.Period.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var query = queryFactory.Query().From(Tables.Periods).Select("*").Where(null, true, true, "");
+                //var query = queryFactory.Query().From(Tables.Periods).Select("*").Where(null, true, true, "");
+
+                var query = queryFactory
+                        .Query()
+                        .From(Tables.Periods)
+                        .Select<Periods>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.Description_ })
+                            .Join<Branches>
+                            (
+                                b => new { BranchName = b.Name },
+                                nameof(Periods.BranchID),
+                                bc => new { bc.Id },
+                                JoinType.Left
+                            ).Where(null, true, true, Tables.Periods);
+
+
                 var periods = queryFactory.GetList<ListPeriodsDto>(query).ToList();
                 return new SuccessDataResult<IList<ListPeriodsDto>>(periods);
             }
@@ -194,8 +211,8 @@ namespace TsiErp.Business.Entities.Period.Services
                     IsActive = entity.IsActive,
                     CreationTime = entity.CreationTime.Value,
                     CreatorId = entity.CreatorId.Value,
-                    DeleterId = entity.DeleterId.Value,
-                    DeletionTime = entity.DeletionTime.Value,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = DateTime.Now,
                     LastModifierId = userId,

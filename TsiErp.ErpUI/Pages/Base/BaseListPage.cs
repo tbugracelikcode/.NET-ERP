@@ -9,6 +9,7 @@ using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 using IResult = Tsi.Core.Utilities.Results.IResult;
@@ -350,7 +351,7 @@ namespace TsiErp.ErpUI.Pages.Base
         {
             if (DataSource.Id != Guid.Empty)
             {
-                await BaseCrudService.UpdateConcurrencyFieldsAsync(DataSource.Id, true, Guid.NewGuid());
+                await BaseCrudService.UpdateConcurrencyFieldsAsync(DataSource.Id, true, LoginedUserService.UserId);
             }
         }
 
