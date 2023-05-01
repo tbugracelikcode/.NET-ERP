@@ -104,7 +104,7 @@ namespace TsiErp.Business.Entities.Period.Services
                             (
                                 b => new { BranchName = b.Name, BranchID = b.Id },
                                 nameof(Periods.BranchID),
-                                bc => new { bc.Id },
+                                nameof(Branches.Id),
                                 JoinType.Left
                             )
                             .Where(new { Id = id }, true, true, Tables.Periods);
@@ -123,8 +123,6 @@ namespace TsiErp.Business.Entities.Period.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                //var query = queryFactory.Query().From(Tables.Periods).Select("*").Where(null, true, true, "");
-
                 var query = queryFactory
                         .Query()
                         .From(Tables.Periods)
@@ -133,7 +131,7 @@ namespace TsiErp.Business.Entities.Period.Services
                             (
                                 b => new { BranchName = b.Name },
                                 nameof(Periods.BranchID),
-                                bc => new { bc.Id },
+                                nameof(Branches.Id),
                                 JoinType.Left
                             ).Where(null, true, true, Tables.Periods);
 
