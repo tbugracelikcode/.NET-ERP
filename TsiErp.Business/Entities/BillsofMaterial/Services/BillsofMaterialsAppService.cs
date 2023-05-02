@@ -104,53 +104,25 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                //var query = queryFactory
-                //       .Query()
-                //           .Join<BillsofMaterials, Products, BillsofMaterialLines>
-                //           (
-                //               bom => new { bom.Id, bom.Code, bom.Name, bom._Description },
-                //               pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name },
-                //               bomLine => new { },
-                //               bomc => new { bomc.FinishedProductID },
-                //               prc => new { prc.Id },
-                //               bomLinec => new { bomLinec.Id },
-                //               JoinType.Left
-                //           ).Where(new { Id = id }, true, true, Tables.BillsofMaterials);
+                var query = queryFactory
+                       .Query()
+                       .From(Tables.BillsofMaterials)
+                       .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive })
+                       .Join<Products>
+                        (
+                            pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
+                            nameof(BillsofMaterials.FinishedProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { Id = id }, true, true, Tables.BillsofMaterials);
 
-                //var billsOfMaterials = queryFactory.Get<SelectBillsofMaterialsDto>(query);
+                var billsOfMaterials = queryFactory.Get<SelectBillsofMaterialsDto>(query);
 
-                //LogsAppService.InsertLogToDatabase(billsOfMaterials, billsOfMaterials, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Get, id);
+                LogsAppService.InsertLogToDatabase(billsOfMaterials, billsOfMaterials, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Get, id);
 
-                return new SuccessDataResult<SelectBillsofMaterialsDto>(new SelectBillsofMaterialsDto());
+                return new SuccessDataResult<SelectBillsofMaterialsDto>(billsOfMaterials);
             }
-
-
-
-            //using (UnitOfWork _uow = new UnitOfWork())
-            //{
-            //    var entity = await _uow.BillsofMaterialsRepository.GetAsync(t => t.Id == id,
-            //    t => t.BillsofMaterialLines,
-            //    t => t.Products);
-
-            //    var mappedEntity = ObjectMapper.Map<BillsofMaterials, SelectBillsofMaterialsDto>(entity);
-
-            //    mappedEntity.SelectBillsofMaterialLines = ObjectMapper.Map<List<BillsofMaterialLines>, List<SelectBillsofMaterialLinesDto>>(entity.BillsofMaterialLines.ToList());
-
-            //    foreach (var item in mappedEntity.SelectBillsofMaterialLines)
-            //    {
-            //        item.FinishedProductCode = mappedEntity.FinishedProductCode;
-            //        item.ProductCode = (await _uow.ProductsRepository.GetAsync(t => t.Id == item.ProductID)).Code;
-            //        item.ProductName = (await _uow.ProductsRepository.GetAsync(t => t.Id == item.ProductID)).Name;
-            //        item.UnitSetCode = (await _uow.UnitSetsRepository.GetAsync(t => t.Id == item.UnitSetID)).Code;
-            //        item.MaterialType = (await _uow.ProductsRepository.GetAsync(t => t.Id == item.ProductID)).ProductType;
-            //    }
-
-            //    var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "BillsofMaterials", LogType.Get, id);
-            //    await _uow.LogsRepository.InsertAsync(log);
-            //    await _uow.SaveChanges();
-
-            //    return new SuccessDataResult<SelectBillsofMaterialsDto>(mappedEntity);
-            //}
         }
 
         [CacheAspect(duration: 60)]
@@ -158,26 +130,15 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                //var query = queryFactory
-                //       .Query()
-                //           .Join<BillsofMaterials, Products>
-                //           (
-                //               bom => new { bom.Id, bom.Code, bom.Name, bom._Description },
-                //               pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name },
-                //               bomc => new { bomc.FinishedProductID },
-                //               prc => new { prc.Id },
-                //               JoinType.Left
-                //           ).Where(null, true, true, Tables.BillsofMaterials);
-
                 var query = queryFactory
                        .Query()
                        .From(Tables.BillsofMaterials)
-                       .Select<BillsofMaterials>(b=>new { b.Id, b.Code, b.Name, b._Description })
+                       .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive })
                        .Join<Products>
                         (
-                            pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name },
+                            pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
                             nameof(BillsofMaterials.FinishedProductID),
-                            prColumns => new { prColumns.Id },
+                            nameof(Products.Id),
                             JoinType.Left
                         )
                         .Where(null, true, true, Tables.BillsofMaterials);

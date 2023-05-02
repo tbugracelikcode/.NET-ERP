@@ -9,7 +9,7 @@ namespace TSI.QueryBuilder
 {
     public partial class Query
     {
-        public Query Join<T1>(Expression<Func<T1, object>> t1Expression, string mainTableColumnExpression, Expression<Func<T1, object>> t1ColumnExpression, string joinType)
+        public Query Join<T1>(Expression<Func<T1, object>> t1Expression, string leftTableColumnExpression, string rightTableColumnExpression, string joinType)
         {
             string query = "";
             string t1 = typeof(T1).Name;
@@ -63,12 +63,6 @@ namespace TSI.QueryBuilder
             }
             #endregion
 
-            #region T1 Column Expression
-            var t1ColumnVisitor = new PropertyVisitor();
-            t1ColumnVisitor.Visit(t1ColumnExpression.Body);
-            var t1ColumnMembers = t1ColumnVisitor.Path;
-            #endregion
-
             if(string.IsNullOrEmpty(Columns))
             {
                 Columns = columns;
@@ -83,11 +77,11 @@ namespace TSI.QueryBuilder
 
             if (string.IsNullOrEmpty(TablesJoinKeywords))
             {
-                TablesJoinKeywords = " " + joinType + " join " + t1 + " as " + t1 + " on " + TableName + "." + mainTableColumnExpression + "=" + t1 + "." + t1ColumnMembers[0].Name;
+                TablesJoinKeywords = " " + joinType + " join " + t1 + " as " + t1 + " on " + TableName + "." + leftTableColumnExpression + "=" + t1 + "." + rightTableColumnExpression;
             }
             else
             {
-                TablesJoinKeywords =TablesJoinKeywords + " " + joinType + " join " + t1 + " as " + t1 + " on " + TableName + "." + mainTableColumnExpression + "=" + t1 + "." + t1ColumnMembers[0].Name;
+                TablesJoinKeywords =TablesJoinKeywords + " " + joinType + " join " + t1 + " as " + t1 + " on " + TableName + "." + leftTableColumnExpression + "=" + t1 + "." + rightTableColumnExpression;
             }
 
             //query = query + WhereSentence;
