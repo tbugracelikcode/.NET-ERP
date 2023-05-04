@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Localization;
+using System.Data;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -34,7 +35,6 @@ namespace TsiErp.Business.Entities.Branch.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-
                 var listQuery = queryFactory.Query().From(Tables.Branches).Select("*").Where(new { Code = input.Code }, false, false, "");
 
                 var list = queryFactory.ControlList<Branches>(listQuery).ToList();
@@ -74,6 +74,7 @@ namespace TsiErp.Business.Entities.Branch.Services
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Branches, LogType.Insert, branches.Id);
 
+
                 return new SuccessDataResult<SelectBranchesDto>(branches);
             }
 
@@ -84,6 +85,8 @@ namespace TsiErp.Business.Entities.Branch.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
+                IDbTransaction transaction = connection.BeginTransaction();
+
                 #region Delete Control
 
                 var periodQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { BranchID = id }, true, true, "");
