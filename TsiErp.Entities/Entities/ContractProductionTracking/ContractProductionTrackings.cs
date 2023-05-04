@@ -84,7 +84,7 @@ namespace TsiErp.Entities.Entities.ContractProductionTracking
         /// <summary>
         /// Cari Hesap ID
         /// </summary>
-        public Guid CurrentAccountID { get; set; }
+        public Guid CurrentAccountCardID { get; set; }
         /// <summary>
         /// Stok ID
         /// </summary>
