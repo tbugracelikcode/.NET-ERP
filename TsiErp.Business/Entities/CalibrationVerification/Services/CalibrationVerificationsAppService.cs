@@ -1,48 +1,81 @@
-﻿using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Microsoft.Extensions.Localization;
+using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
-using TsiErp.Localizations.Resources.CalibrationVerifications.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TSI.QueryBuilder.BaseClasses;
+using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Business.Entities.CalibrationVerification.BusinessRules;
 using TsiErp.Business.Entities.CalibrationVerification.Validations;
 using TsiErp.Business.Entities.Logging.Services;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.CalibrationVerification;
 using TsiErp.Entities.Entities.CalibrationVerification.Dtos;
-using Microsoft.Extensions.Localization;
+using TsiErp.Entities.Entities.EquipmentRecord;
+using TsiErp.Entities.TableConstant;
+using TsiErp.Localizations.Resources.CalibrationVerifications.Page;
 
 namespace TsiErp.Business.Entities.CalibrationVerification.Services
 {
     [ServiceRegistration(typeof(ICalibrationVerificationsAppService), DependencyInjectionType.Scoped)]
     public class CalibrationVerificationsAppService : ApplicationService<CalibrationVerificationsResource>, ICalibrationVerificationsAppService
     {
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
         public CalibrationVerificationsAppService(IStringLocalizer<CalibrationVerificationsResource> l) : base(l)
         {
         }
 
-        CalibrationVerificationManager _manager { get; set; } = new CalibrationVerificationManager();
 
         [ValidationAspect(typeof(CreateCalibrationVerifcationsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCalibrationVerificationsDto>> CreateAsync(CreateCalibrationVerificationsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.CodeControl(_uow.CalibrationVerificationsRepository, input.Code, L);
+                var listQuery = queryFactory.Query().From(Tables.CalibrationVerifications).Select("*").Where(new { Code = input.Code }, false, false, "");
 
-                var entity = ObjectMapper.Map<CreateCalibrationVerificationsDto, CalibrationVerifications>(input);
+                var list = queryFactory.ControlList<CalibrationVerifications>(listQuery).ToList();
 
-                var addedEntity = await _uow.CalibrationVerificationsRepository.InsertAsync(entity);
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "CalibrationVerifications", LogType.Insert, addedEntity.Id);
+                #region Code Control 
 
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                if (list.Count > 0)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["CodeControlManager"]);
+                }
 
-                return new SuccessDataResult<SelectCalibrationVerificationsDto>(ObjectMapper.Map<CalibrationVerifications, SelectCalibrationVerificationsDto>(addedEntity));
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.CalibrationVerifications).Insert(new CreateCalibrationVerificationsDto
+                {
+                    Code = input.Code,
+                    Date = input.Date,
+                    EquipmentID = input.EquipmentID,
+                    InfinitiveCertificateNo = input.InfinitiveCertificateNo,
+                    ReceiptNo = input.ReceiptNo,
+                    Result = input.Result,
+                    NextControl = input.NextControl,
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    Id = GuidGenerator.CreateGuid(),
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                    Name = input.Name
+                });
+
+                var calibrationVerifications = queryFactory.Insert<SelectCalibrationVerificationsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.CalibrationVerifications, LogType.Insert, calibrationVerifications.Id);
+
+                return new SuccessDataResult<SelectCalibrationVerificationsDto>(calibrationVerifications);
             }
         }
 
@@ -50,30 +83,40 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _uow.CalibrationVerificationsRepository.DeleteAsync(id);
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "CalibrationVerifications", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
+                var query = queryFactory.Query().From(Tables.CalibrationVerifications).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
 
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
+                var calibrationVerifications = queryFactory.Update<SelectCalibrationVerificationsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.CalibrationVerifications, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectCalibrationVerificationsDto>(calibrationVerifications);
             }
         }
 
 
         public async Task<IDataResult<SelectCalibrationVerificationsDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.CalibrationVerificationsRepository.GetAsync(t => t.Id == id, t => t.EquipmentRecords);
-                var mappedEntity = ObjectMapper.Map<CalibrationVerifications, SelectCalibrationVerificationsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "CalibrationVerifications", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
+                var query = queryFactory
+                        .Query().From(Tables.CalibrationVerifications).Select<CalibrationVerifications>(c => new { c.Id, c.Code, c.Name, c.NextControl, c.ReceiptNo, c.Result, c.Date, c.EquipmentID })
+                            .Join<EquipmentRecords>
+                            (
+                                e => new { Equipment = e.Code, EquipmentID = e.Id },
+                                nameof(CalibrationVerifications.EquipmentID),
+                                nameof(EquipmentRecords.Id),
+                                JoinType.Left
+                            )
+                            .Where(new { Id = id }, false, false, Tables.CalibrationVerifications);
 
+                var calibrationVerification = queryFactory.Get<SelectCalibrationVerificationsDto>(query);
 
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectCalibrationVerificationsDto>(mappedEntity);
+                LogsAppService.InsertLogToDatabase(calibrationVerification, calibrationVerification, LoginedUserService.UserId, Tables.CalibrationVerifications, LogType.Get, id);
+
+                return new SuccessDataResult<SelectCalibrationVerificationsDto>(calibrationVerification);
+
             }
         }
 
@@ -81,13 +124,23 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCalibrationVerificationsDto>>> GetListAsync(ListCalibrationVerificationsParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.CalibrationVerificationsRepository.GetListAsync(null, t => t.EquipmentRecords);
+                var query = queryFactory
+                        .Query()
+                        .From(Tables.CalibrationVerifications)
+                        .Select<CalibrationVerifications>(c => new { c.Id, c.Code, c.Name, c.NextControl, c.ReceiptNo, c.Result, c.Date, c.EquipmentID })
+                            .Join<EquipmentRecords>
+                            (
+                                e => new { Equipment = e.Code },
+                                nameof(CalibrationVerifications.EquipmentID),
+                                nameof(EquipmentRecords.Id),
+                                JoinType.Left
+                            ).Where(null, false, false, Tables.CalibrationVerifications);
 
-                var mappedEntity = ObjectMapper.Map<List<CalibrationVerifications>, List<ListCalibrationVerificationsDto>>(list.ToList());
 
-                return new SuccessDataResult<IList<ListCalibrationVerificationsDto>>(mappedEntity);
+                var calibrationVerifications = queryFactory.GetList<ListCalibrationVerificationsDto>(query).ToList();
+                return new SuccessDataResult<IList<ListCalibrationVerificationsDto>>(calibrationVerifications);
             }
         }
 
@@ -96,38 +149,91 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCalibrationVerificationsDto>> UpdateAsync(UpdateCalibrationVerificationsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.CalibrationVerificationsRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory.Query().From(Tables.CalibrationVerifications).Select("*").Where(new { Id = input.Id }, false, false, "");
+                var entity = queryFactory.Get<CalibrationVerifications>(entityQuery);
 
-                await _manager.UpdateControl(_uow.CalibrationVerificationsRepository, input.Code, input.Id, entity,L);
+                #region Update Control
 
-                var mappedEntity = ObjectMapper.Map<UpdateCalibrationVerificationsDto, CalibrationVerifications>(input);
+                var listQuery = queryFactory.Query().From(Tables.CalibrationVerifications).Select("*").Where(new { Code = input.Code }, false, false, "");
+                var list = queryFactory.GetList<CalibrationVerifications>(listQuery).ToList();
 
-                await _uow.CalibrationVerificationsRepository.UpdateAsync(mappedEntity);
-                var before = ObjectMapper.Map<CalibrationVerifications, UpdateCalibrationVerificationsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "CalibrationVerifications", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
+                if (list.Count > 0 && entity.Code != input.Code)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["UpdateControlManager"]);
+                }
 
-                await _uow.SaveChanges();
+                #endregion
 
-                return new SuccessDataResult<SelectCalibrationVerificationsDto>(ObjectMapper.Map<CalibrationVerifications, SelectCalibrationVerificationsDto>(mappedEntity));
+                var query = queryFactory.Query().From(Tables.CalibrationVerifications).Update(new UpdateCalibrationVerificationsDto
+                {
+                    Code = input.Code,
+                    Name = input.Name,
+                    EquipmentID = input.EquipmentID,
+                    Date = input.Date,
+                    Result = input.Result,
+                    ReceiptNo = input.ReceiptNo,
+                    InfinitiveCertificateNo = input.InfinitiveCertificateNo,
+                    NextControl = input.NextControl,
+                    Id = input.Id,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId
+                }).Where(new { Id = input.Id }, false, false, "");
+
+                var calibrationVerifications = queryFactory.Update<SelectCalibrationVerificationsDto>(query, "Id", true);
+
+
+                LogsAppService.InsertLogToDatabase(entity, calibrationVerifications, LoginedUserService.UserId, Tables.CalibrationVerifications, LogType.Update, entity.Id);
+
+
+                return new SuccessDataResult<SelectCalibrationVerificationsDto>(calibrationVerifications);
             }
         }
 
         public async Task<IDataResult<SelectCalibrationVerificationsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.CalibrationVerificationsRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.CalibrationVerifications).Select("*").Where(new { Id = id }, false, false, "");
+                var entity = queryFactory.Get<CalibrationVerifications>(entityQuery);
 
-                var updatedEntity = await _uow.CalibrationVerificationsRepository.LockRow(entity.Id, lockRow, userId);
+                var query = queryFactory.Query().From(Tables.CalibrationVerifications).Update(new UpdateCalibrationVerificationsDto
+                {
+                    Code = entity.Code,
+                    Name = entity.Name,
+                    NextControl = entity.NextControl,
+                    InfinitiveCertificateNo = entity.InfinitiveCertificateNo,
+                    ReceiptNo = entity.ReceiptNo,
+                    EquipmentID = entity.EquipmentID,
+                    Result = entity.Result,
+                    Date = entity.Date,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = userId,
+                    Id = id,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId,
 
-                await _uow.SaveChanges();
+                }).Where(new { Id = id }, false, false, "");
 
-                var mappedEntity = ObjectMapper.Map<CalibrationVerifications, SelectCalibrationVerificationsDto>(updatedEntity);
+                var calibrationVerifications = queryFactory.Update<SelectCalibrationVerificationsDto>(query, "Id", true);
 
-                return new SuccessDataResult<SelectCalibrationVerificationsDto>(mappedEntity);
+                return new SuccessDataResult<SelectCalibrationVerificationsDto>(calibrationVerifications);
+
             }
         }
     }

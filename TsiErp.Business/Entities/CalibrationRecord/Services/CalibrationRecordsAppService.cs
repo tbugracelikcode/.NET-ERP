@@ -103,15 +103,15 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
                 var query = queryFactory
-                        .Query()
-                            .Join<CalibrationRecords, EquipmentRecords>
+                        .Query().From(Tables.CalibrationRecords).Select<CalibrationRecords>(c => new { c.Id, c.Code, c.Name, c.NextControl, c.ReceiptNo, c.Result, c.Date, c.EquipmentID })
+                            .Join<EquipmentRecords>
                             (
-                                c => new { c.Id, c.Code, c.Name },
-                                e => new { Equipment = e.Name, EquipmentID = e.Id },
-                                cc => new { cc.EquipmentID },
-                                ec => new { ec.Id },
+                                e => new { Equipment = e.Code, EquipmentID = e.Id },
+                                nameof(CalibrationRecords.EquipmentID),
+                                nameof(EquipmentRecords.Id),
                                 JoinType.Left
-                            ).Where(new { Id = id }, false, false, Tables.CalibrationRecords);
+                            )
+                            .Where(new { Id = id }, false, false, Tables.CalibrationRecords);
 
                 var calibrationRecord = queryFactory.Get<SelectCalibrationRecordsDto>(query);
 
@@ -128,7 +128,19 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var query = queryFactory.Query().From(Tables.CalibrationRecords).Select("*").Where(null, false, false, "");
+                var query = queryFactory
+                        .Query()
+                        .From(Tables.CalibrationRecords)
+                        .Select<CalibrationRecords>(c => new { c.Id, c.Code, c.Name, c.NextControl, c.ReceiptNo, c.Result, c.Date, c.EquipmentID })
+                            .Join<EquipmentRecords>
+                            (
+                                e => new { Equipment = e.Code },
+                                nameof(CalibrationRecords.EquipmentID),
+                                nameof(EquipmentRecords.Id),
+                                JoinType.Left
+                            ).Where(null, false, false, Tables.CalibrationRecords);
+
+
                 var calibrationRecords = queryFactory.GetList<ListCalibrationRecordsDto>(query).ToList();
                 return new SuccessDataResult<IList<ListCalibrationRecordsDto>>(calibrationRecords);
             }
@@ -158,7 +170,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
 
                 #endregion
 
-                var query = queryFactory.Query().From(Tables.Periods).Update(new UpdateCalibrationRecordsDto
+                var query = queryFactory.Query().From(Tables.CalibrationRecords).Update(new UpdateCalibrationRecordsDto
                 {
                     Code = input.Code,
                     Name = input.Name,
@@ -209,8 +221,8 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
                     NextControl = entity.NextControl,
                     CreationTime = entity.CreationTime.Value,
                     CreatorId = entity.CreatorId.Value,
-                    DeleterId = entity.DeleterId.Value,
-                    DeletionTime = entity.DeletionTime.Value,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = DateTime.Now,
                     LastModifierId = userId,

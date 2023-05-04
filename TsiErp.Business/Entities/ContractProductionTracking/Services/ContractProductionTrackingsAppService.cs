@@ -1,25 +1,31 @@
-﻿using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Microsoft.Extensions.Localization;
+using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.Results;
-using TsiErp.Localizations.Resources.ContractProductionTrackings.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
-using TsiErp.Business.Entities.ContractProductionTracking.BusinessRules;
+using TSI.QueryBuilder.BaseClasses;
+using TSI.QueryBuilder.Constants.Join;
+using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.ContractProductionTracking.Validations;
 using TsiErp.Business.Entities.Logging.Services;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.ContractProductionTracking;
 using TsiErp.Entities.Entities.ContractProductionTracking.Dtos;
-using Microsoft.Extensions.Localization;
-using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Entities.Entities.CurrentAccountCard;
+using TsiErp.Entities.Entities.Employee;
+using TsiErp.Entities.Entities.Product;
+using TsiErp.Entities.Entities.Shift;
+using TsiErp.Entities.Entities.Station;
+using TsiErp.Entities.Entities.WorkOrder;
+using TsiErp.Entities.TableConstant;
+using TsiErp.Localizations.Resources.ContractProductionTrackings.Page;
 
 namespace TsiErp.Business.Entities.ContractProductionTracking.Services
 {
     [ServiceRegistration(typeof(IContractProductionTrackingsAppService), DependencyInjectionType.Scoped)]
     public class ContractProductionTrackingsAppService : ApplicationService<ContractProductionTrackingsResource>, IContractProductionTrackingsAppService
     {
-        ContractProductionTrackingManager _manager { get; set; } = new ContractProductionTrackingManager();
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
 
         public ContractProductionTrackingsAppService(IStringLocalizer<ContractProductionTrackingsResource> l) : base(l)
         {
@@ -30,62 +36,173 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectContractProductionTrackingsDto>> CreateAsync(CreateContractProductionTrackingsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.CodeControl(_uow.ContractProductionTrackingsRepository, L);
 
-                var entity = ObjectMapper.Map<CreateContractProductionTrackingsDto, ContractProductionTrackings>(input);
+                var query = queryFactory.Query().From(Tables.ContractProductionTrackings).Insert(new CreateContractProductionTrackingsDto
+                {
+                    CurrentAccountID = input.CurrentAccountID,
+                    EmployeeID = input.EmployeeID,
+                    IsFinished = input.IsFinished,
+                    OperationEndDate = input.OperationEndDate,
+                    OperationEndTime = input.OperationEndTime,
+                    OperationStartDate = input.OperationStartDate,
+                    OperationStartTime = input.OperationStartTime,
+                    OperationTime = input.OperationTime,
+                    PlannedQuantity = input.PlannedQuantity,
+                    ProducedQuantity = input.ProducedQuantity,
+                    ProductID = input.ProductID,
+                    ShiftID = input.ShiftID,
+                    StationID = input.StationID,
+                    WorkOrderID = input.WorkOrderID,
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    Id = GuidGenerator.CreateGuid(),
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                });
 
-                var addedEntity = await _uow.ContractProductionTrackingsRepository.InsertAsync(entity);
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "ContractProductionTrackings", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
+                var contractProductionTrackings = queryFactory.Insert<SelectContractProductionTrackingsDto>(query, "Id", true);
 
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ContractProductionTrackings, LogType.Insert, contractProductionTrackings.Id);
 
-                await _uow.SaveChanges();
-
-                return new SuccessDataResult<SelectContractProductionTrackingsDto>(ObjectMapper.Map<ContractProductionTrackings, SelectContractProductionTrackingsDto>(addedEntity));
+                return new SuccessDataResult<SelectContractProductionTrackingsDto>(contractProductionTrackings);
             }
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _uow.ContractProductionTrackingsRepository.DeleteAsync(id);
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "ContractProductionTrackings", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
+                var query = queryFactory.Query().From(Tables.ContractProductionTrackings).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
 
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
+                var contractProductionTrackings = queryFactory.Update<SelectContractProductionTrackingsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ContractProductionTrackings, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectContractProductionTrackingsDto>(contractProductionTrackings);
             }
         }
 
         public async Task<IDataResult<SelectContractProductionTrackingsDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.ContractProductionTrackingsRepository.GetAsync(t => t.Id == id, t => t.Products, t => t.CurrentAccountCards, t => t.Employees, t => t.Shifts, t => t.Stations);
-                var mappedEntity = ObjectMapper.Map<ContractProductionTrackings, SelectContractProductionTrackingsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "ContractProductionTrackings", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
+                var query = queryFactory
+                        .Query().From(Tables.ContractProductionTrackings).Select<ContractProductionTrackings>(c => new { c.Id, c.StationID, c.StationCode, c.CurrentAccountCardID, c.EmployeeID,c.EmployeeName,c.OperationEndDate,c.OperationEndTime,c.OperationStartDate,c.OperationStartTime,c.OperationTime,c.PlannedQuantity,c.ProducedQuantity,c.ProductID,c.ShiftCode,c.ShiftID,c.WorkOrderID })
+                            .Join<WorkOrders>
+                            (
+                                w => new { WorkOrderCode = w.Code, WorkOrderID = w.Id },
+                                nameof(ContractProductionTrackings.WorkOrderID),
+                                nameof(WorkOrders.Id),
+                                JoinType.Left
+                            )
+                             .Join<Products>
+                            (
+                                p => new { ProductCode = p.Code, ProductName = p.Name, ProductID = p.Id },
+                                nameof(ContractProductionTrackings.ProductID),
+                                nameof(Products.Id),
+                                JoinType.Left
+                            )
+                             .Join<Stations>
+                            (
+                                s => new { StationCode = s.Code, StationID = s.Id },
+                                nameof(ContractProductionTrackings.StationID),
+                                nameof(Stations.Id),
+                                JoinType.Left
+                            )
+                              .Join<Shifts>
+                            (
+                                sh => new { ShiftCode = sh.Code, ShiftID = sh.Id },
+                                nameof(ContractProductionTrackings.ShiftID),
+                                nameof(Shifts.Id),
+                                JoinType.Left
+                            )
+                             .Join<Employees>
+                            (
+                                e => new { EmployeeName = e.Name, EmployeeID = e.Id },
+                                nameof(ContractProductionTrackings.EmployeeID),
+                                nameof(Employees.Id),
+                                JoinType.Left
+                            )
+                             .Join<CurrentAccountCards>
+                            (
+                                c => new { CurrentAccountCardCode = c.Code, CurrentAccountCardID = c.Id },
+                                nameof(ContractProductionTrackings.CurrentAccountCardID),
+                                nameof(CurrentAccountCards.Id),
+                                JoinType.Left
+                            )
+                            .Where(new { Id = id }, false, false, Tables.ContractProductionTrackings);
 
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectContractProductionTrackingsDto>(mappedEntity);
+                var contractProductionTracking = queryFactory.Get<SelectContractProductionTrackingsDto>(query);
+
+                LogsAppService.InsertLogToDatabase(contractProductionTracking, contractProductionTracking, LoginedUserService.UserId, Tables.ContractProductionTrackings, LogType.Get, id);
+
+                return new SuccessDataResult<SelectContractProductionTrackingsDto>(contractProductionTracking);
+
             }
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListContractProductionTrackingsDto>>> GetListAsync(ListContractProductionTrackingsParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.ContractProductionTrackingsRepository.GetListAsync(null, t => t.Products, t => t.CurrentAccountCards, t => t.Employees, t => t.Shifts, t => t.Stations);
+                var query = queryFactory
+                       .Query().From(Tables.ContractProductionTrackings).Select<ContractProductionTrackings>(c => new { c.Id, c.StationID, c.StationCode, c.CurrentAccountCardID, c.EmployeeID, c.EmployeeName, c.OperationEndDate, c.OperationEndTime, c.OperationStartDate, c.OperationStartTime, c.OperationTime, c.PlannedQuantity, c.ProducedQuantity, c.ProductID, c.ShiftCode, c.ShiftID, c.WorkOrderID })
+                           .Join<WorkOrders>
+                           (
+                               w => new { WorkOrderCode = w.Code, WorkOrderID = w.Id },
+                               nameof(ContractProductionTrackings.WorkOrderID),
+                               nameof(WorkOrders.Id),
+                               JoinType.Left
+                           )
+                            .Join<Products>
+                           (
+                               p => new { ProductCode = p.Code, ProductName = p.Name, ProductID = p.Id },
+                               nameof(ContractProductionTrackings.ProductID),
+                               nameof(Products.Id),
+                               JoinType.Left
+                           )
+                            .Join<Stations>
+                           (
+                               s => new { StationCode = s.Code, StationID = s.Id },
+                               nameof(ContractProductionTrackings.StationID),
+                               nameof(Stations.Id),
+                               JoinType.Left
+                           )
+                             .Join<Shifts>
+                           (
+                               sh => new { ShiftCode = sh.Code, ShiftID = sh.Id },
+                               nameof(ContractProductionTrackings.ShiftID),
+                               nameof(Shifts.Id),
+                               JoinType.Left
+                           )
+                            .Join<Employees>
+                           (
+                               e => new { EmployeeName = e.Name, EmployeeID = e.Id },
+                               nameof(ContractProductionTrackings.EmployeeID),
+                               nameof(Employees.Id),
+                               JoinType.Left
+                           )
+                            .Join<CurrentAccountCards>
+                           (
+                               c => new { CurrentAccountCardCode = c.Code, CurrentAccountCardID = c.Id },
+                               nameof(ContractProductionTrackings.CurrentAccountCardID),
+                               nameof(CurrentAccountCards.Id),
+                               JoinType.Left
+                           )
+                           .Where(null, false, false, Tables.ContractProductionTrackings);
 
-                var mappedEntity = ObjectMapper.Map<List<ContractProductionTrackings>, List<ListContractProductionTrackingsDto>>(list.ToList());
 
-                return new SuccessDataResult<IList<ListContractProductionTrackingsDto>>(mappedEntity);
+                var contractProductionTrackings = queryFactory.GetList<ListContractProductionTrackingsDto>(query).ToList();
+                return new SuccessDataResult<IList<ListContractProductionTrackingsDto>>(contractProductionTrackings);
             }
         }
 
@@ -93,49 +210,147 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectContractProductionTrackingsDto>> UpdateAsync(UpdateContractProductionTrackingsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.ContractProductionTrackingsRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory.Query().From(Tables.ContractProductionTrackings).Select("*").Where(new { Id = input.Id }, false, false, "");
+                var entity = queryFactory.Get<ContractProductionTrackings>(entityQuery);
 
-                await _manager.UpdateControl(_uow.ContractProductionTrackingsRepository, input.Id, entity, L);
+                var query = queryFactory.Query().From(Tables.ContractProductionTrackings).Update(new UpdateContractProductionTrackingsDto
+                {
+                    CurrentAccountID = input.CurrentAccountID,
+                    EmployeeID = input.EmployeeID,
+                    IsFinished = input.IsFinished,
+                    OperationEndDate = input.OperationEndDate,
+                    OperationEndTime = input.OperationEndTime,
+                    OperationStartDate = input.OperationStartDate,
+                    OperationStartTime = input.OperationStartTime,
+                    OperationTime = input.OperationTime,
+                    PlannedQuantity = input.PlannedQuantity,
+                    ProducedQuantity = input.ProducedQuantity,
+                    ProductID = input.ProductID,
+                    ShiftID = input.ShiftID,
+                    StationID = input.StationID,
+                    WorkOrderID = input.WorkOrderID,
+                    Id = input.Id,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId
+                }).Where(new { Id = input.Id }, false, false, "");
 
-                var mappedEntity = ObjectMapper.Map<UpdateContractProductionTrackingsDto, ContractProductionTrackings>(input);
+                var contractProductionTrackings = queryFactory.Update<SelectContractProductionTrackingsDto>(query, "Id", true);
 
-                await _uow.ContractProductionTrackingsRepository.UpdateAsync(mappedEntity);
-                var before = ObjectMapper.Map<ContractProductionTrackings, UpdateContractProductionTrackingsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "ContractProductionTrackings", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
 
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectContractProductionTrackingsDto>(ObjectMapper.Map<ContractProductionTrackings, SelectContractProductionTrackingsDto>(mappedEntity));
+                LogsAppService.InsertLogToDatabase(entity, contractProductionTrackings, LoginedUserService.UserId, Tables.ContractProductionTrackings, LogType.Update, entity.Id);
+
+
+                return new SuccessDataResult<SelectContractProductionTrackingsDto>(contractProductionTrackings);
             }
         }
 
         public async Task<IDataResult<IList<SelectContractProductionTrackingsDto>>> GetSelectListAsync(Guid productId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.ContractProductionTrackingsRepository.GetListAsync(t => t.ProductID == productId, t => t.Products);
+                var query = queryFactory
+                       .Query().From(Tables.ContractProductionTrackings).Select<ContractProductionTrackings>(c => new { c.Id, c.StationID, c.StationCode, c.CurrentAccountCardID, c.EmployeeID, c.EmployeeName, c.OperationEndDate, c.OperationEndTime, c.OperationStartDate, c.OperationStartTime, c.OperationTime, c.PlannedQuantity, c.ProducedQuantity, c.ProductID, c.ShiftCode, c.ShiftID, c.WorkOrderID })
+                           .Join<WorkOrders>
+                           (
+                               w => new { WorkOrderCode = w.Code, WorkOrderID = w.Id },
+                               nameof(ContractProductionTrackings.WorkOrderID),
+                               nameof(WorkOrders.Id),
+                               JoinType.Left
+                           )
+                            .Join<Products>
+                           (
+                               p => new { ProductCode = p.Code, ProductName = p.Name, ProductID = p.Id },
+                               nameof(ContractProductionTrackings.ProductID),
+                               nameof(Products.Id),
+                               JoinType.Left
+                           )
+                            .Join<Stations>
+                           (
+                               s => new { StationCode = s.Code, StationID = s.Id },
+                               nameof(ContractProductionTrackings.StationID),
+                               nameof(Stations.Id),
+                               JoinType.Left
+                           )
+                             .Join<Shifts>
+                           (
+                               sh => new { ShiftCode = sh.Code, ShiftID = sh.Id },
+                               nameof(ContractProductionTrackings.ShiftID),
+                               nameof(Shifts.Id),
+                               JoinType.Left
+                           )
+                            .Join<Employees>
+                           (
+                               e => new { EmployeeName = e.Name, EmployeeID = e.Id },
+                               nameof(ContractProductionTrackings.EmployeeID),
+                               nameof(Employees.Id),
+                               JoinType.Left
+                           )
+                            .Join<CurrentAccountCards>
+                           (
+                               c => new { CurrentAccountCardCode = c.Code, CurrentAccountCardID = c.Id },
+                               nameof(ContractProductionTrackings.CurrentAccountCardID),
+                               nameof(CurrentAccountCards.Id),
+                               JoinType.Left
+                           )
+                           .Where(new { ProductID = productId }, false, false, Tables.ContractProductionTrackings);
 
-                var mappedEntity = ObjectMapper.Map<List<ContractProductionTrackings>, List<SelectContractProductionTrackingsDto>>(list.ToList());
 
-                return new SuccessDataResult<IList<SelectContractProductionTrackingsDto>>(mappedEntity);
+                var contractProductionTrackings = queryFactory.GetList<SelectContractProductionTrackingsDto>(query).ToList();
+                return new SuccessDataResult<IList<SelectContractProductionTrackingsDto>>(contractProductionTrackings);
             }
+
+
         }
 
         public async Task<IDataResult<SelectContractProductionTrackingsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.ContractProductionTrackingsRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.ContractProductionTrackings).Select("*").Where(new { Id = id }, false, false, "");
+                var entity = queryFactory.Get<ContractProductionTrackings>(entityQuery);
 
-                var updatedEntity = await _uow.ContractProductionTrackingsRepository.LockRow(entity.Id, lockRow, userId);
+                var query = queryFactory.Query().From(Tables.ContractProductionTrackings).Update(new UpdateContractProductionTrackingsDto
+                {
+                    CurrentAccountID = entity.CurrentAccountCardID,
+                    EmployeeID = entity.EmployeeID,
+                    IsFinished = entity.IsFinished,
+                    OperationEndDate = entity.OperationEndDate,
+                    OperationEndTime = entity.OperationEndTime,
+                    OperationStartDate = entity.OperationStartDate,
+                    OperationStartTime = entity.OperationStartTime,
+                    OperationTime = entity.OperationTime,
+                    PlannedQuantity = entity.PlannedQuantity,
+                    ProducedQuantity = entity.ProducedQuantity,
+                    ProductID = entity.ProductID,
+                    ShiftID = entity.ShiftID,
+                    StationID = entity.StationID,
+                    WorkOrderID = entity.WorkOrderID,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = userId,
+                    Id = id,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId,
 
-                await _uow.SaveChanges();
+                }).Where(new { Id = id }, false, false, "");
 
-                var mappedEntity = ObjectMapper.Map<ContractProductionTrackings, SelectContractProductionTrackingsDto>(updatedEntity);
+                var contractProductionTrackings = queryFactory.Update<SelectContractProductionTrackingsDto>(query, "Id", true);
 
-                return new SuccessDataResult<SelectContractProductionTrackingsDto>(mappedEntity);
+                return new SuccessDataResult<SelectContractProductionTrackingsDto>(contractProductionTrackings);
+
             }
         }
     }
