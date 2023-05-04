@@ -11,20 +11,20 @@ var factory = new QueryFactory();
 var connected = factory.ConnectToDatabase();
 factory.CommandTimeOut = 600;
 
-var query = factory.Query().From("Employees").Insert(new CreateEmployeesDto
-{
-    Address = "adres",
-    City = "İstanbul",
-    FirstName = "Hüseyin",
-    LastName = "Özsüzer",
-    Title = "Müdür",
-    TitleOfCourtesy = "Mr.",
-    BirthDate = null,
-    HireDate = null,
-    Photo = null
-});
+//var query = factory.Query().From("Employees").Insert(new CreateEmployeesDto
+//{
+//    Address = "adres",
+//    City = "İstanbul",
+//    FirstName = "Hüseyin",
+//    LastName = "Özsüzer",
+//    Title = "Müdür",
+//    TitleOfCourtesy = "Mr.",
+//    BirthDate = null,
+//    HireDate = null,
+//    Photo = null
+//});
 
-var employee = factory.Insert<SelectEmployeesDto>(query, "EmployeeID", true);
+//var employee = factory.Insert<SelectEmployeesDto>(query, "EmployeeID", true);
 
 //var query = db.Query().From("Employees").Select().Where("FirstName", "Janet");
 //var query2 = db.Query().From("Employees").Select("EmployeeID","FirstName","LastName").Where("FirstName", "Janet");
