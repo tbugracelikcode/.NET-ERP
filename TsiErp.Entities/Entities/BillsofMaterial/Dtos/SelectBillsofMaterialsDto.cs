@@ -53,5 +53,10 @@ namespace TsiErp.Entities.Entities.BillsofMaterial.Dtos
         public Guid? DataOpenStatusUserId { get; set; }
 
         public List<SelectBillsofMaterialLinesDto> SelectBillsofMaterialLines { get; set; }
+
+        public SelectBillsofMaterialsDto()
+        {
+            SelectBillsofMaterialLines = new List<SelectBillsofMaterialLinesDto>();
+        }
     }
 }

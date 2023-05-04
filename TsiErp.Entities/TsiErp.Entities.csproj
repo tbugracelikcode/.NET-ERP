@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tsi.Core\Tsi.Core.csproj" />
+    <ProjectReference Include="..\TSI.QueryBuilder\TSI.QueryBuilder.csproj" />
   </ItemGroup>
 
 </Project>

@@ -25,7 +25,7 @@ namespace TsiErp.Entities.Entities.BillsofMaterialLine.Dtos
         /// <summary>
         /// Malzeme Türü
         /// </summary>
-        public ProductTypeEnum? MaterialType { get; set; }
+        public ProductTypeEnum MaterialType { get; set; }
         /// <summary>
         /// Ürün ID
         /// </summary>

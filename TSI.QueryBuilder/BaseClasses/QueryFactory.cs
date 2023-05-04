@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Security.Cryptography;
 using System.Text;
 using System.Transactions;
 using Tsi.Core.Utilities.Results;
+using TSI.QueryBuilder.Constants.Join;
 using TSI.QueryBuilder.ExceptionHandler;
 using TSI.QueryBuilder.Extensions;
 using TSI.QueryBuilder.Models;
@@ -380,38 +382,97 @@ namespace TSI.QueryBuilder.BaseClasses
         {
             IDbTransaction transaction = Connection.BeginTransaction();
 
+            T returnValue = (T)Activator.CreateInstance(typeof(T));
+
             try
             {
-                var command = Connection.CreateCommand();
+                string[] insertQueries = query.Sql.Split(QueryConstants.QueryConstant);
 
-                command.CommandTimeout = CommandTimeOut;
-
-                if (command != null)
+                if (insertQueries.Length == 1)
                 {
-                    query.Sql = query.Sql.Replace("values", "output INSERTED." + returnIdCaption + " values");
+                    var command = Connection.CreateCommand();
 
-                    command.CommandText = query.Sql;
-                    command.Transaction = transaction;
+                    command.CommandTimeout = CommandTimeOut;
 
-                    Guid _id = (Guid)command.ExecuteScalar();
+                    if (command != null)
+                    {
+                        query.Sql = query.Sql.Replace("values", "output INSERTED." + returnIdCaption + " values");
 
-                    transaction.Commit();
+                        command.CommandText = query.Sql;
+                        command.Transaction = transaction;
 
-                    var resultSql = query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator);
+                        Guid _id = (Guid)command.ExecuteScalar();
 
-                    var result = Get<T>(resultSql);
+                        transaction.Commit();
 
-                    query.SqlResult = result;
+                        var resultSql = query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator);
 
-                    query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
+                        var result = Get<T>(resultSql);
 
-                    return (T)query.SqlResult;
+                        query.SqlResult = result;
+
+                        query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
+                        returnValue = (T)query.SqlResult;
+                    }
+                    else
+                    {
+                        transaction.Rollback();
+                        return default(T);
+                    }
                 }
                 else
                 {
-                    transaction.Rollback();
-                    return default(T);
+                    var command = Connection.CreateCommand();
+
+                    command.CommandTimeout = CommandTimeOut;
+
+                    if (command != null)
+                    {
+                        query.Sql = insertQueries[0].Replace("values", "output INSERTED." + returnIdCaption + " values");
+
+                        command.CommandText = query.Sql;
+                        command.Transaction = transaction;
+
+                        Guid _id = (Guid)command.ExecuteScalar();
+
+                        if (_id != Guid.Empty)
+                        {
+                            for (int i = 0; i < insertQueries.Length; i++)
+                            {
+                                if (i == 0)
+                                {
+                                    continue;
+                                }
+
+                                var commandLine = Connection.CreateCommand();
+
+                                if (commandLine != null)
+                                {
+                                    commandLine.CommandTimeout = CommandTimeOut;
+                                    query.Sql = insertQueries[i].Replace("values", "output INSERTED." + returnIdCaption + " values");
+
+                                    commandLine.CommandText = query.Sql;
+                                    commandLine.Transaction = transaction;
+                                    commandLine.ExecuteScalar();
+                                }
+                            }
+
+                            transaction.Commit();
+
+                            var resultSql = query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator);
+
+                            var result = Get<T>(resultSql);
+
+                            query.SqlResult = result;
+
+                            query.JsonData = query.SqlResult != null ? JsonConvert.SerializeObject(query.SqlResult, Formatting.Indented, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }) : "";
+
+                            returnValue = (T)query.SqlResult;
+                        }
+                    }
                 }
+
+                return returnValue;
             }
             catch (Exception exp)
             {

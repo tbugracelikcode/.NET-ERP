@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Localization;
+using System.Data;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -34,6 +35,7 @@ namespace TsiErp.Business.Entities.UnitSet.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
+
                 var listQuery = queryFactory.Query().From(Tables.UnitSets).Select("*").Where(new { Code = input.Code }, false, false, "");
 
                 var list = queryFactory.ControlList<UnitSets>(listQuery).ToList();
