@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Localization;
-using System.Data;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -8,19 +7,13 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Business.Entities.BillsofMaterial.BusinessRules;
 using TsiErp.Business.Entities.BillsofMaterial.Validations;
 using TsiErp.Business.Entities.Logging.Services;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.BillsofMaterial;
 using TsiErp.Entities.Entities.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.BillsofMaterialLine;
 using TsiErp.Entities.Entities.BillsofMaterialLine.Dtos;
-using TsiErp.Entities.Entities.Branch;
-using TsiErp.Entities.Entities.Period;
-using TsiErp.Entities.Entities.Period.Dtos;
 using TsiErp.Entities.Entities.Product;
 using TsiErp.Entities.Entities.UnitSet;
 using TsiErp.Entities.TableConstant;
@@ -37,9 +30,6 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
         {
         }
 
-        BillsofMaterialManager _manager { get; set; } = new BillsofMaterialManager();
-
-
         [ValidationAspect(typeof(CreateBillsofMaterialsValidatorDto), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBillsofMaterialsDto>> CreateAsync(CreateBillsofMaterialsDto input)
@@ -48,6 +38,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
             {
                 var listQuery = queryFactory.Query().From(Tables.BillsofMaterials).Select("*").Where(new { Code = input.Code }, false, false, "");
                 var list = queryFactory.ControlList<BillsofMaterials>(listQuery).ToList();
+
                 #region Code Control 
 
                 if (list.Count > 0)
@@ -77,7 +68,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     LastModifierId = Guid.Empty,
                     Name = input.Name,
                     FinishedProductID = input.FinishedProductID,
-                    RouteID = input.RouteID,
+                    RouteID = Guid.Empty,
                     _Description = input._Description
                 });
 
@@ -115,61 +106,36 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
 
                 return new SuccessDataResult<SelectBillsofMaterialsDto>(billOfMaterial);
             }
-            //using (UnitOfWork _uow = new UnitOfWork())
-            //{
-
-            //    await _manager.CodeControl(_uow.BillsofMaterialsRepository, input.Code, L);
-
-            //    var entity = ObjectMapper.Map<CreateBillsofMaterialsDto, BillsofMaterials>(input);
-
-            //    var addedEntity = await _uow.BillsofMaterialsRepository.InsertAsync(entity);
-            //    await _uow.SaveChanges();
-
-            //    foreach (var item in input.SelectBillsofMaterialLines)
-            //    {
-            //        var lineEntity = ObjectMapper.Map<SelectBillsofMaterialLinesDto, BillsofMaterialLines>(item);
-            //        lineEntity.BoMID = addedEntity.Id;
-            //        await _uow.BillsofMaterialLinesRepository.InsertAsync(lineEntity);
-            //        await _uow.SaveChanges();
-            //    }
-
-            //    input.Id = addedEntity.Id;
-            //    var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "BillsofMaterials", LogType.Insert, addedEntity.Id);
-            //    await _uow.LogsRepository.InsertAsync(log);
-
-            //    await _uow.SaveChanges();
-            //    return new SuccessDataResult<SelectBillsofMaterialsDto>(ObjectMapper.Map<BillsofMaterials, SelectBillsofMaterialsDto>(addedEntity));
-            //}
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var lines = (await _uow.BillsofMaterialLinesRepository.GetAsync(t => t.Id == id));
 
-                if (lines != null)
+                var query = queryFactory.Query().From(Tables.BillsofMaterials).Select("*").Where(new { Id = id }, true, true, "");
+
+                var billsOfMaterials = queryFactory.Get<SelectBillsofMaterialsDto>(query);
+
+                if (billsOfMaterials.Id!=Guid.Empty && billsOfMaterials != null)
                 {
-                    await _manager.DeleteControl(_uow.BillsofMaterialsRepository, lines.BoMID, lines.Id, true);
-                    await _uow.BillsofMaterialLinesRepository.DeleteAsync(id);
-                    await _uow.SaveChanges();
-                    return new SuccessResult(L["DeleteSuccessMessage"]);
+                    var deleteQuery = queryFactory.Query().From(Tables.BillsofMaterials).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.BillsofMaterialLines).Delete(LoginedUserService.UserId).Where(new { BomID = id }, false, false, "");
+
+                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+
+                    var billOfMaterial = queryFactory.Update<SelectBillsofMaterialsDto>(deleteQuery, "Id", true);
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Delete, id);
+                    return new SuccessDataResult<SelectBillsofMaterialsDto>(billOfMaterial);
                 }
                 else
                 {
-                    await _manager.DeleteControl(_uow.BillsofMaterialsRepository, id, Guid.Empty, false);
-                    var list = (await _uow.BillsofMaterialLinesRepository.GetListAsync(t => t.BoMID == id));
-                    foreach (var line in list)
-                    {
-                        await _uow.BillsofMaterialLinesRepository.DeleteAsync(line.Id);
-                    }
-                    await _uow.BillsofMaterialsRepository.DeleteAsync(id);
-
-                    var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "BillsofMaterials", LogType.Delete, id);
-                    await _uow.LogsRepository.InsertAsync(log);
-                    await _uow.SaveChanges();
-                    return new SuccessResult(L["DeleteSuccessMessage"]);
+                    var queryLine = queryFactory.Query().From(Tables.BillsofMaterialLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var billOfMaterialLines = queryFactory.Update<SelectBillsofMaterialLinesDto>(queryLine, "Id", true);
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.BillsofMaterialLines, LogType.Delete, id);
+                    return new SuccessDataResult<SelectBillsofMaterialLinesDto>(billOfMaterialLines);
                 }
             }
         }
@@ -196,7 +162,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 var queryLines = queryFactory
                        .Query()
                        .From(Tables.BillsofMaterialLines)
-                       .Select<BillsofMaterialLines>(b => new { b.BoMID, b.FinishedProductID, b.MaterialType, b.Quantity, b._Description, b.LineNr, b.Size })
+                       .Select<BillsofMaterialLines>(b => new { b.Id, b.BoMID, b.FinishedProductID, b.MaterialType, b.ProductID, b.UnitSetID, b.Quantity, b._Description, b.LineNr, b.Size, b.CreatorId, b.CreationTime, b.LastModifierId, b.LastModificationTime, b.DeleterId, b.DeletionTime, b.IsDeleted, b.DataOpenStatus, b.DataOpenStatusUserId })
                        .Join<Products>
                         (
                             p => new { FinishedProductCode = p.Code },
@@ -258,70 +224,203 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectBillsofMaterialsDto>> UpdateAsync(UpdateBillsofMaterialsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.BillsofMaterialsRepository.GetAsync(x => x.Id == input.Id, t => t.BillsofMaterialLines);
+                var entityQuery = queryFactory
+                       .Query()
+                       .From(Tables.BillsofMaterials)
+                       .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive })
+                       .Join<Products>
+                        (
+                            pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
+                            nameof(BillsofMaterials.FinishedProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { Id = input.Id }, true, true, Tables.BillsofMaterials);
 
-                await _manager.UpdateControl(_uow.BillsofMaterialsRepository, input.Code, input.Id, entity, L);
+                var entity = queryFactory.Get<SelectBillsofMaterialsDto>(entityQuery);
 
-                var mappedEntity = ObjectMapper.Map<UpdateBillsofMaterialsDto, BillsofMaterials>(input);
+                var queryLines = queryFactory
+                       .Query()
+                       .From(Tables.BillsofMaterialLines)
+                       .Select<BillsofMaterialLines>(b => new { b.BoMID, b.FinishedProductID, b.MaterialType, b.Quantity, b._Description, b.LineNr, b.Size })
+                       .Join<Products>
+                        (
+                            p => new { FinishedProductCode = p.Code },
+                            nameof(BillsofMaterialLines.FinishedProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                       .Join<Products>
+                        (
+                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                            nameof(BillsofMaterialLines.ProductID),
+                            nameof(Products.Id),
+                            "ProductLine",
+                            JoinType.Left
+                        )
+                       .Join<UnitSets>
+                        (
+                            u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                            nameof(BillsofMaterialLines.UnitSetID),
+                            nameof(UnitSets.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { BoMID = input.Id }, false, false, Tables.BillsofMaterialLines);
 
-                await _uow.BillsofMaterialsRepository.UpdateAsync(mappedEntity);
+                var billsOfMaterialLine = queryFactory.GetList<SelectBillsofMaterialLinesDto>(queryLines).ToList();
+
+                entity.SelectBillsofMaterialLines = billsOfMaterialLine;
+
+                #region Update Control
+                var listQuery = queryFactory
+                               .Query()
+                               .From(Tables.BillsofMaterials)
+                               .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive })
+                               .Join<Products>
+                                (
+                                    pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
+                                    nameof(BillsofMaterials.FinishedProductID),
+                                    nameof(Products.Id),
+                                    JoinType.Left
+                                )
+                                .Where(new { Code = input.Code }, false, false, Tables.BillsofMaterials);
+
+                var list = queryFactory.GetList<ListBillsofMaterialsDto>(listQuery).ToList();
+
+                if (list.Count > 0 && entity.Code != input.Code)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["UpdateControlManager"]);
+                }
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.BillsofMaterials).Update(new UpdateBillsofMaterialsDto
+                {
+                    Code = input.Code,
+                    CreationTime = entity.CreationTime,
+                    CreatorId = entity.CreatorId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                    Id = input.Id,
+                    IsActive = input.IsActive,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId,
+                    Name = input.Name,
+                    FinishedProductID = input.FinishedProductID,
+                    RouteID = Guid.Empty,
+                    _Description = input._Description
+                }).Where(new { Id = input.Id }, true, true, "");
 
                 foreach (var item in input.SelectBillsofMaterialLines)
                 {
-                    var lineEntity = ObjectMapper.Map<SelectBillsofMaterialLinesDto, BillsofMaterialLines>(item);
-                    lineEntity.BoMID = mappedEntity.Id;
-
-                    if (lineEntity.Id == Guid.Empty)
+                    if (item.Id == Guid.Empty)
                     {
-                        await _uow.BillsofMaterialLinesRepository.InsertAsync(lineEntity);
+                        var queryLine = queryFactory.Query().From(Tables.BillsofMaterialLines).Insert(new CreateBillsofMaterialLinesDto
+                        {
+                            BoMID = input.Id,
+                            CreationTime = DateTime.Now,
+                            CreatorId = LoginedUserService.UserId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = Guid.Empty,
+                            DeletionTime = null,
+                            FinishedProductID = item.FinishedProductID,
+                            Id = GuidGenerator.CreateGuid(),
+                            IsDeleted = false,
+                            LastModificationTime = null,
+                            LastModifierId = Guid.Empty,
+                            LineNr = item.LineNr,
+                            MaterialType = item.MaterialType,
+                            ProductID = item.ProductID,
+                            Quantity = item.Quantity,
+                            Size = item.Size,
+                            UnitSetID = item.UnitSetID,
+                            _Description = item._Description
+                        });
+
+                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
                     }
                     else
                     {
-                        await _uow.BillsofMaterialLinesRepository.UpdateAsync(lineEntity);
+                        var lineGetQuery = queryFactory.Query().From(Tables.BillsofMaterialLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+
+                        var line = queryFactory.Get<SelectBillsofMaterialLinesDto>(lineGetQuery);
+
+                        if (line != null)
+                        {
+                            var queryLine = queryFactory.Query().From(Tables.BillsofMaterialLines).Update(new UpdateBillsofMaterialLinesDto
+                            {
+                                BoMID = input.Id,
+                                CreationTime = line.CreationTime,
+                                CreatorId = line.CreatorId,
+                                DataOpenStatus = false,
+                                DataOpenStatusUserId = Guid.Empty,
+                                DeleterId = line.DeleterId.GetValueOrDefault(),
+                                DeletionTime = line.DeletionTime.GetValueOrDefault(),
+                                FinishedProductID = item.FinishedProductID,
+                                Id = item.Id,
+                                IsDeleted = false,
+                                LastModificationTime = DateTime.Now,
+                                LastModifierId = LoginedUserService.UserId,
+                                LineNr = item.LineNr,
+                                MaterialType = item.MaterialType,
+                                ProductID = item.ProductID,
+                                Quantity = item.Quantity,
+                                Size = item.Size,
+                                UnitSetID = item.UnitSetID,
+                                _Description = item._Description
+                            }).Where(new { Id = line.Id }, false, false, "");
+
+                            query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
+                        }
                     }
                 }
 
-                var before = ObjectMapper.Map<BillsofMaterials, UpdateBillsofMaterialsDto>(entity);
-                before.SelectBillsofMaterialLines = ObjectMapper.Map<List<BillsofMaterialLines>, List<SelectBillsofMaterialLinesDto>>(entity.BillsofMaterialLines.ToList());
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "BillsofMaterials", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
+                var billOfMaterial = queryFactory.Update<SelectBillsofMaterialsDto>(query, "Id", true);
 
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectBillsofMaterialsDto>(ObjectMapper.Map<BillsofMaterials, SelectBillsofMaterialsDto>(mappedEntity));
-            }
-        }
+                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Update, billOfMaterial.Id);
 
-        public async Task<IDataResult<SelectBillsofMaterialsDto>> GetSelectListAsync(Guid finishedproductId)
-        {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                var entity = await _uow.BillsofMaterialsRepository.GetAsync(t => t.FinishedProductID == finishedproductId,
-               t => t.BillsofMaterialLines,
-               t => t.Products);
-
-                var mappedEntity = ObjectMapper.Map<BillsofMaterials, SelectBillsofMaterialsDto>(entity);
-
-                mappedEntity.SelectBillsofMaterialLines = ObjectMapper.Map<List<BillsofMaterialLines>, List<SelectBillsofMaterialLinesDto>>(entity.BillsofMaterialLines.ToList());
-
-                return new SuccessDataResult<SelectBillsofMaterialsDto>(mappedEntity);
+                return new SuccessDataResult<SelectBillsofMaterialsDto>(billOfMaterial);
             }
         }
 
         public async Task<IDataResult<SelectBillsofMaterialsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.BillsofMaterialsRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.BillsofMaterials).Select("*").Where(new { Id = id }, true, true, "");
 
-                var updatedEntity = await _uow.BillsofMaterialsRepository.LockRow(entity.Id, lockRow, userId);
+                var entity = queryFactory.Get<BillsofMaterials>(entityQuery);
 
-                await _uow.SaveChanges();
+                var query = queryFactory.Query().From(Tables.BillsofMaterials).Update(new UpdateBillsofMaterialsDto
+                {
+                    Code = entity.Code,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.Value,
+                    Id = entity.Id,
+                    IsActive = entity.IsActive,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                    Name = entity.Name,
+                    FinishedProductID = entity.FinishedProductID,
+                    RouteID = Guid.Empty,
+                    _Description = entity._Description
+                }).Where(new { Id = id }, true, true, "");
 
-                var mappedEntity = ObjectMapper.Map<BillsofMaterials, SelectBillsofMaterialsDto>(updatedEntity);
+                var billsofMaterialsDto = queryFactory.Update<SelectBillsofMaterialsDto>(query, "Id", true);
+                return new SuccessDataResult<SelectBillsofMaterialsDto>(billsofMaterialsDto);
 
-                return new SuccessDataResult<SelectBillsofMaterialsDto>(mappedEntity);
             }
         }
     }
