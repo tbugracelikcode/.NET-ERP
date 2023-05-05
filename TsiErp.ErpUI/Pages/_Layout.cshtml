@@ -75,36 +75,36 @@
         }
     </script>
 
-   @* <script>
-        document.addEventListener('contextmenu', event => event.preventDefault());
+    @* <script>
+    document.addEventListener('contextmenu', event => event.preventDefault());
 
-        document.onkeydown = function(e) {
-            e = (e || window.e);
-            // disable F12 key
-            if (e.keyCode == 123) {
-                return false;
-            }
-            // disable I key
-            if (e.ctrlKey && e.shiftKey && e.keyCode == 73) {
-                return false;
-            }
+    document.onkeydown = function(e) {
+    e = (e || window.e);
+    // disable F12 key
+    if (e.keyCode == 123) {
+    return false;
+    }
+    // disable I key
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 73) {
+    return false;
+    }
 
-            // disable J key
-            if (e.ctrlKey && e.shiftKey && e.keyCode == 74) {
-                return false;
-            }
+    // disable J key
+    if (e.ctrlKey && e.shiftKey && e.keyCode == 74) {
+    return false;
+    }
 
-            // disable U key
-            if (e.ctrlKey && e.keyCode == 85) {
-                return false;
-            }
-        }
+    // disable U key
+    if (e.ctrlKey && e.keyCode == 85) {
+    return false;
+    }
+    }
     </script>*@
 
     <script>
         window.WriteCookie = {
 
-            WriteCookie: function (name, value, days) {
+            WriteCookie: function(name, value, days) {
 
                 var expires;
                 if (days) {
@@ -119,7 +119,7 @@
             }
         }
         window.ReadCookie = {
-            ReadCookie: function (cname) {
+            ReadCookie: function(cname) {
                 var name = cname + "=";
                 var decodedCookie = decodeURIComponent(document.cookie);
                 var ca = decodedCookie.split(';');
@@ -137,6 +137,35 @@
         }
     </script>
 
+    <script>
+        new MutationObserver((mutations, observer) => {
+            if (document.querySelector('#components-reconnect-modal h5 a')) {
+                async function attemptReload() {
+                    await fetch(''); 
+                    location.reload();
+                }
+                observer.disconnect();
+                attemptReload();
+                setInterval(attemptReload, 10000);
+            }
+        }).observe(document.body, { childList: true, subtree: true });
+    </script>
+
+ @*   <script>
+        var logkey;
+        window.initializeKeyListener = (dotnetHelper) => {
+            logkey = (e) => {
+                dotnetHelper.invokeMethod('OnKeyDown', e.key);
+                console.log('key down ' + e.key);
+            };
+            document.addEventListener('keydown', logkey);
+        }
+
+        window.removeKeyListener = () => {
+            document.removeEventListener('keydown', logkey);
+        }
+    </script>
+*@
 
 </body>
 </html>

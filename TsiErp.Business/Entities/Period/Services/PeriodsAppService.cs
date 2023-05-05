@@ -1,6 +1,4 @@
 ﻿using Microsoft.Extensions.Localization;
-using System.Data;
-using System.Threading.Channels;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -12,11 +10,9 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Period.Validations;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.BillsofMaterial;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Period;
 using TsiErp.Entities.Entities.Period.Dtos;
-using TsiErp.Entities.Entities.WareHouse;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.Periods.Page;
 
@@ -119,26 +115,28 @@ namespace TsiErp.Business.Entities.Period.Services
             }
         }
 
+
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPeriodsDto>>> GetListAsync(ListPeriodsParameterDto input)
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var query = queryFactory
-                        .Query()
-                        .From(Tables.Periods)
-                        .Select<Periods>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.Description_ })
-                            .Join<Branches>
-                            (
-                                b => new { BranchName = b.Name },
-                                nameof(Periods.BranchID),
-                                nameof(Branches.Id),
-                                JoinType.Left
-                            ).Where(null, true, true, Tables.Periods);
 
+                var query = queryFactory
+                   .Query()
+                   .From(Tables.Periods)
+                   .Select<Periods>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.Description_ })
+                       .Join<Branches>
+                       (
+                           b => new { BranchName = b.Name },
+                           nameof(Periods.BranchID),
+                           nameof(Branches.Id),
+                           JoinType.Left
+                       ).Where(null, true, true, Tables.Periods);
 
                 var periods = queryFactory.GetList<ListPeriodsDto>(query).ToList();
-                return new SuccessDataResult<IList<ListPeriodsDto>>(periods);
+                
+               return new SuccessDataResult<IList<ListPeriodsDto>>(periods);
             }
         }
 
