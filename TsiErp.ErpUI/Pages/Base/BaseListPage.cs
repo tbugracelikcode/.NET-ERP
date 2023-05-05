@@ -51,14 +51,28 @@ namespace TsiErp.ErpUI.Pages.Base
 
         protected async override Task OnParametersSetAsync()
         {
-            var loc = (IStringLocalizer)_L;
+            //try
+            //{
+                var loc = (IStringLocalizer)_L;
 
-            LoadingCaption = loc["LoadingCaption"];
-            LoadingText = loc["LoadingText"];
+                LoadingCaption = loc["LoadingCaption"];
+                LoadingText = loc["LoadingText"];
 
-            CreateContextMenuItems(loc);
-            await GetListDataSourceAsync();
-            await InvokeAsync(StateHasChanged);
+                CreateContextMenuItems(loc);
+                await GetListDataSourceAsync();
+                await InvokeAsync(StateHasChanged);
+            //}
+            //catch (Exception exp)
+            //{
+            //    if (exp.InnerException != null)
+            //    {
+            //        await ModalManager.MessagePopupAsync("Task was Cancelled.", exp.Message + "\n" + exp.InnerException.Message);
+            //    }
+            //    else
+            //    {
+            //        await ModalManager.MessagePopupAsync("Task was Cancelled.", exp.Message);
+            //    }
+            //}
         }
 
         protected virtual void CreateContextMenuItems(IStringLocalizer loc)
@@ -363,6 +377,5 @@ namespace TsiErp.ErpUI.Pages.Base
                 IsChanged = false;
             }
         }
-
     }
 }
