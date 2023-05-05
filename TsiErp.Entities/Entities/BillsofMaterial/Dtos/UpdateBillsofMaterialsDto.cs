@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.BillsofMaterialLine.Dtos;
 
 namespace TsiErp.Entities.Entities.BillsofMaterial.Dtos
@@ -35,6 +36,7 @@ namespace TsiErp.Entities.Entities.BillsofMaterial.Dtos
         /// </summary>
         public bool IsActive { get; set; }
 
+        [NoDatabaseAction]
         public List<SelectBillsofMaterialLinesDto> SelectBillsofMaterialLines { get; set; }
     }
 }
