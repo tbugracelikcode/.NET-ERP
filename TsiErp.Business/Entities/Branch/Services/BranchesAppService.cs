@@ -85,8 +85,6 @@ namespace TsiErp.Business.Entities.Branch.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                IDbTransaction transaction = connection.BeginTransaction();
-
                 #region Delete Control
 
                 var periodQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { BranchID = id }, true, true, "");
@@ -220,8 +218,8 @@ namespace TsiErp.Business.Entities.Branch.Services
                     DeleterId = entity.DeleterId.GetValueOrDefault(),
                     DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                     IsDeleted = entity.IsDeleted,
-                    LastModificationTime = DateTime.Now,
-                    LastModifierId = userId,
+                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                     Id = id,
                     DataOpenStatus = lockRow,
                     DataOpenStatusUserId = userId

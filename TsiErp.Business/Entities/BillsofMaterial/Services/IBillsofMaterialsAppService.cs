@@ -6,7 +6,6 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
 {
     public interface IBillsofMaterialsAppService : ICrudAppService<SelectBillsofMaterialsDto, ListBillsofMaterialsDto, CreateBillsofMaterialsDto, UpdateBillsofMaterialsDto, ListBillsofMaterialsParameterDto>
     {
-        Task<IDataResult<SelectBillsofMaterialsDto>> GetSelectListAsync(Guid finishedproductId);
 
     }
 }
