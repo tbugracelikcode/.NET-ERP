@@ -101,7 +101,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
                 var query = queryFactory
-                        .Query().From(Tables.CalibrationVerifications).Select<CalibrationVerifications>(c => new { c.Id, c.Code, c.Name, c.NextControl, c.ReceiptNo, c.Result, c.Date, c.EquipmentID })
+                        .Query().From(Tables.CalibrationVerifications).Select<CalibrationVerifications>(c => new { c.Id, c.Code, c.Name, c.NextControl, c.ReceiptNo, c.Result, c.Date, c.EquipmentID, c.DataOpenStatus, c.DataOpenStatusUserId, c.InfinitiveCertificateNo })
                             .Join<EquipmentRecords>
                             (
                                 e => new { Equipment = e.Code, EquipmentID = e.Id },
