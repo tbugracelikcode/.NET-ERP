@@ -151,21 +151,5 @@
         }).observe(document.body, { childList: true, subtree: true });
     </script>
 
- @*   <script>
-        var logkey;
-        window.initializeKeyListener = (dotnetHelper) => {
-            logkey = (e) => {
-                dotnetHelper.invokeMethod('OnKeyDown', e.key);
-                console.log('key down ' + e.key);
-            };
-            document.addEventListener('keydown', logkey);
-        }
-
-        window.removeKeyListener = () => {
-            document.removeEventListener('keydown', logkey);
-        }
-    </script>
-*@
-
 </body>
 </html>

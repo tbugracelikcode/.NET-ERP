@@ -96,7 +96,7 @@ namespace TsiErp.Business.Entities.Period.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
                 var query = queryFactory
-                        .Query().From(Tables.Periods).Select<Periods>(p => new { p.Id, p.Code, p.Name, p.IsActive })
+                        .Query().From(Tables.Periods).Select<Periods>(p => new { p.Id, p.Code, p.Name, p.IsActive,p.DataOpenStatus,p.DataOpenStatusUserId,p.Description_ })
                             .Join<Branches>
                             (
                                 b => new { BranchName = b.Name, BranchID = b.Id },
