@@ -13,37 +13,68 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.Department;
 using TsiErp.Entities.Entities.Department.Dtos;
 using Microsoft.Extensions.Localization;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Entities.TableConstant;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 
 namespace TsiErp.Business.Entities.Department.Services
 {
     [ServiceRegistration(typeof(IDepartmentsAppService), DependencyInjectionType.Scoped)]
     public class DepartmentsAppService : ApplicationService<DepartmentsResource>, IDepartmentsAppService
     {
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
         public DepartmentsAppService(IStringLocalizer<DepartmentsResource> l) : base(l)
         {
         }
-
-        DepartmentManager _manager { get; set; } = new DepartmentManager();
 
 
         [ValidationAspect(typeof(CreateDepartmentsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectDepartmentsDto>> CreateAsync(CreateDepartmentsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.CodeControl(_uow.DepartmentsRepository, input.Code,L);
+                var listQuery = queryFactory.Query().From(Tables.Departments).Select("*").Where(new { Code = input.Code }, false, false, "");
 
-                var entity = ObjectMapper.Map<CreateDepartmentsDto, Departments>(input);
+                var list = queryFactory.ControlList<Departments>(listQuery).ToList();
 
-                var addedEntity = await _uow.DepartmentsRepository.InsertAsync(entity);
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "Departments", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
+                #region Code Control 
 
-                await _uow.SaveChanges();
+                if (list.Count > 0)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["CodeControlManager"]);
+                }
 
-                return new SuccessDataResult<SelectDepartmentsDto>(ObjectMapper.Map<Departments, SelectDepartmentsDto>(addedEntity));
+                #endregion
+
+
+                var query = queryFactory.Query().From(Tables.Departments).Insert(new CreateDepartmentsDto
+                {
+                    Code = input.Code,
+                    Name = input.Name,
+                    IsActive = true,
+                    Id = GuidGenerator.CreateGuid(),
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                    IsDeleted = false
+                });
+
+
+                var departments = queryFactory.Insert<SelectDepartmentsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Departments, LogType.Insert, departments.Id);
+
+
+                return new SuccessDataResult<SelectDepartmentsDto>(departments);
             }
         }
 
@@ -51,28 +82,41 @@ namespace TsiErp.Business.Entities.Department.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.DeleteControl(_uow.DepartmentsRepository, id,L);
-                await _uow.DepartmentsRepository.DeleteAsync(id);
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Departments", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
+                #region Delete Control
+
+
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.Departments).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+
+                var departments = queryFactory.Update<SelectDepartmentsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Departments, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectDepartmentsDto>(departments);
             }
         }
 
 
         public async Task<IDataResult<SelectDepartmentsDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.DepartmentsRepository.GetAsync(t => t.Id == id, t => t.Employees, t => t.EquipmentRecords);
-                var mappedEntity = ObjectMapper.Map<Departments, SelectDepartmentsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "Departments", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectDepartmentsDto>(mappedEntity);
+
+                var query = queryFactory.Query().From(Tables.Departments).Select("*").Where(
+                new
+                {
+                    Id = id
+                }, true, true, "");
+                var department = queryFactory.Get<SelectDepartmentsDto>(query);
+
+
+                LogsAppService.InsertLogToDatabase(department, department, LoginedUserService.UserId, Tables.Departments, LogType.Get, id);
+
+                return new SuccessDataResult<SelectDepartmentsDto>(department);
+
             }
         }
 
@@ -80,13 +124,11 @@ namespace TsiErp.Business.Entities.Department.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListDepartmentsDto>>> GetListAsync(ListDepartmentsParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.DepartmentsRepository.GetListAsync(t => t.IsActive == input.IsActive, t => t.Employees, t => t.EquipmentRecords);
-
-                var mappedEntity = ObjectMapper.Map<List<Departments>, List<ListDepartmentsDto>>(list.ToList());
-
-                return new SuccessDataResult<IList<ListDepartmentsDto>>(mappedEntity);
+                var query = queryFactory.Query().From(Tables.Departments).Select("*").Where(null, true, true, "");
+                var departments = queryFactory.GetList<ListDepartmentsDto>(query).ToList();
+                return new SuccessDataResult<IList<ListDepartmentsDto>>(departments);
             }
         }
 
@@ -95,38 +137,81 @@ namespace TsiErp.Business.Entities.Department.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectDepartmentsDto>> UpdateAsync(UpdateDepartmentsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.DepartmentsRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory.Query().From(Tables.Departments).Select("*").Where(new { Id = input.Id }, true, true, "");
+                var entity = queryFactory.Get<Departments>(entityQuery);
 
-                await _manager.UpdateControl(_uow.DepartmentsRepository, input.Code, input.Id, entity,L);
+                #region Update Control
 
-                var mappedEntity = ObjectMapper.Map<UpdateDepartmentsDto, Departments>(input);
+                var listQuery = queryFactory.Query().From(Tables.Departments).Select("*").Where(new { Code = input.Code }, false, false, "");
+                var list = queryFactory.GetList<Departments>(listQuery).ToList();
 
-                await _uow.DepartmentsRepository.UpdateAsync(mappedEntity);
-                var before = ObjectMapper.Map<Departments, UpdateDepartmentsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "Departments", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                if (list.Count > 0 && entity.Code != input.Code)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["UpdateControlManager"]);
+                }
 
-                return new SuccessDataResult<SelectDepartmentsDto>(ObjectMapper.Map<Departments, SelectDepartmentsDto>(mappedEntity));
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.Departments).Update(new UpdateDepartmentsDto
+                {
+                    Code = input.Code,
+                    Name = input.Name,
+                    Id = input.Id,
+                    IsActive = input.IsActive,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId
+                }).Where(new { Id = input.Id }, true, true, "");
+
+                var departments = queryFactory.Update<SelectDepartmentsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(entity, departments, LoginedUserService.UserId, Tables.Departments, LogType.Update, entity.Id);
+
+                return new SuccessDataResult<SelectDepartmentsDto>(departments);
             }
         }
 
         public async Task<IDataResult<SelectDepartmentsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.DepartmentsRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.Departments).Select("*").Where(new { Id = id }, true, true, "");
 
-                var updatedEntity = await _uow.DepartmentsRepository.LockRow(entity.Id, lockRow, userId);
+                var entity = queryFactory.Get<Departments>(entityQuery);
 
-                await _uow.SaveChanges();
+                var query = queryFactory.Query().From(Tables.Departments).Update(new UpdateDepartmentsDto
+                {
+                    Code = entity.Code,
+                    Name = entity.Name,
+                    IsActive = entity.IsActive,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                    Id = id,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId
 
-                var mappedEntity = ObjectMapper.Map<Departments, SelectDepartmentsDto>(updatedEntity);
+                }).Where(new { Id = id }, true, true, "");
 
-                return new SuccessDataResult<SelectDepartmentsDto>(mappedEntity);
+                var departments = queryFactory.Update<SelectDepartmentsDto>(query, "Id", true);
+                return new SuccessDataResult<SelectDepartmentsDto>(departments);
+
             }
+
         }
     }
 }

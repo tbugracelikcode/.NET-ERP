@@ -22,10 +22,6 @@ namespace TsiErp.Entities.Entities.Employee.Dtos
         /// </summary>        
         public Guid? DepartmentID { get; set; }
         /// <summary>
-        /// Departman Adı
-        /// </summary>
-        public string Department { get; set; }
-        /// <summary>
         /// TC Kimlik No
         /// </summary>
         public string IDnumber { get; set; }
