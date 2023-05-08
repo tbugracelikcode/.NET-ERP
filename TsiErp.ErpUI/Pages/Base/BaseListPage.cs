@@ -51,35 +51,21 @@ namespace TsiErp.ErpUI.Pages.Base
 
         protected async override Task OnParametersSetAsync()
         {
-            //try
-            //{
-                var loc = (IStringLocalizer)_L;
+            var loc = (IStringLocalizer)_L;
 
-                LoadingCaption = loc["LoadingCaption"];
-                LoadingText = loc["LoadingText"];
+            LoadingCaption = loc["LoadingCaption"];
+            LoadingText = loc["LoadingText"];
 
-                CreateContextMenuItems(loc);
-                await GetListDataSourceAsync();
-                await InvokeAsync(StateHasChanged);
-            //}
-            //catch (Exception exp)
-            //{
-            //    if (exp.InnerException != null)
-            //    {
-            //        await ModalManager.MessagePopupAsync("Task was Cancelled.", exp.Message + "\n" + exp.InnerException.Message);
-            //    }
-            //    else
-            //    {
-            //        await ModalManager.MessagePopupAsync("Task was Cancelled.", exp.Message);
-            //    }
-            //}
+            CreateContextMenuItems(loc);
+            await GetListDataSourceAsync();
+            await InvokeAsync(StateHasChanged);
         }
 
         protected virtual void CreateContextMenuItems(IStringLocalizer loc)
         {
-            GridContextMenu.Add(new ContextMenuItemModel { Text = loc["ContextAdd"]    , Id = "new" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = loc["ContextChange"] , Id = "changed" });
-            GridContextMenu.Add(new ContextMenuItemModel { Text = loc["ContextDelete"] , Id = "delete" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = loc["ContextAdd"], Id = "new" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = loc["ContextChange"], Id = "changed" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = loc["ContextDelete"], Id = "delete" });
             GridContextMenu.Add(new ContextMenuItemModel { Text = loc["ContextRefresh"], Id = "refresh" });
         }
 
@@ -87,12 +73,48 @@ namespace TsiErp.ErpUI.Pages.Base
 
         protected async virtual Task<IDataResult<TGetOutputDto>> GetAsync(Guid id)
         {
-            return await BaseCrudService.GetAsync(id);
+            var loc = (IStringLocalizer)_L;
+
+            try
+            {
+                return await BaseCrudService.GetAsync(id);
+            }
+            catch (Exception exp)
+            {
+                if (exp.InnerException != null)
+                {
+                    await ModalManager.MessagePopupAsync(loc["Error"], exp.Message + "\n" + exp.InnerException.Message);
+                }
+                else
+                {
+                    await ModalManager.MessagePopupAsync(loc["Error"], exp.Message);
+                }
+
+                return default(IDataResult<TGetOutputDto>);
+            }
         }
 
         protected async virtual Task<IList<TGetListOutputDto>> GetListAsync(TGetListInput input)
         {
-            return (await BaseCrudService.GetListAsync(input)).Data.ToList();
+            var loc = (IStringLocalizer)_L;
+
+            try
+            {
+                return (await BaseCrudService.GetListAsync(input)).Data.ToList();
+            }
+            catch (Exception exp)
+            {
+                if (exp.InnerException != null)
+                {
+                    await ModalManager.MessagePopupAsync(loc["Error"], exp.Message + "\n" + exp.InnerException.Message);
+                }
+                else
+                {
+                    await ModalManager.MessagePopupAsync(loc["Error"], exp.Message);
+                }
+
+                return default(IList<TGetListOutputDto>);
+            }
         }
 
         protected async virtual Task<IDataResult<TGetOutputDto>> CreateAsync(TCreateInput input)
@@ -127,15 +149,15 @@ namespace TsiErp.ErpUI.Pages.Base
             }
             catch (Exception exp)
             {
-                if(exp.InnerException != null)
+                if (exp.InnerException != null)
                 {
                     await ModalManager.MessagePopupAsync(loc["Error"], exp.Message + "\n" + exp.InnerException.Message);
                 }
                 else
                 {
-                    await ModalManager.MessagePopupAsync(loc["Error"], exp.Message );
+                    await ModalManager.MessagePopupAsync(loc["Error"], exp.Message);
                 }
-                
+
                 return new ErrorDataResult<TGetOutputDto>();
             }
         }
@@ -285,7 +307,7 @@ namespace TsiErp.ErpUI.Pages.Base
 
         public async virtual void ShowEditPage()
         {
-            var loc = (IStringLocalizer)_L; 
+            var loc = (IStringLocalizer)_L;
 
             if (DataSource != null)
             {

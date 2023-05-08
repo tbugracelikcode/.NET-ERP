@@ -8,7 +8,7 @@ namespace TSI.QueryBuilder.ExceptionHandler
     {
         public static string ThrowException(Exception exp)
         {
-            string msg = "Hata!...";
+            string msg = "Error!...";
 
             if (exp.InnerException != null)
             {
