@@ -13,77 +13,118 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.WareHouse;
 using TsiErp.Entities.Entities.WareHouse.Dtos;
 using Microsoft.Extensions.Localization;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Entities.TableConstant;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 
 namespace TsiErp.Business.Entities.Warehouse.Services
 {
     [ServiceRegistration(typeof(IWarehousesAppService), DependencyInjectionType.Scoped)]
     public class WarehousesAppService : ApplicationService<WarehousesResource>, IWarehousesAppService
     {
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
         public WarehousesAppService(IStringLocalizer<WarehousesResource> l) : base(l)
         {
         }
-
-        WarehouseManager _manager { get; set; } = new WarehouseManager();
-
 
         [ValidationAspect(typeof(CreateWarehousesValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectWarehousesDto>> CreateAsync(CreateWarehousesDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.CodeControl(_uow.WarehousesRepository, input.Code,L);
+                var listQuery = queryFactory.Query().From(Tables.Warehouses).Select("*").Where(new { Code = input.Code }, false, false, "");
 
-                var entity = ObjectMapper.Map<CreateWarehousesDto, Warehouses>(input);
+                var list = queryFactory.ControlList<Warehouses>(listQuery).ToList();
 
-                var addedEntity = await _uow.WarehousesRepository.InsertAsync(entity);
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "Warehouses", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                #region Code Control 
 
-                return new SuccessDataResult<SelectWarehousesDto>(ObjectMapper.Map<Warehouses, SelectWarehousesDto>(addedEntity));
+                if (list.Count > 0)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["CodeControlManager"]);
+                }
+
+                #endregion
+
+
+                var query = queryFactory.Query().From(Tables.Warehouses).Insert(new CreateWarehousesDto
+                {
+                    Code = input.Code,
+                    Name = input.Name,
+                    IsActive = true,
+                    Id = GuidGenerator.CreateGuid(),
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                    IsDeleted = false
+                });
+
+
+                var warehouses = queryFactory.Insert<SelectWarehousesDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Warehouses, LogType.Insert, warehouses.Id);
+
+
+                return new SuccessDataResult<SelectWarehousesDto>(warehouses);
             }
+
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.DeleteControl(_uow.WarehousesRepository, id,L);
-                await _uow.WarehousesRepository.DeleteAsync(id);
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Warehouses", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
+                var query = queryFactory.Query().From(Tables.Warehouses).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+
+                var warehouses = queryFactory.Update<SelectWarehousesDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Warehouses, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectWarehousesDto>(warehouses);
             }
+
         }
 
         public async Task<IDataResult<SelectWarehousesDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.WarehousesRepository.GetAsync(t => t.Id == id, t => t.SalesPropositions);
-                var mappedEntity = ObjectMapper.Map<Warehouses, SelectWarehousesDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "Warehouses", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectWarehousesDto>(mappedEntity);
+
+                var query = queryFactory.Query().From(Tables.Warehouses).Select("*").Where(
+                new
+                {
+                    Id = id
+                }, true, true, "");
+                var warehouse = queryFactory.Get<SelectWarehousesDto>(query);
+
+
+                LogsAppService.InsertLogToDatabase(warehouse, warehouse, LoginedUserService.UserId, Tables.Warehouses, LogType.Get, id);
+
+                return new SuccessDataResult<SelectWarehousesDto>(warehouse);
+
             }
+
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListWarehousesDto>>> GetListAsync(ListWarehousesParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.WarehousesRepository.GetListAsync(t => t.IsActive == input.IsActive, t => t.SalesPropositions);
-
-                var mappedEntity = ObjectMapper.Map<List<Warehouses>, List<ListWarehousesDto>>(list.ToList());
-
-                return new SuccessDataResult<IList<ListWarehousesDto>>(mappedEntity);
+                var query = queryFactory.Query().From(Tables.Warehouses).Select("*").Where(null, true, true, "");
+                var warehouses = queryFactory.GetList<ListWarehousesDto>(query).ToList();
+                return new SuccessDataResult<IList<ListWarehousesDto>>(warehouses);
             }
+
         }
 
 
@@ -91,39 +132,82 @@ namespace TsiErp.Business.Entities.Warehouse.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectWarehousesDto>> UpdateAsync(UpdateWarehousesDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.WarehousesRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory.Query().From(Tables.Warehouses).Select("*").Where(new { Id = input.Id }, true, true, "");
+                var entity = queryFactory.Get<Warehouses>(entityQuery);
 
-                await _manager.UpdateControl(_uow.WarehousesRepository, input.Code, input.Id, entity,L);
+                #region Update Control
 
-                var mappedEntity = ObjectMapper.Map<UpdateWarehousesDto, Warehouses>(input);
+                var listQuery = queryFactory.Query().From(Tables.Warehouses).Select("*").Where(new { Code = input.Code }, false, false, "");
+                var list = queryFactory.GetList<Warehouses>(listQuery).ToList();
 
-                await _uow.WarehousesRepository.UpdateAsync(mappedEntity);
+                if (list.Count > 0 && entity.Code != input.Code)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["UpdateControlManager"]);
+                }
 
-                var before = ObjectMapper.Map<Warehouses, UpdateWarehousesDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "Warehouses", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                #endregion
 
-                return new SuccessDataResult<SelectWarehousesDto>(ObjectMapper.Map<Warehouses, SelectWarehousesDto>(mappedEntity));
+                var query = queryFactory.Query().From(Tables.Warehouses).Update(new UpdateWarehousesDto
+                {
+                    Code = input.Code,
+                    Name = input.Name,
+                    Id = input.Id,
+                    IsActive = input.IsActive,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId
+                }).Where(new { Id = input.Id }, true, true, "");
+
+                var warehouses = queryFactory.Update<SelectWarehousesDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(entity, warehouses, LoginedUserService.UserId, Tables.Warehouses, LogType.Update, entity.Id);
+
+                return new SuccessDataResult<SelectWarehousesDto>(warehouses);
             }
+
         }
 
         public async Task<IDataResult<SelectWarehousesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.WarehousesRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.Warehouses).Select("*").Where(new { Id = id }, true, true, "");
 
-                var updatedEntity = await _uow.WarehousesRepository.LockRow(entity.Id, lockRow, userId);
+                var entity = queryFactory.Get<Warehouses>(entityQuery);
 
-                await _uow.SaveChanges();
+                var query = queryFactory.Query().From(Tables.Warehouses).Update(new UpdateWarehousesDto
+                {
+                    Code = entity.Code,
+                    Name = entity.Name,
+                    IsActive = entity.IsActive,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                    Id = id,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId
 
-                var mappedEntity = ObjectMapper.Map<Warehouses, SelectWarehousesDto>(updatedEntity);
+                }).Where(new { Id = id }, true, true, "");
 
-                return new SuccessDataResult<SelectWarehousesDto>(mappedEntity);
+                var warehouses = queryFactory.Update<SelectWarehousesDto>(query, "Id", true);
+                return new SuccessDataResult<SelectWarehousesDto>(warehouses);
+
             }
+
         }
     }
 }

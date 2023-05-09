@@ -76,7 +76,6 @@ namespace TsiErp.Business.Entities.Branch.Services
 
                 return new SuccessDataResult<SelectBranchesDto>(branches);
             }
-
         }
 
         [CacheRemoveAspect("Get")]

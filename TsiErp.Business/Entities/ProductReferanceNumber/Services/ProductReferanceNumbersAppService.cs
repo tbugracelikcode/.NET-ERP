@@ -13,36 +13,69 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.ProductReferanceNumber;
 using TsiErp.Entities.Entities.ProductReferanceNumber.Dtos;
 using Microsoft.Extensions.Localization;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Entities.TableConstant;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
+using TsiErp.Entities.Entities.Product;
+using TSI.QueryBuilder.Constants.Join;
+using TsiErp.Entities.Entities.CurrentAccountCard;
 
 namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
 {
     [ServiceRegistration(typeof(IProductReferanceNumbersAppService), DependencyInjectionType.Scoped)]
     public class ProductReferanceNumbersAppService : ApplicationService<ProductReferanceNumbersResource>, IProductReferanceNumbersAppService
     {
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
         public ProductReferanceNumbersAppService(IStringLocalizer<ProductReferanceNumbersResource> l) : base(l)
         {
         }
-
-        ProductReferanceNumberManager _manager { get; set; } = new ProductReferanceNumberManager();
 
 
         [ValidationAspect(typeof(CreateProductReferanceNumbersValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductReferanceNumbersDto>> CreateAsync(CreateProductReferanceNumbersDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.CodeControl(_uow.ProductReferanceNumbersRepository, input.ReferanceNo,L);
+                var listQuery = queryFactory.Query().From(Tables.ProductReferanceNumbers).Select("*").Where(new { ReferanceNo = input.ReferanceNo }, false, false, "");
 
-                var entity = ObjectMapper.Map<CreateProductReferanceNumbersDto, ProductReferanceNumbers>(input);
+                var list = queryFactory.ControlList<ProductReferanceNumbers>(listQuery).ToList();
 
-                var addedEntity = await _uow.ProductReferanceNumbersRepository.InsertAsync(entity);
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "ProductReferanceNumbers", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                #region Code Control 
 
-                return new SuccessDataResult<SelectProductReferanceNumbersDto>(ObjectMapper.Map<ProductReferanceNumbers, SelectProductReferanceNumbersDto>(addedEntity));
+                if (list.Count > 0)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["CodeControlManager"]);
+                }
+
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.ProductReferanceNumbers).Insert(new CreateProductReferanceNumbersDto
+                {
+                    ReferanceNo = input.ReferanceNo,
+                    CurrentAccountCardID = input.CurrentAccountCardID,
+                    ProductID = input.ProductID,
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    Description_ = input.Description_,
+                    Id = GuidGenerator.CreateGuid(),
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                });
+
+                var productReferanceNumbers = queryFactory.Insert<SelectProductReferanceNumbersDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductReferanceNumbers, LogType.Insert, productReferanceNumbers.Id);
+
+                return new SuccessDataResult<SelectProductReferanceNumbersDto>(productReferanceNumbers);
             }
         }
 
@@ -50,28 +83,48 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.DeleteControl(_uow.ProductReferanceNumbersRepository, id);
-                await _uow.ProductReferanceNumbersRepository.DeleteAsync(id);
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "ProductReferanceNumbers", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
+                var query = queryFactory.Query().From(Tables.ProductReferanceNumbers).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
+                var productReferanceNumbers = queryFactory.Update<SelectProductReferanceNumbersDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductReferanceNumbers, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectProductReferanceNumbersDto>(productReferanceNumbers);
             }
+
         }
 
 
         public async Task<IDataResult<SelectProductReferanceNumbersDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.ProductReferanceNumbersRepository.GetAsync(t => t.Id == id, t => t.Products, t => t.CurrentAccountCards);
-                var mappedEntity = ObjectMapper.Map<ProductReferanceNumbers, SelectProductReferanceNumbersDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "ProductReferanceNumbers", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectProductReferanceNumbersDto>(mappedEntity);
+                var query = queryFactory
+                        .Query().From(Tables.ProductReferanceNumbers).Select<ProductReferanceNumbers>(prn => new {prn.ProductID,prn.DataOpenStatus,prn.DataOpenStatusUserId,prn.Id,prn.CurrentAccountCardID,prn.Description_,prn.ReferanceNo})
+                            .Join<Products>
+                            (
+                                p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                                nameof(ProductReferanceNumbers.ProductID),
+                                nameof(Products.Id),
+                                JoinType.Left
+                            )
+                            .Join<CurrentAccountCards>
+                            (
+                                ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode= ca.Code, CurrentAccountCardName = ca.Name },
+                                nameof(ProductReferanceNumbers.CurrentAccountCardID),
+                                nameof(CurrentAccountCards.Id),
+                                JoinType.Left
+                            )
+                            .Where(new { Id = id }, false, false, Tables.ProductReferanceNumbers);
+
+                var productReferanceNumber = queryFactory.Get<SelectProductReferanceNumbersDto>(query);
+
+                LogsAppService.InsertLogToDatabase(productReferanceNumber, productReferanceNumber, LoginedUserService.UserId, Tables.ProductReferanceNumbers, LogType.Get, id);
+
+                return new SuccessDataResult<SelectProductReferanceNumbersDto>(productReferanceNumber);
+
             }
         }
 
@@ -79,34 +132,60 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductReferanceNumbersDto>>> GetListAsync(ListProductReferanceNumbersParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                IList<ProductReferanceNumbers> list;
 
-                if (input.ProductId == null)
-                {
-                    list = await _uow.ProductReferanceNumbersRepository.GetListAsync(null, t => t.Products);
-                }
-                else
-                {
-                    list = await _uow.ProductReferanceNumbersRepository.GetListAsync(t => t.ProductID == input.ProductId, t => t.Products);
-                }
+                var query = queryFactory
+                   .Query()
+                   .From(Tables.ProductReferanceNumbers).Select<ProductReferanceNumbers>(prn => new { prn.ProductID, prn.DataOpenStatus, prn.DataOpenStatusUserId, prn.Id, prn.CurrentAccountCardID, prn.Description_, prn.ReferanceNo })
+                            .Join<Products>
+                            (
+                                p => new { ProductCode = p.Code, ProductName = p.Name },
+                                nameof(ProductReferanceNumbers.ProductID),
+                                nameof(Products.Id),
+                                JoinType.Left
+                            )
+                            .Join<CurrentAccountCards>
+                            (
+                                ca => new { CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                                nameof(ProductReferanceNumbers.CurrentAccountCardID),
+                                nameof(CurrentAccountCards.Id),
+                                JoinType.Left
+                            )
+                   .Where(null, false, false, Tables.ProductReferanceNumbers);
 
-                var mappedEntity = ObjectMapper.Map<List<ProductReferanceNumbers>, List<ListProductReferanceNumbersDto>>(list.ToList());
+                var productReferanceNumbers = queryFactory.GetList<ListProductReferanceNumbersDto>(query).ToList();
 
-                return new SuccessDataResult<IList<ListProductReferanceNumbersDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListProductReferanceNumbersDto>>(productReferanceNumbers);
             }
         }
 
         public async Task<IDataResult<IList<SelectProductReferanceNumbersDto>>> GetSelectListAsync(Guid productId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.ProductReferanceNumbersRepository.GetListAsync(t => t.ProductID == productId, t => t.Products);
+                var query = queryFactory
+                        .Query().From(Tables.ProductReferanceNumbers).Select<ProductReferanceNumbers>(prn => new { prn.ProductID, prn.DataOpenStatus, prn.DataOpenStatusUserId, prn.Id, prn.CurrentAccountCardID, prn.Description_, prn.ReferanceNo })
+                            .Join<Products>
+                            (
+                                p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                                nameof(ProductReferanceNumbers.ProductID),
+                                nameof(Products.Id),
+                                JoinType.Left
+                            )
+                            .Join<CurrentAccountCards>
+                            (
+                                ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                                nameof(ProductReferanceNumbers.CurrentAccountCardID),
+                                nameof(CurrentAccountCards.Id),
+                                JoinType.Left
+                            )
+                            .Where(new { ProductID = productId }, false, false, Tables.ProductReferanceNumbers);
 
-                var mappedEntity = ObjectMapper.Map<List<ProductReferanceNumbers>, List<SelectProductReferanceNumbersDto>>(list.ToList());
+                var productReferanceNumber = queryFactory.GetList<SelectProductReferanceNumbersDto>(query).ToList();
 
-                return new SuccessDataResult<IList<SelectProductReferanceNumbersDto>>(mappedEntity);
+                return new SuccessDataResult<IList<SelectProductReferanceNumbersDto>>(productReferanceNumber);
+
             }
         }
 
@@ -115,37 +194,81 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductReferanceNumbersDto>> UpdateAsync(UpdateProductReferanceNumbersDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.ProductReferanceNumbersRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory.Query().From(Tables.ProductReferanceNumbers).Select("*").Where(new { Id = input.Id }, false, false, "");
+                var entity = queryFactory.Get<ProductReferanceNumbers>(entityQuery);
 
-                await _manager.UpdateControl(_uow.ProductReferanceNumbersRepository, input.ReferanceNo, input.Id, entity,L);
+                #region Update Control
 
-                var mappedEntity = ObjectMapper.Map<UpdateProductReferanceNumbersDto, ProductReferanceNumbers>(input);
+                var listQuery = queryFactory.Query().From(Tables.ProductReferanceNumbers).Select("*").Where(new { ReferanceNo = input.ReferanceNo }, false, false, "");
+                var list = queryFactory.GetList<ProductReferanceNumbers>(listQuery).ToList();
 
-                await _uow.ProductReferanceNumbersRepository.UpdateAsync(mappedEntity);
-                var before = ObjectMapper.Map<ProductReferanceNumbers, UpdateProductReferanceNumbersDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "ProductReferanceNumbers", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                if (list.Count > 0 && entity.ReferanceNo != input.ReferanceNo)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["UpdateControlManager"]);
+                }
 
-                return new SuccessDataResult<SelectProductReferanceNumbersDto>(ObjectMapper.Map<ProductReferanceNumbers, SelectProductReferanceNumbersDto>(mappedEntity));
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.ProductReferanceNumbers).Update(new UpdateProductReferanceNumbersDto
+                {
+                    ReferanceNo = input.ReferanceNo,
+                    CurrentAccountCardID = input.CurrentAccountCardID,
+                    ProductID = input.ProductID,
+                    Description_ = input.Description_,
+                    Id = input.Id,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId
+                }).Where(new { Id = input.Id }, true, true, "");
+
+                var productReferanceNumbers = queryFactory.Update<SelectProductReferanceNumbersDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(entity, productReferanceNumbers, LoginedUserService.UserId, Tables.ProductReferanceNumbers, LogType.Update, entity.Id);
+
+                return new SuccessDataResult<SelectProductReferanceNumbersDto>(productReferanceNumbers);
             }
         }
 
         public async Task<IDataResult<SelectProductReferanceNumbersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.ProductReferanceNumbersRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.ProductReferanceNumbers).Select("*").Where(new { Id = id }, false, false, "");
+                var entity = queryFactory.Get<ProductReferanceNumbers>(entityQuery);
 
-                var updatedEntity = await _uow.ProductReferanceNumbersRepository.LockRow(entity.Id, lockRow, userId);
+                var query = queryFactory.Query().From(Tables.ProductReferanceNumbers).Update(new UpdateProductReferanceNumbersDto
+                {
+                    ReferanceNo = entity.ReferanceNo,
+                    CurrentAccountCardID = entity.CurrentAccountCardID,
+                    ProductID = entity.ProductID,
+                    Description_ = entity.Description_,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                    Id = id,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId,
 
-                await _uow.SaveChanges();
+                }).Where(new { Id = id }, false, false, "");
 
-                var mappedEntity = ObjectMapper.Map<ProductReferanceNumbers, SelectProductReferanceNumbersDto>(updatedEntity);
+                var productReferanceNumbers = queryFactory.Update<SelectProductReferanceNumbersDto>(query, "Id", true);
 
-                return new SuccessDataResult<SelectProductReferanceNumbersDto>(mappedEntity);
+                return new SuccessDataResult<SelectProductReferanceNumbersDto>(productReferanceNumbers);
+
             }
         }
     }

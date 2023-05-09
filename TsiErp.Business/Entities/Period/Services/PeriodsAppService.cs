@@ -73,7 +73,6 @@ namespace TsiErp.Business.Entities.Period.Services
 
                 return new SuccessDataResult<SelectPeriodsDto>(periods);
             }
-
         }
 
         [CacheRemoveAspect("Get")]

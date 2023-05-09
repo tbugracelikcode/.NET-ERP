@@ -7,12 +7,17 @@ using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.Entities.Entities.Menu;
 using TsiErp.Entities.Entities.Menu.Dtos;
 using Microsoft.Extensions.Localization;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Entities.TableConstant;
+using TsiErp.DataAccess.Services.Login;
 
 namespace TsiErp.Business.Entities.Menu.Services
 {
     [ServiceRegistration(typeof(IMenusAppService), DependencyInjectionType.Scoped)]
     public class MenusAppService : ApplicationService<BranchesResource>, IMenusAppService
     {
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
         public MenusAppService(IStringLocalizer<BranchesResource> l) : base(l)
         {
         }
@@ -20,85 +25,137 @@ namespace TsiErp.Business.Entities.Menu.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMenusDto>> CreateAsync(CreateMenusDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = ObjectMapper.Map<CreateMenusDto, Menus>(input);
+                var query = queryFactory.Query().From(Tables.Menus).Insert(new CreateMenusDto
+                {
+                    Id = GuidGenerator.CreateGuid(),
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                    IsDeleted = false
+                });
 
-                var addedEntity = await _uow.MenusRepository.InsertAsync(entity);
-                await _uow.SaveChanges();
 
-                return new SuccessDataResult<SelectMenusDto>(ObjectMapper.Map<Menus, SelectMenusDto>(addedEntity));
+                var menus = queryFactory.Insert<SelectMenusDto>(query, "Id", true);
+
+                return new SuccessDataResult<SelectMenusDto>(menus);
             }
+
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _uow.MenusRepository.DeleteAsync(id);
-                await _uow.SaveChanges();
-                return new SuccessResult("Silme işlemi başarılı.");
+
+                var query = queryFactory.Query().From(Tables.Menus).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
+                var menus = queryFactory.Update<SelectMenusDto>(query, "Id", true);
+
+                return new SuccessDataResult<SelectMenusDto>(menus);
             }
+
         }
 
 
         public async Task<IDataResult<SelectMenusDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.MenusRepository.GetAsync(t => t.Id == id);
-                var mappedEntity = ObjectMapper.Map<Menus, SelectMenusDto>(entity);
-                return new SuccessDataResult<SelectMenusDto>(mappedEntity);
+
+                var query = queryFactory.Query().From(Tables.Menus).Select("*").Where(
+                new
+                {
+                    Id = id
+                }, false, false, "");
+
+                var menus = queryFactory.Get<SelectMenusDto>(query);
+
+                return new SuccessDataResult<SelectMenusDto>(menus);
+
             }
+
         }
 
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListMenusDto>>> GetListAsync(ListMenusParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.MenusRepository.GetListAsync(null);
-
-                var mappedEntity = ObjectMapper.Map<List<Menus>, List<ListMenusDto>>(list.ToList());
-
-                return new SuccessDataResult<IList<ListMenusDto>>(mappedEntity);
+                var query = queryFactory.Query().From(Tables.Menus).Select("*").Where(null, false, false, "");
+                var menus = queryFactory.GetList<ListMenusDto>(query).ToList();
+                return new SuccessDataResult<IList<ListMenusDto>>(menus);
             }
+
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMenusDto>> UpdateAsync(UpdateMenusDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.MenusRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory.Query().From(Tables.Menus).Select("*").Where(new { Id = input.Id }, false, false, "");
+                var entity = queryFactory.Get<Menus>(entityQuery);
 
-                var mappedEntity = ObjectMapper.Map<UpdateMenusDto, Menus>(input);
+                var query = queryFactory.Query().From(Tables.Menus).Update(new UpdateMenusDto
+                {
+                    Id = input.Id,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId
+                }).Where(new { Id = input.Id }, false, false, "");
 
-                await _uow.MenusRepository.UpdateAsync(mappedEntity);
-                await _uow.SaveChanges();
+                var menus = queryFactory.Update<SelectMenusDto>(query, "Id", true);
 
-                return new SuccessDataResult<SelectMenusDto>(ObjectMapper.Map<Menus, SelectMenusDto>(mappedEntity));
+                return new SuccessDataResult<SelectMenusDto>(menus);
             }
         }
 
         public async Task<IDataResult<SelectMenusDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.MenusRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.Menus).Select("*").Where(new { Id = id }, false, false, "");
 
-                var updatedEntity = await _uow.MenusRepository.LockRow(entity.Id, lockRow, userId);
+                var entity = queryFactory.Get<Menus>(entityQuery);
 
-                await _uow.SaveChanges();
+                var query = queryFactory.Query().From(Tables.Menus).Update(new UpdateMenusDto
+                {
+                    
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                    Id = id,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId
 
-                var mappedEntity = ObjectMapper.Map<Menus, SelectMenusDto>(updatedEntity);
+                }).Where(new { Id = id }, false, false, "");
 
-                return new SuccessDataResult<SelectMenusDto>(mappedEntity);
+                var menus = queryFactory.Update<SelectMenusDto>(query, "Id", true);
+                return new SuccessDataResult<SelectMenusDto>(menus);
+
             }
+
         }
     }
 }
