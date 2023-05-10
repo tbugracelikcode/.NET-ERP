@@ -13,36 +13,65 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.ByDateStockMovement;
 using TsiErp.Entities.Entities.ByDateStockMovement.Dtos;
 using Microsoft.Extensions.Localization;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Entities.TableConstant;
+using TsiErp.Entities.Entities.Product;
+using TSI.QueryBuilder.Constants.Join;
+using TsiErp.Entities.Entities.Branch;
+using TsiErp.Entities.Entities.WareHouse;
 
 namespace TsiErp.Business.Entities.ByDateStockMovement.Services
 {
     [ServiceRegistration(typeof(IByDateStockMovementsAppService), DependencyInjectionType.Scoped)]
     public class ByDateStockMovementsAppService : ApplicationService<ByDateStockMovementsResource>, IByDateStockMovementsAppService
     {
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
         public ByDateStockMovementsAppService(IStringLocalizer<ByDateStockMovementsResource> l) : base(l)
         {
         }
-
-        ByDateStockMovementManager _manager { get; set; } = new ByDateStockMovementManager();
 
 
         [ValidationAspect(typeof(CreateByDateStockMovementsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectByDateStockMovementsDto>> CreateAsync(CreateByDateStockMovementsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = ObjectMapper.Map<CreateByDateStockMovementsDto, ByDateStockMovements>(input);
 
-                var addedEntity = await _uow.ByDateStockMovementsRepository.InsertAsync(entity);
+                var query = queryFactory.Query().From(Tables.ByDateStockMovements).Insert(new CreateByDateStockMovementsDto
+                {
+                    Amount = input.Amount,
+                    Date_ = input.Date_,
+                    ProductID = input.ProductID,
+                    TotalConsumption = input.TotalConsumption,
+                    TotalGoodsIssue = input.TotalGoodsIssue,
+                    TotalGoodsReceipt = input.TotalGoodsReceipt,
+                    TotalProduction = input.TotalProduction,
+                    TotalPurchaseOrder = input.TotalPurchaseOrder,
+                    TotalPurchaseRequest = input.TotalPurchaseRequest,
+                    TotalSalesOrder = input.TotalSalesOrder,
+                    TotalSalesProposition = input.TotalSalesProposition,
+                    TotalWastage = input.TotalWastage,
+                    WarehouseID = input.WarehouseID,
+                    BranchID = input.BranchID,
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    Id = GuidGenerator.CreateGuid(),
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                });
 
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "ByDateStockMovements", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
+                var byDateStockMovements = queryFactory.Insert<SelectByDateStockMovementsDto>(query, "Id", true);
 
-                await _uow.SaveChanges();
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ByDateStockMovements, LogType.Insert, byDateStockMovements.Id);
 
-                return new SuccessDataResult<SelectByDateStockMovementsDto>(ObjectMapper.Map<ByDateStockMovements, SelectByDateStockMovementsDto>(addedEntity));
+                return new SuccessDataResult<SelectByDateStockMovementsDto>(byDateStockMovements);
             }
         }
 
@@ -50,43 +79,90 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _uow.ByDateStockMovementsRepository.DeleteAsync(id);
+                var query = queryFactory.Query().From(Tables.ByDateStockMovements).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
 
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "ByDateStockMovements", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
+                var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
 
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ByDateStockMovements, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectByDateStockMovementsDto>(byDateStockMovements);
             }
         }
 
         public async Task<IDataResult<SelectByDateStockMovementsDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.ByDateStockMovementsRepository.GetAsync(t => t.Id == id, t => t.Branches, t => t.Warehouses, t => t.Products);
-                var mappedEntity = ObjectMapper.Map<ByDateStockMovements, SelectByDateStockMovementsDto>(entity);
+                var query = queryFactory
+                        .Query().From(Tables.ByDateStockMovements).Select<ByDateStockMovements>(bd => new {bd.WarehouseID,bd.TotalWastage,bd.TotalSalesProposition,bd.TotalSalesOrder,bd.TotalPurchaseRequest,bd.TotalPurchaseOrder,bd.TotalProduction,bd.TotalGoodsReceipt,bd.TotalGoodsIssue,bd.TotalConsumption,bd.ProductID,bd.Id,bd.Date_,bd.DataOpenStatusUserId,bd.DataOpenStatus,bd.BranchID,bd.Amount })
+                            .Join<Products>
+                            (
+                                p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                                nameof(ByDateStockMovements.ProductID),
+                                nameof(Products.Id),
+                                JoinType.Left
+                            )
+                             .Join<Branches>
+                            (
+                                b => new { BranchID = b.Id, BranchCode = b.Code },
+                                nameof(ByDateStockMovements.BranchID),
+                                nameof(Branches.Id),
+                                JoinType.Left
+                            )
+                             .Join<Warehouses>
+                            (
+                                w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
+                                nameof(ByDateStockMovements.WarehouseID),
+                                nameof(Warehouses.Id),
+                                JoinType.Left
+                            )
+                            .Where(new { Id = id }, false, false, Tables.ByDateStockMovements);
 
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "ByDateStockMovements", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                var byDateStockMovement = queryFactory.Get<SelectByDateStockMovementsDto>(query);
 
-                return new SuccessDataResult<SelectByDateStockMovementsDto>(mappedEntity);
+                LogsAppService.InsertLogToDatabase(byDateStockMovement, byDateStockMovement, LoginedUserService.UserId, Tables.ByDateStockMovements, LogType.Get, id);
+
+                return new SuccessDataResult<SelectByDateStockMovementsDto>(byDateStockMovement);
+
             }
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListByDateStockMovementsDto>>> GetListAsync(ListByDateStockMovementsParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.ByDateStockMovementsRepository.GetListAsync(null, t => t.Branches, t => t.Warehouses, t => t.Products);
 
-                var mappedEntity = ObjectMapper.Map<List<ByDateStockMovements>, List<ListByDateStockMovementsDto>>(list.ToList());
+                var query = queryFactory
+                   .Query()
+                   .From(Tables.ByDateStockMovements).Select<ByDateStockMovements>(bd => new { bd.WarehouseID, bd.TotalWastage, bd.TotalSalesProposition, bd.TotalSalesOrder, bd.TotalPurchaseRequest, bd.TotalPurchaseOrder, bd.TotalProduction, bd.TotalGoodsReceipt, bd.TotalGoodsIssue, bd.TotalConsumption, bd.ProductID, bd.Id, bd.Date_, bd.DataOpenStatusUserId, bd.DataOpenStatus, bd.BranchID, bd.Amount })
+                            .Join<Products>
+                            (
+                                p => new {  ProductCode = p.Code, ProductName = p.Name },
+                                nameof(ByDateStockMovements.ProductID),
+                                nameof(Products.Id),
+                                JoinType.Left
+                            )
+                             .Join<Branches>
+                            (
+                                b => new { BranchCode = b.Code },
+                                nameof(ByDateStockMovements.BranchID),
+                                nameof(Branches.Id),
+                                JoinType.Left
+                            )
+                             .Join<Warehouses>
+                            (
+                                w => new { WarehouseCode = w.Code },
+                                nameof(ByDateStockMovements.WarehouseID),
+                                nameof(Warehouses.Id),
+                                JoinType.Left
+                            ).Where(null, false, false, Tables.ByDateStockMovements);
 
-                return new SuccessDataResult<IList<ListByDateStockMovementsDto>>(mappedEntity);
+                var byDateStockMovements = queryFactory.GetList<ListByDateStockMovementsDto>(query).ToList();
+
+                return new SuccessDataResult<IList<ListByDateStockMovementsDto>>(byDateStockMovements);
             }
         }
 
@@ -94,21 +170,46 @@ namespace TsiErp.Business.Entities.ByDateStockMovement.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectByDateStockMovementsDto>> UpdateAsync(UpdateByDateStockMovementsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.ByDateStockMovementsRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { Id = input.Id }, false, false, "");
+                var entity = queryFactory.Get<ByDateStockMovements>(entityQuery);
 
-                var mappedEntity = ObjectMapper.Map<UpdateByDateStockMovementsDto, ByDateStockMovements>(input);
+                var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
+                {
+                    Amount = input.Amount,
+                    Date_ = input.Date_,
+                    ProductID = input.ProductID,
+                    TotalConsumption = input.TotalConsumption,
+                    TotalGoodsIssue = input.TotalGoodsIssue,
+                    TotalGoodsReceipt = input.TotalGoodsReceipt,
+                    TotalProduction = input.TotalProduction,
+                    TotalPurchaseOrder = input.TotalPurchaseOrder,
+                    TotalPurchaseRequest = input.TotalPurchaseRequest,
+                    TotalSalesOrder = input.TotalSalesOrder,
+                    TotalSalesProposition = input.TotalSalesProposition,
+                    TotalWastage = input.TotalWastage,
+                    WarehouseID = input.WarehouseID,
+                    BranchID = input.BranchID,
+                    Id = input.Id,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId
+                }).Where(new { Id = input.Id }, false, false, "");
 
-                await _uow.ByDateStockMovementsRepository.UpdateAsync(mappedEntity);
+                var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
 
-                var before = ObjectMapper.Map<ByDateStockMovements, UpdateByDateStockMovementsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "ByDateStockMovements", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
 
-                await _uow.SaveChanges();
+                LogsAppService.InsertLogToDatabase(entity, byDateStockMovements, LoginedUserService.UserId, Tables.ByDateStockMovements, LogType.Update, entity.Id);
 
-                return new SuccessDataResult<SelectByDateStockMovementsDto>(ObjectMapper.Map<ByDateStockMovements, SelectByDateStockMovementsDto>(mappedEntity));
+
+                return new SuccessDataResult<SelectByDateStockMovementsDto>(byDateStockMovements);
             }
         }
 

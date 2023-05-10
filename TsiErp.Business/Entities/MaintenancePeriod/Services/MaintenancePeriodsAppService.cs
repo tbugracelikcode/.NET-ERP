@@ -13,36 +13,70 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MaintenancePeriod;
 using TsiErp.Entities.Entities.MaintenancePeriod.Dtos;
 using Microsoft.Extensions.Localization;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Entities.TableConstant;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 
 namespace TsiErp.Business.Entities.MaintenancePeriod.Services
 {
     [ServiceRegistration(typeof(IMaintenancePeriodsAppService), DependencyInjectionType.Scoped)]
     public class MaintenancePeriodsAppService : ApplicationService<MaintenancePeriodsResource>, IMaintenancePeriodsAppService
     {
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
         public MaintenancePeriodsAppService(IStringLocalizer<MaintenancePeriodsResource> l) : base(l)
         {
         }
-
-        MaintenancePeriodManager _manager { get; set; } = new MaintenancePeriodManager();
-
 
         [ValidationAspect(typeof(CreateMaintenancePeriodsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMaintenancePeriodsDto>> CreateAsync(CreateMaintenancePeriodsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.CodeControl(_uow.MaintenancePeriodsRepository, input.Code,L);
+                var listQuery = queryFactory.Query().From(Tables.MaintenancePeriods).Select("*").Where(new { Code = input.Code }, false, false, "");
 
-                var entity = ObjectMapper.Map<CreateMaintenancePeriodsDto, MaintenancePeriods>(input);
+                var list = queryFactory.ControlList<MaintenancePeriods>(listQuery).ToList();
 
-                var addedEntity = await _uow.MaintenancePeriodsRepository.InsertAsync(entity);
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "MaintenancePeriods", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                #region Code Control 
 
-                return new SuccessDataResult<SelectMaintenancePeriodsDto>(ObjectMapper.Map<MaintenancePeriods, SelectMaintenancePeriodsDto>(addedEntity));
+                if (list.Count > 0)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["CodeControlManager"]);
+                }
+
+                #endregion
+
+
+                var query = queryFactory.Query().From(Tables.MaintenancePeriods).Insert(new CreateMaintenancePeriodsDto
+                {
+                    Code = input.Code,
+                    IsDaily = input.IsDaily,
+                    PeriodTime = input.PeriodTime,
+                    Description_ = input.Description_,
+                    Name = input.Name,
+                    IsActive = true,
+                    Id = GuidGenerator.CreateGuid(),
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                    IsDeleted = false
+                });
+
+
+                var maintenancePeriods = queryFactory.Insert<SelectMaintenancePeriodsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.MaintenancePeriods, LogType.Insert, maintenancePeriods.Id);
+
+
+                return new SuccessDataResult<SelectMaintenancePeriodsDto>(maintenancePeriods);
             }
         }
 
@@ -50,28 +84,37 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.DeleteControl(_uow.MaintenancePeriodsRepository, id);
-                await _uow.MaintenancePeriodsRepository.DeleteAsync(id);
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "MaintenancePeriods", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
+
+                var query = queryFactory.Query().From(Tables.MaintenancePeriods).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+
+                var maintenancePeriods = queryFactory.Update<SelectMaintenancePeriodsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.MaintenancePeriods, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectMaintenancePeriodsDto>(maintenancePeriods);
             }
         }
 
 
         public async Task<IDataResult<SelectMaintenancePeriodsDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.MaintenancePeriodsRepository.GetAsync(t => t.Id == id);
-                var mappedEntity = ObjectMapper.Map<MaintenancePeriods, SelectMaintenancePeriodsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "MaintenancePeriods", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectMaintenancePeriodsDto>(mappedEntity);
+
+                var query = queryFactory.Query().From(Tables.Branches).Select("*").Where(
+                new
+                {
+                    Id = id
+                }, true, true, "");
+                var maintenancePeriod = queryFactory.Get<SelectMaintenancePeriodsDto>(query);
+
+
+                LogsAppService.InsertLogToDatabase(maintenancePeriod, maintenancePeriod, LoginedUserService.UserId, Tables.MaintenancePeriods, LogType.Get, id);
+
+                return new SuccessDataResult<SelectMaintenancePeriodsDto>(maintenancePeriod);
+
             }
         }
 
@@ -79,13 +122,11 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListMaintenancePeriodsDto>>> GetListAsync(ListMaintenancePeriodsParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.MaintenancePeriodsRepository.GetListAsync(t => t.IsActive == input.IsActive);
-
-                var mappedEntity = ObjectMapper.Map<List<MaintenancePeriods>, List<ListMaintenancePeriodsDto>>(list.ToList());
-
-                return new SuccessDataResult<IList<ListMaintenancePeriodsDto>>(mappedEntity);
+                var query = queryFactory.Query().From(Tables.MaintenancePeriods).Select("*").Where(null, true, true, "");
+                var maintenancePeriods = queryFactory.GetList<ListMaintenancePeriodsDto>(query).ToList();
+                return new SuccessDataResult<IList<ListMaintenancePeriodsDto>>(maintenancePeriods);
             }
         }
 
@@ -94,37 +135,85 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectMaintenancePeriodsDto>> UpdateAsync(UpdateMaintenancePeriodsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.MaintenancePeriodsRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory.Query().From(Tables.MaintenancePeriods).Select("*").Where(new { Id = input.Id }, true, true, "");
+                var entity = queryFactory.Get<MaintenancePeriods>(entityQuery);
 
-                await _manager.UpdateControl(_uow.MaintenancePeriodsRepository, input.Code, input.Id, entity,L);
+                #region Update Control
 
-                var mappedEntity = ObjectMapper.Map<UpdateMaintenancePeriodsDto, MaintenancePeriods>(input);
+                var listQuery = queryFactory.Query().From(Tables.MaintenancePeriods).Select("*").Where(new { Code = input.Code }, false, false, "");
+                var list = queryFactory.GetList<MaintenancePeriods>(listQuery).ToList();
 
-                await _uow.MaintenancePeriodsRepository.UpdateAsync(mappedEntity);
-                var before = ObjectMapper.Map<MaintenancePeriods, UpdateMaintenancePeriodsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "MaintenancePeriods", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                if (list.Count > 0 && entity.Code != input.Code)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["UpdateControlManager"]);
+                }
 
-                return new SuccessDataResult<SelectMaintenancePeriodsDto>(ObjectMapper.Map<MaintenancePeriods, SelectMaintenancePeriodsDto>(mappedEntity));
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.MaintenancePeriods).Update(new UpdateMaintenancePeriodsDto
+                {
+                    Code = input.Code,
+                    PeriodTime = input.PeriodTime,
+                    IsDaily = input.IsDaily,
+                    Description_ = input.Description_,
+                    Name = input.Name,
+                    Id = input.Id,
+                    IsActive = input.IsActive,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId
+                }).Where(new { Id = input.Id }, true, true, "");
+
+                var maintenancePeriods = queryFactory.Update<SelectMaintenancePeriodsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(entity, maintenancePeriods, LoginedUserService.UserId, Tables.MaintenancePeriods, LogType.Update, entity.Id);
+
+                return new SuccessDataResult<SelectMaintenancePeriodsDto>(maintenancePeriods);
             }
         }
 
         public async Task<IDataResult<SelectMaintenancePeriodsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.MaintenancePeriodsRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.MaintenancePeriods).Select("*").Where(new { Id = id }, true, true, "");
 
-                var updatedEntity = await _uow.MaintenancePeriodsRepository.LockRow(entity.Id, lockRow, userId);
+                var entity = queryFactory.Get<MaintenancePeriods>(entityQuery);
 
-                await _uow.SaveChanges();
+                var query = queryFactory.Query().From(Tables.MaintenancePeriods).Update(new UpdateMaintenancePeriodsDto
+                {
+                    Code = entity.Code,
+                    IsDaily = entity.IsDaily,
+                    PeriodTime = entity.PeriodTime,
+                    Description_ = entity.Description_,
+                    Name = entity.Name,
+                    IsActive = entity.IsActive,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                    Id = id,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId
 
-                var mappedEntity = ObjectMapper.Map<MaintenancePeriods, SelectMaintenancePeriodsDto>(updatedEntity);
+                }).Where(new { Id = id }, true, true, "");
 
-                return new SuccessDataResult<SelectMaintenancePeriodsDto>(mappedEntity);
+                var maintenancePeriods = queryFactory.Update<SelectMaintenancePeriodsDto>(query, "Id", true);
+                return new SuccessDataResult<SelectMaintenancePeriodsDto>(maintenancePeriods);
+
             }
         }
     }

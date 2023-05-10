@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.MaintenanceInstructionLine.Dtos;
 
 namespace TsiErp.Entities.Entities.MaintenanceInstruction.Dtos
@@ -58,7 +59,7 @@ namespace TsiErp.Entities.Entities.MaintenanceInstruction.Dtos
         /// Not
         /// </summary>
         public string Note_ { get; set; }
-
+        [NoDatabaseAction]
         public List<SelectMaintenanceInstructionLinesDto> SelectMaintenanceInstructionLines { get; set; }
     }
 }

@@ -15,42 +15,107 @@ using TsiErp.Entities.Entities.PlannedMaintenance.Dtos;
 using TsiErp.Entities.Entities.PlannedMaintenanceLine;
 using TsiErp.Entities.Entities.PlannedMaintenanceLine.Dtos;
 using Microsoft.Extensions.Localization;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Entities.TableConstant;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
+using TSI.QueryBuilder.Constants.Join;
+using TsiErp.Entities.Entities.Station;
+using TsiErp.Entities.Entities.MaintenancePeriod;
+using TsiErp.Entities.Entities.Product;
+using TsiErp.Entities.Entities.UnitSet;
 
 namespace TsiErp.Business.Entities.PlannedMaintenance.Services
 {
     [ServiceRegistration(typeof(IPlannedMaintenancesAppService), DependencyInjectionType.Scoped)]
     public class PlannedMaintenancesAppService : ApplicationService<PlannedMaintenancesResource>, IPlannedMaintenancesAppService
     {
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
         public PlannedMaintenancesAppService(IStringLocalizer<PlannedMaintenancesResource> l) : base(l)
         {
         }
-
-        PlannedMaintenanceManager _manager { get; set; } = new PlannedMaintenanceManager();
 
         [ValidationAspect(typeof(CreatePlannedMaintenanceValidatorDto), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPlannedMaintenancesDto>> CreateAsync(CreatePlannedMaintenancesDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.CodeControl(_uow.PlannedMaintenancesRepository, input.RegistrationNo, L);
+                var listQuery = queryFactory.Query().From(Tables.PlannedMaintenances).Select("*").Where(new { RegistrationNo = input.RegistrationNo }, false, false, "");
+                var list = queryFactory.ControlList<PlannedMaintenances>(listQuery).ToList();
 
-                var entity = ObjectMapper.Map<CreatePlannedMaintenancesDto, PlannedMaintenances>(input);
+                #region Code Control 
 
-                var addedEntity = await _uow.PlannedMaintenancesRepository.InsertAsync(entity);
+                if (list.Count > 0)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["CodeControlManager"]);
+                }
+
+                #endregion
+
+                Guid addedEntityId = GuidGenerator.CreateGuid();
+
+                var query = queryFactory.Query().From(Tables.PlannedMaintenances).Insert(new CreatePlannedMaintenancesDto
+                {
+                    RegistrationNo = input.RegistrationNo,
+                    StationID = input.StationID,
+                    CompletionDate = input.CompletionDate,
+                    Caregiver = input.Caregiver,
+                    Note_ = input.Note_,
+                    NumberofCaregivers = input.NumberofCaregivers,
+                    OccuredTime = input.OccuredTime,
+                    PeriodID = input.PeriodID,
+                    PeriodTime = input.PeriodTime,
+                    PlannedDate = input.PlannedDate,
+                    PlannedTime = input.PlannedTime,
+                    RemainingTime = input.RemainingTime,
+                    StartDate = input.StartDate,
+                    Status = input.Status,
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    Id = addedEntityId,
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                });
 
                 foreach (var item in input.SelectPlannedMaintenanceLines)
                 {
-                    var lineEntity = ObjectMapper.Map<SelectPlannedMaintenanceLinesDto, PlannedMaintenanceLines>(item);
-                    lineEntity.PlannedMaintenanceID = addedEntity.Id;
-                    await _uow.PlannedMaintenanceLinesRepository.InsertAsync(lineEntity);
-                }
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "PlannedMaintenances", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
+                    var queryLine = queryFactory.Query().From(Tables.PlannedMaintenanceLines).Insert(new CreatePlannedMaintenanceLinesDto
+                    {
+                        Amount = item.Amount,
+                        InstructionDescription = item.InstructionDescription,
+                        MaintenanceNote = item.MaintenanceNote,
+                        PlannedMaintenanceID = addedEntityId,
+                        CreationTime = DateTime.Now,
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                        LineNr = item.LineNr,
+                        ProductID = item.ProductID,
+                        UnitSetID = item.UnitSetID,
+                    });
 
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectPlannedMaintenancesDto>(ObjectMapper.Map<PlannedMaintenances, SelectPlannedMaintenancesDto>(addedEntity));
+                    query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+                }
+
+                var maintenance = queryFactory.Insert<SelectPlannedMaintenancesDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PlannedMaintenances, LogType.Insert, maintenance.Id);
+
+                return new SuccessDataResult<SelectPlannedMaintenancesDto>(maintenance);
             }
         }
 
@@ -58,79 +123,118 @@ namespace TsiErp.Business.Entities.PlannedMaintenance.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var lines = (await _uow.PlannedMaintenanceLinesRepository.GetAsync(t => t.Id == id));
 
-                if (lines != null)
+                var query = queryFactory.Query().From(Tables.PlannedMaintenances).Select("*").Where(new { Id = id }, false, false, "");
+
+                var maintenances = queryFactory.Get<SelectPlannedMaintenancesDto>(query);
+
+                if (maintenances.Id != Guid.Empty && maintenances != null)
                 {
-                    await _manager.DeleteControl(_uow.PlannedMaintenancesRepository, lines.PlannedMaintenanceID, lines.Id, true);
-                    await _uow.PlannedMaintenanceLinesRepository.DeleteAsync(id);
-                    await _uow.SaveChanges();
-                    return new SuccessResult(L["DeleteSuccessMessage"]);
+                    var deleteQuery = queryFactory.Query().From(Tables.PlannedMaintenances).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.PlannedMaintenanceLines).Delete(LoginedUserService.UserId).Where(new { PlannedMaintenanceID = id }, false, false, "");
+
+                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+
+                    var maintenance = queryFactory.Update<SelectPlannedMaintenancesDto>(deleteQuery, "Id", true);
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PlannedMaintenances, LogType.Delete, id);
+                    return new SuccessDataResult<SelectPlannedMaintenancesDto>(maintenance);
                 }
                 else
                 {
-                    await _manager.DeleteControl(_uow.PlannedMaintenancesRepository, id, Guid.Empty, false);
-
-                    var list = (await _uow.PlannedMaintenanceLinesRepository.GetListAsync(t => t.PlannedMaintenanceID == id));
-                    foreach (var line in list)
-                    {
-                        await _uow.PlannedMaintenanceLinesRepository.DeleteAsync(line.Id);
-                    }
-
-
-                    await _uow.PlannedMaintenanceLinesRepository.DeleteAsync(id);
-                    var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "PlannedMaintenances", LogType.Delete, id);
-                    await _uow.LogsRepository.InsertAsync(log);
-                    await _uow.SaveChanges();
-                    return new SuccessResult(L["DeleteSuccessMessage"]);
+                    var queryLine = queryFactory.Query().From(Tables.PlannedMaintenanceLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var maintenanceLines = queryFactory.Update<SelectPlannedMaintenanceLinesDto>(queryLine, "Id", true);
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PlannedMaintenanceLines, LogType.Delete, id);
+                    return new SuccessDataResult<SelectPlannedMaintenanceLinesDto>(maintenanceLines);
                 }
             }
         }
 
         public async Task<IDataResult<SelectPlannedMaintenancesDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.PlannedMaintenancesRepository.GetAsync(t => t.Id == id,
-                t => t.PlannedMaintenanceLines,
-                t => t.MaintenancePeriods,
-                t => t.Stations);
+                var query = queryFactory
+                       .Query()
+                       .From(Tables.PlannedMaintenances)
+                       .Select<PlannedMaintenances>(pm => new { pm.Status, pm.StationID, pm.StartDate, pm.RemainingTime, pm.RegistrationNo, pm.PlannedTime, pm.PlannedDate, pm.PeriodTime, pm.PeriodID, pm.OccuredTime, pm.NumberofCaregivers, pm.Note_, pm.Id, pm.DataOpenStatusUserId, pm.DataOpenStatus, pm.CompletionDate, pm.Caregiver })
+                       .Join<Stations>
+                        (
+                            s => new { StationID = s.Id, StationCode = s.Code },
+                            nameof(PlannedMaintenances.StationID),
+                            nameof(Stations.Id),
+                            JoinType.Left
+                        )
+                        .Join<MaintenancePeriods>
+                        (
+                            mp => new { PeriodID = mp.Id, PeriodName = mp.Name },
+                            nameof(PlannedMaintenances.PeriodID),
+                            nameof(MaintenancePeriods.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { Id = id }, false, false, Tables.PlannedMaintenances);
 
-                var mappedEntity = ObjectMapper.Map<PlannedMaintenances, SelectPlannedMaintenancesDto>(entity);
+                var maintenances = queryFactory.Get<SelectPlannedMaintenancesDto>(query);
 
-                mappedEntity.SelectPlannedMaintenanceLines = ObjectMapper.Map<List<PlannedMaintenanceLines>, List<SelectPlannedMaintenanceLinesDto>>(entity.PlannedMaintenanceLines.ToList());
+                var queryLines = queryFactory
+                       .Query()
+                       .From(Tables.PlannedMaintenanceLines)
+                       .Select<PlannedMaintenanceLines>(pml => new { pml.UnitSetID, pml.ProductID, pml.PlannedMaintenanceID, pml.MaintenanceNote, pml.LineNr, pml.InstructionDescription, pml.Id, pml.DataOpenStatusUserId, pml.DataOpenStatus, pml.Amount })
+                       .Join<Products>
+                        (
+                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                            nameof(PlannedMaintenanceLines.ProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                       .Join<UnitSets>
+                        (
+                            u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                            nameof(PlannedMaintenanceLines.UnitSetID),
+                            nameof(UnitSets.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { PlannedMaintenanceID = id }, false, false, Tables.PlannedMaintenanceLines);
 
-                foreach (var item in mappedEntity.SelectPlannedMaintenanceLines)
-                {
-                    item.ProductCode = (await _uow.ProductsRepository.GetAsync(t => t.Id == item.ProductID)).Code;
-                    item.ProductName = (await _uow.ProductsRepository.GetAsync(t => t.Id == item.ProductID)).Name;
-                    item.UnitSetCode = (await _uow.UnitSetsRepository.GetAsync(t => t.Id == item.UnitSetID)).Code;
-                }
+                var maintenanceLine = queryFactory.GetList<SelectPlannedMaintenanceLinesDto>(queryLines).ToList();
 
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "PlannedMaintenances", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
+                maintenances.SelectPlannedMaintenanceLines = maintenanceLine;
 
-                await _uow.SaveChanges();
+                LogsAppService.InsertLogToDatabase(maintenances, maintenances, LoginedUserService.UserId, Tables.PlannedMaintenances, LogType.Get, id);
 
-                return new SuccessDataResult<SelectPlannedMaintenancesDto>(mappedEntity);
+                return new SuccessDataResult<SelectPlannedMaintenancesDto>(maintenances);
             }
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPlannedMaintenancesDto>>> GetListAsync(ListPlannedMaintenancesParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.PlannedMaintenancesRepository.GetListAsync(null,
-                t => t.PlannedMaintenanceLines,
-                t => t.MaintenancePeriods,
-                t => t.Stations);
+                var query = queryFactory
+                       .Query()
+                       .From(Tables.PlannedMaintenances)
+                       .Select<PlannedMaintenances>(pm => new { pm.Status, pm.StationID, pm.StartDate, pm.RemainingTime, pm.RegistrationNo, pm.PlannedTime, pm.PlannedDate, pm.PeriodTime, pm.PeriodID, pm.OccuredTime, pm.NumberofCaregivers, pm.Note_, pm.Id, pm.DataOpenStatusUserId, pm.DataOpenStatus, pm.CompletionDate, pm.Caregiver })
+                       .Join<Stations>
+                        (
+                            s => new { StationCode = s.Code },
+                            nameof(PlannedMaintenances.StationID),
+                            nameof(Stations.Id),
+                            JoinType.Left
+                        )
+                        .Join<MaintenancePeriods>
+                        (
+                            mp => new { PeriodName = mp.Name },
+                            nameof(PlannedMaintenances.PeriodID),
+                            nameof(MaintenancePeriods.Id),
+                            JoinType.Left
+                        )
+                        .Where(null, true, true, Tables.BillsofMaterials);
 
-                var mappedEntity = ObjectMapper.Map<List<PlannedMaintenances>, List<ListPlannedMaintenancesDto>>(list.ToList());
-
-                return new SuccessDataResult<IList<ListPlannedMaintenancesDto>>(mappedEntity);
+                var maintenances = queryFactory.GetList<ListPlannedMaintenancesDto>(query).ToList();
+                return new SuccessDataResult<IList<ListPlannedMaintenancesDto>>(maintenances);
             }
         }
 
@@ -138,55 +242,221 @@ namespace TsiErp.Business.Entities.PlannedMaintenance.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPlannedMaintenancesDto>> UpdateAsync(UpdatePlannedMaintenancesDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.PlannedMaintenancesRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory
+                       .Query()
+                        .From(Tables.PlannedMaintenances)
+                       .Select<PlannedMaintenances>(pm => new { pm.Status, pm.StationID, pm.StartDate, pm.RemainingTime, pm.RegistrationNo, pm.PlannedTime, pm.PlannedDate, pm.PeriodTime, pm.PeriodID, pm.OccuredTime, pm.NumberofCaregivers, pm.Note_, pm.Id, pm.DataOpenStatusUserId, pm.DataOpenStatus, pm.CompletionDate, pm.Caregiver })
+                       .Join<Stations>
+                        (
+                            s => new { StationID = s.Id, StationCode = s.Code },
+                            nameof(PlannedMaintenances.StationID),
+                            nameof(Stations.Id),
+                            JoinType.Left
+                        )
+                        .Join<MaintenancePeriods>
+                        (
+                            mp => new { PeriodID = mp.Id, PeriodName = mp.Name },
+                            nameof(PlannedMaintenances.PeriodID),
+                            nameof(MaintenancePeriods.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { Id = input.Id }, false, false, Tables.PlannedMaintenances);
 
-                await _manager.UpdateControl(_uow.PlannedMaintenancesRepository, input.RegistrationNo, input.Id, entity,L);
+                var entity = queryFactory.Get<SelectPlannedMaintenancesDto>(entityQuery);
 
-                var mappedEntity = ObjectMapper.Map<UpdatePlannedMaintenancesDto, PlannedMaintenances>(input);
+                var queryLines = queryFactory
+                       .Query()
+                        .From(Tables.PlannedMaintenanceLines)
+                       .Select<PlannedMaintenanceLines>(pml => new { pml.UnitSetID, pml.ProductID, pml.PlannedMaintenanceID, pml.MaintenanceNote, pml.LineNr, pml.InstructionDescription, pml.Id, pml.DataOpenStatusUserId, pml.DataOpenStatus, pml.Amount })
+                       .Join<Products>
+                        (
+                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                            nameof(PlannedMaintenanceLines.ProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                       .Join<UnitSets>
+                        (
+                            u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                            nameof(PlannedMaintenanceLines.UnitSetID),
+                            nameof(UnitSets.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { PlannedMaintenanceID = input.Id }, false, false, Tables.PlannedMaintenanceLines);
 
-                await _uow.PlannedMaintenancesRepository.UpdateAsync(mappedEntity);
+                var maintenanceLine = queryFactory.GetList<SelectPlannedMaintenanceLinesDto>(queryLines).ToList();
+
+                entity.SelectPlannedMaintenanceLines = maintenanceLine;
+
+                #region Update Control
+                var listQuery = queryFactory
+                               .Query()
+                               .From(Tables.PlannedMaintenances)
+                               .Select<PlannedMaintenances>(pm => new { pm.Status, pm.StationID, pm.StartDate, pm.RemainingTime, pm.RegistrationNo, pm.PlannedTime, pm.PlannedDate, pm.PeriodTime, pm.PeriodID, pm.OccuredTime, pm.NumberofCaregivers, pm.Note_, pm.Id, pm.DataOpenStatusUserId, pm.DataOpenStatus, pm.CompletionDate, pm.Caregiver })
+                               .Join<Stations>
+                                (
+                                    s => new { StationID = s.Id, StationCode = s.Code },
+                                    nameof(PlannedMaintenances.StationID),
+                                    nameof(Stations.Id),
+                                    JoinType.Left
+                                )
+                                .Join<MaintenancePeriods>
+                                (
+                                    mp => new { PeriodID = mp.Id, PeriodName = mp.Name },
+                                    nameof(PlannedMaintenances.PeriodID),
+                                    nameof(MaintenancePeriods.Id),
+                                    JoinType.Left
+                                )
+                                .Where(new { RegistrationNo = input.RegistrationNo }, false, false, Tables.PlannedMaintenances);
+
+                var list = queryFactory.GetList<ListPlannedMaintenancesDto>(listQuery).ToList();
+
+                if (list.Count > 0 && entity.RegistrationNo != input.RegistrationNo)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["UpdateControlManager"]);
+                }
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.PlannedMaintenances).Update(new UpdatePlannedMaintenancesDto
+                {
+                    RegistrationNo = input.RegistrationNo,
+                    StationID = input.StationID,
+                    CompletionDate = input.CompletionDate,
+                    Caregiver = input.Caregiver,
+                    Note_ = input.Note_,
+                    NumberofCaregivers = input.NumberofCaregivers,
+                    OccuredTime = input.OccuredTime,
+                    PeriodID = input.PeriodID,
+                    PeriodTime = input.PeriodTime,
+                    PlannedDate = input.PlannedDate,
+                    PlannedTime = input.PlannedTime,
+                    RemainingTime = input.RemainingTime,
+                    StartDate = input.StartDate,
+                    Status = input.Status,
+                    CreationTime = entity.CreationTime,
+                    CreatorId = entity.CreatorId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                    Id = input.Id,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId,
+                }).Where(new { Id = input.Id }, false, false, "");
 
                 foreach (var item in input.SelectPlannedMaintenanceLines)
                 {
-                    var lineEntity = ObjectMapper.Map<SelectPlannedMaintenanceLinesDto, PlannedMaintenanceLines>(item);
-                    lineEntity.PlannedMaintenanceID = mappedEntity.Id;
-
-                    if (lineEntity.Id == Guid.Empty)
+                    if (item.Id == Guid.Empty)
                     {
-                        await _uow.PlannedMaintenanceLinesRepository.InsertAsync(lineEntity);
+                        var queryLine = queryFactory.Query().From(Tables.PlannedMaintenanceLines).Insert(new CreatePlannedMaintenanceLinesDto
+                        {
+                            Amount = item.Amount,
+                            InstructionDescription = item.InstructionDescription,
+                            MaintenanceNote = item.MaintenanceNote,
+                            PlannedMaintenanceID = input.Id,
+                            CreationTime = DateTime.Now,
+                            CreatorId = LoginedUserService.UserId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = Guid.Empty,
+                            DeletionTime = null,
+                            Id = GuidGenerator.CreateGuid(),
+                            IsDeleted = false,
+                            LastModificationTime = null,
+                            LastModifierId = Guid.Empty,
+                            LineNr = item.LineNr,
+                            ProductID = item.ProductID,
+                            UnitSetID = item.UnitSetID,
+                        });
+
+                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
                     }
                     else
                     {
-                        await _uow.PlannedMaintenanceLinesRepository.UpdateAsync(lineEntity);
+                        var lineGetQuery = queryFactory.Query().From(Tables.PlannedMaintenanceLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+
+                        var line = queryFactory.Get<SelectPlannedMaintenanceLinesDto>(lineGetQuery);
+
+                        if (line != null)
+                        {
+                            var queryLine = queryFactory.Query().From(Tables.PlannedMaintenanceLines).Update(new UpdatePlannedMaintenanceLinesDto
+                            {
+                                Amount = item.Amount,
+                                InstructionDescription = item.InstructionDescription,
+                                MaintenanceNote = item.MaintenanceNote,
+                                PlannedMaintenanceID = input.Id,
+                                CreationTime = line.CreationTime,
+                                CreatorId = line.CreatorId,
+                                DataOpenStatus = false,
+                                DataOpenStatusUserId = Guid.Empty,
+                                DeleterId = line.DeleterId.GetValueOrDefault(),
+                                DeletionTime = line.DeletionTime.GetValueOrDefault(),
+                                Id = item.Id,
+                                IsDeleted = false,
+                                LastModificationTime = DateTime.Now,
+                                LastModifierId = LoginedUserService.UserId,
+                                LineNr = item.LineNr,
+                                ProductID = item.ProductID,
+                                UnitSetID = item.UnitSetID,
+                            }).Where(new { Id = line.Id }, false, false, "");
+
+                            query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
+                        }
                     }
                 }
 
-                var before = ObjectMapper.Map<PlannedMaintenances, UpdatePlannedMaintenancesDto>(entity);
-                before.SelectPlannedMaintenanceLines = ObjectMapper.Map<List<PlannedMaintenanceLines>, List<SelectPlannedMaintenanceLinesDto>>(entity.PlannedMaintenanceLines.ToList());
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "PlannedMaintenances", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
+                var maintenance = queryFactory.Update<SelectPlannedMaintenancesDto>(query, "Id", true);
 
-                await _uow.SaveChanges();
+                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.PlannedMaintenances, LogType.Update, maintenance.Id);
 
-                return new SuccessDataResult<SelectPlannedMaintenancesDto>(ObjectMapper.Map<PlannedMaintenances, SelectPlannedMaintenancesDto>(mappedEntity));
+                return new SuccessDataResult<SelectPlannedMaintenancesDto>(maintenance);
             }
         }
 
         public async Task<IDataResult<SelectPlannedMaintenancesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.PlannedMaintenancesRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.PlannedMaintenances).Select("*").Where(new { Id = id }, false, false, "");
 
-                var updatedEntity = await _uow.PlannedMaintenancesRepository.LockRow(entity.Id, lockRow, userId);
+                var entity = queryFactory.Get<PlannedMaintenances>(entityQuery);
 
-                await _uow.SaveChanges();
+                var query = queryFactory.Query().From(Tables.PlannedMaintenances).Update(new UpdatePlannedMaintenancesDto
+                {
+                    RegistrationNo = entity.RegistrationNo,
+                    StationID = entity.StationID,
+                    CompletionDate = entity.CompletionDate,
+                    Caregiver = entity.Caregiver,
+                    Note_ = entity.Note_,
+                    NumberofCaregivers = entity.NumberofCaregivers,
+                    OccuredTime = entity.OccuredTime,
+                    PeriodID = entity.PeriodID,
+                    PeriodTime = entity.PeriodTime,
+                    PlannedDate = entity.PlannedDate,
+                    PlannedTime = entity.PlannedTime,
+                    RemainingTime = entity.RemainingTime,
+                    StartDate = entity.StartDate,
+                    Status = entity.Status,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.Value,
+                    Id = entity.Id,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                }).Where(new { Id = id }, false, false, "");
 
-                var mappedEntity = ObjectMapper.Map<PlannedMaintenances, SelectPlannedMaintenancesDto>(updatedEntity);
+                var maintenancesDto = queryFactory.Update<SelectPlannedMaintenancesDto>(query, "Id", true);
+                return new SuccessDataResult<SelectPlannedMaintenancesDto>(maintenancesDto);
 
-                return new SuccessDataResult<SelectPlannedMaintenancesDto>(mappedEntity);
             }
         }
     }

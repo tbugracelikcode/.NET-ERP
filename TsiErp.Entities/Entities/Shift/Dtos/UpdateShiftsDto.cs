@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.ShiftLine.Dtos;
 
 namespace TsiErp.Entities.Entities.Shift.Dtos
@@ -42,7 +43,7 @@ namespace TsiErp.Entities.Entities.Shift.Dtos
         /// Vardiya Sırası
         /// </summary>
         public int ShiftOrder { get; set; }
-
+        [NoDatabaseAction]
         public List<SelectShiftLinesDto> SelectShiftLinesDto { get; set; }
     }
 }
