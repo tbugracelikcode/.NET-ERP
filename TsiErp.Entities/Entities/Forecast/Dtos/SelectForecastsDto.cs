@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.ForecastLine.Dtos;
 
 namespace TsiErp.Entities.Entities.Forecast.Dtos
@@ -85,7 +86,7 @@ namespace TsiErp.Entities.Entities.Forecast.Dtos
         /// Dönem Adı
         /// </summary>
         public string PeriodName { get; set; }
-
+        [NoDatabaseAction]
         public List<SelectForecastLinesDto> SelectForecastLines { get; set; }
     }
 }

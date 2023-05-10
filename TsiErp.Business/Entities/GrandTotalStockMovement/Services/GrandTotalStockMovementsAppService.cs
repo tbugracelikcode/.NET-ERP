@@ -13,33 +13,64 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GrandTotalStockMovement;
 using TsiErp.Entities.Entities.GrandTotalStockMovement.Dtos;
 using Microsoft.Extensions.Localization;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Entities.TableConstant;
+using TsiErp.Entities.Entities.Branch;
+using TSI.QueryBuilder.Constants.Join;
+using TsiErp.Entities.Entities.Product;
+using TsiErp.Entities.Entities.WareHouse;
 
 namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
 {
     [ServiceRegistration(typeof(IGrandTotalStockMovementsAppService), DependencyInjectionType.Scoped)]
     public class GrandTotalStockMovementsAppService : ApplicationService<GrandTotalStockMovementsResource>, IGrandTotalStockMovementsAppService
     {
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
         public GrandTotalStockMovementsAppService(IStringLocalizer<GrandTotalStockMovementsResource> l) : base(l)
         {
         }
-
-        GrandTotalStockMovementManager _manager { get; set; } = new GrandTotalStockMovementManager();
 
         [ValidationAspect(typeof(CreateGrandTotalStockMovementsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectGrandTotalStockMovementsDto>> CreateAsync(CreateGrandTotalStockMovementsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = ObjectMapper.Map<CreateGrandTotalStockMovementsDto, GrandTotalStockMovements>(input);
 
-                var addedEntity = await _uow.GrandTotalStockMovementsRepository.InsertAsync(entity);
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "GrandTotalStockMovements", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
+                {
+                    Amount = input.Amount,
+                    ProductID = input.ProductID,
+                    TotalConsumption = input.TotalConsumption,
+                    TotalGoodsIssue = input.TotalGoodsIssue,
+                    TotalGoodsReceipt = input.TotalGoodsReceipt,
+                    TotalProduction = input.TotalProduction,
+                    TotalPurchaseOrder = input.TotalPurchaseOrder,
+                    TotalPurchaseRequest = input.TotalPurchaseRequest,
+                    TotalSalesOrder = input.TotalSalesOrder,
+                    TotalReserved = input.TotalReserved,
+                    TotalSalesProposition = input.TotalSalesProposition,
+                    TotalWastage = input.TotalWastage,
+                    WarehouseID = input.WarehouseID,
+                    BranchID = input.BranchID,
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    Id = GuidGenerator.CreateGuid(),
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                });
 
-                return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(ObjectMapper.Map<GrandTotalStockMovements, SelectGrandTotalStockMovementsDto>(addedEntity));
+                var grandTotalStockMovements = queryFactory.Insert<SelectGrandTotalStockMovementsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.GrandTotalStockMovements, LogType.Insert, grandTotalStockMovements.Id);
+
+                return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(grandTotalStockMovements);
             }
         }
 
@@ -47,29 +78,55 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _uow.GrandTotalStockMovementsRepository.DeleteAsync(id);
+                var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
 
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "GrandTotalStockMovements", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
+                var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
 
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.GrandTotalStockMovements, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(grandTotalStockMovements);
             }
+
         }
 
 
         public async Task<IDataResult<SelectGrandTotalStockMovementsDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.GrandTotalStockMovementsRepository.GetAsync(t => t.Id == id, t => t.Branches, t => t.Warehouses, t => t.Products);
-                var mappedEntity = ObjectMapper.Map<GrandTotalStockMovements, SelectGrandTotalStockMovementsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "GrandTotalStockMovements", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(mappedEntity);
+                var query = queryFactory
+                        .Query().From(Tables.GrandTotalStockMovements).Select<GrandTotalStockMovements>(gt => new {gt.WarehouseID,gt.TotalWastage,gt.TotalSalesProposition,gt.TotalSalesOrder,gt.TotalReserved,gt.TotalPurchaseRequest,gt.TotalPurchaseOrder,gt.TotalProduction,gt.TotalGoodsReceipt,gt.TotalGoodsIssue,gt.TotalConsumption,gt.ProductID,gt.Id,gt.DataOpenStatusUserId,gt.DataOpenStatus,gt.BranchID,gt.Amount })
+                            .Join<Branches>
+                            (
+                                b => new { BranchCode = b.Code, BranchID = b.Id },
+                                nameof(GrandTotalStockMovements.BranchID),
+                                nameof(Branches.Id),
+                                JoinType.Left
+                            )
+                            .Join<Products>
+                            (
+                                p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                                nameof(GrandTotalStockMovements.ProductID),
+                                nameof(Products.Id),
+                                JoinType.Left
+                            )
+                             .Join<Warehouses>
+                            (
+                                w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
+                                nameof(GrandTotalStockMovements.WarehouseID),
+                                nameof(Warehouses.Id),
+                                JoinType.Left
+                            )
+                            .Where(new { Id = id }, false, false, Tables.GrandTotalStockMovements);
+
+                var grandTotalStockMovement = queryFactory.Get<SelectGrandTotalStockMovementsDto>(query);
+
+                LogsAppService.InsertLogToDatabase(grandTotalStockMovement, grandTotalStockMovement, LoginedUserService.UserId, Tables.GrandTotalStockMovements, LogType.Get, id);
+
+                return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(grandTotalStockMovement);
+
             }
         }
 
@@ -77,14 +134,39 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListGrandTotalStockMovementsDto>>> GetListAsync(ListGrandTotalStockMovementsParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.GrandTotalStockMovementsRepository.GetListAsync(null, t => t.Branches, t => t.Warehouses, t => t.Products);
 
-                var mappedEntity = ObjectMapper.Map<List<GrandTotalStockMovements>, List<ListGrandTotalStockMovementsDto>>(list.ToList());
+                var query = queryFactory
+                   .Query()
+                   .From(Tables.GrandTotalStockMovements).Select<GrandTotalStockMovements>(gt => new { gt.WarehouseID, gt.TotalWastage, gt.TotalSalesProposition, gt.TotalSalesOrder, gt.TotalReserved, gt.TotalPurchaseRequest, gt.TotalPurchaseOrder, gt.TotalProduction, gt.TotalGoodsReceipt, gt.TotalGoodsIssue, gt.TotalConsumption, gt.ProductID, gt.Id, gt.DataOpenStatusUserId, gt.DataOpenStatus, gt.BranchID, gt.Amount })
+                            .Join<Branches>
+                            (
+                                b => new { BranchCode = b.Code},
+                                nameof(GrandTotalStockMovements.BranchID),
+                                nameof(Branches.Id),
+                                JoinType.Left
+                            )
+                            .Join<Products>
+                            (
+                                p => new {  ProductCode = p.Code, ProductName = p.Name },
+                                nameof(GrandTotalStockMovements.ProductID),
+                                nameof(Products.Id),
+                                JoinType.Left
+                            )
+                             .Join<Warehouses>
+                            (
+                                w => new { WarehouseCode = w.Code },
+                                nameof(GrandTotalStockMovements.WarehouseID),
+                                nameof(Warehouses.Id),
+                                JoinType.Left
+                            ).Where(null, true, true, Tables.Periods);
 
-                return new SuccessDataResult<IList<ListGrandTotalStockMovementsDto>>(mappedEntity);
+                var grandTotalStockMovements = queryFactory.GetList<ListGrandTotalStockMovementsDto>(query).ToList();
+
+                return new SuccessDataResult<IList<ListGrandTotalStockMovementsDto>>(grandTotalStockMovements);
             }
+
         }
 
 
@@ -92,21 +174,48 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectGrandTotalStockMovementsDto>> UpdateAsync(UpdateGrandTotalStockMovementsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.GrandTotalStockMovementsRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory.Query().From(Tables.GrandTotalStockMovements).Select("*").Where(new { Id = input.Id }, false, false, "");
+                var entity = queryFactory.Get<GrandTotalStockMovements>(entityQuery);
 
-                var mappedEntity = ObjectMapper.Map<UpdateGrandTotalStockMovementsDto, GrandTotalStockMovements>(input);
+                var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
+                {
+                    Amount = input.Amount,
+                    ProductID = input.ProductID,
+                    TotalConsumption = input.TotalConsumption,
+                    TotalGoodsIssue = input.TotalGoodsIssue,
+                    TotalGoodsReceipt = input.TotalGoodsReceipt,
+                    TotalProduction = input.TotalProduction,
+                    TotalPurchaseOrder = input.TotalPurchaseOrder,
+                    TotalPurchaseRequest = input.TotalPurchaseRequest,
+                    TotalSalesOrder = input.TotalSalesOrder,
+                    TotalReserved = input.TotalReserved,
+                    TotalSalesProposition = input.TotalSalesProposition,
+                    TotalWastage = input.TotalWastage,
+                    WarehouseID = input.WarehouseID,
+                    Id = input.Id,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    BranchID = input.BranchID,
+                    LastModifierId = LoginedUserService.UserId
+                }).Where(new { Id = input.Id }, false, false, "");
 
-                await _uow.GrandTotalStockMovementsRepository.UpdateAsync(mappedEntity);
-                var before = ObjectMapper.Map<GrandTotalStockMovements, UpdateGrandTotalStockMovementsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "GrandTotalStockMovements", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
+                var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
 
-                await _uow.SaveChanges();
 
-                return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(ObjectMapper.Map<GrandTotalStockMovements, SelectGrandTotalStockMovementsDto>(mappedEntity));
+                LogsAppService.InsertLogToDatabase(entity, grandTotalStockMovements, LoginedUserService.UserId, Tables.GrandTotalStockMovements, LogType.Update, entity.Id);
+
+
+                return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(grandTotalStockMovements);
             }
+
         }
 
         public Task<IDataResult<SelectGrandTotalStockMovementsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
