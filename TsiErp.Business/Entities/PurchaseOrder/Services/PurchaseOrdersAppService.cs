@@ -531,42 +531,42 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                        .Select<PurchaseOrders>(po => new { po.WorkOrderCreationDate, po.WarehouseID, po.TotalVatExcludedAmount, po.TotalVatAmount, po.TotalDiscountAmount, po.Time_, po.SpecialCode, po.ShippingAdressID, po.PurchaseOrderState, po.ProductionOrderID, po.PaymentPlanID, po.NetAmount, po.LinkedPurchaseRequestID, po.Id, po.GrossAmount, po.FicheNo, po.ExchangeRate, po.Description_, po.Date_, po.DataOpenStatusUserId, po.DataOpenStatus, po.CurrentAccountCardID, po.CurrencyID, po.BranchID })
                        .Join<PaymentPlans>
                         (
-                            pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
+                            pp => new {  PaymentPlanName = pp.Name },
                             nameof(PurchaseOrders.PaymentPlanID),
                             nameof(PaymentPlans.Id),
                             JoinType.Left
                         )
                         .Join<Branches>
                         (
-                            b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                            b => new {  BranchCode = b.Code, BranchName = b.Name },
                             nameof(PurchaseOrders.BranchID),
                             nameof(Branches.Id),
                             JoinType.Left
                         )
                          .Join<Warehouses>
                         (
-                            w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
+                            w => new {  WarehouseCode = w.Code },
                             nameof(PurchaseOrders.WarehouseID),
                             nameof(Warehouses.Id),
                             JoinType.Left
                         )
                          .Join<Currencies>
                         (
-                            c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
+                            c => new {  CurrencyCode = c.Code },
                             nameof(PurchaseOrders.CurrencyID),
                             nameof(Currencies.Id),
                             JoinType.Left
                         )
                          .Join<CurrentAccountCards>
                         (
-                            ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                            ca => new { CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
                             nameof(PurchaseOrders.CurrentAccountCardID),
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left)
 
                              .Join<ShippingAdresses>
                         (
-                            sa => new { ShippingAdressID = sa.Id, ShippingAdressCode = sa.Code, ShippingAdressName = sa.Name },
+                            sa => new {  ShippingAdressCode = sa.Code, ShippingAdressName = sa.Name },
                             nameof(PurchaseOrders.ShippingAdressID),
                             nameof(ShippingAdresses.Id),
                             JoinType.Left

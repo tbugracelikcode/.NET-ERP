@@ -1,29 +1,27 @@
-﻿using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Microsoft.Extensions.Localization;
+using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
-using TsiErp.Localizations.Resources.PurchasePrices.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TSI.QueryBuilder.BaseClasses;
+using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.PurchasePrice.BusinessRules;
 using TsiErp.Business.Entities.PurchasePrice.Validations;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.Branch;
+using TsiErp.Entities.Entities.Currency;
+using TsiErp.Entities.Entities.CurrentAccountCard;
+using TsiErp.Entities.Entities.Product;
 using TsiErp.Entities.Entities.PurchasePrice;
 using TsiErp.Entities.Entities.PurchasePrice.Dtos;
 using TsiErp.Entities.Entities.PurchasePriceLine;
 using TsiErp.Entities.Entities.PurchasePriceLine.Dtos;
-using Microsoft.Extensions.Localization;
-using TSI.QueryBuilder.BaseClasses;
-using TsiErp.Entities.TableConstant;
-using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
-using TSI.QueryBuilder.Constants.Join;
-using TsiErp.Entities.Entities.Currency;
-using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.WareHouse;
-using TsiErp.Entities.Entities.CurrentAccountCard;
-using TsiErp.Entities.Entities.Product;
+using TsiErp.Entities.TableConstant;
+using TsiErp.Localizations.Resources.PurchasePrices.Page;
 
 namespace TsiErp.Business.Entities.PurchasePrice.Services
 {
@@ -208,7 +206,6 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                             cr => new { CurrencyID = cr.Id, CurrencyCode = cr.Code },
                             nameof(PurchasePriceLines.CurrencyID),
                             nameof(Currencies.Id),
-                            "CurrencyLine",
                             JoinType.Left
                         )
                         .Where(new { PurchasePriceID = id }, false, false, Tables.PurchasePriceLines);
@@ -340,28 +337,28 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                        .Select<PurchasePrices>(pp => new { pp.WarehouseID, pp.StartDate, pp.Name, pp.IsApproved, pp.IsActive, pp.Id, pp.EndDate, pp.DataOpenStatusUserId, pp.DataOpenStatus, pp.CurrentAccountCardID, pp.CurrencyID, pp.Code, pp.BranchID })
                        .Join<Currencies>
                         (
-                            c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
+                            c => new {  CurrencyCode = c.Code },
                             nameof(PurchasePrices.CurrencyID),
                             nameof(Currencies.Id),
                             JoinType.Left
                         )
                         .Join<Branches>
                         (
-                            b => new { BranchID = b.Id, BranchCode = b.Code },
+                            b => new {  BranchCode = b.Code },
                             nameof(PurchasePrices.BranchID),
                             nameof(Branches.Id),
                             JoinType.Left
                         )
                         .Join<Warehouses>
                         (
-                            w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
+                            w => new {  WarehouseCode = w.Code },
                             nameof(PurchasePrices.WarehouseID),
                             nameof(Warehouses.Id),
                             JoinType.Left
                         )
                         .Join<CurrentAccountCards>
                         (
-                            ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                            ca => new {  CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
                             nameof(PurchasePrices.CurrentAccountCardID),
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left

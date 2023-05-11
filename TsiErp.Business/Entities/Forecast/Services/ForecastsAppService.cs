@@ -297,21 +297,21 @@ namespace TsiErp.Business.Entities.Forecast.Services
                                .Select<Forecasts>(f => new { f.ValidityStartDate, f.ValidityEndDate, f.Total, f.PeriodID, f.LineNumber, f.Id, f.Description_, f.DataOpenStatusUserId, f.DataOpenStatus, f.CurrentAccountCardID, f.Code, f.BranchID })
                                .Join<Periods>
                                  (
-                                     p => new { PeriodID = p.Id, PeriodCode = p.Code, PeriodName = p.Name },
+                                     p => new { PeriodCode = p.Code, PeriodName = p.Name },
                                      nameof(Forecasts.PeriodID),
                                      nameof(Periods.Id),
                                      JoinType.Left
                                  )
                                  .Join<Branches>
                                  (
-                                     b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                                     b => new { BranchCode = b.Code, BranchName = b.Name },
                                      nameof(Forecasts.BranchID),
                                      nameof(Branches.Id),
                                      JoinType.Left
                                  )
                                   .Join<CurrentAccountCards>
                                  (
-                                     ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                                     ca => new { CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
                                      nameof(Forecasts.CurrentAccountCardID),
                                      nameof(CurrentAccountCards.Id),
                                      JoinType.Left

@@ -253,7 +253,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                        .Select<ProductsOperations>(po => new { po.WorkCenterID, po.TemplateOperationID, po.ProductID, po.Name, po.IsActive, po.Id, po.DataOpenStatusUserId, po.DataOpenStatus, po.Code })
                        .Join<Products>
                         (
-                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                            p => new { ProductCode = p.Code, ProductName = p.Name },
                             nameof(ProductsOperations.ProductID),
                             nameof(Products.Id),
                             JoinType.Left

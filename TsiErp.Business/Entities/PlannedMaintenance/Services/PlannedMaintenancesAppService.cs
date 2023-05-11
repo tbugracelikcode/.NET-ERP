@@ -297,14 +297,14 @@ namespace TsiErp.Business.Entities.PlannedMaintenance.Services
                                .Select<PlannedMaintenances>(pm => new { pm.Status, pm.StationID, pm.StartDate, pm.RemainingTime, pm.RegistrationNo, pm.PlannedTime, pm.PlannedDate, pm.PeriodTime, pm.PeriodID, pm.OccuredTime, pm.NumberofCaregivers, pm.Note_, pm.Id, pm.DataOpenStatusUserId, pm.DataOpenStatus, pm.CompletionDate, pm.Caregiver })
                                .Join<Stations>
                                 (
-                                    s => new { StationID = s.Id, StationCode = s.Code },
+                                    s => new {  StationCode = s.Code },
                                     nameof(PlannedMaintenances.StationID),
                                     nameof(Stations.Id),
                                     JoinType.Left
                                 )
                                 .Join<MaintenancePeriods>
                                 (
-                                    mp => new { PeriodID = mp.Id, PeriodName = mp.Name },
+                                    mp => new {  PeriodName = mp.Name },
                                     nameof(PlannedMaintenances.PeriodID),
                                     nameof(MaintenancePeriods.Id),
                                     JoinType.Left

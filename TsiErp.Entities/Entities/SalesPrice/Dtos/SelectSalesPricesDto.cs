@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.SalesPriceLine.Dtos;
 
 namespace TsiErp.Entities.Entities.SalesPrice.Dtos
@@ -79,7 +80,7 @@ namespace TsiErp.Entities.Entities.SalesPrice.Dtos
         /// Onay
         /// </summary>
         public bool IsApproved { get; set; }
-
+        [NoDatabaseAction]
         public List<SelectSalesPriceLinesDto> SelectSalesPriceLines { get; set; }
     }
 }
