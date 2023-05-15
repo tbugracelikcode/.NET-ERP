@@ -13,35 +13,74 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.TechnicalDrawing;
 using TsiErp.Entities.Entities.TechnicalDrawing.Dtos;
 using Microsoft.Extensions.Localization;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Entities.TableConstant;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
+using TsiErp.Entities.Entities.Product;
+using TSI.QueryBuilder.Constants.Join;
 
 namespace TsiErp.Business.Entities.TechnicalDrawing.Services
 {
     [ServiceRegistration(typeof(ITechnicalDrawingsAppService), DependencyInjectionType.Scoped)]
     public class TechnicalDrawingsAppService : ApplicationService<TechnicalDrawingsResource>, ITechnicalDrawingsAppService
     {
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
         public TechnicalDrawingsAppService(IStringLocalizer<TechnicalDrawingsResource> l) : base(l)
         {
         }
-
-        TechnicalDrawingManager _manager { get; set; } = new TechnicalDrawingManager();
 
         [ValidationAspect(typeof(CreateTechnicalDrawingsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectTechnicalDrawingsDto>> CreateAsync(CreateTechnicalDrawingsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.CodeControl(_uow.TechnicalDrawingsRepository, input.RevisionNo,L);
+                var listQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("*").Where(new { RevisionNo = input.RevisionNo }, false, false, "");
 
-                var entity = ObjectMapper.Map<CreateTechnicalDrawingsDto, TechnicalDrawings>(input);
+                var list = queryFactory.ControlList<TechnicalDrawings>(listQuery).ToList();
 
-                var addedEntity = await _uow.TechnicalDrawingsRepository.InsertAsync(entity);
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "TechnicalDrawings", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                #region Code Control 
 
-                return new SuccessDataResult<SelectTechnicalDrawingsDto>(ObjectMapper.Map<TechnicalDrawings, SelectTechnicalDrawingsDto>(addedEntity));
+                if (list.Count > 0)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["CodeControlManager"]);
+                }
+
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.TechnicalDrawings).Insert(new CreateTechnicalDrawingsDto
+                {
+                    CustomerApproval = input.CustomerApproval,
+                    RevisionNo = input.RevisionNo,
+                    RevisionDate = input.RevisionDate,
+                    ProductID = input.ProductID,
+                    Drawer = input.Drawer,
+                    DrawingDomain = input.DrawingDomain,
+                    DrawingFilePath = input.DrawingFilePath,
+                    DrawingNo = input.DrawingNo,
+                    IsApproved = input.IsApproved,
+                    SampleApproval = input.SampleApproval,
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    Description_ = input.Description_,
+                    Id = GuidGenerator.CreateGuid(),
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                });
+
+                var technicalDrawings = queryFactory.Insert<SelectTechnicalDrawingsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.TechnicalDrawings, LogType.Insert, technicalDrawings.Id);
+
+                return new SuccessDataResult<SelectTechnicalDrawingsDto>(technicalDrawings);
             }
         }
 
@@ -49,28 +88,40 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.DeleteControl(_uow.TechnicalDrawingsRepository, id);
-                await _uow.TechnicalDrawingsRepository.DeleteAsync(id);
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "TechnicalDrawings", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
+                var query = queryFactory.Query().From(Tables.TechnicalDrawings).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
+                var technicalDrawings = queryFactory.Update<SelectTechnicalDrawingsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.TechnicalDrawings, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectTechnicalDrawingsDto>(technicalDrawings);
             }
         }
 
 
         public async Task<IDataResult<SelectTechnicalDrawingsDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.TechnicalDrawingsRepository.GetAsync(t => t.Id == id, t => t.Products);
-                var mappedEntity = ObjectMapper.Map<TechnicalDrawings, SelectTechnicalDrawingsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "TechnicalDrawings", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectTechnicalDrawingsDto>(mappedEntity);
+                var query = queryFactory
+                        .Query().From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(td => new {td.ProductID,td.RevisionDate,td.RevisionNo,td.SampleApproval,td.CustomerApproval,td.DataOpenStatus,td.DataOpenStatusUserId,td.DrawingFilePath,td.Description_,td.Drawer,td.DrawingDomain,td.DrawingNo,td.Id,td.IsApproved})
+                            .Join<Products>
+                            (
+                                p => new { ProductID = p.Id, ProductCode = p.Code, ProductName  = p.Name},
+                                nameof(TechnicalDrawings.ProductID),
+                                nameof(Products.Id),
+                                JoinType.Left
+                            )
+                            .Where(new { Id = id }, false, false, Tables.TechnicalDrawings);
+
+                var technicalDrawing = queryFactory.Get<SelectTechnicalDrawingsDto>(query);
+
+                LogsAppService.InsertLogToDatabase(technicalDrawing, technicalDrawing, LoginedUserService.UserId, Tables.TechnicalDrawings, LogType.Get, id);
+
+                return new SuccessDataResult<SelectTechnicalDrawingsDto>(technicalDrawing);
+
             }
         }
 
@@ -78,36 +129,47 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListTechnicalDrawingsDto>>> GetListAsync(ListTechnicalDrawingsParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                IList<TechnicalDrawings> list;
 
-                if (input.ProductId == null)
-                {
-                    list = await _uow.TechnicalDrawingsRepository.GetListAsync(null, t => t.Products);
-                }
-                else
-                {
-                    list = await _uow.TechnicalDrawingsRepository.GetListAsync(t => t.ProductID == input.ProductId, t => t.Products);
-                }
+                var query = queryFactory
+                   .Query()
+                   .From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(td => new { td.ProductID, td.RevisionDate, td.RevisionNo, td.SampleApproval, td.CustomerApproval, td.DataOpenStatus, td.DataOpenStatusUserId, td.DrawingFilePath, td.Description_, td.Drawer, td.DrawingDomain, td.DrawingNo, td.Id, td.IsApproved })
+                            .Join<Products>
+                            (
+                                p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                                nameof(TechnicalDrawings.ProductID),
+                                nameof(Products.Id),
+                                JoinType.Left
+                            ).Where(null, false, false, Tables.TechnicalDrawings);
 
+                var technicalDrawings = queryFactory.GetList<ListTechnicalDrawingsDto>(query).ToList();
 
-                var mappedEntity = ObjectMapper.Map<List<TechnicalDrawings>, List<ListTechnicalDrawingsDto>>(list.ToList());
-
-                return new SuccessDataResult<IList<ListTechnicalDrawingsDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListTechnicalDrawingsDto>>(technicalDrawings);
             }
+
         }
 
 
         public async Task<IDataResult<IList<SelectTechnicalDrawingsDto>>> GetSelectListAsync(Guid productId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.TechnicalDrawingsRepository.GetListAsync(t => t.ProductID == productId, t => t.Products);
 
-                var mappedEntity = ObjectMapper.Map<List<TechnicalDrawings>, List<SelectTechnicalDrawingsDto>>(list.ToList());
+                var query = queryFactory
+                   .Query()
+                   .From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(td => new { td.ProductID, td.RevisionDate, td.RevisionNo, td.SampleApproval, td.CustomerApproval, td.DataOpenStatus, td.DataOpenStatusUserId, td.DrawingFilePath, td.Description_, td.Drawer, td.DrawingDomain, td.DrawingNo, td.Id, td.IsApproved })
+                            .Join<Products>
+                            (
+                                p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                                nameof(TechnicalDrawings.ProductID),
+                                nameof(Products.Id),
+                                JoinType.Left
+                            ).Where(new { ProductID = productId }, false, false, Tables.TechnicalDrawings);
 
-                return new SuccessDataResult<IList<SelectTechnicalDrawingsDto>>(mappedEntity);
+                var technicalDrawings = queryFactory.GetList<SelectTechnicalDrawingsDto>(query).ToList();
+
+                return new SuccessDataResult<IList<SelectTechnicalDrawingsDto>>(technicalDrawings);
             }
         }
 
@@ -116,39 +178,97 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectTechnicalDrawingsDto>> UpdateAsync(UpdateTechnicalDrawingsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.TechnicalDrawingsRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("*").Where(new { Id = input.Id }, false, false, "");
+                var entity = queryFactory.Get<TechnicalDrawings>(entityQuery);
 
-                await _manager.UpdateControl(_uow.TechnicalDrawingsRepository, input.RevisionNo, input.Id, entity,L);
+                #region Update Control
 
-                var mappedEntity = ObjectMapper.Map<UpdateTechnicalDrawingsDto, TechnicalDrawings>(input);
+                var listQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("*").Where(new { RevisionNo = input.RevisionNo }, false, false, "");
+                var list = queryFactory.GetList<TechnicalDrawings>(listQuery).ToList();
 
-                await _uow.TechnicalDrawingsRepository.UpdateAsync(mappedEntity);
-                var before = ObjectMapper.Map<TechnicalDrawings, UpdateTechnicalDrawingsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "TechnicalDrawings", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                if (list.Count > 0 && entity.RevisionNo != input.RevisionNo)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["UpdateControlManager"]);
+                }
 
-                return new SuccessDataResult<SelectTechnicalDrawingsDto>(ObjectMapper.Map<TechnicalDrawings, SelectTechnicalDrawingsDto>(mappedEntity));
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.TechnicalDrawings).Update(new UpdateTechnicalDrawingsDto
+                {
+                    CustomerApproval = input.CustomerApproval,
+                    RevisionNo = input.RevisionNo,
+                    RevisionDate = input.RevisionDate,
+                    ProductID = input.ProductID,
+                    Drawer = input.Drawer,
+                    DrawingDomain = input.DrawingDomain,
+                    DrawingFilePath = input.DrawingFilePath,
+                    DrawingNo = input.DrawingNo,
+                    IsApproved = input.IsApproved,
+                    SampleApproval = input.SampleApproval,
+                    Description_ = input.Description_,
+                    Id = input.Id,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId
+                }).Where(new { Id = input.Id }, false, false, "");
+
+                var technicalDrawings = queryFactory.Update<SelectTechnicalDrawingsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(entity, technicalDrawings, LoginedUserService.UserId, Tables.TechnicalDrawings, LogType.Update, entity.Id);
+
+                return new SuccessDataResult<SelectTechnicalDrawingsDto>(technicalDrawings);
             }
         }
 
         public async Task<IDataResult<SelectTechnicalDrawingsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.TechnicalDrawingsRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.TechnicalDrawings).Select("*").Where(new { Id = id }, false, false, "");
+                var entity = queryFactory.Get<TechnicalDrawings>(entityQuery);
 
-                var updatedEntity = await _uow.TechnicalDrawingsRepository.LockRow(entity.Id, lockRow, userId);
+                var query = queryFactory.Query().From(Tables.TechnicalDrawings).Update(new UpdateTechnicalDrawingsDto
+                {
+                    CustomerApproval = entity.CustomerApproval,
+                    RevisionNo = entity.RevisionNo,
+                    RevisionDate = entity.RevisionDate,
+                    ProductID = entity.ProductID,
+                    Drawer = entity.Drawer,
+                    DrawingDomain = entity.DrawingDomain,
+                    DrawingFilePath = entity.DrawingFilePath,
+                    DrawingNo = entity.DrawingNo,
+                    IsApproved = entity.IsApproved,
+                    SampleApproval = entity.SampleApproval,
+                    Description_ = entity.Description_,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                    Id = id,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId,
 
-                await _uow.SaveChanges();
+                }).Where(new { Id = id }, false, false, "");
 
-                var mappedEntity = ObjectMapper.Map<TechnicalDrawings, SelectTechnicalDrawingsDto>(updatedEntity);
+                var technicalDrawings = queryFactory.Update<SelectTechnicalDrawingsDto>(query, "Id", true);
 
-                return new SuccessDataResult<SelectTechnicalDrawingsDto>(mappedEntity);
+                return new SuccessDataResult<SelectTechnicalDrawingsDto>(technicalDrawings);
+
             }
+
         }
     }
 }

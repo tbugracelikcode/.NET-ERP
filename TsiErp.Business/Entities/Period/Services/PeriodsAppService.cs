@@ -73,7 +73,6 @@ namespace TsiErp.Business.Entities.Period.Services
 
                 return new SuccessDataResult<SelectPeriodsDto>(periods);
             }
-
         }
 
         [CacheRemoveAspect("Get")]
@@ -194,7 +193,6 @@ namespace TsiErp.Business.Entities.Period.Services
 
         public async Task<IDataResult<SelectPeriodsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-
             using (var connection = queryFactory.ConnectToDatabase())
             {
                 var entityQuery = queryFactory.Query().From(Tables.Periods).Select("*").Where(new { Id = id }, true, true, "");

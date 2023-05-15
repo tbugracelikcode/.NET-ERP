@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; 
+using Tsi.Core.Utilities.Results;
 using TsiErp.Localizations.Resources.ShippingAdresses.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
@@ -13,35 +13,76 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.ShippingAdress;
 using TsiErp.Entities.Entities.ShippingAdress.Dtos;
 using Microsoft.Extensions.Localization;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Entities.TableConstant;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
+using TsiErp.Entities.Entities.CurrentAccountCard;
+using TSI.QueryBuilder.Constants.Join;
 
 namespace TsiErp.Business.Entities.ShippingAdress.Services
 {
     [ServiceRegistration(typeof(IShippingAdressesAppService), DependencyInjectionType.Scoped)]
     public class ShippingAdressesAppService : ApplicationService<ShippingAdressesResource>, IShippingAdressesAppService
     {
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
         public ShippingAdressesAppService(IStringLocalizer<ShippingAdressesResource> l) : base(l)
         {
         }
-
-        ShippingAdressesManager _manager { get; set; } = new ShippingAdressesManager();
 
         [ValidationAspect(typeof(CreateShippingAdressesValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectShippingAdressesDto>> CreateAsync(CreateShippingAdressesDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.CodeControl(_uow.ShippingAdressesRepository, input.Code,L);
+                var listQuery = queryFactory.Query().From(Tables.ShippingAdresses).Select("*").Where(new { Code = input.Code }, false, false, "");
 
-                var entity = ObjectMapper.Map<CreateShippingAdressesDto, ShippingAdresses>(input);
+                var list = queryFactory.ControlList<ShippingAdresses>(listQuery).ToList();
 
-                var addedEntity = await _uow.ShippingAdressesRepository.InsertAsync(entity);
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "ShippingAdresses", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                #region Code Control 
 
-                return new SuccessDataResult<SelectShippingAdressesDto>(ObjectMapper.Map<ShippingAdresses, SelectShippingAdressesDto>(addedEntity));
+                if (list.Count > 0)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["CodeControlManager"]);
+                }
+
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.ShippingAdresses).Insert(new CreateShippingAdressesDto
+                {
+                    Adress1 = input.Adress1,
+                    Adress2 = input.Adress2,
+                    City = input.City,
+                    Country = input.Country,
+                    CustomerCardID = input.CustomerCardID,
+                    District = input.District,
+                    EMail = input.EMail,
+                    Fax = input.Fax,
+                    Phone = input.Phone,
+                    PostCode = input.PostCode,
+                    _Default = input._Default,
+                    Code = input.Code,
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    Id = GuidGenerator.CreateGuid(),
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                    Name = input.Name
+                });
+
+                var shippingAdresses = queryFactory.Insert<SelectShippingAdressesDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ShippingAdresses, LogType.Insert, shippingAdresses.Id);
+
+                return new SuccessDataResult<SelectShippingAdressesDto>(shippingAdresses);
             }
         }
 
@@ -49,29 +90,40 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.DeleteControl(_uow.ShippingAdressesRepository, id,L);
-                await _uow.ShippingAdressesRepository.DeleteAsync(id);
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "ShippingAdresses", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
+                var query = queryFactory.Query().From(Tables.ShippingAdresses).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
+                var shippingAdresses = queryFactory.Update<SelectShippingAdressesDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ShippingAdresses, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectShippingAdressesDto>(shippingAdresses);
             }
         }
 
 
         public async Task<IDataResult<SelectShippingAdressesDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.ShippingAdressesRepository.GetAsync(t => t.Id == id, t => t.CurrentAccountCards, t => t.SalesPropositions);
-                var mappedEntity = ObjectMapper.Map<ShippingAdresses, SelectShippingAdressesDto>(entity);
+                var query = queryFactory
+                        .Query().From(Tables.ShippingAdresses).Select<ShippingAdresses>(sh => new { sh.Adress1, sh.Adress2,sh.City,sh.Name,sh.Code,sh.Country,sh.CustomerCardID,sh.DataOpenStatus,sh._Default,sh.Fax,sh.DataOpenStatusUserId,sh.District,sh.Phone,sh.PostCode,sh.Id })
+                            .Join<CurrentAccountCards>
+                            (
+                                ca => new { CustomerCardID = ca.Id, CustomerCardCode = ca.Code, CustomerCardName= ca.Name },
+                                nameof(ShippingAdresses.CustomerCardID),
+                                nameof(CurrentAccountCards.Id),
+                                JoinType.Left
+                            )
+                            .Where(new { Id = id }, false, false, Tables.ShippingAdresses);
 
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "ShippingAdresses", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectShippingAdressesDto>(mappedEntity);
+                var shippingAdress = queryFactory.Get<SelectShippingAdressesDto>(query);
+
+                LogsAppService.InsertLogToDatabase(shippingAdress, shippingAdress, LoginedUserService.UserId, Tables.ShippingAdresses, LogType.Get, id);
+
+                return new SuccessDataResult<SelectShippingAdressesDto>(shippingAdress);
+
             }
         }
 
@@ -79,14 +131,25 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListShippingAdressesDto>>> GetListAsync(ListShippingAdressesParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.ShippingAdressesRepository.GetListAsync(null, x => x.CurrentAccountCards, t => t.SalesPropositions);
 
-                var mappedEntity = ObjectMapper.Map<List<ShippingAdresses>, List<ListShippingAdressesDto>>(list.ToList());
+                var query = queryFactory
+                   .Query()
+                   .From(Tables.ShippingAdresses).Select<ShippingAdresses>(sh => new { sh.Adress1, sh.Adress2, sh.City, sh.Name, sh.Code, sh.Country, sh.CustomerCardID, sh.DataOpenStatus, sh._Default, sh.Fax, sh.DataOpenStatusUserId, sh.District, sh.Phone, sh.PostCode, sh.Id })
+                            .Join<CurrentAccountCards>
+                            (
+                                ca => new { CustomerCardCode = ca.Code, CustomerCardName = ca.Name },
+                                nameof(ShippingAdresses.CustomerCardID),
+                                nameof(CurrentAccountCards.Id),
+                                JoinType.Left
+                            ).Where(null, false, false, Tables.ShippingAdresses);
 
-                return new SuccessDataResult<IList<ListShippingAdressesDto>>(mappedEntity);
+                var shippingAdresses = queryFactory.GetList<ListShippingAdressesDto>(query).ToList();
+
+                return new SuccessDataResult<IList<ListShippingAdressesDto>>(shippingAdresses);
             }
+
         }
 
 
@@ -94,39 +157,104 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectShippingAdressesDto>> UpdateAsync(UpdateShippingAdressesDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.ShippingAdressesRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory.Query().From(Tables.ShippingAdresses).Select("*").Where(new { Id = input.Id }, false, false, "");
+                var entity = queryFactory.Get<ShippingAdresses>(entityQuery);
 
-                await _manager.UpdateControl(_uow.ShippingAdressesRepository, input.Code, input.Id, entity,L);
+                #region Update Control
 
-                var mappedEntity = ObjectMapper.Map<UpdateShippingAdressesDto, ShippingAdresses>(input);
+                var listQuery = queryFactory.Query().From(Tables.ShippingAdresses).Select("*").Where(new { Code = input.Code }, false, false, "");
+                var list = queryFactory.GetList<ShippingAdresses>(listQuery).ToList();
 
-                await _uow.ShippingAdressesRepository.UpdateAsync(mappedEntity);
+                if (list.Count > 0 && entity.Code != input.Code)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["UpdateControlManager"]);
+                }
 
-                var before = ObjectMapper.Map<ShippingAdresses, UpdateShippingAdressesDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "ShippingAdresses", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                #endregion
 
-                return new SuccessDataResult<SelectShippingAdressesDto>(ObjectMapper.Map<ShippingAdresses, SelectShippingAdressesDto>(mappedEntity));
+                var query = queryFactory.Query().From(Tables.ShippingAdresses).Update(new UpdateShippingAdressesDto
+                {
+                    Adress1 = input.Adress1,
+                    Adress2 = input.Adress2,
+                    City = input.City,
+                    Country = input.Country,
+                    CustomerCardID = input.CustomerCardID,
+                    District = input.District,
+                    EMail = input.EMail,
+                    Fax = input.Fax,
+                    Phone = input.Phone,
+                    PostCode = input.PostCode,
+                    _Default = input._Default,
+                    Code = input.Code,
+                    Name = input.Name,
+                    Id = input.Id,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId
+                }).Where(new { Id = input.Id }, false, false, "");
+
+                var shippingAdresses = queryFactory.Update<SelectShippingAdressesDto>(query, "Id", true);
+
+
+                LogsAppService.InsertLogToDatabase(entity, shippingAdresses, LoginedUserService.UserId, Tables.ShippingAdresses, LogType.Update, entity.Id);
+
+
+                return new SuccessDataResult<SelectShippingAdressesDto>(shippingAdresses);
             }
+
         }
 
         public async Task<IDataResult<SelectShippingAdressesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.ShippingAdressesRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.ShippingAdresses).Select("*").Where(new { Id = id }, false, false, "");
+                var entity = queryFactory.Get<ShippingAdresses>(entityQuery);
 
-                var updatedEntity = await _uow.ShippingAdressesRepository.LockRow(entity.Id, lockRow, userId);
+                var query = queryFactory.Query().From(Tables.ShippingAdresses).Update(new UpdateShippingAdressesDto
+                {
+                    Adress1 = entity.Adress1,
+                    Adress2 = entity.Adress2,
+                    City = entity.City,
+                    Country = entity.Country,
+                    CustomerCardID = entity.CustomerCardID,
+                    District = entity.District,
+                    EMail = entity.EMail,
+                    Fax = entity.Fax,
+                    Phone = entity.Phone,
+                    PostCode = entity.PostCode,
+                    _Default = entity._Default,
+                    Code = entity.Code,
+                    Name = entity.Name,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                    Id = id,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId,
 
-                await _uow.SaveChanges();
+                }).Where(new { Id = id }, false, false, "");
 
-                var mappedEntity = ObjectMapper.Map<ShippingAdresses, SelectShippingAdressesDto>(updatedEntity);
+                var shippingAdresses = queryFactory.Update<SelectShippingAdressesDto>(query, "Id", true);
 
-                return new SuccessDataResult<SelectShippingAdressesDto>(mappedEntity);
+                return new SuccessDataResult<SelectShippingAdressesDto>(shippingAdresses);
+
             }
+
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; 
+using Tsi.Core.Utilities.Results;
 using TsiErp.Localizations.Resources.ExchangeRates.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
@@ -12,12 +12,18 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.ExchangeRate;
 using TsiErp.Entities.Entities.ExchangeRate.Dtos;
 using Microsoft.Extensions.Localization;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Entities.TableConstant;
+using TsiErp.Entities.Entities.Currency;
+using TSI.QueryBuilder.Constants.Join;
 
 namespace TsiErp.Business.Entities.ExchangeRate.Services
 {
     [ServiceRegistration(typeof(IExchangeRatesAppService), DependencyInjectionType.Scoped)]
     public class ExchangeRatesAppService : ApplicationService<ExchangeRatesResource>, IExchangeRatesAppService
     {
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
         public ExchangeRatesAppService(IStringLocalizer<ExchangeRatesResource> l) : base(l)
         {
         }
@@ -26,17 +32,34 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectExchangeRatesDto>> CreateAsync(CreateExchangeRatesDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = ObjectMapper.Map<CreateExchangeRatesDto, ExchangeRates>(input);
 
-                var addedEntity = await _uow.ExchangeRatesRepository.InsertAsync(entity);
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "ExchangeRates", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                var query = queryFactory.Query().From(Tables.ExchangeRates).Insert(new CreateExchangeRatesDto
+                {
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    Id = GuidGenerator.CreateGuid(),
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                    BuyingRate = input.BuyingRate,
+                    CurrencyID = input.CurrencyID,
+                    Date = input.Date,
+                    EffectiveBuyingRate = input.EffectiveBuyingRate,
+                    EffectiveSaleRate = input.EffectiveSaleRate,
+                    SaleRate = input.SaleRate,
+                });
 
-                return new SuccessDataResult<SelectExchangeRatesDto>(ObjectMapper.Map<ExchangeRates, SelectExchangeRatesDto>(addedEntity));
+                var exchangeRates = queryFactory.Insert<SelectExchangeRatesDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ExchangeRates, LogType.Insert, exchangeRates.Id);
+
+                return new SuccessDataResult<SelectExchangeRatesDto>(exchangeRates);
             }
         }
 
@@ -44,27 +67,41 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _uow.ExchangeRatesRepository.DeleteAsync(id);
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "ExchangeRates", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
+                var query = queryFactory.Query().From(Tables.ExchangeRates).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
+                var exchangeRates = queryFactory.Update<SelectExchangeRatesDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ExchangeRates, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectExchangeRatesDto>(exchangeRates);
             }
+
         }
 
 
         public async Task<IDataResult<SelectExchangeRatesDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.ExchangeRatesRepository.GetAsync(t => t.Id == id, t => t.Currencies);
-                var mappedEntity = ObjectMapper.Map<ExchangeRates, SelectExchangeRatesDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "ExchangeRates", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectExchangeRatesDto>(mappedEntity);
+                var query = queryFactory
+                        .Query().From(Tables.ExchangeRates).Select<ExchangeRates>(e => new { e.CurrencyID, e.BuyingRate, e.SaleRate, e.EffectiveBuyingRate, e.EffectiveSaleRate, e.DataOpenStatus, e.DataOpenStatusUserId, e.Date, e.Id })
+                            .Join<Currencies>
+                            (
+                                c => new { CurrencyCode = c.Code, CurrencyID = c.Id },
+                                nameof(ExchangeRates.CurrencyID),
+                                nameof(Currencies.Id),
+                                JoinType.Left
+                            )
+                            .Where(new { Id = id }, false, false, Tables.ExchangeRates);
+
+                var exchangeRate = queryFactory.Get<SelectExchangeRatesDto>(query);
+
+                LogsAppService.InsertLogToDatabase(exchangeRate, exchangeRate, LoginedUserService.UserId, Tables.ExchangeRates, LogType.Get, id);
+
+                return new SuccessDataResult<SelectExchangeRatesDto>(exchangeRate);
+
             }
         }
 
@@ -72,13 +109,24 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListExchangeRatesDto>>> GetListAsync(ListExchangeRatesParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.ExchangeRatesRepository.GetListAsync(null, t => t.Currencies);
 
-                var mappedEntity = ObjectMapper.Map<List<ExchangeRates>, List<ListExchangeRatesDto>>(list.ToList());
+                var query = queryFactory
+                   .Query()
+                   .From(Tables.ExchangeRates)
+                   .Select<ExchangeRates>(e => new { e.CurrencyID, e.BuyingRate, e.SaleRate, e.EffectiveBuyingRate, e.EffectiveSaleRate, e.DataOpenStatus, e.DataOpenStatusUserId, e.Date, e.Id })
+                       .Join<Currencies>
+                       (
+                          c => new { CurrencyCode = c.Code },
+                           nameof(ExchangeRates.CurrencyID),
+                                nameof(Currencies.Id),
+                           JoinType.Left
+                       ).Where(null, false, false, Tables.ExchangeRates);
 
-                return new SuccessDataResult<IList<ListExchangeRatesDto>>(mappedEntity);
+                var exchangeRates = queryFactory.GetList<ListExchangeRatesDto>(query).ToList();
+
+                return new SuccessDataResult<IList<ListExchangeRatesDto>>(exchangeRates);
             }
         }
 
@@ -87,35 +135,73 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectExchangeRatesDto>> UpdateAsync(UpdateExchangeRatesDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.ExchangeRatesRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory.Query().From(Tables.ExchangeRates).Select("*").Where(new { Id = input.Id }, false, false, "");
+                var entity = queryFactory.Get<ExchangeRates>(entityQuery);
 
-                var mappedEntity = ObjectMapper.Map<UpdateExchangeRatesDto, ExchangeRates>(input);
+                var query = queryFactory.Query().From(Tables.ExchangeRates).Update(new UpdateExchangeRatesDto
+                {
+                    Date = input.Date,
+                    EffectiveSaleRate = input.EffectiveSaleRate,
+                    EffectiveBuyingRate = input.EffectiveBuyingRate,
+                    SaleRate = input.SaleRate,
+                    BuyingRate = input.BuyingRate,
+                    CurrencyID = input.CurrencyID,
+                    Id = input.Id,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId
+                }).Where(new { Id = input.Id }, true, true, "");
 
-                await _uow.ExchangeRatesRepository.UpdateAsync(mappedEntity);
-                var before = ObjectMapper.Map<ExchangeRates, UpdateExchangeRatesDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "ExchangeRates", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                var exchangeRates = queryFactory.Update<SelectExchangeRatesDto>(query, "Id", true);
 
-                return new SuccessDataResult<SelectExchangeRatesDto>(ObjectMapper.Map<ExchangeRates, SelectExchangeRatesDto>(mappedEntity));
+
+                LogsAppService.InsertLogToDatabase(entity, exchangeRates, LoginedUserService.UserId, Tables.ExchangeRates, LogType.Update, entity.Id);
+
+
+                return new SuccessDataResult<SelectExchangeRatesDto>(exchangeRates);
             }
         }
 
         public async Task<IDataResult<SelectExchangeRatesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.ExchangeRatesRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.ExchangeRates).Select("*").Where(new { Id = id }, false, false, "");
+                var entity = queryFactory.Get<ExchangeRates>(entityQuery);
 
-                var updatedEntity = await _uow.ExchangeRatesRepository.LockRow(entity.Id, lockRow, userId);
+                var query = queryFactory.Query().From(Tables.ExchangeRates).Update(new UpdateExchangeRatesDto
+                {
+                    BuyingRate = entity.BuyingRate,
+                    CurrencyID = entity.CurrencyID,
+                    SaleRate = entity.SaleRate,
+                    EffectiveBuyingRate = entity.EffectiveBuyingRate,
+                    EffectiveSaleRate = entity.EffectiveSaleRate,
+                    Date = entity.Date,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                    Id = id,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId,
 
-                await _uow.SaveChanges();
+                }).Where(new { Id = id }, false, false, "");
 
-                var mappedEntity = ObjectMapper.Map<ExchangeRates, SelectExchangeRatesDto>(updatedEntity);
+                var exchangeRates = queryFactory.Update<SelectExchangeRatesDto>(query, "Id", true);
 
-                return new SuccessDataResult<SelectExchangeRatesDto>(mappedEntity);
+                return new SuccessDataResult<SelectExchangeRatesDto>(exchangeRates);
+
             }
         }
     }

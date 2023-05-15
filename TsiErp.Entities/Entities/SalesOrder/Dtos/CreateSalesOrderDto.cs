@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.SalesOrderLine.Dtos;
 using TsiErp.Entities.Entities.SalesPropositionLine.Dtos;
 using TsiErp.Entities.Enums;
@@ -107,7 +108,7 @@ namespace TsiErp.Entities.Entities.SalesOrder.Dtos
         public Guid? ShippingAdressID { get; set; }
 
 
-
+        [NoDatabaseAction]
         /// <summary>
         /// Sipariş Satırları
         /// </summary>

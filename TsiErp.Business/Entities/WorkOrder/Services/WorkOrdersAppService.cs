@@ -13,37 +13,90 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.WorkOrder;
 using TsiErp.Entities.Entities.WorkOrder.Dtos;
 using Microsoft.Extensions.Localization;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Entities.TableConstant;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
+using TsiErp.Entities.Entities.ProductionOrder;
+using TSI.QueryBuilder.Constants.Join;
+using TsiErp.Entities.Entities.SalesProposition;
+using TsiErp.Entities.Entities.Route;
+using TsiErp.Entities.Entities.ProductsOperation;
+using TsiErp.Entities.Entities.Station;
+using TsiErp.Entities.Entities.StationGroup;
+using TsiErp.Entities.Entities.Product;
+using TsiErp.Entities.Entities.CurrentAccountCard;
 
 namespace TsiErp.Business.Entities.WorkOrder.Services
 {
     [ServiceRegistration(typeof(IWorkOrdersAppService), DependencyInjectionType.Scoped)]
     public class WorkOrdersAppService : ApplicationService<WorkOrdersResource>, IWorkOrdersAppService
     {
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
         public WorkOrdersAppService(IStringLocalizer<WorkOrdersResource> l) : base(l)
         {
         }
-
-        WorkOrderManager _manager { get; set; } = new WorkOrderManager();
 
         [ValidationAspect(typeof(CreateWorkOrdersValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectWorkOrdersDto>> CreateAsync(CreateWorkOrdersDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.CodeControl(_uow.WorkOrdersRepository, input.Code,L);
+                var listQuery = queryFactory.Query().From(Tables.WorkOrders).Select("*").Where(new { Code = input.Code }, false, false, "");
 
-                var entity = ObjectMapper.Map<CreateWorkOrdersDto, WorkOrders>(input);
+                var list = queryFactory.ControlList<WorkOrders>(listQuery).ToList();
 
-                var addedEntity = await _uow.WorkOrdersRepository.InsertAsync(entity);
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "WorkOrders", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
+                #region Code Control 
 
-                await _uow.SaveChanges();
+                if (list.Count > 0)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["CodeControlManager"]);
+                }
 
+                #endregion
 
-                return new SuccessDataResult<SelectWorkOrdersDto>(ObjectMapper.Map<WorkOrders, SelectWorkOrdersDto>(addedEntity));
+                var query = queryFactory.Query().From(Tables.WorkOrders).Insert(new CreateWorkOrdersDto
+                {
+                    AdjustmentAndControlTime = input.AdjustmentAndControlTime,
+                    CurrentAccountCardID = input.CurrentAccountCardID,
+                    IsCancel = input.IsCancel,
+                    LineNr = input.LineNr,
+                    LinkedWorkOrderID = input.LinkedWorkOrderID,
+                    OccuredFinishDate = input.OccuredFinishDate,
+                    OccuredStartDate = input.OccuredStartDate,
+                    OperationTime = input.OperationTime,
+                    PlannedQuantity = input.PlannedQuantity,
+                    ProducedQuantity = input.ProducedQuantity,
+                    ProductID = input.ProductID,
+                    ProductionOrderID = input.ProductionOrderID,
+                    ProductsOperationID = input.ProductsOperationID,
+                    PropositionID = input.PropositionID,
+                    RouteID = input.RouteID,
+                    StationGroupID = input.StationGroupID,
+                    StationID = input.StationID,
+                    WorkOrderNo = input.WorkOrderNo,
+                    WorkOrderState = input.WorkOrderState,
+                    Code = input.Code,
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    Id = GuidGenerator.CreateGuid(),
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                });
+
+                var workOrders = queryFactory.Insert<SelectWorkOrdersDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.WorkOrders, LogType.Insert, workOrders.Id);
+
+                return new SuccessDataResult<SelectWorkOrdersDto>(workOrders);
             }
         }
 
@@ -51,58 +104,166 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _uow.WorkOrdersRepository.DeleteAsync(id);
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "WorkOrders", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
+                var query = queryFactory.Query().From(Tables.WorkOrders).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
+                var workOrders = queryFactory.Update<SelectWorkOrdersDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.WorkOrders, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectWorkOrdersDto>(workOrders);
             }
+
         }
 
 
         public async Task<IDataResult<SelectWorkOrdersDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.WorkOrdersRepository.GetAsync(t => t.Id == id,
-                t => t.ProductionOrders,
-                t => t.SalesPropositions,
-                t => t.Routes,
-                t => t.ProductsOperations,
-                t => t.Stations,
-                t => t.StationGroups,
-                t => t.Products,
-                t => t.CurrentAccountCards);
-                var mappedEntity = ObjectMapper.Map<WorkOrders, SelectWorkOrdersDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "WorkOrders", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectWorkOrdersDto>(mappedEntity);
+                var query = queryFactory
+                        .Query().From(Tables.WorkOrders).Select<WorkOrders>(wo => new {wo.WorkOrderState,wo.WorkOrderNo,wo.StationID,wo.StationGroupID,wo.RouteID,wo.PropositionID,wo.ProductsOperationID,wo.ProductionOrderID,wo.ProductID,wo.ProducedQuantity,wo.PlannedQuantity,wo.OperationTime,wo.OccuredStartDate,wo.OccuredFinishDate,wo.LinkedWorkOrderID,wo.LineNr,wo.IsCancel,wo.Id,wo.DataOpenStatusUserId,wo.DataOpenStatus,wo.CurrentAccountCardID,wo.Code,wo.AdjustmentAndControlTime})
+                            .Join<ProductionOrders>
+                            (
+                                po => new { ProductionOrderID = po.Id, ProductionOrderFicheNo  = po.FicheNo},
+                                nameof(WorkOrders.ProductionOrderID),
+                                nameof(ProductionOrders.Id),
+                                JoinType.Left
+                            )
+                             .Join<SalesPropositions>
+                            (
+                                sp => new { PropositionID  = sp.Id, PropositionFicheNo = sp.FicheNo},
+                                nameof(WorkOrders.PropositionID),
+                                nameof(SalesPropositions.Id),
+                                JoinType.Left
+                            )
+                            .Join<Routes>
+                            (
+                                r => new { RouteID = r.Id, RouteCode = r.Code },
+                                nameof(WorkOrders.RouteID),
+                                nameof(Routes.Id),
+                                JoinType.Left
+                            )
+                             .Join<ProductsOperations>
+                            (
+                                pro => new { ProductsOperationID = pro.Id, ProductsOperationCode = pro.Code},
+                                nameof(WorkOrders.ProductsOperationID),
+                                nameof(ProductsOperations.Id),
+                                JoinType.Left
+                            )
+                            .Join<Stations>
+                            (
+                                s => new { StationID = s.Id, StationCode = s.Code, StationName = s.Name },
+                                nameof(WorkOrders.StationID),
+                                nameof(Stations.Id),
+                                JoinType.Left
+                            )
+                             .Join<StationGroups>
+                            (
+                                sg => new { StationGroupID = sg.Id, StationGroupCode = sg.Code },
+                                nameof(WorkOrders.StationGroupID),
+                                nameof(StationGroups.Id),
+                                JoinType.Left
+                            )
+                             .Join<Products>
+                            (
+                                p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name},
+                                nameof(WorkOrders.ProductID),
+                                nameof(Products.Id),
+                                JoinType.Left
+                            )
+                               .Join<CurrentAccountCards>
+                            (
+                                ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                                nameof(WorkOrders.CurrentAccountCardID),
+                                nameof(CurrentAccountCards.Id),
+                                JoinType.Left
+                            )
+                            .Where(new { Id = id }, false, false, Tables.WorkOrders);
+
+                var workOrder = queryFactory.Get<SelectWorkOrdersDto>(query);
+
+                LogsAppService.InsertLogToDatabase(workOrder, workOrder, LoginedUserService.UserId, Tables.WorkOrders, LogType.Get, id);
+
+                return new SuccessDataResult<SelectWorkOrdersDto>(workOrder);
+
             }
+
         }
 
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListWorkOrdersDto>>> GetListAsync(ListWorkOrdersParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.WorkOrdersRepository.GetListAsync(null,
-                t => t.ProductionOrders,
-                t => t.SalesPropositions,
-                t => t.Routes,
-                t => t.ProductsOperations,
-                t => t.Stations,
-                t => t.StationGroups,
-                t => t.Products,
-                t => t.CurrentAccountCards);
 
-                var mappedEntity = ObjectMapper.Map<List<WorkOrders>, List<ListWorkOrdersDto>>(list.ToList());
+                var query = queryFactory
+                   .Query()
+                   .From(Tables.WorkOrders).Select<WorkOrders>(wo => new { wo.WorkOrderState, wo.WorkOrderNo, wo.StationID, wo.StationGroupID, wo.RouteID, wo.PropositionID, wo.ProductsOperationID, wo.ProductionOrderID, wo.ProductID, wo.ProducedQuantity, wo.PlannedQuantity, wo.OperationTime, wo.OccuredStartDate, wo.OccuredFinishDate, wo.LinkedWorkOrderID, wo.LineNr, wo.IsCancel, wo.Id, wo.DataOpenStatusUserId, wo.DataOpenStatus, wo.CurrentAccountCardID, wo.Code, wo.AdjustmentAndControlTime })
+                            .Join<ProductionOrders>
+                            (
+                                po => new { ProductionOrderFicheNo = po.FicheNo },
+                                nameof(WorkOrders.ProductionOrderID),
+                                nameof(ProductionOrders.Id),
+                                JoinType.Left
+                            )
+                             .Join<SalesPropositions>
+                            (
+                                sp => new { PropositionFicheNo = sp.FicheNo },
+                                nameof(WorkOrders.PropositionID),
+                                nameof(SalesPropositions.Id),
+                                JoinType.Left
+                            )
+                            .Join<Routes>
+                            (
+                                r => new { RouteCode = r.Code },
+                                nameof(WorkOrders.RouteID),
+                                nameof(Routes.Id),
+                                JoinType.Left
+                            )
+                             .Join<ProductsOperations>
+                            (
+                                pro => new { ProductsOperationCode = pro.Code },
+                                nameof(WorkOrders.ProductsOperationID),
+                                nameof(ProductsOperations.Id),
+                                JoinType.Left
+                            )
+                            .Join<Stations>
+                            (
+                                s => new { StationCode = s.Code, StationName = s.Name },
+                                nameof(WorkOrders.StationID),
+                                nameof(Stations.Id),
+                                JoinType.Left
+                            )
+                             .Join<StationGroups>
+                            (
+                                sg => new { StationGroupCode = sg.Code },
+                                nameof(WorkOrders.StationGroupID),
+                                nameof(StationGroups.Id),
+                                JoinType.Left
+                            )
+                             .Join<Products>
+                            (
+                                p => new { ProductCode = p.Code, ProductName = p.Name },
+                                nameof(WorkOrders.ProductID),
+                                nameof(Products.Id),
+                                JoinType.Left
+                            )
+                               .Join<CurrentAccountCards>
+                            (
+                                ca => new { CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                                nameof(WorkOrders.CurrentAccountCardID),
+                                nameof(CurrentAccountCards.Id),
+                                JoinType.Left
+                            ).Where(null, false, false, Tables.WorkOrders);
 
-                return new SuccessDataResult<IList<ListWorkOrdersDto>>(mappedEntity);
+                var workOrders = queryFactory.GetList<ListWorkOrdersDto>(query).ToList();
+
+                return new SuccessDataResult<IList<ListWorkOrdersDto>>(workOrders);
             }
+
         }
 
 
@@ -110,37 +271,114 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectWorkOrdersDto>> UpdateAsync(UpdateWorkOrdersDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.WorkOrdersRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory.Query().From(Tables.WorkOrders).Select("*").Where(new { Id = input.Id }, false, false, "");
+                var entity = queryFactory.Get<WorkOrders>(entityQuery);
 
-                await _manager.UpdateControl(_uow.WorkOrdersRepository, input.Code, input.Id, entity,L);
+                #region Update Control
 
-                var mappedEntity = ObjectMapper.Map<UpdateWorkOrdersDto, WorkOrders>(input);
+                var listQuery = queryFactory.Query().From(Tables.WorkOrders).Select("*").Where(new { Code = input.Code }, false, false, "");
+                var list = queryFactory.GetList<WorkOrders>(listQuery).ToList();
 
-                await _uow.WorkOrdersRepository.UpdateAsync(mappedEntity);
-                var before = ObjectMapper.Map<WorkOrders, UpdateWorkOrdersDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "WorkOrders", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                if (list.Count > 0 && entity.Code != input.Code)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["UpdateControlManager"]);
+                }
 
-                return new SuccessDataResult<SelectWorkOrdersDto>(ObjectMapper.Map<WorkOrders, SelectWorkOrdersDto>(mappedEntity));
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.WorkOrders).Update(new UpdateWorkOrdersDto
+                {
+                    AdjustmentAndControlTime = input.AdjustmentAndControlTime,
+                    CurrentAccountCardID = input.CurrentAccountCardID,
+                    IsCancel = input.IsCancel,
+                    LineNr = input.LineNr,
+                    LinkedWorkOrderID = input.LinkedWorkOrderID,
+                    OccuredFinishDate = input.OccuredFinishDate,
+                    OccuredStartDate = input.OccuredStartDate,
+                    OperationTime = input.OperationTime,
+                    PlannedQuantity = input.PlannedQuantity,
+                    ProducedQuantity = input.ProducedQuantity,
+                    ProductID = input.ProductID,
+                    ProductionOrderID = input.ProductionOrderID,
+                    ProductsOperationID = input.ProductsOperationID,
+                    PropositionID = input.PropositionID,
+                    RouteID = input.RouteID,
+                    StationGroupID = input.StationGroupID,
+                    StationID = input.StationID,
+                    WorkOrderNo = input.WorkOrderNo,
+                    WorkOrderState = input.WorkOrderState,
+                    Code = input.Code,
+                    Id = input.Id,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId
+                }).Where(new { Id = input.Id }, false, false, "");
+
+                var workOrders = queryFactory.Update<SelectWorkOrdersDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(entity, workOrders, LoginedUserService.UserId, Tables.WorkOrders, LogType.Update, entity.Id);
+
+                return new SuccessDataResult<SelectWorkOrdersDto>(workOrders);
             }
+
         }
 
         public async Task<IDataResult<SelectWorkOrdersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.WorkOrdersRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.WorkOrders).Select("*").Where(new { Id = id }, false, false, "");
+                var entity = queryFactory.Get<WorkOrders>(entityQuery);
 
-                var updatedEntity = await _uow.WorkOrdersRepository.LockRow(entity.Id, lockRow, userId);
+                var query = queryFactory.Query().From(Tables.WorkOrders).Update(new UpdateWorkOrdersDto
+                {
+                    AdjustmentAndControlTime = entity.AdjustmentAndControlTime,
+                    CurrentAccountCardID = entity.CurrentAccountCardID,
+                    IsCancel = entity.IsCancel,
+                    LineNr = entity.LineNr,
+                    LinkedWorkOrderID = entity.LinkedWorkOrderID,
+                    OccuredFinishDate = entity.OccuredFinishDate,
+                    OccuredStartDate = entity.OccuredStartDate,
+                    OperationTime = entity.OperationTime,
+                    PlannedQuantity = entity.PlannedQuantity,
+                    ProducedQuantity = entity.ProducedQuantity,
+                    ProductID = entity.ProductID,
+                    ProductionOrderID = entity.ProductionOrderID,
+                    ProductsOperationID = entity.ProductsOperationID,
+                    PropositionID = entity.PropositionID,
+                    RouteID = entity.RouteID,
+                    StationGroupID = entity.StationGroupID,
+                    StationID = entity.StationID,
+                    WorkOrderNo = entity.WorkOrderNo,
+                    WorkOrderState = entity.WorkOrderState,
+                    Code = entity.Code,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                    Id = id,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId,
 
-                await _uow.SaveChanges();
+                }).Where(new { Id = id }, false, false, "");
 
-                var mappedEntity = ObjectMapper.Map<WorkOrders, SelectWorkOrdersDto>(updatedEntity);
+                var workOrders = queryFactory.Update<SelectWorkOrdersDto>(query, "Id", true);
 
-                return new SuccessDataResult<SelectWorkOrdersDto>(mappedEntity);
+                return new SuccessDataResult<SelectWorkOrdersDto>(workOrders);
+
             }
         }
     }

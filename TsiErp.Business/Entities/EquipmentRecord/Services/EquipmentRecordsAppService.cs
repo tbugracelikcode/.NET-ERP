@@ -13,36 +13,78 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.EquipmentRecord;
 using TsiErp.Entities.Entities.EquipmentRecord.Dtos;
 using Microsoft.Extensions.Localization;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Entities.TableConstant;
+using TsiErp.Entities.Entities.Department;
+using TSI.QueryBuilder.Constants.Join;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 
 namespace TsiErp.Business.Entities.EquipmentRecord.Services
 {
     [ServiceRegistration(typeof(IEquipmentRecordsAppService), DependencyInjectionType.Scoped)]
     public class EquipmentRecordsAppService : ApplicationService<EquipmentRecordsResource>, IEquipmentRecordsAppService
     {
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
         public EquipmentRecordsAppService(IStringLocalizer<EquipmentRecordsResource> l) : base(l)
         {
         }
 
-        EquipmentRecordManager _manager { get; set; } = new EquipmentRecordManager();
 
 
         [ValidationAspect(typeof(CreateEquipmentRecorsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEquipmentRecordsDto>> CreateAsync(CreateEquipmentRecordsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.CodeControl(_uow.EquipmentRecordsRepository, input.Code,L);
+                var listQuery = queryFactory.Query().From(Tables.EquipmentRecords).Select("*").Where(new { Code = input.Code }, false, false, "");
 
-                var entity = ObjectMapper.Map<CreateEquipmentRecordsDto, EquipmentRecords>(input);
+                var list = queryFactory.ControlList<EquipmentRecords>(listQuery).ToList();
 
-                var addedEntity = await _uow.EquipmentRecordsRepository.InsertAsync(entity);
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "EquipmentRecords", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                #region Code Control 
 
-                return new SuccessDataResult<SelectEquipmentRecordsDto>(ObjectMapper.Map<EquipmentRecords, SelectEquipmentRecordsDto>(addedEntity));
+                if (list.Count > 0)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["CodeControlManager"]);
+                }
+
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.EquipmentRecords).Insert(new CreateEquipmentRecordsDto
+                {
+                    Code = input.Code,
+                    Department = input.Department,
+                    Cancel = input.Cancel,
+                    CancellationDate = input.CancellationDate,
+                    CancellationReason = input.CancellationReason,
+                    EquipmentSerialNo = input.EquipmentSerialNo,
+                    Frequency = input.Frequency,
+                    MeasuringAccuracy = input.MeasuringAccuracy,
+                    MeasuringRange = input.MeasuringRange,
+                    RecordDate = input.RecordDate,
+                    Responsible = input.Responsible,
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    Id = GuidGenerator.CreateGuid(),
+                    IsActive = true,
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                    Name = input.Name
+                });
+
+                var equipmentRecords = queryFactory.Insert<SelectEquipmentRecordsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.EquipmentRecords, LogType.Insert, equipmentRecords.Id);
+
+                return new SuccessDataResult<SelectEquipmentRecordsDto>(equipmentRecords);
             }
         }
 
@@ -50,29 +92,40 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.DeleteControl(_uow.EquipmentRecordsRepository, id,L);
-                await _uow.EquipmentRecordsRepository.DeleteAsync(id);
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "EquipmentRecords", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
+                var query = queryFactory.Query().From(Tables.EquipmentRecords).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+
+                var equipmentRecords = queryFactory.Update<SelectEquipmentRecordsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.EquipmentRecords, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectEquipmentRecordsDto>(equipmentRecords);
             }
         }
 
 
         public async Task<IDataResult<SelectEquipmentRecordsDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.EquipmentRecordsRepository.GetAsync(t => t.Id == id, t => t.Departments, t => t.CalibrationRecords, t => t.CalibrationVerifications);
-                var mappedEntity = ObjectMapper.Map<EquipmentRecords, SelectEquipmentRecordsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "EquipmentRecords", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                var query = queryFactory
+                        .Query().From(Tables.EquipmentRecords).Select<EquipmentRecords>(e => new { e.Cancel, e.CancellationDate, e.CancellationReason, e.RecordDate, e.Code, e.DataOpenStatus, e.DataOpenStatusUserId, e.Department, e.EquipmentSerialNo, e.Frequency, e.MeasuringAccuracy, e.MeasuringRange, e.Name, e.Responsible, e.IsActive, e.Id })
+                            .Join<Departments>
+                            (
+                                d => new { DepartmentName = d.Name, Department = d.Id },
+                                nameof(EquipmentRecords.Department),
+                                nameof(Departments.Id),
+                                JoinType.Left
+                            )
+                            .Where(new { Id = id }, true, true, Tables.EquipmentRecords);
 
-                return new SuccessDataResult<SelectEquipmentRecordsDto>(mappedEntity);
+                var equipmentRecord = queryFactory.Get<SelectEquipmentRecordsDto>(query);
+
+                LogsAppService.InsertLogToDatabase(equipmentRecord, equipmentRecord, LoginedUserService.UserId, Tables.EquipmentRecords, LogType.Get, id);
+
+                return new SuccessDataResult<SelectEquipmentRecordsDto>(equipmentRecord);
+
             }
         }
 
@@ -80,13 +133,24 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListEquipmentRecordsDto>>> GetListAsync(ListEquipmentRecordsParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.EquipmentRecordsRepository.GetListAsync(t => t.IsActive == input.IsActive, t => t.Departments, t => t.CalibrationRecords, t => t.CalibrationVerifications);
 
-                var mappedEntity = ObjectMapper.Map<List<EquipmentRecords>, List<ListEquipmentRecordsDto>>(list.ToList());
+                var query = queryFactory
+                   .Query()
+                   .From(Tables.EquipmentRecords)
+                   .Select<EquipmentRecords>(e => new { e.Cancel, e.CancellationDate, e.CancellationReason, e.RecordDate, e.Code, e.DataOpenStatus, e.DataOpenStatusUserId, e.Department, e.EquipmentSerialNo, e.Frequency, e.MeasuringAccuracy, e.MeasuringRange, e.Name, e.Responsible, e.IsActive, e.Id })
+                       .Join<Departments>
+                       (
+                           d => new { DepartmentName = d.Name },
+                           nameof(EquipmentRecords.Department),
+                           nameof(Departments.Id),
+                           JoinType.Left
+                       ).Where(null, true, true, Tables.EquipmentRecords);
 
-                return new SuccessDataResult<IList<ListEquipmentRecordsDto>>(mappedEntity);
+                var equipmentRecords = queryFactory.GetList<ListEquipmentRecordsDto>(query).ToList();
+
+                return new SuccessDataResult<IList<ListEquipmentRecordsDto>>(equipmentRecords);
             }
         }
 
@@ -95,37 +159,101 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectEquipmentRecordsDto>> UpdateAsync(UpdateEquipmentRecordsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.EquipmentRecordsRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory.Query().From(Tables.EquipmentRecords).Select("*").Where(new { Id = input.Id }, true, true, "");
+                var entity = queryFactory.Get<EquipmentRecords>(entityQuery);
 
-                await _manager.UpdateControl(_uow.EquipmentRecordsRepository, input.Code, input.Id, entity,L);
+                #region Update Control
 
-                var mappedEntity = ObjectMapper.Map<UpdateEquipmentRecordsDto, EquipmentRecords>(input);
+                var listQuery = queryFactory.Query().From(Tables.EquipmentRecords).Select("*").Where(new { Code = input.Code }, false, false, "");
+                var list = queryFactory.GetList<EquipmentRecords>(listQuery).ToList();
 
-                await _uow.EquipmentRecordsRepository.UpdateAsync(mappedEntity);
-                var before = ObjectMapper.Map<EquipmentRecords, UpdateEquipmentRecordsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "EquipmentRecords", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                if (list.Count > 0 && entity.Code != input.Code)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["UpdateControlManager"]);
+                }
 
-                return new SuccessDataResult<SelectEquipmentRecordsDto>(ObjectMapper.Map<EquipmentRecords, SelectEquipmentRecordsDto>(mappedEntity));
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.EquipmentRecords).Update(new UpdateEquipmentRecordsDto
+                {
+                    Code = input.Code,
+                    Name = input.Name,
+                    Id = input.Id,
+                    IsActive = input.IsActive,
+                    Responsible = input.Responsible,
+                    MeasuringRange = input.MeasuringRange,
+                    MeasuringAccuracy = input.MeasuringAccuracy,
+                    Frequency = input.Frequency,
+                    Cancel = input.Cancel,
+                    CancellationDate = input.CancellationDate,
+                    CancellationReason = input.CancellationReason,
+                    Department = input.Department,
+                    EquipmentSerialNo = input.EquipmentSerialNo,
+                    RecordDate = input.RecordDate,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId
+                }).Where(new { Id = input.Id }, true, true, "");
+
+                var equipmentRecords = queryFactory.Update<SelectEquipmentRecordsDto>(query, "Id", true);
+
+
+                LogsAppService.InsertLogToDatabase(entity, equipmentRecords, LoginedUserService.UserId, Tables.EquipmentRecords, LogType.Update, entity.Id);
+
+
+                return new SuccessDataResult<SelectEquipmentRecordsDto>(equipmentRecords);
             }
         }
 
         public async Task<IDataResult<SelectEquipmentRecordsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.EquipmentRecordsRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.EquipmentRecords).Select("*").Where(new { Id = id }, true, true, "");
+                var entity = queryFactory.Get<EquipmentRecords>(entityQuery);
 
-                var updatedEntity = await _uow.EquipmentRecordsRepository.LockRow(entity.Id, lockRow, userId);
+                var query = queryFactory.Query().From(Tables.Periods).Update(new UpdateEquipmentRecordsDto
+                {
+                    Code = entity.Code,
+                    Name = entity.Name,
+                    IsActive = entity.IsActive,
+                    Responsible = entity.Responsible,
+                    MeasuringRange = entity.MeasuringRange,
+                    MeasuringAccuracy = entity.MeasuringAccuracy,
+                    Frequency = entity.Frequency,
+                    Cancel = entity.Cancel,
+                    CancellationDate = entity.CancellationDate,
+                    CancellationReason = entity.CancellationReason,
+                    Department = entity.Department,
+                    EquipmentSerialNo = entity.EquipmentSerialNo,
+                    RecordDate = entity.RecordDate,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                    Id = id,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId,
 
-                await _uow.SaveChanges();
+                }).Where(new { Id = id }, true, true, "");
 
-                var mappedEntity = ObjectMapper.Map<EquipmentRecords, SelectEquipmentRecordsDto>(updatedEntity);
+                var equipmentRecords = queryFactory.Update<SelectEquipmentRecordsDto>(query, "Id", true);
 
-                return new SuccessDataResult<SelectEquipmentRecordsDto>(mappedEntity);
+                return new SuccessDataResult<SelectEquipmentRecordsDto>(equipmentRecords);
+
             }
         }
     }

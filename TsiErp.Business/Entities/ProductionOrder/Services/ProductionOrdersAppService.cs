@@ -13,93 +13,278 @@ using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionOrder.Dtos;
 using TsiErp.Business.BusinessCoreServices;
 using Microsoft.Extensions.Localization;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Entities.TableConstant;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
+using TsiErp.Entities.Entities.SalesOrder;
+using TSI.QueryBuilder.Constants.Join;
+using TsiErp.Entities.Entities.SalesOrderLine;
+using TsiErp.Entities.Entities.Product;
+using TsiErp.Entities.Entities.UnitSet;
+using TsiErp.Entities.Entities.BillsofMaterial;
+using TsiErp.Entities.Entities.Route;
+using TsiErp.Entities.Entities.SalesProposition;
+using TsiErp.Entities.Entities.SalesPropositionLine;
+using TsiErp.Entities.Entities.CurrentAccountCard;
 
 namespace TsiErp.Business.Entities.ProductionOrder.Services
 {
     [ServiceRegistration(typeof(IProductionOrdersAppService), DependencyInjectionType.Scoped)]
-    public class ProductionOrdersAppService :ApplicationService<ProductionOrdersResource>, IProductionOrdersAppService
+    public class ProductionOrdersAppService : ApplicationService<ProductionOrdersResource>, IProductionOrdersAppService
     {
+
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
         public ProductionOrdersAppService(IStringLocalizer<ProductionOrdersResource> l) : base(l)
         {
         }
-
-        ProductionOrderManager _manager { get; set; } = new ProductionOrderManager();
 
 
         [ValidationAspect(typeof(CreateProductionOrdersValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionOrdersDto>> CreateAsync(CreateProductionOrdersDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.CodeControl(_uow.ProductionOrdersRepository, input.FicheNo,L);
+                var listQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { FicheNo = input.FicheNo }, false, false, "");
 
-                var entity = ObjectMapper.Map<CreateProductionOrdersDto, ProductionOrders>(input);
+                var list = queryFactory.ControlList<ProductionOrders>(listQuery).ToList();
 
-                var addedEntity = await _uow.ProductionOrdersRepository.InsertAsync(entity);
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "ProductionOrders", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                #region Code Control 
 
-                return new SuccessDataResult<SelectProductionOrdersDto>(ObjectMapper.Map<ProductionOrders, SelectProductionOrdersDto>(addedEntity));
+                if (list.Count > 0)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["CodeControlManager"]);
+                }
+
+                #endregion
+
+
+                var query = queryFactory.Query().From(Tables.ProductionOrders).Insert(new CreateProductionOrdersDto
+                {
+                    BOMID = input.BOMID,
+                    FicheNo = input.FicheNo,
+                    CurrentAccountID = input.CurrentAccountID,
+                    CustomerOrderNo = input.CustomerOrderNo,
+                    EndDate = input.EndDate,
+                    FinishedProductID = input.FinishedProductID,
+                    LinkedProductID = input.LinkedProductID,
+                    LinkedProductionOrderID = input.LinkedProductionOrderID,
+                    OrderID = input.OrderID,
+                    OrderLineID = input.OrderLineID,
+                    PlannedQuantity = input.PlannedQuantity,
+                    ProducedQuantity = input.ProducedQuantity,
+                    ProductionOrderState = input.ProductionOrderState,
+                    ProductTreeID = input.ProductTreeID,
+                    ProductTreeLineID = input.ProductTreeLineID,
+                    PropositionID = input.PropositionID,
+                    PropositionLineID = input.PropositionLineID,
+                    RouteID = input.RouteID,
+                    StartDate = input.StartDate,
+                    UnitSetID = input.UnitSetID,
+                    Cancel_ = input.Cancel_,
+                    Date_ = input.Date_,
+                    Description_ = input.Description_,
+                    Id = GuidGenerator.CreateGuid(),
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                    IsDeleted = false
+                });
+
+
+                var productionOrders = queryFactory.Insert<SelectProductionOrdersDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductionOrders, LogType.Insert, productionOrders.Id);
+
+
+                return new SuccessDataResult<SelectProductionOrdersDto>(productionOrders);
             }
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _uow.ProductionOrdersRepository.DeleteAsync(id);
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "ProductionOrders", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
+                var query = queryFactory.Query().From(Tables.ProductionOrders).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
+                var productionOrders = queryFactory.Update<SelectProductionOrdersDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductionOrders, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectProductionOrdersDto>(productionOrders);
             }
+
         }
 
         public async Task<IDataResult<SelectProductionOrdersDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.ProductionOrdersRepository.GetAsync(t => t.Id == id,
-                t => t.SalesOrders,
-                t => t.SalesOrderLines,
-                t => t.Products,
-                t => t.UnitSets,
-                t => t.BillsofMaterials,
-                t => t.Routes,
-                t => t.SalesPropositions,
-                t => t.SalesPropositionLines,
-                t => t.CurrentAccountCards);
-                var mappedEntity = ObjectMapper.Map<ProductionOrders, SelectProductionOrdersDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "ProductionOrders", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectProductionOrdersDto>(mappedEntity);
+                var query = queryFactory
+                        .Query().From(Tables.ProductionOrders).Select<ProductionOrders>(po => new {po.PropositionID,po.BOMID,po.RouteID,po.PropositionLineID,po.OrderLineID,po.Cancel_,po.CurrentAccountID,po.CustomerOrderNo,po.DataOpenStatus,po.DataOpenStatusUserId,po.Date_,po.Description_,po.EndDate,po.FicheNo,po.FinishedProductID,po.Id,po.LinkedProductID,po.LinkedProductionOrderID,po.OrderID,po.PlannedQuantity,po.ProducedQuantity,po.ProductionOrderState,po.ProductTreeID,po.ProductTreeLineID,po.StartDate,po.UnitSetID})
+                            .Join<SalesOrders>
+                            (
+                                so => new { OrderFicheNo = so.FicheNo, OrderID = so.Id },
+                                nameof(ProductionOrders.OrderID),
+                                nameof(SalesOrders.Id),
+                                JoinType.Left
+                            )
+                            .Join<SalesOrderLines>
+                            (
+                                sol => new { OrderLineID = sol.Id},
+                                nameof(ProductionOrders.OrderLineID),
+                                nameof(SalesOrderLines.Id),
+                                JoinType.Left
+                            )
+                             .Join<Products>
+                            (
+                                p => new { FinishedProductCode = p.Code , FinishedProductName = p.Name},
+                                nameof(ProductionOrders.FinishedProductID),
+                                nameof(Products.Id),
+                                JoinType.Left
+                            )
+                             .Join<Products>
+                            (
+                                p => new { LinkedProductCode = p.Code, LinkedProductName = p.Name, LinkedProductID = p.Id },
+                                nameof(ProductionOrders.LinkedProductID),
+                                nameof(Products.Id),
+                                JoinType.Left
+                            )
+                             .Join<UnitSets>
+                            (
+                                u => new { UnitSetCode = u.Code, UnitSetID = u.Id },
+                                nameof(ProductionOrders.UnitSetID),
+                                nameof(UnitSets.Id),
+                                JoinType.Left
+                            )
+                             .Join<BillsofMaterials>
+                            (
+                                bom => new { BOMID = bom.Id, BOMCode = bom.Code, BOMName = bom.Name },
+                                nameof(ProductionOrders.BOMID),
+                                nameof(BillsofMaterials.Id),
+                                JoinType.Left
+                            )
+                             .Join<Routes>
+                            (
+                                r => new { RouteID = r.Id, RouteCode = r.Code, RouteName = r.Name },
+                                nameof(ProductionOrders.RouteID),
+                                nameof(Routes.Id),
+                                JoinType.Left
+                            )
+                             .Join<SalesPropositions>
+                            (
+                                sp => new { PropositionID = sp.Id, PropositionFicheNo = sp.FicheNo},
+                                nameof(ProductionOrders.PropositionID),
+                                nameof(SalesPropositions.Id),
+                                JoinType.Left
+                            )
+                             .Join<SalesPropositionLines>
+                            (
+                                spl => new { PropositionLineID = spl.Id },
+                                nameof(ProductionOrders.PropositionLineID),
+                                nameof(SalesPropositionLines.Id),
+                                JoinType.Left
+                            )
+                            .Join<CurrentAccountCards>
+                            (
+                                ca => new { CurrentAccountID = ca.Id, CurrentAccountCode = ca.Code, CurrentAccountName = ca.Name },
+                                nameof(ProductionOrders.CurrentAccountID),
+                                nameof(CurrentAccountCards.Id),
+                                JoinType.Left
+                            )
+                            .Where(new { Id = id }, false, false, Tables.ProductionOrders);
+
+                var productionOrder = queryFactory.Get<SelectProductionOrdersDto>(query);
+
+                LogsAppService.InsertLogToDatabase(productionOrder, productionOrder, LoginedUserService.UserId, Tables.ProductionOrders, LogType.Get, id);
+
+                return new SuccessDataResult<SelectProductionOrdersDto>(productionOrder);
+
             }
+
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductionOrdersDto>>> GetListAsync(ListProductionOrdersParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.ProductionOrdersRepository.GetListAsync(null,
-                t => t.SalesOrders,
-                t => t.SalesOrderLines,
-                t => t.Products,
-                t => t.UnitSets,
-                t => t.BillsofMaterials,
-                t => t.Routes,
-                t => t.SalesPropositions,
-                t => t.SalesPropositionLines,
-                t => t.CurrentAccountCards);
 
-                var mappedEntity = ObjectMapper.Map<List<ProductionOrders>, List<ListProductionOrdersDto>>(list.ToList());
+                var query = queryFactory
+                   .Query()
+                   .From(Tables.ProductionOrders).Select<ProductionOrders>(po => new { po.PropositionID, po.BOMID, po.RouteID, po.PropositionLineID, po.OrderLineID, po.Cancel_, po.CurrentAccountID, po.CustomerOrderNo, po.DataOpenStatus, po.DataOpenStatusUserId, po.Date_, po.Description_, po.EndDate, po.FicheNo, po.FinishedProductID, po.Id, po.LinkedProductID, po.LinkedProductionOrderID, po.OrderID, po.PlannedQuantity, po.ProducedQuantity, po.ProductionOrderState, po.ProductTreeID, po.ProductTreeLineID, po.StartDate, po.UnitSetID })
+                            .Join<SalesOrders>
+                            (
+                                so => new { OrderFicheNo = so.FicheNo},
+                                nameof(ProductionOrders.OrderID),
+                                nameof(SalesOrders.Id),
+                                JoinType.Left
+                            )
+                           
+                             .Join<Products>
+                            (
+                                p => new { FinishedProductCode = p.Code, FinishedProductName = p.Name },
+                                nameof(ProductionOrders.FinishedProductID),
+                                nameof(Products.Id),
+                                JoinType.Left
+                            )
+                             .Join<Products>
+                            (
+                                p => new { LinkedProductCode = p.Code, LinkedProductName = p.Name },
+                                nameof(ProductionOrders.LinkedProductID),
+                                nameof(Products.Id),
+                                JoinType.Left
+                            )
+                             .Join<UnitSets>
+                            (
+                                u => new { UnitSetCode = u.Code },
+                                nameof(ProductionOrders.UnitSetID),
+                                nameof(UnitSets.Id),
+                                JoinType.Left
+                            )
+                             .Join<BillsofMaterials>
+                            (
+                                bom => new {  BOMCode = bom.Code, BOMName = bom.Name },
+                                nameof(ProductionOrders.BOMID),
+                                nameof(BillsofMaterials.Id),
+                                JoinType.Left
+                            )
+                             .Join<Routes>
+                            (
+                                r => new { RouteCode = r.Code, RouteName = r.Name },
+                                nameof(ProductionOrders.RouteID),
+                                nameof(Routes.Id),
+                                JoinType.Left
+                            )
+                             .Join<SalesPropositions>
+                            (
+                                sp => new {  PropositionFicheNo = sp.FicheNo },
+                                nameof(ProductionOrders.PropositionID),
+                                nameof(SalesPropositions.Id),
+                                JoinType.Left
+                            )
+                            
+                            .Join<CurrentAccountCards>
+                            (
+                                ca => new { CurrentAccountCode = ca.Code, CurrentAccountName = ca.Name },
+                                nameof(ProductionOrders.CurrentAccountID),
+                                nameof(CurrentAccountCards.Id),
+                                JoinType.Left
+                            )
+                       .Where(null, false, false, Tables.ProductionOrders);
 
-                return new SuccessDataResult<IList<ListProductionOrdersDto>>(mappedEntity);
+                var productionOrders = queryFactory.GetList<ListProductionOrdersDto>(query).ToList();
+
+                return new SuccessDataResult<IList<ListProductionOrdersDto>>(productionOrders);
             }
         }
 
@@ -107,38 +292,123 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionOrdersDto>> UpdateAsync(UpdateProductionOrdersDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.ProductionOrdersRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { Id = input.Id }, false, false, "");
+                var entity = queryFactory.Get<ProductionOrders>(entityQuery);
 
-                await _manager.UpdateControl(_uow.ProductionOrdersRepository, input.FicheNo, input.Id, entity,L);
+                #region Update Control
 
-                var mappedEntity = ObjectMapper.Map<UpdateProductionOrdersDto, ProductionOrders>(input);
+                var listQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { FicheNo = input.FicheNo }, false, false, "");
+                var list = queryFactory.GetList<ProductionOrders>(listQuery).ToList();
 
-                await _uow.ProductionOrdersRepository.UpdateAsync(mappedEntity);
-                var before = ObjectMapper.Map<ProductionOrders, UpdateProductionOrdersDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "ProductionOrders", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
+                if (list.Count > 0 && entity.FicheNo != input.FicheNo)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["UpdateControlManager"]);
+                }
 
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectProductionOrdersDto>(ObjectMapper.Map<ProductionOrders, SelectProductionOrdersDto>(mappedEntity));
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.ProductionOrders).Update(new UpdateProductionOrdersDto
+                {
+                    BOMID = input.BOMID,
+                    FicheNo = input.FicheNo,
+                    CurrentAccountID = input.CurrentAccountID,
+                    CustomerOrderNo = input.CustomerOrderNo,
+                    EndDate = input.EndDate,
+                    FinishedProductID = input.FinishedProductID,
+                    LinkedProductID = input.LinkedProductID,
+                    LinkedProductionOrderID = input.LinkedProductionOrderID,
+                    OrderID = input.OrderID,
+                    OrderLineID = input.OrderLineID,
+                    PlannedQuantity = input.PlannedQuantity,
+                    ProducedQuantity = input.ProducedQuantity,
+                    ProductionOrderState = input.ProductionOrderState,
+                    ProductTreeID = input.ProductTreeID,
+                    ProductTreeLineID = input.ProductTreeLineID,
+                    PropositionID = input.PropositionID,
+                    PropositionLineID = input.PropositionLineID,
+                    RouteID = input.RouteID,
+                    StartDate = input.StartDate,
+                    UnitSetID = input.UnitSetID,
+                    Cancel_ = input.Cancel_,
+                    Date_ = input.Date_,
+                    Description_ = input.Description_,
+                    Id = input.Id,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId
+                }).Where(new { Id = input.Id }, false, false, "");
+
+                var productionOrders = queryFactory.Update<SelectProductionOrdersDto>(query, "Id", true);
+
+
+                LogsAppService.InsertLogToDatabase(entity, productionOrders, LoginedUserService.UserId, Tables.ProductionOrders, LogType.Update, entity.Id);
+
+
+                return new SuccessDataResult<SelectProductionOrdersDto>(productionOrders);
             }
         }
 
         public async Task<IDataResult<SelectProductionOrdersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.ProductionOrdersRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { Id = id }, false, false, "");
+                var entity = queryFactory.Get<ProductionOrders>(entityQuery);
 
-                var updatedEntity = await _uow.ProductionOrdersRepository.LockRow(entity.Id, lockRow, userId);
+                var query = queryFactory.Query().From(Tables.ProductionOrders).Update(new UpdateProductionOrdersDto
+                {
+                    BOMID = entity.BOMID,
+                    FicheNo = entity.FicheNo,
+                    CurrentAccountID = entity.CurrentAccountID,
+                    CustomerOrderNo = entity.CustomerOrderNo,
+                    EndDate = entity.EndDate,
+                    FinishedProductID = entity.FinishedProductID,
+                    LinkedProductID = entity.LinkedProductID,
+                    LinkedProductionOrderID = entity.LinkedProductionOrderID,
+                    OrderID = entity.OrderID,
+                    OrderLineID = entity.OrderLineID,
+                    PlannedQuantity = entity.PlannedQuantity,
+                    ProducedQuantity = entity.ProducedQuantity,
+                    ProductionOrderState = entity.ProductionOrderState,
+                    ProductTreeID = entity.ProductTreeID,
+                    ProductTreeLineID = entity.ProductTreeLineID,
+                    PropositionID = entity.PropositionID,
+                    PropositionLineID = entity.PropositionLineID,
+                    RouteID = entity.RouteID,
+                    StartDate = entity.StartDate,
+                    UnitSetID = entity.UnitSetID,
+                    Cancel_ = entity.Cancel_,
+                    Date_ = entity.Date_,
+                    Description_ = entity.Description_,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                    Id = id,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId,
 
-                await _uow.SaveChanges();
+                }).Where(new { Id = id }, false, false, "");
 
-                var mappedEntity = ObjectMapper.Map<ProductionOrders, SelectProductionOrdersDto>(updatedEntity);
+                var productionOrders = queryFactory.Update<SelectProductionOrdersDto>(query, "Id", true);
 
-                return new SuccessDataResult<SelectProductionOrdersDto>(mappedEntity);
+                return new SuccessDataResult<SelectProductionOrdersDto>(productionOrders);
+
             }
+
         }
     }
 }

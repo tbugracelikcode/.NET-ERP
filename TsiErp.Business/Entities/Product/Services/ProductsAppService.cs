@@ -13,36 +13,88 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.Product;
 using TsiErp.Entities.Entities.Product.Dtos;
 using Microsoft.Extensions.Localization;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Entities.TableConstant;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
+using TsiErp.Entities.Entities.UnitSet;
+using TSI.QueryBuilder.Constants.Join;
+using TsiErp.Entities.Entities.ProductGroup;
 
 namespace TsiErp.Business.Entities.Product.Services
 {
     [ServiceRegistration(typeof(IProductsAppService), DependencyInjectionType.Scoped)]
     public class ProductsAppService : ApplicationService<ProductsResource>, IProductsAppService
     {
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
         public ProductsAppService(IStringLocalizer<ProductsResource> l) : base(l)
         {
         }
-
-        ProductManager _manager { get; set; } = new ProductManager();
 
         [ValidationAspect(typeof(CreateProductsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductsDto>> CreateAsync(CreateProductsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.CodeControl(_uow.ProductsRepository, input.Code,L);
+                var listQuery = queryFactory.Query().From(Tables.Products).Select("*").Where(new { Code = input.Code }, false, false, "");
 
-                var entity = ObjectMapper.Map<CreateProductsDto, Products>(input);
+                var list = queryFactory.ControlList<Products>(listQuery).ToList();
 
-                var addedEntity = await _uow.ProductsRepository.InsertAsync(entity);
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "Products", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
+                #region Code Control 
 
-                await _uow.SaveChanges();
+                if (list.Count > 0)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["CodeControlManager"]);
+                }
 
-                return new SuccessDataResult<SelectProductsDto>(ObjectMapper.Map<Products, SelectProductsDto>(addedEntity));
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.Products).Insert(new CreateProductsDto
+                {
+                    Code = input.Code,
+                    CoatingWeight = input.CoatingWeight,
+                    Confirmation = input.Confirmation,
+                    EnglishDefinition = input.EnglishDefinition,
+                    ExportCatNo = input.ExportCatNo,
+                    FeatureSetID = input.FeatureSetID,
+                    GTIP = input.GTIP,
+                    ManufacturerCode = input.ManufacturerCode,
+                    OemRefNo = input.OemRefNo,
+                    OemRefNo2 = input.OemRefNo2,
+                    OemRefNo3 = input.OemRefNo3,
+                    PlannedWastage = input.PlannedWastage,
+                    ProductDescription = input.ProductDescription,
+                    ProductGrpID = input.ProductGrpID,
+                    ProductSize = input.ProductSize,
+                    ProductType = input.ProductType,
+                    PurchaseVAT = input.PurchaseVAT,
+                    SaleVAT = input.SaleVAT,
+                    SawWastage = input.SawWastage,
+                    SupplyForm = input.SupplyForm,
+                    TechnicalConfirmation = input.TechnicalConfirmation,
+                    UnitSetID = input.UnitSetID,
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    Id = GuidGenerator.CreateGuid(),
+                    IsActive = true,
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                    Name = input.Name
+                });
+
+                var products = queryFactory.Insert<SelectProductsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Products, LogType.Insert, products.Id);
+
+                return new SuccessDataResult<SelectProductsDto>(products);
             }
         }
 
@@ -50,28 +102,47 @@ namespace TsiErp.Business.Entities.Product.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.DeleteControl(_uow.ProductsRepository, id);
-                await _uow.ProductsRepository.DeleteAsync(id);
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Products", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
+                var query = queryFactory.Query().From(Tables.Products).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+
+                var products = queryFactory.Update<SelectProductsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Products, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectProductsDto>(products);
             }
         }
 
 
         public async Task<IDataResult<SelectProductsDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.ProductsRepository.GetAsync(t => t.Id == id, t => t.ProductGroups, y => y.UnitSets, y => y.SalesPropositionLines, y => y.BillsofMaterialLines, y => y.BillsofMaterials);
-                var mappedEntity = ObjectMapper.Map<Products, SelectProductsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "Products", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectProductsDto>(mappedEntity);
+                var query = queryFactory
+                        .Query().From(Tables.Products).Select<Products>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.DataOpenStatus, p.DataOpenStatusUserId, p.UnitSetID,p.CoatingWeight,p.Confirmation,p.EnglishDefinition,p.ExportCatNo,p.FeatureSetID,p.GTIP,p.ManufacturerCode,p.OemRefNo,p.OemRefNo2,p.OemRefNo3,p.TechnicalConfirmation,p.SupplyForm,p.SawWastage,p.SaleVAT,p.PurchaseVAT,p.ProductType,p.ProductSize,p.ProductGrpID,p.ProductDescription,p.PlannedWastage })
+                            .Join<UnitSets>
+                            (
+                                u => new { UnitSet = u.Code, UnitSetID = u.Id },
+                                nameof(Products.UnitSetID),
+                                nameof(UnitSets.Id),
+                                JoinType.Left
+                            )
+                            .Join<ProductGroups>
+                            (
+                                pg => new { ProductGrp = pg.Name, ProductGrpID = pg.Id },
+                                nameof(Products.ProductGrpID),
+                                nameof(ProductGroups.Id),
+                                JoinType.Left
+                            )
+                            .Where(new { Id = id }, true, true, Tables.Products);
+
+                var product = queryFactory.Get<SelectProductsDto>(query);
+
+                LogsAppService.InsertLogToDatabase(product, product, LoginedUserService.UserId, Tables.Products, LogType.Get, id);
+
+                return new SuccessDataResult<SelectProductsDto>(product);
+
             }
         }
 
@@ -79,14 +150,33 @@ namespace TsiErp.Business.Entities.Product.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductsDto>>> GetListAsync(ListProductsParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.ProductsRepository.GetListAsync(t => t.IsActive == input.IsActive, x => x.ProductGroups, y => y.UnitSets, y => y.SalesPropositionLines, y => y.BillsofMaterialLines, y => y.BillsofMaterials);
 
-                var mappedEntity = ObjectMapper.Map<List<Products>, List<ListProductsDto>>(list.ToList());
+                var query = queryFactory
+                   .Query()
+                   .From(Tables.Products)
+                  .Select<Products>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.DataOpenStatus, p.DataOpenStatusUserId, p.UnitSetID, p.CoatingWeight, p.Confirmation, p.EnglishDefinition, p.ExportCatNo, p.FeatureSetID, p.GTIP, p.ManufacturerCode, p.OemRefNo, p.OemRefNo2, p.OemRefNo3, p.TechnicalConfirmation, p.SupplyForm, p.SawWastage, p.SaleVAT, p.PurchaseVAT, p.ProductType, p.ProductSize, p.ProductGrpID, p.ProductDescription, p.PlannedWastage })
+                       .Join<UnitSets>
+                       (
+                            u => new { UnitSet = u.Code },
+                                nameof(Products.UnitSetID),
+                                nameof(UnitSets.Id),
+                           JoinType.Left
+                       )
+                       .Join<ProductGroups>
+                       (
+                            pg => new { ProductGrp = pg.Name },
+                                nameof(Products.ProductGrpID),
+                                nameof(ProductGroups.Id),
+                           JoinType.Left
+                        ).Where(null, true, true, Tables.Products);
 
-                return new SuccessDataResult<IList<ListProductsDto>>(mappedEntity);
+                var products = queryFactory.GetList<ListProductsDto>(query).ToList();
+
+                return new SuccessDataResult<IList<ListProductsDto>>(products);
             }
+
         }
 
 
@@ -94,37 +184,123 @@ namespace TsiErp.Business.Entities.Product.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductsDto>> UpdateAsync(UpdateProductsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.ProductsRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory.Query().From(Tables.Products).Select("*").Where(new { Id = input.Id }, true, true, "");
+                var entity = queryFactory.Get<Products>(entityQuery);
 
-                await _manager.UpdateControl(_uow.ProductsRepository, input.Code, input.Id, entity,L);
+                #region Update Control
 
-                var mappedEntity = ObjectMapper.Map<UpdateProductsDto, Products>(input);
+                var listQuery = queryFactory.Query().From(Tables.Products).Select("*").Where(new { Code = input.Code }, false, false, "");
+                var list = queryFactory.GetList<Products>(listQuery).ToList();
 
-                await _uow.ProductsRepository.UpdateAsync(mappedEntity);
-                var before = ObjectMapper.Map<Products, UpdateProductsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "Products", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                if (list.Count > 0 && entity.Code != input.Code)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["UpdateControlManager"]);
+                }
 
-                return new SuccessDataResult<SelectProductsDto>(ObjectMapper.Map<Products, SelectProductsDto>(mappedEntity));
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.Products).Update(new UpdateProductsDto
+                {
+                    Code = input.Code,
+                    Name = input.Name,
+                    Id = input.Id,
+                    IsActive = input.IsActive,
+                    CoatingWeight = input.CoatingWeight,
+                    Confirmation = input.Confirmation,
+                    EnglishDefinition = input.EnglishDefinition,
+                    ExportCatNo = input.ExportCatNo,
+                    FeatureSetID = input.FeatureSetID,
+                    GTIP = input.GTIP,
+                    ManufacturerCode = input.ManufacturerCode,
+                    OemRefNo = input.OemRefNo,
+                    OemRefNo2 = input.OemRefNo2,
+                    OemRefNo3 = input.OemRefNo3,
+                    PlannedWastage = input.PlannedWastage,
+                    ProductDescription = input.ProductDescription,
+                    ProductGrpID = input.ProductGrpID,
+                    ProductSize = input.ProductSize,
+                    ProductType = input.ProductType,
+                    PurchaseVAT = input.PurchaseVAT,
+                    SaleVAT = input.SaleVAT,
+                    SawWastage = input.SawWastage,
+                    SupplyForm = input.SupplyForm,
+                    TechnicalConfirmation = input.TechnicalConfirmation,
+                    UnitSetID = input.UnitSetID,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId
+                }).Where(new { Id = input.Id }, true, true, "");
+
+                var products = queryFactory.Update<SelectProductsDto>(query, "Id", true);
+
+
+                LogsAppService.InsertLogToDatabase(entity, products, LoginedUserService.UserId, Tables.Products, LogType.Update, entity.Id);
+
+
+                return new SuccessDataResult<SelectProductsDto>(products);
             }
         }
 
         public async Task<IDataResult<SelectProductsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.ProductsRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.Products).Select("*").Where(new { Id = id }, true, true, "");
+                var entity = queryFactory.Get<Products>(entityQuery);
 
-                var updatedEntity = await _uow.ProductsRepository.LockRow(entity.Id, lockRow, userId);
+                var query = queryFactory.Query().From(Tables.Products).Update(new UpdateProductsDto
+                {
+                    Code = entity.Code,
+                    Name = entity.Name,
+                    IsActive = entity.IsActive,
+                    CoatingWeight = entity.CoatingWeight,
+                    Confirmation = entity.Confirmation,
+                    EnglishDefinition = entity.EnglishDefinition,
+                    ExportCatNo = entity.ExportCatNo,
+                    FeatureSetID = entity.FeatureSetID,
+                    GTIP = entity.GTIP,
+                    ManufacturerCode = entity.ManufacturerCode,
+                    OemRefNo = entity.OemRefNo,
+                    OemRefNo2 = entity.OemRefNo2,
+                    OemRefNo3 = entity.OemRefNo3,
+                    PlannedWastage = entity.PlannedWastage,
+                    ProductDescription = entity.ProductDescription,
+                    ProductGrpID = entity.ProductGrpID,
+                    ProductSize = entity.ProductSize,
+                    ProductType = entity.ProductType,
+                    PurchaseVAT = entity.PurchaseVAT,
+                    SaleVAT = entity.SaleVAT,
+                    SawWastage = entity.SawWastage,
+                    SupplyForm = entity.SupplyForm,
+                    TechnicalConfirmation = entity.TechnicalConfirmation,
+                    UnitSetID = entity.UnitSetID,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                    Id = id,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId,
 
-                await _uow.SaveChanges();
+                }).Where(new { Id = id }, true, true, "");
 
-                var mappedEntity = ObjectMapper.Map<Products, SelectProductsDto>(updatedEntity);
+                var products = queryFactory.Update<SelectProductsDto>(query, "Id", true);
 
-                return new SuccessDataResult<SelectProductsDto>(mappedEntity);
+                return new SuccessDataResult<SelectProductsDto>(products);
+
             }
         }
     }

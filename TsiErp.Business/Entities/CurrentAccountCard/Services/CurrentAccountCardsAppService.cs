@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; 
+using Tsi.Core.Utilities.Results;
 using TsiErp.Localizations.Resources.CurrentAccountCards.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
@@ -13,65 +13,138 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.CurrentAccountCard;
 using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
 using Microsoft.Extensions.Localization;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Entities.TableConstant;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
+using TsiErp.Entities.Entities.Currency;
+using TSI.QueryBuilder.Constants.Join;
 
 namespace TsiErp.Business.Entities.CurrentAccountCard.Services
 {
     [ServiceRegistration(typeof(ICurrentAccountCardsAppService), DependencyInjectionType.Scoped)]
     public class CurrentAccountCardsAppService : ApplicationService<CurrentAccountCardsResource>, ICurrentAccountCardsAppService
     {
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
         public CurrentAccountCardsAppService(IStringLocalizer<CurrentAccountCardsResource> l) : base(l)
         {
         }
-
-        CurrentAccountCardManager _manager { get; set; } = new CurrentAccountCardManager();
 
         [ValidationAspect(typeof(CreateCurrentAccountCardsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCurrentAccountCardsDto>> CreateAsync(CreateCurrentAccountCardsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.CodeControl(_uow.CurrentAccountCardsRepository, input.Code,L);
+                var listQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("*").Where(new { Code = input.Code }, false, false, "");
 
-                var entity = ObjectMapper.Map<CreateCurrentAccountCardsDto, CurrentAccountCards>(input);
+                var list = queryFactory.ControlList<CurrentAccountCards>(listQuery).ToList();
 
-                var addedEntity = await _uow.CurrentAccountCardsRepository.InsertAsync(entity);
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "CurrentAccountCards", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                #region Code Control 
 
-                return new SuccessDataResult<SelectCurrentAccountCardsDto>(ObjectMapper.Map<CurrentAccountCards, SelectCurrentAccountCardsDto>(addedEntity));
+                if (list.Count > 0)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["CodeControlManager"]);
+                }
+
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.CurrentAccountCards).Insert(new CreateCurrentAccountCardsDto
+                {
+                    Code = input.Code,
+                    Address1 = input.Address1,
+                    Address2 = input.Address2,
+                    City = input.City,
+                    CoatingCustomer = input.CoatingCustomer,
+                    ContractSupplier = input.ContractSupplier,
+                    Country = input.Country,
+                    CurrencyID = input.CurrencyID,
+                    District = input.District,
+                    Email = input.Email,
+                    Fax = input.Fax,
+                    IDnumber = input.IDnumber,
+                    PlusPercentage = input.PlusPercentage,
+                    PostCode = input.PostCode,
+                    PrivateCode1 = input.PrivateCode1,
+                    PrivateCode2 = input.PrivateCode2,
+                    PrivateCode3 = input.PrivateCode3,
+                    PrivateCode4 = input.PrivateCode4,
+                    PrivateCode5 = input.PrivateCode5,
+                    Responsible = input.Responsible,
+                    SaleContract = input.SaleContract,
+                    ShippingAddress = input.ShippingAddress,
+                    SoleProprietorship = input.SoleProprietorship,
+                    Supplier = input.Supplier,
+                    SupplierNo = input.SupplierNo,
+                    TaxAdministration = input.TaxAdministration,
+                    TaxNumber = input.TaxNumber,
+                    Tel1 = input.Tel1,
+                    Tel2 = input.Tel2,
+                    Type = input.Type,
+                    Web = input.Web,
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    Id = GuidGenerator.CreateGuid(),
+                    IsActive = true,
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                    Name = input.Name
+                });
+
+                var currentAccountCards = queryFactory.Insert<SelectCurrentAccountCardsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.CurrentAccountCards, LogType.Insert, currentAccountCards.Id);
+
+                return new SuccessDataResult<SelectCurrentAccountCardsDto>(currentAccountCards);
             }
+
         }
 
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.DeleteControl(_uow.CurrentAccountCardsRepository, id,L);
-                await _uow.CurrentAccountCardsRepository.DeleteAsync(id);
+                var query = queryFactory.Query().From(Tables.CurrentAccountCards).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
 
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "CurrentAccountCards", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
+                var currentAccountCards = queryFactory.Update<SelectCurrentAccountCardsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.CurrentAccountCards, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectCurrentAccountCardsDto>(currentAccountCards);
             }
         }
 
 
         public async Task<IDataResult<SelectCurrentAccountCardsDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.CurrentAccountCardsRepository.GetAsync(t => t.Id == id, t => t.Currencies, y => y.ShippingAdresses, y => y.SalesPropositions);
-                var mappedEntity = ObjectMapper.Map<CurrentAccountCards, SelectCurrentAccountCardsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "CurrentAccountCards", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectCurrentAccountCardsDto>(mappedEntity);
+                var query = queryFactory
+                        .Query().From(Tables.CurrentAccountCards).Select<CurrentAccountCards>(ca => new { ca.IDnumber, ca.Address2, ca.Address1, ca.City, ca.CoatingCustomer, ca.Code, ca.ContractProductionTrackings, ca.ContractSupplier, ca.Country, ca.CurrencyID, ca.DataOpenStatus, ca.DataOpenStatusUserId, ca.District, ca.Email, ca.Fax, ca.TaxNumber, ca.Tel1, ca.Tel2, ca.Type, ca.Web, ca.TaxAdministration, ca.SupplierNo, ca.Supplier, ca.SoleProprietorship, ca.ShippingAddress, ca.SaleContract, ca.Responsible, ca.PrivateCode5, ca.PrivateCode4, ca.PrivateCode3, ca.PrivateCode2, ca.PrivateCode1, ca.PostCode, ca.PlusPercentage, ca.Name })
+                            .Join<Currencies>
+                            (
+                                c => new { Currency = c.Code, CurrencyID = c.Id },
+                                nameof(CurrentAccountCards.CurrencyID),
+                                nameof(Currencies.Id),
+                                JoinType.Left
+                            )
+                            .Where(new { Id = id }, true, true, Tables.Periods);
+
+                var currentAccountCard = queryFactory.Get<SelectCurrentAccountCardsDto>(query);
+
+                LogsAppService.InsertLogToDatabase(currentAccountCard, currentAccountCard, LoginedUserService.UserId, Tables.Periods, LogType.Get, id);
+
+                return new SuccessDataResult<SelectCurrentAccountCardsDto>(currentAccountCard);
+
             }
         }
 
@@ -79,13 +152,23 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCurrentAccountCardsDto>>> GetListAsync(ListCurrentAccountCardsParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.CurrentAccountCardsRepository.GetListAsync(t => t.IsActive == input.IsActive, t => t.Currencies, y => y.ShippingAdresses, y => y.SalesPropositions);
+                var query = queryFactory
+                   .Query()
+                   .From(Tables.CurrentAccountCards)
+                   .Select<CurrentAccountCards>(ca => new { ca.IDnumber, ca.Address2, ca.Address1, ca.City, ca.CoatingCustomer, ca.Code, ca.ContractProductionTrackings, ca.ContractSupplier, ca.Country, ca.CurrencyID, ca.DataOpenStatus, ca.DataOpenStatusUserId, ca.District, ca.Email, ca.Fax, ca.TaxNumber, ca.Tel1, ca.Tel2, ca.Type, ca.Web, ca.TaxAdministration, ca.SupplierNo, ca.Supplier, ca.SoleProprietorship, ca.ShippingAddress, ca.SaleContract, ca.Responsible, ca.PrivateCode5, ca.PrivateCode4, ca.PrivateCode3, ca.PrivateCode2, ca.PrivateCode1, ca.PostCode, ca.PlusPercentage, ca.Name })
+                       .Join<Currencies>
+                       (
+                           c => new { Currency = c.Code },
+                           nameof(CurrentAccountCards.CurrencyID),
+                           nameof(Currencies.Id),
+                           JoinType.Left
+                       ).Where(null, true, true, Tables.CurrentAccountCards);
 
-                var mappedEntity = ObjectMapper.Map<List<CurrentAccountCards>, List<ListCurrentAccountCardsDto>>(list.ToList());
+                var currentAccountCards = queryFactory.GetList<ListCurrentAccountCardsDto>(query).ToList();
 
-                return new SuccessDataResult<IList<ListCurrentAccountCardsDto>>(mappedEntity);
+                return new SuccessDataResult<IList<ListCurrentAccountCardsDto>>(currentAccountCards);
             }
         }
 
@@ -94,38 +177,141 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCurrentAccountCardsDto>> UpdateAsync(UpdateCurrentAccountCardsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.CurrentAccountCardsRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("*").Where(new { Id = input.Id }, true, true, "");
+                var entity = queryFactory.Get<CurrentAccountCards>(entityQuery);
 
-                await _manager.UpdateControl(_uow.CurrentAccountCardsRepository, input.Code, input.Id, entity,L);
+                #region Update Control
 
-                var mappedEntity = ObjectMapper.Map<UpdateCurrentAccountCardsDto, CurrentAccountCards>(input);
+                var listQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("*").Where(new { Code = input.Code }, false, false, "");
+                var list = queryFactory.GetList<CurrentAccountCards>(listQuery).ToList();
 
-                await _uow.CurrentAccountCardsRepository.UpdateAsync(mappedEntity);
-                var before = ObjectMapper.Map<CurrentAccountCards, UpdateCurrentAccountCardsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "CurrentAccountCards", LogType.Update, mappedEntity.Id);
+                if (list.Count > 0 && entity.Code != input.Code)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["UpdateControlManager"]);
+                }
 
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                #endregion
 
-                return new SuccessDataResult<SelectCurrentAccountCardsDto>(ObjectMapper.Map<CurrentAccountCards, SelectCurrentAccountCardsDto>(mappedEntity));
+                var query = queryFactory.Query().From(Tables.CurrentAccountCards).Update(new UpdateCurrentAccountCardsDto
+                {
+                    Code = input.Code,
+                    PlusPercentage = input.PlusPercentage,
+                    PostCode = input.PostCode,
+                    Address1 = input.Address1,
+                    PrivateCode1 = input.PrivateCode1,
+                    PrivateCode2 = input.PrivateCode2,
+                    Address2 = input.Address2,
+                    City = input.City,
+                    CoatingCustomer = input.CoatingCustomer,
+                    ContractSupplier = input.ContractSupplier,
+                    Country = input.Country,
+                    CurrencyID = input.CurrencyID,
+                    District = input.District,
+                    Email = input.Email,
+                    Fax = input.Fax,
+                    IDnumber = input.IDnumber,
+                    PrivateCode3 = input.PrivateCode3,
+                    PrivateCode4 = input.PrivateCode4,
+                    PrivateCode5 = input.PrivateCode5,
+                    Responsible = input.Responsible,
+                    SaleContract = input.SaleContract,
+                    ShippingAddress = input.ShippingAddress,
+                    SoleProprietorship = input.SoleProprietorship,
+                    Supplier = input.Supplier,
+                    SupplierNo = input.SupplierNo,
+                    TaxAdministration = input.TaxAdministration,
+                    TaxNumber = input.TaxNumber,
+                    Tel1 = input.Tel1,
+                    Tel2 = input.Tel2,
+                    Type = input.Type,
+                    Web = input.Web,
+                    Name = input.Name,
+                    Id = input.Id,
+                    IsActive = input.IsActive,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId
+                }).Where(new { Id = input.Id }, true, true, "");
+
+                var currentAccountCards = queryFactory.Update<SelectCurrentAccountCardsDto>(query, "Id", true);
+
+
+                LogsAppService.InsertLogToDatabase(entity, currentAccountCards, LoginedUserService.UserId, Tables.CurrentAccountCards, LogType.Update, entity.Id);
+
+
+                return new SuccessDataResult<SelectCurrentAccountCardsDto>(currentAccountCards);
             }
         }
 
         public async Task<IDataResult<SelectCurrentAccountCardsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.CurrentAccountCardsRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.CurrentAccountCards).Select("*").Where(new { Id = id }, true, true, "");
+                var entity = queryFactory.Get<CurrentAccountCards>(entityQuery);
 
-                var updatedEntity = await _uow.CurrentAccountCardsRepository.LockRow(entity.Id, lockRow, userId);
+                var query = queryFactory.Query().From(Tables.CurrentAccountCards).Update(new UpdateCurrentAccountCardsDto
+                {
+                    Code = entity.Code,
+                    Name = entity.Name,
+                    IsActive = entity.IsActive,
+                    PlusPercentage = entity.PlusPercentage,
+                    PostCode = entity.PostCode,
+                    Address1 = entity.Address1,
+                    PrivateCode1 = entity.PrivateCode1,
+                    PrivateCode2 = entity.PrivateCode2,
+                    Address2 = entity.Address2,
+                    City = entity.City,
+                    CoatingCustomer = entity.CoatingCustomer,
+                    ContractSupplier = entity.ContractSupplier,
+                    Country = entity.Country,
+                    CurrencyID = entity.CurrencyID,
+                    District = entity.District,
+                    Email = entity.Email,
+                    Fax = entity.Fax,
+                    IDnumber = entity.IDnumber,
+                    PrivateCode3 = entity.PrivateCode3,
+                    PrivateCode4 = entity.PrivateCode4,
+                    PrivateCode5 = entity.PrivateCode5,
+                    Responsible = entity.Responsible,
+                    SaleContract = entity.SaleContract,
+                    ShippingAddress = entity.ShippingAddress,
+                    SoleProprietorship = entity.SoleProprietorship,
+                    Supplier = entity.Supplier,
+                    SupplierNo = entity.SupplierNo,
+                    TaxAdministration = entity.TaxAdministration,
+                    TaxNumber = entity.TaxNumber,
+                    Tel1 = entity.Tel1,
+                    Tel2 = entity.Tel2,
+                    Type = entity.Type,
+                    Web = entity.Web,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                    Id = id,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId,
 
-                await _uow.SaveChanges();
+                }).Where(new { Id = id }, true, true, "");
 
-                var mappedEntity = ObjectMapper.Map<CurrentAccountCards, SelectCurrentAccountCardsDto>(updatedEntity);
+                var currentAccountCards = queryFactory.Update<SelectCurrentAccountCardsDto>(query, "Id", true);
 
-                return new SuccessDataResult<SelectCurrentAccountCardsDto>(mappedEntity);
+                return new SuccessDataResult<SelectCurrentAccountCardsDto>(currentAccountCards);
+
             }
         }
     }

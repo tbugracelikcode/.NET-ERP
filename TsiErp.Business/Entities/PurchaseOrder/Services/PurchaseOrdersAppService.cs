@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; 
+using Tsi.Core.Utilities.Results;
 using TsiErp.Localizations.Resources.PurchaseOrders.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
@@ -16,6 +16,18 @@ using TsiErp.Entities.Entities.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.PurchaseOrderLine;
 using TsiErp.Entities.Entities.PurchaseOrderLine.Dtos;
 using Microsoft.Extensions.Localization;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Entities.TableConstant;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
+using TSI.QueryBuilder.Constants.Join;
+using TsiErp.Entities.Entities.PaymentPlan;
+using TsiErp.Entities.Entities.Branch;
+using TsiErp.Entities.Entities.WareHouse;
+using TsiErp.Entities.Entities.Currency;
+using TsiErp.Entities.Entities.CurrentAccountCard;
+using TsiErp.Entities.Entities.ShippingAdress;
+using TsiErp.Entities.Entities.Product;
+using TsiErp.Entities.Entities.UnitSet;
 
 namespace TsiErp.Business.Entities.PurchaseOrder.Services
 {
@@ -24,40 +36,115 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
     {
         private readonly IPurchaseRequestsAppService _PurchaseRequestsAppService;
 
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
+
         public PurchaseOrdersAppService(IStringLocalizer<PurchaseOrdersResource> l, IPurchaseRequestsAppService PurchaseRequestsAppService) : base(l)
         {
             _PurchaseRequestsAppService = PurchaseRequestsAppService;
         }
 
-        PurchaseOrderManager _manager { get; set; } = new PurchaseOrderManager();
-       
-
-
         [ValidationAspect(typeof(CreatePurchaseOrdersValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchaseOrdersDto>> CreateAsync(CreatePurchaseOrdersDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.CodeControl(_uow.PurchaseOrdersRepository, input.FicheNo,L);
+                var listQuery = queryFactory.Query().From(Tables.PurchaseOrders).Select("*").Where(new { FicheNo = input.FicheNo }, false, false, "");
+                var list = queryFactory.ControlList<PurchaseOrders>(listQuery).ToList();
 
-                var entity = ObjectMapper.Map<CreatePurchaseOrdersDto, PurchaseOrders>(input);
+                #region Code Control 
 
-                var addedEntity = await _uow.PurchaseOrdersRepository.InsertAsync(entity);
+                if (list.Count > 0)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["CodeControlManager"]);
+                }
+
+                #endregion
+
+                Guid addedEntityId = GuidGenerator.CreateGuid();
+
+                var query = queryFactory.Query().From(Tables.PurchaseOrders).Insert(new CreatePurchaseOrdersDto
+                {
+                    FicheNo = input.FicheNo,
+                    BranchID = input.BranchID,
+                    CurrencyID = input.CurrencyID,
+                    CurrentAccountCardID = input.CurrentAccountCardID,
+                    Date_ = input.Date_,
+                    Description_ = input.Description_,
+                    ExchangeRate = input.ExchangeRate,
+                    GrossAmount = input.GrossAmount,
+                    LinkedPurchaseRequestID = input.LinkedPurchaseRequestID,
+                    NetAmount = input.NetAmount,
+                    PaymentPlanID = input.PaymentPlanID,
+                    ProductionOrderID = input.ProductionOrderID,
+                    PurchaseOrderState = input.PurchaseOrderState,
+                    ShippingAdressID = input.ShippingAdressID,
+                    SpecialCode = input.SpecialCode,
+                    Time_ = input.Time_,
+                    TotalDiscountAmount = input.TotalDiscountAmount,
+                    TotalVatAmount = input.TotalVatAmount,
+                    TotalVatExcludedAmount = input.TotalVatExcludedAmount,
+                    WarehouseID = input.WarehouseID,
+                    WorkOrderCreationDate = input.WorkOrderCreationDate,
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    Id = addedEntityId,
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                });
 
                 foreach (var item in input.SelectPurchaseOrderLinesDto)
                 {
-                    var lineEntity = ObjectMapper.Map<SelectPurchaseOrderLinesDto, PurchaseOrderLines>(item);
-                    lineEntity.PurchaseOrderID = addedEntity.Id;
-                    await _uow.PurchaseOrderLinesRepository.InsertAsync(lineEntity);
+                    var queryLine = queryFactory.Query().From(Tables.PurchaseOrderLines).Insert(new CreatePurchaseOrderLinesDto
+                    {
+                        DiscountAmount = item.DiscountAmount,
+                        WorkOrderCreationDate = item.WorkOrderCreationDate,
+                        DiscountRate = item.DiscountRate,
+                        ExchangeRate = item.ExchangeRate,
+                        LikedPurchaseRequestLineID = item.LikedPurchaseRequestLineID,
+                        LineAmount = item.LineAmount,
+                        LineDescription = item.LineDescription,
+                        LineTotalAmount = item.LineTotalAmount,
+                        LinkedPurchaseRequestID = item.LinkedPurchaseRequestID,
+                        PaymentPlanID = item.PaymentPlanID,
+                        ProductionOrderID = item.ProductionOrderID,
+                        PurchaseOrderLineStateEnum = item.PurchaseOrderLineStateEnum,
+                        UnitPrice = item.UnitPrice,
+                        VATamount = item.VATamount,
+                        VATrate = item.VATrate,
+                        PurchaseOrderID = addedEntityId,
+                        CreationTime = DateTime.Now,
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                        LineNr = item.LineNr,
+                        ProductID = item.ProductID,
+                        Quantity = item.Quantity,
+                        UnitSetID = item.UnitSetID,
+                    });
+
+                    query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
                 }
 
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "PurchaseOrders", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
+                var purchaseOrder = queryFactory.Insert<SelectPurchaseOrdersDto>(query, "Id", true);
 
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectPurchaseOrdersDto>(ObjectMapper.Map<PurchaseOrders, SelectPurchaseOrdersDto>(addedEntity));
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PurchaseOrders, LogType.Insert, purchaseOrder.Id);
+
+                return new SuccessDataResult<SelectPurchaseOrdersDto>(purchaseOrder);
             }
         }
 
@@ -65,113 +152,287 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchaseOrdersDto>> ConvertToPurchaseOrderAsync(CreatePurchaseOrdersDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.CodeControl(_uow.PurchaseOrdersRepository, input.FicheNo,L);
+                var listQuery = queryFactory.Query().From(Tables.PurchaseOrders).Select("*").Where(new { FicheNo = input.FicheNo }, false, false, "");
+                var list = queryFactory.ControlList<PurchaseOrders>(listQuery).ToList();
 
-                var entity = ObjectMapper.Map<CreatePurchaseOrdersDto, PurchaseOrders>(input);
+                #region Code Control 
 
-                var addedEntity = await _uow.PurchaseOrdersRepository.InsertAsync(entity);
-
-                if (input.SelectPurchaseOrderLinesDto != null)
+                if (list.Count > 0)
                 {
-                    foreach (var item in input.SelectPurchaseOrderLinesDto)
-                    {
-                        var lineEntity = ObjectMapper.Map<SelectPurchaseOrderLinesDto, PurchaseOrderLines>(item);
-                        lineEntity.PurchaseOrderID = addedEntity.Id;
-                        await _uow.PurchaseOrderLinesRepository.InsertAsync(lineEntity);
-
-                    }
-
-                    await _PurchaseRequestsAppService.UpdatePurchaseRequestLineState(input.SelectPurchaseOrderLinesDto, TsiErp.Entities.Enums.PurchaseRequestLineStateEnum.SatinAlma);
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["CodeControlManager"]);
                 }
 
+                #endregion
 
+                Guid addedEntityId = GuidGenerator.CreateGuid();
 
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectPurchaseOrdersDto>(ObjectMapper.Map<PurchaseOrders, SelectPurchaseOrdersDto>(addedEntity));
+                var query = queryFactory.Query().From(Tables.PurchaseOrders).Insert(new CreatePurchaseOrdersDto
+                {
+                    FicheNo = input.FicheNo,
+                    BranchID = input.BranchID,
+                    CurrencyID = input.CurrencyID,
+                    CurrentAccountCardID = input.CurrentAccountCardID,
+                    Date_ = input.Date_,
+                    Description_ = input.Description_,
+                    ExchangeRate = input.ExchangeRate,
+                    GrossAmount = input.GrossAmount,
+                    LinkedPurchaseRequestID = input.LinkedPurchaseRequestID,
+                    NetAmount = input.NetAmount,
+                    PaymentPlanID = input.PaymentPlanID,
+                    ProductionOrderID = input.ProductionOrderID,
+                    PurchaseOrderState = input.PurchaseOrderState,
+                    ShippingAdressID = input.ShippingAdressID,
+                    SpecialCode = input.SpecialCode,
+                    Time_ = input.Time_,
+                    TotalDiscountAmount = input.TotalDiscountAmount,
+                    TotalVatAmount = input.TotalVatAmount,
+                    TotalVatExcludedAmount = input.TotalVatExcludedAmount,
+                    WarehouseID = input.WarehouseID,
+                    WorkOrderCreationDate = input.WorkOrderCreationDate,
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    Id = addedEntityId,
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                });
+
+                foreach (var item in input.SelectPurchaseOrderLinesDto)
+                {
+                    var queryLine = queryFactory.Query().From(Tables.PurchaseOrderLines).Insert(new CreatePurchaseOrderLinesDto
+                    {
+                        DiscountAmount = item.DiscountAmount,
+                        WorkOrderCreationDate = item.WorkOrderCreationDate,
+                        DiscountRate = item.DiscountRate,
+                        ExchangeRate = item.ExchangeRate,
+                        LikedPurchaseRequestLineID = item.LikedPurchaseRequestLineID,
+                        LineAmount = item.LineAmount,
+                        LineDescription = item.LineDescription,
+                        LineTotalAmount = item.LineTotalAmount,
+                        LinkedPurchaseRequestID = item.LinkedPurchaseRequestID,
+                        PaymentPlanID = item.PaymentPlanID,
+                        ProductionOrderID = item.ProductionOrderID,
+                        PurchaseOrderLineStateEnum = item.PurchaseOrderLineStateEnum,
+                        UnitPrice = item.UnitPrice,
+                        VATamount = item.VATamount,
+                        VATrate = item.VATrate,
+                        PurchaseOrderID = addedEntityId,
+                        CreationTime = DateTime.Now,
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                        LineNr = item.LineNr,
+                        ProductID = item.ProductID,
+                        Quantity = item.Quantity,
+                        UnitSetID = item.UnitSetID,
+                    });
+
+                    query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+                }
+
+                var purchaseOrder = queryFactory.Insert<SelectPurchaseOrdersDto>(query, "Id", true);
+
+                await _PurchaseRequestsAppService.UpdatePurchaseRequestLineState(input.SelectPurchaseOrderLinesDto, TsiErp.Entities.Enums.PurchaseRequestLineStateEnum.SatinAlma);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PurchaseOrders, LogType.Insert, purchaseOrder.Id);
+
+                return new SuccessDataResult<SelectPurchaseOrdersDto>(purchaseOrder);
             }
+
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var lines = (await _uow.PurchaseOrderLinesRepository.GetAsync(t => t.Id == id));
 
-                if (lines != null)
+                var query = queryFactory.Query().From(Tables.PurchaseOrders).Select("*").Where(new { Id = id }, false, false, "");
+
+                var purchaseOrders = queryFactory.Get<SelectPurchaseOrdersDto>(query);
+
+                if (purchaseOrders.Id != Guid.Empty && purchaseOrders != null)
                 {
-                    await _manager.DeleteControl(_uow.PurchaseOrdersRepository, lines.PurchaseOrderID, lines.Id, true);
-                    await _uow.PurchaseOrderLinesRepository.DeleteAsync(id);
-                    await _uow.SaveChanges();
-                    return new SuccessResult(L["DeleteSuccessMessage"]);
+                    var deleteQuery = queryFactory.Query().From(Tables.PurchaseOrders).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.PurchaseOrderLines).Delete(LoginedUserService.UserId).Where(new { PurchaseOrderID = id }, false, false, "");
+
+                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+
+                    var purchaseOrder = queryFactory.Update<SelectPurchaseOrdersDto>(deleteQuery, "Id", true);
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PurchaseOrders, LogType.Delete, id);
+                    return new SuccessDataResult<SelectPurchaseOrdersDto>(purchaseOrder);
                 }
                 else
                 {
-                    await _manager.DeleteControl(_uow.PurchaseOrdersRepository, id, Guid.Empty, false);
-
-                    var list = (await _uow.PurchaseOrderLinesRepository.GetListAsync(t => t.PurchaseOrderID == id));
-                    foreach (var line in list)
-                    {
-                        await _uow.PurchaseOrderLinesRepository.DeleteAsync(line.Id);
-                    }
-
-                    await _uow.PurchaseOrdersRepository.DeleteAsync(id);
-                    var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "PurchaseOrders", LogType.Delete, id);
-                    await _uow.LogsRepository.InsertAsync(log);
-                    await _uow.SaveChanges();
-                    return new SuccessResult(L["DeleteSuccessMessage"]);
+                    var queryLine = queryFactory.Query().From(Tables.PurchaseOrderLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var purchaseOrderLines = queryFactory.Update<SelectPurchaseOrderLinesDto>(queryLine, "Id", true);
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PurchaseOrderLines, LogType.Delete, id);
+                    return new SuccessDataResult<SelectPurchaseOrderLinesDto>(purchaseOrderLines);
                 }
             }
         }
 
         public async Task<IDataResult<SelectPurchaseOrdersDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.PurchaseOrdersRepository.GetAsync(t => t.Id == id,
-                t => t.PurchaseOrderLines,
-                t => t.CurrentAccountCards,
-                t => t.Warehouses,
-                t => t.Branches,
-                t => t.Currencies,
-                t => t.PaymentPlan);
+                var query = queryFactory
+                       .Query()
+                       .From(Tables.PurchaseOrders)
+                       .Select<PurchaseOrders>(po => new { po.WorkOrderCreationDate,po.WarehouseID,po.TotalVatExcludedAmount,po.TotalVatAmount,po.TotalDiscountAmount,po.Time_,po.SpecialCode,po.ShippingAdressID,po.PurchaseOrderState,po.ProductionOrderID,po.PaymentPlanID,po.NetAmount,po.LinkedPurchaseRequestID,po.Id,po.GrossAmount,po.FicheNo,po.ExchangeRate,po.Description_,po.Date_,po.DataOpenStatusUserId,po.DataOpenStatus,po.CurrentAccountCardID,po.CurrencyID,po.BranchID})
+                       .Join<PaymentPlans>
+                        (
+                            pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
+                            nameof(PurchaseOrders.PaymentPlanID),
+                            nameof(PaymentPlans.Id),
+                            JoinType.Left
+                        )
+                        .Join<Branches>
+                        (
+                            b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                            nameof(PurchaseOrders.BranchID),
+                            nameof(Branches.Id),
+                            JoinType.Left
+                        )
+                         .Join<Warehouses>
+                        (
+                            w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
+                            nameof(PurchaseOrders.WarehouseID),
+                            nameof(Warehouses.Id),
+                            JoinType.Left
+                        )
+                         .Join<Currencies>
+                        (
+                            c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
+                            nameof(PurchaseOrders.CurrencyID),
+                            nameof(Currencies.Id),
+                            JoinType.Left
+                        )
+                         .Join<CurrentAccountCards>
+                        (
+                            ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode  = ca.Code, CurrentAccountCardName  = ca.Name},
+                            nameof(PurchaseOrders.CurrentAccountCardID),
+                            nameof(CurrentAccountCards.Id),
+                            JoinType.Left)
 
-                var mappedEntity = ObjectMapper.Map<PurchaseOrders, SelectPurchaseOrdersDto>(entity);
+                             .Join<ShippingAdresses>
+                        (
+                            sa => new { ShippingAdressID = sa.Id, ShippingAdressCode = sa.Code, ShippingAdressName =sa.Name},
+                            nameof(PurchaseOrders.ShippingAdressID),
+                            nameof(ShippingAdresses.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { Id = id }, false, false, Tables.PurchaseOrders);
 
-                mappedEntity.SelectPurchaseOrderLinesDto = ObjectMapper.Map<List<PurchaseOrderLines>, List<SelectPurchaseOrderLinesDto>>(entity.PurchaseOrderLines.ToList());
+                var purchaseOrders = queryFactory.Get<SelectPurchaseOrdersDto>(query);
 
-                foreach (var item in mappedEntity.SelectPurchaseOrderLinesDto)
-                {
-                    item.ProductCode = (await _uow.ProductsRepository.GetAsync(t => t.Id == item.ProductID)).Code;
-                    item.ProductName = (await _uow.ProductsRepository.GetAsync(t => t.Id == item.ProductID)).Name;
-                    item.UnitSetCode = (await _uow.UnitSetsRepository.GetAsync(t => t.Id == item.UnitSetID)).Code;
-                }
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "PurchaseOrders", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
+                var queryLines = queryFactory
+                       .Query()
+                       .From(Tables.PurchaseOrderLines)
+                       .Select<PurchaseOrderLines>(pol => new { pol.WorkOrderCreationDate,pol.VATrate,pol.VATamount,pol.UnitSetID,pol.UnitPrice,pol.Quantity,pol.PurchaseOrderLineStateEnum,pol.PurchaseOrderID,pol.ProductionOrderID,pol.ProductID,pol.PaymentPlanID,pol.LinkedPurchaseRequestID,pol.LineTotalAmount,pol.LikedPurchaseRequestLineID,pol.Id,pol.ExchangeRate,pol.DiscountRate,pol.DiscountAmount,pol.DataOpenStatusUserId,pol.DataOpenStatus })
+                       .Join<Products>
+                        (
+                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                            nameof(PurchaseOrderLines.ProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                       .Join<UnitSets>
+                        (
+                            u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                            nameof(PurchaseOrderLines.UnitSetID),
+                            nameof(UnitSets.Id),
+                            JoinType.Left
+                        )
+                         .Join<PaymentPlans>
+                        (
+                            pay => new { PaymentPlanID = pay.Id, PaymentPlanName = pay.Name },
+                            nameof(PurchaseOrderLines.PaymentPlanID),
+                            nameof(PaymentPlans.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { PurchaseOrderID = id }, false, false, Tables.PurchaseOrderLines);
 
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectPurchaseOrdersDto>(mappedEntity);
+                var purchaseOrderLine = queryFactory.GetList<SelectPurchaseOrderLinesDto>(queryLines).ToList();
+
+                purchaseOrders.SelectPurchaseOrderLinesDto = purchaseOrderLine;
+
+                LogsAppService.InsertLogToDatabase(purchaseOrders, purchaseOrders, LoginedUserService.UserId, Tables.PurchaseOrders, LogType.Get, id);
+
+                return new SuccessDataResult<SelectPurchaseOrdersDto>(purchaseOrders);
             }
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListPurchaseOrdersDto>>> GetListAsync(ListPurchaseOrdersParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.PurchaseOrdersRepository.GetListAsync(null,
-                t => t.PurchaseOrderLines,
-                t => t.CurrentAccountCards,
-                t => t.Warehouses,
-                t => t.Branches,
-                t => t.Currencies,
-                t => t.PaymentPlan);
+                var query = queryFactory
+                       .Query()
+                        .From(Tables.PurchaseOrders)
+                       .Select<PurchaseOrders>(po => new { po.WorkOrderCreationDate, po.WarehouseID, po.TotalVatExcludedAmount, po.TotalVatAmount, po.TotalDiscountAmount, po.Time_, po.SpecialCode, po.ShippingAdressID, po.PurchaseOrderState, po.ProductionOrderID, po.PaymentPlanID, po.NetAmount, po.LinkedPurchaseRequestID, po.Id, po.GrossAmount, po.FicheNo, po.ExchangeRate, po.Description_, po.Date_, po.DataOpenStatusUserId, po.DataOpenStatus, po.CurrentAccountCardID, po.CurrencyID, po.BranchID })
+                       .Join<PaymentPlans>
+                        (
+                            pp => new { PaymentPlanName = pp.Name },
+                            nameof(PurchaseOrders.PaymentPlanID),
+                            nameof(PaymentPlans.Id),
+                            JoinType.Left
+                        )
+                        .Join<Branches>
+                        (
+                            b => new {BranchCode = b.Code, BranchName = b.Name },
+                            nameof(PurchaseOrders.BranchID),
+                            nameof(Branches.Id),
+                            JoinType.Left
+                        )
+                         .Join<Warehouses>
+                        (
+                            w => new { WarehouseCode = w.Code },
+                            nameof(PurchaseOrders.WarehouseID),
+                            nameof(Warehouses.Id),
+                            JoinType.Left
+                        )
+                         .Join<Currencies>
+                        (
+                            c => new { CurrencyCode = c.Code },
+                            nameof(PurchaseOrders.CurrencyID),
+                            nameof(Currencies.Id),
+                            JoinType.Left
+                        )
+                         .Join<CurrentAccountCards>
+                        (
+                            ca => new { CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                            nameof(PurchaseOrders.CurrentAccountCardID),
+                            nameof(CurrentAccountCards.Id),
+                            JoinType.Left)
 
-                var mappedEntity = ObjectMapper.Map<List<PurchaseOrders>, List<ListPurchaseOrdersDto>>(list.ToList());
+                             .Join<ShippingAdresses>
+                        (
+                            sa => new { ShippingAdressCode = sa.Code, ShippingAdressName = sa.Name },
+                            nameof(PurchaseOrders.ShippingAdressID),
+                            nameof(ShippingAdresses.Id),
+                            JoinType.Left
+                        )
+                        .Where(null, false, false, Tables.PurchaseOrders);
 
-                return new SuccessDataResult<IList<ListPurchaseOrdersDto>>(mappedEntity);
+                var purchaseOrders = queryFactory.GetList<ListPurchaseOrdersDto>(query).ToList();
+                return new SuccessDataResult<IList<ListPurchaseOrdersDto>>(purchaseOrders);
             }
         }
 
@@ -179,53 +440,325 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectPurchaseOrdersDto>> UpdateAsync(UpdatePurchaseOrdersDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.PurchaseOrdersRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory
+                       .Query()
+                       .From(Tables.PurchaseOrders)
+                       .Select<PurchaseOrders>(po => new { po.WorkOrderCreationDate, po.WarehouseID, po.TotalVatExcludedAmount, po.TotalVatAmount, po.TotalDiscountAmount, po.Time_, po.SpecialCode, po.ShippingAdressID, po.PurchaseOrderState, po.ProductionOrderID, po.PaymentPlanID, po.NetAmount, po.LinkedPurchaseRequestID, po.Id, po.GrossAmount, po.FicheNo, po.ExchangeRate, po.Description_, po.Date_, po.DataOpenStatusUserId, po.DataOpenStatus, po.CurrentAccountCardID, po.CurrencyID, po.BranchID })
+                       .Join<PaymentPlans>
+                        (
+                            pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
+                            nameof(PurchaseOrders.PaymentPlanID),
+                            nameof(PaymentPlans.Id),
+                            JoinType.Left
+                        )
+                        .Join<Branches>
+                        (
+                            b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                            nameof(PurchaseOrders.BranchID),
+                            nameof(Branches.Id),
+                            JoinType.Left
+                        )
+                         .Join<Warehouses>
+                        (
+                            w => new { WarehouseID = w.Id, WarehouseCode = w.Code },
+                            nameof(PurchaseOrders.WarehouseID),
+                            nameof(Warehouses.Id),
+                            JoinType.Left
+                        )
+                         .Join<Currencies>
+                        (
+                            c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
+                            nameof(PurchaseOrders.CurrencyID),
+                            nameof(Currencies.Id),
+                            JoinType.Left
+                        )
+                         .Join<CurrentAccountCards>
+                        (
+                            ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                            nameof(PurchaseOrders.CurrentAccountCardID),
+                            nameof(CurrentAccountCards.Id),
+                            JoinType.Left)
 
-                await _manager.UpdateControl(_uow.PurchaseOrdersRepository, input.FicheNo, input.Id, entity,L);
+                             .Join<ShippingAdresses>
+                        (
+                            sa => new { ShippingAdressID = sa.Id, ShippingAdressCode = sa.Code, ShippingAdressName = sa.Name },
+                            nameof(PurchaseOrders.ShippingAdressID),
+                            nameof(ShippingAdresses.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { Id = input.Id }, false, false, Tables.PurchaseOrders);
 
-                var mappedEntity = ObjectMapper.Map<UpdatePurchaseOrdersDto, PurchaseOrders>(input);
+                var entity = queryFactory.Get<SelectPurchaseOrdersDto>(entityQuery);
 
-                await _uow.PurchaseOrdersRepository.UpdateAsync(mappedEntity);
+                var queryLines = queryFactory
+                       .Query()
+                        .From(Tables.PurchaseOrderLines)
+                       .Select<PurchaseOrderLines>(pol => new { pol.WorkOrderCreationDate, pol.VATrate, pol.VATamount, pol.UnitSetID, pol.UnitPrice, pol.Quantity, pol.PurchaseOrderLineStateEnum, pol.PurchaseOrderID, pol.ProductionOrderID, pol.ProductID, pol.PaymentPlanID, pol.LinkedPurchaseRequestID, pol.LineTotalAmount, pol.LikedPurchaseRequestLineID, pol.Id, pol.ExchangeRate, pol.DiscountRate, pol.DiscountAmount, pol.DataOpenStatusUserId, pol.DataOpenStatus })
+                       .Join<Products>
+                        (
+                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                            nameof(PurchaseOrderLines.ProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                       .Join<UnitSets>
+                        (
+                            u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                            nameof(PurchaseOrderLines.UnitSetID),
+                            nameof(UnitSets.Id),
+                            JoinType.Left
+                        )
+                         .Join<PaymentPlans>
+                        (
+                            pay => new { PaymentPlanID = pay.Id, PaymentPlanName = pay.Name },
+                            nameof(PurchaseOrderLines.PaymentPlanID),
+                            nameof(PaymentPlans.Id),
+                            "PaymentPlanLine",
+                            JoinType.Left
+                        )
+                        .Where(new { PurchaseOrderID = input.Id }, false, false, Tables.PurchaseOrderLines);
+
+                var purchaseOrderLine = queryFactory.GetList<SelectPurchaseOrderLinesDto>(queryLines).ToList();
+
+                entity.SelectPurchaseOrderLinesDto = purchaseOrderLine;
+
+                #region Update Control
+                var listQuery = queryFactory
+                               .Query()
+                               .From(Tables.PurchaseOrders)
+                       .Select<PurchaseOrders>(po => new { po.WorkOrderCreationDate, po.WarehouseID, po.TotalVatExcludedAmount, po.TotalVatAmount, po.TotalDiscountAmount, po.Time_, po.SpecialCode, po.ShippingAdressID, po.PurchaseOrderState, po.ProductionOrderID, po.PaymentPlanID, po.NetAmount, po.LinkedPurchaseRequestID, po.Id, po.GrossAmount, po.FicheNo, po.ExchangeRate, po.Description_, po.Date_, po.DataOpenStatusUserId, po.DataOpenStatus, po.CurrentAccountCardID, po.CurrencyID, po.BranchID })
+                       .Join<PaymentPlans>
+                        (
+                            pp => new {  PaymentPlanName = pp.Name },
+                            nameof(PurchaseOrders.PaymentPlanID),
+                            nameof(PaymentPlans.Id),
+                            JoinType.Left
+                        )
+                        .Join<Branches>
+                        (
+                            b => new {  BranchCode = b.Code, BranchName = b.Name },
+                            nameof(PurchaseOrders.BranchID),
+                            nameof(Branches.Id),
+                            JoinType.Left
+                        )
+                         .Join<Warehouses>
+                        (
+                            w => new {  WarehouseCode = w.Code },
+                            nameof(PurchaseOrders.WarehouseID),
+                            nameof(Warehouses.Id),
+                            JoinType.Left
+                        )
+                         .Join<Currencies>
+                        (
+                            c => new {  CurrencyCode = c.Code },
+                            nameof(PurchaseOrders.CurrencyID),
+                            nameof(Currencies.Id),
+                            JoinType.Left
+                        )
+                         .Join<CurrentAccountCards>
+                        (
+                            ca => new { CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                            nameof(PurchaseOrders.CurrentAccountCardID),
+                            nameof(CurrentAccountCards.Id),
+                            JoinType.Left)
+
+                             .Join<ShippingAdresses>
+                        (
+                            sa => new {  ShippingAdressCode = sa.Code, ShippingAdressName = sa.Name },
+                            nameof(PurchaseOrders.ShippingAdressID),
+                            nameof(ShippingAdresses.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { FicheNo = input.FicheNo }, false, false, Tables.PurchaseOrders);
+
+                var list = queryFactory.GetList<ListPurchaseOrdersDto>(listQuery).ToList();
+
+                if (list.Count > 0 && entity.FicheNo != input.FicheNo)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["UpdateControlManager"]);
+                }
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.PurchaseOrders).Update(new UpdatePurchaseOrdersDto
+                {
+                    FicheNo = input.FicheNo,
+                    BranchID = input.BranchID,
+                    CurrencyID = input.CurrencyID,
+                    CurrentAccountCardID = input.CurrentAccountCardID,
+                    Date_ = input.Date_,
+                    Description_ = input.Description_,
+                    ExchangeRate = input.ExchangeRate,
+                    GrossAmount = input.GrossAmount,
+                    LinkedPurchaseRequestID = input.LinkedPurchaseRequestID,
+                    NetAmount = input.NetAmount,
+                    PaymentPlanID = input.PaymentPlanID,
+                    ProductionOrderID = input.ProductionOrderID,
+                    PurchaseOrderState = input.PurchaseOrderState,
+                    ShippingAdressID = input.ShippingAdressID,
+                    SpecialCode = input.SpecialCode,
+                    Time_ = input.Time_,
+                    TotalDiscountAmount = input.TotalDiscountAmount,
+                    TotalVatAmount = input.TotalVatAmount,
+                    TotalVatExcludedAmount = input.TotalVatExcludedAmount,
+                    WarehouseID = input.WarehouseID,
+                    WorkOrderCreationDate = input.WorkOrderCreationDate,
+                    CreationTime = entity.CreationTime,
+                    CreatorId = entity.CreatorId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                    Id = input.Id,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId,
+                }).Where(new { Id = input.Id }, false, false, "");
 
                 foreach (var item in input.SelectPurchaseOrderLinesDto)
                 {
-                    var lineEntity = ObjectMapper.Map<SelectPurchaseOrderLinesDto, PurchaseOrderLines>(item);
-                    lineEntity.PurchaseOrderID = mappedEntity.Id;
-
-                    if (lineEntity.Id == Guid.Empty)
+                    if (item.Id == Guid.Empty)
                     {
-                        await _uow.PurchaseOrderLinesRepository.InsertAsync(lineEntity);
+                        var queryLine = queryFactory.Query().From(Tables.PurchaseOrderLines).Insert(new CreatePurchaseOrderLinesDto
+                        {
+                            DiscountAmount = item.DiscountAmount,
+                            WorkOrderCreationDate = item.WorkOrderCreationDate,
+                            DiscountRate = item.DiscountRate,
+                            ExchangeRate = item.ExchangeRate,
+                            LikedPurchaseRequestLineID = item.LikedPurchaseRequestLineID,
+                            LineAmount = item.LineAmount,
+                            LineDescription = item.LineDescription,
+                            LineTotalAmount = item.LineTotalAmount,
+                            LinkedPurchaseRequestID = item.LinkedPurchaseRequestID,
+                            PaymentPlanID = item.PaymentPlanID,
+                            ProductionOrderID = item.ProductionOrderID,
+                            PurchaseOrderLineStateEnum = item.PurchaseOrderLineStateEnum,
+                            UnitPrice = item.UnitPrice,
+                            VATamount = item.VATamount,
+                            VATrate = item.VATrate,
+                            PurchaseOrderID = input.Id,
+                            CreationTime = DateTime.Now,
+                            CreatorId = LoginedUserService.UserId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = Guid.Empty,
+                            DeletionTime = null,
+                            Id = GuidGenerator.CreateGuid(),
+                            IsDeleted = false,
+                            LastModificationTime = null,
+                            LastModifierId = Guid.Empty,
+                            LineNr = item.LineNr,
+                            ProductID = item.ProductID,
+                            Quantity = item.Quantity,
+                            UnitSetID = item.UnitSetID,
+                        });
+
+                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
                     }
                     else
                     {
-                        await _uow.PurchaseOrderLinesRepository.UpdateAsync(lineEntity);
+                        var lineGetQuery = queryFactory.Query().From(Tables.PurchaseOrderLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+
+                        var line = queryFactory.Get<SelectPurchaseOrderLinesDto>(lineGetQuery);
+
+                        if (line != null)
+                        {
+                            var queryLine = queryFactory.Query().From(Tables.PurchaseOrderLines).Update(new UpdatePurchaseOrderLinesDto
+                            {
+                                DiscountAmount = item.DiscountAmount,
+                                WorkOrderCreationDate = item.WorkOrderCreationDate,
+                                DiscountRate = item.DiscountRate,
+                                ExchangeRate = item.ExchangeRate,
+                                LikedPurchaseRequestLineID = item.LikedPurchaseRequestLineID,
+                                LineAmount = item.LineAmount,
+                                LineDescription = item.LineDescription,
+                                LineTotalAmount = item.LineTotalAmount,
+                                LinkedPurchaseRequestID = item.LinkedPurchaseRequestID,
+                                PaymentPlanID = item.PaymentPlanID,
+                                ProductionOrderID = item.ProductionOrderID,
+                                PurchaseOrderLineStateEnum = item.PurchaseOrderLineStateEnum,
+                                UnitPrice = item.UnitPrice,
+                                VATamount = item.VATamount,
+                                VATrate = item.VATrate,
+                                PurchaseOrderID = input.Id,
+                                CreationTime = line.CreationTime,
+                                CreatorId = line.CreatorId,
+                                DataOpenStatus = false,
+                                DataOpenStatusUserId = Guid.Empty,
+                                DeleterId = line.DeleterId.GetValueOrDefault(),
+                                DeletionTime = line.DeletionTime.GetValueOrDefault(),
+                                Id = item.Id,
+                                IsDeleted = false,
+                                LastModificationTime = DateTime.Now,
+                                LastModifierId = LoginedUserService.UserId,
+                                LineNr = item.LineNr,
+                                ProductID = item.ProductID,
+                                Quantity = item.Quantity,
+                                UnitSetID = item.UnitSetID,
+                            }).Where(new { Id = line.Id }, false, false, "");
+
+                            query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
+                        }
                     }
                 }
-                var before = ObjectMapper.Map<PurchaseOrders, UpdatePurchaseOrdersDto>(entity);
-                before.SelectPurchaseOrderLinesDto = ObjectMapper.Map<List<PurchaseOrderLines>, List<SelectPurchaseOrderLinesDto>>(entity.PurchaseOrderLines.ToList());
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "PurchaseOrders", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
 
-                return new SuccessDataResult<SelectPurchaseOrdersDto>(ObjectMapper.Map<PurchaseOrders, SelectPurchaseOrdersDto>(mappedEntity));
+                var purchaseOrder = queryFactory.Update<SelectPurchaseOrdersDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.PurchaseOrders, LogType.Update, purchaseOrder.Id);
+
+                return new SuccessDataResult<SelectPurchaseOrdersDto>(purchaseOrder);
             }
         }
 
         public async Task<IDataResult<SelectPurchaseOrdersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.PurchaseOrdersRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.PurchaseOrders).Select("*").Where(new { Id = id }, false, false, "");
 
-                var updatedEntity = await _uow.PurchaseOrdersRepository.LockRow(entity.Id, lockRow, userId);
+                var entity = queryFactory.Get<PurchaseOrders>(entityQuery);
 
-                await _uow.SaveChanges();
+                var query = queryFactory.Query().From(Tables.PurchaseOrders).Update(new UpdatePurchaseOrdersDto
+                {
+                    FicheNo = entity.FicheNo,
+                    BranchID = entity.BranchID,
+                    CurrencyID = entity.CurrencyID,
+                    CurrentAccountCardID = entity.CurrentAccountCardID,
+                    Date_ = entity.Date_,
+                    Description_ = entity.Description_,
+                    ExchangeRate = entity.ExchangeRate,
+                    GrossAmount = entity.GrossAmount,
+                    LinkedPurchaseRequestID = entity.LinkedPurchaseRequestID,
+                    NetAmount = entity.NetAmount,
+                    PaymentPlanID = entity.PaymentPlanID,
+                    ProductionOrderID = entity.ProductionOrderID,
+                    PurchaseOrderState = entity.PurchaseOrderState,
+                    ShippingAdressID = entity.ShippingAdressID,
+                    SpecialCode = entity.SpecialCode,
+                    Time_ = entity.Time_,
+                    TotalDiscountAmount = entity.TotalDiscountAmount,
+                    TotalVatAmount = entity.TotalVatAmount,
+                    TotalVatExcludedAmount = entity.TotalVatExcludedAmount,
+                    WarehouseID = entity.WarehouseID,
+                    WorkOrderCreationDate = entity.WorkOrderCreationDate,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.Value,
+                    Id = entity.Id,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                }).Where(new { Id = id }, false, false, "");
 
-                var mappedEntity = ObjectMapper.Map<PurchaseOrders, SelectPurchaseOrdersDto>(updatedEntity);
+                var purchaseOrdersDto = queryFactory.Update<SelectPurchaseOrdersDto>(query, "Id", true);
+                return new SuccessDataResult<SelectPurchaseOrdersDto>(purchaseOrdersDto);
 
-                return new SuccessDataResult<SelectPurchaseOrdersDto>(mappedEntity);
             }
         }
     }

@@ -17,114 +17,207 @@ using TsiErp.Entities.Entities.Route.Dtos;
 using TsiErp.Entities.Entities.RouteLine;
 using TsiErp.Entities.Entities.RouteLine.Dtos;
 using Microsoft.Extensions.Localization;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Entities.TableConstant;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
+using TSI.QueryBuilder.Constants.Join;
+using TsiErp.Entities.Entities.Product;
+using TsiErp.Entities.Entities.ProductsOperationLine;
+using TsiErp.Entities.Entities.Station;
+using TsiErp.Entities.Entities.ProductsOperationLine.Dtos;
 
 namespace TsiErp.Business.Entities.Route.Services
 {
     [ServiceRegistration(typeof(IRoutesAppService), DependencyInjectionType.Scoped)]
     public class RoutesAppService : ApplicationService<RoutesResource>, IRoutesAppService
     {
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
         public RoutesAppService(IStringLocalizer<RoutesResource> l) : base(l)
         {
         }
-
-        RouteManager _manager { get; set; } = new RouteManager();
 
         [ValidationAspect(typeof(CreateRoutesValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectRoutesDto>> CreateAsync(CreateRoutesDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.CodeControl(_uow.RoutesRepository, input.Code,L);
+                var listQuery = queryFactory.Query().From(Tables.Routes).Select("*").Where(new { Code = input.Code }, false, false, "");
+                var list = queryFactory.ControlList<Routes>(listQuery).ToList();
 
-                var entity = ObjectMapper.Map<CreateRoutesDto, Routes>(input);
+                #region Code Control 
 
-                var addedEntity = await _uow.RoutesRepository.InsertAsync(entity);
+                if (list.Count > 0)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["CodeControlManager"]);
+                }
+
+                #endregion
+
+                Guid addedEntityId = GuidGenerator.CreateGuid();
+
+                var query = queryFactory.Query().From(Tables.Routes).Insert(new CreateRoutesDto
+                {
+                    Approval = input.Approval,
+                    ProductID = input.ProductID,
+                    ProductionStart = input.ProductionStart,
+                    TechnicalApproval = input.TechnicalApproval,
+                    Code = input.Code,
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    Id = addedEntityId,
+                    IsActive = true,
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                    Name = input.Name,
+                });
 
                 foreach (var item in input.SelectRouteLines)
                 {
-                    var lineEntity = ObjectMapper.Map<SelectRouteLinesDto, RouteLines>(item);
-                    lineEntity.RouteID = addedEntity.Id;
-                    await _uow.RouteLinesRepository.InsertAsync(lineEntity);
+                    var queryLine = queryFactory.Query().From(Tables.RouteLines).Insert(new CreateRouteLinesDto
+                    {
+                        ProductID = item.ProductID,
+                        AdjustmentAndControlTime = item.AdjustmentAndControlTime,
+                        OperationPicture = item.OperationPicture,
+                        OperationTime = item.OperationTime,
+                        Priority = item.Priority,
+                        ProductionPoolDescription = item.ProductionPoolDescription,
+                        ProductionPoolID = item.ProductionPoolID,
+                        ProductsOperationID = item.ProductsOperationID,
+                        RouteID = addedEntityId,
+                        CreationTime = DateTime.Now,
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                        LineNr = item.LineNr,
+                    });
+
+                    query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
                 }
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "Routes", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectRoutesDto>(ObjectMapper.Map<Routes, SelectRoutesDto>(addedEntity));
+
+                var route = queryFactory.Insert<SelectRoutesDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Routes, LogType.Insert, route.Id);
+
+                return new SuccessDataResult<SelectRoutesDto>(route);
             }
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var lines = (await _uow.RouteLinesRepository.GetAsync(t => t.Id == id));
 
-                if (lines != null)
+                var query = queryFactory.Query().From(Tables.Routes).Select("*").Where(new { Id = id }, true, true, "");
+
+                var routes = queryFactory.Get<SelectRoutesDto>(query);
+
+                if (routes.Id != Guid.Empty && routes != null)
                 {
-                    await _manager.DeleteControl(_uow.RoutesRepository, lines.RouteID, lines.Id, true);
-                    await _uow.RouteLinesRepository.DeleteAsync(id);
-                    await _uow.SaveChanges();
-                    return new SuccessResult(L["DeleteSuccessMessage"]);
+                    var deleteQuery = queryFactory.Query().From(Tables.Routes).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.RouteLines).Delete(LoginedUserService.UserId).Where(new { RouteID = id }, false, false, "");
+
+                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+
+                    var route = queryFactory.Update<SelectRoutesDto>(deleteQuery, "Id", true);
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Routes, LogType.Delete, id);
+                    return new SuccessDataResult<SelectRoutesDto>(route);
                 }
                 else
                 {
-                    await _manager.DeleteControl(_uow.RoutesRepository, id, Guid.Empty, false);
-                    var list = (await _uow.RouteLinesRepository.GetListAsync(t => t.RouteID == id));
-                    foreach (var line in list)
-                    {
-                        await _uow.RouteLinesRepository.DeleteAsync(line.Id);
-                    }
-
-                    await _uow.RoutesRepository.DeleteAsync(id);
-                    var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Routes", LogType.Delete, id);
-                    await _uow.LogsRepository.InsertAsync(log);
-                    await _uow.SaveChanges();
-                    return new SuccessResult(L["DeleteSuccessMessage"]);
+                    var queryLine = queryFactory.Query().From(Tables.RouteLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var routeLines = queryFactory.Update<SelectRouteLinesDto>(queryLine, "Id", true);
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.RouteLines, LogType.Delete, id);
+                    return new SuccessDataResult<SelectRouteLinesDto>(routeLines);
                 }
             }
         }
 
         public async Task<IDataResult<SelectRoutesDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.RoutesRepository.GetAsync(t => t.Id == id,
-                t => t.RouteLines,
-                t => t.Products);
+                var query = queryFactory
+                       .Query()
+                       .From(Tables.Routes)
+                       .Select<Routes>(r => new { r.TechnicalApproval, r.ProductionStart, r.ProductID, r.Name, r.IsActive, r.Id, r.DataOpenStatusUserId, r.DataOpenStatus, r.Code, r.Approval })
+                       .Join<Products>
+                        (
+                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                            nameof(Routes.ProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { Id = id }, true, true, Tables.Routes);
 
-                var mappedEntity = ObjectMapper.Map<Routes, SelectRoutesDto>(entity);
+                var routes = queryFactory.Get<SelectRoutesDto>(query);
 
-                mappedEntity.SelectRouteLines = ObjectMapper.Map<List<RouteLines>, List<SelectRouteLinesDto>>(entity.RouteLines.ToList());
+                var queryLines = queryFactory
+                       .Query()
+                       .From(Tables.RouteLines)
+                       .Select<RouteLines>(rl => new { rl.RouteID, rl.ProductsOperationID, rl.ProductionPoolID, rl.ProductionPoolDescription, rl.ProductID, rl.Priority, rl.OperationTime, rl.OperationPicture, rl.LineNr, rl.Id, rl.DataOpenStatusUserId, rl.DataOpenStatus, rl.AdjustmentAndControlTime })
+                       .Join<Products>
+                        (
+                            pr => new { ProductID = pr.Id, ProductCode = pr.Code, ProductName = pr.Name },
+                            nameof(RouteLines.ProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                       .Join<ProductsOperations>
+                        (
+                            po => new { ProductsOperationID = po.Id, OperationName = po.Name, OperationCode = po.Code },
+                            nameof(RouteLines.ProductsOperationID),
+                            nameof(ProductsOperations.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { RouteID = id }, false, false, Tables.RouteLines);
 
-                foreach (var item in mappedEntity.SelectRouteLines)
-                {
-                    item.OperationCode = (await _uow.ProductsOperationsRepository.GetAsync(t => t.Id == item.ProductsOperationID)).Code;
-                    item.OperationName = (await _uow.ProductsOperationsRepository.GetAsync(t => t.Id == item.ProductsOperationID)).Name;
-                }
+                var routeLine = queryFactory.GetList<SelectRouteLinesDto>(queryLines).ToList();
 
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "Routes", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                routes.SelectRouteLines = routeLine;
 
-                return new SuccessDataResult<SelectRoutesDto>(mappedEntity);
+                LogsAppService.InsertLogToDatabase(routes, routes, LoginedUserService.UserId, Tables.Routes, LogType.Get, id);
+
+                return new SuccessDataResult<SelectRoutesDto>(routes);
             }
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListRoutesDto>>> GetListAsync(ListRoutesParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.RoutesRepository.GetListAsync(null,
-                t => t.RouteLines,
-                t => t.Products);
+                var query = queryFactory
+                       .Query()
+                        .From(Tables.Routes)
+                       .Select<Routes>(r => new { r.TechnicalApproval, r.ProductionStart, r.ProductID, r.Name, r.IsActive, r.Id, r.DataOpenStatusUserId, r.DataOpenStatus, r.Code, r.Approval })
+                       .Join<Products>
+                        (
+                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                            nameof(Routes.ProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                        .Where(null, true, true, Tables.BillsofMaterials);
 
-                var mappedEntity = ObjectMapper.Map<List<Routes>, List<ListRoutesDto>>(list.ToList());
-
-                return new SuccessDataResult<IList<ListRoutesDto>>(mappedEntity);
+                var routes = queryFactory.GetList<ListRoutesDto>(query).ToList();
+                return new SuccessDataResult<IList<ListRoutesDto>>(routes);
             }
         }
 
@@ -132,82 +225,274 @@ namespace TsiErp.Business.Entities.Route.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectRoutesDto>> UpdateAsync(UpdateRoutesDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.RoutesRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory
+                       .Query()
+                       .From(Tables.Routes)
+                       .Select<Routes>(r => new { r.TechnicalApproval, r.ProductionStart, r.ProductID, r.Name, r.IsActive, r.Id, r.DataOpenStatusUserId, r.DataOpenStatus, r.Code, r.Approval })
+                       .Join<Products>
+                        (
+                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                            nameof(Routes.ProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { Id = input.Id }, true, true, Tables.Routes);
 
-                await _manager.UpdateControl(_uow.RoutesRepository, input.Code, input.Id, entity,L);
+                var entity = queryFactory.Get<SelectRoutesDto>(entityQuery);
 
-                var mappedEntity = ObjectMapper.Map<UpdateRoutesDto, Routes>(input);
+                var queryLines = queryFactory
+                       .Query()
+                        .From(Tables.RouteLines)
+                       .Select<RouteLines>(rl => new { rl.RouteID, rl.ProductsOperationID, rl.ProductionPoolID, rl.ProductionPoolDescription, rl.ProductID, rl.Priority, rl.OperationTime, rl.OperationPicture, rl.LineNr, rl.Id, rl.DataOpenStatusUserId, rl.DataOpenStatus, rl.AdjustmentAndControlTime })
+                       .Join<Products>
+                        (
+                            pr => new { ProductID = pr.Id, ProductCode = pr.Code, ProductName = pr.Name },
+                            nameof(RouteLines.ProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                       .Join<ProductsOperations>
+                        (
+                            po => new { ProductsOperationID = po.Id, OperationName = po.Name, OperationCode = po.Code },
+                            nameof(RouteLines.ProductsOperationID),
+                            nameof(ProductsOperations.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { RouteID = input.Id }, false, false, Tables.RouteLines);
 
-                await _uow.RoutesRepository.UpdateAsync(mappedEntity);
+                var routeLine = queryFactory.GetList<SelectRouteLinesDto>(queryLines).ToList();
+
+                entity.SelectRouteLines = routeLine;
+
+                #region Update Control
+                var listQuery = queryFactory
+                       .Query()
+                        .From(Tables.Routes)
+                       .Select<Routes>(r => new { r.TechnicalApproval, r.ProductionStart, r.ProductID, r.Name, r.IsActive, r.Id, r.DataOpenStatusUserId, r.DataOpenStatus, r.Code, r.Approval })
+                       .Join<Products>
+                        (
+                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                            nameof(Routes.ProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                                .Where(new { Code = input.Code }, false, false, Tables.Routes);
+
+                var list = queryFactory.GetList<ListRoutesDto>(listQuery).ToList();
+
+                if (list.Count > 0 && entity.Code != input.Code)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["UpdateControlManager"]);
+                }
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.Routes).Update(new UpdateRoutesDto
+                {
+                    Approval = input.Approval,
+                    ProductID = input.ProductID,
+                    ProductionStart = input.ProductionStart,
+                    TechnicalApproval = input.TechnicalApproval,
+                    Code = input.Code,
+                    CreationTime = entity.CreationTime,
+                    CreatorId = entity.CreatorId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                    Id = input.Id,
+                    IsActive = input.IsActive,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId,
+                    Name = input.Name,
+                }).Where(new { Id = input.Id }, true, true, "");
 
                 foreach (var item in input.SelectRouteLines)
                 {
-                    var lineEntity = ObjectMapper.Map<SelectRouteLinesDto, RouteLines>(item);
-                    lineEntity.RouteID = mappedEntity.Id;
-
-                    if (lineEntity.Id == Guid.Empty)
+                    if (item.Id == Guid.Empty)
                     {
-                        await _uow.RouteLinesRepository.InsertAsync(lineEntity);
+                        var queryLine = queryFactory.Query().From(Tables.RouteLines).Insert(new CreateRouteLinesDto
+                        {
+                            ProductID = item.ProductID,
+                            AdjustmentAndControlTime = item.AdjustmentAndControlTime,
+                            OperationPicture = item.OperationPicture,
+                            OperationTime = item.OperationTime,
+                            Priority = item.Priority,
+                            ProductionPoolDescription = item.ProductionPoolDescription,
+                            ProductionPoolID = item.ProductionPoolID,
+                            ProductsOperationID = item.ProductsOperationID,
+                            RouteID = input.Id,
+                            CreationTime = DateTime.Now,
+                            CreatorId = LoginedUserService.UserId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = Guid.Empty,
+                            DeletionTime = null,
+                            Id = GuidGenerator.CreateGuid(),
+                            IsDeleted = false,
+                            LastModificationTime = null,
+                            LastModifierId = Guid.Empty,
+                            LineNr = item.LineNr,
+                        });
+
+                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
                     }
                     else
                     {
-                        await _uow.RouteLinesRepository.UpdateAsync(lineEntity);
+                        var lineGetQuery = queryFactory.Query().From(Tables.RouteLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+
+                        var line = queryFactory.Get<SelectRouteLinesDto>(lineGetQuery);
+
+                        if (line != null)
+                        {
+                            var queryLine = queryFactory.Query().From(Tables.RouteLines).Update(new UpdateRouteLinesDto
+                            {
+                                ProductID = item.ProductID,
+                                AdjustmentAndControlTime = item.AdjustmentAndControlTime,
+                                OperationPicture = item.OperationPicture,
+                                OperationTime = item.OperationTime,
+                                Priority = item.Priority,
+                                ProductionPoolDescription = item.ProductionPoolDescription,
+                                ProductionPoolID = item.ProductionPoolID,
+                                ProductsOperationID = item.ProductsOperationID,
+                                RouteID = input.Id,
+                                CreationTime = line.CreationTime,
+                                CreatorId = line.CreatorId,
+                                DataOpenStatus = false,
+                                DataOpenStatusUserId = Guid.Empty,
+                                DeleterId = line.DeleterId.GetValueOrDefault(),
+                                DeletionTime = line.DeletionTime.GetValueOrDefault(),
+                                Id = item.Id,
+                                IsDeleted = false,
+                                LastModificationTime = DateTime.Now,
+                                LastModifierId = LoginedUserService.UserId,
+                                LineNr = item.LineNr,
+                            }).Where(new { Id = line.Id }, false, false, "");
+
+                            query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
+                        }
                     }
                 }
-                var before = ObjectMapper.Map<Routes, UpdateRoutesDto>(entity);
-                before.SelectRouteLines = ObjectMapper.Map<List<RouteLines>, List<SelectRouteLinesDto>>(entity.RouteLines.ToList());
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "Routes", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
 
-                await _uow.SaveChanges();
+                var route = queryFactory.Update<SelectRoutesDto>(query, "Id", true);
 
-                return new SuccessDataResult<SelectRoutesDto>(ObjectMapper.Map<Routes, SelectRoutesDto>(mappedEntity));
+                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.Routes, LogType.Update, route.Id);
+
+                return new SuccessDataResult<SelectRoutesDto>(route);
             }
+
         }
 
         public async Task<IDataResult<List<ListProductsOperationsDto>>> GetProductsOperationAsync(Guid productId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.ProductsOperationsRepository.GetListAsync(t => t.ProductID == productId, t => t.ProductsOperationLines);
+                var query = queryFactory
+                       .Query()
+                       .From(Tables.ProductsOperations)
+                       .Select<ProductsOperations>(po => new { po.WorkCenterID, po.TemplateOperationID, po.ProductID, po.Name, po.IsActive, po.Id, po.DataOpenStatusUserId, po.DataOpenStatus, po.Code })
+                       .Join<Products>
+                        (
+                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                            nameof(ProductsOperations.ProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { ProductID = productId }, true, true, Tables.ProductsOperations);
 
-                var mappedEntity = ObjectMapper.Map<List<ProductsOperations>, List<ListProductsOperationsDto>>(entity.ToList());
+                var productsOperations = queryFactory.GetList<ListProductsOperationsDto>(query).ToList();
 
-                return new SuccessDataResult<List<ListProductsOperationsDto>>(mappedEntity);
+                return new SuccessDataResult<List<ListProductsOperationsDto>>(productsOperations);
+
             }
+
         }
 
         public async Task<IDataResult<SelectRoutesDto>> GetSelectListAsync(Guid productId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.RoutesRepository.GetAsync(t => t.ProductID == productId,
-                t => t.RouteLines,
-                t => t.Products);
+                var query = queryFactory
+                       .Query()
+                       .From(Tables.Routes)
+                       .Select<Routes>(r => new { r.TechnicalApproval, r.ProductionStart, r.ProductID, r.Name, r.IsActive, r.Id, r.DataOpenStatusUserId, r.DataOpenStatus, r.Code, r.Approval })
+                       .Join<Products>
+                        (
+                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                            nameof(Routes.ProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { ProductID = productId }, true, true, Tables.Routes);
 
-                var mappedEntity = ObjectMapper.Map<Routes, SelectRoutesDto>(entity);
+                var routes = queryFactory.Get<SelectRoutesDto>(query);
 
-                mappedEntity.SelectRouteLines = ObjectMapper.Map<List<RouteLines>, List<SelectRouteLinesDto>>(entity.RouteLines.ToList());
+                var queryLines = queryFactory
+                       .Query()
+                       .From(Tables.RouteLines)
+                       .Select<RouteLines>(rl => new { rl.RouteID, rl.ProductsOperationID, rl.ProductionPoolID, rl.ProductionPoolDescription, rl.ProductID, rl.Priority, rl.OperationTime, rl.OperationPicture, rl.LineNr, rl.Id, rl.DataOpenStatusUserId, rl.DataOpenStatus, rl.AdjustmentAndControlTime })
+                       .Join<Products>
+                        (
+                            pr => new { ProductID = pr.Id, ProductCode = pr.Code, ProductName = pr.Name },
+                            nameof(RouteLines.ProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                       .Join<ProductsOperations>
+                        (
+                            po => new { ProductsOperationID = po.Id, OperationName = po.Name, OperationCode = po.Code },
+                            nameof(RouteLines.ProductsOperationID),
+                            nameof(ProductsOperations.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { RouteID = routes.Id }, false, false, Tables.RouteLines);
 
-                return new SuccessDataResult<SelectRoutesDto>(mappedEntity);
+                var routeLine = queryFactory.GetList<SelectRouteLinesDto>(queryLines).ToList();
+
+                routes.SelectRouteLines = routeLine;
+
+                LogsAppService.InsertLogToDatabase(routes, routes, LoginedUserService.UserId, Tables.Routes, LogType.Get, routes.Id);
+
+                return new SuccessDataResult<SelectRoutesDto>(routes);
             }
         }
 
         public async Task<IDataResult<SelectRoutesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.RoutesRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.Routes).Select("*").Where(new { Id = id }, true, true, "");
 
-                var updatedEntity = await _uow.RoutesRepository.LockRow(entity.Id, lockRow, userId);
+                var entity = queryFactory.Get<Routes>(entityQuery);
 
-                await _uow.SaveChanges();
+                var query = queryFactory.Query().From(Tables.Routes).Update(new UpdateRoutesDto
+                {
+                    Approval = entity.Approval,
+                    ProductID = entity.ProductID,
+                    ProductionStart = entity.ProductionStart,
+                    TechnicalApproval = entity.TechnicalApproval,
+                    Code = entity.Code,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.Value,
+                    Id = entity.Id,
+                    IsActive = entity.IsActive,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                    Name = entity.Name,
+                }).Where(new { Id = id }, true, true, "");
 
-                var mappedEntity = ObjectMapper.Map<Routes, SelectRoutesDto>(updatedEntity);
+                var routesDto = queryFactory.Update<SelectRoutesDto>(query, "Id", true);
+                return new SuccessDataResult<SelectRoutesDto>(routesDto);
 
-                return new SuccessDataResult<SelectRoutesDto>(mappedEntity);
             }
         }
     }

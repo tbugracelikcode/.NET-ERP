@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.UnplannedMaintenanceLine.Dtos;
 using TsiErp.Entities.Enums;
 
@@ -72,7 +73,7 @@ namespace TsiErp.Entities.Entities.UnplannedMaintenance.Dtos
         ///  Tamamlama Tarihi
         /// </summary>
         public DateTime? CompletionDate { get; set; }
-
+        [NoDatabaseAction]
         public List<SelectUnplannedMaintenanceLinesDto> SelectUnplannedMaintenanceLines { get; set; }
 
     }

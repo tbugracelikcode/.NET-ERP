@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.PurchaseOrderLine.Dtos;
 using TsiErp.Entities.Enums;
 
@@ -161,7 +162,7 @@ namespace TsiErp.Entities.Entities.PurchaseOrder.Dtos
         /// Sevkiyat Adresi Açıklaması
         /// </summary>
         public string ShippingAdressName { get; set; }
-
+        [NoDatabaseAction]
         public List<SelectPurchaseOrderLinesDto> SelectPurchaseOrderLinesDto { get; set; }
     }
 }

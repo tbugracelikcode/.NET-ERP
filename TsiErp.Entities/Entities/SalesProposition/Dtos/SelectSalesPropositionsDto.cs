@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Tsi.Core.Entities.Auditing;
+using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.SalesPropositionLine.Dtos;
 using TsiErp.Entities.Enums;
 
@@ -142,6 +143,7 @@ namespace TsiErp.Entities.Entities.SalesProposition.Dtos
         /// Sevkiyat Adresi Kodu
         /// </summary>
         public string ShippingAdressCode { get; set; }
+        [NoDatabaseAction]
         /// <summary>
         /// Teklif Satırları
         /// </summary>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Tsi.Core.Entities.Auditing;
+using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.StationInventory.Dtos;
 
 namespace TsiErp.Entities.Entities.Station.Dtos
@@ -92,7 +93,7 @@ namespace TsiErp.Entities.Entities.Station.Dtos
         /// Fason
         /// </summary>
         public bool IsContract { get; set; }
-
+        [NoDatabaseAction]
         public List<SelectStationInventoriesDto> SelectStationInventoriesDto { get; set; }
     }
 }

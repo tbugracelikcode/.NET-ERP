@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Localization;
-using System.Data;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -77,7 +76,6 @@ namespace TsiErp.Business.Entities.Branch.Services
 
                 return new SuccessDataResult<SelectBranchesDto>(branches);
             }
-
         }
 
         [CacheRemoveAspect("Get")]
@@ -230,8 +228,6 @@ namespace TsiErp.Business.Entities.Branch.Services
                 return new SuccessDataResult<SelectBranchesDto>(branches);
 
             }
-
-
         }
     }
 }

@@ -13,76 +13,136 @@ using TsiErp.Entities.Entities.User;
 using TsiErp.Entities.Entities.User.Dtos;
 using TsiErp.EntityContracts.User;
 using Microsoft.Extensions.Localization;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Entities.TableConstant;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
+using TsiErp.Entities.Entities.UserGroup;
+using TSI.QueryBuilder.Constants.Join;
 
 namespace TsiErp.Business.Entities.User.Services
 {
     [ServiceRegistration(typeof(IUsersAppService), DependencyInjectionType.Scoped)]
     public class UsersAppService : ApplicationService<UsersResource>, IUsersAppService
     {
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
         public UsersAppService(IStringLocalizer<UsersResource> l) : base(l)
         {
         }
-
-        UserManager _manager { get; set; } = new UserManager();
 
         [ValidationAspect(typeof(CreateUsersValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectUsersDto>> CreateAsync(CreateUsersDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.CodeControl(_uow.UsersRepository, input.Code,L);
+                var listQuery = queryFactory.Query().From(Tables.Users).Select("*").Where(new { Code = input.Code }, false, false, "");
 
-                var entity = ObjectMapper.Map<CreateUsersDto, Users>(input);
+                var list = queryFactory.ControlList<Users>(listQuery).ToList();
 
-                var addedEntity = await _uow.UsersRepository.InsertAsync(entity);
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "Users", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                #region Code Control 
 
-                return new SuccessDataResult<SelectUsersDto>(ObjectMapper.Map<Users, SelectUsersDto>(addedEntity));
+                if (list.Count > 0)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["CodeControlManager"]);
+                }
+
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.Users).Insert(new CreateUsersDto
+                {
+                    Code = input.Code,
+                    Email = input.Email,
+                    GroupID = input.GroupID,
+                    IsEmailApproved = input.IsEmailApproved,
+                    NameSurname = input.NameSurname,
+                    Password = input.Password,
+                    UserName = input.UserName,
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    Id = GuidGenerator.CreateGuid(),
+                    IsActive = true,
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                });
+
+                var users = queryFactory.Insert<SelectUsersDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Users, LogType.Insert, users.Id);
+
+                return new SuccessDataResult<SelectUsersDto>(users);
             }
+
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.DeleteControl(_uow.UsersRepository, id);
-                await _uow.UsersRepository.DeleteAsync(id);
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Users", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
+                var query = queryFactory.Query().From(Tables.Users).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+
+                var users = queryFactory.Update<SelectUsersDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Users, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectUsersDto>(users);
             }
         }
 
         public async Task<IDataResult<SelectUsersDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.UsersRepository.GetAsync(t => t.Id == id, t => t.UserGroups);
-                var mappedEntity = ObjectMapper.Map<Users, SelectUsersDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "Users", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectUsersDto>(mappedEntity);
+                var query = queryFactory
+                        .Query().From(Tables.Users).Select<Users>(u => new { u.GroupID, u.Id, u.IsActive, u.IsEmailApproved, u.Code, u.DataOpenStatus, u.DataOpenStatusUserId, u.Email, u.NameSurname, u.Password, u.UserName })
+                            .Join<UserGroups>
+                            (
+                                ug => new { GroupID = ug.Id, GroupName = ug.Name },
+                                nameof(Users.GroupID),
+                                nameof(UserGroups.Id),
+                                JoinType.Left
+                            )
+                            .Where(new { Id = id }, true, true, Tables.Users);
+
+                var user = queryFactory.Get<SelectUsersDto>(query);
+
+                LogsAppService.InsertLogToDatabase(user, user, LoginedUserService.UserId, Tables.Users, LogType.Get, id);
+
+                return new SuccessDataResult<SelectUsersDto>(user);
+
             }
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListUsersDto>>> GetListAsync(ListUsersParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.UsersRepository.GetListAsync(t => t.IsActive == input.IsActive, t => t.UserGroups);
 
-                var mappedEntity = ObjectMapper.Map<List<Users>, List<ListUsersDto>>(list.ToList());
+                var query = queryFactory
+                   .Query()
+                   .From(Tables.Users).Select<Users>(u => new { u.GroupID, u.Id, u.IsActive, u.IsEmailApproved, u.Code, u.DataOpenStatus, u.DataOpenStatusUserId, u.Email, u.NameSurname, u.Password, u.UserName })
+                            .Join<UserGroups>
+                            (
+                                ug => new { GroupName = ug.Name },
+                                nameof(Users.GroupID),
+                                nameof(UserGroups.Id),
+                                JoinType.Left
+                            ).Where(null, true, true, Tables.Users);
 
-                return new SuccessDataResult<IList<ListUsersDto>>(mappedEntity);
+                var users = queryFactory.GetList<ListUsersDto>(query).ToList();
+
+                return new SuccessDataResult<IList<ListUsersDto>>(users);
             }
+
         }
 
 
@@ -90,38 +150,94 @@ namespace TsiErp.Business.Entities.User.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectUsersDto>> UpdateAsync(UpdateUsersDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.UsersRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory.Query().From(Tables.Users).Select("*").Where(new { Id = input.Id }, true, true, "");
+                var entity = queryFactory.Get<Users>(entityQuery);
 
-                await _manager.UpdateControl(_uow.UsersRepository, input.Code, input.Id, entity,L);
+                #region Update Control
 
-                var mappedEntity = ObjectMapper.Map<UpdateUsersDto, Users>(input);
+                var listQuery = queryFactory.Query().From(Tables.Users).Select("*").Where(new { Code = input.Code }, false, false, "");
+                var list = queryFactory.GetList<Users>(listQuery).ToList();
 
-                await _uow.UsersRepository.UpdateAsync(mappedEntity);
-                var before = ObjectMapper.Map<Users, UpdateUsersDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "Users", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                if (list.Count > 0 && entity.Code != input.Code)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["UpdateControlManager"]);
+                }
 
-                return new SuccessDataResult<SelectUsersDto>(ObjectMapper.Map<Users, SelectUsersDto>(mappedEntity));
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.Users).Update(new UpdateUsersDto
+                {
+                    Code = input.Code,
+                    Id = input.Id,
+                    Email = input.Email,
+                    GroupID = input.GroupID,
+                    IsEmailApproved = input.IsEmailApproved,
+                    NameSurname = input.NameSurname,
+                    Password = input.Password,
+                    UserName = input.UserName,
+                    IsActive = input.IsActive,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId
+                }).Where(new { Id = input.Id }, true, true, "");
+
+                var users = queryFactory.Update<SelectUsersDto>(query, "Id", true);
+
+
+                LogsAppService.InsertLogToDatabase(entity, users, LoginedUserService.UserId, Tables.Users, LogType.Update, entity.Id);
+
+
+                return new SuccessDataResult<SelectUsersDto>(users);
             }
+
         }
 
         public async Task<IDataResult<SelectUsersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.UsersRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.Users).Select("*").Where(new { Id = id }, true, true, "");
+                var entity = queryFactory.Get<Users>(entityQuery);
 
-                var updatedEntity = await _uow.UsersRepository.LockRow(entity.Id, lockRow, userId);
+                var query = queryFactory.Query().From(Tables.Users).Update(new UpdateUsersDto
+                {
+                    Code = entity.Code,
+                    Email = entity.Email,
+                    GroupID = entity.GroupID,
+                    IsEmailApproved = entity.IsEmailApproved,
+                    NameSurname = entity.NameSurname,
+                    Password = entity.Password,
+                    UserName = entity.UserName,
+                    IsActive = entity.IsActive,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                    Id = id,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId,
 
-                await _uow.SaveChanges();
+                }).Where(new { Id = id }, true, true, "");
 
-                var mappedEntity = ObjectMapper.Map<Users, SelectUsersDto>(updatedEntity);
+                var users = queryFactory.Update<SelectUsersDto>(query, "Id", true);
 
-                return new SuccessDataResult<SelectUsersDto>(mappedEntity);
+                return new SuccessDataResult<SelectUsersDto>(users);
+
             }
+
         }
     }
 }

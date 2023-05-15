@@ -1,6 +1,6 @@
 ﻿using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; 
+using Tsi.Core.Utilities.Results;
 using TsiErp.Localizations.Resources.ProductionTrackings.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
@@ -15,113 +15,245 @@ using TsiErp.Entities.Entities.ProductionTracking.Dtos;
 using TsiErp.Entities.Entities.ProductionTrackingHaltLine;
 using TsiErp.Entities.Entities.ProductionTrackingHaltLine.Dtos;
 using Microsoft.Extensions.Localization;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Entities.TableConstant;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
+using TSI.QueryBuilder.Constants.Join;
+using TsiErp.Entities.Entities.WorkOrder;
+using TsiErp.Entities.Entities.Station;
+using TsiErp.Entities.Entities.Shift;
+using TsiErp.Entities.Entities.Employee;
+using TsiErp.Entities.Entities.HaltReason;
 
 namespace TsiErp.Business.Entities.ProductionTracking.Services
 {
     [ServiceRegistration(typeof(IProductionTrackingsAppService), DependencyInjectionType.Scoped)]
     public class ProductionTrackingsAppService : ApplicationService<ProductionTrackingsResource>, IProductionTrackingsAppService
     {
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
         public ProductionTrackingsAppService(IStringLocalizer<ProductionTrackingsResource> l) : base(l)
         {
         }
-
-        ProductionTrackingManager _manager { get; set; } = new ProductionTrackingManager();
-
 
         [ValidationAspect(typeof(CreateProductionTrackingsValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionTrackingsDto>> CreateAsync(CreateProductionTrackingsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.CodeControl(_uow.ProductionTrackingsRepository, input.Code, L);
+                var listQuery = queryFactory.Query().From(Tables.ProductionTrackings).Select("*").Where(new { Code = input.Code }, false, false, "");
+                var list = queryFactory.ControlList<ProductionTrackings>(listQuery).ToList();
 
-                var entity = ObjectMapper.Map<CreateProductionTrackingsDto, ProductionTrackings>(input);
+                #region Code Control 
 
-                var addedEntity = await _uow.ProductionTrackingsRepository.InsertAsync(entity);
+                if (list.Count > 0)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["CodeControlManager"]);
+                }
+
+                #endregion
+
+                Guid addedEntityId = GuidGenerator.CreateGuid();
+
+                var query = queryFactory.Query().From(Tables.ProductionTrackings).Insert(new CreateProductionTrackingsDto
+                {
+                    AdjustmentTime = input.AdjustmentTime,
+                    EmployeeID = input.EmployeeID,
+                    HaltTime = input.HaltTime,
+                    IsFinished = input.IsFinished,
+                    OperationEndDate = input.OperationEndDate,
+                    OperationEndTime = input.OperationEndTime,
+                    OperationStartDate = input.OperationStartDate,
+                    OperationStartTime = input.OperationStartTime,
+                    OperationTime = input.OperationTime,
+                    PlannedQuantity = input.PlannedQuantity,
+                    ProducedQuantity = input.ProducedQuantity,
+                    ShiftID = input.ShiftID,
+                    StationID = input.StationID,
+                    WorkOrderID = input.WorkOrderID,
+                    Code = input.Code,
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    Id = addedEntityId,
+                    IsDeleted = false,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                });
 
                 foreach (var item in input.SelectProductionTrackingHaltLinesDto)
                 {
-                    var lineEntity = ObjectMapper.Map<SelectProductionTrackingHaltLinesDto, ProductionTrackingHaltLines>(item);
-                    lineEntity.ProductionTrackingID = addedEntity.Id;
-                    await _uow.ProductionTrackingHaltLinesRepository.InsertAsync(lineEntity);
+                    var queryLine = queryFactory.Query().From(Tables.ProductionTrackingHaltLines).Insert(new CreateProductionTrackingHaltLinesDto
+                    {
+                        HaltID = item.HaltID,
+                        HaltTime = item.HaltTime,
+                        ProductionTrackingID = addedEntityId,
+                        CreationTime = DateTime.Now,
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                    });
+
+                    query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
                 }
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "ProductionTrackings", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
 
-                await _uow.SaveChanges();
+                var productionTracking = queryFactory.Insert<SelectProductionTrackingsDto>(query, "Id", true);
 
-                return new SuccessDataResult<SelectProductionTrackingsDto>(ObjectMapper.Map<ProductionTrackings, SelectProductionTrackingsDto>(addedEntity));
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductionTrackings, LogType.Insert, productionTracking.Id);
+
+                return new SuccessDataResult<SelectProductionTrackingsDto>(productionTracking);
             }
         }
 
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var lines = (await _uow.ProductionTrackingHaltLinesRepository.GetAsync(t => t.Id == id));
 
-                if (lines != null)
+                var query = queryFactory.Query().From(Tables.ProductionTrackings).Select("*").Where(new { Id = id }, false, false, "");
+
+                var productionTrackings = queryFactory.Get<SelectProductionTrackingsDto>(query);
+
+                if (productionTrackings.Id != Guid.Empty && productionTrackings != null)
                 {
-                    await _manager.DeleteControl(_uow.ProductionTrackingsRepository, lines.Id);
-                    await _uow.ProductionTrackingHaltLinesRepository.DeleteAsync(id);
-                    await _uow.SaveChanges();
-                    return new SuccessResult(L["DeleteSuccessMessage"]);
+                    var deleteQuery = queryFactory.Query().From(Tables.ProductionTrackings).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
+                    var lineDeleteQuery = queryFactory.Query().From(Tables.ProductionTrackingHaltLines).Delete(LoginedUserService.UserId).Where(new { ProductionTrackingID = id }, false, false, "");
+
+                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+
+                    var productionTracking = queryFactory.Update<SelectProductionTrackingsDto>(deleteQuery, "Id", true);
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductionTrackings, LogType.Delete, id);
+                    return new SuccessDataResult<SelectProductionTrackingsDto>(productionTracking);
                 }
                 else
                 {
-                    await _manager.DeleteControl(_uow.ProductionTrackingsRepository, id);
-
-                    var list = (await _uow.ProductionTrackingHaltLinesRepository.GetListAsync(t => t.ProductionTrackingID == id));
-                    foreach (var line in list)
-                    {
-                        await _uow.ProductionTrackingHaltLinesRepository.DeleteAsync(line.Id);
-                    }
-                    await _uow.ProductionTrackingsRepository.DeleteAsync(id);
-                    var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "ProductionTrackings", LogType.Delete, id);
-                    await _uow.LogsRepository.InsertAsync(log);
-                    await _uow.SaveChanges();
-                    return new SuccessResult(L["DeleteSuccessMessage"]);
+                    var queryLine = queryFactory.Query().From(Tables.ProductionTrackingHaltLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                    var productionTrackingLines = queryFactory.Update<SelectProductionTrackingHaltLinesDto>(queryLine, "Id", true);
+                    LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.ProductionTrackingHaltLines, LogType.Delete, id);
+                    return new SuccessDataResult<SelectProductionTrackingHaltLinesDto>(productionTrackingLines);
                 }
             }
         }
 
         public async Task<IDataResult<SelectProductionTrackingsDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.ProductionTrackingsRepository.GetAsync(t => t.Id == id,
-                t => t.ProductionTrackingHaltLines);
+                var query = queryFactory
+                       .Query()
+                       .From(Tables.ProductionTrackings)
+                       .Select<ProductionTrackings>(pt => new { pt.WorkOrderID, pt.StationID, pt.StationCode, pt.ShiftID, pt.ShiftCode, pt.ProducedQuantity, pt.PlannedQuantity, pt.OperationTime, pt.OperationStartTime, pt.OperationStartDate, pt.OperationEndTime, pt.OperationEndDate, pt.IsFinished, pt.Id, pt.HaltTime, pt.EmployeeName, pt.EmployeeID, pt.DataOpenStatusUserId, pt.DataOpenStatus, pt.Code, pt.AdjustmentTime })
+                       .Join<WorkOrders>
+                        (
+                            wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.Code },
+                            nameof(ProductionTrackings.WorkOrderID),
+                            nameof(WorkOrders.Id),
+                            JoinType.Left
+                        )
+                         .Join<Stations>
+                        (
+                            s => new { StationID = s.Id, StationCode = s.Code },
+                            nameof(ProductionTrackings.StationID),
+                            nameof(Stations.Id),
+                            JoinType.Left
+                        )
+                        .Join<Shifts>
+                        (
+                            sh => new { ShiftID = sh.Id, ShiftCode = sh.Code },
+                            nameof(ProductionTrackings.ShiftID),
+                            nameof(Shifts.Id),
+                            JoinType.Left
+                        )
+                        .Join<Employees>
+                        (
+                            e => new { EmployeeID = e.Id, EmployeeName = e.Name },
+                            nameof(ProductionTrackings.EmployeeID),
+                            nameof(Employees.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { Id = id }, false, false, Tables.ProductionTrackings);
 
-                var mappedEntity = ObjectMapper.Map<ProductionTrackings, SelectProductionTrackingsDto>(entity);
+                var productionTrackings = queryFactory.Get<SelectProductionTrackingsDto>(query);
 
-                mappedEntity.SelectProductionTrackingHaltLines = ObjectMapper.Map<List<ProductionTrackingHaltLines>, List<SelectProductionTrackingHaltLinesDto>>(entity.ProductionTrackingHaltLines.ToList());
+                var queryLines = queryFactory
+                       .Query()
+                       .From(Tables.ProductionTrackingHaltLines)
+                       .Select<ProductionTrackingHaltLines>(hl => new { hl.ProductionTrackingID, hl.Id, hl.HaltTime, hl.HaltName, hl.HaltID, hl.HaltCode, hl.DataOpenStatusUserId, hl.DataOpenStatus })
+                       .Join<HaltReasons>
+                        (
+                            hr => new { HaltID = hr.Id, HaltName = hr.Name, HaltCode = hr.Code },
+                            nameof(ProductionTrackingHaltLines.HaltID),
+                            nameof(HaltReasons.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { ProductionTrackingID = id }, false, false, Tables.ProductionTrackingHaltLines);
 
-                foreach (var item in mappedEntity.SelectProductionTrackingHaltLines)
-                {
-                    item.HaltCode = (await _uow.HaltReasonsRepository.GetAsync(t => t.Id == item.HaltID)).Code;
-                    item.HaltName = (await _uow.HaltReasonsRepository.GetAsync(t => t.Id == item.HaltID)).Name;
-                }
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "ProductionTrackings", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
+                var productionTrackingLine = queryFactory.GetList<SelectProductionTrackingHaltLinesDto>(queryLines).ToList();
 
-                return new SuccessDataResult<SelectProductionTrackingsDto>(mappedEntity);
+                productionTrackings.SelectProductionTrackingHaltLines = productionTrackingLine;
+
+                LogsAppService.InsertLogToDatabase(productionTrackings, productionTrackings, LoginedUserService.UserId, Tables.ProductionTrackings, LogType.Get, id);
+
+                return new SuccessDataResult<SelectProductionTrackingsDto>(productionTrackings);
             }
+
         }
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductionTrackingsDto>>> GetListAsync(ListProductionTrackingsParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.ProductionTrackingsRepository.GetListAsync(null,
-                t => t.ProductionTrackingHaltLines);
+                var query = queryFactory
+                       .Query()
+                       .From(Tables.ProductionTrackings)
+                       .Select<ProductionTrackings>(pt => new { pt.WorkOrderID, pt.StationID, pt.StationCode, pt.ShiftID, pt.ShiftCode, pt.ProducedQuantity, pt.PlannedQuantity, pt.OperationTime, pt.OperationStartTime, pt.OperationStartDate, pt.OperationEndTime, pt.OperationEndDate, pt.IsFinished, pt.Id, pt.HaltTime, pt.EmployeeName, pt.EmployeeID, pt.DataOpenStatusUserId, pt.DataOpenStatus, pt.Code, pt.AdjustmentTime })
+                       .Join<WorkOrders>
+                        (
+                            wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.Code },
+                            nameof(ProductionTrackings.WorkOrderID),
+                            nameof(WorkOrders.Id),
+                            JoinType.Left
+                        )
+                         .Join<Stations>
+                        (
+                            s => new { StationID = s.Id, StationCode = s.Code },
+                            nameof(ProductionTrackings.StationID),
+                            nameof(Stations.Id),
+                            JoinType.Left
+                        )
+                        .Join<Shifts>
+                        (
+                            sh => new { ShiftID = sh.Id, ShiftCode = sh.Code },
+                            nameof(ProductionTrackings.ShiftID),
+                            nameof(Shifts.Id),
+                            JoinType.Left
+                        )
+                        .Join<Employees>
+                        (
+                            e => new { EmployeeID = e.Id, EmployeeName = e.Name },
+                            nameof(ProductionTrackings.EmployeeID),
+                            nameof(Employees.Id),
+                            JoinType.Left
+                        )
+                        .Where(null, false, false, Tables.ProductionTrackings);
 
-                var mappedEntity = ObjectMapper.Map<List<ProductionTrackings>, List<ListProductionTrackingsDto>>(list.ToList());
-
-                return new SuccessDataResult<IList<ListProductionTrackingsDto>>(mappedEntity);
+                var productionTrackings = queryFactory.GetList<ListProductionTrackingsDto>(query).ToList();
+                return new SuccessDataResult<IList<ListProductionTrackingsDto>>(productionTrackings);
             }
         }
 
@@ -129,53 +261,236 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectProductionTrackingsDto>> UpdateAsync(UpdateProductionTrackingsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.ProductionTrackingsRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory
+                       .Query()
+                       .From(Tables.ProductionTrackings)
+                       .Select<ProductionTrackings>(pt => new { pt.WorkOrderID, pt.StationID, pt.StationCode, pt.ShiftID, pt.ShiftCode, pt.ProducedQuantity, pt.PlannedQuantity, pt.OperationTime, pt.OperationStartTime, pt.OperationStartDate, pt.OperationEndTime, pt.OperationEndDate, pt.IsFinished, pt.Id, pt.HaltTime, pt.EmployeeName, pt.EmployeeID, pt.DataOpenStatusUserId, pt.DataOpenStatus, pt.Code, pt.AdjustmentTime })
+                       .Join<WorkOrders>
+                        (
+                            wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.Code },
+                            nameof(ProductionTrackings.WorkOrderID),
+                            nameof(WorkOrders.Id),
+                            JoinType.Left
+                        )
+                         .Join<Stations>
+                        (
+                            s => new { StationID = s.Id, StationCode = s.Code },
+                            nameof(ProductionTrackings.StationID),
+                            nameof(Stations.Id),
+                            JoinType.Left
+                        )
+                        .Join<Shifts>
+                        (
+                            sh => new { ShiftID = sh.Id, ShiftCode = sh.Code },
+                            nameof(ProductionTrackings.ShiftID),
+                            nameof(Shifts.Id),
+                            JoinType.Left
+                        )
+                        .Join<Employees>
+                        (
+                            e => new { EmployeeID = e.Id, EmployeeName = e.Name },
+                            nameof(ProductionTrackings.EmployeeID),
+                            nameof(Employees.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { Id = input.Id }, false, false, Tables.ProductionTrackings);
 
-                await _manager.UpdateControl(_uow.ProductionTrackingsRepository, input.Code, input.Id, entity, L);
+                var entity = queryFactory.Get<SelectProductionTrackingsDto>(entityQuery);
 
-                var mappedEntity = ObjectMapper.Map<UpdateProductionTrackingsDto, ProductionTrackings>(input);
+                var queryLines = queryFactory
+                       .Query()
+                       .From(Tables.ProductionTrackingHaltLines)
+                       .Select<ProductionTrackingHaltLines>(hl => new { hl.ProductionTrackingID, hl.Id, hl.HaltTime, hl.HaltName, hl.HaltID, hl.HaltCode, hl.DataOpenStatusUserId, hl.DataOpenStatus })
+                       .Join<HaltReasons>
+                        (
+                            hr => new { HaltID = hr.Id, HaltName = hr.Name, HaltCode = hr.Code },
+                            nameof(ProductionTrackingHaltLines.HaltID),
+                            nameof(HaltReasons.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { ProductionTrackingID = input.Id }, false, false, Tables.ProductionTrackingHaltLines);
 
-                await _uow.ProductionTrackingsRepository.UpdateAsync(mappedEntity);
+                var productionTrackingLine = queryFactory.GetList<SelectProductionTrackingHaltLinesDto>(queryLines).ToList();
+
+                entity.SelectProductionTrackingHaltLines = productionTrackingLine;
+
+                #region Update Control
+                var listQuery = queryFactory
+                               .Query()
+                               .From(Tables.ProductionTrackings)
+                               .Select<ProductionTrackings>(pt => new { pt.WorkOrderID, pt.StationID, pt.StationCode, pt.ShiftID, pt.ShiftCode, pt.ProducedQuantity, pt.PlannedQuantity, pt.OperationTime, pt.OperationStartTime, pt.OperationStartDate, pt.OperationEndTime, pt.OperationEndDate, pt.IsFinished, pt.Id, pt.HaltTime, pt.EmployeeName, pt.EmployeeID, pt.DataOpenStatusUserId, pt.DataOpenStatus, pt.Code, pt.AdjustmentTime })
+                               .Join<WorkOrders>
+                                (
+                                    wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.Code },
+                                    nameof(ProductionTrackings.WorkOrderID),
+                                    nameof(WorkOrders.Id),
+                                    JoinType.Left
+                                )
+                                 .Join<Stations>
+                                (
+                                    s => new { StationID = s.Id, StationCode = s.Code },
+                                    nameof(ProductionTrackings.StationID),
+                                    nameof(Stations.Id),
+                                    JoinType.Left
+                                )
+                                .Join<Shifts>
+                                (
+                                    sh => new { ShiftID = sh.Id, ShiftCode = sh.Code },
+                                    nameof(ProductionTrackings.ShiftID),
+                                    nameof(Shifts.Id),
+                                    JoinType.Left
+                                )
+                                .Join<Employees>
+                                (
+                                    e => new { EmployeeID = e.Id, EmployeeName = e.Name },
+                                    nameof(ProductionTrackings.EmployeeID),
+                                    nameof(Employees.Id),
+                                    JoinType.Left
+                                )
+                                .Where(new { Code = input.Code }, false, false, Tables.ProductionTrackings);
+
+                var list = queryFactory.GetList<ListProductionTrackingsDto>(listQuery).ToList();
+
+                if (list.Count > 0 && entity.Code != input.Code)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["UpdateControlManager"]);
+                }
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.ProductionTrackings).Update(new UpdateProductionTrackingsDto
+                {
+                    AdjustmentTime = input.AdjustmentTime,
+                    EmployeeID = input.EmployeeID,
+                    HaltTime = input.HaltTime,
+                    IsFinished = input.IsFinished,
+                    OperationEndDate = input.OperationEndDate,
+                    OperationEndTime = input.OperationEndTime,
+                    OperationStartDate = input.OperationStartDate,
+                    OperationStartTime = input.OperationStartTime,
+                    OperationTime = input.OperationTime,
+                    PlannedQuantity = input.PlannedQuantity,
+                    ProducedQuantity = input.ProducedQuantity,
+                    ShiftID = input.ShiftID,
+                    StationID = input.StationID,
+                    WorkOrderID = input.WorkOrderID,
+                    Code = input.Code,
+                    CreationTime = entity.CreationTime,
+                    CreatorId = entity.CreatorId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                    Id = input.Id,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId,
+                }).Where(new { Id = input.Id }, false, false, "");
 
                 foreach (var item in input.SelectProductionTrackingHaltLinesDto)
                 {
-                    var lineEntity = ObjectMapper.Map<SelectProductionTrackingHaltLinesDto, ProductionTrackingHaltLines>(item);
-                    lineEntity.ProductionTrackingID = mappedEntity.Id;
-                    if (lineEntity.Id == Guid.Empty)
+                    if (item.Id == Guid.Empty)
                     {
-                        await _uow.ProductionTrackingHaltLinesRepository.InsertAsync(lineEntity);
+                        var queryLine = queryFactory.Query().From(Tables.ProductionTrackingHaltLines).Insert(new CreateProductionTrackingHaltLinesDto
+                        {
+                            HaltID = item.HaltID,
+                            HaltTime = item.HaltTime,
+                            LastModifierId = Guid.Empty,
+                            ProductionTrackingID = input.Id,
+                            CreationTime = DateTime.Now,
+                            CreatorId = LoginedUserService.UserId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = Guid.Empty,
+                            DeletionTime = null,
+                            Id = GuidGenerator.CreateGuid(),
+                            IsDeleted = false,
+                            LastModificationTime = null
+                        });
+
+                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
                     }
                     else
                     {
-                        await _uow.ProductionTrackingHaltLinesRepository.UpdateAsync(lineEntity);
+                        var lineGetQuery = queryFactory.Query().From(Tables.ProductionTrackingHaltLines).Select("*").Where(new { Id = item.Id }, false, false, "");
+
+                        var line = queryFactory.Get<SelectProductionTrackingHaltLinesDto>(lineGetQuery);
+
+                        if (line != null)
+                        {
+                            var queryLine = queryFactory.Query().From(Tables.ProductionTrackingHaltLines).Update(new UpdateProductionTrackingHaltLinesDto
+                            {
+                                HaltTime = item.HaltTime,
+                                HaltID = item.HaltID,
+                                ProductionTrackingID = input.Id,
+                                CreationTime = line.CreationTime,
+                                CreatorId = line.CreatorId,
+                                DataOpenStatus = false,
+                                DataOpenStatusUserId = Guid.Empty,
+                                DeleterId = line.DeleterId.GetValueOrDefault(),
+                                DeletionTime = line.DeletionTime.GetValueOrDefault(),
+                                Id = item.Id,
+                                IsDeleted = false,
+                                LastModificationTime = DateTime.Now,
+                                LastModifierId = LoginedUserService.UserId,
+                            }).Where(new { Id = line.Id }, false, false, "");
+
+                            query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
+                        }
                     }
                 }
 
-                var before = ObjectMapper.Map<ProductionTrackings, UpdateProductionTrackingsDto>(entity);
-                before.SelectProductionTrackingHaltLinesDto = ObjectMapper.Map<List<ProductionTrackingHaltLines>, List<SelectProductionTrackingHaltLinesDto>>(entity.ProductionTrackingHaltLines.ToList());
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "ProductionTrackings", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
+                var productionTracking = queryFactory.Update<SelectProductionTrackingsDto>(query, "Id", true);
 
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectProductionTrackingsDto>(ObjectMapper.Map<ProductionTrackings, SelectProductionTrackingsDto>(mappedEntity));
+                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.ProductionTrackings, LogType.Update, productionTracking.Id);
+
+                return new SuccessDataResult<SelectProductionTrackingsDto>(productionTracking);
             }
         }
 
         public async Task<IDataResult<SelectProductionTrackingsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.ProductionTrackingsRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.ProductionTrackings).Select("*").Where(new { Id = id }, false, false, "");
 
-                var updatedEntity = await _uow.ProductionTrackingsRepository.LockRow(entity.Id, lockRow, userId);
+                var entity = queryFactory.Get<ProductionTrackings>(entityQuery);
 
-                await _uow.SaveChanges();
+                var query = queryFactory.Query().From(Tables.BillsofMaterials).Update(new UpdateProductionTrackingsDto
+                {
+                    AdjustmentTime = entity.AdjustmentTime,
+                    EmployeeID = entity.EmployeeID,
+                    HaltTime = entity.HaltTime,
+                    IsFinished = entity.IsFinished,
+                    OperationEndDate = entity.OperationEndDate,
+                    OperationEndTime = entity.OperationEndTime,
+                    OperationStartDate = entity.OperationStartDate,
+                    OperationStartTime = entity.OperationStartTime,
+                    OperationTime = entity.OperationTime,
+                    PlannedQuantity = entity.PlannedQuantity,
+                    ProducedQuantity = entity.ProducedQuantity,
+                    ShiftID = entity.ShiftID,
+                    StationID = entity.StationID,
+                    WorkOrderID = entity.WorkOrderID,
+                    Code = entity.Code,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.Value,
+                    Id = entity.Id,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                }).Where(new { Id = id }, false, false, "");
 
-                var mappedEntity = ObjectMapper.Map<ProductionTrackings, SelectProductionTrackingsDto>(updatedEntity);
+                var productionTrackingsDto = queryFactory.Update<SelectProductionTrackingsDto>(query, "Id", true);
+                return new SuccessDataResult<SelectProductionTrackingsDto>(productionTrackingsDto);
 
-                return new SuccessDataResult<SelectProductionTrackingsDto>(mappedEntity);
             }
         }
     }

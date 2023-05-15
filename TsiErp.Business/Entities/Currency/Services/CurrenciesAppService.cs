@@ -13,35 +13,69 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.Currency;
 using TsiErp.Entities.Entities.Currency.Dtos;
 using Microsoft.Extensions.Localization;
+using TSI.QueryBuilder.BaseClasses;
+using TsiErp.Entities.TableConstant;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 
 namespace TsiErp.Business.Entities.Currency.Services
 {
     [ServiceRegistration(typeof(ICurrenciesAppService), DependencyInjectionType.Scoped)]
     public class CurrenciesAppService : ApplicationService<CurrenciesResource>, ICurrenciesAppService
     {
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
+
         public CurrenciesAppService(IStringLocalizer<CurrenciesResource> l) : base(l)
         {
         }
 
-        CurrencyManager _manager { get; set; } = new CurrencyManager();
 
         [ValidationAspect(typeof(CreateCurrenciesValidator), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCurrenciesDto>> CreateAsync(CreateCurrenciesDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.CodeControl(_uow.CurrenciesRepository, input.Code,L);
+                var listQuery = queryFactory.Query().From(Tables.Currencies).Select("*").Where(new { Code = input.Code }, false, false, "");
 
-                var entity = ObjectMapper.Map<CreateCurrenciesDto, Currencies>(input);
+                var list = queryFactory.ControlList<Currencies>(listQuery).ToList();
 
-                var addedEntity = await _uow.CurrenciesRepository.InsertAsync(entity);
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "Currencies", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
+                #region Code Control 
 
-                return new SuccessDataResult<SelectCurrenciesDto>(ObjectMapper.Map<Currencies, SelectCurrenciesDto>(addedEntity));
+                if (list.Count > 0)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["CodeControlManager"]);
+                }
+
+                #endregion
+
+
+                var query = queryFactory.Query().From(Tables.Currencies).Insert(new CreateCurrenciesDto
+                {
+                    Code = input.Code,
+                    Name = input.Name,
+                    IsActive = true,
+                    Id = GuidGenerator.CreateGuid(),
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                    IsDeleted = false
+                });
+
+
+                var currencies = queryFactory.Insert<SelectCurrenciesDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Currencies, LogType.Insert, currencies.Id);
+
+
+                return new SuccessDataResult<SelectCurrenciesDto>(currencies);
             }
         }
 
@@ -49,33 +83,40 @@ namespace TsiErp.Business.Entities.Currency.Services
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                await _manager.DeleteControl(_uow.CurrenciesRepository, id,L);
-                await _uow.CurrenciesRepository.DeleteAsync(id);
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "Currencies", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
+                #region Delete Control
 
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
+                #endregion
+
+                var query = queryFactory.Query().From(Tables.Currencies).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
+
+                var currencies = queryFactory.Update<SelectCurrenciesDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.Currencies, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectCurrenciesDto>(currencies);
             }
         }
 
 
         public async Task<IDataResult<SelectCurrenciesDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.CurrenciesRepository.GetAsync(t => t.Id == id, t => t.CurrentAccountCards, y => y.ExchangeRates, y => y.SalesPropositions);
-                var mappedEntity = ObjectMapper.Map<Currencies, SelectCurrenciesDto>(entity);
 
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "Currencies", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
+                var query = queryFactory.Query().From(Tables.Currencies).Select("*").Where(
+                new
+                {
+                    Id = id
+                }, true, true, "");
+                var currency = queryFactory.Get<SelectCurrenciesDto>(query);
 
 
+                LogsAppService.InsertLogToDatabase(currency, currency, LoginedUserService.UserId, Tables.Currencies, LogType.Get, id);
 
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectCurrenciesDto>(mappedEntity);
+                return new SuccessDataResult<SelectCurrenciesDto>(currency);
+
             }
         }
 
@@ -83,13 +124,11 @@ namespace TsiErp.Business.Entities.Currency.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCurrenciesDto>>> GetListAsync(ListCurrenciesParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var list = await _uow.CurrenciesRepository.GetListAsync(t => t.IsActive == input.IsActive, x => x.CurrentAccountCards, y => y.ExchangeRates, y => y.SalesPropositions);
-
-                var mappedEntity = ObjectMapper.Map<List<Currencies>, List<ListCurrenciesDto>>(list.ToList());
-
-                return new SuccessDataResult<IList<ListCurrenciesDto>>(mappedEntity);
+                var query = queryFactory.Query().From(Tables.Currencies).Select("*").Where(null, true, true, "");
+                var currencies = queryFactory.GetList<ListCurrenciesDto>(query).ToList();
+                return new SuccessDataResult<IList<ListCurrenciesDto>>(currencies);
             }
         }
 
@@ -98,38 +137,79 @@ namespace TsiErp.Business.Entities.Currency.Services
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCurrenciesDto>> UpdateAsync(UpdateCurrenciesDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.CurrenciesRepository.GetAsync(x => x.Id == input.Id);
+                var entityQuery = queryFactory.Query().From(Tables.Currencies).Select("*").Where(new { Id = input.Id }, true, true, "");
+                var entity = queryFactory.Get<Currencies>(entityQuery);
 
-                await _manager.UpdateControl(_uow.CurrenciesRepository, input.Code, input.Id, entity,L);
+                #region Update Control
 
-                var mappedEntity = ObjectMapper.Map<UpdateCurrenciesDto, Currencies>(input);
+                var listQuery = queryFactory.Query().From(Tables.Currencies).Select("*").Where(new { Code = input.Code }, false, false, "");
+                var list = queryFactory.GetList<Currencies>(listQuery).ToList();
 
-                await _uow.CurrenciesRepository.UpdateAsync(mappedEntity);
-                var before = ObjectMapper.Map<Currencies, UpdateCurrenciesDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "Currencies", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
+                if (list.Count > 0 && entity.Code != input.Code)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["UpdateControlManager"]);
+                }
 
-                await _uow.SaveChanges();
+                #endregion
 
-                return new SuccessDataResult<SelectCurrenciesDto>(ObjectMapper.Map<Currencies, SelectCurrenciesDto>(mappedEntity));
+                var query = queryFactory.Query().From(Tables.Currencies).Update(new UpdateCurrenciesDto
+                {
+                    Code = input.Code,
+                    Name = input.Name,
+                    Id = input.Id,
+                    IsActive = input.IsActive,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = entity.DeleterId.Value,
+                    DeletionTime = entity.DeletionTime.Value,
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = DateTime.Now,
+                    LastModifierId = LoginedUserService.UserId
+                }).Where(new { Id = input.Id }, true, true, "");
+
+                var currencies = queryFactory.Update<SelectCurrenciesDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(entity, currencies, LoginedUserService.UserId, Tables.Currencies, LogType.Update, entity.Id);
+
+                return new SuccessDataResult<SelectCurrenciesDto>(currencies);
             }
         }
 
         public async Task<IDataResult<SelectCurrenciesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
+            using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entity = await _uow.CurrenciesRepository.GetAsync(x => x.Id == id);
+                var entityQuery = queryFactory.Query().From(Tables.Currencies).Select("*").Where(new { Id = id }, true, true, "");
 
-                var updatedEntity = await _uow.CurrenciesRepository.LockRow(entity.Id, lockRow, userId);
+                var entity = queryFactory.Get<Currencies>(entityQuery);
 
-                await _uow.SaveChanges();
+                var query = queryFactory.Query().From(Tables.Currencies).Update(new UpdateCurrenciesDto
+                {
+                    Code = entity.Code,
+                    Name = entity.Name,
+                    IsActive = entity.IsActive,
+                    CreationTime = entity.CreationTime.Value,
+                    CreatorId = entity.CreatorId.Value,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                    IsDeleted = entity.IsDeleted,
+                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
+                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                    Id = id,
+                    DataOpenStatus = lockRow,
+                    DataOpenStatusUserId = userId
 
-                var mappedEntity = ObjectMapper.Map<Currencies, SelectCurrenciesDto>(updatedEntity);
+                }).Where(new { Id = id }, true, true, "");
 
-                return new SuccessDataResult<SelectCurrenciesDto>(mappedEntity);
+                var currencies = queryFactory.Update<SelectCurrenciesDto>(query, "Id", true);
+                return new SuccessDataResult<SelectCurrenciesDto>(currencies);
+
             }
         }
     }
