@@ -85,5 +85,7 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string VsmSchemas = "VsmSchemas";
         public static readonly string Warehouses = "Warehouses";
         public static readonly string WorkOrders = "WorkOrders";
+        public static readonly string StockFiches = "StockFiches";
+        public static readonly string StockFicheLines = "StockFicheLines";
     }
 }
