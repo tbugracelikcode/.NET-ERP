@@ -649,7 +649,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                     LastModifierId = entity.LastModifierId.GetValueOrDefault(),
-                }).Where(new { Id = id }, true, true, "");
+                }).Where(new { Id = id }, false, false, "");
 
                 var purchaseRequestsDto = queryFactory.Update<SelectPurchaseRequestsDto>(query, "Id", true);
                 return new SuccessDataResult<SelectPurchaseRequestsDto>(purchaseRequestsDto);
