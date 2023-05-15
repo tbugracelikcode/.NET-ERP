@@ -251,6 +251,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>StationsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\StockFiche\StockFichesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StockFichesResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\TechnicalDrawings\Page\TechnicalDrawingsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -595,6 +600,13 @@
     <EmbeddedResource Update="Resources\Stations\Page\StationsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>StationsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\StockFiche\StockFichesResource.en-US.resx">
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\StockFiche\StockFichesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>StockFichesResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\TechnicalDrawings\Page\TechnicalDrawingsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
