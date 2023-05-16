@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TSI.QueryBuilder", "TSI.Que
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TSI.QueryBuilder.Test", "TSI.QueryBuilder.Test\TSI.QueryBuilder.Test.csproj", "{265BC448-9AB9-41EC-9D18-C7B308B764CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SMODatabaseUpdater", "SMODatabaseUpdater\SMODatabaseUpdater.csproj", "{C99D8539-72BE-4425-AEAA-6CC838C62117}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMODatabaseUpdater", "SMODatabaseUpdater\SMODatabaseUpdater.csproj", "{C99D8539-72BE-4425-AEAA-6CC838C62117}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

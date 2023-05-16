@@ -9,17 +9,17 @@ namespace TsiErp.Entities.Enums
 {
     public enum StockFicheTypeEnum
     {
-        [Display(Name = "Fire Fişi")]
+        [Display(Name = "EnumWastage")]
         FireFisi = 11,
-        [Display(Name = "Sarf Fişi")]
+        [Display(Name = "EnumConsume")]
         SarfFisi = 12,
-        [Display(Name = "Üretimden Giriş Fişi")]
+        [Display(Name = "EnumProductionIncome")]
         UretimdenGirisFisi = 13,
-        [Display(Name = "Depo Sevk Fişi")]
+        [Display(Name = "EnumWarehouse")]
         DepoSevkFisi = 25,
-        [Display(Name = "Stok Giriş Fişi")]
+        [Display(Name = "EnumStockIncome")]
         StokGirisFisi = 50,
-        [Display(Name = "Stok Çıkış Fişi")]
+        [Display(Name = "EnumStockOutput")]
         StokCikisFisi = 51
     }
 }

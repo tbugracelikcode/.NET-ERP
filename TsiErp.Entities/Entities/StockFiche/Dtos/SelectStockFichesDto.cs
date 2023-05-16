@@ -44,7 +44,8 @@ namespace TsiErp.Entities.Entities.StockFiche.Dtos
         /// <summary>
         /// Fiş Türü
         /// </summary>
-        public StockFicheTypeEnum FicheType { get; set; }
+        public StockFicheTypeEnum? FicheType { get; set; }
+        public string FicheTypeName { get; set; }
         /// <summary>
         /// Şube ID
         /// </summary>

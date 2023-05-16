@@ -107,7 +107,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         ProductID = item.ProductID.GetValueOrDefault(),
                         Quantity = item.Quantity,
                         UnitSetID = item.UnitSetID.GetValueOrDefault(),
-                        FicheType = item.FicheType,
+                        FicheType = item.FicheType.GetValueOrDefault(),
                         LineAmount = item.LineAmount,
                         LineDescription = item.LineDescription,
                         UnitPrice = item.UnitPrice
@@ -395,7 +395,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                             ProductID = item.ProductID.GetValueOrDefault(),
                             Quantity = item.Quantity,
                             UnitSetID = item.UnitSetID.GetValueOrDefault(),
-                            FicheType = item.FicheType,
+                            FicheType = item.FicheType.GetValueOrDefault(),
                             LineAmount = item.LineAmount,
                             LineDescription = item.LineDescription,
                             StockFicheID = input.Id,
@@ -429,7 +429,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 ProductID = item.ProductID.GetValueOrDefault(),
                                 Quantity = item.Quantity,
                                 UnitSetID = item.UnitSetID.GetValueOrDefault(),
-                                FicheType = item.FicheType,
+                                FicheType = item.FicheType.GetValueOrDefault(),
                                 LineAmount = item.LineAmount,
                                 LineDescription = item.LineDescription,
                                 UnitPrice = item.UnitPrice
