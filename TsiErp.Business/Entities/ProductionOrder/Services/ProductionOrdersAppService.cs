@@ -235,6 +235,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                                 p => new { FinishedProductCode = p.Code, FinishedProductName = p.Name },
                                 nameof(ProductionOrders.FinishedProductID),
                                 nameof(Products.Id),
+                                "FinishedProduct",
                                 JoinType.Left
                             )
                              .Join<Products>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,7 +33,8 @@ namespace TsiErp.Entities.Entities.BillsofMaterialLine
         /// Ürün ID
         /// </summary>
         public Guid ProductID { get; set; }
-        
+        [Precision(18, 6)]
+
         /// <summary>
         /// Miktar
         /// </summary>
@@ -49,6 +51,8 @@ namespace TsiErp.Entities.Entities.BillsofMaterialLine
         /// Satır No
         /// </summary>
         public int LineNr { get; set; }
+        [Precision(18, 6)]
+
         /// <summary>
         /// Boy
         /// </summary>

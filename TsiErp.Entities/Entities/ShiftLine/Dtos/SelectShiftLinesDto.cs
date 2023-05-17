@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,6 +35,7 @@ namespace TsiErp.Entities.Entities.ShiftLine.Dtos
         /// Tür Enum Adı
         /// </summary>
         public string TypeName { get; set; }
+        [Precision(18, 6)]
         /// <summary>
         /// Katsayı
         /// </summary>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.PortableExecutable;
@@ -32,14 +33,20 @@ namespace TsiErp.Entities.Entities.Calendar.Dtos
         /// Yıl
         /// </summary>
         public int Year { get; set; }
+        [Precision(18, 6)]
+
         /// <summary>
         /// Toplam Gün Sayısı
         /// </summary>
         public decimal TotalDays { get; set; }
+        [Precision(18, 6)]
+
         /// <summary>
         /// Resmi Tatil Sayısı
         /// </summary>
         public decimal OfficialHolidayDays { get; set; }
+        [Precision(18, 6)]
+
         /// <summary>
         /// Çalışılabilir Gün Sayısı
         /// </summary>
