@@ -159,7 +159,7 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = DateTime.Now,
                     LastModifierId = LoginedUserService.UserId
-                }).Where(new { Id = input.Id }, true, true, "");
+                }).Where(new { Id = input.Id }, false, false, "");
 
                 var exchangeRates = queryFactory.Update<SelectExchangeRatesDto>(query, "Id", true);
 

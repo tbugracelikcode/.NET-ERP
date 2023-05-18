@@ -155,17 +155,6 @@ namespace TsiErp.ErpUI.Pages.Station
                     InventoryList = DataSource.SelectStationInventoriesDto;
                     InventoryDataSource = new SelectStationInventoriesDto();
 
-                    if(InventoryList != null)
-                    {
-                        foreach (var item in InventoryList)
-                        {
-                            item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
-                            item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
-                            item.StationID = DataSource.Id;
-                        }
-                    }
-
-
                     EditPageVisible = true;
                     await InvokeAsync(StateHasChanged);
                     break;

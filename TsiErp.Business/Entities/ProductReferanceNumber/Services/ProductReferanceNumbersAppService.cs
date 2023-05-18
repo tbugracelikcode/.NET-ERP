@@ -228,7 +228,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = DateTime.Now,
                     LastModifierId = LoginedUserService.UserId
-                }).Where(new { Id = input.Id }, true, true, "");
+                }).Where(new { Id = input.Id }, false, false, "");
 
                 var productReferanceNumbers = queryFactory.Update<SelectProductReferanceNumbersDto>(query, "Id", true);
 
