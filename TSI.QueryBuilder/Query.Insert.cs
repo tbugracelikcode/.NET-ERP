@@ -101,7 +101,7 @@ namespace TSI.QueryBuilder
                     if (i == 0)
                     {
                         columnsQuery = " (" + columns[i] + ")";
-                        valuesQuery = " (" + "'" + valuesList[i].GetValue(dto, null) + "'" + ")";
+                        valuesQuery = " (" + "'" + (valuesList[i].PropertyType == typeof(Decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",",".") : valuesList[i].GetValue(dto, null)) + "'" + ")";
                     }
                 }
                 else
@@ -109,12 +109,12 @@ namespace TSI.QueryBuilder
                     if (i == 0)
                     {
                         columnsQuery = " (" + columns[i] + ",";
-                        valuesQuery = " (" + "'" + valuesList[i].GetValue(dto, null) + "'" + ",";
+                        valuesQuery = " (" + "'" + (valuesList[i].PropertyType == typeof(Decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null)) + "'" + ",";
                     }
                     else
                     {
                         columnsQuery = columnsQuery + columns[i] + ",";
-                        valuesQuery = valuesQuery + "'" + valuesList[i].GetValue(dto, null) + "'" + ",";
+                        valuesQuery = valuesQuery + "'" + (valuesList[i].PropertyType == typeof(Decimal) ? Convert.ToString(valuesList[i].GetValue(dto, null)).Replace(",", ".") : valuesList[i].GetValue(dto, null)) + "'" + ",";
 
                     }
                 }
