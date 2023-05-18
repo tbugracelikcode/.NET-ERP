@@ -63,9 +63,7 @@ namespace TsiErp.Business.Entities.FinalControlUnsuitabilityReport.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                var entity = await _uow.FinalControlUnsuitabilityReportsRepository.GetAsync(t => t.Id == id,
-                t => t.Products,
-                t => t.Employees);
+                var entity = await _uow.FinalControlUnsuitabilityReportsRepository.GetAsync(t => t.Id == id);
                 var mappedEntity = ObjectMapper.Map<FinalControlUnsuitabilityReports, SelectFinalControlUnsuitabilityReportsDto>(entity);
                 var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "FinalControlUnsuitabilityReports", LogType.Get, id);
                 await _uow.LogsRepository.InsertAsync(log);
@@ -80,9 +78,7 @@ namespace TsiErp.Business.Entities.FinalControlUnsuitabilityReport.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                var list = await _uow.FinalControlUnsuitabilityReportsRepository.GetListAsync(null,
-                t => t.Products,
-                t => t.Employees);
+                var list = await _uow.FinalControlUnsuitabilityReportsRepository.GetListAsync(null);
 
                 var mappedEntity = ObjectMapper.Map<List<FinalControlUnsuitabilityReports>, List<ListFinalControlUnsuitabilityReportsDto>>(list.ToList());
 

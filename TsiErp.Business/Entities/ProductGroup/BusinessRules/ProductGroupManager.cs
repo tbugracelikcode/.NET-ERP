@@ -26,10 +26,10 @@ namespace TsiErp.Business.Entities.ProductGroup.BusinessRules
 
         public async Task DeleteControl(IProductGroupsRepository _repository, Guid id, IStringLocalizer<ProductGroupsResource> L)
         {
-            if (await _repository.AnyAsync(t => t.Products.Any(x => x.ProductGrpID == id)))
-            {
-                throw new Exception(L["DeleteControlManager"]);
-            }
+            //if (await _repository.AnyAsync(t => t.Products.Any(x => x.ProductGrpID == id)))
+            //{
+            //    throw new Exception(L["DeleteControlManager"]);
+            //}
         }
     }
 }

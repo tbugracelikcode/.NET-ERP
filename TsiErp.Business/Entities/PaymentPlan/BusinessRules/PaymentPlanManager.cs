@@ -26,15 +26,15 @@ namespace TsiErp.Business.Entities.PaymentPlan.BusinessRules
 
         public async Task DeleteControl(IPaymentPlansRepository _repository, Guid id, IStringLocalizer<PaymentPlansResource> L)
         {
-            if (await _repository.AnyAsync(t => t.SalesPropositionLines.Any(x => x.PaymentPlanID == id)))
-            {
-                throw new Exception(L["DeleteControlManager"]);
-            }
+            //if (await _repository.AnyAsync(t => t.SalesPropositionLines.Any(x => x.PaymentPlanID == id)))
+            //{
+            //    throw new Exception(L["DeleteControlManager"]);
+            //}
 
-            if (await _repository.AnyAsync(t => t.SalesPropositions.Any(x => x.PaymentPlanID == id)))
-            {
-                throw new Exception(L["DeleteControlManager"]);
-            }
+            //if (await _repository.AnyAsync(t => t.SalesPropositions.Any(x => x.PaymentPlanID == id)))
+            //{
+            //    throw new Exception(L["DeleteControlManager"]);
+            //}
         }
     }
 }

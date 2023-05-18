@@ -225,12 +225,11 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
         public async Task<IDataResult<SelectCalendarsDto>> GetAsync(Guid id)
         {
-            var entity = await _repository.GetAsync(t => t.Id == id,
-                t => t.CalendarLines);
+            var entity = await _repository.GetAsync(t => t.Id == id);
 
             var mappedEntity = ObjectMapper.Map<Calendars, SelectCalendarsDto>(entity);
 
-            mappedEntity.SelectCalendarLinesDto = ObjectMapper.Map<List<CalendarLines>, List<SelectCalendarLinesDto>>(entity.CalendarLines.ToList());
+            //mappedEntity.SelectCalendarLinesDto = ObjectMapper.Map<List<CalendarLines>, List<SelectCalendarLinesDto>>(entity.CalendarLines.ToList());
 
             return new SuccessDataResult<SelectCalendarsDto>(mappedEntity);
         }
@@ -238,8 +237,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListCalendarsDto>>> GetListAsync(ListCalendarsParameterDto input)
         {
-            var list = await _repository.GetListAsync(null,
-                t => t.CalendarLines);
+            var list = await _repository.GetListAsync(null);
 
             var mappedEntity = ObjectMapper.Map<List<Calendars>, List<ListCalendarsDto>>(list.ToList());
 
@@ -340,9 +338,10 @@ namespace TsiErp.Business.Entities.Calendar.Services
         {
             var entity = await _repository.GetAsync(x => x.Id == calendarID);
 
-            var mappedEntity = ObjectMapper.Map<List<CalendarLines>, List<ListCalendarLinesDto>>(entity.CalendarLines.ToList());
+            //var mappedEntity = ObjectMapper.Map<List<CalendarLines>, List<ListCalendarLinesDto>>(entity.CalendarLines.ToList());
 
-            return new SuccessDataResult<IList<ListCalendarLinesDto>>(mappedEntity);
+            //return new SuccessDataResult<IList<ListCalendarLinesDto>>(mappedEntity);
+            return null;
         }
 
         public Task<IDataResult<SelectCalendarsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)

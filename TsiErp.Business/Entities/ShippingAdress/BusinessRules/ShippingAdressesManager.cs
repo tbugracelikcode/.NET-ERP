@@ -26,14 +26,14 @@ namespace TsiErp.Business.Entities.ShippingAdress.BusinessRules
 
         public async Task DeleteControl(IShippingAdressesRepository _repository, Guid id, IStringLocalizer<ShippingAdressesResource> L)
         {
-            if (await _repository.AnyAsync(t => t.SalesPropositions.Any(x => x.ShippingAdressID == id)))
-            {
-                throw new Exception(L["DeleteControlManager"]);
-            }
-            if (await _repository.AnyAsync(t => t.CurrentAccountCards.ShippingAdresses.Any(x=>x.Id==id)))
-            {
-                throw new Exception(L["DeleteControlManager"]);
-            }
+            //if (await _repository.AnyAsync(t => t.SalesPropositions.Any(x => x.ShippingAdressID == id)))
+            //{
+            //    throw new Exception(L["DeleteControlManager"]);
+            //}
+            //if (await _repository.AnyAsync(t => t.CurrentAccountCards.ShippingAdresses.Any(x=>x.Id==id)))
+            //{
+            //    throw new Exception(L["DeleteControlManager"]);
+            //}
         }
     }
 }

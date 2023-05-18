@@ -63,14 +63,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                var entity = await _uow.OperationUnsuitabilityReportsRepository.GetAsync(t => t.Id == id,
-                t => t.Products,
-                t => t.ProductionOrders,
-                t => t.ProductsOperations,
-                t => t.WorkOrders,
-                t => t.StationGroups,
-                t => t.Employees,
-                t => t.Stations);
+                var entity = await _uow.OperationUnsuitabilityReportsRepository.GetAsync(t => t.Id == id);
                 var mappedEntity = ObjectMapper.Map<OperationUnsuitabilityReports, SelectOperationUnsuitabilityReportsDto>(entity);
                 var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "OperationUnsuitabilityReports", LogType.Get, id);
                 await _uow.LogsRepository.InsertAsync(log);
@@ -84,14 +77,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                var list = await _uow.OperationUnsuitabilityReportsRepository.GetListAsync(null,
-                t => t.Products,
-                t => t.ProductionOrders,
-                t => t.ProductsOperations,
-                t => t.WorkOrders,
-                t => t.StationGroups,
-                t => t.Employees,
-                t => t.Stations);
+                var list = await _uow.OperationUnsuitabilityReportsRepository.GetListAsync(null);
 
                 var mappedEntity = ObjectMapper.Map<List<OperationUnsuitabilityReports>, List<ListOperationUnsuitabilityReportsDto>>(list.ToList());
 
