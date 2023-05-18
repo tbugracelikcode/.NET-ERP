@@ -1,10 +1,7 @@
 ﻿using Autofac;
-using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using Blazored.Modal;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Serialization;
 using Syncfusion.Blazor;
@@ -12,22 +9,14 @@ using System.Globalization;
 using System.Reflection;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business;
-using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.DependencyResolvers.Autofac;
 using TsiErp.DataAccess;
-using TsiErp.DataAccess.EntityFrameworkCore;
 using TsiErp.ErpUI.Shared;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddDbContextFactory<TsiErpDbContext>(
-         options =>
-         {
-             options.UseSqlServer(@"Server=94.73.145.4;Database=u0364806_TSIERP;UID=u0364806_TSIERP;PWD=u=xfJ@i-7H5-VN23;MultipleActiveResultSets=True;");
-             options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-         });
+
 
 
 //builder.Services.AddTransient<ApplicationService>();

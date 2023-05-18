@@ -1,25 +1,22 @@
-﻿using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Microsoft.Extensions.Localization;
+using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
-using TsiErp.Localizations.Resources.TemplateOperations.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TSI.QueryBuilder.BaseClasses;
+using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
-using TsiErp.Business.Entities.TemplateOperation.BusinessRules;
 using TsiErp.Business.Entities.TemplateOperation.Validations;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.Station;
 using TsiErp.Entities.Entities.TemplateOperation;
 using TsiErp.Entities.Entities.TemplateOperation.Dtos;
 using TsiErp.Entities.Entities.TemplateOperationLine;
 using TsiErp.Entities.Entities.TemplateOperationLine.Dtos;
-using Microsoft.Extensions.Localization;
-using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Entities.TableConstant;
-using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
-using TSI.QueryBuilder.Constants.Join;
-using TsiErp.Entities.Entities.Station;
+using TsiErp.Localizations.Resources.TemplateOperations.Page;
 
 namespace TsiErp.Business.Entities.TemplateOperation.Services
 {

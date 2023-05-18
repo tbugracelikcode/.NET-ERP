@@ -4,7 +4,6 @@ using System.Reflection;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business;
 using TsiErp.Business.DependencyResolvers.Autofac;
-using TsiErp.DataAccess.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +16,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-builder.Services.AddDbContextFactory<TsiErpDbContext>();
 
 ConfigureBusiness(builder);
 ConfigureDataAccess(builder);

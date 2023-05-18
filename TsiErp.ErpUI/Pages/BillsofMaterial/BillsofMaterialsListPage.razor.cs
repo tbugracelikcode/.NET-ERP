@@ -14,12 +14,6 @@ namespace TsiErp.ErpUI.Pages.BillsofMaterial
 {
     public partial class BillsofMaterialsListPage
     {
-        #region ComboBox Listeleri
-
-        SfComboBox<string, ListProductsDto> LineFinishedProductsComboBox;
-        List<ListProductsDto> LineFinishedProductsList = new List<ListProductsDto>();
-
-        #endregion
 
         private SfGrid<SelectBillsofMaterialLinesDto> _LineGrid;
 

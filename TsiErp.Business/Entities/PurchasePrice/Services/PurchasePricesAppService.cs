@@ -8,7 +8,6 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
-using TsiErp.Business.Entities.PurchasePrice.BusinessRules;
 using TsiErp.Business.Entities.PurchasePrice.Validations;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.Branch;
@@ -34,7 +33,6 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
         {
         }
 
-        PurchasePriceManager _manager { get; set; } = new PurchasePriceManager();
 
         [ValidationAspect(typeof(CreatePurchasePricesValidatorDto), Priority = 1)]
         [CacheRemoveAspect("Get")]
