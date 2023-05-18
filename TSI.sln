@@ -39,6 +39,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TSI.QueryBuilder.Test", "TS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SMODatabaseUpdater", "SMODatabaseUpdater\SMODatabaseUpdater.csproj", "{C99D8539-72BE-4425-AEAA-6CC838C62117}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSI.QueryBuilder.DatabaseSchemes", "TSI.QueryBuilder.DatabaseSchemes\TSI.QueryBuilder.DatabaseSchemes.csproj", "{AF70C305-0C1D-4D63-9A1A-ADF7BC64F201}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{C99D8539-72BE-4425-AEAA-6CC838C62117}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C99D8539-72BE-4425-AEAA-6CC838C62117}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C99D8539-72BE-4425-AEAA-6CC838C62117}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF70C305-0C1D-4D63-9A1A-ADF7BC64F201}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF70C305-0C1D-4D63-9A1A-ADF7BC64F201}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF70C305-0C1D-4D63-9A1A-ADF7BC64F201}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF70C305-0C1D-4D63-9A1A-ADF7BC64F201}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,6 +115,7 @@ Global
 		{E88B086C-F0D8-4D88-BCBB-AA2D0472FC68} = {D8F4DE11-B727-4387-9269-AE98DAE90980}
 		{964AB0B3-F8F2-43E9-83F5-2E725CC14223} = {32ACB6D0-EDD0-4457-823E-4CF3B23DF52C}
 		{265BC448-9AB9-41EC-9D18-C7B308B764CB} = {32ACB6D0-EDD0-4457-823E-4CF3B23DF52C}
+		{AF70C305-0C1D-4D63-9A1A-ADF7BC64F201} = {32ACB6D0-EDD0-4457-823E-4CF3B23DF52C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {249F607F-1AF1-497A-ADFA-357532BFCABD}
