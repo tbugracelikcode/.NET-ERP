@@ -69,11 +69,5 @@ namespace TsiErp.Entities.Entities.ShippingAdress
         /// Varsayılan
         /// </summary>
         public bool _Default { get; set; }
-
-        public CurrentAccountCards CurrentAccountCards { get; set; }
-        public ICollection<PurchaseOrders> PurchaseOrders { get; set; }
-        public ICollection<SalesPropositions> SalesPropositions { get; set; }
-        public ICollection<SalesOrders> SalesOrders { get; set; }
-        public ICollection<PurchaseRequests> PurchaseRequests { get; set; }
     }
 }

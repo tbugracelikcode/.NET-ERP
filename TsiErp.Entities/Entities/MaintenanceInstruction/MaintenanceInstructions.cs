@@ -46,9 +46,5 @@ namespace TsiErp.Entities.Entities.MaintenanceInstruction
         /// Not
         /// </summary>
         public string Note_ { get; set; }
-
-        public Stations Stations { get; set; }
-        public MaintenancePeriods MaintenancePeriods { get; set; }
-        public ICollection<MaintenanceInstructionLines> MaintenanceInstructionLines { get; set; }
     }
 }

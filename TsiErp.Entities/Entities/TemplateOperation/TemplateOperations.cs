@@ -32,7 +32,6 @@ namespace TsiErp.Entities.Entities.TemplateOperation
         /// </summary>
         public bool IsActive { get; set; }
 
-        public ICollection<TemplateOperationLines> TemplateOperationLines { get; set; }
 
 
 

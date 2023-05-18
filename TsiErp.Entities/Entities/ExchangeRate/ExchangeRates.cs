@@ -44,7 +44,5 @@ namespace TsiErp.Entities.Entities.ExchangeRate
         /// Efektif Satış Kuru
         /// </summary>
         public decimal EffectiveSaleRate { get; set; }
-
-        public Currencies Currencies { get; set; }
     }
 }

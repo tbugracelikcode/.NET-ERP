@@ -40,19 +40,5 @@ namespace TsiErp.Entities.Entities.PaymentPlan
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
-        /// <summary>
-        /// Satış Teklifleri
-        /// </summary>
-        public ICollection<SalesPropositions> SalesPropositions { get; set; }
-        /// <summary>
-        /// Satış Teklif Satırları
-        /// </summary>
-        public ICollection<SalesPropositionLines> SalesPropositionLines { get; set; }
-        public ICollection<SalesOrderLines> SalesOrderLines { get; set; }
-        public ICollection<SalesOrders> SalesOrders { get; set; }
-        public ICollection<PurchaseOrders> PurchaseOrders { get; set; }
-        public ICollection<PurchaseOrderLines> PurchaseOrderLines { get; set; }
-        public ICollection<PurchaseRequests> PurchaseRequests { get; set; }
-        public ICollection<PurchaseRequestLines> PurchaseRequestLines { get; set; }
     }
 }

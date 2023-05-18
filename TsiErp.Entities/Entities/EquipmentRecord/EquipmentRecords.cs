@@ -66,12 +66,6 @@ namespace TsiErp.Entities.Entities.EquipmentRecord
 
         public bool IsActive { get; set; }
 
-        public ICollection<CalibrationRecords> CalibrationRecords { get; set; }
-
-        public ICollection<CalibrationVerifications> CalibrationVerifications { get; set; }
-
-        public Departments Departments { get; set; }
-
 
     }
 }

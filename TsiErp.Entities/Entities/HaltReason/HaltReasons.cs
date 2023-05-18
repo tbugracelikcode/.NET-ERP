@@ -34,7 +34,5 @@ namespace TsiErp.Entities.Entities.HaltReason
         /// Yönetim Kaynaklı mı?
         /// </summary>
         public bool IsManagement { get; set; }
-
-        public ICollection<ProductionTrackingHaltLines> ProductionTrackingHaltLines { get; set; }
     }
 }

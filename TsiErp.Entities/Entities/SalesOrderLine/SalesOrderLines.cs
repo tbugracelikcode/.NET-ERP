@@ -108,31 +108,5 @@ namespace TsiErp.Entities.Entities.SalesOrderLine
         /// Üretim Emri Oluşturulma Tarihi
         /// </summary>
         public DateTime? WorkOrderCreationDate { get; set; }
-
-
-
-
-
-        /// <summary>
-        /// Stoklar
-        /// </summary>
-        public Products Products { get; set; }
-        /// <summary>
-        /// Birim Setleri
-        /// </summary>
-        public UnitSets UnitSets { get; set; }
-        /// <summary>
-        /// Ödeme Planları
-        /// </summary>
-        public PaymentPlans PaymentPlans { get; set; }
-        /// <summary>
-        /// Satış Siparişi
-        /// </summary>
-        public SalesOrders SalesOrders { get; set; }
-        /// <summary>
-        /// Satış Teklifi Satırı
-        /// </summary>
-        public SalesPropositionLines SalesPropositionLines { get; set; }
-        public ProductionOrders ProductionOrders { get; set; }
     }
 }

@@ -25,11 +25,5 @@ namespace TsiErp.Entities.Entities.ProductGroup
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
-
-        /// <summary>
-        /// StokID
-        /// </summary>
-
-        public ICollection<Products> Products { get; set; }
     }
 }

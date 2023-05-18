@@ -35,9 +35,5 @@ namespace TsiErp.Entities.Entities.Period
         /// Şube ID
         /// </summary>
         public Guid BranchID { get; set; }
-
-
-        public Branches Branches { get; set; }
-        public ICollection<Forecasts> Forecasts { get; set; }
     }
 }

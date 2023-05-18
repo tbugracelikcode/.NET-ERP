@@ -33,10 +33,5 @@ namespace TsiErp.Entities.Entities.ProductionTrackingHaltLine
         /// Duruş Süresi
         /// </summary>
         public decimal HaltTime { get; set; }
-        /// <summary>
-        /// Duruş Sebepleri
-        /// </summary>
-        public HaltReasons HaltReasons { get; set; }
-        public ProductionTrackings ProductionTrackings { get; set; }
     }
 }

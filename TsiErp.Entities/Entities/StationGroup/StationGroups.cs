@@ -31,11 +31,5 @@ namespace TsiErp.Entities.Entities.StationGroup
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
-
-        public ICollection<Stations> Stations { get; set; }
-
-        public ICollection<WorkOrders> WorkOrders { get; set; }
-
-        public ICollection<OperationUnsuitabilityReports> OperationUnsuitabilityReports { get; set; }
     }
 }
