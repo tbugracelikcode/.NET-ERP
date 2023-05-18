@@ -49,6 +49,7 @@ namespace TsiErp.Business.Entities.HaltReason.Services
 
                 #endregion
 
+                Guid addedEntityId = GuidGenerator.CreateGuid();
 
                 var query = queryFactory.Query().From(Tables.HaltReasons).Insert(new CreateHaltReasonsDto
                 {
@@ -58,7 +59,7 @@ namespace TsiErp.Business.Entities.HaltReason.Services
                     IsManagement = input.IsManagement,
                     IsOperator = input.IsOperator,
                     IsPlanned = input.IsPlanned,
-                    Id = GuidGenerator.CreateGuid(),
+                    Id = addedEntityId,
                     CreationTime = DateTime.Now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
@@ -73,7 +74,7 @@ namespace TsiErp.Business.Entities.HaltReason.Services
 
                 var haltReasons = queryFactory.Insert<SelectHaltReasonsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.HaltReasons, LogType.Insert, haltReasons.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.HaltReasons, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectHaltReasonsDto>(haltReasons);
             }

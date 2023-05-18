@@ -51,6 +51,8 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
 
                 #endregion
 
+                Guid addedEntityId = GuidGenerator.CreateGuid();
+
                 var query = queryFactory.Query().From(Tables.ShippingAdresses).Insert(new CreateShippingAdressesDto
                 {
                     Adress1 = input.Adress1,
@@ -71,7 +73,7 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
                     DataOpenStatusUserId = Guid.Empty,
                     DeleterId = Guid.Empty,
                     DeletionTime = null,
-                    Id = GuidGenerator.CreateGuid(),
+                    Id = addedEntityId,
                     IsDeleted = false,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
@@ -80,7 +82,7 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
 
                 var shippingAdresses = queryFactory.Insert<SelectShippingAdressesDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ShippingAdresses, LogType.Insert, shippingAdresses.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ShippingAdresses, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectShippingAdressesDto>(shippingAdresses);
             }
@@ -108,7 +110,7 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
                 var query = queryFactory
-                        .Query().From(Tables.ShippingAdresses).Select<ShippingAdresses>(sh => new { sh.Adress1, sh.Adress2,sh.City,sh.Name,sh.Code,sh.Country,sh.CustomerCardID,sh.DataOpenStatus,sh._Default,sh.Fax,sh.DataOpenStatusUserId,sh.District,sh.Phone,sh.PostCode,sh.Id })
+                        .Query().From(Tables.ShippingAdresses).Select<ShippingAdresses>(sh => new { sh._Default,sh.PostCode,sh.Phone,sh.Name,sh.Id,sh.Fax,sh.EMail,sh.District,sh.DataOpenStatusUserId,sh.DataOpenStatus,sh.CustomerCardID,sh.Country,sh.Code,sh.City,sh.Adress2,sh.Adress1 })
                             .Join<CurrentAccountCards>
                             (
                                 ca => new { CustomerCardID = ca.Id, CustomerCardCode = ca.Code, CustomerCardName= ca.Name },
@@ -136,7 +138,7 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
 
                 var query = queryFactory
                    .Query()
-                   .From(Tables.ShippingAdresses).Select<ShippingAdresses>(sh => new { sh.Adress1, sh.Adress2, sh.City, sh.Name, sh.Code, sh.Country, sh.CustomerCardID, sh.DataOpenStatus, sh._Default, sh.Fax, sh.DataOpenStatusUserId, sh.District, sh.Phone, sh.PostCode, sh.Id })
+                   .From(Tables.ShippingAdresses).Select<ShippingAdresses>(sh => new { sh._Default, sh.PostCode, sh.Phone, sh.Name, sh.Id, sh.Fax, sh.EMail, sh.District, sh.DataOpenStatusUserId, sh.DataOpenStatus, sh.CustomerCardID, sh.Country, sh.Code, sh.City, sh.Adress2, sh.Adress1 })
                             .Join<CurrentAccountCards>
                             (
                                 ca => new { CustomerCardCode = ca.Code, CustomerCardName = ca.Name },

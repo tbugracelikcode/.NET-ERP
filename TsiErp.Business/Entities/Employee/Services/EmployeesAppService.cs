@@ -1,23 +1,20 @@
-﻿using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Microsoft.Extensions.Localization;
+using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
-using TsiErp.Localizations.Resources.Employees.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TSI.QueryBuilder.BaseClasses;
+using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Business.Entities.Employee.BusinessRules;
 using TsiErp.Business.Entities.Employee.Validations;
 using TsiErp.Business.Entities.Logging.Services;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.Department;
 using TsiErp.Entities.Entities.Employee;
 using TsiErp.Entities.Entities.Employee.Dtos;
-using Microsoft.Extensions.Localization;
-using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Entities.TableConstant;
-using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
-using TsiErp.Entities.Entities.Department;
-using TSI.QueryBuilder.Constants.Join;
+using TsiErp.Localizations.Resources.Employees.Page;
 
 namespace TsiErp.Business.Entities.Employee.Services
 {
@@ -52,6 +49,9 @@ namespace TsiErp.Business.Entities.Employee.Services
 
                 #endregion
 
+                Guid addedEntityId = GuidGenerator.CreateGuid();
+
+
                 var query = queryFactory.Query().From(Tables.Employees).Insert(new CreateEmployeesDto
                 {
                     Code = input.Code,
@@ -74,7 +74,7 @@ namespace TsiErp.Business.Entities.Employee.Services
                     DataOpenStatusUserId = Guid.Empty,
                     DeleterId = Guid.Empty,
                     DeletionTime = null,
-                    Id = GuidGenerator.CreateGuid(),
+                    Id = addedEntityId,
                     IsActive = true,
                     IsDeleted = false,
                     LastModificationTime = null,
@@ -84,7 +84,7 @@ namespace TsiErp.Business.Entities.Employee.Services
 
                 var employees = queryFactory.Insert<SelectEmployeesDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Employees, LogType.Insert, employees.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Employees, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectEmployeesDto>(employees);
             }

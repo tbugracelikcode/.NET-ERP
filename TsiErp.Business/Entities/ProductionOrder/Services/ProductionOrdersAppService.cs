@@ -61,6 +61,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
                 #endregion
 
+                Guid addedEntityId = GuidGenerator.CreateGuid();
 
                 var query = queryFactory.Query().From(Tables.ProductionOrders).Insert(new CreateProductionOrdersDto
                 {
@@ -87,7 +88,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                     Cancel_ = input.Cancel_,
                     Date_ = input.Date_,
                     Description_ = input.Description_,
-                    Id = GuidGenerator.CreateGuid(),
+                    Id = addedEntityId,
                     CreationTime = DateTime.Now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
@@ -102,7 +103,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
                 var productionOrders = queryFactory.Insert<SelectProductionOrdersDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductionOrders, LogType.Insert, productionOrders.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductionOrders, LogType.Insert, addedEntityId);
 
 
                 return new SuccessDataResult<SelectProductionOrdersDto>(productionOrders);

@@ -53,6 +53,8 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
 
                 #endregion
 
+                Guid addedEntityId = GuidGenerator.CreateGuid();
+
                 var query = queryFactory.Query().From(Tables.ProductReferanceNumbers).Insert(new CreateProductReferanceNumbersDto
                 {
                     ReferanceNo = input.ReferanceNo,
@@ -65,7 +67,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
                     DeleterId = Guid.Empty,
                     DeletionTime = null,
                     Description_ = input.Description_,
-                    Id = GuidGenerator.CreateGuid(),
+                    Id = addedEntityId,
                     IsDeleted = false,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
@@ -73,7 +75,7 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
 
                 var productReferanceNumbers = queryFactory.Insert<SelectProductReferanceNumbersDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductReferanceNumbers, LogType.Insert, productReferanceNumbers.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductReferanceNumbers, LogType.Insert,addedEntityId);
 
                 return new SuccessDataResult<SelectProductReferanceNumbersDto>(productReferanceNumbers);
             }

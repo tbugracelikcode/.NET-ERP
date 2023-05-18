@@ -35,6 +35,9 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
 
+                Guid addedEntityId = GuidGenerator.CreateGuid();
+
+
                 var query = queryFactory.Query().From(Tables.ExchangeRates).Insert(new CreateExchangeRatesDto
                 {
                     CreationTime = DateTime.Now,
@@ -43,7 +46,7 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
                     DataOpenStatusUserId = Guid.Empty,
                     DeleterId = Guid.Empty,
                     DeletionTime = null,
-                    Id = GuidGenerator.CreateGuid(),
+                    Id = addedEntityId,
                     IsDeleted = false,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
@@ -57,7 +60,7 @@ namespace TsiErp.Business.Entities.ExchangeRate.Services
 
                 var exchangeRates = queryFactory.Insert<SelectExchangeRatesDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ExchangeRates, LogType.Insert, exchangeRates.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ExchangeRates, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectExchangeRatesDto>(exchangeRates);
             }

@@ -119,40 +119,11 @@ namespace TsiErp.Entities.Entities.PurchaseRequest
         /// </summary>
         public DateTime ValidityDate_ { get; set; }
         /// <summary>
-        /// Sevkiyat Adresi ID
-        /// </summary>
-        public Guid? ShippingAdressID { get; set; }
-        /// <summary>
         /// Üretim Emri ID
         /// </summary>
         public Guid? ProductionOrderID { get; set; }
 
 
-        /// <summary>
-        /// Ödeme Planı
-        /// </summary>
-        public PaymentPlans PaymentPlan { get; set; }
-        /// <summary>
-        /// Şube
-        /// </summary>
-        public Branches Branches { get; set; }
-        /// <summary>
-        /// Depo
-        /// </summary>        
-        public Warehouses Warehouses { get; set; }
-        /// <summary>
-        /// Para Birimi
-        /// </summary>
-        public Currencies Currencies { get; set; }
-        /// <summary>
-        /// Cari Hesap Kartları
-        /// </summary>
-        public CurrentAccountCards CurrentAccountCards { get; set; }
-        /// <summary>
-        /// Sevkiyat Adresleri
-        /// </summary>
-        public ShippingAdresses ShippingAdresses { get; set; }
-
-        public ICollection<PurchaseRequestLines> PurchaseRequestLines { get; set; }
+       
     }
 }

@@ -58,6 +58,8 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
 
                 #endregion
 
+                Guid addedEntityId = GuidGenerator.CreateGuid();
+
                 var query = queryFactory.Query().From(Tables.WorkOrders).Insert(new CreateWorkOrdersDto
                 {
                     AdjustmentAndControlTime = input.AdjustmentAndControlTime,
@@ -86,7 +88,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                     DataOpenStatusUserId = Guid.Empty,
                     DeleterId = Guid.Empty,
                     DeletionTime = null,
-                    Id = GuidGenerator.CreateGuid(),
+                    Id = addedEntityId,
                     IsDeleted = false,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
@@ -94,7 +96,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
 
                 var workOrders = queryFactory.Insert<SelectWorkOrdersDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.WorkOrders, LogType.Insert, workOrders.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.WorkOrders, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectWorkOrdersDto>(workOrders);
             }
