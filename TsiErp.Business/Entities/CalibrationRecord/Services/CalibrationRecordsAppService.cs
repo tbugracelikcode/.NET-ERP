@@ -51,6 +51,8 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
 
                 #endregion
 
+                Guid addedEntityId = GuidGenerator.CreateGuid();
+
                 var query = queryFactory.Query().From(Tables.CalibrationRecords).Insert(new CreateCalibrationRecordsDto
                 {
                     Code = input.Code,
@@ -66,7 +68,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
                     ReceiptNo = input.ReceiptNo,
                     Result = input.Result,
                     DeletionTime = null,
-                    Id = GuidGenerator.CreateGuid(),
+                    Id = addedEntityId,
                     IsDeleted = false,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
@@ -75,7 +77,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
 
                 var calibrationRecords = queryFactory.Insert<SelectCalibrationRecordsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.CalibrationRecords, LogType.Insert, calibrationRecords.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.CalibrationRecords, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectCalibrationRecordsDto>(calibrationRecords);
             }

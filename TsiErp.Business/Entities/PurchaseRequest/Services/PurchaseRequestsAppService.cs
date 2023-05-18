@@ -1,37 +1,35 @@
-﻿using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Microsoft.Extensions.Localization;
+using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
-using TsiErp.Localizations.Resources.PurchaseRequests.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TSI.QueryBuilder.BaseClasses;
+using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
-using TsiErp.Business.Entities.PurchaseRequest.BusinessRules;
 using TsiErp.Business.Entities.PurchaseRequest.Validations;
-using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.Business.Entities.StockMovement;
 using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.Branch;
+using TsiErp.Entities.Entities.ByDateStockMovement;
+using TsiErp.Entities.Entities.Currency;
+using TsiErp.Entities.Entities.CurrentAccountCard;
+using TsiErp.Entities.Entities.GrandTotalStockMovement;
+using TsiErp.Entities.Entities.PaymentPlan;
+using TsiErp.Entities.Entities.Product;
 using TsiErp.Entities.Entities.PurchaseOrderLine.Dtos;
 using TsiErp.Entities.Entities.PurchaseRequest;
 using TsiErp.Entities.Entities.PurchaseRequest.Dtos;
 using TsiErp.Entities.Entities.PurchaseRequestLine;
 using TsiErp.Entities.Entities.PurchaseRequestLine.Dtos;
-using TsiErp.Entities.Enums;
-using Microsoft.Extensions.Localization;
-using TsiErp.Entities.Entities.ByDateStockMovement;
-using TsiErp.DataAccess.EntityFrameworkCore.Repositories.GrandTotalStockMovement;
-using TsiErp.Entities.Entities.GrandTotalStockMovement;
-using TSI.QueryBuilder.BaseClasses;
-using TsiErp.Entities.TableConstant;
-using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
-using TSI.QueryBuilder.Constants.Join;
-using TsiErp.Entities.Entities.PaymentPlan;
-using TsiErp.Entities.Entities.Branch;
-using TsiErp.Entities.Entities.WareHouse;
-using TsiErp.Entities.Entities.Currency;
-using TsiErp.Entities.Entities.CurrentAccountCard;
 using TsiErp.Entities.Entities.ShippingAdress;
-using TsiErp.Entities.Entities.Product;
 using TsiErp.Entities.Entities.UnitSet;
+using TsiErp.Entities.Entities.WareHouse;
+using TsiErp.Entities.Enums;
+using TsiErp.Entities.TableConstant;
+using TsiErp.Localizations.Resources.PurchaseRequests.Page;
 
 namespace TsiErp.Business.Entities.PurchaseRequest.Services
 {
@@ -39,6 +37,8 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
     public class PurchaseRequestsAppService : ApplicationService<PurchaseRequestsResource>, IPurchaseRequestsAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+
+
 
         public PurchaseRequestsAppService(IStringLocalizer<PurchaseRequestsResource> l) : base(l)
         {
@@ -76,15 +76,15 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                     Description_ = input.Description_,
                     ExchangeRate = input.ExchangeRate,
                     GrossAmount = input.GrossAmount,
-                    LinkedPurchaseRequestID = input.LinkedPurchaseRequestID,
+                    LinkedPurchaseRequestID = Guid.Empty,
                     NetAmount = input.NetAmount,
                     PaymentPlanID = input.PaymentPlanID,
-                    ProductionOrderID = input.ProductionOrderID,
+                    ProductionOrderID = input.ProductionOrderID.GetValueOrDefault(),
                     PropositionRevisionNo = input.PropositionRevisionNo,
                     PurchaseRequestState = input.PurchaseRequestState,
                     RevisionDate = input.RevisionDate,
                     RevisionTime = input.RevisionTime,
-                    ShippingAdressID = input.ShippingAdressID,
+                    ShippingAdressID = input.ShippingAdressID.GetValueOrDefault(),
                     SpecialCode = input.SpecialCode,
                     Time_ = input.Time_,
                     TotalDiscountAmount = input.TotalDiscountAmount,
@@ -143,7 +143,9 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
                 var purchaseRequest = queryFactory.Insert<SelectPurchaseRequestsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PurchaseRequests, LogType.Insert, purchaseRequest.Id);
+                StockMovementsService.TotalPurchaseRequests(addedEntityId);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PurchaseRequests, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectPurchaseRequestsDto>(purchaseRequest);
             }
@@ -598,6 +600,8 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                 }
 
                 var purchaseRequest = queryFactory.Update<SelectPurchaseRequestsDto>(query, "Id", true);
+
+                StockMovementsService.TotalPurchaseRequests(entity.Id);
 
                 LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.PurchaseRequests, LogType.Update, purchaseRequest.Id);
 

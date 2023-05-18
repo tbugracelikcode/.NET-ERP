@@ -72,6 +72,6 @@ namespace TsiErp.Entities.Entities.StockFicheLine.Dtos
         /// <summary>
         /// Fiş Türü
         /// </summary>
-        public StockFicheTypeEnum FicheType { get; set; }
+        public StockFicheTypeEnum? FicheType { get; set; }
     }
 }

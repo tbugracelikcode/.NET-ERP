@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,6 +35,8 @@ namespace TsiErp.Entities.Entities.RouteLine.Dtos
         /// Ayar ve Kontrol Süresi
         /// </summary>
         public int AdjustmentAndControlTime { get; set; }
+        [Precision(18, 6)]
+
         /// <summary>
         /// Operasyon Süresi
         /// </summary>

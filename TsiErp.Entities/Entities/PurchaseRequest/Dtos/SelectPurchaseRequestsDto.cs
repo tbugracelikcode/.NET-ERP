@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,7 +34,6 @@ namespace TsiErp.Entities.Entities.PurchaseRequest.Dtos
         /// Saat
         /// </summary>
         public TimeSpan? Time_ { get; set; }
-
         /// <summary>
         /// Kur Tutarı
         /// </summary>
@@ -122,27 +122,22 @@ namespace TsiErp.Entities.Entities.PurchaseRequest.Dtos
         /// Cari Ünvan
         /// </summary>
         public string CurrentAccountCardName { get; set; }
-
         /// <summary>
         /// Brüt Tutar
         /// </summary>
         public decimal GrossAmount { get; set; }
-
         /// <summary>
         /// KDV hariç Tutar
         /// </summary>
         public decimal TotalVatExcludedAmount { get; set; }
-
         /// <summary>
         /// KDV Tutar
         /// </summary>
         public decimal TotalVatAmount { get; set; }
-
         /// <summary>
         /// Toplam İndirimli Tutar
         /// </summary>
         public decimal TotalDiscountAmount { get; set; }
-
         /// <summary>
         /// Net Tutar
         /// </summary>

@@ -49,6 +49,9 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
 
                 #endregion
 
+                Guid addedEntityId = GuidGenerator.CreateGuid();
+
+
                 var query = queryFactory.Query().From(Tables.CalibrationVerifications).Insert(new CreateCalibrationVerificationsDto
                 {
                     Code = input.Code,
@@ -64,7 +67,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
                     DataOpenStatusUserId = Guid.Empty,
                     DeleterId = Guid.Empty,
                     DeletionTime = null,
-                    Id = GuidGenerator.CreateGuid(),
+                    Id = addedEntityId,
                     IsDeleted = false,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
@@ -73,7 +76,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
 
                 var calibrationVerifications = queryFactory.Insert<SelectCalibrationVerificationsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.CalibrationVerifications, LogType.Insert, calibrationVerifications.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.CalibrationVerifications, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectCalibrationVerificationsDto>(calibrationVerifications);
             }

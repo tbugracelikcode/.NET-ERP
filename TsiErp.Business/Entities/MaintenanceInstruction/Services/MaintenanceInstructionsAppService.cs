@@ -451,7 +451,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
 
                 maintenanceInstructions.SelectMaintenanceInstructionLines = maintenanceInstructionLine;
 
-                LogsAppService.InsertLogToDatabase(maintenanceInstructions, maintenanceInstructions, LoginedUserService.UserId, Tables.MaintenanceInstructions, LogType.Get, id);
+                LogsAppService.InsertLogToDatabase(maintenanceInstructions, maintenanceInstructions, LoginedUserService.UserId, Tables.MaintenanceInstructions, LogType.Get, maintenanceInstructions.Id);
 
                 return new SuccessDataResult<SelectMaintenanceInstructionsDto>(maintenanceInstructions);
             }
