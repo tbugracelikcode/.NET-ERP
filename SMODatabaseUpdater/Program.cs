@@ -11,31 +11,31 @@ Database workDatabase = server.Databases[sqlConnection.Database];
 
 
 
-//Table table = new Table(workDatabase, "SmoTest");
+Table table = new Table(workDatabase, "SmoTest");
 
-//Column idColumn = new Column(table, "Id", DataType.Int);
-//idColumn.Identity = true;
-//table.Columns.Add(idColumn);
+Column idColumn = new Column(table, "Id", DataType.Int);
+idColumn.Identity = true;
+table.Columns.Add(idColumn);
 
-//Column nameColumn = new Column(table, "Name", DataType.NVarChar(50));
-//nameColumn.Nullable = false;
-//table.Columns.Add(nameColumn);
+Column nameColumn = new Column(table, "Name", DataType.NVarChar(50));
+nameColumn.Nullable = false;
+table.Columns.Add(nameColumn);
 
-//table.Create();
+table.Create();
 #endregion
 
 #region Primary Key Create
-//Microsoft.SqlServer.Management.Smo.Index primaryIndex = new Microsoft.SqlServer.Management.Smo.Index(table, "PK_SmoTest");
-//primaryIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+Microsoft.SqlServer.Management.Smo.Index primaryIndex = new Microsoft.SqlServer.Management.Smo.Index(table, "PK_SmoTest");
+primaryIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
 
-//IndexedColumn indexedColumn = new IndexedColumn(primaryIndex, "Id");
-//primaryIndex.IndexedColumns.Add(indexedColumn);
-//primaryIndex.Create();
+IndexedColumn indexedColumn = new IndexedColumn(primaryIndex, "Id");
+primaryIndex.IndexedColumns.Add(indexedColumn);
+primaryIndex.Create();
 #endregion
 
 #region Table Alter
 
-//Table alterTable = workDatabase.Tables["SmoTest"];
+Table alterTable = workDatabase.Tables["SmoTest"];
 
 //Column surnameColumn = new Column(alterTable, "Surname", DataType.NVarChar(50));
 //surnameColumn.Nullable = false;
