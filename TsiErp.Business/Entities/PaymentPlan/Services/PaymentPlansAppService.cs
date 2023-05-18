@@ -8,8 +8,6 @@ using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.PaymentPlan.Validations;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.PaymentPlan;
 using TsiErp.Entities.Entities.PaymentPlan.Dtos;

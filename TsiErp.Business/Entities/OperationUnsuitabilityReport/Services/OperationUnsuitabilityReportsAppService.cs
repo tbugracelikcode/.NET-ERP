@@ -1,18 +1,9 @@
-﻿using Tsi.Core.Aspects.Autofac.Caching;
-using Tsi.Core.Aspects.Autofac.Validation;
+﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Utilities.Results;
-using TsiErp.Localizations.Resources.OperationUnsuitabilityReports.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Business.Entities.Logging.Services;
-using TsiErp.Business.Entities.OperationUnsuitabilityReport.BusinessRules;
-using TsiErp.Business.Entities.OperationUnsuitabilityReport.Validations;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
-using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.OperationUnsuitabilityReport.Dtos;
-using Microsoft.Extensions.Localization;
+using TsiErp.Localizations.Resources.OperationUnsuitabilityReports.Page;
 
 namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
 {
@@ -23,105 +14,34 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
         {
         }
 
-        OperationUnsuitabilityReportManager _manager { get; set; } = new OperationUnsuitabilityReportManager();
-
-        [ValidationAspect(typeof(CreateOperationUnsuitabilityReportsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
-        public async Task<IDataResult<SelectOperationUnsuitabilityReportsDto>> CreateAsync(CreateOperationUnsuitabilityReportsDto input)
+        public Task<IDataResult<SelectOperationUnsuitabilityReportsDto>> CreateAsync(CreateOperationUnsuitabilityReportsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                await _manager.CodeControl(_uow.OperationUnsuitabilityReportsRepository, input.FicheNo,L);
-
-                var entity = ObjectMapper.Map<CreateOperationUnsuitabilityReportsDto, OperationUnsuitabilityReports>(input);
-
-                var addedEntity = await _uow.OperationUnsuitabilityReportsRepository.InsertAsync(entity);
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "OperationUnsuitabilityReports", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-
-                return new SuccessDataResult<SelectOperationUnsuitabilityReportsDto>(ObjectMapper.Map<OperationUnsuitabilityReports, SelectOperationUnsuitabilityReportsDto>(addedEntity));
-            }
+            throw new NotImplementedException();
         }
 
-        [CacheRemoveAspect("Get")]
-        public async Task<IResult> DeleteAsync(Guid id)
+        public Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                await _manager.DeleteControl(_uow.OperationUnsuitabilityReportsRepository, id);
-                await _uow.OperationUnsuitabilityReportsRepository.DeleteAsync(id);
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "OperationUnsuitabilityReports", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
-            }
+            throw new NotImplementedException();
         }
 
-        public async Task<IDataResult<SelectOperationUnsuitabilityReportsDto>> GetAsync(Guid id)
+        public Task<IDataResult<SelectOperationUnsuitabilityReportsDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                var entity = await _uow.OperationUnsuitabilityReportsRepository.GetAsync(t => t.Id == id);
-                var mappedEntity = ObjectMapper.Map<OperationUnsuitabilityReports, SelectOperationUnsuitabilityReportsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "OperationUnsuitabilityReports", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectOperationUnsuitabilityReportsDto>(mappedEntity);
-            }
+            throw new NotImplementedException();
         }
 
-        [CacheAspect(duration: 60)]
-        public async Task<IDataResult<IList<ListOperationUnsuitabilityReportsDto>>> GetListAsync(ListOperationUnsuitabilityReportsParameterDto input)
+        public Task<IDataResult<IList<ListOperationUnsuitabilityReportsDto>>> GetListAsync(ListOperationUnsuitabilityReportsParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                var list = await _uow.OperationUnsuitabilityReportsRepository.GetListAsync(null);
-
-                var mappedEntity = ObjectMapper.Map<List<OperationUnsuitabilityReports>, List<ListOperationUnsuitabilityReportsDto>>(list.ToList());
-
-                return new SuccessDataResult<IList<ListOperationUnsuitabilityReportsDto>>(mappedEntity);
-            }
+            throw new NotImplementedException();
         }
 
-
-        [ValidationAspect(typeof(UpdateOperationUnsuitabilityReportsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
-        public async Task<IDataResult<SelectOperationUnsuitabilityReportsDto>> UpdateAsync(UpdateOperationUnsuitabilityReportsDto input)
+        public Task<IDataResult<SelectOperationUnsuitabilityReportsDto>> UpdateAsync(UpdateOperationUnsuitabilityReportsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                var entity = await _uow.OperationUnsuitabilityReportsRepository.GetAsync(x => x.Id == input.Id);
-
-                await _manager.UpdateControl(_uow.OperationUnsuitabilityReportsRepository, input.FicheNo, input.Id, entity,L);
-
-                var mappedEntity = ObjectMapper.Map<UpdateOperationUnsuitabilityReportsDto, OperationUnsuitabilityReports>(input);
-
-                await _uow.OperationUnsuitabilityReportsRepository.UpdateAsync(mappedEntity);
-                var before = ObjectMapper.Map<OperationUnsuitabilityReports, UpdateOperationUnsuitabilityReportsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "OperationUnsuitabilityReports", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-
-                return new SuccessDataResult<SelectOperationUnsuitabilityReportsDto>(ObjectMapper.Map<OperationUnsuitabilityReports, SelectOperationUnsuitabilityReportsDto>(mappedEntity));
-            }
+            throw new NotImplementedException();
         }
 
-        public async Task<IDataResult<SelectOperationUnsuitabilityReportsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        public Task<IDataResult<SelectOperationUnsuitabilityReportsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                var entity = await _uow.OperationUnsuitabilityReportsRepository.GetAsync(x => x.Id == id);
-
-                var updatedEntity = await _uow.OperationUnsuitabilityReportsRepository.LockRow(entity.Id, lockRow, userId);
-
-                await _uow.SaveChanges();
-
-                var mappedEntity = ObjectMapper.Map<OperationUnsuitabilityReports, SelectOperationUnsuitabilityReportsDto>(updatedEntity);
-
-                return new SuccessDataResult<SelectOperationUnsuitabilityReportsDto>(mappedEntity);
-            }
+            throw new NotImplementedException();
         }
     }
 }

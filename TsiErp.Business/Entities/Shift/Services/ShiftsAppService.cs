@@ -1,24 +1,20 @@
-﻿using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Microsoft.Extensions.Localization;
+using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
-using TsiErp.Localizations.Resources.Shifts.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TSI.QueryBuilder.BaseClasses;
+using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
-using TsiErp.Business.Entities.Shift.BusinessRules;
 using TsiErp.Business.Entities.Shift.Validations;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.Shift;
 using TsiErp.Entities.Entities.Shift.Dtos;
-using TsiErp.Entities.Entities.ShiftLine;
 using TsiErp.Entities.Entities.ShiftLine.Dtos;
-using Microsoft.Extensions.Localization;
-using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Entities.TableConstant;
-using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
-using TSI.QueryBuilder.Constants.Join;
+using TsiErp.Localizations.Resources.Shifts.Page;
 
 namespace TsiErp.Business.Entities.Shift.Services
 {

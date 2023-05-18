@@ -1,34 +1,32 @@
-﻿using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Microsoft.Extensions.Localization;
+using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
-using TsiErp.Localizations.Resources.SalesPropositions.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TSI.QueryBuilder.BaseClasses;
+using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
-using TsiErp.Business.Entities.SalesProposition.BusinessRules;
 using TsiErp.Business.Entities.SalesProposition.Validations;
 using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.Branch;
+using TsiErp.Entities.Entities.Currency;
+using TsiErp.Entities.Entities.CurrentAccountCard;
+using TsiErp.Entities.Entities.PaymentPlan;
+using TsiErp.Entities.Entities.Product;
 using TsiErp.Entities.Entities.SalesOrderLine.Dtos;
 using TsiErp.Entities.Entities.SalesProposition;
 using TsiErp.Entities.Entities.SalesProposition.Dtos;
 using TsiErp.Entities.Entities.SalesPropositionLine;
 using TsiErp.Entities.Entities.SalesPropositionLine.Dtos;
-using TsiErp.Entities.Enums;
-using Microsoft.Extensions.Localization;
-using TSI.QueryBuilder.BaseClasses;
-using TsiErp.Entities.TableConstant;
-using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
-using TSI.QueryBuilder.Constants.Join;
-using TsiErp.Entities.Entities.PaymentPlan;
-using TsiErp.Entities.Entities.Branch;
-using TsiErp.Entities.Entities.WareHouse;
-using TsiErp.Entities.Entities.Currency;
-using TsiErp.Entities.Entities.CurrentAccountCard;
 using TsiErp.Entities.Entities.ShippingAdress;
-using TsiErp.Entities.Entities.Product;
 using TsiErp.Entities.Entities.UnitSet;
+using TsiErp.Entities.Entities.WareHouse;
+using TsiErp.Entities.Enums;
+using TsiErp.Entities.TableConstant;
+using TsiErp.Localizations.Resources.SalesPropositions.Page;
 
 namespace TsiErp.Business.Entities.SalesProposition.Services
 {
@@ -651,25 +649,6 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
 
         public async Task UpdateSalesPropositionLineState(List<SelectSalesOrderLinesDto> orderLineList, SalesPropositionLineStateEnum lineState)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                foreach (var item in orderLineList)
-                {
-                    var lineEntity = (await GetAsync(item.LinkedSalesPropositionID.GetValueOrDefault())).Data.SelectSalesPropositionLines;
-
-                    if (lineEntity.Count > 0)
-                    {
-                        foreach (var line in lineEntity)
-                        {
-                            var mappedLineEntity = ObjectMapper.Map<SelectSalesPropositionLinesDto, SalesPropositionLines>(line);
-                            mappedLineEntity.SalesPropositionLineState = lineState;
-                            mappedLineEntity.OrderConversionDate = DateTime.Now;
-                            await _uow.SalesPropositionLinesRepository.UpdateAsync(mappedLineEntity);
-                            await _uow.SaveChanges();
-                        }
-                    }
-                }
-            }
             using (var connection = queryFactory.ConnectToDatabase())
             {
                 foreach (var item in orderLineList)

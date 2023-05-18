@@ -27,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\HaltReason\BusinessRules\" />
     <Folder Include="Extensions\CrudControl\" />
   </ItemGroup>
 

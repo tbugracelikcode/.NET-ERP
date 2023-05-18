@@ -1,18 +1,9 @@
-﻿using Tsi.Core.Aspects.Autofac.Caching;
-using Tsi.Core.Aspects.Autofac.Validation;
+﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Utilities.Results;
-using TsiErp.Localizations.Resources.ProductionOrderChangeItems.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Business.Entities.Logging.Services;
-using TsiErp.Business.Entities.ProductionOrderChangeItem.BusinessRules;
-using TsiErp.Business.Entities.ProductionOrderChangeItem.Validations;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
-using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.ProductionOrderChangeItem;
 using TsiErp.Entities.Entities.ProductionOrderChangeItem.Dtos;
-using Microsoft.Extensions.Localization;
+using TsiErp.Localizations.Resources.ProductionOrderChangeItems.Page;
 
 namespace TsiErp.Business.Entities.ProductionOrderChangeItem.Services
 {
@@ -23,107 +14,34 @@ namespace TsiErp.Business.Entities.ProductionOrderChangeItem.Services
         {
         }
 
-        ProductionOrderChangeItemManager _manager { get; set; } = new ProductionOrderChangeItemManager();
-
-        [ValidationAspect(typeof(CreateProductionOrderChangeItemsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
-        public async Task<IDataResult<SelectProductionOrderChangeItemsDto>> CreateAsync(CreateProductionOrderChangeItemsDto input)
+        public Task<IDataResult<SelectProductionOrderChangeItemsDto>> CreateAsync(CreateProductionOrderChangeItemsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                await _manager.CodeControl(_uow.ProductionOrderChangeItemsRepository, input.Code,L);
-
-                var entity = ObjectMapper.Map<CreateProductionOrderChangeItemsDto, ProductionOrderChangeItems>(input);
-
-                var addedEntity = await _uow.ProductionOrderChangeItemsRepository.InsertAsync(entity);
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "ProductionOrderChangeItems", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-
-                return new SuccessDataResult<SelectProductionOrderChangeItemsDto>(ObjectMapper.Map<ProductionOrderChangeItems, SelectProductionOrderChangeItemsDto>(addedEntity));
-            }
+            throw new NotImplementedException();
         }
 
-
-        [CacheRemoveAspect("Get")]
-        public async Task<IResult> DeleteAsync(Guid id)
+        public Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                await _uow.ProductionOrderChangeItemsRepository.DeleteAsync(id);
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "ProductionOrderChangeItems", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
-            }
+            throw new NotImplementedException();
         }
 
-
-        public async Task<IDataResult<SelectProductionOrderChangeItemsDto>> GetAsync(Guid id)
+        public Task<IDataResult<SelectProductionOrderChangeItemsDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                var entity = await _uow.ProductionOrderChangeItemsRepository.GetAsync(t => t.Id == id, null);
-                var mappedEntity = ObjectMapper.Map<ProductionOrderChangeItems, SelectProductionOrderChangeItemsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "ProductionOrderChangeItems", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectProductionOrderChangeItemsDto>(mappedEntity);
-            }
+            throw new NotImplementedException();
         }
 
-
-        [CacheAspect(duration: 60)]
-        public async Task<IDataResult<IList<ListProductionOrderChangeItemsDto>>> GetListAsync(ListProductionOrderChangeItemsParameterDto input)
+        public Task<IDataResult<IList<ListProductionOrderChangeItemsDto>>> GetListAsync(ListProductionOrderChangeItemsParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                var list = await _uow.ProductionOrderChangeItemsRepository.GetListAsync(t => t.IsActive == input.IsActive, null);
-
-                var mappedEntity = ObjectMapper.Map<List<ProductionOrderChangeItems>, List<ListProductionOrderChangeItemsDto>>(list.ToList());
-
-                return new SuccessDataResult<IList<ListProductionOrderChangeItemsDto>>(mappedEntity);
-            }
+            throw new NotImplementedException();
         }
 
-
-        [ValidationAspect(typeof(UpdateProductionOrderChangeItemsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
-        public async Task<IDataResult<SelectProductionOrderChangeItemsDto>> UpdateAsync(UpdateProductionOrderChangeItemsDto input)
+        public Task<IDataResult<SelectProductionOrderChangeItemsDto>> UpdateAsync(UpdateProductionOrderChangeItemsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                var entity = await _uow.ProductionOrderChangeItemsRepository.GetAsync(x => x.Id == input.Id);
-
-                await _manager.UpdateControl(_uow.ProductionOrderChangeItemsRepository, input.Code, input.Id, entity,L);
-
-                var mappedEntity = ObjectMapper.Map<UpdateProductionOrderChangeItemsDto, ProductionOrderChangeItems>(input);
-
-                await _uow.ProductionOrderChangeItemsRepository.UpdateAsync(mappedEntity);
-                var before = ObjectMapper.Map<ProductionOrderChangeItems, UpdateProductionOrderChangeItemsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "ProductionOrderChangeItems", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-
-                return new SuccessDataResult<SelectProductionOrderChangeItemsDto>(ObjectMapper.Map<ProductionOrderChangeItems, SelectProductionOrderChangeItemsDto>(mappedEntity));
-            }
+            throw new NotImplementedException();
         }
 
-        public async Task<IDataResult<SelectProductionOrderChangeItemsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        public Task<IDataResult<SelectProductionOrderChangeItemsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                var entity = await _uow.ProductionOrderChangeItemsRepository.GetAsync(x => x.Id == id);
-
-                var updatedEntity = await _uow.ProductionOrderChangeItemsRepository.LockRow(entity.Id, lockRow, userId);
-
-                await _uow.SaveChanges();
-
-                var mappedEntity = ObjectMapper.Map<ProductionOrderChangeItems, SelectProductionOrderChangeItemsDto>(updatedEntity);
-
-                return new SuccessDataResult<SelectProductionOrderChangeItemsDto>(mappedEntity);
-            }
+            throw new NotImplementedException();
         }
     }
 }

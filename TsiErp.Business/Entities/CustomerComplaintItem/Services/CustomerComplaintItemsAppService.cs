@@ -1,18 +1,9 @@
-﻿using Tsi.Core.Aspects.Autofac.Caching;
-using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; 
-using TsiErp.Localizations.Resources.CustomerComplaintItems.Page;
+﻿using Microsoft.Extensions.Localization;
+using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Business.Entities.CustomerComplaintItem.BusinessRules;
-using TsiErp.Business.Entities.CustomerComplaintItem.Validations;
-using TsiErp.Business.Entities.Logging.Services;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
-using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.CustomerComplaintItem;
 using TsiErp.Entities.Entities.CustomerComplaintItem.Dtos;
-using Microsoft.Extensions.Localization;
+using TsiErp.Localizations.Resources.CustomerComplaintItems.Page;
 
 namespace TsiErp.Business.Entities.CustomerComplaintItem.Services
 {
@@ -23,109 +14,34 @@ namespace TsiErp.Business.Entities.CustomerComplaintItem.Services
         {
         }
 
-        CustomerComplaintItemManager _manager { get; set; } = new CustomerComplaintItemManager();
-
-        [ValidationAspect(typeof(CreateCustomerComplaintItemsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
-        public async Task<IDataResult<SelectCustomerComplaintItemsDto>> CreateAsync(CreateCustomerComplaintItemsDto input)
+        public Task<IDataResult<SelectCustomerComplaintItemsDto>> CreateAsync(CreateCustomerComplaintItemsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                await _manager.CodeControl(_uow.CustomerComplaintItemsRepository, input.Code,L);
-
-                var entity = ObjectMapper.Map<CreateCustomerComplaintItemsDto, CustomerComplaintItems>(input);
-
-                var addedEntity = await _uow.CustomerComplaintItemsRepository.InsertAsync(entity);
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "CustomerComplaintItems", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-
-                return new SuccessDataResult<SelectCustomerComplaintItemsDto>(ObjectMapper.Map<CustomerComplaintItems, SelectCustomerComplaintItemsDto>(addedEntity));
-            }
+            throw new NotImplementedException();
         }
 
-
-        [CacheRemoveAspect("Get")]
-        public async Task<IResult> DeleteAsync(Guid id)
+        public Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                await _uow.CustomerComplaintItemsRepository.DeleteAsync(id);
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "CustomerComplaintItems", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
-
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
-            }
+            throw new NotImplementedException();
         }
 
-
-        public async Task<IDataResult<SelectCustomerComplaintItemsDto>> GetAsync(Guid id)
+        public Task<IDataResult<SelectCustomerComplaintItemsDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                var entity = await _uow.CustomerComplaintItemsRepository.GetAsync(t => t.Id == id, null);
-                var mappedEntity = ObjectMapper.Map<CustomerComplaintItems, SelectCustomerComplaintItemsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "CustomerComplaintItems", LogType.Get, id);
-
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectCustomerComplaintItemsDto>(mappedEntity);
-            }
+            throw new NotImplementedException();
         }
 
-
-        [CacheAspect(duration: 60)]
-        public async Task<IDataResult<IList<ListCustomerComplaintItemsDto>>> GetListAsync(ListCustomerComplaintItemsParameterDto input)
+        public Task<IDataResult<IList<ListCustomerComplaintItemsDto>>> GetListAsync(ListCustomerComplaintItemsParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                var list = await _uow.CustomerComplaintItemsRepository.GetListAsync(t => t.IsActive == input.IsActive, null);
-
-                var mappedEntity = ObjectMapper.Map<List<CustomerComplaintItems>, List<ListCustomerComplaintItemsDto>>(list.ToList());
-
-                return new SuccessDataResult<IList<ListCustomerComplaintItemsDto>>(mappedEntity);
-            }
+            throw new NotImplementedException();
         }
 
-
-        [ValidationAspect(typeof(UpdateCustomerComplaintItemsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
-        public async Task<IDataResult<SelectCustomerComplaintItemsDto>> UpdateAsync(UpdateCustomerComplaintItemsDto input)
+        public Task<IDataResult<SelectCustomerComplaintItemsDto>> UpdateAsync(UpdateCustomerComplaintItemsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                var entity = await _uow.CustomerComplaintItemsRepository.GetAsync(x => x.Id == input.Id);
-
-                await _manager.UpdateControl(_uow.CustomerComplaintItemsRepository, input.Code, input.Id, entity,L);
-
-                var mappedEntity = ObjectMapper.Map<UpdateCustomerComplaintItemsDto, CustomerComplaintItems>(input);
-
-                await _uow.CustomerComplaintItemsRepository.UpdateAsync(mappedEntity);
-                var before = ObjectMapper.Map<CustomerComplaintItems, UpdateCustomerComplaintItemsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "CustomerComplaintItems", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-
-                return new SuccessDataResult<SelectCustomerComplaintItemsDto>(ObjectMapper.Map<CustomerComplaintItems, SelectCustomerComplaintItemsDto>(mappedEntity));
-            }
+            throw new NotImplementedException();
         }
 
-        public async Task<IDataResult<SelectCustomerComplaintItemsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        public Task<IDataResult<SelectCustomerComplaintItemsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                var entity = await _uow.CustomerComplaintItemsRepository.GetAsync(x => x.Id == id);
-
-                var updatedEntity = await _uow.CustomerComplaintItemsRepository.LockRow(entity.Id, lockRow, userId);
-
-                await _uow.SaveChanges();
-
-                var mappedEntity = ObjectMapper.Map<CustomerComplaintItems, SelectCustomerComplaintItemsDto>(updatedEntity);
-
-                return new SuccessDataResult<SelectCustomerComplaintItemsDto>(mappedEntity);
-            }
+            throw new NotImplementedException();
         }
     }
 }

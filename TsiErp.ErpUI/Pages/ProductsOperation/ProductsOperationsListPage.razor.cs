@@ -22,13 +22,11 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
 
         SelectProductsOperationLinesDto LineDataSource;
 
-        SelectTemplateOperationsDto TemplateOperationDataSource;
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectProductsOperationLinesDto> GridLineList = new List<SelectProductsOperationLinesDto>();
 
-        List<SelectTemplateOperationLinesDto> TemplateOperationLineList = new List<SelectTemplateOperationLinesDto>();
 
         private bool LineCrudPopup = false;
 

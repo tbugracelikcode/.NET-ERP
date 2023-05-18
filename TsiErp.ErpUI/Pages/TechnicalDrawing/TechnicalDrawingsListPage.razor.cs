@@ -20,8 +20,6 @@ namespace TsiErp.ErpUI.Pages.TechnicalDrawing
 
         List<IFileListEntry> files = new List<IFileListEntry>();
 
-        private SfGrid<SelectTechnicalDrawingsDto> _TechnicalDrawingChangeGrid;
-
         public bool TechnicalDrawingsChangedCrudPopup = false;
 
         List<System.IO.FileInfo> uploadedfiles = new List<System.IO.FileInfo>();

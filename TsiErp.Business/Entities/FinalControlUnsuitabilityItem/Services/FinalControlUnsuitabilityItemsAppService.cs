@@ -1,18 +1,9 @@
-﻿using Tsi.Core.Aspects.Autofac.Caching;
-using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.Results; 
-using TsiErp.Localizations.Resources.FinalControlUnsuitabilityItems.Page;
+﻿using Microsoft.Extensions.Localization;
+using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Business.Entities.FinalControlUnsuitabilityItem.BusinessRules;
-using TsiErp.Business.Entities.FinalControlUnsuitabilityItem.Validations;
-using TsiErp.Business.Entities.Logging.Services;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
-using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.FinalControlUnsuitabilityItem;
 using TsiErp.Entities.Entities.FinalControlUnsuitabilityItem.Dtos;
-using Microsoft.Extensions.Localization;
+using TsiErp.Localizations.Resources.FinalControlUnsuitabilityItems.Page;
 
 namespace TsiErp.Business.Entities.FinalControlUnsuitabilityItem.Services
 {
@@ -23,108 +14,34 @@ namespace TsiErp.Business.Entities.FinalControlUnsuitabilityItem.Services
         {
         }
 
-        FinalControlUnsuitabilityItemManager _manager { get; set; } = new FinalControlUnsuitabilityItemManager();
-
-        [ValidationAspect(typeof(CreateFinalControlUnsuitabilityItemsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
-        public async Task<IDataResult<SelectFinalControlUnsuitabilityItemsDto>> CreateAsync(CreateFinalControlUnsuitabilityItemsDto input)
+        public Task<IDataResult<SelectFinalControlUnsuitabilityItemsDto>> CreateAsync(CreateFinalControlUnsuitabilityItemsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                await _manager.CodeControl(_uow.FinalControlUnsuitabilityItemsRepository, input.Code,L);
-
-                var entity = ObjectMapper.Map<CreateFinalControlUnsuitabilityItemsDto, FinalControlUnsuitabilityItems>(input);
-
-                var addedEntity = await _uow.FinalControlUnsuitabilityItemsRepository.InsertAsync(entity);
-                input.Id = addedEntity.Id;
-                var log = LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, "FinalControlUnsuitabilityItems", LogType.Insert, addedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-
-                return new SuccessDataResult<SelectFinalControlUnsuitabilityItemsDto>(ObjectMapper.Map<FinalControlUnsuitabilityItems, SelectFinalControlUnsuitabilityItemsDto>(addedEntity));
-            }
+            throw new NotImplementedException();
         }
 
-
-        [CacheRemoveAspect("Get")]
-        public async Task<IResult> DeleteAsync(Guid id)
+        public Task<IResult> DeleteAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                await _uow.FinalControlUnsuitabilityItemsRepository.DeleteAsync(id);
-                var log = LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, "FinalControlUnsuitabilityItems", LogType.Delete, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessResult(L["DeleteSuccessMessage"]);
-            }
+            throw new NotImplementedException();
         }
 
-
-        public async Task<IDataResult<SelectFinalControlUnsuitabilityItemsDto>> GetAsync(Guid id)
+        public Task<IDataResult<SelectFinalControlUnsuitabilityItemsDto>> GetAsync(Guid id)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                var entity = await _uow.FinalControlUnsuitabilityItemsRepository.GetAsync(t => t.Id == id, null);
-                var mappedEntity = ObjectMapper.Map<FinalControlUnsuitabilityItems, SelectFinalControlUnsuitabilityItemsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "FinalControlUnsuitabilityItems", LogType.Get, id);
-                await _uow.LogsRepository.InsertAsync(log);
-                await _uow.SaveChanges();
-                return new SuccessDataResult<SelectFinalControlUnsuitabilityItemsDto>(mappedEntity);
-            }
+            throw new NotImplementedException();
         }
 
-
-        [CacheAspect(duration: 60)]
-        public async Task<IDataResult<IList<ListFinalControlUnsuitabilityItemsDto>>> GetListAsync(ListFinalControlUnsuitabilityItemsParameterDto input)
+        public Task<IDataResult<IList<ListFinalControlUnsuitabilityItemsDto>>> GetListAsync(ListFinalControlUnsuitabilityItemsParameterDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                var list = await _uow.FinalControlUnsuitabilityItemsRepository.GetListAsync(t => t.IsActive == input.IsActive, null);
-
-                var mappedEntity = ObjectMapper.Map<List<FinalControlUnsuitabilityItems>, List<ListFinalControlUnsuitabilityItemsDto>>(list.ToList());
-
-                return new SuccessDataResult<IList<ListFinalControlUnsuitabilityItemsDto>>(mappedEntity);
-            }
+            throw new NotImplementedException();
         }
 
-
-        [ValidationAspect(typeof(UpdateFinalControlUnsuitabilityItemsValidator), Priority = 1)]
-        [CacheRemoveAspect("Get")]
-        public async Task<IDataResult<SelectFinalControlUnsuitabilityItemsDto>> UpdateAsync(UpdateFinalControlUnsuitabilityItemsDto input)
+        public Task<IDataResult<SelectFinalControlUnsuitabilityItemsDto>> UpdateAsync(UpdateFinalControlUnsuitabilityItemsDto input)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                var entity = await _uow.FinalControlUnsuitabilityItemsRepository.GetAsync(x => x.Id == input.Id);
-
-                await _manager.UpdateControl(_uow.FinalControlUnsuitabilityItemsRepository, input.Code, input.Id, entity,L);
-
-                var mappedEntity = ObjectMapper.Map<UpdateFinalControlUnsuitabilityItemsDto, FinalControlUnsuitabilityItems>(input);
-
-                await _uow.FinalControlUnsuitabilityItemsRepository.UpdateAsync(mappedEntity);
-                var before = ObjectMapper.Map<FinalControlUnsuitabilityItems, UpdateFinalControlUnsuitabilityItemsDto>(entity);
-                var log = LogsAppService.InsertLogToDatabase(before, input, LoginedUserService.UserId, "FinalControlUnsuitabilityItems", LogType.Update, mappedEntity.Id);
-                await _uow.LogsRepository.InsertAsync(log);
-
-                await _uow.SaveChanges();
-
-                return new SuccessDataResult<SelectFinalControlUnsuitabilityItemsDto>(ObjectMapper.Map<FinalControlUnsuitabilityItems, SelectFinalControlUnsuitabilityItemsDto>(mappedEntity));
-            }
+            throw new NotImplementedException();
         }
 
-        public async Task<IDataResult<SelectFinalControlUnsuitabilityItemsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        public Task<IDataResult<SelectFinalControlUnsuitabilityItemsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (UnitOfWork _uow = new UnitOfWork())
-            {
-                var entity = await _uow.FinalControlUnsuitabilityItemsRepository.GetAsync(x => x.Id == id);
-
-                var updatedEntity = await _uow.FinalControlUnsuitabilityItemsRepository.LockRow(entity.Id, lockRow, userId);
-
-                await _uow.SaveChanges();
-
-                var mappedEntity = ObjectMapper.Map<FinalControlUnsuitabilityItems, SelectFinalControlUnsuitabilityItemsDto>(updatedEntity);
-
-                return new SuccessDataResult<SelectFinalControlUnsuitabilityItemsDto>(mappedEntity);
-            }
+            throw new NotImplementedException();
         }
     }
 }

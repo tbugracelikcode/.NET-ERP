@@ -25,7 +25,21 @@
     </div>
 
     <div class="content px-4">
-        @Body
+
+        <ErrorBoundary @ref="errorBoundary">
+            <ChildContent>
+                @Body
+            </ChildContent>
+            <ErrorContent Context="Exception">
+                <div class="alert alert-danger">
+                    <h5>@Exception.GetType()</h5>
+                    <h5>@Exception.Message</h5>
+                    <button class="btn btn-info" @onclick="()=> errorBoundary.Recover()">Clear</button>
+                </div>
+            </ErrorContent>
+        </ErrorBoundary>
+
+
     </div>
 </div>
 <style>
@@ -182,8 +196,8 @@
     }
 
     /*.e-menu-wrapper.e-hamburger ul.e-menu {
-                    overflow-y: hidden !important;
-                }*/
+                            overflow-y: hidden !important;
+                        }*/
 
     @@font-face {
         font-family: 'e-icons';
@@ -198,5 +212,11 @@
 
 @code
 {
+    private ErrorBoundary errorBoundary;
     SfSidebar Sidebar;
+
+    protected override void OnInitialized()
+    {
+        errorBoundary = new ErrorBoundary();
+    }
 }
