@@ -58,6 +58,5 @@ namespace TsiErp.Entities.Entities.TechnicalDrawing
         /// </summary>
         public Guid ProductID { get; set; }
 
-        public Products Products { get; set; }
     }
 }

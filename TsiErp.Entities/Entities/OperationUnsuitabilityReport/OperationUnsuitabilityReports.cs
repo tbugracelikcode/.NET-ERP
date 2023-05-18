@@ -82,13 +82,5 @@ namespace TsiErp.Entities.Entities.OperationUnsuitabilityReport
         /// </summary>
         public Guid OperationID { get; set; }
 
-        public WorkOrders WorkOrders { get; set; }
-        public Stations Stations { get; set; }
-        public StationGroups StationGroups { get; set; }
-        public Employees Employees { get; set; }
-        public ProductionOrders ProductionOrders { get; set; }
-        public Products Products { get; set; }
-        public ProductsOperations ProductsOperations { get; set; }
-
     }
 }

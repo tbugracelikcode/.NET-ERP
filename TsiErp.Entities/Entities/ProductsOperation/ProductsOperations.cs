@@ -35,15 +35,5 @@ namespace TsiErp.Entities.Entities.ProductsOperation
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
-
-        public ICollection<ProductsOperationLines> ProductsOperationLines { get; set; }
-
-        public Products Products { get; set; }
-
-        public ICollection<RouteLines> RouteLines { get; set; }
-
-        public ICollection<WorkOrders> WorkOrders { get; set; }
-
-        public ICollection<OperationUnsuitabilityReports> OperationUnsuitabilityReports { get; set; }
     }
 }

@@ -41,9 +41,5 @@ namespace TsiErp.Entities.Entities.MaintenanceInstructionLine
         /// Talimat Açıklaması
         /// </summary>
         public string InstructionDescription { get; set; }
-
-        public MaintenanceInstructions MaintenanceInstructions { get; set; }
-        public Products Products { get; set; }
-        public UnitSets UnitSets { get; set; }
     }
 }

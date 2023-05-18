@@ -26,10 +26,10 @@ namespace TsiErp.Business.Entities.Station.BusinessRules
 
         public async Task DeleteControl(IStationsRepository _repository, Guid id, IStringLocalizer<StationsResource> L)
         {
-            if (await _repository.AnyAsync(t => t.TemplateOperationLines.Any(x => x.StationID == id)))
-            {
-                throw new Exception(L["DeleteControlManager"]);
-            }
+            //if (await _repository.AnyAsync(t => t.TemplateOperationLines.Any(x => x.StationID == id)))
+            //{
+            //    throw new Exception(L["DeleteControlManager"]);
+            //}
         }
     }
 }

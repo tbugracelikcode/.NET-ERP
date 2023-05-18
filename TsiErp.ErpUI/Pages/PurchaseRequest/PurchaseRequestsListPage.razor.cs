@@ -600,7 +600,6 @@ namespace TsiErp.ErpUI.Pages.PurchaseRequest
                     NetAmount = DataSource.NetAmount,
                     PaymentPlanID = DataSource.PaymentPlanID,
                     PurchaseOrderState = Entities.Enums.PurchaseOrderStateEnum.Beklemede,
-                    ShippingAdressID = DataSource.ShippingAdressID,
                     SpecialCode = DataSource.SpecialCode,
                     Time_ = DataSource.Time_,
                     TotalDiscountAmount = DataSource.TotalDiscountAmount,

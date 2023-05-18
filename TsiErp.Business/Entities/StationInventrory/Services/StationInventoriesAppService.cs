@@ -49,6 +49,8 @@ namespace TsiErp.Business.Entities.StationInventory.Services
 
                 #endregion
 
+                Guid addedEntityId = GuidGenerator.CreateGuid();
+
                 var query = queryFactory.Query().From(Tables.StationInventories).Insert(new CreateStationInventoriesDto
                 {
                     ProductID = input.ProductID,
@@ -61,7 +63,7 @@ namespace TsiErp.Business.Entities.StationInventory.Services
                     DeleterId = Guid.Empty,
                     DeletionTime = null,
                     Description_ = input.Description_,
-                    Id = GuidGenerator.CreateGuid(),
+                    Id =addedEntityId,
                     IsDeleted = false,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
@@ -69,7 +71,7 @@ namespace TsiErp.Business.Entities.StationInventory.Services
 
                 var stationInventories = queryFactory.Insert<SelectStationInventoriesDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.StationInventories, LogType.Insert, stationInventories.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.StationInventories, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectStationInventoriesDto>(stationInventories);
             }

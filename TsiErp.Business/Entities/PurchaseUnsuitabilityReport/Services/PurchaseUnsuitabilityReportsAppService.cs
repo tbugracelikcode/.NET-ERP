@@ -64,10 +64,7 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                var entity = await _uow.PurchaseUnsuitabilityReportsRepository.GetAsync(t => t.Id == id,
-                t => t.Products,
-                t => t.CurrentAccountCards,
-                t => t.PurchaseOrders);
+                var entity = await _uow.PurchaseUnsuitabilityReportsRepository.GetAsync(t => t.Id == id);
                 var mappedEntity = ObjectMapper.Map<PurchaseUnsuitabilityReports, SelectPurchaseUnsuitabilityReportsDto>(entity);
                 var log = LogsAppService.InsertLogToDatabase(mappedEntity, mappedEntity, LoginedUserService.UserId, "PurchaseUnsuitabilityReports", LogType.Get, id);
                 await _uow.LogsRepository.InsertAsync(log);
@@ -81,10 +78,7 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
         {
             using (UnitOfWork _uow = new UnitOfWork())
             {
-                var list = await _uow.PurchaseUnsuitabilityReportsRepository.GetListAsync(null,
-                t => t.Products,
-                 t => t.CurrentAccountCards,
-                t => t.PurchaseOrders);
+                var list = await _uow.PurchaseUnsuitabilityReportsRepository.GetListAsync(null);
 
                 var mappedEntity = ObjectMapper.Map<List<PurchaseUnsuitabilityReports>, List<ListPurchaseUnsuitabilityReportsDto>>(list.ToList());
 

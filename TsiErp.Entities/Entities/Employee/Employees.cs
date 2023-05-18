@@ -80,11 +80,5 @@ namespace TsiErp.Entities.Entities.Employee
         /// </summary>
         public bool IsActive { get; set; }
 
-        public Departments Departments { get; set; }
-        public ICollection<OperationUnsuitabilityReports> OperationUnsuitabilityReports { get; set; }
-        public ICollection<ProductionTrackings> ProductionTrackings { get; set; }
-        public ICollection<ContractProductionTrackings> ContractProductionTrackings { get; set; }
-        public ICollection<FinalControlUnsuitabilityReports> FinalControlUnsuitabilityReports { get; set; }
-
     }
 }

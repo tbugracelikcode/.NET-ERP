@@ -34,25 +34,6 @@ namespace TsiErp.Entities.Entities.UnitSet
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
-        /// <summary>
-        /// Stoklar
-        /// </summary>
-        ///  /// <summary>
-        /// Stoklar
-        /// </summary>
-        public ICollection<Products> Products { get; set; }
-        /// <summary>
-        /// Satış Teklifleri
-        /// </summary>
-        public ICollection<SalesPropositionLines> SalesPropositionLines { get; set; }
-        public ICollection<SalesOrderLines> SalesOrderLines { get; set; }
-        public ICollection<ProductionOrders> ProductionOrders { get; set; }
-        public ICollection<BillsofMaterialLines> BillsofMaterialLines { get; set; }
-        public ICollection<PurchaseOrderLines> PurchaseOrderLines { get; set; }
-        public ICollection<PurchaseRequestLines> PurchaseRequestLines { get; set; }
-        public ICollection<MaintenanceInstructionLines> MaintenanceInstructionLines { get; set; }
-        public ICollection<PlannedMaintenanceLines> PlannedMaintenanceLines { get; set; }
-        public ICollection<UnplannedMaintenanceLines> UnplannedMaintenanceLines { get; set; }
 
 
     }

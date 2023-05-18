@@ -49,6 +49,9 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
 
                 #endregion
 
+                Guid addedEntityId = GuidGenerator.CreateGuid();
+
+
                 var query = queryFactory.Query().From(Tables.PaymentPlans).Insert(new CreatePaymentPlansDto
                 {
                     Code = input.Code,
@@ -60,7 +63,7 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
                     DataOpenStatusUserId = Guid.Empty,
                     DeleterId = Guid.Empty,
                     DeletionTime = null,
-                    Id = GuidGenerator.CreateGuid(),
+                    Id = addedEntityId,
                     IsActive = true,
                     IsDeleted = false,
                     LastModificationTime = null,
@@ -70,7 +73,7 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
 
                 var paymentPlans = queryFactory.Insert<SelectPaymentPlansDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PaymentPlans, LogType.Insert, paymentPlans.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PaymentPlans, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectPaymentPlansDto>(paymentPlans);
             }

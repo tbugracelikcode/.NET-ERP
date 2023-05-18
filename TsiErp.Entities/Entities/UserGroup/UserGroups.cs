@@ -26,6 +26,5 @@ namespace TsiErp.Entities.Entities.UserGroup
         /// </summary>
         public bool IsActive { get; set; }
 
-        public ICollection<Users> Users { get; set; }
     }
 }

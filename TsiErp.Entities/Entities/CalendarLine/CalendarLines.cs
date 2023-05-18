@@ -60,11 +60,5 @@ namespace TsiErp.Entities.Entities.CalendarLine
         /// Tarih
         /// </summary>
         public DateTime Date_ { get; set; }
-        /// <summary>
-        /// İstasyon
-        /// </summary>
-        public Stations Stations { get; set; }
-
-        public Shifts Shifts { get; set; }
     }
 }

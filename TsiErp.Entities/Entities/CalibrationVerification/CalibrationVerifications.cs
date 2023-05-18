@@ -46,7 +46,5 @@ namespace TsiErp.Entities.Entities.CalibrationVerification
         /// </summary>
         public string Result { get; set; }
 
-        public EquipmentRecords EquipmentRecords { get; set; }
-
     }
 }

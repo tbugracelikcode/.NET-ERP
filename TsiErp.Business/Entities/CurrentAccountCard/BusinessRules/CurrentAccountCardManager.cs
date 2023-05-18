@@ -26,14 +26,14 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.BusinessRules
 
         public async Task DeleteControl(ICurrentAccountCardsRepository _repository, Guid id, IStringLocalizer<CurrentAccountCardsResource>L)
         {
-            if (await _repository.AnyAsync(t => t.SalesPropositions.Any(x => x.CurrentAccountCardID == id)))
-            {
-                throw new Exception(L["DeleteControlManager"]);
-            }
-            if (await _repository.AnyAsync(t => t.ShippingAdresses.Any(x => x.CustomerCardID == id)))
-            {
-                throw new Exception(L["DeleteControlManager"]);
-            }
+            //if (await _repository.AnyAsync(t => t.SalesPropositions.Any(x => x.CurrentAccountCardID == id)))
+            //{
+            //    throw new Exception(L["DeleteControlManager"]);
+            //}
+            //if (await _repository.AnyAsync(t => t.ShippingAdresses.Any(x => x.CustomerCardID == id)))
+            //{
+            //    throw new Exception(L["DeleteControlManager"]);
+            //}
         }
     }
 }

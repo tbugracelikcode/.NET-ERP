@@ -53,8 +53,5 @@ namespace TsiErp.Entities.Entities.Calendar
         /// Çalışılabilir Gün Sayısı
         /// </summary>
         public decimal AvailableDays { get; set; }
-
-        public ICollection<CalendarLines> CalendarLines { get; set; }
-        public ICollection<CalendarDays> CalendarDays { get; set; }
     }
 }

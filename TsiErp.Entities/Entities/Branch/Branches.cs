@@ -41,18 +41,6 @@ namespace TsiErp.Entities.Entities.Branch
         /// </summary>
         public bool IsActive { get; set; }
 
-        
-        public ICollection<Periods> Periods { get; set; }
-        public ICollection<SalesPropositions> SalesPropositions { get; set; }
-        public ICollection<SalesOrders> SalesOrders { get; set; }
-        public ICollection<PurchaseOrders> PurchaseOrders { get; set; }
-        public ICollection<PurchaseRequests> PurchaseRequests { get; set; }
-        public ICollection<Forecasts> Forecasts { get; set; }
-        public ICollection<PurchasePrices> PurchasePrices { get; set; }
-        public ICollection<SalesPrices> SalesPrices { get; set; }
-        public ICollection<ByDateStockMovements> ByDateStockMovements { get; set; }
-        public ICollection<GrandTotalStockMovements> GrandTotalStockMovements { get; set; }
-
 
     }
 }

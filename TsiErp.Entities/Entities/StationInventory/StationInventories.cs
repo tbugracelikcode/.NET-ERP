@@ -31,7 +31,5 @@ namespace TsiErp.Entities.Entities.StationInventory
         /// Açıklama
         /// </summary>
         public string Description_ { get; set; }
-
-        public Stations Stations { get; set; }
     }
 }

@@ -42,10 +42,6 @@ namespace TsiErp.Entities.Entities.MaintenancePeriod
         /// </summary>
         public bool IsDaily { get; set; }
 
-        public ICollection<MaintenanceInstructions> MaintenanceInstructions { get; set; }
-        public ICollection<UnplannedMaintenances> UnplannedMaintenances { get; set; }
-        public ICollection<PlannedMaintenances> PlannedMaintenances { get; set; }
-
 
     }
 }

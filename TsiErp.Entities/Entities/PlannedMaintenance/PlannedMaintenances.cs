@@ -78,9 +78,5 @@ namespace TsiErp.Entities.Entities.PlannedMaintenance
         /// </summary>
         public DateTime? CompletionDate { get; set; }
 
-        public Stations Stations { get; set; }
-        public MaintenancePeriods MaintenancePeriods { get; set; }
-        public ICollection<PlannedMaintenanceLines> PlannedMaintenanceLines { get; set; }
-
     }
 }

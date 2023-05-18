@@ -59,11 +59,5 @@ namespace TsiErp.Entities.Entities.RouteLine
         /// Operasyon Resmi
         /// </summary>
         public byte[] OperationPicture { get; set; }
-
-        public ProductsOperations ProductsOperations { get; set; }
-
-        public Products Products { get; set; }
-
-        public Routes Routes { get; set; }
     }
 }

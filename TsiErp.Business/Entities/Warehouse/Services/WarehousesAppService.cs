@@ -49,13 +49,14 @@ namespace TsiErp.Business.Entities.Warehouse.Services
 
                 #endregion
 
+                Guid addedEntityId = GuidGenerator.CreateGuid();
 
                 var query = queryFactory.Query().From(Tables.Warehouses).Insert(new CreateWarehousesDto
                 {
                     Code = input.Code,
                     Name = input.Name,
                     IsActive = true,
-                    Id = GuidGenerator.CreateGuid(),
+                    Id = addedEntityId,
                     CreationTime = DateTime.Now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
@@ -70,7 +71,7 @@ namespace TsiErp.Business.Entities.Warehouse.Services
 
                 var warehouses = queryFactory.Insert<SelectWarehousesDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Warehouses, LogType.Insert, warehouses.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Warehouses, LogType.Insert, addedEntityId);
 
 
                 return new SuccessDataResult<SelectWarehousesDto>(warehouses);

@@ -46,9 +46,5 @@ namespace TsiErp.Entities.Entities.ProductsOperationLine
         /// Alternatif
         /// </summary>
         public bool Alternative { get; set; }
-
-        public ProductsOperations ProductsOperations { get; set; }
-
-        public Stations Stations { get; set; }
     }
 }

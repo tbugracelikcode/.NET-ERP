@@ -31,8 +31,5 @@ namespace TsiErp.Entities.Entities.ProductReferanceNumber
         /// </summary>
         public string Description_ { get; set; }
 
-        public Products Products { get; set; }
-        public CurrentAccountCards CurrentAccountCards { get; set; }
-
     }
 }

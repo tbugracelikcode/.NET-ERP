@@ -26,14 +26,14 @@ namespace TsiErp.Business.Entities.Department.BusinessRules
 
         public async Task DeleteControl(IDepartmentsRepository _repository, Guid id, IStringLocalizer<DepartmentsResource> L)
         {
-            if (await _repository.AnyAsync(t => t.Employees.Any(x => x.DepartmentID == id)))
-            {
-                throw new Exception(L["DeleteControlManager"]);
-            }
-            if (await _repository.AnyAsync(t => t.EquipmentRecords.Any(x => x.Department == id)))
-            {
-                throw new Exception(L["DeleteControlManager"]);
-            }
+            //if (await _repository.AnyAsync(t => t.Employees.Any(x => x.DepartmentID == id)))
+            //{
+            //    throw new Exception(L["DeleteControlManager"]);
+            //}
+            //if (await _repository.AnyAsync(t => t.EquipmentRecords.Any(x => x.Department == id)))
+            //{
+            //    throw new Exception(L["DeleteControlManager"]);
+            //}
         }
     }
 }

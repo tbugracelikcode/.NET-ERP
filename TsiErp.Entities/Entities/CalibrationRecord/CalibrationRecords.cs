@@ -45,7 +45,5 @@ namespace TsiErp.Entities.Entities.CalibrationRecord
         /// Sonuç
         /// </summary>
         public string Result { get; set; }
-
-        public EquipmentRecords EquipmentRecords { get; set; }
     }
 }

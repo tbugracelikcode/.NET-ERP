@@ -51,6 +51,8 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
 
                 #endregion
 
+                Guid addedEntityId = GuidGenerator.CreateGuid();
+
                 var query = queryFactory.Query().From(Tables.TechnicalDrawings).Insert(new CreateTechnicalDrawingsDto
                 {
                     CustomerApproval = input.CustomerApproval,
@@ -70,7 +72,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                     DeleterId = Guid.Empty,
                     DeletionTime = null,
                     Description_ = input.Description_,
-                    Id = GuidGenerator.CreateGuid(),
+                    Id = addedEntityId,
                     IsDeleted = false,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
@@ -78,7 +80,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
 
                 var technicalDrawings = queryFactory.Insert<SelectTechnicalDrawingsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.TechnicalDrawings, LogType.Insert, technicalDrawings.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.TechnicalDrawings, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectTechnicalDrawingsDto>(technicalDrawings);
             }

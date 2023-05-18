@@ -47,9 +47,5 @@ namespace TsiErp.Entities.Entities.PurchasePriceLine
         /// Bitiş Tarihi
         /// </summary>
         public DateTime? EndDate { get; set; }
-
-        public Products Products { get; set; }
-        public Currencies Currencies { get; set; }
-        public PurchasePrices PurchasePrices { get; set; }
     }
 }

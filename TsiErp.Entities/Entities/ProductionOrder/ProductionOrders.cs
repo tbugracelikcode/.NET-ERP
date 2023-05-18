@@ -121,17 +121,5 @@ namespace TsiErp.Entities.Entities.ProductionOrder
         /// </summary>
         public Guid LinkedProductionOrderID { get; set; }
 
-        public SalesOrders SalesOrders { get; set; }
-        public SalesOrderLines SalesOrderLines { get; set; }
-        public Products Products { get; set; }
-        public UnitSets UnitSets { get; set; }
-        public BillsofMaterials BillsofMaterials { get; set; }
-        public Routes Routes { get; set; }
-        public SalesPropositions SalesPropositions { get; set; }
-        public SalesPropositionLines SalesPropositionLines { get; set; }
-        public CurrentAccountCards CurrentAccountCards { get; set; }
-        public ICollection<WorkOrders> WorkOrders { get; set; }
-        public ICollection<OperationUnsuitabilityReports> OperationUnsuitabilityReports { get; set; }
-
     }
 }

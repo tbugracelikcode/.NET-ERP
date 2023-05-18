@@ -50,6 +50,8 @@ namespace TsiErp.Business.Entities.StationGroup.Services
 
                 #endregion
 
+                Guid addedEntityId = GuidGenerator.CreateGuid();
+
                 var query = queryFactory.Query().From(Tables.StationGroups).Insert(new CreateStationGroupsDto
                 {
                     Code = input.Code,
@@ -60,7 +62,7 @@ namespace TsiErp.Business.Entities.StationGroup.Services
                     DataOpenStatusUserId = Guid.Empty,
                     DeleterId = Guid.Empty,
                     DeletionTime = null,
-                    Id = GuidGenerator.CreateGuid(),
+                    Id = addedEntityId,
                     IsActive = true,
                     IsDeleted = false,
                     LastModificationTime = null,
@@ -70,7 +72,7 @@ namespace TsiErp.Business.Entities.StationGroup.Services
 
                 var stationGroups = queryFactory.Insert<SelectStationGroupsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.StationGroups, LogType.Insert, stationGroups.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.StationGroups, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectStationGroupsDto>(stationGroups);
             }

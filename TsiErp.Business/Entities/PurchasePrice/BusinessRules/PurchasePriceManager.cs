@@ -26,16 +26,16 @@ namespace TsiErp.Business.Entities.PurchasePrice.BusinessRules
 
         public async Task DeleteControl(IPurchasePricesRepository _repository, Guid id, Guid lineId, bool lineDelete)
         {
-            if (lineDelete)
-            {
-                var entity = await _repository.GetAsync(t => t.Id == id, t => t.PurchasePriceLines);
+            //if (lineDelete)
+            //{
+            //    var entity = await _repository.GetAsync(t => t.Id == id, t => t.PurchasePriceLines);
 
-                var line = entity.PurchasePriceLines.Where(t => t.Id == lineId).FirstOrDefault();
-            }
-            else
-            {
-                var entity = await _repository.GetAsync(t => t.Id == id);
-            }
+            //    var line = entity.PurchasePriceLines.Where(t => t.Id == lineId).FirstOrDefault();
+            //}
+            //else
+            //{
+            //    var entity = await _repository.GetAsync(t => t.Id == id);
+            //}
         }
     }
 }

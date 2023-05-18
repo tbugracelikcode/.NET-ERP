@@ -34,16 +34,5 @@ namespace TsiErp.Entities.Entities.Currency
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
-
-        public ICollection<CurrentAccountCards> CurrentAccountCards { get; set; }
-        public ICollection<PurchaseRequests> PurchaseRequests { get; set; }
-        public ICollection<SalesPropositions> SalesPropositions { get; set; }
-        public ICollection<SalesOrders> SalesOrders { get; set; }
-        public ICollection<PurchaseOrders> PurchaseOrders { get; set; }
-        public ICollection<ExchangeRates> ExchangeRates { get; set; }
-        public ICollection<SalesPrices> SalesPrices { get; set; }
-        public ICollection<SalesPriceLines> SalesPriceLines { get; set; }
-        public ICollection<PurchasePriceLines> PurchasePriceLines { get; set; }
-        public ICollection<PurchasePrices> PurchasePrices { get; set; }
     }
 }

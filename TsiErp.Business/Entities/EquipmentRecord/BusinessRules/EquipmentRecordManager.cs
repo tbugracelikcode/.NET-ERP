@@ -26,15 +26,15 @@ namespace TsiErp.Business.Entities.EquipmentRecord.BusinessRules
 
         public async Task DeleteControl(IEquipmentRecordsRepository _repository, Guid id, IStringLocalizer<EquipmentRecordsResource> L)
         {
-            if (await _repository.AnyAsync(t => t.CalibrationRecords.Any(x => x.EquipmentID == id)))
-            {
-                throw new Exception(L["DeleteControlManager"]);
-            }
+            //if (await _repository.AnyAsync(t => t.CalibrationRecords.Any(x => x.EquipmentID == id)))
+            //{
+            //    throw new Exception(L["DeleteControlManager"]);
+            //}
 
-            if (await _repository.AnyAsync(t => t.CalibrationVerifications.Any(x => x.EquipmentID == id)))
-            {
-                throw new Exception(L["DeleteControlManager"]);
-            }
+            //if (await _repository.AnyAsync(t => t.CalibrationVerifications.Any(x => x.EquipmentID == id)))
+            //{
+            //    throw new Exception(L["DeleteControlManager"]);
+            //}
         }
     }
 }

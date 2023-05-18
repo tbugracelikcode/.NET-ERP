@@ -33,20 +33,20 @@ namespace TsiErp.Business.Entities.Currency.BusinessRules
 
         public async Task DeleteControl(ICurrenciesRepository _repository, Guid id, IStringLocalizer<CurrenciesResource> L)
         {
-            if (await _repository.AnyAsync(t => t.CurrentAccountCards.Any(x => x.CurrencyID == id)))
-            {
-                throw new Exception(L["DeleteControlManager"]);
-            }
+            //if (await _repository.AnyAsync(t => t.CurrentAccountCards.Any(x => x.CurrencyID == id)))
+            //{
+            //    throw new Exception(L["DeleteControlManager"]);
+            //}
 
-            if (await _repository.AnyAsync(t => t.ExchangeRates.Any(x => x.CurrencyID == id)))
-            {
-                throw new Exception(L["DeleteControlManager"]);
-            }
+            //if (await _repository.AnyAsync(t => t.ExchangeRates.Any(x => x.CurrencyID == id)))
+            //{
+            //    throw new Exception(L["DeleteControlManager"]);
+            //}
 
-            if (await _repository.AnyAsync(t => t.SalesPropositions.Any(x => x.CurrencyID == id)))
-            {
-                throw new Exception(L["DeleteControlManager"]);
-            }
+            //if (await _repository.AnyAsync(t => t.SalesPropositions.Any(x => x.CurrencyID == id)))
+            //{
+            //    throw new Exception(L["DeleteControlManager"]);
+            //}
         }
     }
 }

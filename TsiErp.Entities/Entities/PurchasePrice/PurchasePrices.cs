@@ -54,12 +54,5 @@ namespace TsiErp.Entities.Entities.PurchasePrice
         /// Onay
         /// </summary>
         public bool IsApproved { get; set; }
-
-        public Currencies Currencies { get; set; }
-        public Branches Branches { get; set; }
-        public Warehouses Warehouses { get; set; }
-        public ICollection<PurchasePriceLines> PurchasePriceLines { get; set; }
-
-        public CurrentAccountCards CurrentAccountCards { get; set; }
     }
 }

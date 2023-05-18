@@ -69,11 +69,5 @@ namespace TsiErp.Entities.Entities.PurchaseUnsuitabilityReport
         /// Sipariş ID
         /// </summary>
         public Guid CurrentAccountCardID { get; set; }
-
-        public PurchaseOrders PurchaseOrders { get; set; }
-
-        public Products Products { get; set; }
-
-        public CurrentAccountCards CurrentAccountCards { get; set; }
     }
 }

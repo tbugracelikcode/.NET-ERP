@@ -51,13 +51,15 @@ namespace TsiErp.Business.Entities.Currency.Services
 
                 #endregion
 
+                Guid addedEntityId = GuidGenerator.CreateGuid();
+
 
                 var query = queryFactory.Query().From(Tables.Currencies).Insert(new CreateCurrenciesDto
                 {
                     Code = input.Code,
                     Name = input.Name,
                     IsActive = true,
-                    Id = GuidGenerator.CreateGuid(),
+                    Id = addedEntityId,
                     CreationTime = DateTime.Now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
@@ -72,7 +74,7 @@ namespace TsiErp.Business.Entities.Currency.Services
 
                 var currencies = queryFactory.Insert<SelectCurrenciesDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Currencies, LogType.Insert, currencies.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Currencies, LogType.Insert, addedEntityId);
 
 
                 return new SuccessDataResult<SelectCurrenciesDto>(currencies);

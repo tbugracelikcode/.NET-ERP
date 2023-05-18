@@ -28,9 +28,5 @@ namespace TsiErp.Entities.Entities.Department
         /// </summary>
         public bool IsActive { get; set; }
 
-        public ICollection<Employees> Employees { get; set; }
-
-        public ICollection<EquipmentRecords> EquipmentRecords { get; set; }
-
     }
 }

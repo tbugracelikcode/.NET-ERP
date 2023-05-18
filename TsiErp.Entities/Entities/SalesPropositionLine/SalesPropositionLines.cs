@@ -103,29 +103,5 @@ namespace TsiErp.Entities.Entities.SalesPropositionLine
         /// Siparişe Çevirilme Tarihi
         /// </summary>
         public DateTime? OrderConversionDate { get; set; }
-
-
-
-
-
-        /// <summary>
-        /// Stoklar
-        /// </summary>
-        public Products Products { get; set; }
-        /// <summary>
-        /// Birim Setleri
-        /// </summary>
-        public UnitSets UnitSets { get; set; }
-        /// <summary>
-        /// Ödeme Planları
-        /// </summary>
-        public PaymentPlans PaymentPlans { get; set; }
-        /// <summary>
-        /// Satış Teklifi
-        /// </summary>
-        public PurchaseRequests PurchaseRequests { get; set; }
-
-        public ProductionOrders ProductionOrders { get; set; }
-        public SalesPropositions SalesPropositions { get; set; }
     }
 }

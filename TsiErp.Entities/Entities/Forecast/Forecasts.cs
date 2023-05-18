@@ -55,11 +55,5 @@ namespace TsiErp.Entities.Entities.Forecast
         /// Dönem ID
         /// </summary>
         public Guid PeriodID { get; set; }
-
-
-        public CurrentAccountCards CurrentAccountCards { get; set; }
-        public Branches Branches { get; set; }
-        public Periods Periods  { get; set; }
-        public ICollection<ForecastLines> ForecastLines { get; set; }
     }
 }
