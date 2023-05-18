@@ -26,10 +26,10 @@ namespace TsiErp.Business.Entities.UserGroup.BusinessRules
 
         public async Task DeleteControl(IUserGroupsRepository _repository, Guid id, IStringLocalizer<UserGroupsResource> L)
         {
-            if (await _repository.AnyAsync(t => t.Users.Any(x => x.GroupID == id)))
-            {
-                throw new Exception(L["DeleteControlManager"]);
-            }
+            //if (await _repository.AnyAsync(t => t.Users.Any(x => x.GroupID == id)))
+            //{
+            //    throw new Exception(L["DeleteControlManager"]);
+            //}
         }
     }
 }

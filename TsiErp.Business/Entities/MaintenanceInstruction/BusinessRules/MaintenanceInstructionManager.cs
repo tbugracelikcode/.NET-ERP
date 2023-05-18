@@ -26,16 +26,16 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.BusinessRules
 
         public async Task DeleteControl(IMaintenanceInstructionsRepository _repository, Guid id, Guid lineId, bool lineDelete)
         {
-            if (lineDelete)
-            {
-                var entity = await _repository.GetAsync(t => t.Id == id, t => t.MaintenanceInstructionLines);
+            //if (lineDelete)
+            //{
+            //    var entity = await _repository.GetAsync(t => t.Id == id, t => t.MaintenanceInstructionLines);
 
-                var line = entity.MaintenanceInstructionLines.Where(t => t.Id == lineId).FirstOrDefault();
-            }
-            else
-            {
-                var entity = await _repository.GetAsync(t => t.Id == id);
-            }
+            //    var line = entity.MaintenanceInstructionLines.Where(t => t.Id == lineId).FirstOrDefault();
+            //}
+            //else
+            //{
+            //    var entity = await _repository.GetAsync(t => t.Id == id);
+            //}
         }
     }
 }

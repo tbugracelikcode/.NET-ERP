@@ -47,9 +47,5 @@ namespace TsiErp.Entities.Entities.TemplateOperationLine
         /// Alternatif
         /// </summary>
         public bool Alternative { get; set; }
-
-        public TemplateOperations TemplateOperations { get; set; }
-
-        public Stations Stations { get; set; }
     }
 }

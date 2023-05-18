@@ -55,11 +55,5 @@ namespace TsiErp.Entities.Entities.SalesPrice
         /// Onay
         /// </summary>
         public bool IsApproved { get; set; }
-
-        public Currencies Currencies { get; set; }
-        public Branches Branches { get; set; }
-        public Warehouses Warehouses { get; set; }
-        public ICollection<SalesPriceLines> SalesPriceLines { get; set; }
-        public CurrentAccountCards CurrentAccountCards { get; set; }
     }
 }

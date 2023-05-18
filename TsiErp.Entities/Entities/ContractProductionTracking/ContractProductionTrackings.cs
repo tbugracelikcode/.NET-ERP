@@ -90,18 +90,5 @@ namespace TsiErp.Entities.Entities.ContractProductionTracking
         /// </summary>
         public Guid? ProductID { get; set; }
 
-
-        public WorkOrders WorkOrders { get; set; }
-
-        public Products Products { get; set; }
-
-        public Stations Stations { get; set; }
-
-        public Shifts Shifts { get; set; }
-
-        public Employees Employees { get; set; }
-
-        public CurrentAccountCards CurrentAccountCards { get; set; }
-
     }
 }

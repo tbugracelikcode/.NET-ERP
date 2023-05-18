@@ -31,10 +31,6 @@ namespace TsiErp.Entities.Entities.BillsofMaterial.Dtos
         /// </summary>
         public string FinishedProducName { get; set; }
         /// <summary>
-        /// Rota ID
-        /// </summary>
-        public Guid? RouteID { get; set; }
-        /// <summary>
         /// Genel Açıklama
         /// </summary>
         public string _Description { get; set; }

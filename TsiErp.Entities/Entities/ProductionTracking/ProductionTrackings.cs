@@ -93,16 +93,5 @@ namespace TsiErp.Entities.Entities.ProductionTracking
         /// </summary>
         public Guid ShiftID { get; set; }
 
-
-        public WorkOrders WorkOrders { get; set; }
-
-        public Stations Stations { get; set; }
-
-        public Shifts Shifts { get; set; }
-
-        public Employees Employees { get; set; }
-
-        public ICollection<ProductionTrackingHaltLines> ProductionTrackingHaltLines { get; set; }
-
     }
 }

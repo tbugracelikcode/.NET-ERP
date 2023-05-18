@@ -42,8 +42,6 @@ namespace TsiErp.Entities.Entities.ShiftLine
         /// </summary>
         public decimal Coefficient { get; set; }
 
-        public Shifts Shifts { get; set; }
-
 
     }
 }

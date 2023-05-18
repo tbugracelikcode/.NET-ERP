@@ -44,10 +44,5 @@ namespace TsiErp.Entities.Entities.Route
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
-
-        public ICollection<RouteLines> RouteLines { get; set; }
-        public Products Products { get; set; }
-        public ICollection<ProductionOrders> ProductionOrders { get; set; }
-        public ICollection<WorkOrders> WorkOrders { get; set; }
     }
 }

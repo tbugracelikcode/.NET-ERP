@@ -84,7 +84,6 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                     PurchaseRequestState = input.PurchaseRequestState,
                     RevisionDate = input.RevisionDate,
                     RevisionTime = input.RevisionTime,
-                    ShippingAdressID = input.ShippingAdressID.GetValueOrDefault(),
                     SpecialCode = input.SpecialCode,
                     Time_ = input.Time_,
                     TotalDiscountAmount = input.TotalDiscountAmount,
@@ -190,7 +189,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                 var query = queryFactory
                        .Query()
                        .From(Tables.PurchaseRequests)
-                       .Select<PurchaseRequests>(pr => new { pr.WarehouseID,pr.ValidityDate_,pr.TotalVatExcludedAmount,pr.TotalVatAmount,pr.TotalDiscountAmount,pr.Time_,pr.SpecialCode,pr.ShippingAdressID,pr.RevisionTime,pr.RevisionDate,pr.PurchaseRequestState,pr.PropositionRevisionNo,pr.ProductionOrderID,pr.PaymentPlanID,pr.NetAmount,pr.LinkedPurchaseRequestID,pr.Id,pr.GrossAmount,pr.FicheNo,pr.ExchangeRate,pr.Description_,pr.Date_,pr.DataOpenStatusUserId,pr.DataOpenStatus,pr.CurrentAccountCardID,pr.CurrencyID,pr.BranchID })
+                       .Select<PurchaseRequests>(pr => new { pr.WarehouseID,pr.ValidityDate_,pr.TotalVatExcludedAmount,pr.TotalVatAmount,pr.TotalDiscountAmount,pr.Time_,pr.SpecialCode,pr.RevisionTime,pr.RevisionDate,pr.PurchaseRequestState,pr.PropositionRevisionNo,pr.ProductionOrderID,pr.PaymentPlanID,pr.NetAmount,pr.LinkedPurchaseRequestID,pr.Id,pr.GrossAmount,pr.FicheNo,pr.ExchangeRate,pr.Description_,pr.Date_,pr.DataOpenStatusUserId,pr.DataOpenStatus,pr.CurrentAccountCardID,pr.CurrencyID,pr.BranchID })
                        .Join<PaymentPlans>
                         (
                             pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
@@ -226,13 +225,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
                         )
-                        .Join<ShippingAdresses>
-                        (
-                            sa => new { ShippingAdressID = sa.Id, ShippingAdressCode = sa.Code },
-                            nameof(PurchaseRequests.ShippingAdressID),
-                            nameof(ShippingAdresses.Id),
-                            JoinType.Left
-                        )
+                       
                         .Where(new { Id = id }, false, false, Tables.PurchaseRequests);
 
                 var purchaseRequests = queryFactory.Get<SelectPurchaseRequestsDto>(query);
@@ -282,7 +275,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                 var query = queryFactory
                        .Query()
                        .From(Tables.PurchaseRequests)
-                       .Select<PurchaseRequests>(pr => new { pr.WarehouseID, pr.ValidityDate_, pr.TotalVatExcludedAmount, pr.TotalVatAmount, pr.TotalDiscountAmount, pr.Time_, pr.SpecialCode, pr.ShippingAdressID, pr.RevisionTime, pr.RevisionDate, pr.PurchaseRequestState, pr.PropositionRevisionNo, pr.ProductionOrderID, pr.PaymentPlanID, pr.NetAmount, pr.LinkedPurchaseRequestID, pr.Id, pr.GrossAmount, pr.FicheNo, pr.ExchangeRate, pr.Description_, pr.Date_, pr.DataOpenStatusUserId, pr.DataOpenStatus, pr.CurrentAccountCardID, pr.CurrencyID, pr.BranchID })
+                       .Select<PurchaseRequests>(pr => new { pr.WarehouseID, pr.ValidityDate_, pr.TotalVatExcludedAmount, pr.TotalVatAmount, pr.TotalDiscountAmount, pr.Time_, pr.SpecialCode, pr.RevisionTime, pr.RevisionDate, pr.PurchaseRequestState, pr.PropositionRevisionNo, pr.ProductionOrderID, pr.PaymentPlanID, pr.NetAmount, pr.LinkedPurchaseRequestID, pr.Id, pr.GrossAmount, pr.FicheNo, pr.ExchangeRate, pr.Description_, pr.Date_, pr.DataOpenStatusUserId, pr.DataOpenStatus, pr.CurrentAccountCardID, pr.CurrencyID, pr.BranchID })
                        .Join<PaymentPlans>
                         (
                             pp => new { PaymentPlanName = pp.Name },
@@ -318,13 +311,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
                         )
-                        .Join<ShippingAdresses>
-                        (
-                            sa => new { ShippingAdressCode = sa.Code },
-                            nameof(PurchaseRequests.ShippingAdressID),
-                            nameof(ShippingAdresses.Id),
-                            JoinType.Left
-                        )
+                     
                         .Where(null, false, false, Tables.PurchaseRequests);
 
                 var purchaseRequests = queryFactory.GetList<ListPurchaseRequestsDto>(query).ToList();
@@ -341,7 +328,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                 var entityQuery = queryFactory
                        .Query()
                       .From(Tables.PurchaseRequests)
-                       .Select<PurchaseRequests>(pr => new { pr.WarehouseID, pr.ValidityDate_, pr.TotalVatExcludedAmount, pr.TotalVatAmount, pr.TotalDiscountAmount, pr.Time_, pr.SpecialCode, pr.ShippingAdressID, pr.RevisionTime, pr.RevisionDate, pr.PurchaseRequestState, pr.PropositionRevisionNo, pr.ProductionOrderID, pr.PaymentPlanID, pr.NetAmount, pr.LinkedPurchaseRequestID, pr.Id, pr.GrossAmount, pr.FicheNo, pr.ExchangeRate, pr.Description_, pr.Date_, pr.DataOpenStatusUserId, pr.DataOpenStatus, pr.CurrentAccountCardID, pr.CurrencyID, pr.BranchID })
+                       .Select<PurchaseRequests>(pr => new { pr.WarehouseID, pr.ValidityDate_, pr.TotalVatExcludedAmount, pr.TotalVatAmount, pr.TotalDiscountAmount, pr.Time_, pr.SpecialCode, pr.RevisionTime, pr.RevisionDate, pr.PurchaseRequestState, pr.PropositionRevisionNo, pr.ProductionOrderID, pr.PaymentPlanID, pr.NetAmount, pr.LinkedPurchaseRequestID, pr.Id, pr.GrossAmount, pr.FicheNo, pr.ExchangeRate, pr.Description_, pr.Date_, pr.DataOpenStatusUserId, pr.DataOpenStatus, pr.CurrentAccountCardID, pr.CurrencyID, pr.BranchID })
                        .Join<PaymentPlans>
                         (
                             pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
@@ -377,13 +364,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
                         )
-                        .Join<ShippingAdresses>
-                        (
-                            sa => new { ShippingAdressID = sa.Id, ShippingAdressCode = sa.Code },
-                            nameof(PurchaseRequests.ShippingAdressID),
-                            nameof(ShippingAdresses.Id),
-                            JoinType.Left
-                        )
+                        
                         .Where(new { Id = input.Id }, false, false, Tables.PurchaseRequests);
 
                 var entity = queryFactory.Get<SelectPurchaseRequestsDto>(entityQuery);
@@ -423,7 +404,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                 var listQuery = queryFactory
                                .Query()
                                .From(Tables.PurchaseRequests)
-                       .Select<PurchaseRequests>(pr => new { pr.WarehouseID, pr.ValidityDate_, pr.TotalVatExcludedAmount, pr.TotalVatAmount, pr.TotalDiscountAmount, pr.Time_, pr.SpecialCode, pr.ShippingAdressID, pr.RevisionTime, pr.RevisionDate, pr.PurchaseRequestState, pr.PropositionRevisionNo, pr.ProductionOrderID, pr.PaymentPlanID, pr.NetAmount, pr.LinkedPurchaseRequestID, pr.Id, pr.GrossAmount, pr.FicheNo, pr.ExchangeRate, pr.Description_, pr.Date_, pr.DataOpenStatusUserId, pr.DataOpenStatus, pr.CurrentAccountCardID, pr.CurrencyID, pr.BranchID })
+                       .Select<PurchaseRequests>(pr => new { pr.WarehouseID, pr.ValidityDate_, pr.TotalVatExcludedAmount, pr.TotalVatAmount, pr.TotalDiscountAmount, pr.Time_, pr.SpecialCode, pr.RevisionTime, pr.RevisionDate, pr.PurchaseRequestState, pr.PropositionRevisionNo, pr.ProductionOrderID, pr.PaymentPlanID, pr.NetAmount, pr.LinkedPurchaseRequestID, pr.Id, pr.GrossAmount, pr.FicheNo, pr.ExchangeRate, pr.Description_, pr.Date_, pr.DataOpenStatusUserId, pr.DataOpenStatus, pr.CurrentAccountCardID, pr.CurrencyID, pr.BranchID })
                        .Join<PaymentPlans>
                         (
                             pp => new {  PaymentPlanName = pp.Name },
@@ -459,13 +440,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
                         )
-                        .Join<ShippingAdresses>
-                        (
-                            sa => new { ShippingAdressCode = sa.Code },
-                            nameof(PurchaseRequests.ShippingAdressID),
-                            nameof(ShippingAdresses.Id),
-                            JoinType.Left
-                        )
+                      
                                 .Where(new { FicheNo = input.FicheNo }, false, false, Tables.PurchaseRequests);
 
                 var list = queryFactory.GetList<ListPurchaseRequestsDto>(listQuery).ToList();
@@ -496,7 +471,6 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                     PurchaseRequestState = input.PurchaseRequestState,
                     RevisionDate = input.RevisionDate,
                     RevisionTime = input.RevisionTime,
-                    ShippingAdressID = input.ShippingAdressID,
                     SpecialCode = input.SpecialCode,
                     Time_ = input.Time_,
                     TotalDiscountAmount = input.TotalDiscountAmount,
@@ -635,7 +609,6 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                     PurchaseRequestState = entity.PurchaseRequestState,
                     RevisionDate = entity.RevisionDate,
                     RevisionTime = entity.RevisionTime,
-                    ShippingAdressID = entity.ShippingAdressID,
                     SpecialCode = entity.SpecialCode,
                     Time_ = entity.Time_,
                     TotalDiscountAmount = entity.TotalDiscountAmount,
@@ -687,7 +660,6 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                         PurchaseRequestState = entity.PurchaseRequestState,
                         RevisionDate = entity.RevisionDate,
                         RevisionTime = entity.RevisionTime,
-                        ShippingAdressID = entity.ShippingAdressID,
                         SpecialCode = entity.SpecialCode,
                         Time_ = entity.Time_,
                         TotalDiscountAmount = entity.TotalDiscountAmount,
@@ -755,219 +727,219 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
 
         #region Stock Movement Transactions
-        private static async Task StockMovementDelete(UnitOfWork _uow, PurchaseRequests entity, PurchaseRequestLines line)
-        {
-            #region ByDateStockMovement
-            var byDateStockMovement = await _uow.ByDateStockMovementsRepository.GetAsync(t => t.BranchID == entity.BranchID && t.WarehouseID == entity.WarehouseID && t.ProductID == line.ProductID && t.Date_ == entity.Date_);
+        //private static async Task StockMovementDelete(UnitOfWork _uow, PurchaseRequests entity, PurchaseRequestLines line)
+        //{
+        //    #region ByDateStockMovement
+        //    var byDateStockMovement = await _uow.ByDateStockMovementsRepository.GetAsync(t => t.BranchID == entity.BranchID && t.WarehouseID == entity.WarehouseID && t.ProductID == line.ProductID && t.Date_ == entity.Date_);
 
-            if (byDateStockMovement != null)
-            {
-                byDateStockMovement.TotalPurchaseRequest -= line.Quantity;
-            }
-            #endregion
+        //    if (byDateStockMovement != null)
+        //    {
+        //        byDateStockMovement.TotalPurchaseRequest -= line.Quantity;
+        //    }
+        //    #endregion
 
-            #region GrandTotalStockMovement
-            var grandTotalStockMovement = await _uow.GrandTotalStockMovementsRepository.GetAsync(t => t.BranchID == entity.BranchID && t.WarehouseID == entity.WarehouseID && t.ProductID == line.ProductID);
+        //    #region GrandTotalStockMovement
+        //    var grandTotalStockMovement = await _uow.GrandTotalStockMovementsRepository.GetAsync(t => t.BranchID == entity.BranchID && t.WarehouseID == entity.WarehouseID && t.ProductID == line.ProductID);
 
-            if (grandTotalStockMovement != null)
-            {
-                grandTotalStockMovement.TotalPurchaseRequest -= line.Quantity;
-            }
-            #endregion
-        }
+        //    if (grandTotalStockMovement != null)
+        //    {
+        //        grandTotalStockMovement.TotalPurchaseRequest -= line.Quantity;
+        //    }
+        //    #endregion
+        //}
 
-        private static async Task StockMovementLineDelete(UnitOfWork _uow, PurchaseRequestLines lines, PurchaseRequests entity)
-        {
-            #region ByDateStockMovement
-            var byDateStockMovement = await _uow.ByDateStockMovementsRepository.GetAsync(t => t.BranchID == entity.BranchID && t.WarehouseID == entity.WarehouseID && t.ProductID == lines.ProductID && t.Date_ == entity.Date_);
+        //private static async Task StockMovementLineDelete(UnitOfWork _uow, PurchaseRequestLines lines, PurchaseRequests entity)
+        //{
+        //    #region ByDateStockMovement
+        //    var byDateStockMovement = await _uow.ByDateStockMovementsRepository.GetAsync(t => t.BranchID == entity.BranchID && t.WarehouseID == entity.WarehouseID && t.ProductID == lines.ProductID && t.Date_ == entity.Date_);
 
-            if (byDateStockMovement != null)
-            {
-                byDateStockMovement.TotalPurchaseRequest -= lines.Quantity;
-            }
-            #endregion
+        //    if (byDateStockMovement != null)
+        //    {
+        //        byDateStockMovement.TotalPurchaseRequest -= lines.Quantity;
+        //    }
+        //    #endregion
 
-            #region GrandTotalStockMovement
-            var grandTotalStockMovement = await _uow.GrandTotalStockMovementsRepository.GetAsync(t => t.BranchID == entity.BranchID && t.WarehouseID == entity.WarehouseID && t.ProductID == lines.ProductID);
+        //    #region GrandTotalStockMovement
+        //    var grandTotalStockMovement = await _uow.GrandTotalStockMovementsRepository.GetAsync(t => t.BranchID == entity.BranchID && t.WarehouseID == entity.WarehouseID && t.ProductID == lines.ProductID);
 
-            if (grandTotalStockMovement != null)
-            {
-                grandTotalStockMovement.TotalPurchaseRequest -= lines.Quantity;
-            }
-            #endregion
-        }
+        //    if (grandTotalStockMovement != null)
+        //    {
+        //        grandTotalStockMovement.TotalPurchaseRequest -= lines.Quantity;
+        //    }
+        //    #endregion
+        //}
 
-        private static async Task StockMovementInsert(CreatePurchaseRequestsDto input, UnitOfWork _uow, PurchaseRequestLines lineEntity)
-        {
-            #region ByDateStockMovement
-            var byDateStockMovement = await _uow.ByDateStockMovementsRepository.GetAsync(t => t.BranchID == input.BranchID && t.WarehouseID == input.WarehouseID && t.ProductID == lineEntity.ProductID && t.Date_ == input.Date_);
+        //private static async Task StockMovementInsert(CreatePurchaseRequestsDto input, UnitOfWork _uow, PurchaseRequestLines lineEntity)
+        //{
+        //    #region ByDateStockMovement
+        //    var byDateStockMovement = await _uow.ByDateStockMovementsRepository.GetAsync(t => t.BranchID == input.BranchID && t.WarehouseID == input.WarehouseID && t.ProductID == lineEntity.ProductID && t.Date_ == input.Date_);
 
-            if (byDateStockMovement == null)
-            {
-                await _uow.ByDateStockMovementsRepository.InsertAsync(new ByDateStockMovements
-                {
-                    BranchID = input.BranchID.GetValueOrDefault(),
-                    Date_ = input.Date_,
-                    ProductID = lineEntity.ProductID,
-                    TotalPurchaseOrder = 0,
-                    WarehouseID = input.WarehouseID.GetValueOrDefault(),
-                    TotalSalesProposition = 0,
-                    TotalProduction = 0,
-                    TotalSalesOrder = 0,
-                    TotalWastage = 0,
-                    TotalPurchaseRequest = lineEntity.Quantity,
-                    TotalGoodsReceipt = 0,
-                    TotalGoodsIssue = 0,
-                    TotalConsumption = 0,
-                    Amount = 0
+        //    if (byDateStockMovement == null)
+        //    {
+        //        await _uow.ByDateStockMovementsRepository.InsertAsync(new ByDateStockMovements
+        //        {
+        //            BranchID = input.BranchID.GetValueOrDefault(),
+        //            Date_ = input.Date_,
+        //            ProductID = lineEntity.ProductID,
+        //            TotalPurchaseOrder = 0,
+        //            WarehouseID = input.WarehouseID.GetValueOrDefault(),
+        //            TotalSalesProposition = 0,
+        //            TotalProduction = 0,
+        //            TotalSalesOrder = 0,
+        //            TotalWastage = 0,
+        //            TotalPurchaseRequest = lineEntity.Quantity,
+        //            TotalGoodsReceipt = 0,
+        //            TotalGoodsIssue = 0,
+        //            TotalConsumption = 0,
+        //            Amount = 0
 
-                });
-            }
-            else
-            {
-                byDateStockMovement.TotalPurchaseRequest = lineEntity.Quantity;
-            }
-            #endregion
+        //        });
+        //    }
+        //    else
+        //    {
+        //        byDateStockMovement.TotalPurchaseRequest = lineEntity.Quantity;
+        //    }
+        //    #endregion
 
-            #region GrandTotalStockMovement
-            var grandTotalStockMovement = await _uow.GrandTotalStockMovementsRepository.GetAsync(t => t.BranchID == input.BranchID && t.WarehouseID == input.WarehouseID && t.ProductID == lineEntity.ProductID);
+        //    #region GrandTotalStockMovement
+        //    var grandTotalStockMovement = await _uow.GrandTotalStockMovementsRepository.GetAsync(t => t.BranchID == input.BranchID && t.WarehouseID == input.WarehouseID && t.ProductID == lineEntity.ProductID);
 
-            if (grandTotalStockMovement == null)
-            {
-                await _uow.GrandTotalStockMovementsRepository.InsertAsync(new GrandTotalStockMovements
-                {
-                    BranchID = input.BranchID.GetValueOrDefault(),
-                    ProductID = lineEntity.ProductID,
-                    TotalPurchaseOrder = 0,
-                    WarehouseID = input.WarehouseID.GetValueOrDefault(),
-                    TotalSalesProposition = 0,
-                    TotalProduction = 0,
-                    TotalSalesOrder = 0,
-                    TotalWastage = 0,
-                    TotalPurchaseRequest = lineEntity.Quantity,
-                    TotalGoodsReceipt = 0,
-                    TotalGoodsIssue = 0,
-                    TotalConsumption = 0,
-                    Amount = 0,
-                    TotalReserved = 0
+        //    if (grandTotalStockMovement == null)
+        //    {
+        //        await _uow.GrandTotalStockMovementsRepository.InsertAsync(new GrandTotalStockMovements
+        //        {
+        //            BranchID = input.BranchID.GetValueOrDefault(),
+        //            ProductID = lineEntity.ProductID,
+        //            TotalPurchaseOrder = 0,
+        //            WarehouseID = input.WarehouseID.GetValueOrDefault(),
+        //            TotalSalesProposition = 0,
+        //            TotalProduction = 0,
+        //            TotalSalesOrder = 0,
+        //            TotalWastage = 0,
+        //            TotalPurchaseRequest = lineEntity.Quantity,
+        //            TotalGoodsReceipt = 0,
+        //            TotalGoodsIssue = 0,
+        //            TotalConsumption = 0,
+        //            Amount = 0,
+        //            TotalReserved = 0
 
-                });
-            }
-            else
-            {
-                grandTotalStockMovement.TotalPurchaseRequest = lineEntity.Quantity;
-            }
-            #endregion
-        }
+        //        });
+        //    }
+        //    else
+        //    {
+        //        grandTotalStockMovement.TotalPurchaseRequest = lineEntity.Quantity;
+        //    }
+        //    #endregion
+        //}
 
-        private static async Task StockMovementInsertOrUpdate(UpdatePurchaseRequestsDto input, UnitOfWork _uow, PurchaseRequests entity, SelectPurchaseRequestLinesDto item, PurchaseRequestLines lineEntity)
-        {
-            var oldLine = entity.PurchaseRequestLines.FirstOrDefault(t => t.Id == item.Id);
+        //private static async Task StockMovementInsertOrUpdate(UpdatePurchaseRequestsDto input, UnitOfWork _uow, PurchaseRequests entity, SelectPurchaseRequestLinesDto item, PurchaseRequestLines lineEntity)
+        //{
+        //    var oldLine = entity.PurchaseRequestLines.FirstOrDefault(t => t.Id == item.Id);
 
-            var branchId = input.BranchID == entity.BranchID ? entity.BranchID : input.BranchID;
-            var warehouseId = input.WarehouseID == entity.WarehouseID ? entity.WarehouseID : input.WarehouseID;
-            var date = input.Date_ == entity.Date_ ? entity.Date_ : input.Date_;
-            var productId = lineEntity.ProductID == oldLine.ProductID ? oldLine.ProductID : lineEntity.ProductID;
+        //    var branchId = input.BranchID == entity.BranchID ? entity.BranchID : input.BranchID;
+        //    var warehouseId = input.WarehouseID == entity.WarehouseID ? entity.WarehouseID : input.WarehouseID;
+        //    var date = input.Date_ == entity.Date_ ? entity.Date_ : input.Date_;
+        //    var productId = lineEntity.ProductID == oldLine.ProductID ? oldLine.ProductID : lineEntity.ProductID;
 
-            #region ByDateStockMovement
-            var deletedByDateStockMovement = await _uow.ByDateStockMovementsRepository.GetAsync(t => t.BranchID == entity.BranchID && t.WarehouseID == entity.WarehouseID && t.ProductID == productId && t.Date_ == entity.Date_);
+        //    #region ByDateStockMovement
+        //    var deletedByDateStockMovement = await _uow.ByDateStockMovementsRepository.GetAsync(t => t.BranchID == entity.BranchID && t.WarehouseID == entity.WarehouseID && t.ProductID == productId && t.Date_ == entity.Date_);
 
-            if (deletedByDateStockMovement != null)
-            {
-                deletedByDateStockMovement.TotalPurchaseRequest = deletedByDateStockMovement.TotalPurchaseRequest - lineEntity.Quantity;
-            }
+        //    if (deletedByDateStockMovement != null)
+        //    {
+        //        deletedByDateStockMovement.TotalPurchaseRequest = deletedByDateStockMovement.TotalPurchaseRequest - lineEntity.Quantity;
+        //    }
 
-            var byDateStockMovement = await _uow.ByDateStockMovementsRepository.GetAsync(t => t.BranchID == branchId && t.WarehouseID == warehouseId && t.ProductID == productId && t.Date_ == date);
+        //    var byDateStockMovement = await _uow.ByDateStockMovementsRepository.GetAsync(t => t.BranchID == branchId && t.WarehouseID == warehouseId && t.ProductID == productId && t.Date_ == date);
 
-            if (byDateStockMovement == null)
-            {
-                await _uow.ByDateStockMovementsRepository.InsertAsync(new ByDateStockMovements
-                {
-                    BranchID = branchId.GetValueOrDefault(),
-                    Date_ = date,
-                    ProductID = productId,
-                    TotalPurchaseOrder = 0,
-                    WarehouseID = warehouseId.GetValueOrDefault(),
-                    TotalSalesProposition = 0,
-                    TotalProduction = 0,
-                    TotalSalesOrder = 0,
-                    TotalWastage = 0,
-                    TotalPurchaseRequest = lineEntity.Quantity,
-                    TotalGoodsReceipt = 0,
-                    TotalGoodsIssue = 0,
-                    TotalConsumption = 0,
-                    Amount = 0
-                });
-            }
-            else
-            {
-                if (oldLine.Quantity > lineEntity.Quantity)
-                {
-                    decimal lineValue = oldLine.Quantity - lineEntity.Quantity;
-                    var totalPurchaseRequest = byDateStockMovement.TotalPurchaseRequest - lineValue;
-                    byDateStockMovement.TotalPurchaseRequest = totalPurchaseRequest;
-                }
+        //    if (byDateStockMovement == null)
+        //    {
+        //        await _uow.ByDateStockMovementsRepository.InsertAsync(new ByDateStockMovements
+        //        {
+        //            BranchID = branchId.GetValueOrDefault(),
+        //            Date_ = date,
+        //            ProductID = productId,
+        //            TotalPurchaseOrder = 0,
+        //            WarehouseID = warehouseId.GetValueOrDefault(),
+        //            TotalSalesProposition = 0,
+        //            TotalProduction = 0,
+        //            TotalSalesOrder = 0,
+        //            TotalWastage = 0,
+        //            TotalPurchaseRequest = lineEntity.Quantity,
+        //            TotalGoodsReceipt = 0,
+        //            TotalGoodsIssue = 0,
+        //            TotalConsumption = 0,
+        //            Amount = 0
+        //        });
+        //    }
+        //    else
+        //    {
+        //        if (oldLine.Quantity > lineEntity.Quantity)
+        //        {
+        //            decimal lineValue = oldLine.Quantity - lineEntity.Quantity;
+        //            var totalPurchaseRequest = byDateStockMovement.TotalPurchaseRequest - lineValue;
+        //            byDateStockMovement.TotalPurchaseRequest = totalPurchaseRequest;
+        //        }
 
-                if (oldLine.Quantity < lineEntity.Quantity)
-                {
-                    decimal lineValue = lineEntity.Quantity - oldLine.Quantity;
-                    var totalPurchaseRequest = byDateStockMovement.TotalPurchaseRequest + lineValue;
-                    byDateStockMovement.TotalPurchaseRequest = totalPurchaseRequest;
-                }
+        //        if (oldLine.Quantity < lineEntity.Quantity)
+        //        {
+        //            decimal lineValue = lineEntity.Quantity - oldLine.Quantity;
+        //            var totalPurchaseRequest = byDateStockMovement.TotalPurchaseRequest + lineValue;
+        //            byDateStockMovement.TotalPurchaseRequest = totalPurchaseRequest;
+        //        }
 
-            }
-            #endregion
+        //    }
+        //    #endregion
 
-            #region GrandTotalStockMovement
+        //    #region GrandTotalStockMovement
 
-            var deletedGrandTotalStockMovement = await _uow.GrandTotalStockMovementsRepository.GetAsync(t => t.BranchID == entity.BranchID && t.WarehouseID == entity.WarehouseID && t.ProductID == productId);
+        //    var deletedGrandTotalStockMovement = await _uow.GrandTotalStockMovementsRepository.GetAsync(t => t.BranchID == entity.BranchID && t.WarehouseID == entity.WarehouseID && t.ProductID == productId);
 
-            if (deletedGrandTotalStockMovement != null)
-            {
-                deletedGrandTotalStockMovement.TotalPurchaseRequest = deletedGrandTotalStockMovement.TotalPurchaseRequest - lineEntity.Quantity;
-            }
+        //    if (deletedGrandTotalStockMovement != null)
+        //    {
+        //        deletedGrandTotalStockMovement.TotalPurchaseRequest = deletedGrandTotalStockMovement.TotalPurchaseRequest - lineEntity.Quantity;
+        //    }
 
 
-            var grandTotalStockMovement = await _uow.GrandTotalStockMovementsRepository.GetAsync(t => t.BranchID == branchId && t.WarehouseID == warehouseId && t.ProductID == productId);
+        //    var grandTotalStockMovement = await _uow.GrandTotalStockMovementsRepository.GetAsync(t => t.BranchID == branchId && t.WarehouseID == warehouseId && t.ProductID == productId);
 
-            if (grandTotalStockMovement == null)
-            {
-                await _uow.GrandTotalStockMovementsRepository.InsertAsync(new GrandTotalStockMovements
-                {
-                    BranchID = branchId.GetValueOrDefault(),
-                    ProductID = productId,
-                    TotalPurchaseOrder = 0,
-                    WarehouseID = warehouseId.GetValueOrDefault(),
-                    TotalSalesProposition = 0,
-                    TotalProduction = 0,
-                    TotalSalesOrder = 0,
-                    TotalWastage = 0,
-                    TotalPurchaseRequest = lineEntity.Quantity,
-                    TotalGoodsReceipt = 0,
-                    TotalGoodsIssue = 0,
-                    TotalConsumption = 0,
-                    Amount = 0,
-                    TotalReserved = 0
-                });
-            }
-            else
-            {
-                if (oldLine.Quantity > lineEntity.Quantity)
-                {
-                    decimal lineValue = oldLine.Quantity - lineEntity.Quantity;
-                    var totalPurchaseRequest = grandTotalStockMovement.TotalPurchaseRequest - lineValue;
-                    grandTotalStockMovement.TotalPurchaseRequest = totalPurchaseRequest;
-                }
+        //    if (grandTotalStockMovement == null)
+        //    {
+        //        await _uow.GrandTotalStockMovementsRepository.InsertAsync(new GrandTotalStockMovements
+        //        {
+        //            BranchID = branchId.GetValueOrDefault(),
+        //            ProductID = productId,
+        //            TotalPurchaseOrder = 0,
+        //            WarehouseID = warehouseId.GetValueOrDefault(),
+        //            TotalSalesProposition = 0,
+        //            TotalProduction = 0,
+        //            TotalSalesOrder = 0,
+        //            TotalWastage = 0,
+        //            TotalPurchaseRequest = lineEntity.Quantity,
+        //            TotalGoodsReceipt = 0,
+        //            TotalGoodsIssue = 0,
+        //            TotalConsumption = 0,
+        //            Amount = 0,
+        //            TotalReserved = 0
+        //        });
+        //    }
+        //    else
+        //    {
+        //        if (oldLine.Quantity > lineEntity.Quantity)
+        //        {
+        //            decimal lineValue = oldLine.Quantity - lineEntity.Quantity;
+        //            var totalPurchaseRequest = grandTotalStockMovement.TotalPurchaseRequest - lineValue;
+        //            grandTotalStockMovement.TotalPurchaseRequest = totalPurchaseRequest;
+        //        }
 
-                if (oldLine.Quantity < lineEntity.Quantity)
-                {
-                    decimal lineValue = lineEntity.Quantity - oldLine.Quantity;
-                    var totalPurchaseRequest = grandTotalStockMovement.TotalPurchaseRequest + lineValue;
-                    grandTotalStockMovement.TotalPurchaseRequest = totalPurchaseRequest;
-                }
-            }
-            #endregion
-        }
+        //        if (oldLine.Quantity < lineEntity.Quantity)
+        //        {
+        //            decimal lineValue = lineEntity.Quantity - oldLine.Quantity;
+        //            var totalPurchaseRequest = grandTotalStockMovement.TotalPurchaseRequest + lineValue;
+        //            grandTotalStockMovement.TotalPurchaseRequest = totalPurchaseRequest;
+        //        }
+        //    }
+        //    #endregion
+        //}
         #endregion
     }
 }

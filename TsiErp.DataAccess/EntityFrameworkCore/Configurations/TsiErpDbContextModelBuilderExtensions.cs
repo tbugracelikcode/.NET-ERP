@@ -134,7 +134,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.RevisionNo);
                 b.HasIndex(x => x.ProductID);
 
-                b.HasOne(t=>t.Products).WithMany(x=>x.TechnicalDrawings).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
 
             });
         }
@@ -157,9 +156,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.ReferanceNo);
                 b.HasIndex(x => x.ProductID);
                 b.HasIndex(x => x.CurrentAccountCardID);
-
-                b.HasOne(t => t.CurrentAccountCards).WithMany(x => x.ProductReferanceNumbers).HasForeignKey(x => x.CurrentAccountCardID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(t => t.Products).WithMany(x => x.ProductReferanceNumbers).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
 
             });
         }
@@ -201,8 +197,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.BranchID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
 
                 b.HasIndex(x => x.Code);
-
-                b.HasOne(x => x.Branches).WithMany(x => x.Periods).HasForeignKey(x => x.BranchID).OnDelete(DeleteBehavior.NoAction);
 
             });
         }
@@ -293,8 +287,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.IsFixtures).HasColumnType(SqlDbType.Bit.ToString());
 
                 b.HasIndex(x => x.Code);
-
-                b.HasOne(x => x.StationGroups).WithMany(x => x.Stations).HasForeignKey(x => x.GroupID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -323,8 +315,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
 
                 b.HasIndex(x => x.Code);
-
-                b.HasOne(x => x.Departments).WithMany(x => x.Employees).HasForeignKey(x => x.DepartmentID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -351,8 +341,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.CancellationReason).HasColumnType("nvarchar(MAX)");
 
                 b.HasIndex(x => x.Code);
-
-                b.HasOne(x => x.Departments).WithMany(x => x.EquipmentRecords).HasForeignKey(x => x.Department).OnDelete(DeleteBehavior.NoAction);
 
 
             });
@@ -417,8 +405,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
                 b.HasIndex(x => x.Code);
 
-                b.HasOne(x => x.EquipmentRecords).WithMany(x => x.CalibrationVerifications).HasForeignKey(x => x.EquipmentID).OnDelete(DeleteBehavior.NoAction);
-
             });
         }
 
@@ -442,8 +428,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.Result).HasColumnType("nvarchar(MAX)");
 
                 b.HasIndex(x => x.Code);
-
-                b.HasOne(x => x.EquipmentRecords).WithMany(x => x.CalibrationRecords).HasForeignKey(x => x.EquipmentID).OnDelete(DeleteBehavior.NoAction);
 
             });
         }
@@ -502,13 +486,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.CurrentAccountCardID);
                 b.HasIndex(x => x.BranchID);
                 b.HasIndex(x => x.WarehouseID);
-
-                b.HasOne(x => x.CurrentAccountCards).WithMany(x => x.SalesPropositions).HasForeignKey(x => x.CurrentAccountCardID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Currencies).WithMany(x => x.SalesPropositions).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Warehouses).WithMany(x => x.SalesPropositions).HasForeignKey(x => x.WarehouseID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.PaymentPlan).WithMany(x => x.SalesPropositions).HasForeignKey(x => x.PaymentPlanID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Branches).WithMany(x => x.SalesPropositions).HasForeignKey(x => x.BranchID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.ShippingAdresses).WithMany(x => x.SalesPropositions).HasForeignKey(x => x.ShippingAdressID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -538,11 +515,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.OrderConversionDate).HasColumnType(SqlDbType.DateTime.ToString());
                 b.HasIndex(x => x.SalesPropositionID);
                 b.HasIndex(x => x.ProductID);
-
-                b.HasOne(x => x.Products).WithMany(x => x.SalesPropositionLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.SalesPropositions).WithMany(x => x.SalesPropositionLines).HasForeignKey(x => x.SalesPropositionID).OnDelete(DeleteBehavior.Cascade);
-                b.HasOne(x => x.UnitSets).WithMany(x => x.SalesPropositionLines).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.PaymentPlans).WithMany(x => x.SalesPropositionLines).HasForeignKey(x => x.PaymentPlanID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -563,7 +535,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.CurrencyID);
                 b.HasIndex(x => x.Date);
 
-                b.HasOne(x => x.Currencies).WithMany(x => x.ExchangeRates).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
 
             });
         }
@@ -614,8 +585,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
                 b.HasIndex(x => x.Code);
 
-                b.HasOne(x => x.Currencies).WithMany(x => x.CurrentAccountCards).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
-
             });
         }
 
@@ -656,10 +625,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
 
                 b.HasIndex(x => x.Code);
-
-
-                b.HasOne(x => x.UnitSets).WithMany(x => x.Products).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.ProductGroups).WithMany(x => x.Products).HasForeignKey(x => x.ProductGrpID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -773,8 +738,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t._Default).HasColumnType(SqlDbType.Decimal.ToString());
 
                 b.HasIndex(x => x.Code);
-
-                b.HasOne(x => x.CurrentAccountCards).WithMany(x => x.ShippingAdresses).HasForeignKey(x => x.CustomerCardID).OnDelete(DeleteBehavior.NoAction);
 
             });
         }
@@ -915,8 +878,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
 
                 b.HasIndex(x => x.Code);
-
-                b.HasOne(x => x.Products).WithMany(x => x.Routes).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -937,9 +898,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.Alternative).HasColumnType(SqlDbType.Bit.ToString());
 
                 b.HasIndex(x => x.TemplateOperationID);
-
-                b.HasOne(x => x.TemplateOperations).WithMany(x => x.TemplateOperationLines).HasForeignKey(x => x.TemplateOperationID).OnDelete(DeleteBehavior.Cascade);
-                b.HasOne(x => x.Stations).WithMany(x => x.TemplateOperationLines).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -966,10 +924,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.RouteID);
                 b.HasIndex(x => x.ProductID);
                 b.HasIndex(x => x.ProductsOperationID);
-
-                b.HasOne(x => x.Routes).WithMany(x => x.RouteLines).HasForeignKey(x => x.RouteID).OnDelete(DeleteBehavior.Cascade);
-                b.HasOne(x => x.Products).WithMany(x => x.RouteLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.ProductsOperations).WithMany(x => x.RouteLines).HasForeignKey(x => x.ProductsOperationID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -1015,10 +969,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.CalendarID);
                 b.HasIndex(x => x.ShiftID);
 
-                b.HasOne(x => x.Stations).WithMany(x => x.CalendarLines).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Shifts).WithMany(x => x.CalendarLines).HasForeignKey(x => x.ShiftID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Calendars).WithMany(x => x.CalendarLines).HasForeignKey(x => x.CalendarID).OnDelete(DeleteBehavior.Cascade);
-
 
             });
         }
@@ -1036,8 +986,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.ColorCode).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(50);
 
                 b.HasIndex(x => x.CalendarID);
-
-                b.HasOne(x => x.Calendars).WithMany(x => x.CalendarDays).HasForeignKey(x => x.CalendarID).OnDelete(DeleteBehavior.Cascade);
 
 
             });
@@ -1083,7 +1031,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
                 b.HasIndex(x => x.ShiftID);
 
-                b.HasOne(x => x.Shifts).WithMany(x => x.ShiftLines).HasForeignKey(x => x.ShiftID).OnDelete(DeleteBehavior.Cascade);
             });
         }
 
@@ -1121,13 +1068,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.CurrentAccountCardID);
                 b.HasIndex(x => x.BranchID);
                 b.HasIndex(x => x.WarehouseID);
-
-                b.HasOne(x => x.CurrentAccountCards).WithMany(x => x.SalesOrders).HasForeignKey(x => x.CurrentAccountCardID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Currencies).WithMany(x => x.SalesOrders).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Warehouses).WithMany(x => x.SalesOrders).HasForeignKey(x => x.WarehouseID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.PaymentPlan).WithMany(x => x.SalesOrders).HasForeignKey(x => x.PaymentPlanID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Branches).WithMany(x => x.SalesOrders).HasForeignKey(x => x.BranchID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.ShippingAdresses).WithMany(x => x.SalesOrders).HasForeignKey(x => x.ShippingAdressID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -1158,11 +1098,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.WorkOrderCreationDate).HasColumnType(SqlDbType.DateTime.ToString());
                 b.HasIndex(x => x.SalesOrderID);
                 b.HasIndex(x => x.ProductID);
-
-                b.HasOne(x => x.Products).WithMany(x => x.SalesOrderLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.SalesOrders).WithMany(x => x.SalesOrderLines).HasForeignKey(x => x.SalesOrderID).OnDelete(DeleteBehavior.Cascade);
-                b.HasOne(x => x.UnitSets).WithMany(x => x.SalesOrderLines).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.PaymentPlans).WithMany(x => x.SalesOrderLines).HasForeignKey(x => x.PaymentPlanID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -1200,13 +1135,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.CurrentAccountCardID);
                 b.HasIndex(x => x.BranchID);
                 b.HasIndex(x => x.WarehouseID);
-
-                b.HasOne(x => x.CurrentAccountCards).WithMany(x => x.PurchaseOrders).HasForeignKey(x => x.CurrentAccountCardID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Currencies).WithMany(x => x.PurchaseOrders).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Warehouses).WithMany(x => x.PurchaseOrders).HasForeignKey(x => x.WarehouseID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.PaymentPlan).WithMany(x => x.PurchaseOrders).HasForeignKey(x => x.PaymentPlanID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Branches).WithMany(x => x.PurchaseOrders).HasForeignKey(x => x.BranchID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.ShippingAdresses).WithMany(x => x.PurchaseOrders).HasForeignKey(x => x.ShippingAdressID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -1240,11 +1168,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
                 b.HasIndex(x => x.PurchaseOrderID);
                 b.HasIndex(x => x.ProductID);
-
-                b.HasOne(x => x.Products).WithMany(x => x.PurchaseOrderLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.PurchaseOrders).WithMany(x => x.PurchaseOrderLines).HasForeignKey(x => x.PurchaseOrderID).OnDelete(DeleteBehavior.Cascade);
-                b.HasOne(x => x.UnitSets).WithMany(x => x.PurchaseOrderLines).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.PaymentPlans).WithMany(x => x.PurchaseOrderLines).HasForeignKey(x => x.PaymentPlanID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -1264,8 +1187,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
 
                 b.HasIndex(x => x.Code);
-
-                b.HasOne(x => x.Products).WithMany(x => x.ProductsOperations).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
 
             });
         }
@@ -1287,9 +1208,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.Alternative).HasColumnType(SqlDbType.Bit.ToString());
 
                 b.HasIndex(x => x.ProductsOperationID);
-
-                b.HasOne(x => x.ProductsOperations).WithMany(x => x.ProductsOperationLines).HasForeignKey(x => x.ProductsOperationID).OnDelete(DeleteBehavior.Cascade);
-                b.HasOne(x => x.Stations).WithMany(x => x.ProductsOperationLines).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -1307,12 +1225,9 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.Name).IsRequired().HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
                 b.Property(t => t._Description).HasColumnType(SqlDbType.NVarChar.ToString()).HasMaxLength(200);
                 b.Property(t => t.FinishedProductID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
-                b.Property(t => t.RouteID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
                 b.Property(t => t.IsActive).HasColumnType(SqlDbType.Bit.ToString());
 
                 b.HasIndex(x => x.Code);
-
-                b.HasOne(x => x.Products).WithMany(x => x.BillsofMaterials).HasForeignKey(x => x.FinishedProductID).OnDelete(DeleteBehavior.NoAction);
 
             });
         }
@@ -1338,10 +1253,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.BoMID);
                 b.HasIndex(x => x.ProductID);
                 b.HasIndex(x => x.UnitSetID);
-
-                b.HasOne(x => x.BillsofMaterials).WithMany(x => x.BillsofMaterialLines).HasForeignKey(x => x.BoMID).OnDelete(DeleteBehavior.Cascade);
-                b.HasOne(x => x.Products).WithMany(x => x.BillsofMaterialLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.UnitSets).WithMany(x => x.BillsofMaterialLines).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -1385,16 +1296,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.BOMID);
                 b.HasIndex(x => x.CurrentAccountID);
 
-                b.HasOne(x => x.Products).WithMany(x => x.ProductionOrders).HasForeignKey(x => x.FinishedProductID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.SalesOrders).WithMany(x => x.ProductionOrders).HasForeignKey(x => x.OrderID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.SalesOrderLines).WithOne(x => x.ProductionOrders).HasForeignKey<ProductionOrders>(x => x.OrderLineID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.UnitSets).WithMany(x => x.ProductionOrders).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.BillsofMaterials).WithMany(x => x.ProductionOrders).HasForeignKey(x => x.BOMID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Routes).WithMany(x => x.ProductionOrders).HasForeignKey(x => x.RouteID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.SalesPropositions).WithMany(x => x.ProductionOrders).HasForeignKey(x => x.PropositionID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.SalesPropositionLines).WithOne(x => x.ProductionOrders).HasForeignKey<ProductionOrders>(x => x.PropositionLineID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.CurrentAccountCards).WithMany(x => x.ProductionOrders).HasForeignKey(x => x.CurrentAccountID).OnDelete(DeleteBehavior.NoAction);
-
             });
         }
 
@@ -1436,15 +1337,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.ProductsOperationID);
                 b.HasIndex(x => x.CurrentAccountCardID);
 
-                b.HasOne(x => x.ProductionOrders).WithMany(x => x.WorkOrders).HasForeignKey(x => x.ProductionOrderID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.SalesPropositions).WithMany(x => x.WorkOrders).HasForeignKey(x => x.PropositionID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Routes).WithMany(x => x.WorkOrders).HasForeignKey(x => x.RouteID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.ProductsOperations).WithMany(x => x.WorkOrders).HasForeignKey(x => x.ProductsOperationID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Stations).WithMany(x => x.WorkOrders).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.StationGroups).WithMany(x => x.WorkOrders).HasForeignKey(x => x.StationGroupID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Products).WithMany(x => x.WorkOrders).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.CurrentAccountCards).WithMany(x => x.WorkOrders).HasForeignKey(x => x.CurrentAccountCardID).OnDelete(DeleteBehavior.NoAction);
-
             });
         }
 
@@ -1479,19 +1371,11 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.TotalDiscountAmount).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.NetAmount).IsRequired().HasColumnType(SqlDbType.Decimal.ToString());
                 b.Property(t => t.ValidityDate_).IsRequired().HasColumnType(SqlDbType.DateTime.ToString());
-                b.Property(t => t.ShippingAdressID).HasColumnType(SqlDbType.UniqueIdentifier.ToString());
 
                 b.HasIndex(x => x.FicheNo);
                 b.HasIndex(x => x.CurrentAccountCardID);
                 b.HasIndex(x => x.BranchID);
                 b.HasIndex(x => x.WarehouseID);
-
-                b.HasOne(x => x.CurrentAccountCards).WithMany(x => x.PurchaseRequests).HasForeignKey(x => x.CurrentAccountCardID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Currencies).WithMany(x => x.PurchaseRequests).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Warehouses).WithMany(x => x.PurchaseRequests).HasForeignKey(x => x.WarehouseID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.PaymentPlan).WithMany(x => x.PurchaseRequests).HasForeignKey(x => x.PaymentPlanID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Branches).WithMany(x => x.PurchaseRequests).HasForeignKey(x => x.BranchID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.ShippingAdresses).WithMany(x => x.PurchaseRequests).HasForeignKey(x => x.ShippingAdressID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -1523,11 +1407,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
                 b.HasIndex(x => x.PurchaseRequestID);
                 b.HasIndex(x => x.ProductID);
-
-                b.HasOne(x => x.Products).WithMany(x => x.PurchaseRequestLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.PurchaseRequests).WithMany(x => x.PurchaseRequestLines).HasForeignKey(x => x.PurchaseRequestID).OnDelete(DeleteBehavior.Cascade);
-                b.HasOne(x => x.UnitSets).WithMany(x => x.PurchaseRequestLines).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.PaymentPlans).WithMany(x => x.PurchaseRequestLines).HasForeignKey(x => x.PaymentPlanID).OnDelete(DeleteBehavior.NoAction);
             });
         }
         public static void ConfigureProductionTrackings(this ModelBuilder builder)
@@ -1558,11 +1437,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.StationID);
                 b.HasIndex(x => x.EmployeeID);
                 b.HasIndex(x => x.ShiftID);
-
-                b.HasOne(x => x.WorkOrders).WithMany(x => x.ProductionTrackings).HasForeignKey(x => x.WorkOrderID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Stations).WithMany(x => x.ProductionTrackings).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Employees).WithMany(x => x.ProductionTrackings).HasForeignKey(x => x.EmployeeID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Shifts).WithMany(x => x.ProductionTrackings).HasForeignKey(x => x.ShiftID).OnDelete(DeleteBehavior.NoAction);
             });
         }
         public static void ConfigureContractProductionTrackings(this ModelBuilder builder)
@@ -1594,13 +1468,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.EmployeeID);
                 b.HasIndex(x => x.ShiftID);
                 b.HasIndex(x => x.CurrentAccountCardID);
-
-                b.HasOne(x => x.WorkOrders).WithMany(x => x.ContractProductionTrackings).HasForeignKey(x => x.WorkOrderID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Products).WithMany(x => x.ContractProductionTrackings).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Stations).WithMany(x => x.ContractProductionTrackings).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Employees).WithMany(x => x.ContractProductionTrackings).HasForeignKey(x => x.EmployeeID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Shifts).WithMany(x => x.ContractProductionTrackings).HasForeignKey(x => x.ShiftID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.CurrentAccountCards).WithMany(x => x.ContractProductionTrackings).HasForeignKey(x => x.CurrentAccountCardID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -1617,9 +1484,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
                 b.HasIndex(x => x.ProductionTrackingID);
                 b.HasIndex(x => x.HaltID);
-
-                b.HasOne(x => x.HaltReasons).WithMany(x => x.ProductionTrackingHaltLines).HasForeignKey(x => x.HaltID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.ProductionTrackings).WithMany(x => x.ProductionTrackingHaltLines).HasForeignKey(x => x.ProductionTrackingID).OnDelete(DeleteBehavior.Cascade);
             });
         }
 
@@ -1668,10 +1532,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.CurrentAccountCardID);
                 b.HasIndex(x => x.OrderID);
                 b.HasIndex(x => x.ProductID);
-
-                b.HasOne(x => x.CurrentAccountCards).WithMany(x => x.PurchaseUnsuitabilityReports).HasForeignKey(x => x.CurrentAccountCardID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Products).WithMany(x => x.PurchaseUnsuitabilityReports).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.PurchaseOrders).WithMany(x => x.PurchaseUnsuitabilityReports).HasForeignKey(x => x.OrderID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -1705,14 +1565,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.WorkOrderID);
                 b.HasIndex(x => x.ProductionOrderID);
                 b.HasIndex(x => x.ProductID);
-
-                b.HasOne(x => x.WorkOrders).WithMany(x => x.OperationUnsuitabilityReports).HasForeignKey(x => x.WorkOrderID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Products).WithMany(x => x.OperationUnsuitabilityReports).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Stations).WithMany(x => x.OperationUnsuitabilityReports).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.StationGroups).WithMany(x => x.OperationUnsuitabilityReports).HasForeignKey(x => x.StationGroupID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Employees).WithMany(x => x.OperationUnsuitabilityReports).HasForeignKey(x => x.EmployeeID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.ProductionOrders).WithMany(x => x.OperationUnsuitabilityReports).HasForeignKey(x => x.ProductionOrderID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.ProductsOperations).WithMany(x => x.OperationUnsuitabilityReports).HasForeignKey(x => x.OperationID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -1739,10 +1591,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.CurrentAccountCardID);
                 b.HasIndex(x => x.BranchID);
                 b.HasIndex(x => x.PeriodID);
-
-                b.HasOne(x => x.CurrentAccountCards).WithMany(x => x.Forecasts).HasForeignKey(x => x.CurrentAccountCardID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Branches).WithMany(x => x.Forecasts).HasForeignKey(x => x.BranchID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Periods).WithMany(x => x.Forecasts).HasForeignKey(x => x.PeriodID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -1761,9 +1609,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
 
                 b.HasIndex(x => x.ForecastID);
                 b.HasIndex(x => x.ProductID);
-
-                b.HasOne(x => x.Products).WithMany(x => x.ForecastLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Forecasts).WithMany(x => x.ForecastLines).HasForeignKey(x => x.ForecastID).OnDelete(DeleteBehavior.Cascade);
             });
         }
 
@@ -1791,11 +1636,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.CurrentAccountCardID);
                 b.HasIndex(x => x.BranchID);
                 b.HasIndex(x => x.WarehouseID);
-
-                b.HasOne(x => x.Currencies).WithMany(x => x.SalesPrices).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.CurrentAccountCards).WithMany(x => x.SalesPrices).HasForeignKey(x => x.CurrentAccountCardID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Branches).WithMany(x => x.SalesPrices).HasForeignKey(x => x.BranchID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Warehouses).WithMany(x => x.SalesPrices).HasForeignKey(x => x.WarehouseID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -1819,10 +1659,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.ProductID);
                 b.HasIndex(x => x.CurrencyID);
                 b.HasIndex(x => x.CurrentAccountCardID);
-
-                b.HasOne(x => x.Products).WithMany(x => x.SalesPriceLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Currencies).WithMany(x => x.SalesPriceLines).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.SalesPrices).WithMany(x => x.SalesPriceLines).HasForeignKey(x => x.SalesPriceID).OnDelete(DeleteBehavior.Cascade);
             });
         }
 
@@ -1851,11 +1687,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.CurrentAccountCardID);
                 b.HasIndex(x => x.BranchID);
                 b.HasIndex(x => x.WarehouseID);
-
-                b.HasOne(x => x.Currencies).WithMany(x => x.PurchasePrices).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.CurrentAccountCards).WithMany(x => x.PurchasePrices).HasForeignKey(x => x.CurrentAccountCardID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Branches).WithMany(x => x.PurchasePrices).HasForeignKey(x => x.BranchID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Warehouses).WithMany(x => x.PurchasePrices).HasForeignKey(x => x.WarehouseID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -1879,10 +1710,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.ProductID);
                 b.HasIndex(x => x.CurrencyID);
                 b.HasIndex(x => x.CurrentAccountCardID);
-
-                b.HasOne(x => x.Products).WithMany(x => x.PurchasePriceLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Currencies).WithMany(x => x.PurchasePriceLines).HasForeignKey(x => x.CurrencyID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.PurchasePrices).WithMany(x => x.PurchasePriceLines).HasForeignKey(x => x.PurchasePriceID).OnDelete(DeleteBehavior.Cascade);
             });
         }
 
@@ -1920,8 +1747,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.Property(t => t.GroupID).IsRequired().HasColumnType(SqlDbType.UniqueIdentifier.ToString());
 
                 b.HasIndex(x => x.Code);
-
-                b.HasOne(x => x.UserGroups).WithMany(x => x.Users).HasForeignKey(x => x.GroupID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -1948,9 +1773,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.FicheNo);
                 b.HasIndex(x => x.EmployeeID);
                 b.HasIndex(x => x.ProductID);
-
-                b.HasOne(x => x.Employees).WithMany(x => x.FinalControlUnsuitabilityReports).HasForeignKey(x => x.EmployeeID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Products).WithMany(x => x.FinalControlUnsuitabilityReports).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -1969,7 +1791,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.StationID);
                 b.HasIndex(x => x.ProductID);
 
-                b.HasOne(x => x.Stations).WithMany(x => x.StationInventories).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.Cascade);
 
             });
         }
@@ -1994,9 +1815,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.Code);
                 b.HasIndex(x => x.StationID);
                 b.HasIndex(x => x.PeriodID);
-
-                b.HasOne(x => x.Stations).WithMany(x => x.MaintenanceInstructions).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.MaintenancePeriods).WithMany(x => x.MaintenanceInstructions).HasForeignKey(x => x.PeriodID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -2017,10 +1835,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.InstructionID);
                 b.HasIndex(x => x.ProductID);
                 b.HasIndex(x => x.UnitSetID);
-
-                b.HasOne(x => x.Products).WithMany(x => x.MaintenanceInstructionLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.MaintenanceInstructions).WithMany(x => x.MaintenanceInstructionLines).HasForeignKey(x => x.InstructionID).OnDelete(DeleteBehavior.Cascade);
-                b.HasOne(x => x.UnitSets).WithMany(x => x.MaintenanceInstructionLines).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -2050,9 +1864,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.RegistrationNo);
                 b.HasIndex(x => x.StationID);
                 b.HasIndex(x => x.PeriodID);
-
-                b.HasOne(x => x.Stations).WithMany(x => x.PlannedMaintenances).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.MaintenancePeriods).WithMany(x => x.PlannedMaintenances).HasForeignKey(x => x.PeriodID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -2074,10 +1885,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.PlannedMaintenanceID);
                 b.HasIndex(x => x.ProductID);
                 b.HasIndex(x => x.UnitSetID);
-
-                b.HasOne(x => x.Products).WithMany(x => x.PlannedMaintenanceLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.PlannedMaintenances).WithMany(x => x.PlannedMaintenanceLines).HasForeignKey(x => x.PlannedMaintenanceID).OnDelete(DeleteBehavior.Cascade);
-                b.HasOne(x => x.UnitSets).WithMany(x => x.PlannedMaintenanceLines).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -2107,9 +1914,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.RegistrationNo);
                 b.HasIndex(x => x.StationID);
                 b.HasIndex(x => x.PeriodID);
-
-                b.HasOne(x => x.Stations).WithMany(x => x.UnplannedMaintenances).HasForeignKey(x => x.StationID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.MaintenancePeriods).WithMany(x => x.UnplannedMaintenances).HasForeignKey(x => x.PeriodID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -2131,10 +1935,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.UnplannedMaintenanceID);
                 b.HasIndex(x => x.ProductID);
                 b.HasIndex(x => x.UnitSetID);
-
-                b.HasOne(x => x.Products).WithMany(x => x.UnplannedMaintenanceLines).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.UnplannedMaintenances).WithMany(x => x.UnplannedMaintenanceLines).HasForeignKey(x => x.UnplannedMaintenanceID).OnDelete(DeleteBehavior.Cascade);
-                b.HasOne(x => x.UnitSets).WithMany(x => x.UnplannedMaintenanceLines).HasForeignKey(x => x.UnitSetID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -2162,10 +1962,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.ProductID);
                 b.HasIndex(x => x.BranchID);
                 b.HasIndex(x => x.WarehouseID);
-
-                b.HasOne(x => x.Products).WithMany(x => x.ByDateStockMovements).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Branches).WithMany(x => x.ByDateStockMovements).HasForeignKey(x => x.BranchID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Warehouses).WithMany(x => x.ByDateStockMovements).HasForeignKey(x => x.WarehouseID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 
@@ -2193,10 +1989,6 @@ namespace TsiErp.DataAccess.EntityFrameworkCore.Configurations
                 b.HasIndex(x => x.ProductID);
                 b.HasIndex(x => x.BranchID);
                 b.HasIndex(x => x.WarehouseID);
-
-                b.HasOne(x => x.Products).WithMany(x => x.GrandTotalStockMovements).HasForeignKey(x => x.ProductID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Branches).WithMany(x => x.GrandTotalStockMovements).HasForeignKey(x => x.BranchID).OnDelete(DeleteBehavior.NoAction);
-                b.HasOne(x => x.Warehouses).WithMany(x => x.GrandTotalStockMovements).HasForeignKey(x => x.WarehouseID).OnDelete(DeleteBehavior.NoAction);
             });
         }
 

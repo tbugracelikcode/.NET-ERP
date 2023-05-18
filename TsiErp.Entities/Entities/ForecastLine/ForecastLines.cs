@@ -33,8 +33,5 @@ namespace TsiErp.Entities.Entities.ForecastLine
         /// Satır Nr
         /// </summary>
         public int LineNr { get; set; }
-
-        public Forecasts Forecasts { get; set; }
-        public Products Products { get; set; }
     }
 }

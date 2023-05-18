@@ -144,34 +144,5 @@ namespace TsiErp.Entities.Entities.Product
         /// </summary>
         public decimal CoatingWeight { get; set; }
 
-
-        public UnitSets UnitSets { get; set; }
-        public ICollection<Routes> Routes { get; set; }
-        public ProductGroups ProductGroups { get; set; }
-        public ICollection<SalesPropositionLines> SalesPropositionLines { get; set; }
-        public ICollection<SalesOrderLines> SalesOrderLines { get; set; }
-        public ICollection<ProductsOperations> ProductsOperations { get; set; }
-        public ICollection<BillsofMaterialLines> BillsofMaterialLines { get; set; }
-        public ICollection<BillsofMaterials> BillsofMaterials { get; set; }
-        public ICollection<RouteLines> RouteLines { get; set; }
-        public ICollection<ProductionOrders> ProductionOrders { get; set; }
-        public ICollection<WorkOrders> WorkOrders { get; set; }
-        public ICollection<PurchaseOrderLines> PurchaseOrderLines { get; set; }
-        public ICollection<PurchaseRequestLines> PurchaseRequestLines { get; set; }
-        public ICollection<PurchaseUnsuitabilityReports> PurchaseUnsuitabilityReports { get; set; }
-        public ICollection<OperationUnsuitabilityReports> OperationUnsuitabilityReports { get; set; }
-        public ICollection<ForecastLines> ForecastLines { get; set; }
-        public ICollection<SalesPriceLines> SalesPriceLines { get; set; }
-        public ICollection<PurchasePriceLines> PurchasePriceLines { get; set; }
-        public ICollection<FinalControlUnsuitabilityReports> FinalControlUnsuitabilityReports { get; set; }
-        public ICollection<MaintenanceInstructionLines> MaintenanceInstructionLines { get; set; }
-        public ICollection<PlannedMaintenanceLines> PlannedMaintenanceLines { get; set; }
-        public ICollection<UnplannedMaintenanceLines> UnplannedMaintenanceLines { get; set; }
-        public ICollection<ByDateStockMovements> ByDateStockMovements { get; set; }
-        public ICollection<GrandTotalStockMovements> GrandTotalStockMovements { get; set; }
-        public ICollection<TechnicalDrawings> TechnicalDrawings { get; set; }
-        public ICollection<ProductReferanceNumbers> ProductReferanceNumbers { get; set; }
-        public ICollection<ContractProductionTrackings> ContractProductionTrackings { get; set; }
-
     }
 }

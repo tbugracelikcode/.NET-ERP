@@ -56,8 +56,5 @@ namespace TsiErp.Entities.Entities.FinalControlUnsuitabilityReport
         /// Stok ID
         /// </summary>
         public Guid ProductID { get; set; }
-
-        public Employees Employees { get; set; }
-        public Products Products { get; set; }
     }
 }

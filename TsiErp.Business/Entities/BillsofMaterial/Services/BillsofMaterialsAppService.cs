@@ -68,7 +68,6 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     LastModifierId = Guid.Empty,
                     Name = input.Name,
                     FinishedProductID = input.FinishedProductID,
-                    RouteID = Guid.Empty,
                     _Description = input._Description
                 });
 
@@ -313,7 +312,6 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     LastModifierId = LoginedUserService.UserId,
                     Name = input.Name,
                     FinishedProductID = input.FinishedProductID,
-                    RouteID = Guid.Empty,
                     _Description = input._Description
                 }).Where(new { Id = input.Id }, true, true, "");
 
@@ -414,7 +412,6 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                     Name = entity.Name,
                     FinishedProductID = entity.FinishedProductID,
-                    RouteID = Guid.Empty,
                     _Description = entity._Description
                 }).Where(new { Id = id }, true, true, "");
 

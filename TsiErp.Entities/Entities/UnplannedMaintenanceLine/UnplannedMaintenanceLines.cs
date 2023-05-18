@@ -45,9 +45,5 @@ namespace TsiErp.Entities.Entities.UnplannedMaintenanceLine
         /// Bakım Notu
         /// </summary>
         public string MaintenanceNote { get; set; }
-
-        public Products Products { get; set; }
-        public UnitSets UnitSets { get; set; }
-        public UnplannedMaintenances UnplannedMaintenances { get; set; }
     }
 }

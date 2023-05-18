@@ -45,7 +45,5 @@ namespace TsiErp.Entities.Entities.User
         /// Grup ID
         /// </summary>
         public Guid GroupID { get; set; }
-
-        public UserGroups UserGroups { get; set; }
     }
 }

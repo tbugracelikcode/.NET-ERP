@@ -26,19 +26,19 @@ namespace TsiErp.Business.Entities.Forecast.BusinessRules
 
         public async Task DeleteControl(IForecastsRepository _repository, Guid id, Guid lineId, bool lineDelete)
         {
-            if (lineDelete)
-            {
-                var entity = await _repository.GetAsync(t => t.Id == id, t => t.ForecastLines);
+            //if (lineDelete)
+            //{
+            //    var entity = await _repository.GetAsync(t => t.Id == id, t => t.ForecastLines);
 
-                var line = entity.ForecastLines.Where(t => t.Id == lineId).FirstOrDefault();
+            //    var line = entity.ForecastLines.Where(t => t.Id == lineId).FirstOrDefault();
 
                 
-            }
-            else
-            {
-                var entity = await _repository.GetAsync(t => t.Id == id);
+            //}
+            //else
+            //{
+            //    var entity = await _repository.GetAsync(t => t.Id == id);
 
-            }
+            //}
         }
     }
 }

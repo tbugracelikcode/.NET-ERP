@@ -126,18 +126,5 @@ namespace TsiErp.Entities.Entities.Station
         /// </summary>
         public bool IsContract { get; set; }
 
-        public StationGroups StationGroups { get; set; }
-        public ICollection<TemplateOperationLines> TemplateOperationLines { get; set; }
-        public ICollection<ProductsOperationLines> ProductsOperationLines { get; set; }
-        public ICollection<CalendarLines> CalendarLines { get; set; }
-        public ICollection<WorkOrders> WorkOrders { get; set; }
-        public ICollection<OperationUnsuitabilityReports> OperationUnsuitabilityReports { get; set; }
-        public ICollection<ProductionTrackings> ProductionTrackings { get; set; }
-        public ICollection<ContractProductionTrackings> ContractProductionTrackings { get; set; }
-        public ICollection<PlannedMaintenances> PlannedMaintenances { get; set; }
-        public ICollection<UnplannedMaintenances> UnplannedMaintenances { get; set; }
-        public ICollection<StationInventories> StationInventories { get; set; }
-        public ICollection<MaintenanceInstructions> MaintenanceInstructions { get; set; }
-
     }
 }

@@ -28,10 +28,6 @@ namespace TsiErp.Entities.Entities.BillsofMaterial
         /// </summary>
         public Guid FinishedProductID { get; set; }
         /// <summary>
-        /// Rota ID
-        /// </summary>
-        public Guid RouteID { get; set; }
-        /// <summary>
         /// Genel Açıklama
         /// </summary>
         public string _Description { get; set; }
@@ -39,11 +35,6 @@ namespace TsiErp.Entities.Entities.BillsofMaterial
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
-
-        public Products Products { get; set; }
-
-        public ICollection<BillsofMaterialLines> BillsofMaterialLines { get; set; }
-        public ICollection<ProductionOrders> ProductionOrders { get; set; }
 
 
     }

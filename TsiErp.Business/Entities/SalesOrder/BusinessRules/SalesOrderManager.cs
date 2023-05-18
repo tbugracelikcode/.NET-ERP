@@ -27,39 +27,39 @@ namespace TsiErp.Business.Entities.SalesOrder.BusinessRules
 
         public async Task DeleteControl(ISalesOrdersRepository _repository, Guid id, Guid lineId, bool lineDelete, IStringLocalizer<SalesOrdersResource> L)
         {
-            if (lineDelete)
-            {
-                var entity = await _repository.GetAsync(t => t.Id == id, t => t.SalesOrderLines);
+            //if (lineDelete)
+            //{
+            //    var entity = await _repository.GetAsync(t => t.Id == id, t => t.SalesOrderLines);
 
-                var line = entity.SalesOrderLines.Where(t => t.Id == lineId).FirstOrDefault();
+            //    var line = entity.SalesOrderLines.Where(t => t.Id == lineId).FirstOrDefault();
 
-                if (line != null)
-                {
-                    if (line.SalesOrderLineStateEnum == SalesOrderLineStateEnum.Onaylandı)
-                    {
-                        throw new Exception(L["DeleteSalesOrderLineManager"]);
-                    }
-                }
-            }
-            else
-            {
-                var entity = await _repository.GetAsync(t => t.Id == id);
+            //    if (line != null)
+            //    {
+            //        if (line.SalesOrderLineStateEnum == SalesOrderLineStateEnum.Onaylandı)
+            //        {
+            //            throw new Exception(L["DeleteSalesOrderLineManager"]);
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    var entity = await _repository.GetAsync(t => t.Id == id);
 
-                if (entity.SalesOrderState == SalesOrderStateEnum.Onaylandı)
-                {
-                    throw new Exception(L["DeleteSalesOrderManager"]);
-                }
+            //    if (entity.SalesOrderState == SalesOrderStateEnum.Onaylandı)
+            //    {
+            //        throw new Exception(L["DeleteSalesOrderManager"]);
+            //    }
 
-                if (entity.SalesOrderState == SalesOrderStateEnum.KismiUretimeVerildi)
-                {
-                    throw new Exception(L["DeleteSalesOrderConvertPartialProductionManager"]);
-                }
+            //    if (entity.SalesOrderState == SalesOrderStateEnum.KismiUretimeVerildi)
+            //    {
+            //        throw new Exception(L["DeleteSalesOrderConvertPartialProductionManager"]);
+            //    }
 
-                if (entity.SalesOrderState == SalesOrderStateEnum.UretimeVerildi)
-                {
-                    throw new Exception(L["DeleteSalesOrderConvertProductionManager"]);
-                }
-            }
+            //    if (entity.SalesOrderState == SalesOrderStateEnum.UretimeVerildi)
+            //    {
+            //        throw new Exception(L["DeleteSalesOrderConvertProductionManager"]);
+            //    }
+            //}
         }
     }
 }

@@ -27,9 +27,5 @@ namespace TsiErp.Entities.Entities.CalendarDay
         /// Renk Kodu
         /// </summary>
         public string ColorCode { get; set; }
-
-
-
-        public Calendars Calendars { get; set; }
     }
 }

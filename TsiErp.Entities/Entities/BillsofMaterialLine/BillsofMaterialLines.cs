@@ -57,11 +57,5 @@ namespace TsiErp.Entities.Entities.BillsofMaterialLine
         /// Boy
         /// </summary>
         public decimal Size { get; set; }
-
-        public BillsofMaterials BillsofMaterials { get; set; }
-
-        public UnitSets UnitSets { get; set; }
-
-        public Products Products { get; set; }
     }
 }

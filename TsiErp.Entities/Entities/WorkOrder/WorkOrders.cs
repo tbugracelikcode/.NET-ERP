@@ -112,26 +112,5 @@ namespace TsiErp.Entities.Entities.WorkOrder
         /// </summary>
         public Guid CurrentAccountCardID { get; set; }
 
-        public ProductionOrders ProductionOrders { get; set; }
-
-        public SalesPropositions SalesPropositions { get; set; }
-
-        public Routes Routes { get; set; }
-
-        public ProductsOperations ProductsOperations { get; set; }
-
-        public Stations Stations { get; set; }
-
-        public StationGroups StationGroups { get; set; }
-
-        public Products Products { get; set; }
-
-        public CurrentAccountCards CurrentAccountCards { get; set; }
-
-        public ICollection<OperationUnsuitabilityReports> OperationUnsuitabilityReports { get; set; }
-        public ICollection<ProductionTrackings> ProductionTrackings { get; set; }
-        public ICollection<ContractProductionTrackings> ContractProductionTrackings { get; set; }
-
-
     }
 }

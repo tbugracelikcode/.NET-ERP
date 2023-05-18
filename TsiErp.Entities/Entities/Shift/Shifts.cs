@@ -58,13 +58,5 @@ namespace TsiErp.Entities.Entities.Shift
         /// </summary>
         public int ShiftOrder { get; set; }
 
-        public ICollection<ShiftLines> ShiftLines { get; set; }
-
-        public ICollection<CalendarLines> CalendarLines { get; set; }
-
-        public ICollection<ProductionTrackings> ProductionTrackings { get; set; }
-
-        public ICollection<ContractProductionTrackings> ContractProductionTrackings { get; set; }
-
     }
 }

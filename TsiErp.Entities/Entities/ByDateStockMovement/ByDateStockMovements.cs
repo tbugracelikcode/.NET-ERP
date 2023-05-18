@@ -83,9 +83,5 @@ namespace TsiErp.Entities.Entities.ByDateStockMovement
         /// </summary>
         public decimal Amount { get; set; }
 
-        public Products Products { get; set; }
-        public Warehouses Warehouses { get; set; }
-        public Branches Branches { get; set; }
-
     }
 }

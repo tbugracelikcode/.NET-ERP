@@ -26,18 +26,18 @@ namespace TsiErp.Business.Entities.TemplateOperation.BusinessRules
 
         public async Task DeleteControl(ITemplateOperationsRepository _repository, Guid id, Guid lineId, bool lineDelete)
         {
-            if (lineDelete)
-            {
-                var entity = await _repository.GetAsync(t => t.Id == id, t => t.TemplateOperationLines);
+            //if (lineDelete)
+            //{
+            //    var entity = await _repository.GetAsync(t => t.Id == id, t => t.TemplateOperationLines);
 
-                var line = entity.TemplateOperationLines.Where(t => t.Id == lineId).FirstOrDefault();
+            //    var line = entity.TemplateOperationLines.Where(t => t.Id == lineId).FirstOrDefault();
 
-            }
-            else
-            {
-                var entity = await _repository.GetAsync(t => t.Id == id);
+            //}
+            //else
+            //{
+            //    var entity = await _repository.GetAsync(t => t.Id == id);
 
-            }
+            //}
         }
     }
 }

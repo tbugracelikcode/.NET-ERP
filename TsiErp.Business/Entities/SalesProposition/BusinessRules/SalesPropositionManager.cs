@@ -27,39 +27,39 @@ namespace TsiErp.Business.Entities.SalesProposition.BusinessRules
 
         public async Task DeleteControl(ISalesPropositionsRepository _repository, Guid id,  Guid lineId,bool lineDelete, IStringLocalizer<SalesPropositionsResource> L)
         {
-            if (lineDelete)
-            {
-                var entity = await _repository.GetAsync(t => t.Id == id, t => t.SalesPropositionLines);
+            //if (lineDelete)
+            //{
+            //    var entity = await _repository.GetAsync(t => t.Id == id, t => t.SalesPropositionLines);
 
-                var line = entity.SalesPropositionLines.Where(t => t.Id == lineId).FirstOrDefault();
+            //    var line = entity.SalesPropositionLines.Where(t => t.Id == lineId).FirstOrDefault();
 
-                if(line!=null)
-                {
-                    if (line.SalesPropositionLineState == SalesPropositionLineStateEnum.Onaylandı)
-                    {
-                        throw new Exception(L["DeleteSalesPropositionLineManager"]);
-                    }
-                }
-            }
-            else
-            {
-                var entity = await _repository.GetAsync(t => t.Id == id);
+            //    if(line!=null)
+            //    {
+            //        if (line.SalesPropositionLineState == SalesPropositionLineStateEnum.Onaylandı)
+            //        {
+            //            throw new Exception(L["DeleteSalesPropositionLineManager"]);
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    var entity = await _repository.GetAsync(t => t.Id == id);
 
-                if (entity.SalesPropositionState == SalesPropositionStateEnum.Onaylandı)
-                {
-                    throw new Exception(L["DeleteSalesPropositionManager"]);
-                }
+            //    if (entity.SalesPropositionState == SalesPropositionStateEnum.Onaylandı)
+            //    {
+            //        throw new Exception(L["DeleteSalesPropositionManager"]);
+            //    }
 
-                if (entity.SalesPropositionState == SalesPropositionStateEnum.Siparis)
-                {
-                    throw new Exception(L["DeleteSalesPropositionConvertManager"]);
-                }
+            //    if (entity.SalesPropositionState == SalesPropositionStateEnum.Siparis)
+            //    {
+            //        throw new Exception(L["DeleteSalesPropositionConvertManager"]);
+            //    }
 
-                if (entity.SalesPropositionState == SalesPropositionStateEnum.KismiSiparis)
-                {
-                    throw new Exception(L["DeleteSalesPropositionConvertManager"]);
-                }
-            }
+            //    if (entity.SalesPropositionState == SalesPropositionStateEnum.KismiSiparis)
+            //    {
+            //        throw new Exception(L["DeleteSalesPropositionConvertManager"]);
+            //    }
+            //}
         }
     }
 }

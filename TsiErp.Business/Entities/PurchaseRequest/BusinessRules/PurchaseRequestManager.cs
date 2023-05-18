@@ -31,39 +31,39 @@ namespace TsiErp.Business.Entities.PurchaseRequest.BusinessRules
 
         public async Task DeleteControl(IPurchaseRequestsRepository _repository, Guid id, Guid lineId, bool lineDelete, IStringLocalizer<PurchaseRequestsResource> L)
         {
-            if (lineDelete)
-            {
-                var entity = await _repository.GetAsync(t => t.Id == id, t => t.PurchaseRequestLines);
+            //if (lineDelete)
+            //{
+            //    var entity = await _repository.GetAsync(t => t.Id == id, t => t.PurchaseRequestLines);
 
-                var line = entity.PurchaseRequestLines.Where(t => t.Id == lineId).FirstOrDefault();
+            //    var line = entity.PurchaseRequestLines.Where(t => t.Id == lineId).FirstOrDefault();
 
-                if (line != null)
-                {
-                    if (line.PurchaseRequestLineState == TsiErp.Entities.Enums.PurchaseRequestLineStateEnum.Onaylandı)
-                    {
-                        throw new Exception(L["DeletePurchaseRequestLineManager"]);
-                    }
-                }
-            }
-            else
-            {
-                var entity = await _repository.GetAsync(t => t.Id == id);
+            //    if (line != null)
+            //    {
+            //        if (line.PurchaseRequestLineState == TsiErp.Entities.Enums.PurchaseRequestLineStateEnum.Onaylandı)
+            //        {
+            //            throw new Exception(L["DeletePurchaseRequestLineManager"]);
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    var entity = await _repository.GetAsync(t => t.Id == id);
 
-                if (entity.PurchaseRequestState == TsiErp.Entities.Enums.PurchaseRequestStateEnum.Onaylandı)
-                {
-                    throw new Exception(L["DeletePurchaseRequestManager"]);
-                }
+            //    if (entity.PurchaseRequestState == TsiErp.Entities.Enums.PurchaseRequestStateEnum.Onaylandı)
+            //    {
+            //        throw new Exception(L["DeletePurchaseRequestManager"]);
+            //    }
 
-                if (entity.PurchaseRequestState == TsiErp.Entities.Enums.PurchaseRequestStateEnum.SatinAlma)
-                {
-                    throw new Exception(L["DeletePurchaseRequestConvertManager"]);
-                }
+            //    if (entity.PurchaseRequestState == TsiErp.Entities.Enums.PurchaseRequestStateEnum.SatinAlma)
+            //    {
+            //        throw new Exception(L["DeletePurchaseRequestConvertManager"]);
+            //    }
 
-                if (entity.PurchaseRequestState == TsiErp.Entities.Enums.PurchaseRequestStateEnum.KismiSatinAlma)
-                {
-                    throw new Exception(L["DeletePurchaseRequestConvertManager"]);
-                }
-            }
+            //    if (entity.PurchaseRequestState == TsiErp.Entities.Enums.PurchaseRequestStateEnum.KismiSatinAlma)
+            //    {
+            //        throw new Exception(L["DeletePurchaseRequestConvertManager"]);
+            //    }
+            //}
         }
     }
 }
