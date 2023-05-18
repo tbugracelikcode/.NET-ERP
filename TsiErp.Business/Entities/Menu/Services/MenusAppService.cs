@@ -27,9 +27,11 @@ namespace TsiErp.Business.Entities.Menu.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
+                Guid addedEntityId = GuidGenerator.CreateGuid();
+
                 var query = queryFactory.Query().From(Tables.Menus).Insert(new CreateMenusDto
                 {
-                    Id = GuidGenerator.CreateGuid(),
+                    Id = addedEntityId,
                     CreationTime = DateTime.Now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,

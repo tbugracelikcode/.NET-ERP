@@ -52,6 +52,9 @@ namespace TsiErp.Business.Entities.Product.Services
 
                 #endregion
 
+                Guid addedEntityId = GuidGenerator.CreateGuid();
+
+
                 var query = queryFactory.Query().From(Tables.Products).Insert(new CreateProductsDto
                 {
                     Code = input.Code,
@@ -82,7 +85,7 @@ namespace TsiErp.Business.Entities.Product.Services
                     DataOpenStatusUserId = Guid.Empty,
                     DeleterId = Guid.Empty,
                     DeletionTime = null,
-                    Id = GuidGenerator.CreateGuid(),
+                    Id = addedEntityId,
                     IsActive = true,
                     IsDeleted = false,
                     LastModificationTime = null,
@@ -92,7 +95,7 @@ namespace TsiErp.Business.Entities.Product.Services
 
                 var products = queryFactory.Insert<SelectProductsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Products, LogType.Insert, products.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Products, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectProductsDto>(products);
             }

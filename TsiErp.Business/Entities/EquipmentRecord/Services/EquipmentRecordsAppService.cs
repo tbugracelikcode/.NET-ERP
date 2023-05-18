@@ -1,23 +1,20 @@
-﻿using Tsi.Core.Aspects.Autofac.Caching;
+﻿using Microsoft.Extensions.Localization;
+using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
+using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
-using TsiErp.Localizations.Resources.EquipmentRecords.Page;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TSI.QueryBuilder.BaseClasses;
+using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Business.Entities.EquipmentRecord.BusinessRules;
 using TsiErp.Business.Entities.EquipmentRecord.Validations;
 using TsiErp.Business.Entities.Logging.Services;
-using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.DataAccess.EntityFrameworkCore.EfUnitOfWork;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.Department;
 using TsiErp.Entities.Entities.EquipmentRecord;
 using TsiErp.Entities.Entities.EquipmentRecord.Dtos;
-using Microsoft.Extensions.Localization;
-using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Entities.TableConstant;
-using TsiErp.Entities.Entities.Department;
-using TSI.QueryBuilder.Constants.Join;
-using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
+using TsiErp.Localizations.Resources.EquipmentRecords.Page;
 
 namespace TsiErp.Business.Entities.EquipmentRecord.Services
 {
@@ -53,6 +50,9 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
 
                 #endregion
 
+                Guid addedEntityId = GuidGenerator.CreateGuid();
+
+
                 var query = queryFactory.Query().From(Tables.EquipmentRecords).Insert(new CreateEquipmentRecordsDto
                 {
                     Code = input.Code,
@@ -72,7 +72,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
                     DataOpenStatusUserId = Guid.Empty,
                     DeleterId = Guid.Empty,
                     DeletionTime = null,
-                    Id = GuidGenerator.CreateGuid(),
+                    Id = addedEntityId,
                     IsActive = true,
                     IsDeleted = false,
                     LastModificationTime = null,
@@ -82,7 +82,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
 
                 var equipmentRecords = queryFactory.Insert<SelectEquipmentRecordsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.EquipmentRecords, LogType.Insert, equipmentRecords.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.EquipmentRecords, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectEquipmentRecordsDto>(equipmentRecords);
             }
@@ -222,7 +222,7 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
                 var entityQuery = queryFactory.Query().From(Tables.EquipmentRecords).Select("*").Where(new { Id = id }, true, true, "");
                 var entity = queryFactory.Get<EquipmentRecords>(entityQuery);
 
-                var query = queryFactory.Query().From(Tables.Periods).Update(new UpdateEquipmentRecordsDto
+                var query = queryFactory.Query().From(Tables.EquipmentRecords).Update(new UpdateEquipmentRecordsDto
                 {
                     Code = entity.Code,
                     Name = entity.Name,

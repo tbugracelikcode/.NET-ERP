@@ -51,6 +51,8 @@ namespace TsiErp.Business.Entities.User.Services
 
                 #endregion
 
+                Guid addedEntityId = GuidGenerator.CreateGuid();
+
                 var query = queryFactory.Query().From(Tables.Users).Insert(new CreateUsersDto
                 {
                     Code = input.Code,
@@ -66,7 +68,7 @@ namespace TsiErp.Business.Entities.User.Services
                     DataOpenStatusUserId = Guid.Empty,
                     DeleterId = Guid.Empty,
                     DeletionTime = null,
-                    Id = GuidGenerator.CreateGuid(),
+                    Id = addedEntityId,
                     IsActive = true,
                     IsDeleted = false,
                     LastModificationTime = null,
@@ -75,7 +77,7 @@ namespace TsiErp.Business.Entities.User.Services
 
                 var users = queryFactory.Insert<SelectUsersDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Users, LogType.Insert, users.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Users, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectUsersDto>(users);
             }

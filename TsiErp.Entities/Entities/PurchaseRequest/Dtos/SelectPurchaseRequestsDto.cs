@@ -147,10 +147,6 @@ namespace TsiErp.Entities.Entities.PurchaseRequest.Dtos
         /// </summary>
         public DateTime ValidityDate_ { get; set; }
         /// <summary>
-        /// Sevkiyat Adresi ID
-        /// </summary>
-        public Guid? ShippingAdressID { get; set; }
-        /// <summary>
         /// Sevkiyat Adresi Kodu
         /// </summary>
         public string ShippingAdressCode { get; set; }

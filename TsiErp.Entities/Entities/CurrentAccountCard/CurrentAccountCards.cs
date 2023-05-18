@@ -162,20 +162,5 @@ namespace TsiErp.Entities.Entities.CurrentAccountCard
         /// </summary>
         public bool IsActive { get; set; }
 
-        public Currencies Currencies { get; set; }
-        public ICollection<SalesPropositions> SalesPropositions { get; set; }
-        public ICollection<SalesOrders> SalesOrders { get; set; }
-        public ICollection<ProductionOrders> ProductionOrders { get; set; }
-        public ICollection<ShippingAdresses> ShippingAdresses { get; set; }
-        public ICollection<WorkOrders> WorkOrders { get; set; }
-        public ICollection<PurchaseOrders> PurchaseOrders { get; set; }
-        public ICollection<PurchaseRequests> PurchaseRequests { get; set; }
-        public ICollection<PurchaseUnsuitabilityReports> PurchaseUnsuitabilityReports { get; set; }
-        public ICollection<ContractProductionTrackings> ContractProductionTrackings { get; set; }
-        public ICollection<Forecasts> Forecasts { get; set; }
-        public ICollection<PurchasePrices> PurchasePrices { get; set; }
-        public ICollection<SalesPrices> SalesPrices { get; set; }
-        public ICollection<ProductReferanceNumbers> ProductReferanceNumbers { get; set; }
-
     }
 }

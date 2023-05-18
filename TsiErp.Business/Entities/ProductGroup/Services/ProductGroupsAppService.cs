@@ -51,13 +51,14 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
 
                 #endregion
 
+                Guid addedEntityId = GuidGenerator.CreateGuid();
 
                 var query = queryFactory.Query().From(Tables.ProductGroups).Insert(new CreateProductGroupsDto
                 {
                     Code = input.Code,
                     Name = input.Name,
                     IsActive = true,
-                    Id = GuidGenerator.CreateGuid(),
+                    Id = addedEntityId,
                     CreationTime = DateTime.Now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
@@ -72,7 +73,7 @@ namespace TsiErp.Business.Entities.ProductGroup.Services
 
                 var productGroups = queryFactory.Insert<SelectProductGroupsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductGroups, LogType.Insert, productGroups.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductGroups, LogType.Insert,addedEntityId);
 
 
                 return new SuccessDataResult<SelectProductGroupsDto>(productGroups);

@@ -50,13 +50,14 @@ namespace TsiErp.Business.Entities.Department.Services
 
                 #endregion
 
+                Guid addedEntityId = GuidGenerator.CreateGuid();
 
                 var query = queryFactory.Query().From(Tables.Departments).Insert(new CreateDepartmentsDto
                 {
                     Code = input.Code,
                     Name = input.Name,
                     IsActive = true,
-                    Id = GuidGenerator.CreateGuid(),
+                    Id = addedEntityId,
                     CreationTime = DateTime.Now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
@@ -71,7 +72,7 @@ namespace TsiErp.Business.Entities.Department.Services
 
                 var departments = queryFactory.Insert<SelectDepartmentsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Departments, LogType.Insert, departments.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Departments, LogType.Insert, addedEntityId);
 
 
                 return new SuccessDataResult<SelectDepartmentsDto>(departments);
