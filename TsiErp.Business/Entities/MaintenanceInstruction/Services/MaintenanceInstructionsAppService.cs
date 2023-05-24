@@ -102,7 +102,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
 
                 var maintenanceInstruction = queryFactory.Insert<SelectMaintenanceInstructionsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.MaintenanceInstructions, LogType.Insert, maintenanceInstruction.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.MaintenanceInstructions, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectMaintenanceInstructionsDto>(maintenanceInstruction);
             }
@@ -392,7 +392,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
 
                 var maintenanceInstruction = queryFactory.Update<SelectMaintenanceInstructionsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.MaintenanceInstructions, LogType.Update, maintenanceInstruction.Id);
+                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.MaintenanceInstructions, LogType.Update, entity.Id);
 
                 return new SuccessDataResult<SelectMaintenanceInstructionsDto>(maintenanceInstruction);
             }

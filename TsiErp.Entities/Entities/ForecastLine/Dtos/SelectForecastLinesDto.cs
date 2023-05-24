@@ -26,7 +26,6 @@ namespace TsiErp.Entities.Entities.ForecastLine.Dtos
         /// Stok Adı
         /// </summary>
         public string ProductName { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Miktar
         /// </summary>

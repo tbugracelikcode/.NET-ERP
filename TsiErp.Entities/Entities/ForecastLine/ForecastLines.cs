@@ -20,7 +20,6 @@ namespace TsiErp.Entities.Entities.ForecastLine
         /// Stok ID
         /// </summary>
         public Guid ProductID { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Miktar
         /// </summary>

@@ -16,6 +16,7 @@ using TsiErp.Entities.Entities.ProductsOperation.Dtos;
 using TsiErp.Entities.Entities.ProductsOperationLine;
 using TsiErp.Entities.Entities.ProductsOperationLine.Dtos;
 using TsiErp.Entities.Entities.Station;
+using TsiErp.Entities.Entities.TemplateOperation;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.ProductsOperations.Page;
 
@@ -56,9 +57,9 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 var query = queryFactory.Query().From(Tables.ProductsOperations).Insert(new CreateProductsOperationsDto
                 {
                     Name = input.Name,
-                    ProductID = addedEntityId,
+                    ProductID = input.ProductID,
                     TemplateOperationID = input.TemplateOperationID,
-                    WorkCenterID = input.WorkCenterID,
+                    WorkCenterID = Guid.Empty,
                     Code = input.Code,
                     CreationTime = DateTime.Now,
                     CreatorId = LoginedUserService.UserId,
@@ -102,7 +103,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
 
                 var productsOperation = queryFactory.Insert<SelectProductsOperationsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductsOperations, LogType.Insert, productsOperation.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductsOperations, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectProductsOperationsDto>(productsOperation);
             }
@@ -155,6 +156,13 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                             nameof(Products.Id),
                             JoinType.Left
                         )
+                        .Join<TemplateOperations>
+                        (
+                            to => new { TemplateOperationID = to.Id, TemplateOperationCode = to.Code, TemplateOperationName = to.Name },
+                            nameof(ProductsOperations.TemplateOperationID),
+                            nameof(TemplateOperations.Id),
+                            JoinType.Left
+                        )
                         .Where(new { Id = id }, true, true, Tables.ProductsOperations);
 
                 var productsOperations = queryFactory.Get<SelectProductsOperationsDto>(query);
@@ -190,7 +198,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 var query = queryFactory
                        .Query()
                        .From(Tables.ProductsOperations)
-                       .Select<ProductsOperations>(po => new { po.WorkCenterID, po.TemplateOperationID, po.ProductID, po.Name, po.IsActive, po.Id, po.DataOpenStatusUserId, po.DataOpenStatus, po.Code })
+                       .Select<ProductsOperations>(po => new { po.WorkCenterID, po.ProductID, po.TemplateOperationID,  po.Name, po.IsActive, po.Id, po.DataOpenStatusUserId, po.DataOpenStatus, po.Code })
                        .Join<Products>
                         (
                             p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -352,7 +360,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
 
                 var productsOperation = queryFactory.Update<SelectProductsOperationsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.ProductsOperations, LogType.Update, productsOperation.Id);
+                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.ProductsOperations, LogType.Update, entity.Id);
 
                 return new SuccessDataResult<SelectProductsOperationsDto>(productsOperation);
             }

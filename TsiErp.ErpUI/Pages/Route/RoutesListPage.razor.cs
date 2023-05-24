@@ -99,7 +99,7 @@ namespace TsiErp.ErpUI.Pages.Route
                     IsChanged = true;
                     DataSource = (await RoutesAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectRouteLines;
-                    GridProductsOperationList = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.Where(t => t.ProductId == DataSource.ProductID).ToList();
+                    GridProductsOperationList = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.Where(t => t.ProductID == DataSource.ProductID).ToList();
                    
 
 
@@ -329,6 +329,10 @@ namespace TsiErp.ErpUI.Pages.Route
                 DataSource.ProductID = selectedProduct.Id;
                 DataSource.ProductCode = selectedProduct.Code;
                 DataSource.ProductName = selectedProduct.Name;
+
+                GridProductsOperationList = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.ToList();
+                GridProductsOperationList = GridProductsOperationList.Where(t => t.ProductID == selectedProduct.Id).ToList();
+                await _ProductsOperationGrid.Refresh();
                 SelectProductsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }

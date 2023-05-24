@@ -30,7 +30,6 @@ namespace TsiErp.Entities.Entities.PurchasePriceLine
         /// Cari ID
         /// </summary>
         public Guid CurrentAccountCardID { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Fiyat
         /// </summary>

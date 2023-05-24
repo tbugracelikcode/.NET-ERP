@@ -292,7 +292,7 @@ namespace TsiErp.ErpUI.Pages.Forecast
                 if (dataOpenStatus == true && dataOpenStatus != null)
                 {
                     EditPageVisible = false;
-                    await ModalManager.MessagePopupAsync(L["UIMessagePopupInformationTitleBase"], L["UIMessagePopupInformationDescriptionBase"]);
+                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);
                     await InvokeAsync(StateHasChanged);
                 }
                 else

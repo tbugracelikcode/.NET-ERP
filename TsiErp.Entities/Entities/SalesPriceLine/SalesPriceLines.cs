@@ -30,7 +30,6 @@ namespace TsiErp.Entities.Entities.SalesPriceLine
         /// Para Birimi ID
         /// </summary>
         public Guid CurrencyID { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Fiyat
         /// </summary>

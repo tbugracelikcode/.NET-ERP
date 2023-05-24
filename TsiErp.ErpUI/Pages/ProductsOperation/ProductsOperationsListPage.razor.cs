@@ -193,6 +193,27 @@ namespace TsiErp.ErpUI.Pages.ProductsOperation
                 DataSource.TemplateOperationID = selectedTemplateOperation.Id;
                 DataSource.TemplateOperationCode = selectedTemplateOperation.Code;
                 DataSource.TemplateOperationName = selectedTemplateOperation.Code;
+                foreach (var line in selectedTemplateOperation.SelectTemplateOperationLines)
+                {
+                    SelectProductsOperationLinesDto lineModel = new SelectProductsOperationLinesDto
+                    {
+                        AdjustmentAndControlTime = line.AdjustmentAndControlTime,
+                        Alternative = line.Alternative,
+                        LineNr = line.LineNr,
+                        StationID = line.StationID,
+                        StationCode = line.StationCode,
+                        StationName = line.StationName,
+                        ProductsOperationName = DataSource.Name,
+                        ProductsOperationID = DataSource.Id,
+                        ProductsOperationCode = DataSource.Code,
+                        ProcessQuantity = line.ProcessQuantity,
+                        Priority = line.Priority,
+                        OperationTime = line.OperationTime,
+                    };
+
+                    GridLineList.Add(lineModel);
+                    await _LineGrid.Refresh();
+                }
                 SelectTemplateOperationsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }

@@ -38,7 +38,6 @@ namespace TsiErp.Entities.Entities.Forecast
         /// Cari ID
         /// </summary>
         public Guid CurrentAccountCardID { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Toplam Adet
         /// </summary>

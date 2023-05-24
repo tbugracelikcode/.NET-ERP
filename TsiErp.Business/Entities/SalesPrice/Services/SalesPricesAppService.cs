@@ -109,7 +109,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
 
                 var salesPrice = queryFactory.Insert<SelectSalesPricesDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.SalesPrices, LogType.Insert, salesPrice.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.SalesPrices, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectSalesPricesDto>(salesPrice);
             }
@@ -439,6 +439,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                                 EndDate = item.EndDate,
                                 CurrentAccountCardID = item.CurrentAccountCardID,
                                 CurrencyID = item.CurrencyID,
+                                ProductID = item.ProductID,
                                 Linenr = item.Linenr,
                                 Price = item.Price,
                                 SalesPriceID = input.Id,
@@ -461,7 +462,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
 
                 var salesPrice = queryFactory.Update<SelectSalesPricesDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.SalesPrices, LogType.Update, salesPrice.Id);
+                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.SalesPrices, LogType.Update, entity.Id);
 
                 return new SuccessDataResult<SelectSalesPricesDto>(salesPrice);
             }

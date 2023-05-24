@@ -23,12 +23,10 @@ namespace TsiErp.Entities.Entities.ProductionTracking
         /// İş Emri ID
         /// </summary>
         public Guid WorkOrderID { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Üretilen Miktar
         /// </summary>
         public decimal ProducedQuantity { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Operasyon Süresi
         /// </summary>
@@ -49,17 +47,14 @@ namespace TsiErp.Entities.Entities.ProductionTracking
         /// Bitiş Saati
         /// </summary>
         public TimeSpan? OperationEndTime { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Duruş Süresi
         /// </summary>
         public decimal HaltTime { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Ayar Süresi
         /// </summary>
         public decimal AdjustmentTime { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Planlanan Adet
         /// </summary>

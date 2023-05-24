@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TSI.QueryBuilder.MappingAttributes;
+using TsiErp.Entities.Entities.TemplateOperationLine.Dtos;
 
 namespace TsiErp.Entities.Entities.TemplateOperation.Dtos
 {
@@ -25,5 +27,8 @@ namespace TsiErp.Entities.Entities.TemplateOperation.Dtos
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
+
+        [NoDatabaseAction]
+        public List<SelectTemplateOperationLinesDto> SelectTemplateOperationLines { get; set; }
     }
 }

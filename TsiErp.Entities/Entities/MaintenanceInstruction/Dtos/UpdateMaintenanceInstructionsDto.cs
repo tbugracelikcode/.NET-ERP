@@ -28,12 +28,10 @@ namespace TsiErp.Entities.Entities.MaintenanceInstruction.Dtos
         /// Bakım Periyodu ID
         /// </summary>
         public Guid? PeriodID { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Periyot Süresi
         /// </summary>
         public decimal PeriodTime { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Planlanan Bakım Süresi
         /// </summary>

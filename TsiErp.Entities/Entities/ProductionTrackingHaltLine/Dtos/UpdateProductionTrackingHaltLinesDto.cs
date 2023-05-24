@@ -18,7 +18,6 @@ namespace TsiErp.Entities.Entities.ProductionTrackingHaltLine.Dtos
         /// Duruş Sebebi ID
         /// </summary>
         public Guid HaltID { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Duruş Süresi
         /// </summary>

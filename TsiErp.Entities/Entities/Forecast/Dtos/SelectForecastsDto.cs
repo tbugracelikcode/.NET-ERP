@@ -53,7 +53,6 @@ namespace TsiErp.Entities.Entities.Forecast.Dtos
         /// Cari Ünvan
         /// </summary>
         public string CurrentAccountCardName { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Toplam Adet
         /// </summary>
