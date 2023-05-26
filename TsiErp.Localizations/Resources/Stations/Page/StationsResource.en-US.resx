@@ -180,6 +180,9 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="ErrorBoundryButtonText" xml:space="preserve">
+    <value>Clear</value>
+  </data>
   <data name="InventoryGridAmount" xml:space="preserve">
     <value>QUANTITY</value>
   </data>

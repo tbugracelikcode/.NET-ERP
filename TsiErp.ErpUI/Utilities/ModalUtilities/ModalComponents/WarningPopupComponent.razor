@@ -5,18 +5,18 @@
     <table style="width:100%">
         <tr>
             <td style="width:30%">
-               
+
                 <i class="fa fa-exclamation fa-3x"></i>
-              
+
             </td>
             <td style="width:70%">
                 <p style="color:#A50000;font-size:14px;text-align: left;">@HtmlMessage</p>
             </td>
-            
+
         </tr>
     </table>
 
-    
+
 
 </div>
 
@@ -52,6 +52,37 @@
 
         Message = parameters.GetValueOrDefault<String>("Message", "Mesaj Yok");
         OkText = parameters.GetValueOrDefault<String>("OkText", "Tamam");
+
+
+        if (!Message.Contains("<li>"))
+        {
+            int numberofCharacters = Message.Length;
+
+            if (numberofCharacters > 50 && 100 >= numberofCharacters)
+            {
+                Message = Message.Insert(45, "- \n");
+            }
+
+            else if (numberofCharacters > 100 && 150 >= numberofCharacters)
+            {
+                Message = Message.Insert(45, "- \n");
+                Message = Message.Insert(95, " - \n");
+            }
+
+            else if (numberofCharacters > 150 && 200 >= numberofCharacters)
+            {
+                Message = Message.Insert(45, "- \n");
+                Message = Message.Insert(95, " - \n");
+                Message = Message.Insert(145, " - \n");
+            }
+            else if (numberofCharacters > 200)
+            {
+                Message = Message.Insert(45, " - \n");
+                Message = Message.Insert(95, " - \n");
+                Message = Message.Insert(145, " - \n");
+                Message = Message.Insert(195, " - \n");
+            }
+        }
 
         HtmlMessage = new MarkupString(Message);
 

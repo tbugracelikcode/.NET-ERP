@@ -180,6 +180,9 @@
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
+  <data name="ErrorBoundryButtonText" xml:space="preserve">
+    <value>Temizle</value>
+  </data>
   <data name="InventoryGridAmount" xml:space="preserve">
     <value>MİKTAR</value>
   </data>
