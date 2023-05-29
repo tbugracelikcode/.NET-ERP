@@ -21,7 +21,10 @@ namespace TSI.QueryBuilder.DatabaseSchemes
         {
             if (_connection != null)
             {
-                SqlConnection sqlConnection = new SqlConnection(_connection.ConnectionString);
+                SqlConnection sqlConnection = new SqlConnection("Server=94.73.145.4;Database=u0364806_TSIERP;UID=u0364806_TSIERP;PWD=u=xfJ@i-7H5-VN23;MultipleActiveResultSets=True;TrustServerCertificate=True;");
+
+                if (sqlConnection.State == ConnectionState.Closed)
+                    sqlConnection.Open();
 
                 ServerConnection serverConnection = new ServerConnection(sqlConnection);
 
@@ -31,10 +34,10 @@ namespace TSI.QueryBuilder.DatabaseSchemes
             return null;
         }
 
-        public bool CreateTable(string tableName, Column[] columns)
+        public Table CreateTable(string tableName)
         {
-            bool acceptChanges = false;
-
+            Table table = null;
+         
             var server = ConnectToServer();
 
             if (server != null)
@@ -43,39 +46,10 @@ namespace TSI.QueryBuilder.DatabaseSchemes
 
                 if (database != null)
                 {
-                    server.ConnectionContext.BeginTransaction();
-
-                    try
-                    {
-                        Table table = new Table(database, tableName);
-
-                        foreach (Column item in columns)
-                        {
-                            table.Columns.Add(item);
-                        }
-
-                        table.Create();
-
-                        foreach (Column item in columns)
-                        {
-                            if (item.Identity)
-                            {
-                                bool primaryIndex = CreateIndex(tableName, "IX_" + item.Name, item, IndexKeyType.DriUniqueKey);
-                            }
-                        }
-
-                        server.ConnectionContext.CommitTransaction();
-                        acceptChanges = true;
-                    }
-                    catch (Exception exp)
-                    {
-                        server.ConnectionContext.RollBackTransaction();
-                        acceptChanges = false;
-                    }
+                    table = new Table(database, tableName);
                 }
             }
-
-            return acceptChanges;
+            return table;
         }
 
         public bool DropTable(string tableName)

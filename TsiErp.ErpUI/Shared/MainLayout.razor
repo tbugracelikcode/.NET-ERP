@@ -1,10 +1,14 @@
 ﻿@inherits LayoutComponentBase
 @inject IJSRuntime JS
+@inject IProgVersionsAppService VersionControlService 
 @using Syncfusion.Blazor.Navigations
 @using TsiErp.Localizations.Resources.Stations.Page
 @using Syncfusion.Blazor.Buttons
 
 @inject IStringLocalizer<StationsResource> L 
+@using Tsi.Core.Utilities.VersionUtilities;
+@using TsiErp.Business.Entities.ProgVersion.Services;
+@using TsiErp.DataAccess.DatabaseSchemeHistories;
 @*@implements IAsyncDisposable*@
 
 <PageTitle>TSI ERP</PageTitle>
@@ -285,8 +289,24 @@
     SfSidebar Sidebar;
     private MarkupString HtmlMessage { get; set; }
 
-    protected override void OnInitialized()
+    protected async override void OnInitialized()
     {
         errorBoundary = new ErrorBoundary();
+
+        Version version = typeof(Program).Assembly.GetName().Version;
+
+        string progVersion = version.Major + "." + version.Minor + "." + version.Build;
+
+        bool control = await VersionControlService.CheckVersion(progVersion);
+
+        //DatabaseSchemeUpdater updater = new DatabaseSchemeUpdater();
+
+        ////var updateMethod = updater.GetType().GetMethods();
+        ////foreach (var item in updateMethod)
+        ////{
+            
+        ////}
+
+        //updater.Update();
     }
 }
