@@ -114,7 +114,15 @@ namespace TSI.QueryBuilder.BaseClasses
                         }
                         else
                         {
-                            query.WhereSentence = query.WhereSentence + " and " + isDeleted;
+                            if (query.TableName == "ProgVersions")
+                            {
+                                query.WhereSentence = query.WhereSentence;
+                            }
+                            else
+                            {
+                                query.WhereSentence = query.WhereSentence + " and " + isDeleted;
+                            }
+
                             query.Sql = query.Sql + " where " + query.WhereSentence;
                         }
                     }
