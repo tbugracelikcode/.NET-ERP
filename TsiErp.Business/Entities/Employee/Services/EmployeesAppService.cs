@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
+using Tsi.Core.Utilities.EnumUtilities;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
@@ -13,6 +14,7 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.Department;
 using TsiErp.Entities.Entities.Employee;
 using TsiErp.Entities.Entities.Employee.Dtos;
+using TsiErp.Entities.Enums;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.Employees.Page;
 
@@ -57,16 +59,14 @@ namespace TsiErp.Business.Entities.Employee.Services
                     Code = input.Code,
                     Address = input.Address,
                     Birthday = input.Birthday,
-                    BloodType = input.BloodType,
+                    BloodType = (int)input.BloodType,
                     CellPhone = input.CellPhone,
                     City = input.City,
-                    Department = input.Department,
                     DepartmentID = input.DepartmentID,
                     District = input.District,
                     Email = input.Email,
                     HomePhone = input.HomePhone,
                     IDnumber = input.IDnumber,
-                    Image = input.Image,
                     Surname = input.Surname,
                     CreationTime = DateTime.Now,
                     CreatorId = LoginedUserService.UserId,
@@ -112,7 +112,7 @@ namespace TsiErp.Business.Entities.Employee.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
                 var query = queryFactory
-                        .Query().From(Tables.Employees).Select<Employees>(e => new { e.Surname, e.Birthday, e.BloodType, e.CellPhone, e.HomePhone, e.City, e.Name, e.Address, e.Code, e.DataOpenStatus, e.DataOpenStatusUserId, e.DepartmentID, e.District, e.Email, e.Id, e.IDnumber, e.IsActive, e.Image })
+                        .Query().From(Tables.Employees).Select<Employees>(e => new { e.Surname, e.Birthday, e.BloodType, e.CellPhone, e.HomePhone, e.City, e.Name, e.Address, e.Code, e.DataOpenStatus, e.DataOpenStatusUserId, e.DepartmentID, e.District, e.Email, e.Id, e.IDnumber, e.IsActive })
                             .Join<Departments>
                             (
                                 d => new { Department = d.Name, DepartmentID = d.Id },
@@ -141,7 +141,7 @@ namespace TsiErp.Business.Entities.Employee.Services
                 var query = queryFactory
                    .Query()
                    .From(Tables.Employees)
-                   .Select<Employees>(e => new { e.Surname, e.Birthday, e.BloodType, e.CellPhone, e.HomePhone, e.City, e.Name, e.Address, e.Code, e.DataOpenStatus, e.DataOpenStatusUserId, e.DepartmentID, e.District, e.Email, e.Id, e.IDnumber, e.IsActive, e.Image })
+                   .Select<Employees>(e => new { e.Surname, e.Birthday, e.BloodType, e.CellPhone, e.HomePhone, e.City, e.Name, e.Address, e.Code, e.DataOpenStatus, e.DataOpenStatusUserId, e.DepartmentID, e.District, e.Email, e.Id, e.IDnumber, e.IsActive})
                        .Join<Departments>
                        (
                            d => new { Department = d.Name },
@@ -187,7 +187,6 @@ namespace TsiErp.Business.Entities.Employee.Services
                     Id = input.Id,
                     Address = input.Address,
                     Birthday = input.Birthday,
-                    Image = input.Image,
                     BloodType = input.BloodType,
                     IDnumber = input.IDnumber,
                     CellPhone = input.CellPhone,
@@ -237,11 +236,10 @@ namespace TsiErp.Business.Entities.Employee.Services
                     DepartmentID = entity.DepartmentID,
                     Address = entity.Address,
                     Birthday = entity.Birthday,
-                    BloodType = entity.BloodType,
+                    BloodType = (int)entity.BloodType,
                     CellPhone = entity.CellPhone,
                     City = entity.City,
                     IDnumber = entity.IDnumber,
-                    Image = entity.Image,
                     IsActive = entity.IsActive,
                     CreationTime = entity.CreationTime.Value,
                     CreatorId = entity.CreatorId.Value,

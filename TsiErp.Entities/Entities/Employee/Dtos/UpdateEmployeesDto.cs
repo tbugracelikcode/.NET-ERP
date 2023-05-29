@@ -32,7 +32,7 @@ namespace TsiErp.Entities.Entities.Employee.Dtos
         /// <summary>
         /// Kan Grubu
         /// </summary>
-        public BloodTypeEnum? BloodType { get; set; }
+        public int BloodType { get; set; }
         /// <summary>
         /// Adres
         /// </summary>
@@ -57,10 +57,6 @@ namespace TsiErp.Entities.Entities.Employee.Dtos
         /// EPosta
         /// </summary>
         public string Email { get; set; }
-        /// <summary>
-        /// Resim
-        /// </summary>
-        public byte[] Image { get; set; }
         /// <summary>
         /// Aktiflik
         /// </summary>

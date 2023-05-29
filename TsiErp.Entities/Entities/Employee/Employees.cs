@@ -72,10 +72,6 @@ namespace TsiErp.Entities.Entities.Employee
         /// </summary>
         public string Email { get; set; }
         /// <summary>
-        /// Resim
-        /// </summary>
-        public byte[] Image { get; set; }
-        /// <summary>
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
