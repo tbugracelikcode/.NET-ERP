@@ -31,11 +31,12 @@ namespace TsiErp.ErpUI.Pages.Employee
         public static List<SelectEmployeesDto> GetEnumDisplayBloodTypesNames<T>()
         {
             var type = typeof(T);
+
             return Enum.GetValues(type)
-                       .Cast<T>()
+                       .Cast<BloodTypeEnum>()
                        .Select(x => new SelectEmployeesDto
                        {
-                           BloodType = x as BloodTypeEnum?,
+                           BloodType = x,
                            BloodTypeName = type.GetMember(x.ToString())
                        .First()
                        .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()

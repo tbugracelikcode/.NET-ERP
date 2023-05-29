@@ -22,10 +22,6 @@ namespace TsiErp.Entities.Entities.Employee.Dtos
         /// </summary>        
         public Guid? DepartmentID { get; set; }
         /// <summary>
-        /// Departman Adı
-        /// </summary>
-        public string Department { get; set; }
-        /// <summary>
         /// TC Kimlik No
         /// </summary>
         public string IDnumber { get; set; }
@@ -36,7 +32,7 @@ namespace TsiErp.Entities.Entities.Employee.Dtos
         /// <summary>
         /// Kan Grubu
         /// </summary>
-        public BloodTypeEnum? BloodType { get; set; }
+        public int BloodType { get; set; }
         /// <summary>
         /// Adres
         /// </summary>
@@ -61,10 +57,6 @@ namespace TsiErp.Entities.Entities.Employee.Dtos
         /// EPosta
         /// </summary>
         public string Email { get; set; }
-        /// <summary>
-        /// Resim
-        /// </summary>
-        public byte[] Image { get; set; }
         /// <summary>
         /// Aktiflik
         /// </summary>

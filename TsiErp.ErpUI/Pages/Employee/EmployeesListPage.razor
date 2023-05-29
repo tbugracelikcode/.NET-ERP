@@ -221,7 +221,7 @@
                                                         <DxGridLayoutItem Row="1" Column="0">
                                                             <Template>
                                                                 <label class="TSIModalLabel"><strong>@L["BloodTypeLabel"] </strong></label><br />
-                                                               <SfDropDownList TItem="SelectEmployeesDto" TValue="BloodTypeEnum?" PopupHeight="230px"  @bind-Value="@DataSource.BloodType" DataSource="@bloodtypes">
+                                                                <SfDropDownList TItem="SelectEmployeesDto" TValue="BloodTypeEnum" PopupHeight="230px" @bind-Value="@DataSource.BloodType" DataSource="@bloodtypes">
                                 <DropDownListFieldSettings Text="BloodTypeName" Value="BloodType"></DropDownListFieldSettings>
                             </SfDropDownList>
                                                             </Template>
