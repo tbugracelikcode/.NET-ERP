@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TSI.QueryBuilder.DatabaseSchemes\TSI.QueryBuilder.DatabaseSchemes.csproj" />
     <ProjectReference Include="..\TsiErp.Entities\TsiErp.Entities.csproj" />
   </ItemGroup>
 
