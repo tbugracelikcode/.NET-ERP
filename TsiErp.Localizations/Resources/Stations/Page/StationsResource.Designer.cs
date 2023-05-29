@@ -250,6 +250,15 @@ namespace TsiErp.Localizations.Resources.Stations.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Temizle.
+        /// </summary>
+        public static string ErrorBoundryButtonText {
+            get {
+                return ResourceManager.GetString("ErrorBoundryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MİKTAR.
         /// </summary>
         public static string InventoryGridAmount {

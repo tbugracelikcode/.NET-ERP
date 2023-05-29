@@ -32,12 +32,10 @@ namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
         /// Data Concurrency UserID
         /// </summary>
         public Guid? DataOpenStatusUserId { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Üretilen Miktar
         /// </summary>
         public decimal ProducedQuantity { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Operasyon Süresi
         /// </summary>
@@ -58,17 +56,14 @@ namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
         /// Bitiş Saati
         /// </summary>
         public TimeSpan? OperationEndTime { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Duruş Süresi
         /// </summary>
         public decimal HaltTime { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Ayar Süresi
         /// </summary>
         public decimal AdjustmentTime { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Planlanan Adet
         /// </summary>

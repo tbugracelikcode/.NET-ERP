@@ -15,7 +15,6 @@ namespace TsiErp.ErpUI.Pages.ExchangeRate
         {
             BaseCrudService = ExchangeRatesService;
             _L = L;
-            await GetCurrenciesList();
         }
 
         protected override Task BeforeInsertAsync()
@@ -72,11 +71,6 @@ namespace TsiErp.ErpUI.Pages.ExchangeRate
         }
 
         #endregion
-
-        private async Task GetCurrenciesList()
-        {
-            CurrenciesList = (await CurrenciesAppService.GetListAsync(new ListCurrenciesParameterDto())).Data.ToList();
-        }
 
 
     }

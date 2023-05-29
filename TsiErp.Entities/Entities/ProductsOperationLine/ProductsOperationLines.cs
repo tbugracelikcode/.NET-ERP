@@ -28,12 +28,10 @@ namespace TsiErp.Entities.Entities.ProductsOperationLine
         /// İşlem Adet
         /// </summary>
         public int ProcessQuantity { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Ayar ve Kontrol Süresi
         /// </summary>
         public decimal AdjustmentAndControlTime { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Operasyon Süresi
         /// </summary>

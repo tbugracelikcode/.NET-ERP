@@ -53,7 +53,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
 
                 var query = queryFactory.Query().From(Tables.TemplateOperations).Insert(new CreateTemplateOperationsDto
                 {
-                    WorkCenterID = input.WorkCenterID,
+                    WorkCenterID = Guid.Empty,
                     Code = input.Code,
                     CreationTime = DateTime.Now,
                     CreatorId = LoginedUserService.UserId,
@@ -98,7 +98,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
 
                 var templateOperation = queryFactory.Insert<SelectTemplateOperationsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.TemplateOperations, LogType.Insert, templateOperation.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.TemplateOperations, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectTemplateOperationsDto>(templateOperation);
             }
@@ -177,7 +177,29 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
                 var query = queryFactory.Query().From(Tables.TemplateOperations).Select("*").Where(null, true, true, "");
+
                 var templateOperations = queryFactory.GetList<ListTemplateOperationsDto>(query).ToList();
+
+                var queryLines = queryFactory
+                     .Query()
+                     .From(Tables.TemplateOperationLines)
+                     .Select<TemplateOperationLines>(tol => new { tol.TemplateOperationID, tol.StationID, tol.ProcessQuantity, tol.Priority, tol.OperationTime, tol.LineNr, tol.Id, tol.DataOpenStatusUserId, tol.DataOpenStatus, tol.Alternative, tol.AdjustmentAndControlTime })
+                     .Join<Stations>
+                      (
+                          s => new { StationID = s.Id, StationCode = s.Code, StationName = s.Name },
+                          nameof(TemplateOperationLines.StationID),
+                          nameof(Stations.Id),
+                          JoinType.Left
+                      )
+                      .Where(null, false, false, Tables.TemplateOperationLines);
+
+                var templateOperationLine = queryFactory.GetList<SelectTemplateOperationLinesDto>(queryLines).ToList();
+
+                foreach(var item in templateOperations)
+                {
+                    item.SelectTemplateOperationLines = templateOperationLine.Where(t => t.TemplateOperationID == item.Id).ToList();
+                }
+
                 return new SuccessDataResult<IList<ListTemplateOperationsDto>>(templateOperations);
             }
 
@@ -307,7 +329,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
 
                 var templateOperation = queryFactory.Update<SelectTemplateOperationsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.TemplateOperations, LogType.Update, templateOperation.Id);
+                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.TemplateOperations, LogType.Update, entity.Id);
 
                 return new SuccessDataResult<SelectTemplateOperationsDto>(templateOperation);
             }

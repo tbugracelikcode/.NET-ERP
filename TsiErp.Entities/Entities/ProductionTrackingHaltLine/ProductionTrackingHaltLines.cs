@@ -28,7 +28,6 @@ namespace TsiErp.Entities.Entities.ProductionTrackingHaltLine
         /// Duruş Sebebi Adı
         /// </summary>
         public string HaltName { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Duruş Süresi
         /// </summary>

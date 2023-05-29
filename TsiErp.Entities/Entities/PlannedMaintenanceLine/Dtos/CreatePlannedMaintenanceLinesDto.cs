@@ -26,7 +26,6 @@ namespace TsiErp.Entities.Entities.PlannedMaintenanceLine.Dtos
         /// Birim Set ID
         /// </summary>
         public Guid? UnitSetID { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Miktar
         /// </summary>

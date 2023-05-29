@@ -57,7 +57,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                 var query = queryFactory.Query().From(Tables.Forecasts).Insert(new CreateForecastsDto
                 {
                     BranchID = input.BranchID,
-                    CreationDate_ = input.CreationDate_,
+                    CreationDate_ = DateTime.Now,
                     CurrentAccountCardID = input.CurrentAccountCardID,
                     Description_ = input.Description_,
                     LineNumber = input.LineNumber,
@@ -104,7 +104,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
 
                 var forecast = queryFactory.Insert<SelectForecastsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Forecasts, LogType.Insert, forecast.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Forecasts, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectForecastsDto>(forecast);
             }
@@ -231,6 +231,8 @@ namespace TsiErp.Business.Entities.Forecast.Services
                         .Where(null, false, false, Tables.Forecasts);
 
                 var forecasts = queryFactory.GetList<ListForecastsDto>(query).ToList();
+
+                throw new Exception();
                 return new SuccessDataResult<IList<ListForecastsDto>>(forecasts);
             }
         }
@@ -408,7 +410,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
 
                 var forecast = queryFactory.Update<SelectForecastsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.Forecasts, LogType.Update, forecast.Id);
+                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.Forecasts, LogType.Update, entity.Id);
 
                 return new SuccessDataResult<SelectForecastsDto>(forecast);
             }

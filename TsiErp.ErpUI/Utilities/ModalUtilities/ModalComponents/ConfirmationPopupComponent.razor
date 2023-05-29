@@ -8,9 +8,9 @@
                 <i class="fa fa-trash fa-3x"></i>
             </td>
             <td style="width:70%; ">
-                <p style="color:#A50000;font-size:16px;text-align: left;">@Message</p>
+                <p style="color:#A50000;font-size:16px;text-align: left;">@HtmlMessage</p>
             </td>
-            
+
         </tr>
     </table>
 
@@ -40,11 +40,46 @@
 
 @code {
 
+
+    public MarkupString HtmlMessage { get; set; }
+
     public async override Task SetParametersAsync(ParameterView parameters)
     {
         Message = parameters.GetValueOrDefault<String>("Message") ?? "No message found";
+
+        if (!Message.Contains("<li>"))
+        {
+            int numberofCharacters = Message.Length;
+
+            if (numberofCharacters > 50 && 100 >= numberofCharacters)
+            {
+                Message = Message.Insert(45, "- \n");
+            }
+
+            else if (numberofCharacters > 100 && 150 >= numberofCharacters)
+            {
+                Message = Message.Insert(45, "- \n");
+                Message = Message.Insert(90, " - \n");
+            }
+
+            else if (numberofCharacters > 150 && 200 >= numberofCharacters)
+            {
+                Message = Message.Insert(45, "- \n");
+                Message = Message.Insert(90, " - \n");
+                Message = Message.Insert(135, " - \n");
+            }
+            else if (numberofCharacters > 200)
+            {
+                Message = Message.Insert(45, "- \n");
+                Message = Message.Insert(90, " - \n");
+                Message = Message.Insert(135, " - \n");
+                Message = Message.Insert(180, " - \n");
+            }
+        }
         YesText = parameters.GetValueOrDefault<String>("YesText") ?? "Evet";
         CancelText = parameters.GetValueOrDefault<String>("CancelText") ?? "Vazgeç";
+
+        HtmlMessage = new MarkupString(Message);
 
         await base.SetParametersAsync(parameters);
     }

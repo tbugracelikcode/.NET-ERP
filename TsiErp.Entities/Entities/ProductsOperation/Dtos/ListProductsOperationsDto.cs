@@ -40,7 +40,7 @@ namespace TsiErp.Entities.Entities.ProductsOperation.Dtos
         /// <summary>
         /// Ürün Id
         /// </summary>
-        public Guid ProductId { get; set; }
+        public Guid ProductID { get; set; }
         /// <summary>
         /// Aktiflik
         /// </summary>

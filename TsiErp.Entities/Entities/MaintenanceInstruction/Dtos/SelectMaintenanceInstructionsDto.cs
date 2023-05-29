@@ -45,12 +45,10 @@ namespace TsiErp.Entities.Entities.MaintenanceInstruction.Dtos
         /// Periyot Adı
         /// </summary>
         public string PeriodName { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Periyot Süresi
         /// </summary>
         public decimal PeriodTime { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Planlanan Bakım Süresi
         /// </summary>

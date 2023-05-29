@@ -42,7 +42,6 @@ namespace TsiErp.Entities.Entities.PurchasePriceLine.Dtos
         /// Para Birimi Kodu
         /// </summary>
         public string CurrencyCode { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Fiyat
         /// </summary>

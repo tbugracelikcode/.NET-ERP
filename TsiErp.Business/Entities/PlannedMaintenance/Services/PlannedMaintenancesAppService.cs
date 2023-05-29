@@ -110,7 +110,7 @@ namespace TsiErp.Business.Entities.PlannedMaintenance.Services
 
                 var maintenance = queryFactory.Insert<SelectPlannedMaintenancesDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PlannedMaintenances, LogType.Insert, maintenance.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PlannedMaintenances, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectPlannedMaintenancesDto>(maintenance);
             }
@@ -213,7 +213,7 @@ namespace TsiErp.Business.Entities.PlannedMaintenance.Services
                 var query = queryFactory
                        .Query()
                        .From(Tables.PlannedMaintenances)
-                       .Select<PlannedMaintenances>(pm => new { pm.Status, pm.StationID, pm.StartDate, pm.RemainingTime, pm.RegistrationNo, pm.PlannedTime, pm.PlannedDate, pm.PeriodTime, pm.PeriodID, pm.OccuredTime, pm.NumberofCaregivers, pm.Note_, pm.Id, pm.DataOpenStatusUserId, pm.DataOpenStatus, pm.CompletionDate, pm.Caregiver })
+                       .Select<PlannedMaintenances>(pm => new {  pm.Status, pm.StationID, pm.StartDate, pm.RemainingTime, pm.RegistrationNo, pm.PlannedTime, pm.PlannedDate, pm.PeriodTime, pm.PeriodID, pm.OccuredTime, pm.NumberofCaregivers, pm.Note_, pm.Id, pm.DataOpenStatusUserId, pm.DataOpenStatus, pm.CompletionDate, pm.Caregiver })
                        .Join<Stations>
                         (
                             s => new { StationCode = s.Code },
@@ -409,7 +409,7 @@ namespace TsiErp.Business.Entities.PlannedMaintenance.Services
 
                 var maintenance = queryFactory.Update<SelectPlannedMaintenancesDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.PlannedMaintenances, LogType.Update, maintenance.Id);
+                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.PlannedMaintenances, LogType.Update, entity.Id);
 
                 return new SuccessDataResult<SelectPlannedMaintenancesDto>(maintenance);
             }

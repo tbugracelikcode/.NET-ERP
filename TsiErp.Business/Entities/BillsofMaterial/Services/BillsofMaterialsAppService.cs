@@ -101,7 +101,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
 
                 var billOfMaterial = queryFactory.Insert<SelectBillsofMaterialsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Insert, billOfMaterial.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectBillsofMaterialsDto>(billOfMaterial);
             }

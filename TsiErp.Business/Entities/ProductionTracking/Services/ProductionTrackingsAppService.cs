@@ -108,7 +108,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
                 var productionTracking = queryFactory.Insert<SelectProductionTrackingsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductionTrackings, LogType.Insert, productionTracking.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductionTrackings, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectProductionTrackingsDto>(productionTracking);
             }
@@ -442,7 +442,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
                 var productionTracking = queryFactory.Update<SelectProductionTrackingsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.ProductionTrackings, LogType.Update, productionTracking.Id);
+                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.ProductionTrackings, LogType.Update, entity.Id);
 
                 return new SuccessDataResult<SelectProductionTrackingsDto>(productionTracking);
             }

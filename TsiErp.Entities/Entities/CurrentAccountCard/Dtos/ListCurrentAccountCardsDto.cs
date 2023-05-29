@@ -28,7 +28,7 @@ namespace TsiErp.Entities.Entities.CurrentAccountCard.Dtos
         /// <summary>
         /// Tür
         /// </summary>
-        public int Type { get; set; }
+        public int Type_ { get; set; }
         /// <summary>
         /// Adres1
         /// </summary>

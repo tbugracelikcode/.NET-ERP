@@ -105,7 +105,7 @@ namespace TsiErp.Business.Entities.Route.Services
 
                 var route = queryFactory.Insert<SelectRoutesDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Routes, LogType.Insert, route.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Routes, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectRoutesDto>(route);
             }
@@ -208,7 +208,7 @@ namespace TsiErp.Business.Entities.Route.Services
                             nameof(Products.Id),
                             JoinType.Left
                         )
-                        .Where(null, true, true, Tables.BillsofMaterials);
+                        .Where(null, true, true, Tables.Routes);
 
                 var routes = queryFactory.GetList<ListRoutesDto>(query).ToList();
                 return new SuccessDataResult<IList<ListRoutesDto>>(routes);
@@ -374,7 +374,7 @@ namespace TsiErp.Business.Entities.Route.Services
 
                 var route = queryFactory.Update<SelectRoutesDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.Routes, LogType.Update, route.Id);
+                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.Routes, LogType.Update, entity.Id);
 
                 return new SuccessDataResult<SelectRoutesDto>(route);
             }

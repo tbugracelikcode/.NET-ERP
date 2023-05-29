@@ -81,7 +81,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                     TaxNumber = input.TaxNumber,
                     Tel1 = input.Tel1,
                     Tel2 = input.Tel2,
-                    Type = input.Type,
+                    Type_ = input.Type_,
                     Web = input.Web,
                     CreationTime = DateTime.Now,
                     CreatorId = LoginedUserService.UserId,
@@ -128,7 +128,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
                 var query = queryFactory
-                        .Query().From(Tables.CurrentAccountCards).Select<CurrentAccountCards>(ca => new { ca.Id, ca.IDnumber, ca.Address2, ca.Address1, ca.City, ca.CoatingCustomer, ca.Code,  ca.ContractSupplier, ca.Country, ca.CurrencyID, ca.DataOpenStatus, ca.DataOpenStatusUserId, ca.District, ca.Email, ca.Fax, ca.TaxNumber, ca.Tel1, ca.Tel2, ca.Type, ca.Web, ca.TaxAdministration, ca.SupplierNo, ca.Supplier, ca.SoleProprietorship, ca.ShippingAddress, ca.SaleContract, ca.Responsible, ca.PrivateCode5, ca.PrivateCode4, ca.PrivateCode3, ca.PrivateCode2, ca.PrivateCode1, ca.PostCode, ca.PlusPercentage, ca.Name })
+                        .Query().From(Tables.CurrentAccountCards).Select<CurrentAccountCards>(ca => new { ca.Id, ca.IDnumber, ca.Address2, ca.Address1, ca.City, ca.CoatingCustomer, ca.Code,  ca.ContractSupplier, ca.Country, ca.CurrencyID, ca.DataOpenStatus, ca.DataOpenStatusUserId, ca.District, ca.Email, ca.Fax, ca.TaxNumber, ca.Tel1, ca.Tel2, ca.Type_, ca.Web, ca.TaxAdministration, ca.SupplierNo, ca.Supplier, ca.SoleProprietorship, ca.ShippingAddress, ca.SaleContract, ca.Responsible, ca.PrivateCode5, ca.PrivateCode4, ca.PrivateCode3, ca.PrivateCode2, ca.PrivateCode1, ca.PostCode, ca.PlusPercentage, ca.Name })
                             .Join<Currencies>
                             (
                                 c => new { Currency = c.Code, CurrencyID = c.Id },
@@ -136,11 +136,11 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                                 nameof(Currencies.Id),
                                 JoinType.Left
                             )
-                            .Where(new { Id = id }, true, true, Tables.Periods);
+                            .Where(new { Id = id }, true, true, Tables.CurrentAccountCards);
 
                 var currentAccountCard = queryFactory.Get<SelectCurrentAccountCardsDto>(query);
 
-                LogsAppService.InsertLogToDatabase(currentAccountCard, currentAccountCard, LoginedUserService.UserId, Tables.Periods, LogType.Get, id);
+                LogsAppService.InsertLogToDatabase(currentAccountCard, currentAccountCard, LoginedUserService.UserId, Tables.CurrentAccountCards, LogType.Get, id);
 
                 return new SuccessDataResult<SelectCurrentAccountCardsDto>(currentAccountCard);
 
@@ -156,7 +156,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                 var query = queryFactory
                    .Query()
                    .From(Tables.CurrentAccountCards)
-                   .Select<CurrentAccountCards>(ca => new {ca.Id, ca.IDnumber, ca.Address2, ca.Address1, ca.City, ca.CoatingCustomer, ca.Code,  ca.ContractSupplier, ca.Country, ca.CurrencyID, ca.DataOpenStatus, ca.DataOpenStatusUserId, ca.District, ca.Email, ca.Fax, ca.TaxNumber, ca.Tel1, ca.Tel2, ca.Type, ca.Web, ca.TaxAdministration, ca.SupplierNo, ca.Supplier, ca.SoleProprietorship, ca.ShippingAddress, ca.SaleContract, ca.Responsible, ca.PrivateCode5, ca.PrivateCode4, ca.PrivateCode3, ca.PrivateCode2, ca.PrivateCode1, ca.PostCode, ca.PlusPercentage, ca.Name })
+                   .Select<CurrentAccountCards>(ca => new {ca.Id, ca.IDnumber, ca.Address2, ca.Address1, ca.City, ca.CoatingCustomer, ca.Code,  ca.ContractSupplier, ca.Country, ca.CurrencyID, ca.DataOpenStatus, ca.DataOpenStatusUserId, ca.District, ca.Email, ca.Fax, ca.TaxNumber, ca.Tel1, ca.Tel2, ca.Type_, ca.Web, ca.TaxAdministration, ca.SupplierNo, ca.Supplier, ca.SoleProprietorship, ca.ShippingAddress, ca.SaleContract, ca.Responsible, ca.PrivateCode5, ca.PrivateCode4, ca.PrivateCode3, ca.PrivateCode2, ca.PrivateCode1, ca.PostCode, ca.PlusPercentage, ca.Name })
                        .Join<Currencies>
                        (
                            c => new { Currency = c.Code },
@@ -226,7 +226,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                     TaxNumber = input.TaxNumber,
                     Tel1 = input.Tel1,
                     Tel2 = input.Tel2,
-                    Type = input.Type,
+                    Type_ = input.Type_,
                     Web = input.Web,
                     Name = input.Name,
                     Id = input.Id,
@@ -292,7 +292,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                     TaxNumber = entity.TaxNumber,
                     Tel1 = entity.Tel1,
                     Tel2 = entity.Tel2,
-                    Type = entity.Type,
+                    Type_ = entity.Type_,
                     Web = entity.Web,
                     CreationTime = entity.CreationTime.Value,
                     CreatorId = entity.CreatorId.Value,

@@ -30,7 +30,6 @@ namespace TsiErp.Entities.Entities.ProductionTrackingHaltLine.Dtos
         /// Planlı mı?
         /// </summary>
         public bool IsPlanned { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Duruş Süresi
         /// </summary>

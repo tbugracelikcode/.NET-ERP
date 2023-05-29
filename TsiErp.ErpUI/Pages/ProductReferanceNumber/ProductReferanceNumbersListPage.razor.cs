@@ -30,12 +30,6 @@ namespace TsiErp.ErpUI.Pages.ProductReferanceNumber
             ListDataSource = (await GetListAsync(new ListProductReferanceNumbersParameterDto
             { })).ToList();
 
-            foreach (var item in ListDataSource)
-            {
-                item.CurrentAccountCardCode = (await CurrentAccountCardsAppService.GetAsync(item.CurrentAccountCardID)).Data.Code;
-                item.CurrentAccountCardName = (await CurrentAccountCardsAppService.GetAsync(item.CurrentAccountCardID)).Data.Name;
-            }
-
             IsLoaded = true;
         }
 

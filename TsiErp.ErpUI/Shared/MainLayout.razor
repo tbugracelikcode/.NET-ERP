@@ -2,6 +2,10 @@
 @inject IJSRuntime JS
 @inject IProgVersionsAppService VersionControlService 
 @using Syncfusion.Blazor.Navigations
+@using TsiErp.Localizations.Resources.Stations.Page
+@using Syncfusion.Blazor.Buttons
+
+@inject IStringLocalizer<StationsResource> L 
 @using Tsi.Core.Utilities.VersionUtilities;
 @using TsiErp.Business.Entities.ProgVersion.Services;
 @using TsiErp.DataAccess.DatabaseSchemeHistories;
@@ -35,10 +39,75 @@
                 @Body
             </ChildContent>
             <ErrorContent Context="Exception">
-                <div class="alert alert-danger">
-                    <h5>@Exception.GetType()</h5>
-                    <h5>@Exception.Message</h5>
-                    <button class="btn btn-info" @onclick="()=> errorBoundary.Recover()">Clear</button>
+                <div class="TSIErrorBoundryCard">
+                    <table>
+                        <tr>
+                            <th style="width:80%;text-align: left;">
+                                
+                                <h5 class="TSIErrorBoundryText">
+                                    @{
+                                        string message = Exception.Message;
+
+
+                                        if (message.Length > 145 && 290 >= message.Length)
+                                        {
+                                            message = message.Insert(140, "- \n");
+                                        }
+                                        else if (message.Length > 290 && 435 >= message.Length)
+                                        {
+                                            message = message.Insert(140, "- \n");
+                                            message = message.Insert(280, " - \n");
+                                        }
+                                        else if (message.Length > 435 && 580 >= message.Length)
+                                        {
+                                            message = message.Insert(140, "- \n");
+                                            message = message.Insert(280, " - \n");
+                                            message = message.Insert(420, " - \n");
+                                        }
+
+                                        else if (message.Length > 580 && 725 >= message.Length)
+                                        {
+                                            message = message.Insert(140, "- \n");
+                                            message = message.Insert(280, " - \n");
+                                            message = message.Insert(420, " - \n");
+                                            message = message.Insert(560, " - \n");
+                                        }
+
+                                        else if (message.Length > 725 && 870 >= message.Length)
+                                        {
+                                            message = message.Insert(140, "- \n");
+                                            message = message.Insert(280, " - \n");
+                                            message = message.Insert(420, " - \n");
+                                            message = message.Insert(560, " - \n");
+                                            message = message.Insert(700, " - \n");
+                                        }
+
+                                        HtmlMessage = new MarkupString(message);
+
+                                        string inner = string.Empty;
+
+                                        if(Exception.InnerException != null)
+                                        {
+                                            inner = " / " + Exception.InnerException;
+                                        }
+                                        else
+                                        {
+                                            inner = "";
+                                        }
+
+                                    }
+                                    <text style="font-size:22px">@Exception.GetType() : </text>@HtmlMessage@inner
+                                </h5>
+                            </th>
+
+                            <th style="width:20%">
+
+                                @*<button class="TSIErrorBoundryButton" @onclick="()=> errorBoundary.Recover()">Clear</button>*@
+                                <SfButton CssClass="TSISaveButton" @onclick="()=> errorBoundary.Recover()"><SfIcon Size="IconSize.Medium" Name="IconName.Reset"></SfIcon>&nbsp;@L["ErrorBoundryButtonText"]</SfButton>
+                            </th>
+                        </tr>
+                    </table>
+
                 </div>
             </ErrorContent>
         </ErrorBoundary>
@@ -200,8 +269,8 @@
     }
 
     /*.e-menu-wrapper.e-hamburger ul.e-menu {
-                            overflow-y: hidden !important;
-                        }*/
+                                        overflow-y: hidden !important;
+                                    }*/
 
     @@font-face {
         font-family: 'e-icons';
@@ -218,6 +287,7 @@
 {
     private ErrorBoundary errorBoundary;
     SfSidebar Sidebar;
+    private MarkupString HtmlMessage { get; set; }
 
     protected async override void OnInitialized()
     {

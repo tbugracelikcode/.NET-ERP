@@ -34,7 +34,6 @@ namespace TsiErp.Entities.Entities.MaintenanceInstructionLine.Dtos
         /// Birim Seti Kodu
         /// </summary>
         public string UnitSetCode { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Miktar
         /// </summary>
