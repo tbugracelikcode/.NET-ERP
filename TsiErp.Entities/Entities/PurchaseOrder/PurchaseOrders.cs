@@ -37,7 +37,6 @@ namespace TsiErp.Entities.Entities.PurchaseOrder
         /// </summary>
         public TimeSpan? Time_ { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Kur Tutarı
         /// </summary>
@@ -83,31 +82,26 @@ namespace TsiErp.Entities.Entities.PurchaseOrder
         /// </summary>
         public Guid ProductionOrderID { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Brüt Tutar
         /// </summary>
         public decimal GrossAmount { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// KDV hariç Tutar
         /// </summary>
         public decimal TotalVatExcludedAmount { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// KDV Tutar
         /// </summary>
         public decimal TotalVatAmount { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Toplam İndirimli Tutar
         /// </summary>
         public decimal TotalDiscountAmount { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Net Tutar
         /// </summary>

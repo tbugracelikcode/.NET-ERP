@@ -57,8 +57,6 @@ namespace TsiErp.Entities.Entities.Product
         /// Temin Şekli
         /// </summary>
         public ProductSupplyFormEnum SupplyForm { get; set; }
-
-        [Precision(18, 6)]
         /// <summary>
         /// Stok Boyu
         /// </summary>
@@ -68,7 +66,6 @@ namespace TsiErp.Entities.Entities.Product
         /// </summary>
         public string GTIP { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Testere Fire
         /// </summary>
@@ -138,7 +135,6 @@ namespace TsiErp.Entities.Entities.Product
         /// </summary>
         public int PlannedWastage { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Kaplama Ağırlığı
         /// </summary>

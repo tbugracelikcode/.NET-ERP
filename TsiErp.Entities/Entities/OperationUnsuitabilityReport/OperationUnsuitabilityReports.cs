@@ -36,7 +36,6 @@ namespace TsiErp.Entities.Entities.OperationUnsuitabilityReport
         /// Uygunsuzluk İş Emri Oluşacak
         /// </summary>
         public bool IsUnsuitabilityWorkOrder { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Ölçü Kontrol Form Beyan
         /// </summary>

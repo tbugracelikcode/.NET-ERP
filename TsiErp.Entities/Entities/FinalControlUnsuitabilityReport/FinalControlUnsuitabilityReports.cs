@@ -43,7 +43,6 @@ namespace TsiErp.Entities.Entities.FinalControlUnsuitabilityReport
         /// Olduğu Gibi Kullanılacak
         /// </summary>
         public bool IsToBeUsedAs { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Ölçü Kontrol Form Beyan
         /// </summary>

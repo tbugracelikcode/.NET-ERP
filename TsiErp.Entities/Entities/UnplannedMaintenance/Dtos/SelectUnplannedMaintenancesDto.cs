@@ -58,12 +58,10 @@ namespace TsiErp.Entities.Entities.UnplannedMaintenance.Dtos
         /// Bakımı Yapan Kişi Sayısı
         /// </summary>
         public int NumberofCaregivers { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Periyot Süresi
         /// </summary>
         public decimal PeriodTime { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Kalan Süre
         /// </summary>
@@ -72,12 +70,10 @@ namespace TsiErp.Entities.Entities.UnplannedMaintenance.Dtos
         /// Not
         /// </summary>
         public string Note_ { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Planlanan Bakım Süre
         /// </summary>
         public decimal UnplannedTime { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Gerçekleşen Bakım Süre
         /// </summary>

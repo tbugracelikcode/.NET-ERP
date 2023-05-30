@@ -46,37 +46,31 @@ namespace TsiErp.Entities.Entities.PurchaseOrderLine
         /// </summary>
         public Guid? LinkedPurchaseRequestID { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Miktar
         /// </summary>
         public decimal Quantity { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Birim Fiyat
         /// </summary>
         public decimal UnitPrice { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// İndirim Oranı
         /// </summary>
         public decimal DiscountRate { get; set; }
 
-        [Precision(18, 6)]
         ///<summary>
         /// İndirim Tutarı
         /// </summary>
         public decimal DiscountAmount { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Satır Tutarı
         /// </summary>
         public decimal LineAmount { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Satır Toplar Tutarı
         /// </summary>
@@ -90,13 +84,11 @@ namespace TsiErp.Entities.Entities.PurchaseOrderLine
         /// </summary>
         public int VATrate { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// KDV Tutarı
         /// </summary>
         public decimal VATamount { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Kur Turarı
         /// </summary>

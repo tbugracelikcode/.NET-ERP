@@ -31,7 +31,6 @@ namespace TsiErp.Entities.Entities.ShiftLine.Dtos
         /// Tür Enum
         /// </summary>
         public ShiftLinesTypeEnum Type { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Katsayı
         /// </summary>

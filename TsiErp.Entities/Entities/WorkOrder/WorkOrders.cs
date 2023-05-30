@@ -41,13 +41,11 @@ namespace TsiErp.Entities.Entities.WorkOrder
         /// Durum
         /// </summary>
         public WorkOrderStateEnum WorkOrderState { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Ayar ve Kontrol Süresi
         /// </summary>
         public decimal AdjustmentAndControlTime { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Operasyon Süresi
         /// </summary>
@@ -60,13 +58,11 @@ namespace TsiErp.Entities.Entities.WorkOrder
         /// Gerçekleşen Bitiş Tarihi
         /// </summary>
         public DateTime? OccuredFinishDate { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Planlanan Miktar
         /// </summary>
         public decimal PlannedQuantity { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Gerçekleşen Miktar
         /// </summary>

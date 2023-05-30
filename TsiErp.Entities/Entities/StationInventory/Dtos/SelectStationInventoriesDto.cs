@@ -35,7 +35,6 @@ namespace TsiErp.Entities.Entities.StationInventory.Dtos
         /// Stok Açıklaması
         /// </summary>
         public string ProductName { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Miktar
         /// </summary>

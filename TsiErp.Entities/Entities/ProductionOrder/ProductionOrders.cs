@@ -49,13 +49,11 @@ namespace TsiErp.Entities.Entities.ProductionOrder
         /// </summary>
         public DateTime? EndDate { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Planlanan Miktar
         /// </summary>
         public decimal PlannedQuantity { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Üretilen Miktar
         /// </summary>

@@ -80,7 +80,6 @@ namespace TsiErp.Business.Entities.Route.Services
                     {
                         ProductID = item.ProductID,
                         AdjustmentAndControlTime = item.AdjustmentAndControlTime,
-                        OperationPicture = item.OperationPicture,
                         OperationTime = item.OperationTime,
                         Priority = item.Priority,
                         ProductionPoolDescription = item.ProductionPoolDescription,
@@ -165,7 +164,7 @@ namespace TsiErp.Business.Entities.Route.Services
                 var queryLines = queryFactory
                        .Query()
                        .From(Tables.RouteLines)
-                       .Select<RouteLines>(rl => new { rl.RouteID, rl.ProductsOperationID, rl.ProductionPoolID, rl.ProductionPoolDescription, rl.ProductID, rl.Priority, rl.OperationTime, rl.OperationPicture, rl.LineNr, rl.Id, rl.DataOpenStatusUserId, rl.DataOpenStatus, rl.AdjustmentAndControlTime })
+                       .Select<RouteLines>(rl => new { rl.RouteID, rl.ProductsOperationID, rl.ProductionPoolID, rl.ProductionPoolDescription, rl.ProductID, rl.Priority, rl.OperationTime, rl.LineNr, rl.Id, rl.DataOpenStatusUserId, rl.DataOpenStatus, rl.AdjustmentAndControlTime })
                        .Join<Products>
                         (
                             pr => new { ProductID = pr.Id, ProductCode = pr.Code, ProductName = pr.Name },
@@ -239,7 +238,7 @@ namespace TsiErp.Business.Entities.Route.Services
                 var queryLines = queryFactory
                        .Query()
                         .From(Tables.RouteLines)
-                       .Select<RouteLines>(rl => new { rl.RouteID, rl.ProductsOperationID, rl.ProductionPoolID, rl.ProductionPoolDescription, rl.ProductID, rl.Priority, rl.OperationTime, rl.OperationPicture, rl.LineNr, rl.Id, rl.DataOpenStatusUserId, rl.DataOpenStatus, rl.AdjustmentAndControlTime })
+                       .Select<RouteLines>(rl => new { rl.RouteID, rl.ProductsOperationID, rl.ProductionPoolID, rl.ProductionPoolDescription, rl.ProductID, rl.Priority, rl.OperationTime, rl.LineNr, rl.Id, rl.DataOpenStatusUserId, rl.DataOpenStatus, rl.AdjustmentAndControlTime })
                        .Join<Products>
                         (
                             pr => new { ProductID = pr.Id, ProductCode = pr.Code, ProductName = pr.Name },
@@ -313,7 +312,6 @@ namespace TsiErp.Business.Entities.Route.Services
                         {
                             ProductID = item.ProductID,
                             AdjustmentAndControlTime = item.AdjustmentAndControlTime,
-                            OperationPicture = item.OperationPicture,
                             OperationTime = item.OperationTime,
                             Priority = item.Priority,
                             ProductionPoolDescription = item.ProductionPoolDescription,
@@ -347,7 +345,6 @@ namespace TsiErp.Business.Entities.Route.Services
                             {
                                 ProductID = item.ProductID,
                                 AdjustmentAndControlTime = item.AdjustmentAndControlTime,
-                                OperationPicture = item.OperationPicture,
                                 OperationTime = item.OperationTime,
                                 Priority = item.Priority,
                                 ProductionPoolDescription = item.ProductionPoolDescription,
@@ -428,7 +425,7 @@ namespace TsiErp.Business.Entities.Route.Services
                 var queryLines = queryFactory
                        .Query()
                        .From(Tables.RouteLines)
-                       .Select<RouteLines>(rl => new { rl.RouteID, rl.ProductsOperationID, rl.ProductionPoolID, rl.ProductionPoolDescription, rl.ProductID, rl.Priority, rl.OperationTime, rl.OperationPicture, rl.LineNr, rl.Id, rl.DataOpenStatusUserId, rl.DataOpenStatus, rl.AdjustmentAndControlTime })
+                       .Select<RouteLines>(rl => new { rl.RouteID, rl.ProductsOperationID, rl.ProductionPoolID, rl.ProductionPoolDescription, rl.ProductID, rl.Priority, rl.OperationTime, rl.LineNr, rl.Id, rl.DataOpenStatusUserId, rl.DataOpenStatus, rl.AdjustmentAndControlTime })
                        .Join<Products>
                         (
                             pr => new { ProductID = pr.Id, ProductCode = pr.Code, ProductName = pr.Name },
