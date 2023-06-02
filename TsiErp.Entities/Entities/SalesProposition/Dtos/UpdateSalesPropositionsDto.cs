@@ -21,7 +21,7 @@ namespace TsiErp.Entities.Entities.SalesProposition.Dtos
         /// <summary>
         /// Saat
         /// </summary>
-        public TimeSpan? Time_ { get; set; }
+        public string Time_ { get; set; }
         /// <summary>
         /// Kur Tutarı
         /// </summary>
@@ -49,7 +49,7 @@ namespace TsiErp.Entities.Entities.SalesProposition.Dtos
         /// <summary>
         /// Satış Teklif Durumu
         /// </summary>
-        public SalesPropositionStateEnum SalesPropositionState { get; set; }
+        public int SalesPropositionState { get; set; }
         /// <summary>
         /// Bağlı Teklif ID
         /// </summary>

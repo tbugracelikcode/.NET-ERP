@@ -173,7 +173,7 @@ else
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["Date_Label"] </strong></label><br />
-                            <SfDatePicker @bind-Value="@DataSource.Date_"></SfDatePicker>
+                            <SfDatePicker @bind-Value="@DataSource.Date_" Max="DateTime.Now"></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="3">
@@ -388,7 +388,7 @@ else
                     <DxGridLayoutItem Row="3" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["VATamountLineLabel"]</strong></label>
-                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.VATamount"></SfNumericTextBox>
+                            <SfNumericTextBox Min="0" TValue="decimal" @bind-Value="LineDataSource.VATamount" Enabled=false></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

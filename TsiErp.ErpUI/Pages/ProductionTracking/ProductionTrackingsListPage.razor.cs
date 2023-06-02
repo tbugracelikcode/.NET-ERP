@@ -422,52 +422,6 @@ namespace TsiErp.ErpUI.Pages.ProductionTracking
             }
         }
 
-        protected override async Task OnSubmit()
-        {
-            SelectProductionTrackingsDto result;
-
-            if (DataSource.Id == Guid.Empty)
-            {
-                DataSource.SelectProductionTrackingHaltLines = GridLineList;
-                var createInput = ObjectMapper.Map<SelectProductionTrackingsDto, CreateProductionTrackingsDto>(DataSource);
-
-                result = (await CreateAsync(createInput)).Data;
-
-                if (result != null)
-                    DataSource.Id = result.Id;
-            }
-            else
-            {
-                DataSource.SelectProductionTrackingHaltLines = GridLineList;
-
-                var updateInput = ObjectMapper.Map<SelectProductionTrackingsDto, UpdateProductionTrackingsDto>(DataSource);
-
-                result = (await UpdateAsync(updateInput)).Data;
-            }
-
-            if (result == null)
-            {
-
-                return;
-            }
-
-            await GetListDataSourceAsync();
-
-            var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
-
-            HideEditPage();
-
-            if (DataSource.Id == Guid.Empty)
-            {
-                DataSource.Id = result.Id;
-            }
-
-            if (savedEntityIndex > -1)
-                SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
-            else
-                SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
-        }
-
         public void HideLinesPopup()
         {
             LineCrudPopup = false;

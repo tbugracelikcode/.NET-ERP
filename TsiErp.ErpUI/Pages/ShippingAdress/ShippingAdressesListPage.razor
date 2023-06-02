@@ -225,7 +225,7 @@ else
                                                     <DxGridLayoutItem Row="1" Column="4">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>@L["PhoneLabel"] </strong></label>
-                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Phone" ></SfTextBox>
+                                                             <SfMaskedTextBox CssClass="TSITxtBox" Mask="0(000)-000-0000"  @bind-Value="@DataSource.Phone"></SfMaskedTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 

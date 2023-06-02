@@ -159,7 +159,7 @@ namespace TsiErp.Business.Entities.Product.Services
                   .Select<Products>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.DataOpenStatus, p.DataOpenStatusUserId, p.UnitSetID, p.CoatingWeight, p.Confirmation, p.EnglishDefinition, p.ExportCatNo, p.FeatureSetID, p.GTIP, p.ManufacturerCode, p.OemRefNo, p.OemRefNo2, p.OemRefNo3, p.TechnicalConfirmation, p.SupplyForm, p.SawWastage, p.SaleVAT, p.PurchaseVAT, p.ProductType, p.ProductSize, p.ProductGrpID, p.ProductDescription, p.PlannedWastage })
                        .Join<UnitSets>
                        (
-                            u => new { UnitSet = u.Code },
+                            u => new { UnitSetCode = u.Code },
                                 nameof(Products.UnitSetID),
                                 nameof(UnitSets.Id),
                            JoinType.Left
@@ -277,11 +277,11 @@ namespace TsiErp.Business.Entities.Product.Services
                     ProductDescription = entity.ProductDescription,
                     ProductGrpID = entity.ProductGrpID,
                     ProductSize = entity.ProductSize,
-                    ProductType = entity.ProductType,
+                    ProductType = (int)entity.ProductType,
                     PurchaseVAT = entity.PurchaseVAT,
                     SaleVAT = entity.SaleVAT,
                     SawWastage = entity.SawWastage,
-                    SupplyForm = entity.SupplyForm,
+                    SupplyForm = (int)entity.SupplyForm,
                     TechnicalConfirmation = entity.TechnicalConfirmation,
                     UnitSetID = entity.UnitSetID,
                     CreationTime = entity.CreationTime.Value,

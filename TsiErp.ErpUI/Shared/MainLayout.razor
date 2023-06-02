@@ -51,35 +51,35 @@
 
                                         if (message.Length > 145 && 290 >= message.Length)
                                         {
-                                            message = message.Insert(140, "- \n");
+                                            message = message.Insert(140, "\n");
                                         }
                                         else if (message.Length > 290 && 435 >= message.Length)
                                         {
-                                            message = message.Insert(140, "- \n");
-                                            message = message.Insert(280, " - \n");
+                                            message = message.Insert(140, "\n");
+                                            message = message.Insert(280, "\n");
                                         }
                                         else if (message.Length > 435 && 580 >= message.Length)
                                         {
-                                            message = message.Insert(140, "- \n");
-                                            message = message.Insert(280, " - \n");
-                                            message = message.Insert(420, " - \n");
+                                            message = message.Insert(140, "\n");
+                                            message = message.Insert(280, "\n");
+                                            message = message.Insert(420, "\n");
                                         }
 
                                         else if (message.Length > 580 && 725 >= message.Length)
                                         {
-                                            message = message.Insert(140, "- \n");
-                                            message = message.Insert(280, " - \n");
-                                            message = message.Insert(420, " - \n");
-                                            message = message.Insert(560, " - \n");
+                                            message = message.Insert(140, "\n");
+                                            message = message.Insert(280, "\n");
+                                            message = message.Insert(420, "\n");
+                                            message = message.Insert(560, "\n");
                                         }
 
                                         else if (message.Length > 725 && 870 >= message.Length)
                                         {
-                                            message = message.Insert(140, "- \n");
-                                            message = message.Insert(280, " - \n");
-                                            message = message.Insert(420, " - \n");
-                                            message = message.Insert(560, " - \n");
-                                            message = message.Insert(700, " - \n");
+                                            message = message.Insert(140, "\n");
+                                            message = message.Insert(280, "\n");
+                                            message = message.Insert(420, "\n");
+                                            message = message.Insert(560, "\n");
+                                            message = message.Insert(700, "\n");
                                         }
 
                                         HtmlMessage = new MarkupString(message);

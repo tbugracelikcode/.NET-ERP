@@ -86,7 +86,7 @@ namespace TsiErp.Entities.Entities.SalesOrderLine.Dtos
         /// <summary>
         /// Satış Sipariş Satırı Durumu
         /// </summary>
-        public SalesOrderLineStateEnum SalesOrderLineStateEnum { get; set; }
+        public int SalesOrderLineStateEnum { get; set; }
         /// <summary>
         /// Üretim Emri Oluşturulma Tarihi
         /// </summary>

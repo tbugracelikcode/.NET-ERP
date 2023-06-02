@@ -34,7 +34,7 @@ namespace TsiErp.Entities.Entities.Product.Dtos
         /// <summary>
         /// Temin Şekli
         /// </summary>
-        public ProductSupplyFormEnum? SupplyForm { get; set; }
+        public ProductSupplyFormEnum SupplyForm { get; set; }
 
         /// <summary>
         /// Temin Şekli Adı
@@ -63,7 +63,7 @@ namespace TsiErp.Entities.Entities.Product.Dtos
         /// <summary>
         /// Stok Türü
         /// </summary>
-        public ProductTypeEnum? ProductType { get; set; }
+        public ProductTypeEnum ProductType { get; set; }
 
         /// <summary>
         /// Stok Türü Adı

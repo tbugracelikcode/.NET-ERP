@@ -34,7 +34,7 @@ namespace TsiErp.Entities.Entities.SalesOrder
         /// <summary>
         /// Saat
         /// </summary>
-        public TimeSpan? Time_ { get; set; }
+        public string Time_ { get; set; }
 
         /// <summary>
         /// Kur Tutarı

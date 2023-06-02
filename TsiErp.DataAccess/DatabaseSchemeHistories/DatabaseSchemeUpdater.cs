@@ -23,81 +23,81 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
         [Version(VersiyonNumber = "1.23.2")]
         public bool Update()
         {
-            var queryFactory = new QueryFactory();
+            //var queryFactory = new QueryFactory();
 
-            queryFactory.ConnectToDatabase();
+            //queryFactory.ConnectToDatabase();
 
-            DatabaseModel model = new DatabaseModel(queryFactory.Connection);
+            //DatabaseModel model = new DatabaseModel(queryFactory.Connection);
 
-            #region Stock Fiche Table Created
-            Table stockFichesTable = model.CreateTable(Tables.StockFiches);
+            //#region Stock Fiche Table Created
+            //Table stockFichesTable = model.CreateTable(Tables.StockFiches);
 
-            if (stockFichesTable != null)
-            {
-                var properties = (typeof(StockFiches)).GetProperties();
+            //if (stockFichesTable != null)
+            //{
+            //    var properties = (typeof(StockFiches)).GetProperties();
 
-                foreach (var property in properties)
-                {
-                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
-                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
-                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
-                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
-                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
-                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+            //    foreach (var property in properties)
+            //    {
+            //        var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+            //        var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+            //        var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+            //        var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+            //        var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+            //        var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
 
-                    Column column = new Column(stockFichesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
-                    column.Nullable = required;
+            //        Column column = new Column(stockFichesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+            //        column.Nullable = required;
 
-                    if (isPrimaryKey)
-                    {
-                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(stockFichesTable, "PK_" + stockFichesTable.Name);
-                        pkIndex.IsClustered = true;
-                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
-                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
-                        stockFichesTable.Indexes.Add(pkIndex);
-                    }
+            //        if (isPrimaryKey)
+            //        {
+            //            Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(stockFichesTable, "PK_" + stockFichesTable.Name);
+            //            pkIndex.IsClustered = true;
+            //            pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+            //            pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+            //            stockFichesTable.Indexes.Add(pkIndex);
+            //        }
 
-                    stockFichesTable.Columns.Add(column);
-                }
+            //        stockFichesTable.Columns.Add(column);
+            //    }
 
-                stockFichesTable.Create();
-            }
-            #endregion
+                //stockFichesTable.Create();
+            //}
+            //#endregion
 
-            #region Stock Fiche Line Table Created
-            Table stockFicheLinesTable = model.CreateTable(Tables.StockFicheLines);
+            //#region Stock Fiche Line Table Created
+            //Table stockFicheLinesTable = model.CreateTable(Tables.StockFicheLines);
 
-            if (stockFicheLinesTable != null)
-            {
-                var properties = (typeof(StockFicheLines)).GetProperties();
+            //if (stockFicheLinesTable != null)
+            //{
+            //    var properties = (typeof(StockFicheLines)).GetProperties();
 
-                foreach (var property in properties)
-                {
-                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
-                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
-                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
-                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
-                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
-                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+            //    foreach (var property in properties)
+            //    {
+            //        var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+            //        var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+            //        var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+            //        var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+            //        var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+            //        var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
 
-                    Column column = new Column(stockFicheLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
-                    column.Nullable = required;
+            //        Column column = new Column(stockFicheLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+            //        column.Nullable = required;
 
-                    if (isPrimaryKey)
-                    {
-                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(stockFicheLinesTable, "PK_" + stockFicheLinesTable.Name);
-                        pkIndex.IsClustered = true;
-                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
-                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
-                        stockFicheLinesTable.Indexes.Add(pkIndex);
-                    }
+            //        if (isPrimaryKey)
+            //        {
+            //            Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(stockFicheLinesTable, "PK_" + stockFicheLinesTable.Name);
+            //            pkIndex.IsClustered = true;
+            //            pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+            //            pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+            //            stockFicheLinesTable.Indexes.Add(pkIndex);
+            //        }
 
-                    stockFicheLinesTable.Columns.Add(column);
-                }
+            //        stockFicheLinesTable.Columns.Add(column);
+            //    }
 
-                stockFicheLinesTable.Create();
-            }
-            #endregion
+            //    //stockFicheLinesTable.Create();
+            //}
+            //#endregion
 
             return true;
         }

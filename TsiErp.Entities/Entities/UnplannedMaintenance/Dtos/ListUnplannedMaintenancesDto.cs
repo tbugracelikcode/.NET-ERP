@@ -29,7 +29,7 @@ namespace TsiErp.Entities.Entities.UnplannedMaintenance.Dtos
         /// <summary>
         /// Durum
         /// </summary>
-        public UnplannedMaintenanceStateEnum? Status { get; set; }
+        public UnplannedMaintenanceStateEnum Status { get; set; }
         /// <summary>
         /// Bakımı Yapan
         /// </summary>

@@ -32,7 +32,7 @@ namespace TsiErp.Entities.Entities.PlannedMaintenance
         /// <summary>
         /// Durum
         /// </summary>
-        public PlannedMaintenanceStateEnum? Status { get; set; }
+        public PlannedMaintenanceStateEnum Status { get; set; }
         /// <summary>
         /// Bakımı Yapan
         /// </summary>

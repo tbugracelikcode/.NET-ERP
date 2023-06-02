@@ -69,7 +69,7 @@ namespace TsiErp.Entities.Entities.SalesPropositionLine.Dtos
         /// <summary>
         /// Satış Teklif Satırı Durumu
         /// </summary>
-        public SalesPropositionLineStateEnum SalesPropositionLineState { get; set; }
+        public int SalesPropositionLineState { get; set; }
         /// <summary>
         /// Siparişe Çevirilme Tarihi
         /// </summary>

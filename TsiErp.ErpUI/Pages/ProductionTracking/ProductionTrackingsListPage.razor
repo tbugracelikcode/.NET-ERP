@@ -122,8 +122,9 @@ else
                         <DxGridLayoutRow Height="9%" />
                         <DxGridLayoutRow Height="9%" />
                         <DxGridLayoutRow Height="9%" />
+                        <DxGridLayoutRow Height="9%" />
                         <DxGridLayoutRow Height="11%" />
-                        <DxGridLayoutRow Height="48%" />
+                        <DxGridLayoutRow Height="40%" />
                         <DxGridLayoutRow Height="5%" />
                     </Rows>
 
@@ -138,78 +139,85 @@ else
                     </Columns>
 
                     <Items>
+
+                         <DxGridLayoutItem Row="0" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label><br />
+                                 <SfTextBox  @bind-Value="DataSource.Code"  CssClass="TSITxtBox"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
                         
-                        <DxGridLayoutItem Row="0" Column="1">
+                        <DxGridLayoutItem Row="0" Column="3">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["WorkOrderCodeLabel"] </strong></label><br />
                                  <SfTextBox @ref="@WorkOrdersButtonEdit" Created="@WorkOrdersCodeOnCreateIcon" @bind-Value="DataSource.WorkOrderCode" ShowClearButton=true ValueChange="WorkOrdersOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="0" Column="3">
+                        <DxGridLayoutItem Row="1" Column="1">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["ProducedQuantityLabel"] </strong></label>
                                 <SfNumericTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.ProducedQuantity"></SfNumericTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         
-                        <DxGridLayoutItem Row="2" Column="5">
+                        <DxGridLayoutItem Row="1" Column="5">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["IsFinishedLabel"] </strong></label><br />
                                 <SfSwitch @bind-Checked="DataSource.IsFinished">
                                 </SfSwitch>
                             </Template>
                         </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="1" Column="1">
+                        <DxGridLayoutItem Row="1" Column="3">
                             <Template>
                             <label class="TSIModalLabel"><strong>@L["OperationStartDateLabel"] </strong></label><br />
                                 <SfDatePicker @bind-Value="@DataSource.OperationStartDate" OnChange="OnDateChange"></SfDatePicker>
                             </Template>
                         </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="1" Column="3">
+                        <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["OperationStartTimeLabel"] </strong></label>
                             <SfTimePicker Step="15" Format="@("hh\\:mm\\:ss")" TValue="TimeSpan?" @bind-Value="@DataSource.OperationStartTime"></SfTimePicker>
                         </Template>
                     </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="2" Column="1">
+                        <DxGridLayoutItem Row="2" Column="3">
                             <Template>
                             <label class="TSIModalLabel"><strong>@L["OperationEndDateLabel"] </strong></label><br />
                                 <SfDatePicker @ref="@_endDatePicker" @bind-Value="@DataSource.OperationEndDate" OnFocus="OnDateFocus" Min="@Convert.ToDateTime(DataSource.OperationStartDate)" ></SfDatePicker>
                             </Template>
                         </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="2" Column="3">
+                        <DxGridLayoutItem Row="3" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["OperationEndTimeLabel"] </strong></label>
                             <SfTimePicker Step="15" Format="@("hh\\:mm\\:ss")" TValue="TimeSpan?" @bind-Value="@DataSource.OperationEndTime"></SfTimePicker>
                         </Template>
                     </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="3" Column="1">
+                        <DxGridLayoutItem Row="3" Column="3">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["OperationTimeLabel"] </strong></label>
                                 <SfNumericTextBox CssClass="TSITxtBox" @bind-Value="DataSource.OperationTime"></SfNumericTextBox>
                             </Template>
                         </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="3" Column="3">
+                        <DxGridLayoutItem Row="4" Column="1">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["EmployeeNameLabel"] </strong></label>
                                 <SfTextBox @ref="@EmployeesButtonEdit" Created="@EmployeesCodeOnCreateIcon" @bind-Value="DataSource.EmployeeName" ShowClearButton=true ValueChange="EmployeesOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 
-                        <DxGridLayoutItem Row="4" Column="1">
+                        <DxGridLayoutItem Row="4" Column="3">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["StationCodeLabel"] </strong></label>
                                 <SfTextBox @ref="@StationsButtonEdit" Created="@StationsCodeOnCreateIcon" @bind-Value="DataSource.StationCode" ShowClearButton=true ValueChange="StationsOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
-                        <DxGridLayoutItem Row="4" Column="3">
+                        <DxGridLayoutItem Row="5" Column="1">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["ShiftCodeLabel"] </strong></label>
                                  <SfTextBox @ref="@ShiftsButtonEdit" Created="@ShiftsCodeOnCreateIcon" @bind-Value="DataSource.ShiftCode" ShowClearButton=true ValueChange="ShiftsOnValueChange"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>                       
 
-                        <DxGridLayoutItem Row="5" Column="1" ColumnSpan="5">
+                        <DxGridLayoutItem Row="6" Column="1" ColumnSpan="5">
                             <Template>
                                 <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
                                     <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectProductionTrackingHaltLinesDto"></GridEvents>

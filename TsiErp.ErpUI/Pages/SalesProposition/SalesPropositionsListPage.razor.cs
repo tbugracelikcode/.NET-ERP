@@ -562,7 +562,7 @@ namespace TsiErp.ErpUI.Pages.SalesProposition
                     FicheNo = "DENEME 9",
                     NetAmount = DataSource.NetAmount,
                     PaymentPlanID = DataSource.PaymentPlanID,
-                    SalesOrderState = Entities.Enums.SalesOrderStateEnum.Beklemede,
+                    SalesOrderState = (int)Entities.Enums.SalesOrderStateEnum.Beklemede,
                     ShippingAdressID = DataSource.ShippingAdressID,
                     SpecialCode = DataSource.SpecialCode,
                     Time_ = DataSource.Time_,

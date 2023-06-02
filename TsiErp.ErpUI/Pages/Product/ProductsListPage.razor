@@ -228,7 +228,7 @@ else
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ProductTypeLabel"] </strong></label>
-                            <SfDropDownList TItem="SelectProductsDto" TValue="ProductTypeEnum?" PopupHeight="230px" @bind-Value="@DataSource.ProductType" DataSource="@types">
+                            <SfDropDownList TItem="SelectProductsDto" TValue="ProductTypeEnum" PopupHeight="230px" @bind-Value="@DataSource.ProductType" DataSource="@types">
                                 <DropDownListFieldSettings Text="ProductTypeName" Value="ProductType"></DropDownListFieldSettings>
                             </SfDropDownList>
                         </Template>
@@ -284,7 +284,7 @@ else
                                                         <Template>
                                                             <br />
                                                             <label class="TSIModalLabel"><strong>@L["SupplyFormLabel"] </strong></label><br />
-                                                            <SfDropDownList TItem="SelectProductsDto" TValue="ProductSupplyFormEnum?" PopupHeight="230px" Placeholder="Temin Şeklini Seçiniz" @bind-Value="@DataSource.SupplyForm" DataSource="@supplyforms">
+                                                            <SfDropDownList TItem="SelectProductsDto" TValue="ProductSupplyFormEnum" PopupHeight="230px" Placeholder="Temin Şeklini Seçiniz" @bind-Value="@DataSource.SupplyForm" DataSource="@supplyforms">
                                                                 <DropDownListFieldSettings Text="SupplyFormName" Value="SupplyForm"></DropDownListFieldSettings>
                                                             </SfDropDownList>
                                                         </Template>

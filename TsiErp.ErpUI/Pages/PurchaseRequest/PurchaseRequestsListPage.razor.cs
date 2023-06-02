@@ -599,7 +599,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseRequest
                     FicheNo = "DENEME 1",
                     NetAmount = DataSource.NetAmount,
                     PaymentPlanID = DataSource.PaymentPlanID,
-                    PurchaseOrderState = Entities.Enums.PurchaseOrderStateEnum.Beklemede,
+                    PurchaseOrderState = (int)Entities.Enums.PurchaseOrderStateEnum.Beklemede,
                     SpecialCode = DataSource.SpecialCode,
                     Time_ = DataSource.Time_,
                     TotalDiscountAmount = DataSource.TotalDiscountAmount,

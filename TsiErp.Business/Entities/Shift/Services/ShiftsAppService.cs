@@ -78,7 +78,7 @@ namespace TsiErp.Business.Entities.Shift.Services
                         Coefficient = item.Coefficient,
                         EndHour = item.EndHour,
                         StartHour = item.StartHour,
-                        Type = item.Type.GetValueOrDefault(),
+                        Type = (int)item.Type,
                         ShiftID = addedEntityId,
                         CreationTime = DateTime.Now,
                         CreatorId = LoginedUserService.UserId,
@@ -208,7 +208,7 @@ namespace TsiErp.Business.Entities.Shift.Services
                 var listQuery = queryFactory.Query().From(Tables.Shifts).Select("*").Where(
               new
               {
-                  Id = input.Id
+                  Code = input.Code
               }, false, false, "");
 
                 var list = queryFactory.GetList<ListShiftsDto>(listQuery).ToList();
@@ -252,7 +252,7 @@ namespace TsiErp.Business.Entities.Shift.Services
                             Coefficient = item.Coefficient,
                             EndHour = item.EndHour,
                             StartHour = item.StartHour,
-                            Type = item.Type.GetValueOrDefault(),
+                            Type = (int)item.Type,
                             ShiftID = input.Id,
                             CreationTime = DateTime.Now,
                             CreatorId = LoginedUserService.UserId,
@@ -282,7 +282,7 @@ namespace TsiErp.Business.Entities.Shift.Services
                                 Coefficient = item.Coefficient,
                                 EndHour = item.EndHour,
                                 StartHour = item.StartHour,
-                                Type = item.Type.GetValueOrDefault(),
+                                Type = (int)item.Type,
                                 ShiftID = input.Id,
                                 CreationTime = line.CreationTime,
                                 CreatorId = line.CreatorId,

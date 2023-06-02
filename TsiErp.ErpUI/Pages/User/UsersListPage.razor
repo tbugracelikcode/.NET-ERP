@@ -179,7 +179,10 @@ else
                                                         <Template>
                                                             <br />
                                                             <label class="TSIModalLabel"><strong>@L["EmailLabel"] </strong></label>
-                                                            <SfTextBox @bind-Value="DataSource.Email" CssClass="TSITxtBox"></SfTextBox>
+                                                            <SfTextBox Type="InputType.Email"  @bind-Value="DataSource.Email" CssClass="TSITxtBox">
+                                                                 
+                                                            </SfTextBox>
+                                                           
                                                         </Template>
                                                     </DxGridLayoutItem>
 

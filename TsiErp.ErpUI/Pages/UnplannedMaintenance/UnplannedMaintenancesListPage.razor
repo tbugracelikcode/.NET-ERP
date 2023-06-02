@@ -233,7 +233,7 @@ else
                     <DxGridLayoutItem Row="3" Column="7">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["StatusLabel"] </strong></label><br />
-                             <SfDropDownList TItem="SelectUnplannedMaintenancesDto" TValue="UnplannedMaintenanceStateEnum?" PopupHeight="230px"  @bind-Value="@DataSource.Status" DataSource="@status">
+                             <SfDropDownList TItem="SelectUnplannedMaintenancesDto" TValue="UnplannedMaintenanceStateEnum" PopupHeight="230px"  @bind-Value="@DataSource.Status" DataSource="@status">
                                 <DropDownListFieldSettings Text="StatusName" Value="Status"></DropDownListFieldSettings>
                             </SfDropDownList>
                         </Template>

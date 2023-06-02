@@ -70,7 +70,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     ProducedQuantity = input.ProducedQuantity,
                     ShiftID = input.ShiftID,
                     StationID = input.StationID,
-                    WorkOrderID = input.WorkOrderID,
+                    WorkOrderID = GuidGenerator.CreateGuid(),
                     Code = input.Code,
                     CreationTime = DateTime.Now,
                     CreatorId = LoginedUserService.UserId,
@@ -456,7 +456,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
                 var entity = queryFactory.Get<ProductionTrackings>(entityQuery);
 
-                var query = queryFactory.Query().From(Tables.BillsofMaterials).Update(new UpdateProductionTrackingsDto
+                var query = queryFactory.Query().From(Tables.ProductionTrackings).Update(new UpdateProductionTrackingsDto
                 {
                     AdjustmentTime = entity.AdjustmentTime,
                     EmployeeID = entity.EmployeeID,

@@ -26,10 +26,10 @@ namespace TsiErp.ErpUI.Pages.PlannedMaintenance
         {
             var type = typeof(T);
             return Enum.GetValues(type)
-                       .Cast<T>()
+                       .Cast<PlannedMaintenanceStateEnum>()
                        .Select(x => new SelectPlannedMaintenancesDto
                        {
-                           Status = x as PlannedMaintenanceStateEnum?,
+                           Status = x ,
                            StatusName = type.GetMember(x.ToString())
                        .First()
                        .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
