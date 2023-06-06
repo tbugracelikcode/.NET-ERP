@@ -23,12 +23,10 @@ namespace TsiErp.Entities.Entities.ContractProductionTracking.Dtos
         /// Stok ID
         /// </summary>
         public Guid? ProductID { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Üretilen Miktar
         /// </summary>
         public decimal ProducedQuantity { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Operasyon Süresi
         /// </summary>
@@ -54,7 +52,6 @@ namespace TsiErp.Entities.Entities.ContractProductionTracking.Dtos
         /// Tamamlandı mı ?
         /// </summary>
         public bool IsFinished { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Planlanan Adet
         /// </summary>

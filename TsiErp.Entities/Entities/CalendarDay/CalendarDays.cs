@@ -13,18 +13,22 @@ namespace TsiErp.Entities.Entities.CalendarDay
 {
     public class CalendarDays : FullAuditedEntity
     {
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Çalışma Takvimi ID
         /// </summary>
         public Guid CalendarID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.DateTime)]
         /// <summary>
         /// Gün
         /// </summary>
         public DateTime Date_ { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
         /// <summary>
         /// Durum
         /// </summary>
         public int CalendarDayStateEnum { get; set; }
+        [SqlColumnType(MaxLength = 50, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
         /// Renk Kodu
         /// </summary>

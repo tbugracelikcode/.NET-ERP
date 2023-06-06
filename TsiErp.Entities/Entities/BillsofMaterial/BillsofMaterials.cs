@@ -17,22 +17,27 @@ namespace TsiErp.Entities.Entities.BillsofMaterial
     /// </summary>
     public class BillsofMaterials : FullAuditedEntity
     {
+        [SqlColumnType(MaxLength = 17, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
         /// Reçete Kodu
         /// </summary>
         public string Code { get; set; }
+        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
         /// Reçete Adı
         /// </summary>
         public string Name { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Mamül ID
         /// </summary>
         public Guid FinishedProductID { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
         /// <summary>
         /// Genel Açıklama
         /// </summary>
         public string _Description { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
         /// <summary>
         /// Aktiflik
         /// </summary>

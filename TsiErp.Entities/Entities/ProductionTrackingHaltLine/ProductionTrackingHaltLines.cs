@@ -14,22 +14,27 @@ namespace TsiErp.Entities.Entities.ProductionTrackingHaltLine
 {
     public class ProductionTrackingHaltLines : FullAuditedEntity
     {
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Üretim Takip ID
         /// </summary>
         public Guid ProductionTrackingID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Duruş Sebebi ID
         /// </summary>
         public Guid HaltID { get; set; }
+        [SqlColumnType(Nullable = true,SqlDbType = SqlDataType.NVarCharMax)]
         /// <summary>
         /// Duruş Sebebi Kodu
         /// </summary>
         public string HaltCode { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
         /// <summary>
         /// Duruş Sebebi Adı
         /// </summary>
         public string HaltName { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Duruş Süresi
         /// </summary>

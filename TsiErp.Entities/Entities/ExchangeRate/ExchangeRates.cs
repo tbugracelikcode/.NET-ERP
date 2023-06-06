@@ -16,32 +16,33 @@ namespace TsiErp.Entities.Entities.ExchangeRate
     /// </summary>
     public class ExchangeRates : FullAuditedEntity
     {
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Parabirimi ID
         /// </summary>
         public Guid CurrencyID { get; set; }
-
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.DateTime)]
         public DateTime Date { get; set; }
 
-        [Precision(18, 6)]
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Alış Kuru
         /// </summary>
         public decimal BuyingRate { get; set; }
 
-        [Precision(18, 6)]
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Satış Kuru
         /// </summary>
         public decimal SaleRate { get; set; }
 
-        [Precision(18, 6)]
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Efektif Alış Kuru
         /// </summary>
         public decimal EffectiveBuyingRate { get; set; }
 
-        [Precision(18, 6)]
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Efektif Satış Kuru
         /// </summary>

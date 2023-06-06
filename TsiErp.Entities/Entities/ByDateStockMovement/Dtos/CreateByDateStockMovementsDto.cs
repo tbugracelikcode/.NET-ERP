@@ -14,47 +14,38 @@ namespace TsiErp.Entities.Entities.ByDateStockMovement.Dtos
         ///  Tarih
         /// </summary>
         public DateTime? Date_ { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         ///  Satın Alma Talep Toplamı
         /// </summary>
         public decimal TotalPurchaseRequest { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         ///  Satın Alma Sipariş Toplamı
         /// </summary>
         public decimal TotalPurchaseOrder { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         ///  Verilen Teklif Toplamı
         /// </summary>
         public decimal TotalSalesProposition { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         ///  Satış Sipariş Toplamı
         /// </summary>
         public decimal TotalSalesOrder { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         ///  Sarf Toplamı
         /// </summary>
         public decimal TotalConsumption { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         ///  Fire Toplamı
         /// </summary>
         public decimal TotalWastage { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         ///  Üretim Toplamı
         /// </summary>
         public decimal TotalProduction { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         ///  Stok Giriş Toplamı
         /// </summary>
         public decimal TotalGoodsReceipt { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         ///  Stok Çıkış Toplamı
         /// </summary>
@@ -71,7 +62,6 @@ namespace TsiErp.Entities.Entities.ByDateStockMovement.Dtos
         ///  Depo ID
         /// </summary>
         public Guid? WarehouseID { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         ///  Stok Miktarı
         /// </summary>

@@ -15,14 +15,17 @@ namespace TsiErp.Entities.Entities.UserGroup
     /// </summary>
     public class UserGroups : FullAuditedEntity
     {
+        [SqlColumnType(MaxLength = 17, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
         /// Kullanıcı Grubu Kodu
         /// </summary>
         public string Code { get; set; }
+        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
         /// Kullanıcı Grubu Adı
         /// </summary>
         public string Name { get; set; }
+        [SqlColumnType( Nullable = false, SqlDbType = SqlDataType.Bit)]
         /// <summary>
         /// Aktiflik
         /// </summary>
