@@ -15,5 +15,7 @@ namespace TsiErp.Entities.Entities.Version.Dtos
         public string MinDbVersion { get; set; }
 
         public string BuildVersion { get; set; }
+
+        public bool IsUpdating { get; set; }
     }
 }
