@@ -27,7 +27,6 @@ namespace TsiErp.Entities.Entities.MaintenancePeriod.Dtos
         /// Data Concurrency UserID
         /// </summary>
         public Guid? DataOpenStatusUserId { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Bakım Periyot Süresi
         /// </summary>

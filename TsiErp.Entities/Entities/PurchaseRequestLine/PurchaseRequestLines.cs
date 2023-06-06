@@ -10,6 +10,8 @@ using TsiErp.Entities.Entities.Product;
 using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.PurchaseRequest;
 using TsiErp.Entities.Entities.UnitSet;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.PurchaseRequestLine

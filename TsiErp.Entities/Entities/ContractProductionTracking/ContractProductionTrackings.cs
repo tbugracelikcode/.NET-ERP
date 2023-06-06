@@ -12,6 +12,8 @@ using TsiErp.Entities.Entities.ProductionTrackingHaltLine;
 using TsiErp.Entities.Entities.Shift;
 using TsiErp.Entities.Entities.Station;
 using TsiErp.Entities.Entities.WorkOrder;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.ContractProductionTracking
 {

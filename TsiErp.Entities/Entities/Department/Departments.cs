@@ -7,6 +7,8 @@ using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Employee;
 using TsiErp.Entities.Entities.EquipmentRecord;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.Department
 {

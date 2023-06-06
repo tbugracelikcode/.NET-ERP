@@ -8,6 +8,8 @@ using TsiErp.Entities.Entities.Product;
 using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.RouteLine;
 using TsiErp.Entities.Entities.WorkOrder;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.Route
 {

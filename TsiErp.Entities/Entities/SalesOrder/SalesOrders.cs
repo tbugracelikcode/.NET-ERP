@@ -8,6 +8,8 @@ using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Currency;
 using TsiErp.Entities.Entities.CurrentAccountCard;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 using TsiErp.Entities.Entities.PaymentPlan;
 using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.SalesOrderLine;

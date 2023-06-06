@@ -12,6 +12,8 @@ using TsiErp.Entities.Entities.Product;
 using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionTracking;
 using TsiErp.Entities.Entities.ProductsOperation;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 using TsiErp.Entities.Entities.Route;
 using TsiErp.Entities.Entities.SalesProposition;
 using TsiErp.Entities.Entities.Station;
@@ -25,44 +27,52 @@ namespace TsiErp.Entities.Entities.WorkOrder
     /// </summary>
     public class WorkOrders: FullAuditedEntity
     {
+        [SqlColumnType(MaxLength = 17, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
         /// İş Emri Kodu
         /// </summary>
         public string Code { get; set; }
+        [SqlColumnType(MaxLength = 200, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
         /// İş Emri No
         /// </summary>
         public string WorkOrderNo { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
         /// <summary>
         /// İptal
         /// </summary>
         public bool IsCancel { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
         /// <summary>
         /// Durum
         /// </summary>
         public WorkOrderStateEnum WorkOrderState { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Ayar ve Kontrol Süresi
         /// </summary>
         public decimal AdjustmentAndControlTime { get; set; }
-
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Operasyon Süresi
         /// </summary>
         public decimal OperationTime { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
         /// <summary>
         /// Gerçekleşen Başlangıç Tarihi
         /// </summary>
         public DateTime? OccuredStartDate { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
         /// <summary>
         /// Gerçekleşen Bitiş Tarihi
         /// </summary>
         public DateTime? OccuredFinishDate { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Planlanan Miktar
         /// </summary>
         public decimal PlannedQuantity { get; set; }
-
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Gerçekleşen Miktar
         /// </summary>

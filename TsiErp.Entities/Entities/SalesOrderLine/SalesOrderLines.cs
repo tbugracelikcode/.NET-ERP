@@ -12,6 +12,8 @@ using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.SalesOrder;
 using TsiErp.Entities.Entities.SalesProposition;
 using TsiErp.Entities.Entities.SalesPropositionLine;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 using TsiErp.Entities.Entities.UnitSet;
 using TsiErp.Entities.Entities.WareHouse;
 using TsiErp.Entities.Enums;

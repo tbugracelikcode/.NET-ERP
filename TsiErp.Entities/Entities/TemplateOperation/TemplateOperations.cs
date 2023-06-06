@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.ProductsOperation;
 using TsiErp.Entities.Entities.RouteLine;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 using TsiErp.Entities.Entities.TemplateOperationLine;
 
 namespace TsiErp.Entities.Entities.TemplateOperation

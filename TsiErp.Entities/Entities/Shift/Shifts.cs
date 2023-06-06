@@ -9,6 +9,8 @@ using TsiErp.Entities.Entities.CalendarLine;
 using TsiErp.Entities.Entities.ContractProductionTracking;
 using TsiErp.Entities.Entities.ProductionTracking;
 using TsiErp.Entities.Entities.ShiftLine;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.Shift
 {

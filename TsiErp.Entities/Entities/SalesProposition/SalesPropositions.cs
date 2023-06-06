@@ -13,6 +13,8 @@ using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.SalesPropositionLine;
 using TsiErp.Entities.Entities.ShippingAdress;
 using TsiErp.Entities.Entities.WareHouse;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 using TsiErp.Entities.Entities.WorkOrder;
 using TsiErp.Entities.Enums;
 

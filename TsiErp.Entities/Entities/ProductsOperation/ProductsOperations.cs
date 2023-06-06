@@ -5,6 +5,8 @@ using TsiErp.Entities.Entities.Product;
 using TsiErp.Entities.Entities.ProductsOperationLine;
 using TsiErp.Entities.Entities.RouteLine;
 using TsiErp.Entities.Entities.TemplateOperation;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Entities.Entities.ProductsOperation

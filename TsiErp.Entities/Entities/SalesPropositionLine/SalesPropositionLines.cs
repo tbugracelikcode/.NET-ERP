@@ -14,6 +14,8 @@ using TsiErp.Entities.Entities.SalesProposition;
 using TsiErp.Entities.Entities.UnitSet;
 using TsiErp.Entities.Entities.WareHouse;
 using TsiErp.Entities.Enums;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.SalesPropositionLine
 {
