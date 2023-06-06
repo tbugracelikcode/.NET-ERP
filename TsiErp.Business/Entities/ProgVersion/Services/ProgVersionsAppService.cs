@@ -81,15 +81,14 @@ namespace TsiErp.Business.Entities.ProgVersion.Services
                 var entityQuery = queryFactory.Query().From(Tables.ProgVersions).Select("*").Where(new { Id = input.Id }, false, false, "");
                 var entity = queryFactory.Get<ProgVersions>(entityQuery);
 
-
-
                 var query = queryFactory.Query().From(Tables.ProgVersions).Update(new UpdateProgVersionsDto
                 {
 
                     Id = input.Id,
                     MinDbVersion = input.MinDbVersion,
                     BuildVersion = input.BuildVersion,
-                    MajDbVersion = input.MajDbVersion
+                    MajDbVersion = input.MajDbVersion,
+                    IsUpdating = input.IsUpdating
 
                 }).Where(new { Id = input.Id }, false, false, "");
 
@@ -124,8 +123,33 @@ namespace TsiErp.Business.Entities.ProgVersion.Services
 
                 if (dbVersion != progVersion)
                 {
-                    var a = await UpdateDatabase(progVersion);
-                    return false;
+                    var updatedVersionIsRuning = new UpdateProgVersionsDto
+                    {
+                        Id = id,
+                        BuildVersion = version.BuildVersion,
+                        IsUpdating = true,
+                        MajDbVersion = version.MajDbVersion,
+                        MinDbVersion = version.MinDbVersion
+                    };
+
+                    await UpdateAsync(updatedVersionIsRuning);
+
+                    await UpdateDatabase(progVersion);
+
+                    var updatedVersion = new UpdateProgVersionsDto
+                    {
+                        Id = id,
+                        BuildVersion = progVersion.Split('.')[2],
+                        IsUpdating = false,
+                        MajDbVersion = progVersion.Split(".")[0],
+                        MinDbVersion = progVersion.Split(".")[1]
+                    };
+
+                    await UpdateAsync(updatedVersion);
+
+                    return updatedVersion.BuildVersion == progVersion.Split('.')[2] ? true : false;
+
+
                 }
 
                 return true;
