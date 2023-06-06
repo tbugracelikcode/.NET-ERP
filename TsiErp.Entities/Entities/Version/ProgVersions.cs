@@ -20,5 +20,8 @@ namespace TsiErp.Entities.Entities.Version
 
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.NVarChar, MaxLength = 5)]
         public string BuildVersion { get; set; }
+
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
+        public bool IsUpdating { get; set; }
     }
 }
