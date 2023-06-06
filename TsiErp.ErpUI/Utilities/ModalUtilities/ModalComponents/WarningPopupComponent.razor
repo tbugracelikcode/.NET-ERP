@@ -58,29 +58,29 @@
         {
             int numberofCharacters = Message.Length;
 
-            if (numberofCharacters > 50 && 100 >= numberofCharacters)
+          if (numberofCharacters > 50 && 100 >= numberofCharacters)
             {
-                Message = Message.Insert(45, "- \n");
+                Message = Message.Insert(45, "\n");
             }
 
             else if (numberofCharacters > 100 && 150 >= numberofCharacters)
             {
-                Message = Message.Insert(45, "- \n");
-                Message = Message.Insert(95, " - \n");
+                Message = Message.Insert(45, "\n");
+                Message = Message.Insert(90, "\n");
             }
 
             else if (numberofCharacters > 150 && 200 >= numberofCharacters)
             {
-                Message = Message.Insert(45, "- \n");
-                Message = Message.Insert(95, " - \n");
-                Message = Message.Insert(145, " - \n");
+                Message = Message.Insert(45, "\n");
+                Message = Message.Insert(90, "\n");
+                Message = Message.Insert(135, "\n");
             }
             else if (numberofCharacters > 200)
             {
-                Message = Message.Insert(45, " - \n");
-                Message = Message.Insert(95, " - \n");
-                Message = Message.Insert(145, " - \n");
-                Message = Message.Insert(195, " - \n");
+                Message = Message.Insert(45, "\n");
+                Message = Message.Insert(90, "\n");
+                Message = Message.Insert(135, "\n");
+                Message = Message.Insert(180, "\n");
             }
         }
 

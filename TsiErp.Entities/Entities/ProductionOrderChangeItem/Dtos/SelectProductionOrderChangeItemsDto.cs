@@ -28,10 +28,6 @@ namespace TsiErp.Entities.Entities.ProductionOrderChangeItem.Dtos
         public Guid? DataOpenStatusUserId { get; set; }
 
         /// <summary>
-        /// Resim
-        /// </summary>
-        public byte[] Image { get; set; }
-        /// <summary>
         /// Tespit
         /// </summary>
         public int Detection { get; set; }

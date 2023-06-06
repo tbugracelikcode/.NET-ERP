@@ -28,7 +28,6 @@ namespace TsiErp.Entities.Entities.PurchaseUnsuitabilityReport
         /// Tarih
         /// </summary>
         public DateTime? Date_ { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Uygun Olmayan Miktar
         /// </summary>

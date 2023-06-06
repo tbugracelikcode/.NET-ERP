@@ -18,7 +18,6 @@ namespace TsiErp.Entities.Entities.MaintenancePeriod.Dtos
         /// Periyot Adı
         /// </summary>
         public string Name { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Bakım Periyot Süresi
         /// </summary>

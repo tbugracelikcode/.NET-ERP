@@ -67,8 +67,6 @@ namespace TsiErp.Business.Entities.Station.Services
                     PowerFactor = input.PowerFactor,
                     ShiftWorkingTime = input.ShiftWorkingTime,
                     UsageArea = input.UsageArea,
-                    WorkSafetyInstruction = input.WorkSafetyInstruction,
-                    UsageInstruction = input.UsageInstruction,
                     X = input.X,
                     Y = input.Y,
                     Code = input.Code,
@@ -156,7 +154,7 @@ namespace TsiErp.Business.Entities.Station.Services
                 var query = queryFactory
                        .Query()
                        .From(Tables.Stations)
-                       .Select<Stations>(s => new { s.Y, s.X, s.WorkSafetyInstruction, s.UsageInstruction, s.UsageArea, s.ShiftWorkingTime, s.Shift, s.PowerFactor, s.Name, s.Model, s.MachineCost, s.KWA, s.IsFixtures, s.IsContract, s.IsActive, s.Id, s.GroupID, s.DataOpenStatusUserId, s.DataOpenStatus, s.Code, s.Capacity, s.Brand, s.AreaCovered, s.Amortization })
+                       .Select<Stations>(s => new { s.Y, s.X, s.UsageArea, s.ShiftWorkingTime, s.Shift, s.PowerFactor, s.Name, s.Model, s.MachineCost, s.KWA, s.IsFixtures, s.IsContract, s.IsActive, s.Id, s.GroupID, s.DataOpenStatusUserId, s.DataOpenStatus, s.Code, s.Capacity, s.Brand, s.AreaCovered, s.Amortization })
                        .Join<StationGroups>
                         (
                             sg => new { GroupID = sg.Id, StationGroup = sg.Name },
@@ -191,7 +189,7 @@ namespace TsiErp.Business.Entities.Station.Services
                 var query = queryFactory
                        .Query()
                        .From(Tables.Stations)
-                       .Select<Stations>(s => new { s.Y, s.X, s.WorkSafetyInstruction, s.UsageInstruction, s.UsageArea, s.ShiftWorkingTime, s.Shift, s.PowerFactor, s.Name, s.Model, s.MachineCost, s.KWA, s.IsFixtures, s.IsContract, s.IsActive, s.Id, s.GroupID, s.DataOpenStatusUserId, s.DataOpenStatus, s.Code, s.Capacity, s.Brand, s.AreaCovered, s.Amortization })
+                       .Select<Stations>(s => new { s.Y, s.X, s.UsageArea, s.ShiftWorkingTime, s.Shift, s.PowerFactor, s.Name, s.Model, s.MachineCost, s.KWA, s.IsFixtures, s.IsContract, s.IsActive, s.Id, s.GroupID, s.DataOpenStatusUserId, s.DataOpenStatus, s.Code, s.Capacity, s.Brand, s.AreaCovered, s.Amortization })
                        .Join<StationGroups>
                         (
                             sg => new { StationGroup = sg.Name },
@@ -217,7 +215,7 @@ namespace TsiErp.Business.Entities.Station.Services
                 var entityQuery = queryFactory
                        .Query()
                        .From(Tables.Stations)
-                       .Select<Stations>(s => new { s.Y, s.X, s.WorkSafetyInstruction, s.UsageInstruction, s.UsageArea, s.ShiftWorkingTime, s.Shift, s.PowerFactor, s.Name, s.Model, s.MachineCost, s.KWA, s.IsFixtures, s.IsContract, s.IsActive, s.Id, s.GroupID, s.DataOpenStatusUserId, s.DataOpenStatus, s.Code, s.Capacity, s.Brand, s.AreaCovered, s.Amortization })
+                       .Select<Stations>(s => new { s.Y, s.X, s.UsageArea, s.ShiftWorkingTime, s.Shift, s.PowerFactor, s.Name, s.Model, s.MachineCost, s.KWA, s.IsFixtures, s.IsContract, s.IsActive, s.Id, s.GroupID, s.DataOpenStatusUserId, s.DataOpenStatus, s.Code, s.Capacity, s.Brand, s.AreaCovered, s.Amortization })
                        .Join<StationGroups>
                         (
                             sg => new { GroupID = sg.Id, StationGroup = sg.Name },
@@ -242,7 +240,7 @@ namespace TsiErp.Business.Entities.Station.Services
                 var listQuery = queryFactory
                                .Query()
                                .From(Tables.Stations)
-                               .Select<Stations>(s => new { s.Y, s.X, s.WorkSafetyInstruction, s.UsageInstruction, s.UsageArea, s.ShiftWorkingTime, s.Shift, s.PowerFactor, s.Name, s.Model, s.MachineCost, s.KWA, s.IsFixtures, s.IsContract, s.IsActive, s.Id, s.GroupID, s.DataOpenStatusUserId, s.DataOpenStatus, s.Code, s.Capacity, s.Brand, s.AreaCovered, s.Amortization })
+                               .Select<Stations>(s => new { s.Y, s.X, s.UsageArea, s.ShiftWorkingTime, s.Shift, s.PowerFactor, s.Name, s.Model, s.MachineCost, s.KWA, s.IsFixtures, s.IsContract, s.IsActive, s.Id, s.GroupID, s.DataOpenStatusUserId, s.DataOpenStatus, s.Code, s.Capacity, s.Brand, s.AreaCovered, s.Amortization })
                                .Join<StationGroups>
                         (
                             sg => new { GroupID = sg.Id, StationGroup = sg.Name },
@@ -278,8 +276,6 @@ namespace TsiErp.Business.Entities.Station.Services
                     PowerFactor = input.PowerFactor,
                     ShiftWorkingTime = input.ShiftWorkingTime,
                     UsageArea = input.UsageArea,
-                    WorkSafetyInstruction = input.WorkSafetyInstruction,
-                    UsageInstruction = input.UsageInstruction,
                     X = input.X,
                     Y = input.Y,
                     Code = input.Code,
@@ -384,8 +380,6 @@ namespace TsiErp.Business.Entities.Station.Services
                     PowerFactor = entity.PowerFactor,
                     ShiftWorkingTime = entity.ShiftWorkingTime,
                     UsageArea = entity.UsageArea,
-                    WorkSafetyInstruction = entity.WorkSafetyInstruction,
-                    UsageInstruction = entity.UsageInstruction,
                     X = entity.X,
                     Y = entity.Y,
                     Code = entity.Code,
@@ -394,12 +388,12 @@ namespace TsiErp.Business.Entities.Station.Services
                     DataOpenStatus = lockRow,
                     DataOpenStatusUserId = userId,
                     DeleterId = entity.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entity.DeletionTime.Value,
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                     Id = entity.Id,
-                    IsActive = entity.IsActive,
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                     LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                    IsActive = entity.IsActive,
                     Name = entity.Name,
                 }).Where(new { Id = id }, true, true, "");
 

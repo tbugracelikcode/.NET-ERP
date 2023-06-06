@@ -62,6 +62,12 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
                 Guid addedEntityId = GuidGenerator.CreateGuid();
 
+                string now = DateTime.Now.ToString();
+
+                string[] timeSplit = now.Split(" ");
+
+                string time = timeSplit[1];
+
                 var query = queryFactory.Query().From(Tables.PurchaseRequests).Insert(new CreatePurchaseRequestsDto
                 {
                     FicheNo = input.FicheNo,
@@ -75,13 +81,13 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                     LinkedPurchaseRequestID = Guid.Empty,
                     NetAmount = input.NetAmount,
                     PaymentPlanID = input.PaymentPlanID,
-                    ProductionOrderID = input.ProductionOrderID.GetValueOrDefault(),
+                    ProductionOrderID = Guid.Empty,
                     PropositionRevisionNo = input.PropositionRevisionNo,
                     PurchaseRequestState = input.PurchaseRequestState,
                     RevisionDate = input.RevisionDate,
                     RevisionTime = input.RevisionTime,
                     SpecialCode = input.SpecialCode,
-                    Time_ = input.Time_,
+                    Time_ = time,
                     TotalDiscountAmount = input.TotalDiscountAmount,
                     TotalVatAmount = input.TotalVatAmount,
                     TotalVatExcludedAmount = input.TotalVatExcludedAmount,
@@ -111,8 +117,8 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                         LineTotalAmount = item.LineTotalAmount,
                         OrderConversionDate = item.OrderConversionDate,
                         PaymentPlanID = item.PaymentPlanID,
-                        ProductionOrderID = item.ProductionOrderID,
-                        PurchaseRequestLineState = item.PurchaseRequestLineState,
+                        ProductionOrderID = Guid.Empty,
+                        PurchaseRequestLineState = (int)item.PurchaseRequestLineState,
                         UnitPrice = item.UnitPrice,
                         VATamount = item.VATamount,
                         VATrate = item.VATrate,
@@ -138,7 +144,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
                 var purchaseRequest = queryFactory.Insert<SelectPurchaseRequestsDto>(query, "Id", true);
 
-                StockMovementsService.TotalPurchaseRequests(addedEntityId);
+                //StockMovementsService.TotalPurchaseRequests(addedEntityId);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PurchaseRequests, LogType.Insert, addedEntityId);
 
@@ -501,7 +507,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                             OrderConversionDate = item.OrderConversionDate,
                             PaymentPlanID = item.PaymentPlanID,
                             ProductionOrderID = item.ProductionOrderID,
-                            PurchaseRequestLineState = item.PurchaseRequestLineState,
+                            PurchaseRequestLineState = (int)item.PurchaseRequestLineState,
                             UnitPrice = item.UnitPrice,
                             VATamount = item.VATamount,
                             VATrate = item.VATrate,
@@ -543,7 +549,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                                 OrderConversionDate = item.OrderConversionDate,
                                 PaymentPlanID = item.PaymentPlanID,
                                 ProductionOrderID = item.ProductionOrderID,
-                                PurchaseRequestLineState = item.PurchaseRequestLineState,
+                                PurchaseRequestLineState = (int)item.PurchaseRequestLineState,
                                 UnitPrice = item.UnitPrice,
                                 VATamount = item.VATamount,
                                 VATrate = item.VATrate,
@@ -571,7 +577,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
                 var purchaseRequest = queryFactory.Update<SelectPurchaseRequestsDto>(query, "Id", true);
 
-                StockMovementsService.TotalPurchaseRequests(entity.Id);
+                //StockMovementsService.TotalPurchaseRequests(entity.Id);
 
                 LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.PurchaseRequests, LogType.Update, purchaseRequest.Id);
 
@@ -602,7 +608,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                     PaymentPlanID = entity.PaymentPlanID,
                     ProductionOrderID = entity.ProductionOrderID,
                     PropositionRevisionNo = entity.PropositionRevisionNo,
-                    PurchaseRequestState = entity.PurchaseRequestState,
+                    PurchaseRequestState = (int)entity.PurchaseRequestState,
                     RevisionDate = entity.RevisionDate,
                     RevisionTime = entity.RevisionTime,
                     SpecialCode = entity.SpecialCode,
@@ -653,7 +659,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                         PaymentPlanID = entity.PaymentPlanID,
                         ProductionOrderID = entity.ProductionOrderID,
                         PropositionRevisionNo = entity.PropositionRevisionNo,
-                        PurchaseRequestState = entity.PurchaseRequestState,
+                        PurchaseRequestState = (int)entity.PurchaseRequestState,
                         RevisionDate = entity.RevisionDate,
                         RevisionTime = entity.RevisionTime,
                         SpecialCode = entity.SpecialCode,
@@ -690,7 +696,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                                 OrderConversionDate = DateTime.Now,
                                 PaymentPlanID = line.PaymentPlanID,
                                 ProductionOrderID = line.ProductionOrderID,
-                                PurchaseRequestLineState = lineState,
+                                PurchaseRequestLineState = (int)lineState,
                                 UnitPrice = line.UnitPrice,
                                 VATamount = line.VATamount,
                                 VATrate = line.VATrate,

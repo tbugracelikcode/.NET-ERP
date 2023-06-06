@@ -7,6 +7,8 @@ using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.Station;
 using TsiErp.Entities.Entities.WorkOrder;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.StationGroup
 {

@@ -438,7 +438,7 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
                     UnplannedDate = entity.UnplannedDate,
                     RemainingTime = entity.RemainingTime,
                     StartDate = entity.StartDate,
-                    Status = entity.Status,
+                    Status = (int)entity.Status,
                     CreationTime = entity.CreationTime.Value,
                     CreatorId = entity.CreatorId.Value,
                     DataOpenStatus = lockRow,

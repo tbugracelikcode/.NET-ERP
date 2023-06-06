@@ -24,7 +24,7 @@ namespace TsiErp.Entities.Entities.PurchaseRequest.Dtos
         /// <summary>
         /// Saat
         /// </summary>
-        public TimeSpan? Time_ { get; set; }
+        public string Time_ { get; set; }
         /// <summary>
         /// Kur Tutarı
         /// </summary>
@@ -52,7 +52,7 @@ namespace TsiErp.Entities.Entities.PurchaseRequest.Dtos
         /// <summary>
         /// Satın Alma Talep Durumu
         /// </summary>
-        public PurchaseRequestStateEnum PurchaseRequestState { get; set; }
+        public int PurchaseRequestState { get; set; }
         /// <summary>
         /// Bağlı Teklif ID
         /// </summary>

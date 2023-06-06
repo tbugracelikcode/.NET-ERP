@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.Shift;
 using TsiErp.Entities.Enums;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.ShiftLine
 {
@@ -35,7 +37,6 @@ namespace TsiErp.Entities.Entities.ShiftLine
         /// Tür Enum
         /// </summary>
         public ShiftLinesTypeEnum Type { get; set; }
-        [Precision(18, 6)]
 
         /// <summary>
         /// Katsayı

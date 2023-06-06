@@ -99,10 +99,10 @@ namespace TsiErp.ErpUI.Pages.Shift
         {
             var type = typeof(T);
             return Enum.GetValues(type)
-                       .Cast<T>()
+                       .Cast<ShiftLinesTypeEnum>()
                        .Select(x => new SelectShiftLinesDto
                        {
-                           Type = x as ShiftLinesTypeEnum?,
+                           Type = x ,
                            TypeName = type.GetMember(x.ToString())
                        .First()
                        .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()

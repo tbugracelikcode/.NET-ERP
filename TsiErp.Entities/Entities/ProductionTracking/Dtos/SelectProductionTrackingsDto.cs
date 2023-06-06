@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.ProductionTrackingHaltLine.Dtos;
 
 namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
@@ -97,8 +98,14 @@ namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
         /// </summary>
         public Guid ShiftID { get; set; }
 
+        [NoDatabaseAction]
 
         public List<SelectProductionTrackingHaltLinesDto> SelectProductionTrackingHaltLines { get; set; }
+
+        public SelectProductionTrackingsDto()
+        {
+            SelectProductionTrackingHaltLines = new List<SelectProductionTrackingHaltLinesDto>();
+        }
 
     }
 }

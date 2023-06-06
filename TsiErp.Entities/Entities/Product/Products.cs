@@ -32,6 +32,8 @@ using TsiErp.Entities.Entities.ByDateStockMovement;
 using TsiErp.Entities.Entities.GrandTotalStockMovement;
 using TsiErp.Entities.Entities.TechnicalDrawing;
 using TsiErp.Entities.Entities.ProductReferanceNumber;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 using TsiErp.Entities.Entities.ContractProductionTracking;
 
 namespace TsiErp.Entities.Entities.Product
@@ -57,8 +59,6 @@ namespace TsiErp.Entities.Entities.Product
         /// Temin Şekli
         /// </summary>
         public ProductSupplyFormEnum SupplyForm { get; set; }
-
-        [Precision(18, 6)]
         /// <summary>
         /// Stok Boyu
         /// </summary>
@@ -68,7 +68,6 @@ namespace TsiErp.Entities.Entities.Product
         /// </summary>
         public string GTIP { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Testere Fire
         /// </summary>
@@ -138,7 +137,6 @@ namespace TsiErp.Entities.Entities.Product
         /// </summary>
         public int PlannedWastage { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Kaplama Ağırlığı
         /// </summary>

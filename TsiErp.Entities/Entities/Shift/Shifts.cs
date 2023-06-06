@@ -9,6 +9,8 @@ using TsiErp.Entities.Entities.CalendarLine;
 using TsiErp.Entities.Entities.ContractProductionTracking;
 using TsiErp.Entities.Entities.ProductionTracking;
 using TsiErp.Entities.Entities.ShiftLine;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.Shift
 {
@@ -29,25 +31,21 @@ namespace TsiErp.Entities.Entities.Shift
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
-        [Precision(18, 6)]
 
         /// <summary>
         /// Toplam Çalışma Süresi
         /// </summary>
         public decimal TotalWorkTime { get; set; }
-        [Precision(18, 6)]
 
         /// <summary>
         /// Toplam Mola Süresi
         /// </summary>
         public decimal TotalBreakTime { get; set; }
-        [Precision(18, 6)]
 
         /// <summary>
         /// Net Çalışma Süresi
         /// </summary>
         public decimal NetWorkTime { get; set; }
-        [Precision(18, 6)]
 
         /// <summary>
         /// Fazla Mesai Süresi

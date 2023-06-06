@@ -28,7 +28,7 @@ namespace TsiErp.Entities.Entities.PlannedMaintenance.Dtos
         /// <summary>
         /// Durum
         /// </summary>
-        public PlannedMaintenanceStateEnum? Status { get; set; }
+        public int Status { get; set; }
         /// <summary>
         /// Bakımı Yapan
         /// </summary>

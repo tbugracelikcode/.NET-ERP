@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.CurrentAccountCard;
 using TsiErp.Entities.Entities.Product;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.ProductReferanceNumber
 {

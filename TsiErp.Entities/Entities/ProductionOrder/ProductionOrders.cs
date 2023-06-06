@@ -13,6 +13,8 @@ using TsiErp.Entities.Entities.SalesOrder;
 using TsiErp.Entities.Entities.SalesOrderLine;
 using TsiErp.Entities.Entities.SalesProposition;
 using TsiErp.Entities.Entities.SalesPropositionLine;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 using TsiErp.Entities.Entities.UnitSet;
 using TsiErp.Entities.Entities.WorkOrder;
 using TsiErp.Entities.Enums;
@@ -49,13 +51,11 @@ namespace TsiErp.Entities.Entities.ProductionOrder
         /// </summary>
         public DateTime? EndDate { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Planlanan Miktar
         /// </summary>
         public decimal PlannedQuantity { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Üretilen Miktar
         /// </summary>

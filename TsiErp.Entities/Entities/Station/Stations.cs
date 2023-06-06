@@ -14,6 +14,8 @@ using TsiErp.Entities.Entities.ProductionTracking;
 using TsiErp.Entities.Entities.ProductsOperationLine;
 using TsiErp.Entities.Entities.StationGroup;
 using TsiErp.Entities.Entities.StationInventory;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 using TsiErp.Entities.Entities.TemplateOperationLine;
 using TsiErp.Entities.Entities.UnplannedMaintenance;
 using TsiErp.Entities.Entities.WorkOrder;
@@ -46,7 +48,6 @@ namespace TsiErp.Entities.Entities.Station
         /// </summary>
         public string Capacity { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// KWA
         /// </summary>
@@ -56,25 +57,21 @@ namespace TsiErp.Entities.Entities.Station
         /// </summary>
         public Guid GroupID { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// X
         /// </summary>
         public decimal X { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Y
         /// </summary>
         public decimal Y { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Kapladığı Alan
         /// </summary>
         public decimal AreaCovered { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Kullanım Alanı
         /// </summary>
@@ -84,7 +81,6 @@ namespace TsiErp.Entities.Entities.Station
         /// </summary>
         public int Amortization { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Makine Maliyeti
         /// </summary>
@@ -94,25 +90,15 @@ namespace TsiErp.Entities.Entities.Station
         /// </summary>
         public int Shift { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Vardiya Çalışma Süresi
         /// </summary>
         public decimal ShiftWorkingTime { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Güç Faktörü
         /// </summary>
         public decimal PowerFactor { get; set; }       
-        /// <summary>
-        /// İş Güvenliği Talimatı
-        /// </summary>
-        public byte[] WorkSafetyInstruction { get; set; }
-        /// <summary>
-        /// Kullanım Talimatı
-        /// </summary>
-        public byte[] UsageInstruction { get; set; }
         /// <summary>
         /// Aktiflik
         /// </summary>

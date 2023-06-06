@@ -94,7 +94,7 @@ namespace TsiErp.Entities.Entities.PurchaseOrderLine.Dtos
         /// <summary>
         /// Satış Sipariş Satırı Durumu
         /// </summary>
-        public PurchaseOrderLineStateEnum PurchaseOrderLineStateEnum { get; set; }
+        public int PurchaseOrderLineStateEnum { get; set; }
         /// <summary>
         /// Üretim Emri Oluşturulma Tarihi
         /// </summary>

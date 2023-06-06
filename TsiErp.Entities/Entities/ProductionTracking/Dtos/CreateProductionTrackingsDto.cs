@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.ProductionTrackingHaltLine.Dtos;
 using TsiErp.Entities.Entities.SalesOrderLine.Dtos;
 
@@ -73,10 +74,16 @@ namespace TsiErp.Entities.Entities.ProductionTracking.Dtos
         /// Vardiya ID
         /// </summary>
         public Guid? ShiftID { get; set; }
+        [NoDatabaseAction]
 
         /// <summary>
         /// Sipariş Satırları
         /// </summary>
         public List<SelectProductionTrackingHaltLinesDto> SelectProductionTrackingHaltLinesDto { get; set; }
+
+        public CreateProductionTrackingsDto()
+        {
+            SelectProductionTrackingHaltLinesDto = new List<SelectProductionTrackingHaltLinesDto>();
+        }
     }    
 }

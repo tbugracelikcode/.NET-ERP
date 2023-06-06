@@ -277,7 +277,7 @@ else
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["TypeLineLabel"] </strong></label><br />
-                            <SfDropDownList TItem="SelectShiftLinesDto" TValue="ShiftLinesTypeEnum?" PopupHeight="230px"  @bind-Value="@LineDataSource.Type" DataSource="@shifttypes">
+                            <SfDropDownList TItem="SelectShiftLinesDto" TValue="ShiftLinesTypeEnum" PopupHeight="230px"  @bind-Value="@LineDataSource.Type" DataSource="@shifttypes">
                                 <DropDownListFieldSettings Text="TypeName" Value="Type"></DropDownListFieldSettings>
                             </SfDropDownList>
                         </Template>

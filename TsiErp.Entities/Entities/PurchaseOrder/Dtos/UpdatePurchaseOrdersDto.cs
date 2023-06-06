@@ -24,9 +24,8 @@ namespace TsiErp.Entities.Entities.PurchaseOrder.Dtos
         /// <summary>
         /// Saat
         /// </summary>
-        public TimeSpan? Time_ { get; set; }
+        public string Time_ { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Kur Tutarı
         /// </summary>
@@ -42,7 +41,7 @@ namespace TsiErp.Entities.Entities.PurchaseOrder.Dtos
         /// <summary>
         /// Sipariş Durumu
         /// </summary>
-        public PurchaseOrderStateEnum PurchaseOrderState { get; set; }
+        public int PurchaseOrderState { get; set; }
         /// <summary>
         /// Bağlı Satın Alma Talep ID
         /// </summary>
@@ -72,31 +71,26 @@ namespace TsiErp.Entities.Entities.PurchaseOrder.Dtos
         /// </summary>
         public Guid? ProductionOrderID { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Brüt Tutar
         /// </summary>
         public decimal GrossAmount { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// KDV hariç Tutar
         /// </summary>
         public decimal TotalVatExcludedAmount { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// KDV Tutar
         /// </summary>
         public decimal TotalVatAmount { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Toplam İndirimli Tutar
         /// </summary>
         public decimal TotalDiscountAmount { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Net Tutar
         /// </summary>

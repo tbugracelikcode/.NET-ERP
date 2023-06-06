@@ -8,6 +8,8 @@ using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.Product;
 using TsiErp.Entities.Entities.ProductsOperation;
 using TsiErp.Entities.Entities.Route;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.RouteLine
 {
@@ -53,9 +55,5 @@ namespace TsiErp.Entities.Entities.RouteLine
         /// Satır Numarası
         /// </summary>
         public int LineNr { get; set; }
-        /// <summary>
-        /// Operasyon Resmi
-        /// </summary>
-        public byte[] OperationPicture { get; set; }
     }
 }

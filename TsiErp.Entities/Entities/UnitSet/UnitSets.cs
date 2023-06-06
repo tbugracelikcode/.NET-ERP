@@ -11,6 +11,8 @@ using TsiErp.Entities.Entities.Product;
 using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.PurchaseOrderLine;
 using TsiErp.Entities.Entities.PurchaseRequestLine;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 using TsiErp.Entities.Entities.SalesOrderLine;
 using TsiErp.Entities.Entities.SalesPropositionLine;
 using TsiErp.Entities.Entities.UnplannedMaintenanceLine;

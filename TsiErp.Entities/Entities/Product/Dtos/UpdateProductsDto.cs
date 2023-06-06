@@ -25,7 +25,7 @@ namespace TsiErp.Entities.Entities.Product.Dtos
         /// <summary>
         /// Temin Şekli
         /// </summary>
-        public ProductSupplyFormEnum SupplyForm { get; set; }
+        public int SupplyForm { get; set; }
         /// <summary>
         /// Stok Boyu
         /// </summary>
@@ -49,7 +49,7 @@ namespace TsiErp.Entities.Entities.Product.Dtos
         /// <summary>
         /// Stok Türü
         /// </summary>
-        public ProductTypeEnum ProductType { get; set; }
+        public int ProductType { get; set; }
         /// <summary>
         /// Stok Açıklaması
         /// </summary>

@@ -8,6 +8,8 @@ using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.Currency;
 using TsiErp.Entities.Entities.CurrentAccountCard;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 using TsiErp.Entities.Entities.PaymentPlan;
 using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.SalesOrderLine;
@@ -34,9 +36,8 @@ namespace TsiErp.Entities.Entities.SalesOrder
         /// <summary>
         /// Saat
         /// </summary>
-        public TimeSpan? Time_ { get; set; }
+        public string Time_ { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Kur Tutarı
         /// </summary>
@@ -78,31 +79,26 @@ namespace TsiErp.Entities.Entities.SalesOrder
         /// </summary>
         public Guid CurrentAccountCardID { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Brüt Tutar
         /// </summary>
         public decimal GrossAmount { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// KDV hariç Tutar
         /// </summary>
         public decimal TotalVatExcludedAmount { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// KDV Tutar
         /// </summary>
         public decimal TotalVatAmount { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Toplam İndirimli Tutar
         /// </summary>
         public decimal TotalDiscountAmount { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Net Tutar
         /// </summary>

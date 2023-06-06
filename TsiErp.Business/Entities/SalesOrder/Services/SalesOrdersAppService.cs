@@ -63,9 +63,15 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
 
                 Guid addedEntityId = GuidGenerator.CreateGuid();
 
+                string now = DateTime.Now.ToString();
+
+                string[] timeSplit = now.Split(" ");
+
+                string time = timeSplit[1];
+
                 var query = queryFactory.Query().From(Tables.SalesOrders).Insert(new CreateSalesOrderDto
                 {
-                    LinkedSalesPropositionID = input.LinkedSalesPropositionID,
+                    LinkedSalesPropositionID = Guid.Empty,
                     SalesOrderState = input.SalesOrderState,
                     FicheNo = input.FicheNo,
                     BranchID = input.BranchID,
@@ -79,7 +85,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     PaymentPlanID = input.PaymentPlanID,
                     ShippingAdressID = input.ShippingAdressID,
                     SpecialCode = input.SpecialCode,
-                    Time_ = input.Time_,
+                    Time_ = time,
                     TotalDiscountAmount = input.TotalDiscountAmount,
                     TotalVatAmount = input.TotalVatAmount,
                     TotalVatExcludedAmount = input.TotalVatExcludedAmount,
@@ -99,10 +105,10 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
 
                 foreach (var item in input.SelectSalesOrderLines)
                 {
-                    var queryLine = queryFactory.Query().From(Tables.SalesOrders).Insert(new CreateSalesOrderLinesDto
+                    var queryLine = queryFactory.Query().From(Tables.SalesOrderLines).Insert(new CreateSalesOrderLinesDto
                     {
-                        LikedPropositionLineID = item.LikedPropositionLineID.GetValueOrDefault(),
-                        SalesOrderLineStateEnum = item.SalesOrderLineStateEnum,
+                        LikedPropositionLineID = Guid.Empty,
+                        SalesOrderLineStateEnum = (int)item.SalesOrderLineStateEnum,
                         DiscountAmount = item.DiscountAmount,
                         WorkOrderCreationDate = item.WorkOrderCreationDate,
                         DiscountRate = item.DiscountRate,
@@ -136,7 +142,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
 
                 var salesOrder = queryFactory.Insert<SelectSalesOrderDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.SalesOrders, LogType.Insert, salesOrder.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.SalesOrders, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectSalesOrderDto>(salesOrder);
             }
@@ -203,7 +209,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     var queryLine = queryFactory.Query().From(Tables.SalesOrderLines).Insert(new CreateSalesOrderLinesDto
                     {
                         LikedPropositionLineID = item.LikedPropositionLineID.GetValueOrDefault(),
-                        SalesOrderLineStateEnum = item.SalesOrderLineStateEnum,
+                        SalesOrderLineStateEnum = (int)item.SalesOrderLineStateEnum,
                         DiscountAmount = item.DiscountAmount,
                         WorkOrderCreationDate = item.WorkOrderCreationDate,
                         DiscountRate = item.DiscountRate,
@@ -483,7 +489,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
 
                              .Join<ShippingAdresses>
                         (
-                            sa => new { ShippingAdressID = sa.Id, ShippingAdressCode = sa.Code, ShippingAdressName = sa.Name },
+                            sa => new { ShippingAdressID = sa.Id, ShippingAdressCode = sa.Code},
                             nameof(SalesOrders.ShippingAdressID),
                             nameof(ShippingAdresses.Id),
                             JoinType.Left
@@ -524,7 +530,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                             nameof(SalesPropositionLines.Id),
                             JoinType.Left
                         )
-                        .Where(new { PurchaseOrderID = input.Id }, false, false, Tables.SalesOrderLines);
+                        .Where(new { SalesOrderID = input.Id }, false, false, Tables.SalesOrderLines);
 
                 var salesOrderLine = queryFactory.GetList<SelectSalesOrderLinesDto>(queryLines).ToList();
 
@@ -629,7 +635,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     {
                         var queryLine = queryFactory.Query().From(Tables.SalesOrderLines).Insert(new CreateSalesOrderLinesDto
                         {
-                            SalesOrderLineStateEnum = item.SalesOrderLineStateEnum,
+                            SalesOrderLineStateEnum = (int)item.SalesOrderLineStateEnum,
                             LikedPropositionLineID = item.LikedPropositionLineID.GetValueOrDefault(),
                             DiscountAmount = item.DiscountAmount,
                             WorkOrderCreationDate = item.WorkOrderCreationDate,
@@ -672,7 +678,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                             var queryLine = queryFactory.Query().From(Tables.SalesOrderLines).Update(new UpdateSalesOrderLinesDto
                             {
                                 LikedPropositionLineID = item.LikedPropositionLineID.GetValueOrDefault(),
-                                SalesOrderLineStateEnum = item.SalesOrderLineStateEnum,
+                                SalesOrderLineStateEnum = (int)item.SalesOrderLineStateEnum,
                                 DiscountAmount = item.DiscountAmount,
                                 WorkOrderCreationDate = item.WorkOrderCreationDate.GetValueOrDefault(),
                                 DiscountRate = item.DiscountRate,
@@ -725,7 +731,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 var query = queryFactory.Query().From(Tables.SalesOrders).Update(new UpdateSalesOrderDto
                 {
                     LinkedSalesPropositionID = entity.LinkedSalesPropositionID,
-                    SalesOrderState = entity.SalesOrderState,
+                    SalesOrderState = (int)entity.SalesOrderState,
                     FicheNo = entity.FicheNo,
                     BranchID = entity.BranchID,
                     CurrencyID = entity.CurrencyID,

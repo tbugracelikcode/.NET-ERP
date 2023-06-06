@@ -9,6 +9,8 @@ using TsiErp.Entities.Entities.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseRequest;
 using TsiErp.Entities.Entities.SalesOrder;
 using TsiErp.Entities.Entities.SalesProposition;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.ShippingAdress
 {

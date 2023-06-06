@@ -89,6 +89,15 @@ namespace TsiErp.Localizations.Resources.ProductionTrackings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Üretim Takip Kodu:.
+        /// </summary>
+        public static string CodeLabel {
+            get {
+                return ResourceManager.GetString("CodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
         public static string ContextAdd {

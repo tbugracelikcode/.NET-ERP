@@ -11,7 +11,6 @@ namespace TsiErp.ErpUI.Pages.User
 {
     public partial class UsersListPage
     {
-
         protected override async void OnInitialized()
         {
             BaseCrudService = UsersService;
@@ -23,6 +22,9 @@ namespace TsiErp.ErpUI.Pages.User
         {
             UserGroupList = (await UserGroupsService.GetListAsync(new ListUserGroupsParameterDto())).Data.ToList();
         }
+
+      
+      
 
         protected override Task BeforeInsertAsync()
         {

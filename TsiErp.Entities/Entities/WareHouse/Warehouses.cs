@@ -13,6 +13,8 @@ using TsiErp.Entities.Entities.SalesOrder;
 using TsiErp.Entities.Entities.SalesPrice;
 using TsiErp.Entities.Entities.SalesProposition;
 using TsiErp.Entities.Entities.SalesPropositionLine;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.WareHouse
 {

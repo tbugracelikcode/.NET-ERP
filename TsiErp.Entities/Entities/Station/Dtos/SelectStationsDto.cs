@@ -94,14 +94,6 @@ namespace TsiErp.Entities.Entities.Station.Dtos
         /// </summary>
         public decimal PowerFactor { get; set; }        
         /// <summary>
-        /// İş Güvenliği Talimatı
-        /// </summary>
-        public byte[] WorkSafetyInstruction { get; set; }
-        /// <summary>
-        /// Kullanım Talimatı
-        /// </summary>
-        public byte[] UsageInstruction { get; set; }
-        /// <summary>
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }

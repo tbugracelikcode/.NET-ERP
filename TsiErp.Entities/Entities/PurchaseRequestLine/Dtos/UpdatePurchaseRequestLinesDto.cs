@@ -92,7 +92,7 @@ namespace TsiErp.Entities.Entities.PurchaseRequestLine.Dtos
         /// <summary>
         /// Satış Teklif Satırı Durumu
         /// </summary>
-        public PurchaseRequestLineStateEnum PurchaseRequestLineState { get; set; }
+        public int PurchaseRequestLineState { get; set; }
         /// <summary>
         /// Siparişe Çevirilme Tarihi
         /// </summary>

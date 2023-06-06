@@ -126,6 +126,9 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Üretim Takip Kodu:</value>
+  </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>

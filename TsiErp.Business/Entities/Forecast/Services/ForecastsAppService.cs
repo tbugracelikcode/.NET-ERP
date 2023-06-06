@@ -232,7 +232,6 @@ namespace TsiErp.Business.Entities.Forecast.Services
 
                 var forecasts = queryFactory.GetList<ListForecastsDto>(query).ToList();
 
-                throw new Exception();
                 return new SuccessDataResult<IList<ListForecastsDto>>(forecasts);
             }
         }

@@ -13,6 +13,8 @@ using TsiErp.Entities.Entities.SalesOrder;
 using TsiErp.Entities.Entities.SalesOrderLine;
 using TsiErp.Entities.Entities.SalesProposition;
 using TsiErp.Entities.Entities.SalesPropositionLine;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.PaymentPlan 
 {
@@ -31,7 +33,6 @@ namespace TsiErp.Entities.Entities.PaymentPlan
         /// </summary>
         public int Days_ { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Gecikme Vade Farkı
         /// </summary>

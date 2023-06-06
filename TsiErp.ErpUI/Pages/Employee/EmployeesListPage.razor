@@ -244,14 +244,14 @@
                                                         <DxGridLayoutItem Row="2" Column="0">
                                                             <Template>
                                                                 <label class="TSIModalLabel"><strong>@L["HomePhoneLabel"] </strong></label><br />
-                                                                <SfTextBox @bind-Value="DataSource.HomePhone" CssClass="TSITxtBox"></SfTextBox>
+                                                                     <SfMaskedTextBox CssClass="TSITxtBox" Mask="0(000)-000-0000"  @bind-Value="@DataSource.HomePhone"></SfMaskedTextBox>
                                                             </Template>
                                                         </DxGridLayoutItem>
 
                                                         <DxGridLayoutItem Row="2" Column="2">
                                                             <Template>
                                                                 <label class="TSIModalLabel"><strong>@L["CellPhoneLabel"] </strong></label><br />
-                                                                <SfTextBox  @bind-Value="DataSource.CellPhone" CssClass="TSITxtBox"></SfTextBox>
+                                                                <SfMaskedTextBox CssClass="TSITxtBox" Mask="0(000)-000-0000"  @bind-Value="@DataSource.CellPhone"></SfMaskedTextBox>
                                                             </Template>
                                                         </DxGridLayoutItem>
 

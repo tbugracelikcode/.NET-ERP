@@ -8,6 +8,8 @@ using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.MaintenanceInstruction;
 using TsiErp.Entities.Entities.PlannedMaintenance;
 using TsiErp.Entities.Entities.UnplannedMaintenance;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.MaintenancePeriod
 {
@@ -24,7 +26,6 @@ namespace TsiErp.Entities.Entities.MaintenancePeriod
         /// Periyot Adı
         /// </summary>
         public string Name { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Bakım Periyot Süresi
         /// </summary>

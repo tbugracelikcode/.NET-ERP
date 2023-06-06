@@ -9,6 +9,8 @@ using TsiErp.Entities.Entities.Branch;
 using TsiErp.Entities.Entities.CurrentAccountCard;
 using TsiErp.Entities.Entities.ForecastLine;
 using TsiErp.Entities.Entities.Period;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.Forecast
 {

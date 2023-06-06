@@ -47,9 +47,5 @@ namespace TsiErp.Entities.Entities.RouteLine.Dtos
         /// Satır Numarası
         /// </summary>
         public int LineNr { get; set; }
-        /// <summary>
-        /// Operasyon Resmi
-        /// </summary>
-        public byte[] OperationPicture { get; set; }
     }
 }

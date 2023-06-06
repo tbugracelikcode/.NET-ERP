@@ -46,10 +46,10 @@ namespace TsiErp.ErpUI.Pages.Product
         {
             var type = typeof(T);
             return Enum.GetValues(type)
-                       .Cast<T>()
+                       .Cast<ProductTypeEnum>()
                        .Select(x => new SelectProductsDto
                        {
-                           ProductType = x as ProductTypeEnum?,
+                           ProductType = x,
                            ProductTypeName = type.GetMember(x.ToString())
                        .First()
                        .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
@@ -61,10 +61,10 @@ namespace TsiErp.ErpUI.Pages.Product
         {
             var type = typeof(T);
             return Enum.GetValues(type)
-                       .Cast<T>()
+                       .Cast<ProductSupplyFormEnum>()
                        .Select(x => new SelectProductsDto
                        {
-                           SupplyForm = x as ProductSupplyFormEnum?,
+                           SupplyForm = x ,
                            SupplyFormName = type.GetMember(x.ToString())
                        .First()
                        .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()

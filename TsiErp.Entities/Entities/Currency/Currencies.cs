@@ -13,6 +13,8 @@ using TsiErp.Entities.Entities.PurchaseRequest;
 using TsiErp.Entities.Entities.SalesPrice;
 using TsiErp.Entities.Entities.SalesPriceLine;
 using TsiErp.Entities.Entities.PurchasePriceLine;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 using TsiErp.Entities.Entities.PurchasePrice;
 
 namespace TsiErp.Entities.Entities.Currency

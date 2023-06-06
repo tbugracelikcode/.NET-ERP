@@ -8,6 +8,8 @@ using Tsi.Core.Entities.Auditing;
 using TsiErp.Entities.Entities.MaintenancePeriod;
 using TsiErp.Entities.Entities.PlannedMaintenanceLine;
 using TsiErp.Entities.Entities.Station;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 using TsiErp.Entities.Enums;
 
 namespace TsiErp.Entities.Entities.PlannedMaintenance
@@ -32,7 +34,7 @@ namespace TsiErp.Entities.Entities.PlannedMaintenance
         /// <summary>
         /// Durum
         /// </summary>
-        public PlannedMaintenanceStateEnum? Status { get; set; }
+        public PlannedMaintenanceStateEnum Status { get; set; }
         /// <summary>
         /// Bakımı Yapan
         /// </summary>

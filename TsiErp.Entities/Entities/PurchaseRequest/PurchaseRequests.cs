@@ -12,6 +12,8 @@ using TsiErp.Entities.Entities.PaymentPlan;
 using TsiErp.Entities.Entities.ProductionOrder;
 using TsiErp.Entities.Entities.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseRequestLine;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 using TsiErp.Entities.Entities.ShippingAdress;
 using TsiErp.Entities.Entities.WareHouse;
 using TsiErp.Entities.Enums;
@@ -34,7 +36,7 @@ namespace TsiErp.Entities.Entities.PurchaseRequest
         /// <summary>
         /// Saat
         /// </summary>
-        public TimeSpan? Time_ { get; set; }
+        public string Time_ { get; set; }
 
         /// <summary>
         /// Kur Tutarı

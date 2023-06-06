@@ -80,15 +80,6 @@ namespace TsiErp.Entities.Entities.Station.Dtos
         /// Güç Faktörü
         /// </summary>
         public decimal PowerFactor { get; set; }
-        
-        /// <summary>
-        /// İş Güvenliği Talimatı
-        /// </summary>
-        public byte[] WorkSafetyInstruction { get; set; }
-        /// <summary>
-        /// Kullanım Talimatı
-        /// </summary>
-        public byte[] UsageInstruction { get; set; }
         /// <summary>
         /// Aktiflik
         /// </summary>

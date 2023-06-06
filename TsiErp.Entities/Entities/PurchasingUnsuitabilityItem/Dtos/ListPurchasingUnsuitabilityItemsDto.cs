@@ -19,10 +19,6 @@ namespace TsiErp.Entities.Entities.PurchasingUnsuitabilityItem.Dtos
         public string Name { get; set; }
 
         /// <summary>
-        /// Resim
-        /// </summary>
-        public byte[] Image { get; set; }
-        /// <summary>
         /// Tespit
         /// </summary>
         public int Detection { get; set; }

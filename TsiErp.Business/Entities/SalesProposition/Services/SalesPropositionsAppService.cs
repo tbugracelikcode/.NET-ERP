@@ -62,9 +62,15 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
 
                 Guid addedEntityId = GuidGenerator.CreateGuid();
 
+                string now = DateTime.Now.ToString();
+
+                string[] timeSplit = now.Split(" ");
+
+                string time = timeSplit[1];
+
                 var query = queryFactory.Query().From(Tables.SalesPropositions).Insert(new CreateSalesPropositionsDto
                 {
-                    LinkedSalesPropositionID = input.LinkedSalesPropositionID,
+                    LinkedSalesPropositionID = Guid.Empty,
                     SalesPropositionState = input.SalesPropositionState,
                     FicheNo = input.FicheNo,
                     BranchID = input.BranchID,
@@ -81,7 +87,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                     RevisionTime = input.RevisionTime,
                     ShippingAdressID = input.ShippingAdressID,
                     SpecialCode = input.SpecialCode,
-                    Time_ = input.Time_,
+                    Time_ = time,
                     TotalDiscountAmount = input.TotalDiscountAmount,
                     TotalVatAmount = input.TotalVatAmount,
                     TotalVatExcludedAmount = input.TotalVatExcludedAmount,
@@ -103,7 +109,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                 {
                     var queryLine = queryFactory.Query().From(Tables.SalesPropositionLines).Insert(new CreateSalesPropositionLinesDto
                     {
-                        SalesPropositionLineState = item.SalesPropositionLineState,
+                        SalesPropositionLineState = (int)item.SalesPropositionLineState,
                         DiscountAmount = item.DiscountAmount,
                         DiscountRate = item.DiscountRate,
                         ExchangeRate = item.ExchangeRate,
@@ -137,7 +143,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
 
                 var salesProposition = queryFactory.Insert<SelectSalesPropositionsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.SalesPropositions, LogType.Insert, salesProposition.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.SalesPropositions, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectSalesPropositionsDto>(salesProposition);
             }
@@ -521,7 +527,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                             LineTotalAmount = item.LineTotalAmount,
                             OrderConversionDate = item.OrderConversionDate,
                             PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
-                            SalesPropositionLineState = item.SalesPropositionLineState,
+                            SalesPropositionLineState = (int)item.SalesPropositionLineState,
                             UnitPrice = item.UnitPrice,
                             VATamount = item.VATamount,
                             VATrate = item.VATrate,
@@ -562,7 +568,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                                 LineTotalAmount = item.LineTotalAmount,
                                 OrderConversionDate = item.OrderConversionDate,
                                 PaymentPlanID = item.PaymentPlanID.GetValueOrDefault(),
-                                SalesPropositionLineState = item.SalesPropositionLineState,
+                                SalesPropositionLineState = (int)item.SalesPropositionLineState,
                                 UnitPrice = item.UnitPrice,
                                 VATamount = item.VATamount,
                                 VATrate = item.VATrate,
@@ -618,7 +624,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                     NetAmount = entity.NetAmount,
                     PaymentPlanID = entity.PaymentPlanID,
                     PropositionRevisionNo = entity.PropositionRevisionNo,
-                    SalesPropositionState = entity.SalesPropositionState,
+                    SalesPropositionState = (int)entity.SalesPropositionState,
                     RevisionDate = entity.RevisionDate,
                     RevisionTime = entity.RevisionTime,
                     ShippingAdressID = entity.ShippingAdressID,
@@ -669,7 +675,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                         NetAmount = entity.NetAmount,
                         PaymentPlanID = entity.PaymentPlanID,
                         PropositionRevisionNo = entity.PropositionRevisionNo,
-                        SalesPropositionState = entity.SalesPropositionState,
+                        SalesPropositionState = (int)entity.SalesPropositionState,
                         RevisionDate = entity.RevisionDate,
                         RevisionTime = entity.RevisionTime,
                         ShippingAdressID = entity.ShippingAdressID,
@@ -706,7 +712,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                                 LineTotalAmount = line.LineTotalAmount,
                                 OrderConversionDate = DateTime.Now,
                                 PaymentPlanID = line.PaymentPlanID.GetValueOrDefault(),
-                                SalesPropositionLineState = lineState,
+                                SalesPropositionLineState = (int)lineState,
                                 UnitPrice = line.UnitPrice,
                                 VATamount = line.VATamount,
                                 VATrate = line.VATrate,

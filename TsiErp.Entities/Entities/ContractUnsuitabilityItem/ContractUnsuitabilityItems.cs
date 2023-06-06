@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.ContractUnsuitabilityItem
 {
@@ -20,10 +22,6 @@ namespace TsiErp.Entities.Entities.ContractUnsuitabilityItem
         /// Açıklama
         /// </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Resim
-        /// </summary>
-        public byte[] Image { get; set; }
         /// <summary>
         /// Tespit
         /// </summary>

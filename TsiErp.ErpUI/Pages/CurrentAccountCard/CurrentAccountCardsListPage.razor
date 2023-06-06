@@ -387,14 +387,14 @@ else
                                                     <DxGridLayoutItem Row="1" Column="4">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>@L["Tel1Label"] </strong></label>
-                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Tel1"></SfTextBox>
+                                                             <SfMaskedTextBox CssClass="TSITxtBox" Mask="0(000)-000-0000"  @bind-Value="@DataSource.Tel1"></SfMaskedTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="1" Column="6">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>@L["Tel2Label"] </strong></label>
-                                                            <SfTextBox @bind-Value="DataSource.Tel2"></SfTextBox>
+                                                            <SfMaskedTextBox CssClass="TSITxtBox" Mask="0(000)-000-0000"  @bind-Value="@DataSource.Tel2"></SfMaskedTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
