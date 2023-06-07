@@ -1,40 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TsiErp.Entities.Entities.ProductGroup;
-using TsiErp.Entities.Entities.UnitSet;
-using TsiErp.Entities.Entities.SalesPropositionLine;
-using Tsi.Core.Entities.Auditing;
-using TsiErp.Entities.Entities.RouteLine;
-using TsiErp.Entities.Entities.Route;
-using Microsoft.EntityFrameworkCore;
-using TsiErp.Entities.Entities.SalesOrderLine;
-using TsiErp.Entities.Entities.ProductsOperation;
-using TsiErp.Entities.Entities.BillsofMaterialLine;
-using TsiErp.Entities.Entities.BillsofMaterial;
-using TsiErp.Entities.Entities.ProductionOrder;
-using TsiErp.Entities.Entities.WorkOrder;
-using TsiErp.Entities.Entities.PurchaseOrderLine;
-using TsiErp.Entities.Entities.PurchaseRequestLine;
-using TsiErp.Entities.Entities.PurchaseUnsuitabilityReport;
-using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
-using TsiErp.Entities.Entities.ForecastLine;
-using TsiErp.Entities.Entities.SalesPriceLine;
-using TsiErp.Entities.Entities.PurchasePriceLine;
-using TsiErp.Entities.Entities.FinalControlUnsuitabilityReport;
-using TsiErp.Entities.Entities.MaintenanceInstructionLine;
-using TsiErp.Entities.Entities.PlannedMaintenanceLine;
-using TsiErp.Entities.Enums;
-using TsiErp.Entities.Entities.UnplannedMaintenanceLine;
-using TsiErp.Entities.Entities.ByDateStockMovement;
-using TsiErp.Entities.Entities.GrandTotalStockMovement;
-using TsiErp.Entities.Entities.TechnicalDrawing;
-using TsiErp.Entities.Entities.ProductReferanceNumber;
+﻿using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using TsiErp.Entities.Enums;
 using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
-using TsiErp.Entities.Entities.ContractProductionTracking;
 
 namespace TsiErp.Entities.Entities.Product
 {

@@ -1,24 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Entities.Auditing;
-using TsiErp.Entities.Entities.CalendarLine;
-using TsiErp.Entities.Entities.ContractProductionTracking;
-using TsiErp.Entities.Entities.MaintenanceInstruction;
-using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
-using TsiErp.Entities.Entities.PlannedMaintenance;
-using TsiErp.Entities.Entities.ProductionTracking;
-using TsiErp.Entities.Entities.ProductsOperationLine;
-using TsiErp.Entities.Entities.StationGroup;
-using TsiErp.Entities.Entities.StationInventory;
+﻿using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
-using TsiErp.Entities.Entities.TemplateOperationLine;
-using TsiErp.Entities.Entities.UnplannedMaintenance;
-using TsiErp.Entities.Entities.WorkOrder;
 
 namespace TsiErp.Entities.Entities.Station
 {

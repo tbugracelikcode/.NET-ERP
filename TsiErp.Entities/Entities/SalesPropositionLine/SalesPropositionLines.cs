@@ -1,20 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Entities.Auditing;
-using TsiErp.Entities.Entities.Branch;
-using TsiErp.Entities.Entities.PaymentPlan;
-using TsiErp.Entities.Entities.Product;
-using TsiErp.Entities.Entities.ProductionOrder;
-using TsiErp.Entities.Entities.PurchaseRequest;
-using TsiErp.Entities.Entities.SalesProposition;
-using TsiErp.Entities.Entities.UnitSet;
-using TsiErp.Entities.Entities.WareHouse;
-using TsiErp.Entities.Enums;
+﻿using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
+using TsiErp.Entities.Enums;
 using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.SalesPropositionLine

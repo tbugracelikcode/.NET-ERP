@@ -1,23 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Entities.Auditing;
-using TsiErp.Entities.Entities.Branch;
-using TsiErp.Entities.Entities.Currency;
-using TsiErp.Entities.Entities.CurrentAccountCard;
-using TsiErp.Entities.Entities.PaymentPlan;
+﻿using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
-using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
-using TsiErp.Entities.Entities.ProductionOrder;
-using TsiErp.Entities.Entities.PurchaseOrderLine;
-using TsiErp.Entities.Entities.PurchaseRequest;
-using TsiErp.Entities.Entities.PurchaseUnsuitabilityReport;
-using TsiErp.Entities.Entities.ShippingAdress;
-using TsiErp.Entities.Entities.WareHouse;
 using TsiErp.Entities.Enums;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.PurchaseOrder
 {

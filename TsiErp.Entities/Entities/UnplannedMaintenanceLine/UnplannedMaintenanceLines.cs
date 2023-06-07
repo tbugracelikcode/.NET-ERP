@@ -1,15 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Entities.Auditing;
-using TsiErp.Entities.Entities.UnplannedMaintenance;
-using TsiErp.Entities.Entities.Product;
+﻿using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
-using TsiErp.Entities.Entities.UnitSet;
 
 namespace TsiErp.Entities.Entities.UnplannedMaintenanceLine
 {

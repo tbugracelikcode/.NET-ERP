@@ -1,26 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TsiErp.Entities.Entities.Currency;
-using TsiErp.Entities.Entities.SalesProposition;
-using TsiErp.Entities.Entities.ShippingAdress;
-using Tsi.Core.Entities.Auditing;
-using TsiErp.Entities.Entities.SalesOrder;
-using TsiErp.Entities.Entities.ProductionOrder;
-using TsiErp.Entities.Entities.WorkOrder;
-using TsiErp.Entities.Entities.PurchaseOrder;
-using TsiErp.Entities.Entities.PurchaseRequest;
-using TsiErp.Entities.Entities.PurchaseUnsuitabilityReport;
-using TsiErp.Entities.Entities.ProductionTracking;
-using TsiErp.Entities.Entities.ContractProductionTracking;
-using TsiErp.Entities.Entities.Forecast;
-using TsiErp.Entities.Entities.SalesPrice;
-using TsiErp.Entities.Entities.SalesPriceLine;
-using TsiErp.Entities.Entities.PurchasePrice;
-using TsiErp.Entities.Entities.PurchasePriceLine;
-using TsiErp.Entities.Entities.ProductReferanceNumber;
+﻿using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 

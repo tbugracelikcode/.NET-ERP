@@ -1,18 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Entities.Auditing;
-using TsiErp.Entities.Entities.ContractProductionTracking;
-using TsiErp.Entities.Entities.Department;
-using TsiErp.Entities.Entities.FinalControlUnsuitabilityReport;
-using TsiErp.Entities.Entities.OperationUnsuitabilityReport;
-using TsiErp.Entities.Entities.ProductionTracking;
-using TsiErp.Entities.Entities.SalesPrice;
+﻿using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
-using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 using TsiErp.Entities.Enums;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.Employee
 {

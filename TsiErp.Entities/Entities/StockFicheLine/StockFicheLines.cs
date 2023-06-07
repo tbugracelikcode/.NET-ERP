@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Tsi.Core.Entities.Auditing;
+﻿using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using TsiErp.Entities.Enums;
 

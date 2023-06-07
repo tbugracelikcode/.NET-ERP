@@ -1,12 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Entities.Auditing;
-using TsiErp.Entities.Entities.CalendarDay;
-using TsiErp.Entities.Entities.CalendarLine;
+﻿using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
@@ -17,40 +9,44 @@ namespace TsiErp.Entities.Entities.Calendar
     /// </summary>
     public class Calendars : FullAuditedEntity
     {
+        [SqlColumnType(MaxLength = 17, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
         /// Çalışma Takvimi Kodu
         /// </summary>
         public string Code { get; set; }
+        [SqlColumnType(MaxLength = 200, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
         /// Çalışma Takvimi Adı
         /// </summary>
         public string Name { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
         /// <summary>
         /// Açıklama
         /// </summary>
         public string _Description { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
         /// <summary>
         /// Planlanan mı?
         /// </summary>
         public bool IsPlanned { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
         /// <summary>
         /// Yıl
         /// </summary>
         public int Year { get; set; }
-        [Precision(18, 6)]
-
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Toplam Gün Sayısı
         /// </summary>
         public decimal TotalDays { get; set; }
-        [Precision(18, 6)]
 
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Resmi Tatil Sayısı
         /// </summary>
         public decimal OfficialHolidayDays { get; set; }
-        [Precision(18, 6)]
 
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Çalışılabilir Gün Sayısı
         /// </summary>
