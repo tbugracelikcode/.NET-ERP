@@ -436,7 +436,9 @@ else
                                                         <Template>
                                                             <br />
                                                             <label class="TSIModalLabel"><strong>@L["IDnumberLabel"] </strong></label>
-                                                            <SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.IDnumber"></SfTextBox>
+                                                            @*<SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.IDnumber"></SfTextBox>*@
+
+                                                            <SfMaskedTextBox CssClass="TSITxtBox" Mask="00000000000" @bind-Value="DataSource.IDnumber"></SfMaskedTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -449,7 +451,9 @@ else
                                                     <DxGridLayoutItem Row="2" Column="0">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>@L["TaxNumberLabel"] </strong></label>
-                                                            <SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.TaxNumber"></SfTextBox>
+                                                            @*<SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.TaxNumber"></SfTextBox>*@
+
+                                                            <SfMaskedTextBox CssClass="TSITxtBox" Mask="0000000000" @bind-Value="DataSource.TaxNumber"></SfMaskedTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
