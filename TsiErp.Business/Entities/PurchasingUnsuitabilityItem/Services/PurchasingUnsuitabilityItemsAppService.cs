@@ -2,7 +2,7 @@
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.PurchasingUnsuitabilityItem.Dtos;
+using TsiErp.Entities.Entities.QualityControl.PurchasingUnsuitabilityItem.Dtos;
 using TsiErp.Localizations.Resources.PurchasingUnsuitabilityItems.Page;
 
 namespace TsiErp.Business.Entities.PurchasingUnsuitabilityItem.Services

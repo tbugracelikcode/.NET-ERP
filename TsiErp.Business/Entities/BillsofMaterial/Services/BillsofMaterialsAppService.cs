@@ -10,12 +10,12 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.BillsofMaterial.Validations;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.BillsofMaterial;
-using TsiErp.Entities.Entities.BillsofMaterial.Dtos;
-using TsiErp.Entities.Entities.BillsofMaterialLine;
-using TsiErp.Entities.Entities.BillsofMaterialLine.Dtos;
-using TsiErp.Entities.Entities.Product;
-using TsiErp.Entities.Entities.UnitSet;
+using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial;
+using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine;
+using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
+using TsiErp.Entities.Entities.StockManagement.Product;
+using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.BillsofMaterials.Page;
 

@@ -1,11 +1,5 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TsiErp.Entities.Entities.PlannedMaintenance.Dtos;
-using TsiErp.Entities.Entities.SalesProposition.Dtos;
+using TsiErp.Entities.Entities.MaintenanceManagement.PlannedMaintenance.Dtos;
 
 namespace TsiErp.Business.Entities.PlannedMaintenance.Validations
 {

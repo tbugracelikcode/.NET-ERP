@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Tsi.Core.CrossCuttingConcerns.Validation;
-using TsiErp.Entities.Entities.User.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.User.Dtos;
 
 namespace TsiErp.EntityContracts.User
 {

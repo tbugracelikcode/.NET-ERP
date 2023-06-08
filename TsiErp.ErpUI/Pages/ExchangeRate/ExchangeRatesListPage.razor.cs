@@ -4,6 +4,7 @@ using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.Currency.Dtos;
 using TsiErp.Entities.Entities.ExchangeRate.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 
 namespace TsiErp.ErpUI.Pages.ExchangeRate
 {

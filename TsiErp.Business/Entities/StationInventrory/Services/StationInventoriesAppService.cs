@@ -10,9 +10,9 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.StationInventory.Validations;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.Station;
-using TsiErp.Entities.Entities.StationInventory;
-using TsiErp.Entities.Entities.StationInventory.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationInventory;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationInventory.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.StationInventrories.Page;
 

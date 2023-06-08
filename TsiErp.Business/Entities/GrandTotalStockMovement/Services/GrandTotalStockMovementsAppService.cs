@@ -9,11 +9,11 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.GrandTotalStockMovement.Validations;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.Branch;
-using TsiErp.Entities.Entities.GrandTotalStockMovement;
-using TsiErp.Entities.Entities.GrandTotalStockMovement.Dtos;
-using TsiErp.Entities.Entities.Product;
-using TsiErp.Entities.Entities.WareHouse;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
+using TsiErp.Entities.Entities.Other.GrandTotalStockMovement;
+using TsiErp.Entities.Entities.Other.GrandTotalStockMovement.Dtos;
+using TsiErp.Entities.Entities.StockManagement.Product;
+using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.GrandTotalStockMovements.Page;
 

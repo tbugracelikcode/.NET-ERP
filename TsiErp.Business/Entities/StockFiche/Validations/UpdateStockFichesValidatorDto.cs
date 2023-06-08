@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TsiErp.Entities.Entities.StockFiche.Dtos;
+using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
 
 namespace TsiErp.Business.Entities.StockFiche.Validations
 {

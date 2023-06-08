@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TsiErp.Business.Entities.ProductionOrderChangeItem.Services;
-using TsiErp.Entities.Entities.ProductionOrderChangeItem.Dtos;
+using TsiErp.Entities.Entities.QualityControl.ProductionOrderChangeItem.Dtos;
 
 namespace TsiErp.WebAPI.Controllers
 {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.CrossCuttingConcerns.Validation;
-using TsiErp.Entities.Entities.MaintenancePeriod.Dtos;
+using TsiErp.Entities.Entities.MaintenanceManagement.MaintenancePeriod.Dtos;
 
 namespace TsiErp.Business.Entities.MaintenancePeriod.Validations
 {

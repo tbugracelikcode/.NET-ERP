@@ -4,6 +4,7 @@ using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.Department.Dtos;
 using TsiErp.Entities.Entities.EquipmentRecord.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department.Dtos;
 
 namespace TsiErp.ErpUI.Pages.EquipmentRecord
 {

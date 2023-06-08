@@ -10,11 +10,11 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.TemplateOperation.Validations;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.Station;
-using TsiErp.Entities.Entities.TemplateOperation;
-using TsiErp.Entities.Entities.TemplateOperation.Dtos;
-using TsiErp.Entities.Entities.TemplateOperationLine;
-using TsiErp.Entities.Entities.TemplateOperationLine.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
+using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation;
+using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationLine;
+using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationLine.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.TemplateOperations.Page;
 

@@ -1,5 +1,5 @@
 ﻿using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.WareHouse.Dtos;
+using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 
 namespace TsiErp.Business.Entities.Warehouse.Services
 {

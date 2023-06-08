@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TsiErp.Business.Entities.Shift.Services;
-using TsiErp.Entities.Entities.Shift.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift.Dtos;
 
 namespace TsiErp.WebAPI.Controllers
 {

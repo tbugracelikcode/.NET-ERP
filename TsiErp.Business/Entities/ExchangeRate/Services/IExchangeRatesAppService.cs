@@ -1,5 +1,5 @@
 ﻿using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.ExchangeRate.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.ExchangeRate.Dtos;
 
 namespace TsiErp.Business.Entities.ExchangeRate.Services
 {

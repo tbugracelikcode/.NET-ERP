@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TsiErp.Business.Entities.ExchangeRate.Services;
-using TsiErp.Entities.Entities.ExchangeRate.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.ExchangeRate.Dtos;
 
 namespace TsiErp.WebAPI.Controllers
 {

@@ -5,8 +5,11 @@ using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.BillsofMaterial.Dtos;
-using TsiErp.Entities.Entities.BillsofMaterialLine.Dtos;
 using TsiErp.Entities.Entities.Product.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
+using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
+using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.UnitSet.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.CrossCuttingConcerns.Validation;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.Branch.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Localizations.Resources.Branches.Page;
 
 namespace TsiErp.Business.Entities.Branch.Validations

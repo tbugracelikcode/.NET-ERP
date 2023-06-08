@@ -1,5 +1,5 @@
 ﻿using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.PlannedMaintenance.Dtos;
+using TsiErp.Entities.Entities.MaintenanceManagement.PlannedMaintenance.Dtos;
 
 namespace TsiErp.Business.Entities.PlannedMaintenance.Services
 {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TsiErp.Entities.Entities.Shift.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift.Dtos;
 
 namespace TsiErp.Business.Entities.Shift.Validations
 {

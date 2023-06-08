@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TsiErp.Business.Entities.CustomerComplaintItem.Services;
-using TsiErp.Entities.Entities.CustomerComplaintItem.Dtos;
+using TsiErp.Entities.Entities.QualityControl.CustomerComplaintItem.Dtos;
 
 namespace TsiErp.WebAPI.Controllers
 {

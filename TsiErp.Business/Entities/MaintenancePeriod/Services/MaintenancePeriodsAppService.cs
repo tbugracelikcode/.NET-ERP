@@ -9,8 +9,8 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.MaintenancePeriod.Validations;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.MaintenancePeriod;
-using TsiErp.Entities.Entities.MaintenancePeriod.Dtos;
+using TsiErp.Entities.Entities.MaintenanceManagement.MaintenancePeriod;
+using TsiErp.Entities.Entities.MaintenanceManagement.MaintenancePeriod.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.MaintenancePeriods.Page;
 

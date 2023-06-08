@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.CrossCuttingConcerns.Validation;
-using TsiErp.Entities.Entities.Period.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period.Dtos;
 
 namespace TsiErp.Business.Entities.Period.Validations
 {

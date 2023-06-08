@@ -2,7 +2,7 @@
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.OperationUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
 using TsiErp.Localizations.Resources.OperationUnsuitabilityReports.Page;
 
 namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services

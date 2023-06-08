@@ -5,10 +5,10 @@ using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Navigations;
 using Syncfusion.Blazor.Schedule;
 using Tsi.Core.Utilities.Results;
-using TsiErp.Entities.Entities.Calendar.Dtos;
-using TsiErp.Entities.Entities.CalendarDay.Dtos;
-using TsiErp.Entities.Entities.Shift.Dtos;
-using TsiErp.Entities.Entities.Station.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
+using TsiErp.Entities.Entities.PlanningManagement.Calendar.Dtos;
+using TsiErp.Entities.Entities.PlanningManagement.CalendarDay.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.Calendar

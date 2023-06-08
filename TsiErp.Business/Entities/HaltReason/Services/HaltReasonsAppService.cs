@@ -9,8 +9,8 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.HaltReason.Validations;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.HaltReason;
-using TsiErp.Entities.Entities.HaltReason.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.HaltReason;
+using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.HaltReasons.Page;
 

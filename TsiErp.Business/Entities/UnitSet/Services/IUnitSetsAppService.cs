@@ -1,5 +1,5 @@
 ﻿using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.UnitSet.Dtos;
+using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 
 namespace TsiErp.Business.Entities.UnitSet.Services
 {

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using TsiErp.Entities.Entities.SalesProposition.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesProposition.Dtos;
 
 namespace TsiErp.Business.Entities.SalesProposition.Validations
 {

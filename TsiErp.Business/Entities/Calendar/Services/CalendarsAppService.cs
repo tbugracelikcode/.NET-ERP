@@ -2,9 +2,9 @@
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.Calendar.Dtos;
-using TsiErp.Entities.Entities.CalendarDay.Dtos;
-using TsiErp.Entities.Entities.CalendarLine.Dtos;
+using TsiErp.Entities.Entities.PlanningManagement.Calendar.Dtos;
+using TsiErp.Entities.Entities.PlanningManagement.CalendarDay.Dtos;
+using TsiErp.Entities.Entities.PlanningManagement.CalendarLine.Dtos;
 using TsiErp.Localizations.Resources.Branches.Page;
 
 namespace TsiErp.Business.Entities.Calendar.Services

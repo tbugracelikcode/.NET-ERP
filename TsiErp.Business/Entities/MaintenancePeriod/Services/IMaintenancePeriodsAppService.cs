@@ -1,5 +1,5 @@
 ﻿using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.MaintenancePeriod.Dtos;
+using TsiErp.Entities.Entities.MaintenanceManagement.MaintenancePeriod.Dtos;
 
 namespace TsiErp.Business.Entities.MaintenancePeriod.Services
 {

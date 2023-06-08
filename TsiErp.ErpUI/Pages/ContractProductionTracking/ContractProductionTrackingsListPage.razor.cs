@@ -7,9 +7,16 @@ using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.ContractProductionTracking.Dtos;
 using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.Employee.Dtos;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.Product.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ContractProductionTracking.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.Shift.Dtos;
 using TsiErp.Entities.Entities.Station.Dtos;
+using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.WorkOrder.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 

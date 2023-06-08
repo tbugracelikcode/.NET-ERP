@@ -1,7 +1,8 @@
-﻿using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+﻿using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.Branches.Page;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.PurchasePrice.Dtos;
-using TsiErp.Entities.Entities.PurchasePriceLine.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchasePrice.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchasePriceLine.Dtos;
 
 namespace TsiErp.Business.Entities.PurchasePrice.Services
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TsiErp.Business.Entities.Currency.Services;
-using TsiErp.Entities.Entities.Currency.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 
 namespace TsiErp.WebAPI.Controllers
 {

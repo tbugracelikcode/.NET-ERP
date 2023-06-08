@@ -1,6 +1,6 @@
 ﻿using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.SalesOrderLine.Dtos;
-using TsiErp.Entities.Entities.SalesProposition.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesProposition.Dtos;
 using TsiErp.Entities.Enums;
 
 namespace TsiErp.Business.Entities.SalesProposition.Services

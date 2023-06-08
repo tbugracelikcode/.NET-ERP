@@ -1,5 +1,5 @@
 ﻿using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.CalibrationRecord.Dtos;
+using TsiErp.Entities.Entities.QualityControl.CalibrationRecord.Dtos;
 
 namespace TsiErp.Business.Entities.CalibrationRecord.Services
 {

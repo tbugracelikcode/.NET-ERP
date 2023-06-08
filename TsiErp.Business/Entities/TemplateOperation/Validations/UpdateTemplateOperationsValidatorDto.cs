@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TsiErp.Entities.Entities.TemplateOperation.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation.Dtos;
 
 namespace TsiErp.Business.Entities.TemplateOperation.Validations
 {

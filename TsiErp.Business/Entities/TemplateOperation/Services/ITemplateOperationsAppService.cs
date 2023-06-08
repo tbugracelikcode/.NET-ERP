@@ -1,5 +1,5 @@
 ﻿using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.TemplateOperation.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation.Dtos;
 
 namespace TsiErp.Business.Entities.TemplateOperation.Services
 {

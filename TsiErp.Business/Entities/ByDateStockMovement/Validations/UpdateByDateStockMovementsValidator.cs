@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Tsi.Core.CrossCuttingConcerns.Validation;
-using TsiErp.Entities.Entities.ByDateStockMovement.Dtos;
+using TsiErp.Entities.Entities.Other.ByDateStockMovement.Dtos;
 
 namespace TsiErp.Business.Entities.ByDateStockMovement.Validations
 {

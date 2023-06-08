@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TsiErp.Business.Entities.CurrentAccountCard.Services;
-using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 
 namespace TsiErp.WebAPI.Controllers
 {

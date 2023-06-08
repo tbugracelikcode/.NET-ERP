@@ -6,9 +6,16 @@ using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.Branch.Dtos;
 using TsiErp.Entities.Entities.Currency.Dtos;
 using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.WareHouse.Dtos;
 using TsiErp.Entities.Entities.Product.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchasePrice.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchasePriceLine.Dtos;
 using TsiErp.Entities.Entities.PurchasePrice.Dtos;
-using TsiErp.Entities.Entities.PurchasePriceLine.Dtos;
+using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
+using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.Entities.Entities.WareHouse.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 

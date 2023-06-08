@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TsiErp.Entities.Entities.Forecast.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.Forecast.Dtos;
 
 namespace TsiErp.Business.Entities.Forecast.Validations
 {

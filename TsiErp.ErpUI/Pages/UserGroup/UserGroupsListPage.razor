@@ -1,13 +1,13 @@
 ﻿@page "/user-groups"
 @layout MainLayout
 
-@using Syncfusion.Blazor.Buttons
+@    using Syncfusion.Blazor.Buttons
 
-@using TsiErp.Business.Entities.UserGroup.Services
-@using TsiErp.Entities.Entities.UserGroup
-@using TsiErp.Entities.Entities.UserGroup.Dtos
-@using TsiErp.ErpUI.Pages.Base
-@using TsiErp.Localizations.Resources.UserGroups.Page
+@    using TsiErp.Business.Entities.UserGroup.Services
+@    using TsiErp.Entities.Entities.UserGroup
+@    using TsiErp.Entities.Entities.UserGroup.Dtos
+@    using TsiErp.ErpUI.Pages.Base
+@    using TsiErp.Localizations.Resources.UserGroups.Page
 @inject IStringLocalizer<UserGroupsResource> L 
 
 @inherits BaseListPage<SelectUserGroupsDto, ListUserGroupsDto, CreateUserGroupsDto, UpdateUserGroupsDto, ListUserGroupsParameterDto>

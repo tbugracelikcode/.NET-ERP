@@ -1,44 +1,44 @@
 ﻿@page "/products"
 @layout MainLayout
 
-@using Syncfusion.Blazor.Buttons
+@    using Syncfusion.Blazor.Buttons
 
-@using TsiErp.Business.Entities.Product.Services
-@using TsiErp.Entities.Entities.Product
-@using TsiErp.Entities.Entities.Product.Dtos
-@using TsiErp.Entities.Entities.ProductReferanceNumber.Dtos
-@using TsiErp.Entities.Entities.SalesPrice.Dtos
-@using TsiErp.Entities.Entities.PurchasePrice.Dtos
-@using TsiErp.Entities.Entities.SalesPriceLine.Dtos
-@using TsiErp.Entities.Entities.PurchasePriceLine.Dtos
-@using TsiErp.Entities.Entities.BillsofMaterial.Dtos
-@using TsiErp.Entities.Entities.Route.Dtos
-@using TsiErp.Entities.Entities.BillsofMaterialLine.Dtos
-@using TsiErp.Entities.Entities.RouteLine.Dtos
-@using TsiErp.Entities.Entities.ContractProductionTracking.Dtos
-@using TsiErp.ErpUI.Pages.Base
+@    using TsiErp.Business.Entities.Product.Services
+@    using TsiErp.Entities.Entities.Product
+@    using TsiErp.Entities.Entities.Product.Dtos
+@    using TsiErp.Entities.Entities.ProductReferanceNumber.Dtos
+@    using TsiErp.Entities.Entities.SalesPrice.Dtos
+@    using TsiErp.Entities.Entities.PurchasePrice.Dtos
+@    using TsiErp.Entities.Entities.SalesPriceLine.Dtos
+@    using TsiErp.Entities.Entities.PurchasePriceLine.Dtos
+@    using TsiErp.Entities.Entities.BillsofMaterial.Dtos
+@    using TsiErp.Entities.Entities.Route.Dtos
+@    using TsiErp.Entities.Entities.BillsofMaterialLine.Dtos
+@    using TsiErp.Entities.Entities.RouteLine.Dtos
+@    using TsiErp.Entities.Entities.ContractProductionTracking.Dtos
+@    using TsiErp.ErpUI.Pages.Base
 
-@using TsiErp.Entities.Entities.ProductGroup.Dtos
-@using TsiErp.Entities.Entities.Currency.Dtos
-@using TsiErp.Entities.Entities.CurrentAccountCard.Dtos
-@using TsiErp.Entities.Entities.UnitSet.Dtos
-@using TsiErp.Entities.Entities.TechnicalDrawing.Dtos
-@using TsiErp.Business.Entities.ProductGroup.Services
-@using TsiErp.Business.Entities.UnitSet.Services
-@using TsiErp.Business.Entities.TechnicalDrawing.Services
-@using TsiErp.Business.Entities.ProductReferanceNumber.Services
-@using TsiErp.Business.Entities.CurrentAccountCard.Services
-@using TsiErp.Business.Entities.SalesPrice.Services
-@using TsiErp.Business.Entities.PurchasePrice.Services
-@using TsiErp.Business.Entities.Currency.Services
-@using TsiErp.Business.Entities.BillsofMaterial.Services
-@using TsiErp.Business.Entities.Route.Services
-@using TsiErp.Business.Entities.ProductsOperation.Services
-@using TsiErp.Business.Entities.ContractProductionTracking.Services
-@using TsiErp.ErpUI.Services
+@    using TsiErp.Entities.Entities.ProductGroup.Dtos
+@    using TsiErp.Entities.Entities.Currency.Dtos
+@    using TsiErp.Entities.Entities.CurrentAccountCard.Dtos
+@    using TsiErp.Entities.Entities.UnitSet.Dtos
+@    using TsiErp.Entities.Entities.TechnicalDrawing.Dtos
+@    using TsiErp.Business.Entities.ProductGroup.Services
+@    using TsiErp.Business.Entities.UnitSet.Services
+@    using TsiErp.Business.Entities.TechnicalDrawing.Services
+@    using TsiErp.Business.Entities.ProductReferanceNumber.Services
+@    using TsiErp.Business.Entities.CurrentAccountCard.Services
+@    using TsiErp.Business.Entities.SalesPrice.Services
+@    using TsiErp.Business.Entities.PurchasePrice.Services
+@    using TsiErp.Business.Entities.Currency.Services
+@    using TsiErp.Business.Entities.BillsofMaterial.Services
+@    using TsiErp.Business.Entities.Route.Services
+@    using TsiErp.Business.Entities.ProductsOperation.Services
+@    using TsiErp.Business.Entities.ContractProductionTracking.Services
+@    using TsiErp.ErpUI.Services
 
-@using TsiErp.Entities.Enums
-@using TsiErp.Localizations.Resources.Products.Page
+@    using TsiErp.Entities.Enums
+@    using TsiErp.Localizations.Resources.Products.Page
 @inject IStringLocalizer<ProductsResource> L 
 @inherits BaseListPage<SelectProductsDto, ListProductsDto, CreateProductsDto, UpdateProductsDto, ListProductsParameterDto>
 

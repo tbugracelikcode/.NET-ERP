@@ -1,5 +1,5 @@
 ﻿using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.PaymentPlan.Dtos;
+using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos;
 
 namespace TsiErp.Business.Entities.PaymentPlan.Services
 {

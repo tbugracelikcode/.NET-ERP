@@ -3,8 +3,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Tsi.Core.Utilities.Guids;
 using TSI.QueryBuilder.BaseClasses;
-using TsiErp.Entities.Entities.Logging;
-using TsiErp.Entities.Entities.Logging.Dtos;
+using TsiErp.Entities.Entities.Other.Logging;
+using TsiErp.Entities.Entities.Other.Logging.Dtos;
 using TsiErp.Entities.TableConstant;
 
 namespace TsiErp.Business.Entities.Logging.Services

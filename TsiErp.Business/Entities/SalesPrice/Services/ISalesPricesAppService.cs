@@ -1,7 +1,8 @@
-﻿using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+﻿using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.Branches.Page;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.SalesPrice.Dtos;
-using TsiErp.Entities.Entities.SalesPriceLine.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesPriceLine.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesPrice.Dtos;
 
 namespace TsiErp.Business.Entities.SalesPrice.Services
 {

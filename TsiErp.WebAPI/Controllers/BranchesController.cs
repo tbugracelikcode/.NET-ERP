@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TsiErp.Business.Entities.Branch.Services;
-using TsiErp.Entities.Entities.Branch.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 
 namespace TsiErp.WebAPI.Controllers
 {

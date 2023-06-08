@@ -1,16 +1,8 @@
 ﻿@page "/technical-drawings"
 @layout MainLayout
 
-@using Syncfusion.Blazor.Buttons
 
-@using TsiErp.Business.Entities.TechnicalDrawing.Services
-@using TsiErp.Business.Entities.Product.Services
-@using TsiErp.Entities.Entities.TechnicalDrawing
-@using TsiErp.Entities.Entities.TechnicalDrawing.Dtos
-@using TsiErp.Entities.Entities.Product.Dtos
-@using TsiErp.ErpUI.Pages.Base
-@using TsiErp.ErpUI.Services
-@using TsiErp.Localizations.Resources.TechnicalDrawings.Page
+
 @inject IStringLocalizer<TechnicalDrawingsResource> L 
 
 @inherits BaseListPage<SelectTechnicalDrawingsDto, ListTechnicalDrawingsDto, CreateTechnicalDrawingsDto, UpdateTechnicalDrawingsDto, ListTechnicalDrawingsParameterDto>

@@ -1,6 +1,7 @@
-﻿using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+﻿using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.Branches.Page;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.ProductReferanceNumber.Dtos;
+using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
 
 namespace TsiErp.Business.Entities.ProductReferanceNumber.Services
 {

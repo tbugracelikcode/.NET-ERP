@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TsiErp.Business.Entities.PaymentPlan.Services;
-using TsiErp.Entities.Entities.PaymentPlan.Dtos;
+using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos;
 
 namespace TsiErp.WebAPI.Controllers
 {

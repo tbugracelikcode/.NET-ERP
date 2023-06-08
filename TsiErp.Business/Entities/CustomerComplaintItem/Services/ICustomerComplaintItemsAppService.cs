@@ -1,5 +1,5 @@
 ﻿using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.CustomerComplaintItem.Dtos;
+using TsiErp.Entities.Entities.QualityControl.CustomerComplaintItem.Dtos;
 
 namespace TsiErp.Business.Entities.CustomerComplaintItem.Services
 {
