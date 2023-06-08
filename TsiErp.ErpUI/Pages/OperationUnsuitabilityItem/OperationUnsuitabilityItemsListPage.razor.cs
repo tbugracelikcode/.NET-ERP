@@ -1,4 +1,4 @@
-﻿using TsiErp.Entities.Entities.OperationUnsuitabilityItem.Dtos;
+﻿using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityItem.Dtos;
 
 namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityItem
 {

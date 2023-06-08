@@ -1,4 +1,4 @@
-﻿using TsiErp.Entities.Entities.PurchasingUnsuitabilityItem.Dtos;
+﻿using TsiErp.Entities.Entities.QualityControl.PurchasingUnsuitabilityItem.Dtos;
 
 namespace TsiErp.ErpUI.Pages.PurchasingUnsuitabilityItem
 {

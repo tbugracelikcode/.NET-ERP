@@ -3,21 +3,14 @@ using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using TsiErp.Entities.Entities.Employee.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
-using TsiErp.Entities.Entities.OperationUnsuitabilityReport.Dtos;
-using TsiErp.Entities.Entities.Product.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
-using TsiErp.Entities.Entities.ProductionOrder.Dtos;
-using TsiErp.Entities.Entities.ProductsOperation.Dtos;
-using TsiErp.Entities.Entities.Station.Dtos;
-using TsiErp.Entities.Entities.StationGroup.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
-using TsiErp.Entities.Entities.WorkOrder.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.OperationUnsuitabilityReport

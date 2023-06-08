@@ -7,8 +7,6 @@ using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationInventory.Dtos;
-using TsiErp.Entities.Entities.Product.Dtos;
-using TsiErp.Entities.Entities.StationGroup.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;

@@ -1,4 +1,4 @@
-﻿using TsiErp.Entities.Entities.PaymentPlan.Dtos;
+﻿using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos;
 
 namespace TsiErp.ErpUI.Pages.PaymentPlan
 {

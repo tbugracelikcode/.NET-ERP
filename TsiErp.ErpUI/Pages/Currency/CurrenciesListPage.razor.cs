@@ -1,4 +1,4 @@
-﻿using TsiErp.Entities.Entities.Currency.Dtos;
+﻿using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 
 
 namespace TsiErp.ErpUI.Pages.Currency

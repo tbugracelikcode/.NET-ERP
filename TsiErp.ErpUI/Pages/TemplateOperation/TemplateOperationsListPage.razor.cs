@@ -6,8 +6,6 @@ using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationLine.Dtos;
-using TsiErp.Entities.Entities.Station.Dtos;
-using TsiErp.Entities.Entities.TemplateOperation.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.TemplateOperation

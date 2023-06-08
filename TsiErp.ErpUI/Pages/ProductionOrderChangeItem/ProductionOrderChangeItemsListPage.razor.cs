@@ -1,4 +1,4 @@
-﻿using TsiErp.Entities.Entities.ProductionOrderChangeItem.Dtos;
+﻿using TsiErp.Entities.Entities.QualityControl.ProductionOrderChangeItem.Dtos;
 
 namespace TsiErp.ErpUI.Pages.ProductionOrderChangeItem
 {

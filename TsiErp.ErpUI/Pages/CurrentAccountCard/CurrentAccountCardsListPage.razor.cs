@@ -4,10 +4,8 @@ using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using TsiErp.Entities.Entities.Currency.Dtos;
-using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
-using TsiErp.Entities.Entities.ShippingAdress.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress.Dtos;
 
 namespace TsiErp.ErpUI.Pages.CurrentAccountCard

@@ -8,12 +8,8 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenancePeriod.Dtos;
 using TsiErp.Entities.Entities.MaintenanceManagement.UnplannedMaintenance.Dtos;
 using TsiErp.Entities.Entities.MaintenanceManagement.UnplannedMaintenanceLine.Dtos;
-using TsiErp.Entities.Entities.MaintenancePeriod.Dtos;
-using TsiErp.Entities.Entities.Product.Dtos;
-using TsiErp.Entities.Entities.Station.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
-using TsiErp.Entities.Entities.UnitSet.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 

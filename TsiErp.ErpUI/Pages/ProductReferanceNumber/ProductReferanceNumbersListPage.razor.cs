@@ -2,11 +2,9 @@
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
-using TsiErp.Entities.Entities.Product.Dtos;
-using TsiErp.Entities.Entities.ProductReferanceNumber.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
+using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
 
 namespace TsiErp.ErpUI.Pages.ProductReferanceNumber
 {

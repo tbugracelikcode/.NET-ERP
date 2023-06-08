@@ -1,4 +1,4 @@
-﻿using TsiErp.Entities.Entities.ProductGroup.Dtos;
+﻿using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
 
 namespace TsiErp.ErpUI.Pages.ProductGroup
 {

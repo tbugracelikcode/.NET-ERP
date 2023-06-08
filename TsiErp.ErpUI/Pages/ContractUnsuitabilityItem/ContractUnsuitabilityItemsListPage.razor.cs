@@ -1,4 +1,4 @@
-﻿using TsiErp.Entities.Entities.ContractUnsuitabilityItem.Dtos;
+﻿using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityItem.Dtos;
 
 namespace TsiErp.ErpUI.Pages.ContractUnsuitabilityItem
 {

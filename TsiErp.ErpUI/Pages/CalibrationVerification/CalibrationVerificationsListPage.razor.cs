@@ -2,8 +2,7 @@
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using TsiErp.Entities.Entities.CalibrationVerification.Dtos;
-using TsiErp.Entities.Entities.EquipmentRecord.Dtos;
+using TsiErp.Entities.Entities.QualityControl.CalibrationVerification.Dtos;
 using TsiErp.Entities.Entities.QualityControl.EquipmentRecord.Dtos;
 
 namespace TsiErp.ErpUI.Pages.CalibrationVerification

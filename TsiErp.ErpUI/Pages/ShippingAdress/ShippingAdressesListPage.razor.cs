@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 
 namespace TsiErp.ErpUI.Pages.ShippingAdress

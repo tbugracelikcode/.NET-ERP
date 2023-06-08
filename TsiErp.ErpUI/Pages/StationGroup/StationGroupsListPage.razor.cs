@@ -1,4 +1,4 @@
-﻿using TsiErp.Entities.Entities.StationGroup.Dtos;
+﻿using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 
 namespace TsiErp.ErpUI.Pages.StationGroup
 {

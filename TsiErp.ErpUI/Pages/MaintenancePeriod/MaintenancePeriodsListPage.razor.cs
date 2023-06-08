@@ -1,4 +1,4 @@
-﻿using TsiErp.Entities.Entities.MaintenancePeriod.Dtos;
+﻿using TsiErp.Entities.Entities.MaintenanceManagement.MaintenancePeriod.Dtos;
 
 namespace TsiErp.ErpUI.Pages.MaintenancePeriod
 {

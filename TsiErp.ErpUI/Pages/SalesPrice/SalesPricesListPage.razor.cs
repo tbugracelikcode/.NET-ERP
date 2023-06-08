@@ -3,20 +3,13 @@ using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using TsiErp.Entities.Entities.Branch.Dtos;
-using TsiErp.Entities.Entities.Currency.Dtos;
-using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
-using TsiErp.Entities.Entities.GeneralSystemIdentifications.WareHouse.Dtos;
-using TsiErp.Entities.Entities.Product.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesPrice.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesPriceLine.Dtos;
-using TsiErp.Entities.Entities.SalesPrice.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
-using TsiErp.Entities.Entities.WareHouse.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.SalesPrice

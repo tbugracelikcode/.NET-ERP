@@ -1,4 +1,4 @@
-﻿using TsiErp.Entities.Entities.Branch.Dtos;
+﻿using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 
 namespace TsiErp.ErpUI.Pages.Branch
 {

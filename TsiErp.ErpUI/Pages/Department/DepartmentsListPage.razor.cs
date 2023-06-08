@@ -1,4 +1,4 @@
-﻿using TsiErp.Entities.Entities.Department.Dtos;
+﻿using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department.Dtos;
 
 namespace TsiErp.ErpUI.Pages.Department
 {
