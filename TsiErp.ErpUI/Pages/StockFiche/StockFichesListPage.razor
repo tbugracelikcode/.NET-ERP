@@ -139,10 +139,10 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="@L["EditModalTitle"]"
-         Width="70%"
-         Height="65%"
-         MinWidth="1200px"
-         MinHeight="700px"
+         Width="72%"
+         Height="71%"
+         MinWidth="1250px"
+         MinHeight="800px"
          HeaderCssClass="HeaderTitleCss"
          Showing="CrudModalShowing"
          Closing="CrudModalClosing">
@@ -151,11 +151,11 @@ else
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
+                    <DxGridLayoutRow Height="15%" />
                     <DxGridLayoutRow Height="13%" />
                     <DxGridLayoutRow Height="10%" />
                     <DxGridLayoutRow Height="10%" />
-                    <DxGridLayoutRow Height="10%" />
-                    <DxGridLayoutRow Height="57%" />
+                    <DxGridLayoutRow Height="50%" />
                 </Rows>
 
                 <Columns>
@@ -173,6 +173,7 @@ else
                 <Items>
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
+                            <br/>
                             <label class="TSIModalLabel"><strong>@L["FicheNoLabel"] </strong></label>
                             <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.FicheNo"></SfTextBox>
                         </Template>
@@ -180,15 +181,17 @@ else
 
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
+                            <br/>
                             <label class="TSIModalLabel"><strong>@L["Date_Label"] </strong></label><br />
                             <SfDatePicker @bind-Value="@DataSource.Date_"></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="0" Column="3" ColumnSpan="3" RowSpan="2">
+                    <DxGridLayoutItem Row="0" Column="5" ColumnSpan="3" RowSpan="2">
                         <Template>
+                            <br/>
                             <label class="TSIModalLabel"><strong>@L["Description_Label"] </strong></label>
-                            <SfTextBox @bind-Value="DataSource.Description_" Multiline=true CssClass="TSIMemoBox100"></SfTextBox>
+                            <SfTextBox @bind-Value="DataSource.Description_" Multiline=true CssClass="TSIMemoBox70"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -209,7 +212,7 @@ else
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["FicheTypeLabel"] </strong></label>
-                            <SfDropDownList TItem="SelectStockFichesDto" TValue="StockFicheTypeEnum?" PopupHeight="230px" @bind-Value="@DataSource.FicheType" DataSource="@types">
+                            <SfDropDownList TItem="SelectStockFichesDto" TValue="StockFicheTypeEnum" PopupHeight="230px" @bind-Value="@DataSource.FicheType" DataSource="@types">
                                 <DropDownListFieldSettings Text="FicheTypeName" Value="FicheType"></DropDownListFieldSettings>
                             </SfDropDownList>
                         </Template>
@@ -276,7 +279,7 @@ else
                                     <GridColumn Field=@nameof(SelectStockFicheLinesDto.FicheType) HeaderText="@L["FicheType"]" TextAlign="TextAlign.Center" Width="120" Context="LineContext">
                                         <Template>
                                             @{
-                                                StockFicheTypeEnum ficheType = (context as ListStockFichesDto).FicheType;
+                                                StockFicheTypeEnum ficheType = (LineContext as SelectStockFicheLinesDto).FicheType;
                                                 string fiche = "";
                                                 if (ficheType == StockFicheTypeEnum.DepoSevkFisi)
                                                 {
@@ -327,9 +330,9 @@ else
          CloseOnOutsideClick="false"
          HeaderText="@L["EditLineModalTitle"]"
          Width="53%"
-         Height="28%"
+         Height="37%"
          MinWidth="910px"
-         MinHeight="300px"
+         MinHeight="400px"
          HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>

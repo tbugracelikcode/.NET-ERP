@@ -15,7 +15,6 @@ namespace TsiErp.Entities.Entities.ContractProductionTracking.Dtos
         /// İş Emri ID
         /// </summary>
         public Guid WorkOrderID { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Üretilen Miktar
         /// </summary>
@@ -35,7 +34,6 @@ namespace TsiErp.Entities.Entities.ContractProductionTracking.Dtos
         /// Stok Açıklama
         /// </summary>
         public string ProductName { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Operasyon Süresi
         /// </summary>
@@ -61,7 +59,6 @@ namespace TsiErp.Entities.Entities.ContractProductionTracking.Dtos
         /// Tamamlandı mı ?
         /// </summary>
         public bool IsFinished { get; set; }
-        [Precision(18, 6)]
         /// <summary>
         /// Planlanan Adet
         /// </summary>

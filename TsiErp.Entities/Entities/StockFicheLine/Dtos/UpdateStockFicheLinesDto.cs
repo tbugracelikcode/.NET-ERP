@@ -31,19 +31,16 @@ namespace TsiErp.Entities.Entities.StockFicheLine.Dtos
         /// </summary>
         public Guid UnitSetID { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Miktar
         /// </summary>
         public decimal Quantity { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Birim Fiyat
         /// </summary>
         public decimal UnitPrice { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Satır Tutarı
         /// </summary>
@@ -57,6 +54,6 @@ namespace TsiErp.Entities.Entities.StockFicheLine.Dtos
         /// <summary>
         /// Fiş Türü
         /// </summary>
-        public StockFicheTypeEnum FicheType { get; set; }
+        public int FicheType { get; set; }
     }
 }

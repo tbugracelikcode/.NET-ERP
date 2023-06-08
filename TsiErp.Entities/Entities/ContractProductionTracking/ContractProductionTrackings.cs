@@ -1,17 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Entities.Auditing;
-using TsiErp.Entities.Entities.CurrentAccountCard;
-using TsiErp.Entities.Entities.Employee;
-using TsiErp.Entities.Entities.Product;
-using TsiErp.Entities.Entities.ProductionTrackingHaltLine;
-using TsiErp.Entities.Entities.Shift;
-using TsiErp.Entities.Entities.Station;
-using TsiErp.Entities.Entities.WorkOrder;
+﻿using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
@@ -19,74 +6,87 @@ namespace TsiErp.Entities.Entities.ContractProductionTracking
 {
     public class ContractProductionTrackings : FullAuditedEntity
     {
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// İş Emri ID
         /// </summary>
         public Guid WorkOrderID { get; set; }
-        [Precision(18, 6)]
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Üretilen Miktar
         /// </summary>
         public decimal ProducedQuantity { get; set; }
-        [Precision(18, 6)]
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Operasyon Süresi
         /// </summary>
         public decimal OperationTime { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.DateTime)]
         /// <summary>
         /// Operasyon Başlangıç Tarihi
         /// </summary>
         public DateTime OperationStartDate { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Time)]
         /// <summary>
         /// Başlangıç Saati
         /// </summary>
         public TimeSpan? OperationStartTime { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.DateTime)]
         /// <summary>
         /// Operasyon Bitiş Tarihi
         /// </summary>
         public DateTime OperationEndDate { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Time)]
         /// <summary>
         /// Bitiş Saati
         /// </summary>
         public TimeSpan? OperationEndTime { get; set; }
-
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
         /// <summary>
         /// Tamamlandı mı ?
         /// </summary>
         public bool IsFinished { get; set; }
-        [Precision(18, 6)]
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Planlanan Adet
         /// </summary>
         public decimal PlannedQuantity { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
         /// <summary>
         /// İş İstasyonu Kody
         /// </summary>
         public string StationCode { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
         /// <summary>
         /// Çalışan Adı
         /// </summary>
         public string EmployeeName { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
         /// <summary>
         /// Vardiya Kodu
         /// </summary>
         public string ShiftCode { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// İş İstasyonu ID
         /// </summary>
         public Guid StationID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Çalışan ID
         /// </summary>
         public Guid EmployeeID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Vardiya ID
         /// </summary>
         public Guid ShiftID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Cari Hesap ID
         /// </summary>
         public Guid CurrentAccountCardID { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Stok ID
         /// </summary>

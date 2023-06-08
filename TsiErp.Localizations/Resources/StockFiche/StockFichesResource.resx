@@ -228,6 +228,24 @@
   <data name="LineDescriptionLineLabel" xml:space="preserve">
     <value>Satır Açıklaması:</value>
   </data>
+  <data name="LineGridLineAmount" xml:space="preserve">
+    <value>SATIR TUTARI</value>
+  </data>
+  <data name="LineGridProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="LineGridProductName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="LineGridQuantity" xml:space="preserve">
+    <value>MİKTAR</value>
+  </data>
+  <data name="LineGridUnitPrice" xml:space="preserve">
+    <value>BİRİM FİYAT</value>
+  </data>
+  <data name="LineGridUnitSetCode" xml:space="preserve">
+    <value>BİRİM SETİ</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
   </data>
@@ -311,6 +329,12 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Stok Yönetimi &gt; Hareketler</value>
+  </data>
+  <data name="UIWarningFicheTypeMessageBase" xml:space="preserve">
+    <value>Fiş türü seçmeden satır ekleme işlemi yapılamaz.</value>
+  </data>
+  <data name="UIWarningFicheTypeTitleBase" xml:space="preserve">
+    <value>Uyarı</value>
   </data>
   <data name="UIWarningPopupMessageBase1" xml:space="preserve">
     <value>Birim seti seçilmeden satır kaydetme işlemi yapılamaz.</value>

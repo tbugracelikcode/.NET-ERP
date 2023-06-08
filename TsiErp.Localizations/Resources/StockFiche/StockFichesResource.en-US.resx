@@ -228,6 +228,24 @@
   <data name="LineDescriptionLineLabel" xml:space="preserve">
     <value>Line Description:</value>
   </data>
+  <data name="LineGridLineAmount" xml:space="preserve">
+    <value>LINE PRICE</value>
+  </data>
+  <data name="LineGridProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
+  <data name="LineGridProductName" xml:space="preserve">
+    <value>PRODUCT NAME</value>
+  </data>
+  <data name="LineGridQuantity" xml:space="preserve">
+    <value>QUANTITY</value>
+  </data>
+  <data name="LineGridUnitPrice" xml:space="preserve">
+    <value>UNIT PRICE</value>
+  </data>
+  <data name="LineGridUnitSetCode" xml:space="preserve">
+    <value>UNIT SET</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
   </data>
@@ -311,6 +329,12 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Inventory Management &gt;Transactions</value>
+  </data>
+  <data name="UIWarningFicheTypeMessageBase" xml:space="preserve">
+    <value>It is not possible to add a line without selecting a fiche type.</value>
+  </data>
+  <data name="UIWarningFicheTypeTitleBase" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="UIWarningPopupMessageBase1" xml:space="preserve">
     <value>It is not possible to save lines without selecting the unit set.</value>
