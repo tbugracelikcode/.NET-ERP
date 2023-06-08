@@ -36,7 +36,7 @@ namespace TsiErp.Entities.Entities.StockFiche.Dtos
         /// <summary>
         /// Fiş Türü
         /// </summary>
-        public StockFicheTypeEnum FicheType { get; set; }
+        public int FicheType { get; set; }
         /// <summary>
         /// Şube ID
         /// </summary>
@@ -54,7 +54,6 @@ namespace TsiErp.Entities.Entities.StockFiche.Dtos
         /// </summary>
         public Guid? CurrencyID { get; set; }
 
-        [Precision(18, 6)]
         /// <summary>
         /// Kur Tutarı
         /// </summary>

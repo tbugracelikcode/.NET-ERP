@@ -40,10 +40,10 @@ namespace TsiErp.ErpUI.Pages.StockFiche
         {
             var type = typeof(T);
             return Enum.GetValues(type)
-                       .Cast<T>()
+                       .Cast<StockFicheTypeEnum>()
                        .Select(x => new SelectStockFichesDto
                        {
-                           FicheType = x as StockFicheTypeEnum?,
+                           FicheType = x,
                            FicheTypeName = type.GetMember(x.ToString())
                        .First()
                        .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
@@ -402,7 +402,6 @@ namespace TsiErp.ErpUI.Pages.StockFiche
             {
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextProdOrder"], Id = "createproductionorder" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
             }
@@ -431,6 +430,11 @@ namespace TsiErp.ErpUI.Pages.StockFiche
 
         public async void MainContextMenuClick(ContextMenuClickEventArgs<ListStockFichesDto> args)
         {
+            foreach (var item in types)
+            {
+                item.FicheTypeName = L[item.FicheTypeName];
+            }
+
             switch (args.Item.Id)
             {
                 case "new":
@@ -474,11 +478,19 @@ namespace TsiErp.ErpUI.Pages.StockFiche
             switch (args.Item.Id)
             {
                 case "new":
-                    LineDataSource = new SelectStockFicheLinesDto();
-                    LineCrudPopup = true;
-                    LineDataSource.FicheType = DataSource.FicheType;
-                    LineDataSource.LineNr = GridLineList.Count + 1;
-                    await InvokeAsync(StateHasChanged);
+                    if(DataSource.FicheType == 0)
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarningFicheTypeTitleBase"], L["UIWarningFicheTypeMessageBase"]);
+                    }
+                    else
+                    {
+                        LineDataSource = new SelectStockFicheLinesDto();
+                        LineCrudPopup = true;
+                        LineDataSource.FicheType = DataSource.FicheType;
+                        LineDataSource.LineNr = GridLineList.Count + 1;
+                        await InvokeAsync(StateHasChanged);
+                    }
+                    
                     break;
 
                 case "changed":

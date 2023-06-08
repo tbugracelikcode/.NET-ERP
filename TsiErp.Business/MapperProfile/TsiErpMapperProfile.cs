@@ -152,7 +152,11 @@ using TsiErp.Entities.Entities.TechnicalDrawing;
 using TsiErp.Entities.Entities.TechnicalDrawing.Dtos;
 using TsiErp.Entities.Entities.ProductReferanceNumber;
 using TsiErp.Entities.Entities.ProductReferanceNumber.Dtos;
+using TsiErp.Entities.Entities.StockFiche.Dtos;
+using TsiErp.Entities.Entities.StockFicheLine.Dtos;
 using AutoMapper.EquivalencyExpression;
+using TsiErp.Entities.Entities.StockFiche;
+using TsiErp.Entities.Entities.StockFicheLine;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -500,7 +504,6 @@ namespace TsiErp.Business.MapperProfile
 
 
             CreateMap<BillsofMaterialLines, SelectBillsofMaterialLinesDto>();
-
             CreateMap<BillsofMaterialLines, ListBillsofMaterialLinesDto>();
             CreateMap<CreateBillsofMaterialLinesDto, BillsofMaterialLines>();
             CreateMap<SelectBillsofMaterialLinesDto, CreateBillsofMaterialLinesDto>();
@@ -749,6 +752,23 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateByDateStockMovementsDto, ByDateStockMovements>();
             CreateMap<ByDateStockMovements, UpdateByDateStockMovementsDto>();
             CreateMap<SelectByDateStockMovementsDto, UpdateByDateStockMovementsDto>();
+
+            CreateMap<StockFiches, SelectStockFichesDto>();
+            CreateMap<StockFiches, ListStockFichesDto>();
+            CreateMap<UpdateStockFichesDto, StockFiches>();
+            CreateMap<CreateStockFichesDto, StockFiches>();
+            CreateMap<SelectStockFichesDto, CreateStockFichesDto>();
+            CreateMap<SelectStockFichesDto, UpdateStockFichesDto>();
+            CreateMap<StockFiches, UpdateStockFichesDto>();
+
+
+            CreateMap<StockFicheLines, SelectStockFicheLinesDto>();
+            CreateMap<StockFicheLines, ListStockFicheLinesDto>();
+            CreateMap<CreateStockFicheLinesDto, StockFicheLines>();
+            CreateMap<SelectStockFicheLinesDto, CreateStockFicheLinesDto>();
+            CreateMap<UpdateStockFicheLinesDto, StockFicheLines>();
+            CreateMap<SelectStockFicheLinesDto, UpdateStockFicheLinesDto>();
+            CreateMap<SelectStockFicheLinesDto, StockFicheLines>();
         }
     }
 }

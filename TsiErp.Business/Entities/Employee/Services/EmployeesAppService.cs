@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
-using Tsi.Core.Utilities.EnumUtilities;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
@@ -14,7 +13,6 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.Department;
 using TsiErp.Entities.Entities.Employee;
 using TsiErp.Entities.Entities.Employee.Dtos;
-using TsiErp.Entities.Enums;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.Employees.Page;
 
