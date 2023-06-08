@@ -82,7 +82,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     ExchangeRate = input.ExchangeRate,
                     FicheType = input.FicheType,
                     NetAmount = input.NetAmount,
-                    ProductionOrderID = input.ProductionOrderID,
+                    ProductionOrderID = Guid.Empty,
                     SpecialCode = input.SpecialCode,
                     Time_ = input.Time_,
                     WarehouseID = input.WarehouseID
@@ -107,7 +107,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         ProductID = item.ProductID.GetValueOrDefault(),
                         Quantity = item.Quantity,
                         UnitSetID = item.UnitSetID.GetValueOrDefault(),
-                        FicheType = item.FicheType.GetValueOrDefault(),
+                        FicheType = (int)item.FicheType,
                         LineAmount = item.LineAmount,
                         LineDescription = item.LineDescription,
                         UnitPrice = item.UnitPrice
@@ -118,7 +118,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
                 var stockFiche = queryFactory.Insert<SelectStockFichesDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.StockFiches, LogType.Insert, stockFiche.Id);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.StockFiches, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectStockFichesDto>(stockFiche);
             }
@@ -163,17 +163,17 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 var query = queryFactory
                        .Query()
                        .From(Tables.StockFiches)
-                       .Select<StockFiches>(b => new { b.Id, b.FicheNo, b.Date_, b.Description_, b.FicheType, b.NetAmount })
+                       .Select<StockFiches>(sf => new { sf.Id, sf.FicheNo, sf.Date_, sf.Description_, sf.FicheType, sf.NetAmount, sf.WarehouseID, sf.Time_, sf.SpecialCode, sf.ProductionOrderID, sf.ExchangeRate, sf.DataOpenStatusUserId, sf.DataOpenStatus, sf.CurrencyID, sf.BranchID })
                        .Join<Branches>
                         (
-                            pr => new { BranchCode = pr.Code },
+                            b => new { BranchCode = b.Code , BranchID = b.Id},
                             nameof(StockFiches.BranchID),
                             nameof(Branches.Id),
                             JoinType.Left
                         )
                        .Join<Warehouses>
                         (
-                            pr => new { WarehouseCode = pr.Code },
+                            w => new { WarehouseCode = w.Code, WarehouseID = w.Id },
                             nameof(StockFiches.WarehouseID),
                             nameof(Warehouses.Id),
                             JoinType.Left
@@ -185,28 +185,8 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 var queryLines = queryFactory
                        .Query()
                        .From(Tables.StockFicheLines)
-                       .Select<StockFicheLines>(b => new
-                       {
-                           b.Id,
-                           b.StockFicheID,
-                           b.LineNr,
-                           b.ProductID,
-                           b.UnitSetID,
-                           b.Quantity,
-                           b.UnitPrice,
-                           b.LineAmount,
-                           b.LineDescription,
-                           b.FicheType,
-                           b.CreatorId,
-                           b.CreationTime,
-                           b.LastModifierId,
-                           b.LastModificationTime,
-                           b.DeleterId,
-                           b.DeletionTime,
-                           b.IsDeleted,
-                           b.DataOpenStatus,
-                           b.DataOpenStatusUserId
-                       })
+                       .Select<StockFicheLines>(sfl => new
+                       { sfl.UnitSetID, sfl.UnitPrice, sfl.StockFicheID, sfl.Quantity, sfl.ProductID, sfl.LineNr, sfl.LineDescription, sfl.LineAmount, sfl.Id, sfl.FicheType, sfl.DataOpenStatusUserId, sfl.DataOpenStatus})
                        .Join<Products>
                         (
                             p => new { ProductCode = p.Code, ProductName = p.Name },
@@ -241,7 +221,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 var query = queryFactory
                        .Query()
                        .From(Tables.StockFiches)
-                       .Select<StockFiches>(b => new { b.FicheNo, b.Date_, b.Description_, b.FicheType, b.NetAmount })
+                       .Select<StockFiches>(b => new { b.FicheNo, b.Date_, b.Description_, b.FicheType, b.NetAmount , b.Id, b.WarehouseID, b.Time_, b.SpecialCode, b.ProductionOrderID, b.ExchangeRate, b.DataOpenStatusUserId, b.DataOpenStatus, b.CurrencyID, b.BranchID })
                        .Join<Branches>
                         (
                             pr => new { BranchCode = pr.Code },
@@ -272,17 +252,17 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 var entityQuery = queryFactory
                        .Query()
                        .From(Tables.StockFiches)
-                       .Select<StockFiches>(b => new { b.Id, b.FicheNo, b.Date_, b.Description_, b.FicheType, b.NetAmount })
+                       .Select<StockFiches>(sf => new { sf.Id, sf.FicheNo, sf.Date_, sf.Description_, sf.FicheType, sf.NetAmount, sf.WarehouseID, sf.Time_, sf.SpecialCode, sf.ProductionOrderID, sf.ExchangeRate, sf.DataOpenStatusUserId, sf.DataOpenStatus, sf.CurrencyID, sf.BranchID, sf.CreationTime, sf.DeletionTime })
                        .Join<Branches>
                         (
-                            pr => new { BranchCode = pr.Code },
+                            b => new { BranchCode = b.Code, BranchID = b.Id },
                             nameof(StockFiches.BranchID),
                             nameof(Branches.Id),
                             JoinType.Left
                         )
                        .Join<Warehouses>
                         (
-                            pr => new { WarehouseCode = pr.Code },
+                            w => new { WarehouseCode = w.Code, WarehouseID = w.Id },
                             nameof(StockFiches.WarehouseID),
                             nameof(Warehouses.Id),
                             JoinType.Left
@@ -294,28 +274,8 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 var queryLines = queryFactory
                        .Query()
                        .From(Tables.StockFicheLines)
-                       .Select<StockFicheLines>(b => new
-                       {
-                           b.Id,
-                           b.StockFicheID,
-                           b.LineNr,
-                           b.ProductID,
-                           b.UnitSetID,
-                           b.Quantity,
-                           b.UnitPrice,
-                           b.LineAmount,
-                           b.LineDescription,
-                           b.FicheType,
-                           b.CreatorId,
-                           b.CreationTime,
-                           b.LastModifierId,
-                           b.LastModificationTime,
-                           b.DeleterId,
-                           b.DeletionTime,
-                           b.IsDeleted,
-                           b.DataOpenStatus,
-                           b.DataOpenStatusUserId
-                       })
+                       .Select<StockFicheLines>(sfl => new
+                       { sfl.UnitSetID, sfl.UnitPrice, sfl.StockFicheID, sfl.Quantity, sfl.ProductID, sfl.LineNr, sfl.LineDescription, sfl.LineAmount, sfl.Id, sfl.FicheType, sfl.DataOpenStatusUserId, sfl.DataOpenStatus })
                        .Join<Products>
                         (
                             p => new { ProductCode = p.Code, ProductName = p.Name },
@@ -395,7 +355,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                             ProductID = item.ProductID.GetValueOrDefault(),
                             Quantity = item.Quantity,
                             UnitSetID = item.UnitSetID.GetValueOrDefault(),
-                            FicheType = item.FicheType.GetValueOrDefault(),
+                            FicheType = (int)item.FicheType,
                             LineAmount = item.LineAmount,
                             LineDescription = item.LineDescription,
                             StockFicheID = input.Id,
@@ -429,7 +389,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                                 ProductID = item.ProductID.GetValueOrDefault(),
                                 Quantity = item.Quantity,
                                 UnitSetID = item.UnitSetID.GetValueOrDefault(),
-                                FicheType = item.FicheType.GetValueOrDefault(),
+                                FicheType = (int)item.FicheType,
                                 LineAmount = item.LineAmount,
                                 LineDescription = item.LineDescription,
                                 UnitPrice = item.UnitPrice
@@ -442,7 +402,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
                 var stockFiche = queryFactory.Update<SelectStockFichesDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.StockFiches, LogType.Update, stockFiche.Id);
+                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.StockFiches, LogType.Update, entity.Id);
 
                 return new SuccessDataResult<SelectStockFichesDto>(stockFiche);
             }
@@ -474,7 +434,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     Date_ = entity.Date_,
                     Description_ = entity.Description_,
                     ExchangeRate = entity.ExchangeRate,
-                    FicheType = entity.FicheType,
+                    FicheType = (int)entity.FicheType,
                     ProductionOrderID = entity.ProductionOrderID,
                     SpecialCode = entity.SpecialCode,
                     Time_ = entity.Time_,

@@ -394,6 +394,60 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SATIR TUTARI.
+        /// </summary>
+        public static string LineGridLineAmount {
+            get {
+                return ResourceManager.GetString("LineGridLineAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK KODU.
+        /// </summary>
+        public static string LineGridProductCode {
+            get {
+                return ResourceManager.GetString("LineGridProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK AÇIKLAMASI.
+        /// </summary>
+        public static string LineGridProductName {
+            get {
+                return ResourceManager.GetString("LineGridProductName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MİKTAR.
+        /// </summary>
+        public static string LineGridQuantity {
+            get {
+                return ResourceManager.GetString("LineGridQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BİRİM FİYAT.
+        /// </summary>
+        public static string LineGridUnitPrice {
+            get {
+                return ResourceManager.GetString("LineGridUnitPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BİRİM SETİ.
+        /// </summary>
+        public static string LineGridUnitSetCode {
+            get {
+                return ResourceManager.GetString("LineGridUnitSetCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen Bekleyin...
         /// </summary>
         public static string LoadingCaption {
@@ -642,6 +696,24 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         public static string UIPreviousMenu {
             get {
                 return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fiş türü seçmeden satır ekleme işlemi yapılamaz..
+        /// </summary>
+        public static string UIWarningFicheTypeMessageBase {
+            get {
+                return ResourceManager.GetString("UIWarningFicheTypeMessageBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningFicheTypeTitleBase {
+            get {
+                return ResourceManager.GetString("UIWarningFicheTypeTitleBase", resourceCulture);
             }
         }
         

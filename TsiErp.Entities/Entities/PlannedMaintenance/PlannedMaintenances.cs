@@ -1,16 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Entities.Auditing;
-using TsiErp.Entities.Entities.MaintenancePeriod;
-using TsiErp.Entities.Entities.PlannedMaintenanceLine;
-using TsiErp.Entities.Entities.Station;
+﻿using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
-using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 using TsiErp.Entities.Enums;
+using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.PlannedMaintenance
 {
@@ -19,58 +10,72 @@ namespace TsiErp.Entities.Entities.PlannedMaintenance
     /// </summary>
     public class PlannedMaintenances : FullAuditedEntity
     {
+        [SqlColumnType(MaxLength = 17, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
         /// Kayıt No
         /// </summary>
         public string RegistrationNo { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// İstasyon ID
         /// </summary>
         public Guid StationID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Periyot ID
         /// </summary>
         public Guid PeriodID { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
         /// <summary>
         /// Durum
         /// </summary>
         public PlannedMaintenanceStateEnum Status { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
         /// <summary>
         /// Bakımı Yapan
         /// </summary>
         public string Caregiver { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
         /// <summary>
         /// Bakımı Yapan Kişi Sayısı
         /// </summary>
         public int NumberofCaregivers { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Kalan Süre
         /// </summary>
         public decimal RemainingTime { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Periyot Süresi
         /// </summary>
         public decimal PeriodTime { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
         /// <summary>
         /// Not
         /// </summary>
         public string Note_ { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Planlanan Bakım Süre
         /// </summary>
         public decimal PlannedTime { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Gerçekleşen Bakım Süre
         /// </summary>
         public decimal OccuredTime { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
         /// <summary>
         /// Başlangıç Tarihi
         /// </summary>
         public DateTime? StartDate { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
         /// <summary>
         /// Planlanan Bakım Tarihi
         /// </summary>
         public DateTime? PlannedDate { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.DateTime)]
         /// <summary>
         ///  Tamamlama Tarihi
         /// </summary>

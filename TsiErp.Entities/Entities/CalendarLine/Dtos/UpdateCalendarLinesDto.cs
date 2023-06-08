@@ -10,14 +10,13 @@ namespace TsiErp.Entities.Entities.CalendarLine.Dtos
 {
     public class UpdateCalendarLinesDto : FullAuditedEntityDto
     {
-        [Precision(18, 6)]
+       
 
         /// <summary>
         /// Fazla Mesai Süresi
         /// </summary>
         public decimal ShiftOverTime { get; set; }
-        [Precision(18, 6)]
-
+        
         /// <summary>
         /// Vardiya Süresi
         /// </summary>
@@ -28,8 +27,7 @@ namespace TsiErp.Entities.Entities.CalendarLine.Dtos
         /// Planlanan Duruş Süresi
         /// </summary>
         public decimal PlannedHaltTimes { get; set; }
-        [Precision(18, 6)]
-
+        
         /// <summary>
         /// Çalışılabilir Süre
         /// </summary>
