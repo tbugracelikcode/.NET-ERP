@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TsiErp.Business.Entities.Period.Services;
-using TsiErp.Entities.Entities.Period.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period.Dtos;
 
 namespace TsiErp.WebAPI.Controllers
 {

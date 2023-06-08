@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
-using TsiErp.Entities.Entities.Product.Dtos;
-using TsiErp.Entities.Entities.PurchaseOrder.Dtos;
-using TsiErp.Entities.Entities.PurchaseUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
+using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.PurchaseUnsuitabilityReport

@@ -1,20 +1,4 @@
-﻿using Microsoft.SqlServer.Management.Smo;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
-using Tsi.Core.Utilities.VersionUtilities;
-using TSI.QueryBuilder.BaseClasses;
-using TSI.QueryBuilder.DatabaseSchemes;
-using TsiErp.DataAccess.Utilities;
-using TsiErp.Entities.Entities.StockFiche;
-using TsiErp.Entities.Entities.StockFicheLine;
-using TsiErp.Entities.Entities.Version;
-using TsiErp.Entities.TableConstant;
+﻿using Tsi.Core.Utilities.VersionUtilities;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {

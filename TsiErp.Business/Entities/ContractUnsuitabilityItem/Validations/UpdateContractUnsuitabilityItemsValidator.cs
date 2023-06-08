@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Tsi.Core.CrossCuttingConcerns.Validation;
-using TsiErp.Entities.Entities.ContractUnsuitabilityItem.Dtos;
+using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityItem.Dtos;
 
 namespace TsiErp.Business.Entities.ContractUnsuitabilityItem.Validations
 {

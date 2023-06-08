@@ -1,5 +1,5 @@
 ﻿using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.Employee.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 
 namespace TsiErp.Business.Entities.Employee.Services
 {

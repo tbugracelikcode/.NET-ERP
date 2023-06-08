@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Tsi.Core.CrossCuttingConcerns.Validation;
-using TsiErp.Entities.Entities.StationGroup.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 
 namespace TsiErp.EntityContracts.StationGroup
 {

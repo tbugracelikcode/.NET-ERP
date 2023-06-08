@@ -9,8 +9,8 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.PaymentPlan.Validations;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.PaymentPlan;
-using TsiErp.Entities.Entities.PaymentPlan.Dtos;
+using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
+using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.PaymentPlans.Page;
 

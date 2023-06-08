@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.CrossCuttingConcerns.Validation;
-using TsiErp.Entities.Entities.PaymentPlan.Dtos;
+using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos;
 
 namespace TsiErp.Business.Entities.PaymentPlan.Validations
 {

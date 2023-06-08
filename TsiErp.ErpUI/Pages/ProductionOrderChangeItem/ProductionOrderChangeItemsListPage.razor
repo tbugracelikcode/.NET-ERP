@@ -1,20 +1,18 @@
 ﻿@page "/production-order-change-items"
 @layout MainLayout
 
-@using Syncfusion.Blazor.Buttons
 
-@using TsiErp.Business.Entities.ProductionOrderChangeItem.Services
-@using TsiErp.Entities.Entities.ProductionOrderChangeItem
-@using TsiErp.Entities.Entities.ProductionOrderChangeItem.Dtos
-@using TsiErp.ErpUI.Pages.Base
-@using TsiErp.Localizations.Resources.ProductionOrderChangeItems.Page
+
+
 @inject IStringLocalizer<ProductionOrderChangeItemsResource> L 
 
 @inherits BaseListPage<SelectProductionOrderChangeItemsDto, ListProductionOrderChangeItemsDto, CreateProductionOrderChangeItemsDto, UpdateProductionOrderChangeItemsDto, ListProductionOrderChangeItemsParameterDto>
 
 @inject IProductionOrderChangeItemsAppService ProductionOrderChangeItemsService
 
-@{if (!base.IsLoaded)
+@{
+    
+    if (!base.IsLoaded)
 {
     <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
 }

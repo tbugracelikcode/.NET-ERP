@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using TsiErp.Business.Entities.Branch.Services;
+﻿using Microsoft.AspNetCore.Mvc;
 using TsiErp.Business.Entities.ContractUnsuitabilityItem.Services;
-using TsiErp.Entities.Entities.Branch.Dtos;
-using TsiErp.Entities.Entities.ContractUnsuitabilityItem.Dtos;
+using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityItem.Dtos;
 
 namespace TsiErp.WebAPI.Controllers
 {

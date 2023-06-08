@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.CrossCuttingConcerns.Validation;
-using TsiErp.Entities.Entities.PurchasingUnsuitabilityItem.Dtos;
+using TsiErp.Entities.Entities.QualityControl.PurchasingUnsuitabilityItem.Dtos;
 
 namespace TsiErp.Business.Entities.PurchasingUnsuitabilityItem.Validations
 {

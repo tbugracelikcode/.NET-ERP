@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Tsi.Core.CrossCuttingConcerns.Validation;
-using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 
 namespace TsiErp.Business.Entities.CurrentAccountCard.Validations
 {

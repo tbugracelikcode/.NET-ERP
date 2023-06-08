@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TsiErp.Business.Entities.ShippingAdress.Services;
-using TsiErp.Entities.Entities.ShippingAdress.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress.Dtos;
 
 namespace TsiErp.WebAPI.Controllers
 {

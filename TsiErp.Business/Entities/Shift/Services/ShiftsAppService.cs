@@ -10,9 +10,9 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Shift.Validations;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.Shift;
-using TsiErp.Entities.Entities.Shift.Dtos;
-using TsiErp.Entities.Entities.ShiftLine.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShiftLine.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.Shifts.Page;
 

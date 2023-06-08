@@ -1,5 +1,5 @@
 ﻿using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.FinalControlUnsuitabilityItem.Dtos;
+using TsiErp.Entities.Entities.QualityControl.FinalControlUnsuitabilityItem.Dtos;
 
 namespace TsiErp.Business.Entities.FinalControlUnsuitabilityItem.Services
 {

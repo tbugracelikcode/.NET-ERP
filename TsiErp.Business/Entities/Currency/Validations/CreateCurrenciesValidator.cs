@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Tsi.Core.CrossCuttingConcerns.Validation;
-using TsiErp.Entities.Entities.Currency.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 
 namespace TsiErp.Business.Entities.Currency.Validations
 {

@@ -1,4 +1,4 @@
-﻿using TsiErp.Entities.Entities.HaltReason.Dtos;
+﻿using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
 
 namespace TsiErp.ErpUI.Pages.HaltReason
 {

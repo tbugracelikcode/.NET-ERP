@@ -10,9 +10,9 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.ShippingAdress.Validations;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.CurrentAccountCard;
-using TsiErp.Entities.Entities.ShippingAdress;
-using TsiErp.Entities.Entities.ShippingAdress.Dtos;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
+using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress;
+using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.ShippingAdresses.Page;
 

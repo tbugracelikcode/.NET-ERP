@@ -1,22 +1,7 @@
 ﻿@page "/stations"
 @layout MainLayout
 
-@using Syncfusion.Blazor.Buttons
 
-
-@using TsiErp.Business.Entities.Station.Services
-@using TsiErp.Business.Entities.StationGroup.Services
-@using TsiErp.Business.Entities.Product.Services
-@using TsiErp.Business.Entities.StationInventory.Services
-@using TsiErp.Entities.Entities.Station
-@using TsiErp.Entities.Entities.Station.Dtos
-@using TsiErp.ErpUI.Pages.Base
-
-@using TsiErp.ErpUI.Pages.StationGroup
-@using TsiErp.Entities.Entities.StationGroup.Dtos
-@using TsiErp.Entities.Entities.Product.Dtos
-@using TsiErp.Entities.Entities.StationInventory.Dtos
-@using TsiErp.Localizations.Resources.Stations.Page
 @inject IStringLocalizer<StationsResource> L 
 
 @inherits BaseListPage<SelectStationsDto, ListStationsDto, CreateStationsDto, UpdateStationsDto, ListStationsParameterDto>

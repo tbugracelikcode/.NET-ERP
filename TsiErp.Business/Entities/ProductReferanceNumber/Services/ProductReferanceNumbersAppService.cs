@@ -10,10 +10,10 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.ProductReferanceNumber.Validations;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.CurrentAccountCard;
-using TsiErp.Entities.Entities.Product;
-using TsiErp.Entities.Entities.ProductReferanceNumber;
-using TsiErp.Entities.Entities.ProductReferanceNumber.Dtos;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
+using TsiErp.Entities.Entities.StockManagement.Product;
+using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber;
+using TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.ProductReferanceNumbers.Page;
 

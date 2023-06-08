@@ -10,9 +10,9 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Period.Validations;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.Branch;
-using TsiErp.Entities.Entities.Period;
-using TsiErp.Entities.Entities.Period.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.Periods.Page;
 

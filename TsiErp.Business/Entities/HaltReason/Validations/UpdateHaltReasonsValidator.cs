@@ -1,12 +1,6 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tsi.Core.CrossCuttingConcerns.Validation;
-using TsiErp.Entities.Entities.HaltReason.Dtos;
-using TsiErp.Entities.Entities.Period.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
 
 namespace TsiErp.Business.Entities.HaltReason.Validations
 {

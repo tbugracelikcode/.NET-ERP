@@ -1,5 +1,5 @@
 ﻿using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.EquipmentRecord.Dtos;
+using TsiErp.Entities.Entities.QualityControl.EquipmentRecord.Dtos;
 
 namespace TsiErp.Business.Entities.EquipmentRecord.Services
 {

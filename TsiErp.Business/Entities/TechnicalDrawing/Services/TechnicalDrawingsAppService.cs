@@ -10,9 +10,9 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.TechnicalDrawing.Validations;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.Product;
-using TsiErp.Entities.Entities.TechnicalDrawing;
-using TsiErp.Entities.Entities.TechnicalDrawing.Dtos;
+using TsiErp.Entities.Entities.StockManagement.Product;
+using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing;
+using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.TechnicalDrawings.Page;
 

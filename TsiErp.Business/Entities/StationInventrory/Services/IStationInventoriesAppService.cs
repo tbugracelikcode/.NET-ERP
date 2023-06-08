@@ -1,5 +1,5 @@
 ﻿using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.StationInventory.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationInventory.Dtos;
 
 namespace TsiErp.Business.Entities.StationInventory.Services
 {

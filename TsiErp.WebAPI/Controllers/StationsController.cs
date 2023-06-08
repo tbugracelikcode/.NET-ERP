@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using TsiErp.Business.Entities.Branch.Services;
+﻿using Microsoft.AspNetCore.Mvc;
 using TsiErp.Business.Entities.Station.Services;
-using TsiErp.Entities.Entities.Branch.Dtos;
-using TsiErp.Entities.Entities.Station.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 
 namespace TsiErp.WebAPI.Controllers
 {

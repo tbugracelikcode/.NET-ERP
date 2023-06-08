@@ -1,4 +1,4 @@
-﻿using TsiErp.Entities.Entities.UserGroup.Dtos;
+﻿using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserGroup.Dtos;
 
 namespace TsiErp.ErpUI.Pages.UserGroup
 {

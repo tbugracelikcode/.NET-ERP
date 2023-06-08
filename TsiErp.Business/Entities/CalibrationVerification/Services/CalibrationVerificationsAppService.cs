@@ -10,9 +10,9 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.CalibrationVerification.Validations;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.CalibrationVerification;
-using TsiErp.Entities.Entities.CalibrationVerification.Dtos;
-using TsiErp.Entities.Entities.EquipmentRecord;
+using TsiErp.Entities.Entities.QualityControl.CalibrationVerification;
+using TsiErp.Entities.Entities.QualityControl.CalibrationVerification.Dtos;
+using TsiErp.Entities.Entities.QualityControl.EquipmentRecord;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.CalibrationVerifications.Page;
 

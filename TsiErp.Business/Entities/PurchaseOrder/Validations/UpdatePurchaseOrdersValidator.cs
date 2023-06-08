@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TsiErp.Entities.Entities.PurchaseOrder.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 
 namespace TsiErp.Business.Entities.PurchaseOrder.Validations
 {

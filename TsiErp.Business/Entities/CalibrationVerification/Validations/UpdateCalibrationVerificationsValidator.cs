@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Tsi.Core.CrossCuttingConcerns.Validation;
-using TsiErp.Entities.Entities.CalibrationVerification.Dtos;
+using TsiErp.Entities.Entities.QualityControl.CalibrationVerification.Dtos;
 
 namespace TsiErp.Business.Entities.CalibrationVerification.Validations
 {

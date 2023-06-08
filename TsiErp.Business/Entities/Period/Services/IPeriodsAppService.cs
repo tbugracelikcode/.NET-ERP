@@ -1,5 +1,5 @@
 ﻿using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.Period.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period.Dtos;
 
 namespace TsiErp.Business.Entities.Period.Services
 {

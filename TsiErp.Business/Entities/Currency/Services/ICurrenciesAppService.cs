@@ -1,5 +1,5 @@
 ﻿using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.Currency.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 
 namespace TsiErp.Business.Entities.Currency.Services
 {

@@ -3,12 +3,12 @@ using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using TsiErp.Entities.Entities.Branch.Dtos;
-using TsiErp.Entities.Entities.CurrentAccountCard.Dtos;
-using TsiErp.Entities.Entities.Forecast.Dtos;
-using TsiErp.Entities.Entities.ForecastLine.Dtos;
-using TsiErp.Entities.Entities.Period.Dtos;
-using TsiErp.Entities.Entities.Product.Dtos;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.Forecast.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.ForecastLine.Dtos;
+using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.Forecast

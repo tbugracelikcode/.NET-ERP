@@ -1,19 +1,8 @@
 ﻿@page "/purchase-unsuitability-reports"
 @layout MainLayout
 
-@using Syncfusion.Blazor.Buttons
 
-@using TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
-@using TsiErp.Entities.Entities.PurchaseUnsuitabilityReport
-@using TsiErp.Entities.Entities.PurchaseUnsuitabilityReport.Dtos
-@using TsiErp.Entities.Entities.PurchaseOrder.Dtos
-@using TsiErp.Business.Entities.PurchaseOrder.Services
-@using TsiErp.Entities.Entities.Product.Dtos
-@using TsiErp.Business.Entities.Product.Services
-@using TsiErp.Entities.Entities.CurrentAccountCard.Dtos
-@using TsiErp.Business.Entities.CurrentAccountCard.Services
-@using TsiErp.ErpUI.Pages.Base
-@using TsiErp.Localizations.Resources.PurchaseUnsuitabilityReports.Page
+
 @inject IStringLocalizer<PurchaseUnsuitabilityReportsResource> L 
 
 @inherits BaseListPage<SelectPurchaseUnsuitabilityReportsDto, ListPurchaseUnsuitabilityReportsDto, CreatePurchaseUnsuitabilityReportsDto, UpdatePurchaseUnsuitabilityReportsDto, ListPurchaseUnsuitabilityReportsParameterDto>

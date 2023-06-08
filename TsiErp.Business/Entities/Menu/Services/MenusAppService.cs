@@ -5,8 +5,8 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.Menu;
-using TsiErp.Entities.Entities.Menu.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.Branches.Page;
 

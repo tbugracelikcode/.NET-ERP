@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.CrossCuttingConcerns.Validation;
-using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 
 namespace TsiErp.Business.Entities.WorkOrder.Validations
 {

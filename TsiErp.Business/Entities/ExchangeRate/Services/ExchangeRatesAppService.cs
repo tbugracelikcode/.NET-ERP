@@ -9,9 +9,9 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.ExchangeRate.Validations;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.Currency;
-using TsiErp.Entities.Entities.ExchangeRate;
-using TsiErp.Entities.Entities.ExchangeRate.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.ExchangeRate;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.ExchangeRate.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.ExchangeRates.Page;
 

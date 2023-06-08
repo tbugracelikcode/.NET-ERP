@@ -2,21 +2,7 @@
 @layout MainLayout
 
 
-@using TsiErp.Business.Entities.Employee.Services
-@using TsiErp.Business.Entities.HaltReason.Services
-@using TsiErp.Business.Entities.ProductionTracking.Services
-@using TsiErp.Business.Entities.Shift.Services
-@using TsiErp.Business.Entities.Station.Services
-@using TsiErp.Business.Entities.WorkOrder.Services
-@using TsiErp.Entities.Entities.HaltReason.Dtos
-@using TsiErp.Entities.Entities.ProductionTracking.Dtos
-@using TsiErp.Entities.Entities.ProductionTrackingHaltLine.Dtos
-@using TsiErp.Entities.Entities.WorkOrder.Dtos
-@using TsiErp.Entities.Entities.Employee.Dtos
-@using TsiErp.Entities.Entities.Station.Dtos
-@using TsiErp.Entities.Entities.Shift.Dtos
-@using TsiErp.ErpUI.Pages.Base
-@using TsiErp.Localizations.Resources.ProductionTrackings.Page
+
 @inject IStringLocalizer<ProductionTrackingsResource> L 
 @inherits BaseListPage<SelectProductionTrackingsDto, ListProductionTrackingsDto, CreateProductionTrackingsDto, UpdateProductionTrackingsDto, ListProductionTrackingsParameterDto>
 

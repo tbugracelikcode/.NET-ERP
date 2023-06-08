@@ -1,5 +1,5 @@
 ﻿using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.Branch.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 
 namespace TsiErp.Business.Entities.Branch.Services
 {

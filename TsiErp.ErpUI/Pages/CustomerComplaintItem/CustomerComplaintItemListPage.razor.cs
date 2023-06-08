@@ -1,4 +1,4 @@
-﻿using TsiErp.Entities.Entities.CustomerComplaintItem.Dtos;
+﻿using TsiErp.Entities.Entities.QualityControl.CustomerComplaintItem.Dtos;
 
 namespace TsiErp.ErpUI.Pages.CustomerComplaintItem
 {

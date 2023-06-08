@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TsiErp.Business.Entities.PurchasingUnsuitabilityItem.Services;
-using TsiErp.Entities.Entities.PurchasingUnsuitabilityItem.Dtos;
+using TsiErp.Entities.Entities.QualityControl.PurchasingUnsuitabilityItem.Dtos;
 
 namespace TsiErp.WebAPI.Controllers
 {

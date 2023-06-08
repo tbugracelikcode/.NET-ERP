@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using TsiErp.Business.Entities.Branch.Services;
+﻿using Microsoft.AspNetCore.Mvc;
 using TsiErp.Business.Entities.CalibrationRecord.Services;
-using TsiErp.Entities.Entities.Branch.Dtos;
-using TsiErp.Entities.Entities.CalibrationRecord.Dtos;
+using TsiErp.Entities.Entities.QualityControl.CalibrationRecord.Dtos;
 
 namespace TsiErp.WebAPI.Controllers
 {

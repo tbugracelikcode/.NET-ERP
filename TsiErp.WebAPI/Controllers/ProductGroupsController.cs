@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TsiErp.Business.Entities.ProductGroup.Services;
-using TsiErp.Entities.Entities.ProductGroup.Dtos;
+using TsiErp.Entities.Entities.StockManagement.ProductGroup.Dtos;
 
 namespace TsiErp.WebAPI.Controllers
 {

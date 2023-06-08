@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using TsiErp.Entities.Entities.Product.Dtos;
-using TsiErp.Entities.Entities.ProductsOperation.Dtos;
-using TsiErp.Entities.Entities.ProductsOperationLine.Dtos;
-using TsiErp.Entities.Entities.Route.Dtos;
-using TsiErp.Entities.Entities.RouteLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.Route.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.RouteLine.Dtos;
+using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.Route

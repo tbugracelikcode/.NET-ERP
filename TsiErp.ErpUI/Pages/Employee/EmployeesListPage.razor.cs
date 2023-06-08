@@ -5,8 +5,8 @@ using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using TsiErp.Entities.Entities.Department.Dtos;
-using TsiErp.Entities.Entities.Employee.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 

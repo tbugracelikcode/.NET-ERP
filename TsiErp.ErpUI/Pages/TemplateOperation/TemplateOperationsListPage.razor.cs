@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
-using TsiErp.Entities.Entities.Station.Dtos;
-using TsiErp.Entities.Entities.TemplateOperation.Dtos;
-using TsiErp.Entities.Entities.TemplateOperationLine.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationLine.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.TemplateOperation

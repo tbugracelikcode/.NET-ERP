@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TsiErp.Business.Entities.Route.Services;
-using TsiErp.Entities.Entities.Route.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.Route.Dtos;
 
 namespace TsiErp.WebAPI.Controllers
 {

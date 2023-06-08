@@ -1,25 +1,16 @@
 ﻿using Microsoft.Extensions.Localization;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Tsi.Core.Aspects.Autofac.Caching;
-using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using Tsi.Core.Utilities.VersionUtilities;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
-using TsiErp.Business.Entities.Period.Services;
 using TsiErp.DataAccess.DatabaseSchemeHistories;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.Branch;
-using TsiErp.Entities.Entities.Branch.Dtos;
-using TsiErp.Entities.Entities.Version;
-using TsiErp.Entities.Entities.Version.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Version;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Version.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.Periods.Page;
 

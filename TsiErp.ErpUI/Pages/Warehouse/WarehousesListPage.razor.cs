@@ -1,4 +1,4 @@
-﻿using TsiErp.Entities.Entities.WareHouse.Dtos;
+﻿using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 
 namespace TsiErp.ErpUI.Pages.Warehouse
 {

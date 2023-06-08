@@ -1,5 +1,5 @@
 ﻿using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 
 namespace TsiErp.Business.Entities.WorkOrder.Services
 {

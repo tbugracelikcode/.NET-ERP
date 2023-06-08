@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TsiErp.Entities.Entities.SalesPrice.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesPrice.Dtos;
 
 namespace TsiErp.Business.Entities.SalesPrice.Validations
 {

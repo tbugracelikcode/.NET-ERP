@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using Tsi.Core.CrossCuttingConcerns.Validation;
-using TsiErp.Entities.Entities.ContractProductionTracking.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ContractProductionTracking.Dtos;
 
 namespace TsiErp.Business.Entities.ContractProductionTracking.Validations
 {

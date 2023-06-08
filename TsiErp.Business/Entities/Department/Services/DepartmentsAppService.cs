@@ -9,8 +9,8 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Department.Validations;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.Department;
-using TsiErp.Entities.Entities.Department.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.Departments.Page;
 

@@ -4,12 +4,12 @@ using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using TsiErp.Entities.Entities.MaintenancePeriod.Dtos;
-using TsiErp.Entities.Entities.PlannedMaintenance.Dtos;
-using TsiErp.Entities.Entities.PlannedMaintenanceLine.Dtos;
-using TsiErp.Entities.Entities.Product.Dtos;
-using TsiErp.Entities.Entities.Station.Dtos;
-using TsiErp.Entities.Entities.UnitSet.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
+using TsiErp.Entities.Entities.MaintenanceManagement.MaintenancePeriod.Dtos;
+using TsiErp.Entities.Entities.MaintenanceManagement.PlannedMaintenance.Dtos;
+using TsiErp.Entities.Entities.MaintenanceManagement.PlannedMaintenanceLine.Dtos;
+using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
+using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 

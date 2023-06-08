@@ -1,8 +1,9 @@
-﻿using Tsi.Core.Utilities.Results; using TsiErp.Localizations.Resources.Branches.Page;
+﻿using Tsi.Core.Utilities.Results;
+using TsiErp.Localizations.Resources.Branches.Page;
 using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.Calendar.Dtos;
-using TsiErp.Entities.Entities.CalendarDay.Dtos;
-using TsiErp.Entities.Entities.CalendarLine.Dtos;
+using TsiErp.Entities.Entities.PlanningManagement.CalendarLine.Dtos;
+using TsiErp.Entities.Entities.PlanningManagement.Calendar.Dtos;
+using TsiErp.Entities.Entities.PlanningManagement.CalendarDay.Dtos;
 
 namespace TsiErp.Business.Entities.Calendar.Services
 {

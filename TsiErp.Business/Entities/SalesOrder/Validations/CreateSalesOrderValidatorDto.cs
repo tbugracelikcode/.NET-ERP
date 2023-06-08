@@ -1,11 +1,5 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TsiErp.Entities.Entities.SalesOrder.Dtos;
-using TsiErp.Entities.Entities.SalesProposition.Dtos;
+using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 
 namespace TsiErp.Business.Entities.SalesOrder.Validations
 {

@@ -1,4 +1,4 @@
-﻿using TsiErp.Entities.Entities.UnitSet.Dtos;
+﻿using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 
 namespace TsiErp.ErpUI.Pages.UnitSet
 {

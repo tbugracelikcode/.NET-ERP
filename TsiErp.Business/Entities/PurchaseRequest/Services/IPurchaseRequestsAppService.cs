@@ -1,6 +1,6 @@
 ﻿using TsiErp.Business.BusinessCoreServices;
-using TsiErp.Entities.Entities.PurchaseOrderLine.Dtos;
-using TsiErp.Entities.Entities.PurchaseRequest.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest.Dtos;
 using TsiErp.Entities.Enums;
 
 namespace TsiErp.Business.Entities.PurchaseRequest.Services

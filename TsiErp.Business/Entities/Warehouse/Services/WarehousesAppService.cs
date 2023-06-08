@@ -9,8 +9,8 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Warehouse.Validations;
 using TsiErp.DataAccess.Services.Login;
-using TsiErp.Entities.Entities.WareHouse;
-using TsiErp.Entities.Entities.WareHouse.Dtos;
+using TsiErp.Entities.Entities.StockManagement.WareHouse;
+using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.Warehouses.Page;
 
