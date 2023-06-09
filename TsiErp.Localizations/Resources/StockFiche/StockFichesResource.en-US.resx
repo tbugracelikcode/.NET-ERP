@@ -144,6 +144,24 @@
   <data name="ContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="ContextAddConsume" xml:space="preserve">
+    <value>Add Consumption Fiche</value>
+  </data>
+  <data name="ContextAddProductionIncome" xml:space="preserve">
+    <value>Add Production Input Fiche</value>
+  </data>
+  <data name="ContextAddStockIncome" xml:space="preserve">
+    <value>Add Stock Input Fiche</value>
+  </data>
+  <data name="ContextAddStockOutput" xml:space="preserve">
+    <value>Add Stock Output Fiche</value>
+  </data>
+  <data name="ContextAddWarehouse" xml:space="preserve">
+    <value>Add Shipping to Warehouse Fiche</value>
+  </data>
+  <data name="ContextAddWastege" xml:space="preserve">
+    <value>Add Wastage Fiche</value>
+  </data>
   <data name="ContextChange" xml:space="preserve">
     <value>Change</value>
   </data>

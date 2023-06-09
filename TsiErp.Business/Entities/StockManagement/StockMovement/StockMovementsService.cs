@@ -35,51 +35,51 @@ namespace TsiErp.Business.Entities.StockMovement
 
                 var queryPR = queryFactory
                       .Query()
-                      .From(Tables.PurchaseRequests)
-                      .Select<PurchaseRequests>(pr => new { pr.WarehouseID, pr.ValidityDate_, pr.TotalVatExcludedAmount, pr.TotalVatAmount, pr.TotalDiscountAmount, pr.Time_, pr.SpecialCode, pr.RevisionTime, pr.RevisionDate, pr.PurchaseRequestState, pr.PropositionRevisionNo, pr.ProductionOrderID, pr.PaymentPlanID, pr.NetAmount, pr.LinkedPurchaseRequestID, pr.Id, pr.GrossAmount, pr.FicheNo, pr.ExchangeRate, pr.Description_, pr.Date_, pr.DataOpenStatusUserId, pr.DataOpenStatus, pr.CurrentAccountCardID, pr.CurrencyID, pr.BranchID })
-                      .Join<PaymentPlans>
-                       (
-                           pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
-                           nameof(PurchaseRequests.PaymentPlanID),
-                           nameof(PaymentPlans.Id),
-                           JoinType.Left
-                       )
-                       .Join<Branches>
-                       (
-                           b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
-                           nameof(PurchaseRequests.BranchID),
-                           nameof(Branches.Id),
-                           JoinType.Left
-                       )
-                       .Join<Warehouses>
-                       (
-                           w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
-                           nameof(PurchaseRequests.WarehouseID),
-                           nameof(Warehouses.Id),
-                           JoinType.Left
-                       )
-                       .Join<Currencies>
-                       (
-                           c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
-                           nameof(PurchaseRequests.CurrencyID),
-                           nameof(Currencies.Id),
-                           JoinType.Left
-                       )
-                       .Join<CurrentAccountCards>
-                       (
-                           ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
-                           nameof(PurchaseRequests.CurrentAccountCardID),
-                           nameof(CurrentAccountCards.Id),
-                           JoinType.Left
-                       )
-                      
-                       .Where(new { Id = id }, false, false, Tables.PurchaseRequests);
+                       .From(Tables.PurchaseRequests)
+                       .Select<PurchaseRequests>(pr => new { pr.WarehouseID, pr.ValidityDate_, pr.TotalVatExcludedAmount, pr.TotalVatAmount, pr.TotalDiscountAmount, pr.Time_, pr.SpecialCode, pr.RevisionTime, pr.RevisionDate, pr.PurchaseRequestState, pr.PropositionRevisionNo, pr.ProductionOrderID, pr.PaymentPlanID, pr.NetAmount, pr.LinkedPurchaseRequestID, pr.Id, pr.GrossAmount, pr.FicheNo, pr.ExchangeRate, pr.Description_, pr.Date_, pr.DataOpenStatusUserId, pr.DataOpenStatus, pr.CurrentAccountCardID, pr.CurrencyID, pr.BranchID })
+                       .Join<PaymentPlans>
+                        (
+                            pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },
+                            nameof(PurchaseRequests.PaymentPlanID),
+                            nameof(PaymentPlans.Id),
+                            JoinType.Left
+                        )
+                        .Join<Branches>
+                        (
+                            b => new { BranchID = b.Id, BranchCode = b.Code, BranchName = b.Name },
+                            nameof(PurchaseRequests.BranchID),
+                            nameof(Branches.Id),
+                            JoinType.Left
+                        )
+                        .Join<Warehouses>
+                        (
+                            w => new { WarehouseID = w.Id, WarehouseName = w.Name, WarehouseCode = w.Code },
+                            nameof(PurchaseRequests.WarehouseID),
+                            nameof(Warehouses.Id),
+                            JoinType.Left
+                        )
+                        .Join<Currencies>
+                        (
+                            c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
+                            nameof(PurchaseRequests.CurrencyID),
+                            nameof(Currencies.Id),
+                            JoinType.Left
+                        )
+                        .Join<CurrentAccountCards>
+                        (
+                            ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                            nameof(PurchaseRequests.CurrentAccountCardID),
+                            nameof(CurrentAccountCards.Id),
+                            JoinType.Left
+                        )
+
+                        .Where(new { Id = id }, false, false, Tables.PurchaseRequests);
 
                 var purchaseRequests = queryFactory.Get<SelectPurchaseRequestsDto>(queryPR);
 
                 var queryPRLines = queryFactory
                        .Query()
-                       .From(Tables.PurchaseRequestLines)
+                        .From(Tables.PurchaseRequestLines)
                        .Select<PurchaseRequestLines>(prl => new { prl.VATrate, prl.VATamount, prl.UnitSetID, prl.UnitPrice, prl.Quantity, prl.PurchaseRequestLineState, prl.PurchaseRequestID, prl.ProductionOrderID, prl.ProductID, prl.PaymentPlanID, prl.OrderConversionDate, prl.LineTotalAmount, prl.LineNr, prl.LineDescription, prl.LineAmount, prl.Id, prl.ExchangeRate, prl.DiscountRate, prl.DiscountAmount, prl.DataOpenStatusUserId, prl.DataOpenStatus })
                        .Join<Products>
                         (
@@ -110,6 +110,8 @@ namespace TsiErp.Business.Entities.StockMovement
 
                 #endregion
 
+                int counter = 0;
+
                 foreach(var line in purchaseRequestLine)
                 {
 
@@ -131,7 +133,7 @@ namespace TsiErp.Business.Entities.StockMovement
 
                         ByDateStockMovements deletedAmountEntity = listByDate.Where(t => t.Date_ != purchaseRequests.Date_ && t.Amount > 0).FirstOrDefault();
 
-                        if(  deletedAmount != 0)
+                        if(deletedAmount != 0)
                         {
                             var queryDeleted = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
                             {
@@ -302,7 +304,7 @@ namespace TsiErp.Business.Entities.StockMovement
 
                     else if(listByDate.Count <=1)
                     {
-                        if (entityByDate != null)
+                        if (entityByDate.Id != Guid.Empty)
                         {
                             var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
                             {
@@ -379,7 +381,7 @@ namespace TsiErp.Business.Entities.StockMovement
 
                     var entityGrandTotal = queryFactory.Get<GrandTotalStockMovements>(entityQueryGrandTotal);
 
-                    if(entityGrandTotal != null)
+                    if(entityGrandTotal.Id != Guid.Empty)
                     {
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Update(new UpdateGrandTotalStockMovementsDto
                         {

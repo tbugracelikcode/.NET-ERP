@@ -9,6 +9,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.PurchaseRequest.Validations;
+using TsiErp.Business.Entities.StockMovement;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
@@ -143,7 +144,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
                 var purchaseRequest = queryFactory.Insert<SelectPurchaseRequestsDto>(query, "Id", true);
 
-                //StockMovementsService.TotalPurchaseRequests(addedEntityId);
+                StockMovementsService.TotalPurchaseRequests(addedEntityId);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PurchaseRequests, LogType.Insert, addedEntityId);
 

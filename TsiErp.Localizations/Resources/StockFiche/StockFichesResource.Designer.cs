@@ -142,6 +142,60 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sarf Fişi Ekle.
+        /// </summary>
+        public static string ContextAddConsume {
+            get {
+                return ResourceManager.GetString("ContextAddConsume", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretimden Giriş Fişi Ekle.
+        /// </summary>
+        public static string ContextAddProductionIncome {
+            get {
+                return ResourceManager.GetString("ContextAddProductionIncome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Giriş Fişi Ekle.
+        /// </summary>
+        public static string ContextAddStockIncome {
+            get {
+                return ResourceManager.GetString("ContextAddStockIncome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Çıkış Fişi Ekle.
+        /// </summary>
+        public static string ContextAddStockOutput {
+            get {
+                return ResourceManager.GetString("ContextAddStockOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Depo Sevk Fişi Ekle.
+        /// </summary>
+        public static string ContextAddWarehouse {
+            get {
+                return ResourceManager.GetString("ContextAddWarehouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fire Fişi Ekle.
+        /// </summary>
+        public static string ContextAddWastege {
+            get {
+                return ResourceManager.GetString("ContextAddWastege", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
         public static string ContextChange {

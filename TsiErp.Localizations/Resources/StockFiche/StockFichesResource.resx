@@ -144,6 +144,24 @@
   <data name="ContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
+  <data name="ContextAddConsume" xml:space="preserve">
+    <value>Sarf Fişi Ekle</value>
+  </data>
+  <data name="ContextAddProductionIncome" xml:space="preserve">
+    <value>Üretimden Giriş Fişi Ekle</value>
+  </data>
+  <data name="ContextAddStockIncome" xml:space="preserve">
+    <value>Stok Giriş Fişi Ekle</value>
+  </data>
+  <data name="ContextAddStockOutput" xml:space="preserve">
+    <value>Stok Çıkış Fişi Ekle</value>
+  </data>
+  <data name="ContextAddWarehouse" xml:space="preserve">
+    <value>Depo Sevk Fişi Ekle</value>
+  </data>
+  <data name="ContextAddWastege" xml:space="preserve">
+    <value>Fire Fişi Ekle</value>
+  </data>
   <data name="ContextChange" xml:space="preserve">
     <value>Değiştir</value>
   </data>
