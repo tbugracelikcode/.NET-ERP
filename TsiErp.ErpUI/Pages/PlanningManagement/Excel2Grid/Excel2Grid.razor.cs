@@ -1,0 +1,58 @@
+﻿using Syncfusion.Blazor.Grids;
+using Syncfusion.Blazor.Inputs;
+using Syncfusion.XlsIO;
+using System.Data;
+using System.Dynamic;
+
+namespace TsiErp.ErpUI.Pages.PlanningManagement.Excel2Grid
+{
+    
+    public partial class Excel2Grid
+    {
+        SfGrid<ExpandoObject> Grid;
+        public DataTable table = new DataTable();
+        private void OnChange(UploadChangeEventArgs args)
+        {
+            foreach (var file in args.Files)
+            {
+                var path = file.FileInfo.Name;
+                ExcelEngine excelEngine = new ExcelEngine();
+                IApplication application = excelEngine.Excel;
+                application.DefaultVersion = ExcelVersion.Excel2016;
+
+                //get local wwwroot path of application
+                var check = ExcelService.GetPath(path);
+                //create new filestream into above path
+                FileStream openFileStream = new FileStream(check, FileMode.OpenOrCreate);
+                //write the uploaded memorystream to file stream
+                file.Stream.WriteTo(openFileStream);
+                //again open the filstream from that path
+                FileStream fileStream = new FileStream(check, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                //access the workbook from that filtestream
+                IWorkbook workbook = application.Workbooks.Open(fileStream);
+                IWorksheet worksheet = workbook.Worksheets[0];
+                //get datatable from workbook
+                table = worksheet.ExportDataTable(worksheet.UsedRange, ExcelExportDataTableOptions.ColumnNames);
+                //convert to dynamic list and append to Grid. 
+                GenerateListFromTable(table);
+            }
+        }
+        string[] Columns;
+        public List<ExpandoObject> CustomerList;
+        public void GenerateListFromTable(DataTable input)
+        {
+            var list = new List<ExpandoObject>();
+            Columns = input.Columns.Cast<DataColumn>()
+                                 .Select(x => x.ColumnName)
+                                 .ToArray();
+            foreach (DataRow row in input.Rows)
+            {
+                System.Dynamic.ExpandoObject e = new System.Dynamic.ExpandoObject();
+                foreach (DataColumn col in input.Columns)
+                    e.TryAdd(col.ColumnName, row.ItemArray[col.Ordinal]);
+                list.Add(e);
+            }
+            CustomerList = list;
+        }
+    }
+}

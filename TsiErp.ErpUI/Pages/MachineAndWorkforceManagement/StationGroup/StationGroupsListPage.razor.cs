@@ -1,0 +1,27 @@
+﻿using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
+
+namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.StationGroup
+{
+    public partial class StationGroupsListPage
+    {
+
+        protected override async void OnInitialized()
+        {
+            BaseCrudService = StationGroupsService;
+            _L = L;
+        }
+
+        protected override Task BeforeInsertAsync()
+        {
+            DataSource= new SelectStationGroupsDto()
+            { 
+                IsActive = true 
+            };
+
+            EditPageVisible = true;
+
+            return Task.CompletedTask;
+        }
+
+    }
+}
