@@ -88,5 +88,6 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string StockFiches = "StockFiches";
         public static readonly string StockFicheLines = "StockFicheLines";
         public static readonly string ProgVersions = "ProgVersions";
+        public static readonly string UnsuitabilityTypesItems = "UnsuitabilityTypesItems";
     }
 }
