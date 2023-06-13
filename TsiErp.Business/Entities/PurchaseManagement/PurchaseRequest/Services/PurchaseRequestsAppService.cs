@@ -164,6 +164,8 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
                 if (purchaseRequests.Id != Guid.Empty && purchaseRequests != null)
                 {
+                    StockMovementsService.DeletePurchaseRequests(purchaseRequests.Id);
+
                     var deleteQuery = queryFactory.Query().From(Tables.PurchaseRequests).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
 
                     var lineDeleteQuery = queryFactory.Query().From(Tables.PurchaseRequestLines).Delete(LoginedUserService.UserId).Where(new { PurchaseRequestID = id }, false, false, "");
@@ -577,7 +579,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
                 var purchaseRequest = queryFactory.Update<SelectPurchaseRequestsDto>(query, "Id", true);
 
-                //StockMovementsService.TotalPurchaseRequests(entity.Id);
+                StockMovementsService.TotalPurchaseRequests(entity.Id);
 
                 LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.PurchaseRequests, LogType.Update, purchaseRequest.Id);
 
