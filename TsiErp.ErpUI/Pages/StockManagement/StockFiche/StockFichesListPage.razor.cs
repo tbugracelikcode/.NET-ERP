@@ -379,9 +379,6 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
             DataSource.SelectStockFicheLines = new List<SelectStockFicheLinesDto>();
             GridLineList = DataSource.SelectStockFicheLines;
 
-            EditPageVisible = true;
-
-
             await Task.CompletedTask;
         }
 
@@ -400,7 +397,12 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAddStockIncome"], Id = "income" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAddStockOutput"], Id = "output" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAddConsume"], Id = "consume" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAddWastege"], Id = "wastage" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAddProductionIncome"], Id = "proincome" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAddWarehouse"], Id = "warehouse" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
@@ -437,8 +439,46 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
 
             switch (args.Item.Id)
             {
-                case "new":
+                case "wastage":
+                    
                     await BeforeInsertAsync();
+                    DataSource.FicheType = StockFicheTypeEnum.FireFisi;
+                    EditPageVisible = true;
+                    break;
+
+                case "consume":
+                    
+                    await BeforeInsertAsync();
+                    DataSource.FicheType = StockFicheTypeEnum.SarfFisi;
+                    EditPageVisible = true;
+                    break;
+
+                case "proincome":
+                    
+                    await BeforeInsertAsync();
+                    DataSource.FicheType = StockFicheTypeEnum.UretimdenGirisFisi;
+                    EditPageVisible = true;
+                    break;
+
+                case "warehouse":
+                   
+                    await BeforeInsertAsync();
+                    DataSource.FicheType = StockFicheTypeEnum.DepoSevkFisi;
+                    EditPageVisible = true;
+                    break;
+
+                case "income":
+                    
+                    await BeforeInsertAsync();
+                    DataSource.FicheType = StockFicheTypeEnum.StokGirisFisi;
+                    EditPageVisible = true;
+                    break;
+
+                case "output":
+                    
+                    await BeforeInsertAsync();
+                    DataSource.FicheType = StockFicheTypeEnum.StokCikisFisi;
+                    EditPageVisible = true;
                     break;
 
                 case "changed":
