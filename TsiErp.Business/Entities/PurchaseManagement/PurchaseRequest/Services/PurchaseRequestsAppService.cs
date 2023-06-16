@@ -164,7 +164,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
                 if (purchaseRequests.Id != Guid.Empty && purchaseRequests != null)
                 {
-                    StockMovementsService.DeletePurchaseRequests(purchaseRequests.Id);
+                    StockMovementsService.DeletePurchaseRequests(purchaseRequests);
 
                     var deleteQuery = queryFactory.Query().From(Tables.PurchaseRequests).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
 
