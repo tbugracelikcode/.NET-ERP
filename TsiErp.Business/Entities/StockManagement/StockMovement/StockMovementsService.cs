@@ -74,7 +74,7 @@ namespace TsiErp.Business.Entities.StockMovement
                     }
                     else
                     {
-                        var queryDeleted = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
+                        var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
                         {
                             Amount = entityByDate.Amount,
                             Date_ = entityByDate.Date_,
@@ -102,7 +102,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             LastModifierId = LoginedUserService.UserId
                         }).Where(new { Id = entityByDate.Id }, false, false, "");
 
-                        var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(queryDeleted, "Id", true);
+                        var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
                     }
 
                     #endregion
@@ -202,11 +202,45 @@ namespace TsiErp.Business.Entities.StockMovement
 
                     if(entityByDate.Id == Guid.Empty)
                     {
+                        foreach(var previousline in previousEntity.SelectPurchaseRequestLines)
+                        {
+                            var entityQueryByDateDecreasing = queryFactory.Query().From(Tables.ByDateStockMovements).Select("*").Where(new { BranchID = previousEntity.BranchID, WarehouseID = previousEntity.WarehouseID, ProductID = line.ProductID, Date_ = previousEntity.Date_ }, false, false, "");
 
+                            var entityByDateDecreasing = queryFactory.Get<ByDateStockMovements>(entityQueryByDateDecreasing);
+                        }
+                       
                     }
                     else
                     {
+                        var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
+                        {
+                            Amount = entityByDate.Amount,
+                            Date_ = entityByDate.Date_,
+                            ProductID = line.ProductID,
+                            TotalConsumption = entityByDate.TotalConsumption,
+                            TotalGoodsIssue = entityByDate.TotalGoodsIssue,
+                            TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
+                            TotalProduction = entityByDate.TotalProduction,
+                            TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
+                            TotalPurchaseRequest = entityByDate.TotalPurchaseRequest + line.Quantity,
+                            TotalSalesOrder = entityByDate.TotalSalesOrder,
+                            TotalSalesProposition = entityByDate.TotalSalesProposition,
+                            TotalWastage = entityByDate.TotalWastage,
+                            WarehouseID = entityByDate.WarehouseID,
+                            BranchID = entityByDate.BranchID,
+                            Id = entityByDate.Id,
+                            CreationTime = entityByDate.CreationTime.Value,
+                            CreatorId = entityByDate.CreatorId.Value,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = entityByDate.DeleterId.Value,
+                            DeletionTime = entityByDate.DeletionTime.Value,
+                            IsDeleted = entityByDate.IsDeleted,
+                            LastModificationTime = DateTime.Now,
+                            LastModifierId = LoginedUserService.UserId
+                        }).Where(new { Id = entityByDate.Id }, false, false, "");
 
+                        var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
                     }
                 }
 
