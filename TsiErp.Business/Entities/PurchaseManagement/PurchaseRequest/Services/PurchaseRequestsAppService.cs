@@ -144,7 +144,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
                 var purchaseRequest = queryFactory.Insert<SelectPurchaseRequestsDto>(query, "Id", true);
 
-                StockMovementsService.TotalPurchaseRequests(addedEntityId);
+                StockMovementsService.InsertPurchaseRequests(input);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PurchaseRequests, LogType.Insert, addedEntityId);
 
@@ -579,7 +579,7 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
 
                 var purchaseRequest = queryFactory.Update<SelectPurchaseRequestsDto>(query, "Id", true);
 
-                StockMovementsService.TotalPurchaseRequests(entity.Id);
+                StockMovementsService.UpdatePurchaseRequests(entity, input);
 
                 LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.PurchaseRequests, LogType.Update, purchaseRequest.Id);
 
