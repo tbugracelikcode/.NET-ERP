@@ -9,6 +9,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.SalesProposition.Validations;
+using TsiErp.Business.Entities.StockMovement;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
@@ -142,6 +143,8 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
 
                 var salesProposition = queryFactory.Insert<SelectSalesPropositionsDto>(query, "Id", true);
 
+                StockMovementsService.InsertSalesPropositions(input);
+
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.SalesPropositions, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectSalesPropositionsDto>(salesProposition);
@@ -160,6 +163,8 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
 
                 if (salesPropositions.Id != Guid.Empty && salesPropositions != null)
                 {
+                    StockMovementsService.DeleteSalesPropositions(salesPropositions);
+
                     var deleteQuery = queryFactory.Query().From(Tables.SalesPropositions).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
 
                     var lineDeleteQuery = queryFactory.Query().From(Tables.SalesPropositionLines).Delete(LoginedUserService.UserId).Where(new { SalesPropositionID = id }, false, false, "");
@@ -167,14 +172,25 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                     deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
                     var salesProposition = queryFactory.Update<SelectSalesPropositionsDto>(deleteQuery, "Id", true);
+
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.SalesPropositions, LogType.Delete, id);
+
                     return new SuccessDataResult<SelectSalesPropositionsDto>(salesProposition);
                 }
                 else
                 {
+                    var queryLineGet = queryFactory.Query().From(Tables.SalesPropositionLines).Select("*").Where(new { Id = id }, false, false, "");
+
+                    var salesPropositionsLineGet = queryFactory.Get<SelectSalesPropositionLinesDto>(queryLineGet);
+
+                    StockMovementsService.DeleteSalesPropositionLines(salesPropositionsLineGet);
+
                     var queryLine = queryFactory.Query().From(Tables.SalesPropositionLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
                     var salesPropositionLines = queryFactory.Update<SelectSalesPropositionLinesDto>(queryLine, "Id", true);
+
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.SalesPropositionLines, LogType.Delete, id);
+
                     return new SuccessDataResult<SelectSalesPropositionLinesDto>(salesPropositionLines);
                 }
             }
@@ -594,6 +610,8 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                 }
 
                 var salesProposition = queryFactory.Update<SelectSalesPropositionsDto>(query, "Id", true);
+
+                StockMovementsService.UpdateSalesPropositions(entity, input);
 
                 LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.SalesPropositions, LogType.Update, salesProposition.Id);
 

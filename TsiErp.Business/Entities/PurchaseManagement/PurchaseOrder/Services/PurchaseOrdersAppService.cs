@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.PurchaseOrder.Validations;
 using TsiErp.Business.Entities.PurchaseRequest.Services;
+using TsiErp.Business.Entities.StockMovement;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
@@ -145,6 +146,8 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
 
                 var purchaseOrder = queryFactory.Insert<SelectPurchaseOrdersDto>(query, "Id", true);
 
+                StockMovementsService.InsertPurchaseOrders(input);
+
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PurchaseOrders, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectPurchaseOrdersDto>(purchaseOrder);
@@ -270,6 +273,8 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
 
                 if (purchaseOrders.Id != Guid.Empty && purchaseOrders != null)
                 {
+                    StockMovementsService.DeletePurchaseOrders(purchaseOrders);
+
                     var deleteQuery = queryFactory.Query().From(Tables.PurchaseOrders).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
 
                     var lineDeleteQuery = queryFactory.Query().From(Tables.PurchaseOrderLines).Delete(LoginedUserService.UserId).Where(new { PurchaseOrderID = id }, false, false, "");
@@ -277,14 +282,25 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                     deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
                     var purchaseOrder = queryFactory.Update<SelectPurchaseOrdersDto>(deleteQuery, "Id", true);
+
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PurchaseOrders, LogType.Delete, id);
+
                     return new SuccessDataResult<SelectPurchaseOrdersDto>(purchaseOrder);
                 }
                 else
                 {
+                    var queryLineGet = queryFactory.Query().From(Tables.PurchaseOrderLines).Select("*").Where(new { Id = id }, false, false, "");
+
+                    var purchaseOrdersLineGet = queryFactory.Get<SelectPurchaseOrderLinesDto>(queryLineGet);
+
+                    StockMovementsService.DeletePurchaseOrderLines(purchaseOrdersLineGet);
+
                     var queryLine = queryFactory.Query().From(Tables.PurchaseOrderLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
                     var purchaseOrderLines = queryFactory.Update<SelectPurchaseOrderLinesDto>(queryLine, "Id", true);
+
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.PurchaseOrderLines, LogType.Delete, id);
+
                     return new SuccessDataResult<SelectPurchaseOrderLinesDto>(purchaseOrderLines);
                 }
             }
@@ -709,6 +725,8 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 }
 
                 var purchaseOrder = queryFactory.Update<SelectPurchaseOrdersDto>(query, "Id", true);
+
+                StockMovementsService.UpdatePurchaseOrders(entity, input);
 
                 LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.PurchaseOrders, LogType.Update, purchaseOrder.Id);
 
