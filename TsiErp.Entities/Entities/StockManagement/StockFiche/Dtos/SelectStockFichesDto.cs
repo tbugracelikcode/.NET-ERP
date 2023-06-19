@@ -63,6 +63,14 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
         /// </summary>
         public string WarehouseCode { get; set; }
         /// <summary>
+        /// Çıkış Depo ID
+        /// </summary>
+        public Guid TransmitterWarehouseID { get; set; }
+        /// <summary>
+        /// Çıkış Depo Kodu
+        /// </summary>
+        public string TransmitterWarehouseCode { get; set; }
+        /// <summary>
         /// Üretim Emri ID
         /// </summary>
         public Guid ProductionOrderID { get; set; }
