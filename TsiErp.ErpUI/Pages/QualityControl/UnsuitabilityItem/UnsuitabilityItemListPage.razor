@@ -1,11 +1,11 @@
-﻿@page "/unsuitability-types-items"
+﻿@page "/unsuitability-items"
 @layout MainLayout
 
-@inject IStringLocalizer<UnsuitabilityTypesItemResources> L
+@inject IStringLocalizer<PeriodsResource> L
 
-@inherits BaseListPage<SelectUnsuitabilityTypesItemsDto, ListUnsuitabilityTypesItemsDto, CreateUnsuitabilityTypesItemsDto, UpdateUnsuitabilityTypesItemsDto, ListUnsuitabilityTypesItemsParameterDto>
+@inherits BaseListPage<SelectUnsuitabilityItemsDto, ListUnsuitabilityItemsDto, CreateUnsuitabilityItemsDto, UpdateUnsuitabilityItemsDto, ListUnsuitabilityItemsParameterDto>
 
-@inject IUnsuitabilityTypesItemsAppService UnsuitabilityTypesItemsService
+@inject IUnsuitabilityItemsAppService UnsuitabilityItemsService
 
 @if (!base.IsLoaded)
 {
@@ -50,18 +50,18 @@ else
 
                                     </ToolbarItems>
                                 </SfToolbar>
-                                <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListUnsuitabilityTypesItemsDto"></GridEvents>
+                                <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListUnsuitabilityItemsDto"></GridEvents>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                 <GridColumns>
-                                    <GridColumn Field=@nameof(ListUnsuitabilityTypesItemsDto.Code) HeaderText=@L["Code"] TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListUnsuitabilityTypesItemsDto.Name) HeaderText=@L["Name"] TextAlign="TextAlign.Center" Width="120">
+                                    <GridColumn Field=@nameof(ListUnsuitabilityItemsDto.Code) HeaderText=@L["Code"] TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListUnsuitabilityItemsDto.Name) HeaderText=@L["Name"] TextAlign="TextAlign.Center" Width="120">
 
                                     </GridColumn>
-                                    <GridColumn Field=@nameof(ListUnsuitabilityTypesItemsDto.Description_) HeaderText="@L["Description_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListUnsuitabilityItemsDto.Description_) HeaderText="@L["Description_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </CardContent>
@@ -78,10 +78,10 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="@L["EditModalTitle"]"
-         Width="40%"
-         Height="44%"
-         MinWidth="760px"
-         MinHeight="480px"
+         Width="70%"
+         Height="45%"
+         MinWidth="1200px"
+         MinHeight="500px"
          HeaderCssClass="HeaderTitleCss"
          Showing="CrudModalShowing"
          Closing="CrudModalClosing">
@@ -90,19 +90,23 @@ else
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="21%" />
-                    <DxGridLayoutRow Height="0.4%" />
-                    <DxGridLayoutRow Height="11%" />
-                    <DxGridLayoutRow Height="0.4%" />
-                    <DxGridLayoutRow Height="25%" />
+                    <DxGridLayoutRow Height="15%" />
+                    <DxGridLayoutRow Height="12%" />
+                    <DxGridLayoutRow Height="12%" />
+                    <DxGridLayoutRow Height="12%" />
+                    <DxGridLayoutRow Height="12%" />
                 </Rows>
 
                 <Columns>
-                    <DxGridLayoutColumn Width="6%" />
-                    <DxGridLayoutColumn Width="40%" />
-                    <DxGridLayoutColumn Width="6%" />
-                    <DxGridLayoutColumn Width="40%" />
-                    <DxGridLayoutColumn Width="6%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="21%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="21%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="21%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="21%" />
+                    <DxGridLayoutColumn Width="3%" />
                 </Columns>
 
                 <Items>
@@ -114,7 +118,7 @@ else
 
                         </Template>
                     </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="0" Column="3">
+                    <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
@@ -122,22 +126,33 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="2" Column="1">
+                    <DxGridLayoutItem Row="0" Column="3" ColumnSpan="4">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["DescriptionLabel"] </strong></label><br />
+                            <SfTextBox CssClass="TSIMemoBox100" Multiline="true" @bind-Value="DataSource.Description_"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="7"  ColumnSpan="1">
                         <Template>
                             <center>
+                                <br />
                                 <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
                                 <SfSwitch @bind-Checked="@DataSource.IsActive"></SfSwitch>
                             </center>
                         </Template>
                     </DxGridLayoutItem>
 
-
-                    <DxGridLayoutItem Row="4" Column="1" ColumnSpan="4">
+                    <DxGridLayoutItem Row="2" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>@L["DescriptionLabel"] </strong></label><br />
-                            <SfTextBox CssClass="TSIMemoBox100" Multiline="true" @bind-Value="DataSource.Description_"></SfTextBox>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="UnsuitabilityTypesItemsName"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
+
+                    
 
                 </Items>
             </DxGridLayout>
