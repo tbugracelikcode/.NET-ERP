@@ -18,6 +18,7 @@ using TsiErp.Entities.Entities.StockManagement.StockFicheLine;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.StockManagement.WareHouse;
+using TsiErp.Entities.Enums;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.StockFiche;
 
@@ -54,9 +55,19 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
                 Guid addedEntityId = GuidGenerator.CreateGuid();
 
+                switch(input.FicheType)
+                {
+                    case 12:input.InputOutputCode = 1;break;
+                    case 11:input.InputOutputCode = 1;break;
+                    case 13:input.InputOutputCode = 0;break;
+                    case 50:input.InputOutputCode = 0;break;
+                    case 51:input.InputOutputCode = 1;break;
+                }
+
                 var query = queryFactory.Query().From(Tables.StockFiches).Insert(new CreateStockFichesDto
                 {
                     FicheNo = input.FicheNo,
+                    InputOutputCode = input.InputOutputCode,
                     CreationTime = DateTime.Now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
@@ -301,10 +312,20 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 }
                 #endregion
 
+                switch (input.FicheType)
+                {
+                    case 12: input.InputOutputCode = 1; break;
+                    case 11: input.InputOutputCode = 1; break;
+                    case 13: input.InputOutputCode = 0; break;
+                    case 50: input.InputOutputCode = 0; break;
+                    case 51: input.InputOutputCode = 1; break;
+                }
+
                 var query = queryFactory.Query().From(Tables.StockFiches).Update(new UpdateStockFichesDto
                 {
                     CreationTime = entity.CreationTime,
                     CreatorId = entity.CreatorId,
+                    InputOutputCode = input.InputOutputCode,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
                     DeleterId = entity.DeleterId.GetValueOrDefault(),

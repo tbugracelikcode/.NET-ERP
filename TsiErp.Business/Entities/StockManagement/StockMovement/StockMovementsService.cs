@@ -69,6 +69,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = 0,
+                            TotalWarehouseInput = 0,
+                            TotalWarehouseOutput = 0,
                             TotalProduction = 0,
                             TotalPurchaseOrder = 0,
                             TotalPurchaseRequest = line.Quantity,
@@ -91,6 +93,7 @@ namespace TsiErp.Business.Entities.StockMovement
 
                         var byDateStockMovements = queryFactory.Insert<SelectByDateStockMovementsDto>(query, "Id", true);
                     }
+
                     else
                     {
                         var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
@@ -100,6 +103,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             ProductID = line.ProductID,
                             TotalConsumption = entityByDate.TotalConsumption,
                             TotalGoodsIssue = entityByDate.TotalGoodsIssue,
+                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                             TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                             TotalProduction = entityByDate.TotalProduction,
                             TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
@@ -142,6 +147,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = 0,
+                            TotalWarehouseInput = 0,
+                            TotalWarehouseOutput = 0,
                             TotalProduction = 0,
                             TotalPurchaseOrder = 0,
                             TotalPurchaseRequest = line.Quantity,
@@ -175,6 +182,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
+                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                             TotalProduction = entityGrandTotal.TotalProduction,
                             TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
                             TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest + line.Quantity,
@@ -236,6 +245,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Amount = entityByDateDecreasing.Amount,
                                 Date_ = entityByDateDecreasing.Date_,
                                 ProductID = previousline.ProductID,
+                                TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput,
                                 TotalConsumption = entityByDateDecreasing.TotalConsumption,
                                 TotalGoodsIssue = entityByDateDecreasing.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityByDateDecreasing.TotalGoodsReceipt,
@@ -269,6 +280,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalConsumption = 0,
                                 TotalGoodsIssue = 0,
                                 TotalGoodsReceipt = 0,
+                                TotalWarehouseInput = 0,
+                                TotalWarehouseOutput = 0,
                                 TotalProduction = 0,
                                 TotalPurchaseOrder = 0,
                                 TotalPurchaseRequest = line.Quantity,
@@ -293,6 +306,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         }
 
                     }
+
                     else
                     {
                         decimal previousQuantity = previousEntity.SelectPurchaseRequestLines.Where(t => t.Id == line.Id).Select(t => t.Quantity).First();
@@ -307,6 +321,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Date_ = entityByDate.Date_,
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityByDate.TotalConsumption,
+                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                                 TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                                 TotalProduction = entityByDate.TotalProduction,
@@ -344,6 +360,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalConsumption = entityByDate.TotalConsumption,
                                 TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
+                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                                 TotalProduction = entityByDate.TotalProduction,
                                 TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
                                 TotalPurchaseRequest = entityByDate.TotalPurchaseRequest - decreasedPR,
@@ -395,6 +413,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalGoodsIssue = entityGrandTotalDecreasing.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityGrandTotalDecreasing.TotalGoodsReceipt,
                                 TotalProduction = entityGrandTotalDecreasing.TotalProduction,
+                                TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput,
                                 TotalPurchaseOrder = entityGrandTotalDecreasing.TotalPurchaseOrder,
                                 TotalPurchaseRequest = entityGrandTotalDecreasing.TotalPurchaseRequest - decreasingAmount,
                                 TotalSalesOrder = entityGrandTotalDecreasing.TotalSalesOrder,
@@ -424,6 +444,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalConsumption = 0,
                                 TotalGoodsIssue = 0,
                                 TotalGoodsReceipt = 0,
+                                TotalWarehouseOutput = 0,
+                                TotalWarehouseInput = 0,
                                 TotalProduction = 0,
                                 TotalPurchaseOrder = 0,
                                 TotalPurchaseRequest = line.Quantity,
@@ -464,6 +486,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
                                 TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
+                                TotalWarehouseInput = entityGrandTotal.TotalWarehouseOutput,
+                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                                 TotalProduction = entityGrandTotal.TotalProduction,
                                 TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
                                 TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest + addedPR,
@@ -498,6 +522,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
                                 TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
+                                TotalWarehouseInput = entityGrandTotal.TotalWarehouseOutput,
+                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                                 TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                                 TotalProduction = entityGrandTotal.TotalProduction,
                                 TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
@@ -523,7 +549,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
                         }
 
-                      
+
 
                     }
 
@@ -600,6 +626,8 @@ namespace TsiErp.Business.Entities.StockMovement
                     ProductID = entityByDate.ProductID,
                     TotalConsumption = entityByDate.TotalConsumption,
                     TotalGoodsIssue = entityByDate.TotalGoodsIssue,
+                    TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                    TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                     TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                     TotalProduction = entityByDate.TotalProduction,
                     TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
@@ -637,6 +665,8 @@ namespace TsiErp.Business.Entities.StockMovement
                     ProductID = deletedLine.ProductID,
                     TotalConsumption = entityGrandTotal.TotalConsumption,
                     TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
+                    TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                    TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                     TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                     TotalProduction = entityGrandTotal.TotalProduction,
                     TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
@@ -727,6 +757,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                             TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                             TotalProduction = entityByDate.TotalProduction,
+                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                             TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
                             TotalPurchaseRequest = entityByDate.TotalPurchaseRequest - line.Quantity,
                             TotalSalesOrder = entityByDate.TotalSalesOrder,
@@ -766,6 +798,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
+                            TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                             TotalProduction = entityGrandTotal.TotalProduction,
                             TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
                             TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest - line.Quantity,
@@ -824,6 +858,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             ProductID = line.ProductID,
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
+                            TotalWarehouseInput = 0,
+                            TotalWarehouseOutput = 0,
                             TotalGoodsReceipt = 0,
                             TotalProduction = 0,
                             TotalPurchaseOrder = line.Quantity,
@@ -856,6 +892,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             ProductID = line.ProductID,
                             TotalConsumption = entityByDate.TotalConsumption,
                             TotalGoodsIssue = entityByDate.TotalGoodsIssue,
+                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                             TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                             TotalProduction = entityByDate.TotalProduction,
                             TotalPurchaseOrder = entityByDate.TotalPurchaseOrder + line.Quantity,
@@ -897,9 +935,11 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = 0,
+                            TotalWarehouseInput = 0,
+                            TotalWarehouseOutput = 0,
                             TotalProduction = 0,
                             TotalPurchaseOrder = line.Quantity,
-                            TotalPurchaseRequest =0,
+                            TotalPurchaseRequest = 0,
                             TotalSalesOrder = 0,
                             TotalReserved = 0,
                             TotalSalesProposition = 0,
@@ -929,6 +969,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             ProductID = line.ProductID,
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
+                            TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
+                            TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                             TotalProduction = entityGrandTotal.TotalProduction,
                             TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder + line.Quantity,
@@ -992,6 +1034,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Date_ = entityByDateDecreasing.Date_,
                                 ProductID = previousline.ProductID,
                                 TotalConsumption = entityByDateDecreasing.TotalConsumption,
+                                TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput,
                                 TotalGoodsIssue = entityByDateDecreasing.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityByDateDecreasing.TotalGoodsReceipt,
                                 TotalProduction = entityByDateDecreasing.TotalProduction,
@@ -1024,6 +1068,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalConsumption = 0,
                                 TotalGoodsIssue = 0,
                                 TotalGoodsReceipt = 0,
+                                TotalWarehouseOutput = 0,
+                                TotalWarehouseInput = 0,
                                 TotalProduction = 0,
                                 TotalPurchaseOrder = line.Quantity,
                                 TotalPurchaseRequest = 0,
@@ -1063,6 +1109,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityByDate.TotalConsumption,
                                 TotalGoodsIssue = entityByDate.TotalGoodsIssue,
+                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                                 TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                                 TotalProduction = entityByDate.TotalProduction,
                                 TotalPurchaseOrder = entityByDate.TotalPurchaseOrder + addedPR,
@@ -1098,6 +1146,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityByDate.TotalConsumption,
                                 TotalGoodsIssue = entityByDate.TotalGoodsIssue,
+                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                                 TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                                 TotalProduction = entityByDate.TotalProduction,
                                 TotalPurchaseOrder = entityByDate.TotalPurchaseOrder - decreasedPR,
@@ -1149,6 +1199,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
                                 TotalGoodsIssue = entityGrandTotalDecreasing.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityGrandTotalDecreasing.TotalGoodsReceipt,
+                                TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput,
                                 TotalProduction = entityGrandTotalDecreasing.TotalProduction,
                                 TotalPurchaseOrder = entityGrandTotalDecreasing.TotalPurchaseOrder - decreasingAmount,
                                 TotalPurchaseRequest = entityGrandTotalDecreasing.TotalPurchaseRequest,
@@ -1179,6 +1231,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalConsumption = 0,
                                 TotalGoodsIssue = 0,
                                 TotalGoodsReceipt = 0,
+                                TotalWarehouseOutput = 0,
+                                TotalWarehouseInput = 0,
                                 TotalProduction = 0,
                                 TotalPurchaseOrder = line.Quantity,
                                 TotalPurchaseRequest = 0,
@@ -1219,6 +1273,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
                                 TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
+                                TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                                 TotalProduction = entityGrandTotal.TotalProduction,
                                 TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder + addedPR,
                                 TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
@@ -1255,6 +1311,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
                                 TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
+                                TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                                 TotalProduction = entityGrandTotal.TotalProduction,
                                 TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder - decreasedPR,
                                 TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
@@ -1360,6 +1418,8 @@ namespace TsiErp.Business.Entities.StockMovement
                     TotalConsumption = entityByDate.TotalConsumption,
                     TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                     TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
+                    TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                    TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                     TotalProduction = entityByDate.TotalProduction,
                     TotalPurchaseOrder = entityByDate.TotalPurchaseOrder - deletedLine.Quantity,
                     TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
@@ -1395,6 +1455,8 @@ namespace TsiErp.Business.Entities.StockMovement
                     Amount = entityGrandTotal.Amount,
                     ProductID = deletedLine.ProductID,
                     TotalConsumption = entityGrandTotal.TotalConsumption,
+                    TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                    TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                     TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                     TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                     TotalProduction = entityGrandTotal.TotalProduction,
@@ -1487,6 +1549,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalProduction = entityByDate.TotalProduction,
                             TotalPurchaseOrder = entityByDate.TotalPurchaseOrder - line.Quantity,
                             TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
+                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                             TotalSalesOrder = entityByDate.TotalSalesOrder,
                             TotalSalesProposition = entityByDate.TotalSalesProposition,
                             TotalWastage = entityByDate.TotalWastage,
@@ -1525,6 +1589,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                             TotalProduction = entityGrandTotal.TotalProduction,
+                            TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                             TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder - line.Quantity,
                             TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
                             TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
@@ -1583,6 +1649,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = 0,
+                            TotalWarehouseOutput = 0,
+                            TotalWarehouseInput = 0,
                             TotalProduction = 0,
                             TotalPurchaseOrder = 0,
                             TotalPurchaseRequest = 0,
@@ -1605,6 +1673,7 @@ namespace TsiErp.Business.Entities.StockMovement
 
                         var byDateStockMovements = queryFactory.Insert<SelectByDateStockMovementsDto>(query, "Id", true);
                     }
+
                     else
                     {
                         var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
@@ -1613,6 +1682,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             Date_ = entityByDate.Date_,
                             ProductID = line.ProductID,
                             TotalConsumption = entityByDate.TotalConsumption,
+                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                             TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                             TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                             TotalProduction = entityByDate.TotalProduction,
@@ -1657,6 +1728,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = 0,
                             TotalProduction = 0,
+                            TotalWarehouseOutput = 0,
+                            TotalWarehouseInput = 0,
                             TotalPurchaseOrder = 0,
                             TotalPurchaseRequest = 0,
                             TotalSalesOrder = 0,
@@ -1687,6 +1760,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             Amount = entityGrandTotal.Amount,
                             ProductID = line.ProductID,
                             TotalConsumption = entityGrandTotal.TotalConsumption,
+                            TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                             TotalProduction = entityGrandTotal.TotalProduction,
@@ -1751,6 +1826,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Date_ = entityByDateDecreasing.Date_,
                                 ProductID = previousline.ProductID,
                                 TotalConsumption = entityByDateDecreasing.TotalConsumption,
+                                TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput,
                                 TotalGoodsIssue = entityByDateDecreasing.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityByDateDecreasing.TotalGoodsReceipt,
                                 TotalProduction = entityByDateDecreasing.TotalProduction,
@@ -1781,6 +1858,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Date_ = currentEntity.Date_,
                                 ProductID = line.ProductID,
                                 TotalConsumption = 0,
+                                TotalWarehouseInput = 0,
+                                TotalWarehouseOutput = 0,
                                 TotalGoodsIssue = 0,
                                 TotalGoodsReceipt = 0,
                                 TotalProduction = 0,
@@ -1807,6 +1886,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         }
 
                     }
+
                     else
                     {
                         decimal previousQuantity = previousEntity.SelectSalesPropositionLines.Where(t => t.Id == line.Id).Select(t => t.Quantity).First();
@@ -1821,6 +1901,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Date_ = entityByDate.Date_,
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityByDate.TotalConsumption,
+                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                                 TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                                 TotalProduction = entityByDate.TotalProduction,
@@ -1856,6 +1938,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Date_ = entityByDate.Date_,
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityByDate.TotalConsumption,
+                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                                 TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                                 TotalProduction = entityByDate.TotalProduction,
@@ -1906,6 +1990,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Amount = entityGrandTotalDecreasing.Amount,
                                 ProductID = previousLine.ProductID,
                                 TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
+                                TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput,
                                 TotalGoodsIssue = entityGrandTotalDecreasing.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityGrandTotalDecreasing.TotalGoodsReceipt,
                                 TotalProduction = entityGrandTotalDecreasing.TotalProduction,
@@ -1936,6 +2022,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Amount = 0,
                                 ProductID = line.ProductID,
                                 TotalConsumption = 0,
+                                TotalWarehouseOutput = 0,
+                                TotalWarehouseInput = 0,
                                 TotalGoodsIssue = 0,
                                 TotalGoodsReceipt = 0,
                                 TotalProduction = 0,
@@ -1976,6 +2064,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Amount = entityGrandTotal.Amount,
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
+                                TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                                 TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                                 TotalProduction = entityGrandTotal.TotalProduction,
@@ -2012,6 +2102,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
                                 TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
+                                TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                                 TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                                 TotalProduction = entityGrandTotal.TotalProduction,
                                 TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
@@ -2119,6 +2211,8 @@ namespace TsiErp.Business.Entities.StockMovement
                     Date_ = entityByDate.Date_,
                     ProductID = entityByDate.ProductID,
                     TotalConsumption = entityByDate.TotalConsumption,
+                    TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                    TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                     TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                     TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                     TotalProduction = entityByDate.TotalProduction,
@@ -2156,6 +2250,8 @@ namespace TsiErp.Business.Entities.StockMovement
                     Amount = entityGrandTotal.Amount,
                     ProductID = deletedLine.ProductID,
                     TotalConsumption = entityGrandTotal.TotalConsumption,
+                    TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                    TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                     TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                     TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                     TotalProduction = entityGrandTotal.TotalProduction,
@@ -2243,6 +2339,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             Date_ = entityByDate.Date_,
                             ProductID = line.ProductID,
                             TotalConsumption = entityByDate.TotalConsumption,
+                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                             TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                             TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                             TotalProduction = entityByDate.TotalProduction,
@@ -2283,6 +2381,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             Amount = entityGrandTotal.Amount,
                             ProductID = line.ProductID,
                             TotalConsumption = entityGrandTotal.TotalConsumption,
+                            TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                             TotalProduction = entityGrandTotal.TotalProduction,
@@ -2343,6 +2443,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             ProductID = line.ProductID,
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
+                            TotalWarehouseOutput = 0,
+                            TotalWarehouseInput = 0,
                             TotalGoodsReceipt = 0,
                             TotalProduction = 0,
                             TotalPurchaseOrder = 0,
@@ -2374,6 +2476,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             Date_ = entityByDate.Date_,
                             ProductID = line.ProductID,
                             TotalConsumption = entityByDate.TotalConsumption,
+                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                             TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                             TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                             TotalProduction = entityByDate.TotalProduction,
@@ -2417,6 +2521,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = 0,
+                            TotalWarehouseOutput = 0,
+                            TotalWarehouseInput = 0,
                             TotalProduction = 0,
                             TotalPurchaseOrder = 0,
                             TotalPurchaseRequest = 0,
@@ -2448,6 +2554,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             Amount = entityGrandTotal.Amount,
                             ProductID = line.ProductID,
                             TotalConsumption = entityGrandTotal.TotalConsumption,
+                            TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                             TotalProduction = entityGrandTotal.TotalProduction,
@@ -2512,6 +2620,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Date_ = entityByDateDecreasing.Date_,
                                 ProductID = previousline.ProductID,
                                 TotalConsumption = entityByDateDecreasing.TotalConsumption,
+                                TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput,
                                 TotalGoodsIssue = entityByDateDecreasing.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityByDateDecreasing.TotalGoodsReceipt,
                                 TotalProduction = entityByDateDecreasing.TotalProduction,
@@ -2542,6 +2652,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Date_ = currentEntity.Date_,
                                 ProductID = line.ProductID,
                                 TotalConsumption = 0,
+                                TotalWarehouseInput = 0,
+                                TotalWarehouseOutput = 0,
                                 TotalGoodsIssue = 0,
                                 TotalGoodsReceipt = 0,
                                 TotalProduction = 0,
@@ -2568,6 +2680,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         }
 
                     }
+
                     else
                     {
                         decimal previousQuantity = previousEntity.SelectSalesOrderLines.Where(t => t.Id == line.Id).Select(t => t.Quantity).First();
@@ -2582,6 +2695,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Date_ = entityByDate.Date_,
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityByDate.TotalConsumption,
+                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                                 TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                                 TotalProduction = entityByDate.TotalProduction,
@@ -2607,6 +2722,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
 
                         }
+
                         else if (line.Quantity < previousQuantity)
                         {
                             decimal decreasedPR = previousQuantity - line.Quantity;
@@ -2617,6 +2733,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Date_ = entityByDate.Date_,
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityByDate.TotalConsumption,
+                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                                 TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                                 TotalProduction = entityByDate.TotalProduction,
@@ -2667,6 +2785,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Amount = entityGrandTotalDecreasing.Amount,
                                 ProductID = previousLine.ProductID,
                                 TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
+                                TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput,
                                 TotalGoodsIssue = entityGrandTotalDecreasing.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityGrandTotalDecreasing.TotalGoodsReceipt,
                                 TotalProduction = entityGrandTotalDecreasing.TotalProduction,
@@ -2697,6 +2817,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Amount = 0,
                                 ProductID = line.ProductID,
                                 TotalConsumption = 0,
+                                TotalWarehouseOutput = 0,
+                                TotalWarehouseInput = 0,
                                 TotalGoodsIssue = 0,
                                 TotalGoodsReceipt = 0,
                                 TotalProduction = 0,
@@ -2737,6 +2859,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Amount = entityGrandTotal.Amount,
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
+                                TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                                 TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                                 TotalProduction = entityGrandTotal.TotalProduction,
@@ -2772,6 +2896,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Amount = entityGrandTotal.Amount,
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
+                                TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                                 TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                                 TotalProduction = entityGrandTotal.TotalProduction,
@@ -2881,6 +3007,8 @@ namespace TsiErp.Business.Entities.StockMovement
                     ProductID = entityByDate.ProductID,
                     TotalConsumption = entityByDate.TotalConsumption,
                     TotalGoodsIssue = entityByDate.TotalGoodsIssue,
+                    TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                    TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                     TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                     TotalProduction = entityByDate.TotalProduction,
                     TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
@@ -2917,6 +3045,8 @@ namespace TsiErp.Business.Entities.StockMovement
                     Amount = entityGrandTotal.Amount,
                     ProductID = deletedLine.ProductID,
                     TotalConsumption = entityGrandTotal.TotalConsumption,
+                    TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                    TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                     TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                     TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                     TotalProduction = entityGrandTotal.TotalProduction,
@@ -3012,6 +3142,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             Date_ = entityByDate.Date_,
                             ProductID = line.ProductID,
                             TotalConsumption = entityByDate.TotalConsumption,
+                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                             TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                             TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                             TotalProduction = entityByDate.TotalProduction,
@@ -3052,6 +3184,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             Amount = entityGrandTotal.Amount,
                             ProductID = line.ProductID,
                             TotalConsumption = entityGrandTotal.TotalConsumption,
+                            TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                             TotalProduction = entityGrandTotal.TotalProduction,
@@ -3113,6 +3247,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalConsumption = line.Quantity,
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = 0,
+                            TotalWarehouseInput = 0,
+                            TotalWarehouseOutput = 0,
                             TotalProduction = 0,
                             TotalPurchaseOrder = 0,
                             TotalPurchaseRequest = 0,
@@ -3135,6 +3271,7 @@ namespace TsiErp.Business.Entities.StockMovement
 
                         var byDateStockMovements = queryFactory.Insert<SelectByDateStockMovementsDto>(query, "Id", true);
                     }
+
                     else
                     {
                         var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
@@ -3144,13 +3281,15 @@ namespace TsiErp.Business.Entities.StockMovement
                             ProductID = line.ProductID,
                             TotalConsumption = entityByDate.TotalConsumption + line.Quantity,
                             TotalGoodsIssue = entityByDate.TotalGoodsIssue,
+                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                             TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                             TotalProduction = entityByDate.TotalProduction,
                             TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
                             TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
                             TotalSalesOrder = entityByDate.TotalSalesOrder,
                             TotalSalesProposition = entityByDate.TotalSalesProposition,
-                            TotalWastage = entityByDate.TotalWastage ,
+                            TotalWastage = entityByDate.TotalWastage,
                             WarehouseID = entityByDate.WarehouseID,
                             BranchID = entityByDate.BranchID,
                             Id = entityByDate.Id,
@@ -3186,6 +3325,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalConsumption = line.Quantity,
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = 0,
+                            TotalWarehouseOutput = 0,
+                            TotalWarehouseInput = 0,
                             TotalProduction = 0,
                             TotalPurchaseOrder = 0,
                             TotalPurchaseRequest = 0,
@@ -3219,6 +3360,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalConsumption = entityGrandTotal.TotalConsumption + line.Quantity,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
+                            TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                             TotalProduction = entityGrandTotal.TotalProduction,
                             TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
                             TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
@@ -3282,13 +3425,15 @@ namespace TsiErp.Business.Entities.StockMovement
                                 ProductID = previousline.ProductID,
                                 TotalConsumption = entityByDateDecreasing.TotalConsumption - decreasingAmount,
                                 TotalGoodsIssue = entityByDateDecreasing.TotalGoodsIssue,
+                                TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput,
                                 TotalGoodsReceipt = entityByDateDecreasing.TotalGoodsReceipt,
                                 TotalProduction = entityByDateDecreasing.TotalProduction,
                                 TotalPurchaseOrder = entityByDateDecreasing.TotalPurchaseOrder,
                                 TotalPurchaseRequest = entityByDateDecreasing.TotalPurchaseRequest,
                                 TotalSalesOrder = entityByDateDecreasing.TotalSalesOrder,
                                 TotalSalesProposition = entityByDateDecreasing.TotalSalesProposition,
-                                TotalWastage = entityByDateDecreasing.TotalWastage ,
+                                TotalWastage = entityByDateDecreasing.TotalWastage,
                                 WarehouseID = entityByDateDecreasing.WarehouseID,
                                 BranchID = entityByDateDecreasing.BranchID,
                                 Id = entityByDateDecreasing.Id,
@@ -3316,6 +3461,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalProduction = 0,
                                 TotalPurchaseOrder = 0,
                                 TotalPurchaseRequest = 0,
+                                TotalWarehouseInput = 0,
+                                TotalWarehouseOutput = 0,
                                 TotalSalesOrder = 0,
                                 TotalSalesProposition = 0,
                                 TotalWastage = 0,
@@ -3337,6 +3484,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         }
 
                     }
+
                     else
                     {
                         decimal previousQuantity = previousEntity.SelectStockFicheLines.Where(t => t.Id == line.Id).Select(t => t.Quantity).First();
@@ -3352,13 +3500,15 @@ namespace TsiErp.Business.Entities.StockMovement
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityByDate.TotalConsumption + addedPR,
                                 TotalGoodsIssue = entityByDate.TotalGoodsIssue,
+                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                                 TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                                 TotalProduction = entityByDate.TotalProduction,
                                 TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
                                 TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
                                 TotalSalesOrder = entityByDate.TotalSalesOrder,
                                 TotalSalesProposition = entityByDate.TotalSalesProposition,
-                                TotalWastage = entityByDate.TotalWastage ,
+                                TotalWastage = entityByDate.TotalWastage,
                                 WarehouseID = entityByDate.WarehouseID,
                                 BranchID = entityByDate.BranchID,
                                 Id = entityByDate.Id,
@@ -3388,6 +3538,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalConsumption = entityByDate.TotalConsumption - decreasedPR,
                                 TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
+                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                                 TotalProduction = entityByDate.TotalProduction,
                                 TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
                                 TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
@@ -3438,13 +3590,15 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalConsumption = entityGrandTotalDecreasing.TotalConsumption - decreasingAmount,
                                 TotalGoodsIssue = entityGrandTotalDecreasing.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityGrandTotalDecreasing.TotalGoodsReceipt,
+                                TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput,
                                 TotalProduction = entityGrandTotalDecreasing.TotalProduction,
                                 TotalPurchaseOrder = entityGrandTotalDecreasing.TotalPurchaseOrder,
                                 TotalPurchaseRequest = entityGrandTotalDecreasing.TotalPurchaseRequest,
                                 TotalSalesOrder = entityGrandTotalDecreasing.TotalSalesOrder,
                                 TotalReserved = entityGrandTotalDecreasing.TotalReserved,
                                 TotalSalesProposition = entityGrandTotalDecreasing.TotalSalesProposition,
-                                TotalWastage = entityGrandTotalDecreasing.TotalWastage ,
+                                TotalWastage = entityGrandTotalDecreasing.TotalWastage,
                                 WarehouseID = previousEntity.WarehouseID,
                                 Id = entityGrandTotalDecreasing.Id,
                                 CreationTime = entityGrandTotalDecreasing.CreationTime.Value,
@@ -3469,6 +3623,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalGoodsIssue = 0,
                                 TotalGoodsReceipt = 0,
                                 TotalProduction = 0,
+                                TotalWarehouseOutput = 0,
+                                TotalWarehouseInput = 0,
                                 TotalPurchaseOrder = 0,
                                 TotalPurchaseRequest = 0,
                                 TotalSalesOrder = 0,
@@ -3507,6 +3663,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityGrandTotal.TotalConsumption + addedPR,
                                 TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
+                                TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                                 TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                                 TotalProduction = entityGrandTotal.TotalProduction,
                                 TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
@@ -3514,7 +3672,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
                                 TotalReserved = entityGrandTotal.TotalReserved,
                                 TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
-                                TotalWastage = entityGrandTotal.TotalWastage ,
+                                TotalWastage = entityGrandTotal.TotalWastage,
                                 WarehouseID = entityGrandTotal.WarehouseID,
                                 Id = entityGrandTotal.Id,
                                 CreationTime = entityGrandTotal.CreationTime.Value,
@@ -3542,6 +3700,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityGrandTotal.TotalConsumption - decreasedPR,
                                 TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
+                                TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                                 TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                                 TotalProduction = entityGrandTotal.TotalProduction,
                                 TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
@@ -3549,7 +3709,7 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
                                 TotalReserved = entityGrandTotal.TotalReserved,
                                 TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
-                                TotalWastage = entityGrandTotal.TotalWastage ,
+                                TotalWastage = entityGrandTotal.TotalWastage,
                                 WarehouseID = entityGrandTotal.WarehouseID,
                                 Id = entityGrandTotal.Id,
                                 CreationTime = entityGrandTotal.CreationTime.Value,
@@ -3623,12 +3783,14 @@ namespace TsiErp.Business.Entities.StockMovement
                     TotalConsumption = entityByDate.TotalConsumption - deletedLine.Quantity,
                     TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                     TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
+                    TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                    TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                     TotalProduction = entityByDate.TotalProduction,
                     TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
                     TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
                     TotalSalesOrder = entityByDate.TotalSalesOrder,
                     TotalSalesProposition = entityByDate.TotalSalesProposition,
-                    TotalWastage = entityByDate.TotalWastage ,
+                    TotalWastage = entityByDate.TotalWastage,
                     WarehouseID = entityByDate.WarehouseID,
                     BranchID = entityByDate.BranchID,
                     Id = entityByDate.Id,
@@ -3662,11 +3824,13 @@ namespace TsiErp.Business.Entities.StockMovement
                     TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                     TotalProduction = entityGrandTotal.TotalProduction,
                     TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
+                    TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                    TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                     TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
                     TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
                     TotalReserved = entityGrandTotal.TotalReserved,
                     TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
-                    TotalWastage = entityGrandTotal.TotalWastage ,
+                    TotalWastage = entityGrandTotal.TotalWastage,
                     WarehouseID = entityGrandTotal.WarehouseID,
                     Id = entityGrandTotal.Id,
                     CreationTime = entityGrandTotal.CreationTime.Value,
@@ -3743,10 +3907,12 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                             TotalProduction = entityByDate.TotalProduction,
                             TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
+                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                             TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
                             TotalSalesOrder = entityByDate.TotalSalesOrder,
                             TotalSalesProposition = entityByDate.TotalSalesProposition,
-                            TotalWastage = entityByDate.TotalWastage ,
+                            TotalWastage = entityByDate.TotalWastage,
                             WarehouseID = entityByDate.WarehouseID,
                             BranchID = entityByDate.BranchID,
                             Id = entityByDate.Id,
@@ -3782,12 +3948,14 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                             TotalProduction = entityGrandTotal.TotalProduction,
+                            TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                             TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
                             TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
                             TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
                             TotalReserved = entityGrandTotal.TotalReserved,
                             TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
-                            TotalWastage = entityGrandTotal.TotalWastage ,
+                            TotalWastage = entityGrandTotal.TotalWastage,
                             WarehouseID = entityGrandTotal.WarehouseID,
                             Id = entityGrandTotal.Id,
                             CreationTime = entityGrandTotal.CreationTime.Value,
@@ -3840,6 +4008,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = 0,
+                            TotalWarehouseOutput = 0,
+                            TotalWarehouseInput = 0,
                             TotalProduction = 0,
                             TotalPurchaseOrder = 0,
                             TotalPurchaseRequest = 0,
@@ -3862,6 +4032,7 @@ namespace TsiErp.Business.Entities.StockMovement
 
                         var byDateStockMovements = queryFactory.Insert<SelectByDateStockMovementsDto>(query, "Id", true);
                     }
+
                     else
                     {
                         var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
@@ -3870,6 +4041,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             Date_ = entityByDate.Date_,
                             ProductID = line.ProductID,
                             TotalConsumption = entityByDate.TotalConsumption,
+                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                             TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                             TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                             TotalProduction = entityByDate.TotalProduction,
@@ -3913,6 +4086,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = 0,
+                            TotalWarehouseOutput = 0,
+                            TotalWarehouseInput = 0,
                             TotalProduction = 0,
                             TotalPurchaseOrder = 0,
                             TotalPurchaseRequest = 0,
@@ -3944,6 +4119,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             Amount = entityGrandTotal.Amount - line.Quantity,
                             ProductID = line.ProductID,
                             TotalConsumption = entityGrandTotal.TotalConsumption,
+                            TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                             TotalProduction = entityGrandTotal.TotalProduction,
@@ -4008,6 +4185,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Date_ = entityByDateDecreasing.Date_,
                                 ProductID = previousline.ProductID,
                                 TotalConsumption = entityByDateDecreasing.TotalConsumption,
+                                TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput,
                                 TotalGoodsIssue = entityByDateDecreasing.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityByDateDecreasing.TotalGoodsReceipt,
                                 TotalProduction = entityByDateDecreasing.TotalProduction,
@@ -4040,6 +4219,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalConsumption = 0,
                                 TotalGoodsIssue = 0,
                                 TotalGoodsReceipt = 0,
+                                TotalWarehouseInput = 0,
+                                TotalWarehouseOutput = 0,
                                 TotalProduction = 0,
                                 TotalPurchaseOrder = 0,
                                 TotalPurchaseRequest = 0,
@@ -4064,6 +4245,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         }
 
                     }
+
                     else
                     {
                         decimal previousQuantity = previousEntity.SelectStockFicheLines.Where(t => t.Id == line.Id).Select(t => t.Quantity).First();
@@ -4074,10 +4256,12 @@ namespace TsiErp.Business.Entities.StockMovement
 
                             var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
                             {
-                                Amount = entityByDate.Amount -addedPR,
+                                Amount = entityByDate.Amount - addedPR,
                                 Date_ = entityByDate.Date_,
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityByDate.TotalConsumption,
+                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                                 TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                                 TotalProduction = entityByDate.TotalProduction,
@@ -4113,6 +4297,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Date_ = entityByDate.Date_,
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityByDate.TotalConsumption,
+                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                                 TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                                 TotalProduction = entityByDate.TotalProduction,
@@ -4163,6 +4349,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Amount = entityGrandTotalDecreasing.Amount + decreasingAmount,
                                 ProductID = previousLine.ProductID,
                                 TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
+                                TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput,
                                 TotalGoodsIssue = entityGrandTotalDecreasing.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityGrandTotalDecreasing.TotalGoodsReceipt,
                                 TotalProduction = entityGrandTotalDecreasing.TotalProduction,
@@ -4194,6 +4382,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 ProductID = line.ProductID,
                                 TotalConsumption = 0,
                                 TotalGoodsIssue = 0,
+                                TotalWarehouseOutput = 0,
+                                TotalWarehouseInput = 0,
                                 TotalGoodsReceipt = 0,
                                 TotalProduction = 0,
                                 TotalPurchaseOrder = 0,
@@ -4233,11 +4423,13 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Amount = entityGrandTotal.Amount - addedPR,
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
+                                TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                                 TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                                 TotalProduction = entityGrandTotal.TotalProduction,
                                 TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
-                                TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest ,
+                                TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
                                 TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
                                 TotalReserved = entityGrandTotal.TotalReserved,
                                 TotalSalesProposition = entityGrandTotal.TotalSalesProposition,
@@ -4268,6 +4460,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Amount = entityGrandTotal.Amount + decreasedPR,
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
+                                TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                                 TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                                 TotalProduction = entityGrandTotal.TotalProduction,
@@ -4348,6 +4542,8 @@ namespace TsiErp.Business.Entities.StockMovement
                     Date_ = entityByDate.Date_,
                     ProductID = entityByDate.ProductID,
                     TotalConsumption = entityByDate.TotalConsumption,
+                    TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                    TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                     TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                     TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                     TotalProduction = entityByDate.TotalProduction,
@@ -4385,6 +4581,8 @@ namespace TsiErp.Business.Entities.StockMovement
                     Amount = entityGrandTotal.Amount + deletedLine.Quantity,
                     ProductID = deletedLine.ProductID,
                     TotalConsumption = entityGrandTotal.TotalConsumption,
+                    TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                    TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                     TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                     TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                     TotalProduction = entityGrandTotal.TotalProduction,
@@ -4466,6 +4664,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             Date_ = entityByDate.Date_,
                             ProductID = line.ProductID,
                             TotalConsumption = entityByDate.TotalConsumption,
+                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                             TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                             TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                             TotalProduction = entityByDate.TotalProduction,
@@ -4506,6 +4706,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             Amount = entityGrandTotal.Amount + line.Quantity,
                             ProductID = line.ProductID,
                             TotalConsumption = entityGrandTotal.TotalConsumption,
+                            TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                             TotalProduction = entityGrandTotal.TotalProduction,
@@ -4566,6 +4768,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             ProductID = line.ProductID,
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
+                            TotalWarehouseOutput = 0,
+                            TotalWarehouseInput = 0,
                             TotalGoodsReceipt = 0,
                             TotalProduction = line.Quantity,
                             TotalPurchaseOrder = 0,
@@ -4589,6 +4793,7 @@ namespace TsiErp.Business.Entities.StockMovement
 
                         var byDateStockMovements = queryFactory.Insert<SelectByDateStockMovementsDto>(query, "Id", true);
                     }
+
                     else
                     {
                         var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
@@ -4596,7 +4801,9 @@ namespace TsiErp.Business.Entities.StockMovement
                             Amount = entityByDate.Amount + line.Quantity,
                             Date_ = entityByDate.Date_,
                             ProductID = line.ProductID,
-                            TotalConsumption = entityByDate.TotalConsumption ,
+                            TotalConsumption = entityByDate.TotalConsumption,
+                            TotalWarehouseInput = entityByDate.TotalConsumption,
+                            TotalWarehouseOutput = entityByDate.TotalConsumption,
                             TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                             TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                             TotalProduction = entityByDate.TotalProduction + line.Quantity,
@@ -4635,9 +4842,11 @@ namespace TsiErp.Business.Entities.StockMovement
                     {
                         var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                         {
-                            Amount = line.Quantity ,
+                            Amount = line.Quantity,
                             ProductID = line.ProductID,
                             TotalConsumption = 0,
+                            TotalWarehouseOutput = 0,
+                            TotalWarehouseInput = 0,
                             TotalGoodsIssue = 0,
                             TotalGoodsReceipt = 0,
                             TotalProduction = line.Quantity,
@@ -4670,7 +4879,9 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = entityGrandTotal.Amount + line.Quantity,
                             ProductID = line.ProductID,
-                            TotalConsumption = entityGrandTotal.TotalConsumption ,
+                            TotalConsumption = entityGrandTotal.TotalConsumption,
+                            TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                             TotalProduction = entityGrandTotal.TotalProduction + line.Quantity,
@@ -4734,7 +4945,9 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Amount = entityByDateDecreasing.Amount - decreasingAmount,
                                 Date_ = entityByDateDecreasing.Date_,
                                 ProductID = previousline.ProductID,
-                                TotalConsumption = entityByDateDecreasing.TotalConsumption ,
+                                TotalConsumption = entityByDateDecreasing.TotalConsumption,
+                                TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput,
                                 TotalGoodsIssue = entityByDateDecreasing.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityByDateDecreasing.TotalGoodsReceipt,
                                 TotalProduction = entityByDateDecreasing.TotalProduction - decreasingAmount,
@@ -4761,11 +4974,13 @@ namespace TsiErp.Business.Entities.StockMovement
 
                             var query = queryFactory.Query().From(Tables.ByDateStockMovements).Insert(new CreateByDateStockMovementsDto
                             {
-                                Amount = line.Quantity ,
+                                Amount = line.Quantity,
                                 Date_ = currentEntity.Date_,
                                 ProductID = line.ProductID,
                                 TotalConsumption = 0,
                                 TotalGoodsIssue = 0,
+                                TotalWarehouseInput = 0,
+                                TotalWarehouseOutput = 0,
                                 TotalGoodsReceipt = 0,
                                 TotalProduction = line.Quantity,
                                 TotalPurchaseOrder = 0,
@@ -4791,6 +5006,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         }
 
                     }
+
                     else
                     {
                         decimal previousQuantity = previousEntity.SelectStockFicheLines.Where(t => t.Id == line.Id).Select(t => t.Quantity).First();
@@ -4804,7 +5020,9 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Amount = entityByDate.Amount + addedPR,
                                 Date_ = entityByDate.Date_,
                                 ProductID = line.ProductID,
-                                TotalConsumption = entityByDate.TotalConsumption ,
+                                TotalConsumption = entityByDate.TotalConsumption,
+                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                                 TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                                 TotalProduction = entityByDate.TotalProduction + addedPR,
@@ -4830,6 +5048,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
 
                         }
+
                         else if (line.Quantity < previousQuantity)
                         {
                             decimal decreasedPR = previousQuantity - line.Quantity;
@@ -4839,7 +5058,9 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Amount = entityByDate.Amount - decreasedPR,
                                 Date_ = entityByDate.Date_,
                                 ProductID = line.ProductID,
-                                TotalConsumption = entityByDate.TotalConsumption ,
+                                TotalConsumption = entityByDate.TotalConsumption,
+                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                                 TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                                 TotalProduction = entityByDate.TotalProduction - decreasedPR,
@@ -4890,6 +5111,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Amount = entityGrandTotalDecreasing.Amount - decreasingAmount,
                                 ProductID = previousLine.ProductID,
                                 TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
+                                TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput,
                                 TotalGoodsIssue = entityGrandTotalDecreasing.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityGrandTotalDecreasing.TotalGoodsReceipt,
                                 TotalProduction = entityGrandTotalDecreasing.TotalProduction - decreasingAmount,
@@ -4917,9 +5140,11 @@ namespace TsiErp.Business.Entities.StockMovement
 
                             var query = queryFactory.Query().From(Tables.GrandTotalStockMovements).Insert(new CreateGrandTotalStockMovementsDto
                             {
-                                Amount = line.Quantity ,
+                                Amount = line.Quantity,
                                 ProductID = line.ProductID,
                                 TotalConsumption = 0,
+                                TotalWarehouseOutput = 0,
+                                TotalWarehouseInput = 0,
                                 TotalGoodsIssue = 0,
                                 TotalGoodsReceipt = 0,
                                 TotalProduction = line.Quantity,
@@ -4959,7 +5184,9 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = entityGrandTotal.Amount + addedPR,
                                 ProductID = line.ProductID,
-                                TotalConsumption = entityGrandTotal.TotalConsumption ,
+                                TotalConsumption = entityGrandTotal.TotalConsumption,
+                                TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                                 TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                                 TotalProduction = entityGrandTotal.TotalProduction + addedPR,
@@ -4986,6 +5213,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
 
                         }
+
                         else if (line.Quantity < previousQuantity)
                         {
                             decimal decreasedPR = previousQuantity - line.Quantity;
@@ -4994,7 +5222,9 @@ namespace TsiErp.Business.Entities.StockMovement
                             {
                                 Amount = entityGrandTotal.Amount - decreasedPR,
                                 ProductID = line.ProductID,
-                                TotalConsumption = entityGrandTotal.TotalConsumption ,
+                                TotalConsumption = entityGrandTotal.TotalConsumption,
+                                TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                                 TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                                 TotalProduction = entityGrandTotal.TotalProduction - decreasedPR,
@@ -5075,6 +5305,8 @@ namespace TsiErp.Business.Entities.StockMovement
                     Date_ = entityByDate.Date_,
                     ProductID = entityByDate.ProductID,
                     TotalConsumption = entityByDate.TotalConsumption,
+                    TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                    TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                     TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                     TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                     TotalProduction = entityByDate.TotalProduction - deletedLine.Quantity,
@@ -5111,7 +5343,9 @@ namespace TsiErp.Business.Entities.StockMovement
                 {
                     Amount = entityGrandTotal.Amount - deletedLine.Quantity,
                     ProductID = deletedLine.ProductID,
-                    TotalConsumption = entityGrandTotal.TotalConsumption ,
+                    TotalConsumption = entityGrandTotal.TotalConsumption,
+                    TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                    TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                     TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                     TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                     TotalProduction = entityGrandTotal.TotalProduction - deletedLine.Quantity,
@@ -5193,6 +5427,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             Date_ = entityByDate.Date_,
                             ProductID = line.ProductID,
                             TotalConsumption = entityByDate.TotalConsumption,
+                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                             TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                             TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                             TotalProduction = entityByDate.TotalProduction - line.Quantity,
@@ -5232,7 +5468,9 @@ namespace TsiErp.Business.Entities.StockMovement
                         {
                             Amount = entityGrandTotal.Amount - line.Quantity,
                             ProductID = line.ProductID,
-                            TotalConsumption = entityGrandTotal.TotalConsumption ,
+                            TotalConsumption = entityGrandTotal.TotalConsumption,
+                            TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                             TotalProduction = entityGrandTotal.TotalProduction - line.Quantity,
@@ -5293,6 +5531,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             ProductID = line.ProductID,
                             TotalConsumption = 0,
                             TotalGoodsIssue = 0,
+                            TotalWarehouseOutput = 0,
+                            TotalWarehouseInput = 0,
                             TotalGoodsReceipt = line.Quantity,
                             TotalProduction = 0,
                             TotalPurchaseOrder = 0,
@@ -5316,6 +5556,7 @@ namespace TsiErp.Business.Entities.StockMovement
 
                         var byDateStockMovements = queryFactory.Insert<SelectByDateStockMovementsDto>(query, "Id", true);
                     }
+
                     else
                     {
                         var query = queryFactory.Query().From(Tables.ByDateStockMovements).Update(new UpdateByDateStockMovementsDto
@@ -5324,9 +5565,11 @@ namespace TsiErp.Business.Entities.StockMovement
                             Date_ = entityByDate.Date_,
                             ProductID = line.ProductID,
                             TotalConsumption = entityByDate.TotalConsumption,
+                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
                             TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                             TotalGoodsReceipt = entityByDate.TotalGoodsReceipt + line.Quantity,
-                            TotalProduction = entityByDate.TotalProduction ,
+                            TotalProduction = entityByDate.TotalProduction,
                             TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
                             TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
                             TotalSalesOrder = entityByDate.TotalSalesOrder,
@@ -5370,6 +5613,8 @@ namespace TsiErp.Business.Entities.StockMovement
                             TotalProduction = 0,
                             TotalPurchaseOrder = 0,
                             TotalPurchaseRequest = 0,
+                            TotalWarehouseOutput = 0,
+                            TotalWarehouseInput = 0,
                             TotalSalesOrder = 0,
                             TotalReserved = 0,
                             TotalSalesProposition = 0,
@@ -5398,9 +5643,11 @@ namespace TsiErp.Business.Entities.StockMovement
                             Amount = entityGrandTotal.Amount + line.Quantity,
                             ProductID = line.ProductID,
                             TotalConsumption = entityGrandTotal.TotalConsumption,
+                            TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt + line.Quantity,
-                            TotalProduction = entityGrandTotal.TotalProduction ,
+                            TotalProduction = entityGrandTotal.TotalProduction,
                             TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
                             TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
                             TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
@@ -5462,9 +5709,11 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Date_ = entityByDateDecreasing.Date_,
                                 ProductID = previousline.ProductID,
                                 TotalConsumption = entityByDateDecreasing.TotalConsumption,
+                                TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput,
                                 TotalGoodsIssue = entityByDateDecreasing.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityByDateDecreasing.TotalGoodsReceipt - decreasingAmount,
-                                TotalProduction = entityByDateDecreasing.TotalProduction ,
+                                TotalProduction = entityByDateDecreasing.TotalProduction,
                                 TotalPurchaseOrder = entityByDateDecreasing.TotalPurchaseOrder,
                                 TotalPurchaseRequest = entityByDateDecreasing.TotalPurchaseRequest,
                                 TotalSalesOrder = entityByDateDecreasing.TotalSalesOrder,
@@ -5496,6 +5745,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalGoodsReceipt = line.Quantity,
                                 TotalProduction = 0,
                                 TotalPurchaseOrder = 0,
+                                TotalWarehouseInput = 0,
+                                TotalWarehouseOutput = 0,
                                 TotalPurchaseRequest = 0,
                                 TotalSalesOrder = 0,
                                 TotalSalesProposition = 0,
@@ -5518,6 +5769,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         }
 
                     }
+
                     else
                     {
                         decimal previousQuantity = previousEntity.SelectStockFicheLines.Where(t => t.Id == line.Id).Select(t => t.Quantity).First();
@@ -5532,9 +5784,11 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Date_ = entityByDate.Date_,
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityByDate.TotalConsumption,
+                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                                 TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityByDate.TotalGoodsReceipt + addedPR,
-                                TotalProduction = entityByDate.TotalProduction ,
+                                TotalProduction = entityByDate.TotalProduction,
                                 TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
                                 TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
                                 TotalSalesOrder = entityByDate.TotalSalesOrder,
@@ -5557,6 +5811,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
 
                         }
+
                         else if (line.Quantity < previousQuantity)
                         {
                             decimal decreasedPR = previousQuantity - line.Quantity;
@@ -5567,9 +5822,11 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Date_ = entityByDate.Date_,
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityByDate.TotalConsumption,
+                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                                 TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityByDate.TotalGoodsReceipt - decreasedPR,
-                                TotalProduction = entityByDate.TotalProduction ,
+                                TotalProduction = entityByDate.TotalProduction,
                                 TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
                                 TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
                                 TotalSalesOrder = entityByDate.TotalSalesOrder,
@@ -5617,9 +5874,11 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Amount = entityGrandTotalDecreasing.Amount - decreasingAmount,
                                 ProductID = previousLine.ProductID,
                                 TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
+                                TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput,
                                 TotalGoodsIssue = entityGrandTotalDecreasing.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityGrandTotalDecreasing.TotalGoodsReceipt - decreasingAmount,
-                                TotalProduction = entityGrandTotalDecreasing.TotalProduction ,
+                                TotalProduction = entityGrandTotalDecreasing.TotalProduction,
                                 TotalPurchaseOrder = entityGrandTotalDecreasing.TotalPurchaseOrder,
                                 TotalPurchaseRequest = entityGrandTotalDecreasing.TotalPurchaseRequest,
                                 TotalSalesOrder = entityGrandTotalDecreasing.TotalSalesOrder,
@@ -5647,6 +5906,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Amount = line.Quantity,
                                 ProductID = line.ProductID,
                                 TotalConsumption = 0,
+                                TotalWarehouseOutput = 0,
+                                TotalWarehouseInput = 0,
                                 TotalGoodsIssue = 0,
                                 TotalGoodsReceipt = line.Quantity,
                                 TotalProduction = 0,
@@ -5687,9 +5948,11 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Amount = entityGrandTotal.Amount + addedPR,
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
+                                TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                                 TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt + addedPR,
-                                TotalProduction = entityGrandTotal.TotalProduction ,
+                                TotalProduction = entityGrandTotal.TotalProduction,
                                 TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
                                 TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
                                 TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
@@ -5713,6 +5976,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
 
                         }
+
                         else if (line.Quantity < previousQuantity)
                         {
                             decimal decreasedPR = previousQuantity - line.Quantity;
@@ -5722,6 +5986,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Amount = entityGrandTotal.Amount - decreasedPR,
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
+                                TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                                 TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                                 TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt - decreasedPR,
                                 TotalProduction = entityGrandTotal.TotalProduction,
@@ -5747,8 +6013,6 @@ namespace TsiErp.Business.Entities.StockMovement
 
                             var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
                         }
-
-
 
                     }
 
@@ -5802,9 +6066,11 @@ namespace TsiErp.Business.Entities.StockMovement
                     Date_ = entityByDate.Date_,
                     ProductID = entityByDate.ProductID,
                     TotalConsumption = entityByDate.TotalConsumption,
+                    TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                    TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                     TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                     TotalGoodsReceipt = entityByDate.TotalGoodsReceipt - deletedLine.Quantity,
-                    TotalProduction = entityByDate.TotalProduction ,
+                    TotalProduction = entityByDate.TotalProduction,
                     TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
                     TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
                     TotalSalesOrder = entityByDate.TotalSalesOrder,
@@ -5839,6 +6105,8 @@ namespace TsiErp.Business.Entities.StockMovement
                     Amount = entityGrandTotal.Amount - deletedLine.Quantity,
                     ProductID = deletedLine.ProductID,
                     TotalConsumption = entityGrandTotal.TotalConsumption,
+                    TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                    TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                     TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                     TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt - deletedLine.Quantity,
                     TotalProduction = entityGrandTotal.TotalProduction,
@@ -5920,9 +6188,11 @@ namespace TsiErp.Business.Entities.StockMovement
                             Date_ = entityByDate.Date_,
                             ProductID = line.ProductID,
                             TotalConsumption = entityByDate.TotalConsumption,
+                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                             TotalGoodsIssue = entityByDate.TotalGoodsIssue,
                             TotalGoodsReceipt = entityByDate.TotalGoodsReceipt - line.Quantity,
-                            TotalProduction = entityByDate.TotalProduction ,
+                            TotalProduction = entityByDate.TotalProduction,
                             TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
                             TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
                             TotalSalesOrder = entityByDate.TotalSalesOrder,
@@ -5960,9 +6230,11 @@ namespace TsiErp.Business.Entities.StockMovement
                             Amount = entityGrandTotal.Amount - line.Quantity,
                             ProductID = line.ProductID,
                             TotalConsumption = entityGrandTotal.TotalConsumption,
+                            TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue,
                             TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt - line.Quantity,
-                            TotalProduction = entityGrandTotal.TotalProduction ,
+                            TotalProduction = entityGrandTotal.TotalProduction,
                             TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
                             TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
                             TotalSalesOrder = entityGrandTotal.TotalSalesOrder,
@@ -6052,7 +6324,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             ProductID = line.ProductID,
                             TotalConsumption = entityByDate.TotalConsumption,
                             TotalGoodsIssue = entityByDate.TotalGoodsIssue + line.Quantity,
-                            TotalGoodsReceipt = entityByDate.TotalGoodsReceipt ,
+                            TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                             TotalProduction = entityByDate.TotalProduction,
                             TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
                             TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
@@ -6126,7 +6398,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             ProductID = line.ProductID,
                             TotalConsumption = entityGrandTotal.TotalConsumption,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue + line.Quantity,
-                            TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt ,
+                            TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                             TotalProduction = entityGrandTotal.TotalProduction,
                             TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
                             TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
@@ -6189,8 +6461,10 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Date_ = entityByDateDecreasing.Date_,
                                 ProductID = previousline.ProductID,
                                 TotalConsumption = entityByDateDecreasing.TotalConsumption,
+                                TotalWarehouseOutput = entityByDateDecreasing.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDateDecreasing.TotalWarehouseInput,
                                 TotalGoodsIssue = entityByDateDecreasing.TotalGoodsIssue - decreasingAmount,
-                                TotalGoodsReceipt = entityByDateDecreasing.TotalGoodsReceipt ,
+                                TotalGoodsReceipt = entityByDateDecreasing.TotalGoodsReceipt,
                                 TotalProduction = entityByDateDecreasing.TotalProduction,
                                 TotalPurchaseOrder = entityByDateDecreasing.TotalPurchaseOrder,
                                 TotalPurchaseRequest = entityByDateDecreasing.TotalPurchaseRequest,
@@ -6223,6 +6497,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalGoodsReceipt = 0,
                                 TotalProduction = 0,
                                 TotalPurchaseOrder = 0,
+                                TotalWarehouseInput = 0,
+                                TotalWarehouseOutput = 0,
                                 TotalPurchaseRequest = 0,
                                 TotalSalesOrder = 0,
                                 TotalSalesProposition = 0,
@@ -6245,6 +6521,7 @@ namespace TsiErp.Business.Entities.StockMovement
                         }
 
                     }
+
                     else
                     {
                         decimal previousQuantity = previousEntity.SelectStockFicheLines.Where(t => t.Id == line.Id).Select(t => t.Quantity).First();
@@ -6259,8 +6536,10 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Date_ = entityByDate.Date_,
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityByDate.TotalConsumption,
+                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                                 TotalGoodsIssue = entityByDate.TotalGoodsIssue + addedPR,
-                                TotalGoodsReceipt = entityByDate.TotalGoodsReceipt ,
+                                TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                                 TotalProduction = entityByDate.TotalProduction,
                                 TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
                                 TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
@@ -6284,6 +6563,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var byDateStockMovements = queryFactory.Update<SelectByDateStockMovementsDto>(query, "Id", true);
 
                         }
+
                         else if (line.Quantity < previousQuantity)
                         {
                             decimal decreasedPR = previousQuantity - line.Quantity;
@@ -6294,8 +6574,10 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Date_ = entityByDate.Date_,
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityByDate.TotalConsumption,
+                                TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                                TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                                 TotalGoodsIssue = entityByDate.TotalGoodsIssue - decreasedPR,
-                                TotalGoodsReceipt = entityByDate.TotalGoodsReceipt ,
+                                TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                                 TotalProduction = entityByDate.TotalProduction,
                                 TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
                                 TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
@@ -6344,8 +6626,10 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Amount = entityGrandTotalDecreasing.Amount + decreasingAmount,
                                 ProductID = previousLine.ProductID,
                                 TotalConsumption = entityGrandTotalDecreasing.TotalConsumption,
+                                TotalWarehouseInput = entityGrandTotalDecreasing.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotalDecreasing.TotalWarehouseOutput,
                                 TotalGoodsIssue = entityGrandTotalDecreasing.TotalGoodsIssue - decreasingAmount,
-                                TotalGoodsReceipt = entityGrandTotalDecreasing.TotalGoodsReceipt ,
+                                TotalGoodsReceipt = entityGrandTotalDecreasing.TotalGoodsReceipt,
                                 TotalProduction = entityGrandTotalDecreasing.TotalProduction,
                                 TotalPurchaseOrder = entityGrandTotalDecreasing.TotalPurchaseOrder,
                                 TotalPurchaseRequest = entityGrandTotalDecreasing.TotalPurchaseRequest,
@@ -6376,6 +6660,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 TotalConsumption = 0,
                                 TotalGoodsIssue = line.Quantity,
                                 TotalGoodsReceipt = 0,
+                                TotalWarehouseOutput = 0,
+                                TotalWarehouseInput = 0,
                                 TotalProduction = 0,
                                 TotalPurchaseOrder = 0,
                                 TotalPurchaseRequest = 0,
@@ -6414,8 +6700,10 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Amount = entityGrandTotal.Amount - addedPR,
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
+                                TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                                 TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue + addedPR,
-                                TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt ,
+                                TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                                 TotalProduction = entityGrandTotal.TotalProduction,
                                 TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
                                 TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
@@ -6440,6 +6728,7 @@ namespace TsiErp.Business.Entities.StockMovement
                             var grandTotalStockMovements = queryFactory.Update<SelectGrandTotalStockMovementsDto>(query, "Id", true);
 
                         }
+
                         else if (line.Quantity < previousQuantity)
                         {
                             decimal decreasedPR = previousQuantity - line.Quantity;
@@ -6449,6 +6738,8 @@ namespace TsiErp.Business.Entities.StockMovement
                                 Amount = entityGrandTotal.Amount + decreasedPR,
                                 ProductID = line.ProductID,
                                 TotalConsumption = entityGrandTotal.TotalConsumption,
+                                TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                                TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                                 TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue - decreasedPR,
                                 TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                                 TotalProduction = entityGrandTotal.TotalProduction,
@@ -6529,8 +6820,10 @@ namespace TsiErp.Business.Entities.StockMovement
                     Date_ = entityByDate.Date_,
                     ProductID = entityByDate.ProductID,
                     TotalConsumption = entityByDate.TotalConsumption,
+                    TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                    TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                     TotalGoodsIssue = entityByDate.TotalGoodsIssue - deletedLine.Quantity,
-                    TotalGoodsReceipt = entityByDate.TotalGoodsReceipt ,
+                    TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                     TotalProduction = entityByDate.TotalProduction,
                     TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
                     TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
@@ -6566,8 +6859,10 @@ namespace TsiErp.Business.Entities.StockMovement
                     Amount = entityGrandTotal.Amount + deletedLine.Quantity,
                     ProductID = deletedLine.ProductID,
                     TotalConsumption = entityGrandTotal.TotalConsumption,
+                    TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                    TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                     TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue - deletedLine.Quantity,
-                    TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt ,
+                    TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                     TotalProduction = entityGrandTotal.TotalProduction,
                     TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
                     TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
@@ -6647,8 +6942,10 @@ namespace TsiErp.Business.Entities.StockMovement
                             Date_ = entityByDate.Date_,
                             ProductID = line.ProductID,
                             TotalConsumption = entityByDate.TotalConsumption,
+                            TotalWarehouseOutput = entityByDate.TotalWarehouseOutput,
+                            TotalWarehouseInput = entityByDate.TotalWarehouseInput,
                             TotalGoodsIssue = entityByDate.TotalGoodsIssue - line.Quantity,
-                            TotalGoodsReceipt = entityByDate.TotalGoodsReceipt ,
+                            TotalGoodsReceipt = entityByDate.TotalGoodsReceipt,
                             TotalProduction = entityByDate.TotalProduction,
                             TotalPurchaseOrder = entityByDate.TotalPurchaseOrder,
                             TotalPurchaseRequest = entityByDate.TotalPurchaseRequest,
@@ -6687,8 +6984,10 @@ namespace TsiErp.Business.Entities.StockMovement
                             Amount = entityGrandTotal.Amount + line.Quantity,
                             ProductID = line.ProductID,
                             TotalConsumption = entityGrandTotal.TotalConsumption,
+                            TotalWarehouseInput = entityGrandTotal.TotalWarehouseInput,
+                            TotalWarehouseOutput = entityGrandTotal.TotalWarehouseOutput,
                             TotalGoodsIssue = entityGrandTotal.TotalGoodsIssue - line.Quantity,
-                            TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt ,
+                            TotalGoodsReceipt = entityGrandTotal.TotalGoodsReceipt,
                             TotalProduction = entityGrandTotal.TotalProduction,
                             TotalPurchaseOrder = entityGrandTotal.TotalPurchaseOrder,
                             TotalPurchaseRequest = entityGrandTotal.TotalPurchaseRequest,
@@ -6725,7 +7024,7 @@ namespace TsiErp.Business.Entities.StockMovement
 
         #region Warehouse Shipping Fiches
 
-        
+
 
         #endregion
 

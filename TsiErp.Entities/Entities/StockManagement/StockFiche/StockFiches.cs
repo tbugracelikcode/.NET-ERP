@@ -57,11 +57,11 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche
         /// </summary>
         public Guid WarehouseID { get; set; }
 
-        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Int)]
         /// <summary>
-        /// Çıkış Depo ID
+        /// Giriş Çıkış Kodu
         /// </summary>
-        public Guid TransmitterWarehouseID { get; set; }
+        public int InputOutputCode { get; set; }
 
 
         [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
