@@ -14,16 +14,16 @@ using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem;
 using TsiErp.Entities.TableConstant;
-using TsiErp.Localizations.Resources.Periods.Page;
+using TsiErp.Localizations.Resources.UnsuitabilityItems.Page;
 
 namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
 {
     [ServiceRegistration(typeof(IUnsuitabilityItemsAppService), DependencyInjectionType.Scoped)]
-    public class UnsuitabilityItemsAppService : ApplicationService<PeriodsResource>, IUnsuitabilityItemsAppService
+    public class UnsuitabilityItemsAppService : ApplicationService<UnsuitabilityItemsResource>, IUnsuitabilityItemsAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public UnsuitabilityItemsAppService(IStringLocalizer<PeriodsResource> l) : base(l)
+        public UnsuitabilityItemsAppService(IStringLocalizer<UnsuitabilityItemsResource> l) : base(l)
         {
         }
 
