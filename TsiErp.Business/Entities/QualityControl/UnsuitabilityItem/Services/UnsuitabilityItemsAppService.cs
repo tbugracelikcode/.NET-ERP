@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Validations;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem;
@@ -72,7 +73,8 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
                     LossOfPrestige = input.LossOfPrestige,
                     ProductLifeShortening = input.ProductLifeShortening,
                     ToBeUsedAs = input.ToBeUsedAs,
-                    UnsuitabilityTypesItemsId = input.UnsuitabilityTypesItemsId
+                    UnsuitabilityTypesItemsId = input.UnsuitabilityTypesItemsId,
+                    StationGroupId = input.StationGroupId
                 });
 
                 var unsuitabilityItem = queryFactory.Insert<SelectUnsuitabilityItemsDto>(query, "Id", true);
@@ -103,12 +105,19 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
                 var query = queryFactory
-                        .Query().From(Tables.UnsuitabilityItems).Select<UnsuitabilityItems>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.DataOpenStatus, p.DataOpenStatusUserId, p.Description_, p.LifeThreatening, p.LossOfPrestige, p.ExtraCost, p.ProductLifeShortening, p.Detectability, p.ToBeUsedAs, p.IntensityRange, p.IntensityCoefficient })
+                        .Query().From(Tables.UnsuitabilityItems).Select<UnsuitabilityItems>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.DataOpenStatus, p.DataOpenStatusUserId, p.Description_, p.LifeThreatening, p.LossOfPrestige,p.StationGroupId, p.ExtraCost, p.ProductLifeShortening, p.Detectability, p.ToBeUsedAs, p.IntensityRange, p.IntensityCoefficient })
                             .Join<UnsuitabilityTypesItems>
                             (
                                 b => new { UnsuitabilityTypesItemsName = b.Name, UnsuitabilityTypesItemsId = b.Id },
                                 nameof(UnsuitabilityItems.UnsuitabilityTypesItemsId),
                                 nameof(UnsuitabilityTypesItems.Id),
+                                JoinType.Left
+                            )
+                             .Join<StationGroups>
+                            (
+                                sg => new { StationGroupName = sg.Name, StationGroupId = sg.Id },
+                                nameof(UnsuitabilityItems.StationGroupId),
+                                nameof(StationGroups.Id),
                                 JoinType.Left
                             )
                             .Where(new { Id = id }, true, true, Tables.UnsuitabilityItems);
@@ -134,6 +143,13 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
                                 b => new { UnsuitabilityTypesItemsName = b.Name },
                                 nameof(UnsuitabilityItems.UnsuitabilityTypesItemsId),
                                 nameof(UnsuitabilityTypesItems.Id),
+                                JoinType.Left
+                            )
+                             .Join<StationGroups>
+                            (
+                                sg => new { StationGroupName = sg.Name },
+                                nameof(UnsuitabilityItems.StationGroupId),
+                                nameof(StationGroups.Id),
                                 JoinType.Left
                             )
                             .Where(null, true, true, Tables.UnsuitabilityItems);
@@ -193,7 +209,8 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
                     LossOfPrestige = input.LossOfPrestige,
                     ProductLifeShortening = input.ProductLifeShortening,
                     ToBeUsedAs = input.ToBeUsedAs,
-                    UnsuitabilityTypesItemsId = input.UnsuitabilityTypesItemsId
+                    UnsuitabilityTypesItemsId = input.UnsuitabilityTypesItemsId,
+                    StationGroupId = input.StationGroupId,
                 }).Where(new { Id = input.Id }, true, true, "");
 
                 var unsuitabilityItem = queryFactory.Update<SelectUnsuitabilityItemsDto>(query, "Id", true);
@@ -237,7 +254,8 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityItem.Services
                     LossOfPrestige = entity.LossOfPrestige,
                     ProductLifeShortening = entity.ProductLifeShortening,
                     ToBeUsedAs = entity.ToBeUsedAs,
-                    UnsuitabilityTypesItemsId = entity.UnsuitabilityTypesItemsId
+                    UnsuitabilityTypesItemsId = entity.UnsuitabilityTypesItemsId,
+                    StationGroupId = entity.StationGroupId,
                 }).Where(new { Id = id }, true, true, "");
 
                 var unsuitabilityItem = queryFactory.Update<SelectUnsuitabilityItemsDto>(query, "Id", true);

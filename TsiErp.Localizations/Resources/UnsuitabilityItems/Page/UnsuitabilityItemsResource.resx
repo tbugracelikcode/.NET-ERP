@@ -222,6 +222,21 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
+  <data name="StationGroupLabel" xml:space="preserve">
+    <value>İş Merkezi:</value>
+  </data>
+  <data name="StationGroupModalGridCode" xml:space="preserve">
+    <value>İŞ MERKEZİ KODU</value>
+  </data>
+  <data name="StationGroupModalGridName" xml:space="preserve">
+    <value>İŞ MERKEZİ AÇIKLAMASI</value>
+  </data>
+  <data name="StationGroupModalGridTotalEmployees" xml:space="preserve">
+    <value>TOPLAM ÇALIŞAN</value>
+  </data>
+  <data name="StationGroupModalTitle" xml:space="preserve">
+    <value>İş Merkezleri</value>
+  </data>
   <data name="ToBeUsedAsLabel" xml:space="preserve">
     <value>Olduğu Gibi Kullanılacak:</value>
   </data>

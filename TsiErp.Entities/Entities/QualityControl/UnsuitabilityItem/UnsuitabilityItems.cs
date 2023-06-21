@@ -39,6 +39,12 @@ namespace TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         public Guid UnsuitabilityTypesItemsId { get; set; }
 
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// İş Merkezi ID 
+        /// </summary>
+        public Guid StationGroupId { get; set; }
+
         [SqlColumnType(MaxLength = 5, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
         /// Hayati Tehlike

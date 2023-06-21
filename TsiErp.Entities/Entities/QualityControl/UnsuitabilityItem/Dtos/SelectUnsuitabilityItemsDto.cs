@@ -31,6 +31,10 @@ namespace TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos
         /// </summary>
         public Guid UnsuitabilityTypesItemsId { get; set; }
 
+        public Guid StationGroupId { get; set; }
+
+        public string StationGroupName { get; set; }
+
         /// <summary>
         /// Uygunsuzluk Türü Başlığı 
         /// </summary>

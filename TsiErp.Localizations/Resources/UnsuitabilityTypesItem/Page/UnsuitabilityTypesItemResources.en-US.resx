@@ -195,8 +195,14 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="StationGroupLabel" xml:space="preserve">
+    <value>Work Center:</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Quality Control &gt; Unsuitability Items</value>
+  </data>
+  <data name="UnsuitabilityTypesItemPlaceholder" xml:space="preserve">
+    <value>Select</value>
   </data>
   <data name="UnsuitabilityTypesItemTitle" xml:space="preserve">
     <value>Unsuitability Type Items</value>

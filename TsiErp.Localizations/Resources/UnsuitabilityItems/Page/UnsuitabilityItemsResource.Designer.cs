@@ -377,6 +377,51 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityItems.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İş Merkezi:.
+        /// </summary>
+        public static string StationGroupLabel {
+            get {
+                return ResourceManager.GetString("StationGroupLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İŞ MERKEZİ KODU.
+        /// </summary>
+        public static string StationGroupModalGridCode {
+            get {
+                return ResourceManager.GetString("StationGroupModalGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İŞ MERKEZİ AÇIKLAMASI.
+        /// </summary>
+        public static string StationGroupModalGridName {
+            get {
+                return ResourceManager.GetString("StationGroupModalGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TOPLAM ÇALIŞAN.
+        /// </summary>
+        public static string StationGroupModalGridTotalEmployees {
+            get {
+                return ResourceManager.GetString("StationGroupModalGridTotalEmployees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş Merkezleri.
+        /// </summary>
+        public static string StationGroupModalTitle {
+            get {
+                return ResourceManager.GetString("StationGroupModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Olduğu Gibi Kullanılacak:.
         /// </summary>
         public static string ToBeUsedAsLabel {

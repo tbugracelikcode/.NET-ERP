@@ -32,6 +32,8 @@ namespace TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos
         /// </summary>
         public string UnsuitabilityTypesItemsName { get; set; }
 
+        public string StationGroupName { get; set; }
+
         /// <summary>
         /// Şiddet Aralığı
         /// </summary>

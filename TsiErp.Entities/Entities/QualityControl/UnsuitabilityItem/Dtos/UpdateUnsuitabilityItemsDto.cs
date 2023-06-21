@@ -24,6 +24,7 @@ namespace TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos
         /// </summary>
         public string Description_ { get; set; }
 
+        public Guid StationGroupId { get; set; }
         public bool IsActive { get; set; }
 
         /// <summary>

@@ -6,6 +6,8 @@
 @inherits BaseListPage<SelectUnsuitabilityItemsDto, ListUnsuitabilityItemsDto, CreateUnsuitabilityItemsDto, UpdateUnsuitabilityItemsDto, ListUnsuitabilityItemsParameterDto>
 
 @inject IUnsuitabilityItemsAppService UnsuitabilityItemsService
+@inject IUnsuitabilityTypesItemsAppService UnsuitabilityTypesItemsService
+@inject IStationGroupsAppService StationGroupsService
 
 @if (!base.IsLoaded)
 {
@@ -150,7 +152,19 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["UnsuitabilityTypesItemsNameLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.UnsuitabilityTypesItemsName"></SfTextBox>
+                            <SfComboBox Placeholder="Seçin" @bind-Value="@DataSource.UnsuitabilityTypesItemsId" DataSource="@UnsuitabilityTypesItemList">
+                                <ComboBoxFieldSettings Text ="Name" Value="Id"></ComboBoxFieldSettings>
+                            </SfComboBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="2" Column="3">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["StationGroupLabel"] </strong></label><br />
+
+                            <SfTextBox @ref="@StationGroupButtonEdit" Created="@StationGroupOnCreateIcon" @bind-Value="DataSource.StationGroupName" ShowClearButton=true ValueChange="StationGroupOnValueChange"></SfTextBox>
+
                         </Template>
                     </DxGridLayoutItem>
 
@@ -220,7 +234,7 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="4" Column="5">
+                    <DxGridLayoutItem Row="4" Column="5">
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["IntensityRangeLabel"] </strong></label>
@@ -228,7 +242,7 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="4" Column="7">
+                    <DxGridLayoutItem Row="4" Column="7">
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["IntensityCoefficientLabel"] </strong></label>
@@ -247,4 +261,56 @@ else
         </FooterContentTemplate>
     </DxPopup>
 }
- 
+
+@if (SelectStationGroupPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectStationGroupPopupVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         HeaderText="@L["StationGroupModalTitle"]"
+         Width="64%"
+         Height="44%"
+         MinWidth="1220px"
+         MinHeight="470px"
+         HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIWorkStationGroupPopUpCard">
+
+                                <CardContent>
+                                    <SfGrid ID="GroupGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@StationGroupList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                        AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@StationGroupDoubleClickHandler" TValue="ListStationGroupsDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListStationGroupsDto.Code) HeaderText="@L["StationGroupModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListStationGroupsDto.Name) HeaderText="@L["StationGroupModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListStationGroupsDto.TotalEmployees) Type="ColumnType.Number" HeaderText="@L["StationGroupModalGridTotalEmployees"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}

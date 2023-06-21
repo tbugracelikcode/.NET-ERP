@@ -222,6 +222,18 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="StationGroupLabel" xml:space="preserve">
+    <value>Work Center:</value>
+  </data>
+  <data name="StationGroupModalGridCode" xml:space="preserve">
+    <value>WOKR CENTER CODE</value>
+  </data>
+  <data name="StationGroupModalGridName" xml:space="preserve">
+    <value>WOKR CENTER NAME</value>
+  </data>
+  <data name="StationGroupModalGridTotalEmployees" xml:space="preserve">
+    <value>TOTAL EMPLOYEES</value>
+  </data>
   <data name="ToBeUsedAsLabel" xml:space="preserve">
     <value>To Be Used As:</value>
   </data>

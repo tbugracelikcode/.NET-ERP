@@ -296,11 +296,29 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İş Merkezi:.
+        /// </summary>
+        public static string StationGroupLabel {
+            get {
+                return ResourceManager.GetString("StationGroupLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kalite Kontrol &gt; Uygunsuzluk Başlıkları.
         /// </summary>
         public static string UIPreviousMenu {
             get {
                 return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçiniz.
+        /// </summary>
+        public static string UnsuitabilityTypesItemPlaceholder {
+            get {
+                return ResourceManager.GetString("UnsuitabilityTypesItemPlaceholder", resourceCulture);
             }
         }
         
