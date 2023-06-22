@@ -14,6 +14,14 @@ namespace TsiErp.Entities.Entities.Other.ByDateStockMovement.Dtos
         /// </summary>
         public DateTime? Date_ { get; set; }
         /// <summary>
+        ///  Depo Giriş Toplamı
+        /// </summary>
+        public decimal TotalWarehouseInput { get; set; }
+        /// <summary>
+        ///  Depo Çıkış Toplamı
+        /// </summary>
+        public decimal TotalWarehouseOutput { get; set; }
+        /// <summary>
         ///  Satın Alma Talep Toplamı
         /// </summary>
         public decimal TotalPurchaseRequest { get; set; }

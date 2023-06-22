@@ -9,6 +9,7 @@ using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.StockFiche.Validations;
+using TsiErp.Business.Entities.StockMovement;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.StockManagement.Product;
@@ -18,6 +19,7 @@ using TsiErp.Entities.Entities.StockManagement.StockFicheLine;
 using TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.StockManagement.WareHouse;
+using TsiErp.Entities.Enums;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.StockFiche;
 
@@ -54,9 +56,23 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
                 Guid addedEntityId = GuidGenerator.CreateGuid();
 
+                if(input.FicheType != 25)
+                {
+                    switch (input.FicheType)
+                    {
+                        case 12: input.InputOutputCode = 1; break;
+                        case 11: input.InputOutputCode = 1; break;
+                        case 13: input.InputOutputCode = 0; break;
+                        case 50: input.InputOutputCode = 0; break;
+                        case 51: input.InputOutputCode = 1; break;
+                    }
+                }
+               
+
                 var query = queryFactory.Query().From(Tables.StockFiches).Insert(new CreateStockFichesDto
                 {
                     FicheNo = input.FicheNo,
+                    InputOutputCode = input.InputOutputCode,
                     CreationTime = DateTime.Now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
@@ -110,6 +126,20 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
                 var stockFiche = queryFactory.Insert<SelectStockFichesDto>(query, "Id", true);
 
+                #region Stock Movement Service
+
+                switch (input.FicheType)
+                {
+                    case 12: StockMovementsService.InsertTotalWastages(input); ; break;
+                    case 11: StockMovementsService.InsertTotalConsumptions(input); ; break;
+                    case 13: StockMovementsService.InsertTotalProductions(input); ; break;
+                    case 50: StockMovementsService.InsertTotalGoods(input); ; break;
+                    case 51: StockMovementsService.InsertTotalGoodIssues(input); ; break;
+                    case 25: StockMovementsService.InsertTotalWarehouseShippings(input); break;
+                }
+
+                #endregion
+
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.StockFiches, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectStockFichesDto>(stockFiche);
@@ -128,6 +158,20 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
                 if (StockFiches.Id != Guid.Empty && StockFiches != null)
                 {
+                    #region Stock Movement Service
+
+                    switch (StockFiches.FicheType)
+                    {
+                        case StockFicheTypeEnum.FireFisi: StockMovementsService.DeleteTotalWastages(StockFiches); ; break;
+                        case StockFicheTypeEnum.SarfFisi: StockMovementsService.DeleteTotalConsumptions(StockFiches); ; break;
+                        case StockFicheTypeEnum.UretimdenGirisFisi: StockMovementsService.DeleteTotalProductions(StockFiches); ; break;
+                        case StockFicheTypeEnum.StokGirisFisi: StockMovementsService.DeleteTotalGoods(StockFiches); ; break;
+                        case StockFicheTypeEnum.StokCikisFisi: StockMovementsService.DeleteTotalGoodIssues(StockFiches); ; break;
+                        case StockFicheTypeEnum.DepoSevkFisi: StockMovementsService.DeleteTotalWarehouseShippings(StockFiches); break;
+                    }
+
+                    #endregion
+
                     var deleteQuery = queryFactory.Query().From(Tables.StockFiches).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
 
                     var lineDeleteQuery = queryFactory.Query().From(Tables.StockFicheLines).Delete(LoginedUserService.UserId).Where(new { StockFicheID = id }, false, false, "");
@@ -135,14 +179,41 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
                     var stockFiche = queryFactory.Update<SelectStockFichesDto>(deleteQuery, "Id", true);
+
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.StockFiches, LogType.Delete, id);
+
                     return new SuccessDataResult<SelectStockFichesDto>(stockFiche);
                 }
                 else
                 {
+                    var queryLineGet = queryFactory.Query().From(Tables.StockFicheLines).Select("*").Where(new { Id = id }, false, false, "");
+
+                    var stockFichesLineGet = queryFactory.Get<SelectStockFicheLinesDto>(queryLineGet);
+
+                    var queryDeleteEntity = queryFactory.Query().From(Tables.StockFiches).Select("*").Where(new { Id = stockFichesLineGet.StockFicheID }, false, false, "");
+
+                    var StockFichesDeleteEntity = queryFactory.Get<SelectStockFichesDto>(queryDeleteEntity);
+
+                    #region Stock Movement Service
+
+                    switch (StockFichesDeleteEntity.FicheType)
+                    {
+                        case StockFicheTypeEnum.FireFisi: StockMovementsService.DeleteTotalWastageLines(stockFichesLineGet); ; break;
+                        case StockFicheTypeEnum.SarfFisi: StockMovementsService.DeleteTotalConsumptionLines(stockFichesLineGet); ; break;
+                        case StockFicheTypeEnum.UretimdenGirisFisi: StockMovementsService.DeleteTotalProductionLines(stockFichesLineGet); ; break;
+                        case StockFicheTypeEnum.StokGirisFisi: StockMovementsService.DeleteTotalGoodLines(stockFichesLineGet); ; break;
+                        case StockFicheTypeEnum.StokCikisFisi: StockMovementsService.DeleteTotalGoodIssueLines(stockFichesLineGet); ; break;
+                        case StockFicheTypeEnum.DepoSevkFisi: StockMovementsService.DeleteTotalWarehouseShippingLines(stockFichesLineGet); break;
+                    }
+
+                    #endregion
+
                     var queryLine = queryFactory.Query().From(Tables.StockFicheLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
                     var stockFicheLines = queryFactory.Update<SelectStockFicheLinesDto>(queryLine, "Id", true);
+
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.StockFicheLines, LogType.Delete, id);
+
                     return new SuccessDataResult<SelectStockFicheLinesDto>(stockFicheLines);
                 }
             }
@@ -155,7 +226,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 var query = queryFactory
                        .Query()
                        .From(Tables.StockFiches)
-                       .Select<StockFiches>(sf => new { sf.Id, sf.FicheNo, sf.Date_, sf.Description_, sf.FicheType, sf.NetAmount, sf.WarehouseID, sf.Time_, sf.SpecialCode, sf.ProductionOrderID, sf.ExchangeRate, sf.DataOpenStatusUserId, sf.DataOpenStatus, sf.CurrencyID, sf.BranchID })
+                       .Select<StockFiches>(sf => new { sf.Id, sf.InputOutputCode, sf.FicheNo, sf.Date_, sf.Description_, sf.FicheType, sf.NetAmount, sf.WarehouseID, sf.Time_, sf.SpecialCode, sf.ProductionOrderID, sf.ExchangeRate, sf.DataOpenStatusUserId, sf.DataOpenStatus, sf.CurrencyID, sf.BranchID })
                        .Join<Branches>
                         (
                             b => new { BranchCode = b.Code , BranchID = b.Id},
@@ -213,17 +284,17 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 var query = queryFactory
                        .Query()
                        .From(Tables.StockFiches)
-                       .Select<StockFiches>(b => new { b.FicheNo, b.Date_, b.Description_, b.FicheType, b.NetAmount , b.Id, b.WarehouseID, b.Time_, b.SpecialCode, b.ProductionOrderID, b.ExchangeRate, b.DataOpenStatusUserId, b.DataOpenStatus, b.CurrencyID, b.BranchID })
+                       .Select<StockFiches>(sf => new { sf.FicheNo, sf.InputOutputCode, sf.Date_, sf.Description_, sf.FicheType, sf.NetAmount , sf.Id, sf.WarehouseID, sf.Time_, sf.SpecialCode, sf.ProductionOrderID, sf.ExchangeRate, sf.DataOpenStatusUserId, sf.DataOpenStatus, sf.CurrencyID, sf.BranchID })
                        .Join<Branches>
                         (
-                            pr => new { BranchCode = pr.Code },
+                            b => new { BranchCode = b.Code },
                             nameof(StockFiches.BranchID),
                             nameof(Branches.Id),
                             JoinType.Left
                         )
                        .Join<Warehouses>
                         (
-                            pr => new { WarehouseCode = pr.Code },
+                            w => new { WarehouseCode = w.Code },
                             nameof(StockFiches.WarehouseID),
                             nameof(Warehouses.Id),
                             JoinType.Left
@@ -244,7 +315,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 var entityQuery = queryFactory
                        .Query()
                        .From(Tables.StockFiches)
-                       .Select<StockFiches>(sf => new { sf.Id, sf.FicheNo, sf.Date_, sf.Description_, sf.FicheType, sf.NetAmount, sf.WarehouseID, sf.Time_, sf.SpecialCode, sf.ProductionOrderID, sf.ExchangeRate, sf.DataOpenStatusUserId, sf.DataOpenStatus, sf.CurrencyID, sf.BranchID, sf.CreationTime, sf.DeletionTime })
+                       .Select<StockFiches>(sf => new { sf.Id, sf.FicheNo, sf.InputOutputCode, sf.Date_, sf.Description_, sf.FicheType, sf.NetAmount, sf.WarehouseID, sf.Time_, sf.SpecialCode, sf.ProductionOrderID, sf.ExchangeRate, sf.DataOpenStatusUserId, sf.DataOpenStatus, sf.CurrencyID, sf.BranchID, sf.CreationTime, sf.DeletionTime })
                        .Join<Branches>
                         (
                             b => new { BranchCode = b.Code, BranchID = b.Id },
@@ -301,10 +372,24 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 }
                 #endregion
 
+                if(input.FicheType != 25)
+                {
+                    switch (input.FicheType)
+                    {
+                        case 12: input.InputOutputCode = 1; break;
+                        case 11: input.InputOutputCode = 1; break;
+                        case 13: input.InputOutputCode = 0; break;
+                        case 50: input.InputOutputCode = 0; break;
+                        case 51: input.InputOutputCode = 1; break;
+                    }
+                }
+
+
                 var query = queryFactory.Query().From(Tables.StockFiches).Update(new UpdateStockFichesDto
                 {
                     CreationTime = entity.CreationTime,
                     CreatorId = entity.CreatorId,
+                    InputOutputCode = input.InputOutputCode,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
                     DeleterId = entity.DeleterId.GetValueOrDefault(),
@@ -394,6 +479,20 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
                 var stockFiche = queryFactory.Update<SelectStockFichesDto>(query, "Id", true);
 
+                #region Stock Movement Service
+
+                switch (input.FicheType)
+                {
+                    case 12: StockMovementsService.UpdateTotalWastages(entity,input);  break;
+                    case 11: StockMovementsService.UpdateTotalConsumptions(entity, input);  break;
+                    case 13: StockMovementsService.UpdateTotalProductions(entity, input);  break;
+                    case 50: StockMovementsService.UpdateTotalGoods(entity, input);  break;
+                    case 51: StockMovementsService.UpdateTotalGoodIssues(entity, input);  break;
+                    case 25: StockMovementsService.UpdateTotalWarehouseShippings(entity, input); break;
+                }
+
+                #endregion
+
                 LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.StockFiches, LogType.Update, entity.Id);
 
                 return new SuccessDataResult<SelectStockFichesDto>(stockFiche);
@@ -425,6 +524,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     CurrencyID = entity.CurrencyID,
                     Date_ = entity.Date_,
                     Description_ = entity.Description_,
+                    InputOutputCode = entity.InputOutputCode,
                     ExchangeRate = entity.ExchangeRate,
                     FicheType = (int)entity.FicheType,
                     ProductionOrderID = entity.ProductionOrderID,

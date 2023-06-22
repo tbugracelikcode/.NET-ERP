@@ -16,6 +16,16 @@ namespace TsiErp.Entities.Entities.Other.ByDateStockMovement
         public DateTime? Date_ { get; set; }
         [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
+        ///  Depo Giriş Toplamı
+        /// </summary>
+        public decimal TotalWarehouseInput { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        ///  Depo Çıkış Toplamı
+        /// </summary>
+        public decimal TotalWarehouseOutput { get; set; }
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
         ///  Satın Alma Talep Toplamı
         /// </summary>
         public decimal TotalPurchaseRequest { get; set; }

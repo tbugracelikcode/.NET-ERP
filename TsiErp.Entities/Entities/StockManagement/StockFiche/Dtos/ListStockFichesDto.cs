@@ -27,6 +27,10 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
         /// </summary>
         public StockFicheTypeEnum FicheType { get; set; }
         /// <summary>
+        /// Giriş Çıkış Kodu
+        /// </summary>
+        public int InputOutputCode { get; set; }
+        /// <summary>
         /// Şube Kodu
         /// </summary>
         public string BranchCode { get; set; }
