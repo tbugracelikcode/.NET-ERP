@@ -55,7 +55,6 @@ namespace TsiErp.Business.Entities.User.Services
                     Code = input.Code,
                     Email = input.Email,
                     GroupID = input.GroupID,
-                    IsEmailApproved = input.IsEmailApproved,
                     NameSurname = input.NameSurname,
                     Password = input.Password,
                     UserName = input.UserName,
@@ -101,7 +100,7 @@ namespace TsiErp.Business.Entities.User.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
                 var query = queryFactory
-                        .Query().From(Tables.Users).Select<Users>(u => new { u.GroupID, u.Id, u.IsActive, u.IsEmailApproved, u.Code, u.DataOpenStatus, u.DataOpenStatusUserId, u.Email, u.NameSurname, u.Password, u.UserName })
+                        .Query().From(Tables.Users).Select<Users>(u => new { u.GroupID, u.Id, u.IsActive, u.Code, u.DataOpenStatus, u.DataOpenStatusUserId, u.Email, u.NameSurname, u.Password, u.UserName })
                             .Join<UserGroups>
                             (
                                 ug => new { GroupID = ug.Id, GroupName = ug.Name },
@@ -128,7 +127,7 @@ namespace TsiErp.Business.Entities.User.Services
 
                 var query = queryFactory
                    .Query()
-                   .From(Tables.Users).Select<Users>(u => new { u.GroupID, u.Id, u.IsActive, u.IsEmailApproved, u.Code, u.DataOpenStatus, u.DataOpenStatusUserId, u.Email, u.NameSurname, u.Password, u.UserName })
+                   .From(Tables.Users).Select<Users>(u => new { u.GroupID, u.Id, u.IsActive, u.Code, u.DataOpenStatus, u.DataOpenStatusUserId, u.Email, u.NameSurname, u.Password, u.UserName })
                             .Join<UserGroups>
                             (
                                 ug => new { GroupName = ug.Name },
@@ -174,7 +173,6 @@ namespace TsiErp.Business.Entities.User.Services
                     Id = input.Id,
                     Email = input.Email,
                     GroupID = input.GroupID,
-                    IsEmailApproved = input.IsEmailApproved,
                     NameSurname = input.NameSurname,
                     Password = input.Password,
                     UserName = input.UserName,
@@ -213,7 +211,6 @@ namespace TsiErp.Business.Entities.User.Services
                     Code = entity.Code,
                     Email = entity.Email,
                     GroupID = entity.GroupID,
-                    IsEmailApproved = entity.IsEmailApproved,
                     NameSurname = entity.NameSurname,
                     Password = entity.Password,
                     UserName = entity.UserName,
