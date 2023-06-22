@@ -157,6 +157,10 @@ using TsiErp.Entities.Entities.Other.ByDateStockMovement.Dtos;
 using TsiErp.Entities.Entities.Other.ByDateStockMovement;
 using TsiErp.Entities.Entities.Other.GrandTotalStockMovement.Dtos;
 using TsiErp.Entities.Entities.Other.GrandTotalStockMovement;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem.Dtos;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -769,6 +773,23 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateStockFicheLinesDto, StockFicheLines>();
             CreateMap<SelectStockFicheLinesDto, UpdateStockFicheLinesDto>();
             CreateMap<SelectStockFicheLinesDto, StockFicheLines>();
+
+
+
+            CreateMap<UnsuitabilityTypesItems, SelectUnsuitabilityTypesItemsDto>();
+            CreateMap<UnsuitabilityTypesItems, ListUnsuitabilityTypesItemsDto>();
+            CreateMap<CreateUnsuitabilityTypesItemsDto, UnsuitabilityTypesItems>();
+            CreateMap<SelectUnsuitabilityTypesItemsDto, CreateUnsuitabilityTypesItemsDto>();
+            CreateMap<UpdateUnsuitabilityTypesItemsDto, UnsuitabilityTypesItems>();
+            CreateMap<SelectUnsuitabilityTypesItemsDto, UpdateUnsuitabilityTypesItemsDto>();
+            CreateMap<UnsuitabilityTypesItems, UpdateUnsuitabilityTypesItemsDto>();
+
+            CreateMap<UnsuitabilityItems, SelectUnsuitabilityItemsDto>();
+            CreateMap<UnsuitabilityItems, ListUnsuitabilityItemsDto>();
+            CreateMap<CreateUnsuitabilityItemsDto, UnsuitabilityItems>();
+            CreateMap<SelectUnsuitabilityItemsDto, CreateUnsuitabilityItemsDto>();
+            CreateMap<UpdateUnsuitabilityItemsDto, UnsuitabilityItems>();
+            CreateMap<SelectUnsuitabilityItemsDto, UpdateUnsuitabilityItemsDto>();
         }
     }
 }

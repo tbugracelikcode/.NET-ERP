@@ -67,6 +67,7 @@ using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.ProductionOrderChangeItem;
 using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.PurchasingUnsuitabilityItem;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem;
 using TsiErp.Entities.Entities.SalesManagement.Forecast;
 using TsiErp.Entities.Entities.SalesManagement.ForecastLine;
@@ -2302,6 +2303,41 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 UnsuitabilityTypesItemsTable.Create();
+            }
+            #endregion
+
+            #region UnsuitabilityItems Table Created
+            Table UnsuitabilityItemsTable = model.CreateTable(Tables.UnsuitabilityItems);
+
+            if (UnsuitabilityItemsTable != null)
+            {
+                var properties = (typeof(UnsuitabilityItems)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(UnsuitabilityItemsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(UnsuitabilityItemsTable, "PK_" + UnsuitabilityItemsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        UnsuitabilityItemsTable.Indexes.Add(pkIndex);
+                    }
+
+                    UnsuitabilityItemsTable.Columns.Add(column);
+                }
+
+                UnsuitabilityItemsTable.Create();
             }
             #endregion
 

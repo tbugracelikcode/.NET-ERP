@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
+namespace TsiErp.Localizations.Resources.UnsuitabilityItems.Page {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class UnsuitabilityTypesItemResources {
+    public class UnsuitabilityItemsResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal UnsuitabilityTypesItemResources() {
+        internal UnsuitabilityItemsResource() {
         }
         
         /// <summary>
@@ -39,8 +39,8 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page.UnsuitabilityTypesItem" +
-                            "Resources", typeof(UnsuitabilityTypesItemResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TsiErp.Localizations.Resources.UnsuitabilityItems.Page.UnsuitabilityItemsResource" +
+                            "", typeof(UnsuitabilityItemsResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -71,7 +71,7 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UYGUNSUZUK TÜRÜ KODU.
+        ///   Looks up a localized string similar to BAŞLIK KODU.
         /// </summary>
         public static string Code {
             get {
@@ -89,7 +89,7 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uygunsuzluk Türü Kodu:.
+        ///   Looks up a localized string similar to Başlık Kodu:.
         /// </summary>
         public static string CodeLabel {
             get {
@@ -188,7 +188,16 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uygunsuzluk Türü Başlıkları.
+        ///   Looks up a localized string similar to Farkedilebilirlik:.
+        /// </summary>
+        public static string DetectabilityLabel {
+            get {
+                return ResourceManager.GetString("DetectabilityLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uygunsuzluk Başlıkları.
         /// </summary>
         public static string EditModalTitle {
             get {
@@ -206,7 +215,7 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UygunsuzlukTuruBasliklari.
+        ///   Looks up a localized string similar to UygunsuzlukBasliklari.
         /// </summary>
         public static string ExportFileName {
             get {
@@ -215,11 +224,56 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uygunsuzluk Türü Başlıkları.
+        ///   Looks up a localized string similar to Uygunsuzluk Başlıkları.
         /// </summary>
         public static string ExportTitle {
             get {
                 return ResourceManager.GetString("ExportTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekstra Maliyet:.
+        /// </summary>
+        public static string ExtraCostLabel {
+            get {
+                return ResourceManager.GetString("ExtraCostLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ŞİDDET KATSAYISI.
+        /// </summary>
+        public static string IntensityCoefficient {
+            get {
+                return ResourceManager.GetString("IntensityCoefficient", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şiddet Katsayısı:.
+        /// </summary>
+        public static string IntensityCoefficientLabel {
+            get {
+                return ResourceManager.GetString("IntensityCoefficientLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ŞİDDET ARALIĞI.
+        /// </summary>
+        public static string IntensityRange {
+            get {
+                return ResourceManager.GetString("IntensityRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şiddet Aralığı:.
+        /// </summary>
+        public static string IntensityRangeLabel {
+            get {
+                return ResourceManager.GetString("IntensityRangeLabel", resourceCulture);
             }
         }
         
@@ -229,6 +283,15 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         public static string IsActiveLabel {
             get {
                 return ResourceManager.GetString("IsActiveLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hayati Tehlike:.
+        /// </summary>
+        public static string LifeThreateningLabel {
+            get {
+                return ResourceManager.GetString("LifeThreateningLabel", resourceCulture);
             }
         }
         
@@ -251,6 +314,15 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Prestij Kaybı:.
+        /// </summary>
+        public static string LossOfPrestigeLabel {
+            get {
+                return ResourceManager.GetString("LossOfPrestigeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seçtiğiniz kayıt {0} tarafından kullanılmaktadır..
         /// </summary>
         public static string MessagePopupInformationDescriptionBase {
@@ -269,7 +341,7 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UYGUNSUZUK TÜRÜ ADI.
+        ///   Looks up a localized string similar to BAŞLIK ADI.
         /// </summary>
         public static string Name {
             get {
@@ -278,11 +350,20 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uygunsuzluk Türü Adı:.
+        ///   Looks up a localized string similar to Başlık Adı:.
         /// </summary>
         public static string NameLabel {
             get {
                 return ResourceManager.GetString("NameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ürün Ömrü Kısalması:.
+        /// </summary>
+        public static string ProductLifeShorteningLabel {
+            get {
+                return ResourceManager.GetString("ProductLifeShorteningLabel", resourceCulture);
             }
         }
         
@@ -305,7 +386,52 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kalite Kontrol &gt; Uygunsuzluk Başlıkları.
+        ///   Looks up a localized string similar to İŞ MERKEZİ KODU.
+        /// </summary>
+        public static string StationGroupModalGridCode {
+            get {
+                return ResourceManager.GetString("StationGroupModalGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İŞ MERKEZİ AÇIKLAMASI.
+        /// </summary>
+        public static string StationGroupModalGridName {
+            get {
+                return ResourceManager.GetString("StationGroupModalGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TOPLAM ÇALIŞAN.
+        /// </summary>
+        public static string StationGroupModalGridTotalEmployees {
+            get {
+                return ResourceManager.GetString("StationGroupModalGridTotalEmployees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş Merkezleri.
+        /// </summary>
+        public static string StationGroupModalTitle {
+            get {
+                return ResourceManager.GetString("StationGroupModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Olduğu Gibi Kullanılacak:.
+        /// </summary>
+        public static string ToBeUsedAsLabel {
+            get {
+                return ResourceManager.GetString("ToBeUsedAsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kalite Kontrol &gt; Ana Kayıtlar.
         /// </summary>
         public static string UIPreviousMenu {
             get {
@@ -314,20 +440,20 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seçiniz.
+        ///   Looks up a localized string similar to Uygunsuzluk Başlıkları.
         /// </summary>
-        public static string UnsuitabilityTypesItemPlaceholder {
+        public static string UnsuitabilityItemTitle {
             get {
-                return ResourceManager.GetString("UnsuitabilityTypesItemPlaceholder", resourceCulture);
+                return ResourceManager.GetString("UnsuitabilityItemTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uygunsuzluk Türü Başlıkları.
+        ///   Looks up a localized string similar to Uygunsuzluk Türü Başlığı:.
         /// </summary>
-        public static string UnsuitabilityTypesItemTitle {
+        public static string UnsuitabilityTypesItemsNameLabel {
             get {
-                return ResourceManager.GetString("UnsuitabilityTypesItemTitle", resourceCulture);
+                return ResourceManager.GetString("UnsuitabilityTypesItemsNameLabel", resourceCulture);
             }
         }
         
@@ -341,7 +467,7 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lütfen uygunsuzluk türü kodunu yazın..
+        ///   Looks up a localized string similar to Lütfen başlık kodunu yazın..
         /// </summary>
         public static string ValidatorCodeEmpty {
             get {
@@ -350,7 +476,7 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uygunsuzluk türü kodu 17 karakterden fazla olamaz..
+        ///   Looks up a localized string similar to Başlık kodu 17 karakterden fazla olamaz..
         /// </summary>
         public static string ValidatorCodeMaxLenght {
             get {
@@ -359,7 +485,7 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lütfen uygunsuzluk türü adını yazın..
+        ///   Looks up a localized string similar to Lütfen başlık adını yazın..
         /// </summary>
         public static string ValidatorNameEmpty {
             get {
@@ -368,7 +494,7 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uygunsuzluk türü adı 200 karakterden fazla olamaz..
+        ///   Looks up a localized string similar to Başlık adı 200 karakterden fazla olamaz..
         /// </summary>
         public static string ValidatorNameMaxLenght {
             get {

@@ -118,108 +118,150 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CloseButton" xml:space="preserve">
-    <value>Close</value>
+    <value>Kapat</value>
   </data>
   <data name="Code" xml:space="preserve">
-    <value>UNSUITABILITY TYPE CODE</value>
+    <value>BAŞLIK KODU</value>
   </data>
   <data name="CodeControlManager" xml:space="preserve">
-    <value>There is a record with the same code.</value>
+    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
   <data name="CodeLabel" xml:space="preserve">
-    <value>Unsuitability Type Code:</value>
+    <value>Başlık Kodu:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
+    <value>Ekle</value>
   </data>
   <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
+    <value>Değiştir</value>
   </data>
   <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
+    <value>Sil</value>
   </data>
   <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
+    <value>Güncelle</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
-    <value>Are you sure you want to delete?</value>
+    <value>Silmek istediğinize emin misiniz ?</value>
   </data>
   <data name="DeleteConfirmationTitleBase" xml:space="preserve">
-    <value>Confirmation</value>
+    <value>Onay</value>
   </data>
   <data name="DeleteControlManager" xml:space="preserve">
-    <value>Records with transaction cannot be deleted.</value>
+    <value>Hareket gören kayıtlar silinemez.</value>
   </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
-    <value>The record deleted successfully.</value>
+    <value>Kayıt başarıyla silindi.</value>
   </data>
   <data name="DescriptionLabel" xml:space="preserve">
-    <value>Description:</value>
+    <value>Açıklama:</value>
   </data>
   <data name="Description_" xml:space="preserve">
-    <value>DESCRIPTION</value>
+    <value>AÇIKLAMA</value>
+  </data>
+  <data name="DetectabilityLabel" xml:space="preserve">
+    <value>Farkedilebilirlik:</value>
   </data>
   <data name="EditModalTitle" xml:space="preserve">
-    <value>Unsuitability Type Items</value>
+    <value>Uygunsuzluk Başlıkları</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Error</value>
+    <value>Hata</value>
   </data>
   <data name="ExportFileName" xml:space="preserve">
-    <value>UnsuitabilityTypeItems</value>
+    <value>UygunsuzlukBasliklari</value>
   </data>
   <data name="ExportTitle" xml:space="preserve">
-    <value>Unsuitability Type Items</value>
+    <value>Uygunsuzluk Başlıkları</value>
+  </data>
+  <data name="ExtraCostLabel" xml:space="preserve">
+    <value>Ekstra Maliyet:</value>
+  </data>
+  <data name="IntensityCoefficient" xml:space="preserve">
+    <value>ŞİDDET KATSAYISI</value>
+  </data>
+  <data name="IntensityCoefficientLabel" xml:space="preserve">
+    <value>Şiddet Katsayısı:</value>
+  </data>
+  <data name="IntensityRange" xml:space="preserve">
+    <value>ŞİDDET ARALIĞI</value>
+  </data>
+  <data name="IntensityRangeLabel" xml:space="preserve">
+    <value>Şiddet Aralığı:</value>
   </data>
   <data name="IsActiveLabel" xml:space="preserve">
-    <value>Activity:</value>
+    <value>Aktiflik:</value>
+  </data>
+  <data name="LifeThreateningLabel" xml:space="preserve">
+    <value>Hayati Tehlike:</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
-    <value>Please wait..</value>
+    <value>Lütfen Bekleyin..</value>
   </data>
   <data name="LoadingText" xml:space="preserve">
-    <value>The records are loading..</value>
+    <value>Kayıtlar Yükleniyor..</value>
+  </data>
+  <data name="LossOfPrestigeLabel" xml:space="preserve">
+    <value>Prestij Kaybı:</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
-    <value>The record you selected is using by {0}.</value>
+    <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
-    <value>Information</value>
+    <value>Bilgi</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>UNSUITABILITY TYPE NAME</value>
+    <value>BAŞLIK ADI</value>
   </data>
   <data name="NameLabel" xml:space="preserve">
-    <value>Unsuitability Type Name:</value>
+    <value>Başlık Adı:</value>
+  </data>
+  <data name="ProductLifeShorteningLabel" xml:space="preserve">
+    <value>Ürün Ömrü Kısalması:</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
-    <value>Save</value>
+    <value>Kaydet</value>
   </data>
   <data name="StationGroupLabel" xml:space="preserve">
-    <value>Work Center:</value>
+    <value>İş Merkezi:</value>
+  </data>
+  <data name="StationGroupModalGridCode" xml:space="preserve">
+    <value>İŞ MERKEZİ KODU</value>
+  </data>
+  <data name="StationGroupModalGridName" xml:space="preserve">
+    <value>İŞ MERKEZİ AÇIKLAMASI</value>
+  </data>
+  <data name="StationGroupModalGridTotalEmployees" xml:space="preserve">
+    <value>TOPLAM ÇALIŞAN</value>
+  </data>
+  <data name="StationGroupModalTitle" xml:space="preserve">
+    <value>İş Merkezleri</value>
+  </data>
+  <data name="ToBeUsedAsLabel" xml:space="preserve">
+    <value>Olduğu Gibi Kullanılacak:</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Quality Control &gt; Unsuitability Items</value>
+    <value>Kalite Kontrol &gt; Ana Kayıtlar</value>
   </data>
-  <data name="UnsuitabilityTypesItemPlaceholder" xml:space="preserve">
-    <value>Select</value>
+  <data name="UnsuitabilityItemTitle" xml:space="preserve">
+    <value>Uygunsuzluk Başlıkları</value>
   </data>
-  <data name="UnsuitabilityTypesItemTitle" xml:space="preserve">
-    <value>Unsuitability Type Items</value>
+  <data name="UnsuitabilityTypesItemsNameLabel" xml:space="preserve">
+    <value>Uygunsuzluk Türü Başlığı:</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
-    <value>There is a record with the same code.</value>
+    <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
-    <value>Please enter the unsuitability type code.</value>
+    <value>Lütfen başlık kodunu yazın.</value>
   </data>
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
-    <value>Unsuitability type code cannot exceed 17 characters.</value>
+    <value>Başlık kodu 17 karakterden fazla olamaz.</value>
   </data>
   <data name="ValidatorNameEmpty" xml:space="preserve">
-    <value>Please enter the unsuitability type name.</value>
+    <value>Lütfen başlık adını yazın.</value>
   </data>
   <data name="ValidatorNameMaxLenght" xml:space="preserve">
-    <value>Unsuitability type code cannot exceed 200 characters.</value>
+    <value>Başlık adı 200 karakterden fazla olamaz.</value>
   </data>
 </root>

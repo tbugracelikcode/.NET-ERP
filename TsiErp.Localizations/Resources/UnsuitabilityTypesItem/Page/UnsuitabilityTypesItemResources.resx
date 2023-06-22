@@ -195,8 +195,14 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
+  <data name="StationGroupLabel" xml:space="preserve">
+    <value>İş Merkezi:</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Kalite Kontrol &gt; Uygunsuzluk Başlıkları</value>
+  </data>
+  <data name="UnsuitabilityTypesItemPlaceholder" xml:space="preserve">
+    <value>Seçiniz</value>
   </data>
   <data name="UnsuitabilityTypesItemTitle" xml:space="preserve">
     <value>Uygunsuzluk Türü Başlıkları</value>

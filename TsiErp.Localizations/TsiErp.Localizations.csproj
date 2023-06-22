@@ -276,6 +276,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>UnplannedMaintenancesResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\UnsuitabilityItems\Page\UnsuitabilityItemsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UnsuitabilityItemsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\UnsuitabilityTypesItem\Page\UnsuitabilityTypesItemResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -634,6 +639,13 @@
     <EmbeddedResource Update="Resources\UnplannedMaintenances\Page\UnplannedMaintenancesResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>UnplannedMaintenancesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\UnsuitabilityItems\Page\UnsuitabilityItemsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\UnsuitabilityItems\Page\UnsuitabilityItemsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UnsuitabilityItemsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\UnsuitabilityTypesItem\Page\UnsuitabilityTypesItemResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

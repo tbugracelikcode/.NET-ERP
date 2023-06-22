@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 
-namespace TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem.Dtos
+namespace TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos
 {
-    public class SelectUnsuitabilityTypesItemsDto : FullAuditedEntityDto
+    public class ListUnsuitabilityItemsDto : FullAuditedEntityDto
     {
+
         /// <summary>
         /// Başlık Kodu
         /// </summary>
@@ -25,14 +26,22 @@ namespace TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem.Dtos
         public string Description_ { get; set; }
 
         public bool IsActive { get; set; }
-        /// <summary>
-        /// Data Concurrency Stamp
-        /// </summary>
-        public bool? DataOpenStatus { get; set; }
 
         /// <summary>
-        /// Data Concurrency UserID
+        /// Uygunsuzluk Türü Başlığı 
         /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
+        public string UnsuitabilityTypesItemsName { get; set; }
+
+        public string StationGroupName { get; set; }
+
+        /// <summary>
+        /// Şiddet Aralığı
+        /// </summary>
+        public int IntensityRange { get; set; }
+
+        /// <summary>
+        /// Şiddet Kat Sayısı
+        /// </summary>
+        public int IntensityCoefficient { get; set; }
     }
 }
