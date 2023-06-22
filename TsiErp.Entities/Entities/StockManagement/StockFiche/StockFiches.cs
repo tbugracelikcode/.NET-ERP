@@ -57,6 +57,12 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche
         /// </summary>
         public Guid WarehouseID { get; set; }
 
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Giriş Çıkış Kodu
+        /// </summary>
+        public int InputOutputCode { get; set; }
+
 
         [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
