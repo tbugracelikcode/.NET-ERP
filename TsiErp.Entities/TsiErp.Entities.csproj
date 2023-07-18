@@ -15,18 +15,4 @@
     <ProjectReference Include="..\TSI.QueryBuilder\TSI.QueryBuilder.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Entities\GeneralSystemIdentifications\FinanceManagementParameters\" />
-    <Folder Include="Entities\GeneralSystemIdentifications\MachineAndWorkforceManagementParameters\" />
-    <Folder Include="Entities\GeneralSystemIdentifications\MaintenanceManagementParameters\" />
-    <Folder Include="Entities\GeneralSystemIdentifications\GeneralParameters\" />
-    <Folder Include="Entities\GeneralSystemIdentifications\QualityControlParameters\" />
-    <Folder Include="Entities\GeneralSystemIdentifications\ProductionManagementParameters\" />
-    <Folder Include="Entities\GeneralSystemIdentifications\ShippingManagementParameters\" />
-    <Folder Include="Entities\GeneralSystemIdentifications\PlanningManagementParameters\" />
-    <Folder Include="Entities\GeneralSystemIdentifications\SalesManagementParameters\" />
-    <Folder Include="Entities\GeneralSystemIdentifications\PurchaseManagementParameters\" />
-    <Folder Include="Entities\GeneralSystemIdentifications\StockManagementParameters\" />
-  </ItemGroup>
-
 </Project>
