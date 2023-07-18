@@ -90,5 +90,16 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string ProgVersions = "ProgVersions";
         public static readonly string UnsuitabilityTypesItems = "UnsuitabilityTypesItems";
         public static readonly string UnsuitabilityItems = "UnsuitabilityItems";
+        public static readonly string FinanceManagementParameters = "FinanceManagementParameters";
+        public static readonly string GeneralParameters = "GeneralParameters";
+        public static readonly string MachineAndWorkforceManagementParameters = "MachineAndWorkforceManagementParameters";
+        public static readonly string MaintenanceManagementParameters = "MaintenanceManagementParameters";
+        public static readonly string PlanningManagementParameters = "PlanningManagementParameters";
+        public static readonly string ProductionManagementParameters = "ProductionManagementParameters";
+        public static readonly string PurchaseManagementParameters = "PurchaseManagementParameters";
+        public static readonly string QualityControlParameters = "QualityControlParameters";
+        public static readonly string SalesManagementParameters = "SalesManagementParameters";
+        public static readonly string ShippingManagementParameters = "ShippingManagementParameters";
+        public static readonly string StockManagementParameters = "StockManagementParameters";
     }
 }
