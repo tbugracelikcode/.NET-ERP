@@ -10,10 +10,21 @@ using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ExchangeRate;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.FinanceManagementParameter;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.GeneralParameter;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.MachineAndWorkforceManagementParameter;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.MaintenanceManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.PlanningManagementParameter;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.ProductionManagementParameter;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManagementParameter;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.QualityControlParameter;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShiftLine;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShippingManagementParameter;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.StockManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.User;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserGroup;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Version;
@@ -2933,6 +2944,391 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 WarehousesTable.Create();
+            }
+            #endregion
+
+            #region FinanceManagementParameters Table Created
+            Table FinanceManagementParametersTable = model.CreateTable(Tables.FinanceManagementParameters);
+
+            if (FinanceManagementParametersTable != null)
+            {
+                var properties = (typeof(FinanceManagementParameters)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(FinanceManagementParametersTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(FinanceManagementParametersTable, "PK_" + FinanceManagementParametersTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        FinanceManagementParametersTable.Indexes.Add(pkIndex);
+                    }
+
+                    FinanceManagementParametersTable.Columns.Add(column);
+                }
+
+                FinanceManagementParametersTable.Create();
+            }
+            #endregion
+
+            #region GeneralParameters Table Created
+            Table GeneralParametersTable = model.CreateTable(Tables.GeneralParameters);
+
+            if (GeneralParametersTable != null)
+            {
+                var properties = (typeof(GeneralParameters)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(GeneralParametersTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(GeneralParametersTable, "PK_" + GeneralParametersTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        GeneralParametersTable.Indexes.Add(pkIndex);
+                    }
+
+                    GeneralParametersTable.Columns.Add(column);
+                }
+
+                GeneralParametersTable.Create();
+            }
+            #endregion
+
+            #region MachineAndWorkforceManagementParameters Table Created
+            Table MachineAndWorkforceManagementParametersTable = model.CreateTable(Tables.MachineAndWorkforceManagementParameters);
+
+            if (MachineAndWorkforceManagementParametersTable != null)
+            {
+                var properties = (typeof(MachineAndWorkforceManagementParameters)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(MachineAndWorkforceManagementParametersTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(MachineAndWorkforceManagementParametersTable, "PK_" + MachineAndWorkforceManagementParametersTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        MachineAndWorkforceManagementParametersTable.Indexes.Add(pkIndex);
+                    }
+
+                    MachineAndWorkforceManagementParametersTable.Columns.Add(column);
+                }
+
+                MachineAndWorkforceManagementParametersTable.Create();
+            }
+            #endregion
+
+            #region MaintenanceManagementParameters Table Created
+            Table MaintenanceManagementParametersTable = model.CreateTable(Tables.MaintenanceManagementParameters);
+
+            if (MaintenanceManagementParametersTable != null)
+            {
+                var properties = (typeof(MaintenanceManagementParameters)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(MaintenanceManagementParametersTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(MaintenanceManagementParametersTable, "PK_" + MaintenanceManagementParametersTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        MaintenanceManagementParametersTable.Indexes.Add(pkIndex);
+                    }
+
+                    MaintenanceManagementParametersTable.Columns.Add(column);
+                }
+
+                MaintenanceManagementParametersTable.Create();
+            }
+            #endregion
+
+            #region PlanningManagementParameters Table Created
+            Table PlanningManagementParametersTable = model.CreateTable(Tables.PlanningManagementParameters);
+
+            if (PlanningManagementParametersTable != null)
+            {
+                var properties = (typeof(PlanningManagementParameters)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(PlanningManagementParametersTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(PlanningManagementParametersTable, "PK_" + PlanningManagementParametersTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        PlanningManagementParametersTable.Indexes.Add(pkIndex);
+                    }
+
+                    PlanningManagementParametersTable.Columns.Add(column);
+                }
+
+                PlanningManagementParametersTable.Create();
+            }
+            #endregion
+
+            #region ProductionManagementParameters Table Created
+            Table ProductionManagementParametersTable = model.CreateTable(Tables.ProductionManagementParameters);
+
+            if (ProductionManagementParametersTable != null)
+            {
+                var properties = (typeof(ProductionManagementParameters)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(ProductionManagementParametersTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ProductionManagementParametersTable, "PK_" + ProductionManagementParametersTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        ProductionManagementParametersTable.Indexes.Add(pkIndex);
+                    }
+
+                    ProductionManagementParametersTable.Columns.Add(column);
+                }
+
+                ProductionManagementParametersTable.Create();
+            }
+            #endregion
+
+            #region PurchaseManagementParameters Table Created
+            Table PurchaseManagementParametersTable = model.CreateTable(Tables.PurchaseManagementParameters);
+
+            if (PurchaseManagementParametersTable != null)
+            {
+                var properties = (typeof(PurchaseManagementParameters)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(PurchaseManagementParametersTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(PurchaseManagementParametersTable, "PK_" + PurchaseManagementParametersTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        PurchaseManagementParametersTable.Indexes.Add(pkIndex);
+                    }
+
+                    PurchaseManagementParametersTable.Columns.Add(column);
+                }
+
+                PurchaseManagementParametersTable.Create();
+            }
+            #endregion
+
+            #region QualityControlParameters Table Created
+            Table QualityControlParametersTable = model.CreateTable(Tables.QualityControlParameters);
+
+            if (QualityControlParametersTable != null)
+            {
+                var properties = (typeof(QualityControlParameters)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(QualityControlParametersTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(QualityControlParametersTable, "PK_" + QualityControlParametersTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        QualityControlParametersTable.Indexes.Add(pkIndex);
+                    }
+
+                    QualityControlParametersTable.Columns.Add(column);
+                }
+
+                QualityControlParametersTable.Create();
+            }
+            #endregion
+
+            #region SalesManagementParameters Table Created
+            Table SalesManagementParametersTable = model.CreateTable(Tables.SalesManagementParameters);
+
+            if (SalesManagementParametersTable != null)
+            {
+                var properties = (typeof(SalesManagementParameters)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(SalesManagementParametersTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(SalesManagementParametersTable, "PK_" + SalesManagementParametersTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        SalesManagementParametersTable.Indexes.Add(pkIndex);
+                    }
+
+                    SalesManagementParametersTable.Columns.Add(column);
+                }
+
+                SalesManagementParametersTable.Create();
+            }
+            #endregion
+
+            #region ShippingManagementParameters Table Created
+            Table ShippingManagementParametersTable = model.CreateTable(Tables.ShippingManagementParameters);
+
+            if (ShippingManagementParametersTable != null)
+            {
+                var properties = (typeof(ShippingManagementParameters)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(ShippingManagementParametersTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ShippingManagementParametersTable, "PK_" + ShippingManagementParametersTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        ShippingManagementParametersTable.Indexes.Add(pkIndex);
+                    }
+
+                    ShippingManagementParametersTable.Columns.Add(column);
+                }
+
+                ShippingManagementParametersTable.Create();
+            }
+            #endregion
+
+            #region StockManagementParameters Table Created
+            Table StockManagementParametersTable = model.CreateTable(Tables.StockManagementParameters);
+
+            if (StockManagementParametersTable != null)
+            {
+                var properties = (typeof(StockManagementParameters)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(StockManagementParametersTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(StockManagementParametersTable, "PK_" + StockManagementParametersTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        StockManagementParametersTable.Indexes.Add(pkIndex);
+                    }
+
+                    StockManagementParametersTable.Columns.Add(column);
+                }
+
+                StockManagementParametersTable.Create();
             }
             #endregion
 
