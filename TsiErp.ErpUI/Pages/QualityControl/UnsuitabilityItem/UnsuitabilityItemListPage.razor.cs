@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.SqlServer.Management.Smo;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
@@ -10,7 +11,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItem
 {
     partial class UnsuitabilityItemListPage
     {
-        private List<SelectionList> SelectionLists = new List<SelectionList>() { new SelectionList { Text = "Evet", Id=1 }, new SelectionList { Text = "Hayır", Id=2 } };
+        private List<SelectionList> SelectionLists = new List<SelectionList>() { new SelectionList { Text = "Evet", Id = 1 }, new SelectionList { Text = "Hayır", Id = 2 } };
 
         List<ListStationGroupsDto> StationGroupList = new List<ListStationGroupsDto>();
 
@@ -77,28 +78,94 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItem
 
         #endregion
 
-        public void LifeThreateningOnChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, SelectionList> args)
+        private void IntensityRangeCalculate()
         {
-        }
+            if(DataSource.LifeThreatening=="1")
+            {
+                DataSource.IntensityRange = 100;
+                DataSource.IntensityCoefficient = 10;
+                return;
+            }
+            else
+            {
+                DataSource.IntensityRange = 0;
+                DataSource.IntensityCoefficient = 0;
 
-        public void LossOfPrestigeOnChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, SelectionList> args)
-        {
-        }
+                if (DataSource.LossOfPrestige == "1")
+                {
+                    DataSource.IntensityRange = 100;
+                    DataSource.IntensityCoefficient = 10;
+                    return;
+                }
 
-        public void ExtraCostOnChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, SelectionList> args)
-        {
-        }
+                if (DataSource.ExtraCost == "1")
+                {
+                    DataSource.IntensityRange = DataSource.IntensityRange + 50;
+                }
 
-        public void ProductLifeShorteningOnChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, SelectionList> args)
-        {
-        }
+                if (DataSource.ProductLifeShortening == "1")
+                {
+                    DataSource.IntensityRange = DataSource.IntensityRange + 20;
+                }
 
-        public void DetectabilityOnChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, SelectionList> args)
-        {
-        }
+                if (DataSource.Detectability == "2")
+                {
+                    DataSource.IntensityRange = DataSource.IntensityRange + 20;
+                }
 
-        public void ToBeUsedAsOnChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<string, SelectionList> args)
-        {
+                if (DataSource.ToBeUsedAs == "1")
+                {
+                    DataSource.IntensityRange = DataSource.IntensityRange + 10;
+                }
+            }
+
+            if (DataSource.LossOfPrestige == "1")
+            {
+                DataSource.IntensityRange = 100;
+                DataSource.IntensityCoefficient = 10;
+                return;
+            }
+            else 
+            {
+                DataSource.IntensityRange = 0;
+                DataSource.IntensityCoefficient = 0;
+
+                if (DataSource.LifeThreatening == "1")
+                {
+                    DataSource.IntensityRange = 100;
+                    DataSource.IntensityCoefficient = 10;
+                    return;
+                }
+
+                if (DataSource.ExtraCost == "1")
+                {
+                    DataSource.IntensityRange = DataSource.IntensityRange + 50;
+                }
+
+                if (DataSource.ProductLifeShortening == "1")
+                {
+                    DataSource.IntensityRange = DataSource.IntensityRange + 20;
+                }
+
+                if (DataSource.Detectability == "2")
+                {
+                    DataSource.IntensityRange = DataSource.IntensityRange + 20;
+                }
+
+                if (DataSource.ToBeUsedAs == "1")
+                {
+                    DataSource.IntensityRange = DataSource.IntensityRange + 10;
+                }
+            }
+
+            if(DataSource.IntensityRange==0)
+            {
+                DataSource.IntensityCoefficient = 1;
+            }
+            else
+            {
+                DataSource.IntensityCoefficient = DataSource.IntensityRange / 10;
+            }
         }
     }
 

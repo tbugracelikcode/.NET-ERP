@@ -186,6 +186,12 @@
   <data name="IntensityRange" xml:space="preserve">
     <value>INTENSITY RANGE</value>
   </data>
+  <data name="IntensityRangeCalculateButton" xml:space="preserve">
+    <value>Calculate</value>
+  </data>
+  <data name="IntensityRangeCalculateLabel" xml:space="preserve">
+    <value>Intensity Range Calculate</value>
+  </data>
   <data name="IntensityRangeLabel" xml:space="preserve">
     <value>Intensity Range:</value>
   </data>
