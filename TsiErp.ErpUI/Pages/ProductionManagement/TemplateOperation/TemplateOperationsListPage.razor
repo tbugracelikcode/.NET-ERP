@@ -2,7 +2,7 @@
 @layout MainLayout
 
 
-@inject IStringLocalizer<TemplateOperationsResource> L 
+@inject IStringLocalizer<TemplateOperationsResource> L
 
 @inherits BaseListPage<SelectTemplateOperationsDto, ListTemplateOperationsDto, CreateTemplateOperationsDto, UpdateTemplateOperationsDto, ListTemplateOperationsParameterDto>
 
@@ -34,7 +34,7 @@ else
                     <SfCard class="TSIGridCards">
 
                         <CardContent>
-                            <SfGrid ID="Grid"  @ref="_grid"   AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true"  GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu">
+                            <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu">
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
                                 <SfToolbar>
                                     <ToolbarItems>
@@ -54,7 +54,7 @@ else
 
                                     </ToolbarItems>
                                 </SfToolbar>
-                                <GridEvents   ContextMenuItemClicked="@MainContextMenuClick" TValue="ListTemplateOperationsDto"></GridEvents>
+                                <GridEvents ContextMenuItemClicked="@MainContextMenuClick" TValue="ListTemplateOperationsDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
@@ -75,17 +75,17 @@ else
     </DevGridLayout>
 
     <DxPopup @bind-Visible="base.EditPageVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["EditModalTitle"]"
-         Width="60%"
-         Height="50%"
-         MinWidth="1140px"
-         MinHeight="540px"
-         HeaderCssClass="HeaderTitleCss"
-         Showing="CrudModalShowing"
-         Closing="CrudModalClosing">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["EditModalTitle"]"
+             Width="60%"
+             Height="50%"
+             MinWidth="1140px"
+             MinHeight="540px"
+             HeaderCssClass="HeaderTitleCss"
+             Showing="CrudModalShowing"
+             Closing="CrudModalClosing">
 
         <BodyTemplate>
             <DxGridLayout CssClass="TSIGridLayout">
@@ -109,13 +109,13 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.Code"></SfTextBox>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.Name"></SfTextBox>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="1">
@@ -128,21 +128,44 @@ else
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                             <center>
-                            <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
-                            <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
+                                <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
+                                <SfSwitch @bind-Checked="DataSource.IsActive"></SfSwitch>
                             </center>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="3" Column="1" ColumnSpan="3">
                         <Template>
+
+                            @*<SfTab>
+                                <TabItems>
+                                    <TabItem>
+                                        <ChildContent>
+                                            <TabHeader Text="@L["Tab1Name"]"></TabHeader>
+                                        </ChildContent>
+                                        <ContentTemplate>
+                                        </ContentTemplate>
+                                    </TabItem>
+
+                                    <TabItem>
+                                        <ChildContent>
+                                            <TabHeader Text="@L["Tab2Name"]"></TabHeader>
+                                        </ChildContent>
+                                        <ContentTemplate>
+                                        </ContentTemplate>
+                                    </TabItem>
+                                </TabItems>
+                            </SfTab>*@
+
+
+
                             <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
                                 <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectTemplateOperationLinesDto"></GridEvents>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                <GridSelectionSettings  Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                 <GridColumns>
                                     <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.Priority) Type="ColumnType.Number" HeaderText="@L["LineGridPriority"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
@@ -167,7 +190,6 @@ else
                             <table style="height:100%">
                                 <tr style="height:40%">
                                     <td>
-
                                     </td>
                                 </tr>
                                 <tr style="vertical-align:central; height:10%">
@@ -176,16 +198,15 @@ else
 
                                     </td>
                                 </tr>
-                                  <tr style="vertical-align:central; height:10%">
+                                <tr style="vertical-align:central; height:10%">
                                     <td>
                                         <SfButton CssClass="TSICancelButton" OnClick="ArrowDownBtnClicked"><SfIcon Size="IconSize.Medium" Name="IconName.ArrowDown"></SfIcon></SfButton>
 
                                     </td>
                                 </tr>
 
-                                 <tr style="height:40%">
+                                <tr style="height:40%">
                                     <td>
-
                                     </td>
                                 </tr>
                             </table>
@@ -202,17 +223,17 @@ else
     </DxPopup>
 
     <DxPopup @bind-Visible="LineCrudPopup"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["EditLineModalTitle"]"
-         Width="48%"
-         Height="31%"
-         MinWidth="910px"
-         MinHeight="340px"
-         HeaderCssClass="HeaderTitleCss"
-         Showing="CrudModalShowing"
-         Closing="CrudModalClosing">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["EditLineModalTitle"]"
+             Width="48%"
+             Height="31%"
+             MinWidth="910px"
+             MinHeight="340px"
+             HeaderCssClass="HeaderTitleCss"
+             Showing="CrudModalShowing"
+             Closing="CrudModalClosing">
 
         <BodyTemplate>
             <DxGridLayout CssClass="TSIGridLayout">
@@ -244,7 +265,7 @@ else
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["StationNameLineLabel"] </strong></label>
-                               <SfTextBox @ref="@StationsNameButtonEdit" Created="@StationsNameOnCreateIcon" @bind-Value="LineDataSource.StationName" ShowClearButton=true ValueChange="StationsOnValueChange"></SfTextBox>
+                            <SfTextBox @ref="@StationsNameButtonEdit" Created="@StationsNameOnCreateIcon" @bind-Value="LineDataSource.StationName" ShowClearButton=true ValueChange="StationsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -298,18 +319,18 @@ else
 
 }
 
- @if (SelectStationsPopupVisible)
+@if (SelectStationsPopupVisible)
 {
     <DxPopup @bind-Visible="SelectStationsPopupVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["StationModalTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["StationModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DevGridLayout ColumnCount="1" RowCount="1">
