@@ -4,6 +4,7 @@ using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationLine.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
@@ -12,6 +13,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
 {
     public partial class TemplateOperationsListPage
     {
+        SfTextBox StationGroupButtonEdit;
+        bool SelectStationGroupPopupVisible = false;
+        List<ListStationGroupsDto> StationGroupList = new List<ListStationGroupsDto>();
+
         private SfGrid<SelectTemplateOperationLinesDto> _LineGrid;
 
         [Inject]
@@ -33,6 +38,41 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
 
+        }
+
+        public async Task StationGroupOnCreateIcon()
+        {
+            var StationGroupButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, StationGroupButtonClickEvent);
+            await StationGroupButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", StationGroupButtonClick } });
+        }
+
+        public async void StationGroupButtonClickEvent()
+        {
+            SelectStationGroupPopupVisible = true;
+            StationGroupList = (await StationGroupsService.GetListAsync(new ListStationGroupsParameterDto())).Data.ToList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void StationGroupOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.WorkCenterID = Guid.Empty;
+                DataSource.WorkCenterName = string.Empty;
+            }
+        }
+
+        public async void StationGroupDoubleClickHandler(RecordDoubleClickEventArgs<ListStationGroupsDto> args)
+        {
+            var selectedStationGroup = args.RowData;
+
+            if (selectedStationGroup != null)
+            {
+                DataSource.WorkCenterID = selectedStationGroup.Id;
+                DataSource.WorkCenterName = selectedStationGroup.Name;
+                SelectStationGroupPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
         }
 
         #region İş İstasyonu ButtonEdit

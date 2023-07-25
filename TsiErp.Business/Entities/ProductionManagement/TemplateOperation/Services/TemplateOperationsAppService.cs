@@ -10,7 +10,9 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.TemplateOperation.Validations;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationLine;
@@ -53,7 +55,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
 
                 var query = queryFactory.Query().From(Tables.TemplateOperations).Insert(new CreateTemplateOperationsDto
                 {
-                    WorkCenterID = Guid.Empty,
+                    WorkCenterID = input.WorkCenterID,
                     Code = input.Code,
                     CreationTime = DateTime.Now,
                     CreatorId = LoginedUserService.UserId,
@@ -140,11 +142,20 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var query = queryFactory.Query().From(Tables.TemplateOperations).Select("*").Where(
-               new
-               {
-                   Id = id
-               }, true, true, "");
+                var query = queryFactory.Query().From(Tables.TemplateOperations).Select<TemplateOperations>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.DataOpenStatus, p.DataOpenStatusUserId })
+                    .Join<StationGroups>
+                    (
+                        g => new { WorkCenterName = g.Name },
+                        nameof(TemplateOperations.WorkCenterID),
+                        nameof(StationGroups.Id), JoinType.Left
+                    )
+                    .Where
+                    (
+                        new
+                        {
+                            Id = id
+                        }, true, true, Tables.TemplateOperations
+                    );
 
                 var templateOperations = queryFactory.Get<SelectTemplateOperationsDto>(query);
 
@@ -176,7 +187,14 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var query = queryFactory.Query().From(Tables.TemplateOperations).Select("*").Where(null, true, true, "");
+                var query = queryFactory.Query().From(Tables.TemplateOperations)
+                    .Select<TemplateOperations>(p => new { p.Id, p.Name, p.Code, p.IsActive })
+                    .Join<StationGroups>
+                    (
+                        g => new { WorkCenterName = g.Name },
+                        nameof(TemplateOperations.WorkCenterID),
+                        nameof(StationGroups.Id), JoinType.Left
+                    ).Where(null, true, true, Tables.TemplateOperations);
 
                 var templateOperations = queryFactory.GetList<ListTemplateOperationsDto>(query).ToList();
 
@@ -195,7 +213,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
 
                 var templateOperationLine = queryFactory.GetList<SelectTemplateOperationLinesDto>(queryLines).ToList();
 
-                foreach(var item in templateOperations)
+                foreach (var item in templateOperations)
                 {
                     item.SelectTemplateOperationLines = templateOperationLine.Where(t => t.TemplateOperationID == item.Id).ToList();
                 }

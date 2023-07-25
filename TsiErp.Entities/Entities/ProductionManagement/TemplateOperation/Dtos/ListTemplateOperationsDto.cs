@@ -22,7 +22,7 @@ namespace TsiErp.Entities.Entities.ProductionManagement.TemplateOperation.Dtos
         /// <summary>
         /// İş Merkezi Kodu
         /// </summary>
-        public string WorkCenterCode { get; set; }
+        public string WorkCenterName { get; set; }
         /// <summary>
         /// Aktiflik
         /// </summary>
