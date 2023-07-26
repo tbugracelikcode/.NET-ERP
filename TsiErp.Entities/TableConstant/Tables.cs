@@ -101,5 +101,6 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string SalesManagementParameters = "SalesManagementParameters";
         public static readonly string ShippingManagementParameters = "ShippingManagementParameters";
         public static readonly string StockManagementParameters = "StockManagementParameters";
+        public static readonly string TemplateOperationUnsuitabilityItems = "TemplateOperationUnsuitabilityItems";
     }
 }

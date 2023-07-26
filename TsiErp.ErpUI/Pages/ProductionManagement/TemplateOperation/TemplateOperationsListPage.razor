@@ -137,13 +137,79 @@ else
                     <DxGridLayoutItem Row="3" Column="1" ColumnSpan="3">
                         <Template>
 
-                            @*<SfTab>
+                            <SfTab>
                                 <TabItems>
                                     <TabItem>
                                         <ChildContent>
                                             <TabHeader Text="@L["Tab1Name"]"></TabHeader>
                                         </ChildContent>
                                         <ContentTemplate>
+                                            <DxGridLayout CssClass="TSIGridLayout">
+                                                <Rows>
+                                                    <DxGridLayoutRow Height="100%" />
+                                                </Rows>
+                                                <Columns>
+                                                    <DxGridLayoutColumn Width="90%" />
+                                                    <DxGridLayoutColumn Width="10%" />
+                                                </Columns>
+                                                <Items>
+                                                    <DxGridLayoutItem Row="0" Column="0">
+                                                        <Template>
+
+                                                            <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
+                                                                <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectTemplateOperationLinesDto"></GridEvents>
+                                                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                                                <GridColumns>
+                                                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.Priority) Type="ColumnType.Number" HeaderText="@L["LineGridPriority"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.StationCode) HeaderText="@L["LineGridStationCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.StationName) HeaderText="@L["LineGridStationName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.OperationTime) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridOprTime"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+
+                                                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.ProcessQuantity) Type="ColumnType.Number" HeaderText="@L["LineGridProcessQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.AdjustmentAndControlTime) Type="ColumnType.Number" HeaderText="@L["LineGridAdjustment"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.Alternative) DisplayAsCheckBox=true HeaderText="@L["LineGridAlternative"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                </GridColumns>
+                                                            </SfGrid>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                    <DxGridLayoutItem Row="0" Column="1">
+                                                        <Template>
+                                                            <table style="height:100%">
+                                                                <tr style="height:40%">
+                                                                    <td>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr style="vertical-align:central; height:10%">
+                                                                    <td>
+                                                                        <SfButton CssClass="TSISaveButton" OnClick="ArrowUpBtnClicked"><SfIcon Size="IconSize.Medium" Name="IconName.ArrowUp"></SfIcon></SfButton>
+
+                                                                    </td>
+                                                                </tr>
+                                                                <tr style="vertical-align:central; height:10%">
+                                                                    <td>
+                                                                        <SfButton CssClass="TSICancelButton" OnClick="ArrowDownBtnClicked"><SfIcon Size="IconSize.Medium" Name="IconName.ArrowDown"></SfIcon></SfButton>
+
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr style="height:40%">
+                                                                    <td>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+                                                </Items>
+                                            </DxGridLayout>
                                         </ContentTemplate>
                                     </TabItem>
 
@@ -155,64 +221,9 @@ else
                                         </ContentTemplate>
                                     </TabItem>
                                 </TabItems>
-                            </SfTab>*@
-
-
-
-                            <SfGrid @ref=_LineGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridLineList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
-                                <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectTemplateOperationLinesDto"></GridEvents>
-                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
-
-                                <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
-                                <GridColumns>
-                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.Priority) Type="ColumnType.Number" HeaderText="@L["LineGridPriority"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-
-                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.StationCode) HeaderText="@L["LineGridStationCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.StationName) HeaderText="@L["LineGridStationName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-
-                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.OperationTime) Format="N2" Type="ColumnType.Number" HeaderText="@L["LineGridOprTime"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-
-
-                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.ProcessQuantity) Type="ColumnType.Number" HeaderText="@L["LineGridProcessQuantity"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.AdjustmentAndControlTime) Type="ColumnType.Number" HeaderText="@L["LineGridAdjustment"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-
-                                    <GridColumn Field=@nameof(SelectTemplateOperationLinesDto.Alternative) DisplayAsCheckBox=true HeaderText="@L["LineGridAlternative"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                </GridColumns>
-                            </SfGrid>
+                            </SfTab>
                         </Template>
                     </DxGridLayoutItem>
-
-
-                    <DxGridLayoutItem Row="3" Column="4">
-                        <Template>
-                            <table style="height:100%">
-                                <tr style="height:40%">
-                                    <td>
-                                    </td>
-                                </tr>
-                                <tr style="vertical-align:central; height:10%">
-                                    <td>
-                                        <SfButton CssClass="TSISaveButton" OnClick="ArrowUpBtnClicked"><SfIcon Size="IconSize.Medium" Name="IconName.ArrowUp"></SfIcon></SfButton>
-
-                                    </td>
-                                </tr>
-                                <tr style="vertical-align:central; height:10%">
-                                    <td>
-                                        <SfButton CssClass="TSICancelButton" OnClick="ArrowDownBtnClicked"><SfIcon Size="IconSize.Medium" Name="IconName.ArrowDown"></SfIcon></SfButton>
-
-                                    </td>
-                                </tr>
-
-                                <tr style="height:40%">
-                                    <td>
-                                    </td>
-                                </tr>
-                            </table>
-                        </Template>
-                    </DxGridLayoutItem>
-
                 </Items>
             </DxGridLayout>
         </BodyTemplate>

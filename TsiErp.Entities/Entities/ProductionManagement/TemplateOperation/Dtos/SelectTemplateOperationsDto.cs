@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationUnsuitabilityItem.Dtos;
 
 namespace TsiErp.Entities.Entities.ProductionManagement.TemplateOperation.Dtos
 {
@@ -40,7 +41,11 @@ namespace TsiErp.Entities.Entities.ProductionManagement.TemplateOperation.Dtos
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
+
         [NoDatabaseAction]
         public List<SelectTemplateOperationLinesDto> SelectTemplateOperationLines { get; set; }
+
+        [NoDatabaseAction]
+        public List<SelectTemplateOperationUnsuitabilityItemsDto> SelectTemplateOperationUnsuitabilityItems { get; set; }
     }
 }
