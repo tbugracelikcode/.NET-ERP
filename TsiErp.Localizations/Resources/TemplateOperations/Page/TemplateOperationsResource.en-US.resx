@@ -165,6 +165,15 @@
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="GridLineNr" xml:space="preserve">
+    <value>LINE NR.</value>
+  </data>
+  <data name="GridToBeUsed" xml:space="preserve">
+    <value>TO BE USED</value>
+  </data>
+  <data name="GridUnsuitabilityItemsName" xml:space="preserve">
+    <value>UNSUITABILITY ITEM</value>
+  </data>
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Activity:</value>
   </data>
@@ -235,10 +244,10 @@
     <value>Station Name:</value>
   </data>
   <data name="Tab1Name" xml:space="preserve">
-    <value>StationInformations</value>
+    <value>Station Informations</value>
   </data>
   <data name="Tab2Name" xml:space="preserve">
-    <value>OperationUnsuitabilityItems</value>
+    <value>Operation Unsuitability Items</value>
   </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>The template operation you selected will be permanently deleted.</value>

@@ -7,6 +7,7 @@ using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationUnsuitabilityItem.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
@@ -18,6 +19,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
         List<ListStationGroupsDto> StationGroupList = new List<ListStationGroupsDto>();
 
         private SfGrid<SelectTemplateOperationLinesDto> _LineGrid;
+        private SfGrid<SelectTemplateOperationUnsuitabilityItemsDto> _UnsuitabilityItemsLineGrid;
 
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -27,6 +29,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectTemplateOperationLinesDto> GridLineList = new List<SelectTemplateOperationLinesDto>();
+        List<SelectTemplateOperationUnsuitabilityItemsDto> UnsuitabilityItemsLineGridList = new List<SelectTemplateOperationUnsuitabilityItemsDto>();
 
         private bool LineCrudPopup = false;
 
@@ -71,6 +74,16 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
                 DataSource.WorkCenterID = selectedStationGroup.Id;
                 DataSource.WorkCenterName = selectedStationGroup.Name;
                 SelectStationGroupPopupVisible = false;
+
+                UnsuitabilityItemsLineGridList.Clear();
+
+                UnsuitabilityItemsLineGridList = (await TemplateOperationsAppService.GetUnsuitabilityItemsAsync(DataSource.WorkCenterID.GetValueOrDefault(), DataSource.Id)).Data.ToList();
+
+                if (UnsuitabilityItemsLineGridList != null)
+                {
+                    DataSource.SelectTemplateOperationUnsuitabilityItems = UnsuitabilityItemsLineGridList;
+                }
+
                 await InvokeAsync(StateHasChanged);
             }
         }
@@ -142,6 +155,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
             };
             DataSource.SelectTemplateOperationLines = new List<SelectTemplateOperationLinesDto>();
             GridLineList = DataSource.SelectTemplateOperationLines;
+
+            DataSource.SelectTemplateOperationUnsuitabilityItems = new List<SelectTemplateOperationUnsuitabilityItemsDto>();
+            UnsuitabilityItemsLineGridList = DataSource.SelectTemplateOperationUnsuitabilityItems;
 
             EditPageVisible = true;
 
@@ -279,9 +295,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
                             if (line != null)
                             {
 
-                                int selectedIndex = GridLineList.FindIndex(t=>t.Id==line.Id);
+                                int selectedIndex = GridLineList.FindIndex(t => t.Id == line.Id);
 
-                                if(selectedIndex >= 0)
+                                if (selectedIndex >= 0)
                                 {
                                     int selectedPriority = GridLineList[selectedIndex].Priority;
 
@@ -290,8 +306,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
 
                                     for (int i = 0; i < GridLineList.Count; i++)
                                     {
-                                        GridLineList[i].LineNr = i +1;
-                                        GridLineList[i].Priority = i +1;
+                                        GridLineList[i].LineNr = i + 1;
+                                        GridLineList[i].Priority = i + 1;
                                     }
 
                                     DataSource.SelectTemplateOperationLines = GridLineList;
@@ -424,5 +440,20 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
         }
 
         #endregion
+
+        public async void UnsuitabilityItemsRowUpdate(ActionEventArgs<SelectTemplateOperationUnsuitabilityItemsDto> arg)
+        {
+
+            if (arg.RequestType == Syncfusion.Blazor.Grids.Action.Save)
+            {
+                var data = arg.Data;
+
+                DataSource.SelectTemplateOperationUnsuitabilityItems.FirstOrDefault(t => t.LineNr == data.LineNr).ToBeUsed = data.ToBeUsed;
+                arg.Cancel = true;
+                await _UnsuitabilityItemsLineGrid.CloseEditAsync();
+                await _UnsuitabilityItemsLineGrid.Refresh();
+            }
+
+        }
     }
 }

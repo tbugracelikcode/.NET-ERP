@@ -315,6 +315,11 @@
     height: 100%;
 }
 
+.TSITemplateOprGridLayout {
+    width: 100%;
+    height: 350px;
+}
+
 .TSIStationCards {
     height: fit-content;
     border: 3px solid #f36565 !important;
