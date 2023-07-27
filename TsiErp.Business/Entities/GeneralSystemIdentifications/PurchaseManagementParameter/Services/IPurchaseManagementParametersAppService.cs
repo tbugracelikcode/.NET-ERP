@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManagementParameter.Dtos;
 
 namespace TsiErp.Business.Entities.GeneralSystemIdentifications.PurchaseManagementParameter.Services
 {
-    public interface IPurchaseManagementParametersAppService
+    public interface IPurchaseManagementParametersAppService : ICrudAppService<SelectPurchaseManagementParametersDto, ListPurchaseManagementParametersDto, CreatePurchaseManagementParametersDto, UpdatePurchaseManagementParametersDto, ListPurchaseManagementParametersParameterDto>
     {
     }
 }
