@@ -234,6 +234,12 @@
   <data name="StationNameLineLabel" xml:space="preserve">
     <value>İstasyon Açıklaması: </value>
   </data>
+  <data name="Tab1Name" xml:space="preserve">
+    <value>İş İstasyonu Bilgileri</value>
+  </data>
+  <data name="Tab2Name" xml:space="preserve">
+    <value>Operasyon Uygunsuzluk Başlıkları</value>
+  </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>Seçtiğiniz şablon operasyon, kalıcı olarak silinecektir.</value>
   </data>
