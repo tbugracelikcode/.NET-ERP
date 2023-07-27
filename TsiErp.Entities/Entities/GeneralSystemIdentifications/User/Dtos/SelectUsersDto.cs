@@ -35,10 +35,6 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.User.Dtos
         /// </summary>
         public string Email { get; set; }
         /// <summary>
-        /// E-posta Onay
-        /// </summary>
-        public bool IsEmailApproved { get; set; }
-        /// <summary>
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }

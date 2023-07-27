@@ -66,7 +66,6 @@ else
                                     <GridColumn Field=@nameof(ListUsersDto.NameSurname) HeaderText="@L["NameSurname"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListUsersDto.Email) HeaderText="@L["Email"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListUsersDto.GroupName) HeaderText="@L["GroupName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    <GridColumn Field=@nameof(ListUsersDto.IsEmailApproved) DisplayAsCheckBox="true" HeaderText="@L["IsEmailApproved"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                 </GridColumns>
                             </SfGrid>
                         </CardContent>
@@ -189,18 +188,6 @@ else
                                                                 <SfTextBox @ref="@UserGroupButtonEdit" Created="@UserGroupOnCreateIcon" @bind-Value="DataSource.GroupName" ShowClearButton=true ValueChange="UserGroupOnValueChange"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
-
-                                                    <DxGridLayoutItem Row="1" Column="3">
-                                                        <Template>
-                                                            <center>
-                                                                <label class="TSIModalLabel"><strong>@L["IsEmailApprovedLabel"] </strong></label><br />
-                                                                <SfSwitch @bind-Checked="DataSource.IsEmailApproved"></SfSwitch>
-                                                                </center>
-                                                        </Template>
-                                                    </DxGridLayoutItem>
-
-
-
                                                 </Items>
                                             </DxGridLayout>
 

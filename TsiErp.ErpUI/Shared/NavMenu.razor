@@ -1,3 +1,9 @@
+
+@inject IStringLocalizer<NavbarMenusResource> L
+
+
+
+
 <div>
 
     <div class="sidebar">
@@ -5,305 +11,293 @@
 
             <Nodes>
 
-                @*   <DxTreeViewNode Visible="@collapsevisible" Text="Ana Sayfa" IconCssClass="fas fa-columns b-bar-icon" />*@
-
-                <DxTreeViewNode Visible="@collapsevisible" Text="Stok Yönetimi" IconCssClass="fa fa-warehouse">
+                <DxTreeViewNode Visible="@collapsevisible" Text=@L["StockManagementParentMenu"] IconCssClass="fa fa-warehouse">
                     <Nodes>
-                        <DxTreeViewNode Text="Ana Kayýtlar">
+                        <DxTreeViewNode Text=@L["MainRecordsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/product-groups" Text="Ürün Gruplarý" />
-                                <DxTreeViewNode NavigateUrl="/unitsets" Text="Birim Setleri" />
-                                <DxTreeViewNode NavigateUrl="/warehouses" Text="Depo Kartlarý" />
-                                <DxTreeViewNode NavigateUrl="/products" Text="Stok Kartlarý" />
-                                <DxTreeViewNode NavigateUrl="/technical-drawings" Text="Teknik Resimler" />
-                                <DxTreeViewNode NavigateUrl="/product-referance-numbers" Text="Ürün Referans Numaralarý" />
+                                <DxTreeViewNode NavigateUrl="/product-groups" Text=@L["ProductGroupsChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/unitsets" Text=@L["UnitSetsChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/warehouses" Text=@L["WarehousesChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/products" Text=@L["ProductsChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/technical-drawings" Text=@L["TechnicalDrawingsChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/product-referance-numbers" Text=@L["ProductRefNumbersChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text="Hareketler">
+                        <DxTreeViewNode Text=@L["TransactionsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode Text="Stok Fiþleri" NavigateUrl="/stock-fiches" />
+                                <DxTreeViewNode Text=@L["StockFichesChildMenu"] NavigateUrl="/stock-fiches" />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text="Raporlar">
+                        <DxTreeViewNode Text=@L["ReportsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode Text="Malzeme Listesi" />
-                                <DxTreeViewNode Text="Malzeme/Depo Durum Raporu" />
-                                <DxTreeViewNode Text="Envanter Listesi" />
-                                <DxTreeViewNode Text="Ürün Grubuna Göre Performans Analizi" />
-                                <DxTreeViewNode Text="Ürün Grubuna Göre Hurda Analizi" />
+                                <DxTreeViewNode Text=@L["ListofMaterialsChildMenu"] />
+                                <DxTreeViewNode Text=@L["MaterialWarehouseStatusChildMenu"] />
+                                <DxTreeViewNode Text=@L["InventoryListChildMenu"] />
+                                <DxTreeViewNode Text=@L["ByProdGrpPerfAnalysisChildMenu"] />
+                                <DxTreeViewNode Text=@L["ByProdGrpScrapAnalysisChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text="Finans Yönetimi" IconCssClass="fa fa-euro-sign">
+                <DxTreeViewNode Visible="@collapsevisible" Text=@L["FinanceManagementParentMenu"] IconCssClass="fa fa-euro-sign">
                     <Nodes>
-                        <DxTreeViewNode Text="Ana Kayýtlar">
+                        <DxTreeViewNode Text=@L["MainRecordsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/current-account-cards" Text="Cari Hesap Kartlarý" />
-                                <DxTreeViewNode NavigateUrl="/payment-plans" Text="Ödeme Planlarý" />
+                                <DxTreeViewNode NavigateUrl="/current-account-cards" Text=@L["CurrentAccountsChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/payment-plans" Text=@L["PaymentPlansChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text="Satýn Alma Yönetimi" IconCssClass="fa fa-euro-sign">
+                <DxTreeViewNode Visible="@collapsevisible" Text=@L["PurchaseManagementParentMenu"] IconCssClass="fa fa-euro-sign">
                     <Nodes>
-                        <DxTreeViewNode Text="Ana Kayýtlar">
+                        <DxTreeViewNode Text=@L["MainRecordsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/purchase-prices" Text="Satýn Alma Fiyat Listeleri" />
+                                <DxTreeViewNode NavigateUrl="/purchase-prices" Text=@L["PurchasePricesChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text="Hareketler">
+                        <DxTreeViewNode Text=@L["TransactionsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/purchase-requests" Text="Satýn Alma Talep Fiþleri" />
-                                <DxTreeViewNode NavigateUrl="/purchase-orders" Text="Satýn Alma Sipariþleri " />
+                                <DxTreeViewNode NavigateUrl="/purchase-requests" Text=@L["PurchaseRequestsChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/purchase-orders" Text=@L["PurchaseOrdersChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text="Raporlar">
+                        <DxTreeViewNode Text=@L["ReportsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode Text="Satýn Alma Talep Fiþi Listesi" />
-                                <DxTreeViewNode Text="Satýn Alma Sipariþleri Listesi" />
+                                <DxTreeViewNode Text=@L["PurchaseRequestFicheListChildMenu"] />
+                                <DxTreeViewNode Text=@L["PurchaseOrderFicheListChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text="Satýþ Yönetimi" IconCssClass="fa fa-euro-sign">
+                <DxTreeViewNode Visible="@collapsevisible" Text=@L["SalesManagementParentMenu"] IconCssClass="fa fa-euro-sign">
                     <Nodes>
-                        <DxTreeViewNode Text="Ana Kayýtlar">
+                        <DxTreeViewNode Text=@L["MainRecordsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/sales-prices" Text="Satýþ Fiyat Listeleri" />
+                                <DxTreeViewNode NavigateUrl="/sales-prices" Text=@L["SalesPricesChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text="Hareketler">
+                        <DxTreeViewNode Text=@L["TransactionsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/sales-propositions" Text="Verilen Teklifler" />
-                                <DxTreeViewNode NavigateUrl="/sales-orders" Text="Satýþ Sipariþleri" />
-                                <DxTreeViewNode NavigateUrl="/forecasts" Text="Satýþ Forecast Kayýtlarý" />
+                                <DxTreeViewNode NavigateUrl="/sales-propositions" Text=@L["SalesPropositionsChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/sales-orders" Text=@L["SalesOrdersChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/forecasts" Text=@L["ForecastsChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text="Maliyetlendirme">
+                        <DxTreeViewNode Text=@L["CostMenu"]>
                             <Nodes>
-                                <DxTreeViewNode Text="Ürün Maliyet Kayýtlarý (CPR)" />
+                                <DxTreeViewNode Text=@L["CPRChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text="Raporlar">
+                        <DxTreeViewNode Text=@L["ReportsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode Text="Verilen Teklif Listesi" />
-                                <DxTreeViewNode Text="Satýþ Sipariþleri Listesi" />
+                                <DxTreeViewNode Text=@L["SalesPropositionFicheListChildMenu"] />
+                                <DxTreeViewNode Text=@L["SalesOrderFicheListChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text="Planlama" IconCssClass="fa fa-list">
+                <DxTreeViewNode Visible="@collapsevisible" Text=@L["PlanningParentMenu"] IconCssClass="fa fa-list">
                     <Nodes>
-                        <DxTreeViewNode Text="Üretim Planlama">
+                        <DxTreeViewNode Text=@L["ProductionPlanningMenu"]>
                             <Nodes>
-                                <DxTreeViewNode Text="Üretim Kaynak Planlamasý (MRPII)" />
-                                <DxTreeViewNode Text="Malzeme Ýhtiyaç Planlamasý (MRP)" />
+                                <DxTreeViewNode Text=@L["MRPIIChildMenu"] />
+                                <DxTreeViewNode Text=@L["MRPChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text="Çalýþma Takvimi">
+                        <DxTreeViewNode Text=@L["CalendarMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/calendars" Text="Çalýþma Takvimi" />
+                                <DxTreeViewNode NavigateUrl="/calendars" Text=@L["CalendarMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text="Sevkiyat Yönetimi" IconCssClass="fa fa-truck">
+                <DxTreeViewNode Visible="@collapsevisible" Text=@L["ShipmentParentMenu"] IconCssClass="fa fa-truck">
                     <Nodes>
-                        <DxTreeViewNode Text="Ana Kayýtlar">
+                        <DxTreeViewNode Text=@L["MainRecordsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/shipping-adresses" Text="Sevkiyat Adresleri" />
+                                <DxTreeViewNode NavigateUrl="/shipping-adresses" Text=@L["ShippingAdressesChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text="Hareketler">
+                        <DxTreeViewNode Text=@L["TransactionsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode Text="Sevkiyat Planlama" />
-                                <DxTreeViewNode Text="Paket Fiþleri" />
-                                <DxTreeViewNode Text="Palet Kayýtlarý" />
-                                <DxTreeViewNode Text="Çeki Listeleri" />
+                                <DxTreeViewNode Text=@L["ShipmentPlanningChildMenu"] />
+                                <DxTreeViewNode Text=@L["PackageFichesChildMenu"] />
+                                <DxTreeViewNode Text=@L["PalletRecordsChildMenu"] />
+                                <DxTreeViewNode Text=@L["PackingListsChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text="Raporlar">
+                        <DxTreeViewNode Text=@L["ReportsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode Text="Paket Fiþleri Listesi" />
-                                <DxTreeViewNode Text="Palet Kayýtlarý Listesi" />
-                                <DxTreeViewNode Text="Çeki Listesi" />
+                                <DxTreeViewNode Text=@L["PackageFichesListChildMenu"] />
+                                <DxTreeViewNode Text=@L["PalletRecordsListChildMenu"] />
+                                <DxTreeViewNode Text=@L["PackingListChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text="Makine & Ýþ Gücü Yönetimi" IconCssClass="fa fa-users">
+                <DxTreeViewNode Visible="@collapsevisible" Text=@L["MachWorkForceManagementParentMenu"] IconCssClass="fa fa-users">
                     <Nodes>
-                        <DxTreeViewNode Text="Ana Kayýtlar">
+                        <DxTreeViewNode Text=@L["MainRecordsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/station-groups" Text="Ýþ Ýstasyonu Gruplarý" />
-                                <DxTreeViewNode NavigateUrl="/stations" Text="Ýþ Ýstasyonlarý" />
-                                <DxTreeViewNode NavigateUrl="/employees" Text="Personel Kayýtlarý" />
-                                <DxTreeViewNode NavigateUrl="/departments" Text="Personel Departmanlarý" />
+                                <DxTreeViewNode NavigateUrl="/station-groups" Text=@L["StationGroupChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/stations" Text=@L["StationsChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/employees" Text=@L["EmployeesChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/departments" Text=@L["DepartmentsChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text="Hareketler">
+                        <DxTreeViewNode Text=@L["TransactionsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode Text="Personel Puanlama Kayýtlarý" />
-                                <DxTreeViewNode Text="Ýþ Ýstasyonu Maliyet Kayýtlarý" />
+                                <DxTreeViewNode Text=@L["EmployeeScoreChildMenu"] />
+                                <DxTreeViewNode Text=@L["StationCostChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text="Raporlar">
+                        <DxTreeViewNode Text=@L["ReportsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode Text="Ýþ Ýstasyonlarý Listesi" />
-                                <DxTreeViewNode Text="Personel Listesi" />
-                                <DxTreeViewNode Text="Personel Puanlama Listesi" />
-                                <DxTreeViewNode Text="Ýþ Ýstasyon Maliyetleri Listesi" />
-                                <DxTreeViewNode Text="Personel Verimlilik Analizi" />
-                                <DxTreeViewNode Text="Duruþ Kodlarýna Göre Personel Verimlilik Analizi" />
-                                <DxTreeViewNode Text="Duruþ Kodlarýna Göre Ýþ Ýstasyonu Analizi" />
-                                <DxTreeViewNode Text="Ürün Gruplarýna Göre Ýþ Ýstasyonu Performans Analizi" />
-                                <DxTreeViewNode Text="Personellere Göre Ýþ Ýstasyonu Verimlilik Analizi" />
+                                <DxTreeViewNode Text=@L["StationListChildMenu"] />
+                                <DxTreeViewNode Text=@L["EmployeeListChildMenu"] />
+                                <DxTreeViewNode Text=@L["EmployeeScoreListChildMenu"] />
+                                <DxTreeViewNode Text=@L["StationCostListChildMenu"] />
+                                <DxTreeViewNode Text=@L["EmployeeProductivityChildMenu"] />
+                                <DxTreeViewNode Text=@L["ByHaltEmpProductivityChildMenu"] />
+                                <DxTreeViewNode Text=@L["ByHaltStationChildMenu"] />
+                                <DxTreeViewNode Text=@L["ByHaltStationPerfChildMenu"] />
+                                <DxTreeViewNode Text=@L["ByEmpStationProductivityChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
                     </Nodes>
                 </DxTreeViewNode>
 
-
-                <DxTreeViewNode Visible="@collapsevisible" Text="Üretim Yönetimi" IconCssClass="fa fa-industry">
+                <DxTreeViewNode Visible="@collapsevisible" Text=@L["ProductionManagementParentMenu"] IconCssClass="fa fa-industry">
                     <Nodes>
-                        <DxTreeViewNode Text="Ana Kayýtlar">
+                        <DxTreeViewNode Text=@L["MainRecordsMenu"]>
                             <Nodes>
 
-                                <DxTreeViewNode Text="Operasyonlar">
+                                <DxTreeViewNode Text=@L["OperationsMenu"]>
                                     <Nodes>
-                                        <DxTreeViewNode NavigateUrl="/template-operations" Text="Þablon Operasyon Kayýtlarý" />
-                                        <DxTreeViewNode NavigateUrl="/products-operations" Text="Ürün Operasyon Kayýtlarý" />
+                                        <DxTreeViewNode NavigateUrl="/template-operations" Text=@L["TempOperationsChildMenu"] />
+                                        <DxTreeViewNode NavigateUrl="/products-operations" Text=@L["ProdOperationsChildMenu"] />
                                     </Nodes>
                                 </DxTreeViewNode>
-                                <DxTreeViewNode NavigateUrl="/bills-of-materials" Text="Üretim Reçeteleri" />
-                                <DxTreeViewNode NavigateUrl="/routes" Text="Üretim Rotalarý" />
-                                <DxTreeViewNode NavigateUrl="/halt-reasons" Text="Duruþ Kodlarý" />
+                                <DxTreeViewNode NavigateUrl="/bills-of-materials" Text=@L["BOMChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/routes" Text=@L["RoutesChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/halt-reasons" Text=@L["HaltReasonsChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
 
-                        <DxTreeViewNode Text="Hareketler">
+                        <DxTreeViewNode Text=@L["TransactionsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode Text="Üretim Emirleri" />
-                                <DxTreeViewNode NavigateUrl="/work-orders" Text="Ýþ Emirleri" />
+                                <DxTreeViewNode Text=@L["ProductionOrdersChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/work-orders" Text=@L["WorkOrdersChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text="Üretim Takip Kayýtlarý">
+                        <DxTreeViewNode Text=@L["ProductionTrackingRecordsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/production-tracking" Text="Manuel" />
-                                <DxTreeViewNode NavigateUrl="/production-tracking-iot" Text="IoT" />
-                                <DxTreeViewNode NavigateUrl="/contract-production-tracking" Text="Fason Ýmalat Takip Kayýtlarý" />
+                                <DxTreeViewNode NavigateUrl="/production-tracking" Text=@L["ProdTrackingsChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/production-tracking-iot" Text=@L["IoTProdTrackingsChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/contract-production-tracking" Text=@L["ContractProdTrackingsChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text="Raporlar">
+                        <DxTreeViewNode Text=@L["ReportsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode Text="Genel Fabrika OEE Analizi" />
-                                <DxTreeViewNode Text="Ýþ Ýstasyonlarý OEE Analizi" />
-                                <DxTreeViewNode Text="Üretim Takip Kayýtlarý Listesi" />
-                                <DxTreeViewNode Text="Ýþ Emirleri Listesi" />
-                                <DxTreeViewNode Text="Üretim Emirleri Listesi" />
+                                <DxTreeViewNode Text=@L["GeneralOEEChildMenu"] />
+                                <DxTreeViewNode Text=@L["StationOEEChildMenu"] />
+                                <DxTreeViewNode Text=@L["ProdTrackingListChildMenu"] />
+                                <DxTreeViewNode Text=@L["WorkOrderListChildMenu"] />
+                                <DxTreeViewNode Text=@L["ProductionOrderListChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text="Bakým Yönetimi" IconCssClass="fa fa-euro-sign">
+                <DxTreeViewNode Visible="@collapsevisible" Text=@L["MaintenanceManagementParentMenu"] IconCssClass="fa fa-euro-sign">
                     <Nodes>
-                        <DxTreeViewNode Text="Ana Kayýtlar">
+                        <DxTreeViewNode Text=@L["MainRecordsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/maintenance-periods" Text="Bakým Periyotlarý" />
-                                <DxTreeViewNode NavigateUrl="/maintenance-instructions" Text="Bakým Talimatlarý" />
+                                <DxTreeViewNode NavigateUrl="/maintenance-periods" Text=@L["MainPeriodsChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/maintenance-instructions" Text=@L["MainInstructionsChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text="Hareketler">
+                        <DxTreeViewNode Text=@L["TransactionsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/planned-maintenances" Text="Önleyici/Planlý Bakým Kayýtlarý" />
-                                <DxTreeViewNode NavigateUrl="/unplanned-maintenances" Text="Arýza/Plansýz Bakým Kayýtlarý" />
-                                <DxTreeViewNode Text="Bakým Malzemesi Ýhtiyaç Planlamasý" />
-                                <DxTreeViewNode Text="Bakým Malzemesi Satýnalma Süreç Takibi" />
+                                <DxTreeViewNode NavigateUrl="/planned-maintenances" Text=@L["PlannedMainChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/unplanned-maintenances" Text=@L["UnplannedMainChildMenu"] />
+                                <DxTreeViewNode Text=@L["MainMatReqPlanningChildMenu"] />
+                                <DxTreeViewNode Text=@L["MainMatPurchaseTrackingChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text="Kalite Kontrol" IconCssClass="fa fa-clipboard">
+                <DxTreeViewNode Visible="@collapsevisible" Text=@L["QualityControlParentMenu"] IconCssClass="fa fa-clipboard">
                     <Nodes>
-                        <DxTreeViewNode Text="Ana Kayýtlar">
+                        <DxTreeViewNode Text=@L["MainRecordsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode Text="Uygunsuzluk Türü Baþlýklarý" NavigateUrl="/unsuitability-types-items" />
-                                <DxTreeViewNode Text="Uygunsuzluk Baþlýklarý" NavigateUrl="/unsuitability-items" />
-                                <DxTreeViewNode Text="Ara Kontrol Baþlýklarý" />
-                                <DxTreeViewNode Text="Uygunsuzluk Baþlýklarý">
-                                    <Nodes>
-                                        <DxTreeViewNode NavigateUrl="/purchasing-unsuitability-items" Text="Satýn Alma Uygunsuzluk Baþlýklarý" />
-                                        <DxTreeViewNode NavigateUrl="/production-order-change-items" Text="Üretim Emri Deðiþiklik Baþlýklarý" />
-                                        <DxTreeViewNode NavigateUrl="/operation-unsuitability-items" Text="Operasyon Uygunsuzluk Baþlýklarý" />
-                                        <DxTreeViewNode NavigateUrl="/final-control-unsuitability-items" Text="Final Kontrol Uygunsuzluk Baþlýklarý" />
-                                        <DxTreeViewNode NavigateUrl="/contract-unsuitability-items" Text="Fason Uygunsuzluk Baþlýklarý" />
-                                        <DxTreeViewNode NavigateUrl="/customer-complaint-items" Text="Müþteri Þikayet Baþlýklarý" />
-                                    </Nodes>
-                                </DxTreeViewNode>
+                                <DxTreeViewNode Text=@L["UnsTypesItemsChildMenu"] NavigateUrl="/unsuitability-types-items" />
+                                <DxTreeViewNode Text=@L["UnsItemsChildMenu"] NavigateUrl="/unsuitability-items" />
+                                <DxTreeViewNode Text=@L["MidControlChildMenu"] />
 
-                                <DxTreeViewNode Text="Ekipman Yönetimi">
+                                <DxTreeViewNode Text=@L["EquipmentManagementMenu"]>
                                     <Nodes>
-                                        <DxTreeViewNode NavigateUrl="/equipment-records" Text="Ekipman Kayýtlarý" />
+                                        <DxTreeViewNode NavigateUrl="/equipment-records" Text=@L["EquipmentRecordsChildMenu"] />
                                     </Nodes>
                                 </DxTreeViewNode>
 
                             </Nodes>
                         </DxTreeViewNode>
 
-                        <DxTreeViewNode Text="Hareketler">
+                        <DxTreeViewNode Text=@L["TransactionsMenu"]>
                             <Nodes>
-                                <DxTreeViewNode Text="Ara Kontrol Kayýtlarý" />
-                                <DxTreeViewNode Text="Final Kontrol Kayýtlarý" />
-                                <DxTreeViewNode Text="Ekipman Ýþlemleri">
+                                <DxTreeViewNode Text=@L["MidControlRecordsChildMenu"] />
+                                <DxTreeViewNode Text=@L["FinalControlRecordsChildMenu"] />
+                                <DxTreeViewNode Text=@L["EquipmentOperationsMenu"]>
                                     <Nodes>
-                                        <DxTreeViewNode NavigateUrl="/calibration-records" Text="Kalibrasyon Takip Kayýtlarý" />
-                                        <DxTreeViewNode NavigateUrl="/calibration-verifications" Text="Kalibrasyon Doðrulama Kayýtlarý" />
+                                        <DxTreeViewNode NavigateUrl="/calibration-records" Text=@L["CalRecordsChildMenu"] />
+                                        <DxTreeViewNode NavigateUrl="/calibration-verifications" Text=@L["CalVerificationsChildMenu"] />
                                     </Nodes>
                                 </DxTreeViewNode>
 
-                                <DxTreeViewNode Text="Uygunsuzluk Kayýtlarý">
+                                <DxTreeViewNode Text=@L["UnsRecordsMenu"]>
                                     <Nodes>
-                                        <DxTreeViewNode NavigateUrl="/purchase-unsuitability-reports" Text="Satýn Alma Uygunsuzluk Kayýtlarý" />
-                                        <DxTreeViewNode Text="Üretim Emri Uygunsuzluk Kayýtlarý" />
-                                        <DxTreeViewNode NavigateUrl="/operation-unsuitability-reports" Text="Operasyon Uygunsuzluk Kayýtlarý" />
-                                        <DxTreeViewNode Text="Final Kontrol Uygunsuzluk Kayýtlarý" />
-                                        <DxTreeViewNode Text="Fason Uygunsuzluk Kayýtlarý" />
-                                        <DxTreeViewNode Text="Müþteri Þikayet Kayýtlarý" />
+                                        <DxTreeViewNode NavigateUrl="/purchase-unsuitability-reports" Text=@L["PurchUnsRecordsChildMenu"] />
+                                        <DxTreeViewNode Text=@L["ProdOrderRecordsChildMenu"] />
+                                        <DxTreeViewNode NavigateUrl="/operation-unsuitability-reports" Text=@L["OprUnsRecordsChildMenu"] />
+                                        <DxTreeViewNode Text=@L["FinalControlUnsRecordsChildMenu"] />
+                                        <DxTreeViewNode Text=@L["ContUnsRecordsChildMenu"] />
+                                        <DxTreeViewNode Text=@L["CustCompRecordsChildMenu"] />
 
                                     </Nodes>
                                 </DxTreeViewNode>
-                                <DxTreeViewNode Text="Raporlar">
+                                <DxTreeViewNode Text=@L["ReportsMenu"]>
                                 </DxTreeViewNode>
-                                <DxTreeViewNode Text="Teknik Analizler">
-                                    <DxTreeViewNode Text="SPC & FMEA" />
-                                    <DxTreeViewNode Text="Satýnalma Uygunuzluk Kayýtlarý Analizi" />
-                                    <DxTreeViewNode Text="Fason Tedarikçi Uygunsuzluk Kayýtlarý Analizi" />
-                                    <DxTreeViewNode Text="Üretim Emri Uygunsuzluk Kayýtlarý Analizi" />
+                                <DxTreeViewNode Text=@L["TechAnlChildMenu"]>
+                                    <DxTreeViewNode Text=@L["SPCFMEAChildMenu"] />
+                                    <DxTreeViewNode Text=@L["PurcUnsAnlChildMenu"] />
+                                    <DxTreeViewNode Text=@L["ContUnsAnlChildMenu"] />
+                                    <DxTreeViewNode Text=@L["ProdOrderUnsAnlChildMenu"] />
                                 </DxTreeViewNode>
                             </Nodes>
                         </DxTreeViewNode>
                     </Nodes>
                 </DxTreeViewNode>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text="Genel Sistem Tanýmlamalarý" IconCssClass="fa fa-newspaper">
+                <DxTreeViewNode Visible="@collapsevisible" Text=@L["GeneralSystemIdentificationsParentMenu"] IconCssClass="fa fa-newspaper">
                     <Nodes>
-                        <DxTreeViewNode NavigateUrl="/periods" Text="Dönem Kayýtlarý" />
-                        <DxTreeViewNode NavigateUrl="/branches" Text="Þube Tanýmlamalarý" />
-                        <DxTreeViewNode NavigateUrl="/currencies" Text="Para Birimi Tanýmlamalarý" />
-                        <DxTreeViewNode NavigateUrl="/exchange-rates" Text="Döviz Kuru Tablosu" />
-                        <DxTreeViewNode NavigateUrl="/shifts" Text="Vardiya Tanýmlamalarý" />
-                        <DxTreeViewNode NavigateUrl="/users" Text="Kullanýcý Tanýmlamalarý" />
-                        <DxTreeViewNode NavigateUrl="/user-groups" Text="Kullanýcý Gruplarý" />
-                        <DxTreeViewNode NavigateUrl="" Text="Rol Tanýmlamalarý" />
+                        <DxTreeViewNode NavigateUrl="/periods" Text=@L["PeriodsChildMenu"] />
+                        <DxTreeViewNode NavigateUrl="/branches" Text=@L["BranchesChildMenu"] />
+                        <DxTreeViewNode NavigateUrl="/currencies" Text=@L["CurrenciesChildMenu"] />
+                        <DxTreeViewNode NavigateUrl="/exchange-rates" Text=@L["ExRatesChildMenu"] />
+                        <DxTreeViewNode NavigateUrl="/shifts" Text=@L["ShiftsChildMenu"] />
+                        <DxTreeViewNode NavigateUrl="/users" Text=@L["UsersChildMenu"] />
+                        <DxTreeViewNode NavigateUrl="/user-groups" Text=@L["UserGrpChildMenu"] />
+                        <DxTreeViewNode NavigateUrl="" Text=@L["RoleDefinitionsChildMenu"] />
+                        <DxTreeViewNode NavigateUrl="/insert-menu" Text="Menü Ekle" />
                     </Nodes>
                 </DxTreeViewNode>
 

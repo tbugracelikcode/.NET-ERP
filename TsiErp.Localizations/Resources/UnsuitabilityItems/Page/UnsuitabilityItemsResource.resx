@@ -186,6 +186,12 @@
   <data name="IntensityRange" xml:space="preserve">
     <value>ŞİDDET ARALIĞI</value>
   </data>
+  <data name="IntensityRangeCalculateButton" xml:space="preserve">
+    <value>Hesapla</value>
+  </data>
+  <data name="IntensityRangeCalculateLabel" xml:space="preserve">
+    <value>Şiddet Aralığını Hesapla</value>
+  </data>
   <data name="IntensityRangeLabel" xml:space="preserve">
     <value>Şiddet Aralığı:</value>
   </data>

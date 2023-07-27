@@ -10,11 +10,16 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.TemplateOperation.Validations;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Period;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationLine;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationUnsuitabilityItem;
+using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationUnsuitabilityItem.Dtos;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.TemplateOperations.Page;
 
@@ -53,7 +58,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
 
                 var query = queryFactory.Query().From(Tables.TemplateOperations).Insert(new CreateTemplateOperationsDto
                 {
-                    WorkCenterID = Guid.Empty,
+                    WorkCenterID = input.WorkCenterID,
                     Code = input.Code,
                     CreationTime = DateTime.Now,
                     CreatorId = LoginedUserService.UserId,
@@ -91,6 +96,29 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
+                    });
+
+                    query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+                }
+
+                foreach (var item in input.SelectTemplateOperationUnsuitabilityItems)
+                {
+                    var queryLine = queryFactory.Query().From(Tables.TemplateOperationUnsuitabilityItems).Insert(new CreateTemplateOperationUnsuitabilityItemsDto
+                    {
+                        CreationTime = DateTime.Now,
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                        LineNr = item.LineNr,
+                        TemplateOperationId = addedEntityId,
+                        ToBeUsed = item.ToBeUsed,
+                        UnsuitabilityItemsId = item.UnsuitabilityItemsId
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
@@ -140,30 +168,60 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var query = queryFactory.Query().From(Tables.TemplateOperations).Select("*").Where(
-               new
-               {
-                   Id = id
-               }, true, true, "");
+                var query = queryFactory.Query().From(Tables.TemplateOperations).Select<TemplateOperations>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.DataOpenStatus, p.DataOpenStatusUserId })
+                    .Join<StationGroups>
+                    (
+                        g => new { WorkCenterName = g.Name },
+                        nameof(TemplateOperations.WorkCenterID),
+                        nameof(StationGroups.Id), JoinType.Left
+                    )
+                    .Where
+                    (
+                        new
+                        {
+                            Id = id
+                        }, true, true, Tables.TemplateOperations
+                    );
 
                 var templateOperations = queryFactory.Get<SelectTemplateOperationsDto>(query);
 
+                #region TemplateOperationLines
                 var queryLines = queryFactory
-                       .Query()
-                       .From(Tables.TemplateOperationLines)
-                       .Select<TemplateOperationLines>(tol => new { tol.TemplateOperationID, tol.StationID, tol.ProcessQuantity, tol.Priority, tol.OperationTime, tol.LineNr, tol.Id, tol.DataOpenStatusUserId, tol.DataOpenStatus, tol.Alternative, tol.AdjustmentAndControlTime })
-                       .Join<Stations>
-                        (
-                            s => new { StationID = s.Id, StationCode = s.Code, StationName = s.Name },
-                            nameof(TemplateOperationLines.StationID),
-                            nameof(Stations.Id),
-                            JoinType.Left
-                        )
-                        .Where(new { TemplateOperationID = id }, false, false, Tables.TemplateOperationLines);
+                               .Query()
+                               .From(Tables.TemplateOperationLines)
+                               .Select<TemplateOperationLines>(tol => new { tol.TemplateOperationID, tol.StationID, tol.ProcessQuantity, tol.Priority, tol.OperationTime, tol.LineNr, tol.Id, tol.DataOpenStatusUserId, tol.DataOpenStatus, tol.Alternative, tol.AdjustmentAndControlTime })
+                               .Join<Stations>
+                                (
+                                    s => new { StationID = s.Id, StationCode = s.Code, StationName = s.Name },
+                                    nameof(TemplateOperationLines.StationID),
+                                    nameof(Stations.Id),
+                                    JoinType.Left
+                                )
+                                .Where(new { TemplateOperationID = id }, false, false, Tables.TemplateOperationLines);
 
                 var templateOperationLine = queryFactory.GetList<SelectTemplateOperationLinesDto>(queryLines).ToList();
 
                 templateOperations.SelectTemplateOperationLines = templateOperationLine;
+                #endregion
+
+                #region UnsuitabilityItems
+                var queryUnsuitabilityItems = queryFactory
+                            .Query()
+                            .From(Tables.TemplateOperationUnsuitabilityItems)
+                            .Select<TemplateOperationUnsuitabilityItems>(tol => new { tol.LineNr, tol.Id, tol.DataOpenStatus, tol.DataOpenStatusUserId, tol.TemplateOperationId, tol.ToBeUsed })
+                            .Join<UnsuitabilityItems>
+                            (
+                                s => new { UnsuitabilityItemsId = s.Id, UnsuitabilityItemsName = s.Name },
+                                nameof(TemplateOperationUnsuitabilityItems.UnsuitabilityItemsId),
+                                nameof(UnsuitabilityItems.Id),
+                                JoinType.Left
+                            )
+                            .Where(new { TemplateOperationId = id }, false, false, Tables.TemplateOperationUnsuitabilityItems);
+
+                var unsuitabilityItemsLine = queryFactory.GetList<SelectTemplateOperationUnsuitabilityItemsDto>(queryUnsuitabilityItems).ToList();
+
+                templateOperations.SelectTemplateOperationUnsuitabilityItems = unsuitabilityItemsLine;
+                #endregion
 
                 LogsAppService.InsertLogToDatabase(templateOperations, templateOperations, LoginedUserService.UserId, Tables.TemplateOperations, LogType.Get, id);
 
@@ -176,29 +234,60 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var query = queryFactory.Query().From(Tables.TemplateOperations).Select("*").Where(null, true, true, "");
+                var query = queryFactory.Query().From(Tables.TemplateOperations)
+                    .Select<TemplateOperations>(p => new { p.Id, p.Name, p.Code, p.IsActive })
+                    .Join<StationGroups>
+                    (
+                        g => new { WorkCenterName = g.Name },
+                        nameof(TemplateOperations.WorkCenterID),
+                        nameof(StationGroups.Id), JoinType.Left
+                    ).Where(null, true, true, Tables.TemplateOperations);
 
                 var templateOperations = queryFactory.GetList<ListTemplateOperationsDto>(query).ToList();
 
+                #region TemplateOperationLines
                 var queryLines = queryFactory
-                     .Query()
-                     .From(Tables.TemplateOperationLines)
-                     .Select<TemplateOperationLines>(tol => new { tol.TemplateOperationID, tol.StationID, tol.ProcessQuantity, tol.Priority, tol.OperationTime, tol.LineNr, tol.Id, tol.DataOpenStatusUserId, tol.DataOpenStatus, tol.Alternative, tol.AdjustmentAndControlTime })
-                     .Join<Stations>
-                      (
-                          s => new { StationID = s.Id, StationCode = s.Code, StationName = s.Name },
-                          nameof(TemplateOperationLines.StationID),
-                          nameof(Stations.Id),
-                          JoinType.Left
-                      )
-                      .Where(null, false, false, Tables.TemplateOperationLines);
+                             .Query()
+                             .From(Tables.TemplateOperationLines)
+                             .Select<TemplateOperationLines>(tol => new { tol.TemplateOperationID, tol.StationID, tol.ProcessQuantity, tol.Priority, tol.OperationTime, tol.LineNr, tol.Id, tol.DataOpenStatusUserId, tol.DataOpenStatus, tol.Alternative, tol.AdjustmentAndControlTime })
+                             .Join<Stations>
+                              (
+                                  s => new { StationID = s.Id, StationCode = s.Code, StationName = s.Name },
+                                  nameof(TemplateOperationLines.StationID),
+                                  nameof(Stations.Id),
+                                  JoinType.Left
+                              )
+                              .Where(null, false, false, Tables.TemplateOperationLines);
 
                 var templateOperationLine = queryFactory.GetList<SelectTemplateOperationLinesDto>(queryLines).ToList();
 
-                foreach(var item in templateOperations)
+                foreach (var item in templateOperations)
                 {
                     item.SelectTemplateOperationLines = templateOperationLine.Where(t => t.TemplateOperationID == item.Id).ToList();
                 }
+                #endregion
+
+                #region UnsuitabilityItems
+                var queryUnsuitabilityItems = queryFactory
+                            .Query()
+                            .From(Tables.TemplateOperationUnsuitabilityItems)
+                            .Select<TemplateOperationUnsuitabilityItems>(tol => new { tol.LineNr, tol.Id, tol.DataOpenStatus, tol.DataOpenStatusUserId, tol.TemplateOperationId, tol.ToBeUsed })
+                            .Join<UnsuitabilityItems>
+                            (
+                                s => new { UnsuitabilityItemsId = s.Id, UnsuitabilityItemsName = s.Name },
+                                nameof(TemplateOperationUnsuitabilityItems.UnsuitabilityItemsId),
+                                nameof(UnsuitabilityItems.Id),
+                                JoinType.Left
+                            )
+                            .Where(null, false, false, Tables.TemplateOperationUnsuitabilityItems);
+
+                var unsuitabilityItemsLine = queryFactory.GetList<SelectTemplateOperationUnsuitabilityItemsDto>(queryUnsuitabilityItems).ToList();
+
+                foreach (var item in templateOperations)
+                {
+                    item.SelectTemplateOperationUnsuitabilityItems = unsuitabilityItemsLine;
+                }
+                #endregion
 
                 return new SuccessDataResult<IList<ListTemplateOperationsDto>>(templateOperations);
             }
@@ -233,6 +322,26 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
 
                 entity.SelectTemplateOperationLines = templateOperationLine;
 
+                #region UnsuitabilityItems
+                var queryUnsuitabilityItems = queryFactory
+                            .Query()
+                            .From(Tables.TemplateOperationUnsuitabilityItems)
+                            .Select<TemplateOperationUnsuitabilityItems>(tol => new { tol.LineNr, tol.Id, tol.DataOpenStatus, tol.DataOpenStatusUserId, tol.TemplateOperationId, tol.ToBeUsed })
+                            .Join<UnsuitabilityItems>
+                            (
+                                s => new { UnsuitabilityItemsId = s.Id, UnsuitabilityItemsName = s.Name },
+                                nameof(TemplateOperationUnsuitabilityItems.UnsuitabilityItemsId),
+                                nameof(UnsuitabilityItems.Id),
+                                JoinType.Left
+                            )
+                            .Where(new { TemplateOperationId = input.Id }, false, false, Tables.TemplateOperationUnsuitabilityItems);
+
+                var unsuitabilityItemsLine = queryFactory.GetList<SelectTemplateOperationUnsuitabilityItemsDto>(queryUnsuitabilityItems).ToList();
+
+                entity.SelectTemplateOperationUnsuitabilityItems = unsuitabilityItemsLine;
+
+                #endregion
+
                 #region Update Control
                 var listQuery = queryFactory.Query().From(Tables.TemplateOperations).Select("*").Where(new { Code = input.Code }, false, false, Tables.TemplateOperations);
 
@@ -261,9 +370,10 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                     IsActive = input.IsActive,
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = DateTime.Now,
-                    LastModifierId = LoginedUserService.UserId,
+                    LastModifierId = LoginedUserService.UserId
                 }).Where(new { Id = input.Id }, true, true, "");
 
+                #region TemplateOperationLines
                 foreach (var item in input.SelectTemplateOperationLines)
                 {
                     if (item.Id == Guid.Empty)
@@ -326,6 +436,66 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                         }
                     }
                 }
+
+                #endregion
+
+                #region UnsuitabilityItems
+                foreach (var item in input.SelectTemplateOperationUnsuitabilityItems)
+                {
+                    if (item.Id == Guid.Empty)
+                    {
+                        var queryLine = queryFactory.Query().From(Tables.TemplateOperationUnsuitabilityItems).Insert(new CreateTemplateOperationUnsuitabilityItemsDto
+                        {
+                            TemplateOperationId = input.Id,
+                            CreationTime = DateTime.Now,
+                            CreatorId = LoginedUserService.UserId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = Guid.Empty,
+                            DeletionTime = null,
+                            Id = GuidGenerator.CreateGuid(),
+                            IsDeleted = false,
+                            LastModificationTime = null,
+                            LastModifierId = Guid.Empty,
+                            LineNr = item.LineNr,
+                            ToBeUsed = item.ToBeUsed,
+                            UnsuitabilityItemsId = item.UnsuitabilityItemsId
+                        });
+
+                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+                    }
+                    else
+                    {
+                        var lineGetQuery = queryFactory.Query().From(Tables.TemplateOperationUnsuitabilityItems).Select("*").Where(new { Id = item.Id }, false, false, "");
+
+                        var line = queryFactory.Get<SelectTemplateOperationUnsuitabilityItemsDto>(lineGetQuery);
+
+                        if (line != null)
+                        {
+                            var queryLine = queryFactory.Query().From(Tables.TemplateOperationUnsuitabilityItems).Update(new UpdateTemplateOperationUnsuitabilityItemsDto
+                            {
+                                TemplateOperationId = input.Id,
+                                CreationTime = line.CreationTime,
+                                CreatorId = line.CreatorId,
+                                DataOpenStatus = false,
+                                DataOpenStatusUserId = Guid.Empty,
+                                DeleterId = line.DeleterId.GetValueOrDefault(),
+                                DeletionTime = line.DeletionTime.GetValueOrDefault(),
+                                Id = item.Id,
+                                IsDeleted = false,
+                                LastModificationTime = DateTime.Now,
+                                LastModifierId = LoginedUserService.UserId,
+                                LineNr = item.LineNr,
+                                ToBeUsed = item.ToBeUsed,
+                                UnsuitabilityItemsId = item.UnsuitabilityItemsId
+                            }).Where(new { Id = line.Id }, false, false, "");
+
+                            query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
+                        }
+                    }
+                }
+
+                #endregion
 
                 var templateOperation = queryFactory.Update<SelectTemplateOperationsDto>(query, "Id", true);
 

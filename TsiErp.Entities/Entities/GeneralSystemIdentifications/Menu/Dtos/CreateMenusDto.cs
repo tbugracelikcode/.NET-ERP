@@ -7,7 +7,12 @@ using Tsi.Core.Entities.Auditing;
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos
 {
-    public class CreateMenusDto : FullAuditedEntityDto
+    public class CreateMenusDto
     {
+        public Guid Id { get; set; }
+
+        public string MenuName { get; set; }
+
+        public Guid ParentMenuId { get; set; }
     }
 }

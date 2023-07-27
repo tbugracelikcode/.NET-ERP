@@ -1,0 +1,483 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BOMChildMenu" xml:space="preserve">
+    <value>Üretim Reçeteleri</value>
+  </data>
+  <data name="BranchesChildMenu" xml:space="preserve">
+    <value>Şube Tanımlamaları</value>
+  </data>
+  <data name="ByEmpStationProductivityChildMenu" xml:space="preserve">
+    <value>Personellere Göre İş İstasyonu Verimlilik Analizi</value>
+  </data>
+  <data name="ByHaltEmpProductivityChildMenu" xml:space="preserve">
+    <value>Duruş Kodlarına Göre Personel Verimlilik Analizi</value>
+  </data>
+  <data name="ByHaltStationChildMenu" xml:space="preserve">
+    <value>Duruş Kodlarına Göre İş İstasyonu Analizi</value>
+  </data>
+  <data name="ByHaltStationPerfChildMenu" xml:space="preserve">
+    <value>Ürün Gruplarına Göre İş İstasyonu Performans Analizi</value>
+  </data>
+  <data name="ByProdGrpPerfAnalysisChildMenu" xml:space="preserve">
+    <value>Ürün Grubuna Göre Performans Analizi</value>
+  </data>
+  <data name="ByProdGrpScrapAnalysisChildMenu" xml:space="preserve">
+    <value>Ürün Grubuna Göre Hurda Analizi</value>
+  </data>
+  <data name="CalendarMenu" xml:space="preserve">
+    <value>Çalışma Takvimi</value>
+  </data>
+  <data name="CalRecordsChildMenu" xml:space="preserve">
+    <value>Kalibrasyon Takip Kayıtları</value>
+  </data>
+  <data name="CalVerificationsChildMenu" xml:space="preserve">
+    <value>Kalibrasyon Doğrulama Kayıtları</value>
+  </data>
+  <data name="ContractProdTrackingsChildMenu" xml:space="preserve">
+    <value>Fason İmalat Takip Kayıtları</value>
+  </data>
+  <data name="ContUnsAnlChildMenu" xml:space="preserve">
+    <value>Fason Tedarikçi Uygunsuzluk Kayıtları Analizi</value>
+  </data>
+  <data name="ContUnsRecordsChildMenu" xml:space="preserve">
+    <value>Fason Uygunsuzluk Kayıtları</value>
+  </data>
+  <data name="CostMenu" xml:space="preserve">
+    <value>Maliyetlendirme</value>
+  </data>
+  <data name="CPRChildMenu" xml:space="preserve">
+    <value>Ürün Maliyet Kayıtları (CPR)</value>
+  </data>
+  <data name="CurrenciesChildMenu" xml:space="preserve">
+    <value>Para Birimi Tanımlamaları</value>
+  </data>
+  <data name="CurrentAccountsChildMenu" xml:space="preserve">
+    <value>Cari Hesap Kartları</value>
+  </data>
+  <data name="CustCompRecordsChildMenu" xml:space="preserve">
+    <value>Müşteri Şikayet Kayıtları</value>
+  </data>
+  <data name="DepartmentsChildMenu" xml:space="preserve">
+    <value>Personel Departmanları</value>
+  </data>
+  <data name="EmployeeListChildMenu" xml:space="preserve">
+    <value>Personel Listesi</value>
+  </data>
+  <data name="EmployeeProductivityChildMenu" xml:space="preserve">
+    <value>Personel Verimlilik Analizi</value>
+  </data>
+  <data name="EmployeesChildMenu" xml:space="preserve">
+    <value>Personel Kayıtları</value>
+  </data>
+  <data name="EmployeeScoreChildMenu" xml:space="preserve">
+    <value>Personel Puanlama Kayıtları</value>
+  </data>
+  <data name="EmployeeScoreListChildMenu" xml:space="preserve">
+    <value>Personel Puanlama Listesi</value>
+  </data>
+  <data name="EquipmentManagementMenu" xml:space="preserve">
+    <value>Ekipman Yönetimi</value>
+  </data>
+  <data name="EquipmentOperationsMenu" xml:space="preserve">
+    <value>Ekipman İşlemleri</value>
+  </data>
+  <data name="EquipmentRecordsChildMenu" xml:space="preserve">
+    <value>Ekipman Kayıtları</value>
+  </data>
+  <data name="ExRatesChildMenu" xml:space="preserve">
+    <value>Döviz Kuru Tablosu</value>
+  </data>
+  <data name="FinalControlRecordsChildMenu" xml:space="preserve">
+    <value>Final Kontrol Kayıtları</value>
+  </data>
+  <data name="FinalControlUnsRecordsChildMenu" xml:space="preserve">
+    <value>Final Kontrol Uygunsuzluk Kayıtları</value>
+  </data>
+  <data name="FinanceManagementParentMenu" xml:space="preserve">
+    <value>Finans Yönetimi</value>
+  </data>
+  <data name="ForecastsChildMenu" xml:space="preserve">
+    <value>Satış Forecast Kayıtları</value>
+  </data>
+  <data name="GeneralOEEChildMenu" xml:space="preserve">
+    <value>Genel Fabrika OEE Analizi</value>
+  </data>
+  <data name="GeneralSystemIdentificationsParentMenu" xml:space="preserve">
+    <value>Genel Sistem Tanımlamaları</value>
+  </data>
+  <data name="HaltReasonsChildMenu" xml:space="preserve">
+    <value>Duruş Kodları</value>
+  </data>
+  <data name="InventoryListChildMenu" xml:space="preserve">
+    <value>Envanter Listesi</value>
+  </data>
+  <data name="IoTProdTrackingsChildMenu" xml:space="preserve">
+    <value>IoT</value>
+  </data>
+  <data name="ListofMaterialsChildMenu" xml:space="preserve">
+    <value>Malzeme Listesi</value>
+  </data>
+  <data name="MachWorkForceManagementParentMenu" xml:space="preserve">
+    <value>Makine &amp; İş Gücü Yönetimi</value>
+  </data>
+  <data name="MainInstructionsChildMenu" xml:space="preserve">
+    <value>Bakım Talimatları</value>
+  </data>
+  <data name="MainMatPurchaseTrackingChildMenu" xml:space="preserve">
+    <value>Bakım Malzemesi Satınalma Süreç Takibi</value>
+  </data>
+  <data name="MainMatReqPlanningChildMenu" xml:space="preserve">
+    <value>Bakım Malzemesi İhtiyaç Planlaması</value>
+  </data>
+  <data name="MainPeriodsChildMenu" xml:space="preserve">
+    <value>Bakım Periyotları</value>
+  </data>
+  <data name="MainRecordsMenu" xml:space="preserve">
+    <value>Ana Kayıtlar</value>
+  </data>
+  <data name="MaintenanceManagementParentMenu" xml:space="preserve">
+    <value>Bakım Yönetimi</value>
+  </data>
+  <data name="MaterialWarehouseStatusChildMenu" xml:space="preserve">
+    <value>Malzeme/Depo Durum Raporu</value>
+  </data>
+  <data name="MidControlChildMenu" xml:space="preserve">
+    <value>Ara Kontrol Başlıkları</value>
+  </data>
+  <data name="MidControlRecordsChildMenu" xml:space="preserve">
+    <value>Ara Kontrol Kayıtları</value>
+  </data>
+  <data name="MRPChildMenu" xml:space="preserve">
+    <value>Malzeme İhtiyaç Planlaması (MRP)</value>
+  </data>
+  <data name="MRPIIChildMenu" xml:space="preserve">
+    <value>Üretim Kaynak Planlaması (MRPII)</value>
+  </data>
+  <data name="OperationsMenu" xml:space="preserve">
+    <value>Operasyonlar</value>
+  </data>
+  <data name="OprUnsRecordsChildMenu" xml:space="preserve">
+    <value>Operasyon Uygunsuzluk Kayıtları</value>
+  </data>
+  <data name="PackageFichesChildMenu" xml:space="preserve">
+    <value>Paket Fişleri</value>
+  </data>
+  <data name="PackageFichesListChildMenu" xml:space="preserve">
+    <value>Paket Fişleri Listesi</value>
+  </data>
+  <data name="PackingListChildMenu" xml:space="preserve">
+    <value>Çeki Listesi</value>
+  </data>
+  <data name="PackingListsChildMenu" xml:space="preserve">
+    <value>Çeki Listeleri</value>
+  </data>
+  <data name="PalletRecordsChildMenu" xml:space="preserve">
+    <value>Palet Kayıtları</value>
+  </data>
+  <data name="PalletRecordsListChildMenu" xml:space="preserve">
+    <value>Palet Kayıtları Listesi</value>
+  </data>
+  <data name="PaymentPlansChildMenu" xml:space="preserve">
+    <value>Ödeme Planları</value>
+  </data>
+  <data name="PeriodsChildMenu" xml:space="preserve">
+    <value>Dönem Kayıtları</value>
+  </data>
+  <data name="PlannedMainChildMenu" xml:space="preserve">
+    <value>Önleyici/Planlı Bakım Kayıtları</value>
+  </data>
+  <data name="PlanningParentMenu" xml:space="preserve">
+    <value>Planlama</value>
+  </data>
+  <data name="ProdOperationsChildMenu" xml:space="preserve">
+    <value>Ürün Operasyon Kayıtları</value>
+  </data>
+  <data name="ProdOrderRecordsChildMenu" xml:space="preserve">
+    <value>Üretim Emri Uygunsuzluk Kayıtları</value>
+  </data>
+  <data name="ProdOrderUnsAnlChildMenu" xml:space="preserve">
+    <value>Üretim Emri Uygunsuzluk Kayıtları Analizi</value>
+  </data>
+  <data name="ProdTrackingListChildMenu" xml:space="preserve">
+    <value>Üretim Takip Kayıtları Listesi</value>
+  </data>
+  <data name="ProdTrackingsChildMenu" xml:space="preserve">
+    <value>Manuel</value>
+  </data>
+  <data name="ProductGroupsChildMenu" xml:space="preserve">
+    <value>Ürün Grupları</value>
+  </data>
+  <data name="ProductionManagementParentMenu" xml:space="preserve">
+    <value>Üretim Yönetimi</value>
+  </data>
+  <data name="ProductionOrderListChildMenu" xml:space="preserve">
+    <value>Üretim Emirleri Listesi</value>
+  </data>
+  <data name="ProductionOrdersChildMenu" xml:space="preserve">
+    <value>Üretim Emirleri</value>
+  </data>
+  <data name="ProductionPlanningMenu" xml:space="preserve">
+    <value>Üretim Planlama</value>
+  </data>
+  <data name="ProductionTrackingRecordsMenu" xml:space="preserve">
+    <value>Üretim Takip Kayıtları</value>
+  </data>
+  <data name="ProductRefNumbersChildMenu" xml:space="preserve">
+    <value>Ürün Referans Numaraları</value>
+  </data>
+  <data name="ProductsChildMenu" xml:space="preserve">
+    <value>Stok Kartları</value>
+  </data>
+  <data name="PurchaseManagementParentMenu" xml:space="preserve">
+    <value>Satın Alma Yönetimi</value>
+  </data>
+  <data name="PurchaseOrderFicheListChildMenu" xml:space="preserve">
+    <value>Satın Alma Siparişleri Listesi</value>
+  </data>
+  <data name="PurchaseOrdersChildMenu" xml:space="preserve">
+    <value>Satın Alma Siparişleri</value>
+  </data>
+  <data name="PurchasePricesChildMenu" xml:space="preserve">
+    <value>Satın Alma Fiyat Listeleri</value>
+  </data>
+  <data name="PurchaseRequestFicheListChildMenu" xml:space="preserve">
+    <value>Satın Alma Talep Fişi Listesi</value>
+  </data>
+  <data name="PurchaseRequestsChildMenu" xml:space="preserve">
+    <value>Satın Alma Talep Fişleri</value>
+  </data>
+  <data name="PurchUnsRecordsChildMenu" xml:space="preserve">
+    <value>Satın Alma Uygunsuzluk Kayıtları</value>
+  </data>
+  <data name="PurcUnsAnlChildMenu" xml:space="preserve">
+    <value>Satınalma Uygunuzluk Kayıtları Analizi</value>
+  </data>
+  <data name="QualityControlParentMenu" xml:space="preserve">
+    <value>Kalite Kontrol</value>
+  </data>
+  <data name="ReportsMenu" xml:space="preserve">
+    <value>Raporlar</value>
+  </data>
+  <data name="RoleDefinitionsChildMenu" xml:space="preserve">
+    <value>Rol Tanımlamaları</value>
+  </data>
+  <data name="RoutesChildMenu" xml:space="preserve">
+    <value>Üretim Rotaları</value>
+  </data>
+  <data name="SalesManagementParentMenu" xml:space="preserve">
+    <value>Satış Yönetimi</value>
+  </data>
+  <data name="SalesOrderFicheListChildMenu" xml:space="preserve">
+    <value>Satış Siparişleri Listesi</value>
+  </data>
+  <data name="SalesOrdersChildMenu" xml:space="preserve">
+    <value>Satış Siparişleri</value>
+  </data>
+  <data name="SalesPricesChildMenu" xml:space="preserve">
+    <value>Satış Fiyat Listeleri</value>
+  </data>
+  <data name="SalesPropositionFicheListChildMenu" xml:space="preserve">
+    <value>Verilen Teklif Listesi</value>
+  </data>
+  <data name="SalesPropositionsChildMenu" xml:space="preserve">
+    <value>Verilen Teklifler</value>
+  </data>
+  <data name="ShiftsChildMenu" xml:space="preserve">
+    <value>Vardiya Tanımlamaları</value>
+  </data>
+  <data name="ShipmentParentMenu" xml:space="preserve">
+    <value>Sevkiyat Yönetimi</value>
+  </data>
+  <data name="ShipmentPlanningChildMenu" xml:space="preserve">
+    <value>Sevkiyat Planlama</value>
+  </data>
+  <data name="ShippingAdressesChildMenu" xml:space="preserve">
+    <value>Sevkiyat Adresleri</value>
+  </data>
+  <data name="SPCFMEAChildMenu" xml:space="preserve">
+    <value>SPC &amp; FMEA</value>
+  </data>
+  <data name="StationCostChildMenu" xml:space="preserve">
+    <value>İş İstasyonu Maliyet Kayıtları</value>
+  </data>
+  <data name="StationCostListChildMenu" xml:space="preserve">
+    <value>İş İstasyon Maliyetleri Listesi</value>
+  </data>
+  <data name="StationGroupChildMenu" xml:space="preserve">
+    <value>İş Merkezleri</value>
+  </data>
+  <data name="StationListChildMenu" xml:space="preserve">
+    <value>İş İstasyonları Listesi</value>
+  </data>
+  <data name="StationOEEChildMenu" xml:space="preserve">
+    <value>İş İstasyonları OEE Analizi</value>
+  </data>
+  <data name="StationsChildMenu" xml:space="preserve">
+    <value>İş İstasyonları</value>
+  </data>
+  <data name="StockFichesChildMenu" xml:space="preserve">
+    <value>Stok Fişleri</value>
+  </data>
+  <data name="StockManagementParentMenu" xml:space="preserve">
+    <value>Stok Yönetimi</value>
+  </data>
+  <data name="TechAnlChildMenu" xml:space="preserve">
+    <value>Teknik Analizler</value>
+  </data>
+  <data name="TechnicalDrawingsChildMenu" xml:space="preserve">
+    <value>Teknik Resimler</value>
+  </data>
+  <data name="TempOperationsChildMenu" xml:space="preserve">
+    <value>Şablon Operasyon Kayıtları</value>
+  </data>
+  <data name="TransactionsMenu" xml:space="preserve">
+    <value>Hareketler</value>
+  </data>
+  <data name="UnitSetsChildMenu" xml:space="preserve">
+    <value>Birim Setleri</value>
+  </data>
+  <data name="UnplannedMainChildMenu" xml:space="preserve">
+    <value>Arıza/Plansız Bakım Kayıtları</value>
+  </data>
+  <data name="UnsItemsChildMenu" xml:space="preserve">
+    <value>Uygunsuzluk Başlıkları</value>
+  </data>
+  <data name="UnsRecordsMenu" xml:space="preserve">
+    <value>Uygunsuzluk Kayıtları</value>
+  </data>
+  <data name="UnsTypesItemsChildMenu" xml:space="preserve">
+    <value>Uygunsuzluk Türü Başlıkları</value>
+  </data>
+  <data name="UserGrpChildMenu" xml:space="preserve">
+    <value>Kullanıcı Grupları</value>
+  </data>
+  <data name="UsersChildMenu" xml:space="preserve">
+    <value>Kullanıcı Tanımlamaları</value>
+  </data>
+  <data name="WarehousesChildMenu" xml:space="preserve">
+    <value>Depo Kartları</value>
+  </data>
+  <data name="WorkOrderListChildMenu" xml:space="preserve">
+    <value>İş Emirleri Listesi</value>
+  </data>
+  <data name="WorkOrdersChildMenu" xml:space="preserve">
+    <value>İş Emirleri</value>
+  </data>
+</root>

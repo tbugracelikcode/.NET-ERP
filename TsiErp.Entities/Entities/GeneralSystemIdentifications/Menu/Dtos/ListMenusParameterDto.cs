@@ -7,7 +7,7 @@ using Tsi.Core.Entities.Auditing;
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos
 {
-    public class ListMenusParameterDto : FullAuditedEntityDto
+    public class ListMenusParameterDto
     {
     }
 }

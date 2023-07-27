@@ -29,11 +29,7 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.User
         ///  E-Posta
         /// </summary>
         public string Email { get; set; }
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
-        /// <summary>
-        /// E-posta Onay
-        /// </summary>
-        public bool IsEmailApproved { get; set; }
+        
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
         /// <summary>
         /// Aktiflik

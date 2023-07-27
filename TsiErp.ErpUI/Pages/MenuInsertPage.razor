@@ -1,0 +1,86 @@
+﻿@page "/insert-menu"
+@using TsiErp.Business.Entities.Menu.Services;
+@using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
+@layout MainLayout
+
+
+@inherits BaseListPage<SelectMenusDto, ListMenusDto, CreateMenusDto, UpdateMenusDto, ListMenusParameterDto>
+
+@inject IMenusAppService Service
+
+@if (!base.IsLoaded)
+{
+    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+}
+else
+{
+    <div>
+        <SfComboBox TValue="Guid" TItem="ComboData" Placeholder="e.g. Australia" DataSource="@list" @bind-Value="DataSource.ParentMenuId">
+
+            <ComboBoxEvents TValue="Guid" TItem="ComboData" ValueChange="OnValueChange" />
+            <ComboBoxFieldSettings Text="MenuName" Value="Id"></ComboBoxFieldSettings>
+        </SfComboBox>
+
+        <br />
+
+        <SfTextBox CssClass="TSIMemoBox100" @bind-Value="DataSource.MenuName"></SfTextBox>
+
+
+        <br />
+
+        <SfButton CssClass="TSISaveButton" OnClick="InsertMenu"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon></SfButton>
+    </div>
+
+}
+
+@code {
+
+    List<ComboData> list = new List<ComboData>();
+
+    protected override void OnInitialized()
+    {
+        DataSource = new SelectMenusDto();
+        BaseCrudService = Service;
+        GetMenus();
+    }
+
+    private async void GetMenus()
+    {
+        var menus = (await Service.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+
+        foreach (var item in menus)
+        {
+            if (!list.Any(t => t.MenuName == item.MenuName))
+            {
+                list.Add(new ComboData() { Id = item.Id, MenuName = item.MenuName });
+            }
+        }
+    }
+
+    private void InsertMenu()
+    {
+        var insertedMenu = new CreateMenusDto()
+            {
+                MenuName = DataSource.MenuName,
+                ParentMenuId = DataSource.ParentMenuId
+            };
+
+        Service.CreateAsync(insertedMenu);
+
+        GetMenus();
+
+        StateHasChanged();
+    }
+
+    public void OnValueChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<Guid, ComboData> args)
+    {
+        
+    }
+
+    public class ComboData
+    {
+        public Guid Id { get; set; }
+
+        public string MenuName { get; set; }
+    }
+}

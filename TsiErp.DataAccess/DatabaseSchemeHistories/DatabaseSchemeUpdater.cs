@@ -59,6 +59,7 @@ using TsiErp.Entities.Entities.ProductionManagement.Route;
 using TsiErp.Entities.Entities.ProductionManagement.RouteLine;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationLine;
+using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationUnsuitabilityItem;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine;
@@ -1614,6 +1615,41 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 TemplateOperationLinesTable.Create();
+            }
+            #endregion
+
+            #region TemplateOperationUnsuitabilityItems Table Created
+            Table TemplateOperationUnsuitabilityItemsTable = model.CreateTable(Tables.TemplateOperationUnsuitabilityItems);
+
+            if (TemplateOperationUnsuitabilityItemsTable != null)
+            {
+                var properties = (typeof(TemplateOperationUnsuitabilityItems)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(TemplateOperationUnsuitabilityItemsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(TemplateOperationUnsuitabilityItemsTable, "PK_" + TemplateOperationUnsuitabilityItemsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        TemplateOperationUnsuitabilityItemsTable.Indexes.Add(pkIndex);
+                    }
+
+                    TemplateOperationUnsuitabilityItemsTable.Columns.Add(column);
+                }
+
+                TemplateOperationUnsuitabilityItemsTable.Create();
             }
             #endregion
 

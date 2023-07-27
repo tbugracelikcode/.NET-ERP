@@ -31,15 +31,8 @@ namespace TsiErp.Business.Entities.Menu.Services
                 var query = queryFactory.Query().From(Tables.Menus).Insert(new CreateMenusDto
                 {
                     Id = addedEntityId,
-                    CreationTime = DateTime.Now,
-                    CreatorId = LoginedUserService.UserId,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = Guid.Empty,
-                    DeletionTime = null,
-                    LastModificationTime = null,
-                    LastModifierId = Guid.Empty,
-                    IsDeleted = false
+                    MenuName = input.MenuName,
+                    ParentMenuId = input.ParentMenuId
                 });
 
 
@@ -111,15 +104,8 @@ namespace TsiErp.Business.Entities.Menu.Services
                 var query = queryFactory.Query().From(Tables.Menus).Update(new UpdateMenusDto
                 {
                     Id = input.Id,
-                    CreationTime = entity.CreationTime.Value,
-                    CreatorId = entity.CreatorId.Value,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = entity.DeleterId.Value,
-                    DeletionTime = entity.DeletionTime.Value,
-                    IsDeleted = entity.IsDeleted,
-                    LastModificationTime = DateTime.Now,
-                    LastModifierId = LoginedUserService.UserId
+                    ParentMenuId = input.ParentMenuId,
+                    MenuName = input.MenuName
                 }).Where(new { Id = input.Id }, false, false, "");
 
                 var menus = queryFactory.Update<SelectMenusDto>(query, "Id", true);
@@ -130,33 +116,7 @@ namespace TsiErp.Business.Entities.Menu.Services
 
         public async Task<IDataResult<SelectMenusDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var entityQuery = queryFactory.Query().From(Tables.Menus).Select("*").Where(new { Id = id }, false, false, "");
-
-                var entity = queryFactory.Get<Menus>(entityQuery);
-
-                var query = queryFactory.Query().From(Tables.Menus).Update(new UpdateMenusDto
-                {
-                    
-                    CreationTime = entity.CreationTime.Value,
-                    CreatorId = entity.CreatorId.Value,
-                    DeleterId = entity.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
-                    IsDeleted = entity.IsDeleted,
-                    LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
-                    LastModifierId = entity.LastModifierId.GetValueOrDefault(),
-                    Id = id,
-                    DataOpenStatus = lockRow,
-                    DataOpenStatusUserId = userId
-
-                }).Where(new { Id = id }, false, false, "");
-
-                var menus = queryFactory.Update<SelectMenusDto>(query, "Id", true);
-                return new SuccessDataResult<SelectMenusDto>(menus);
-
-            }
-
+            throw new NotImplementedException();
         }
     }
 }

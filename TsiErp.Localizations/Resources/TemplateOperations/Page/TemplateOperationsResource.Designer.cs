@@ -413,6 +413,24 @@ namespace TsiErp.Localizations.Resources.TemplateOperations.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İş İstasyonu Bilgileri.
+        /// </summary>
+        public static string Tab1Name {
+            get {
+                return ResourceManager.GetString("Tab1Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operasyon Uygunsuzluk Başlıkları.
+        /// </summary>
+        public static string Tab2Name {
+            get {
+                return ResourceManager.GetString("Tab2Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Seçtiğiniz şablon operasyon, kalıcı olarak silinecektir..
         /// </summary>
         public static string UIConfirmationPopupMessageBase {

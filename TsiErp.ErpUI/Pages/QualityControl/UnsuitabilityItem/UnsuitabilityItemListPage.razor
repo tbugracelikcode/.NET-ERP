@@ -85,7 +85,7 @@ else
          Width="70%"
          Height="35%"
          MinWidth="1200px"
-         MinHeight="550px"
+         MinHeight="600px"
          HeaderCssClass="HeaderTitleCss"
          Showing="CrudModalShowing"
          Closing="CrudModalClosing">
@@ -94,6 +94,7 @@ else
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
+                    <DxGridLayoutRow Height="15%" />
                     <DxGridLayoutRow Height="15%" />
                     <DxGridLayoutRow Height="15%" />
                     <DxGridLayoutRow Height="15%" />
@@ -173,7 +174,6 @@ else
                             <br />
                             <label class="TSIModalLabel"><strong>@L["LifeThreateningLabel"] </strong></label>
                             <SfComboBox TValue="string" TItem="SelectionList" PopupHeight="230px" Placeholder="Seçin" @bind-Value="@DataSource.LifeThreatening" DataSource="@SelectionLists">
-                                <ComboBoxEvents TValue="string" TItem="SelectionList" ValueChange="LifeThreateningOnChange" />
                                 <ComboBoxFieldSettings Text="Text" Value="Id" />
                             </SfComboBox>
                         </Template>
@@ -184,7 +184,6 @@ else
                             <br />
                             <label class="TSIModalLabel"><strong>@L["LossOfPrestigeLabel"] </strong></label>
                             <SfComboBox TValue="string" TItem="SelectionList" PopupHeight="230px" Placeholder="Seçin" @bind-Value="@DataSource.LossOfPrestige" DataSource="@SelectionLists">
-                                <ComboBoxEvents TValue="string" TItem="SelectionList" ValueChange="LossOfPrestigeOnChange" />
                                 <ComboBoxFieldSettings Text="Text" Value="Id" />
                             </SfComboBox>
                         </Template>
@@ -195,7 +194,6 @@ else
                             <br />
                             <label class="TSIModalLabel"><strong>@L["ExtraCostLabel"] </strong></label>
                             <SfComboBox TValue="string" TItem="SelectionList" PopupHeight="230px" Placeholder="Seçin" @bind-Value="@DataSource.ExtraCost" DataSource="@SelectionLists">
-                                <ComboBoxEvents TValue="string" TItem="SelectionList" ValueChange="ExtraCostOnChange" />
                                 <ComboBoxFieldSettings Text="Text" Value="Id" />
                             </SfComboBox>
                         </Template>
@@ -206,7 +204,6 @@ else
                             <br />
                             <label class="TSIModalLabel"><strong>@L["ProductLifeShorteningLabel"] </strong></label>
                             <SfComboBox TValue="string" TItem="SelectionList" PopupHeight="230px" Placeholder="Seçin" @bind-Value="@DataSource.ProductLifeShortening" DataSource="@SelectionLists">
-                                <ComboBoxEvents TValue="string" TItem="SelectionList" ValueChange="ProductLifeShorteningOnChange" />
                                 <ComboBoxFieldSettings Text="Text" Value="Id" />
                             </SfComboBox>
                         </Template>
@@ -217,7 +214,6 @@ else
                             <br />
                             <label class="TSIModalLabel"><strong>@L["DetectabilityLabel"] </strong></label>
                             <SfComboBox TValue="string" TItem="SelectionList" PopupHeight="230px" Placeholder="Seçin" @bind-Value="@DataSource.Detectability" DataSource="@SelectionLists">
-                                <ComboBoxEvents TValue="string" TItem="SelectionList" ValueChange="DetectabilityOnChange" />
                                 <ComboBoxFieldSettings Text="Text" Value="Id" />
                             </SfComboBox>
                         </Template>
@@ -228,7 +224,6 @@ else
                             <br />
                             <label class="TSIModalLabel"><strong>@L["ToBeUsedAsLabel"] </strong></label>
                             <SfComboBox TValue="string" TItem="SelectionList" PopupHeight="230px" Placeholder="Seçin" @bind-Value="@DataSource.ToBeUsedAs" DataSource="@SelectionLists">
-                                <ComboBoxEvents TValue="string" TItem="SelectionList" ValueChange="ToBeUsedAsOnChange" />
                                 <ComboBoxFieldSettings Text="Text" Value="Id" />
                             </SfComboBox>
                         </Template>
@@ -238,7 +233,7 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["IntensityRangeLabel"] </strong></label>
-                            <SfNumericTextBox CssClass="TSITxtBox" @bind-Value="DataSource.IntensityRange" Min="0"></SfNumericTextBox>
+                            <SfNumericTextBox CssClass="TSITxtBox" @bind-Value="DataSource.IntensityRange" Min="0" Enabled=false></SfNumericTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -246,7 +241,15 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["IntensityCoefficientLabel"] </strong></label>
-                            <SfNumericTextBox CssClass="TSITxtBox" @bind-Value="DataSource.IntensityCoefficient" Min="0"></SfNumericTextBox>
+                            <SfNumericTextBox CssClass="TSITxtBox" @bind-Value="DataSource.IntensityCoefficient" Min="0" Enabled=false></SfNumericTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="5" Column="1">
+                        <Template>
+                            <br />
+                            <label class="TSIModalLabel"><strong>@L["IntensityRangeCalculateLabel"] </strong></label>
+                            <SfButton CssClass="TSISaveButton" OnClick="IntensityRangeCalculate"><SfIcon Size="IconSize.Medium" Name="IconName.CalculatedMember"></SfIcon>&nbsp;@L["IntensityRangeCalculateButton"]</SfButton>
                         </Template>
                     </DxGridLayoutItem>
 

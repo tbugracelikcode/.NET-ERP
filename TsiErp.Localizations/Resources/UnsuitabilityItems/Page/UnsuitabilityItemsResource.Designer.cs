@@ -269,6 +269,24 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityItems.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hesapla.
+        /// </summary>
+        public static string IntensityRangeCalculateButton {
+            get {
+                return ResourceManager.GetString("IntensityRangeCalculateButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Şiddet Aralığını Hesapla.
+        /// </summary>
+        public static string IntensityRangeCalculateLabel {
+            get {
+                return ResourceManager.GetString("IntensityRangeCalculateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Şiddet Aralığı:.
         /// </summary>
         public static string IntensityRangeLabel {
