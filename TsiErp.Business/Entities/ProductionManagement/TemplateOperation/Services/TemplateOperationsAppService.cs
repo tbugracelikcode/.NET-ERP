@@ -151,17 +151,23 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
 
                     var lineDeleteQuery = queryFactory.Query().From(Tables.TemplateOperationLines).Delete(LoginedUserService.UserId).Where(new { TemplateOperationID = id }, false, false, "");
 
-                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+                    var lineUnsuitabilityItemsQuery = queryFactory.Query().From(Tables.TemplateOperationUnsuitabilityItems).Delete(LoginedUserService.UserId).Where(new { TemplateOperationId = id }, false, false, "");
+
+                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + QueryConstants.QueryConstant + lineUnsuitabilityItemsQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
                     var templateOperation = queryFactory.Update<SelectTemplateOperationsDto>(deleteQuery, "Id", true);
+
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.TemplateOperations, LogType.Delete, id);
                     return new SuccessDataResult<SelectTemplateOperationsDto>(templateOperation);
                 }
                 else
                 {
                     var queryLine = queryFactory.Query().From(Tables.TemplateOperationLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
                     var templateOperationLines = queryFactory.Update<SelectTemplateOperationLinesDto>(queryLine, "Id", true);
+
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.TemplateOperationLines, LogType.Delete, id);
+
                     return new SuccessDataResult<SelectTemplateOperationLinesDto>(templateOperationLines);
                 }
             }
