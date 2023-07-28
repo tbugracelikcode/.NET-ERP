@@ -177,7 +177,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var query = queryFactory.Query().From(Tables.TemplateOperations).Select<TemplateOperations>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.DataOpenStatus, p.DataOpenStatusUserId })
+                var query = queryFactory.Query().From(Tables.TemplateOperations).Select<TemplateOperations>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.DataOpenStatus, p.DataOpenStatusUserId,p.WorkCenterID })
                     .Join<StationGroups>
                     (
                         g => new { WorkCenterName = g.Name },
@@ -229,6 +229,8 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
 
                 var unsuitabilityItemsLine = queryFactory.GetList<SelectTemplateOperationUnsuitabilityItemsDto>(queryUnsuitabilityItems).ToList();
 
+                templateOperations.SelectTemplateOperationUnsuitabilityItems = unsuitabilityItemsLine;
+
                 #region UnsuitabilityItems Control
 
                 var unsuitabilityItemsQuery = queryFactory.Query().From(Tables.UnsuitabilityItems).Select("*").Where(new { StationGroupId = templateOperations.WorkCenterID }, true, true, "");
@@ -241,6 +243,8 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                 {
                     if (!unsuitabilityItemsLine.Any(t => t.UnsuitabilityItemsId == item.Id))
                     {
+                        lineNr++;
+
                         unsuitabilityItemsLine.Add(new SelectTemplateOperationUnsuitabilityItemsDto
                         {
                             CreationTime = DateTime.Now,
@@ -259,12 +263,12 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                             UnsuitabilityItemsName = item.Name
                         });
 
-                        lineNr++;
                     }
                 }
                 #endregion
 
                 templateOperations.SelectTemplateOperationUnsuitabilityItems = unsuitabilityItemsLine;
+
                 #endregion
 
                 LogsAppService.InsertLogToDatabase(templateOperations, templateOperations, LoginedUserService.UserId, Tables.TemplateOperations, LogType.Get, id);

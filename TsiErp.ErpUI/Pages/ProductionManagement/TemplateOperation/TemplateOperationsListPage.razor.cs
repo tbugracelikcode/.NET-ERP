@@ -229,7 +229,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
                     IsChanged = true;
                     DataSource = (await TemplateOperationsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectTemplateOperationLines.OrderBy(t => t.Priority).ToList();
-
+                    UnsuitabilityItemsLineGridList = DataSource.SelectTemplateOperationUnsuitabilityItems.OrderBy(t=>t.LineNr).ToList();
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
                     break;
