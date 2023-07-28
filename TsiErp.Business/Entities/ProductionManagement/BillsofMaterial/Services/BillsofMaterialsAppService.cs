@@ -363,7 +363,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                                 DeletionTime = line.DeletionTime.GetValueOrDefault(),
                                 FinishedProductID = item.FinishedProductID,
                                 Id = item.Id,
-                                IsDeleted = false,
+                                IsDeleted = item.IsDeleted,
                                 LastModificationTime = DateTime.Now,
                                 LastModifierId = LoginedUserService.UserId,
                                 LineNr = item.LineNr,

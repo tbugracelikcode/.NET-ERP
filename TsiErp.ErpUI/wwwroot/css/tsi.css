@@ -976,6 +976,18 @@ e-upload .e-upload-files .e-file-remove-btn.e-icons:hover, .e-upload .e-upload-f
     margin-top: 5% !important;
 }
 
+.e-toolbar .e-tbar-btn {
+    background: #f8f9fa;
+    box-shadow: none;
+    color: #c13030 !important;
+    border: 1px #c13030 solid !important;
+    font-weight: 500 !important;
+}
+
+    .e-toolbar .e-tbar-btn.e-btn .e-icons {
+        color: #bf1212 !important;
+    }
+
 
 
 
