@@ -51,6 +51,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ContractUnsuitabilityItemsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\ControlConditions\Page\ControlConditionResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ControlConditionResources.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\ControlTypes\Page\ControlTypeResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -367,6 +372,10 @@
     <EmbeddedResource Update="Resources\ContractUnsuitabilityItems\Page\ContractUnsuitabilityItemsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ContractUnsuitabilityItemsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ControlConditions\Page\ControlConditionResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ControlConditionResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\ControlTypes\Page\ControlTypeResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

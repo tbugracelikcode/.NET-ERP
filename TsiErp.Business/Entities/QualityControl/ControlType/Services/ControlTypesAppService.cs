@@ -124,6 +124,8 @@ namespace TsiErp.Business.Entities.QualityControl.ControlType.Services
             }
         }
 
+        [ValidationAspect(typeof(UpdateControlTypesValidator), Priority = 1)]
+        [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectControlTypesDto>> UpdateAsync(UpdateControlTypesDto input)
         {
             using (var connection = queryFactory.ConnectToDatabase())
