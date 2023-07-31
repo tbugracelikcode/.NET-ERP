@@ -161,6 +161,15 @@ namespace TsiErp.Localizations.Resources.StockManagementParameter.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stok fişlerinde ileri tarihli kayıt yapılsın..
+        /// </summary>
+        public static string FutureDateParameterLabel {
+            get {
+                return ResourceManager.GetString("FutureDateParameterLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen Bekleyin...
         /// </summary>
         public static string LoadingCaption {
@@ -202,6 +211,24 @@ namespace TsiErp.Localizations.Resources.StockManagementParameter.Page {
         public static string SaveButton {
             get {
                 return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Yönetimi Parametreleri.
+        /// </summary>
+        public static string UICurrentMenu {
+            get {
+                return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genel Sistem Tanımlamaları &gt; Genel Sistem Parametreleri.
+        /// </summary>
+        public static string UIPreviousMenu {
+            get {
+                return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
             }
         }
         

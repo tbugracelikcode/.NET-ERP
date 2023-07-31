@@ -4,5 +4,9 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.GeneralParameter
 {
     public class UpdateGeneralParametersDto : FullAuditedEntityDto
     {
+        /// <summary>
+        /// Sayfa Adı
+        /// </summary>
+        public string PageName { get; set; }
     }
 }

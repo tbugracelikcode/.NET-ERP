@@ -150,6 +150,9 @@
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
+  <data name="FutureDateParameterLabel" xml:space="preserve">
+    <value>Stok fişlerinde ileri tarihli kayıt yapılsın.</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
   </data>
@@ -164,6 +167,12 @@
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Stok Yönetimi Parametreleri</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Genel Sistem Tanımlamaları &gt; Genel Sistem Parametreleri</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>

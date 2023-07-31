@@ -68,6 +68,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementP
                 var query = queryFactory.Query().From(Tables.StockManagementParameters).Update(new UpdateStockManagementParametersDto
                 {
                     FutureDateParameter = input.FutureDateParameter,
+                    PageName = input.PageName,
                     Id = input.Id,
                     CreationTime = entity.CreationTime.Value,
                     CreatorId = entity.CreatorId.Value,

@@ -8,5 +8,9 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.FinanceManagemen
         /// İleri Zamanlı Tarih Parametresi
         /// </summary>
         public bool FutureDateParameter { get; set; }
+        /// <summary>
+        /// Sayfa Adı
+        /// </summary>
+        public string PageName { get; set; }
     }
 }

@@ -206,6 +206,24 @@ namespace TsiErp.Localizations.Resources.FinanceManagementParameter.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Finans Yönetimi Parametreleri.
+        /// </summary>
+        public static string UICurrentMenu {
+            get {
+                return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genel Sistem Tanımlamaları &gt; Genel Sistem Parametreleri.
+        /// </summary>
+        public static string UIPreviousMenu {
+            get {
+                return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aynı kodlu bir kayıt bulunmaktadır..
         /// </summary>
         public static string UpdateControlManager {

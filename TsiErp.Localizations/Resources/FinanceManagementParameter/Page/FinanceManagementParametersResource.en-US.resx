@@ -165,4 +165,10 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Finance Management Parameters</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>General System Identifications &gt; General System Parameters</value>
+  </data>
 </root>

@@ -11,5 +11,11 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.ShippingManageme
         /// İleri Zamanlı Tarih Parametresi
         /// </summary>
         public bool FutureDateParameter { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Sayfa Adı
+        /// </summary>
+        public string PageName { get; set; }
     }
 }

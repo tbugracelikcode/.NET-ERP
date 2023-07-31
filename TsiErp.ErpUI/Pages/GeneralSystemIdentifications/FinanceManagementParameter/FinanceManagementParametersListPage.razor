@@ -1,0 +1,43 @@
+﻿@page "/finance-management-parameters"
+@layout MainLayout
+
+
+@inherits BaseListPage<SelectFinanceManagementParametersDto, ListFinanceManagementParametersDto, CreateFinanceManagementParametersDto, UpdateFinanceManagementParametersDto, ListFinanceManagementParametersParameterDto>
+
+@inject IFinanceManagementParametersAppService FinanceManagementParametersService
+@inject IStringLocalizer<FinanceManagementParametersResource> L
+
+@if (!base.IsLoaded)
+{
+    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+}
+else
+{
+    <DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+        <GridLayoutItems>
+            <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIListPageTitleCard">
+                        <CardContent>
+                            <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+            <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+                <Template>
+                    <SfCard class="TSIGridCards">
+                        <CardContent>
+
+                        </CardContent>
+                        <CardFooter>
+                        </CardFooter>
+                    </SfCard>
+                </Template>
+            </DxGridLayoutItem>
+        </GridLayoutItems>
+    </DevGridLayout>
+
+}
