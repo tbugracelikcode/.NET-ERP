@@ -153,6 +153,12 @@
   <data name="ContractProdTrackingsChildMenu" xml:space="preserve">
     <value>Fason İmalat Takip Kayıtları</value>
   </data>
+  <data name="ControlConditionsChildMenu" xml:space="preserve">
+    <value>Kontrol Şartı Başlıkları</value>
+  </data>
+  <data name="ControlTypesChildMenu" xml:space="preserve">
+    <value>Kontrol Türü Başlıkları</value>
+  </data>
   <data name="ContUnsAnlChildMenu" xml:space="preserve">
     <value>Fason Tedarikçi Uygunsuzluk Kayıtları Analizi</value>
   </data>

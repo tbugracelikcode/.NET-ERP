@@ -322,7 +322,7 @@ namespace TsiErp.Localizations.Resources.ControlConditions.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kalite Kontrol &gt; Kontrol Şartı Başlıkları.
+        ///   Looks up a localized string similar to Kalite Kontrol &gt; .
         /// </summary>
         public static string UIPreviousMenu {
             get {

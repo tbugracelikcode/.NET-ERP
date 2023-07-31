@@ -161,6 +161,10 @@ using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
+using TsiErp.Entities.Entities.QualityControl.ControlType;
+using TsiErp.Entities.Entities.QualityControl.ControlType.Dtos;
+using TsiErp.Entities.Entities.QualityControl.ControlCondition;
+using TsiErp.Entities.Entities.QualityControl.ControlCondition.Dtos;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -790,6 +794,20 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectUnsuitabilityItemsDto, CreateUnsuitabilityItemsDto>();
             CreateMap<UpdateUnsuitabilityItemsDto, UnsuitabilityItems>();
             CreateMap<SelectUnsuitabilityItemsDto, UpdateUnsuitabilityItemsDto>();
+
+            CreateMap<ControlTypes, SelectControlTypesDto>();
+            CreateMap<ControlTypes, ListControlTypesDto>();
+            CreateMap<CreateControlTypesDto, ControlTypes>();
+            CreateMap<SelectControlTypesDto, CreateControlTypesDto>();
+            CreateMap<UpdateControlTypesDto, ControlTypes>();
+            CreateMap<SelectControlTypesDto, UpdateControlTypesDto>();
+
+            CreateMap<ControlConditions, SelectControlConditionsDto>();
+            CreateMap<ControlConditions, ListControlConditionsDto>();
+            CreateMap<CreateControlConditionsDto, ControlConditions>();
+            CreateMap<SelectControlConditionsDto, CreateControlConditionsDto>();
+            CreateMap<UpdateControlConditionsDto, ControlConditions>();
+            CreateMap<SelectControlConditionsDto, UpdateControlConditionsDto>();
         }
     }
 }
