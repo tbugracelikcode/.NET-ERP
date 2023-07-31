@@ -2388,6 +2388,41 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
             }
             #endregion
 
+            #region ControlTypes Table Created
+            Table ControlTypesTable = model.CreateTable(Tables.ControlTypes);
+
+            if (ControlTypesTable != null)
+            {
+                var properties = (typeof(UnsuitabilityTypesItems)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(ControlTypesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ControlTypesTable, "PK_" + ControlTypesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        ControlTypesTable.Indexes.Add(pkIndex);
+                    }
+
+                    ControlTypesTable.Columns.Add(column);
+                }
+
+                ControlTypesTable.Create();
+            }
+            #endregion
+
             #region Forecasts Table Created
             Table ForecastsTable = model.CreateTable(Tables.Forecasts);
 
