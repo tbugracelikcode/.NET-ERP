@@ -216,6 +216,9 @@
   <data name="FinalControlUnsRecordsChildMenu" xml:space="preserve">
     <value>Final Control Unsuitability Records</value>
   </data>
+  <data name="FinanceManagementParametersChildMenu" xml:space="preserve">
+    <value>Finance Management </value>
+  </data>
   <data name="FinanceManagementParentMenu" xml:space="preserve">
     <value>Finance Management</value>
   </data>
@@ -225,8 +228,14 @@
   <data name="GeneralOEEChildMenu" xml:space="preserve">
     <value>General OEE Analysis</value>
   </data>
+  <data name="GeneralParametersChildMenu" xml:space="preserve">
+    <value>General Parameters</value>
+  </data>
   <data name="GeneralSystemIdentificationsParentMenu" xml:space="preserve">
     <value>General Identifications</value>
+  </data>
+  <data name="GeneralSystemParametersParentMenu" xml:space="preserve">
+    <value>General System Parameters</value>
   </data>
   <data name="HaltReasonsChildMenu" xml:space="preserve">
     <value>Halt Reasons</value>
@@ -239,6 +248,9 @@
   </data>
   <data name="ListofMaterialsChildMenu" xml:space="preserve">
     <value>List of Materials</value>
+  </data>
+  <data name="MachineAndWorkforceManagementParametersChildMenu" xml:space="preserve">
+    <value>Machine &amp; Workforce Management </value>
   </data>
   <data name="MachWorkForceManagementParentMenu" xml:space="preserve">
     <value>Machinery and Workforce Management</value>
@@ -257,6 +269,9 @@
   </data>
   <data name="MainRecordsMenu" xml:space="preserve">
     <value>Main Records</value>
+  </data>
+  <data name="MaintenanceManagementParametersChildMenu" xml:space="preserve">
+    <value>Maintenance Management</value>
   </data>
   <data name="MaintenanceManagementParentMenu" xml:space="preserve">
     <value>Maintenance Management</value>
@@ -309,6 +324,9 @@
   <data name="PlannedMainChildMenu" xml:space="preserve">
     <value>Preventive/Planned Maintenance Records</value>
   </data>
+  <data name="PlanningManagementParametersChildMenu" xml:space="preserve">
+    <value>Planning Management </value>
+  </data>
   <data name="PlanningParentMenu" xml:space="preserve">
     <value>Planning</value>
   </data>
@@ -330,6 +348,9 @@
   <data name="ProductGroupsChildMenu" xml:space="preserve">
     <value>Product Groups</value>
   </data>
+  <data name="ProductionManagementParametersChildMenu" xml:space="preserve">
+    <value>Production Management </value>
+  </data>
   <data name="ProductionManagementParentMenu" xml:space="preserve">
     <value>Production Management</value>
   </data>
@@ -350,6 +371,9 @@
   </data>
   <data name="ProductsChildMenu" xml:space="preserve">
     <value>Products</value>
+  </data>
+  <data name="PurchaseManagementParametersChildMenu" xml:space="preserve">
+    <value>Purchase Management </value>
   </data>
   <data name="PurchaseManagementParentMenu" xml:space="preserve">
     <value>Purchase Management</value>
@@ -375,6 +399,9 @@
   <data name="PurcUnsAnlChildMenu" xml:space="preserve">
     <value>Purchase Unsuitability Records Analysis</value>
   </data>
+  <data name="QualityControlParametersChildMenu" xml:space="preserve">
+    <value>Quality Control </value>
+  </data>
   <data name="QualityControlParentMenu" xml:space="preserve">
     <value>Quality Control</value>
   </data>
@@ -386,6 +413,9 @@
   </data>
   <data name="RoutesChildMenu" xml:space="preserve">
     <value>Routes</value>
+  </data>
+  <data name="SalesManagementParametersChildMenu" xml:space="preserve">
+    <value>Sales Management </value>
   </data>
   <data name="SalesManagementParentMenu" xml:space="preserve">
     <value>Sales Management</value>
@@ -417,6 +447,9 @@
   <data name="ShippingAdressesChildMenu" xml:space="preserve">
     <value>Shipping Addresses</value>
   </data>
+  <data name="ShippingManagementParametersChildMenu" xml:space="preserve">
+    <value>Shipping Management </value>
+  </data>
   <data name="SPCFMEAChildMenu" xml:space="preserve">
     <value>SPC &amp; FMEA</value>
   </data>
@@ -440,6 +473,9 @@
   </data>
   <data name="StockFichesChildMenu" xml:space="preserve">
     <value>Stock Fiches</value>
+  </data>
+  <data name="StockManagementParametersChildMenu" xml:space="preserve">
+    <value>Stock Management </value>
   </data>
   <data name="StockManagementParentMenu" xml:space="preserve">
     <value>Stock Management</value>

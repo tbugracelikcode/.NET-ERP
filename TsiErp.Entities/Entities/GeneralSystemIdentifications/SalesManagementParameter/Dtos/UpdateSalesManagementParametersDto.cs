@@ -3,11 +3,15 @@
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementParameter.Dtos
 {
-    public class UpdateSalesManagementParametersDto : FullAuditedEntityDto
+    public class UpdateSalesManagementParametersDto 
     {
         /// <summary>
         /// İleri Zamanlı Tarih Parametresi
         /// </summary>
         public bool FutureDateParameter { get; set; }
+        /// <summary>
+        /// Id
+        /// </summary>
+        public Guid Id { get; set; }
     }
 }

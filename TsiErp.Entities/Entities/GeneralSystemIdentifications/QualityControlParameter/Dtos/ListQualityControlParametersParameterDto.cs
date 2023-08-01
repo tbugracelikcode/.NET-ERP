@@ -3,7 +3,7 @@
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.QualityControlParameter.Dtos
 {
-    public class ListQualityControlParametersParameterDto : FullAuditedEntityDto
+    public class ListQualityControlParametersParameterDto 
     {
     }
 }

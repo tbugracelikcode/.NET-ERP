@@ -2,11 +2,15 @@
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.MaintenanceManagementParameter.Dtos
 {
-    public class SelectMaintenanceManagementParametersDto : FullAuditedEntityDto
+    public class SelectMaintenanceManagementParametersDto 
     {
         /// <summary>
         /// İleri Zamanlı Tarih Parametresi
         /// </summary>
         public bool FutureDateParameter { get; set; }
+        /// <summary>
+        /// Id
+        /// </summary>
+        public Guid Id { get; set; }
     }
 }

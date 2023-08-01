@@ -88,6 +88,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Folder Include="Pages\GeneralSystemIdentifications\GeneralParameter\" />
+		<Folder Include="Pages\GeneralSystemIdentifications\MachineAndWorkforceManagementParameter\" />
+		<Folder Include="Pages\GeneralSystemIdentifications\MaintenanceManagementParameter\" />
+		<Folder Include="Pages\GeneralSystemIdentifications\PlanningManagementParameter\" />
+		<Folder Include="Pages\GeneralSystemIdentifications\ProductionManagementParameter\" />
+		<Folder Include="Pages\GeneralSystemIdentifications\PurchaseManagementParameter\" />
+		<Folder Include="Pages\GeneralSystemIdentifications\QualityControlParameter\" />
+		<Folder Include="Pages\GeneralSystemIdentifications\SalesManagementParameter\" />
+		<Folder Include="Pages\GeneralSystemIdentifications\ShippingManagementParameter\" />
 		<Folder Include="wwwroot\ExportedGridFiles\" />
 	</ItemGroup>
 

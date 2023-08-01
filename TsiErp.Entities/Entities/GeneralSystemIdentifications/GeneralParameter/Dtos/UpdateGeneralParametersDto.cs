@@ -2,7 +2,11 @@
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.GeneralParameter.Dtos
 {
-    public class UpdateGeneralParametersDto : FullAuditedEntityDto
+    public class UpdateGeneralParametersDto
     {
+        /// <summary>
+        /// Id
+        /// </summary>
+        public Guid Id { get; set; }
     }
 }

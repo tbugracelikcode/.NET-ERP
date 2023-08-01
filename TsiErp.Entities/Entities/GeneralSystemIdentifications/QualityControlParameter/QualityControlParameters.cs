@@ -4,12 +4,17 @@ using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.QualityControlParameter
 {
-    public class QualityControlParameters : FullAuditedEntity
+    public class QualityControlParameters 
     {
         [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
         /// <summary>
         /// İleri Zamanlı Tarih Parametresi
         /// </summary>
         public bool FutureDateParameter { get; set; }
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Id
+        /// </summary>
+        public Guid Id { get; set; }
     }
 }
