@@ -9,55 +9,42 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.StockManagementParamet
 {
     public partial class StockManagementParametersListPage
     {
-        #region Değişkenler 
-
-        public bool stockFiches = false;
-        public Guid stockFichesId;
-
-        #endregion
-
-        List<ListStockManagementParametersDto> StockManagementParametersList = new List<ListStockManagementParametersDto>();
-
         protected override async void OnInitialized()
         {
             BaseCrudService = StockManagementParametersService;
+
             _L = L;
 
-
-            StockManagementParametersList = (await StockManagementParametersService.GetListAsync(new ListStockManagementParametersParameterDto())).Data.ToList();
-
-            //stockFiches = StockManagementParametersList.Where(t => t.PageName == Tables.StockFiches).Select(t => t.FutureDateParameter).FirstOrDefault();
-
-            //stockFichesId = StockManagementParametersList.Where(t => t.PageName == Tables.StockFiches).Select(t => t.Id).FirstOrDefault();
-
-
-            DataSource = (await StockManagementParametersService.GetAsync(stockFichesId)).Data;
-
+            DataSource = (await StockManagementParametersService.GetStockManagementParametersAsync()).Data;
         }
 
         private async void StockFichesChange(ChangeEventArgs<bool> args)
         {
-
             DataSource.FutureDateParameter = args.Checked;
-
-            //var updateInput = ObjectMapper.Map<SelectStockManagementParametersDto, UpdateStockManagementParametersDto>(DataSource);
-
-            //var result = (await UpdateAsync(updateInput)).Data;
         }
 
         private async void OnClick()
         {
-            DataSource = (await StockManagementParametersService.GetAsync(stockFichesId)).Data;
+            if (DataSource.Id == Guid.Empty)
+            {
+                var createdEntity = ObjectMapper.Map<SelectStockManagementParametersDto, CreateStockManagementParametersDto>(DataSource);
 
-            DataSource.FutureDateParameter = stockFiches;
+                await StockManagementParametersService.CreateAsync(createdEntity);
 
-            var updateInput = ObjectMapper.Map<SelectStockManagementParametersDto, UpdateStockManagementParametersDto>(DataSource);
+                DataSource = (await StockManagementParametersService.GetStockManagementParametersAsync()).Data;
 
+                await InvokeAsync(StateHasChanged);
+            }
+            else
+            {
+                var updatedEntity = ObjectMapper.Map<SelectStockManagementParametersDto, UpdateStockManagementParametersDto>(DataSource);
 
+                await StockManagementParametersService.UpdateAsync(updatedEntity);
 
-            var updatedEntity = await StockManagementParametersService.UpdateAsync(updateInput);
+                DataSource = (await StockManagementParametersService.GetStockManagementParametersAsync()).Data;
 
-            //var result = (await UpdateAsync(updateInput)).Data;
+                await InvokeAsync(StateHasChanged);
+            }
         }
     }
 }
