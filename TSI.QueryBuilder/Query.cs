@@ -25,5 +25,7 @@ namespace TSI.QueryBuilder
         public string JoinSeperator { get; set; }
 
         public string TablesJoinKeywords { get; set; }
+
+        public bool UseIsDeleteInQuery { get; set; } = true;
     }
 }

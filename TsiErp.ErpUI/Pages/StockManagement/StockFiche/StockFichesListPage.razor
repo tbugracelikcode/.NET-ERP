@@ -15,6 +15,7 @@
 @inject IStockFichesAppService StockFichesAppService
 @inject IProductsAppService ProductsAppService
 @inject IUnitSetsAppService UnitSetsAppService
+@inject IStockManagementParametersAppService StockManagementParametersAppService
 
 @if (!base.IsLoaded)
 {
@@ -167,7 +168,7 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["Date_Label"] </strong></label><br />
-                            <SfDatePicker @bind-Value="@DataSource.Date_"></SfDatePicker>
+                            <SfDatePicker @bind-Value="@DataSource.Date_" Max=@(!futureDateParameter ? DateTime.Today : new DateTime(2100,12,31))></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
 

@@ -110,20 +110,23 @@ namespace TSI.QueryBuilder.BaseClasses
 
                         if (string.IsNullOrEmpty(query.WhereSentence))
                         {
-                            query.Sql = query.Sql + " where " + isDeleted;
+                            if (query.UseIsDeleteInQuery)
+                            {
+                                query.Sql = query.Sql + " where " + isDeleted;
+                            }
                         }
                         else
                         {
-                            if (query.TableName == "ProgVersions")
+                            if (query.UseIsDeleteInQuery)
                             {
-                                query.WhereSentence = query.WhereSentence;
+                                query.WhereSentence = query.WhereSentence + " and " + isDeleted;
+                                query.Sql = query.Sql + " where " + query.WhereSentence;
                             }
                             else
                             {
-                                query.WhereSentence = query.WhereSentence + " and " + isDeleted;
+                                query.WhereSentence = query.WhereSentence;
+                                query.Sql = query.Sql + " where " + query.WhereSentence;
                             }
-
-                            query.Sql = query.Sql + " where " + query.WhereSentence;
                         }
                     }
 
@@ -173,12 +176,23 @@ namespace TSI.QueryBuilder.BaseClasses
 
                         if (string.IsNullOrEmpty(query.WhereSentence))
                         {
-                            query.Sql = query.Sql + " where " + isDeleted;
+                            if (query.UseIsDeleteInQuery)
+                            {
+                                query.Sql = query.Sql + " where " + isDeleted;
+                            }
                         }
                         else
                         {
-                            query.WhereSentence = query.WhereSentence + " and " + isDeleted;
-                            query.Sql = query.Sql + " where " + query.WhereSentence;
+                            if (query.UseIsDeleteInQuery)
+                            {
+                                query.WhereSentence = query.WhereSentence + " and " + isDeleted;
+                                query.Sql = query.Sql + " where " + query.WhereSentence;
+                            }
+                            else
+                            {
+                                query.WhereSentence = query.WhereSentence;
+                                query.Sql = query.Sql + " where " + query.WhereSentence;
+                            }
                         }
                     }
 
@@ -313,7 +327,9 @@ namespace TSI.QueryBuilder.BaseClasses
 
                         transaction.Commit();
 
-                        var resultSql = query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator);
+                        var resultSql = query.UseIsDeleteInQuery
+                               ? query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator)
+                               : query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator).UseIsDelete(false);
 
                         var result = Get<T>(resultSql);
 
@@ -367,7 +383,9 @@ namespace TSI.QueryBuilder.BaseClasses
 
                             transaction.Commit();
 
-                            var resultSql = query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator);
+                            var resultSql = query.UseIsDeleteInQuery
+                                ? query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator)
+                                : query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator).UseIsDelete(false);
 
                             var result = Get<T>(resultSql);
 
@@ -419,7 +437,9 @@ namespace TSI.QueryBuilder.BaseClasses
 
                         transaction.Commit();
 
-                        var resultSql = query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator);
+                        var resultSql = query.UseIsDeleteInQuery
+                                ? query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator)
+                                : query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator).UseIsDelete(false);
 
                         var result = Get<T>(resultSql);
 
@@ -483,7 +503,9 @@ namespace TSI.QueryBuilder.BaseClasses
 
                             transaction.Commit();
 
-                            var resultSql = query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator);
+                            var resultSql = query.UseIsDeleteInQuery
+                               ? query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator)
+                               : query.From(query.TableName).Select().Where(returnIdCaption, _id.ToString(), query.JoinSeperator).UseIsDelete(false);
 
                             var result = Get<T>(resultSql);
 

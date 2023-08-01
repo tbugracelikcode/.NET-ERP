@@ -9,6 +9,45 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Pages\GeneralSystemIdentifications\GeneralParameter\**" />
+	  <Compile Remove="Pages\GeneralSystemIdentifications\MachineAndWorkforceManagementParameter\**" />
+	  <Compile Remove="Pages\GeneralSystemIdentifications\MaintenanceManagementParameter\**" />
+	  <Compile Remove="Pages\GeneralSystemIdentifications\PlanningManagementParameter\**" />
+	  <Compile Remove="Pages\GeneralSystemIdentifications\ProductionManagementParameter\**" />
+	  <Compile Remove="Pages\GeneralSystemIdentifications\PurchaseManagementParameter\**" />
+	  <Compile Remove="Pages\GeneralSystemIdentifications\QualityControlParameter\**" />
+	  <Compile Remove="Pages\GeneralSystemIdentifications\SalesManagementParameter\**" />
+	  <Compile Remove="Pages\GeneralSystemIdentifications\ShippingManagementParameter\**" />
+	  <Content Remove="Pages\GeneralSystemIdentifications\GeneralParameter\**" />
+	  <Content Remove="Pages\GeneralSystemIdentifications\MachineAndWorkforceManagementParameter\**" />
+	  <Content Remove="Pages\GeneralSystemIdentifications\MaintenanceManagementParameter\**" />
+	  <Content Remove="Pages\GeneralSystemIdentifications\PlanningManagementParameter\**" />
+	  <Content Remove="Pages\GeneralSystemIdentifications\ProductionManagementParameter\**" />
+	  <Content Remove="Pages\GeneralSystemIdentifications\PurchaseManagementParameter\**" />
+	  <Content Remove="Pages\GeneralSystemIdentifications\QualityControlParameter\**" />
+	  <Content Remove="Pages\GeneralSystemIdentifications\SalesManagementParameter\**" />
+	  <Content Remove="Pages\GeneralSystemIdentifications\ShippingManagementParameter\**" />
+	  <EmbeddedResource Remove="Pages\GeneralSystemIdentifications\GeneralParameter\**" />
+	  <EmbeddedResource Remove="Pages\GeneralSystemIdentifications\MachineAndWorkforceManagementParameter\**" />
+	  <EmbeddedResource Remove="Pages\GeneralSystemIdentifications\MaintenanceManagementParameter\**" />
+	  <EmbeddedResource Remove="Pages\GeneralSystemIdentifications\PlanningManagementParameter\**" />
+	  <EmbeddedResource Remove="Pages\GeneralSystemIdentifications\ProductionManagementParameter\**" />
+	  <EmbeddedResource Remove="Pages\GeneralSystemIdentifications\PurchaseManagementParameter\**" />
+	  <EmbeddedResource Remove="Pages\GeneralSystemIdentifications\QualityControlParameter\**" />
+	  <EmbeddedResource Remove="Pages\GeneralSystemIdentifications\SalesManagementParameter\**" />
+	  <EmbeddedResource Remove="Pages\GeneralSystemIdentifications\ShippingManagementParameter\**" />
+	  <None Remove="Pages\GeneralSystemIdentifications\GeneralParameter\**" />
+	  <None Remove="Pages\GeneralSystemIdentifications\MachineAndWorkforceManagementParameter\**" />
+	  <None Remove="Pages\GeneralSystemIdentifications\MaintenanceManagementParameter\**" />
+	  <None Remove="Pages\GeneralSystemIdentifications\PlanningManagementParameter\**" />
+	  <None Remove="Pages\GeneralSystemIdentifications\ProductionManagementParameter\**" />
+	  <None Remove="Pages\GeneralSystemIdentifications\PurchaseManagementParameter\**" />
+	  <None Remove="Pages\GeneralSystemIdentifications\QualityControlParameter\**" />
+	  <None Remove="Pages\GeneralSystemIdentifications\SalesManagementParameter\**" />
+	  <None Remove="Pages\GeneralSystemIdentifications\ShippingManagementParameter\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Content Remove="Pages\ComponentTest.razor" />
 	</ItemGroup>
 
@@ -88,15 +127,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Pages\GeneralSystemIdentifications\GeneralParameter\" />
-		<Folder Include="Pages\GeneralSystemIdentifications\MachineAndWorkforceManagementParameter\" />
-		<Folder Include="Pages\GeneralSystemIdentifications\MaintenanceManagementParameter\" />
-		<Folder Include="Pages\GeneralSystemIdentifications\PlanningManagementParameter\" />
-		<Folder Include="Pages\GeneralSystemIdentifications\ProductionManagementParameter\" />
-		<Folder Include="Pages\GeneralSystemIdentifications\PurchaseManagementParameter\" />
-		<Folder Include="Pages\GeneralSystemIdentifications\QualityControlParameter\" />
-		<Folder Include="Pages\GeneralSystemIdentifications\SalesManagementParameter\" />
-		<Folder Include="Pages\GeneralSystemIdentifications\ShippingManagementParameter\" />
 		<Folder Include="wwwroot\ExportedGridFiles\" />
 	</ItemGroup>
 

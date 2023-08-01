@@ -19,6 +19,11 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
 {
     public partial class StockFichesListPage
     {
+
+        #region Stock Parameters
+        bool futureDateParameter;
+        #endregion
+
         private SfGrid<SelectStockFicheLinesDto> _LineGrid;
 
         [Inject]
@@ -365,6 +370,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
 
+            futureDateParameter = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data.FutureDateParameter;
         }
 
         #region Stok Fişleri Satır Modalı İşlemleri
