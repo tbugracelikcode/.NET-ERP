@@ -96,10 +96,20 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>FinalControlUnsuitabilityReportsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\FinanceManagementParameter\Page\FinanceManagementParametersResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FinanceManagementParametersResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Forecasts\Page\ForecastsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ForecastsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\GeneralParameter\Page\GeneralParametersResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>GeneralParametersResource.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\GrandTotalStockMovements\Page\GrandTotalStockMovementsResource.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -111,10 +121,20 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>HaltReasonsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\MachineAndWorkforceManagementParameter\Page\MachineAndWorkforceManagementParametersResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MachineAndWorkforceManagementParametersResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\MaintenanceInstructions\Page\MaintenanceInstructionsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>MaintenanceInstructionsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\MaintenanceManagementParameter\Page\MaintenanceManagementParametersResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MaintenanceManagementParametersResource.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\MaintenancePeriods\Page\MaintenancePeriodsResource.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -151,10 +171,20 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>PlannedMaintenancesResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\PlanningManagementParameter\Page\PlanningManagementParametersResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PlanningManagementParametersResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\ProductGroups\Page\ProductGroupsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ProductGroupsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\ProductionManagementParameter\Page\ProductionManagementParametersResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ProductionManagementParametersResource.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\ProductionOrderChangeItems\Page\ProductionOrderChangeItemsResource.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -186,6 +216,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ProductsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\PurchaseManagementParameter\Page\PurchaseManagementParametersResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PurchaseManagementParametersResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\PurchaseOrders\Page\PurchaseOrdersResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -211,10 +246,20 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>PurchasingUnsuitabilityItemsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\QualityControlParameter\Page\QualityControlParametersResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>QualityControlParametersResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Routes\Page\RoutesResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>RoutesResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\SalesManagementParameter\Page\SalesManagementParametersResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>SalesManagementParametersResource.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\SalesOrders\Page\SalesOrdersResource.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -241,6 +286,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ShippingAdressesResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\ShippingManagementParameter\Page\ShippingManagementParametersResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ShippingManagementParametersResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\StationGroups\Page\StationGroupsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -260,6 +310,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>StockFichesResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\StockManagementParameter\Page\StockManagementParametersResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>StockManagementParametersResource.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\TechnicalDrawings\Page\TechnicalDrawingsResource.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -420,12 +475,20 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>FinalControlUnsuitabilityReportsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\FinanceManagementParameter\Page\FinanceManagementParametersResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FinanceManagementParametersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Forecasts\Page\ForecastsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Forecasts\Page\ForecastsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ForecastsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\GeneralParameter\Page\GeneralParametersResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GeneralParametersResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\GrandTotalStockMovements\Page\GrandTotalStockMovementsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -441,9 +504,17 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>HaltReasonsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\MachineAndWorkforceManagementParameter\Page\MachineAndWorkforceManagementParametersResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MachineAndWorkforceManagementParametersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\MaintenanceInstructions\Page\MaintenanceInstructionsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MaintenanceInstructionsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\MaintenanceManagementParameter\Page\MaintenanceManagementParametersResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MaintenanceManagementParametersResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\MaintenancePeriods\Page\MaintenancePeriodsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -491,12 +562,20 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PlannedMaintenancesResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PlanningManagementParameter\Page\PlanningManagementParametersResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PlanningManagementParametersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\ProductGroups\Page\ProductGroupsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\ProductGroups\Page\ProductGroupsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProductGroupsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ProductionManagementParameter\Page\ProductionManagementParametersResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProductionManagementParametersResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\ProductionOrderChangeItems\Page\ProductionOrderChangeItemsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -537,6 +616,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProductsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PurchaseManagementParameter\Page\PurchaseManagementParametersResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PurchaseManagementParametersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\PurchaseOrders\Page\PurchaseOrdersResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
@@ -572,12 +655,20 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PurchasingUnsuitabilityItemsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\QualityControlParameter\Page\QualityControlParametersResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>QualityControlParametersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Routes\Page\RoutesResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Routes\Page\RoutesResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RoutesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\SalesManagementParameter\Page\SalesManagementParametersResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SalesManagementParametersResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\SalesOrders\Page\SalesOrdersResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -611,6 +702,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ShippingAdressesResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ShippingManagementParameter\Page\ShippingManagementParametersResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ShippingManagementParametersResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\StationGroups\Page\StationGroupsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>StationGroupsResource.Designer.cs</LastGenOutput>
@@ -629,6 +724,10 @@
     <EmbeddedResource Update="Resources\StockFiche\StockFichesResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>StockFichesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\StockManagementParameter\Page\StockManagementParametersResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>StockManagementParametersResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\TechnicalDrawings\Page\TechnicalDrawingsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

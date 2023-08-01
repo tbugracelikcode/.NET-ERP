@@ -2,7 +2,7 @@
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.MaintenanceManagementParameter.Dtos
 {
-    public class ListMaintenanceManagementParametersParameterDto : FullAuditedEntityDto
+    public class ListMaintenanceManagementParametersParameterDto 
     {
     }
 }

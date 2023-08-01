@@ -2,7 +2,7 @@
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.MachineAndWorkforceManagementParameter.Dtos
 {
-    public class ListMachineAndWorkforceManagementParametersParameterDto : FullAuditedEntityDto
+    public class ListMachineAndWorkforceManagementParametersParameterDto 
     {
     }
 }

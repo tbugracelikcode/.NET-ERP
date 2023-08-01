@@ -2,7 +2,7 @@
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.GeneralParameter.Dtos
 {
-    public class ListGeneralParametersParameterDto : FullAuditedEntityDto
+    public class ListGeneralParametersParameterDto 
     {
     }
 }

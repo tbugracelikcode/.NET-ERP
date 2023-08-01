@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.StockManagementParameter.Dtos;
 
 namespace TsiErp.Business.Entities.GeneralSystemIdentifications.StockManagementParameter.Services
 {
-    public interface IStockManagementParametersAppService
+    public interface IStockManagementParametersAppService : ICrudAppService<SelectStockManagementParametersDto, ListStockManagementParametersDto, CreateStockManagementParametersDto, UpdateStockManagementParametersDto, ListStockManagementParametersParameterDto>
     {
     }
 }

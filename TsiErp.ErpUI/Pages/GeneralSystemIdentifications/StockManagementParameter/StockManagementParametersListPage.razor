@@ -1,0 +1,64 @@
+﻿@page "/stock-management-parameters"
+@layout MainLayout
+
+
+@inherits BaseListPage<SelectStockManagementParametersDto, ListStockManagementParametersDto, CreateStockManagementParametersDto, UpdateStockManagementParametersDto, ListStockManagementParametersParameterDto>
+
+@inject IStockManagementParametersAppService StockManagementParametersService
+@inject IStringLocalizer<StockManagementParametersResource> L
+
+@if (!base.IsLoaded)
+{
+    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+}
+else
+{
+<DevGridLayout ColumnCount="1" RowCount="3" RowHeights="@RowHeights("*")">
+    <GridLayoutItems>
+        <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="TSIListPageTitleCard">
+                    <CardContent>
+                        <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+        <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+            <Template>
+                <SfCard class="TSIGridCards">
+                    <CardContent>
+
+                        <br />
+                        <table style="width:100%;">
+                            <tr>
+                                <td style="width: 30%; text-align: left;height: 80px; padding-left: 2%;">
+                                   
+                                        <label class="TSIEditFormLabel">• @L["FutureDateParameterLabel"]  </label><br />
+                                    
+
+                                </td>
+
+                                <td style="width: 70%; text-align: left;height: 80px; padding-top: 1%;">
+                                        <SfSwitch  ValueChange="StockFichesChange" @bind-Checked="stockFiches" TChecked="bool"></SfSwitch>
+
+                                        <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+                                    
+                                </td>
+
+
+                            </tr>
+                        </table>
+
+                    </CardContent>
+                    <CardFooter>
+                    </CardFooter>
+                </SfCard>
+            </Template>
+        </DxGridLayoutItem>
+    </GridLayoutItems>
+</DevGridLayout>
+
+}

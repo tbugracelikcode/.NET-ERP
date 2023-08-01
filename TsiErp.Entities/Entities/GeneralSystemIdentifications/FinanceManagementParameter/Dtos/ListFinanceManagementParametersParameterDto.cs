@@ -2,7 +2,7 @@
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.FinanceManagementParameter.Dtos
 {
-    public class ListFinanceManagementParametersParameterDto : FullAuditedEntityDto
+    public class ListFinanceManagementParametersParameterDto 
     {
     }
 }

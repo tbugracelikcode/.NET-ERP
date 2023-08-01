@@ -2,8 +2,12 @@
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.MachineAndWorkforceManagementParameter.Dtos
 {
-    public class CreateMachineAndWorkforceManagementParametersDto : FullAuditedEntityDto
+    public class CreateMachineAndWorkforceManagementParametersDto
     {
+        /// <summary>
+        /// Id
+        /// </summary>
+        public Guid Id { get; set; }
         /// <summary>
         /// İleri Zamanlı Tarih Parametresi
         /// </summary>

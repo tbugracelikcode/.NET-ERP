@@ -210,6 +210,9 @@
   <data name="FinalControlUnsRecordsChildMenu" xml:space="preserve">
     <value>Final Kontrol Uygunsuzluk Kayıtları</value>
   </data>
+  <data name="FinanceManagementParametersChildMenu" xml:space="preserve">
+    <value>Finans Yönetimi </value>
+  </data>
   <data name="FinanceManagementParentMenu" xml:space="preserve">
     <value>Finans Yönetimi</value>
   </data>
@@ -219,8 +222,14 @@
   <data name="GeneralOEEChildMenu" xml:space="preserve">
     <value>Genel Fabrika OEE Analizi</value>
   </data>
+  <data name="GeneralParametersChildMenu" xml:space="preserve">
+    <value>Genel Parametreler</value>
+  </data>
   <data name="GeneralSystemIdentificationsParentMenu" xml:space="preserve">
     <value>Genel Sistem Tanımlamaları</value>
+  </data>
+  <data name="GeneralSystemParametersParentMenu" xml:space="preserve">
+    <value>Genel Sistem Parametreleri</value>
   </data>
   <data name="HaltReasonsChildMenu" xml:space="preserve">
     <value>Duruş Kodları</value>
@@ -233,6 +242,9 @@
   </data>
   <data name="ListofMaterialsChildMenu" xml:space="preserve">
     <value>Malzeme Listesi</value>
+  </data>
+  <data name="MachineAndWorkforceManagementParametersChildMenu" xml:space="preserve">
+    <value>Makine &amp; İş Gücü Yönetimi </value>
   </data>
   <data name="MachWorkForceManagementParentMenu" xml:space="preserve">
     <value>Makine &amp; İş Gücü Yönetimi</value>
@@ -251,6 +263,9 @@
   </data>
   <data name="MainRecordsMenu" xml:space="preserve">
     <value>Ana Kayıtlar</value>
+  </data>
+  <data name="MaintenanceManagementParametersChildMenu" xml:space="preserve">
+    <value>Bakım Yönetimi </value>
   </data>
   <data name="MaintenanceManagementParentMenu" xml:space="preserve">
     <value>Bakım Yönetimi</value>
@@ -303,6 +318,9 @@
   <data name="PlannedMainChildMenu" xml:space="preserve">
     <value>Önleyici/Planlı Bakım Kayıtları</value>
   </data>
+  <data name="PlanningManagementParametersChildMenu" xml:space="preserve">
+    <value>Planlama Yönetimi </value>
+  </data>
   <data name="PlanningParentMenu" xml:space="preserve">
     <value>Planlama</value>
   </data>
@@ -324,6 +342,9 @@
   <data name="ProductGroupsChildMenu" xml:space="preserve">
     <value>Ürün Grupları</value>
   </data>
+  <data name="ProductionManagementParametersChildMenu" xml:space="preserve">
+    <value>Üretim Yönetimi </value>
+  </data>
   <data name="ProductionManagementParentMenu" xml:space="preserve">
     <value>Üretim Yönetimi</value>
   </data>
@@ -344,6 +365,9 @@
   </data>
   <data name="ProductsChildMenu" xml:space="preserve">
     <value>Stok Kartları</value>
+  </data>
+  <data name="PurchaseManagementParametersChildMenu" xml:space="preserve">
+    <value>Satın Alma Yönetimi </value>
   </data>
   <data name="PurchaseManagementParentMenu" xml:space="preserve">
     <value>Satın Alma Yönetimi</value>
@@ -369,6 +393,9 @@
   <data name="PurcUnsAnlChildMenu" xml:space="preserve">
     <value>Satınalma Uygunuzluk Kayıtları Analizi</value>
   </data>
+  <data name="QualityControlParametersChildMenu" xml:space="preserve">
+    <value>Kalite Kontrol </value>
+  </data>
   <data name="QualityControlParentMenu" xml:space="preserve">
     <value>Kalite Kontrol</value>
   </data>
@@ -380,6 +407,9 @@
   </data>
   <data name="RoutesChildMenu" xml:space="preserve">
     <value>Üretim Rotaları</value>
+  </data>
+  <data name="SalesManagementParametersChildMenu" xml:space="preserve">
+    <value>Satış Yönetimi </value>
   </data>
   <data name="SalesManagementParentMenu" xml:space="preserve">
     <value>Satış Yönetimi</value>
@@ -411,6 +441,9 @@
   <data name="ShippingAdressesChildMenu" xml:space="preserve">
     <value>Sevkiyat Adresleri</value>
   </data>
+  <data name="ShippingManagementParametersChildMenu" xml:space="preserve">
+    <value>Sevkiyat Yönetimi </value>
+  </data>
   <data name="SPCFMEAChildMenu" xml:space="preserve">
     <value>SPC &amp; FMEA</value>
   </data>
@@ -434,6 +467,9 @@
   </data>
   <data name="StockFichesChildMenu" xml:space="preserve">
     <value>Stok Fişleri</value>
+  </data>
+  <data name="StockManagementParametersChildMenu" xml:space="preserve">
+    <value>Stok Yönetimi </value>
   </data>
   <data name="StockManagementParentMenu" xml:space="preserve">
     <value>Stok Yönetimi</value>

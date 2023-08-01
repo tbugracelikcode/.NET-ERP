@@ -4,8 +4,13 @@ using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.MachineAndWorkforceManagementParameter
 {
-    public class MachineAndWorkforceManagementParameters : FullAuditedEntity
+    public class MachineAndWorkforceManagementParameters 
     {
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Id
+        /// </summary>
+        public Guid Id { get; set; }
         [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
         /// <summary>
         /// İleri Zamanlı Tarih Parametresi
