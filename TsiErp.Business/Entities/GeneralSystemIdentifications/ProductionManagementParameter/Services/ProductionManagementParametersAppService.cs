@@ -68,16 +68,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.ProductionManage
                 var query = queryFactory.Query().From(Tables.ProductionManagementParameters).Update(new UpdateProductionManagementParametersDto
                 {
                     FutureDateParameter = input.FutureDateParameter,
-                    Id = input.Id,
-                    CreationTime = entity.CreationTime.Value,
-                    CreatorId = entity.CreatorId.Value,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = entity.DeleterId.Value,
-                    DeletionTime = entity.DeletionTime.Value,
-                    IsDeleted = entity.IsDeleted,
-                    LastModificationTime = DateTime.Now,
-                    LastModifierId = LoginedUserService.UserId
+                    Id = input.Id
                 }).Where(new { Id = input.Id }, false, false, "");
 
                 var ProductionManagementParameters = queryFactory.Update<SelectProductionManagementParametersDto>(query, "Id", true);

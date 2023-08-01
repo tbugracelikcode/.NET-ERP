@@ -1,17 +1,17 @@
 ﻿using Tsi.Core.Entities.Auditing;
-
+using Tsi.Core.Entities;
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.StockManagementParameter.Dtos
 {
-    public class ListStockManagementParametersDto : FullAuditedEntityDto
+    public class ListStockManagementParametersDto : IEntityDto
     {
         /// <summary>
         /// İleri Zamanlı Tarih Parametresi
         /// </summary>
         public bool FutureDateParameter { get; set; }
         /// <summary>
-        /// Sayfa Adı
+        /// Id
         /// </summary>
-        public string PageName { get; set; }
+        public Guid Id { get; set; }
     }
 }

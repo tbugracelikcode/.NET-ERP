@@ -3,7 +3,7 @@
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementParameter.Dtos
 {
-    public class ListSalesManagementParametersParameterDto : FullAuditedEntityDto
+    public class ListSalesManagementParametersParameterDto 
     {
     }
 }

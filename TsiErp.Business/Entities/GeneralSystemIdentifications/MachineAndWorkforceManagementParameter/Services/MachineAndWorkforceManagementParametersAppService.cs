@@ -68,16 +68,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.MachineAndWorkfo
                 var query = queryFactory.Query().From(Tables.MachineAndWorkforceManagementParameters).Update(new UpdateMachineAndWorkforceManagementParametersDto
                 {
                     FutureDateParameter = input.FutureDateParameter,
-                    Id = input.Id,
-                    CreationTime = entity.CreationTime.Value,
-                    CreatorId = entity.CreatorId.Value,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = entity.DeleterId.Value,
-                    DeletionTime = entity.DeletionTime.Value,
-                    IsDeleted = entity.IsDeleted,
-                    LastModificationTime = DateTime.Now,
-                    LastModifierId = LoginedUserService.UserId
+                    Id = input.Id
                 }).Where(new { Id = input.Id }, false, false, "");
 
                 var MachineAndWorkforceManagementParameters = queryFactory.Update<SelectMachineAndWorkforceManagementParametersDto>(query, "Id", true);

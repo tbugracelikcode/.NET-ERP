@@ -26,20 +26,38 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.StockManagementParamet
 
             StockManagementParametersList = (await StockManagementParametersService.GetListAsync(new ListStockManagementParametersParameterDto())).Data.ToList();
 
-            stockFiches = StockManagementParametersList.Where(t => t.PageName == Tables.StockFiches).Select(t => t.FutureDateParameter).FirstOrDefault();
-            stockFichesId = StockManagementParametersList.Where(t => t.PageName == Tables.StockFiches).Select(t => t.Id).FirstOrDefault();
+            //stockFiches = StockManagementParametersList.Where(t => t.PageName == Tables.StockFiches).Select(t => t.FutureDateParameter).FirstOrDefault();
+
+            //stockFichesId = StockManagementParametersList.Where(t => t.PageName == Tables.StockFiches).Select(t => t.Id).FirstOrDefault();
+
+
+            DataSource = (await StockManagementParametersService.GetAsync(stockFichesId)).Data;
 
         }
 
         private async void StockFichesChange(ChangeEventArgs<bool> args)
         {
-            DataSource = (await StockManagementParametersService.GetAsync(stockFichesId)).Data;
 
             DataSource.FutureDateParameter = args.Checked;
 
+            //var updateInput = ObjectMapper.Map<SelectStockManagementParametersDto, UpdateStockManagementParametersDto>(DataSource);
+
+            //var result = (await UpdateAsync(updateInput)).Data;
+        }
+
+        private async void OnClick()
+        {
+            DataSource = (await StockManagementParametersService.GetAsync(stockFichesId)).Data;
+
+            DataSource.FutureDateParameter = stockFiches;
+
             var updateInput = ObjectMapper.Map<SelectStockManagementParametersDto, UpdateStockManagementParametersDto>(DataSource);
 
-            var result = (await UpdateAsync(updateInput)).Data;
+
+
+            var updatedEntity = await StockManagementParametersService.UpdateAsync(updateInput);
+
+            //var result = (await UpdateAsync(updateInput)).Data;
         }
     }
 }

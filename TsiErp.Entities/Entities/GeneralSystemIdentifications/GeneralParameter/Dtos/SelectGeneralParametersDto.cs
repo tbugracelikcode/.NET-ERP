@@ -2,11 +2,12 @@
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.GeneralParameter.Dtos
 {
-    public class SelectGeneralParametersDto : FullAuditedEntityDto
+    public class SelectGeneralParametersDto 
     {
+
         /// <summary>
-        /// Sayfa Adı
+        /// Id
         /// </summary>
-        public string PageName { get; set; }
+        public Guid Id { get; set; }
     }
 }

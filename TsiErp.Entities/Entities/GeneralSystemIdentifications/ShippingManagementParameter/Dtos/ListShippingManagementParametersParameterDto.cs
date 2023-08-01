@@ -3,7 +3,7 @@
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.ShippingManagementParameter.Dtos
 {
-    public class ListShippingManagementParametersParameterDto : FullAuditedEntityDto
+    public class ListShippingManagementParametersParameterDto 
     {
         
     }

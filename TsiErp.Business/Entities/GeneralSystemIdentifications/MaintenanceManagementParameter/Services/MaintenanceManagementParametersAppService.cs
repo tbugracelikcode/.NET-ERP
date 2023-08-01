@@ -68,16 +68,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.MaintenanceManag
                 var query = queryFactory.Query().From(Tables.MaintenanceManagementParameters).Update(new UpdateMaintenanceManagementParametersDto
                 {
                     FutureDateParameter = input.FutureDateParameter,
-                    Id = input.Id,
-                    CreationTime = entity.CreationTime.Value,
-                    CreatorId = entity.CreatorId.Value,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = entity.DeleterId.Value,
-                    DeletionTime = entity.DeletionTime.Value,
-                    IsDeleted = entity.IsDeleted,
-                    LastModificationTime = DateTime.Now,
-                    LastModifierId = LoginedUserService.UserId
+                    Id = input.Id
                 }).Where(new { Id = input.Id }, false, false, "");
 
                 var MaintenanceManagementParameters = queryFactory.Update<SelectMaintenanceManagementParametersDto>(query, "Id", true);

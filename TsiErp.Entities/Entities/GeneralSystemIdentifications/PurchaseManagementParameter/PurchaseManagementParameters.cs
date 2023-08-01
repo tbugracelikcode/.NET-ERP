@@ -4,18 +4,17 @@ using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManagementParameter
 {
-    public class PurchaseManagementParameters : FullAuditedEntity
+    public class PurchaseManagementParameters 
     {
         [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
         /// <summary>
         /// İleri Zamanlı Tarih Parametresi
         /// </summary>
         public bool FutureDateParameter { get; set; }
-
-        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarChar)]
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
-        /// Sayfa Adı
+        /// Id
         /// </summary>
-        public string PageName { get; set; }
+        public Guid Id { get; set; }
     }
 }

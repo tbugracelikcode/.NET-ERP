@@ -2,15 +2,15 @@
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.PlanningManagementParameter.Dtos
 {
-    public class ListPlanningManagementParametersDto : FullAuditedEntityDto
+    public class ListPlanningManagementParametersDto 
     {
         /// <summary>
         /// İleri Zamanlı Tarih Parametresi
         /// </summary>
         public bool FutureDateParameter { get; set; }
         /// <summary>
-        /// Sayfa Adı
+        /// Id
         /// </summary>
-        public string PageName { get; set; }
+        public Guid Id { get; set; }
     }
 }

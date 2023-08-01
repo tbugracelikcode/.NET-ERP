@@ -68,16 +68,7 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FinanceManagemen
                 var query = queryFactory.Query().From(Tables.FinanceManagementParameters).Update(new UpdateFinanceManagementParametersDto
                 {
                      FutureDateParameter = input.FutureDateParameter,
-                    Id = input.Id,
-                    CreationTime = entity.CreationTime.Value,
-                    CreatorId = entity.CreatorId.Value,
-                    DataOpenStatus = false,
-                    DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = entity.DeleterId.Value,
-                    DeletionTime = entity.DeletionTime.Value,
-                    IsDeleted = entity.IsDeleted,
-                    LastModificationTime = DateTime.Now,
-                    LastModifierId = LoginedUserService.UserId
+                    Id = input.Id
                 }).Where(new { Id = input.Id }, false, false, "");
 
                 var financeManagementParameters = queryFactory.Update<SelectFinanceManagementParametersDto>(query, "Id", true);

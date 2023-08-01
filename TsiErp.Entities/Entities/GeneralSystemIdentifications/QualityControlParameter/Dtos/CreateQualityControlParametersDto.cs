@@ -3,15 +3,15 @@
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.QualityControlParameter.Dtos
 {
-    public class CreateQualityControlParametersDto : FullAuditedEntityDto
+    public class CreateQualityControlParametersDto 
     {
         /// <summary>
         /// İleri Zamanlı Tarih Parametresi
         /// </summary>
         public bool FutureDateParameter { get; set; }
         /// <summary>
-        /// Sayfa Adı
+        /// Id
         /// </summary>
-        public string PageName { get; set; }
+        public Guid Id { get; set; }
     }
 }
