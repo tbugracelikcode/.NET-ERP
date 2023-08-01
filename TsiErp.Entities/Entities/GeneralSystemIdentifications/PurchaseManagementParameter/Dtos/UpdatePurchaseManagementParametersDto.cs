@@ -1,13 +1,18 @@
-﻿using Tsi.Core.Entities.Auditing;
+﻿using Tsi.Core.Entities;
+
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManagementParameter.Dtos
 {
-    public class UpdatePurchaseManagementParametersDto 
+    public class UpdatePurchaseManagementParametersDto : IEntityDto
     {
         /// <summary>
-        /// İleri Zamanlı Tarih Parametresi
+        /// Sipariş İleri Zamanlı Tarih Parametresi
         /// </summary>
-        public bool FutureDateParameter { get; set; }
+        public bool OrderFutureDateParameter { get; set; }
+        /// <summary>
+        /// Talep İleri Zamanlı Tarih Parametresi
+        /// </summary>
+        public bool RequestFutureDateParameter { get; set; }
         /// <summary>
         /// Id
         /// </summary>

@@ -1,16 +1,21 @@
-﻿using Tsi.Core.Entities.Auditing;
+﻿using Tsi.Core.Entities;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 using SqlDataType = Tsi.Core.Utilities.SqlDataTypeMappingUtilities.SqlDataType;
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementParameter
 {
-    public class SalesManagementParameters 
+    public class SalesManagementParameters : IEntity
     {
         [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
         /// <summary>
-        /// İleri Zamanlı Tarih Parametresi
+        /// Sipariş İleri Zamanlı Tarih Parametresi
         /// </summary>
-        public bool FutureDateParameter { get; set; }
+        public bool OrderFutureDateParameter { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.Bit)]
+        /// <summary>
+        /// Teklif İleri Zamanlı Tarih Parametresi
+        /// </summary>
+        public bool PropositionFutureDateParameter { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Id

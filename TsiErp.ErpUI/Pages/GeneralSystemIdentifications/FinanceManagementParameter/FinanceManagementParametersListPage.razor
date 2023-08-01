@@ -30,7 +30,26 @@ else
                 <Template>
                     <SfCard class="TSIGridCards">
                         <CardContent>
+                              <br />
+                        <table style="width:100%;">
+                            <tr>
+                                <td style="width: 30%; text-align: left;height: 80px; padding-left: 2%;">
+                                   
+                                        <label class="TSIEditFormLabel">•@* @L["FutureDateParameterLabel"] *@ </label><br />
+                                    
 
+                                </td>
+
+                                <td style="width: 70%; text-align: left;height: 80px; padding-top: 1%;">
+                                       @* <SfSwitch  ValueChange="StockFichesChange" @bind-Checked="DataSource.FutureDateParameter" TChecked="bool"></SfSwitch>*@
+
+                                        <SfButton CssClass="TSISaveButton" OnClick="OnClick"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+                                    
+                                </td>
+
+
+                            </tr>
+                        </table>
                         </CardContent>
                         <CardFooter>
                         </CardFooter>

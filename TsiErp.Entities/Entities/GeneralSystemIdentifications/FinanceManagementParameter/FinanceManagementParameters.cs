@@ -12,10 +12,5 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.FinanceManagemen
         /// Id
         /// </summary>
         public Guid Id { get; set; }
-        [SqlColumnType( Nullable = true, SqlDbType = SqlDataType.Bit)]
-        /// <summary>
-        /// İleri Zamanlı Tarih Parametresi
-        /// </summary>
-        public bool FutureDateParameter { get; set; }
     }
 }

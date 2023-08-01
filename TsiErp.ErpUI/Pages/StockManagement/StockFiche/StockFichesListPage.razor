@@ -168,7 +168,7 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["Date_Label"] </strong></label><br />
-                            <SfDatePicker @bind-Value="@DataSource.Date_" Max=@(!futureDateParameter ? DateTime.Today : new DateTime(2100,12,31))></SfDatePicker>
+                            <SfDatePicker @bind-Value="@DataSource.Date_" Max=@(!futureDateParameter ? DateTime.Today : new DateTime(10000,12,31))></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
 

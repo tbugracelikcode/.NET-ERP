@@ -162,8 +162,20 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="OrderFutureDateParameterLabel" xml:space="preserve">
+    <value>Satın alma sipariş fişlerinde ileri tarihli kayıt yapılsın.</value>
+  </data>
+  <data name="RequestFutureDateParameterLabel" xml:space="preserve">
+    <value>Satın alma talep fişlerinde ileri tarihli kayıt yapılsın.</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Satın Alma Yönetimi Parametreleri</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Genel Sistem Tanımlamaları &gt; Genel Sistem Parametreleri</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>

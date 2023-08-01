@@ -1,5 +1,4 @@
 ﻿using Tsi.Core.Entities;
-using Tsi.Core.Entities.Auditing;
 
 
 namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.StockManagementParameter.Dtos

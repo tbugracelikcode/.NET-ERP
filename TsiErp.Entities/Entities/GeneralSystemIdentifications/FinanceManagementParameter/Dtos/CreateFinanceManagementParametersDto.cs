@@ -9,9 +9,5 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.FinanceManagemen
         /// Id
         /// </summary>
         public Guid Id { get; set; }
-        /// <summary>
-        /// İleri Zamanlı Tarih Parametresi
-        /// </summary>
-        public bool FutureDateParameter { get; set; }
     }
 }
