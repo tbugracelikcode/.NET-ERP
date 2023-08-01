@@ -70,6 +70,8 @@ using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequestLine;
 using TsiErp.Entities.Entities.QualityControl.CalibrationRecord;
 using TsiErp.Entities.Entities.QualityControl.CalibrationVerification;
 using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityItem;
+using TsiErp.Entities.Entities.QualityControl.ControlCondition;
+using TsiErp.Entities.Entities.QualityControl.ControlType;
 using TsiErp.Entities.Entities.QualityControl.CustomerComplaintItem;
 using TsiErp.Entities.Entities.QualityControl.EquipmentRecord;
 using TsiErp.Entities.Entities.QualityControl.FinalControlUnsuitabilityItem;
@@ -2385,6 +2387,76 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 UnsuitabilityItemsTable.Create();
+            }
+            #endregion
+
+            #region ControlTypes Table Created
+            Table ControlTypesTable = model.CreateTable(Tables.ControlTypes);
+
+            if (ControlTypesTable != null)
+            {
+                var properties = (typeof(ControlTypes)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(ControlTypesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ControlTypesTable, "PK_" + ControlTypesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        ControlTypesTable.Indexes.Add(pkIndex);
+                    }
+
+                    ControlTypesTable.Columns.Add(column);
+                }
+
+                ControlTypesTable.Create();
+            }
+            #endregion
+
+            #region ControlConditions Table Created
+            Table ControlConditionsTable = model.CreateTable(Tables.ControlConditions);
+
+            if (ControlConditionsTable != null)
+            {
+                var properties = (typeof(ControlConditions)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(ControlConditionsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ControlConditionsTable, "PK_" + ControlConditionsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        ControlConditionsTable.Indexes.Add(pkIndex);
+                    }
+
+                    ControlConditionsTable.Columns.Add(column);
+                }
+
+                ControlConditionsTable.Create();
             }
             #endregion
 

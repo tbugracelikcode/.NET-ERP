@@ -430,7 +430,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                 DeleterId = line.DeleterId.GetValueOrDefault(),
                                 DeletionTime = line.DeletionTime.GetValueOrDefault(),
                                 Id = item.Id,
-                                IsDeleted = false,
+                                IsDeleted = item.IsDeleted,
                                 LastModificationTime = DateTime.Now,
                                 LastModifierId = LoginedUserService.UserId,
                             }).Where(new { Id = line.Id }, false, false, "");

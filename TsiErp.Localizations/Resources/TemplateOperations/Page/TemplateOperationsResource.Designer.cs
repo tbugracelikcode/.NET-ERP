@@ -206,6 +206,33 @@ namespace TsiErp.Localizations.Resources.TemplateOperations.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SATIR NR..
+        /// </summary>
+        public static string GridLineNr {
+            get {
+                return ResourceManager.GetString("GridLineNr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KULLANILACAK.
+        /// </summary>
+        public static string GridToBeUsed {
+            get {
+                return ResourceManager.GetString("GridToBeUsed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UYGUNSUZLUK BAŞLIĞI.
+        /// </summary>
+        public static string GridUnsuitabilityItemsName {
+            get {
+                return ResourceManager.GetString("GridUnsuitabilityItemsName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Aktiflik:.
         /// </summary>
         public static string IsActiveLabel {

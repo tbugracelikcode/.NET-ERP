@@ -136,7 +136,6 @@ else
 
                     <DxGridLayoutItem Row="3" Column="1" ColumnSpan="3">
                         <Template>
-
                             <SfTab>
                                 <TabItems>
                                     <TabItem>
@@ -144,13 +143,13 @@ else
                                             <TabHeader Text="@L["Tab1Name"]"></TabHeader>
                                         </ChildContent>
                                         <ContentTemplate>
-                                            <DxGridLayout CssClass="TSIGridLayout">
+                                            <DxGridLayout CssClass="TSITemplateOprGridLayout">
                                                 <Rows>
-                                                    <DxGridLayoutRow Height="260%" />
+                                                    <DxGridLayoutRow Height="100%" />
                                                 </Rows>
                                                 <Columns>
-                                                    <DxGridLayoutColumn Width="90%" />
-                                                    <DxGridLayoutColumn Width="10%" />
+                                                    <DxGridLayoutColumn Width="95%" />
+                                                    <DxGridLayoutColumn Width="5%" />
                                                 </Columns>
                                                 <Items>
                                                     <DxGridLayoutItem Row="0" Column="0">
@@ -218,6 +217,42 @@ else
                                             <TabHeader Text="@L["Tab2Name"]"></TabHeader>
                                         </ChildContent>
                                         <ContentTemplate>
+
+                                            <DxGridLayout CssClass="TSITemplateOprGridLayout">
+                                                <Rows>
+                                                    <DxGridLayoutRow Height="100%" />
+                                                </Rows>
+                                                <Columns>
+                                                    <DxGridLayoutColumn Width="100%" />
+                                                </Columns>
+                                                <Items>
+                                                    <DxGridLayoutItem Row="0" Column="0">
+                                                        <Template>
+
+                                                            <SfGrid @ref=_UnsuitabilityItemsLineGrid ID="UnsuitabilityItemsLineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@UnsuitabilityItemsLineGridList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" Toolbar="@(new List<string>() { "Update" , "Cancel"})">
+
+                                                                <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                                                <GridEditSettings AllowAdding="false" AllowEditing="true" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+
+                                                                <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                                                <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                                                <GridColumns>
+
+                                                                    <GridColumn Field=@nameof(SelectTemplateOperationUnsuitabilityItemsDto.LineNr) HeaderText="@L["GridLineNr"]" TextAlign="TextAlign.Center" Width="120" AllowEditing="false"></GridColumn>
+
+                                                                    <GridColumn Field=@nameof(SelectTemplateOperationUnsuitabilityItemsDto.ToBeUsed) Type="ColumnType.Number" HeaderText="@L["GridToBeUsed"]" TextAlign="TextAlign.Center" Width="120" EditType="EditType.BooleanEdit" DisplayAsCheckBox="true"></GridColumn>
+
+                                                                    <GridColumn Field=@nameof(SelectTemplateOperationUnsuitabilityItemsDto.UnsuitabilityItemsName) HeaderText="@L["GridUnsuitabilityItemsName"]" TextAlign="TextAlign.Center" Width="120" AllowEditing="false"></GridColumn>
+                                                                    
+                                                                </GridColumns>
+
+                                                                <GridEvents TValue="SelectTemplateOperationUnsuitabilityItemsDto" OnActionBegin="UnsuitabilityItemsRowUpdate"></GridEvents>
+                                                            </SfGrid>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+                                                </Items>
+                                            </DxGridLayout>
                                         </ContentTemplate>
                                     </TabItem>
                                 </TabItems>

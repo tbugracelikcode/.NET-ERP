@@ -165,6 +165,15 @@
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
+  <data name="GridLineNr" xml:space="preserve">
+    <value>SATIR NR.</value>
+  </data>
+  <data name="GridToBeUsed" xml:space="preserve">
+    <value>KULLANILACAK</value>
+  </data>
+  <data name="GridUnsuitabilityItemsName" xml:space="preserve">
+    <value>UYGUNSUZLUK BAŞLIĞI</value>
+  </data>
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Aktiflik:</value>
   </data>

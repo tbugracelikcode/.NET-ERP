@@ -169,6 +169,24 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Kontrol Şartı Başlıkları.
+        /// </summary>
+        public static string ControlConditionsChildMenu {
+            get {
+                return ResourceManager.GetString("ControlConditionsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kontrol Türü Başlıkları.
+        /// </summary>
+        public static string ControlTypesChildMenu {
+            get {
+                return ResourceManager.GetString("ControlTypesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fason Tedarikçi Uygunsuzluk Kayıtları Analizi.
         /// </summary>
         public static string ContUnsAnlChildMenu {

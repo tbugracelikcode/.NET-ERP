@@ -305,7 +305,7 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kalite Kontrol &gt; Uygunsuzluk Başlıkları.
+        ///   Looks up a localized string similar to Kalite Kontrol &gt; .
         /// </summary>
         public static string UIPreviousMenu {
             get {

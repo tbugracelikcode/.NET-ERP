@@ -153,6 +153,12 @@
   <data name="ContractProdTrackingsChildMenu" xml:space="preserve">
     <value>Contract Production Tracking Records</value>
   </data>
+  <data name="ControlConditionsChildMenu" xml:space="preserve">
+    <value>Control Condition Items</value>
+  </data>
+  <data name="ControlTypesChildMenu" xml:space="preserve">
+    <value>Control Types</value>
+  </data>
   <data name="ContUnsAnlChildMenu" xml:space="preserve">
     <value>Contract Unsuitability Records Analysis</value>
   </data>

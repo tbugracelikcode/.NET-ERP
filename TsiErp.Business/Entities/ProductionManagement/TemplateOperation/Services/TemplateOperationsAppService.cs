@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Localization;
+using System.Collections.Generic;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -20,6 +21,8 @@ using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationUnsuitabilityItem;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationUnsuitabilityItem.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem.Dtos;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.TemplateOperations.Page;
 
@@ -148,17 +151,23 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
 
                     var lineDeleteQuery = queryFactory.Query().From(Tables.TemplateOperationLines).Delete(LoginedUserService.UserId).Where(new { TemplateOperationID = id }, false, false, "");
 
-                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+                    var lineUnsuitabilityItemsQuery = queryFactory.Query().From(Tables.TemplateOperationUnsuitabilityItems).Delete(LoginedUserService.UserId).Where(new { TemplateOperationId = id }, false, false, "");
+
+                    deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + QueryConstants.QueryConstant + lineUnsuitabilityItemsQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
 
                     var templateOperation = queryFactory.Update<SelectTemplateOperationsDto>(deleteQuery, "Id", true);
+
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.TemplateOperations, LogType.Delete, id);
                     return new SuccessDataResult<SelectTemplateOperationsDto>(templateOperation);
                 }
                 else
                 {
                     var queryLine = queryFactory.Query().From(Tables.TemplateOperationLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+
                     var templateOperationLines = queryFactory.Update<SelectTemplateOperationLinesDto>(queryLine, "Id", true);
+
                     LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.TemplateOperationLines, LogType.Delete, id);
+
                     return new SuccessDataResult<SelectTemplateOperationLinesDto>(templateOperationLines);
                 }
             }
@@ -168,7 +177,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var query = queryFactory.Query().From(Tables.TemplateOperations).Select<TemplateOperations>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.DataOpenStatus, p.DataOpenStatusUserId })
+                var query = queryFactory.Query().From(Tables.TemplateOperations).Select<TemplateOperations>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.DataOpenStatus, p.DataOpenStatusUserId,p.WorkCenterID })
                     .Join<StationGroups>
                     (
                         g => new { WorkCenterName = g.Name },
@@ -221,6 +230,45 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                 var unsuitabilityItemsLine = queryFactory.GetList<SelectTemplateOperationUnsuitabilityItemsDto>(queryUnsuitabilityItems).ToList();
 
                 templateOperations.SelectTemplateOperationUnsuitabilityItems = unsuitabilityItemsLine;
+
+                #region UnsuitabilityItems Control
+
+                var unsuitabilityItemsQuery = queryFactory.Query().From(Tables.UnsuitabilityItems).Select("*").Where(new { StationGroupId = templateOperations.WorkCenterID }, true, true, "");
+
+                var unsuitabilityItemsList = queryFactory.GetList<SelectUnsuitabilityItemsDto>(unsuitabilityItemsQuery).ToList();
+
+                var lineNr = unsuitabilityItemsLine.Max(s => s.LineNr);
+
+                foreach (var item in unsuitabilityItemsList)
+                {
+                    if (!unsuitabilityItemsLine.Any(t => t.UnsuitabilityItemsId == item.Id))
+                    {
+                        lineNr++;
+
+                        unsuitabilityItemsLine.Add(new SelectTemplateOperationUnsuitabilityItemsDto
+                        {
+                            CreationTime = DateTime.Now,
+                            CreatorId = LoginedUserService.UserId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = Guid.Empty,
+                            DeletionTime = null,
+                            Id = Guid.Empty,
+                            IsDeleted = false,
+                            LastModificationTime = null,
+                            LastModifierId = Guid.Empty,
+                            LineNr = lineNr,
+                            ToBeUsed = false,
+                            UnsuitabilityItemsId = item.Id,
+                            UnsuitabilityItemsName = item.Name
+                        });
+
+                    }
+                }
+                #endregion
+
+                templateOperations.SelectTemplateOperationUnsuitabilityItems = unsuitabilityItemsLine;
+
                 #endregion
 
                 LogsAppService.InsertLogToDatabase(templateOperations, templateOperations, LoginedUserService.UserId, Tables.TemplateOperations, LogType.Get, id);
@@ -291,8 +339,6 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
 
                 return new SuccessDataResult<IList<ListTemplateOperationsDto>>(templateOperations);
             }
-
-
         }
 
         [ValidationAspect(typeof(UpdateTemplateOperationsValidatorDto), Priority = 1)]
@@ -482,7 +528,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                                 DeleterId = line.DeleterId.GetValueOrDefault(),
                                 DeletionTime = line.DeletionTime.GetValueOrDefault(),
                                 Id = item.Id,
-                                IsDeleted = false,
+                                IsDeleted = item.IsDeleted,
                                 LastModificationTime = DateTime.Now,
                                 LastModifierId = LoginedUserService.UserId,
                                 LineNr = item.LineNr,
@@ -534,6 +580,102 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                 var templateOperationsDto = queryFactory.Update<SelectTemplateOperationsDto>(query, "Id", true);
                 return new SuccessDataResult<SelectTemplateOperationsDto>(templateOperationsDto);
 
+            }
+        }
+
+        public async Task<IDataResult<IList<SelectTemplateOperationUnsuitabilityItemsDto>>> GetUnsuitabilityItemsAsync(Guid workCenterId, Guid templateOperationId)
+        {
+            using (var connection = queryFactory.ConnectToDatabase())
+            {
+                List<SelectTemplateOperationUnsuitabilityItemsDto> list = new List<SelectTemplateOperationUnsuitabilityItemsDto>();
+
+                if (templateOperationId != Guid.Empty)
+                {
+                    var queryUnsuitabilityItems = queryFactory
+                           .Query()
+                           .From(Tables.TemplateOperationUnsuitabilityItems)
+                           .Select<TemplateOperationUnsuitabilityItems>(tol => new { tol.LineNr, tol.Id, tol.DataOpenStatus, tol.DataOpenStatusUserId, tol.TemplateOperationId, tol.ToBeUsed })
+                           .Join<UnsuitabilityItems>
+                           (
+                               s => new { UnsuitabilityItemsId = s.Id, UnsuitabilityItemsName = s.Name },
+                               nameof(TemplateOperationUnsuitabilityItems.UnsuitabilityItemsId),
+                               nameof(UnsuitabilityItems.Id),
+                               JoinType.Left
+                           )
+                           .Where(new { TemplateOperationId = templateOperationId }, false, false, Tables.TemplateOperationUnsuitabilityItems);
+
+                    var unsuitabilityItemsLine = queryFactory.GetList<SelectTemplateOperationUnsuitabilityItemsDto>(queryUnsuitabilityItems).ToList();
+
+
+                    var unsuitabilityItemsQuery = queryFactory.Query().From(Tables.UnsuitabilityItems).Select("*").Where(new { StationGroupId = workCenterId }, true, true, "");
+
+                    var unsuitabilityItemsList = queryFactory.GetList<SelectUnsuitabilityItemsDto>(unsuitabilityItemsQuery).ToList();
+
+                    var lineNr = unsuitabilityItemsLine.Max(s => s.LineNr);
+
+                    foreach (var item in unsuitabilityItemsList)
+                    {
+                        if (!unsuitabilityItemsLine.Any(t => t.UnsuitabilityItemsId == item.Id))
+                        {
+                            unsuitabilityItemsLine.Add(new SelectTemplateOperationUnsuitabilityItemsDto
+                            {
+                                CreationTime = DateTime.Now,
+                                CreatorId = LoginedUserService.UserId,
+                                DataOpenStatus = false,
+                                DataOpenStatusUserId = Guid.Empty,
+                                DeleterId = Guid.Empty,
+                                DeletionTime = null,
+                                Id = Guid.Empty,
+                                IsDeleted = false,
+                                LastModificationTime = null,
+                                LastModifierId = Guid.Empty,
+                                LineNr = lineNr,
+                                ToBeUsed = false,
+                                UnsuitabilityItemsId = item.Id,
+                                UnsuitabilityItemsName = item.Name
+                            });
+
+                            lineNr++;
+                        }
+                    }
+
+                    list = unsuitabilityItemsLine;
+                }
+                else
+                {
+                    var unsuitabilityItemsQuery = queryFactory.Query().From(Tables.UnsuitabilityItems).Select("*").Where(new { StationGroupId = workCenterId }, true, true, "");
+
+                    var unsuitabilityItemsList = queryFactory.GetList<SelectUnsuitabilityItemsDto>(unsuitabilityItemsQuery).ToList();
+
+                    int lineNr = 1;
+
+                    foreach (var item in unsuitabilityItemsList)
+                    {
+                        list.Add(new SelectTemplateOperationUnsuitabilityItemsDto
+                        {
+                            CreationTime = DateTime.Now,
+                            CreatorId = LoginedUserService.UserId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = Guid.Empty,
+                            DeletionTime = null,
+                            Id = Guid.Empty,
+                            IsDeleted = false,
+                            LastModificationTime = null,
+                            LastModifierId = Guid.Empty,
+                            LineNr = lineNr,
+                            ToBeUsed = false,
+                            UnsuitabilityItemsId = item.Id,
+                            UnsuitabilityItemsName = item.Name
+                        });
+
+                        lineNr++;
+                    }
+                }
+
+
+
+                return new SuccessDataResult<IList<SelectTemplateOperationUnsuitabilityItemsDto>>(list);
             }
         }
     }

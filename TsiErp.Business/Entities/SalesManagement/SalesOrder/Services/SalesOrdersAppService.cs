@@ -714,7 +714,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                                 DeleterId = line.DeleterId.GetValueOrDefault(),
                                 DeletionTime = line.DeletionTime.GetValueOrDefault(),
                                 Id = item.Id,
-                                IsDeleted = false,
+                                IsDeleted = item.IsDeleted,
                                 LastModificationTime = DateTime.Now,
                                 LastModifierId = LoginedUserService.UserId,
                                 LineNr = item.LineNr,
