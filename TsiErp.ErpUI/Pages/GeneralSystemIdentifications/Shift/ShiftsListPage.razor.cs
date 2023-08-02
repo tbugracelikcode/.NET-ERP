@@ -189,9 +189,14 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
                     break;
 
                 case "delete":
-                    await DeleteAsync(args.RowInfo.RowData.Id);
-                    await GetListDataSourceAsync();
-                    await InvokeAsync(StateHasChanged);
+                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
+                    if (res == true)
+                    {
+                        await DeleteAsync(args.RowInfo.RowData.Id);
+                        await GetListDataSourceAsync();
+                        await _grid.Refresh();
+                        await InvokeAsync(StateHasChanged);
+                    }
                     break;
 
                 case "refresh":

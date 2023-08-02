@@ -197,11 +197,47 @@ namespace TsiErp.Localizations.Resources.PurchaseManagementParameter.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satın alma sipariş fişlerinde ileri tarihli kayıt yapılsın..
+        /// </summary>
+        public static string OrderFutureDateParameterLabel {
+            get {
+                return ResourceManager.GetString("OrderFutureDateParameterLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın alma talep fişlerinde ileri tarihli kayıt yapılsın..
+        /// </summary>
+        public static string RequestFutureDateParameterLabel {
+            get {
+                return ResourceManager.GetString("RequestFutureDateParameterLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string SaveButton {
             get {
                 return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Yönetimi Parametreleri.
+        /// </summary>
+        public static string UICurrentMenu {
+            get {
+                return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Genel Sistem Tanımlamaları &gt; Genel Sistem Parametreleri.
+        /// </summary>
+        public static string UIPreviousMenu {
+            get {
+                return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
             }
         }
         

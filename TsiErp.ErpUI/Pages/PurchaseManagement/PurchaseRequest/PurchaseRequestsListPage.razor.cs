@@ -25,6 +25,12 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
         private SfGrid<SelectPurchaseRequestLinesDto> _LineGrid;
         private SfGrid<SelectPurchaseRequestLinesDto> _ConvertToOrderGrid;
 
+        #region Stock Parameters
+
+        bool futureDateParameter;
+
+        #endregion
+
         [Inject]
         ModalManager ModalManager { get; set; }
 
@@ -465,6 +471,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
             CreateConvertToOrderContextMenuItems();
+
+            futureDateParameter = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data.FutureDateParameter;
 
         }
 

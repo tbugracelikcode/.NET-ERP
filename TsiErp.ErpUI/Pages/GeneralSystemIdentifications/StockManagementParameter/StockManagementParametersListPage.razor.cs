@@ -1,9 +1,6 @@
 ﻿using Syncfusion.Blazor.Buttons;
 using TsiErp.Business.Extensions.ObjectMapping;
-using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.StockManagementParameter.Dtos;
-using TsiErp.Entities.ModuleConstant;
-using TsiErp.Entities.TableConstant;
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.StockManagementParameter
 {

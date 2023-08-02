@@ -162,7 +162,19 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="OrderFutureDateParameterLabel" xml:space="preserve">
+    <value>Post-dated recording can be made in the purchase order fiches.</value>
+  </data>
+  <data name="RequestFutureDateParameterLabel" xml:space="preserve">
+    <value>Post-dated recording can be made in the purchase request fiches.</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Purchase Management Parameters</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>General System Identifications &gt; General System Parameters</value>
   </data>
 </root>

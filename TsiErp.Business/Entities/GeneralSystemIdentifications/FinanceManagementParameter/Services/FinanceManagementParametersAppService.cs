@@ -24,35 +24,52 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FinanceManagemen
 
         public async Task<IDataResult<SelectFinanceManagementParametersDto>> GetAsync(Guid id)
         {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory.Query().From(Tables.FinanceManagementParameters).Select("*").Where(
-                 new
-                 {
-                     Id = id
-                 }, false, false, "");
+            throw new NotImplementedException();
 
-                var financeManagementParameter = queryFactory.Get<SelectFinanceManagementParametersDto>(query);
-
-                LogsAppService.InsertLogToDatabase(financeManagementParameter, financeManagementParameter, LoginedUserService.UserId, Tables.FinanceManagementParameters, LogType.Get, id);
-
-                return new SuccessDataResult<SelectFinanceManagementParametersDto>(financeManagementParameter);
-
-            }
         }
 
-
-        [CacheAspect(duration: 60)]
-        public async Task<IDataResult<IList<ListFinanceManagementParametersDto>>> GetListAsync(ListFinanceManagementParametersParameterDto input)
+        public async Task<IDataResult<SelectFinanceManagementParametersDto>> CreateAsync(CreateFinanceManagementParametersDto input)
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
+                var query = queryFactory.Query().From(Tables.FinanceManagementParameters).Insert(new CreateFinanceManagementParametersDto
+                {
+                    Id = GuidGenerator.CreateGuid()
+                }).UseIsDelete(false); ;
 
-                var query = queryFactory.Query().From(Tables.FinanceManagementParameters).Select("*").Where(null, false, false, "");
 
-                var financeManagementParameters = queryFactory.GetList<ListFinanceManagementParametersDto>(query).ToList();
+                var FinanceManagementParameter = queryFactory.Insert<SelectFinanceManagementParametersDto>(query, "Id", true);
 
-                return new SuccessDataResult<IList<ListFinanceManagementParametersDto>>(financeManagementParameters);
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.FinanceManagementParameters, LogType.Insert, FinanceManagementParameter.Id);
+
+                return new SuccessDataResult<SelectFinanceManagementParametersDto>(FinanceManagementParameter);
+            }
+        }
+
+        public async Task<IDataResult<SelectFinanceManagementParametersDto>> GetFinanceManagementParametersAsync()
+        {
+            using (var connection = queryFactory.ConnectToDatabase())
+            {
+                SelectFinanceManagementParametersDto result = new SelectFinanceManagementParametersDto();
+
+                var controlQuery = queryFactory.Query().From(Tables.FinanceManagementParameters).Select("*").UseIsDelete(false);
+
+                SelectFinanceManagementParametersDto FinanceManagementParameter = queryFactory.Get<SelectFinanceManagementParametersDto>(controlQuery);
+
+                if (FinanceManagementParameter != null)
+                {
+                    var query = queryFactory.Query().From(Tables.FinanceManagementParameters).Select("*").Where(
+                     new
+                     {
+                         Id = FinanceManagementParameter.Id
+                     }, false, false, "").UseIsDelete(false);
+
+                    result = queryFactory.Get<SelectFinanceManagementParametersDto>(query);
+                }
+
+                LogsAppService.InsertLogToDatabase(result, result, LoginedUserService.UserId, Tables.FinanceManagementParameters, LogType.Get, result.Id);
+
+                return new SuccessDataResult<SelectFinanceManagementParametersDto>(result);
             }
         }
 
@@ -62,31 +79,25 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FinanceManagemen
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entityQuery = queryFactory.Query().From(Tables.FinanceManagementParameters).Select("*").Where(new { Id = input.Id }, false, false, "");
+                var entityQuery = queryFactory.Query().From(Tables.FinanceManagementParameters).Select("*").Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
+
                 var entity = queryFactory.Get<FinanceManagementParameters>(entityQuery);
 
                 var query = queryFactory.Query().From(Tables.FinanceManagementParameters).Update(new UpdateFinanceManagementParametersDto
                 {
-                     FutureDateParameter = input.FutureDateParameter,
                     Id = input.Id
-                }).Where(new { Id = input.Id }, false, false, "");
-
-                var financeManagementParameters = queryFactory.Update<SelectFinanceManagementParametersDto>(query, "Id", true);
+                }).Where(new { Id = input.Id }, false, false, "").UseIsDelete(false);
 
 
-                LogsAppService.InsertLogToDatabase(entity, financeManagementParameters, LoginedUserService.UserId, Tables.FinanceManagementParameters, LogType.Update, entity.Id);
+                var FinanceManagementParameters = queryFactory.Update<SelectFinanceManagementParametersDto>(query, "Id", true);
 
+                LogsAppService.InsertLogToDatabase(entity, FinanceManagementParameters, LoginedUserService.UserId, Tables.FinanceManagementParameters, LogType.Update, entity.Id);
 
-                return new SuccessDataResult<SelectFinanceManagementParametersDto>(financeManagementParameters);
+                return new SuccessDataResult<SelectFinanceManagementParametersDto>(FinanceManagementParameters);
             }
         }
 
         #region Unused Implemented Methods
-
-        public Task<IDataResult<SelectFinanceManagementParametersDto>> CreateAsync(CreateFinanceManagementParametersDto input)
-        {
-            throw new NotImplementedException();
-        }
 
         public Task<IResult> DeleteAsync(Guid id)
         {
@@ -96,6 +107,21 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FinanceManagemen
         public Task<IDataResult<SelectFinanceManagementParametersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
         {
             throw new NotImplementedException();
+        }
+
+
+        [CacheAspect(duration: 60)]
+        public async Task<IDataResult<IList<ListFinanceManagementParametersDto>>> GetListAsync(ListFinanceManagementParametersParameterDto input)
+        {
+            using (var connection = queryFactory.ConnectToDatabase())
+            {
+
+                var query = queryFactory.Query().From(Tables.FinanceManagementParameters).Select("*").UseIsDelete(false);
+
+                var FinanceManagementParameters = queryFactory.GetList<ListFinanceManagementParametersDto>(query).ToList();
+
+                return new SuccessDataResult<IList<ListFinanceManagementParametersDto>>(FinanceManagementParameters);
+            }
         }
 
         #endregion

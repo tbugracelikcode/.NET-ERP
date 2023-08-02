@@ -33,6 +33,12 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
         private bool LineCrudPopup = false;
 
+        #region Stock Parameters
+
+        bool futureDateParameter;
+
+        #endregion
+
         #region Birim Setleri ButtonEdit
         SfTextBox UnitSetsButtonEdit;
         bool SelectUnitSetsPopupVisible = false;
@@ -453,6 +459,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
+
+            futureDateParameter = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data.FutureDateParameter;
         }
 
         #region Teklif Satır Modalı İşlemleri

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.PlanningManagement.CalendarLine.Dtos;
 
 namespace TsiErp.Entities.Entities.PlanningManagement.Calendar.Dtos
@@ -46,7 +47,7 @@ namespace TsiErp.Entities.Entities.PlanningManagement.Calendar.Dtos
         /// Çalışılabilir Gün Sayısı
         /// </summary>
         public decimal AvailableDays { get; set; }
-
+        [NoDatabaseAction]
         public List<SelectCalendarLinesDto> SelectCalendarLinesDto { get; set; }
     }
 }
