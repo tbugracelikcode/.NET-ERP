@@ -13,20 +13,20 @@ namespace TsiErp.Business.Entities.Calendar.Validations
         public CreateCalendarsValidatorDto()
         {
             RuleFor(x => x.Code)
-               .NotEmpty()
-               .WithMessage("Lütfen çalışma takvimi kodunu giriniz.")
-               .MaximumLength(17)
-               .WithMessage("Çalışma takvimi kodu 17 karakterden fazla olamaz.");
+              .NotEmpty()
+              .WithMessage("ValidatorCodeEmpty")
+              .MaximumLength(17)
+              .WithMessage("ValidatorCodeMaxLenght");
 
             RuleFor(x => x.Year)
                .NotEmpty()
-               .WithMessage("Lütfen takvim yılını seçiniz.");
+               .WithMessage("ValidatorYearEmpty");
 
             RuleFor(x => x.Name)
                .NotEmpty()
-               .WithMessage("Lütfen çalışma takvimi adını giriniz.")
+               .WithMessage("ValidatorNameEmpty")
                .MaximumLength(200)
-               .WithMessage("Çalışma takvimi adı 200 karakterden fazla olamaz.");
+               .WithMessage("ValidatorNameMaxLenght");
 
         }
     }

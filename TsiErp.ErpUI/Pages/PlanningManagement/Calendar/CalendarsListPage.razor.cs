@@ -70,6 +70,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         protected override void OnInitialized()
         {
             BaseCrudService = CalendarsService;
+            _L = L;
             GetYearsList();
             CreateMainContextMenuItems();
             FinalDataSource = DataSourceEvent;
