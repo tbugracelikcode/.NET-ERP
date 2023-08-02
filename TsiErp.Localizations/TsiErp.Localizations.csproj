@@ -31,6 +31,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ByDateStockMovementsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\Calendars\Page\CalendarsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CalendarsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\CalibrationRecords\Page\CalibrationRecordsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -399,6 +404,10 @@
     <EmbeddedResource Update="Resources\ByDateStockMovements\Page\ByDateStockMovementsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ByDateStockMovementsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Calendars\Page\CalendarsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CalendarsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\CalibrationRecords\Page\CalibrationRecordsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
