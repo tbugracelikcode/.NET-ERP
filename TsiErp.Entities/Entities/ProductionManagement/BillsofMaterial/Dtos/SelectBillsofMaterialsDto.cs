@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
 
 namespace TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos
@@ -47,9 +48,8 @@ namespace TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos
         /// Data Concurrency UserID
         /// </summary>
         public Guid? DataOpenStatusUserId { get; set; }
-
+        [NoDatabaseAction]
         public List<SelectBillsofMaterialLinesDto> SelectBillsofMaterialLines { get; set; }
-
         public SelectBillsofMaterialsDto()
         {
             SelectBillsofMaterialLines = new List<SelectBillsofMaterialLinesDto>();

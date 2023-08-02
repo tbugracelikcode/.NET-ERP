@@ -26,6 +26,12 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
         private SfGrid<SelectSalesPropositionLinesDto> _LineGrid;
         private SfGrid<SelectSalesPropositionLinesDto> _ConvertToOrderGrid;
 
+        #region Stock Parameters
+
+        bool futureDateParameter;
+
+        #endregion
+
         [Inject]
         ModalManager ModalManager { get; set; }
 
@@ -428,6 +434,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
 
             BaseCrudService = SalesPropositionsAppService;
             _L = L;
+
+            futureDateParameter = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data.FutureDateParameter;
 
         }
 

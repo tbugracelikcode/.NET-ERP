@@ -25,6 +25,12 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         private SfGrid<SelectSalesOrderLinesDto> _ProductionOrderGrid;
         private SfGrid<ProductsTreeDto> _BoMLineGrid;
 
+        #region Stock Parameters
+
+        bool futureDateParameter;
+
+        #endregion
+
         [Inject]
         ModalManager ModalManager { get; set; }
 
@@ -439,6 +445,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
             CreateBoMLineContextMenuItems();
 
             await GetProductsList();
+
+            futureDateParameter = (await StockManagementParametersAppService.GetStockManagementParametersAsync()).Data.FutureDateParameter;
         }
 
         #region Reçete Satırları Modalı İşlemleri

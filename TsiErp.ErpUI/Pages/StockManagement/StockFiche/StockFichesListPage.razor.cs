@@ -21,7 +21,9 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
     {
 
         #region Stock Parameters
+
         bool futureDateParameter;
+
         #endregion
 
         private SfGrid<SelectStockFicheLinesDto> _LineGrid;

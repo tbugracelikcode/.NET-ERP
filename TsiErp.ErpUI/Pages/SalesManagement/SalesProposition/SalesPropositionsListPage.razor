@@ -18,6 +18,7 @@
 @inject IPaymentPlansAppService PaymentPlansAppService
 @inject IBillsofMaterialsAppService BillsofMaterialsAppService
 @inject IShippingAdressesAppService ShippingAdressesAppService
+@inject IStockManagementParametersAppService StockManagementParametersAppService
 
 @if (!base.IsLoaded)
 {
@@ -156,7 +157,7 @@ else
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["Date_Label"]</strong></label><br />
-                            <SfDatePicker @bind-Value="@DataSource.Date_" Max="DateTime.Now"></SfDatePicker>
+                            <SfDatePicker @bind-Value="@DataSource.Date_" Max=@(!futureDateParameter ? DateTime.Today : new DateTime(10000,12,31))></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
 
