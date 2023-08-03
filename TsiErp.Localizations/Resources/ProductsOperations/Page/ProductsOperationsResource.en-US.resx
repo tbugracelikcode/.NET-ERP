@@ -123,6 +123,9 @@
   <data name="AlternativeLineLabel" xml:space="preserve">
     <value>Alternative:</value>
   </data>
+  <data name="BottomTolerancePlanLabel" xml:space="preserve">
+    <value>Bottom Tolerance</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
@@ -147,6 +150,21 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="ControlConditionsNamePlanLabel" xml:space="preserve">
+    <value>Control Condition</value>
+  </data>
+  <data name="ControlEquipmentPlanLabel" xml:space="preserve">
+    <value>Control Equipment</value>
+  </data>
+  <data name="ControlFrequencyPlanLabel" xml:space="preserve">
+    <value>Control Frequency</value>
+  </data>
+  <data name="ControlManagerPlanLabel" xml:space="preserve">
+    <value>Control Manager</value>
+  </data>
+  <data name="ControlTypesNamePlanLabel" xml:space="preserve">
+    <value>Control Type</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -164,6 +182,9 @@
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="IdealMeasurePlanLabel" xml:space="preserve">
+    <value>Ideal Measure</value>
   </data>
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Activity:</value>
@@ -195,6 +216,9 @@
   <data name="LoadingText" xml:space="preserve">
     <value>The records are loading..</value>
   </data>
+  <data name="MeasureNumberInPicturePlanLabel" xml:space="preserve">
+    <value>Measure Number In Picture</value>
+  </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>The record you selected is using by {0}.</value>
   </data>
@@ -209,6 +233,9 @@
   </data>
   <data name="OperationTimeLineLabel" xml:space="preserve">
     <value>Operation Time:</value>
+  </data>
+  <data name="PeriodicControlMeasurePlanLabel" xml:space="preserve">
+    <value>Periodic Control Measure</value>
   </data>
   <data name="PriorityLineLabel" xml:space="preserve">
     <value>Priority:</value>
@@ -234,11 +261,50 @@
   <data name="ProductNameLabel" xml:space="preserve">
     <value>Product Name:</value>
   </data>
+  <data name="QualityLineGridBottomTolerance" xml:space="preserve">
+    <value>BOTTOM TOLERANCE</value>
+  </data>
+  <data name="QualityLineGridControlCondition" xml:space="preserve">
+    <value>CONTROL CONDITION</value>
+  </data>
+  <data name="QualityLineGridControlEquipment" xml:space="preserve">
+    <value>CONTROL EQUIPMENT</value>
+  </data>
+  <data name="QualityLineGridControlFrequency" xml:space="preserve">
+    <value>CONTROL FREQUENCY</value>
+  </data>
+  <data name="QualityLineGridControlManager" xml:space="preserve">
+    <value>CONTROL MANAGER</value>
+  </data>
+  <data name="QualityLineGridControlTypesName" xml:space="preserve">
+    <value>CONTROL TYPE</value>
+  </data>
+  <data name="QualityLineGridIdealMeasure" xml:space="preserve">
+    <value>IDEAL MEASURE</value>
+  </data>
+  <data name="QualityLineGridMeasureNumberInPicture" xml:space="preserve">
+    <value>MEASURE NUMBER IN PICTURE</value>
+  </data>
+  <data name="QualityLineGridPeriodicControlMeasure" xml:space="preserve">
+    <value>PERIODIC CONTROL MEASURE</value>
+  </data>
+  <data name="QualityLineGridUpperTolerance" xml:space="preserve">
+    <value>UPPER TOLERANCE</value>
+  </data>
+  <data name="QualityLineGridWorkCenterName" xml:space="preserve">
+    <value>WORK CENTER</value>
+  </data>
+  <data name="QualityPlanModalTitle" xml:space="preserve">
+    <value>Operation Quality Plan</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
   <data name="StationCodeLineLabel" xml:space="preserve">
     <value>Station Code:</value>
+  </data>
+  <data name="StationGroupLabel" xml:space="preserve">
+    <value>Work Center</value>
   </data>
   <data name="StationModalGridCode" xml:space="preserve">
     <value>STATION CODE</value>
@@ -251,6 +317,12 @@
   </data>
   <data name="StationNameLineLabel" xml:space="preserve">
     <value>Station Name:</value>
+  </data>
+  <data name="Tab1Name" xml:space="preserve">
+    <value>Station Informations</value>
+  </data>
+  <data name="Tab2Name" xml:space="preserve">
+    <value>Operation Quality Plans</value>
   </data>
   <data name="TemplateOperationCodeLabel" xml:space="preserve">
     <value>Template Operation:</value>
@@ -287,6 +359,9 @@
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="UpperTolerancePlanLabel" xml:space="preserve">
+    <value>Upper Tolerance</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
     <value>Please enter the operation code.</value>
