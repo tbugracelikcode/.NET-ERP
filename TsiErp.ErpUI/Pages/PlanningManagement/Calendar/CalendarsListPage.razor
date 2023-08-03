@@ -4,11 +4,12 @@
 
 
 @inherits BaseListPage<SelectCalendarsDto, ListCalendarsDto, CreateCalendarsDto, UpdateCalendarsDto, ListCalendarsParameterDto>
-@inject IStringLocalizer<CalendarsResource> L 
+@inject IStringLocalizer<CalendarsResource> L
 
 
 @inject ICalendarsAppService CalendarsService
 @inject IStationsAppService StationsAppService
+@inject IStationGroupsAppService StationGroupsAppService
 @inject IShiftsAppService ShiftsAppService
 
 @{
@@ -35,29 +36,29 @@
                     <Template>
                         <SfCard class="TSIGridCards">
                             <CardContent>
-                                <SfGrid ID="Grid" @ref="_grid"   AllowPdfExport=true DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%"
+                                <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%"
                                 class="GridZebra" ContextMenuItems="@MainGridContextMenu">
                                     <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
                                     <SfToolbar>
-                                    <ToolbarItems>
-                                        <ToolbarItem Type="ItemType.Button">
-                                            <Template>
+                                        <ToolbarItems>
+                                            <ToolbarItem Type="ItemType.Button">
+                                                <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", "Çalışma Takvimi", "CalismaTakvimi"))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
-                                            </Template>
-                                        </ToolbarItem>
+                                                    <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", "Çalışma Takvimi", "CalismaTakvimi"))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
+                                                </Template>
+                                            </ToolbarItem>
 
-                                        <ToolbarItem Type="ItemType.Button">
-                                            <Template>
+                                            <ToolbarItem Type="ItemType.Button">
+                                                <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", "Çalışma Takvimi", "CalismaTakvimi"))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
-                                            </Template>
-                                        </ToolbarItem>
+                                                    <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", "Çalışma Takvimi", "CalismaTakvimi"))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
+                                                </Template>
+                                            </ToolbarItem>
 
-                                    </ToolbarItems>
-                                </SfToolbar>
+                                        </ToolbarItems>
+                                    </SfToolbar>
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false"></GridEditSettings>
-                                    <GridEvents   ContextMenuItemClicked="@MainContextMenuClick" TValue="ListCalendarsDto"></GridEvents>
+                                    <GridEvents ContextMenuItemClicked="@MainContextMenuClick" TValue="ListCalendarsDto"></GridEvents>
                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
@@ -192,8 +193,8 @@
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="5" Column="1" ColumnSpan="3">
                             <Template>
-                                <SfGrid @ref=_daysGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridDaysList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
-                                    <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectCalendarDaysDto"></GridEvents>
+                                <SfGrid @ref=_daysGrid ID="DayGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridDaysList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@DayGridContextMenu">
+                                    <GridEvents ContextMenuItemClicked="@OnDayContextMenuClick" TValue="SelectCalendarDaysDto"></GridEvents>
                                     <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false"></GridEditSettings>
@@ -201,19 +202,39 @@
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
                                         <GridColumn Field=@nameof(SelectCalendarDaysDto.Date_) Format="dd-MM-yyyy" HeaderText="TARİH" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(SelectCalendarDaysDto.CalendarDayStateEnum) Type="ColumnType.String" HeaderText="DURUM" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    </GridColumns>
-                                </SfGrid>
-                            </Template>
-                        </DxGridLayoutItem>
-                    </Items>
-                </DxGridLayout>
-            </BodyTemplate>
-            <FooterContentTemplate>
-                <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-                <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
-            </FooterContentTemplate>
-        </DxPopup>
+                                        <GridColumn Field=@nameof(SelectCalendarDaysDto.CalendarDayStateEnum) Type="ColumnType.String" Context="daycontext" HeaderText="DURUM" TextAlign="TextAlign.Center" Width="120">
+                                            <Template>
+                                                @{
+                                                    string state = string.Empty;
+                                                    int dayStateEnum = (daycontext as SelectCalendarDaysDto).CalendarDayStateEnum;
+
+                                                    switch (dayStateEnum)
+                                                    {
+                                                        case 1: { state = "Çalışma Var"; break; }
+                                                        case 2: { state = "Çalışma Yok"; break; }
+                                                        case 3: { state = "Resmi Tatil"; break; }
+                                                        case 4: { state = "Tatil"; break; }
+                                                        case 5: { state = "Yarım Gün"; break; }
+                                                        case 6: { state = "Yükleme Günü"; break; }
+                                                        case 7: { state = "Bakım"; break; }
+                                                        default: break;
+                                                    }
+                                            }
+                                            @state
+                                        </Template>
+                                    </GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
 
         <DxPopup @bind-Visible="schedularVisible"
          ShowFooter="true"
@@ -346,7 +367,7 @@
                 </table>
             </BodyTemplate>
             <FooterContentTemplate>
-                <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideScheduleEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
             </FooterContentTemplate>
         </DxPopup>
 
@@ -364,7 +385,7 @@
             <BodyTemplate>
 
                 <table style="margin-top:2%">
-                    <tr>
+                    <tr style="height:80%">
                         <td style="font-size:16px;padding-left:2%; width:20%"><strong>Tarih :</strong> @CurrentDate</td>
                         <td style="width:80%">
 
@@ -379,90 +400,92 @@
                             }
                         </td>
                     </tr>
+                    <tr style="height:20%">
+
+                        <td style="width:33%"></td>
+
+                        <td style="width:33%">
+
+                            <SfButton CssClass="TSISaveButton" OnClick="ShowModal2"><SfIcon Size="IconSize.Medium" Name="IconName.Check"></SfIcon>&nbsp;Seçilen İstasyonları Planla</SfButton>
+
+                        </td>
+
+                        <td style="width:33%"></td>
+
+                    </tr>
                 </table>
+                <div class="control-section col-lg-11 card-control-section tile_layout" style="padding-left: 10%;">
+                    <div class="row e-card-layout">
+                        @foreach (var stationgroupname in StationGroupNameList)
+                        {
 
-                <SfCard class="TSIWorkSchduleModalStationsCard">
-                    <CardContent>
+                            <div class="col-lg-2 col-md-2 col-sm-4"  style="padding: 10px;text-align:left;  width: 31%;">
+                               <center> <label class="TSIScheduleModalLabel">@stationgroupname</label></center>
+                                <SfCard class="TSIWorkSchduleModalStationsCard">
+                                    <CardContent>
 
-                        @{
+                                        @{
 
-                            <div class="row">
-                                <center>
-                                    <div class="control-section col-lg-11 card-control-section tile_layout">
-                                        <div class="row e-card-layout">
-                                            @if (StationsList != null)
-                                            {
-                                                @foreach (var item in StationsList)
-                                                {
-                                                     string exactURL = imageURL + item.Code + "off.png";
+                                            var tempStationList = StationsList.Where(t => t.StationGroup == stationgroupname).ToList();
 
-                                                   
-                                                    <div class="col-lg-2 col-md-2 col-sm-4" onclick="@(()=>OnSelectStation(item))" style="padding: 10px;text-align:left;  width: 10%;">
-                                                        <div id="card_sample_1" class="card_sample" >
-                                                            <SfCard CssClass="TSIStationCards" >
-                                                            <div style="background-color:@cardbgcolor">
-                                                                <center><CardImage Image="@exactURL" /></center>
-                                                                <center> <CardHeader Title="@item.Code" /></center>
-                                                                <CardContent>
-                                                                    <ChildContent>
-                                                                        @* <table class="table table-hover">
-                                                    <thead>
-                                                    <tr>
-                                                    <th scope="col" style="text-align:center">Bakım </th>
-                                                    <th scope="col" style="text-align:left"> &nbsp;Detayları</th>
-                                                    <th scope="col" style="text-align:left"> </th>
-                                                    <th scope="col" style="text-align:left"></th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr>
-                                                    <td><strong>Departman : @card.StationDepartment</strong></td>
-                                                    </tr>
-                                                    <tr>
-                                                    <td><strong>Planlanan Bakım Tarihi : @card.PlannedMaintenanceDate.ToString("dd-MM-yyyy")</strong></td>
-                                                    </tr>
-                                                    <tr>
-                                                    <td><strong>Bakım Türü : @card.MaintenanceType</strong></td>
-                                                    </tr>
-                                                    <tr>
-                                                    <td><strong>Bakıma Kalan Süre : @card.TimeLeft İş Günü</strong></td>
-                                                    </tr>
-                                                    </tbody>
-                                                    </table>*@
-                                                                    </ChildContent>
-                                                                </CardContent>
-                                                                
-                                                                <CardFooter>
-                                                                </CardFooter>
-                                                                </div>
-                                                            </SfCard>
+                                            <div class="row" style="padding-top:10px;    padding-left: 5%;">
+                                                <center>
+                                                    <div class="control-section col-lg-11 card-control-section tile_layout">
+                                                        <div class="row e-card-layout">
+                                                            @if (StationsList != null)
+                                                            {
+
+                                                                @foreach (var item in tempStationList)
+                                                                {
+                                                                    <div class="col-lg-2 col-md-2 col-sm-4" onclick="@(()=>OnSelectStation(item))" style="padding: 10px;text-align:left;  width: 31%;">
+                                                                        <div id="card_sample_1" class="card_sample">
+                                                                            <SfCard CssClass="TSIStationCards">
+                                                                                <div style="background-color:@cardbgcolor">
+                                                                                    <br>
+                                                                                    <center> <CardHeader Title="@item.Code" /></center>
+                                                                                    <CardContent>
+                                                                                        <ChildContent>
+                                                                                        </ChildContent>
+                                                                                    </CardContent>
+
+                                                                                    <CardFooter>
+                                                                                    </CardFooter>
+                                                                                </div>
+                                                                            </SfCard>
+
+
+                                                                        </div>
+                                                                    </div>
+
+                                                                }
+                                                            }
 
 
 
                                                         </div>
                                                     </div>
-                                                }
-                                            }
+                                                </center>
+                                            </div>
+                                            <br />
+                                        }
 
-                                        </div>
-                                    </div>
-                                </center>
+                                        <br />
+
+
+
+                                    </CardContent>
+                                    <CardFooter>
+                                    </CardFooter>
+                                </SfCard>
                             </div>
                         }
-                        <br />
-
-
-
-                    </CardContent>
-                    <CardFooter>
-                    </CardFooter>
-                </SfCard>
-
+                    </div>
+                </div>
+                
 
             </BodyTemplate>
             <FooterContentTemplate>
                 <SfButton CssClass="TSICancelButton" OnClick="HideModal1"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
-                <SfButton CssClass="TSISaveButton" OnClick="ShowModal2"><SfIcon Size="IconSize.Medium" Name="IconName.Check"></SfIcon>&nbsp;Seç</SfButton>
             </FooterContentTemplate>
         </DxPopup>
 
@@ -485,7 +508,7 @@
 
                     <tr style="height:90%">
 
-                    <SfCard class="TSIGridCards">
+                        <SfCard class="TSIGridCards">
                             <CardContent>
                                 <SfGrid ID="StationShiftGrid" DataSource="@StationShiftList" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%"
                                 class="GridZebra" ContextMenuItems="@StationShiftGridContextMenu">
@@ -499,7 +522,7 @@
                                     <GridColumns>
                                         <GridColumn Field=@nameof(StationShiftInfos.Station) HeaderText="İŞ İSTASYONU KODU" TextAlign="TextAlign.Center" Width="120">
                                         </GridColumn>
-                                         <GridColumn Field=@nameof(StationShiftInfos.ShiftOrder) Type="ColumnType.Number" HeaderText="VARDİYA NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(StationShiftInfos.ShiftOrder) Type="ColumnType.Number" HeaderText="VARDİYA NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         <GridColumn Field=@nameof(StationShiftInfos.TotalWorkTime) Type="ColumnType.Number" HeaderText="TOPLAM ÇALIŞMA SÜRESİ" TextAlign="TextAlign.Center" Width="120">
 
                                         </GridColumn>
@@ -509,9 +532,9 @@
 
                                     </GridColumns>
                                 </SfGrid>
-                                </CardContent>
-                                </SfCard>
-                       
+                            </CardContent>
+                        </SfCard>
+
                     </tr>
 
                 </table>
@@ -526,18 +549,18 @@
         </DxPopup>
 
         <style>
-                                    .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-other-month {
-                                        visibility: hidden !important;
-                                    }
+                                                                                                    .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-other-month {
+                                                                                                        visibility: hidden !important;
+                                                                                                    }
 
-                                    .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-header .e-title {
-                                        cursor: default !important;
-                                        background-color: white !important;
-                                    }
+                                                                                                    .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-header .e-title {
+                                                                                                        cursor: default !important;
+                                                                                                        background-color: white !important;
+                                                                                                    }
 
-                                    .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-appointment, .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-appointment-indicator {
-                                        visibility: hidden;
-                                    }
+                                                                                                    .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-appointment, .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-appointment-indicator {
+                                                                                                        visibility: hidden;
+                                                                                                    }
 
             @*.e-schedule .e-year-view .calismaVar {
         background: green !important;
@@ -554,3 +577,4 @@
         </style>
     }
 }
+

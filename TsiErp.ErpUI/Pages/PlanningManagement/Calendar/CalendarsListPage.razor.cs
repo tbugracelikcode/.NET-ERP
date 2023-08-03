@@ -5,8 +5,11 @@ using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Navigations;
 using Syncfusion.Blazor.Schedule;
 using Tsi.Core.Utilities.Results;
+using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.Entities.CalendarColorConstant;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.Calendar.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.CalendarDay.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
@@ -19,6 +22,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         private CellClickEventArgs CellData { get; set; }
         public bool schedularVisible { get; set; } = false;
         public List<int> YearList = new List<int>();
+        public List<string> StationGroupNameList = new List<string>();
+        public List<ListStationGroupsDto> StationGroupList = new List<ListStationGroupsDto>();
         public SfGrid<SelectCalendarDaysDto> _daysGrid;
         public List<SelectCalendarDaysDto> GridDaysList = new List<SelectCalendarDaysDto>();
         public List<SelectCalendarDaysDto> SchedularDaysList = new List<SelectCalendarDaysDto>();
@@ -26,8 +31,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         public List<ListStationsDto> SelectedStations = new List<ListStationsDto>();
         public List<ListShiftsDto> ShiftsList = new List<ListShiftsDto>();
         SfComboBox<int, int> Years;
-        
-        public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+
+        public List<ContextMenuItemModel> DayGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> StationShiftGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
@@ -52,19 +57,20 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         string cardbgcolor = "white";
         public DateTime CurrentDate = DateTime.Today;
         public DateTime officialHoliday = DateTime.Today;
+        int selection = 0;
 
         #endregion
 
         public List<AppointmentData> DataSourceEvent = new List<AppointmentData> { };
         public List<AppointmentData> FinalDataSource = new List<AppointmentData>();
         public List<ResourceData> ResourceList { get; set; } = new List<ResourceData> {
-        new ResourceData{ Text = "Çalışma Var", Id= 1, Color = "#00ff14" },
-        new ResourceData{ Text = "Çalışma Yok", Id= 2, Color = "#ff0000" },
-        new ResourceData{ Text = "Resmi Tatil", Id= 3, Color = "#6c757d" },
-        new ResourceData{ Text = "Tatil", Id= 4, Color = "#b75050ed" },
-        new ResourceData{ Text = "Yarım Gün", Id= 5, Color = "#0089ff" },
-        new ResourceData{ Text = "Yükleme Günü", Id= 6, Color = "#ffeb00" },
-        new ResourceData{ Text = "Bakım", Id= 7, Color = "#ff8d00" }
+        new ResourceData{ Text = "Çalışma Var", Id= 1, Color = CalendarColors.WorkExists },
+        new ResourceData{ Text = "Çalışma Yok", Id= 2, Color = CalendarColors.WorkNotExists },
+        new ResourceData{ Text = "Resmi Tatil", Id= 3, Color = CalendarColors.OfficialHoliday },
+        new ResourceData{ Text = "Tatil", Id= 4, Color = CalendarColors.Holiday },
+        new ResourceData{ Text = "Yarım Gün", Id= 5, Color = CalendarColors.HalfDay },
+        new ResourceData{ Text = "Yükleme Günü", Id= 6, Color = CalendarColors.LoadingDay },
+        new ResourceData{ Text = "Bakım", Id= 7, Color = CalendarColors.Maintenance }
     };
 
         protected override void OnInitialized()
@@ -73,6 +79,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             _L = L;
             GetYearsList();
             CreateMainContextMenuItems();
+            CreateDayContextMenuItems();
             FinalDataSource = DataSourceEvent;
             base.OnInitialized();
         }
@@ -117,9 +124,11 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             if (chcTumu) { DataSourceEvent = FinalDataSource; }
         }
 
+        #region Çalışma Takvimi Ekleme Modalı Metotları
+
         private void GetYearsList()
         {
-            YearList = Enumerable.Range(DateTime.Today.Year - 35, 65).ToList();
+            YearList = Enumerable.Range(DateTime.Today.Year - 2, 3).ToList();
         }
 
         public async Task YearValueChangeHandler(ChangeEventArgs<int, int> args)
@@ -148,7 +157,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                 GridDaysList.Add(new SelectCalendarDaysDto()
                 {
                     Date_ = officialHoliday,
-                    CalendarDayStateEnum = 7
+                    CalendarDayStateEnum = 3
                 });
                 await _daysGrid.Refresh();
                 await InvokeAsync(StateHasChanged);
@@ -161,15 +170,10 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 
         protected void CreateMainContextMenuItems()
         {
-            if (LineGridContextMenu.Count() == 0)
+            if (MainGridContextMenu.Count() == 0)
             {
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle", Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel
-                {
-                    Text = "Takvimi Görünt" +
-                    "üle",
-                    Id = "schedular"
-                });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Takvimi Görüntüle",Id = "schedular"});
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
@@ -248,34 +252,15 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             }
         }
 
-        private List<AppointmentData> ConvertToAppointmentData(List<SelectCalendarDaysDto> dtoList)
+        protected void CreateDayContextMenuItems()
         {
-            List<AppointmentData> DataSourceEvent = new List<AppointmentData> { };
-            if (dtoList.Count > 0)
+            if (DayGridContextMenu.Count() == 0)
             {
-                foreach (var dto in dtoList)
-                {
-                    AppointmentData data = new AppointmentData();
-                    data.StartTime = dto.StartTime;
-                    data.EndTime = dto.EndTime;
-                    data.ResourceId = dto.CalendarDayStateEnum;
-                    data.Subject = dto.Subject;
-                    DataSourceEvent.Add(data);
-                }
-            }
-
-            return DataSourceEvent;
-        }
-
-        protected void CreateLineContextMenuItems()
-        {
-            if (LineGridContextMenu.Count() == 0)
-            {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
+                DayGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
             }
         }
 
-        public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectCalendarDaysDto> args)
+        public async void OnDayContextMenuClick(ContextMenuClickEventArgs<SelectCalendarDaysDto> args)
         {
             switch (args.Item.Id)
             {
@@ -303,12 +288,51 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             }
         }
 
+        #endregion
+
+        #region Çalışma Takvimi Görüntüleme Modalı Metotları
+
+        public void HideScheduleEditPage()
+        {
+            schedularVisible = false;
+            InvokeAsync(StateHasChanged);
+        }
+
+        #endregion
+
+        private List<AppointmentData> ConvertToAppointmentData(List<SelectCalendarDaysDto> dtoList)
+        {
+            List<AppointmentData> DataSourceEvent = new List<AppointmentData> { };
+            if (dtoList.Count > 0)
+            {
+                foreach (var dto in dtoList)
+                {
+                    AppointmentData data = new AppointmentData();
+                    data.StartTime = dto.StartTime;
+                    data.EndTime = dto.EndTime;
+                    data.ResourceId = dto.CalendarDayStateEnum;
+                    data.Subject = dto.Subject;
+                    DataSourceEvent.Add(data);
+                }
+            }
+
+            return DataSourceEvent;
+        }
+
 
         #region İş İstasyonları Modalı İşlemleri
 
         private async void ShowModal1()
         {
             StationsList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
+            StationGroupList = (await StationGroupsAppService.GetListAsync(new ListStationGroupsParameterDto())).Data.ToList();
+            var tempGroupList = StationsList.Select(t => t.GroupID).Distinct().ToList();
+            foreach (var groupId in tempGroupList )
+            {
+                string groupname = StationGroupList.Where(t => t.Id == groupId).Select(t => t.Name).FirstOrDefault();
+                StationGroupNameList.Add(groupname);
+            }
+            var a = StationGroupNameList;
             modal1visible = true;
         }
 
@@ -318,11 +342,13 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             SelectedStations.Clear();
         }
 
+
         private async void OnSelectStation(ListStationsDto station)
         {
             if (SelectedStations.Contains(station))
             {
-                SelectedStations.Remove(station);
+                await ModalManager.MessagePopupAsync("Bilgi", "Seçtiğiniz istasyon, listede mevcut.");
+
             }
             else
             {
@@ -346,7 +372,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 
         private void ShowModal2()
         {
-           
+
             //ShiftsList = (await ShiftsAppService.GetListAsync(new ListShiftsParameterDto())).Data.ToList();
 
             //var lineList = (await CalendarsService.GetLineListAsync(DataSource.Id)).Data.Where(t=>t.Date_ == selectedDay.).ToList();
