@@ -232,7 +232,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 var qualityPlansQuery = queryFactory
                             .Query()
                             .From(Tables.ProductOperationQualityPlans)
-                            .Select<ProductOperationQualityPlans>(s => new { s.ProductsOperationID, s.ControlFrequency, s.Equipment, s.ControlManager, s.LineNr, s.IdealMeasure, s.BottomTolerance, s.UpperTolerance, s.PeriodicControlMeasure, s.MeasureNumberInPicture })
+                            .Select<ProductOperationQualityPlans>(s => new { s.ProductsOperationID, s.ControlFrequency, s.Equipment, s.ControlManager, s.LineNr, s.IdealMeasure, s.BottomTolerance, s.UpperTolerance, s.PeriodicControlMeasure, s.MeasureNumberInPicture,s.Id,s.DataOpenStatus,s.DataOpenStatusUserId })
                             .Join<ControlTypes>
                             (
                                 s => new { ControlTypesID = s.Id, ControlTypesName = s.Name },
