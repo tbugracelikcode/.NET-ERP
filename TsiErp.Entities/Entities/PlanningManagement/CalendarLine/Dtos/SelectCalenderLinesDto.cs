@@ -20,7 +20,10 @@ namespace TsiErp.Entities.Entities.PlanningManagement.CalendarLine.Dtos
         /// Vardiya Süresi
         /// </summary>
         public decimal ShiftTime { get; set; }
-
+        /// <summary>
+        /// Çalışma Durumu
+        /// </summary>
+        public string WorkStatus { get; set; }
         /// <summary>
         /// Planlanan Duruş Süresi
         /// </summary>
@@ -46,6 +49,10 @@ namespace TsiErp.Entities.Entities.PlanningManagement.CalendarLine.Dtos
         /// Vardiya ID
         /// </summary>
         public Guid? ShiftID { get; set; }
+        /// <summary>
+        /// İstasyon Kodu
+        /// </summary>
+        public string StationCode { get; set; }
         /// <summary>
         /// İstasyon Adı
         /// </summary>

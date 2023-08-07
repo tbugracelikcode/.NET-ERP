@@ -16,6 +16,12 @@ namespace TsiErp.Entities.Entities.PlanningManagement.CalendarLine
         /// </summary>
         public decimal ShiftOverTime { get; set; }
 
+        [SqlColumnType(SqlDbType = SqlDataType.NVarChar, MaxLength =100)]
+        /// <summary>
+        /// Çalışma Durumu
+        /// </summary>
+        public string WorkStatus { get; set; }
+
         [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Vardiya Süresi

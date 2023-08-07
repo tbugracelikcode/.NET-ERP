@@ -1004,6 +1004,30 @@ e-upload .e-upload-files .e-file-remove-btn.e-icons:hover, .e-upload .e-upload-f
     visibility: hidden !important;
 }
 
+.e-checkbox-wrapper .e-label, .e-css.e-checkbox-wrapper .e-label {
+    cursor: pointer;
+    display: inline-block;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 16px !important;
+    font-weight: bolder !important;
+    line-height: 14px;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    vertical-align: middle;
+    white-space: normal;
+}
+
+.e-checkbox-wrapper, .e-css.e-checkbox-wrapper {
+    -webkit-tap-highlight-color: transparent;
+    float: right !important;
+    padding-right: 5% !important;
+}
+
+    .e-checkbox-wrapper:hover .e-label, .e-css.e-checkbox-wrapper:hover .e-label {
+        color: #c90101 !important;
+    }
+
 
 
 

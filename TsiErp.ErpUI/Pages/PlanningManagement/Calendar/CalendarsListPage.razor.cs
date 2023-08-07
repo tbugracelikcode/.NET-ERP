@@ -5,13 +5,13 @@ using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Navigations;
 using Syncfusion.Blazor.Schedule;
 using Tsi.Core.Utilities.Results;
-using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.CalendarColorConstant;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.Calendar.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.CalendarDay.Dtos;
+using TsiErp.Entities.Entities.PlanningManagement.CalendarLine.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
@@ -25,6 +25,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         public List<string> StationGroupNameList = new List<string>();
         public List<ListStationGroupsDto> StationGroupList = new List<ListStationGroupsDto>();
         public SfGrid<SelectCalendarDaysDto> _daysGrid;
+        private SfGrid<SelectCalendarLinesDto> _LineGrid;
         public List<SelectCalendarDaysDto> GridDaysList = new List<SelectCalendarDaysDto>();
         public List<SelectCalendarDaysDto> SchedularDaysList = new List<SelectCalendarDaysDto>();
         public List<ListStationsDto> StationsList = new List<ListStationsDto>();
@@ -34,9 +35,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 
         public List<ContextMenuItemModel> DayGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
-        public List<ContextMenuItemModel> StationShiftGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+        public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
-        public List<StationShiftInfos> StationShiftList = new List<StationShiftInfos>();
+        public List<SelectCalendarLinesDto> LineGridList = new List<SelectCalendarLinesDto>();
         [Inject]
         ModalManager ModalManager { get; set; }
 
@@ -51,8 +52,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         public bool chcYarimGun;
         public bool chcYuklemeGunu;
         public bool chcBakim;
-        private bool modal1visible = false;
-        private bool modal2visible = false;
+        private bool StationsModalVisible = false;
+        private bool LineModalVisible = false;
+        private bool stationSelectAll = false;
         string imageURL = "images/Stations/";
         string cardbgcolor = "white";
         public DateTime CurrentDate = DateTime.Today;
@@ -73,7 +75,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         new ResourceData{ Text = "Bakım", Id= 7, Color = CalendarColors.Maintenance }
     };
 
-        protected override void OnInitialized()
+        protected override async void OnInitialized()
         {
             BaseCrudService = CalendarsService;
             _L = L;
@@ -82,6 +84,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             CreateDayContextMenuItems();
             FinalDataSource = DataSourceEvent;
             base.OnInitialized();
+
         }
 
         protected override Task BeforeInsertAsync()
@@ -173,7 +176,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             if (MainGridContextMenu.Count() == 0)
             {
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle", Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Takvimi Görüntüle",Id = "schedular"});
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Takvimi Görüntüle", Id = "schedular" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
@@ -298,6 +301,19 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             InvokeAsync(StateHasChanged);
         }
 
+        private async void OnSelectAllStationsChange(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+        {
+            //if (stationSelectAll)
+            //{
+            //    SelectedStations = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.Where(t => t.StationGroup == stationGroup).ToList();
+
+            //}
+            //else
+            //{
+            //    SelectedStations.Clear();
+            //}
+        }
+
         #endregion
 
         private List<AppointmentData> ConvertToAppointmentData(List<SelectCalendarDaysDto> dtoList)
@@ -322,26 +338,25 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 
         #region İş İstasyonları Modalı İşlemleri
 
-        private async void ShowModal1()
+        private async void ShowStationsModal()
         {
             StationsList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
             StationGroupList = (await StationGroupsAppService.GetListAsync(new ListStationGroupsParameterDto())).Data.ToList();
             var tempGroupList = StationsList.Select(t => t.GroupID).Distinct().ToList();
-            foreach (var groupId in tempGroupList )
+            foreach (var groupId in tempGroupList)
             {
                 string groupname = StationGroupList.Where(t => t.Id == groupId).Select(t => t.Name).FirstOrDefault();
                 StationGroupNameList.Add(groupname);
             }
             var a = StationGroupNameList;
-            modal1visible = true;
+            StationsModalVisible = true;
         }
 
-        private void HideModal1()
+        private void HideStationsModal()
         {
-            modal1visible = false;
+            StationsModalVisible = false;
             SelectedStations.Clear();
         }
-
 
         private async void OnSelectStation(ListStationsDto station)
         {
@@ -368,57 +383,98 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 
         #endregion
 
-        #region Vardiya Bilgileri Modalı İşlemleri
+        #region Takvim Satır Modalı İşlemleri
 
-        private void ShowModal2()
+        private async void ShowLineModal()
         {
 
-            //ShiftsList = (await ShiftsAppService.GetListAsync(new ListShiftsParameterDto())).Data.ToList();
+            ShiftsList = (await ShiftsAppService.GetListAsync(new ListShiftsParameterDto())).Data.ToList();
 
             //var lineList = (await CalendarsService.GetLineListAsync(DataSource.Id)).Data.Where(t=>t.Date_ == selectedDay.).ToList();
 
-            //foreach (var station in SelectedStations)
+            List<SelectCalendarLinesDto> templist = new List<SelectCalendarLinesDto>();
+
+            foreach (var shift in ShiftsList)
+            {
+                foreach (var station in SelectedStations)
+                {
+                    SelectCalendarLinesDto lineRecord = new SelectCalendarLinesDto
+                    {
+                        CalendarID = DataSource.Id,
+                        AvailableTime = shift.TotalWorkTime - shift.TotalBreakTime,
+                        PlannedHaltTimes = shift.TotalBreakTime,
+                        ShiftName = shift.Name,
+                        StationName = station.Name,
+                        StationCode = station.Code,
+                        ShiftTime = shift.TotalWorkTime,
+                        StationID = station.Id,
+                        ShiftID = shift.Id,
+                        ShiftOverTime = shift.Overtime,
+                        ShiftOrder = shift.ShiftOrder,
+                    };
+
+                    LineGridList.Add(lineRecord);
+                }
+
+            }
+
+            LineModalVisible = true;
+        }
+
+        private void HideLineModal()
+        {
+            SelectedStations.Clear();
+            LineGridList.Clear();
+            LineModalVisible = false;
+        }
+
+        private void LineModalSave()
+        {
+
+            //if (LineDataSource.Id == Guid.Empty)
             //{
-            //    lineList.Where(t=>t.)
-
-            //    foreach (var line in lineList)
+            //    if (DataSource.SelectBillsofMaterialLines.Contains(LineDataSource))
             //    {
-            //        StationShiftInfos stationShiftModel = new StationShiftInfos
+            //        int selectedLineIndex = DataSource.SelectBillsofMaterialLines.FindIndex(t => t.LineNr == LineDataSource.LineNr);
+
+            //        if (selectedLineIndex > -1)
             //        {
-            //            Station = station.Code,
-            //            Overtime = line.ShiftOverTime,
-            //            BreakTime = line.PlannedHaltTimes,
-            //            ShiftOrder = line.ShiftOrder,
-            //            TotalWorkTime = line.AvailableTime
-            //        };
-
-            //        StationShiftList.Add(stationShiftModel);
+            //            DataSource.SelectBillsofMaterialLines[selectedLineIndex] = LineDataSource;
+            //        }
             //    }
+            //    else
+            //    {
+            //        DataSource.SelectBillsofMaterialLines.Add(LineDataSource);
+            //    }
+            //}
+            //else
+            //{
+            //    int selectedLineIndex = DataSource.SelectBillsofMaterialLines.FindIndex(t => t.Id == LineDataSource.Id);
 
+            //    if (selectedLineIndex > -1)
+            //    {
+            //        DataSource.SelectBillsofMaterialLines[selectedLineIndex] = LineDataSource;
+            //    }
             //}
 
-            modal2visible = true;
+            //LineDataSource.FinishedProductID = DataSource.FinishedProductID;
+            //LineDataSource.FinishedProductCode = DataSource.FinishedProductCode;
+            //GridLineList = DataSource.SelectBillsofMaterialLines;
+            //await _LineGrid.Refresh();
+
+            //HideLinesPopup();
+            //await InvokeAsync(StateHasChanged);
         }
 
-        private void HideModal2()
+        protected void CreateLineContextMenuItems()
         {
-            modal2visible = false;
-        }
-
-        private void Modal2Save()
-        {
-            HideModal2();
-        }
-
-        protected void CreateStationShiftContextMenuItems()
-        {
-            if (StationShiftGridContextMenu.Count() == 0)
+            if (LineGridContextMenu.Count() == 0)
             {
-                StationShiftGridContextMenu.Add(new ContextMenuItemModel { Text = "Bakım Bilgileri", Id = "maintenance" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Bakım Bilgileri", Id = "maintenance" });
             }
         }
 
-        public void OnStationShiftContextMenuClick(ContextMenuClickEventArgs<StationShiftInfos> args)
+        public void OnLineContextMenuClick(ContextMenuClickEventArgs<SelectCalendarLinesDto> args)
         {
             switch (args.Item.Id)
             {
@@ -442,7 +498,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             switch (SelectedMenuItem)
             {
                 case "Edit":
-                    ShowModal1();
+                    ShowStationsModal();
                     break;
                 default:
                     break;
@@ -473,18 +529,27 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             public int ResourceId { get; set; }
         }
 
-        public class StationShiftInfos
+        public class WorkStates
         {
-            public decimal TotalWorkTime { get; set; }
-
-            public decimal BreakTime { get; set; }
-
-            public decimal Overtime { get; set; }
-
-            public string Station { get; set; }
-
-            public int ShiftOrder { get; set; }
+            public string ID { get; set; }
+            public string Text { get; set; }
         }
+        List<WorkStates> WorkStatesData = new List<WorkStates> {
+         new WorkStates() { ID= "State1", Text= "Çalışma Var" },
+         new WorkStates() { ID= "State2", Text= "Çalışma Yok" },
+         new WorkStates() { ID= "State3", Text= "Üretim Kısıtı" },
+         new WorkStates() { ID= "State4", Text= "Operatör Kısıtı" },
+         new WorkStates() { ID= "State5", Text= "Arızi Kısıt" },
+  };
+        private void WorkStatesValueChangeHandler(ChangeEventArgs<string, WorkStates> args)
+        {
+            foreach (var line in LineGridList)
+            {
+                line.WorkStatus = args.ItemData.Text;
+            }
+            _LineGrid.Refresh();
+        }
+
 
     }
 }

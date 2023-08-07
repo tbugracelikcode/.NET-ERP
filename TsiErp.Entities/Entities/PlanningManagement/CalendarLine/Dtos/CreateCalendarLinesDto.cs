@@ -19,7 +19,10 @@ namespace TsiErp.Entities.Entities.PlanningManagement.CalendarLine.Dtos
         /// Vardiya Süresi
         /// </summary>
         public decimal ShiftTime { get; set; }
-
+        /// <summary>
+        /// Çalışma Durumu
+        /// </summary>
+        public string WorkStatus { get; set; }
 
         /// <summary>
         /// Planlanan Duruş Süresi

@@ -258,7 +258,7 @@
                             </ScheduleEventSettings>
 
                             <ScheduleViews>
-                                <ScheduleView Option="View.Year" FirstDayOfWeek="1" ShowWeekNumber=true></ScheduleView>
+                                <ScheduleView Option="View.Year" FirstDayOfWeek="1"  ShowWeekNumber=true></ScheduleView>
                             </ScheduleViews>
                             <ScheduleTemplates Context="context">
 
@@ -371,9 +371,9 @@
             </FooterContentTemplate>
         </DxPopup>
 
-        <DxPopup Visible="modal1visible"
+        <DxPopup Visible="StationsModalVisible"
          ShowFooter="true"
-         CloseButtonClick="HideModal1"
+         CloseButtonClick="HideStationsModal"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="İş İstasyonları"
@@ -406,7 +406,7 @@
 
                         <td style="width:33%">
 
-                            <SfButton CssClass="TSISaveButton" OnClick="ShowModal2"><SfIcon Size="IconSize.Medium" Name="IconName.Check"></SfIcon>&nbsp;Seçilen İstasyonları Planla</SfButton>
+                            <SfButton CssClass="TSISaveButton" OnClick="ShowLineModal"><SfIcon Size="IconSize.Medium" Name="IconName.Check"></SfIcon>&nbsp;Seçilen İstasyonları Planla</SfButton>
 
                         </td>
 
@@ -475,6 +475,7 @@
 
                                     </CardContent>
                                     <CardFooter>
+                                    <SfCheckBox @bind-Checked="stationSelectAll"  @onclick="OnSelectAllStationsChange(stationgroupname)" Label="Hepsini Seç"></SfCheckBox><br />
                                     </CardFooter>
                                 </SfCard>
                             </div>
@@ -485,82 +486,143 @@
 
             </BodyTemplate>
             <FooterContentTemplate>
-                <SfButton CssClass="TSICancelButton" OnClick="HideModal1"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideStationsModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
             </FooterContentTemplate>
         </DxPopup>
 
-        <DxPopup Visible="modal2visible"
+        <DxPopup Visible="LineModalVisible"
          ShowFooter="true"
-         CloseButtonClick="HideModal2"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="İş İstasyonu Vardiya Bilgileri"
-         Width="700px"
-         CssClass="TSIWorkSchduleModal"
+         Width="89%"
+         Height="74%"
+         MinWidth="1750px"
+         MinHeight="800px"
          HeaderCssClass="HeaderTitleCss">
 
             <BodyTemplate>
 
-                <table style="width:90%; height:fit-content;margin-top:2%;">
+            <DxGridLayout CssClass="TSIGridLayout">
 
-                    <tr style="height:10%">
-                    </tr>
+                <Rows>
+                    <DxGridLayoutRow Height="11%" />
+                    <DxGridLayoutRow Height="13%" />
+                    <DxGridLayoutRow Height="70%" />
+                </Rows>
 
-                    <tr style="height:90%">
+                <Columns>
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="15%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="15%" />
+                    <DxGridLayoutColumn Width="61%" />
+                    <DxGridLayoutColumn Width="3%" />
 
-                        <SfCard class="TSIGridCards">
-                            <CardContent>
-                                <SfGrid ID="StationShiftGrid" DataSource="@StationShiftList" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%"
-                                class="GridZebra" ContextMenuItems="@StationShiftGridContextMenu">
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Başlangıç Tarihi: </strong></label>
+                            <SfTextBox  ></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                           <label class="TSIModalLabel"><strong>Planlanan Takvim: </strong></label>
+                    <br />
+                            <SfSwitch @bind-Checked="DataSource.IsPlanned" Disabled=true  ></SfSwitch>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                             <label class="TSIModalLabel"><strong>Bitiş Tarihi: </strong></label>
+                            <SfTextBox  ></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="3">
+                        <Template>
+                             <label class="TSIModalLabel"><strong>Çalışma Durumu: </strong></label>
+                            <SfComboBox TValue="string" TItem="WorkStates" Placeholder="Çalışma durumu seçin." DataSource="@WorkStatesData">
+                             <ComboBoxEvents TItem="WorkStates" TValue="string" ValueChange="@WorkStatesValueChangeHandler"></ComboBoxEvents>
+    <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+</SfComboBox>
+
+                        </Template>
+                    </DxGridLayoutItem>
+
+                     <DxGridLayoutItem Row="2" Column="1" ColumnSpan="4">
+                        <Template>
+                            
+                                <SfGrid ID="LineGrid" @ref=_LineGrid DataSource="@LineGridList" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%"
+                                class="GridZebra" ContextMenuItems="@LineGridContextMenu">
                                     <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false"></GridEditSettings>
-                                    <GridEvents ContextMenuItemClicked="@OnStationShiftContextMenuClick" TValue="StationShiftInfos"></GridEvents>
+                                    <GridEvents ContextMenuItemClicked="@OnLineContextMenuClick" TValue="SelectCalendarLinesDto"></GridEvents>
                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(StationShiftInfos.Station) HeaderText="İŞ İSTASYONU KODU" TextAlign="TextAlign.Center" Width="120">
+
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.StationCode) HeaderText="İSTASYON KODU" TextAlign="TextAlign.Center" Width="140">
                                         </GridColumn>
-                                        <GridColumn Field=@nameof(StationShiftInfos.ShiftOrder) Type="ColumnType.Number" HeaderText="VARDİYA NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(StationShiftInfos.TotalWorkTime) Type="ColumnType.Number" HeaderText="TOPLAM ÇALIŞMA SÜRESİ" TextAlign="TextAlign.Center" Width="120">
+
+                                         <GridColumn Field=@nameof(SelectCalendarLinesDto.StationName) HeaderText="İSTASYON ADI" TextAlign="TextAlign.Center" Width="140">
+                                        </GridColumn>
+
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.ShiftName) Type="ColumnType.Number" HeaderText="VARDİYA ADI" TextAlign="TextAlign.Center" Width="100"></GridColumn>
+                                        
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.WorkStatus) Type="ColumnType.Number" HeaderText="ÇALIŞMA DURUMU" TextAlign="TextAlign.Center" Width="150"></GridColumn>
+
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.ShiftTime) Type="ColumnType.Number" HeaderText="VARDİYA SÜRESİ" TextAlign="TextAlign.Center" Width="140">
 
                                         </GridColumn>
-                                        <GridColumn Field=@nameof(StationShiftInfos.BreakTime) Type="ColumnType.Number" HeaderText="TOPLAM DURUŞ SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(StationShiftInfos.Overtime) Type="ColumnType.Number" HeaderText="FAZLA MESAİ SÜRESİ" DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.ShiftOverTime) Type="ColumnType.Number" HeaderText="FAZLA MESAİ SÜRESİ" TextAlign="TextAlign.Center" Width="180"></GridColumn>
 
-
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.PlannedHaltTimes) Type="ColumnType.Number" HeaderText="PLANLI DURUŞ SÜRESİ" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                        
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.Date_) Type="ColumnType.Number" HeaderText="TARİH" TextAlign="TextAlign.Center" Width="80"></GridColumn>
+                                        
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.AvailableTime) Type="ColumnType.Number" HeaderText="ÇALIŞILABİLİR SÜRE"  TextAlign="TextAlign.Center" Width="170"></GridColumn>
                                     </GridColumns>
                                 </SfGrid>
-                            </CardContent>
-                        </SfCard>
 
-                    </tr>
+                        </Template>
+                    </DxGridLayoutItem>
 
-                </table>
+                    
 
+                </Items>
+            </DxGridLayout>
 
+                        
 
             </BodyTemplate>
             <FooterContentTemplate>
-                <SfButton CssClass="TSICancelButton" OnClick="HideModal2"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
-                <SfButton CssClass="TSISaveButton" OnClick="Modal2Save"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideLineModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+                <SfButton CssClass="TSISaveButton" OnClick="LineModalSave"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
             </FooterContentTemplate>
         </DxPopup>
 
         <style>
-                                                                                                    .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-other-month {
-                                                                                                        visibility: hidden !important;
-                                                                                                    }
+                 .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-other-month {
+                     visibility: hidden !important;
+                 }
 
-                                                                                                    .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-header .e-title {
-                                                                                                        cursor: default !important;
-                                                                                                        background-color: white !important;
-                                                                                                    }
+                 .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-header .e-title {
+                     cursor: default !important;
+                     background-color: white !important;
+                 }
 
-                                                                                                    .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-appointment, .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-appointment-indicator {
-                                                                                                        visibility: hidden;
-                                                                                                    }
+                 .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-appointment, .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-appointment-indicator {
+                     visibility: hidden;
+                 }
 
             @*.e-schedule .e-year-view .calismaVar {
         background: green !important;

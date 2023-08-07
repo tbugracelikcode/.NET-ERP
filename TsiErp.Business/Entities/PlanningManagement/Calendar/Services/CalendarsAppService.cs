@@ -84,6 +84,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                         CalendarID = addedEntityId,
                         CreationTime = DateTime.Now,
                         CreatorId = LoginedUserService.UserId,
+                        WorkStatus = item.WorkStatus,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
                         DeleterId = Guid.Empty,
@@ -181,10 +182,10 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 var queryLines = queryFactory
                        .Query()
                        .From(Tables.CalendarLines)
-                       .Select<CalendarLines>(cl => new { cl.ShiftID, cl.CalendarID, cl.StationID, cl.Id, cl.DataOpenStatus, cl.DataOpenStatusUserId, cl.ShiftTime, cl.ShiftOverTime, cl.PlannedHaltTimes, cl.Date_, cl.AvailableTime })
+                       .Select<CalendarLines>(cl => new { cl.ShiftID, cl.CalendarID, cl.StationID, cl.Id, cl.DataOpenStatus, cl.DataOpenStatusUserId, cl.ShiftTime, cl.ShiftOverTime, cl.PlannedHaltTimes, cl.Date_, cl.AvailableTime, cl.WorkStatus })
                        .Join<Stations>
                         (
-                            s => new { StationName = s.Name, StationID = s.Id },
+                            s => new { StationName = s.Name, StationID = s.Id, StationCode = s.Code },
                             nameof(CalendarLines.StationID),
                             nameof(Stations.Id),
                             JoinType.Left
@@ -235,7 +236,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
 
-                var query = queryFactory.Query().From(Tables.CalendarLines).Select<CalendarLines>(cl => new { cl.ShiftID, cl.CalendarID, cl.StationID, cl.Id, cl.DataOpenStatus, cl.DataOpenStatusUserId, cl.ShiftTime, cl.ShiftOverTime, cl.PlannedHaltTimes, cl.Date_, cl.AvailableTime })
+                var query = queryFactory.Query().From(Tables.CalendarLines).Select<CalendarLines>(cl => new { cl.ShiftID, cl.CalendarID, cl.StationID, cl.Id, cl.DataOpenStatus, cl.DataOpenStatusUserId, cl.ShiftTime, cl.ShiftOverTime, cl.PlannedHaltTimes, cl.Date_, cl.AvailableTime, cl.WorkStatus })
                        .Join<Stations>
                         (
                             s => new { StationName = s.Name },
@@ -288,10 +289,10 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 var queryLines = queryFactory
                        .Query()
                        .From(Tables.CalendarLines)
-                       .Select<CalendarLines>(cl => new { cl.ShiftID, cl.CalendarID, cl.StationID, cl.Id, cl.DataOpenStatus, cl.DataOpenStatusUserId, cl.ShiftTime, cl.ShiftOverTime, cl.PlannedHaltTimes, cl.Date_, cl.AvailableTime })
+                       .Select<CalendarLines>(cl => new { cl.ShiftID, cl.CalendarID, cl.StationID, cl.Id, cl.DataOpenStatus, cl.DataOpenStatusUserId, cl.ShiftTime, cl.ShiftOverTime, cl.PlannedHaltTimes, cl.Date_, cl.AvailableTime, cl.WorkStatus })
                        .Join<Stations>
                         (
-                            s => new { StationName = s.Name,StationID = s.Id },
+                            s => new { StationName = s.Name, StationID = s.Id, StationCode = s.Code },
                             nameof(CalendarLines.StationID),
                             nameof(Stations.Id),
                             JoinType.Left
@@ -368,6 +369,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                             DataOpenStatusUserId = Guid.Empty,
                             DeleterId = Guid.Empty,
                             DeletionTime = null,
+                            WorkStatus = item.WorkStatus,
                             Id = GuidGenerator.CreateGuid(),
                             IsDeleted = false,
                             LastModificationTime = null,
@@ -409,6 +411,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                                 PlannedHaltTimes = item.PlannedHaltTimes,
                                 ShiftID = item.ShiftID.Value,
                                 ShiftOverTime = item.ShiftOverTime,
+                                WorkStatus = item.WorkStatus,
                                 ShiftTime = item.ShiftTime,
                                 StationID = item.StationID.Value
                             }).Where(new { Id = line.Id }, false, false, "");
