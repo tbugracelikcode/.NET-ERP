@@ -315,28 +315,6 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                 }
                 #endregion
 
-                #region UnsuitabilityItems
-                var queryUnsuitabilityItems = queryFactory
-                            .Query()
-                            .From(Tables.TemplateOperationUnsuitabilityItems)
-                            .Select<TemplateOperationUnsuitabilityItems>(tol => new { tol.LineNr, tol.Id, tol.DataOpenStatus, tol.DataOpenStatusUserId, tol.TemplateOperationId, tol.ToBeUsed })
-                            .Join<UnsuitabilityItems>
-                            (
-                                s => new { UnsuitabilityItemsId = s.Id, UnsuitabilityItemsName = s.Name },
-                                nameof(TemplateOperationUnsuitabilityItems.UnsuitabilityItemsId),
-                                nameof(UnsuitabilityItems.Id),
-                                JoinType.Left
-                            )
-                            .Where(null, false, false, Tables.TemplateOperationUnsuitabilityItems);
-
-                var unsuitabilityItemsLine = queryFactory.GetList<SelectTemplateOperationUnsuitabilityItemsDto>(queryUnsuitabilityItems).ToList();
-
-                foreach (var item in templateOperations)
-                {
-                    item.SelectTemplateOperationUnsuitabilityItems = unsuitabilityItemsLine;
-                }
-                #endregion
-
                 return new SuccessDataResult<IList<ListTemplateOperationsDto>>(templateOperations);
             }
         }

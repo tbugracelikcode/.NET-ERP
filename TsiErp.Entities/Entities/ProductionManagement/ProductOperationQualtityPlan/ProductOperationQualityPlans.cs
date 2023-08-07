@@ -90,10 +90,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductOperationQualtity
         /// </summary>
         public bool PeriodicControlMeasure { get; set; }
 
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Resimdeki Ölçü Numarası
         /// </summary>
-        public int MeasureNumberInPicture { get; set; }
+        public decimal MeasureNumberInPicture { get; set; }
     }
 }

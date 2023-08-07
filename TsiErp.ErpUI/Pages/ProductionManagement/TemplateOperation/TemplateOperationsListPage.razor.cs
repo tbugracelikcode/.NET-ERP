@@ -29,6 +29,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectTemplateOperationLinesDto> GridLineList = new List<SelectTemplateOperationLinesDto>();
+
         List<SelectTemplateOperationUnsuitabilityItemsDto> UnsuitabilityItemsLineGridList = new List<SelectTemplateOperationUnsuitabilityItemsDto>();
 
         private bool LineCrudPopup = false;

@@ -68,6 +68,6 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductOperationQualtity
         /// <summary>
         /// Resimdeki Ölçü Numarası
         /// </summary>
-        public int MeasureNumberInPicture { get; set; }
+        public decimal MeasureNumberInPicture { get; set; }
     }
 }
