@@ -126,6 +126,37 @@
 		<None Include="Components\Commons\Loadings\CircleLoading.razor" />
 		<None Include="Components\Layouts\DevGridLayout.razor" />
 		<None Include="Components\Layouts\DevPopupListPageLayout.razor" />
+		<None Include="wwwroot\login\font\Flaticon.svg" />
+		<None Include="wwwroot\login\font\Flaticon.woff2" />
+		<None Include="wwwroot\login\font\_flaticon.scss" />
+		<None Include="wwwroot\login\js\bootstrap.min.js" />
+		<None Include="wwwroot\login\js\imagesloaded.pkgd.min.js" />
+		<None Include="wwwroot\login\js\jquery-3.5.0.min.js" />
+		<None Include="wwwroot\login\js\jquery.mb.YTPlayer.min.js" />
+		<None Include="wwwroot\login\js\main.js" />
+		<None Include="wwwroot\login\js\particles-1.js" />
+		<None Include="wwwroot\login\js\particles-2.js" />
+		<None Include="wwwroot\login\js\particles-3.js" />
+		<None Include="wwwroot\login\js\particles.js" />
+		<None Include="wwwroot\login\js\particles.min.js" />
+		<None Include="wwwroot\login\js\popper.min.js" />
+		<None Include="wwwroot\login\js\star-animation.js" />
+		<None Include="wwwroot\login\js\starfield.js" />
+		<None Include="wwwroot\login\js\validator.min.js" />
+		<None Include="wwwroot\login\js\vegas.min.js" />
+		<None Include="wwwroot\login\less\style.less" />
+		<None Include="wwwroot\login\sass\base\bases\_animation-classes.scss" />
+		<None Include="wwwroot\login\sass\base\bases\_default.scss" />
+		<None Include="wwwroot\login\sass\base\bases\_typography.scss" />
+		<None Include="wwwroot\login\sass\base\bases\_variables.scss" />
+		<None Include="wwwroot\login\sass\base\_bases.scss" />
+		<None Include="wwwroot\login\sass\layout\layouts\_template-layout31.scss" />
+		<None Include="wwwroot\login\sass\layout\_layouts.scss" />
+		<None Include="wwwroot\login\sass\README.md" />
+		<None Include="wwwroot\login\sass\style.scss" />
+		<None Include="wwwroot\login\webfonts\fa-brands-400.woff2" />
+		<None Include="wwwroot\login\webfonts\fa-regular-400.woff2" />
+		<None Include="wwwroot\login\webfonts\fa-solid-900.woff2" />
 	</ItemGroup>
 
 </Project>
