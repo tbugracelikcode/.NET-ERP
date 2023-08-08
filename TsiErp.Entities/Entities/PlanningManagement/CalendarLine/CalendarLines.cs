@@ -34,6 +34,19 @@ namespace TsiErp.Entities.Entities.PlanningManagement.CalendarLine
         /// </summary>
         public decimal PlannedHaltTimes { get; set; }
 
+
+        [SqlColumnType(SqlDbType = SqlDataType.NVarChar, MaxLength = 100)]
+        /// <summary>
+        /// Bakım Türü
+        /// </summary>
+        public string MaintenanceType { get; set; }
+
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Planlanan Bakım Süresi
+        /// </summary>
+        public decimal PlannedMaintenanceTime { get; set; }
+
         [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Çalışılabilir Süre

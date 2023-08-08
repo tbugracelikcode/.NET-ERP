@@ -22,6 +22,15 @@ namespace TsiErp.Entities.Entities.PlanningManagement.CalendarLine.Dtos
         /// </summary>
         public string WorkStatus { get; set; }
         /// <summary>
+        /// Planlanan Bakım Süresi
+        /// </summary>
+        public decimal PlannedMaintenanceTime { get; set; }
+
+        /// <summary>
+        /// Bakım Türü
+        /// </summary>
+        public string MaintenanceType { get; set; }
+        /// <summary>
         /// Planlanan Duruş Süresi
         /// </summary>
         public decimal PlannedHaltTimes { get; set; }

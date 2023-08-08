@@ -248,7 +248,7 @@
             <BodyTemplate>
                 <table>
                     <th style="width:75%">
-                        <SfSchedule @ref="ScheduleObj" TValue="AppointmentData" @bind-SelectedDate="@CurrentDate" Width="100%" Height="650px">
+                        <SfSchedule @ref="ScheduleObj" AllowMultiCellSelection="true" TValue="AppointmentData" @bind-SelectedDate="@CurrentDate" Width="100%" Height="650px">
 
                             <ScheduleResources>
                                 <ScheduleResource TItem="ResourceData" TValue="int[]" DataSource="@ResourceList" Field="ResourceId" Title="Owner" Name="Owners" TextField="OwnerText" IdField="Id" ColorField="Color" AllowMultiple="true"></ScheduleResource>
@@ -268,43 +268,49 @@
 
                                         DateTime currentDate = (context as TemplateContext).Date;
 
-                                        string name = string.Empty;
+                                        var a = SchedularDaysList.Where(t => t.Date_ == currentDate).Select(t => t.CalendarDayStateEnum).FirstOrDefault();
 
-                                        switch (DataSourceEvent.Where(t => t.StartTime == currentDate).Select(t => t.ResourceId).LastOrDefault())
-
+                                        switch(a)
                                         {
-
-                                            case 1:
-                                                name = "calismaVar";
-                                                break;
-                                            case 2:
-                                                name = "calismaYok";
-                                                break;
-                                            case 3:
-                                                name = "resmiTatil";
-                                                break;
-                                            case 4:
-                                                name = "tatil";
-                                                break;
-                                            case 5:
-                                                name = "yarimGun";
-                                                break;
-                                            case 6:
-                                                name = "yuklemeGunu";
-                                                break;
-                                            case 7:
-                                                name = "bakim";
-                                                break;
-                                            default:
-                                                name = "";
+                                            case 1:{
+                                                    <span class="e-day" style="background-color:#00ff14">@currentDate.Day.ToString(CultureInfo.CurrentCulture)</span>
+                                                    break;
+                                                }
+                                                case 2:{
+                                                    <span class="e-day" style="background-color:#ff0000">@currentDate.Day.ToString(CultureInfo.CurrentCulture)</span>
+                                                    break;
+                                                }
+                                                case 3:{
+                                                    <span class="e-day" style="background-color:#6c757d">@currentDate.Day.ToString(CultureInfo.CurrentCulture)</span>
+                                                    break;
+                                                }
+                                                case 4:{
+                                                    <span class="e-day" style="background-color:#b75050ed">@currentDate.Day.ToString(CultureInfo.CurrentCulture)</span>
+                                                    break;
+                                                }
+                                                case 5:{
+                                                    <span class="e-day" style="background-color:#0089ff">@currentDate.Day.ToString(CultureInfo.CurrentCulture)</span>
+                                                    break;
+                                                }
+                                                case 6:{
+                                                    <span class="e-day" style="background-color:#ffeb00">@currentDate.Day.ToString(CultureInfo.CurrentCulture)</span>
+                                                    break;
+                                                }
+                                                case 7:{
+                                                    <span class="e-day" style="background-color:#ff8d00">@currentDate.Day.ToString(CultureInfo.CurrentCulture)</span>
+                                                    break;
+                                                }
+                                                default:
+                                                <span class="e-day" >@currentDate.Day.ToString(CultureInfo.CurrentCulture)</span>
                                                 break;
                                         }
 
-                                        <span class="@("e-day " + name)">@currentDate.Day.ToString(CultureInfo.CurrentCulture)</span>
+                                        
 
                                     }
 
                                 </CellHeaderTemplate>
+
 
                             </ScheduleTemplates>
                         </SfSchedule>
@@ -475,7 +481,8 @@
 
                                     </CardContent>
                                     <CardFooter>
-                                    <SfCheckBox @bind-Checked="stationSelectAll"  @onclick="OnSelectAllStationsChange(stationgroupname)" Label="Hepsini Seç"></SfCheckBox><br />
+                                    <text class="TSISelectAllStationsCalendar" @onclick="@(()=>OnSelectAllStationsChange(stationgroupname))">Hepsini Seç</text>
+
                                     </CardFooter>
                                 </SfCard>
                             </div>
@@ -494,6 +501,7 @@
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
+         ShowCloseButton="false"
          HeaderText="İş İstasyonu Vardiya Bilgileri"
          Width="89%"
          Height="74%"
@@ -548,7 +556,7 @@
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                              <label class="TSIModalLabel"><strong>Çalışma Durumu: </strong></label>
-                            <SfComboBox TValue="string" TItem="WorkStates" Placeholder="Çalışma durumu seçin." DataSource="@WorkStatesData">
+                            <SfComboBox  TValue="string" TItem="WorkStates" Placeholder="Çalışma durumu seçin." DataSource="@WorkStatesData">
                              <ComboBoxEvents TItem="WorkStates" TValue="string" ValueChange="@WorkStatesValueChangeHandler"></ComboBoxEvents>
     <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
 </SfComboBox>
