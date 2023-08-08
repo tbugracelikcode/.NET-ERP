@@ -773,7 +773,7 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                     DataOpenStatus = lockRow,
                     DataOpenStatusUserId = userId,
                     DeleterId = entity.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entity.DeletionTime.Value,
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                     Id = entity.Id,
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),

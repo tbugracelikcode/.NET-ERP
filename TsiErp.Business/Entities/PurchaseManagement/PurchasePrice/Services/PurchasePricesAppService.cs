@@ -521,7 +521,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                     DataOpenStatus = lockRow,
                     DataOpenStatusUserId = userId,
                     DeleterId = entity.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entity.DeletionTime.Value,
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                     Id = entity.Id,
                     IsActive = entity.IsActive,
                     IsDeleted = entity.IsDeleted,
