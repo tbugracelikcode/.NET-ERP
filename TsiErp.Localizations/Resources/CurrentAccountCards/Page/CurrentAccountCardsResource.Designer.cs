@@ -170,6 +170,15 @@ namespace TsiErp.Localizations.Resources.CurrentAccountCards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Günlük Çalışma Kapasitesi:.
+        /// </summary>
+        public static string ContractDailyWorkingCapacityLabel {
+            get {
+                return ResourceManager.GetString("ContractDailyWorkingCapacityLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fason Tedarikçi:.
         /// </summary>
         public static string ContractSupplierLabel {
@@ -386,6 +395,15 @@ namespace TsiErp.Localizations.Resources.CurrentAccountCards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İş İstasyonu Sayısı:.
+        /// </summary>
+        public static string NumberOfStationsLabel {
+            get {
+                return ResourceManager.GetString("NumberOfStationsLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Artı Yüzde Oran:.
         /// </summary>
         public static string PlusPercentageLabel {
@@ -526,6 +544,15 @@ namespace TsiErp.Localizations.Resources.CurrentAccountCards.Page {
         public static string Tab3Name {
             get {
                 return ResourceManager.GetString("Tab3Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fason Tedarikçi Bilgileri.
+        /// </summary>
+        public static string Tab4Name {
+            get {
+                return ResourceManager.GetString("Tab4Name", resourceCulture);
             }
         }
         

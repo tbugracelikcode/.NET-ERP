@@ -10,7 +10,7 @@
 @inject ICurrentAccountCardsAppService CurrentAccountCardsService
 @inject ICurrenciesAppService CurrenciesAppService
 @inject IShippingAdressesAppService ShippingAdressesAppService
-@inject IStringLocalizer<CurrentAccountCardsResource> L 
+@inject IStringLocalizer<CurrentAccountCardsResource> L
 
 
 @if (!base.IsLoaded)
@@ -36,8 +36,8 @@ else
                 <Template>
                     <SfCard class="TSIGridCards">
                         <CardContent>
-                            <SfGrid ID="Grid" @ref="_grid"   AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
-                                AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
+                            <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true"
+                                    AllowExcelExport="true" ShowColumnChooser="true" GridLines="GridLine.Both" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@GridContextMenu">
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
                                 <SfToolbar>
                                     <ToolbarItems>
@@ -57,7 +57,7 @@ else
 
                                     </ToolbarItems>
                                 </SfToolbar>
-                                <GridEvents   ContextMenuItemClicked="@OnContextMenuClick" TValue="ListCurrentAccountCardsDto"></GridEvents>
+                                <GridEvents ContextMenuItemClicked="@OnContextMenuClick" TValue="ListCurrentAccountCardsDto"></GridEvents>
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
@@ -82,17 +82,17 @@ else
     </DevGridLayout>
 
     <DxPopup @bind-Visible="base.EditPageVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["EditModalTitle"]"
-         Width="72%"
-         Height="60%"
-         MinWidth="1380px"
-         MinHeight="650px"
-         HeaderCssClass="HeaderTitleCss"
-         Showing="CrudModalShowing"
-         Closing="CrudModalClosing">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["EditModalTitle"]"
+             Width="72%"
+             Height="60%"
+             MinWidth="1380px"
+             MinHeight="650px"
+             HeaderCssClass="HeaderTitleCss"
+             Showing="CrudModalShowing"
+             Closing="CrudModalClosing">
 
         <BodyTemplate>
             <DxGridLayout CssClass="TSIGridLayout">
@@ -116,13 +116,13 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.Code"></SfTextBox>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.Name"></SfTextBox>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -180,7 +180,7 @@ else
                                                         <Template>
                                                             <br />
                                                             <label class="TSIModalLabel"><strong>@L["PlusPercentageLabel"] </strong></label>
-                                                            <SfNumericTextBox Min="0"  @bind-Value="DataSource.PlusPercentage"></SfNumericTextBox>
+                                                            <SfNumericTextBox Min="0" @bind-Value="DataSource.PlusPercentage"></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -188,7 +188,7 @@ else
                                                         <Template>
                                                             <br />
                                                             <label class="TSIModalLabel"><strong>@L["TypeLabel"] </strong></label>
-                                                            <SfNumericTextBox Min="0"  @bind-Value="DataSource.Type_"></SfNumericTextBox>
+                                                            <SfNumericTextBox Min="0" @bind-Value="DataSource.Type_"></SfNumericTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -196,7 +196,7 @@ else
                                                         <Template>
                                                             <br />
                                                             <label class="TSIModalLabel"><strong>@L["ResponsibleLabel"] </strong></label>
-                                                            <SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.Responsible"></SfTextBox>
+                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Responsible"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -260,8 +260,8 @@ else
                                                     <DxGridLayoutItem Row="3" Column="0">
                                                         <Template>
                                                             <center>
-                                                            <label class="TSIModalLabel"><strong>@L["CoatingCustomerLabel"] </strong></label><br />
-                                                            <SfSwitch @bind-Checked="DataSource.CoatingCustomer"></SfSwitch>
+                                                                <label class="TSIModalLabel"><strong>@L["CoatingCustomerLabel"] </strong></label><br />
+                                                                <SfSwitch @bind-Checked="DataSource.CoatingCustomer"></SfSwitch>
                                                             </center>
                                                         </Template>
                                                     </DxGridLayoutItem>
@@ -269,24 +269,17 @@ else
                                                     <DxGridLayoutItem Row="3" Column="2">
                                                         <Template>
                                                             <center>
-                                                            <label class="TSIModalLabel"><strong>@L["SupplierLabel"] </strong></label><br />
-                                                            <SfSwitch @bind-Checked="@DataSource.Supplier"></SfSwitch>
+                                                                <label class="TSIModalLabel"><strong>@L["SupplierLabel"] </strong></label><br />
+                                                                <SfSwitch @bind-Checked="@DataSource.Supplier"></SfSwitch>
                                                             </center>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
-                                                    <DxGridLayoutItem Row="3" Column="4">
-                                                        <Template>
-                                                            <center>
-                                                            <label class="TSIModalLabel"><strong>@L["ContractSupplierLabel"] </strong></label><br />
-                                                            <SfSwitch @bind-Checked="@DataSource.ContractSupplier"></SfSwitch>
-                                                            </center>
-                                                        </Template>
-                                                    </DxGridLayoutItem>
+
 
                                                     <DxGridLayoutItem Row="3" Column="6">
                                                         <Template>
-                                                           
+
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -370,21 +363,21 @@ else
                                                     <DxGridLayoutItem Row="1" Column="2">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>@L["PostCodeLabel"] </strong></label>
-                                                            <SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.PostCode"></SfTextBox>
+                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.PostCode"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="1" Column="4">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>@L["Tel1Label"] </strong></label>
-                                                             <SfMaskedTextBox CssClass="TSITxtBox" Mask="0(000)-000-0000"  @bind-Value="@DataSource.Tel1"></SfMaskedTextBox>
+                                                            <SfMaskedTextBox CssClass="TSITxtBox" Mask="0(000)-000-0000" @bind-Value="@DataSource.Tel1"></SfMaskedTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="1" Column="6">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>@L["Tel2Label"] </strong></label>
-                                                            <SfMaskedTextBox CssClass="TSITxtBox" Mask="0(000)-000-0000"  @bind-Value="@DataSource.Tel2"></SfMaskedTextBox>
+                                                            <SfMaskedTextBox CssClass="TSITxtBox" Mask="0(000)-000-0000" @bind-Value="@DataSource.Tel2"></SfMaskedTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -400,6 +393,7 @@ else
                                             </DxGridLayout>
                                         </ContentTemplate>
                                     </TabItem>
+
                                     <TabItem>
                                         <ChildContent>
                                             <TabHeader Text="@L["Tab3Name"]"></TabHeader>
@@ -450,8 +444,8 @@ else
                                                     <DxGridLayoutItem Row="3" Column="0">
                                                         <Template>
                                                             <center>
-                                                            <label class="TSIModalLabel"><strong>@L["SoleProprietorshipLabel"] </strong></label><br />
-                                                            <SfSwitch @bind-Checked="@DataSource.SoleProprietorship"></SfSwitch>
+                                                                <label class="TSIModalLabel"><strong>@L["SoleProprietorshipLabel"] </strong></label><br />
+                                                                <SfSwitch @bind-Checked="@DataSource.SoleProprietorship"></SfSwitch>
                                                             </center>
                                                         </Template>
                                                     </DxGridLayoutItem>
@@ -462,6 +456,49 @@ else
                                         </ContentTemplate>
                                     </TabItem>
 
+                                    <TabItem>
+                                        <ChildContent>
+                                            <TabHeader Text="@L["Tab4Name"]"></TabHeader>
+                                        </ChildContent>
+                                        <ContentTemplate>
+                                            <DxGridLayout CssClass="TSIGridLayout">
+
+                                                <Rows>
+                                                    <DxGridLayoutRow Height="45%" />
+                                                    <DxGridLayoutRow Height="40%" />
+                                                    <DxGridLayoutRow Height="15%" />
+                                                </Rows>
+
+                                                <Columns>
+                                                    <DxGridLayoutColumn Width="20%" />
+                                                    <DxGridLayoutColumn Width="80%" />
+                                                </Columns>
+
+                                                <Items>
+                                                    <DxGridLayoutItem Row="0" Column="0">
+                                                        <Template>
+                                                            <br />
+                                                            <label class="TSIModalLabel"><strong>@L["ContractSupplierLabel"] </strong></label><br />
+                                                            <SfSwitch @bind-Checked="@DataSource.ContractSupplier"></SfSwitch>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+                                                     <DxGridLayoutItem Row="1" Column="0">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["ContractDailyWorkingCapacityLabel"] </strong></label>
+                                                            <br />
+                                                            <SfNumericTextBox Min="0" @bind-Value="DataSource.ContractDailyWorkingCapacity"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+                                                    <DxGridLayoutItem Row="2" Column="0">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["NumberOfStationsLabel"] </strong></label>
+                                                            <SfNumericTextBox Min="0" @bind-Value="DataSource.NumberOfStations"></SfNumericTextBox>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+                                                </Items>
+                                            </DxGridLayout>
+                                        </ContentTemplate>
+                                    </TabItem>
                                 </TabItems>
                             </SfTab>
                         </Template>
@@ -482,15 +519,15 @@ else
 @if (SelectCurrencyPopupVisible)
 {
     <DxPopup @bind-Visible="SelectCurrencyPopupVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["CurrencyPopupTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["CurrencyPopupTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
         <BodyTemplate>
 
             <DevGridLayout ColumnCount="1" RowCount="1">
