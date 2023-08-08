@@ -10,8 +10,11 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.ProductsOperation.Validations;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
+using TsiErp.Entities.Entities.ProductionManagement.ContractOfProductsOperation;
+using TsiErp.Entities.Entities.ProductionManagement.ContractOfProductsOperation.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductOperationQualtityPlan;
 using TsiErp.Entities.Entities.ProductionManagement.ProductOperationQualtityPlan.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
@@ -138,6 +141,30 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
                 }
 
+
+
+                foreach (var item in input.SelectContractOfProductsOperationsLines)
+                {
+                    var queryLine = queryFactory.Query().From(Tables.ContractOfProductsOperations).Insert(new CreateContractOfProductsOperationsDto
+                    {
+                        ProductsOperationID = addedEntityId,
+                        CreationTime = DateTime.Now,
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                        LineNr = item.LineNr,
+                        CurrentAccountCardID = item.CurrentAccountCardID
+                    });
+
+                    query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+                }
+
                 var productsOperation = queryFactory.Insert<SelectProductsOperationsDto>(query, "Id", true);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductsOperations, LogType.Insert, addedEntityId);
@@ -164,9 +191,12 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
 
                     var lineQualityPlansDeleteQuery = queryFactory.Query().From(Tables.ProductOperationQualityPlans).Delete(LoginedUserService.UserId).Where(new { ProductsOperationID = id }, false, false, "");
 
+                    var lineContractDeleteQuery = queryFactory.Query().From(Tables.ContractOfProductsOperations).Delete(LoginedUserService.UserId).Where(new { ProductsOperationID = id }, false, false, "");
+
                     deleteQuery.Sql = deleteQuery.Sql
                         + QueryConstants.QueryConstant + lineDeleteQuery.Sql
                         + QueryConstants.QueryConstant + lineQualityPlansDeleteQuery.Sql
+                        + QueryConstants.QueryConstant + lineContractDeleteQuery.Sql
                         + " where " + lineDeleteQuery.WhereSentence;
 
                     var productsOperation = queryFactory.Update<SelectProductsOperationsDto>(deleteQuery, "Id", true);
@@ -232,7 +262,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 var qualityPlansQuery = queryFactory
                             .Query()
                             .From(Tables.ProductOperationQualityPlans)
-                            .Select<ProductOperationQualityPlans>(s => new { s.ProductsOperationID, s.ControlFrequency, s.Equipment, s.ControlManager, s.LineNr, s.IdealMeasure, s.BottomTolerance, s.UpperTolerance, s.PeriodicControlMeasure, s.MeasureNumberInPicture,s.Id,s.DataOpenStatus,s.DataOpenStatusUserId })
+                            .Select<ProductOperationQualityPlans>(s => new { s.ProductsOperationID, s.ControlFrequency, s.Equipment, s.ControlManager, s.LineNr, s.IdealMeasure, s.BottomTolerance, s.UpperTolerance, s.PeriodicControlMeasure, s.MeasureNumberInPicture, s.Id, s.DataOpenStatus, s.DataOpenStatusUserId })
                             .Join<ControlTypes>
                             (
                                 s => new { ControlTypesID = s.Id, ControlTypesName = s.Name },
@@ -259,6 +289,25 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 var qualityPlans = queryFactory.GetList<SelectProductOperationQualityPlansDto>(qualityPlansQuery).ToList();
 
                 productsOperations.SelectProductOperationQualityPlans = qualityPlans;
+                #endregion
+
+                #region Contract Of Production Operations
+                var contractOfProductionOperationQuery = queryFactory
+                            .Query()
+                            .From(Tables.ContractOfProductsOperations)
+                            .Select<ContractOfProductsOperations>(s => new { s.ProductsOperationID, s.Id, s.DataOpenStatus, s.DataOpenStatusUserId, s.LineNr })
+                            .Join<CurrentAccountCards>
+                            (
+                                s => new { CurrentAccountCardID = s.Id, CurrentAccountCardName = s.Name },
+                                nameof(ContractOfProductsOperations.CurrentAccountCardID),
+                                nameof(CurrentAccountCards.Id),
+                                JoinType.Left
+                            )
+                            .Where(new { ProductsOperationID = id }, false, false, Tables.ContractOfProductsOperations);
+
+                var contractOfProductionOperations = queryFactory.GetList<SelectContractOfProductsOperationsDto>(contractOfProductionOperationQuery).ToList();
+
+                productsOperations.SelectContractOfProductsOperationsLines = contractOfProductionOperations;
                 #endregion
 
                 LogsAppService.InsertLogToDatabase(productsOperations, productsOperations, LoginedUserService.UserId, Tables.ProductsOperations, LogType.Get, id);
@@ -299,7 +348,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 var entityQuery = queryFactory
                        .Query()
                         .From(Tables.ProductsOperations)
-                       .Select<ProductsOperations>(po => new { po.WorkCenterID, po.TemplateOperationID, po.ProductID, po.Name, po.IsActive, po.Id, po.DataOpenStatusUserId, po.DataOpenStatus, po.Code })
+                       .Select<ProductsOperations>(po => new { po.WorkCenterID, po.TemplateOperationID, po.ProductID, po.Name, po.IsActive, po.Id, po.DataOpenStatusUserId, po.DataOpenStatus, po.Code, po.CreationTime, po.CreatorId, po.LastModificationTime, po.LastModifierId, po.DeleterId, po.DeletionTime, po.IsDeleted })
                        .Join<Products>
                         (
                             p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -361,6 +410,25 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 var qualityPlans = queryFactory.GetList<SelectProductOperationQualityPlansDto>(qualityPlansQuery).ToList();
 
                 entity.SelectProductOperationQualityPlans = qualityPlans;
+                #endregion
+
+                #region Contract Of Production Operations
+                var contractOfProductionOperationQuery = queryFactory
+                            .Query()
+                            .From(Tables.ContractOfProductsOperations)
+                            .Select<ContractOfProductsOperations>(s => new { s.ProductsOperationID, s.Id, s.DataOpenStatus, s.DataOpenStatusUserId, s.LineNr })
+                            .Join<CurrentAccountCards>
+                            (
+                                s => new { CurrentAccountCardID = s.Id, CurrentAccountCardName = s.Name },
+                                nameof(ContractOfProductsOperations.CurrentAccountCardID),
+                                nameof(CurrentAccountCards.Id),
+                                JoinType.Left
+                            )
+                            .Where(new { ProductsOperationID = input.Id }, false, false, Tables.ContractOfProductsOperations);
+
+                var contractOfProductionOperations = queryFactory.GetList<SelectContractOfProductsOperationsDto>(contractOfProductionOperationQuery).ToList();
+
+                entity.SelectContractOfProductsOperationsLines = contractOfProductionOperations;
                 #endregion
 
                 #region Update Control
@@ -539,6 +607,61 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                                 PeriodicControlMeasure = item.PeriodicControlMeasure,
                                 UpperTolerance = item.UpperTolerance,
                                 WorkCenterID = item.WorkCenterID
+                            }).Where(new { Id = line.Id }, false, false, "");
+
+                            query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
+                        }
+                    }
+                }
+                #endregion
+
+                #region Contract Of Production Operations
+                foreach (var item in input.SelectContractOfProductsOperationsLines)
+                {
+                    if (item.Id == Guid.Empty)
+                    {
+                        var queryLine = queryFactory.Query().From(Tables.ContractOfProductsOperations).Insert(new CreateContractOfProductsOperationsDto
+                        {
+                            ProductsOperationID = input.Id,
+                            CreationTime = DateTime.Now,
+                            CreatorId = LoginedUserService.UserId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = Guid.Empty,
+                            DeletionTime = null,
+                            Id = GuidGenerator.CreateGuid(),
+                            IsDeleted = false,
+                            LastModificationTime = null,
+                            LastModifierId = Guid.Empty,
+                            LineNr = item.LineNr,
+                            CurrentAccountCardID = item.CurrentAccountCardID
+                        });
+
+                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+                    }
+                    else
+                    {
+                        var lineGetQuery = queryFactory.Query().From(Tables.ContractOfProductsOperations).Select("*").Where(new { Id = item.Id }, false, false, "");
+
+                        var line = queryFactory.Get<SelectContractOfProductsOperationsDto>(lineGetQuery);
+
+                        if (line != null)
+                        {
+                            var queryLine = queryFactory.Query().From(Tables.ContractOfProductsOperations).Update(new UpdateContractOfProductsOperationsDto
+                            {
+                                ProductsOperationID = input.Id,
+                                CreationTime = line.CreationTime,
+                                CreatorId = line.CreatorId,
+                                DataOpenStatus = false,
+                                DataOpenStatusUserId = Guid.Empty,
+                                DeleterId = line.DeleterId.GetValueOrDefault(),
+                                DeletionTime = line.DeletionTime.GetValueOrDefault(),
+                                Id = item.Id,
+                                IsDeleted = item.IsDeleted,
+                                LastModificationTime = DateTime.Now,
+                                LastModifierId = LoginedUserService.UserId,
+                                LineNr = item.LineNr,
+                                CurrentAccountCardID = item.CurrentAccountCardID
                             }).Where(new { Id = line.Id }, false, false, "");
 
                             query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;

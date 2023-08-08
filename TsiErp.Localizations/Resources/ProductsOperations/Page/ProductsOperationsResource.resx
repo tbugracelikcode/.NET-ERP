@@ -150,6 +150,15 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="ContextSelectSupplier" xml:space="preserve">
+    <value>Tedarikçi Seç</value>
+  </data>
+  <data name="ContractGridCurrentAccountCardName" xml:space="preserve">
+    <value>TEDARİKÇİ ÜNVANI</value>
+  </data>
+  <data name="ContractGridLineNr" xml:space="preserve">
+    <value>SATIR NR.</value>
+  </data>
   <data name="ControlConditionsNamePlanLabel" xml:space="preserve">
     <value>Kontrol Şartı</value>
   </data>
@@ -323,6 +332,9 @@
   </data>
   <data name="Tab2Name" xml:space="preserve">
     <value>Operasyon Kalite Planları</value>
+  </data>
+  <data name="Tab3Name" xml:space="preserve">
+    <value>Fason Tedarikçiler</value>
   </data>
   <data name="TemplateOperationCodeLabel" xml:space="preserve">
     <value>Şablon Operasyon:</value>

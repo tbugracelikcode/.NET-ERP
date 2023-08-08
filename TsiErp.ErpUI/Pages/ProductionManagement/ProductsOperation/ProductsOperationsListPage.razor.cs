@@ -4,8 +4,11 @@ using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using System.Linq;
+using TsiErp.Business.Entities.CurrentAccountCard.Services;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ContractOfProductsOperation.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductOperationQualtityPlan.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine.Dtos;
@@ -21,6 +24,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
     {
         private SfGrid<SelectProductsOperationLinesDto> _LineGrid;
         private SfGrid<SelectProductOperationQualityPlansDto> _QualityPlanGrid;
+        private SfGrid<SelectContractOfProductsOperationsDto> _ContractOfProductsOperationsGrid;
 
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -29,24 +33,35 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
 
         SelectProductOperationQualityPlansDto QualityPlansDataSource;
 
+        SelectContractOfProductsOperationsDto ContractOfProductsOperationsGridDataSource;
+
         public List<ContextMenuItemModel> StationLineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> QualityPlanGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+        public List<ContextMenuItemModel> ContractOfProductsOperationsGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectProductsOperationLinesDto> StationGridLineList = new List<SelectProductsOperationLinesDto>();
 
         List<SelectProductOperationQualityPlansDto> QulityPlanGridLineList = new List<SelectProductOperationQualityPlansDto>();
+
+        List<SelectContractOfProductsOperationsDto> ContractOfProductsOperationsGridLineList = new List<SelectContractOfProductsOperationsDto>();
+
+        List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
 
 
         private bool StationLineCrudPopup = false;
 
         private bool QualityPlanLineCrudPopup = false;
 
+
+        bool SelectCurrentAccountCardsPopupVisible = false;
+
         protected override async void OnInitialized()
         {
             CreateMainContextMenuItems();
             CreateStationLineContextMenuItems();
             CreateQualityPlanContextMenuItems();
+            CreateContractOfProductsOperationsContextMenuItems();
 
             BaseCrudService = ProductsOperationsAppService;
             _L = L;
@@ -401,6 +416,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
             DataSource.SelectProductOperationQualityPlans = new List<SelectProductOperationQualityPlansDto>();
             QulityPlanGridLineList = DataSource.SelectProductOperationQualityPlans;
 
+            DataSource.SelectContractOfProductsOperationsLines = new List<SelectContractOfProductsOperationsDto>();
+            ContractOfProductsOperationsGridLineList = DataSource.SelectContractOfProductsOperationsLines;
+
             EditPageVisible = true;
 
 
@@ -475,6 +493,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
                     DataSource = (await ProductsOperationsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     StationGridLineList = DataSource.SelectProductsOperationLines.OrderBy(t => t.Priority).ToList();
                     QulityPlanGridLineList = DataSource.SelectProductOperationQualityPlans.OrderBy(t => t.MeasureNumberInPicture).ToList();
+                    ContractOfProductsOperationsGridLineList=DataSource.SelectContractOfProductsOperationsLines.OrderBy(t => t.LineNr).ToList();
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
@@ -846,6 +865,139 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
         }
 
         #endregion
+
+        #region Fason Tedarikçi Grid İşlemler
+
+        protected void CreateContractOfProductsOperationsContextMenuItems()
+        {
+            if (ContractOfProductsOperationsGridContextMenu.Count() == 0)
+            {
+                ContractOfProductsOperationsGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextSelectSupplier"], Id = "new" });
+                ContractOfProductsOperationsGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
+            }
+        }
+
+
+        public async void ContractOfProductsOperationsContextMenuClick(ContextMenuClickEventArgs<SelectContractOfProductsOperationsDto> args)
+        {
+            switch (args.Item.Id)
+            {
+                case "new":
+                    SelectCurrentAccountCardsPopupVisible = true;
+                    await GetCurrentAccountCardsList();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                case "delete":
+                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
+
+                    if (res == true)
+                    {
+
+                        var line = args.RowInfo.RowData;
+
+                        if (line.Id == Guid.Empty)
+                        {
+                            ContractOfProductsOperationsGridLineList.Remove(line);
+
+                            for (int i = 0; i < ContractOfProductsOperationsGridLineList.Count; i++)
+                            {
+                                ContractOfProductsOperationsGridLineList[i].LineNr = i + 1;
+                            }
+
+                            DataSource.SelectContractOfProductsOperationsLines = ContractOfProductsOperationsGridLineList;
+
+                            await _ContractOfProductsOperationsGrid.Refresh();
+                            await InvokeAsync(StateHasChanged);
+                        }
+                        else
+                        {
+                            if (line != null)
+                            {
+
+                                int selectedIndex = ContractOfProductsOperationsGridLineList.FindIndex(t => t.Id == line.Id);
+
+                                if (selectedIndex >= 0)
+                                {
+
+                                    ContractOfProductsOperationsGridLineList.Remove(line);
+
+                                    for (int i = 0; i < ContractOfProductsOperationsGridLineList.Count; i++)
+                                    {
+                                        ContractOfProductsOperationsGridLineList[i].LineNr = i + 1;
+                                    }
+
+                                    DataSource.SelectContractOfProductsOperationsLines = ContractOfProductsOperationsGridLineList;
+
+                                    await _ContractOfProductsOperationsGrid.Refresh();
+
+
+                                    await DeleteAsync(args.RowInfo.RowData.Id);
+                                    //await GetListDataSourceAsync();
+                                    await InvokeAsync(StateHasChanged);
+                                }
+                            }
+                            else
+                            {
+                                ContractOfProductsOperationsGridLineList.Remove(line);
+
+                                for (int i = 0; i < ContractOfProductsOperationsGridLineList.Count; i++)
+                                {
+                                    ContractOfProductsOperationsGridLineList[i].LineNr = i + 1;
+                                }
+
+                                DataSource.SelectContractOfProductsOperationsLines = ContractOfProductsOperationsGridLineList;
+
+                                await _ContractOfProductsOperationsGrid.Refresh();
+                                await InvokeAsync(StateHasChanged);
+                            }
+                        }
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+
+        private async Task GetCurrentAccountCardsList()
+        {
+            CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
+        }
+
+        public async void CurrentAccountCardsDoubleClickHandler(RecordDoubleClickEventArgs<ListCurrentAccountCardsDto> args)
+        {
+            var selectedUnitSet = args.RowData;
+
+            if (selectedUnitSet != null)
+            {
+                ContractOfProductsOperationsGridLineList.Add(new SelectContractOfProductsOperationsDto
+                {
+                    CurrentAccountCardID = selectedUnitSet.Id,
+                    CurrentAccountCardName = selectedUnitSet.Name,
+                    ProductsOperationID = DataSource.Id,
+                    LineNr = ContractOfProductsOperationsGridLineList.Count + 1
+                });
+
+                DataSource.SelectContractOfProductsOperationsLines = ContractOfProductsOperationsGridLineList;
+
+                await _ContractOfProductsOperationsGrid.Refresh();
+
+                SelectCurrentAccountCardsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
+
+        public async override void HideEditPage()
+        {
+            StationGridLineList.Clear();
+            QulityPlanGridLineList.Clear();
+            ContractOfProductsOperationsGridLineList.Clear();
+            EditPageVisible = false;
+            await InvokeAsync(StateHasChanged);
+        }
     }
 }
 

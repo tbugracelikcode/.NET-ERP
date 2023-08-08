@@ -48,6 +48,7 @@ using TsiErp.Entities.Entities.PlanningManagement.CalendarDay;
 using TsiErp.Entities.Entities.PlanningManagement.CalendarLine;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine;
+using TsiErp.Entities.Entities.ProductionManagement.ContractOfProductsOperation;
 using TsiErp.Entities.Entities.ProductionManagement.ContractProductionTracking;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
@@ -3473,6 +3474,41 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 StockManagementParametersTable.Create();
+            }
+            #endregion
+
+            #region ContractOfProductsOperations Table Created
+            Table ContractOfProductsOperationsTable = model.CreateTable(Tables.ContractOfProductsOperations);
+
+            if (ContractOfProductsOperationsTable != null)
+            {
+                var properties = (typeof(ContractOfProductsOperations)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(ContractOfProductsOperationsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ContractOfProductsOperationsTable, "PK_" + ContractOfProductsOperationsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        ContractOfProductsOperationsTable.Indexes.Add(pkIndex);
+                    }
+
+                    ContractOfProductsOperationsTable.Columns.Add(column);
+                }
+
+                ContractOfProductsOperationsTable.Create();
             }
             #endregion
 

@@ -150,6 +150,15 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="ContextSelectSupplier" xml:space="preserve">
+    <value>Select Supplier</value>
+  </data>
+  <data name="ContractGridCurrentAccountCardName" xml:space="preserve">
+    <value>SUPPLIER TITLE</value>
+  </data>
+  <data name="ContractGridLineNr" xml:space="preserve">
+    <value>LINE NR.</value>
+  </data>
   <data name="ControlConditionsNamePlanLabel" xml:space="preserve">
     <value>Control Condition</value>
   </data>
@@ -323,6 +332,9 @@
   </data>
   <data name="Tab2Name" xml:space="preserve">
     <value>Operation Quality Plans</value>
+  </data>
+  <data name="Tab3Name" xml:space="preserve">
+    <value>Contract Suppliers</value>
   </data>
   <data name="TemplateOperationCodeLabel" xml:space="preserve">
     <value>Template Operation:</value>
