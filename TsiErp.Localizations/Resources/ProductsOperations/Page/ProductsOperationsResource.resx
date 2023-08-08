@@ -123,6 +123,9 @@
   <data name="AlternativeLineLabel" xml:space="preserve">
     <value>Alternatif:</value>
   </data>
+  <data name="BottomTolerancePlanLabel" xml:space="preserve">
+    <value>Alt Tolerans</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
@@ -147,6 +150,21 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="ControlConditionsNamePlanLabel" xml:space="preserve">
+    <value>Kontrol Şartı</value>
+  </data>
+  <data name="ControlEquipmentPlanLabel" xml:space="preserve">
+    <value>Kontrol Ekipmanı</value>
+  </data>
+  <data name="ControlFrequencyPlanLabel" xml:space="preserve">
+    <value>Kontrol Sıklığı</value>
+  </data>
+  <data name="ControlManagerPlanLabel" xml:space="preserve">
+    <value>Kontrol Sorumlusu</value>
+  </data>
+  <data name="ControlTypesNamePlanLabel" xml:space="preserve">
+    <value>Kontrol Türü</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -164,6 +182,9 @@
   </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="IdealMeasurePlanLabel" xml:space="preserve">
+    <value>Olması Gereken Ölçü</value>
   </data>
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Aktiflik:</value>
@@ -195,6 +216,9 @@
   <data name="LoadingText" xml:space="preserve">
     <value>Kayıtlar Yükleniyor..</value>
   </data>
+  <data name="MeasureNumberInPicturePlanLabel" xml:space="preserve">
+    <value>Resimdeki Ölçü Numarası</value>
+  </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
   </data>
@@ -209,6 +233,9 @@
   </data>
   <data name="OperationTimeLineLabel" xml:space="preserve">
     <value>Operasyon Süresi:</value>
+  </data>
+  <data name="PeriodicControlMeasurePlanLabel" xml:space="preserve">
+    <value>Periyodik Kontrol Ölçüsü</value>
   </data>
   <data name="PriorityLineLabel" xml:space="preserve">
     <value>Öncelik:</value>
@@ -234,11 +261,50 @@
   <data name="ProductNameLabel" xml:space="preserve">
     <value>Stok Açıklaması:</value>
   </data>
+  <data name="QualityLineGridBottomTolerance" xml:space="preserve">
+    <value>ALT TOLERANS</value>
+  </data>
+  <data name="QualityLineGridControlCondition" xml:space="preserve">
+    <value>KONTROL ŞARTI</value>
+  </data>
+  <data name="QualityLineGridControlEquipment" xml:space="preserve">
+    <value>KONTROL EKİPMANI</value>
+  </data>
+  <data name="QualityLineGridControlFrequency" xml:space="preserve">
+    <value>KONTROL SIKLIĞI</value>
+  </data>
+  <data name="QualityLineGridControlManager" xml:space="preserve">
+    <value>KONTROL SORUMLUSU</value>
+  </data>
+  <data name="QualityLineGridControlTypesName" xml:space="preserve">
+    <value>KONTROL TÜRÜ</value>
+  </data>
+  <data name="QualityLineGridIdealMeasure" xml:space="preserve">
+    <value>OLMASI GEREKEN ÖLÇÜ</value>
+  </data>
+  <data name="QualityLineGridMeasureNumberInPicture" xml:space="preserve">
+    <value>RESİMDEKİ ÖLÇÜ NUMARASI</value>
+  </data>
+  <data name="QualityLineGridPeriodicControlMeasure" xml:space="preserve">
+    <value>PERİYODİK KONTROL ÖLÇÜSÜ</value>
+  </data>
+  <data name="QualityLineGridUpperTolerance" xml:space="preserve">
+    <value>ÜST TOLERANS</value>
+  </data>
+  <data name="QualityLineGridWorkCenterName" xml:space="preserve">
+    <value>İŞ MERKEZİ</value>
+  </data>
+  <data name="QualityPlanModalTitle" xml:space="preserve">
+    <value>Operasyon Kalite Planı</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
   <data name="StationCodeLineLabel" xml:space="preserve">
     <value>İstasyon Kodu:</value>
+  </data>
+  <data name="StationGroupLabel" xml:space="preserve">
+    <value>İş Merkezi</value>
   </data>
   <data name="StationModalGridCode" xml:space="preserve">
     <value>İSTASYON KODU</value>
@@ -251,6 +317,12 @@
   </data>
   <data name="StationNameLineLabel" xml:space="preserve">
     <value>İstasyon Açıklaması:</value>
+  </data>
+  <data name="Tab1Name" xml:space="preserve">
+    <value>İş İstasyonu Bilgileri</value>
+  </data>
+  <data name="Tab2Name" xml:space="preserve">
+    <value>Operasyon Kalite Planları</value>
   </data>
   <data name="TemplateOperationCodeLabel" xml:space="preserve">
     <value>Şablon Operasyon:</value>
@@ -287,6 +359,9 @@
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="UpperTolerancePlanLabel" xml:space="preserve">
+    <value>Üst Tolerans</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
     <value>Lütfen operasyon kodunu yazın.</value>
