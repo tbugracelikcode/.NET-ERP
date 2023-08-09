@@ -235,8 +235,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
             {
                 var entityQuery = queryFactory
                        .Query()
-                       .From(Tables.MaintenanceInstructions)
-                       .Select<MaintenanceInstructions>(mi => new { mi.StationID, mi.PlannedMaintenanceTime, mi.PeriodTime, mi.PeriodID, mi.Note_, mi.InstructionName, mi.Id, mi.DataOpenStatusUserId, mi.DataOpenStatus, mi.Code })
+                       .From(Tables.MaintenanceInstructions).Select("*")
                         .Join<Stations>
                         (
                             s => new { StationID = s.Id, StationCode = s.Code },

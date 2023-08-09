@@ -271,7 +271,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                 var entityQuery = queryFactory
                        .Query()
                       .From(Tables.SalesPrices)
-                       .Select<SalesPrices>(sp => new { sp.WarehouseID, sp.StartDate, sp.Name, sp.IsApproved, sp.IsActive, sp.Id, sp.EndDate, sp.DataOpenStatusUserId, sp.DataOpenStatus, sp.CurrentAccountCardID, sp.CurrencyID, sp.Code, sp.BranchID })
+                       .Select("*")
                        .Join<Currencies>
                         (
                             c => new { CurrencyID = c.Id, CurrencyCode = c.Code },

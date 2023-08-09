@@ -348,7 +348,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 var entityQuery = queryFactory
                        .Query()
                         .From(Tables.ProductsOperations)
-                       .Select<ProductsOperations>(po => new { po.WorkCenterID, po.TemplateOperationID, po.ProductID, po.Name, po.IsActive, po.Id, po.DataOpenStatusUserId, po.DataOpenStatus, po.Code, po.CreationTime, po.CreatorId, po.LastModificationTime, po.LastModifierId, po.DeleterId, po.DeletionTime, po.IsDeleted })
+                       .Select("*")
                        .Join<Products>
                         (
                             p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },

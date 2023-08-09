@@ -464,7 +464,7 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 var entityQuery = queryFactory
                        .Query()
                        .From(Tables.PurchaseOrders)
-                       .Select<PurchaseOrders>(po => new { po.WorkOrderCreationDate, po.WarehouseID, po.TotalVatExcludedAmount, po.TotalVatAmount, po.TotalDiscountAmount, po.Time_, po.SpecialCode, po.ShippingAdressID, po.PurchaseOrderState, po.ProductionOrderID, po.PaymentPlanID, po.NetAmount, po.LinkedPurchaseRequestID, po.Id, po.GrossAmount, po.FicheNo, po.ExchangeRate, po.Description_, po.Date_, po.DataOpenStatusUserId, po.DataOpenStatus, po.CurrentAccountCardID, po.CurrencyID, po.BranchID })
+                       .Select("*")
                        .Join<PaymentPlans>
                         (
                             pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },

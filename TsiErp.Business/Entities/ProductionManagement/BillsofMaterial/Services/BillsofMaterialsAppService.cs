@@ -228,7 +228,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 var entityQuery = queryFactory
                        .Query()
                        .From(Tables.BillsofMaterials)
-                       .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive })
+                       .Select("*")
                        .Join<Products>
                         (
                             pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
