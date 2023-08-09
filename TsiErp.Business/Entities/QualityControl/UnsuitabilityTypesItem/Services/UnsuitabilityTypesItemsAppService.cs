@@ -109,8 +109,8 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityTypesItem.Service
                     CreatorId = entity.CreatorId.Value,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = entity.DeleterId.Value,
-                    DeletionTime = entity.DeletionTime.Value,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = DateTime.Now,
                     LastModifierId = LoginedUserService.UserId
