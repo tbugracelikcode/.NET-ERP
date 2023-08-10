@@ -20,7 +20,7 @@ namespace TSI.QueryBuilder.BaseClasses
     {
         public IDbConnection Connection { get; set; }
 
-        public int CommandTimeOut { get; set; } = 600;
+        public int CommandTimeOut { get; set; } = 900;
 
         public bool _IsSoftDelete { get; set; }
 

@@ -21,13 +21,23 @@ namespace TsiErp.Entities.Entities.PlanningManagement.CalendarLine.Dtos
         /// Vardiya Süresi
         /// </summary>
         public decimal ShiftTime { get; set; }
-        [Precision(18, 6)]
-
+        /// <summary>
+        /// Çalışma Durumu
+        /// </summary>
+        public int WorkStatus { get; set; }
         /// <summary>
         /// Planlanan Duruş Süresi
         /// </summary>
         public decimal PlannedHaltTimes { get; set; }
+        /// <summary>
+        /// Planlanan Bakım Süresi
+        /// </summary>
+        public decimal PlannedMaintenanceTime { get; set; }
 
+        /// <summary>
+        /// Bakım Türü
+        /// </summary>
+        public string MaintenanceType { get; set; }
         /// <summary>
         /// Çalışılabilir Süre
         /// </summary>

@@ -4,11 +4,12 @@
 
 
 @inherits BaseListPage<SelectCalendarsDto, ListCalendarsDto, CreateCalendarsDto, UpdateCalendarsDto, ListCalendarsParameterDto>
-@inject IStringLocalizer<CalendarsResource> L 
+@inject IStringLocalizer<CalendarsResource> L
 
 
 @inject ICalendarsAppService CalendarsService
 @inject IStationsAppService StationsAppService
+@inject IStationGroupsAppService StationGroupsAppService
 @inject IShiftsAppService ShiftsAppService
 
 @{
@@ -35,29 +36,29 @@
                     <Template>
                         <SfCard class="TSIGridCards">
                             <CardContent>
-                                <SfGrid ID="Grid" @ref="_grid"   AllowPdfExport=true DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%"
+                                <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%"
                                 class="GridZebra" ContextMenuItems="@MainGridContextMenu">
                                     <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
                                     <SfToolbar>
-                                    <ToolbarItems>
-                                        <ToolbarItem Type="ItemType.Button">
-                                            <Template>
+                                        <ToolbarItems>
+                                            <ToolbarItem Type="ItemType.Button">
+                                                <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", "Çalışma Takvimi", "CalismaTakvimi"))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
-                                            </Template>
-                                        </ToolbarItem>
+                                                    <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", "Çalışma Takvimi", "CalismaTakvimi"))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
+                                                </Template>
+                                            </ToolbarItem>
 
-                                        <ToolbarItem Type="ItemType.Button">
-                                            <Template>
+                                            <ToolbarItem Type="ItemType.Button">
+                                                <Template>
 
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", "Çalışma Takvimi", "CalismaTakvimi"))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
-                                            </Template>
-                                        </ToolbarItem>
+                                                    <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", "Çalışma Takvimi", "CalismaTakvimi"))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
+                                                </Template>
+                                            </ToolbarItem>
 
-                                    </ToolbarItems>
-                                </SfToolbar>
+                                        </ToolbarItems>
+                                    </SfToolbar>
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false"></GridEditSettings>
-                                    <GridEvents   ContextMenuItemClicked="@MainContextMenuClick" TValue="ListCalendarsDto"></GridEvents>
+                                    <GridEvents ContextMenuItemClicked="@MainContextMenuClick" TValue="ListCalendarsDto"></GridEvents>
                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
@@ -192,8 +193,8 @@
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="5" Column="1" ColumnSpan="3">
                             <Template>
-                                <SfGrid @ref=_daysGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridDaysList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@LineGridContextMenu">
-                                    <GridEvents ContextMenuItemClicked="@OnListContextMenuClick" TValue="SelectCalendarDaysDto"></GridEvents>
+                                <SfGrid @ref=_daysGrid ID="DayGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridDaysList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@DayGridContextMenu">
+                                    <GridEvents ContextMenuItemClicked="@OnDayContextMenuClick" TValue="SelectCalendarDaysDto"></GridEvents>
                                     <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false"></GridEditSettings>
@@ -201,19 +202,39 @@
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
                                         <GridColumn Field=@nameof(SelectCalendarDaysDto.Date_) Format="dd-MM-yyyy" HeaderText="TARİH" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(SelectCalendarDaysDto.CalendarDayStateEnum) Type="ColumnType.String" HeaderText="DURUM" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                    </GridColumns>
-                                </SfGrid>
-                            </Template>
-                        </DxGridLayoutItem>
-                    </Items>
-                </DxGridLayout>
-            </BodyTemplate>
-            <FooterContentTemplate>
-                <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-                <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
-            </FooterContentTemplate>
-        </DxPopup>
+                                        <GridColumn Field=@nameof(SelectCalendarDaysDto.CalendarDayStateEnum) Type="ColumnType.String" Context="daycontext" HeaderText="DURUM" TextAlign="TextAlign.Center" Width="120">
+                                            <Template>
+                                                @{
+                                                    string state = string.Empty;
+                                                    int dayStateEnum = (daycontext as SelectCalendarDaysDto).CalendarDayStateEnum;
+
+                                                    switch (dayStateEnum)
+                                                    {
+                                                        case 1: { state = "Çalışma Var"; break; }
+                                                        case 2: { state = "Çalışma Yok"; break; }
+                                                        case 3: { state = "Resmi Tatil"; break; }
+                                                        case 4: { state = "Tatil"; break; }
+                                                        case 5: { state = "Yarım Gün"; break; }
+                                                        case 6: { state = "Yükleme Günü"; break; }
+                                                        case 7: { state = "Bakım"; break; }
+                                                        default: break;
+                                                    }
+                                            }
+                                            @state
+                                        </Template>
+                                    </GridColumn>
+                                </GridColumns>
+                            </SfGrid>
+                        </Template>
+                    </DxGridLayoutItem>
+                </Items>
+            </DxGridLayout>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+        </FooterContentTemplate>
+    </DxPopup>
 
         <DxPopup @bind-Visible="schedularVisible"
          ShowFooter="true"
@@ -227,17 +248,17 @@
             <BodyTemplate>
                 <table>
                     <th style="width:75%">
-                        <SfSchedule @ref="ScheduleObj" TValue="AppointmentData" @bind-SelectedDate="@CurrentDate" Width="100%" Height="650px">
+                        <SfSchedule @ref="ScheduleObj" AllowMultiCellSelection="true" TValue="AppointmentData" @bind-SelectedDate="@CurrentDate" Width="100%" Height="650px">
 
                             <ScheduleResources>
                                 <ScheduleResource TItem="ResourceData" TValue="int[]" DataSource="@ResourceList" Field="ResourceId" Title="Owner" Name="Owners" TextField="OwnerText" IdField="Id" ColorField="Color" AllowMultiple="true"></ScheduleResource>
                             </ScheduleResources>
-                            <ScheduleEvents TValue="AppointmentData" OnPopupOpen="@OnPopupOpen"> </ScheduleEvents>
+                            <ScheduleEvents TValue="AppointmentData"  OnCellClick="OnCellClick"> </ScheduleEvents>
                             <ScheduleEventSettings DataSource="@DataSourceEvent">
                             </ScheduleEventSettings>
 
                             <ScheduleViews>
-                                <ScheduleView Option="View.Year" FirstDayOfWeek="1" ShowWeekNumber=true></ScheduleView>
+                                <ScheduleView Option="View.Year" FirstDayOfWeek="1"  ShowWeekNumber=true></ScheduleView>
                             </ScheduleViews>
                             <ScheduleTemplates Context="context">
 
@@ -247,54 +268,54 @@
 
                                         DateTime currentDate = (context as TemplateContext).Date;
 
-                                        string name = string.Empty;
+                                        var a = SchedularDaysList.Where(t => t.Date_ == currentDate).Select(t => t.CalendarDayStateEnum).FirstOrDefault();
 
-                                        switch (DataSourceEvent.Where(t => t.StartTime == currentDate).Select(t => t.ResourceId).LastOrDefault())
-
+                                        switch(a)
                                         {
-
-                                            case 1:
-                                                name = "calismaVar";
-                                                break;
-                                            case 2:
-                                                name = "calismaYok";
-                                                break;
-                                            case 3:
-                                                name = "resmiTatil";
-                                                break;
-                                            case 4:
-                                                name = "tatil";
-                                                break;
-                                            case 5:
-                                                name = "yarimGun";
-                                                break;
-                                            case 6:
-                                                name = "yuklemeGunu";
-                                                break;
-                                            case 7:
-                                                name = "bakim";
-                                                break;
-                                            default:
-                                                name = "";
+                                            case 1:{
+                                                    <span class="e-day" style="background-color:#00ff14">@currentDate.Day.ToString(CultureInfo.CurrentCulture)</span>
+                                                    break;
+                                                }
+                                                case 2:{
+                                                    <span class="e-day" style="background-color:#ff0000">@currentDate.Day.ToString(CultureInfo.CurrentCulture)</span>
+                                                    break;
+                                                }
+                                                case 3:{
+                                                    <span class="e-day" style="background-color:#6c757d">@currentDate.Day.ToString(CultureInfo.CurrentCulture)</span>
+                                                    break;
+                                                }
+                                                case 4:{
+                                                    <span class="e-day" style="background-color:#b75050ed">@currentDate.Day.ToString(CultureInfo.CurrentCulture)</span>
+                                                    break;
+                                                }
+                                                case 5:{
+                                                    <span class="e-day" style="background-color:#0089ff">@currentDate.Day.ToString(CultureInfo.CurrentCulture)</span>
+                                                    break;
+                                                }
+                                                case 6:{
+                                                    <span class="e-day" style="background-color:#ffeb00">@currentDate.Day.ToString(CultureInfo.CurrentCulture)</span>
+                                                    break;
+                                                }
+                                                case 7:{
+                                                    <span class="e-day" style="background-color:#ff8d00">@currentDate.Day.ToString(CultureInfo.CurrentCulture)</span>
+                                                    break;
+                                                }
+                                                default:
+                                                <span class="e-day" >@currentDate.Day.ToString(CultureInfo.CurrentCulture)</span>
                                                 break;
                                         }
 
-                                        <span class="@("e-day " + name)">@currentDate.Day.ToString(CultureInfo.CurrentCulture)</span>
+                                        
 
                                     }
 
                                 </CellHeaderTemplate>
 
+
                             </ScheduleTemplates>
                         </SfSchedule>
 
-                        <SfContextMenu TValue="MenuItem" Target=".e-schedule">
-                            <MenuItems>
-                                <MenuItem Text="Düzenle" Id="Edit" Hidden="@isCell"></MenuItem>
-
-                            </MenuItems>
-                            <MenuEvents TValue="MenuItem" ItemSelected="OnItemSelected"></MenuEvents>
-                        </SfContextMenu>
+                       
 
                     </th>
                     <th style="width:25%">
@@ -346,13 +367,13 @@
                 </table>
             </BodyTemplate>
             <FooterContentTemplate>
-                <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideScheduleEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
             </FooterContentTemplate>
         </DxPopup>
 
-        <DxPopup Visible="modal1visible"
+        <DxPopup Visible="StationsModalVisible"
          ShowFooter="true"
-         CloseButtonClick="HideModal1"
+         CloseButtonClick="HideStationsModal"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="İş İstasyonları"
@@ -364,8 +385,8 @@
             <BodyTemplate>
 
                 <table style="margin-top:2%">
-                    <tr>
-                        <td style="font-size:16px;padding-left:2%; width:20%"><strong>Tarih :</strong> @CurrentDate</td>
+                    <tr style="height:80%">
+                        <td style="font-size:16px;padding-left:2%; width:20%"><strong>Tarih :</strong> @selectedDate</td>
                         <td style="width:80%">
 
                             @if (SelectedStations.Count != 0)
@@ -379,165 +400,420 @@
                             }
                         </td>
                     </tr>
+                    <tr style="height:20%">
+
+                        <td style="width:50%">
+                          <SfCheckBox Label="Tüm İstasyonları Ekle"  @onchange="OnAddAllStationsChange" @bind-Checked="isAllStationsChecked"></SfCheckBox>
+                        </td>
+
+                        <td style="width:50%">
+
+                            <SfButton CssClass="TSISaveButton" OnClick="ShowLineModal"><SfIcon Size="IconSize.Medium" Name="IconName.Check"></SfIcon>&nbsp;Seçilen İstasyonları Planla</SfButton>
+
+                        </td>
+
+
+                    </tr>
                 </table>
+                <div class="control-section col-lg-11 card-control-section tile_layout" style="padding-left: 10%;">
+                    <div class="row e-card-layout">
+                        @foreach (var stationgroupname in StationGroupNameList)
+                        {
 
-                <SfCard class="TSIWorkSchduleModalStationsCard">
-                    <CardContent>
+                            <div class="col-lg-2 col-md-2 col-sm-4"  style="padding: 10px;text-align:left;  width: 31%;">
+                               <center> <label class="TSIScheduleModalLabel">@stationgroupname</label></center>
+                                <SfCard class="TSIWorkSchduleModalStationsCard">
+                                    <CardContent>
 
-                        @{
+                                        @{
 
-                            <div class="row">
-                                <center>
-                                    <div class="control-section col-lg-11 card-control-section tile_layout">
-                                        <div class="row e-card-layout">
-                                            @if (StationsList != null)
-                                            {
-                                                @foreach (var item in StationsList)
-                                                {
-                                                     string exactURL = imageURL + item.Code + "off.png";
+                                            var tempStationList = StationsList.Where(t => t.StationGroup == stationgroupname).ToList();
 
-                                                   
-                                                    <div class="col-lg-2 col-md-2 col-sm-4" onclick="@(()=>OnSelectStation(item))" style="padding: 10px;text-align:left;  width: 10%;">
-                                                        <div id="card_sample_1" class="card_sample" >
-                                                            <SfCard CssClass="TSIStationCards" >
-                                                            <div style="background-color:@cardbgcolor">
-                                                                <center><CardImage Image="@exactURL" /></center>
-                                                                <center> <CardHeader Title="@item.Code" /></center>
-                                                                <CardContent>
-                                                                    <ChildContent>
-                                                                        @* <table class="table table-hover">
-                                                    <thead>
-                                                    <tr>
-                                                    <th scope="col" style="text-align:center">Bakım </th>
-                                                    <th scope="col" style="text-align:left"> &nbsp;Detayları</th>
-                                                    <th scope="col" style="text-align:left"> </th>
-                                                    <th scope="col" style="text-align:left"></th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr>
-                                                    <td><strong>Departman : @card.StationDepartment</strong></td>
-                                                    </tr>
-                                                    <tr>
-                                                    <td><strong>Planlanan Bakım Tarihi : @card.PlannedMaintenanceDate.ToString("dd-MM-yyyy")</strong></td>
-                                                    </tr>
-                                                    <tr>
-                                                    <td><strong>Bakım Türü : @card.MaintenanceType</strong></td>
-                                                    </tr>
-                                                    <tr>
-                                                    <td><strong>Bakıma Kalan Süre : @card.TimeLeft İş Günü</strong></td>
-                                                    </tr>
-                                                    </tbody>
-                                                    </table>*@
-                                                                    </ChildContent>
-                                                                </CardContent>
-                                                                
-                                                                <CardFooter>
-                                                                </CardFooter>
-                                                                </div>
-                                                            </SfCard>
+                                            <div class="row" style="padding-top:10px;    padding-left: 5%;">
+                                                <center>
+                                                    <div class="control-section col-lg-11 card-control-section tile_layout">
+                                                        <div class="row e-card-layout">
+                                                            @if (StationsList != null)
+                                                            {
+
+                                                                @foreach (var item in tempStationList)
+                                                                {
+                                                                    int stawork = StationWorkStatusList.Where(t=>t.Date_ == selectedDate && t.StationID == item.Id).Select(t=>t.WorkStatus).FirstOrDefault();
+                                                                    switch(stawork)
+                                                                    {
+                                                                        case 1:
+                                                                          <div class="col-lg-2 col-md-2 col-sm-4" onclick="@(()=>OnSelectStation(item))" style="padding: 10px;text-align:left;  width: 31%;">
+                                                                        <div id="card_sample_1" class="card_sample">
+                                                                            <SfCard CssClass="TSIStationCards">
+                                                                                <div style="background-color:#00ff14">
+                                                                                    <br>
+                                                                                    <center> <CardHeader Title="@item.Code" /></center>
+                                                                                    <CardContent>
+                                                                                        <ChildContent>
+                                                                                        </ChildContent>
+                                                                                    </CardContent>
+
+                                                                                    <CardFooter>
+                                                                                    </CardFooter>
+                                                                                </div>
+                                                                            </SfCard>
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                        break;
+                                                                        case 2:
+                                                                         <div class="col-lg-2 col-md-2 col-sm-4" onclick="@(()=>OnSelectStation(item))" style="padding: 10px;text-align:left;  width: 31%;">
+                                                                        <div id="card_sample_1" class="card_sample">
+                                                                            <SfCard CssClass="TSIStationCards">
+                                                                                <div style="background-color:#ff0000">
+                                                                                    <br>
+                                                                                    <center> <CardHeader Title="@item.Code" /></center>
+                                                                                    <CardContent>
+                                                                                        <ChildContent>
+                                                                                        </ChildContent>
+                                                                                    </CardContent>
+
+                                                                                    <CardFooter>
+                                                                                    </CardFooter>
+                                                                                </div>
+                                                                            </SfCard>
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                        break;
+                                                                        case 3:
+                                                                         <div class="col-lg-2 col-md-2 col-sm-4" onclick="@(()=>OnSelectStation(item))" style="padding: 10px;text-align:left;  width: 31%;">
+                                                                        <div id="card_sample_1" class="card_sample">
+                                                                            <SfCard CssClass="TSIStationCards">
+                                                                                <div style="background-color:#00ff14">
+                                                                                    <br>
+                                                                                    <center> <CardHeader Title="@item.Code" /></center>
+                                                                                    <CardContent>
+                                                                                        <ChildContent>
+                                                                                        </ChildContent>
+                                                                                    </CardContent>
+
+                                                                                    <CardFooter>
+                                                                                    </CardFooter>
+                                                                                </div>
+                                                                            </SfCard>
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                        break;
+                                                                        case 4:
+                                                                         <div class="col-lg-2 col-md-2 col-sm-4" onclick="@(()=>OnSelectStation(item))" style="padding: 10px;text-align:left;  width: 31%;">
+                                                                        <div id="card_sample_1" class="card_sample">
+                                                                            <SfCard CssClass="TSIStationCards">
+                                                                                <div style="background-color:#00ff14">
+                                                                                    <br>
+                                                                                    <center> <CardHeader Title="@item.Code" /></center>
+                                                                                    <CardContent>
+                                                                                        <ChildContent>
+                                                                                        </ChildContent>
+                                                                                    </CardContent>
+
+                                                                                    <CardFooter>
+                                                                                    </CardFooter>
+                                                                                </div>
+                                                                            </SfCard>
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                        break;
+                                                                        case 5:
+                                                                         <div class="col-lg-2 col-md-2 col-sm-4" onclick="@(()=>OnSelectStation(item))" style="padding: 10px;text-align:left;  width: 31%;">
+                                                                        <div id="card_sample_1" class="card_sample">
+                                                                            <SfCard CssClass="TSIStationCards">
+                                                                                <div style="background-color:#00ff14">
+                                                                                    <br>
+                                                                                    <center> <CardHeader Title="@item.Code" /></center>
+                                                                                    <CardContent>
+                                                                                        <ChildContent>
+                                                                                        </ChildContent>
+                                                                                    </CardContent>
+
+                                                                                    <CardFooter>
+                                                                                    </CardFooter>
+                                                                                </div>
+                                                                            </SfCard>
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                        break;
+                                                                        default:
+                                                                         <div class="col-lg-2 col-md-2 col-sm-4" onclick="@(()=>OnSelectStation(item))" style="padding: 10px;text-align:left;  width: 31%;">
+                                                                        <div id="card_sample_1" class="card_sample">
+                                                                            <SfCard CssClass="TSIStationCards">
+                                                                                <div style="background-color:white">
+                                                                                    <br>
+                                                                                    <center> <CardHeader Title="@item.Code" /></center>
+                                                                                    <CardContent>
+                                                                                        <ChildContent>
+                                                                                        </ChildContent>
+                                                                                    </CardContent>
+
+                                                                                    <CardFooter>
+                                                                                    </CardFooter>
+                                                                                </div>
+                                                                            </SfCard>
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                            break;
+                                                                    }
+                                                                  
+
+                                                                }
+                                                            }
 
 
 
                                                         </div>
                                                     </div>
-                                                }
-                                            }
+                                                </center>
+                                            </div>
+                                            <br />
+                                        }
 
-                                        </div>
-                                    </div>
-                                </center>
+                                        <br />
+
+
+
+                                    </CardContent>
+                                    <CardFooter>
+                                    <text class="TSISelectAllStationsCalendar" @onclick="@(()=>OnSelectAllStationsChange(stationgroupname))">Hepsini Seç</text>
+
+                                    </CardFooter>
+                                </SfCard>
                             </div>
                         }
-                        <br />
-
-
-
-                    </CardContent>
-                    <CardFooter>
-                    </CardFooter>
-                </SfCard>
-
+                    </div>
+                </div>
+                
 
             </BodyTemplate>
             <FooterContentTemplate>
-                <SfButton CssClass="TSICancelButton" OnClick="HideModal1"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
-                <SfButton CssClass="TSISaveButton" OnClick="ShowModal2"><SfIcon Size="IconSize.Medium" Name="IconName.Check"></SfIcon>&nbsp;Seç</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideStationsModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
             </FooterContentTemplate>
         </DxPopup>
 
-        <DxPopup Visible="modal2visible"
+        <DxPopup Visible="LineModalVisible"
          ShowFooter="true"
-         CloseButtonClick="HideModal2"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
+         ShowCloseButton="false"
          HeaderText="İş İstasyonu Vardiya Bilgileri"
-         Width="700px"
-         CssClass="TSIWorkSchduleModal"
+         Width="89%"
+         Height="74%"
+         MinWidth="1750px"
+         MinHeight="800px"
          HeaderCssClass="HeaderTitleCss">
 
             <BodyTemplate>
 
-                <table style="width:90%; height:fit-content;margin-top:2%;">
+            <DxGridLayout CssClass="TSIGridLayout">
 
-                    <tr style="height:10%">
-                    </tr>
+                <Rows>
+                    <DxGridLayoutRow Height="11%" />
+                    <DxGridLayoutRow Height="13%" />
+                    <DxGridLayoutRow Height="70%" />
+                </Rows>
 
-                    <tr style="height:90%">
+                <Columns>
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="15%" />
+                    <DxGridLayoutColumn Width="3%" />
+                    <DxGridLayoutColumn Width="15%" />
+                    <DxGridLayoutColumn Width="61%" />
+                    <DxGridLayoutColumn Width="3%" />
 
-                    <SfCard class="TSIGridCards">
-                            <CardContent>
-                                <SfGrid ID="StationShiftGrid" DataSource="@StationShiftList" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%"
-                                class="GridZebra" ContextMenuItems="@StationShiftGridContextMenu">
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>Başlangıç Tarihi: </strong></label>
+                            <SfTextBox  @bind-Value="@selectedDateStr" Enabled=false></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="0" Column="3">
+                        <Template>
+                           <label class="TSIModalLabel"><strong>Planlanan Takvim: </strong></label>
+                    <br />
+                            <SfSwitch @bind-Checked="DataSource.IsPlanned" Disabled=true  ></SfSwitch>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                             <label class="TSIModalLabel"><strong>Bitiş Tarihi: </strong></label>
+                            <SfTextBox  @bind-Value="@selectedDateStr" Enabled=false></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="1" Column="3">
+                        <Template>
+                             <label class="TSIModalLabel"><strong>Çalışma Durumu: </strong></label>
+                            <SfComboBox  TValue="string" TItem="WorkStates" Placeholder="Çalışma durumu seçin." DataSource="@WorkStatesData">
+                             <ComboBoxEvents TItem="WorkStates" TValue="string" ValueChange="@WorkStatesValueChangeHandler"></ComboBoxEvents>
+    <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
+</SfComboBox>
+
+                        </Template>
+                    </DxGridLayoutItem>
+
+                     <DxGridLayoutItem Row="2" Column="1" ColumnSpan="4">
+                        <Template>
+                            
+                                <SfGrid ID="LineGrid" @ref=_LineGrid DataSource="@LineGridList" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" AllowSorting="true" Height="100%" Width="100%"
+                                class="GridZebra" ContextMenuItems="@LineGridContextMenu">
                                     <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
 
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false"></GridEditSettings>
-                                    <GridEvents ContextMenuItemClicked="@OnStationShiftContextMenuClick" TValue="StationShiftInfos"></GridEvents>
+                                    <GridEvents ContextMenuItemClicked="@OnLineContextMenuClick" TValue="SelectCalendarLinesDto"></GridEvents>
                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(StationShiftInfos.Station) HeaderText="İŞ İSTASYONU KODU" TextAlign="TextAlign.Center" Width="120">
+
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.StationCode) HeaderText="İSTASYON KODU" TextAlign="TextAlign.Center" Width="140">
                                         </GridColumn>
-                                         <GridColumn Field=@nameof(StationShiftInfos.ShiftOrder) Type="ColumnType.Number" HeaderText="VARDİYA NO" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(StationShiftInfos.TotalWorkTime) Type="ColumnType.Number" HeaderText="TOPLAM ÇALIŞMA SÜRESİ" TextAlign="TextAlign.Center" Width="120">
+
+                                         <GridColumn Field=@nameof(SelectCalendarLinesDto.StationName) HeaderText="İSTASYON ADI" TextAlign="TextAlign.Center" Width="140">
+                                        </GridColumn>
+
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.ShiftName) Type="ColumnType.Number" HeaderText="VARDİYA ADI" TextAlign="TextAlign.Center" Width="100"></GridColumn>
+                                        
+                                        <GridColumn Context="lineContext" Field=@nameof(SelectCalendarLinesDto.WorkStatus) Type="ColumnType.Number" HeaderText="ÇALIŞMA DURUMU" TextAlign="TextAlign.Center" Width="150">
+                                        <Template>
+                                         
+                                        @{
+                                            if(lineContext != null){
+                                              int status = (lineContext as SelectCalendarLinesDto).WorkStatus;
+                                             switch(status)
+                                             {
+                                                 case 1: workStatus = "Çalışma Var";break;
+                                                 case 2: workStatus = "Çalışma Yok";break;
+                                                 case 3: workStatus = "Üretim Kısıtı";break;
+                                                 case 4: workStatus = "Operatör Kısıtı";break;
+                                                 case 5: workStatus = "Arızi Kısıt";break;
+                                                 default:break;
+                                             }
+                                            }
+                                           
+                                        }
+                                        @workStatus
+</Template>
+                                        </GridColumn>
+
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.ShiftTime) Type="ColumnType.Number" HeaderText="VARDİYA SÜRESİ" TextAlign="TextAlign.Center" Width="140">
 
                                         </GridColumn>
-                                        <GridColumn Field=@nameof(StationShiftInfos.BreakTime) Type="ColumnType.Number" HeaderText="TOPLAM DURUŞ SÜRESİ" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(StationShiftInfos.Overtime) Type="ColumnType.Number" HeaderText="FAZLA MESAİ SÜRESİ" DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.ShiftOverTime) Type="ColumnType.Number" HeaderText="FAZLA MESAİ SÜRESİ" TextAlign="TextAlign.Center" Width="180"></GridColumn>
 
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.PlannedHaltTimes) Type="ColumnType.Number" HeaderText="PLANLI DURUŞ SÜRESİ" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                        
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.Date_) Type="ColumnType.Number" HeaderText="TARİH" TextAlign="TextAlign.Center" Width="80"></GridColumn>
+                                        
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.AvailableTime) Type="ColumnType.Number" HeaderText="ÇALIŞILABİLİR SÜRE"  TextAlign="TextAlign.Center" Width="170"></GridColumn>
 
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.PlannedMaintenanceTime) Type="ColumnType.Number" HeaderText="PLANLI BAKIM SÜRESİ"  TextAlign="TextAlign.Center" Width="170"></GridColumn>
+
+                                         <GridColumn Field=@nameof(SelectCalendarLinesDto.MaintenanceType) HeaderText="BAKIM TÜRÜ" TextAlign="TextAlign.Center" Width="140">
+                                        </GridColumn>
                                     </GridColumns>
                                 </SfGrid>
-                                </CardContent>
-                                </SfCard>
-                       
-                    </tr>
 
-                </table>
+                        </Template>
+                    </DxGridLayoutItem>
 
+                    
 
+                </Items>
+            </DxGridLayout>
+
+                        
 
             </BodyTemplate>
             <FooterContentTemplate>
-                <SfButton CssClass="TSICancelButton" OnClick="HideModal2"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
-                <SfButton CssClass="TSISaveButton" OnClick="Modal2Save"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+                <SfButton CssClass="TSISaveButton" OnClick="LineModalSave"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideLineModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+            </FooterContentTemplate>
+        </DxPopup>
+
+        <DxPopup Visible="lineWorkStatusVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         ShowCloseButton="false"
+         HeaderText="İş İstasyonu Vardiya Bilgileri"
+         Width="22%"
+         Height="23%"
+         MinWidth="380px"
+         MinHeight="250px"
+         HeaderCssClass="HeaderTitleCss">
+
+            <BodyTemplate>
+
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="80%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="11%" />
+                    <DxGridLayoutColumn Width="78%" />
+                    <DxGridLayoutColumn Width="11%" />
+
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                        <br/>
+                            <label class="TSIModalLabel"><strong>Çalışma Durumu: </strong></label>
+                             <SfComboBox  TValue="string" TItem="WorkStates" Placeholder="Çalışma durumu seçin." DataSource="@WorkStatesData">
+                             <ComboBoxEvents TItem="WorkStates" TValue="string" ValueChange="@LineEditModalWorkStatesValueChangeHandler"></ComboBoxEvents>
+    <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings></SfComboBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+            </DxGridLayout>
+
+                        
+
+            </BodyTemplate>
+            <FooterContentTemplate>
+                <SfButton CssClass="TSISaveButton" OnClick="LineEditModalSave"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideLineEditModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
             </FooterContentTemplate>
         </DxPopup>
 
         <style>
-                                    .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-other-month {
-                                        visibility: hidden !important;
-                                    }
+                 .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-other-month {
+                     visibility: hidden !important;
+                 }
 
-                                    .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-header .e-title {
-                                        cursor: default !important;
-                                        background-color: white !important;
-                                    }
+                 .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-header .e-title {
+                     cursor: default !important;
+                     background-color: white !important;
+                 }
 
-                                    .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-appointment, .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-appointment-indicator {
-                                        visibility: hidden;
-                                    }
+                 .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-appointment, .e-schedule .e-year-view .e-calendar-wrapper .e-month-calendar.e-calendar .e-appointment-indicator {
+                     visibility: hidden;
+                 }
 
             @*.e-schedule .e-year-view .calismaVar {
         background: green !important;
@@ -554,3 +830,4 @@
         </style>
     }
 }
+
