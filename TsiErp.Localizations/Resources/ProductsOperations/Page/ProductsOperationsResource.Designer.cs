@@ -161,6 +161,33 @@ namespace TsiErp.Localizations.Resources.ProductsOperations.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tedarikçi Seç.
+        /// </summary>
+        public static string ContextSelectSupplier {
+            get {
+                return ResourceManager.GetString("ContextSelectSupplier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TEDARİKÇİ ÜNVANI.
+        /// </summary>
+        public static string ContractGridCurrentAccountCardName {
+            get {
+                return ResourceManager.GetString("ContractGridCurrentAccountCardName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SATIR NR..
+        /// </summary>
+        public static string ContractGridLineNr {
+            get {
+                return ResourceManager.GetString("ContractGridLineNr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kontrol Şartı.
         /// </summary>
         public static string ControlConditionsNamePlanLabel {
@@ -679,6 +706,15 @@ namespace TsiErp.Localizations.Resources.ProductsOperations.Page {
         public static string Tab2Name {
             get {
                 return ResourceManager.GetString("Tab2Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fason Tedarikçiler.
+        /// </summary>
+        public static string Tab3Name {
+            get {
+                return ResourceManager.GetString("Tab3Name", resourceCulture);
             }
         }
         

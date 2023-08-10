@@ -212,13 +212,10 @@ namespace TsiErp.Business.Entities.Station.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entityQuery = queryFactory
-                       .Query()
-                       .From(Tables.Stations)
-                       .Select<Stations>(s => new { s.Y, s.X, s.UsageArea, s.ShiftWorkingTime, s.Shift, s.PowerFactor, s.Name, s.Model, s.MachineCost, s.KWA, s.IsFixtures, s.IsContract, s.IsActive, s.Id, s.GroupID, s.DataOpenStatusUserId, s.DataOpenStatus, s.Code, s.Capacity, s.Brand, s.AreaCovered, s.Amortization })
-                       .Join<StationGroups>
+                var entityQuery = queryFactory.Query().From(Tables.Stations).Select("*")
+                        .Join<StationGroups>
                         (
-                            sg => new { GroupID = sg.Id, StationGroup = sg.Name },
+                            sg => new { GroupID = sg.Id, StationGroup = sg.Name, StationGroupCode = sg.Code },
                             nameof(Stations.GroupID),
                             nameof(StationGroups.Id),
                             JoinType.Left

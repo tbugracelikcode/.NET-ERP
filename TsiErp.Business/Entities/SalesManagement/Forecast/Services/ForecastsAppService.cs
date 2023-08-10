@@ -245,7 +245,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                 var entityQuery = queryFactory
                        .Query()
                        .From(Tables.Forecasts)
-                       .Select<Forecasts>(f => new { f.ValidityStartDate, f.ValidityEndDate, f.Total, f.PeriodID, f.LineNumber, f.Id, f.Description_, f.DataOpenStatusUserId, f.DataOpenStatus, f.CurrentAccountCardID, f.Code, f.BranchID })
+                       .Select("*")
                        .Join<Periods>
                         (
                             p => new { PeriodID = p.Id, PeriodCode = p.Code, PeriodName = p.Name },
@@ -440,7 +440,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                     DataOpenStatus = lockRow,
                     DataOpenStatusUserId = userId,
                     DeleterId = entity.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entity.DeletionTime.Value,
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                     Id = entity.Id,
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),

@@ -153,6 +153,9 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="ContractDailyWorkingCapacityLabel" xml:space="preserve">
+    <value>Daily Working Capacity</value>
+  </data>
   <data name="ContractSupplierLabel" xml:space="preserve">
     <value>Contract Supplier:</value>
   </data>
@@ -225,6 +228,9 @@
   <data name="NameLabel" xml:space="preserve">
     <value>Current Account Name:</value>
   </data>
+  <data name="NumberOfStationsLabel" xml:space="preserve">
+    <value>Number Of Stations</value>
+  </data>
   <data name="PlusPercentageLabel" xml:space="preserve">
     <value>Plus Percentage:</value>
   </data>
@@ -272,6 +278,9 @@
   </data>
   <data name="Tab3Name" xml:space="preserve">
     <value>Commercial Information</value>
+  </data>
+  <data name="Tab4Name" xml:space="preserve">
+    <value>Contract Supplier Information</value>
   </data>
   <data name="TaxAdministrationLabel" xml:space="preserve">
     <value>Tax Administration:</value>

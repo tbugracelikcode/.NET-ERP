@@ -263,7 +263,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 var entityQuery = queryFactory
                        .Query()
                        .From(Tables.ProductionTrackings)
-                       .Select<ProductionTrackings>(pt => new { pt.WorkOrderID, pt.StationID, pt.StationCode, pt.ShiftID, pt.ShiftCode, pt.ProducedQuantity, pt.PlannedQuantity, pt.OperationTime, pt.OperationStartTime, pt.OperationStartDate, pt.OperationEndTime, pt.OperationEndDate, pt.IsFinished, pt.Id, pt.HaltTime, pt.EmployeeName, pt.EmployeeID, pt.DataOpenStatusUserId, pt.DataOpenStatus, pt.Code, pt.AdjustmentTime })
+                       .Select("*")
                        .Join<WorkOrders>
                         (
                             wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.Code },
@@ -478,7 +478,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     DataOpenStatus = lockRow,
                     DataOpenStatusUserId = userId,
                     DeleterId = entity.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entity.DeletionTime.Value,
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                     Id = entity.Id,
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),

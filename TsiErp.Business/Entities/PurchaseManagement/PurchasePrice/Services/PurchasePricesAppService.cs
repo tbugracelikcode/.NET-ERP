@@ -271,7 +271,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                 var entityQuery = queryFactory
                        .Query()
                       .From(Tables.PurchasePrices)
-                       .Select<PurchasePrices>(pp => new { pp.WarehouseID, pp.StartDate, pp.Name, pp.IsApproved, pp.IsActive, pp.Id, pp.EndDate, pp.DataOpenStatusUserId, pp.DataOpenStatus, pp.CurrentAccountCardID, pp.CurrencyID, pp.Code, pp.BranchID })
+                       .Select("*")
                        .Join<Currencies>
                         (
                             c => new { CurrencyID = c.Id, CurrencyCode = c.Code },
@@ -521,7 +521,7 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                     DataOpenStatus = lockRow,
                     DataOpenStatusUserId = userId,
                     DeleterId = entity.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entity.DeletionTime.Value,
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                     Id = entity.Id,
                     IsActive = entity.IsActive,
                     IsDeleted = entity.IsDeleted,

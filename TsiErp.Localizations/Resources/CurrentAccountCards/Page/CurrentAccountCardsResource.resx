@@ -153,6 +153,9 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="ContractDailyWorkingCapacityLabel" xml:space="preserve">
+    <value>Günlük Çalışma Kapasitesi:</value>
+  </data>
   <data name="ContractSupplierLabel" xml:space="preserve">
     <value>Fason Tedarikçi:</value>
   </data>
@@ -225,6 +228,9 @@
   <data name="NameLabel" xml:space="preserve">
     <value>Cari Ünvan:</value>
   </data>
+  <data name="NumberOfStationsLabel" xml:space="preserve">
+    <value>İş İstasyonu Sayısı:</value>
+  </data>
   <data name="PlusPercentageLabel" xml:space="preserve">
     <value>Artı Yüzde Oran:</value>
   </data>
@@ -272,6 +278,9 @@
   </data>
   <data name="Tab3Name" xml:space="preserve">
     <value>Ticari Bilgiler</value>
+  </data>
+  <data name="Tab4Name" xml:space="preserve">
+    <value>Fason Tedarikçi Bilgileri</value>
   </data>
   <data name="TaxAdministrationLabel" xml:space="preserve">
     <value>Vergi Dairesi:</value>

@@ -154,5 +154,13 @@ namespace TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
+        /// <summary>
+        /// Fason Günlük Çalışma Kapasitesi (Saniye)
+        /// </summary>
+        public int ContractDailyWorkingCapacity { get; set; }
+        /// <summary>
+        /// İş İstasyonu Sayısı
+        /// </summary>
+        public int NumberOfStations { get; set; }
     }
 }

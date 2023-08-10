@@ -124,7 +124,7 @@
     <value>Alternative:</value>
   </data>
   <data name="BottomTolerancePlanLabel" xml:space="preserve">
-    <value>Bottom Tolerance</value>
+    <value>Bottom Tolerance:</value>
   </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
@@ -150,20 +150,29 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="ContextSelectSupplier" xml:space="preserve">
+    <value>Select Supplier</value>
+  </data>
+  <data name="ContractGridCurrentAccountCardName" xml:space="preserve">
+    <value>SUPPLIER TITLE</value>
+  </data>
+  <data name="ContractGridLineNr" xml:space="preserve">
+    <value>LINE NR.</value>
+  </data>
   <data name="ControlConditionsNamePlanLabel" xml:space="preserve">
-    <value>Control Condition</value>
+    <value>Control Condition:</value>
   </data>
   <data name="ControlEquipmentPlanLabel" xml:space="preserve">
-    <value>Control Equipment</value>
+    <value>Control Equipment:</value>
   </data>
   <data name="ControlFrequencyPlanLabel" xml:space="preserve">
-    <value>Control Frequency</value>
+    <value>Control Frequency:</value>
   </data>
   <data name="ControlManagerPlanLabel" xml:space="preserve">
-    <value>Control Manager</value>
+    <value>Control Manager:</value>
   </data>
   <data name="ControlTypesNamePlanLabel" xml:space="preserve">
-    <value>Control Type</value>
+    <value>Control Type:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
@@ -184,7 +193,7 @@
     <value>Error</value>
   </data>
   <data name="IdealMeasurePlanLabel" xml:space="preserve">
-    <value>Ideal Measure</value>
+    <value>Ideal Measure:</value>
   </data>
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Activity:</value>
@@ -217,7 +226,7 @@
     <value>The records are loading..</value>
   </data>
   <data name="MeasureNumberInPicturePlanLabel" xml:space="preserve">
-    <value>Measure Number In Picture</value>
+    <value>Measure Number In Picture:</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>The record you selected is using by {0}.</value>
@@ -235,7 +244,7 @@
     <value>Operation Time:</value>
   </data>
   <data name="PeriodicControlMeasurePlanLabel" xml:space="preserve">
-    <value>Periodic Control Measure</value>
+    <value>Periodic Control Measure:</value>
   </data>
   <data name="PriorityLineLabel" xml:space="preserve">
     <value>Priority:</value>
@@ -304,7 +313,7 @@
     <value>Station Code:</value>
   </data>
   <data name="StationGroupLabel" xml:space="preserve">
-    <value>Work Center</value>
+    <value>Work Center:</value>
   </data>
   <data name="StationModalGridCode" xml:space="preserve">
     <value>STATION CODE</value>
@@ -323,6 +332,9 @@
   </data>
   <data name="Tab2Name" xml:space="preserve">
     <value>Operation Quality Plans</value>
+  </data>
+  <data name="Tab3Name" xml:space="preserve">
+    <value>Contract Suppliers</value>
   </data>
   <data name="TemplateOperationCodeLabel" xml:space="preserve">
     <value>Template Operation:</value>
@@ -361,7 +373,7 @@
     <value>There is a record with the same code.</value>
   </data>
   <data name="UpperTolerancePlanLabel" xml:space="preserve">
-    <value>Upper Tolerance</value>
+    <value>Upper Tolerance:</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
     <value>Please enter the operation code.</value>

@@ -315,7 +315,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 var entityQuery = queryFactory
                        .Query()
                        .From(Tables.StockFiches)
-                       .Select<StockFiches>(sf => new { sf.Id, sf.FicheNo, sf.InputOutputCode, sf.Date_, sf.Description_, sf.FicheType, sf.NetAmount, sf.WarehouseID, sf.Time_, sf.SpecialCode, sf.ProductionOrderID, sf.ExchangeRate, sf.DataOpenStatusUserId, sf.DataOpenStatus, sf.CurrencyID, sf.BranchID, sf.CreationTime, sf.DeletionTime })
+                       .Select("*")
                        .Join<Branches>
                         (
                             b => new { BranchCode = b.Code, BranchID = b.Id },
@@ -515,7 +515,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     DataOpenStatus = lockRow,
                     DataOpenStatusUserId = userId,
                     DeleterId = entity.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entity.DeletionTime.Value,
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                     Id = entity.Id,
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),

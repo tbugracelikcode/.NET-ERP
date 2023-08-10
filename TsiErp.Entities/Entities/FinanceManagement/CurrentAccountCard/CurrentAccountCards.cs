@@ -175,5 +175,19 @@ namespace TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard
         /// </summary>
         public bool IsActive { get; set; }
 
+
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Fason Günlük Çalışma Kapasitesi (Saniye)
+        /// </summary>
+        public int ContractDailyWorkingCapacity { get; set; }
+
+
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// İş İstasyonu Sayısı
+        /// </summary>
+        public int NumberOfStations { get; set; }
+
     }
 }

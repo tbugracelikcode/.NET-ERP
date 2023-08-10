@@ -94,7 +94,9 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                     IsDeleted = false,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
-                    Name = input.Name
+                    Name = input.Name,
+                    ContractDailyWorkingCapacity = input.ContractDailyWorkingCapacity,
+                    NumberOfStations = input.NumberOfStations
                 });
 
                 var currentAccountCards = queryFactory.Insert<SelectCurrentAccountCardsDto>(query, "Id", true);
@@ -165,7 +167,9 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                             ca.PostCode,
                             ca.PlusPercentage,
                             ca.Name,
-                            ca.IsActive
+                            ca.IsActive,
+                            ca.NumberOfStations,
+                            ca.ContractDailyWorkingCapacity
                         })
                             .Join<Currencies>
                             (
@@ -194,7 +198,46 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                 var query = queryFactory
                    .Query()
                    .From(Tables.CurrentAccountCards)
-                   .Select<CurrentAccountCards>(ca => new { ca.Id, ca.IDnumber, ca.Address2, ca.Address1, ca.City, ca.CoatingCustomer, ca.Code, ca.ContractSupplier, ca.Country, ca.CurrencyID, ca.DataOpenStatus, ca.DataOpenStatusUserId, ca.District, ca.Email, ca.Fax, ca.TaxNumber, ca.Tel1, ca.Tel2, ca.Type_, ca.Web, ca.TaxAdministration, ca.SupplierNo, ca.Supplier, ca.SoleProprietorship, ca.ShippingAddress, ca.SaleContract, ca.Responsible, ca.PrivateCode5, ca.PrivateCode4, ca.PrivateCode3, ca.PrivateCode2, ca.PrivateCode1, ca.PostCode, ca.PlusPercentage, ca.Name })
+                   .Select<CurrentAccountCards>(ca => new
+                   {
+                       ca.Id,
+                       ca.IDnumber,
+                       ca.Address2,
+                       ca.Address1,
+                       ca.City,
+                       ca.CoatingCustomer,
+                       ca.Code,
+                       ca.ContractSupplier,
+                       ca.Country,
+                       ca.CurrencyID,
+                       ca.DataOpenStatus,
+                       ca.DataOpenStatusUserId,
+                       ca.District,
+                       ca.Email,
+                       ca.Fax,
+                       ca.TaxNumber,
+                       ca.Tel1,
+                       ca.Tel2,
+                       ca.Type_,
+                       ca.Web,
+                       ca.TaxAdministration,
+                       ca.SupplierNo,
+                       ca.Supplier,
+                       ca.SoleProprietorship,
+                       ca.ShippingAddress,
+                       ca.SaleContract,
+                       ca.Responsible,
+                       ca.PrivateCode5,
+                       ca.PrivateCode4,
+                       ca.PrivateCode3,
+                       ca.PrivateCode2,
+                       ca.PrivateCode1,
+                       ca.PostCode,
+                       ca.PlusPercentage,
+                       ca.Name,
+                       ca.NumberOfStations,
+                       ca.ContractDailyWorkingCapacity
+                   })
                        .Join<Currencies>
                        (
                            c => new { Currency = c.Code },
@@ -273,11 +316,13 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                     CreatorId = entity.CreatorId.Value,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
-                    DeleterId = entity.DeleterId.Value,
-                    DeletionTime = entity.DeletionTime.Value,
+                    DeleterId = entity.DeleterId.GetValueOrDefault(),
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = DateTime.Now,
-                    LastModifierId = LoginedUserService.UserId
+                    LastModifierId = LoginedUserService.UserId,
+                    ContractDailyWorkingCapacity = input.ContractDailyWorkingCapacity,
+                    NumberOfStations = input.NumberOfStations
                 }).Where(new { Id = input.Id }, true, true, "");
 
                 var currentAccountCards = queryFactory.Update<SelectCurrentAccountCardsDto>(query, "Id", true);
@@ -342,7 +387,8 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                     Id = id,
                     DataOpenStatus = lockRow,
                     DataOpenStatusUserId = userId,
-
+                    NumberOfStations = entity.NumberOfStations,
+                    ContractDailyWorkingCapacity = entity.ContractDailyWorkingCapacity
                 }).Where(new { Id = id }, true, true, "");
 
                 var currentAccountCards = queryFactory.Update<SelectCurrentAccountCardsDto>(query, "Id", true);

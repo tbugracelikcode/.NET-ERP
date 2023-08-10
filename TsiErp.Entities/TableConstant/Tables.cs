@@ -105,5 +105,7 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string ControlTypes = "ControlTypes";
         public static readonly string ControlConditions = "ControlConditions";
         public static readonly string ProductOperationQualityPlans = "ProductOperationQualityPlans";
+        public static readonly string ContractOfProductsOperations = "ContractOfProductsOperations";
+        public static readonly string OperationalQualityPlans = "OperationalQualityPlans";
     }
 }

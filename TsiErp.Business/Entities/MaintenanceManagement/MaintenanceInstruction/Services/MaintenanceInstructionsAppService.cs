@@ -235,8 +235,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
             {
                 var entityQuery = queryFactory
                        .Query()
-                       .From(Tables.MaintenanceInstructions)
-                       .Select<MaintenanceInstructions>(mi => new { mi.StationID, mi.PlannedMaintenanceTime, mi.PeriodTime, mi.PeriodID, mi.Note_, mi.InstructionName, mi.Id, mi.DataOpenStatusUserId, mi.DataOpenStatus, mi.Code })
+                       .From(Tables.MaintenanceInstructions).Select("*")
                         .Join<Stations>
                         (
                             s => new { StationID = s.Id, StationCode = s.Code },
@@ -476,7 +475,7 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
                     DataOpenStatus = lockRow,
                     DataOpenStatusUserId = userId,
                     DeleterId = entity.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entity.DeletionTime.Value,
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                     Id = entity.Id,
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
