@@ -253,7 +253,7 @@
                             <ScheduleResources>
                                 <ScheduleResource TItem="ResourceData" TValue="int[]" DataSource="@ResourceList" Field="ResourceId" Title="Owner" Name="Owners" TextField="OwnerText" IdField="Id" ColorField="Color" AllowMultiple="true"></ScheduleResource>
                             </ScheduleResources>
-                            <ScheduleEvents TValue="AppointmentData" OnPopupOpen="@OnPopupOpen"> </ScheduleEvents>
+                            <ScheduleEvents TValue="AppointmentData"  OnCellClick="OnCellClick"> </ScheduleEvents>
                             <ScheduleEventSettings DataSource="@DataSourceEvent">
                             </ScheduleEventSettings>
 
@@ -315,13 +315,7 @@
                             </ScheduleTemplates>
                         </SfSchedule>
 
-                        <SfContextMenu TValue="MenuItem" Target=".e-schedule">
-                            <MenuItems>
-                                <MenuItem Text="Düzenle" Id="Edit" Hidden="@isCell"></MenuItem>
-
-                            </MenuItems>
-                            <MenuEvents TValue="MenuItem" ItemSelected="OnItemSelected"></MenuEvents>
-                        </SfContextMenu>
+                       
 
                     </th>
                     <th style="width:25%">
@@ -392,7 +386,7 @@
 
                 <table style="margin-top:2%">
                     <tr style="height:80%">
-                        <td style="font-size:16px;padding-left:2%; width:20%"><strong>Tarih :</strong> @CurrentDate</td>
+                        <td style="font-size:16px;padding-left:2%; width:20%"><strong>Tarih :</strong> @selectedDate</td>
                         <td style="width:80%">
 
                             @if (SelectedStations.Count != 0)
@@ -408,15 +402,16 @@
                     </tr>
                     <tr style="height:20%">
 
-                        <td style="width:33%"></td>
+                        <td style="width:50%">
+                          <SfCheckBox Label="Tüm İstasyonları Ekle"  @onchange="OnAddAllStationsChange" @bind-Checked="isAllStationsChecked"></SfCheckBox>
+                        </td>
 
-                        <td style="width:33%">
+                        <td style="width:50%">
 
                             <SfButton CssClass="TSISaveButton" OnClick="ShowLineModal"><SfIcon Size="IconSize.Medium" Name="IconName.Check"></SfIcon>&nbsp;Seçilen İstasyonları Planla</SfButton>
 
                         </td>
 
-                        <td style="width:33%"></td>
 
                     </tr>
                 </table>
@@ -443,10 +438,14 @@
 
                                                                 @foreach (var item in tempStationList)
                                                                 {
-                                                                    <div class="col-lg-2 col-md-2 col-sm-4" onclick="@(()=>OnSelectStation(item))" style="padding: 10px;text-align:left;  width: 31%;">
+                                                                    int stawork = StationWorkStatusList.Where(t=>t.Date_ == selectedDate && t.StationID == item.Id).Select(t=>t.WorkStatus).FirstOrDefault();
+                                                                    switch(stawork)
+                                                                    {
+                                                                        case 1:
+                                                                          <div class="col-lg-2 col-md-2 col-sm-4" onclick="@(()=>OnSelectStation(item))" style="padding: 10px;text-align:left;  width: 31%;">
                                                                         <div id="card_sample_1" class="card_sample">
                                                                             <SfCard CssClass="TSIStationCards">
-                                                                                <div style="background-color:@cardbgcolor">
+                                                                                <div style="background-color:#00ff14">
                                                                                     <br>
                                                                                     <center> <CardHeader Title="@item.Code" /></center>
                                                                                     <CardContent>
@@ -462,6 +461,114 @@
 
                                                                         </div>
                                                                     </div>
+                                                                        break;
+                                                                        case 2:
+                                                                         <div class="col-lg-2 col-md-2 col-sm-4" onclick="@(()=>OnSelectStation(item))" style="padding: 10px;text-align:left;  width: 31%;">
+                                                                        <div id="card_sample_1" class="card_sample">
+                                                                            <SfCard CssClass="TSIStationCards">
+                                                                                <div style="background-color:#ff0000">
+                                                                                    <br>
+                                                                                    <center> <CardHeader Title="@item.Code" /></center>
+                                                                                    <CardContent>
+                                                                                        <ChildContent>
+                                                                                        </ChildContent>
+                                                                                    </CardContent>
+
+                                                                                    <CardFooter>
+                                                                                    </CardFooter>
+                                                                                </div>
+                                                                            </SfCard>
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                        break;
+                                                                        case 3:
+                                                                         <div class="col-lg-2 col-md-2 col-sm-4" onclick="@(()=>OnSelectStation(item))" style="padding: 10px;text-align:left;  width: 31%;">
+                                                                        <div id="card_sample_1" class="card_sample">
+                                                                            <SfCard CssClass="TSIStationCards">
+                                                                                <div style="background-color:#00ff14">
+                                                                                    <br>
+                                                                                    <center> <CardHeader Title="@item.Code" /></center>
+                                                                                    <CardContent>
+                                                                                        <ChildContent>
+                                                                                        </ChildContent>
+                                                                                    </CardContent>
+
+                                                                                    <CardFooter>
+                                                                                    </CardFooter>
+                                                                                </div>
+                                                                            </SfCard>
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                        break;
+                                                                        case 4:
+                                                                         <div class="col-lg-2 col-md-2 col-sm-4" onclick="@(()=>OnSelectStation(item))" style="padding: 10px;text-align:left;  width: 31%;">
+                                                                        <div id="card_sample_1" class="card_sample">
+                                                                            <SfCard CssClass="TSIStationCards">
+                                                                                <div style="background-color:#00ff14">
+                                                                                    <br>
+                                                                                    <center> <CardHeader Title="@item.Code" /></center>
+                                                                                    <CardContent>
+                                                                                        <ChildContent>
+                                                                                        </ChildContent>
+                                                                                    </CardContent>
+
+                                                                                    <CardFooter>
+                                                                                    </CardFooter>
+                                                                                </div>
+                                                                            </SfCard>
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                        break;
+                                                                        case 5:
+                                                                         <div class="col-lg-2 col-md-2 col-sm-4" onclick="@(()=>OnSelectStation(item))" style="padding: 10px;text-align:left;  width: 31%;">
+                                                                        <div id="card_sample_1" class="card_sample">
+                                                                            <SfCard CssClass="TSIStationCards">
+                                                                                <div style="background-color:#00ff14">
+                                                                                    <br>
+                                                                                    <center> <CardHeader Title="@item.Code" /></center>
+                                                                                    <CardContent>
+                                                                                        <ChildContent>
+                                                                                        </ChildContent>
+                                                                                    </CardContent>
+
+                                                                                    <CardFooter>
+                                                                                    </CardFooter>
+                                                                                </div>
+                                                                            </SfCard>
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                        break;
+                                                                        default:
+                                                                         <div class="col-lg-2 col-md-2 col-sm-4" onclick="@(()=>OnSelectStation(item))" style="padding: 10px;text-align:left;  width: 31%;">
+                                                                        <div id="card_sample_1" class="card_sample">
+                                                                            <SfCard CssClass="TSIStationCards">
+                                                                                <div style="background-color:white">
+                                                                                    <br>
+                                                                                    <center> <CardHeader Title="@item.Code" /></center>
+                                                                                    <CardContent>
+                                                                                        <ChildContent>
+                                                                                        </ChildContent>
+                                                                                    </CardContent>
+
+                                                                                    <CardFooter>
+                                                                                    </CardFooter>
+                                                                                </div>
+                                                                            </SfCard>
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                            break;
+                                                                    }
+                                                                  
 
                                                                 }
                                                             }
@@ -534,7 +641,7 @@
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>Başlangıç Tarihi: </strong></label>
-                            <SfTextBox  ></SfTextBox>
+                            <SfTextBox  @bind-Value="@selectedDateStr" Enabled=false></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -549,7 +656,7 @@
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                              <label class="TSIModalLabel"><strong>Bitiş Tarihi: </strong></label>
-                            <SfTextBox  ></SfTextBox>
+                            <SfTextBox  @bind-Value="@selectedDateStr" Enabled=false></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -586,7 +693,27 @@
 
                                         <GridColumn Field=@nameof(SelectCalendarLinesDto.ShiftName) Type="ColumnType.Number" HeaderText="VARDİYA ADI" TextAlign="TextAlign.Center" Width="100"></GridColumn>
                                         
-                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.WorkStatus) Type="ColumnType.Number" HeaderText="ÇALIŞMA DURUMU" TextAlign="TextAlign.Center" Width="150"></GridColumn>
+                                        <GridColumn Context="lineContext" Field=@nameof(SelectCalendarLinesDto.WorkStatus) Type="ColumnType.Number" HeaderText="ÇALIŞMA DURUMU" TextAlign="TextAlign.Center" Width="150">
+                                        <Template>
+                                         
+                                        @{
+                                            if(lineContext != null){
+                                              int status = (lineContext as SelectCalendarLinesDto).WorkStatus;
+                                             switch(status)
+                                             {
+                                                 case 1: workStatus = "Çalışma Var";break;
+                                                 case 2: workStatus = "Çalışma Yok";break;
+                                                 case 3: workStatus = "Üretim Kısıtı";break;
+                                                 case 4: workStatus = "Operatör Kısıtı";break;
+                                                 case 5: workStatus = "Arızi Kısıt";break;
+                                                 default:break;
+                                             }
+                                            }
+                                           
+                                        }
+                                        @workStatus
+</Template>
+                                        </GridColumn>
 
                                         <GridColumn Field=@nameof(SelectCalendarLinesDto.ShiftTime) Type="ColumnType.Number" HeaderText="VARDİYA SÜRESİ" TextAlign="TextAlign.Center" Width="140">
 
@@ -598,6 +725,11 @@
                                         <GridColumn Field=@nameof(SelectCalendarLinesDto.Date_) Type="ColumnType.Number" HeaderText="TARİH" TextAlign="TextAlign.Center" Width="80"></GridColumn>
                                         
                                         <GridColumn Field=@nameof(SelectCalendarLinesDto.AvailableTime) Type="ColumnType.Number" HeaderText="ÇALIŞILABİLİR SÜRE"  TextAlign="TextAlign.Center" Width="170"></GridColumn>
+
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.PlannedMaintenanceTime) Type="ColumnType.Number" HeaderText="PLANLI BAKIM SÜRESİ"  TextAlign="TextAlign.Center" Width="170"></GridColumn>
+
+                                         <GridColumn Field=@nameof(SelectCalendarLinesDto.MaintenanceType) HeaderText="BAKIM TÜRÜ" TextAlign="TextAlign.Center" Width="140">
+                                        </GridColumn>
                                     </GridColumns>
                                 </SfGrid>
 
@@ -613,8 +745,59 @@
 
             </BodyTemplate>
             <FooterContentTemplate>
-                <SfButton CssClass="TSICancelButton" OnClick="HideLineModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
                 <SfButton CssClass="TSISaveButton" OnClick="LineModalSave"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideLineModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+            </FooterContentTemplate>
+        </DxPopup>
+
+        <DxPopup Visible="lineWorkStatusVisible"
+         ShowFooter="true"
+         CloseOnEscape="false"
+         CloseOnOutsideClick="false"
+         ShowCloseButton="false"
+         HeaderText="İş İstasyonu Vardiya Bilgileri"
+         Width="22%"
+         Height="23%"
+         MinWidth="380px"
+         MinHeight="250px"
+         HeaderCssClass="HeaderTitleCss">
+
+            <BodyTemplate>
+
+            <DxGridLayout CssClass="TSIGridLayout">
+
+                <Rows>
+                    <DxGridLayoutRow Height="80%" />
+                </Rows>
+
+                <Columns>
+                    <DxGridLayoutColumn Width="11%" />
+                    <DxGridLayoutColumn Width="78%" />
+                    <DxGridLayoutColumn Width="11%" />
+
+                </Columns>
+
+                <Items>
+                    <br />
+                    <DxGridLayoutItem Row="0" Column="1">
+                        <Template>
+                        <br/>
+                            <label class="TSIModalLabel"><strong>Çalışma Durumu: </strong></label>
+                             <SfComboBox  TValue="string" TItem="WorkStates" Placeholder="Çalışma durumu seçin." DataSource="@WorkStatesData">
+                             <ComboBoxEvents TItem="WorkStates" TValue="string" ValueChange="@LineEditModalWorkStatesValueChangeHandler"></ComboBoxEvents>
+    <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings></SfComboBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                </Items>
+            </DxGridLayout>
+
+                        
+
+            </BodyTemplate>
+            <FooterContentTemplate>
+                <SfButton CssClass="TSISaveButton" OnClick="LineEditModalSave"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideLineEditModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
             </FooterContentTemplate>
         </DxPopup>
 

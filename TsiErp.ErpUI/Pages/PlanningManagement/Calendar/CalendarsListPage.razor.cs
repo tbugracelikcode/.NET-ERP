@@ -20,6 +20,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
     public partial class CalendarsListPage
     {
         SfSchedule<AppointmentData> ScheduleObj;
+
+        SelectCalendarLinesDto LineDataSource;
         private CellClickEventArgs CellData { get; set; }
         public bool schedularVisible { get; set; } = false;
         public List<int> YearList = new List<int>();
@@ -39,6 +41,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         public List<SelectCalendarLinesDto> LineGridList = new List<SelectCalendarLinesDto>();
+        public List<SelectCalendarLinesDto> StationWorkStatusList = new List<SelectCalendarLinesDto>();
         [Inject]
         ModalManager ModalManager { get; set; }
 
@@ -56,23 +59,17 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         private bool StationsModalVisible = false;
         private bool LineModalVisible = false;
         string cardbgcolor = "white";
-        public DateTime CurrentDate = DateTime.Today;
         public DateTime officialHoliday = DateTime.Today;
+        public DateTime CurrentDate = DateTime.Today;
         int selection = 0;
+        public DateTime? selectedDate = null;
+        public string selectedDateStr = string.Empty;
+        public bool isAllStationsChecked = false;
+        public string workStatus = string.Empty;
+        public bool lineWorkStatusVisible = false;
+        public int tempworkStatus = 0;
 
         #endregion
-
-        public List<AppointmentData> DataSourceEvent = new List<AppointmentData> { };
-        public List<AppointmentData> FinalDataSource = new List<AppointmentData>();
-        public List<ResourceData> ResourceList { get; set; } = new List<ResourceData> {
-        new ResourceData{ Text = "Çalışma Var", Id= 1, Color = CalendarColors.WorkExists },
-        new ResourceData{ Text = "Çalışma Yok", Id= 2, Color = CalendarColors.WorkNotExists },
-        new ResourceData{ Text = "Resmi Tatil", Id= 3, Color = CalendarColors.OfficialHoliday },
-        new ResourceData{ Text = "Tatil", Id= 4, Color = CalendarColors.Holiday },
-        new ResourceData{ Text = "Yarım Gün", Id= 5, Color = CalendarColors.HalfDay },
-        new ResourceData{ Text = "Yükleme Günü", Id= 6, Color = CalendarColors.LoadingDay },
-        new ResourceData{ Text = "Bakım", Id= 7, Color = CalendarColors.Maintenance }
-    };
 
         protected override async void OnInitialized()
         {
@@ -80,106 +77,11 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             _L = L;
             GetYearsList();
             CreateMainContextMenuItems();
+            CreateLineContextMenuItems();
             CreateDayContextMenuItems();
             FinalDataSource = DataSourceEvent;
             base.OnInitialized();
 
-        }
-
-        protected override Task BeforeInsertAsync()
-        {
-            GridDaysList.Clear();
-
-            int thisYear = DateTime.Now.Year;
-
-            #region Default Resmi Tatiller
-
-            SelectCalendarDaysDto zaferBayrami = new SelectCalendarDaysDto
-            {
-                     CalendarDayStateEnum = 3,
-                      Date_ = new DateTime(thisYear, 8, 30)
-            };
-
-            SelectCalendarDaysDto ulusalEgemenlikBayrami = new SelectCalendarDaysDto
-            {
-                CalendarDayStateEnum = 3,
-                Date_ = new DateTime(thisYear, 4, 23)
-            };
-
-            SelectCalendarDaysDto isciBayrami = new SelectCalendarDaysDto
-            {
-                CalendarDayStateEnum = 3,
-                Date_ = new DateTime(thisYear, 5, 1)
-            };
-
-            SelectCalendarDaysDto ATATURKUAnmaBayrami = new SelectCalendarDaysDto
-            {
-                CalendarDayStateEnum = 3,
-                Date_ = new DateTime(thisYear, 5, 19)
-            };
-
-            SelectCalendarDaysDto temmuz15Bayrami = new SelectCalendarDaysDto
-            {
-                CalendarDayStateEnum = 3,
-                Date_ = new DateTime(thisYear, 7, 15)
-            };
-
-            SelectCalendarDaysDto CUMHURIYETBayrami = new SelectCalendarDaysDto
-            {
-                CalendarDayStateEnum = 3,
-                Date_ = new DateTime(thisYear, 10, 29)
-            };
-
-            GridDaysList.Add(ulusalEgemenlikBayrami);
-            GridDaysList.Add(isciBayrami);
-            GridDaysList.Add(ATATURKUAnmaBayrami);
-            GridDaysList.Add(temmuz15Bayrami);
-            GridDaysList.Add(zaferBayrami);
-            GridDaysList.Add(CUMHURIYETBayrami);
-
-            #endregion
-
-            DataSource = new SelectCalendarsDto() { };
-
-            DataSource.SelectCalendarDaysDto = GridDaysList;
-
-            EditPageVisible = true;
-
-            return Task.CompletedTask;
-        }
-
-        public void OnPopupOpen(PopupOpenEventArgs<AppointmentData> args)
-        {
-            if (args.Type == PopupType.Editor)
-            {
-                args.Cancel = true;
-            }
-        }
-
-        public void customChange(string switchName)
-        {
-            DataSourceEvent = FinalDataSource;
-            List<int> selectedResource = new List<int>();
-            List<AppointmentData> filteredData = new List<AppointmentData>();
-            if (chcCalismaVar) { selectedResource.Add(1); }
-            if (chcCalismaYok) { selectedResource.Add(2); }
-            if (chcResmiTatil) { selectedResource.Add(3); }
-            if (chcTatil) { selectedResource.Add(4); }
-            if (chcYarimGun) { selectedResource.Add(5); }
-            if (chcYuklemeGunu) { selectedResource.Add(6); }
-            if (chcBakim) { selectedResource.Add(7); }
-
-            foreach (int resource in selectedResource)
-            {
-
-                List<AppointmentData> data = FinalDataSource.Where(x => ResourceList[resource].Id == x.ResourceId).ToList();
-                filteredData = filteredData.Concat(data).ToList();
-            }
-
-            DataSourceEvent = filteredData;
-            if (switchName == "chcTumu") { chcCalismaVar = false; chcCalismaYok = false; chcResmiTatil = false; chcTatil = false; chcYarimGun = false; chcYuklemeGunu = false; chcBakim = false; } else { chcTumu = false; }
-
-            if (chcTumu) { DataSourceEvent = FinalDataSource; }
         }
 
         #region Çalışma Takvimi Ekleme Modalı Metotları
@@ -346,6 +248,70 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             }
         }
 
+        protected override Task BeforeInsertAsync()
+        {
+            GridDaysList.Clear();
+
+            int thisYear = DateTime.Now.Year;
+
+            #region Default Resmi Tatiller
+
+            SelectCalendarDaysDto zaferBayrami = new SelectCalendarDaysDto
+            {
+                CalendarDayStateEnum = 3,
+                Date_ = new DateTime(thisYear, 8, 30)
+            };
+
+            SelectCalendarDaysDto ulusalEgemenlikBayrami = new SelectCalendarDaysDto
+            {
+                CalendarDayStateEnum = 3,
+                Date_ = new DateTime(thisYear, 4, 23)
+            };
+
+            SelectCalendarDaysDto isciBayrami = new SelectCalendarDaysDto
+            {
+                CalendarDayStateEnum = 3,
+                Date_ = new DateTime(thisYear, 5, 1)
+            };
+
+            SelectCalendarDaysDto ATATURKUAnmaBayrami = new SelectCalendarDaysDto
+            {
+                CalendarDayStateEnum = 3,
+                Date_ = new DateTime(thisYear, 5, 19)
+            };
+
+            SelectCalendarDaysDto temmuz15Bayrami = new SelectCalendarDaysDto
+            {
+                CalendarDayStateEnum = 3,
+                Date_ = new DateTime(thisYear, 7, 15)
+            };
+
+            SelectCalendarDaysDto CUMHURIYETBayrami = new SelectCalendarDaysDto
+            {
+                CalendarDayStateEnum = 3,
+                Date_ = new DateTime(thisYear, 10, 29)
+            };
+
+            GridDaysList.Add(ulusalEgemenlikBayrami);
+            GridDaysList.Add(isciBayrami);
+            GridDaysList.Add(ATATURKUAnmaBayrami);
+            GridDaysList.Add(temmuz15Bayrami);
+            GridDaysList.Add(zaferBayrami);
+            GridDaysList.Add(CUMHURIYETBayrami);
+
+            #endregion
+
+            DataSource = new SelectCalendarsDto() { IsPlanned = true };
+
+            DataSource.SelectCalendarDaysDto = GridDaysList;
+
+
+
+            EditPageVisible = true;
+
+            return Task.CompletedTask;
+        }
+
         #endregion
 
         #region Çalışma Takvimi Görüntüleme Modalı Metotları
@@ -354,6 +320,86 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         {
             schedularVisible = false;
             InvokeAsync(StateHasChanged);
+        }
+
+        private List<AppointmentData> ConvertToAppointmentData(List<SelectCalendarDaysDto> dtoList)
+        {
+            List<AppointmentData> DataSourceEvent = new List<AppointmentData> { };
+            if (dtoList.Count > 0)
+            {
+                foreach (var dto in dtoList)
+                {
+                    AppointmentData data = new AppointmentData();
+                    data.StartTime = dto.StartTime;
+                    data.EndTime = dto.EndTime;
+                    data.ResourceId = dto.CalendarDayStateEnum;
+                    data.Subject = dto.Subject;
+                    DataSourceEvent.Add(data);
+                }
+            }
+
+            return DataSourceEvent;
+        }
+
+        public void customChange(string switchName)
+        {
+            DataSourceEvent = FinalDataSource;
+            List<int> selectedResource = new List<int>();
+            List<AppointmentData> filteredData = new List<AppointmentData>();
+            if (chcCalismaVar) { selectedResource.Add(1); }
+            if (chcCalismaYok) { selectedResource.Add(2); }
+            if (chcResmiTatil) { selectedResource.Add(3); }
+            if (chcTatil) { selectedResource.Add(4); }
+            if (chcYarimGun) { selectedResource.Add(5); }
+            if (chcYuklemeGunu) { selectedResource.Add(6); }
+            if (chcBakim) { selectedResource.Add(7); }
+
+            foreach (int resource in selectedResource)
+            {
+
+                List<AppointmentData> data = FinalDataSource.Where(x => ResourceList[resource].Id == x.ResourceId).ToList();
+                filteredData = filteredData.Concat(data).ToList();
+            }
+
+            DataSourceEvent = filteredData;
+            if (switchName == "chcTumu") { chcCalismaVar = false; chcCalismaYok = false; chcResmiTatil = false; chcTatil = false; chcYarimGun = false; chcYuklemeGunu = false; chcBakim = false; } else { chcTumu = false; }
+
+            if (chcTumu) { DataSourceEvent = FinalDataSource; }
+        }
+
+
+        public async Task OnCellClick(CellClickEventArgs args)
+        {
+            args.Cancel = true;
+            selectedDate = args.StartTime;
+            ShowStationsModal();
+        }
+
+
+        #endregion
+
+        #region İş İstasyonları Modalı İşlemleri
+
+        private async void ShowStationsModal()
+        {
+            StationsList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
+            StationGroupList = (await StationGroupsAppService.GetListAsync(new ListStationGroupsParameterDto())).Data.ToList();
+            StationWorkStatusList = DataSource.SelectCalendarLinesDto;
+
+            var tempGroupList = StationsList.Select(t => t.GroupID).Distinct().ToList();
+            foreach (var groupId in tempGroupList)
+            {
+                string groupname = StationGroupList.Where(t => t.Id == groupId).Select(t => t.Name).FirstOrDefault();
+                StationGroupNameList.Add(groupname);
+            }
+            var a = StationGroupNameList;
+            StationsModalVisible = true;
+        }
+
+        private void HideStationsModal()
+        {
+            StationsModalVisible = false;
+            SelectedStations.Clear();
         }
 
         private async void OnSelectAllStationsChange(string stationGroup)
@@ -375,50 +421,6 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                 var deletedStationList = SelectedStations.Where(t => t.StationGroup != stationGroup).ToList();
                 SelectedStations = deletedStationList;
             }
-        }
-
-        #endregion
-
-        private List<AppointmentData> ConvertToAppointmentData(List<SelectCalendarDaysDto> dtoList)
-        {
-            List<AppointmentData> DataSourceEvent = new List<AppointmentData> { };
-            if (dtoList.Count > 0)
-            {
-                foreach (var dto in dtoList)
-                {
-                    AppointmentData data = new AppointmentData();
-                    data.StartTime = dto.StartTime;
-                    data.EndTime = dto.EndTime;
-                    data.ResourceId = dto.CalendarDayStateEnum;
-                    data.Subject = dto.Subject;
-                    DataSourceEvent.Add(data);
-                }
-            }
-
-            return DataSourceEvent;
-        }
-
-
-        #region İş İstasyonları Modalı İşlemleri
-
-        private async void ShowStationsModal()
-        {
-            StationsList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
-            StationGroupList = (await StationGroupsAppService.GetListAsync(new ListStationGroupsParameterDto())).Data.ToList();
-            var tempGroupList = StationsList.Select(t => t.GroupID).Distinct().ToList();
-            foreach (var groupId in tempGroupList)
-            {
-                string groupname = StationGroupList.Where(t => t.Id == groupId).Select(t => t.Name).FirstOrDefault();
-                StationGroupNameList.Add(groupname);
-            }
-            var a = StationGroupNameList;
-            StationsModalVisible = true;
-        }
-
-        private void HideStationsModal()
-        {
-            StationsModalVisible = false;
-            SelectedStations.Clear();
         }
 
         private async void OnSelectStation(ListStationsDto station)
@@ -444,17 +446,36 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             InvokeAsync(() => StateHasChanged());
         }
 
+        private void OnAddAllStationsChange(Microsoft.AspNetCore.Components.ChangeEventArgs args)
+        {
+            if (isAllStationsChecked)
+            {
+                foreach (var station in StationsList)
+                {
+                    if (!SelectedStations.Contains(station))
+                    {
+                        SelectedStations.Add(station);
+                    }
+                }
+            }
+            else
+            {
+                SelectedStations.Clear();
+            }
+        }
+
         #endregion
 
         #region Takvim Satır Modalı İşlemleri
 
         private async void ShowLineModal()
         {
-            DateTime tempDay = new DateTime(2023, 5, 5);
+            selectedDateStr = selectedDate.ToString();
 
-            if (DataSource.SelectCalendarLinesDto.Where(t => t.Date_ != tempDay).Count() == 0)
+            ShiftsList = (await ShiftsAppService.GetListAsync(new ListShiftsParameterDto())).Data.ToList();
+
+            if (DataSource.SelectCalendarLinesDto.Where(t => t.Date_ == selectedDate).Count() == 0)
             {
-                ShiftsList = (await ShiftsAppService.GetListAsync(new ListShiftsParameterDto())).Data.ToList();
 
                 //var lineList = (await CalendarsService.GetLineListAsync(DataSource.Id)).Data.Where(t=>t.Date_ == selectedDay.).ToList();
 
@@ -477,6 +498,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                             ShiftID = shift.Id,
                             ShiftOverTime = shift.Overtime,
                             ShiftOrder = shift.ShiftOrder,
+                            Date_ = selectedDate.GetValueOrDefault(),
+                            MaintenanceType = "Bakım 1", /*deneme*/
+                            PlannedMaintenanceTime = 3600 /*deneme*/
                         };
 
                         LineGridList.Add(lineRecord);
@@ -487,11 +511,47 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 
             else
             {
-                LineGridList = DataSource.SelectCalendarLinesDto;
+                foreach (var shift in ShiftsList)
+                {
+                    foreach (var station in SelectedStations)
+                    {
+                        if (DataSource.SelectCalendarLinesDto.Where(t => t.StationID == station.Id).Count() != 0)
+                        {
+                            LineGridList.Add(DataSource.SelectCalendarLinesDto.Where(t => t.Date_ == selectedDate && t.StationID == station.Id && t.ShiftID == shift.Id).FirstOrDefault());
+                        }
+                        else
+                        {
+                            SelectCalendarLinesDto lineRecord = new SelectCalendarLinesDto
+                            {
+                                CalendarID = DataSource.Id,
+                                AvailableTime = shift.TotalWorkTime - shift.TotalBreakTime,
+                                PlannedHaltTimes = shift.TotalBreakTime,
+                                ShiftName = shift.Name,
+                                StationName = station.Name,
+                                StationCode = station.Code,
+                                ShiftTime = shift.TotalWorkTime,
+                                StationID = station.Id,
+                                ShiftID = shift.Id,
+                                ShiftOverTime = shift.Overtime,
+                                ShiftOrder = shift.ShiftOrder,
+                                Date_ = selectedDate.GetValueOrDefault(),
+                                MaintenanceType = "Bakım 1", /*deneme*/
+                                PlannedMaintenanceTime = 3600 /*deneme*/
+                            };
+
+                            LineGridList.Add(lineRecord);
+                        }
+
+                    }
+                }
             }
 
-
             LineModalVisible = true;
+        }
+
+        private void ShowLineWorkStatusModal()
+        {
+            lineWorkStatusVisible = true;
         }
 
         private void HideLineModal()
@@ -501,9 +561,15 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             LineModalVisible = false;
         }
 
+        private void HideLineEditModal()
+        {
+            lineWorkStatusVisible = false;
+        }
+
         private async void LineModalSave()
         {
             DataSource.SelectCalendarLinesDto = LineGridList;
+
 
             var updatedEntity = ObjectMapper.Map<SelectCalendarsDto, UpdateCalendarsDto>(DataSource);
 
@@ -511,6 +577,25 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 
             HideLineModal();
 
+            SchedularDaysList = (await CalendarsService.GetDaysListAsync(DataSource.Id)).Data.ToList();
+
+            await InvokeAsync(StateHasChanged);
+        }
+
+        private async void LineEditModalSave()
+        {
+            int selectedLineIndex = DataSource.SelectCalendarLinesDto.FindIndex(t => t.Id == LineDataSource.Id);
+
+            LineDataSource.WorkStatus = tempworkStatus;
+
+            if (selectedLineIndex > -1)
+            {
+                DataSource.SelectCalendarLinesDto[selectedLineIndex] = LineDataSource;
+            }
+
+            await _LineGrid.Refresh();
+
+            HideLineEditModal();
             await InvokeAsync(StateHasChanged);
         }
 
@@ -519,6 +604,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             if (LineGridContextMenu.Count() == 0)
             {
                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Bakım Bilgileri", Id = "maintenance" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Çalışma Durumunu Güncelle", Id = "workstatus" });
             }
         }
 
@@ -531,27 +617,117 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 
                     break;
 
+                case "workstatus":
+                    LineDataSource = args.RowInfo.RowData;
+
+                    ShowLineWorkStatusModal();
+
+                    break;
+
                 default:
                     break;
+            }
+        }
+
+        private void WorkStatesValueChangeHandler(ChangeEventArgs<string, WorkStates> args)
+        {
+            int statusIndex = DataSource.SelectCalendarDaysDto.FindIndex(t => t.Date_ == selectedDate);
+            switch (args.ItemData.ID)
+            {
+                case "State1":
+                    DataSource.SelectCalendarDaysDto[statusIndex].CalendarDayStateEnum = 1;
+                    foreach (var line in LineGridList)
+                    {
+                        line.WorkStatus = 1;
+                    }
+                    break;
+
+                case "State2":
+                    DataSource.SelectCalendarDaysDto[statusIndex].CalendarDayStateEnum = 2;
+                    foreach (var line in LineGridList)
+                    {
+                        line.WorkStatus = 2;
+                    }
+                    break;
+
+                case "State3":
+                    DataSource.SelectCalendarDaysDto[statusIndex].CalendarDayStateEnum = 1;
+                    foreach (var line in LineGridList)
+                    {
+                        line.WorkStatus = 3;
+                    }
+                    break;
+
+                case "State4":
+                    DataSource.SelectCalendarDaysDto[statusIndex].CalendarDayStateEnum = 1;
+
+                    foreach (var line in LineGridList)
+                    {
+                        line.WorkStatus = 4;
+                    }
+                    break;
+
+                case "State5":
+                    DataSource.SelectCalendarDaysDto[statusIndex].CalendarDayStateEnum = 1;
+
+                    foreach (var line in LineGridList)
+                    {
+                        line.WorkStatus = 5;
+                    }
+                    break;
+
+            }
+
+
+            _LineGrid.Refresh();
+        }
+
+        private void LineEditModalWorkStatesValueChangeHandler(ChangeEventArgs<string, WorkStates> args)
+        {
+            switch (args.ItemData.ID)
+            {
+                case "State1":
+
+                    tempworkStatus = 1;
+                    break;
+
+                case "State2":
+
+                    tempworkStatus = 2;
+                    break;
+
+                case "State3":
+
+                    tempworkStatus = 3;
+                    break;
+
+                case "State4":
+
+                    tempworkStatus = 4;
+                    break;
+
+                case "State5":
+
+                    tempworkStatus = 5;
+                    break;
+
             }
         }
 
         #endregion
 
+        #region Public Class'lar
 
-        public async Task OnItemSelected(MenuEventArgs<MenuItem> args)
-        {
-            var SelectedMenuItem = args.Item.Id;
-
-            switch (SelectedMenuItem)
-            {
-                case "Edit":
-                    ShowStationsModal();
-                    break;
-                default:
-                    break;
-            }
-        }
+        public List<AppointmentData> DataSourceEvent = new List<AppointmentData> { };
+        public List<AppointmentData> FinalDataSource = new List<AppointmentData>();
+        public List<ResourceData> ResourceList { get; set; } = new List<ResourceData> {
+        new ResourceData{ Text = "Çalışma Var", Id= 1, Color = CalendarColors.WorkExists },
+        new ResourceData{ Text = "Çalışma Yok", Id= 2, Color = CalendarColors.WorkNotExists },
+        new ResourceData{ Text = "Resmi Tatil", Id= 3, Color = CalendarColors.OfficialHoliday },
+        new ResourceData{ Text = "Tatil", Id= 4, Color = CalendarColors.Holiday },
+        new ResourceData{ Text = "Yarım Gün", Id= 5, Color = CalendarColors.HalfDay },
+        new ResourceData{ Text = "Yükleme Günü", Id= 6, Color = CalendarColors.LoadingDay },
+        new ResourceData{ Text = "Bakım", Id= 7, Color = CalendarColors.Maintenance } };
 
         public class ResourceData
         {
@@ -582,6 +758,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             public string ID { get; set; }
             public string Text { get; set; }
         }
+
         List<WorkStates> WorkStatesData = new List<WorkStates> {
          new WorkStates() { ID= "State1", Text= "Çalışma Var" },
          new WorkStates() { ID= "State2", Text= "Çalışma Yok" },
@@ -589,14 +766,11 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
          new WorkStates() { ID= "State4", Text= "Operatör Kısıtı" },
          new WorkStates() { ID= "State5", Text= "Arızi Kısıt" },
   };
-        private void WorkStatesValueChangeHandler(ChangeEventArgs<string, WorkStates> args)
-        {
-            foreach (var line in LineGridList)
-            {
-                line.WorkStatus = args.ItemData.Text;
-            }
-            _LineGrid.Refresh();
-        }
+
+        #endregion
+
+
+
 
 
     }

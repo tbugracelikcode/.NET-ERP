@@ -485,7 +485,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 {
                     if (item.Id == Guid.Empty)
                     {
-                        var queryDay = queryFactory.Query().From(Tables.CalendarLines).Insert(new CreateCalendarDaysDto
+                        var queryDay = queryFactory.Query().From(Tables.CalendarDays).Insert(new CreateCalendarDaysDto
                         {
                             CalendarID = input.Id,
                             CreationTime = DateTime.Now,
@@ -509,7 +509,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                     {
                         var dayGetQuery = queryFactory.Query().From(Tables.CalendarDays).Select("*").Where(new { Id = item.Id }, false, false, "");
 
-                        var day = queryFactory.Get<SelectCalendarLinesDto>(dayGetQuery);
+                        var day = queryFactory.Get<SelectCalendarDaysDto>(dayGetQuery);
 
                         if (day != null)
                         {
@@ -538,7 +538,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
                 var calendar = queryFactory.Update<SelectCalendarsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.Calendars, LogType.Update, calendar.Id);
+                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.Calendars, LogType.Update, input.Id);
 
                 return new SuccessDataResult<SelectCalendarsDto>(calendar);
             }
@@ -560,7 +560,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                     DataOpenStatus = lockRow,
                     DataOpenStatusUserId = userId,
                     DeleterId = entity.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entity.DeletionTime.Value,
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                     Id = entity.Id,
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),

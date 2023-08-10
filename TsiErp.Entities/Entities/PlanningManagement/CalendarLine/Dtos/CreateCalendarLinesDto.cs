@@ -22,7 +22,7 @@ namespace TsiErp.Entities.Entities.PlanningManagement.CalendarLine.Dtos
         /// <summary>
         /// Çalışma Durumu
         /// </summary>
-        public string WorkStatus { get; set; }
+        public int WorkStatus { get; set; }
 
         /// <summary>
         /// Planlanan Duruş Süresi
