@@ -78,6 +78,7 @@ using TsiErp.Entities.Entities.QualityControl.CustomerComplaintItem;
 using TsiErp.Entities.Entities.QualityControl.EquipmentRecord;
 using TsiErp.Entities.Entities.QualityControl.FinalControlUnsuitabilityItem;
 using TsiErp.Entities.Entities.QualityControl.FinalControlUnsuitabilityReport;
+using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityItem;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.ProductionOrderChangeItem;
@@ -1479,41 +1480,6 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 ProductsOperationLinesTable.Create();
-            }
-            #endregion
-
-            #region ProductOperationQualityPlans Table Created
-            Table ProductOperationQualityPlansTable = model.CreateTable(Tables.ProductOperationQualityPlans);
-
-            if (ProductOperationQualityPlansTable != null)
-            {
-                var properties = (typeof(ProductOperationQualityPlans)).GetProperties();
-
-                foreach (var property in properties)
-                {
-                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
-                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
-                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
-                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
-                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
-                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
-
-                    Column column = new Column(ProductOperationQualityPlansTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
-                    column.Nullable = required;
-
-                    if (isPrimaryKey)
-                    {
-                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ProductOperationQualityPlansTable, "PK_" + ProductOperationQualityPlansTable.Name);
-                        pkIndex.IsClustered = true;
-                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
-                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
-                        ProductOperationQualityPlansTable.Indexes.Add(pkIndex);
-                    }
-
-                    ProductOperationQualityPlansTable.Columns.Add(column);
-                }
-
-                ProductOperationQualityPlansTable.Create();
             }
             #endregion
 
@@ -3477,12 +3443,12 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
             }
             #endregion
 
-            #region ContractOfProductsOperations Table Created
-            Table ContractOfProductsOperationsTable = model.CreateTable(Tables.ContractOfProductsOperations);
+            #region OperationalQualityPlans Table Created
+            Table OperationalQualityPlansTable = model.CreateTable(Tables.OperationalQualityPlans);
 
-            if (ContractOfProductsOperationsTable != null)
+            if (OperationalQualityPlansTable != null)
             {
-                var properties = (typeof(ContractOfProductsOperations)).GetProperties();
+                var properties = (typeof(OperationalQualityPlans)).GetProperties();
 
                 foreach (var property in properties)
                 {
@@ -3493,22 +3459,22 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                     var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
                     var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
 
-                    Column column = new Column(ContractOfProductsOperationsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    Column column = new Column(OperationalQualityPlansTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
                     column.Nullable = required;
 
                     if (isPrimaryKey)
                     {
-                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ContractOfProductsOperationsTable, "PK_" + ContractOfProductsOperationsTable.Name);
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(OperationalQualityPlansTable, "PK_" + OperationalQualityPlansTable.Name);
                         pkIndex.IsClustered = true;
                         pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
                         pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
-                        ContractOfProductsOperationsTable.Indexes.Add(pkIndex);
+                        OperationalQualityPlansTable.Indexes.Add(pkIndex);
                     }
 
-                    ContractOfProductsOperationsTable.Columns.Add(column);
+                    OperationalQualityPlansTable.Columns.Add(column);
                 }
 
-                ContractOfProductsOperationsTable.Create();
+                OperationalQualityPlansTable.Create();
             }
             #endregion
 
