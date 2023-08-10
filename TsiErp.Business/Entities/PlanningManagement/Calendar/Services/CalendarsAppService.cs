@@ -32,6 +32,12 @@ namespace TsiErp.Business.Entities.Calendar.Services
         {
         }
 
+        public IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
+        {
+            for (var day = from.Date; day.Date <= thru.Date; day = day.AddDays(1))
+                yield return day;
+        }
+
         [ValidationAspect(typeof(CreateCalendarsValidatorDto), Priority = 1)]
         [CacheRemoveAspect("Get")]
         public async Task<IDataResult<SelectCalendarsDto>> CreateAsync(CreateCalendarsDto input)
@@ -84,9 +90,12 @@ namespace TsiErp.Business.Entities.Calendar.Services
                         CalendarID = addedEntityId,
                         CreationTime = DateTime.Now,
                         CreatorId = LoginedUserService.UserId,
+                        WorkStatus = item.WorkStatus,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
                         DeleterId = Guid.Empty,
+                        MaintenanceType = item.MaintenanceType,
+                        PlannedMaintenanceTime = item.PlannedMaintenanceTime,
                         DeletionTime = null,
                         Id = GuidGenerator.CreateGuid(),
                         IsDeleted = false,
@@ -103,6 +112,54 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
                 }
+
+                #region Renkli Takvim Oluşturma
+
+                int thisYear = DateTime.Now.Year;
+                DateTime startDate = new DateTime(thisYear, 1, 1);
+                DateTime endDate = new DateTime(thisYear, 12, 31);
+                int numberofDays = 0;
+
+                foreach (DateTime day in EachDay(startDate, endDate))
+                {
+                    numberofDays++;
+
+                    if (day.DayOfWeek == DayOfWeek.Sunday)
+                    {
+                        SelectCalendarDaysDto calendarDays = new SelectCalendarDaysDto
+                        {
+                            CalendarDayStateEnum = 4,
+                            Date_ = day,
+                        };
+                        input.SelectCalendarDaysDto.Add(calendarDays);
+                    }
+                    else if (day.Month == 8 && day.Day == 30 || day.Month == 4 && day.Day == 23 || day.Month == 5 && day.Day == 1 || day.Month == 5 && day.Day == 19 || day.Month == 7 && day.Day == 15 || day.Month == 10 && day.Day == 29)
+                    {
+                        if(!input.SelectCalendarDaysDto.Where(t=>t.Date_.Month == day.Month && t.Date_.Day == day.Day).Any())
+                        {
+                            SelectCalendarDaysDto calendarDays = new SelectCalendarDaysDto
+                            {
+                                CalendarDayStateEnum = 3,
+                                Date_ = day,
+                            };
+                            input.SelectCalendarDaysDto.Add(calendarDays);
+                        }
+                    }
+                    else
+                    {
+                        SelectCalendarDaysDto calendarDays = new SelectCalendarDaysDto
+                        {
+                            CalendarDayStateEnum = 1,
+                            Date_ = day,
+                        };
+                        input.SelectCalendarDaysDto.Add(calendarDays);
+                    }
+
+
+                }
+
+
+            #endregion
 
                 foreach (var item in input.SelectCalendarDaysDto)
                 {
@@ -181,10 +238,10 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 var queryLines = queryFactory
                        .Query()
                        .From(Tables.CalendarLines)
-                       .Select<CalendarLines>(cl => new { cl.ShiftID, cl.CalendarID, cl.StationID, cl.Id, cl.DataOpenStatus, cl.DataOpenStatusUserId, cl.ShiftTime, cl.ShiftOverTime, cl.PlannedHaltTimes, cl.Date_, cl.AvailableTime })
+                       .Select<CalendarLines>(cl => new { cl.ShiftID, cl.CalendarID, cl.StationID, cl.Id, cl.DataOpenStatus, cl.DataOpenStatusUserId, cl.ShiftTime, cl.ShiftOverTime, cl.PlannedHaltTimes, cl.Date_, cl.AvailableTime, cl.WorkStatus, cl.PlannedMaintenanceTime, cl.MaintenanceType })
                        .Join<Stations>
                         (
-                            s => new { StationName = s.Name, StationID = s.Id },
+                            s => new { StationName = s.Name, StationID = s.Id, StationCode = s.Code },
                             nameof(CalendarLines.StationID),
                             nameof(Stations.Id),
                             JoinType.Left
@@ -235,7 +292,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
 
-                var query = queryFactory.Query().From(Tables.CalendarLines).Select<CalendarLines>(cl => new { cl.ShiftID, cl.CalendarID, cl.StationID, cl.Id, cl.DataOpenStatus, cl.DataOpenStatusUserId, cl.ShiftTime, cl.ShiftOverTime, cl.PlannedHaltTimes, cl.Date_, cl.AvailableTime })
+                var query = queryFactory.Query().From(Tables.CalendarLines).Select<CalendarLines>(cl => new { cl.ShiftID, cl.CalendarID, cl.StationID, cl.Id, cl.DataOpenStatus, cl.DataOpenStatusUserId, cl.ShiftTime, cl.ShiftOverTime, cl.PlannedHaltTimes, cl.Date_, cl.AvailableTime, cl.WorkStatus, cl.PlannedMaintenanceTime, cl.MaintenanceType })
                        .Join<Stations>
                         (
                             s => new { StationName = s.Name },
@@ -288,10 +345,10 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 var queryLines = queryFactory
                        .Query()
                        .From(Tables.CalendarLines)
-                       .Select<CalendarLines>(cl => new { cl.ShiftID, cl.CalendarID, cl.StationID, cl.Id, cl.DataOpenStatus, cl.DataOpenStatusUserId, cl.ShiftTime, cl.ShiftOverTime, cl.PlannedHaltTimes, cl.Date_, cl.AvailableTime })
+                       .Select<CalendarLines>(cl => new { cl.ShiftID, cl.CalendarID, cl.StationID, cl.Id, cl.DataOpenStatus, cl.DataOpenStatusUserId, cl.ShiftTime, cl.ShiftOverTime, cl.PlannedHaltTimes, cl.Date_, cl.AvailableTime, cl.WorkStatus, cl.PlannedMaintenanceTime, cl.MaintenanceType })
                        .Join<Stations>
                         (
-                            s => new { StationName = s.Name,StationID = s.Id },
+                            s => new { StationName = s.Name, StationID = s.Id, StationCode = s.Code },
                             nameof(CalendarLines.StationID),
                             nameof(Stations.Id),
                             JoinType.Left
@@ -366,8 +423,11 @@ namespace TsiErp.Business.Entities.Calendar.Services
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
+                            MaintenanceType = item.MaintenanceType,
+                            PlannedMaintenanceTime = item.PlannedMaintenanceTime,
                             DeleterId = Guid.Empty,
                             DeletionTime = null,
+                            WorkStatus = item.WorkStatus,
                             Id = GuidGenerator.CreateGuid(),
                             IsDeleted = false,
                             LastModificationTime = null,
@@ -400,6 +460,8 @@ namespace TsiErp.Business.Entities.Calendar.Services
                                 DataOpenStatusUserId = Guid.Empty,
                                 DeleterId = line.DeleterId.GetValueOrDefault(),
                                 DeletionTime = line.DeletionTime.GetValueOrDefault(),
+                                PlannedMaintenanceTime = line.PlannedMaintenanceTime,
+                                MaintenanceType = line.MaintenanceType,
                                 Id = item.Id,
                                 IsDeleted = item.IsDeleted,
                                 LastModificationTime = DateTime.Now,
@@ -409,6 +471,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                                 PlannedHaltTimes = item.PlannedHaltTimes,
                                 ShiftID = item.ShiftID.Value,
                                 ShiftOverTime = item.ShiftOverTime,
+                                WorkStatus = item.WorkStatus,
                                 ShiftTime = item.ShiftTime,
                                 StationID = item.StationID.Value
                             }).Where(new { Id = line.Id }, false, false, "");
@@ -422,7 +485,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 {
                     if (item.Id == Guid.Empty)
                     {
-                        var queryDay = queryFactory.Query().From(Tables.CalendarLines).Insert(new CreateCalendarDaysDto
+                        var queryDay = queryFactory.Query().From(Tables.CalendarDays).Insert(new CreateCalendarDaysDto
                         {
                             CalendarID = input.Id,
                             CreationTime = DateTime.Now,
@@ -446,7 +509,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                     {
                         var dayGetQuery = queryFactory.Query().From(Tables.CalendarDays).Select("*").Where(new { Id = item.Id }, false, false, "");
 
-                        var day = queryFactory.Get<SelectCalendarLinesDto>(dayGetQuery);
+                        var day = queryFactory.Get<SelectCalendarDaysDto>(dayGetQuery);
 
                         if (day != null)
                         {
@@ -475,7 +538,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
 
                 var calendar = queryFactory.Update<SelectCalendarsDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.Calendars, LogType.Update, calendar.Id);
+                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.Calendars, LogType.Update, input.Id);
 
                 return new SuccessDataResult<SelectCalendarsDto>(calendar);
             }
@@ -497,7 +560,7 @@ namespace TsiErp.Business.Entities.Calendar.Services
                     DataOpenStatus = lockRow,
                     DataOpenStatusUserId = userId,
                     DeleterId = entity.DeleterId.GetValueOrDefault(),
-                    DeletionTime = entity.DeletionTime.Value,
+                    DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                     Id = entity.Id,
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),

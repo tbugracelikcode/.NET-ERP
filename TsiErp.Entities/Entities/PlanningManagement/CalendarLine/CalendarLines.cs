@@ -16,6 +16,12 @@ namespace TsiErp.Entities.Entities.PlanningManagement.CalendarLine
         /// </summary>
         public decimal ShiftOverTime { get; set; }
 
+        [SqlColumnType(SqlDbType = SqlDataType.Int)]
+        /// <summary>
+        /// Çalışma Durumu
+        /// </summary>
+        public int WorkStatus { get; set; }
+
         [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Vardiya Süresi
@@ -27,6 +33,19 @@ namespace TsiErp.Entities.Entities.PlanningManagement.CalendarLine
         /// Planlanan Duruş Süresi
         /// </summary>
         public decimal PlannedHaltTimes { get; set; }
+
+
+        [SqlColumnType(SqlDbType = SqlDataType.NVarChar, MaxLength = 100)]
+        /// <summary>
+        /// Bakım Türü
+        /// </summary>
+        public string MaintenanceType { get; set; }
+
+        [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
+        /// <summary>
+        /// Planlanan Bakım Süresi
+        /// </summary>
+        public decimal PlannedMaintenanceTime { get; set; }
 
         [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>

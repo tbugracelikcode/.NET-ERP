@@ -192,7 +192,7 @@ namespace TsiErp.Business.Entities.Station.Services
                        .Select<Stations>(s => new { s.Y, s.X, s.UsageArea, s.ShiftWorkingTime, s.Shift, s.PowerFactor, s.Name, s.Model, s.MachineCost, s.KWA, s.IsFixtures, s.IsContract, s.IsActive, s.Id, s.GroupID, s.DataOpenStatusUserId, s.DataOpenStatus, s.Code, s.Capacity, s.Brand, s.AreaCovered, s.Amortization })
                        .Join<StationGroups>
                         (
-                            sg => new { StationGroup = sg.Name },
+                            sg => new { StationGroup = sg.Name, GroupID = sg.Id },
                             nameof(Stations.GroupID),
                             nameof(StationGroups.Id),
                             JoinType.Left
