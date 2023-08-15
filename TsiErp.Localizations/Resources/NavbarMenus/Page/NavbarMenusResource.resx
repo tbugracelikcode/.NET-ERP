@@ -153,6 +153,9 @@
   <data name="ContractProdTrackingsChildMenu" xml:space="preserve">
     <value>Fason İmalat Takip Kayıtları</value>
   </data>
+  <data name="ContractQualityPlansChildMenu" xml:space="preserve">
+    <value>Fason Giriş Kalite Planları</value>
+  </data>
   <data name="ControlConditionsChildMenu" xml:space="preserve">
     <value>Kontrol Şartı Başlıkları</value>
   </data>
@@ -291,6 +294,9 @@
   <data name="MRPIIChildMenu" xml:space="preserve">
     <value>Üretim Kaynak Planlaması (MRPII)</value>
   </data>
+  <data name="OperationalQualityPlansChildMenu" xml:space="preserve">
+    <value>Operasyon Kalite Planları</value>
+  </data>
   <data name="OperationsMenu" xml:space="preserve">
     <value>Operasyonlar</value>
   </data>
@@ -387,6 +393,9 @@
   <data name="PurchasePricesChildMenu" xml:space="preserve">
     <value>Satın Alma Fiyat Listeleri</value>
   </data>
+  <data name="PurchaseQualityPlansChildMenu" xml:space="preserve">
+    <value>Satın Alma Giriş Kalite Planları</value>
+  </data>
   <data name="PurchaseRequestFicheListChildMenu" xml:space="preserve">
     <value>Satın Alma Talep Fişi Listesi</value>
   </data>
@@ -404,6 +413,9 @@
   </data>
   <data name="QualityControlParentMenu" xml:space="preserve">
     <value>Kalite Kontrol</value>
+  </data>
+  <data name="QualityPlansMenu" xml:space="preserve">
+    <value>Kalite Planları</value>
   </data>
   <data name="ReportsMenu" xml:space="preserve">
     <value>Raporlar</value>

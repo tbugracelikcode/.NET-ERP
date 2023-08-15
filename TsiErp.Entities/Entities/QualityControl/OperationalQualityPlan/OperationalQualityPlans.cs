@@ -92,5 +92,23 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan
         /// Resimdeki Ölçü Numarası
         /// </summary>
         public decimal MeasureNumberInPicture { get; set; }
+
+        [SqlColumnType( MaxLength = 17, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Kalite Planı Kodu
+        /// </summary>
+        public string Code { get; set; }
+
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.DateTime)]
+        /// <summary>
+        /// Tarih
+        /// </summary>
+        public DateTime Date_ { get; set; }
+
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
+        ///<summary>
+        ///Kontrol Sıklığı
+        /// </summary
+        public string Description_ { get; set; }
     }
 }

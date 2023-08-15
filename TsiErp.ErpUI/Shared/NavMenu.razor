@@ -242,6 +242,13 @@
                                 <DxTreeViewNode Text=@L["ControlTypesChildMenu"] NavigateUrl="/control-types" />
                                 <DxTreeViewNode Text=@L["ControlConditionsChildMenu"] NavigateUrl="/control-conditions" />
                                 <DxTreeViewNode Text=@L["UnsItemsChildMenu"] NavigateUrl="/unsuitability-items" />
+                                 <DxTreeViewNode Text=@L["QualityPlansMenu"]>
+                                    <Nodes>
+                                        <DxTreeViewNode NavigateUrl="/operational-quality-plans" Text=@L["OperationalQualityPlansChildMenu"] />
+                                        <DxTreeViewNode  Text=@L["ContractQualityPlansChildMenu"] />
+                                        <DxTreeViewNode  Text=@L["PurchaseQualityPlansChildMenu"] />
+                                    </Nodes>
+                                </DxTreeViewNode>
                                 <DxTreeViewNode Text=@L["MidControlChildMenu"] />
 
                                 <DxTreeViewNode Text=@L["EquipmentManagementMenu"]>

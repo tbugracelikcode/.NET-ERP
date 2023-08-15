@@ -18,15 +18,40 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan.Dtos
         /// </summary>
         
         public string ProductCode { get; set; }
+
+        /// <summary>
+        /// Ürün Adı
+        /// </summary>
+
+        public string ProductName { get; set; }
         ///<summary>
         ///Operasyon ID
         /// </summary
         public Guid ProductsOperationID { get; set; }
+        /// <summary>
+        /// Kalite Planı Kodu
+        /// </summary>
+        public string Code { get; set; }
+
+        /// <summary>
+        /// Tarih
+        /// </summary>
+        public DateTime Date_ { get; set; }
+
+        ///<summary>
+        ///Kontrol Sıklığı
+        /// </summary
+        public string Description_ { get; set; }
 
         /// <summary>
         /// Operasyon Kodu
         /// </summary>
         public string OperationCode { get; set; }
+
+        /// <summary>
+        /// Operasyon Adı
+        /// </summary>
+        public string OperationName { get; set; }
 
         ///<summary>
         ///Kontrol Türü ID

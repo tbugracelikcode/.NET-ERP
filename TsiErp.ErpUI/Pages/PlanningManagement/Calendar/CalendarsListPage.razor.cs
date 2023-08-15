@@ -81,7 +81,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             CreateDayContextMenuItems();
             FinalDataSource = DataSourceEvent;
             base.OnInitialized();
-
+                                                                       
         }
 
         #region Çalışma Takvimi Ekleme Modalı Metotları
@@ -714,7 +714,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             }
         }
 
-        #endregion
+        #endregion                                               
 
         #region Public Class'lar
 
