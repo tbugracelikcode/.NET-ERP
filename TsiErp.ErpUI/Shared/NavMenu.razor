@@ -1,3 +1,4 @@
+@using DevExpress.Blazor.Navigation.Internal;
 @inject IStringLocalizer<NavbarMenusResource> L
 
 
@@ -6,13 +7,13 @@
 <div>
 
     <div class="sidebar">
-        <DxTreeView AllowSelectNodes="true" style="min-height: 90vh;" CssClass=" app-sidebar" NodeExpandCollapseAction="TreeViewNodeExpandCollapseAction.NodeClick">
+        <DxTreeView @ref=treeView AllowSelectNodes="true" style="min-height: 90vh;" CssClass=" app-sidebar" NodeExpandCollapseAction="TreeViewNodeExpandCollapseAction.NodeClick">
 
             <Nodes>
 
-                <DxTreeViewNode Visible="@collapsevisible" Text=@L["StockManagementParentMenu"] IconCssClass="fa fa-warehouse">
+                <DxTreeViewNode Visible="@StockManagementParentMenuVisible" Text=@L["StockManagementParentMenu"] Name="StockManagementParentMenu" IconCssClass="fa fa-warehouse">
                     <Nodes>
-                        <DxTreeViewNode Text=@L["MainRecordsMenu"]>
+                        <DxTreeViewNode Text=@L["StockManagementMainRecordsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode NavigateUrl="/product-groups" Text=@L["ProductGroupsChildMenu"] />
                                 <DxTreeViewNode NavigateUrl="/unitsets" Text=@L["UnitSetsChildMenu"] />
@@ -22,12 +23,12 @@
                                 <DxTreeViewNode NavigateUrl="/product-referance-numbers" Text=@L["ProductRefNumbersChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["TransactionsMenu"]>
+                        <DxTreeViewNode Text=@L["StockManagementTransactionsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode Text=@L["StockFichesChildMenu"] NavigateUrl="/stock-fiches" />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["ReportsMenu"]>
+                        <DxTreeViewNode Text=@L["StockManagementReportsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode Text=@L["ListofMaterialsChildMenu"] />
                                 <DxTreeViewNode Text=@L["MaterialWarehouseStatusChildMenu"] />
@@ -41,7 +42,7 @@
 
                 <DxTreeViewNode Visible="@collapsevisible" Text=@L["FinanceManagementParentMenu"] IconCssClass="fa fa-euro-sign">
                     <Nodes>
-                        <DxTreeViewNode Text=@L["MainRecordsMenu"]>
+                        <DxTreeViewNode Text=@L["FinanceManagementMainRecordsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode NavigateUrl="/current-account-cards" Text=@L["CurrentAccountsChildMenu"] />
                                 <DxTreeViewNode NavigateUrl="/payment-plans" Text=@L["PaymentPlansChildMenu"] />
@@ -52,18 +53,18 @@
 
                 <DxTreeViewNode Visible="@collapsevisible" Text=@L["PurchaseManagementParentMenu"] IconCssClass="fa fa-euro-sign">
                     <Nodes>
-                        <DxTreeViewNode Text=@L["MainRecordsMenu"]>
+                        <DxTreeViewNode Text=@L["PurchaseManagementMainRecordsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode NavigateUrl="/purchase-prices" Text=@L["PurchasePricesChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["TransactionsMenu"]>
+                        <DxTreeViewNode Text=@L["PurchaseManagementTransactionsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode NavigateUrl="/purchase-requests" Text=@L["PurchaseRequestsChildMenu"] />
                                 <DxTreeViewNode NavigateUrl="/purchase-orders" Text=@L["PurchaseOrdersChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["ReportsMenu"]>
+                        <DxTreeViewNode Text=@L["PurchaseManagementReportsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode Text=@L["PurchaseRequestFicheListChildMenu"] />
                                 <DxTreeViewNode Text=@L["PurchaseOrderFicheListChildMenu"] />
@@ -74,12 +75,12 @@
 
                 <DxTreeViewNode Visible="@collapsevisible" Text=@L["SalesManagementParentMenu"] IconCssClass="fa fa-euro-sign">
                     <Nodes>
-                        <DxTreeViewNode Text=@L["MainRecordsMenu"]>
+                        <DxTreeViewNode Text=@L["SalesManagementMainRecordsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode NavigateUrl="/sales-prices" Text=@L["SalesPricesChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["TransactionsMenu"]>
+                        <DxTreeViewNode Text=@L["SalesManagementTransactionsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode NavigateUrl="/sales-propositions" Text=@L["SalesPropositionsChildMenu"] />
                                 <DxTreeViewNode NavigateUrl="/sales-orders" Text=@L["SalesOrdersChildMenu"] />
@@ -91,7 +92,7 @@
                                 <DxTreeViewNode Text=@L["CPRChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["ReportsMenu"]>
+                        <DxTreeViewNode Text=@L["SalesManagementReportsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode Text=@L["SalesPropositionFicheListChildMenu"] />
                                 <DxTreeViewNode Text=@L["SalesOrderFicheListChildMenu"] />
@@ -118,12 +119,12 @@
 
                 <DxTreeViewNode Visible="@collapsevisible" Text=@L["ShipmentParentMenu"] IconCssClass="fa fa-truck">
                     <Nodes>
-                        <DxTreeViewNode Text=@L["MainRecordsMenu"]>
+                        <DxTreeViewNode Text=@L["ShipmentManagementMainRecordsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode NavigateUrl="/shipping-adresses" Text=@L["ShippingAdressesChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["TransactionsMenu"]>
+                        <DxTreeViewNode Text=@L["ShipmentManagementTransactionsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode Text=@L["ShipmentPlanningChildMenu"] />
                                 <DxTreeViewNode Text=@L["PackageFichesChildMenu"] />
@@ -131,7 +132,7 @@
                                 <DxTreeViewNode Text=@L["PackingListsChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["ReportsMenu"]>
+                        <DxTreeViewNode Text=@L["ShipmentManagementReportsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode Text=@L["PackageFichesListChildMenu"] />
                                 <DxTreeViewNode Text=@L["PalletRecordsListChildMenu"] />
@@ -143,7 +144,7 @@
 
                 <DxTreeViewNode Visible="@collapsevisible" Text=@L["MachWorkForceManagementParentMenu"] IconCssClass="fa fa-users">
                     <Nodes>
-                        <DxTreeViewNode Text=@L["MainRecordsMenu"]>
+                        <DxTreeViewNode Text=@L["MachWorkForceManagementMainRecordsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode NavigateUrl="/station-groups" Text=@L["StationGroupChildMenu"] />
                                 <DxTreeViewNode NavigateUrl="/stations" Text=@L["StationsChildMenu"] />
@@ -151,13 +152,13 @@
                                 <DxTreeViewNode NavigateUrl="/departments" Text=@L["DepartmentsChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["TransactionsMenu"]>
+                        <DxTreeViewNode Text=@L["MachWorkForceManagementTransactionsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode Text=@L["EmployeeScoreChildMenu"] />
                                 <DxTreeViewNode Text=@L["StationCostChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["ReportsMenu"]>
+                        <DxTreeViewNode Text=@L["MachWorkForceManagementReportsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode Text=@L["StationListChildMenu"] />
                                 <DxTreeViewNode Text=@L["EmployeeListChildMenu"] />
@@ -175,7 +176,7 @@
 
                 <DxTreeViewNode Visible="@collapsevisible" Text=@L["ProductionManagementParentMenu"] IconCssClass="fa fa-industry">
                     <Nodes>
-                        <DxTreeViewNode Text=@L["MainRecordsMenu"]>
+                        <DxTreeViewNode Text=@L["ProductionManagementMainRecordsMenu"]>
                             <Nodes>
 
                                 <DxTreeViewNode Text=@L["OperationsMenu"]>
@@ -190,7 +191,7 @@
                             </Nodes>
                         </DxTreeViewNode>
 
-                        <DxTreeViewNode Text=@L["TransactionsMenu"]>
+                        <DxTreeViewNode Text=@L["ProductionManagementTransactionsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode Text=@L["ProductionOrdersChildMenu"] />
                                 <DxTreeViewNode NavigateUrl="/work-orders" Text=@L["WorkOrdersChildMenu"] />
@@ -203,7 +204,7 @@
                                 <DxTreeViewNode NavigateUrl="/contract-production-tracking" Text=@L["ContractProdTrackingsChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["ReportsMenu"]>
+                        <DxTreeViewNode Text=@L["ProductionManagementReportsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode Text=@L["GeneralOEEChildMenu"] />
                                 <DxTreeViewNode Text=@L["StationOEEChildMenu"] />
@@ -217,13 +218,13 @@
 
                 <DxTreeViewNode Visible="@collapsevisible" Text=@L["MaintenanceManagementParentMenu"] IconCssClass="fa fa-euro-sign">
                     <Nodes>
-                        <DxTreeViewNode Text=@L["MainRecordsMenu"]>
+                        <DxTreeViewNode Text=@L["MaintenanceManagementMainRecordsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode NavigateUrl="/maintenance-periods" Text=@L["MainPeriodsChildMenu"] />
                                 <DxTreeViewNode NavigateUrl="/maintenance-instructions" Text=@L["MainInstructionsChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["TransactionsMenu"]>
+                        <DxTreeViewNode Text=@L["MaintenanceManagementTransactionsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode NavigateUrl="/planned-maintenances" Text=@L["PlannedMainChildMenu"] />
                                 <DxTreeViewNode NavigateUrl="/unplanned-maintenances" Text=@L["UnplannedMainChildMenu"] />
@@ -236,7 +237,7 @@
 
                 <DxTreeViewNode Visible="@collapsevisible" Text=@L["QualityControlParentMenu"] IconCssClass="fa fa-clipboard">
                     <Nodes>
-                        <DxTreeViewNode Text=@L["MainRecordsMenu"]>
+                        <DxTreeViewNode Text=@L["QualityControlMainRecordsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode Text=@L["UnsTypesItemsChildMenu"] NavigateUrl="/unsuitability-types-items" />
                                 <DxTreeViewNode Text=@L["ControlTypesChildMenu"] NavigateUrl="/control-types" />
@@ -253,7 +254,7 @@
                             </Nodes>
                         </DxTreeViewNode>
 
-                        <DxTreeViewNode Text=@L["TransactionsMenu"]>
+                        <DxTreeViewNode Text=@L["QualityControlTransactionsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode Text=@L["MidControlRecordsChildMenu"] />
                                 <DxTreeViewNode Text=@L["FinalControlRecordsChildMenu"] />
@@ -275,7 +276,7 @@
 
                                     </Nodes>
                                 </DxTreeViewNode>
-                                <DxTreeViewNode Text=@L["ReportsMenu"]>
+                                <DxTreeViewNode Text=@L["QualityControlReportsMenu"]>
                                 </DxTreeViewNode>
                                 <DxTreeViewNode Text=@L["TechAnlChildMenu"]>
                                     <DxTreeViewNode Text=@L["SPCFMEAChildMenu"] />
@@ -298,19 +299,19 @@
                         <DxTreeViewNode NavigateUrl="/users" Text=@L["UsersChildMenu"] />
                         <DxTreeViewNode NavigateUrl="/user-groups" Text=@L["UserGrpChildMenu"] />
                         <DxTreeViewNode NavigateUrl="" Text=@L["RoleDefinitionsChildMenu"] />
-                        <DxTreeViewNode Visible="@collapseparametersvisible" Text=@L["GeneralSystemParametersParentMenu"] >
+                        <DxTreeViewNode Visible="@collapseparametersvisible" Text=@L["GeneralSystemParametersParentMenu"]>
                             <Nodes>
-                                 <DxTreeViewNode NavigateUrl="/finance-management-parameters"  Text=@L["FinanceManagementParametersChildMenu"] />
-                                 <DxTreeViewNode  Text=@L["MachineAndWorkforceManagementParametersChildMenu"] />
-                                 <DxTreeViewNode  Text=@L["MaintenanceManagementParametersChildMenu"] />
-                                 <DxTreeViewNode  Text=@L["PlanningManagementParametersChildMenu"] />
-                                 <DxTreeViewNode  Text=@L["ProductionManagementParametersChildMenu"] />
-                                 <DxTreeViewNode NavigateUrl="/purchase-management-parameters"  Text=@L["PurchaseManagementParametersChildMenu"] />
-                                 <DxTreeViewNode  Text=@L["QualityControlParametersChildMenu"] />
-                                 <DxTreeViewNode NavigateUrl="/sales-management-parameters"   Text=@L["SalesManagementParametersChildMenu"] />
-                                 <DxTreeViewNode  Text=@L["ShippingManagementParametersChildMenu"] />
-                                 <DxTreeViewNode NavigateUrl="/stock-management-parameters" Text=@L["StockManagementParametersChildMenu"] />
-                                 <DxTreeViewNode  Text=@L["GeneralParametersChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/finance-management-parameters" Text=@L["FinanceManagementParametersChildMenu"] />
+                                <DxTreeViewNode Text=@L["MachineAndWorkforceManagementParametersChildMenu"] />
+                                <DxTreeViewNode Text=@L["MaintenanceManagementParametersChildMenu"] />
+                                <DxTreeViewNode Text=@L["PlanningManagementParametersChildMenu"] />
+                                <DxTreeViewNode Text=@L["ProductionManagementParametersChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/purchase-management-parameters" Text=@L["PurchaseManagementParametersChildMenu"] />
+                                <DxTreeViewNode Text=@L["QualityControlParametersChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/sales-management-parameters" Text=@L["SalesManagementParametersChildMenu"] />
+                                <DxTreeViewNode Text=@L["ShippingManagementParametersChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/stock-management-parameters" Text=@L["StockManagementParametersChildMenu"] />
+                                <DxTreeViewNode Text=@L["GeneralParametersChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
                         <DxTreeViewNode NavigateUrl="/insert-menu" Text="Menü Ekle" />
@@ -318,10 +319,13 @@
                 </DxTreeViewNode>
 
             </Nodes>
+
         </DxTreeView>
     </div>
 
 </div>
+@*
+<SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Get Node Info</SfButton>*@
 
 <style>
     .scroller {
@@ -356,11 +360,23 @@
     }
 </style>
 
+
 @code {
     private bool collapsevisible = true;
+    private bool StockManagementParentMenuVisible = true;
     private bool collapseparametersvisible = true;
     public bool SidebarToggle = true;
     public bool SidebarToggleFixed = true;
 
+    DxTreeView treeView;
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var node = treeView.GetNodeInfo(t => t.Name == "StockManagementParentMenu");
+            StockManagementParentMenuVisible = false;
+            await InvokeAsync(StateHasChanged);
+        }
+    }
 }

@@ -85,7 +85,7 @@ namespace TsiErp.Business.Entities.Menu.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var query = queryFactory.Query().From(Tables.Menus).Select("*").Where(null, false, false, "");
+                var query = queryFactory.Query().From(Tables.Menus).Select("*").Where(null, false, false, "").UseIsDelete(false);
                 var menus = queryFactory.GetList<ListMenusDto>(query).ToList();
                 return new SuccessDataResult<IList<ListMenusDto>>(menus);
             }

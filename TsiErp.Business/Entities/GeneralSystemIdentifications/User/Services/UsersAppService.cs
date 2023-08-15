@@ -119,6 +119,21 @@ namespace TsiErp.Business.Entities.User.Services
             }
         }
 
+        public async Task<IDataResult<SelectUsersDto>> GetAsyncByUserNameAndPassword(string userName, string password)
+        {
+            using (var connection = queryFactory.ConnectToDatabase())
+            {
+                var query = queryFactory.Query().From(Tables.Users).Select("*").Where(new { UserName = userName, Password = password }, true, true, Tables.Users);
+
+                var user = queryFactory.Get<SelectUsersDto>(query);
+
+                LogsAppService.InsertLogToDatabase(user, user, LoginedUserService.UserId, Tables.Users, LogType.Get, user.Id);
+
+                return new SuccessDataResult<SelectUsersDto>(user);
+
+            }
+        }
+
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListUsersDto>>> GetListAsync(ListUsersParameterDto input)
         {

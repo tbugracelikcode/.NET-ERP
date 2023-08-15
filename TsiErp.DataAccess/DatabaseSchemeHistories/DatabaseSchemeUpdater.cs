@@ -27,6 +27,7 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.ShippingManagementPa
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.StockManagementParameter;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.User;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserGroup;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Version;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
@@ -3477,6 +3478,42 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 OperationalQualityPlansTable.Create();
             }
             #endregion
+
+            #region UserPermissions Table Created
+            Table UserPermissionsTable = model.CreateTable(Tables.UserPermissions);
+
+            if (UserPermissionsTable != null)
+            {
+                var properties = (typeof(UserPermissions)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(UserPermissionsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(UserPermissionsTable, "PK_" + UserPermissionsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        UserPermissionsTable.Indexes.Add(pkIndex);
+                    }
+
+                    UserPermissionsTable.Columns.Add(column);
+                }
+
+                UserPermissionsTable.Create();
+            }
+            #endregion
+
 
             return true;
         }
