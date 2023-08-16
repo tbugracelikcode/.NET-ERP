@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using TsiErp.ErpUI.Models;
 
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
@@ -172,7 +173,19 @@
 
             LoginedUserService.VersionTableId = Guid.Parse("8A5F698D-D632-4314-A0C4-02E496FEB6CD");
 
-            LoginedUserService.UserPermissions = (await UserPermissionsAppService.GetListAsyncByUserId(loginnedUser.Id)).Data.ToList();
+            var permissions = (await UserPermissionsAppService.GetListAsyncByUserId(loginnedUser.Id)).Data;
+
+            var menus = (typeof(NavBarPermissionsModel)).GetProperties();
+
+            foreach (var item in permissions)
+            {
+                var menu = menus.Where(t => t.Name == item.MenuName).FirstOrDefault();
+
+                if(menu!=null)
+                {
+                    menu.SetValue(menu, item.IsUserPermitted);
+                }
+            }
 
             NavigationManager.NavigateTo("/home");
         }

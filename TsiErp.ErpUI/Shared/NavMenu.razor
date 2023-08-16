@@ -1,7 +1,9 @@
 @using DevExpress.Blazor.Navigation.Internal;
+@using TsiErp.ErpUI.Models;
 @inject IStringLocalizer<NavbarMenusResource> L
 
-
+@inject IMenusAppService MenuService
+@inject IUserPermissionsAppService UserPermissionsService
 
 
 <div>
@@ -11,30 +13,30 @@
 
             <Nodes>
 
-                <DxTreeViewNode Visible="@StockManagementParentMenuVisible" Text=@L["StockManagementParentMenu"] Name="StockManagementParentMenu" IconCssClass="fa fa-warehouse">
+                <DxTreeViewNode Visible="@(NavBarPermissionsModel.StockManagementParentMenu)" Text=@L["StockManagementParentMenu"] Name="StockManagementParentMenu" IconCssClass="fa fa-warehouse">
                     <Nodes>
-                        <DxTreeViewNode Text=@L["StockManagementMainRecordsMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.StockManagementMainRecordsMenu)" Text=@L["StockManagementMainRecordsMenu"] Name="StockManagementMainRecordsMenu">
                             <Nodes>
-                                <DxTreeViewNode NavigateUrl="/product-groups" Text=@L["ProductGroupsChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/unitsets" Text=@L["UnitSetsChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/warehouses" Text=@L["WarehousesChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/products" Text=@L["ProductsChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/technical-drawings" Text=@L["TechnicalDrawingsChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/product-referance-numbers" Text=@L["ProductRefNumbersChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductGroupsChildMenu)"  NavigateUrl="/product-groups" Text=@L["ProductGroupsChildMenu"] Name="ProductGroupsChildMenu" />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.UnitSetsChildMenu)" NavigateUrl="/unitsets" Text=@L["UnitSetsChildMenu"] Name="UnitSetsChildMenu" />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.WarehousesChildMenu)"  NavigateUrl="/warehouses" Text=@L["WarehousesChildMenu"] Name="WarehousesChildMenu" />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductsChildMenu)" NavigateUrl="/products" Text=@L["ProductsChildMenu"] Name="ProductsChildMenu" />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.TechnicalDrawingsChildMenu)"  NavigateUrl="/technical-drawings" Text=@L["TechnicalDrawingsChildMenu"] Name="TechnicalDrawingsChildMenu" />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductRefNumbersChildMenu)" NavigateUrl="/product-referance-numbers" Text=@L["ProductRefNumbersChildMenu"] Name="ProductRefNumbersChildMenu" />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["StockManagementTransactionsMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.StockManagementTransactionsMenu)" Text=@L["StockManagementTransactionsMenu"] Name="StockManagementTransactionsMenu">
                             <Nodes>
-                                <DxTreeViewNode Text=@L["StockFichesChildMenu"] NavigateUrl="/stock-fiches" />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.StockFichesChildMenu)" Text=@L["StockFichesChildMenu"] Name="StockFichesChildMenu" NavigateUrl="/stock-fiches" />
                             </Nodes>
                         </DxTreeViewNode>
-                        <DxTreeViewNode Text=@L["StockManagementReportsMenu"]>
+                        <DxTreeViewNode Visible="@(NavBarPermissionsModel.StockManagementReportsMenu)" Text=@L["StockManagementReportsMenu"] Name="StockManagementReportsMenu">
                             <Nodes>
-                                <DxTreeViewNode Text=@L["ListofMaterialsChildMenu"] />
-                                <DxTreeViewNode Text=@L["MaterialWarehouseStatusChildMenu"] />
-                                <DxTreeViewNode Text=@L["InventoryListChildMenu"] />
-                                <DxTreeViewNode Text=@L["ByProdGrpPerfAnalysisChildMenu"] />
-                                <DxTreeViewNode Text=@L["ByProdGrpScrapAnalysisChildMenu"] />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ListofMaterialsChildMenu)" Text=@L["ListofMaterialsChildMenu"] Name="ListofMaterialsChildMenu" />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MaterialWarehouseStatusChildMenu)"  Text=@L["MaterialWarehouseStatusChildMenu"] Name="MaterialWarehouseStatusChildMenu" />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.InventoryListChildMenu)" Text=@L["InventoryListChildMenu"] Name="InventoryListChildMenu" />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ByProdGrpPerfAnalysisChildMenu)" Text=@L["ByProdGrpPerfAnalysisChildMenu"] Name="ByProdGrpPerfAnalysisChildMenu" />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ByProdGrpScrapAnalysisChildMenu)" Text=@L["ByProdGrpScrapAnalysisChildMenu"] Name="ByProdGrpScrapAnalysisChildMenu" />
                             </Nodes>
                         </DxTreeViewNode>
                     </Nodes>
@@ -374,9 +376,16 @@
     {
         if (firstRender)
         {
-            var node = treeView.GetNodeInfo(t => t.Name == "StockManagementParentMenu");
-            StockManagementParentMenuVisible = false;
-            await InvokeAsync(StateHasChanged);
+            //var menus = (typeof(NavBarPermissionsModel)).GetProperties();
+
+            //foreach (var item in menus)
+            //{
+                
+            //}
+
+            //var node = treeView.GetNodeInfo(t => t.Name == "StockManagementParentMenu");
+            //StockManagementParentMenuVisible = false;
+            //await InvokeAsync(StateHasChanged);
         }
     }
 }

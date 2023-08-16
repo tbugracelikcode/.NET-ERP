@@ -6,7 +6,5 @@ namespace TsiErp.DataAccess.Services.Login
     {
         public static Guid UserId { get; set; }
         public static Guid VersionTableId { get; set; }
-
-        public static List<SelectUserPermissionsDto> UserPermissions { get; set; } = new List<SelectUserPermissionsDto>();
     }
 }
