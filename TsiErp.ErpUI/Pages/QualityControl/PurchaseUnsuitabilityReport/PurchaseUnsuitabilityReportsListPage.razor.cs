@@ -39,37 +39,32 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
 
         private void UnsComboBoxValueChangeHandler(ChangeEventArgs<string, UnsComboBox> args)
         {
-            switch (args.ItemData.ID)
+            if (args.ItemData != null)
             {
-                case "Rejection":
-                    DataSource.IsReject = true;
-                    DataSource.IsCorrection = false;
-                    DataSource.IsToBeUsedAs = false;
-                    DataSource.IsContactSupplier = false;
-                    break;
+                switch (args.ItemData.ID)
+                {
+                    case "Rejection":
+                        DataSource.Action_ = L["ComboboxRejection"].Value;
+                        break;
 
-                case "Correction":
-                    DataSource.IsReject = false;
-                    DataSource.IsCorrection = true;
-                    DataSource.IsToBeUsedAs = false;
-                    DataSource.IsContactSupplier = false;
-                    break;
+                    case "Correction":
+                        DataSource.Action_ = L["ComboboxCorrection"].Value;
+                        break;
 
-                case "ToBeUsedAs":
-                    DataSource.IsReject = false;
-                    DataSource.IsCorrection = false;
-                    DataSource.IsToBeUsedAs = true;
-                    DataSource.IsContactSupplier = false;
-                    break;
+                    case "ToBeUsedAs":
+                        DataSource.Action_ = L["ComboboxToBeUsedAs"].Value;
+                        break;
 
-                case "ContactSupplier":
-                    DataSource.IsReject = false;
-                    DataSource.IsCorrection = false;
-                    DataSource.IsToBeUsedAs = false;
-                    DataSource.IsContactSupplier = true;
-                    break;
+                    case "ContactSupplier":
+                        DataSource.Action_ = L["ComboboxContactSupplier"].Value;
+                        break;
 
-                default: break;
+                    default: break;
+                }
+            }
+            else
+            {
+                DataSource.Action_ = string.Empty;
             }
         }
 
@@ -80,7 +75,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
                 Date_ = DateTime.Today
             };
 
-            foreach(var item in _unsComboBox)
+            foreach (var item in _unsComboBox)
             {
                 item.Text = L[item.Text];
             }
@@ -209,74 +204,16 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
             {
                 DataSource.OrderID = selectedOrder.Id;
                 DataSource.OrderFicheNo = selectedOrder.FicheNo;
+
+                DataSource.CurrentAccountCardID = selectedOrder.CurrentAccountCardID;
+                DataSource.CurrentAccountCardName = selectedOrder.CurrentAccountCardName;
+                DataSource.CurrentAccountCardCode = selectedOrder.CurrentAccountCardCode;
+
                 SelectPurchaseOrdersPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
         }
         #endregion
-
-        #region Cari Hesap ButtonEdit
-
-        SfTextBox CurrentAccountCardsCodeButtonEdit;
-        SfTextBox CurrentAccountCardsNameButtonEdit;
-        bool SelectCurrentAccountCardsPopupVisible = false;
-        List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
-
-        public async Task CurrentAccountCardsCodeOnCreateIcon()
-        {
-            var CurrentAccountCardsCodeButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CurrentAccountCardsCodeButtonClickEvent);
-            await CurrentAccountCardsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CurrentAccountCardsCodeButtonClick } });
-        }
-
-        public async void CurrentAccountCardsCodeButtonClickEvent()
-        {
-            SelectCurrentAccountCardsPopupVisible = true;
-            await GetCurrentAccountCardsList();
-            await InvokeAsync(StateHasChanged);
-        }
-
-        public async Task CurrentAccountCardsNameOnCreateIcon()
-        {
-            var CurrentAccountCardsNameButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CurrentAccountCardsNameButtonClickEvent);
-            await CurrentAccountCardsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CurrentAccountCardsNameButtonClick } });
-        }
-
-        public async void CurrentAccountCardsNameButtonClickEvent()
-        {
-            SelectCurrentAccountCardsPopupVisible = true;
-            await GetCurrentAccountCardsList();
-            await InvokeAsync(StateHasChanged);
-        }
-
-        public void CurrentAccountCardsOnValueChange(ChangedEventArgs args)
-        {
-            if (args.Value == null)
-            {
-                DataSource.CurrentAccountCardID = Guid.Empty;
-                DataSource.CurrentAccountCardCode = string.Empty;
-                DataSource.CurrentAccountCardName = string.Empty;
-            }
-        }
-
-        public async void CurrentAccountCardsDoubleClickHandler(RecordDoubleClickEventArgs<ListCurrentAccountCardsDto> args)
-        {
-            var selectedUnitSet = args.RowData;
-
-            if (selectedUnitSet != null)
-            {
-                DataSource.CurrentAccountCardID = selectedUnitSet.Id;
-                DataSource.CurrentAccountCardCode = selectedUnitSet.Code;
-                DataSource.CurrentAccountCardName = selectedUnitSet.Name;
-                SelectCurrentAccountCardsPopupVisible = false;
-                await InvokeAsync(StateHasChanged);
-            }
-        }
-        #endregion
-
-        private async Task GetCurrentAccountCardsList()
-        {
-            CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
-        }
 
         private async Task GetProductsList()
         {
