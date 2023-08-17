@@ -183,6 +183,12 @@ using TsiErp.Entities.Entities.QualityControl.ControlType;
 using TsiErp.Entities.Entities.QualityControl.ControlType.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ControlCondition;
 using TsiErp.Entities.Entities.QualityControl.ControlCondition.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan;
+using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlanLine.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlanLine;
+using TsiErp.Entities.Entities.QualityControl.OperationPicture;
+using TsiErp.Entities.Entities.QualityControl.OperationPicture.Dtos;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -905,6 +911,32 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectControlConditionsDto, CreateControlConditionsDto>();
             CreateMap<UpdateControlConditionsDto, ControlConditions>();
             CreateMap<SelectControlConditionsDto, UpdateControlConditionsDto>();
+
+
+
+            CreateMap<OperationalQualityPlans, SelectOperationalQualityPlansDto>();
+            CreateMap<OperationalQualityPlans, ListOperationalQualityPlansDto>();
+            CreateMap<UpdateOperationalQualityPlansDto, OperationalQualityPlans>();
+            CreateMap<CreateOperationalQualityPlansDto, OperationalQualityPlans>();
+            CreateMap<SelectOperationalQualityPlansDto, CreateOperationalQualityPlansDto>();
+            CreateMap<SelectOperationalQualityPlansDto, UpdateOperationalQualityPlansDto>();
+            CreateMap<OperationalQualityPlans, UpdateOperationalQualityPlansDto>();
+
+            CreateMap<OperationalQualityPlanLines, SelectOperationalQualityPlanLinesDto>();
+            CreateMap<OperationalQualityPlanLines, ListOperationalQualityPlanLinesDto>();
+            CreateMap<CreateOperationalQualityPlanLinesDto, OperationalQualityPlanLines>();
+            CreateMap<SelectOperationalQualityPlanLinesDto, CreateOperationalQualityPlanLinesDto>();
+            CreateMap<UpdateOperationalQualityPlanLinesDto, OperationalQualityPlanLines>();
+            CreateMap<SelectOperationalQualityPlanLinesDto, UpdateOperationalQualityPlanLinesDto>();
+            CreateMap<SelectOperationalQualityPlanLinesDto, OperationalQualityPlanLines>();
+
+            CreateMap<OperationPictures, SelectOperationPicturesDto>();
+            CreateMap<OperationPictures, ListOperationPicturesDto>();
+            CreateMap<CreateOperationPicturesDto, OperationPictures>();
+            CreateMap<SelectOperationPicturesDto, CreateOperationPicturesDto>();
+            CreateMap<UpdateOperationPicturesDto, OperationPictures>();
+            CreateMap<SelectOperationPicturesDto, UpdateOperationPicturesDto>();
+            CreateMap<SelectOperationPicturesDto, OperationPictures>();
         }
     }
 }

@@ -4,9 +4,9 @@ using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan.Dtos;
 
 namespace TsiErp.Business.Entities.QualityControl.OperationalQualityPlan.Validations
 {
-    public class CreateOperationalQualityPlansValidatorDto : TsiAbstractValidatorBase<CreateOperationalQualityPlansDto>
+    public class UpdateOperationalQualityPlansValidatorDto : TsiAbstractValidatorBase<UpdateOperationalQualityPlansDto>
     {
-        public CreateOperationalQualityPlansValidatorDto()
+        public UpdateOperationalQualityPlansValidatorDto()
         {
             RuleFor(x => x.DocumentNumber)
                 .NotEmpty()

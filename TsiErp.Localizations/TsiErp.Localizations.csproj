@@ -161,7 +161,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>NavbarMenusResource.resx</DependentUpon>
     </Compile>
-    <Compile Update="Resources\OperationalQualityPlan\Page\OperationalQualityPlansResource.Designer.cs">
+    <Compile Update="Resources\OperationalQualityPlans\Page\OperationalQualityPlansResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>OperationalQualityPlansResource.resx</DependentUpon>
@@ -562,7 +562,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>NavbarMenusResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\OperationalQualityPlan\Page\OperationalQualityPlansResource.resx">
+    <EmbeddedResource Update="Resources\OperationalQualityPlans\Page\OperationalQualityPlansResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>OperationalQualityPlansResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>

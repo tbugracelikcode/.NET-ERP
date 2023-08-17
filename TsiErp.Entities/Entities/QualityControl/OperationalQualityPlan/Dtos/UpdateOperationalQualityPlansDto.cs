@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Entities.Auditing;
+﻿using Tsi.Core.Entities.Auditing;
+using TSI.QueryBuilder.MappingAttributes;
+using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlanLine.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationPicture.Dtos;
 
 namespace TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan.Dtos
 {
@@ -13,78 +11,26 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan.Dtos
         /// Ürün ID
         /// </summary>
         public Guid? ProductID { get; set; }
+
         ///<summary>
         ///Operasyon ID
         /// </summary
         public Guid? ProductsOperationID { get; set; }
 
         ///<summary>
-        ///Kontrol Türü ID
-        /// </summary
-        public Guid? ControlTypesID { get; set; }
-        /// <summary>
-        /// Kalite Planı Kodu
-        /// </summary>
-        public string Code { get; set; }
-
-        /// <summary>
-        /// Tarih
-        /// </summary>
-        public DateTime Date_ { get; set; }
-
-        ///<summary>
-        ///Kontrol Sıklığı
+        ///Açıklama
         /// </summary
         public string Description_ { get; set; }
-
-        ///<summary>
-        ///İş Merkezi ID
-        /// </summary
-        public Guid? WorkCenterID { get; set; }
-
-        ///<summary>
-        ///Kontrol Sıklığı
-        /// </summary
-        public string ControlFrequency { get; set; }
-
-        ///<summary>
-        ///Kontrol Şartı ID
-        /// </summary
-        public Guid? ControlConditionsID { get; set; }
-
-        ///<summary>
-        ///Kontrol Ekipmanı
-        /// </summary
-        public string Equipment { get; set; }
-
-        ///<summary>
-        ///Kontrol Sorumlusu
-        /// </summary
-        public string ControlManager { get; set; }
-
         /// <summary>
-        /// Olması Gereken Ölçü
+        /// Döküman Numarası
         /// </summary>
-        public decimal IdealMeasure { get; set; }
+        public string DocumentNumber { get; set; }
 
-        /// <summary>
-        /// Alt Tolerans
-        /// </summary>
-        public decimal BottomTolerance { get; set; }
 
-        /// <summary>
-        /// Üst Tolerans
-        /// </summary>
-        public decimal UpperTolerance { get; set; }
+        [NoDatabaseAction]
+        public List<SelectOperationalQualityPlanLinesDto> SelectOperationalQualityPlanLines { get; set; }
 
-        /// <summary>
-        /// Periyodik Kontrol Ölçüsü
-        /// </summary>
-        public bool PeriodicControlMeasure { get; set; }
-
-        /// <summary>
-        /// Resimdeki Ölçü Numarası
-        /// </summary>
-        public decimal MeasureNumberInPicture { get; set; }
+        [NoDatabaseAction]
+        public List<SelectOperationPicturesDto> SelectOperationPictures { get; set; }
     }
 }

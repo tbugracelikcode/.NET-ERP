@@ -1,6 +1,4 @@
-﻿
-
-using Microsoft.Extensions.Localization;
+﻿using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -10,6 +8,7 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.Business.Entities.QualityControl.OperationalQualityPlan.Services;
 using TsiErp.Business.Entities.QualityControl.OperationalQualityPlan.Validations;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
@@ -18,9 +17,13 @@ using TsiErp.Entities.Entities.QualityControl.ControlCondition;
 using TsiErp.Entities.Entities.QualityControl.ControlType;
 using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan;
 using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlanLine;
+using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlanLine.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationPicture.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product;
+using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.TableConstant;
-using TsiErp.Localizations.Resources.OperationalQualityPlan.Page;
+using TsiErp.Localizations.Resources.OperationalQualityPlans.Page;
 
 namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
 {
@@ -39,7 +42,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var listQuery = queryFactory.Query().From(Tables.OperationalQualityPlans).Select("*").Where(new { Code = input.Code }, false, false, "");
+                var listQuery = queryFactory.Query().From(Tables.OperationalQualityPlans).Select("*").Where(new { DocumentNumber = input.DocumentNumber }, false, false, "");
                 var list = queryFactory.ControlList<OperationalQualityPlans>(listQuery).ToList();
 
                 #region Code Control 
@@ -57,7 +60,6 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
 
                 var query = queryFactory.Query().From(Tables.OperationalQualityPlans).Insert(new CreateOperationalQualityPlansDto
                 {
-                    Code = input.Code,
                     CreationTime = DateTime.Now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
@@ -65,32 +67,85 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                     DeleterId = Guid.Empty,
                     DeletionTime = null,
                     Id = addedEntityId,
+                    Description_ = input.Description_,
+                    DocumentNumber = input.DocumentNumber,
+                    ProductID = input.ProductID,
+                    ProductsOperationID = input.ProductsOperationID,
                     IsDeleted = false,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
-                    WorkCenterID = input.WorkCenterID,
-                    ProductsOperationID = input.ProductsOperationID,
-                    ProductID = input.ProductID,
-                    BottomTolerance = input.BottomTolerance,
-                    ControlConditionsID = input.ControlConditionsID,
-                    ControlFrequency = input.ControlFrequency,
-                    ControlManager = input.ControlManager,
-                    ControlTypesID = input.ControlTypesID,
-                    Date_ = input.Date_,
-                    Description_ = input.Description_,
-                    Equipment = input.Equipment,
-                    IdealMeasure = input.IdealMeasure,
-                    MeasureNumberInPicture = input.MeasureNumberInPicture,
-                    PeriodicControlMeasure = input.PeriodicControlMeasure,
-                    UpperTolerance = input.UpperTolerance,
                 });
 
-                var operationalQualityPlans = queryFactory.Insert<SelectOperationalQualityPlansDto>(query, "Id", true);
+                foreach (var item in input.SelectOperationalQualityPlanLines)
+                {
+                    var queryLine = queryFactory.Query().From(Tables.OperationalQualityPlanLines).Insert(new CreateOperationalQualityPlanLinesDto
+                    {
+                        OperationalQualityPlanID = addedEntityId,
+                        CreationTime = DateTime.Now,
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                        ProductsOperationID = item.ProductsOperationID,
+                        ProductID = item.ProductID,
+                        Description_ = item.Description_,
+                        BottomTolerance = item.BottomTolerance,
+                        Code = item.Code,
+                        ControlConditionsID = item.ControlConditionsID,
+                        ControlFrequency = item.ControlFrequency,
+                        ControlManager = item.ControlManager,
+                        ControlTypesID = item.ControlTypesID,
+                        Date_ = item.Date_,
+                        Equipment = item.Equipment,
+                        IdealMeasure = item.IdealMeasure,
+                        LineNr = item.LineNr,
+                        MeasureNumberInPicture = item.MeasureNumberInPicture,
+                        PeriodicControlMeasure = item.PeriodicControlMeasure,
+                        UpperTolerance = item.UpperTolerance,
+                        WorkCenterID = item.WorkCenterID,
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.OperationalQualityPlans, LogType.Insert, operationalQualityPlans.Id);
+                    });
 
+                    query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+                }
 
-                return new SuccessDataResult<SelectOperationalQualityPlansDto>(operationalQualityPlans);
+                foreach (var item in input.SelectOperationPictures)
+                {
+                    var queryPicture = queryFactory.Query().From(Tables.OperationPictures).Insert(new CreateOperationPicturesDto
+                    {
+                        OperationalQualityPlanID = addedEntityId,
+                        CreationTime = DateTime.Now,
+                        CreatorId = LoginedUserService.UserId,
+                        DataOpenStatus = false,
+                        DataOpenStatusUserId = Guid.Empty,
+                        DeleterId = Guid.Empty,
+                        DeletionTime = null,
+                        Id = GuidGenerator.CreateGuid(),
+                        IsDeleted = false,
+                        LastModificationTime = null,
+                        LastModifierId = Guid.Empty,
+                        LineNr = item.LineNr,
+                        Approver = item.Approver,
+                        CreationDate_ = DateTime.Now,
+                        Description_ = item.Description_,
+                        Drawer = item.Drawer,
+                        IsApproved = item.IsApproved,
+
+                    });
+
+                    query.Sql = query.Sql + QueryConstants.QueryConstant + queryPicture.Sql;
+                }
+
+                var operationalQualityPlan = queryFactory.Insert<SelectOperationalQualityPlansDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.OperationalQualityPlans, LogType.Insert, addedEntityId);
+
+                return new SuccessDataResult<SelectOperationalQualityPlansDto>(operationalQualityPlan);
             }
         }
 
@@ -99,13 +154,49 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var query = queryFactory.Query().From(Tables.OperationalQualityPlans).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
 
-                var operationalQualityPlans = queryFactory.Update<SelectOperationalQualityPlansDto>(query, "Id", true);
+                var deleteQuery = queryFactory.Query().From(Tables.OperationalQualityPlans).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
 
+                var lineDeleteQuery = queryFactory.Query().From(Tables.OperationalQualityPlanLines).Delete(LoginedUserService.UserId).Where(new { OperationalQualityPlanID = id }, false, false, "");
+
+                deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + lineDeleteQuery.Sql + " where " + lineDeleteQuery.WhereSentence;
+
+                var operationPictureDeleteQuery = queryFactory.Query().From(Tables.OperationPictures).Delete(LoginedUserService.UserId).Where(new { OperationalQualityPlanID = id }, false, false, "");
+
+                deleteQuery.Sql = deleteQuery.Sql + QueryConstants.QueryConstant + operationPictureDeleteQuery.Sql + " where " + operationPictureDeleteQuery.WhereSentence;
+
+                var operationalQualityPlan = queryFactory.Update<SelectOperationalQualityPlansDto>(deleteQuery, "Id", true);
                 LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.OperationalQualityPlans, LogType.Delete, id);
+                return new SuccessDataResult<SelectOperationalQualityPlansDto>(operationalQualityPlan);
 
-                return new SuccessDataResult<SelectOperationalQualityPlansDto>(operationalQualityPlans);
+            }
+        }
+
+        public async Task<IResult> DeleteLineAsync(Guid id)
+        {
+            using (var connection = queryFactory.ConnectToDatabase())
+            {
+
+
+                var queryLine = queryFactory.Query().From(Tables.OperationalQualityPlanLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var operationalQualityPlanLines = queryFactory.Update<SelectOperationalQualityPlanLinesDto>(queryLine, "Id", true);
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.OperationalQualityPlanLines, LogType.Delete, id);
+                return new SuccessDataResult<SelectOperationalQualityPlanLinesDto>(operationalQualityPlanLines);
+
+            }
+        }
+
+        public async Task<IResult> DeleteOperationPictureAsync(Guid id)
+        {
+            using (var connection = queryFactory.ConnectToDatabase())
+            {
+
+
+                var queryOperationPicture = queryFactory.Query().From(Tables.OperationPictures).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
+                var operationPictures = queryFactory.Update<SelectOperationPicturesDto>(queryOperationPicture, "Id", true);
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.OperationPictures, LogType.Delete, id);
+                return new SuccessDataResult<SelectOperationPicturesDto>(operationPictures);
+
             }
         }
 
@@ -116,7 +207,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                 var query = queryFactory
                        .Query()
                        .From(Tables.OperationalQualityPlans)
-                       .Select<OperationalQualityPlans>(oqp => new { oqp.ProductID, oqp.Id, oqp.WorkCenterID, oqp.UpperTolerance, oqp.ProductsOperationID, oqp.PeriodicControlMeasure, oqp.MeasureNumberInPicture, oqp.IdealMeasure, oqp.Description_, oqp.Date_, oqp.DataOpenStatusUserId, oqp.DataOpenStatus, oqp.ControlTypesID, oqp.ControlManager, oqp.ControlFrequency, oqp.ControlConditionsID, oqp.Code, oqp.BottomTolerance })
+                       .Select<OperationalQualityPlans>(oqp => new { oqp.ProductsOperationID, oqp.ProductID, oqp.Id, oqp.DocumentNumber, oqp.Description_, oqp.DataOpenStatusUserId, oqp.DataOpenStatus })
                        .Join<Products>
                         (
                             pr => new { ProductCode = pr.Code, ProductName = pr.Name, ProductID = pr.Id },
@@ -126,37 +217,77 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                         )
                         .Join<ProductsOperations>
                         (
-                            po => new { OperationCode = po.Code, OperationName = po.Name, ProductsOperationID = po.Id },
+                            pro => new { OperationCode = pro.Code, OperationName = pro.Name, ProductsOperationID = pro.Id },
                             nameof(OperationalQualityPlans.ProductsOperationID),
                             nameof(ProductsOperations.Id),
-                            JoinType.Left
-                        )
-                        .Join<ControlTypes>
-                        (
-                            ct => new { ControlTypesName = ct.Name, ControlTypesID = ct.Id },
-                            nameof(OperationalQualityPlans.ControlTypesID),
-                            nameof(ControlTypes.Id),
-                            JoinType.Left
-                        )
-                         .Join<StationGroups>
-                        (
-                            sg => new { WorkCenterName = sg.Name, WorkCenterID = sg.Id },
-                            nameof(OperationalQualityPlans.WorkCenterID),
-                            nameof(StationGroups.Id),
-                            JoinType.Left
-                        )
-                         .Join<ControlConditions>
-                        (
-                            cc => new { ControlConditionsName = cc.Name, ControlConditionsID = cc.Id },
-                            nameof(OperationalQualityPlans.ControlConditionsID),
-                            nameof(ControlConditions.Id),
                             JoinType.Left
                         )
                         .Where(new { Id = id }, false, false, Tables.OperationalQualityPlans);
 
                 var operationalQualityPlans = queryFactory.Get<SelectOperationalQualityPlansDto>(query);
 
+                #region Satır Get
 
+                var queryLines = queryFactory
+                       .Query()
+                       .From(Tables.OperationalQualityPlanLines)
+                       .Select<OperationalQualityPlanLines>(oqpl => new { oqpl.WorkCenterID, oqpl.UpperTolerance, oqpl.ProductsOperationID, oqpl.PeriodicControlMeasure, oqpl.OperationalQualityPlanID, oqpl.MeasureNumberInPicture, oqpl.LineNr, oqpl.IdealMeasure, oqpl.Id, oqpl.Equipment, oqpl.Description_, oqpl.Date_, oqpl.DataOpenStatusUserId, oqpl.DataOpenStatus, oqpl.ControlTypesID, oqpl.ControlManager, oqpl.ControlFrequency, oqpl.ControlConditionsID, oqpl.Code, oqpl.BottomTolerance })
+                       .Join<Products>
+                        (
+                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                            nameof(OperationalQualityPlanLines.ProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                       .Join<ProductsOperations>
+                        (
+                            po => new { OperationCode = po.Code, OperationName = po.Name, ProductsOperationID = po.Id },
+                            nameof(OperationalQualityPlanLines.ProductsOperationID),
+                            nameof(ProductsOperations.Id),
+                            JoinType.Left
+                        )
+                        .Join<ControlTypes>
+                        (
+                            ct => new { ControlTypesName = ct.Name, ControlTypesID = ct.Id },
+                            nameof(OperationalQualityPlanLines.ControlTypesID),
+                            nameof(ControlTypes.Id),
+                            JoinType.Left
+                        )
+                         .Join<StationGroups>
+                        (
+                            sg => new { WorkCenterName = sg.Name, WorkCenterID = sg.Id },
+                            nameof(OperationalQualityPlanLines.WorkCenterID),
+                            nameof(StationGroups.Id),
+                            JoinType.Left
+                        )
+                         .Join<ControlConditions>
+                        (
+                            cc => new { ControlConditionsName = cc.Name, ControlConditionsID = cc.Id },
+                            nameof(OperationalQualityPlanLines.ControlConditionsID),
+                            nameof(ControlConditions.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { OperationalQualityPlanID = id }, false, false, Tables.OperationalQualityPlanLines);
+
+                var OperationalQualityPlanLine = queryFactory.GetList<SelectOperationalQualityPlanLinesDto>(queryLines).ToList();
+
+                operationalQualityPlans.SelectOperationalQualityPlanLines = OperationalQualityPlanLine;
+
+                #endregion
+
+                #region Operasyon Resmi Get
+
+                var queryOperationPicture = queryFactory.Query().From(Tables.OperationPictures).Select("*").Where(
+               new
+               {
+                   OperationalQualityPlanID = id
+               }, false, false, "");
+
+                var operationPictures = queryFactory.GetList<SelectOperationPicturesDto>(queryOperationPicture).ToList();
+
+                operationalQualityPlans.SelectOperationPictures = operationPictures;
+
+                #endregion
 
                 LogsAppService.InsertLogToDatabase(operationalQualityPlans, operationalQualityPlans, LoginedUserService.UserId, Tables.OperationalQualityPlans, LogType.Get, id);
 
@@ -172,7 +303,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                 var query = queryFactory
                        .Query()
                        .From(Tables.OperationalQualityPlans)
-                       .Select<OperationalQualityPlans>(oqp => new { oqp.ProductID, oqp.Id, oqp.WorkCenterID, oqp.UpperTolerance, oqp.ProductsOperationID, oqp.PeriodicControlMeasure, oqp.MeasureNumberInPicture, oqp.IdealMeasure, oqp.Description_, oqp.Date_, oqp.DataOpenStatusUserId, oqp.DataOpenStatus, oqp.ControlTypesID, oqp.ControlManager, oqp.ControlFrequency, oqp.ControlConditionsID, oqp.Code, oqp.BottomTolerance })
+                       .Select<OperationalQualityPlans>(oqp => new { oqp.ProductsOperationID, oqp.ProductID, oqp.Id, oqp.DocumentNumber, oqp.Description_, oqp.DataOpenStatusUserId, oqp.DataOpenStatus })
                        .Join<Products>
                         (
                             pr => new { ProductCode = pr.Code, ProductName = pr.Name },
@@ -182,23 +313,9 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                         )
                         .Join<ProductsOperations>
                         (
-                            po => new { OperationCode = po.Code, OperationName = po.Name },
+                            pro => new { OperationCode = pro.Code, OperationName = pro.Name },
                             nameof(OperationalQualityPlans.ProductsOperationID),
                             nameof(ProductsOperations.Id),
-                            JoinType.Left
-                        )
-                        .Join<ControlTypes>
-                        (
-                            ct => new { ControlTypesName = ct.Name },
-                            nameof(OperationalQualityPlans.ControlTypesID),
-                            nameof(ControlTypes.Id),
-                            JoinType.Left
-                        )
-                         .Join<StationGroups>
-                        (
-                            sg => new { WorkCenterName = sg.Name },
-                            nameof(OperationalQualityPlans.WorkCenterID),
-                            nameof(StationGroups.Id),
                             JoinType.Left
                         )
                         .Where(null, false, false, Tables.OperationalQualityPlans);
@@ -219,53 +336,184 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
 
                 #region Update Control
 
-                var listQuery = queryFactory.Query().From(Tables.OperationalQualityPlans).Select("*").Where(new { Code = input.Code }, false, false, "");
+                var listQuery = queryFactory.Query().From(Tables.OperationalQualityPlans).Select("*").Where(new { DocumentNumber = input.DocumentNumber }, false, false, "");
                 var list = queryFactory.GetList<OperationalQualityPlans>(listQuery).ToList();
 
-                if (list.Count > 0 && entity.Code != input.Code)
+                if (list.Count > 0 && entity.DocumentNumber != input.DocumentNumber)
                 {
                     connection.Close();
                     connection.Dispose();
                     throw new DuplicateCodeException(L["UpdateControlManager"]);
                 }
-
                 #endregion
 
                 var query = queryFactory.Query().From(Tables.OperationalQualityPlans).Update(new UpdateOperationalQualityPlansDto
                 {
-                    Code = input.Code,
-                    Description_ = input.Description_,
-                    Id = input.Id,
-                    BottomTolerance = input.BottomTolerance,
-                    ControlConditionsID = input.ControlConditionsID,
-                    ControlFrequency = input.ControlFrequency,
-                    ControlManager = input.ControlManager,
-                    ControlTypesID = input.ControlTypesID,
-                    Date_ = input.Date_,
-                    Equipment = input.Equipment,
-                    IdealMeasure = input.IdealMeasure,
-                    MeasureNumberInPicture = input.MeasureNumberInPicture,
-                    PeriodicControlMeasure = input.PeriodicControlMeasure,
-                    ProductID = input.ProductID,
-                    ProductsOperationID = input.ProductsOperationID,
-                    UpperTolerance = input.UpperTolerance,
-                    WorkCenterID = input.WorkCenterID,
-                    CreationTime = entity.CreationTime.Value,
-                    CreatorId = entity.CreatorId.Value,
+                    CreationTime = entity.CreationTime.GetValueOrDefault(),
+                    CreatorId = entity.CreatorId.GetValueOrDefault(),
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
                     DeleterId = entity.DeleterId.GetValueOrDefault(),
                     DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                    Id = input.Id,
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = DateTime.Now,
-                    LastModifierId = LoginedUserService.UserId
+                    Description_ = input.Description_,
+                    DocumentNumber = input.DocumentNumber,
+                    ProductID = input.ProductID,
+                    ProductsOperationID = input.ProductsOperationID,
+                    LastModifierId = LoginedUserService.UserId,
                 }).Where(new { Id = input.Id }, false, false, "");
 
-                var operationalQualityPlans = queryFactory.Update<SelectOperationalQualityPlansDto>(query, "Id", true);
+                foreach (var item in input.SelectOperationalQualityPlanLines)
+                {
+                    if (item.Id == Guid.Empty)
+                    {
+                        var queryLine = queryFactory.Query().From(Tables.OperationalQualityPlanLines).Insert(new CreateOperationalQualityPlanLinesDto
+                        {
+                            OperationalQualityPlanID = input.Id,
+                            CreationTime = DateTime.Now,
+                            CreatorId = LoginedUserService.UserId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = Guid.Empty,
+                            DeletionTime = null,
+                            Id = GuidGenerator.CreateGuid(),
+                            IsDeleted = false,
+                            LastModificationTime = null,
+                            LastModifierId = Guid.Empty,
+                            LineNr = item.LineNr,
+                            ProductID = item.ProductID,
+                            BottomTolerance = item.BottomTolerance,
+                            Code = item.Code,
+                            ProductsOperationID = item.ProductsOperationID,
+                            Description_ = item.Description_,
+                            ControlConditionsID = item.ControlConditionsID,
+                            ControlFrequency = item.ControlFrequency,
+                            ControlManager = item.ControlManager,
+                            ControlTypesID = item.ControlTypesID,
+                            Date_ = item.Date_,
+                            Equipment = item.Equipment,
+                            IdealMeasure = item.IdealMeasure,
+                            MeasureNumberInPicture = item.MeasureNumberInPicture,
+                            PeriodicControlMeasure = item.PeriodicControlMeasure,
+                            UpperTolerance = item.UpperTolerance,
+                            WorkCenterID = item.WorkCenterID,
+                        });
 
-                LogsAppService.InsertLogToDatabase(entity, operationalQualityPlans, LoginedUserService.UserId, Tables.OperationalQualityPlans, LogType.Update, entity.Id);
+                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql;
+                    }
+                    else
+                    {
+                        var lineGetQuery = queryFactory.Query().From(Tables.OperationalQualityPlanLines).Select("*").Where(new { Id = item.Id }, false, false, "");
 
-                return new SuccessDataResult<SelectOperationalQualityPlansDto>(operationalQualityPlans);
+                        var line = queryFactory.Get<SelectOperationalQualityPlanLinesDto>(lineGetQuery);
+
+                        if (line != null)
+                        {
+                            var queryLine = queryFactory.Query().From(Tables.OperationalQualityPlanLines).Update(new UpdateOperationalQualityPlanLinesDto
+                            {
+                                OperationalQualityPlanID = input.Id,
+                                CreationTime = line.CreationTime,
+                                CreatorId = line.CreatorId,
+                                DataOpenStatus = false,
+                                DataOpenStatusUserId = Guid.Empty,
+                                DeleterId = line.DeleterId.GetValueOrDefault(),
+                                DeletionTime = line.DeletionTime.GetValueOrDefault(),
+                                Id = item.Id,
+                                IsDeleted = item.IsDeleted,
+                                LastModificationTime = DateTime.Now,
+                                LastModifierId = LoginedUserService.UserId,
+                                LineNr = item.LineNr,
+                                ProductID = item.ProductID,
+                                BottomTolerance = item.BottomTolerance,
+                                Code = item.Code,
+                                ProductsOperationID = item.ProductsOperationID,
+                                Description_ = item.Description_,
+                                ControlConditionsID = item.ControlConditionsID,
+                                ControlFrequency = item.ControlFrequency,
+                                ControlManager = item.ControlManager,
+                                ControlTypesID = item.ControlTypesID,
+                                Date_ = item.Date_,
+                                Equipment = item.Equipment,
+                                IdealMeasure = item.IdealMeasure,
+                                MeasureNumberInPicture = item.MeasureNumberInPicture,
+                                PeriodicControlMeasure = item.PeriodicControlMeasure,
+                                UpperTolerance = item.UpperTolerance,
+                                WorkCenterID = item.WorkCenterID,
+                            }).Where(new { Id = line.Id }, false, false, "");
+
+                            query.Sql = query.Sql + QueryConstants.QueryConstant + queryLine.Sql + " where " + queryLine.WhereSentence;
+                        }
+                    }
+                }
+
+                foreach (var item in input.SelectOperationPictures)
+                {
+                    if (item.Id == Guid.Empty)
+                    {
+                        var queryOperaionPicture = queryFactory.Query().From(Tables.OperationPictures).Insert(new CreateOperationPicturesDto
+                        {
+                            OperationalQualityPlanID = input.Id,
+                            CreationTime = DateTime.Now,
+                            CreatorId = LoginedUserService.UserId,
+                            DataOpenStatus = false,
+                            DataOpenStatusUserId = Guid.Empty,
+                            DeleterId = Guid.Empty,
+                            DeletionTime = null,
+                            Id = GuidGenerator.CreateGuid(),
+                            IsDeleted = false,
+                            LastModificationTime = null,
+                            LastModifierId = Guid.Empty,
+                            LineNr = item.LineNr,
+                            Approver = item.Approver,
+                            CreationDate_ = item.CreationDate_,
+                            Description_ = item.Description_,
+                            Drawer = item.Drawer,
+                            IsApproved = item.IsApproved,
+                        });
+
+                        query.Sql = query.Sql + QueryConstants.QueryConstant + queryOperaionPicture.Sql;
+                    }
+                    else
+                    {
+                        var operationPictureGetQuery = queryFactory.Query().From(Tables.OperationPictures).Select("*").Where(new { Id = item.Id }, false, false, "");
+
+                        var operationPicture = queryFactory.Get<SelectOperationPicturesDto>(operationPictureGetQuery);
+
+                        if (operationPicture != null)
+                        {
+                            var queryOperaionPicture = queryFactory.Query().From(Tables.OperationPictures).Update(new UpdateOperationPicturesDto
+                            {
+                                OperationalQualityPlanID = input.Id,
+                                CreationTime = operationPicture.CreationTime,
+                                CreatorId = operationPicture.CreatorId,
+                                DataOpenStatus = false,
+                                DataOpenStatusUserId = Guid.Empty,
+                                DeleterId = operationPicture.DeleterId.GetValueOrDefault(),
+                                DeletionTime = operationPicture.DeletionTime.GetValueOrDefault(),
+                                Id = item.Id,
+                                IsDeleted = item.IsDeleted,
+                                LastModificationTime = DateTime.Now,
+                                LastModifierId = LoginedUserService.UserId,
+                                LineNr = item.LineNr,
+                                Approver = item.Approver,
+                                CreationDate_ = item.CreationDate_,
+                                Description_ = item.Description_,
+                                Drawer = item.Drawer,
+                                IsApproved = item.IsApproved,
+                            }).Where(new { Id = operationPicture.Id }, false, false, "");
+
+                            query.Sql = query.Sql + QueryConstants.QueryConstant + queryOperaionPicture.Sql + " where " + queryOperaionPicture.WhereSentence;
+                        }
+                    }
+                }
+
+                var operationalQualityPlan = queryFactory.Update<SelectOperationalQualityPlansDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(entity, input, LoginedUserService.UserId, Tables.OperationalQualityPlans, LogType.Update, entity.Id);
+
+                return new SuccessDataResult<SelectOperationalQualityPlansDto>(operationalQualityPlan);
             }
         }
 
@@ -273,37 +521,27 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var entityQuery = queryFactory.Query().From(Tables.BillsofMaterials).Select("*").Where(new { Id = id }, true, true, "");
+                var entityQuery = queryFactory.Query().From(Tables.OperationalQualityPlans).Select("*").Where(new { Id = id }, false, false, "");
 
                 var entity = queryFactory.Get<OperationalQualityPlans>(entityQuery);
 
                 var query = queryFactory.Query().From(Tables.OperationalQualityPlans).Update(new UpdateOperationalQualityPlansDto
                 {
-                    Code = entity.Code,
                     CreationTime = entity.CreationTime.Value,
                     CreatorId = entity.CreatorId.Value,
                     DataOpenStatus = lockRow,
                     DataOpenStatusUserId = userId,
                     DeleterId = entity.DeleterId.GetValueOrDefault(),
                     DeletionTime = entity.DeletionTime.GetValueOrDefault(),
-                    BottomTolerance = entity.BottomTolerance,
-                    ControlConditionsID = entity.ControlConditionsID,
-                    ControlFrequency = entity.ControlFrequency,
-                    ControlManager = entity.ControlManager,
-                    ControlTypesID = entity.ControlTypesID,
-                    Date_ = entity.Date_,
-                    Equipment = entity.Equipment,
-                    IdealMeasure = entity.IdealMeasure,
-                    MeasureNumberInPicture = entity.MeasureNumberInPicture,
-                    PeriodicControlMeasure = entity.PeriodicControlMeasure,
-                    ProductID = entity.ProductID,
-                    ProductsOperationID = entity.ProductsOperationID,
-                    UpperTolerance = entity.UpperTolerance,
-                    WorkCenterID = entity.WorkCenterID,
                     Id = entity.Id,
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                     LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                    Description_ = entity.Description_,
+                    DocumentNumber = entity.DocumentNumber,
+                    ProductID = entity.ProductID,
+                    ProductsOperationID = entity.ProductsOperationID,
+
                 }).Where(new { Id = id }, false, false, "");
 
                 var operationalQualityPlansDto = queryFactory.Update<SelectOperationalQualityPlansDto>(query, "Id", true);

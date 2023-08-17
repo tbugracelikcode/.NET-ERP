@@ -1,0 +1,435 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ApproverOperationPictureLabel" xml:space="preserve">
+    <value>Onaylayan:</value>
+  </data>
+  <data name="BottomToleranceLineLabel" xml:space="preserve">
+    <value>Alt Tolerans:</value>
+  </data>
+  <data name="CloseButton" xml:space="preserve">
+    <value>Kapat</value>
+  </data>
+  <data name="CodeControlManager" xml:space="preserve">
+    <value>Aynı döküman numaralı bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="ContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="ControlConditionsCode" xml:space="preserve">
+    <value>KONTROL ŞARTI KODU</value>
+  </data>
+  <data name="ControlConditionsDescription_" xml:space="preserve">
+    <value>AÇIKLAMA</value>
+  </data>
+  <data name="ControlConditionsModalTitle" xml:space="preserve">
+    <value>Kontrol Şartları</value>
+  </data>
+  <data name="ControlConditionsName" xml:space="preserve">
+    <value>KONTROL ŞARTI ADI</value>
+  </data>
+  <data name="ControlConditionsNameLineLabel" xml:space="preserve">
+    <value>Kontrol Şartı:</value>
+  </data>
+  <data name="ControlEquipmentLineLabel" xml:space="preserve">
+    <value>Ekipman:</value>
+  </data>
+  <data name="ControlFrequencyLineLabel" xml:space="preserve">
+    <value>Kontrol Sıklığı:</value>
+  </data>
+  <data name="ControlManagerLineLabel" xml:space="preserve">
+    <value>Kontrol Sorumlusu:</value>
+  </data>
+  <data name="ControlTypesCode" xml:space="preserve">
+    <value>KONTROL TÜRÜ KODU</value>
+  </data>
+  <data name="ControlTypesDescription_" xml:space="preserve">
+    <value>AÇIKLAMA</value>
+  </data>
+  <data name="ControlTypesModalTitle" xml:space="preserve">
+    <value>Kontrol Türleri</value>
+  </data>
+  <data name="ControlTypesName" xml:space="preserve">
+    <value>KONTROL TÜRÜ ADI</value>
+  </data>
+  <data name="ControlTypesNameLineLabel" xml:space="preserve">
+    <value>Kontrol Türü:</value>
+  </data>
+  <data name="CreationDate_OperationPictureLabel" xml:space="preserve">
+    <value>Eklenme Tarihi:</value>
+  </data>
+  <data name="Date_LineLabel" xml:space="preserve">
+    <value>Tarih:</value>
+  </data>
+  <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
+    <value>Silmek istediğinize emin misiniz ?</value>
+  </data>
+  <data name="DeleteConfirmationTitleBase" xml:space="preserve">
+    <value>Onay</value>
+  </data>
+  <data name="DeleteControlManager" xml:space="preserve">
+    <value>Hareket gören kayıtlar silinemez.</value>
+  </data>
+  <data name="DeleteSuccessMessage" xml:space="preserve">
+    <value>Kayıt başarıyla silindi.</value>
+  </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
+  <data name="Description_LineLabel" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
+  <data name="Description_OperationPictureLabel" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
+  <data name="DocumentNumber" xml:space="preserve">
+    <value>DÖKÜMAN NUMARASI</value>
+  </data>
+  <data name="DocumentNumberLabel" xml:space="preserve">
+    <value>Döküman Numarası:</value>
+  </data>
+  <data name="DrawerOperationPictureLabel" xml:space="preserve">
+    <value>Çizen:</value>
+  </data>
+  <data name="EditModalTitle" xml:space="preserve">
+    <value>Operasyon Kalite Planları</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Hata</value>
+  </data>
+  <data name="ExportFileName" xml:space="preserve">
+    <value>OperasyonKalitePlanlari</value>
+  </data>
+  <data name="ExportTitle" xml:space="preserve">
+    <value>Operasyon Kalite Planları</value>
+  </data>
+  <data name="FilestoUpload" xml:space="preserve">
+    <value>Yüklenecek Dosya:</value>
+  </data>
+  <data name="IdealMeasureLineLabel" xml:space="preserve">
+    <value>Olması Gereken Ölçü:</value>
+  </data>
+  <data name="IsApprovedOperationPictureLabel" xml:space="preserve">
+    <value>Onaylı:</value>
+  </data>
+  <data name="LineGridBottomTolerance" xml:space="preserve">
+    <value>ALT TOLERANS</value>
+  </data>
+  <data name="LineGridControlConditionsName" xml:space="preserve">
+    <value>KONTROL ŞARTI</value>
+  </data>
+  <data name="LineGridControlManager" xml:space="preserve">
+    <value>KONTROL SORUMLUSU</value>
+  </data>
+  <data name="LineGridControlTypesName" xml:space="preserve">
+    <value>KONTROL TÜRÜ</value>
+  </data>
+  <data name="LineGridEquipment" xml:space="preserve">
+    <value>EKİPMAN</value>
+  </data>
+  <data name="LineGridIdealMeasure" xml:space="preserve">
+    <value>OLMASI GEREKEN ÖLÇÜ</value>
+  </data>
+  <data name="LineGridMeasureNumberInPicture" xml:space="preserve">
+    <value>RESİMDEKİ ÖLÇÜ NUMARASI</value>
+  </data>
+  <data name="LineGridOperationCode" xml:space="preserve">
+    <value>OPERASYON KODU</value>
+  </data>
+  <data name="LineGridPeriodicControlMeasure" xml:space="preserve">
+    <value>PERİYODİK KONTROL ÖLÇÜSÜ</value>
+  </data>
+  <data name="LineGridProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="LineGridUpperTolerance" xml:space="preserve">
+    <value>ÜST TOLERANS</value>
+  </data>
+  <data name="LineGridWorkCenterName" xml:space="preserve">
+    <value>KONTROL NOKTASI</value>
+  </data>
+  <data name="LineModalTitle" xml:space="preserve">
+    <value>Operasyon Kalite Plan Satırları</value>
+  </data>
+  <data name="LoadingCaption" xml:space="preserve">
+    <value>Lütfen Bekleyin..</value>
+  </data>
+  <data name="LoadingText" xml:space="preserve">
+    <value>Kayıtlar Yükleniyor..</value>
+  </data>
+  <data name="MeasureNumberInPictureLineLabel" xml:space="preserve">
+    <value>Resimdeki Ölçü Numarası:</value>
+  </data>
+  <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
+    <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
+  </data>
+  <data name="MessagePopupInformationTitleBase" xml:space="preserve">
+    <value>Bilgi</value>
+  </data>
+  <data name="NoFile" xml:space="preserve">
+    <value>Dosya Yok.</value>
+  </data>
+  <data name="OperationCodeLabel" xml:space="preserve">
+    <value>Operasyon Kodu:</value>
+  </data>
+  <data name="OperationCodeLineLabel" xml:space="preserve">
+    <value>Operasyon Kodu:</value>
+  </data>
+  <data name="OperationName" xml:space="preserve">
+    <value>OPERASYON ADI</value>
+  </data>
+  <data name="OperationNameLineLabel" xml:space="preserve">
+    <value>Operasyon Adı:</value>
+  </data>
+  <data name="OperationPictureGridApprover" xml:space="preserve">
+    <value>ONAYLAYAN</value>
+  </data>
+  <data name="OperationPictureGridDrawer" xml:space="preserve">
+    <value>ÇİZEN</value>
+  </data>
+  <data name="OperationPictureGridIsApproved" xml:space="preserve">
+    <value>ONAYLI</value>
+  </data>
+  <data name="OperationPictureModalTitle" xml:space="preserve">
+    <value>Operasyon Resimleri</value>
+  </data>
+  <data name="PeriodicControlMeasureLineLabel" xml:space="preserve">
+    <value>Periyodik Kontrol Ölçüsü:</value>
+  </data>
+  <data name="ProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductCodeLabel" xml:space="preserve">
+    <value>Stok Kodu:</value>
+  </data>
+  <data name="ProductCodeLineLabel" xml:space="preserve">
+    <value>Stok Kodu:</value>
+  </data>
+  <data name="ProductModalGridCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
+  <data name="ProductModalGridName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="ProductModalTitle" xml:space="preserve">
+    <value>Stok Kartları</value>
+  </data>
+  <data name="ProductName" xml:space="preserve">
+    <value>STOK AÇIKLAMASI</value>
+  </data>
+  <data name="ProductNameLabel" xml:space="preserve">
+    <value>Stok Açıklaması:</value>
+  </data>
+  <data name="ProductNameLineLabel" xml:space="preserve">
+    <value>Stok Açıklaması:</value>
+  </data>
+  <data name="ProductsOprModalGridCode" xml:space="preserve">
+    <value>OPERASYON KODU</value>
+  </data>
+  <data name="ProductsOprModalGridName" xml:space="preserve">
+    <value>OPERASYON ADI</value>
+  </data>
+  <data name="ProductsOprModalTitle" xml:space="preserve">
+    <value>Ürün Operasyon Kayıtları</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="StationGroupModalGridCode" xml:space="preserve">
+    <value>İŞ MERKEZİ KODU</value>
+  </data>
+  <data name="StationGroupModalGridName" xml:space="preserve">
+    <value>İŞ MERKEZİ ADI</value>
+  </data>
+  <data name="StationGroupModalGridTotalEmployees" xml:space="preserve">
+    <value>TOPLAM ÇALIŞAN</value>
+  </data>
+  <data name="StationGroupModalTitle" xml:space="preserve">
+    <value>İş Merkezleri</value>
+  </data>
+  <data name="Tab1Name" xml:space="preserve">
+    <value>Kalite Planı Satırları</value>
+  </data>
+  <data name="Tab2Name" xml:space="preserve">
+    <value>Operasyon Resimleri</value>
+  </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>Seçtiğiniz operasyon kalite planı kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageOprPictureBase" xml:space="preserve">
+    <value>Seçtiğiniz operasyon resmi kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Dikkat</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Operasyon Kalite Planları</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Kalite Kontrol &gt; Ana Kayıtlar &gt; Kalite Planları</value>
+  </data>
+  <data name="UIWarningMessageBase" xml:space="preserve">
+    <value>Stok ve operasyon seçimi yapılmadan satır ekleme işlemi yapılamaz.</value>
+  </data>
+  <data name="UIWarningTitleBase" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UpdateControlManager" xml:space="preserve">
+    <value>Aynı döküman numaralı bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="UploadedFiles" xml:space="preserve">
+    <value>Yüklenmiş Dosya:</value>
+  </data>
+  <data name="UpperToleranceLineLabel" xml:space="preserve">
+    <value>Üst Tolerans:</value>
+  </data>
+  <data name="ValidatorCodeEmpty" xml:space="preserve">
+    <value>Lütfen operasyon kalite planı döküman numarasını yazın.</value>
+  </data>
+  <data name="ValidatorCodeMaxLenght" xml:space="preserve">
+    <value>Operasyon kalite planı döküman numarası 17 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorNameEmpty" xml:space="preserve">
+    <value>Lütfen operasyon kalite planı adını yazın.</value>
+  </data>
+  <data name="ValidatorNameMaxLenght" xml:space="preserve">
+    <value>Operasyon kalite planı adı 200 karakterden fazla olamaz.</value>
+  </data>
+  <data name="ValidatorProductID" xml:space="preserve">
+    <value>Lütfen stok seçiniz.</value>
+  </data>
+  <data name="ValidatorProductsOperationID" xml:space="preserve">
+    <value>Lütfen operasyon seçiniz.</value>
+  </data>
+  <data name="WorkCenterNameLineLabel" xml:space="preserve">
+    <value>Kontrol Noktası:</value>
+  </data>
+</root>
