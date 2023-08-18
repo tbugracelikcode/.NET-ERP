@@ -209,6 +209,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
                 DataSource.CurrentAccountCardName = selectedOrder.CurrentAccountCardName;
                 DataSource.CurrentAccountCardCode = selectedOrder.CurrentAccountCardCode;
 
+                
+
                 SelectPurchaseOrdersPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
@@ -217,7 +219,17 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
 
         private async Task GetProductsList()
         {
-            ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
+            if(DataSource.OrderID.HasValue && DataSource.OrderID.Value!=Guid.Empty)
+            {
+                var orderLines = (await PurchaseOrdersAppService.GetAsync(DataSource.OrderID.GetValueOrDefault())).Data.SelectPurchaseOrderLinesDto;
+
+                if (orderLines != null)
+                {
+                    ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data
+                        .Where(t => orderLines.Select(p => p.ProductID.Value).Contains(t.Id))
+                        .ToList();
+                }
+            }
         }
 
         private async Task GetPurchaseOrdersList()

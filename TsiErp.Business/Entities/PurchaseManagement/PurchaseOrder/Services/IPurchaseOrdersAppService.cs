@@ -2,6 +2,7 @@
 using TsiErp.Localizations.Resources.Branches.Page;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine.Dtos;
 
 namespace TsiErp.Business.Entities.PurchaseOrder.Services
 {
