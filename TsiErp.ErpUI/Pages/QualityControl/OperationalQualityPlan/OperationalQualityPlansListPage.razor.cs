@@ -80,7 +80,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
-            CreateOperationPictureContextMenuItems();
+            //CreateOperationPictureContextMenuItems();
 
         }
 
@@ -116,7 +116,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
             if (extention == ".pdf")
             {
-                PDFrootPath = rootpath + @"\UploadedFiles\OperationPictures\" + DataSource.ProductID + "-" + DataSource.ProductsOperationID  + @"\" + file.Name;
+                PDFrootPath = rootpath + @"\UploadedFiles\OperationPictures\" + DataSource.ProductID + "-" + DataSource.ProductsOperationID  + @"\" + OperationPictureDataSource.Id + @"\" + file.Name;
 
                 System.IO.FileInfo pdfFile = new System.IO.FileInfo(PDFrootPath);
                 if (pdfFile.Exists)
@@ -127,7 +127,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
             else
             {
-                imageDataUri = rootpath + @"\UploadedFiles\OperationPictures\" + DataSource.ProductID + "-" + DataSource.ProductsOperationID  + @"\" + file.Name;
+                imageDataUri = rootpath + @"\UploadedFiles\OperationPictures\" + DataSource.ProductID + "-" + DataSource.ProductsOperationID  + @"\" + OperationPictureDataSource.Id + @"\" + file.Name;
 
                 System.IO.FileInfo jpgfile = new System.IO.FileInfo(imageDataUri);
                 if (jpgfile.Exists)
@@ -203,7 +203,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
             if (format == ".jpg" || format == ".jpeg" || format == ".png")
             {
-                imageDataUri = @"\UploadedFiles\OperationPictures\" + DataSource.ProductID + "-" + DataSource.ProductsOperationID  + @"\" + file.Name;
+                imageDataUri = @"\UploadedFiles\OperationPictures\" + DataSource.ProductID + "-" + DataSource.ProductsOperationID  + @"\" + OperationPictureDataSource.Id + @"\" + file.Name;
 
                 image = true;
 
@@ -215,7 +215,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
             else if (format == ".pdf")
             {
 
-                PDFrootPath = "wwwroot/UploadedFiles/OperationPictures/" + DataSource.ProductID + "-" + DataSource.ProductsOperationID + "/" + file.Name;
+                PDFrootPath = "wwwroot/UploadedFiles/OperationPictures/" + DataSource.ProductID + "-" + DataSource.ProductsOperationID + "/" + OperationPictureDataSource.Id + "/" + file.Name;
 
                 PDFFileName = file.Name;
 
@@ -501,22 +501,41 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
             }
         }
 
+        public async Task BeforeOperationPictureInsertAsync()
+        {
+            if (DataSource.ProductID == Guid.Empty || DataSource.ProductsOperationID == Guid.Empty)
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningTitleBase"], L["UIWarningMessageOprPictureBase"]);
+            }
+            else
+            {
+                OperationPictureDataSource = new SelectOperationPicturesDto
+                {
+                    CreationDate_ = DateTime.Now
+                };
+
+                OperationPictureCrudPopup = true;
+                OperationPictureDataSource.LineNr = GridLineList.Count + 1;
+            }
+
+
+            await Task.CompletedTask;
+        }
+
         public async void OnOperationPictureContextMenuClick(ContextMenuClickEventArgs<SelectOperationPicturesDto> args)
         {
             switch (args.Item.Id)
             {
                 case "new":
-                    OperationPictureDataSource = new SelectOperationPicturesDto();
-                    OperationPictureCrudPopup = true;
-                    OperationPictureDataSource.LineNr = GridOperationPictureList.Count + 1;
-                    OperationPictureDataSource.CreationDate_ = DateTime.Now;
+
+                    await BeforeOperationPictureInsertAsync();
                     await InvokeAsync(StateHasChanged);
                     break;
 
                 case "changed":
                     OperationPictureDataSource = args.RowInfo.RowData;
                     string rootpath = FileUploadService.GetRootPath();
-                    string operationPicturePath = @"\UploadedFiles\OperationPictures\" + DataSource.ProductID.ToString() + "-" + DataSource.ProductsOperationID.ToString()  + @"\";
+                    string operationPicturePath = @"\UploadedFiles\OperationPictures\" + DataSource.ProductID.ToString() + "-" + DataSource.ProductsOperationID.ToString()  + @"\" + OperationPictureDataSource.Id + @"\";
                     DirectoryInfo operationPicture = new DirectoryInfo(rootpath + operationPicturePath);
                     if (operationPicture.Exists)
                     {
@@ -613,7 +632,37 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
             await _OperationPicturesGrid.Refresh();
 
+            #region File Upload İşlemleri
+
+            string productid = DataSource.ProductID.ToString();
+            string operationid = DataSource.ProductsOperationID.ToString();
+            string oprpictureid = OperationPictureDataSource.Id.ToString();
+
+            List<string> _result = new List<string>();
+
+            foreach (var file in files)
+            {
+                disable = true;
+
+                string fileName = file.Name;
+                //string rootPath = "UploadedFiles/OperationPictures/" + productid + "-" + operationid + "/" + oprpictureid ;
+                string rootPath = "UploadedFiles/OperationPictures/" + DataSource.ProductCode + "-" + DataSource.OperationCode + "/" + "123123";
+
+
+                _result.Add(await FileUploadService.UploadOperationPicture(file, rootPath, fileName));
+                await InvokeAsync(() => StateHasChanged());
+
+            }
+
+            #endregion
+
             HideOperationPicturesPopup();
+
+            disable = false;
+
+            files.Clear();
+
+            uploadedfiles.Clear();
 
             await InvokeAsync(StateHasChanged);
         }
@@ -692,8 +741,16 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
         public async void ProductsOperationsButtonClickEvent()
         {
-            SelectProductsOperationsPopupVisible = true;
-            await GetProductsOperationsList();
+            if(DataSource.ProductID == Guid.Empty)
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningProductIdTitleBase"], L["UIWarningProductIdMessageBase"]);
+            }
+            else
+            {
+                SelectProductsOperationsPopupVisible = true;
+                await GetProductsOperationsList();
+            }
+          
             await InvokeAsync(StateHasChanged);
         }
 
@@ -888,7 +945,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
         private async Task GetProductsOperationsList()
         {
-            ProductsOperationsList = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.ToList();
+            ProductsOperationsList = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.Where(t=>t.ProductID == DataSource.ProductID).ToList();
         }
 
         private async Task GetControlTypesList()
@@ -903,83 +960,5 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
         #endregion
 
-        protected override async Task OnSubmit()
-        {
-            #region Submit İşlemleri
-
-            SelectOperationalQualityPlansDto result;
-
-            if (DataSource.Id == Guid.Empty)
-            {
-                var createInput = ObjectMapper.Map<SelectOperationalQualityPlansDto, CreateOperationalQualityPlansDto>(DataSource);
-
-                result = (await CreateAsync(createInput)).Data;
-
-                if (result != null)
-                    DataSource.Id = result.Id;
-            }
-            else
-            {
-                var updateInput = ObjectMapper.Map<SelectOperationalQualityPlansDto, UpdateOperationalQualityPlansDto>(DataSource);
-
-                result = (await UpdateAsync(updateInput)).Data;
-            }
-
-            if (result == null)
-            {
-
-                return;
-            }
-
-            await GetListDataSourceAsync();
-
-            var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
-
-
-
-            if (DataSource.Id == Guid.Empty)
-            {
-                DataSource.Id = result.Id;
-            }
-
-            if (savedEntityIndex > -1)
-                SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
-            else
-                SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
-
-            #endregion
-
-            #region File Upload İşlemleri
-
-            string productid = DataSource.ProductID.ToString();
-            string operationid = DataSource.ProductsOperationID.ToString();
-
-            List<string> _result = new List<string>();
-
-            foreach (var file in files)
-            {
-                disable = true;
-
-                string fileName = file.Name;
-                string rootPath = "UploadedFiles/OperationPictures/" + productid + "-" + operationid ;
-
-
-                _result.Add(await FileUploadService.UploadOperationPicture(file, rootPath, fileName));
-                await InvokeAsync(() => StateHasChanged());
-
-            }
-
-            HideEditPage();
-
-            disable = false;
-
-            files.Clear();
-
-            uploadedfiles.Clear();
-
-            await InvokeAsync(() => StateHasChanged());
-
-            #endregion
-        }
     }
 }

@@ -908,6 +908,33 @@ namespace TsiErp.Localizations.Resources.OperationalQualityPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stok ve operasyon seçimi yapılmadan operasyon resmi ekleme işlemi yapılamaz..
+        /// </summary>
+        public static string UIWarningMessageOprPictureBase {
+            get {
+                return ResourceManager.GetString("UIWarningMessageOprPictureBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok seçmeden operasyon seçimi yapılamaz..
+        /// </summary>
+        public static string UIWarningProductIdMessageBase {
+            get {
+                return ResourceManager.GetString("UIWarningProductIdMessageBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningProductIdTitleBase {
+            get {
+                return ResourceManager.GetString("UIWarningProductIdTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Uyarı.
         /// </summary>
         public static string UIWarningTitleBase {

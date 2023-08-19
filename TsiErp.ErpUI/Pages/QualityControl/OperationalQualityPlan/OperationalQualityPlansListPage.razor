@@ -88,10 +88,10 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="@L["EditModalTitle"]"
-         Width="62%"
-         Height="56%"
-         MinWidth="1060px"
-         MinHeight="600px"
+         Width="80%"
+         Height="93%"
+         MinWidth="1500px"
+         MinHeight="800px"
          HeaderCssClass="HeaderTitleCss"
          Showing="CrudModalShowing"
          Closing="CrudModalClosing">
@@ -100,9 +100,9 @@ else
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="20%" />
-                    <DxGridLayoutRow Height="16%" />
-                    <DxGridLayoutRow Height="60%" />
+                    <DxGridLayoutRow Height="15%" />
+                    <DxGridLayoutRow Height="14%" />
+                    <DxGridLayoutRow Height="63%" />
                 </Rows>
 
                 <Columns>
@@ -119,16 +119,16 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>@L["ProductCodeLabel"] </strong></label><br />
-                            <SfTextBox @ref="@ProductsCodeButtonEdit" Created="@ProductsCodeOnCreateIcon" @bind-Value="DataSource.ProductCode" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
+                             <label class="TSIModalLabel"><strong>@L["DocumentNumberLabel"] </strong></label><br />
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.DocumentNumber"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>@L["ProductNameLabel"] </strong></label><br />
-                            <SfTextBox @ref="@ProductsNameButtonEdit" Created="@ProductsNameOnCreateIcon" @bind-Value="DataSource.ProductName" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
+                             <label class="TSIModalLabel"><strong>@L["OperationCodeLabel"] </strong></label><br />
+                            <SfTextBox @ref="@ProductsOperationsButtonEdit" Created="@ProductsOperationsOnCreateIcon" @bind-Value="DataSource.OperationCode" ShowClearButton=true ValueChange="ProductsOperationsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -141,15 +141,15 @@ else
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>@L["OperationCodeLabel"] </strong></label><br />
-                            <SfTextBox @ref="@ProductsOperationsButtonEdit" Created="@ProductsOperationsOnCreateIcon" @bind-Value="DataSource.OperationCode" ShowClearButton=true ValueChange="ProductsOperationsOnValueChange"></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["ProductCodeLabel"] </strong></label><br />
+                            <SfTextBox @ref="@ProductsCodeButtonEdit" Created="@ProductsCodeOnCreateIcon" @bind-Value="DataSource.ProductCode" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
-                            <label class="TSIModalLabel"><strong>@L["DocumentNumberLabel"] </strong></label><br />
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.DocumentNumber"></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["ProductNameLabel"] </strong></label><br />
+                            <SfTextBox @ref="@ProductsNameButtonEdit" Created="@ProductsNameOnCreateIcon" @bind-Value="DataSource.ProductName" ShowClearButton=true ValueChange="ProductsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -165,7 +165,7 @@ else
                                             <TabHeader Text="@L["Tab1Name"]"></TabHeader>
                                         </ChildContent>
                                         <ContentTemplate>
-                                            <DxGridLayout CssClass="TSIGridLayout">
+                                            <DxGridLayout CssClass="TSIQualityPlansGridLayout">
 
                                                 <Rows>
                                                     <DxGridLayoutRow Height="100%" />
@@ -188,25 +188,23 @@ else
                                                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                                                 <GridColumns>
-                                                                    <GridColumn Field=@nameof(SelectOperationalQualityPlanLinesDto.ProductCode) HeaderText="@L["LineGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                                                    <GridColumn Field=@nameof(SelectOperationalQualityPlanLinesDto.OperationCode) HeaderText="@L["LineGridOperationCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                                                    <GridColumn Field=@nameof(SelectOperationalQualityPlanLinesDto.ControlTypesName) HeaderText="@L["LineGridControlTypesName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                                                    <GridColumn Field=@nameof(SelectOperationalQualityPlanLinesDto.WorkCenterName) HeaderText="@L["LineGridWorkCenterName"]" TextAlign="TextAlign.Center" Width="120">
+                                                                    <GridColumn Field=@nameof(SelectOperationalQualityPlanLinesDto.ControlTypesName) HeaderText="@L["LineGridControlTypesName"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectOperationalQualityPlanLinesDto.WorkCenterName) HeaderText="@L["LineGridWorkCenterName"]" TextAlign="TextAlign.Center" Width="180">
                                                                     </GridColumn>
-                                                                    <GridColumn Field=@nameof(SelectOperationalQualityPlanLinesDto.ControlConditionsName) HeaderText="@L["LineGridControlConditionsName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectOperationalQualityPlanLinesDto.ControlConditionsName) HeaderText="@L["LineGridControlConditionsName"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
 
-                                                                    <GridColumn Field=@nameof(SelectOperationalQualityPlanLinesDto.Equipment) HeaderText="@L["LineGridEquipment"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectOperationalQualityPlanLinesDto.Equipment) HeaderText="@L["LineGridEquipment"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
 
-                                                                    <GridColumn Field=@nameof(SelectOperationalQualityPlanLinesDto.ControlManager) HeaderText="@L["LineGridControlManager"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                                                    <GridColumn Field=@nameof(SelectOperationalQualityPlanLinesDto.IdealMeasure) Type="ColumnType.Number" HeaderText="@L["LineGridIdealMeasure"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectOperationalQualityPlanLinesDto.ControlManager) HeaderText="@L["LineGridControlManager"]" TextAlign="TextAlign.Center" Width="280"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectOperationalQualityPlanLinesDto.IdealMeasure) Type="ColumnType.Number" HeaderText="@L["LineGridIdealMeasure"]" TextAlign="TextAlign.Center" Width="250"></GridColumn>
 
-                                                                    <GridColumn Field=@nameof(SelectOperationalQualityPlanLinesDto.BottomTolerance) Type="ColumnType.Number" HeaderText="@L["LineGridBottomTolerance"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectOperationalQualityPlanLinesDto.BottomTolerance) Type="ColumnType.Number" HeaderText="@L["LineGridBottomTolerance"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
 
-                                                                    <GridColumn Field=@nameof(SelectOperationalQualityPlanLinesDto.UpperTolerance) Type="ColumnType.Number" HeaderText="@L["LineGridUpperTolerance"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectOperationalQualityPlanLinesDto.UpperTolerance) Type="ColumnType.Number" HeaderText="@L["LineGridUpperTolerance"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
 
-                                                                    <GridColumn Field=@nameof(SelectOperationalQualityPlanLinesDto.PeriodicControlMeasure) DisplayAsCheckBox=true HeaderText="@L["LineGridPeriodicControlMeasure"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectOperationalQualityPlanLinesDto.PeriodicControlMeasure) DisplayAsCheckBox=true HeaderText="@L["LineGridPeriodicControlMeasure"]" TextAlign="TextAlign.Center" Width="300"></GridColumn>
 
-                                                                    <GridColumn Field=@nameof(SelectProductOperationQualityPlansDto.MeasureNumberInPicture) Type="ColumnType.Number" HeaderText="@L["LineGridMeasureNumberInPicture"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                                                    <GridColumn Field=@nameof(SelectProductOperationQualityPlansDto.MeasureNumberInPicture) Type="ColumnType.Number" HeaderText="@L["LineGridMeasureNumberInPicture"]" TextAlign="TextAlign.Center" Width="300"></GridColumn>
                                                                 </GridColumns>
                                                             </SfGrid>
                                                         </Template>

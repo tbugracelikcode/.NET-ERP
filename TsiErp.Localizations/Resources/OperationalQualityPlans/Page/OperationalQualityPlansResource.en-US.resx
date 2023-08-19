@@ -396,6 +396,15 @@
   <data name="UIWarningMessageBase" xml:space="preserve">
     <value>It is not possible to add line without selecting product and operation.</value>
   </data>
+  <data name="UIWarningMessageOprPictureBase" xml:space="preserve">
+    <value>It is not possible to add operation picture without selecting product and operation.</value>
+  </data>
+  <data name="UIWarningProductIdMessageBase" xml:space="preserve">
+    <value>Operation selection cannot be made without selecting product.</value>
+  </data>
+  <data name="UIWarningProductIdTitleBase" xml:space="preserve">
+    <value>Warning</value>
+  </data>
   <data name="UIWarningTitleBase" xml:space="preserve">
     <value>Warning</value>
   </data>
