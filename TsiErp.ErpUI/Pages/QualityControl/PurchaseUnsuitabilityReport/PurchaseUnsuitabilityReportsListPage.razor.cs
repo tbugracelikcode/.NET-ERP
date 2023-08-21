@@ -124,9 +124,17 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
 
         public async void ProductsCodeButtonClickEvent()
         {
-            SelectProductsPopupVisible = true;
-            await GetProductsList();
-            await InvokeAsync(StateHasChanged);
+            if(DataSource.OrderID==Guid.Empty || DataSource.OrderID==null)
+            {
+                await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationSelectOrderBase"]);
+                await InvokeAsync(StateHasChanged);
+            }
+            else
+            {
+                SelectProductsPopupVisible = true;
+                await GetProductsList();
+                await InvokeAsync(StateHasChanged);
+            }
         }
         public async Task ProductsNameOnCreateIcon()
         {

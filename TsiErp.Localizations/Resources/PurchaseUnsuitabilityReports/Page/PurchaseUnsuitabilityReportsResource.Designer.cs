@@ -404,6 +404,15 @@ namespace TsiErp.Localizations.Resources.PurchaseUnsuitabilityReports.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lütfen satınalma siparişi seçin..
+        /// </summary>
+        public static string MessagePopupInformationSelectOrderBase {
+            get {
+                return ResourceManager.GetString("MessagePopupInformationSelectOrderBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bilgi.
         /// </summary>
         public static string MessagePopupInformationTitleBase {

@@ -231,6 +231,9 @@
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
   </data>
+  <data name="MessagePopupInformationSelectOrderBase" xml:space="preserve">
+    <value>Lütfen satınalma siparişi seçin.</value>
+  </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>

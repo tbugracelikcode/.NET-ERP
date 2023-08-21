@@ -231,6 +231,9 @@
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>The record you selected is using by {0}.</value>
   </data>
+  <data name="MessagePopupInformationSelectOrderBase" xml:space="preserve">
+    <value>Please select a purchase order record.</value>
+  </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
