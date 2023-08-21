@@ -35,21 +35,13 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.D
         /// </summary>
         public bool IsUnsuitabilityWorkOrder { get; set; }
         /// <summary>
-        /// Ölçü Kontrol Form Beyan
+        /// Uygun Olmayan Miktar
         /// </summary>
-        public decimal ControlFormDeclaration { get; set; }
+        public decimal UnsuitableAmount { get; set; }
         /// <summary>
-        /// Hurda
+        /// Aksiyon
         /// </summary>
-        public bool IsScrap { get; set; }
-        /// <summary>
-        /// Düzeltme
-        /// </summary>
-        public bool IsCorrection { get; set; }
-        /// <summary>
-        /// Olduğu Gibi Kullanılacak
-        /// </summary>
-        public bool IsToBeUsedAs { get; set; }
+        public string Action_ { get; set; }
         /// <summary>
         /// İş Emri ID
         /// </summary>

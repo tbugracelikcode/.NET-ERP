@@ -79,5 +79,13 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dt
         /// Cari Ünvan
         /// </summary>
         public string CurrentAccountCardName { get; set; }
+        /// <summary>
+        /// Uygunsuzluk Başlığı ID
+        /// </summary>
+        public Guid UnsuitabilityItemsID { get; set; }
+        /// <summary>
+        /// Uygunsuzluk Başlığı Adı
+        /// </summary>
+        public string UnsuitabilityItemsName { get; set; }
     }
 }

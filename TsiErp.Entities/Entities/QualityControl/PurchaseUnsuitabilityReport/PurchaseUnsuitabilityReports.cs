@@ -71,5 +71,11 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport
         /// Sipariş ID
         /// </summary>
         public Guid CurrentAccountCardID { get; set; }
+
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Sipariş ID
+        /// </summary>
+        public Guid UnsuitabilityItemsID { get; set; }
     }
 }

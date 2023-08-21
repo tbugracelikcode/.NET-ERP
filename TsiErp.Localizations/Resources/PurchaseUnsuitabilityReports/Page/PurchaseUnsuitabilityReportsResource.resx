@@ -315,11 +315,23 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Kalite Kontrol &gt; Hareketler &gt; Uygunsuzluk Kayıtları</value>
   </data>
+  <data name="UnsuitabilityItemsModalTitle" xml:space="preserve">
+    <value>Uygunsuzluk Başlıkları</value>
+  </data>
+  <data name="UnsuitabilityNameLabel" xml:space="preserve">
+    <value>Uygunsuzluk Başlığı:</value>
+  </data>
   <data name="UnsuitableAmount" xml:space="preserve">
     <value>HATALI MİKTAR</value>
   </data>
   <data name="UnsuitableAmountLabel" xml:space="preserve">
-    <value>Uygun Olmayan Miktar:</value>
+    <value>Hatalı Miktar:</value>
+  </data>
+  <data name="UnsutabilityItemModalGridCode" xml:space="preserve">
+    <value>BAŞLIK KODU</value>
+  </data>
+  <data name="UnsutabilityItemModalGridName" xml:space="preserve">
+    <value>BAŞLIK ADI</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
@@ -344,5 +356,8 @@
   </data>
   <data name="ValidatorProductID" xml:space="preserve">
     <value>Lütfen ürün seçin.</value>
+  </data>
+  <data name="ValidatorUnsuitabilityItemsID" xml:space="preserve">
+    <value>Lütfen uygunsuzluk başlığı seçin.</value>
   </data>
 </root>

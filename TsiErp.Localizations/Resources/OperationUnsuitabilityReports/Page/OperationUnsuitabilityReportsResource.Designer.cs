@@ -62,6 +62,15 @@ namespace TsiErp.Localizations.Resources.OperationUnsuitabilityReports.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AKSİYON.
+        /// </summary>
+        public static string Action_ {
+            get {
+                return ResourceManager.GetString("Action_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Uygunsuzluk Aksiyonu:.
         /// </summary>
         public static string ActionLabel {
@@ -148,15 +157,6 @@ namespace TsiErp.Localizations.Resources.OperationUnsuitabilityReports.Page {
         public static string ContextRefresh {
             get {
                 return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ölçü Kontrol Form Beyan:.
-        /// </summary>
-        public static string ControlFormDeclarationLabel {
-            get {
-                return ResourceManager.GetString("ControlFormDeclarationLabel", resourceCulture);
             }
         }
         
@@ -292,33 +292,6 @@ namespace TsiErp.Localizations.Resources.OperationUnsuitabilityReports.Page {
         public static string FicheNoLabel {
             get {
                 return ResourceManager.GetString("FicheNoLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to DÜZELTME.
-        /// </summary>
-        public static string IsCorrection {
-            get {
-                return ResourceManager.GetString("IsCorrection", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to HURDA.
-        /// </summary>
-        public static string IsScrap {
-            get {
-                return ResourceManager.GetString("IsScrap", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to OLDUĞU GİBİ KULLANILACAK.
-        /// </summary>
-        public static string IsToBeUsedAs {
-            get {
-                return ResourceManager.GetString("IsToBeUsedAs", resourceCulture);
             }
         }
         
@@ -733,6 +706,15 @@ namespace TsiErp.Localizations.Resources.OperationUnsuitabilityReports.Page {
         public static string UIToBeUsedAs {
             get {
                 return ResourceManager.GetString("UIToBeUsedAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hatalı Miktar:.
+        /// </summary>
+        public static string UnsuitableAmountLabel {
+            get {
+                return ResourceManager.GetString("UnsuitableAmountLabel", resourceCulture);
             }
         }
         

@@ -14,6 +14,7 @@ using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
 using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.PurchaseUnsuitabilityReports.Page;
@@ -73,7 +74,8 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
                     OrderID = input.OrderID,
                     PartyNo = input.PartyNo,
                     ProductID = input.ProductID,
-                    UnsuitableAmount = input.UnsuitableAmount
+                    UnsuitableAmount = input.UnsuitableAmount,
+                    UnsuitabilityItemsID = input.UnsuitabilityItemsID
                 });
 
 
@@ -117,6 +119,10 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
                     (
                        d => new { CurrentAccountCardCode = d.Code, CurrentAccountCardName = d.Name }, nameof(PurchaseUnsuitabilityReports.CurrentAccountCardID), nameof(CurrentAccountCards.Id), JoinType.Left
                     )
+                    .Join<UnsuitabilityItems>
+                    (
+                       d => new { UnsuitabilityItemsName = d.Name }, nameof(PurchaseUnsuitabilityReports.UnsuitabilityItemsID), nameof(UnsuitabilityItems.Id), JoinType.Left
+                    )
                     .Where(null, false, false, Tables.PurchaseUnsuitabilityReports);
 
                 var purchaseUnsuitabilityReport = queryFactory.Get<SelectPurchaseUnsuitabilityReportsDto>(query);
@@ -133,7 +139,7 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var query = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Select<PurchaseUnsuitabilityReports>(r => new {r.Id, r.FicheNo, r.PartyNo, r.Date_, r.Description_, r.UnsuitableAmount, r.Action_ })
+                var query = queryFactory.Query().From(Tables.PurchaseUnsuitabilityReports).Select<PurchaseUnsuitabilityReports>(r => new { r.Id, r.FicheNo, r.PartyNo, r.Date_, r.Description_, r.UnsuitableAmount, r.Action_ })
                     .Join<PurchaseOrders>
                     (
                        d => new { OrderFicheNo = d.FicheNo }, nameof(PurchaseUnsuitabilityReports.OrderID), nameof(PurchaseOrders.Id), JoinType.Left
@@ -146,6 +152,10 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
                     (
                        d => new { CurrentAccountCardCode = d.Code, CurrentAccountCardName = d.Name }, nameof(PurchaseUnsuitabilityReports.CurrentAccountCardID), nameof(CurrentAccountCards.Id), JoinType.Left
                     )
+                    .Join<UnsuitabilityItems>
+                    (
+                       d => new { UnsuitabilityItemsName = d.Name }, nameof(PurchaseUnsuitabilityReports.UnsuitabilityItemsID), nameof(UnsuitabilityItems.Id), JoinType.Left
+                    )
                     .Where(null, false, false, Tables.PurchaseUnsuitabilityReports);
 
                 var purchaseUnsuitabilityReports = queryFactory.GetList<ListPurchaseUnsuitabilityReportsDto>(query).ToList();
@@ -153,8 +163,6 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
                 return new SuccessDataResult<IList<ListPurchaseUnsuitabilityReportsDto>>(purchaseUnsuitabilityReports);
 
             }
-
-            throw new NotImplementedException();
         }
 
 
@@ -202,7 +210,8 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
                     OrderID = input.OrderID,
                     PartyNo = input.PartyNo,
                     ProductID = input.ProductID,
-                    UnsuitableAmount = input.UnsuitableAmount
+                    UnsuitableAmount = input.UnsuitableAmount,
+                    UnsuitabilityItemsID = input.UnsuitabilityItemsID
                 }).Where(new { Id = input.Id }, false, false, "");
 
                 var purchaseUnsuitabilityReport = queryFactory.Update<SelectPurchaseUnsuitabilityReportsDto>(query, "Id", true);
@@ -243,7 +252,8 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
                     FicheNo = entity.FicheNo,
                     Description_ = entity.Description_,
                     Date_ = entity.Date_,
-                    CurrentAccountCardID = entity.CurrentAccountCardID
+                    CurrentAccountCardID = entity.CurrentAccountCardID,
+                    UnsuitabilityItemsID = entity.UnsuitabilityItemsID
                 }).Where(new { Id = id }, false, false, "");
 
                 var purchaseUnsuitabilityReport = queryFactory.Update<SelectPurchaseUnsuitabilityReportsDto>(query, "Id", true);

@@ -69,20 +69,19 @@
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                     <GridColumns>
                                         <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.FicheNo) HeaderText="@L["FicheNo"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+
                                         <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.Date_) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["Date_"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
                                         
-
-                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.IsCorrection) DisplayAsCheckBox=true HeaderText="@L["IsCorrection"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
-                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.IsScrap) DisplayAsCheckBox=true HeaderText="@L["IsScrap"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
-                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.IsToBeUsedAs) DisplayAsCheckBox=true HeaderText="@L["IsToBeUsedAs"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
-                                        <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.IsUnsuitabilityWorkOrder) DisplayAsCheckBox=true HeaderText="@L["IsUnsuitabilityWorkOrder"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
                                         <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.WorkOrderNo) HeaderText="@L["WorkOrderNo"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+
                                         <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.StationCode) HeaderText="@L["StationCode"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
                                        
                                         <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.StationGroupCode) HeaderText="@L["StationGroupCode"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
                                        
                                         <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.EmployeeName) HeaderText="@L["EmployeeName"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+
                                         <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.ProductionOrderFicheNo) HeaderText="@L["ProductionOrderFicheNo"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
+
                                         <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.ProductCode) HeaderText="@L["ProductCode"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
                                        
                                         <GridColumn Field=@nameof(ListOperationUnsuitabilityReportsDto.OperationCode) HeaderText="@L["OperationCode"]" TextAlign="TextAlign.Center" Width="120"> </GridColumn>
@@ -152,8 +151,8 @@
                         <DxGridLayoutItem Row="0" Column="5">
                             <Template>
                                 <br />
-                                <label class="TSIModalLabel"><strong>@L["ControlFormDeclarationLabel"] </strong></label>
-                                <SfNumericTextBox TValue="decimal" @bind-Value="DataSource.ControlFormDeclaration" Min=0></SfNumericTextBox>
+                                <label class="TSIModalLabel"><strong>@L["UnsuitableAmountLabel"] </strong></label>
+                                <SfNumericTextBox TValue="decimal" @bind-Value="DataSource.UnsuitableAmount" Min=0></SfNumericTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="0" Column="7">

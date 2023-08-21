@@ -6,6 +6,8 @@ using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
@@ -124,7 +126,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
 
         public async void ProductsCodeButtonClickEvent()
         {
-            if(DataSource.OrderID==Guid.Empty || DataSource.OrderID==null)
+            if (DataSource.OrderID == Guid.Empty || DataSource.OrderID == null)
             {
                 await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationSelectOrderBase"]);
                 await InvokeAsync(StateHasChanged);
@@ -217,7 +219,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
                 DataSource.CurrentAccountCardName = selectedOrder.CurrentAccountCardName;
                 DataSource.CurrentAccountCardCode = selectedOrder.CurrentAccountCardCode;
 
-                
+
 
                 SelectPurchaseOrdersPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
@@ -225,9 +227,49 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
         }
         #endregion
 
+        SfTextBox UnsuitabilityItemsButtonEdit;
+        bool SelectUnsuitabilityItemsPopupVisible = false;
+        List<ListUnsuitabilityItemsDto> UnsuitabilityItemsList = new List<ListUnsuitabilityItemsDto>();
+
+        public async Task UnsuitabilityItemsOnCreateIcon()
+        {
+            var UnsuitabilityItemsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, UnsuitabilityItemsButtonClickEvent);
+            await UnsuitabilityItemsButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", UnsuitabilityItemsButtonClick } });
+        }
+
+        public async void UnsuitabilityItemsButtonClickEvent()
+        {
+            SelectUnsuitabilityItemsPopupVisible = true;
+            await GetUnsuitabilityItemsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+
+        public void UnsuitabilityItemsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.UnsuitabilityItemsID = Guid.Empty;
+                DataSource.UnsuitabilityItemsName = string.Empty;
+            }
+        }
+
+        public async void UnsuitabilityItemsDoubleClickHandler(RecordDoubleClickEventArgs<ListUnsuitabilityItemsDto> args)
+        {
+            var selectedOrder = args.RowData;
+
+            if (selectedOrder != null)
+            {
+                DataSource.UnsuitabilityItemsID =selectedOrder.Id;
+                DataSource.UnsuitabilityItemsName = selectedOrder.Name;
+                SelectUnsuitabilityItemsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
         private async Task GetProductsList()
         {
-            if(DataSource.OrderID.HasValue && DataSource.OrderID.Value!=Guid.Empty)
+            if (DataSource.OrderID.HasValue && DataSource.OrderID.Value != Guid.Empty)
             {
                 var orderLines = (await PurchaseOrdersAppService.GetAsync(DataSource.OrderID.GetValueOrDefault())).Data.SelectPurchaseOrderLinesDto;
 
@@ -243,6 +285,16 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
         private async Task GetPurchaseOrdersList()
         {
             PurchaseOrdersList = (await PurchaseOrdersAppService.GetListAsync(new ListPurchaseOrdersParameterDto())).Data.ToList();
+        }
+
+        private async Task GetUnsuitabilityItemsList()
+        {
+            var unsuitabilityTypesItem = (await UnsuitabilityTypesItemsAppService.GetWithUnsuitabilityItemDescriptionAsync("Purchase")).Data;
+
+            if (unsuitabilityTypesItem != null)
+            {
+                UnsuitabilityItemsList = (await UnsuitabilityItemsAppService.GetListAsync(new ListUnsuitabilityItemsParameterDto ())).Data.Where(t=>t.UnsuitabilityTypesItemsName== unsuitabilityTypesItem.Name).ToList();
+            }
         }
     }
 }

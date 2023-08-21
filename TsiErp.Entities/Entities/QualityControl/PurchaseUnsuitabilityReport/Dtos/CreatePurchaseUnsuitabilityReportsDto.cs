@@ -50,5 +50,9 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dt
         /// Sipariş ID
         /// </summary>
         public Guid? CurrentAccountCardID { get; set; }
+        /// <summary>
+        /// Uygunsuzluk Başlığı ID
+        /// </summary>
+        public Guid? UnsuitabilityItemsID { get; set; }
     }
 }

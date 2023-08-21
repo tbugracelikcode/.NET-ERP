@@ -315,11 +315,23 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Quality Control &gt; Transactions &gt; Unsuitability Records</value>
   </data>
+  <data name="UnsuitabilityItemsModalTitle" xml:space="preserve">
+    <value>Unsuitability Items</value>
+  </data>
+  <data name="UnsuitabilityNameLabel" xml:space="preserve">
+    <value>Unsuitability Item Name:</value>
+  </data>
   <data name="UnsuitableAmount" xml:space="preserve">
-    <value>WRONG AMOUNT</value>
+    <value>UNSUITABLE AMOUNT</value>
   </data>
   <data name="UnsuitableAmountLabel" xml:space="preserve">
     <value>Unsuitable Amount:</value>
+  </data>
+  <data name="UnsutabilityItemModalGridCode" xml:space="preserve">
+    <value>ITEM CODE</value>
+  </data>
+  <data name="UnsutabilityItemModalGridName" xml:space="preserve">
+    <value>ITEM NAME</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same number.</value>
@@ -344,5 +356,8 @@
   </data>
   <data name="ValidatorProductID" xml:space="preserve">
     <value>Please select a product.</value>
+  </data>
+  <data name="ValidatorUnsuitabilityItemsID" xml:space="preserve">
+    <value>Please select an unsuitability item.</value>
   </data>
 </root>

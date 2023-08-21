@@ -87,22 +87,16 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
         {
             switch(args.ItemData.ID)
             {
-                case "Scrap": 
-                    DataSource.IsScrap = true; 
-                    DataSource.IsCorrection = false;
-                    DataSource.IsToBeUsedAs = false;
+                case "Scrap":
+                    DataSource.Action_ = L["ComboboxScrap"].Value;
                     break;
 
                 case "Correction":
-                    DataSource.IsScrap = false;
-                    DataSource.IsCorrection = true;
-                    DataSource.IsToBeUsedAs = false;
+                    DataSource.Action_ = L["ComboboxCorrection"].Value;
                     break;
 
                 case "ToBeUsedAs":
-                    DataSource.IsScrap = false;
-                    DataSource.IsCorrection = false;
-                    DataSource.IsToBeUsedAs = true;
+                    DataSource.Action_ = L["ComboboxToBeUsedAs"].Value;
                     break;
 
                 default:break;

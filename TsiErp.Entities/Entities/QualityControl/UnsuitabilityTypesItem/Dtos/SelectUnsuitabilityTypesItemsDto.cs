@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Entities.Auditing;
+﻿using Tsi.Core.Entities.Auditing;
 
 namespace TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem.Dtos
 {
@@ -24,15 +19,15 @@ namespace TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem.Dtos
         /// </summary>
         public string Description_ { get; set; }
 
-        public bool IsActive { get; set; }
         /// <summary>
-        /// Data Concurrency Stamp
+        /// Aktif
         /// </summary>
-        public bool? DataOpenStatus { get; set; }
+        public bool IsActive { get; set; }
+
 
         /// <summary>
-        /// Data Concurrency UserID
+        /// Uygunsuzluk Türü Açıklaması
         /// </summary>
-        public Guid? DataOpenStatusUserId { get; set; }
+        public string UnsuitabilityTypesDescription { get; set; }
     }
 }

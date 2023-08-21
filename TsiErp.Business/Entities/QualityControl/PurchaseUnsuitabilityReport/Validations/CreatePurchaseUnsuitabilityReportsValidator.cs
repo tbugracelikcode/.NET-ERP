@@ -31,6 +31,8 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Validations
 
             RuleFor(x => x.OrderID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorOrderID");
 
+            RuleFor(x => x.UnsuitabilityItemsID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorUnsuitabilityItemsID");
+
         }
     }
 }
