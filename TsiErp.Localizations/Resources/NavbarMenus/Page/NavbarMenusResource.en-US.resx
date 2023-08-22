@@ -202,7 +202,7 @@
     <value>Equipment Management</value>
   </data>
   <data name="EquipmentOperationsMenu" xml:space="preserve">
-    <value>Equipment Operations</value>
+    <value>Equipment Calibration Operations</value>
   </data>
   <data name="EquipmentRecordsChildMenu" xml:space="preserve">
     <value>Equipment Records</value>

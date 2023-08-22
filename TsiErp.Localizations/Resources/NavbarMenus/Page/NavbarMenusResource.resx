@@ -202,7 +202,7 @@
     <value>Ekipman Yönetimi</value>
   </data>
   <data name="EquipmentOperationsMenu" xml:space="preserve">
-    <value>Ekipman İşlemleri</value>
+    <value>Ekipman Kalibrasyon İşlemleri</value>
   </data>
   <data name="EquipmentRecordsChildMenu" xml:space="preserve">
     <value>Ekipman Kayıtları</value>

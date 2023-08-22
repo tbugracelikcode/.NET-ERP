@@ -313,7 +313,7 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekipman İşlemleri.
+        ///   Looks up a localized string similar to Ekipman Kalibrasyon İşlemleri.
         /// </summary>
         public static string EquipmentOperationsMenu {
             get {
