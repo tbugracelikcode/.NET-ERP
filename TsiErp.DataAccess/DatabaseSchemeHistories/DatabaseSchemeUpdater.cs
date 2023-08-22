@@ -74,13 +74,10 @@ using TsiErp.Entities.Entities.QualityControl.CalibrationRecord;
 using TsiErp.Entities.Entities.QualityControl.CalibrationVerification;
 using TsiErp.Entities.Entities.QualityControl.ControlCondition;
 using TsiErp.Entities.Entities.QualityControl.ControlType;
-using TsiErp.Entities.Entities.QualityControl.CustomerComplaintItem;
 using TsiErp.Entities.Entities.QualityControl.EquipmentRecord;
-using TsiErp.Entities.Entities.QualityControl.FinalControlUnsuitabilityItem;
 using TsiErp.Entities.Entities.QualityControl.FinalControlUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport;
-using TsiErp.Entities.Entities.QualityControl.ProductionOrderChangeItem;
 using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem;
@@ -1971,41 +1968,6 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
             }
             #endregion
 
-            #region CustomerComplaintItems Table Created
-            Table CustomerComplaintItemsTable = model.CreateTable(Tables.CustomerComplaintItems);
-
-            if (CustomerComplaintItemsTable != null)
-            {
-                var properties = (typeof(CustomerComplaintItems)).GetProperties();
-
-                foreach (var property in properties)
-                {
-                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
-                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
-                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
-                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
-                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
-                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
-
-                    Column column = new Column(CustomerComplaintItemsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
-                    column.Nullable = required;
-
-                    if (isPrimaryKey)
-                    {
-                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(CustomerComplaintItemsTable, "PK_" + CustomerComplaintItemsTable.Name);
-                        pkIndex.IsClustered = true;
-                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
-                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
-                        CustomerComplaintItemsTable.Indexes.Add(pkIndex);
-                    }
-
-                    CustomerComplaintItemsTable.Columns.Add(column);
-                }
-
-                CustomerComplaintItemsTable.Create();
-            }
-            #endregion
-
             #region EquipmentRecords Table Created
             Table EquipmentRecordsTable = model.CreateTable(Tables.EquipmentRecords);
 
@@ -2038,41 +2000,6 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 EquipmentRecordsTable.Create();
-            }
-            #endregion
-
-            #region FinalControlUnsuitabilityItems Table Created
-            Table FinalControlUnsuitabilityItemsTable = model.CreateTable(Tables.FinalControlUnsuitabilityItems);
-
-            if (FinalControlUnsuitabilityItemsTable != null)
-            {
-                var properties = (typeof(FinalControlUnsuitabilityItems)).GetProperties();
-
-                foreach (var property in properties)
-                {
-                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
-                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
-                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
-                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
-                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
-                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
-
-                    Column column = new Column(FinalControlUnsuitabilityItemsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
-                    column.Nullable = required;
-
-                    if (isPrimaryKey)
-                    {
-                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(FinalControlUnsuitabilityItemsTable, "PK_" + FinalControlUnsuitabilityItemsTable.Name);
-                        pkIndex.IsClustered = true;
-                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
-                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
-                        FinalControlUnsuitabilityItemsTable.Indexes.Add(pkIndex);
-                    }
-
-                    FinalControlUnsuitabilityItemsTable.Columns.Add(column);
-                }
-
-                FinalControlUnsuitabilityItemsTable.Create();
             }
             #endregion
 
@@ -2143,41 +2070,6 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 OperationUnsuitabilityReportsTable.Create();
-            }
-            #endregion
-
-            #region ProductionOrderChangeItems Table Created
-            Table ProductionOrderChangeItemsTable = model.CreateTable(Tables.ProductionOrderChangeItems);
-
-            if (ProductionOrderChangeItemsTable != null)
-            {
-                var properties = (typeof(ProductionOrderChangeItems)).GetProperties();
-
-                foreach (var property in properties)
-                {
-                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
-                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
-                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
-                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
-                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
-                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
-
-                    Column column = new Column(ProductionOrderChangeItemsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
-                    column.Nullable = required;
-
-                    if (isPrimaryKey)
-                    {
-                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ProductionOrderChangeItemsTable, "PK_" + ProductionOrderChangeItemsTable.Name);
-                        pkIndex.IsClustered = true;
-                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
-                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
-                        ProductionOrderChangeItemsTable.Indexes.Add(pkIndex);
-                    }
-
-                    ProductionOrderChangeItemsTable.Columns.Add(column);
-                }
-
-                ProductionOrderChangeItemsTable.Create();
             }
             #endregion
 
