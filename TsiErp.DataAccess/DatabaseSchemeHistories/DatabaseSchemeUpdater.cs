@@ -79,11 +79,9 @@ using TsiErp.Entities.Entities.QualityControl.EquipmentRecord;
 using TsiErp.Entities.Entities.QualityControl.FinalControlUnsuitabilityItem;
 using TsiErp.Entities.Entities.QualityControl.FinalControlUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan;
-using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityItem;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.ProductionOrderChangeItem;
 using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport;
-using TsiErp.Entities.Entities.QualityControl.PurchasingUnsuitabilityItem;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem;
 using TsiErp.Entities.Entities.SalesManagement.Forecast;
@@ -2113,41 +2111,6 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
             }
             #endregion
 
-            #region OperationUnsuitabilityItems Table Created
-            Table OperationUnsuitabilityItemsTable = model.CreateTable(Tables.OperationUnsuitabilityItems);
-
-            if (OperationUnsuitabilityItemsTable != null)
-            {
-                var properties = (typeof(OperationUnsuitabilityItems)).GetProperties();
-
-                foreach (var property in properties)
-                {
-                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
-                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
-                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
-                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
-                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
-                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
-
-                    Column column = new Column(OperationUnsuitabilityItemsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
-                    column.Nullable = required;
-
-                    if (isPrimaryKey)
-                    {
-                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(OperationUnsuitabilityItemsTable, "PK_" + OperationUnsuitabilityItemsTable.Name);
-                        pkIndex.IsClustered = true;
-                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
-                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
-                        OperationUnsuitabilityItemsTable.Indexes.Add(pkIndex);
-                    }
-
-                    OperationUnsuitabilityItemsTable.Columns.Add(column);
-                }
-
-                OperationUnsuitabilityItemsTable.Create();
-            }
-            #endregion
-
             #region OperationUnsuitabilityReports Table Created
             Table OperationUnsuitabilityReportsTable = model.CreateTable(Tables.OperationUnsuitabilityReports);
 
@@ -2250,41 +2213,6 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 PurchaseUnsuitabilityReportsTable.Create();
-            }
-            #endregion
-
-            #region PurchasingUnsuitabilityItems Table Created
-            Table PurchasingUnsuitabilityItemsTable = model.CreateTable(Tables.PurchasingUnsuitabilityItems);
-
-            if (PurchasingUnsuitabilityItemsTable != null)
-            {
-                var properties = (typeof(PurchasingUnsuitabilityItems)).GetProperties();
-
-                foreach (var property in properties)
-                {
-                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
-                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
-                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
-                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
-                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
-                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
-
-                    Column column = new Column(PurchasingUnsuitabilityItemsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
-                    column.Nullable = required;
-
-                    if (isPrimaryKey)
-                    {
-                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(PurchasingUnsuitabilityItemsTable, "PK_" + PurchasingUnsuitabilityItemsTable.Name);
-                        pkIndex.IsClustered = true;
-                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
-                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
-                        PurchasingUnsuitabilityItemsTable.Indexes.Add(pkIndex);
-                    }
-
-                    PurchasingUnsuitabilityItemsTable.Columns.Add(column);
-                }
-
-                PurchasingUnsuitabilityItemsTable.Create();
             }
             #endregion
 

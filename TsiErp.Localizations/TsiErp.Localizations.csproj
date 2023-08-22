@@ -161,11 +161,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>OperationalQualityPlansResource.resx</DependentUpon>
     </Compile>
-    <Compile Update="Resources\OperationUnsuitabilityItems\Page\OperationUnsuitabilityItemsResource.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>OperationUnsuitabilityItemsResource.resx</DependentUpon>
-    </Compile>
     <Compile Update="Resources\OperationUnsuitabilityReports\Page\OperationUnsuitabilityReportsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -255,11 +250,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>PurchaseUnsuitabilityReportsResource.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Resources\PurchasingUnsuitabilityItems\Page\PurchasingUnsuitabilityItemsResource.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>PurchasingUnsuitabilityItemsResource.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\QualityControlParameter\Page\QualityControlParametersResource.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -554,13 +544,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>OperationalQualityPlansResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\OperationUnsuitabilityItems\Page\OperationUnsuitabilityItemsResource.en-US.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\OperationUnsuitabilityItems\Page\OperationUnsuitabilityItemsResource.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>OperationUnsuitabilityItemsResource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Update="Resources\OperationUnsuitabilityReports\Page\OperationUnsuitabilityReportsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>OperationUnsuitabilityReportsResource.Designer.cs</LastGenOutput>
@@ -671,13 +654,6 @@
     <EmbeddedResource Update="Resources\PurchaseUnsuitabilityReports\Page\PurchaseUnsuitabilityReportsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PurchaseUnsuitabilityReportsResource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\PurchasingUnsuitabilityItems\Page\PurchasingUnsuitabilityItemsResource.en-US.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\PurchasingUnsuitabilityItems\Page\PurchasingUnsuitabilityItemsResource.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>PurchasingUnsuitabilityItemsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\QualityControlParameter\Page\QualityControlParametersResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
