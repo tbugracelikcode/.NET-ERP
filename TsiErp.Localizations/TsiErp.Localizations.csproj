@@ -51,6 +51,16 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ContractProductionTrackingsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\ContractQualityPlans\Page\ContractQualityPlansResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ContractQualityPlansResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\ContractUnsuitabilityItems\Page\ContractUnsuitabilityItemsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ContractUnsuitabilityItemsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\ControlConditions\Page\ControlConditionResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -146,7 +156,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>NavbarMenusResource.resx</DependentUpon>
     </Compile>
-    <Compile Update="Resources\OperationalQualityPlan\Page\OperationalQualityPlansResource.Designer.cs">
+    <Compile Update="Resources\OperationalQualityPlans\Page\OperationalQualityPlansResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>OperationalQualityPlansResource.resx</DependentUpon>
@@ -225,6 +235,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>PurchasePricesResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\PurchaseQualityPlans\Page\PurchaseQualityPlansResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PurchaseQualityPlansResource.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\PurchaseRequests\Page\PurchaseRequestsResource.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -405,6 +420,17 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ContractProductionTrackingsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ContractQualityPlans\Page\ContractQualityPlansResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ContractQualityPlansResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ContractUnsuitabilityItems\Page\ContractUnsuitabilityItemsResource.en-US.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ContractUnsuitabilityItems\Page\ContractUnsuitabilityItemsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ContractUnsuitabilityItemsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\ControlConditions\Page\ControlConditionResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ControlConditionResources.Designer.cs</LastGenOutput>
@@ -514,7 +540,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>NavbarMenusResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\OperationalQualityPlan\Page\OperationalQualityPlansResource.resx">
+    <EmbeddedResource Update="Resources\OperationalQualityPlans\Page\OperationalQualityPlansResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>OperationalQualityPlansResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -607,6 +633,10 @@
     <EmbeddedResource Update="Resources\PurchasePrices\Page\PurchasePricesResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PurchasePricesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PurchaseQualityPlans\Page\PurchaseQualityPlansResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PurchaseQualityPlansResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\PurchaseRequests\Page\PurchaseRequestsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

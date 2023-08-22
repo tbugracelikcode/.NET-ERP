@@ -153,6 +153,9 @@
   <data name="ContractProdTrackingsChildMenu" xml:space="preserve">
     <value>Contract Production Tracking Records</value>
   </data>
+  <data name="ContractQualityPlansChildMenu" xml:space="preserve">
+    <value>Contract Quality Plans</value>
+  </data>
   <data name="ControlConditionsChildMenu" xml:space="preserve">
     <value>Control Condition Items</value>
   </data>
@@ -309,6 +312,9 @@
   <data name="MRPIIChildMenu" xml:space="preserve">
     <value>Production Resource Planning (MRPII)</value>
   </data>
+  <data name="OperationalQualityPlansChildMenu" xml:space="preserve">
+    <value>Operational Quality Plans</value>
+  </data>
   <data name="OperationsMenu" xml:space="preserve">
     <value>Operations</value>
   </data>
@@ -423,6 +429,9 @@
   <data name="PurchasePricesChildMenu" xml:space="preserve">
     <value>Purchase Prices</value>
   </data>
+  <data name="PurchaseQualityPlansChildMenu" xml:space="preserve">
+    <value>Purchase Quality Plans</value>
+  </data>
   <data name="PurchaseRequestFicheListChildMenu" xml:space="preserve">
     <value>List of Purchase Requests</value>
   </data>
@@ -449,6 +458,9 @@
   </data>
   <data name="QualityControlTransactionsMenu" xml:space="preserve">
     <value>Transactions</value>
+  </data>
+  <data name="QualityPlansMenu" xml:space="preserve">
+    <value>Quality Plans</value>
   </data>
   <data name="ReportsMenu" xml:space="preserve">
     <value>Reports</value>

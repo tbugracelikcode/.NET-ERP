@@ -94,5 +94,81 @@ namespace TsiErp.ErpUI.Services
 
             return result;
         }
+
+        public async Task<string> UploadOperationPicture(IFileListEntry file, string rootPath, string fileName)
+        {
+            string result = "";
+
+            try
+            {
+                rootPath = _webHostEnvironment.WebRootPath + "/" + rootPath;
+
+                if (!Directory.Exists(rootPath))
+                {
+                    Directory.CreateDirectory(rootPath);
+                }
+
+                var path = Path.Combine(_webHostEnvironment.WebRootPath, rootPath, fileName);
+
+                var memoryStream = new MemoryStream();
+
+                await file.Data.CopyToAsync(memoryStream);
+
+                using (FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write))
+                {
+                    memoryStream.WriteTo(fileStream);
+
+
+                    result = "Successful";
+                }
+            }
+            catch (Exception)
+            {
+
+                var path = Path.Combine(_webHostEnvironment.WebRootPath, rootPath, fileName);
+                File.Delete(path);
+                result = "Error";
+            }
+
+            return result;
+        }
+
+        public async Task<string> UploadOperationPicturePDF(IFileListEntry file, string rootPath, string fileName)
+        {
+            string result = "";
+
+            try
+            {
+                rootPath = _webHostEnvironment.WebRootPath + "/" + rootPath;
+
+                if (!Directory.Exists(rootPath))
+                {
+                    Directory.CreateDirectory(rootPath);
+                }
+
+                var path = Path.Combine(_webHostEnvironment.WebRootPath, rootPath, fileName);
+
+                var memoryStream = new MemoryStream();
+
+                await file.Data.CopyToAsync(memoryStream);
+
+                using (FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write))
+                {
+                    memoryStream.WriteTo(fileStream);
+
+
+                    result = "Successful";
+                }
+            }
+            catch (Exception)
+            {
+
+                var path = Path.Combine(_webHostEnvironment.WebRootPath, rootPath, fileName);
+                File.Delete(path);
+                result = "Error";
+            }
+
+            return result;
+        }
     }
 }

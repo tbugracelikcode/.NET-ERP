@@ -169,6 +169,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fason Giriş Kalite Planları.
+        /// </summary>
+        public static string ContractQualityPlansChildMenu {
+            get {
+                return ResourceManager.GetString("ContractQualityPlansChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kontrol Şartı Başlıkları.
         /// </summary>
         public static string ControlConditionsChildMenu {
@@ -637,6 +646,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operasyon Kalite Planları.
+        /// </summary>
+        public static string OperationalQualityPlansChildMenu {
+            get {
+                return ResourceManager.GetString("OperationalQualityPlansChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operasyonlar.
         /// </summary>
         public static string OperationsMenu {
@@ -979,6 +997,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Satın Alma Giriş Kalite Planları.
+        /// </summary>
+        public static string PurchaseQualityPlansChildMenu {
+            get {
+                return ResourceManager.GetString("PurchaseQualityPlansChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satın Alma Talep Fişi Listesi.
         /// </summary>
         public static string PurchaseRequestFicheListChildMenu {
@@ -1038,6 +1065,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string QualityControlParentMenu {
             get {
                 return ResourceManager.GetString("QualityControlParentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kalite Planları.
+        /// </summary>
+        public static string QualityPlansMenu {
+            get {
+                return ResourceManager.GetString("QualityPlansMenu", resourceCulture);
             }
         }
         
