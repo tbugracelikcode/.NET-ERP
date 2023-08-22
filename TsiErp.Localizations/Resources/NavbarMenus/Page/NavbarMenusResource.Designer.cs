@@ -1069,15 +1069,6 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kalite Planları.
-        /// </summary>
-        public static string QualityPlansMenu {
-            get {
-                return ResourceManager.GetString("QualityPlansMenu", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Raporlar.
         /// </summary>
         public static string QualityControlReportsMenu {
@@ -1092,6 +1083,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string QualityControlTransactionsMenu {
             get {
                 return ResourceManager.GetString("QualityControlTransactionsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kalite Planları.
+        /// </summary>
+        public static string QualityPlansMenu {
+            get {
+                return ResourceManager.GetString("QualityPlansMenu", resourceCulture);
             }
         }
         
