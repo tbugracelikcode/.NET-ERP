@@ -119,26 +119,14 @@ using TsiErp.Entities.Entities.QualityControl.CalibrationRecord;
 using TsiErp.Entities.Entities.QualityControl.CalibrationRecord.Dtos;
 using TsiErp.Entities.Entities.QualityControl.CalibrationVerification;
 using TsiErp.Entities.Entities.QualityControl.CalibrationVerification.Dtos;
-using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityItem;
-using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityItem.Dtos;
-using TsiErp.Entities.Entities.QualityControl.CustomerComplaintItem;
-using TsiErp.Entities.Entities.QualityControl.CustomerComplaintItem.Dtos;
 using TsiErp.Entities.Entities.QualityControl.EquipmentRecord;
 using TsiErp.Entities.Entities.QualityControl.EquipmentRecord.Dtos;
-using TsiErp.Entities.Entities.QualityControl.FinalControlUnsuitabilityItem;
-using TsiErp.Entities.Entities.QualityControl.FinalControlUnsuitabilityItem.Dtos;
 using TsiErp.Entities.Entities.QualityControl.FinalControlUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.FinalControlUnsuitabilityReport.Dtos;
-using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityItem;
-using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityItem.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
-using TsiErp.Entities.Entities.QualityControl.ProductionOrderChangeItem;
-using TsiErp.Entities.Entities.QualityControl.ProductionOrderChangeItem.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dtos;
-using TsiErp.Entities.Entities.QualityControl.PurchasingUnsuitabilityItem;
-using TsiErp.Entities.Entities.QualityControl.PurchasingUnsuitabilityItem.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem;
@@ -248,13 +236,6 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateCalibrationVerificationsDto, CalibrationVerifications>();
             CreateMap<SelectCalibrationVerificationsDto, UpdateCalibrationVerificationsDto>();
 
-            CreateMap<ContractUnsuitabilityItems, SelectContractUnsuitabilityItemsDto>();
-            CreateMap<ContractUnsuitabilityItems, ListContractUnsuitabilityItemsDto>();
-            CreateMap<CreateContractUnsuitabilityItemsDto, ContractUnsuitabilityItems>();
-            CreateMap<SelectContractUnsuitabilityItemsDto, CreateContractUnsuitabilityItemsDto>();
-            CreateMap<UpdateContractUnsuitabilityItemsDto, ContractUnsuitabilityItems>();
-            CreateMap<SelectContractUnsuitabilityItemsDto, UpdateContractUnsuitabilityItemsDto>();
-
             CreateMap<Currencies, SelectCurrenciesDto>();
             CreateMap<Currencies, ListCurrenciesDto>();
             CreateMap<CreateCurrenciesDto, Currencies>();
@@ -268,13 +249,6 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectCurrentAccountCardsDto, CreateCurrentAccountCardsDto>();
             CreateMap<UpdateCurrentAccountCardsDto, CurrentAccountCards>();
             CreateMap<SelectCurrentAccountCardsDto, UpdateCurrentAccountCardsDto>();
-
-            CreateMap<CustomerComplaintItems, SelectCustomerComplaintItemsDto>();
-            CreateMap<CustomerComplaintItems, ListCustomerComplaintItemsDto>();
-            CreateMap<CreateCustomerComplaintItemsDto, CustomerComplaintItems>();
-            CreateMap<SelectCustomerComplaintItemsDto, CreateCustomerComplaintItemsDto>();
-            CreateMap<UpdateCustomerComplaintItemsDto, CustomerComplaintItems>();
-            CreateMap<SelectCustomerComplaintItemsDto, UpdateCustomerComplaintItemsDto>();
 
             CreateMap<Departments, SelectDepartmentsDto>();
             CreateMap<Departments, ListDepartmentsDto>();
@@ -304,20 +278,6 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateExchangeRatesDto, ExchangeRates>();
             CreateMap<SelectExchangeRatesDto, UpdateExchangeRatesDto>();
 
-            CreateMap<FinalControlUnsuitabilityItems, SelectFinalControlUnsuitabilityItemsDto>();
-            CreateMap<FinalControlUnsuitabilityItems, ListFinalControlUnsuitabilityItemsDto>();
-            CreateMap<CreateFinalControlUnsuitabilityItemsDto, FinalControlUnsuitabilityItems>();
-            CreateMap<SelectFinalControlUnsuitabilityItemsDto, CreateFinalControlUnsuitabilityItemsDto>();
-            CreateMap<UpdateFinalControlUnsuitabilityItemsDto, FinalControlUnsuitabilityItems>();
-            CreateMap<SelectFinalControlUnsuitabilityItemsDto, UpdateFinalControlUnsuitabilityItemsDto>();
-
-            CreateMap<OperationUnsuitabilityItems, SelectOperationUnsuitabilityItemsDto>();
-            CreateMap<OperationUnsuitabilityItems, ListOperationUnsuitabilityItemsDto>();
-            CreateMap<CreateOperationUnsuitabilityItemsDto, OperationUnsuitabilityItems>();
-            CreateMap<SelectOperationUnsuitabilityItemsDto, CreateOperationUnsuitabilityItemsDto>();
-            CreateMap<UpdateOperationUnsuitabilityItemsDto, OperationUnsuitabilityItems>();
-            CreateMap<SelectOperationUnsuitabilityItemsDto, UpdateOperationUnsuitabilityItemsDto>();
-
             CreateMap<PaymentPlans, SelectPaymentPlansDto>();
             CreateMap<PaymentPlans, ListPaymentPlansDto>();
             CreateMap<CreatePaymentPlansDto, PaymentPlans>();
@@ -338,20 +298,6 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectProductsDto, CreateProductsDto>();
             CreateMap<UpdateProductsDto, Products>();
             CreateMap<SelectProductsDto, UpdateProductsDto>();
-
-            CreateMap<ProductionOrderChangeItems, SelectProductionOrderChangeItemsDto>();
-            CreateMap<ProductionOrderChangeItems, ListProductionOrderChangeItemsDto>();
-            CreateMap<CreateProductionOrderChangeItemsDto, ProductionOrderChangeItems>();
-            CreateMap<SelectProductionOrderChangeItemsDto, CreateProductionOrderChangeItemsDto>();
-            CreateMap<UpdateProductionOrderChangeItemsDto, ProductionOrderChangeItems>();
-            CreateMap<SelectProductionOrderChangeItemsDto, UpdateProductionOrderChangeItemsDto>();
-
-            CreateMap<PurchasingUnsuitabilityItems, SelectPurchasingUnsuitabilityItemsDto>();
-            CreateMap<PurchasingUnsuitabilityItems, ListPurchasingUnsuitabilityItemsDto>();
-            CreateMap<CreatePurchasingUnsuitabilityItemsDto, PurchasingUnsuitabilityItems>();
-            CreateMap<SelectPurchasingUnsuitabilityItemsDto, CreatePurchasingUnsuitabilityItemsDto>();
-            CreateMap<UpdatePurchasingUnsuitabilityItemsDto, PurchasingUnsuitabilityItems>();
-            CreateMap<SelectPurchasingUnsuitabilityItemsDto, UpdatePurchasingUnsuitabilityItemsDto>();
 
             CreateMap<Stations, SelectStationsDto>();
             CreateMap<Stations, ListStationsDto>();

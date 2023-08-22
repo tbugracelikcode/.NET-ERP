@@ -62,7 +62,8 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityTypesItem.Service
                     DeletionTime = null,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
-                    IsDeleted = false
+                    IsDeleted = false,
+                    UnsuitabilityTypesDescription = input.UnsuitabilityTypesDescription
                 });
 
 
@@ -113,7 +114,8 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityTypesItem.Service
                     DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = DateTime.Now,
-                    LastModifierId = LoginedUserService.UserId
+                    LastModifierId = LoginedUserService.UserId,
+                    UnsuitabilityTypesDescription = input.UnsuitabilityTypesDescription
                 }).Where(new { Id = input.Id }, true, true, "");
 
                 var unsuitabilityTypesItems = queryFactory.Update<SelectUnsuitabilityTypesItemsDto>(query, "Id", true);
@@ -193,11 +195,31 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityTypesItem.Service
                     LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                     Id = id,
                     DataOpenStatus = lockRow,
-                    DataOpenStatusUserId = userId
-
+                    DataOpenStatusUserId = userId,
+                    UnsuitabilityTypesDescription = entity.UnsuitabilityTypesDescription
                 }).Where(new { Id = id }, true, true, "");
 
                 var unsuitabilityTypesItems = queryFactory.Update<SelectUnsuitabilityTypesItemsDto>(query, "Id", true);
+                return new SuccessDataResult<SelectUnsuitabilityTypesItemsDto>(unsuitabilityTypesItems);
+
+            }
+        }
+
+        public async Task<IDataResult<SelectUnsuitabilityTypesItemsDto>> GetWithUnsuitabilityItemDescriptionAsync(string description)
+        {
+            using (var connection = queryFactory.ConnectToDatabase())
+            {
+
+                var query = queryFactory.Query().From(Tables.UnsuitabilityTypesItems).Select("*").Where(
+                new
+                {
+                    UnsuitabilityTypesDescription = description
+                }, true, true, "");
+                var unsuitabilityTypesItems = queryFactory.Get<SelectUnsuitabilityTypesItemsDto>(query);
+
+
+                LogsAppService.InsertLogToDatabase(unsuitabilityTypesItems, unsuitabilityTypesItems, LoginedUserService.UserId, Tables.UnsuitabilityTypesItems, LogType.Get, unsuitabilityTypesItems.Id);
+
                 return new SuccessDataResult<SelectUnsuitabilityTypesItemsDto>(unsuitabilityTypesItems);
 
             }

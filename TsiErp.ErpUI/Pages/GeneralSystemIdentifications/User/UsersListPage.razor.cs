@@ -2,8 +2,12 @@
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.User.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserGroup.Dtos;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.UserPermission.Dtos;
+using TsiErp.ErpUI.Helpers;
 
 namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
 {
@@ -21,9 +25,6 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
             UserGroupList = (await UserGroupsService.GetListAsync(new ListUserGroupsParameterDto())).Data.ToList();
         }
 
-      
-      
-
         protected override Task BeforeInsertAsync()
         {
             DataSource = new SelectUsersDto()
@@ -34,6 +35,80 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
             EditPageVisible = true;
 
             return Task.CompletedTask;
+        }
+
+        protected override async Task OnSubmit()
+        {
+            SelectUsersDto result;
+
+            if (DataSource.Id == Guid.Empty)
+            {
+                var createdInput = ObjectMapper.Map<SelectUsersDto, CreateUsersDto>(DataSource);
+
+                result = (await CreateAsync(createdInput)).Data;
+
+                if (result != null)
+                {
+                    DataSource.Id = result.Id;
+
+                    var menus = (await MenusAppService.GetListAsync(new ListMenusParameterDto())).Data.ToList();
+
+                    List<SelectUserPermissionsDto> permissionsList = new List<SelectUserPermissionsDto>();
+
+                    foreach (var menu in menus)
+                    {
+                        SelectUserPermissionsDto permission = new SelectUserPermissionsDto()
+                        {
+                            Id = Guid.Empty,
+                            IsUserPermitted = true,
+                            MenuId = menu.Id,
+                            MenuName = menu.MenuName,
+                            UserId = DataSource.Id,
+                            UserName = DataSource.UserName
+                        };
+
+                        permissionsList.Add(permission);
+                    }
+
+                    var permissionCreateInput = new CreateUserPermissionsDto
+                    {
+                        Id = Guid.Empty,
+                        IsUserPermitted = false,
+                        MenuId = Guid.Empty,
+                        SelectUserPermissionsList = permissionsList,
+                        UserId = Guid.Empty
+                    };
+
+                    var insertedPermissions = (await UserPermissionsService.CreateAsync(permissionCreateInput)).Data;
+                }
+            }
+            else
+            {
+                var updatedInput = ObjectMapper.Map<SelectUsersDto, UpdateUsersDto>(DataSource);
+
+                result = (await UpdateAsync(updatedInput)).Data;
+            }
+
+            if (result == null)
+            {
+                return;
+            }
+
+            await GetListDataSourceAsync();
+
+            var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
+
+            HideEditPage();
+
+            if (DataSource.Id == Guid.Empty)
+            {
+                DataSource.Id = result.Id;
+            }
+
+            if (savedEntityIndex > -1)
+                SelectedItem = ListDataSource.SetSelectedItem(savedEntityIndex);
+            else
+                SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
         }
 
         #region Kullanıcı Grubu ButtonEdit

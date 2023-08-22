@@ -33,22 +33,11 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dt
         /// Uygunsuzluk İş Emri Oluşacak
         /// </summary>
         public bool IsUnsuitabilityWorkOrder { get; set; }
+
         /// <summary>
-        /// Red
+        /// Aksiyon
         /// </summary>
-        public bool IsReject { get; set; }
-        /// <summary>
-        /// Düzeltme
-        /// </summary>
-        public bool IsCorrection { get; set; }
-        /// <summary>
-        /// Olduğu Gibi Kullanılacak
-        /// </summary>
-        public bool IsToBeUsedAs { get; set; }
-        /// <summary>
-        /// Tedarikçi ile İrtibat
-        /// </summary>
-        public bool IsContactSupplier { get; set; }
+        public string Action_ { get; set; }
         /// <summary>
         /// Sipariş ID
         /// </summary>
@@ -61,5 +50,9 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dt
         /// Sipariş ID
         /// </summary>
         public Guid? CurrentAccountCardID { get; set; }
+        /// <summary>
+        /// Uygunsuzluk Başlığı ID
+        /// </summary>
+        public Guid? UnsuitabilityItemsID { get; set; }
     }
 }

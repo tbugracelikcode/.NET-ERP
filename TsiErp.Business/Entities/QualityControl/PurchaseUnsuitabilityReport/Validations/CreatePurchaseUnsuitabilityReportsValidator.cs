@@ -23,11 +23,15 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Validations
                .NotEmpty()
                .WithMessage("ValidatorDate");
 
+            RuleFor(x => x.Action_).NotEmpty().WithMessage("ValidatorAction");
+
             RuleFor(x => x.ProductID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorProductID");
 
             RuleFor(x => x.CurrentAccountCardID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorCurrentAccountID");
 
             RuleFor(x => x.OrderID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorOrderID");
+
+            RuleFor(x => x.UnsuitabilityItemsID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorUnsuitabilityItemsID");
 
         }
     }

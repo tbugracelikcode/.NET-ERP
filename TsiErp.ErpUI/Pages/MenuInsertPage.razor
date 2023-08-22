@@ -8,12 +8,7 @@
 
 @inject IMenusAppService Service
 
-@if (!base.IsLoaded)
-{
-    <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
-}
-else
-{
+
     <div>
         <SfComboBox TValue="Guid" TItem="ComboData" Placeholder="e.g. Australia" DataSource="@list" @bind-Value="DataSource.ParentMenuId">
 
@@ -31,7 +26,7 @@ else
         <SfButton CssClass="TSISaveButton" OnClick="InsertMenu"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon></SfButton>
     </div>
 
-}
+
 
 @code {
 

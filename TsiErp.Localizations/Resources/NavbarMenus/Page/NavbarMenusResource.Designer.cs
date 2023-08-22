@@ -313,7 +313,7 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekipman İşlemleri.
+        ///   Looks up a localized string similar to Ekipman Kalibrasyon İşlemleri.
         /// </summary>
         public static string EquipmentOperationsMenu {
             get {
@@ -354,6 +354,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string FinalControlUnsRecordsChildMenu {
             get {
                 return ResourceManager.GetString("FinalControlUnsRecordsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ana Kayıtlar.
+        /// </summary>
+        public static string FinanceManagementMainRecordsMenu {
+            get {
+                return ResourceManager.GetString("FinanceManagementMainRecordsMenu", resourceCulture);
             }
         }
         
@@ -466,11 +475,38 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ana Kayıtlar.
+        /// </summary>
+        public static string MachWorkForceManagementMainRecordsMenu {
+            get {
+                return ResourceManager.GetString("MachWorkForceManagementMainRecordsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Makine &amp; İş Gücü Yönetimi.
         /// </summary>
         public static string MachWorkForceManagementParentMenu {
             get {
                 return ResourceManager.GetString("MachWorkForceManagementParentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Raporlar.
+        /// </summary>
+        public static string MachWorkForceManagementReportsMenu {
+            get {
+                return ResourceManager.GetString("MachWorkForceManagementReportsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hareketler.
+        /// </summary>
+        public static string MachWorkForceManagementTransactionsMenu {
+            get {
+                return ResourceManager.GetString("MachWorkForceManagementTransactionsMenu", resourceCulture);
             }
         }
         
@@ -520,6 +556,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ana Kayıtlar.
+        /// </summary>
+        public static string MaintenanceManagementMainRecordsMenu {
+            get {
+                return ResourceManager.GetString("MaintenanceManagementMainRecordsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bakım Yönetimi .
         /// </summary>
         public static string MaintenanceManagementParametersChildMenu {
@@ -534,6 +579,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string MaintenanceManagementParentMenu {
             get {
                 return ResourceManager.GetString("MaintenanceManagementParentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hareketler.
+        /// </summary>
+        public static string MaintenanceManagementTransactionsMenu {
+            get {
+                return ResourceManager.GetString("MaintenanceManagementTransactionsMenu", resourceCulture);
             }
         }
         
@@ -754,6 +808,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ana Kayıtlar.
+        /// </summary>
+        public static string ProductionManagementMainRecordsMenu {
+            get {
+                return ResourceManager.GetString("ProductionManagementMainRecordsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Üretim Yönetimi .
         /// </summary>
         public static string ProductionManagementParametersChildMenu {
@@ -768,6 +831,24 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string ProductionManagementParentMenu {
             get {
                 return ResourceManager.GetString("ProductionManagementParentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Raporlar.
+        /// </summary>
+        public static string ProductionManagementReportsMenu {
+            get {
+                return ResourceManager.GetString("ProductionManagementReportsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hareketler.
+        /// </summary>
+        public static string ProductionManagementTransactionsMenu {
+            get {
+                return ResourceManager.GetString("ProductionManagementTransactionsMenu", resourceCulture);
             }
         }
         
@@ -826,6 +907,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ana Kayıtlar.
+        /// </summary>
+        public static string PurchaseManagementMainRecordsMenu {
+            get {
+                return ResourceManager.GetString("PurchaseManagementMainRecordsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satın Alma Yönetimi .
         /// </summary>
         public static string PurchaseManagementParametersChildMenu {
@@ -840,6 +930,24 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string PurchaseManagementParentMenu {
             get {
                 return ResourceManager.GetString("PurchaseManagementParentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Raporlar.
+        /// </summary>
+        public static string PurchaseManagementReportsMenu {
+            get {
+                return ResourceManager.GetString("PurchaseManagementReportsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hareketler.
+        /// </summary>
+        public static string PurchaseManagementTransactionsMenu {
+            get {
+                return ResourceManager.GetString("PurchaseManagementTransactionsMenu", resourceCulture);
             }
         }
         
@@ -907,6 +1015,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ana Kayıtlar.
+        /// </summary>
+        public static string QualityControlMainRecordsMenu {
+            get {
+                return ResourceManager.GetString("QualityControlMainRecordsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kalite Kontrol .
         /// </summary>
         public static string QualityControlParametersChildMenu {
@@ -921,6 +1038,24 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string QualityControlParentMenu {
             get {
                 return ResourceManager.GetString("QualityControlParentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Raporlar.
+        /// </summary>
+        public static string QualityControlReportsMenu {
+            get {
+                return ResourceManager.GetString("QualityControlReportsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hareketler.
+        /// </summary>
+        public static string QualityControlTransactionsMenu {
+            get {
+                return ResourceManager.GetString("QualityControlTransactionsMenu", resourceCulture);
             }
         }
         
@@ -952,6 +1087,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ana Kayıtlar.
+        /// </summary>
+        public static string SalesManagementMainRecordsMenu {
+            get {
+                return ResourceManager.GetString("SalesManagementMainRecordsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satış Yönetimi .
         /// </summary>
         public static string SalesManagementParametersChildMenu {
@@ -966,6 +1110,24 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string SalesManagementParentMenu {
             get {
                 return ResourceManager.GetString("SalesManagementParentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Raporlar.
+        /// </summary>
+        public static string SalesManagementReportsMenu {
+            get {
+                return ResourceManager.GetString("SalesManagementReportsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hareketler.
+        /// </summary>
+        public static string SalesManagementTransactionsMenu {
+            get {
+                return ResourceManager.GetString("SalesManagementTransactionsMenu", resourceCulture);
             }
         }
         
@@ -1020,6 +1182,33 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string ShiftsChildMenu {
             get {
                 return ResourceManager.GetString("ShiftsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ana Kayıtlar.
+        /// </summary>
+        public static string ShipmentManagementMainRecordsMenu {
+            get {
+                return ResourceManager.GetString("ShipmentManagementMainRecordsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Raporlar.
+        /// </summary>
+        public static string ShipmentManagementReportsMenu {
+            get {
+                return ResourceManager.GetString("ShipmentManagementReportsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hareketler.
+        /// </summary>
+        public static string ShipmentManagementTransactionsMenu {
+            get {
+                return ResourceManager.GetString("ShipmentManagementTransactionsMenu", resourceCulture);
             }
         }
         
@@ -1132,6 +1321,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ana Kayıtlar.
+        /// </summary>
+        public static string StockManagementMainRecordsMenu {
+            get {
+                return ResourceManager.GetString("StockManagementMainRecordsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stok Yönetimi .
         /// </summary>
         public static string StockManagementParametersChildMenu {
@@ -1146,6 +1344,24 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string StockManagementParentMenu {
             get {
                 return ResourceManager.GetString("StockManagementParentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Raporlar.
+        /// </summary>
+        public static string StockManagementReportsMenu {
+            get {
+                return ResourceManager.GetString("StockManagementReportsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hareketler.
+        /// </summary>
+        public static string StockManagementTransactionsMenu {
+            get {
+                return ResourceManager.GetString("StockManagementTransactionsMenu", resourceCulture);
             }
         }
         

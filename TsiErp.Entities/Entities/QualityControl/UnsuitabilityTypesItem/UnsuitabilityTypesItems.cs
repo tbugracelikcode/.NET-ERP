@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tsi.Core.Entities.Auditing;
+﻿using Tsi.Core.Entities.Auditing;
 using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 
 namespace TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem
@@ -29,8 +23,16 @@ namespace TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem
         /// </summary>
         public string Description_ { get; set; }
 
-
+        /// <summary>
+        /// Aktif
+        /// </summary>
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Bit)]
         public bool IsActive { get; set; }
+
+        [SqlColumnType(MaxLength = 50, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Uygunsuzluk Türü Açıklaması
+        /// </summary>
+        public string UnsuitabilityTypesDescription { get; set; }
     }
 }

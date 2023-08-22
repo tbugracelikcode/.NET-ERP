@@ -120,6 +120,9 @@
   <data name="ActionLabel" xml:space="preserve">
     <value>Uygunsuzluk Aksiyonu:</value>
   </data>
+  <data name="Action_" xml:space="preserve">
+    <value>AKSİYON</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
@@ -146,9 +149,6 @@
   </data>
   <data name="ContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
-  </data>
-  <data name="ControlFormDeclarationLabel" xml:space="preserve">
-    <value>Ölçü Kontrol Form Beyan:</value>
   </data>
   <data name="Date_" xml:space="preserve">
     <value>TARİH</value>
@@ -194,15 +194,6 @@
   </data>
   <data name="FicheNoLabel" xml:space="preserve">
     <value>Uygunsuzluk Fiş Numarası:</value>
-  </data>
-  <data name="IsCorrection" xml:space="preserve">
-    <value>DÜZELTME</value>
-  </data>
-  <data name="IsScrap" xml:space="preserve">
-    <value>HURDA</value>
-  </data>
-  <data name="IsToBeUsedAs" xml:space="preserve">
-    <value>OLDUĞU GİBİ KULLANILACAK</value>
   </data>
   <data name="IsUnsuitabilityWorkOrder" xml:space="preserve">
     <value>UYGUNSUZLUK İŞ EMRİ OLUŞACAK</value>
@@ -341,6 +332,9 @@
   </data>
   <data name="UIToBeUsedAs" xml:space="preserve">
     <value>Olduğu Gibi Kullanılacak</value>
+  </data>
+  <data name="UnsuitableAmountLabel" xml:space="preserve">
+    <value>Hatalı Miktar:</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>

@@ -1,19 +1,10 @@
 ﻿@page "/"
-
-@using Syncfusion.Blazor.Buttons
-@using Syncfusion.Blazor.Popups
-@using Syncfusion.Blazor.Cards
-@using Syncfusion.Blazor.Data
-@using Syncfusion.Blazor.DropDowns
-@using Syncfusion.Blazor.Inputs
-@using Syncfusion.Blazor.Calendars
-@using Syncfusion.Blazor.Grids
-@using Syncfusion.Blazor.Navigations
-@using System.Timers
-@using TsiErp.DataAccess.Services.Login
+@using TsiErp.ErpUI.Models;
 
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
+@inject IUsersAppService UsersAppService
+@inject IUserPermissionsAppService UserPermissionsAppService
 
 <!doctype html>
 <html class="no-js" lang="">
@@ -63,8 +54,8 @@
                     </div>
                     <div class="fxt-login-option">
                         @*<ul>
-                            <li class="fxt-transformY-50 fxt-transition-delay-6"><a href="#">Sing in with Google</a></li>
-                            <li class="fxt-transformY-50 fxt-transition-delay-7"><a href="#">Sing in with Facebook</a></li>
+                        <li class="fxt-transformY-50 fxt-transition-delay-6"><a href="#">Sing in with Google</a></li>
+                        <li class="fxt-transformY-50 fxt-transition-delay-7"><a href="#">Sing in with Facebook</a></li>
                         </ul>*@
                     </div>
                 </div>
@@ -73,8 +64,8 @@
                 <div class="fxt-page-switcher">
                     <h2 class="fxt-page-title mr-3">TSI ERP - Kurumsal Yazılım Çözümleri</h2>
                     @*<ul class="fxt-switcher-wrap">
-                        <li><a href="login-31.html" class="fxt-switcher-btn active">Login</a></li>
-                        <li><a href="register-31.html" class="fxt-switcher-btn">Register</a></li>
+                    <li><a href="login-31.html" class="fxt-switcher-btn active">Login</a></li>
+                    <li><a href="register-31.html" class="fxt-switcher-btn">Register</a></li>
                     </ul>*@
                 </div>
                 <div class="fxt-main-form">
@@ -92,16 +83,16 @@
                                         <i toggle="#password" class="fa fa-fw fa-eye toggle-password field-icon"></i>
                                     </div>
                                 </div>
-                               @* <div class="col-12">
-                                    <div class="form-group">
-                                        <div class="fxt-checkbox-wrap">
-                                            <div class="fxt-checkbox-box mr-3">
-                                                <input id="checkbox1" type="checkbox">
-                                                <label for="checkbox1" class="ps-4">Keep me logged in</label>
-                                            </div>
-                                            <a href="forgot-password-31.html" class="fxt-switcher-text">Forgot Password</a>
-                                        </div>
-                                    </div>
+                                @* <div class="col-12">
+                                <div class="form-group">
+                                <div class="fxt-checkbox-wrap">
+                                <div class="fxt-checkbox-box mr-3">
+                                <input id="checkbox1" type="checkbox">
+                                <label for="checkbox1" class="ps-4">Keep me logged in</label>
+                                </div>
+                                <a href="forgot-password-31.html" class="fxt-switcher-text">Forgot Password</a>
+                                </div>
+                                </div>
                                 </div>*@
                                 <div class="col-12">
                                     <div class="form-group">
@@ -153,7 +144,7 @@
 
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
-        if(firstRender)
+        if (firstRender)
         {
             await JSRuntime.InvokeVoidAsync(identifier: "import", "/login/js/jquery-3.5.0.min.js");
             await JSRuntime.InvokeVoidAsync(identifier: "import", "/login/js/bootstrap.min.js");
@@ -168,15 +159,33 @@
         vispopup = false;
     }
 
-    private void OnLoginButtonClicked()
+    private async void OnLoginButtonClicked()
     {
-        if (User == "admin" && Password == "admin")
+        var loginnedUser = (await UsersAppService.GetAsyncByUserNameAndPassword(User, Password)).Data;
+
+        if (loginnedUser != null)
         {
             VisibleSpinner = true;
 
-            LoginedUserService.UserId = Guid.Parse("d71be8fe-07ce-4ff0-940f-f6d778c16181");
+            //LoginedUserService.UserId = Guid.Parse("d71be8fe-07ce-4ff0-940f-f6d778c16181");
+
+            LoginedUserService.UserId = loginnedUser.Id;
 
             LoginedUserService.VersionTableId = Guid.Parse("8A5F698D-D632-4314-A0C4-02E496FEB6CD");
+
+            var permissions = (await UserPermissionsAppService.GetListAsyncByUserId(loginnedUser.Id)).Data;
+
+            var menus = (typeof(NavBarPermissionsModel)).GetProperties();
+
+            foreach (var item in permissions)
+            {
+                var menu = menus.Where(t => t.Name == item.MenuName).FirstOrDefault();
+
+                if(menu!=null)
+                {
+                    menu.SetValue(menu, item.IsUserPermitted);
+                }
+            }
 
             NavigationManager.NavigateTo("/home");
         }
@@ -184,6 +193,21 @@
         {
             vispopup = true;
         }
+
+        //if (User == "admin" && Password == "admin")
+        //{
+        //    VisibleSpinner = true;
+
+        //    LoginedUserService.UserId = Guid.Parse("d71be8fe-07ce-4ff0-940f-f6d778c16181");
+
+        //    LoginedUserService.VersionTableId = Guid.Parse("8A5F698D-D632-4314-A0C4-02E496FEB6CD");
+
+        //    NavigationManager.NavigateTo("/home");
+        //}
+        //else
+        //{
+        //    vispopup = true;
+        //}
 
     }
     private void OnOkButtonClicked()

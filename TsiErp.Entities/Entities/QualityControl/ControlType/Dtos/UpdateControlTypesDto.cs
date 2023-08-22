@@ -25,5 +25,9 @@ namespace TsiErp.Entities.Entities.QualityControl.ControlType.Dtos
         public string Description_ { get; set; }
 
         public bool IsActive { get; set; }
+        /// <summary>
+        /// Kalite Plan Türü Açıklaması
+        /// </summary>
+        public string QualityPlanTypes { get; set; }
     }
 }

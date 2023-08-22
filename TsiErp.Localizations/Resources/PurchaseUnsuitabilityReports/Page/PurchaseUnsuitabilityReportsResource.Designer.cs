@@ -62,6 +62,15 @@ namespace TsiErp.Localizations.Resources.PurchaseUnsuitabilityReports.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AKSİYON.
+        /// </summary>
+        public static string Action_ {
+            get {
+                return ResourceManager.GetString("Action_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Uygunsuzluk Aksiyonu:.
         /// </summary>
         public static string ActionLabel {
@@ -332,7 +341,7 @@ namespace TsiErp.Localizations.Resources.PurchaseUnsuitabilityReports.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UYGUNSUZLUK FİŞ NO.
+        ///   Looks up a localized string similar to FİŞ NO.
         /// </summary>
         public static string FicheNo {
             get {
@@ -346,42 +355,6 @@ namespace TsiErp.Localizations.Resources.PurchaseUnsuitabilityReports.Page {
         public static string FicheNoLabel {
             get {
                 return ResourceManager.GetString("FicheNoLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to TEDARİKÇİ İLE İRTİBAT.
-        /// </summary>
-        public static string IsContactSupplier {
-            get {
-                return ResourceManager.GetString("IsContactSupplier", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to DÜZELTME.
-        /// </summary>
-        public static string IsCorrection {
-            get {
-                return ResourceManager.GetString("IsCorrection", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to RED.
-        /// </summary>
-        public static string IsReject {
-            get {
-                return ResourceManager.GetString("IsReject", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to OLDUĞU GİBİ KULLANILACAK.
-        /// </summary>
-        public static string IsToBeUsedAs {
-            get {
-                return ResourceManager.GetString("IsToBeUsedAs", resourceCulture);
             }
         }
         
@@ -427,6 +400,15 @@ namespace TsiErp.Localizations.Resources.PurchaseUnsuitabilityReports.Page {
         public static string MessagePopupInformationDescriptionBase {
             get {
                 return ResourceManager.GetString("MessagePopupInformationDescriptionBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen satınalma siparişi seçin..
+        /// </summary>
+        public static string MessagePopupInformationSelectOrderBase {
+            get {
+                return ResourceManager.GetString("MessagePopupInformationSelectOrderBase", resourceCulture);
             }
         }
         
@@ -674,7 +656,25 @@ namespace TsiErp.Localizations.Resources.PurchaseUnsuitabilityReports.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to UYGUN OLMAYAN MİKTAR.
+        ///   Looks up a localized string similar to Uygunsuzluk Başlıkları.
+        /// </summary>
+        public static string UnsuitabilityItemsModalTitle {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemsModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uygunsuzluk Başlığı:.
+        /// </summary>
+        public static string UnsuitabilityNameLabel {
+            get {
+                return ResourceManager.GetString("UnsuitabilityNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HATALI MİKTAR.
         /// </summary>
         public static string UnsuitableAmount {
             get {
@@ -683,11 +683,29 @@ namespace TsiErp.Localizations.Resources.PurchaseUnsuitabilityReports.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uygun Olmayan Miktar:.
+        ///   Looks up a localized string similar to Hatalı Miktar:.
         /// </summary>
         public static string UnsuitableAmountLabel {
             get {
                 return ResourceManager.GetString("UnsuitableAmountLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BAŞLIK KODU.
+        /// </summary>
+        public static string UnsutabilityItemModalGridCode {
+            get {
+                return ResourceManager.GetString("UnsutabilityItemModalGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BAŞLIK ADI.
+        /// </summary>
+        public static string UnsutabilityItemModalGridName {
+            get {
+                return ResourceManager.GetString("UnsutabilityItemModalGridName", resourceCulture);
             }
         }
         
@@ -697,6 +715,15 @@ namespace TsiErp.Localizations.Resources.PurchaseUnsuitabilityReports.Page {
         public static string UpdateControlManager {
             get {
                 return ResourceManager.GetString("UpdateControlManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen aksiyon seçin..
+        /// </summary>
+        public static string ValidatorAction {
+            get {
+                return ResourceManager.GetString("ValidatorAction", resourceCulture);
             }
         }
         
@@ -751,6 +778,15 @@ namespace TsiErp.Localizations.Resources.PurchaseUnsuitabilityReports.Page {
         public static string ValidatorProductID {
             get {
                 return ResourceManager.GetString("ValidatorProductID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lütfen uygunsuzluk başlığı seçin..
+        /// </summary>
+        public static string ValidatorUnsuitabilityItemsID {
+            get {
+                return ResourceManager.GetString("ValidatorUnsuitabilityItemsID", resourceCulture);
             }
         }
     }
