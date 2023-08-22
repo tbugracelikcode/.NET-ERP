@@ -3,36 +3,45 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
+using TsiErp.Entities.Entities.QualityControl.ContractOperationPicture.Dtos;
+using TsiErp.Entities.Entities.QualityControl.ContractQualityPlan.Dtos;
+using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanLine.Dtos;
+using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanOperation.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ControlCondition.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ControlType.Dtos;
-using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan.Dtos;
-using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlanLine.Dtos;
-using TsiErp.Entities.Entities.QualityControl.OperationPicture.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
-namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
+namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
 {
-    public partial class OperationalQualityPlansListPage
+    public partial class ContractQualityPlansListPage
     {
-        private SfGrid<SelectOperationalQualityPlanLinesDto> _LineGrid;
-        private SfGrid<SelectOperationPicturesDto> _OperationPicturesGrid;
+        private SfGrid<SelectContractQualityPlanLinesDto> _LineGrid;
+        private SfGrid<SelectContractOperationPicturesDto> _OperationPicturesGrid;
+        private SfGrid<SelectContractQualityPlanOperationsDto> _ContractOperationsGrid;
 
         [Inject]
         ModalManager ModalManager { get; set; }
 
-        SelectOperationalQualityPlanLinesDto LineDataSource;
-        SelectOperationPicturesDto OperationPictureDataSource;
+        SelectContractQualityPlanLinesDto LineDataSource;
+        SelectContractOperationPicturesDto OperationPictureDataSource;
+        SelectContractQualityPlanOperationsDto ContractOperationDataSource;
 
         public List<ContextMenuItemModel> LineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> OperationPictureGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
+        public List<ContextMenuItemModel> ContractOperationGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
-        List<SelectOperationalQualityPlanLinesDto> GridLineList = new List<SelectOperationalQualityPlanLinesDto>();
+        List<SelectContractQualityPlanLinesDto> GridLineList = new List<SelectContractQualityPlanLinesDto>();
 
-        List<SelectOperationPicturesDto> GridOperationPictureList = new List<SelectOperationPicturesDto>();
+        List<SelectContractOperationPicturesDto> GridOperationPictureList = new List<SelectContractOperationPicturesDto>();
+
+        List<SelectContractQualityPlanOperationsDto> GridContractOperationList = new List<SelectContractQualityPlanOperationsDto>();
+
+        List<ListProductsOperationsDto> ProductsOperationList = new List<ListProductsOperationsDto>();
 
         #region File Upload Değişkenleri
 
@@ -68,15 +77,18 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
         private bool OperationPictureCrudPopup = false;
 
+        private bool ContractOperationCrudPopup = false;
+
         #endregion
 
         protected override async Task OnInitializedAsync()
         {
-            BaseCrudService = OperationalQualityPlansAppService;
+            BaseCrudService = ContractQualityPlansAppService;
             _L = L;
 
             CreateMainContextMenuItems();
             CreateLineContextMenuItems();
+            CreateContractOperationContextMenuItems();
             //CreateOperationPictureContextMenuItems();
 
         }
@@ -113,7 +125,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
             if (extention == ".pdf")
             {
-                PDFrootPath = rootpath + @"\UploadedFiles\OperationPictures\" + DataSource.ProductID + "-" + DataSource.ProductsOperationID  + @"\" + OperationPictureDataSource.Id + @"\" + file.Name;
+                PDFrootPath = rootpath + @"\UploadedFiles\ContractOperationPictures\" + DataSource.ProductID + @"\" + OperationPictureDataSource.Id + @"\" + file.Name;
 
                 System.IO.FileInfo pdfFile = new System.IO.FileInfo(PDFrootPath);
                 if (pdfFile.Exists)
@@ -124,7 +136,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
             else
             {
-                imageDataUri = rootpath + @"\UploadedFiles\OperationPictures\" + DataSource.ProductID + "-" + DataSource.ProductsOperationID  + @"\" + OperationPictureDataSource.Id + @"\" + file.Name;
+                imageDataUri = rootpath + @"\UploadedFiles\ContractOperationPictures\" + DataSource.ProductID + @"\" + OperationPictureDataSource.Id + @"\" + file.Name;
 
                 System.IO.FileInfo jpgfile = new System.IO.FileInfo(imageDataUri);
                 if (jpgfile.Exists)
@@ -200,7 +212,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
             if (format == ".jpg" || format == ".jpeg" || format == ".png")
             {
-                imageDataUri = @"\UploadedFiles\OperationPictures\" + DataSource.ProductID + "-" + DataSource.ProductsOperationID  + @"\" + OperationPictureDataSource.Id + @"\" + file.Name;
+                imageDataUri = @"\UploadedFiles\ContractOperationPictures\" + DataSource.ProductID + @"\" + OperationPictureDataSource.Id + @"\" + file.Name;
 
                 image = true;
 
@@ -212,7 +224,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
             else if (format == ".pdf")
             {
 
-                PDFrootPath = "wwwroot/UploadedFiles/OperationPictures/" + DataSource.ProductID + "-" + DataSource.ProductsOperationID + "/" + OperationPictureDataSource.Id + "/" + file.Name;
+                PDFrootPath = "wwwroot/UploadedFiles/ContractOperationPictures/" + DataSource.ProductID + "/" + OperationPictureDataSource.Id + "/" + file.Name;
 
                 PDFFileName = file.Name;
 
@@ -248,10 +260,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
             }
         }
 
-       
+
         #endregion
 
-        #region Operasyon Kalite Planı Satır İşlemleri
+        #region Fason Giriş Kalite Planı Satır İşlemleri
 
         protected void CreateMainContextMenuItems()
         {
@@ -277,16 +289,18 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
         protected override async Task BeforeInsertAsync()
         {
-            DataSource = new SelectOperationalQualityPlansDto()
+            DataSource = new SelectContractQualityPlansDto()
             {
             };
 
-            DataSource.SelectOperationalQualityPlanLines = new List<SelectOperationalQualityPlanLinesDto>();
-            DataSource.SelectOperationPictures = new List<SelectOperationPicturesDto>();
-            GridLineList = DataSource.SelectOperationalQualityPlanLines;
-            GridOperationPictureList = DataSource.SelectOperationPictures;
-
+            DataSource.SelectContractQualityPlanLines = new List<SelectContractQualityPlanLinesDto>();
+            DataSource.SelectContractOperationPictures = new List<SelectContractOperationPicturesDto>();
+            DataSource.SelectContractQualityPlanOperations = new List<SelectContractQualityPlanOperationsDto>();
+            GridLineList = DataSource.SelectContractQualityPlanLines;
+            GridOperationPictureList = DataSource.SelectContractOperationPictures;
+            GridContractOperationList = DataSource.SelectContractQualityPlanOperations;
             EditPageVisible = true;
+
 
             await Task.CompletedTask;
         }
@@ -312,7 +326,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
             }
         }
 
-        public async void MainContextMenuClick(ContextMenuClickEventArgs<ListOperationalQualityPlansDto> args)
+        public async void MainContextMenuClick(ContextMenuClickEventArgs<ListContractQualityPlansDto> args)
         {
             switch (args.Item.Id)
             {
@@ -322,9 +336,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
                 case "changed":
                     IsChanged = true;
-                    DataSource = (await OperationalQualityPlansAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
-                    GridLineList = DataSource.SelectOperationalQualityPlanLines;
-                    GridOperationPictureList = DataSource.SelectOperationPictures;
+                    DataSource = (await ContractQualityPlansAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
+                    GridLineList = DataSource.SelectContractQualityPlanLines;
+                    GridOperationPictureList = DataSource.SelectContractOperationPictures;
+                    GridContractOperationList = DataSource.SelectContractQualityPlanOperations;
 
                     ShowEditPage();
                     await InvokeAsync(StateHasChanged);
@@ -334,7 +349,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
                     var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageBase"]);
                     if (res == true)
                     {
-                        await OperationalQualityPlansAppService.DeleteAsync(args.RowInfo.RowData.Id);
+                        await ContractQualityPlansAppService.DeleteAsync(args.RowInfo.RowData.Id);
                         await GetListDataSourceAsync();
                         await _grid.Refresh();
                         await InvokeAsync(StateHasChanged);
@@ -355,32 +370,29 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
         public async Task BeforeLineInsertAsync()
         {
-            if(DataSource.ProductID == Guid.Empty || DataSource.ProductsOperationID == Guid.Empty)
+            if (DataSource.ProductID == Guid.Empty || DataSource.ProductID == null)
             {
                 await ModalManager.WarningPopupAsync(L["UIWarningTitleBase"], L["UIWarningMessageBase"]);
             }
             else
             {
-                LineDataSource = new SelectOperationalQualityPlanLinesDto
+                LineDataSource = new SelectContractQualityPlanLinesDto
                 {
-                    ProductID = DataSource.ProductID,
+                    ProductID = DataSource.ProductID.GetValueOrDefault(),
                     ProductCode = DataSource.ProductCode,
                     ProductName = DataSource.ProductName,
-                    ProductsOperationID = DataSource.ProductsOperationID,
-                    OperationCode = DataSource.OperationCode,
-                    OperationName = DataSource.OperationName,
                     Date_ = DateTime.Now
                 };
 
                 LineCrudPopup = true;
                 LineDataSource.LineNr = GridLineList.Count + 1;
             }
-           
+
 
             await Task.CompletedTask;
         }
 
-        public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectOperationalQualityPlanLinesDto> args)
+        public async void OnListContextMenuClick(ContextMenuClickEventArgs<SelectContractQualityPlanLinesDto> args)
         {
             switch (args.Item.Id)
             {
@@ -407,19 +419,19 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
                         if (line.Id == Guid.Empty)
                         {
-                            DataSource.SelectOperationalQualityPlanLines.Remove(args.RowInfo.RowData);
+                            DataSource.SelectContractQualityPlanLines.Remove(args.RowInfo.RowData);
                         }
                         else
                         {
                             if (line != null)
                             {
-                                await OperationalQualityPlansAppService.DeleteLineAsync(args.RowInfo.RowData.Id);
-                                DataSource.SelectOperationalQualityPlanLines.Remove(line);
+                                await ContractQualityPlansAppService.DeleteLineAsync(args.RowInfo.RowData.Id);
+                                DataSource.SelectContractQualityPlanLines.Remove(line);
                                 await GetListDataSourceAsync();
                             }
                             else
                             {
-                                DataSource.SelectOperationalQualityPlanLines.Remove(line);
+                                DataSource.SelectContractQualityPlanLines.Remove(line);
                             }
                         }
 
@@ -450,31 +462,31 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
         {
             if (LineDataSource.Id == Guid.Empty)
             {
-                if (DataSource.SelectOperationalQualityPlanLines.Contains(LineDataSource))
+                if (DataSource.SelectContractQualityPlanLines.Contains(LineDataSource))
                 {
-                    int selectedLineIndex = DataSource.SelectOperationalQualityPlanLines.FindIndex(t => t.LineNr == LineDataSource.LineNr);
+                    int selectedLineIndex = DataSource.SelectContractQualityPlanLines.FindIndex(t => t.LineNr == LineDataSource.LineNr);
 
                     if (selectedLineIndex > -1)
                     {
-                        DataSource.SelectOperationalQualityPlanLines[selectedLineIndex] = LineDataSource;
+                        DataSource.SelectContractQualityPlanLines[selectedLineIndex] = LineDataSource;
                     }
                 }
                 else
                 {
-                    DataSource.SelectOperationalQualityPlanLines.Add(LineDataSource);
+                    DataSource.SelectContractQualityPlanLines.Add(LineDataSource);
                 }
             }
             else
             {
-                int selectedLineIndex = DataSource.SelectOperationalQualityPlanLines.FindIndex(t => t.Id == LineDataSource.Id);
+                int selectedLineIndex = DataSource.SelectContractQualityPlanLines.FindIndex(t => t.Id == LineDataSource.Id);
 
                 if (selectedLineIndex > -1)
                 {
-                    DataSource.SelectOperationalQualityPlanLines[selectedLineIndex] = LineDataSource;
+                    DataSource.SelectContractQualityPlanLines[selectedLineIndex] = LineDataSource;
                 }
             }
 
-            GridLineList = DataSource.SelectOperationalQualityPlanLines.OrderBy(t => t.MeasureNumberInPicture).ToList();
+            GridLineList = DataSource.SelectContractQualityPlanLines.OrderBy(t => t.MeasureNumberInPicture).ToList();
 
             await _LineGrid.Refresh();
 
@@ -500,13 +512,13 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
         public async Task BeforeOperationPictureInsertAsync()
         {
-            if (DataSource.ProductID == Guid.Empty || DataSource.ProductsOperationID == Guid.Empty)
+            if (DataSource.ProductID == Guid.Empty || DataSource.ProductID == null)
             {
                 await ModalManager.WarningPopupAsync(L["UIWarningTitleBase"], L["UIWarningMessageOprPictureBase"]);
             }
             else
             {
-                OperationPictureDataSource = new SelectOperationPicturesDto
+                OperationPictureDataSource = new SelectContractOperationPicturesDto
                 {
                     CreationDate_ = DateTime.Now
                 };
@@ -519,7 +531,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
             await Task.CompletedTask;
         }
 
-        public async void OnOperationPictureContextMenuClick(ContextMenuClickEventArgs<SelectOperationPicturesDto> args)
+        public async void OnOperationPictureContextMenuClick(ContextMenuClickEventArgs<SelectContractOperationPicturesDto> args)
         {
             switch (args.Item.Id)
             {
@@ -532,7 +544,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
                 case "changed":
                     OperationPictureDataSource = args.RowInfo.RowData;
                     string rootpath = FileUploadService.GetRootPath();
-                    string operationPicturePath = @"\UploadedFiles\OperationPictures\" + DataSource.ProductID.ToString() + "-" + DataSource.ProductsOperationID.ToString()  + @"\" + OperationPictureDataSource.Id + @"\";
+                    string operationPicturePath = @"\UploadedFiles\ContractOperationPictures\" + DataSource.ProductID.ToString() + @"\" + OperationPictureDataSource.Id + @"\";
                     DirectoryInfo operationPicture = new DirectoryInfo(rootpath + operationPicturePath);
                     if (operationPicture.Exists)
                     {
@@ -558,19 +570,19 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
                         if (line.Id == Guid.Empty)
                         {
-                            DataSource.SelectOperationPictures.Remove(args.RowInfo.RowData);
+                            DataSource.SelectContractOperationPictures.Remove(args.RowInfo.RowData);
                         }
                         else
                         {
                             if (line != null)
                             {
-                                await OperationalQualityPlansAppService.DeleteOperationPictureAsync(args.RowInfo.RowData.Id);
-                                DataSource.SelectOperationPictures.Remove(line);
+                                await ContractQualityPlansAppService.DeleteContractPictureAsync(args.RowInfo.RowData.Id);
+                                DataSource.SelectContractOperationPictures.Remove(line);
                                 await GetListDataSourceAsync();
                             }
                             else
                             {
-                                DataSource.SelectOperationPictures.Remove(line);
+                                DataSource.SelectContractOperationPictures.Remove(line);
                             }
                         }
 
@@ -601,38 +613,37 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
         {
             if (OperationPictureDataSource.Id == Guid.Empty)
             {
-                if (DataSource.SelectOperationPictures.Contains(OperationPictureDataSource))
+                if (DataSource.SelectContractOperationPictures.Contains(OperationPictureDataSource))
                 {
-                    int selectedLineIndex = DataSource.SelectOperationPictures.FindIndex(t => t.LineNr == OperationPictureDataSource.LineNr);
+                    int selectedLineIndex = DataSource.SelectContractOperationPictures.FindIndex(t => t.LineNr == OperationPictureDataSource.LineNr);
 
                     if (selectedLineIndex > -1)
                     {
-                        DataSource.SelectOperationPictures[selectedLineIndex] = OperationPictureDataSource;
+                        DataSource.SelectContractOperationPictures[selectedLineIndex] = OperationPictureDataSource;
                     }
                 }
                 else
                 {
-                    DataSource.SelectOperationPictures.Add(OperationPictureDataSource);
+                    DataSource.SelectContractOperationPictures.Add(OperationPictureDataSource);
                 }
             }
             else
             {
-                int selectedLineIndex = DataSource.SelectOperationPictures.FindIndex(t => t.Id == OperationPictureDataSource.Id);
+                int selectedLineIndex = DataSource.SelectContractOperationPictures.FindIndex(t => t.Id == OperationPictureDataSource.Id);
 
                 if (selectedLineIndex > -1)
                 {
-                    DataSource.SelectOperationPictures[selectedLineIndex] = OperationPictureDataSource;
+                    DataSource.SelectContractOperationPictures[selectedLineIndex] = OperationPictureDataSource;
                 }
             }
 
-            GridOperationPictureList = DataSource.SelectOperationPictures;
+            GridOperationPictureList = DataSource.SelectContractOperationPictures;
 
             await _OperationPicturesGrid.Refresh();
 
             #region File Upload İşlemleri
 
             string productid = DataSource.ProductID.ToString();
-            string operationid = DataSource.ProductsOperationID.ToString();
             string oprpictureid = OperationPictureDataSource.Id.ToString();
 
             List<string> _result = new List<string>();
@@ -643,7 +654,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
                 string fileName = file.Name;
                 //string rootPath = "UploadedFiles/OperationPictures/" + productid + "-" + operationid + "/" + oprpictureid ;
-                string rootPath = "UploadedFiles/OperationPictures/" + DataSource.ProductCode + "-" + DataSource.OperationCode + "/" + "123123";
+                string rootPath = "UploadedFiles/ContractOperationPictures/" + DataSource.ProductCode + "/" + "123123";
 
 
                 _result.Add(await FileUploadService.UploadOperationPicture(file, rootPath, fileName));
@@ -663,6 +674,104 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
             await InvokeAsync(StateHasChanged);
         }
+
+        #endregion
+
+        #region Fason Operasyonları İşlemleri
+
+        protected void CreateContractOperationContextMenuItems()
+        {
+            if (ContractOperationGridContextMenu.Count() == 0)
+            {
+                ContractOperationGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
+                ContractOperationGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
+                ContractOperationGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+            }
+        }
+
+        public async Task BeforeContractOperationInsertAsync()
+        {
+            if (DataSource.ProductID == Guid.Empty || DataSource.ProductID == null)
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningTitleBase"], L["UIWarningMessageContractOperationBase"]);
+            }
+            else
+            {
+                ContractOperationDataSource = new SelectContractQualityPlanOperationsDto
+                {
+                    ContractQualityPlanID = DataSource.Id
+                };
+
+                ProductsOperationList = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.Where(t => t.ProductID == DataSource.ProductID).ToList();
+
+                ContractOperationCrudPopup = true;
+                ContractOperationDataSource.LineNr = GridContractOperationList.Count + 1;
+            }
+
+
+            await Task.CompletedTask;
+        }
+
+        public async void OnContractOperationContextMenuClick(ContextMenuClickEventArgs<SelectContractQualityPlanOperationsDto> args)
+        {
+            switch (args.Item.Id)
+            {
+                case "new":
+
+                    await BeforeContractOperationInsertAsync();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+
+                case "delete":
+
+                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageContractOperationBase"]);
+
+                    if (res == true)
+                    {
+                        var line = args.RowInfo.RowData;
+
+                        if (line.Id == Guid.Empty)
+                        {
+                            DataSource.SelectContractQualityPlanOperations.Remove(args.RowInfo.RowData);
+                        }
+                        else
+                        {
+                            if (line != null)
+                            {
+                                await ContractQualityPlansAppService.DeleteContractOperationAsync(args.RowInfo.RowData.Id);
+                                DataSource.SelectContractQualityPlanOperations.Remove(line);
+                                await GetListDataSourceAsync();
+                            }
+                            else
+                            {
+                                DataSource.SelectContractQualityPlanOperations.Remove(line);
+                            }
+                        }
+
+                        await _ContractOperationsGrid.Refresh();
+                        GetTotal();
+                        await InvokeAsync(StateHasChanged);
+                    }
+
+                    break;
+
+                case "refresh":
+                    await GetListDataSourceAsync();
+                    await _ContractOperationsGrid.Refresh();
+                    await InvokeAsync(StateHasChanged);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        public void HideContractOperationsPopup()
+        {
+            ContractOperationCrudPopup = false;
+        }
+
 
         #endregion
 
@@ -725,42 +834,64 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
         #endregion
 
-        #region Ürün Operasyon Button Edit
+        #region Cari Hesap Button Edit
 
-        SfTextBox ProductsOperationsButtonEdit;
-        bool SelectProductsOperationsPopupVisible = false;
-        List<ListProductsOperationsDto> ProductsOperationsList = new List<ListProductsOperationsDto>();
-        public async Task ProductsOperationsOnCreateIcon()
+        SfTextBox CurrentAccountCardsCodeButtonEdit;
+        SfTextBox CurrentAccountCardsNameButtonEdit;
+        bool SelectCurrentAccountCardsPopupVisible = false;
+        List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
+        public async Task CurrentAccountCardsCodeOnCreateIcon()
         {
-            var ProductsOperationsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductsOperationsButtonClickEvent);
-            await ProductsOperationsButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ProductsOperationsButtonClick } });
+            var CurrentAccountCardsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CurrentAccountCardsCodeButtonClickEvent);
+            await CurrentAccountCardsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CurrentAccountCardsButtonClick } });
         }
 
-        public async void ProductsOperationsButtonClickEvent()
+        public async void CurrentAccountCardsCodeButtonClickEvent()
         {
-            if(DataSource.ProductID == Guid.Empty)
-            {
-                await ModalManager.WarningPopupAsync(L["UIWarningProductIdTitleBase"], L["UIWarningProductIdMessageBase"]);
-            }
-            else
-            {
-                SelectProductsOperationsPopupVisible = true;
-                await GetProductsOperationsList();
-            }
-          
+            SelectCurrentAccountCardsPopupVisible = true;
+            await GetCurrentAccountCardsList();
+            await InvokeAsync(StateHasChanged);
+        }
+        public async Task CurrentAccountCardsNameOnCreateIcon()
+        {
+            var CurrentAccountCardsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CurrentAccountCardsNameButtonClickEvent);
+            await CurrentAccountCardsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CurrentAccountCardsButtonClick } });
+        }
+
+        public async void CurrentAccountCardsNameButtonClickEvent()
+        {
+            SelectCurrentAccountCardsPopupVisible = true;
+            await GetCurrentAccountCardsList();
             await InvokeAsync(StateHasChanged);
         }
 
-
-        public void ProductsOperationsOnValueChange(ChangedEventArgs args)
+        public void CurrentAccountCardsOnValueChange(ChangedEventArgs args)
         {
             if (args.Value == null)
             {
-                DataSource.ProductsOperationID = Guid.Empty;
-                DataSource.OperationCode = string.Empty;
-                DataSource.OperationName = string.Empty;
+                DataSource.CurrrentAccountCardID = Guid.Empty;
+                DataSource.CurrrentAccountCardCode = string.Empty;
+                DataSource.CurrrentAccountCardName = string.Empty;
             }
         }
+
+        public async void CurrentAccountCardsDoubleClickHandler(RecordDoubleClickEventArgs<ListCurrentAccountCardsDto> args)
+        {
+            var selectedCurrentAccountCard = args.RowData;
+
+            if (selectedCurrentAccountCard != null)
+            {
+                DataSource.CurrrentAccountCardID = selectedCurrentAccountCard.Id;
+                DataSource.CurrrentAccountCardCode = selectedCurrentAccountCard.Code;
+                DataSource.CurrrentAccountCardName = selectedCurrentAccountCard.Name;
+                SelectCurrentAccountCardsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        #endregion
+
+        #region Ürün Operasyon 
 
         public async void ProductsOperationsDoubleClickHandler(RecordDoubleClickEventArgs<ListProductsOperationsDto> args)
         {
@@ -768,10 +899,14 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
 
             if (selectedProductsOperation != null)
             {
-                DataSource.ProductsOperationID = selectedProductsOperation.Id;
-                DataSource.OperationCode = selectedProductsOperation.Code;
-                DataSource.OperationName = selectedProductsOperation.Name;
-                SelectProductsOperationsPopupVisible = false;
+
+                ContractOperationDataSource.Name = selectedProductsOperation.Name;
+                ContractOperationDataSource.Code = selectedProductsOperation.Code;
+                ContractOperationDataSource.ContractQualityPlanID = DataSource.Id;
+
+                GridContractOperationList.Add(ContractOperationDataSource);
+                await _ContractOperationsGrid.Refresh();
+                ContractOperationCrudPopup = false;
                 await InvokeAsync(StateHasChanged);
             }
         }
@@ -940,9 +1075,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
             ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
         }
 
-        private async Task GetProductsOperationsList()
+        private async Task GetCurrentAccountCardsList()
         {
-            ProductsOperationsList = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.Where(t=>t.ProductID == DataSource.ProductID).ToList();
+            CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
         }
 
         private async Task GetControlTypesList()
@@ -956,6 +1091,5 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
         }
 
         #endregion
-
     }
 }

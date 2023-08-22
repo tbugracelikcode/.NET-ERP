@@ -117,325 +117,337 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AcceptableNumberofDefectiveProductLabel" xml:space="preserve">
+    <value>Kabul Edilebilir Hatalı Ürün Sayısı:</value>
+  </data>
   <data name="ApproverOperationPictureLabel" xml:space="preserve">
-    <value>Approver:</value>
+    <value>Onaylayan:</value>
   </data>
   <data name="BottomToleranceLineLabel" xml:space="preserve">
-    <value>Bottom Tolerance:</value>
+    <value>Alt Tolerans:</value>
   </data>
   <data name="CloseButton" xml:space="preserve">
-    <value>Close</value>
+    <value>Kapat</value>
   </data>
   <data name="CodeControlManager" xml:space="preserve">
-    <value>There is a record with the same document number.</value>
+    <value>Aynı döküman numaralı bir kayıt bulunmaktadır.</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
+    <value>Ekle</value>
   </data>
   <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
+    <value>Değiştir</value>
   </data>
   <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
+    <value>Sil</value>
   </data>
   <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
+    <value>Güncelle</value>
   </data>
   <data name="ControlConditionsCode" xml:space="preserve">
-    <value>CONTROL CONDITION CODE</value>
+    <value>KONTROL ŞARTI KODU</value>
   </data>
   <data name="ControlConditionsDescription_" xml:space="preserve">
-    <value>DESCRIPTION</value>
+    <value>AÇIKLAMA</value>
   </data>
   <data name="ControlConditionsModalTitle" xml:space="preserve">
-    <value>Control Conditions</value>
+    <value>Kontrol Şartları</value>
   </data>
   <data name="ControlConditionsName" xml:space="preserve">
-    <value>CONTROL CONDITION NAME</value>
+    <value>KONTROL ŞARTI ADI</value>
   </data>
   <data name="ControlConditionsNameLineLabel" xml:space="preserve">
-    <value>Control Condition:</value>
+    <value>Kontrol Şartı:</value>
   </data>
   <data name="ControlEquipmentLineLabel" xml:space="preserve">
-    <value>Equipment:</value>
+    <value>Ekipman:</value>
   </data>
   <data name="ControlFrequencyLineLabel" xml:space="preserve">
-    <value>Control Frequency:</value>
+    <value>Kontrol Sıklığı:</value>
   </data>
   <data name="ControlManagerLineLabel" xml:space="preserve">
-    <value>Control Manager:</value>
+    <value>Kontrol Sorumlusu:</value>
   </data>
   <data name="ControlTypesCode" xml:space="preserve">
-    <value>CONTROL TYPE CODE</value>
+    <value>KONTROL TÜRÜ KODU</value>
   </data>
   <data name="ControlTypesDescription_" xml:space="preserve">
-    <value>DESCRIPTION</value>
+    <value>AÇIKLAMA</value>
   </data>
   <data name="ControlTypesModalTitle" xml:space="preserve">
-    <value>Control Types</value>
+    <value>Kontrol Türleri</value>
   </data>
   <data name="ControlTypesName" xml:space="preserve">
-    <value>CONTROL TYPE NAME</value>
+    <value>KONTROL TÜRÜ ADI</value>
   </data>
   <data name="ControlTypesNameLineLabel" xml:space="preserve">
-    <value>Control Type:</value>
+    <value>Kontrol Türü:</value>
   </data>
   <data name="CreationDate_OperationPictureLabel" xml:space="preserve">
-    <value>Creation Date:</value>
+    <value>Eklenme Tarihi:</value>
+  </data>
+  <data name="CurrentAccountCardCodeLabel" xml:space="preserve">
+    <value>Cari Hesap Ünvanı:</value>
+  </data>
+  <data name="CurrentAccountCardModalGridCode" xml:space="preserve">
+    <value>CARİ HESAP KODU</value>
+  </data>
+  <data name="CurrentAccountCardModalGridName" xml:space="preserve">
+    <value>CARİ HESAP ÜNVANI</value>
+  </data>
+  <data name="CurrentAccountCardModalTitle" xml:space="preserve">
+    <value>Cari Hesap Kartları</value>
+  </data>
+  <data name="CurrentAccountCardNameLabel" xml:space="preserve">
+    <value>Cari Hesap Kodu:</value>
+  </data>
+  <data name="CurrrentAccountCardName" xml:space="preserve">
+    <value>CARİ ÜNVAN</value>
   </data>
   <data name="Date_LineLabel" xml:space="preserve">
-    <value>Date:</value>
+    <value>Tarih:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
-    <value>Are you sure you want to delete?</value>
+    <value>Silmek istediğinize emin misiniz ?</value>
   </data>
   <data name="DeleteConfirmationTitleBase" xml:space="preserve">
-    <value>Confirmation</value>
+    <value>Onay</value>
   </data>
   <data name="DeleteControlManager" xml:space="preserve">
-    <value>Records with transaction cannot be deleted.</value>
+    <value>Hareket gören kayıtlar silinemez.</value>
   </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
-    <value>The record deleted successfully.</value>
+    <value>Kayıt başarıyla silindi.</value>
   </data>
   <data name="Description_Label" xml:space="preserve">
-    <value>Description:</value>
+    <value>Açıklama:</value>
   </data>
   <data name="Description_LineLabel" xml:space="preserve">
-    <value>Description:</value>
+    <value>Açıklama:</value>
   </data>
   <data name="Description_OperationPictureLabel" xml:space="preserve">
-    <value>Description:</value>
+    <value>Açıklama:</value>
   </data>
   <data name="DocumentNumber" xml:space="preserve">
-    <value>DOCUMENT NUMBER</value>
+    <value>DÖKÜMAN NUMARASI</value>
   </data>
   <data name="DocumentNumberLabel" xml:space="preserve">
-    <value>Document Number:</value>
+    <value>Döküman Numarası:</value>
   </data>
   <data name="DrawerOperationPictureLabel" xml:space="preserve">
-    <value>Drawer:</value>
+    <value>Çizen:</value>
   </data>
   <data name="EditModalTitle" xml:space="preserve">
-    <value>Operational Quality Plans</value>
+    <value>Fason Giriş Kalite Planları</value>
   </data>
   <data name="Error" xml:space="preserve">
-    <value>Error</value>
+    <value>Hata</value>
   </data>
   <data name="ExportFileName" xml:space="preserve">
-    <value>OperationalQualityPlans</value>
+    <value>FasonGirisKalitePlanlari</value>
   </data>
   <data name="ExportTitle" xml:space="preserve">
-    <value>Operational Quality Plans</value>
+    <value>Fason Giriş Kalite Planları</value>
   </data>
   <data name="FilestoUpload" xml:space="preserve">
-    <value>File to Upload:</value>
+    <value>Yüklenecek Dosyalar:</value>
   </data>
   <data name="IdealMeasureLineLabel" xml:space="preserve">
-    <value>Ideal Measurement:</value>
+    <value>Olması Gereken Ölçü:</value>
   </data>
   <data name="IsApprovedOperationPictureLabel" xml:space="preserve">
-    <value>Approved:</value>
+    <value>Onaylı:</value>
   </data>
   <data name="LineGridBottomTolerance" xml:space="preserve">
-    <value>BOTTOM TOLERANCE</value>
+    <value>ALT TOLERANS</value>
   </data>
   <data name="LineGridControlConditionsName" xml:space="preserve">
-    <value>CONTROL CONDITIONS</value>
+    <value>KONTROL ŞARTI</value>
   </data>
   <data name="LineGridControlManager" xml:space="preserve">
-    <value>CONTROL MANAGER</value>
+    <value>KONTROL SORUMLUSU</value>
   </data>
   <data name="LineGridControlTypesName" xml:space="preserve">
-    <value>CONTROL TYPE</value>
+    <value>KONTROL TÜRÜ</value>
   </data>
   <data name="LineGridEquipment" xml:space="preserve">
-    <value>EQUIPMENT</value>
+    <value>EKİPMAN</value>
   </data>
   <data name="LineGridIdealMeasure" xml:space="preserve">
-    <value>IDEAL MEASUREMENT</value>
+    <value>OLMASI GEREKEN ÖLÇÜ</value>
   </data>
   <data name="LineGridMeasureNumberInPicture" xml:space="preserve">
-    <value>MEASUREMENT NUMBER IN PICTURE</value>
+    <value>RESİMDEKİ ÖLÇÜ NUMARASI</value>
   </data>
   <data name="LineGridOperationCode" xml:space="preserve">
-    <value>OPERATION CODE</value>
+    <value>OPERASYON KODU</value>
   </data>
   <data name="LineGridPeriodicControlMeasure" xml:space="preserve">
-    <value>PERIODIC CONTROL MEASUREMENT</value>
+    <value>PERİYODİK KONTROL ÖLÇÜSÜ</value>
   </data>
   <data name="LineGridProductCode" xml:space="preserve">
-    <value>PRODUCT CODE</value>
+    <value>STOK KODU</value>
   </data>
   <data name="LineGridUpperTolerance" xml:space="preserve">
-    <value>UPPER TOLERANCE</value>
+    <value>ÜST TOLERANS</value>
   </data>
   <data name="LineGridWorkCenterName" xml:space="preserve">
-    <value>CHECKPOINT</value>
+    <value>KONTROL NOKTASI</value>
   </data>
   <data name="LineModalTitle" xml:space="preserve">
-    <value>Operation Quality Plan Lines</value>
+    <value>Fason Giriş Kalite Planlanı Satırları</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
-    <value>Please wait..</value>
+    <value>Lütfen Bekleyin..</value>
   </data>
   <data name="LoadingText" xml:space="preserve">
-    <value>The records are loading..</value>
+    <value>Kayıtlar Yükleniyor..</value>
   </data>
   <data name="MeasureNumberInPictureLineLabel" xml:space="preserve">
-    <value>Measurement Number in Picture:</value>
+    <value>Resimdeki Ölçü Numarası:</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
-    <value>The record you selected is using by {0}.</value>
+    <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
-    <value>Information</value>
+    <value>Bilgi</value>
   </data>
   <data name="NoFile" xml:space="preserve">
-    <value>No File.</value>
+    <value>Dosya yok.</value>
   </data>
-  <data name="OperationCodeLabel" xml:space="preserve">
-    <value>Operation Code:</value>
+  <data name="NumberofSampleinPartLabel" xml:space="preserve">
+    <value>Parti İçi Numune Sayısı:</value>
   </data>
-  <data name="OperationCodeLineLabel" xml:space="preserve">
-    <value>Operation Code:</value>
+  <data name="OperationGridCode" xml:space="preserve">
+    <value>OPERASYON KODU</value>
   </data>
-  <data name="OperationName" xml:space="preserve">
-    <value>OPERATION NAME</value>
-  </data>
-  <data name="OperationNameLineLabel" xml:space="preserve">
-    <value>Operation Name:</value>
+  <data name="OperationGridName" xml:space="preserve">
+    <value>OPERASYON ADI</value>
   </data>
   <data name="OperationPictureGridApprover" xml:space="preserve">
-    <value>APPROVER</value>
+    <value>ONAYLAYAN</value>
   </data>
   <data name="OperationPictureGridDrawer" xml:space="preserve">
-    <value>DRAWER</value>
+    <value>ÇİZEN</value>
   </data>
   <data name="OperationPictureGridIsApproved" xml:space="preserve">
-    <value>APPROVED</value>
+    <value>ONAYLI</value>
   </data>
   <data name="OperationPictureModalTitle" xml:space="preserve">
-    <value>Operation Pictures</value>
+    <value>Operasyon Resimleri</value>
   </data>
   <data name="PeriodicControlMeasureLineLabel" xml:space="preserve">
-    <value>Periodic Control Measurement:</value>
+    <value>Periyodik Kontrol Ölçüsü:</value>
   </data>
   <data name="ProductCode" xml:space="preserve">
-    <value>PRODUCT CODE</value>
+    <value>STOK KODU</value>
   </data>
   <data name="ProductCodeLabel" xml:space="preserve">
-    <value>Product Code:</value>
+    <value>Stok Kodu:</value>
   </data>
   <data name="ProductCodeLineLabel" xml:space="preserve">
-    <value>Product Code:</value>
+    <value>Stok Kodu:</value>
   </data>
   <data name="ProductModalGridCode" xml:space="preserve">
-    <value>PRODUCT CODE</value>
+    <value>STOK KODU</value>
   </data>
   <data name="ProductModalGridName" xml:space="preserve">
-    <value>PRODUCT NAME</value>
+    <value>STOK AÇIKLMASI</value>
   </data>
   <data name="ProductModalTitle" xml:space="preserve">
-    <value>Products</value>
+    <value>Stok Kartları</value>
   </data>
   <data name="ProductName" xml:space="preserve">
-    <value>PRODUCT NAME</value>
+    <value>STOK AÇIKLAMASI</value>
   </data>
   <data name="ProductNameLabel" xml:space="preserve">
-    <value>Product Name:</value>
+    <value>Stok Açıklaması:</value>
   </data>
   <data name="ProductNameLineLabel" xml:space="preserve">
-    <value>Product Name:</value>
+    <value>Stok Açıklaması:</value>
   </data>
   <data name="ProductsOprModalGridCode" xml:space="preserve">
-    <value>OPERATION CODE</value>
+    <value>OPERASYON KODU</value>
   </data>
   <data name="ProductsOprModalGridName" xml:space="preserve">
-    <value>OPERATION NAME</value>
+    <value>OPERASYON ADI</value>
   </data>
   <data name="ProductsOprModalTitle" xml:space="preserve">
-    <value>Operations</value>
+    <value>Ürüne Özel Operasyonlar</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
-    <value>Save</value>
+    <value>Kaydet</value>
   </data>
   <data name="StationGroupModalGridCode" xml:space="preserve">
-    <value>WORK CENTER CODE</value>
+    <value>İŞ MERKEZİ KODU</value>
   </data>
   <data name="StationGroupModalGridName" xml:space="preserve">
-    <value>WORK CENTER NAME</value>
+    <value>İŞ MERKEZİ ADI</value>
   </data>
   <data name="StationGroupModalGridTotalEmployees" xml:space="preserve">
-    <value>TOTAL EMPLOYEES</value>
+    <value>TOPLAM ÇALIŞAN</value>
   </data>
   <data name="StationGroupModalTitle" xml:space="preserve">
-    <value>Work Centers</value>
+    <value>İş Merkezleri</value>
   </data>
   <data name="Tab1Name" xml:space="preserve">
-    <value>Quality Plan Lines</value>
+    <value>Kalite Planı Satırları</value>
   </data>
   <data name="Tab2Name" xml:space="preserve">
-    <value>Operation Pictures</value>
+    <value>Operasyon Resimleri</value>
+  </data>
+  <data name="Tab3Name" xml:space="preserve">
+    <value>Operasyonlar</value>
   </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
-    <value>The operational quality plan you selected will be permanently deleted.</value>
+    <value>Seçtiğiniz fason giriş kalite planı, kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageContractOperationBase" xml:space="preserve">
+    <value>Seçtiğiniz operasyon, kalıcı olarak silinecektir.</value>
   </data>
   <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
-    <value>The line you selected will be permanently deleted.</value>
+    <value>Seçtiğiniz satır, kalıcı olarak silinecektir.</value>
   </data>
   <data name="UIConfirmationPopupMessageOprPictureBase" xml:space="preserve">
-    <value>The operation picture you selected will be permanently deleted.</value>
+    <value>Seçtiğiniz operasyon resmi, kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Onay</value>
   </data>
   <data name="UICurrentMenu" xml:space="preserve">
-    <value>Operational Quality Plans</value>
+    <value>Fason Giriş Kalite Planları</value>
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
-    <value>Quality Control &gt; Main Records &gt;  Quality Plans</value>
+    <value>Kalite Kontrol &gt; Ana Kayıtlar &gt; Kalite Planları</value>
   </data>
   <data name="UIWarningMessageBase" xml:space="preserve">
-    <value>It is not possible to add line without selecting product and operation.</value>
+    <value>Stok seçmeden satır ekleme işlemi yapılamaz.</value>
+  </data>
+  <data name="UIWarningMessageContractOperationBase" xml:space="preserve">
+    <value>Stok seçmeden operasyon ekleme işlemi yapılamaz.</value>
   </data>
   <data name="UIWarningMessageOprPictureBase" xml:space="preserve">
-    <value>It is not possible to add operation picture without selecting product and operation.</value>
-  </data>
-  <data name="UIWarningProductIdMessageBase" xml:space="preserve">
-    <value>Operation selection cannot be made without selecting product.</value>
-  </data>
-  <data name="UIWarningProductIdTitleBase" xml:space="preserve">
-    <value>Warning</value>
+    <value>Stok seçmeden operasyon resmi ekleme işlemi yapılamaz.</value>
   </data>
   <data name="UIWarningTitleBase" xml:space="preserve">
-    <value>Warning</value>
+    <value>Uyarı</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
-    <value>There is a record with the same document number.</value>
+    <value>Aynı döküman numaralı bir kayıt bulunmaktadır.</value>
   </data>
   <data name="UploadedFiles" xml:space="preserve">
-    <value>UploadedFile:</value>
+    <value>Yüklü Dosyalar:</value>
   </data>
   <data name="UpperToleranceLineLabel" xml:space="preserve">
-    <value>Upper Tolerance:</value>
+    <value>Üst Tolerans:</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
-    <value>Please enter the operational quality plan document number.</value>
+    <value>Lütfen döküman numarasını yazın.</value>
   </data>
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
-    <value>Operational quality plan document number cannot exceed 17 characters.</value>
-  </data>
-  <data name="ValidatorNameEmpty" xml:space="preserve">
-    <value>Please enter the operational quality plan name.</value>
-  </data>
-  <data name="ValidatorNameMaxLenght" xml:space="preserve">
-    <value>Operational quality plan code cannot exceed 200 characters.</value>
-  </data>
-  <data name="ValidatorProductID" xml:space="preserve">
-    <value>Please select a product!</value>
-  </data>
-  <data name="ValidatorProductsOperationID" xml:space="preserve">
-    <value>Please select an operation!</value>
+    <value>Döküman numarası 17 karakterden fazla olamaz.</value>
   </data>
   <data name="WorkCenterNameLineLabel" xml:space="preserve">
-    <value>Checkpoint:</value>
+    <value>Kontrol Noktası:</value>
   </data>
 </root>

@@ -189,6 +189,18 @@ using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlanLine.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlanLine;
 using TsiErp.Entities.Entities.QualityControl.OperationPicture;
 using TsiErp.Entities.Entities.QualityControl.OperationPicture.Dtos;
+using TsiErp.Entities.Entities.QualityControl.ContractQualityPlan;
+using TsiErp.Entities.Entities.QualityControl.ContractQualityPlan.Dtos;
+using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanLine;
+using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanLine.Dtos;
+using TsiErp.Entities.Entities.QualityControl.ContractOperationPicture;
+using TsiErp.Entities.Entities.QualityControl.ContractOperationPicture.Dtos;
+using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanOperation;
+using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanOperation.Dtos;
+using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan.Dtos;
+using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan;
+using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlanLine;
+using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlanLine.Dtos;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -937,6 +949,59 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateOperationPicturesDto, OperationPictures>();
             CreateMap<SelectOperationPicturesDto, UpdateOperationPicturesDto>();
             CreateMap<SelectOperationPicturesDto, OperationPictures>();
+
+
+
+
+            CreateMap<ContractQualityPlans, SelectContractQualityPlansDto>();
+            CreateMap<ContractQualityPlans, ListContractQualityPlansDto>();
+            CreateMap<UpdateContractQualityPlansDto, ContractQualityPlans>();
+            CreateMap<CreateContractQualityPlansDto, ContractQualityPlans>();
+            CreateMap<SelectContractQualityPlansDto, CreateContractQualityPlansDto>();
+            CreateMap<SelectContractQualityPlansDto, UpdateContractQualityPlansDto>();
+            CreateMap<ContractQualityPlans, UpdateContractQualityPlansDto>();
+
+            CreateMap<ContractQualityPlanLines, SelectContractQualityPlanLinesDto>();
+            CreateMap<ContractQualityPlanLines, ListContractQualityPlanLinesDto>();
+            CreateMap<CreateContractQualityPlanLinesDto, ContractQualityPlanLines>();
+            CreateMap<SelectContractQualityPlanLinesDto, CreateContractQualityPlanLinesDto>();
+            CreateMap<UpdateContractQualityPlanLinesDto, ContractQualityPlanLines>();
+            CreateMap<SelectContractQualityPlanLinesDto, UpdateContractQualityPlanLinesDto>();
+            CreateMap<SelectContractQualityPlanLinesDto, ContractQualityPlanLines>();
+
+            CreateMap<ContractOperationPictures, SelectContractOperationPicturesDto>();
+            CreateMap<ContractOperationPictures, ListContractOperationPicturesDto>();
+            CreateMap<CreateContractOperationPicturesDto, ContractOperationPictures>();
+            CreateMap<SelectContractOperationPicturesDto, CreateContractOperationPicturesDto>();
+            CreateMap<UpdateContractOperationPicturesDto, ContractOperationPictures>();
+            CreateMap<SelectContractOperationPicturesDto, UpdateContractOperationPicturesDto>();
+            CreateMap<SelectContractOperationPicturesDto, ContractOperationPictures>();
+
+            CreateMap<ContractQualityPlanOperations, SelectContractQualityPlanOperationsDto>();
+            CreateMap<ContractQualityPlanOperations, ListContractQualityPlanOperationsDto>();
+            CreateMap<CreateContractQualityPlanOperationsDto, ContractQualityPlanOperations>();
+            CreateMap<SelectContractQualityPlanOperationsDto, CreateContractQualityPlanOperationsDto>();
+            CreateMap<UpdateContractQualityPlanOperationsDto, ContractQualityPlanOperations>();
+            CreateMap<SelectContractQualityPlanOperationsDto, UpdateContractQualityPlanOperationsDto>();
+            CreateMap<SelectContractQualityPlanOperationsDto, ContractQualityPlanOperations>();
+
+
+
+            CreateMap<PurchaseQualityPlans, SelectPurchaseQualityPlansDto>();
+            CreateMap<PurchaseQualityPlans, ListPurchaseQualityPlansDto>();
+            CreateMap<UpdatePurchaseQualityPlansDto, PurchaseQualityPlans>();
+            CreateMap<CreatePurchaseQualityPlansDto, PurchaseQualityPlans>();
+            CreateMap<SelectPurchaseQualityPlansDto, CreatePurchaseQualityPlansDto>();
+            CreateMap<SelectPurchaseQualityPlansDto, UpdatePurchaseQualityPlansDto>();
+            CreateMap<PurchaseQualityPlans, UpdatePurchaseQualityPlansDto>();
+
+            CreateMap<PurchaseQualityPlanLines, SelectPurchaseQualityPlanLinesDto>();
+            CreateMap<PurchaseQualityPlanLines, ListPurchaseQualityPlanLinesDto>();
+            CreateMap<CreatePurchaseQualityPlanLinesDto, PurchaseQualityPlanLines>();
+            CreateMap<SelectPurchaseQualityPlanLinesDto, CreatePurchaseQualityPlanLinesDto>();
+            CreateMap<UpdatePurchaseQualityPlanLinesDto, PurchaseQualityPlanLines>();
+            CreateMap<SelectPurchaseQualityPlanLinesDto, UpdatePurchaseQualityPlanLinesDto>();
+            CreateMap<SelectPurchaseQualityPlanLinesDto, PurchaseQualityPlanLines>();
         }
     }
 }

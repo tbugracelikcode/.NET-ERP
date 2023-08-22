@@ -86,6 +86,10 @@ using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem;
 using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan;
 using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlanLine;
 using TsiErp.Entities.Entities.QualityControl.OperationPicture;
+using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanLine;
+using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanOperation;
+using TsiErp.Entities.Entities.QualityControl.ContractQualityPlan;
+using TsiErp.Entities.Entities.QualityControl.ContractOperationPicture;
 using TsiErp.Entities.Entities.SalesManagement.Forecast;
 using TsiErp.Entities.Entities.SalesManagement.ForecastLine;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
@@ -104,6 +108,8 @@ using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.TableConstant;
+using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan;
+using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlanLine;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -3545,6 +3551,216 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 OperationPicturesTable.Create();
+            }
+            #endregion
+
+            #region ContractOperationPictures Table Created
+            Table ContractOperationPicturesTable = model.CreateTable(Tables.ContractOperationPictures);
+
+            if (ContractOperationPicturesTable != null)
+            {
+                var properties = (typeof(ContractOperationPictures)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(ContractOperationPicturesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ContractOperationPicturesTable, "PK_" + ContractOperationPicturesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        ContractOperationPicturesTable.Indexes.Add(pkIndex);
+                    }
+
+                    ContractOperationPicturesTable.Columns.Add(column);
+                }
+
+                ContractOperationPicturesTable.Create();
+            }
+            #endregion
+
+            #region ContractQualityPlans Table Created
+            Table ContractQualityPlansTable = model.CreateTable(Tables.ContractQualityPlans);
+
+            if (ContractQualityPlansTable != null)
+            {
+                var properties = (typeof(ContractQualityPlans)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(ContractQualityPlansTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ContractQualityPlansTable, "PK_" + ContractQualityPlansTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        ContractQualityPlansTable.Indexes.Add(pkIndex);
+                    }
+
+                    ContractQualityPlansTable.Columns.Add(column);
+                }
+
+                ContractQualityPlansTable.Create();
+            }
+            #endregion
+
+            #region ContractQualityPlanLines Table Created
+            Table ContractQualityPlanLinesTable = model.CreateTable(Tables.ContractQualityPlanLines);
+
+            if (ContractQualityPlanLinesTable != null)
+            {
+                var properties = (typeof(ContractQualityPlanLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(ContractQualityPlanLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ContractQualityPlanLinesTable, "PK_" + ContractQualityPlanLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        ContractQualityPlanLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    ContractQualityPlanLinesTable.Columns.Add(column);
+                }
+
+                ContractQualityPlanLinesTable.Create();
+            }
+            #endregion
+
+            #region ContractQualityPlanOperations Table Created
+            Table ContractQualityPlanOperationsTable = model.CreateTable(Tables.ContractQualityPlanOperations);
+
+            if (ContractQualityPlanOperationsTable != null)
+            {
+                var properties = (typeof(ContractQualityPlanOperations)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(ContractQualityPlanOperationsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ContractQualityPlanOperationsTable, "PK_" + ContractQualityPlanOperationsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        ContractQualityPlanOperationsTable.Indexes.Add(pkIndex);
+                    }
+
+                    ContractQualityPlanOperationsTable.Columns.Add(column);
+                }
+
+                ContractQualityPlanOperationsTable.Create();
+            }
+            #endregion
+
+            #region PurchaseQualityPlans Table Created
+            Table PurchaseQualityPlansTable = model.CreateTable(Tables.PurchaseQualityPlans);
+
+            if (PurchaseQualityPlansTable != null)
+            {
+                var properties = (typeof(PurchaseQualityPlans)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(PurchaseQualityPlansTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(PurchaseQualityPlansTable, "PK_" + PurchaseQualityPlansTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        PurchaseQualityPlansTable.Indexes.Add(pkIndex);
+                    }
+
+                    PurchaseQualityPlansTable.Columns.Add(column);
+                }
+
+                PurchaseQualityPlansTable.Create();
+            }
+            #endregion
+
+            #region PurchaseQualityPlanLines Table Created
+            Table PurchaseQualityPlanLinesTable = model.CreateTable(Tables.PurchaseQualityPlanLines);
+
+            if (PurchaseQualityPlanLinesTable != null)
+            {
+                var properties = (typeof(PurchaseQualityPlanLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(PurchaseQualityPlanLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(PurchaseQualityPlanLinesTable, "PK_" + PurchaseQualityPlanLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        PurchaseQualityPlanLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    PurchaseQualityPlanLinesTable.Columns.Add(column);
+                }
+
+                PurchaseQualityPlanLinesTable.Create();
             }
             #endregion
 
