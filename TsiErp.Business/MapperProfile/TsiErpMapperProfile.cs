@@ -119,8 +119,6 @@ using TsiErp.Entities.Entities.QualityControl.CalibrationRecord;
 using TsiErp.Entities.Entities.QualityControl.CalibrationRecord.Dtos;
 using TsiErp.Entities.Entities.QualityControl.CalibrationVerification;
 using TsiErp.Entities.Entities.QualityControl.CalibrationVerification.Dtos;
-using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityItem;
-using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityItem.Dtos;
 using TsiErp.Entities.Entities.QualityControl.CustomerComplaintItem;
 using TsiErp.Entities.Entities.QualityControl.CustomerComplaintItem.Dtos;
 using TsiErp.Entities.Entities.QualityControl.EquipmentRecord;
@@ -247,13 +245,6 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectCalibrationVerificationsDto, CreateCalibrationVerificationsDto>();
             CreateMap<UpdateCalibrationVerificationsDto, CalibrationVerifications>();
             CreateMap<SelectCalibrationVerificationsDto, UpdateCalibrationVerificationsDto>();
-
-            CreateMap<ContractUnsuitabilityItems, SelectContractUnsuitabilityItemsDto>();
-            CreateMap<ContractUnsuitabilityItems, ListContractUnsuitabilityItemsDto>();
-            CreateMap<CreateContractUnsuitabilityItemsDto, ContractUnsuitabilityItems>();
-            CreateMap<SelectContractUnsuitabilityItemsDto, CreateContractUnsuitabilityItemsDto>();
-            CreateMap<UpdateContractUnsuitabilityItemsDto, ContractUnsuitabilityItems>();
-            CreateMap<SelectContractUnsuitabilityItemsDto, UpdateContractUnsuitabilityItemsDto>();
 
             CreateMap<Currencies, SelectCurrenciesDto>();
             CreateMap<Currencies, ListCurrenciesDto>();

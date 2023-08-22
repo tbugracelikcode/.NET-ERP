@@ -51,11 +51,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ContractProductionTrackingsResource.resx</DependentUpon>
     </Compile>
-    <Compile Update="Resources\ContractUnsuitabilityItems\Page\ContractUnsuitabilityItemsResource.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ContractUnsuitabilityItemsResource.resx</DependentUpon>
-    </Compile>
     <Compile Update="Resources\ControlConditions\Page\ControlConditionResources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -434,13 +429,6 @@
     <EmbeddedResource Update="Resources\ContractProductionTrackings\Page\ContractProductionTrackingsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ContractProductionTrackingsResource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\ContractUnsuitabilityItems\Page\ContractUnsuitabilityItemsResource.en-US.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\ContractUnsuitabilityItems\Page\ContractUnsuitabilityItemsResource.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ContractUnsuitabilityItemsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\ControlConditions\Page\ControlConditionResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

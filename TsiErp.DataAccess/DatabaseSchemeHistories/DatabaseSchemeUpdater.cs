@@ -72,7 +72,6 @@ using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequest;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseRequestLine;
 using TsiErp.Entities.Entities.QualityControl.CalibrationRecord;
 using TsiErp.Entities.Entities.QualityControl.CalibrationVerification;
-using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityItem;
 using TsiErp.Entities.Entities.QualityControl.ControlCondition;
 using TsiErp.Entities.Entities.QualityControl.ControlType;
 using TsiErp.Entities.Entities.QualityControl.CustomerComplaintItem;
@@ -1971,41 +1970,6 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 CalibrationVerificationsTable.Create();
-            }
-            #endregion
-
-            #region ContractUnsuitabilityItems Table Created
-            Table ContractUnsuitabilityItemsTable = model.CreateTable(Tables.ContractUnsuitabilityItems);
-
-            if (ContractUnsuitabilityItemsTable != null)
-            {
-                var properties = (typeof(ContractUnsuitabilityItems)).GetProperties();
-
-                foreach (var property in properties)
-                {
-                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
-                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
-                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
-                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
-                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
-                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
-
-                    Column column = new Column(ContractUnsuitabilityItemsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
-                    column.Nullable = required;
-
-                    if (isPrimaryKey)
-                    {
-                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ContractUnsuitabilityItemsTable, "PK_" + ContractUnsuitabilityItemsTable.Name);
-                        pkIndex.IsClustered = true;
-                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
-                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
-                        ContractUnsuitabilityItemsTable.Indexes.Add(pkIndex);
-                    }
-
-                    ContractUnsuitabilityItemsTable.Columns.Add(column);
-                }
-
-                ContractUnsuitabilityItemsTable.Create();
             }
             #endregion
 
