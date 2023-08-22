@@ -14,10 +14,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
         {
             BaseCrudService = UnsuitabilityTypesItemsService;
             _L = L;
-
-
-
-            
         }
 
         protected override Task BeforeInsertAsync()
@@ -26,6 +22,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
             {
                 IsActive = true
             };
+
+            _isContract = false;
+            _isOperation = false;
+            _isPurchase = false;
 
             EditPageVisible = true;
 

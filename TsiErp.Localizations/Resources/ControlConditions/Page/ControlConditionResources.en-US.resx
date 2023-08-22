@@ -180,6 +180,15 @@
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Activity:</value>
   </data>
+  <data name="IsContractLabel" xml:space="preserve">
+    <value>Contract</value>
+  </data>
+  <data name="IsOperationLabel" xml:space="preserve">
+    <value>Operation</value>
+  </data>
+  <data name="IsPurchaseLabel" xml:space="preserve">
+    <value>Purchase</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
   </data>

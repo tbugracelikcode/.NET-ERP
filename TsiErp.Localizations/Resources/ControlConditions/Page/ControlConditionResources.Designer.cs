@@ -250,6 +250,33 @@ namespace TsiErp.Localizations.Resources.ControlConditions.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fason.
+        /// </summary>
+        public static string IsContractLabel {
+            get {
+                return ResourceManager.GetString("IsContractLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operasyon.
+        /// </summary>
+        public static string IsOperationLabel {
+            get {
+                return ResourceManager.GetString("IsOperationLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Satınalma.
+        /// </summary>
+        public static string IsPurchaseLabel {
+            get {
+                return ResourceManager.GetString("IsPurchaseLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen Bekleyin...
         /// </summary>
         public static string LoadingCaption {
