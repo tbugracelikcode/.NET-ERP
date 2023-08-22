@@ -65,6 +65,10 @@ namespace TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos
         /// </summary>
         public string WarehouseCode { get; set; }
         /// <summary>
+        /// Cari Id
+        /// </summary>
+        public Guid CurrentAccountCardID { get; set; }
+        /// <summary>
         /// Cari Kodu
         /// </summary>
         public string CurrentAccountCardCode { get; set; }

@@ -120,6 +120,9 @@
   <data name="ActionLabel" xml:space="preserve">
     <value>Uygunsuzluk Aksiyonu:</value>
   </data>
+  <data name="Action_" xml:space="preserve">
+    <value>AKSİYON</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
@@ -208,22 +211,10 @@
     <value>Hata</value>
   </data>
   <data name="FicheNo" xml:space="preserve">
-    <value>UYGUNSUZLUK FİŞ NO</value>
+    <value>FİŞ NO</value>
   </data>
   <data name="FicheNoLabel" xml:space="preserve">
     <value>Uygunsuzluk Fiş Numarası:</value>
-  </data>
-  <data name="IsContactSupplier" xml:space="preserve">
-    <value>TEDARİKÇİ İLE İRTİBAT</value>
-  </data>
-  <data name="IsCorrection" xml:space="preserve">
-    <value>DÜZELTME</value>
-  </data>
-  <data name="IsReject" xml:space="preserve">
-    <value>RED</value>
-  </data>
-  <data name="IsToBeUsedAs" xml:space="preserve">
-    <value>OLDUĞU GİBİ KULLANILACAK</value>
   </data>
   <data name="IsUnsuitabilityWorkOrder" xml:space="preserve">
     <value>UYGUNSUZLUK İŞ EMRİ OLUŞACAK</value>
@@ -239,6 +230,9 @@
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
+  </data>
+  <data name="MessagePopupInformationSelectOrderBase" xml:space="preserve">
+    <value>Lütfen satınalma siparişi seçin.</value>
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
@@ -321,14 +315,29 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Kalite Kontrol &gt; Hareketler &gt; Uygunsuzluk Kayıtları</value>
   </data>
+  <data name="UnsuitabilityItemsModalTitle" xml:space="preserve">
+    <value>Uygunsuzluk Başlıkları</value>
+  </data>
+  <data name="UnsuitabilityNameLabel" xml:space="preserve">
+    <value>Uygunsuzluk Başlığı:</value>
+  </data>
   <data name="UnsuitableAmount" xml:space="preserve">
-    <value>UYGUN OLMAYAN MİKTAR</value>
+    <value>HATALI MİKTAR</value>
   </data>
   <data name="UnsuitableAmountLabel" xml:space="preserve">
-    <value>Uygun Olmayan Miktar:</value>
+    <value>Hatalı Miktar:</value>
+  </data>
+  <data name="UnsutabilityItemModalGridCode" xml:space="preserve">
+    <value>BAŞLIK KODU</value>
+  </data>
+  <data name="UnsutabilityItemModalGridName" xml:space="preserve">
+    <value>BAŞLIK ADI</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="ValidatorAction" xml:space="preserve">
+    <value>Lütfen aksiyon seçin.</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
     <value>Lütfen fiş numarasını yazın.</value>
@@ -347,5 +356,8 @@
   </data>
   <data name="ValidatorProductID" xml:space="preserve">
     <value>Lütfen ürün seçin.</value>
+  </data>
+  <data name="ValidatorUnsuitabilityItemsID" xml:space="preserve">
+    <value>Lütfen uygunsuzluk başlığı seçin.</value>
   </data>
 </root>

@@ -205,7 +205,7 @@
     <value>Ekipman Yönetimi</value>
   </data>
   <data name="EquipmentOperationsMenu" xml:space="preserve">
-    <value>Ekipman İşlemleri</value>
+    <value>Ekipman Kalibrasyon İşlemleri</value>
   </data>
   <data name="EquipmentRecordsChildMenu" xml:space="preserve">
     <value>Ekipman Kayıtları</value>
@@ -218,6 +218,9 @@
   </data>
   <data name="FinalControlUnsRecordsChildMenu" xml:space="preserve">
     <value>Final Kontrol Uygunsuzluk Kayıtları</value>
+  </data>
+  <data name="FinanceManagementMainRecordsMenu" xml:space="preserve">
+    <value>Ana Kayıtlar</value>
   </data>
   <data name="FinanceManagementParametersChildMenu" xml:space="preserve">
     <value>Finans Yönetimi </value>
@@ -255,8 +258,17 @@
   <data name="MachineAndWorkforceManagementParametersChildMenu" xml:space="preserve">
     <value>Makine &amp; İş Gücü Yönetimi </value>
   </data>
+  <data name="MachWorkForceManagementMainRecordsMenu" xml:space="preserve">
+    <value>Ana Kayıtlar</value>
+  </data>
   <data name="MachWorkForceManagementParentMenu" xml:space="preserve">
     <value>Makine &amp; İş Gücü Yönetimi</value>
+  </data>
+  <data name="MachWorkForceManagementReportsMenu" xml:space="preserve">
+    <value>Raporlar</value>
+  </data>
+  <data name="MachWorkForceManagementTransactionsMenu" xml:space="preserve">
+    <value>Hareketler</value>
   </data>
   <data name="MainInstructionsChildMenu" xml:space="preserve">
     <value>Bakım Talimatları</value>
@@ -273,11 +285,17 @@
   <data name="MainRecordsMenu" xml:space="preserve">
     <value>Ana Kayıtlar</value>
   </data>
+  <data name="MaintenanceManagementMainRecordsMenu" xml:space="preserve">
+    <value>Ana Kayıtlar</value>
+  </data>
   <data name="MaintenanceManagementParametersChildMenu" xml:space="preserve">
     <value>Bakım Yönetimi </value>
   </data>
   <data name="MaintenanceManagementParentMenu" xml:space="preserve">
     <value>Bakım Yönetimi</value>
+  </data>
+  <data name="MaintenanceManagementTransactionsMenu" xml:space="preserve">
+    <value>Hareketler</value>
   </data>
   <data name="MaterialWarehouseStatusChildMenu" xml:space="preserve">
     <value>Malzeme/Depo Durum Raporu</value>
@@ -354,11 +372,20 @@
   <data name="ProductGroupsChildMenu" xml:space="preserve">
     <value>Ürün Grupları</value>
   </data>
+  <data name="ProductionManagementMainRecordsMenu" xml:space="preserve">
+    <value>Ana Kayıtlar</value>
+  </data>
   <data name="ProductionManagementParametersChildMenu" xml:space="preserve">
     <value>Üretim Yönetimi </value>
   </data>
   <data name="ProductionManagementParentMenu" xml:space="preserve">
     <value>Üretim Yönetimi</value>
+  </data>
+  <data name="ProductionManagementReportsMenu" xml:space="preserve">
+    <value>Raporlar</value>
+  </data>
+  <data name="ProductionManagementTransactionsMenu" xml:space="preserve">
+    <value>Hareketler</value>
   </data>
   <data name="ProductionOrderListChildMenu" xml:space="preserve">
     <value>Üretim Emirleri Listesi</value>
@@ -378,11 +405,20 @@
   <data name="ProductsChildMenu" xml:space="preserve">
     <value>Stok Kartları</value>
   </data>
+  <data name="PurchaseManagementMainRecordsMenu" xml:space="preserve">
+    <value>Ana Kayıtlar</value>
+  </data>
   <data name="PurchaseManagementParametersChildMenu" xml:space="preserve">
     <value>Satın Alma Yönetimi </value>
   </data>
   <data name="PurchaseManagementParentMenu" xml:space="preserve">
     <value>Satın Alma Yönetimi</value>
+  </data>
+  <data name="PurchaseManagementReportsMenu" xml:space="preserve">
+    <value>Raporlar</value>
+  </data>
+  <data name="PurchaseManagementTransactionsMenu" xml:space="preserve">
+    <value>Hareketler</value>
   </data>
   <data name="PurchaseOrderFicheListChildMenu" xml:space="preserve">
     <value>Satın Alma Siparişleri Listesi</value>
@@ -408,11 +444,20 @@
   <data name="PurcUnsAnlChildMenu" xml:space="preserve">
     <value>Satınalma Uygunuzluk Kayıtları Analizi</value>
   </data>
+  <data name="QualityControlMainRecordsMenu" xml:space="preserve">
+    <value>Ana Kayıtlar</value>
+  </data>
   <data name="QualityControlParametersChildMenu" xml:space="preserve">
     <value>Kalite Kontrol </value>
   </data>
   <data name="QualityControlParentMenu" xml:space="preserve">
     <value>Kalite Kontrol</value>
+  </data>
+  <data name="QualityControlReportsMenu" xml:space="preserve">
+    <value>Raporlar</value>
+  </data>
+  <data name="QualityControlTransactionsMenu" xml:space="preserve">
+    <value>Hareketler</value>
   </data>
   <data name="QualityPlansMenu" xml:space="preserve">
     <value>Kalite Planları</value>
@@ -426,11 +471,20 @@
   <data name="RoutesChildMenu" xml:space="preserve">
     <value>Üretim Rotaları</value>
   </data>
+  <data name="SalesManagementMainRecordsMenu" xml:space="preserve">
+    <value>Ana Kayıtlar</value>
+  </data>
   <data name="SalesManagementParametersChildMenu" xml:space="preserve">
     <value>Satış Yönetimi </value>
   </data>
   <data name="SalesManagementParentMenu" xml:space="preserve">
     <value>Satış Yönetimi</value>
+  </data>
+  <data name="SalesManagementReportsMenu" xml:space="preserve">
+    <value>Raporlar</value>
+  </data>
+  <data name="SalesManagementTransactionsMenu" xml:space="preserve">
+    <value>Hareketler</value>
   </data>
   <data name="SalesOrderFicheListChildMenu" xml:space="preserve">
     <value>Satış Siparişleri Listesi</value>
@@ -449,6 +503,15 @@
   </data>
   <data name="ShiftsChildMenu" xml:space="preserve">
     <value>Vardiya Tanımlamaları</value>
+  </data>
+  <data name="ShipmentManagementMainRecordsMenu" xml:space="preserve">
+    <value>Ana Kayıtlar</value>
+  </data>
+  <data name="ShipmentManagementReportsMenu" xml:space="preserve">
+    <value>Raporlar</value>
+  </data>
+  <data name="ShipmentManagementTransactionsMenu" xml:space="preserve">
+    <value>Hareketler</value>
   </data>
   <data name="ShipmentParentMenu" xml:space="preserve">
     <value>Sevkiyat Yönetimi</value>
@@ -486,11 +549,20 @@
   <data name="StockFichesChildMenu" xml:space="preserve">
     <value>Stok Fişleri</value>
   </data>
+  <data name="StockManagementMainRecordsMenu" xml:space="preserve">
+    <value>Ana Kayıtlar</value>
+  </data>
   <data name="StockManagementParametersChildMenu" xml:space="preserve">
     <value>Stok Yönetimi </value>
   </data>
   <data name="StockManagementParentMenu" xml:space="preserve">
     <value>Stok Yönetimi</value>
+  </data>
+  <data name="StockManagementReportsMenu" xml:space="preserve">
+    <value>Raporlar</value>
+  </data>
+  <data name="StockManagementTransactionsMenu" xml:space="preserve">
+    <value>Hareketler</value>
   </data>
   <data name="TechAnlChildMenu" xml:space="preserve">
     <value>Teknik Analizler</value>

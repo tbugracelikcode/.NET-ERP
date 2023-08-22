@@ -6,6 +6,8 @@ using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
@@ -39,37 +41,32 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
 
         private void UnsComboBoxValueChangeHandler(ChangeEventArgs<string, UnsComboBox> args)
         {
-            switch (args.ItemData.ID)
+            if (args.ItemData != null)
             {
-                case "Rejection":
-                    DataSource.IsReject = true;
-                    DataSource.IsCorrection = false;
-                    DataSource.IsToBeUsedAs = false;
-                    DataSource.IsContactSupplier = false;
-                    break;
+                switch (args.ItemData.ID)
+                {
+                    case "Rejection":
+                        DataSource.Action_ = L["ComboboxRejection"].Value;
+                        break;
 
-                case "Correction":
-                    DataSource.IsReject = false;
-                    DataSource.IsCorrection = true;
-                    DataSource.IsToBeUsedAs = false;
-                    DataSource.IsContactSupplier = false;
-                    break;
+                    case "Correction":
+                        DataSource.Action_ = L["ComboboxCorrection"].Value;
+                        break;
 
-                case "ToBeUsedAs":
-                    DataSource.IsReject = false;
-                    DataSource.IsCorrection = false;
-                    DataSource.IsToBeUsedAs = true;
-                    DataSource.IsContactSupplier = false;
-                    break;
+                    case "ToBeUsedAs":
+                        DataSource.Action_ = L["ComboboxToBeUsedAs"].Value;
+                        break;
 
-                case "ContactSupplier":
-                    DataSource.IsReject = false;
-                    DataSource.IsCorrection = false;
-                    DataSource.IsToBeUsedAs = false;
-                    DataSource.IsContactSupplier = true;
-                    break;
+                    case "ContactSupplier":
+                        DataSource.Action_ = L["ComboboxContactSupplier"].Value;
+                        break;
 
-                default: break;
+                    default: break;
+                }
+            }
+            else
+            {
+                DataSource.Action_ = string.Empty;
             }
         }
 
@@ -80,7 +77,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
                 Date_ = DateTime.Today
             };
 
-            foreach(var item in _unsComboBox)
+            foreach (var item in _unsComboBox)
             {
                 item.Text = L[item.Text];
             }
@@ -129,9 +126,17 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
 
         public async void ProductsCodeButtonClickEvent()
         {
-            SelectProductsPopupVisible = true;
-            await GetProductsList();
-            await InvokeAsync(StateHasChanged);
+            if (DataSource.OrderID == Guid.Empty || DataSource.OrderID == null)
+            {
+                await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationSelectOrderBase"]);
+                await InvokeAsync(StateHasChanged);
+            }
+            else
+            {
+                SelectProductsPopupVisible = true;
+                await GetProductsList();
+                await InvokeAsync(StateHasChanged);
+            }
         }
         public async Task ProductsNameOnCreateIcon()
         {
@@ -209,83 +214,87 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
             {
                 DataSource.OrderID = selectedOrder.Id;
                 DataSource.OrderFicheNo = selectedOrder.FicheNo;
+
+                DataSource.CurrentAccountCardID = selectedOrder.CurrentAccountCardID;
+                DataSource.CurrentAccountCardName = selectedOrder.CurrentAccountCardName;
+                DataSource.CurrentAccountCardCode = selectedOrder.CurrentAccountCardCode;
+
+
+
                 SelectPurchaseOrdersPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
         }
         #endregion
 
-        #region Cari Hesap ButtonEdit
+        SfTextBox UnsuitabilityItemsButtonEdit;
+        bool SelectUnsuitabilityItemsPopupVisible = false;
+        List<ListUnsuitabilityItemsDto> UnsuitabilityItemsList = new List<ListUnsuitabilityItemsDto>();
 
-        SfTextBox CurrentAccountCardsCodeButtonEdit;
-        SfTextBox CurrentAccountCardsNameButtonEdit;
-        bool SelectCurrentAccountCardsPopupVisible = false;
-        List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
-
-        public async Task CurrentAccountCardsCodeOnCreateIcon()
+        public async Task UnsuitabilityItemsOnCreateIcon()
         {
-            var CurrentAccountCardsCodeButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CurrentAccountCardsCodeButtonClickEvent);
-            await CurrentAccountCardsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CurrentAccountCardsCodeButtonClick } });
+            var UnsuitabilityItemsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, UnsuitabilityItemsButtonClickEvent);
+            await UnsuitabilityItemsButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", UnsuitabilityItemsButtonClick } });
         }
 
-        public async void CurrentAccountCardsCodeButtonClickEvent()
+        public async void UnsuitabilityItemsButtonClickEvent()
         {
-            SelectCurrentAccountCardsPopupVisible = true;
-            await GetCurrentAccountCardsList();
+            SelectUnsuitabilityItemsPopupVisible = true;
+            await GetUnsuitabilityItemsList();
             await InvokeAsync(StateHasChanged);
         }
 
-        public async Task CurrentAccountCardsNameOnCreateIcon()
-        {
-            var CurrentAccountCardsNameButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CurrentAccountCardsNameButtonClickEvent);
-            await CurrentAccountCardsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CurrentAccountCardsNameButtonClick } });
-        }
 
-        public async void CurrentAccountCardsNameButtonClickEvent()
-        {
-            SelectCurrentAccountCardsPopupVisible = true;
-            await GetCurrentAccountCardsList();
-            await InvokeAsync(StateHasChanged);
-        }
-
-        public void CurrentAccountCardsOnValueChange(ChangedEventArgs args)
+        public void UnsuitabilityItemsOnValueChange(ChangedEventArgs args)
         {
             if (args.Value == null)
             {
-                DataSource.CurrentAccountCardID = Guid.Empty;
-                DataSource.CurrentAccountCardCode = string.Empty;
-                DataSource.CurrentAccountCardName = string.Empty;
+                DataSource.UnsuitabilityItemsID = Guid.Empty;
+                DataSource.UnsuitabilityItemsName = string.Empty;
             }
         }
 
-        public async void CurrentAccountCardsDoubleClickHandler(RecordDoubleClickEventArgs<ListCurrentAccountCardsDto> args)
+        public async void UnsuitabilityItemsDoubleClickHandler(RecordDoubleClickEventArgs<ListUnsuitabilityItemsDto> args)
         {
-            var selectedUnitSet = args.RowData;
+            var selectedOrder = args.RowData;
 
-            if (selectedUnitSet != null)
+            if (selectedOrder != null)
             {
-                DataSource.CurrentAccountCardID = selectedUnitSet.Id;
-                DataSource.CurrentAccountCardCode = selectedUnitSet.Code;
-                DataSource.CurrentAccountCardName = selectedUnitSet.Name;
-                SelectCurrentAccountCardsPopupVisible = false;
+                DataSource.UnsuitabilityItemsID =selectedOrder.Id;
+                DataSource.UnsuitabilityItemsName = selectedOrder.Name;
+                SelectUnsuitabilityItemsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
-        }
-        #endregion
-
-        private async Task GetCurrentAccountCardsList()
-        {
-            CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
         }
 
         private async Task GetProductsList()
         {
-            ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
+            if (DataSource.OrderID.HasValue && DataSource.OrderID.Value != Guid.Empty)
+            {
+                var orderLines = (await PurchaseOrdersAppService.GetAsync(DataSource.OrderID.GetValueOrDefault())).Data.SelectPurchaseOrderLinesDto;
+
+                if (orderLines != null)
+                {
+                    ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data
+                        .Where(t => orderLines.Select(p => p.ProductID.Value).Contains(t.Id))
+                        .ToList();
+                }
+            }
         }
 
         private async Task GetPurchaseOrdersList()
         {
             PurchaseOrdersList = (await PurchaseOrdersAppService.GetListAsync(new ListPurchaseOrdersParameterDto())).Data.ToList();
+        }
+
+        private async Task GetUnsuitabilityItemsList()
+        {
+            var unsuitabilityTypesItem = (await UnsuitabilityTypesItemsAppService.GetWithUnsuitabilityItemDescriptionAsync("Purchase")).Data;
+
+            if (unsuitabilityTypesItem != null)
+            {
+                UnsuitabilityItemsList = (await UnsuitabilityItemsAppService.GetListAsync(new ListUnsuitabilityItemsParameterDto ())).Data.Where(t=>t.UnsuitabilityTypesItemsName== unsuitabilityTypesItem.Name).ToList();
+            }
         }
     }
 }

@@ -18,7 +18,6 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string CalibrationRecords = "CalibrationRecords";
         public static readonly string CalibrationVerifications = "CalibrationVerifications";
         public static readonly string ContractProductionTrackings = "ContractProductionTrackings";
-        public static readonly string ContractUnsuitabilityItems = "ContractUnsuitabilityItems";
         public static readonly string Currencies = "Currencies";
         public static readonly string CurrentAccountCards = "CurrentAccountCards";
         public static readonly string CustomerComplaintItems = "CustomerComplaintItems";
@@ -37,7 +36,6 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string MaintenanceInstructions = "MaintenanceInstructions";
         public static readonly string MaintenancePeriods = "MaintenancePeriods";
         public static readonly string Menus = "Menus";
-        public static readonly string OperationUnsuitabilityItems = "OperationUnsuitabilityItems";
         public static readonly string OperationUnsuitabilityReports = "OperationUnsuitabilityReports";
         public static readonly string PaymentPlans = "PaymentPlans";
         public static readonly string Periods = "Periods";
@@ -59,7 +57,6 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string PurchaseRequestLines = "PurchaseRequestLines";
         public static readonly string PurchaseRequests = "PurchaseRequests";
         public static readonly string PurchaseUnsuitabilityReports = "PurchaseUnsuitabilityReports";
-        public static readonly string PurchasingUnsuitabilityItems = "PurchasingUnsuitabilityItems";
         public static readonly string RouteLines = "RouteLines";
         public static readonly string Routes = "Routes";
         public static readonly string SalesOrderLines = "SalesOrderLines";
@@ -107,6 +104,7 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string ProductOperationQualityPlans = "ProductOperationQualityPlans";
         public static readonly string ContractOfProductsOperations = "ContractOfProductsOperations";
         public static readonly string OperationalQualityPlans = "OperationalQualityPlans";
+        public static readonly string UserPermissions = "UserPermissions";
         public static readonly string OperationalQualityPlanLines = "OperationalQualityPlanLines";
         public static readonly string OperationPictures = "OperationPictures";
         public static readonly string ContractQualityPlans = "ContractQualityPlans";

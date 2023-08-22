@@ -81,11 +81,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>CurrentAccountCardsResource.resx</DependentUpon>
     </Compile>
-    <Compile Update="Resources\CustomerComplaintItems\Page\CustomerComplaintItemsResource.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>CustomerComplaintItemsResource.resx</DependentUpon>
-    </Compile>
     <Compile Update="Resources\Departments\Page\DepartmentsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -105,11 +100,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ExchangeRatesResource.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Resources\FinalControlUnsuitabilityItems\Page\FinalControlUnsuitabilityItemsResource.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>FinalControlUnsuitabilityItemsResource.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\FinalControlUnsuitabilityReports\Page\FinalControlUnsuitabilityReportsResource.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -171,11 +161,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>OperationalQualityPlansResource.resx</DependentUpon>
     </Compile>
-    <Compile Update="Resources\OperationUnsuitabilityItems\Page\OperationUnsuitabilityItemsResource.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>OperationUnsuitabilityItemsResource.resx</DependentUpon>
-    </Compile>
     <Compile Update="Resources\OperationUnsuitabilityReports\Page\OperationUnsuitabilityReportsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -210,11 +195,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ProductionManagementParametersResource.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Resources\ProductionOrderChangeItems\Page\ProductionOrderChangeItemsResource.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ProductionOrderChangeItemsResource.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\ProductionOrders\Page\ProductionOrdersResource.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -270,11 +250,6 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>PurchaseUnsuitabilityReportsResource.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Resources\PurchasingUnsuitabilityItems\Page\PurchasingUnsuitabilityItemsResource.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>PurchasingUnsuitabilityItemsResource.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\QualityControlParameter\Page\QualityControlParametersResource.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -478,13 +453,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CurrentAccountCardsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\CustomerComplaintItems\Page\CustomerComplaintItemsResource.en-US.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\CustomerComplaintItems\Page\CustomerComplaintItemsResource.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>CustomerComplaintItemsResource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Departments\Page\DepartmentsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
@@ -509,10 +477,6 @@
     <EmbeddedResource Update="Resources\ExchangeRates\Page\ExchangeRatesResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ExchangeRatesResource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\FinalControlUnsuitabilityItems\Page\FinalControlUnsuitabilityItemsResource.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>FinalControlUnsuitabilityItemsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\FinalControlUnsuitabilityReports\Page\FinalControlUnsuitabilityReportsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -580,13 +544,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>OperationalQualityPlansResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\OperationUnsuitabilityItems\Page\OperationUnsuitabilityItemsResource.en-US.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\OperationUnsuitabilityItems\Page\OperationUnsuitabilityItemsResource.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>OperationUnsuitabilityItemsResource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Update="Resources\OperationUnsuitabilityReports\Page\OperationUnsuitabilityReportsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>OperationUnsuitabilityReportsResource.Designer.cs</LastGenOutput>
@@ -626,13 +583,6 @@
     <EmbeddedResource Update="Resources\ProductionManagementParameter\Page\ProductionManagementParametersResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProductionManagementParametersResource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\ProductionOrderChangeItems\Page\ProductionOrderChangeItemsResource.en-US.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\ProductionOrderChangeItems\Page\ProductionOrderChangeItemsResource.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ProductionOrderChangeItemsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\ProductionOrders\Page\ProductionOrdersResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -701,13 +651,6 @@
     <EmbeddedResource Update="Resources\PurchaseUnsuitabilityReports\Page\PurchaseUnsuitabilityReportsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PurchaseUnsuitabilityReportsResource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\PurchasingUnsuitabilityItems\Page\PurchasingUnsuitabilityItemsResource.en-US.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Resources\PurchasingUnsuitabilityItems\Page\PurchasingUnsuitabilityItemsResource.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>PurchasingUnsuitabilityItemsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\QualityControlParameter\Page\QualityControlParametersResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

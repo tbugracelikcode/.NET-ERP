@@ -34,5 +34,9 @@ namespace TsiErp.Entities.Entities.QualityControl.ControlType.Dtos
         /// Data Concurrency UserID
         /// </summary>
         public Guid? DataOpenStatusUserId { get; set; }
+        /// <summary>
+        /// Kalite Plan Türü Açıklaması
+        /// </summary>
+        public string QualityPlanTypes { get; set; }
     }
 }

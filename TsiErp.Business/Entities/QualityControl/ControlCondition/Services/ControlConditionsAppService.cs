@@ -65,7 +65,8 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
                     DeletionTime = null,
                     LastModificationTime = null,
                     LastModifierId = Guid.Empty,
-                    IsDeleted = false
+                    IsDeleted = false,
+                    QualityPlanTypes = input.QualityPlanTypes
                 });
 
 
@@ -164,7 +165,8 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
                     DeletionTime = entity.DeletionTime.GetValueOrDefault(),
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = DateTime.Now,
-                    LastModifierId = LoginedUserService.UserId
+                    LastModifierId = LoginedUserService.UserId,
+                    QualityPlanTypes = input.QualityPlanTypes
                 }).Where(new { Id = input.Id }, true, true, "");
 
                 var controlConditions = queryFactory.Update<SelectControlConditionsDto>(query, "Id", true);
@@ -198,8 +200,8 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
                     LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                     Id = id,
                     DataOpenStatus = lockRow,
-                    DataOpenStatusUserId = userId
-
+                    DataOpenStatusUserId = userId,
+                    QualityPlanTypes = entity.QualityPlanTypes
                 }).Where(new { Id = id }, true, true, "");
 
                 var controlConditions = queryFactory.Update<SelectControlConditionsDto>(query, "Id", true);
