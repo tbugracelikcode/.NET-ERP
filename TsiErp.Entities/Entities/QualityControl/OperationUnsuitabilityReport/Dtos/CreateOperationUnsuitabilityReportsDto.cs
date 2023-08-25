@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
+using Tsi.Core.Utilities.SqlDataTypeMappingUtilities;
 
 namespace TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos
 {
@@ -17,6 +18,10 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.D
         /// Tarih
         /// </summary>
         public DateTime? Date_ { get; set; }
+        /// <summary>
+        /// Hata Başlığı ID
+        /// </summary>
+        public Guid? UnsuitabilityItemsID { get; set; }
         /// <summary>
         /// Açıklama
         /// </summary>

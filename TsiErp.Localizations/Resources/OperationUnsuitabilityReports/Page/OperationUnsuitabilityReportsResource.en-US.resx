@@ -324,6 +324,27 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Quality Control &gt; Transactions &gt; Unsuitability Records</value>
   </data>
+  <data name="UIWarningWorkOrderMessageEmployeebase" xml:space="preserve">
+    <value>The employee cannot be selected without selecting a work order.</value>
+  </data>
+  <data name="UIWarningWorkOrderMessageStationbase" xml:space="preserve">
+    <value>The station cannot be selected without selecting a work order.</value>
+  </data>
+  <data name="UIWarningWorkOrderTitlebase" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UnsuitabilityItemModalGridCode" xml:space="preserve">
+    <value>UNSUITABILITY ITEM CODE</value>
+  </data>
+  <data name="UnsuitabilityItemModalGridName" xml:space="preserve">
+    <value>UNSUITABILITY ITEM NAME</value>
+  </data>
+  <data name="UnsuitabilityItemModalTitle" xml:space="preserve">
+    <value>Unsuitability Items</value>
+  </data>
+  <data name="UnsuitabilityItemsNameLabel" xml:space="preserve">
+    <value>Unsuitability Item:</value>
+  </data>
   <data name="UnsuitableAmountLabel" xml:space="preserve">
     <value>Unsuitable Amount:</value>
   </data>

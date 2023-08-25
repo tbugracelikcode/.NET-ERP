@@ -51,6 +51,10 @@
     height: 57% !important;
 }
 
+.TSIMemoBox45 {
+    height: 45% !important;
+}
+
 .TSIComboBox {
     font-size: 14px;
     font-family: Arial, Helvetica, sans-serif;
@@ -262,6 +266,21 @@
     border-radius: 5px;
     height: 35px;
     border: 2px solid;
+}
+
+.TSILoginLeftCard {
+    background-image: linear-gradient(135deg, rgb(168 20 20) 20%, #f82121 90%) !important;
+    width: 50%;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    padding: 50px;
+    z-index: 1;
+    position: relative;
 }
 
 .TSIGeneralBTNGray {

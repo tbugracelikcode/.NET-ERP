@@ -32,7 +32,11 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport
         /// </summary>
         public bool IsUnsuitabilityWorkOrder { get; set; }
 
-
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Hata Başlığı ID
+        /// </summary>
+        public Guid UnsuitabilityItemsID { get; set; }
 
         [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>

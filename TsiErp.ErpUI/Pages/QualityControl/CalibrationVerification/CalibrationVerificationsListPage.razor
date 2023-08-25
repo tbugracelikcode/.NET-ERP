@@ -65,7 +65,7 @@
                                         <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         <GridColumn Field=@nameof(ListCalibrationVerificationsDto.ReceiptNo) HeaderText="@L["ReceiptNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Equipment) HeaderText="@L["Equipment"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Date) HeaderText="@L["Date"]" Format="dd.MM.yyyy" Type="ColumnType.Date" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Date_) HeaderText="@L["Date"]" Format="dd.MM.yyyy" Type="ColumnType.Date" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         <GridColumn Field=@nameof(ListCalibrationVerificationsDto.NextControl) HeaderText="@L["NextControl"]" Format="dd.MM.yyyy" Type="ColumnType.Date" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         <GridColumn Field=@nameof(ListCalibrationVerificationsDto.InfinitiveCertificateNo) HeaderText="@L["InfinitiveCertificateNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         <GridColumn Field=@nameof(ListCalibrationVerificationsDto.Result) HeaderText="@L["Result"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
@@ -151,7 +151,7 @@
                         <DxGridLayoutItem Row="2" Column="5">
                             <Template>
                                 <label class="TSIModalLabel"><strong>@L["DateLabel"] </strong></label><br />
-                                <SfDatePicker @bind-Value="DataSource.Date"></SfDatePicker>
+                                <SfDatePicker @bind-Value="DataSource.Date_"></SfDatePicker>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="4" Column="1">

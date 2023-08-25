@@ -13910,14 +13910,14 @@ ul {
 34. Demo Layout Thirty One
 =========================================================================*/
 .fxt-template-layout31 {
-  background-color: #ffffff;
-  padding: 110px;
-  width: 100%;
-  min-height: 100vh;
-  display: -ms-grid;
-  display: grid;
-  position: relative;
-  z-index: 1;
+    background-color: #e9e9e9;
+    padding: 110px;
+    width: 100%;
+    min-height: 100vh;
+    display: -ms-grid;
+    display: grid;
+    position: relative;
+    z-index: 1;
 }
 @media only screen and (max-width: 1199px) {
   .fxt-template-layout31 {
@@ -14022,14 +14022,14 @@ ul {
   }
 }
 .fxt-template-layout31 .fxt-heading-content:before {
-  height: 100%;
-  width: 100%;
-  background-color: rgba(189, 3, 3, 0.9);
-  content: "";
-  left: 0;
-  top: 0;
-  z-index: -1;
-  position: absolute;
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(135deg, rgb(168 20 20) 20%, #f82121 90%) !important;
+    content: "";
+    left: 0;
+    top: 0;
+    z-index: -1;
+    position: absolute;
 }
 .fxt-template-layout31 .fxt-heading-content .fxt-inner-wrap {
   text-align: center;

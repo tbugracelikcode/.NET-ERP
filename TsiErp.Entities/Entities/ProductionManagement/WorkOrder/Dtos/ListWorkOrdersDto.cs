@@ -23,6 +23,26 @@ namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos
         /// </summary>
         public bool IsCancel { get; set; }
         /// <summary>
+        /// Üretim Emri ID
+        /// </summary>
+        public Guid? ProductionOrderID { get; set; }
+
+        /// <summary>
+        /// Ürüne Özel Operasyon ID
+        /// </summary>
+        public Guid? ProductsOperationID { get; set; }
+
+        /// <summary>
+        /// İş İstasyonu Grup ID
+        /// </summary>
+        public Guid? StationGroupID { get; set; }
+
+        /// <summary>
+        /// Stok ID
+        /// </summary>
+        public Guid? ProductID { get; set; }
+
+        /// <summary>
         /// Durum
         /// </summary>
         public WorkOrderStateEnum WorkOrderState { get; set; }
