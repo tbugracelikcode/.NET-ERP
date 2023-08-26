@@ -656,6 +656,15 @@ namespace TsiErp.Localizations.Resources.OperationalQualityPlans.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DOSYA ADI.
+        /// </summary>
+        public static string OperationPictureGridUploadedFileName {
+            get {
+                return ResourceManager.GetString("OperationPictureGridUploadedFileName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operasyon Resimleri.
         /// </summary>
         public static string OperationPictureModalTitle {

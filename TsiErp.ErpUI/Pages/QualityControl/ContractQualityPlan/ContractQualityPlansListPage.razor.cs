@@ -657,7 +657,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
                 string rootPath = "UploadedFiles/ContractOperationPictures/" + DataSource.ProductCode + "/" + "123123";
 
 
-                _result.Add(await FileUploadService.UploadOperationPicture(file, rootPath, fileName));
+                //_result.Add(await FileUploadService.UploadOperationPicture(file, rootPath, fileName));
                 await InvokeAsync(() => StateHasChanged());
 
             }

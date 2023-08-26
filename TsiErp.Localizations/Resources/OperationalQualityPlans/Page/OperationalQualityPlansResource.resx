@@ -315,6 +315,9 @@
   <data name="OperationPictureGridIsApproved" xml:space="preserve">
     <value>ONAYLI</value>
   </data>
+  <data name="OperationPictureGridUploadedFileName" xml:space="preserve">
+    <value>DOSYA ADI</value>
+  </data>
   <data name="OperationPictureModalTitle" xml:space="preserve">
     <value>Operasyon Resimleri</value>
   </data>

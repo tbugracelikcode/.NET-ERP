@@ -1,4 +1,6 @@
 ﻿using BlazorInputFile;
+using Microsoft.EntityFrameworkCore.Query.Internal;
+using System.IO;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 
 namespace TsiErp.ErpUI.Services
@@ -95,7 +97,7 @@ namespace TsiErp.ErpUI.Services
             return result;
         }
 
-        public async Task<string> UploadOperationPicture(IFileListEntry file, string rootPath, string fileName)
+        public async Task<string> UploadOperationPicture(byte[] file, string rootPath, string fileName)
         {
             string result = "";
 
@@ -110,21 +112,10 @@ namespace TsiErp.ErpUI.Services
 
                 var path = Path.Combine(_webHostEnvironment.WebRootPath, rootPath, fileName);
 
-                var memoryStream = new MemoryStream();
-
-                await file.Data.CopyToAsync(memoryStream);
-
-                using (FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write))
-                {
-                    memoryStream.WriteTo(fileStream);
-
-
-                    result = "Successful";
-                }
+                File.WriteAllBytes(path, file);
             }
-            catch (Exception)
+            catch (Exception exp)
             {
-
                 var path = Path.Combine(_webHostEnvironment.WebRootPath, rootPath, fileName);
                 File.Delete(path);
                 result = "Error";
