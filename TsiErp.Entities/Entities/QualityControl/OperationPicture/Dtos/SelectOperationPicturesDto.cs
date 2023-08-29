@@ -1,4 +1,6 @@
-﻿using Tsi.Core.Entities.Auditing;
+﻿using BlazorInputFile;
+using Tsi.Core.Entities.Auditing;
+using TSI.QueryBuilder.MappingAttributes;
 
 namespace TsiErp.Entities.Entities.QualityControl.OperationPicture.Dtos
 {
@@ -36,5 +38,28 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationPicture.Dtos
         ///Açıklama
         /// </summary
         public string Description_ { get; set; }
+
+        /// <summary>
+        /// Yüklenen Domain
+        /// </summary>
+        public string DrawingDomain { get; set; }
+
+        /// <summary>
+        /// Dosya Yolu
+        /// </summary>
+        public string DrawingFilePath { get; set; }
+
+        [NoDatabaseAction]
+        public IFileListEntry UploadedFiles { get; set; }
+
+
+        [NoDatabaseAction]
+        public byte[] FileByteArray { get; set; }
+
+        /// <summary>
+        /// Dosya adı
+        /// </summary>
+        public string UploadedFileName { get; set; }
+
     }
 }

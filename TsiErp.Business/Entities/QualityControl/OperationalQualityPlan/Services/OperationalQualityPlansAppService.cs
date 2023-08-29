@@ -32,6 +32,7 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
+
         public OperationalQualityPlansAppService(IStringLocalizer<OperationalQualityPlansResource> l) : base(l)
         {
         }
@@ -135,7 +136,9 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                         Description_ = item.Description_,
                         Drawer = item.Drawer,
                         IsApproved = item.IsApproved,
-
+                        DrawingDomain = item.DrawingDomain,
+                        DrawingFilePath = item.DrawingFilePath,
+                        UploadedFileName = item.UploadedFileName
                     });
 
                     query.Sql = query.Sql + QueryConstants.QueryConstant + queryPicture.Sql;
@@ -143,7 +146,12 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
 
                 var operationalQualityPlan = queryFactory.Insert<SelectOperationalQualityPlansDto>(query, "Id", true);
 
-                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.OperationalQualityPlans, LogType.Insert, addedEntityId);
+                var logInput = input;
+
+                logInput.SelectOperationPictures.Clear();
+                logInput.SelectOperationPictures = new List<SelectOperationPicturesDto>();
+
+                LogsAppService.InsertLogToDatabase(logInput, logInput, LoginedUserService.UserId, Tables.OperationalQualityPlans, LogType.Insert, addedEntityId);
 
                 return new SuccessDataResult<SelectOperationalQualityPlansDto>(operationalQualityPlan);
             }
@@ -176,13 +184,13 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-
-
                 var queryLine = queryFactory.Query().From(Tables.OperationalQualityPlanLines).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
-                var operationalQualityPlanLines = queryFactory.Update<SelectOperationalQualityPlanLinesDto>(queryLine, "Id", true);
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.OperationalQualityPlanLines, LogType.Delete, id);
-                return new SuccessDataResult<SelectOperationalQualityPlanLinesDto>(operationalQualityPlanLines);
 
+                var operationalQualityPlanLines = queryFactory.Update<SelectOperationalQualityPlanLinesDto>(queryLine, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.OperationalQualityPlanLines, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectOperationalQualityPlanLinesDto>(operationalQualityPlanLines);
             }
         }
 
@@ -190,13 +198,13 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-
-
                 var queryOperationPicture = queryFactory.Query().From(Tables.OperationPictures).Delete(LoginedUserService.UserId).Where(new { Id = id }, false, false, "");
-                var operationPictures = queryFactory.Update<SelectOperationPicturesDto>(queryOperationPicture, "Id", true);
-                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.OperationPictures, LogType.Delete, id);
-                return new SuccessDataResult<SelectOperationPicturesDto>(operationPictures);
 
+                var operationPictures = queryFactory.Update<SelectOperationPicturesDto>(queryOperationPicture, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(id, id, LoginedUserService.UserId, Tables.OperationPictures, LogType.Delete, id);
+
+                return new SuccessDataResult<SelectOperationPicturesDto>(operationPictures);
             }
         }
 
@@ -471,6 +479,9 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                             Description_ = item.Description_,
                             Drawer = item.Drawer,
                             IsApproved = item.IsApproved,
+                            DrawingDomain = item.DrawingDomain,
+                            DrawingFilePath = item.DrawingFilePath,
+                            UploadedFileName = item.UploadedFileName
                         });
 
                         query.Sql = query.Sql + QueryConstants.QueryConstant + queryOperaionPicture.Sql;
@@ -502,6 +513,9 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
                                 Description_ = item.Description_,
                                 Drawer = item.Drawer,
                                 IsApproved = item.IsApproved,
+                                DrawingDomain = item.DrawingDomain,
+                                DrawingFilePath = item.DrawingFilePath,
+                                UploadedFileName = item.UploadedFileName
                             }).Where(new { Id = operationPicture.Id }, false, false, "");
 
                             query.Sql = query.Sql + QueryConstants.QueryConstant + queryOperaionPicture.Sql + " where " + queryOperaionPicture.WhereSentence;

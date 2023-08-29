@@ -11,6 +11,7 @@
 @inject IControlTypesAppService IControlTypesAppService
 @inject IControlConditionsAppService ControlConditionsAppService
 @inject IFileUploadService FileUploadService
+@inject NavigationManager Navigation
 @inject IStringLocalizer<OperationalQualityPlansResource> L
 
 @if (!base.IsLoaded)
@@ -84,24 +85,25 @@ else
     </DevGridLayout>
 
     <DxPopup @bind-Visible="base.EditPageVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["EditModalTitle"]"
-         Width="80%"
-         Height="93%"
-         MinWidth="1500px"
-         MinHeight="800px"
-         HeaderCssClass="HeaderTitleCss"
-         Showing="CrudModalShowing"
-         Closing="CrudModalClosing">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["EditModalTitle"]"
+             Width="80%"
+             Height="93%"
+             MinWidth="1500px"
+             MinHeight="800px"
+             HeaderCssClass="HeaderTitleCss"
+             Showing="CrudModalShowing"
+             Closing="CrudModalClosing">
 
         <BodyTemplate>
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="15%" />
-                    <DxGridLayoutRow Height="14%" />
+                    <DxGridLayoutRow Height="12%" />
+                    <DxGridLayoutRow Height="10%" />
+                    <DxGridLayoutRow Height="11%" />
                     <DxGridLayoutRow Height="63%" />
                 </Rows>
 
@@ -119,16 +121,8 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <br />
-                             <label class="TSIModalLabel"><strong>@L["DocumentNumberLabel"] </strong></label><br />
+                            <label class="TSIModalLabel"><strong>@L["DocumentNumberLabel"] </strong></label><br />
                             <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.DocumentNumber"></SfTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-
-                    <DxGridLayoutItem Row="0" Column="3">
-                        <Template>
-                            <br />
-                             <label class="TSIModalLabel"><strong>@L["OperationCodeLabel"] </strong></label><br />
-                            <SfTextBox @ref="@ProductsOperationsButtonEdit" Created="@ProductsOperationsOnCreateIcon" @bind-Value="DataSource.OperationCode" ShowClearButton=true ValueChange="ProductsOperationsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -139,6 +133,7 @@ else
                             <SfTextBox Multiline=true CssClass="TSIMemoBox60" @bind-Value="DataSource.Description_"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
+
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ProductCodeLabel"] </strong></label><br />
@@ -153,8 +148,15 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
+                    <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["OperationCodeLabel"] </strong></label><br />
+                            <SfTextBox @ref="@ProductsOperationsButtonEdit" Created="@ProductsOperationsOnCreateIcon" @bind-Value="DataSource.OperationCode" ShowClearButton=true ValueChange="ProductsOperationsOnValueChange"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="2" Column="1" ColumnSpan="5">
+
+                    <DxGridLayoutItem Row="3" Column="1" ColumnSpan="5">
                         <Template>
 
                             <SfTab>
@@ -222,7 +224,7 @@ else
                                             <TabHeader Text="@L["Tab2Name"]"></TabHeader>
                                         </ChildContent>
                                         <ContentTemplate>
-                                            <DxGridLayout CssClass="TSIGridLayout">
+                                            <DxGridLayout CssClass="TSIQualityPlansGridLayout">
 
                                                 <Rows>
                                                     <DxGridLayoutRow Height="100%" />
@@ -236,7 +238,7 @@ else
 
                                                     <DxGridLayoutItem Row="0" Column="0">
                                                         <Template>
-                                                             <br />
+                                                            <br />
                                                             <SfGrid @ref=_OperationPicturesGrid ID="LineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@GridOperationPictureList" AllowPaging="false" AllowFiltering="false" AllowReordering="true" AllowResizing="true" AllowGrouping="false" AllowExcelExport="false" AllowSelection="true" AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@OperationPictureGridContextMenu">
                                                                 <GridEvents ContextMenuItemClicked="@OnOperationPictureContextMenuClick" TValue="SelectOperationPicturesDto"></GridEvents>
                                                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
@@ -248,23 +250,19 @@ else
                                                                     <GridColumn Field=@nameof(SelectOperationPicturesDto.Drawer) HeaderText="@L["OperationPictureGridDrawer"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                                                     <GridColumn Field=@nameof(SelectOperationPicturesDto.Approver) HeaderText="@L["OperationPictureGridApprover"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                                                     <GridColumn Field=@nameof(SelectOperationPicturesDto.IsApproved) DisplayAsCheckBox=true HeaderText="@L["OperationPictureGridIsApproved"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                                                   
+                                                                    <GridColumn Field=@nameof(SelectOperationPicturesDto.UploadedFileName) HeaderText="@L["OperationPictureGridUploadedFileName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
                                                                 </GridColumns>
                                                             </SfGrid>
                                                         </Template>
                                                     </DxGridLayoutItem>
-
-
                                                 </Items>
-
                                             </DxGridLayout>
                                         </ContentTemplate>
                                     </TabItem>
 
                                 </TabItems>
                             </SfTab>
-
-
                         </Template>
                     </DxGridLayoutItem>
 
@@ -279,15 +277,15 @@ else
     </DxPopup>
 
     <DxPopup @bind-Visible="LineCrudPopup"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["LineModalTitle"]"
-         Width="62%"
-         Height="60%"
-         MinWidth="1060px"
-         MinHeight="650px"
-         HeaderCssClass="HeaderTitleCss">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["LineModalTitle"]"
+             Width="62%"
+             Height="60%"
+             MinWidth="1060px"
+             MinHeight="650px"
+             HeaderCssClass="HeaderTitleCss">
 
         <BodyTemplate>
             <DxGridLayout CssClass="TSIGridLayout">
@@ -315,9 +313,10 @@ else
                 <Items>
                     <br />
                     <DxGridLayoutItem Row="0" Column="1">
-                        <Template><br/>
+                        <Template>
+                            <br />
                             <label class="TSIModalLabel"><strong>@L["Date_LineLabel"] </strong></label>
-                            <SfDatePicker  @bind-Value="LineDataSource.Date_"></SfDatePicker>
+                            <SfDatePicker @bind-Value="LineDataSource.Date_"></SfDatePicker>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -338,7 +337,7 @@ else
 
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
-                             <label class="TSIModalLabel"><strong>@L["ProductNameLineLabel"] </strong></label><br />
+                            <label class="TSIModalLabel"><strong>@L["ProductNameLineLabel"] </strong></label><br />
                             <SfTextBox Enabled=false CssClass="TSITxtBox" @bind-Value="LineDataSource.ProductName"></SfTextBox>
 
                         </Template>
@@ -346,7 +345,7 @@ else
 
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
-                             <label class="TSIModalLabel"><strong>@L["OperationCodeLineLabel"] </strong></label><br />
+                            <label class="TSIModalLabel"><strong>@L["OperationCodeLineLabel"] </strong></label><br />
                             <SfTextBox Enabled=false CssClass="TSITxtBox" @bind-Value="LineDataSource.OperationCode"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
@@ -359,16 +358,16 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="3" Column="1">
+                    <DxGridLayoutItem Row="3" Column="1">
                         <Template>
-                             <label class="TSIModalLabel"><strong>@L["ControlTypesNameLineLabel"] </strong></label><br />
-                              <SfTextBox @ref="@ControlTypesNameButtonEdit" Created="@ControlTypesNameOnCreateIcon" @bind-Value="LineDataSource.ControlTypesName" ShowClearButton=true ValueChange="ControlTypesOnValueChange"></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["ControlTypesNameLineLabel"] </strong></label><br />
+                            <SfTextBox @ref="@ControlTypesNameButtonEdit" Created="@ControlTypesNameOnCreateIcon" @bind-Value="LineDataSource.ControlTypesName" ShowClearButton=true ValueChange="ControlTypesOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="3" Column="3">
                         <Template>
-                              <label class="TSIModalLabel"><strong>@L["ControlConditionsNameLineLabel"] </strong></label>
+                            <label class="TSIModalLabel"><strong>@L["ControlConditionsNameLineLabel"] </strong></label>
                             <SfTextBox @ref="@ControlConditionsNameButtonEdit" Created="@ControlConditionsNameOnCreateIcon" @bind-Value="LineDataSource.ControlConditionsName" ShowClearButton=true ValueChange="ControlConditionsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
@@ -381,7 +380,7 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="4" Column="1">
+                    <DxGridLayoutItem Row="4" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ControlFrequencyLineLabel"] </strong></label><br />
                             <SfTextBox CssClass="TSITxtBox" @bind-Value="LineDataSource.ControlFrequency"></SfTextBox>
@@ -402,7 +401,7 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="5" Column="1">
+                    <DxGridLayoutItem Row="5" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["IdealMeasureLineLabel"] </strong></label><br />
                             <SfNumericTextBox TValue="decimal" CssClass="TSITxtBox" Min="0" @bind-Value="LineDataSource.IdealMeasure"></SfNumericTextBox>
@@ -427,9 +426,11 @@ else
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="6" Column="1">
-                        <Template><center>
-                            <label class="TSIModalLabel"><strong>@L["PeriodicControlMeasureLineLabel"] </strong></label><br />
-                            <SfSwitch @bind-Checked="LineDataSource.PeriodicControlMeasure"></SfSwitch></center>
+                        <Template>
+                            <center>
+                                <label class="TSIModalLabel"><strong>@L["PeriodicControlMeasureLineLabel"] </strong></label><br />
+                                <SfSwitch @bind-Checked="LineDataSource.PeriodicControlMeasure"></SfSwitch>
+                            </center>
 
                         </Template>
                     </DxGridLayoutItem>
@@ -452,15 +453,16 @@ else
     </DxPopup>
 
     <DxPopup @bind-Visible="OperationPictureCrudPopup"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["OperationPictureModalTitle"]"
-         Width="42%"
-         Height="60%"
-         MinWidth="720px"
-         MinHeight="600px"
-         HeaderCssClass="HeaderTitleCss">
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["OperationPictureModalTitle"]"
+             Width="42%"
+             Height="60%"
+             MinWidth="720px"
+             MinHeight="600px"
+             HeaderCssClass="HeaderTitleCss"
+             ShowCloseButton=false>
 
         <BodyTemplate>
             <DxGridLayout CssClass="TSIGridLayout">
@@ -483,61 +485,62 @@ else
 
                 <Items>
                     <DxGridLayoutItem Row="0" Column="1">
-                        <Template><br/>
+                        <Template>
                             <br />
-                                <center>
-                                    <div style="color:transparent;">
-                                        <BlazorInputFile.InputFile  OnChange="@HandleFileSelectedOperationPicture" />
-                                    </div>
-                                </center>
+                            <br />
+                            <center>
+                                <div style="color:transparent;">
+                                    <BlazorInputFile.InputFile OnChange="@HandleFileSelectedOperationPicture" />
+                                </div>
+                            </center>
                         </Template>
                     </DxGridLayoutItem>
 
-                     <DxGridLayoutItem Row="1" Column="1">
+                    <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["FilestoUpload"] </strong></label><br />
-                                @{
-                                    if (files.Count != 0)
-                                    {
-                                        <div class="TSI_Paper">
-
-                                            @foreach (var file in files)
-                                            {
-                                                <div class="TSI_Chip"><span onclick="@(()=>PreviewImage(file))">@file.Name</span>&nbsp;&nbsp;&nbsp; <SfIcon onclick="@(()=>Remove(file))" Name="IconName.Trash"></SfIcon></div>
-                                            }
-
+                            @{
+                                if (OperationPictureDataSource.UploadedFiles != null && OperationPictureDataSource.UploadedFiles.Data.Length > 0)
+                                {
+                                    <div class="TSI_Paper">
+                                        <div class="TSI_Chip">
+                                            <span onclick="@(()=>PreviewImage(OperationPictureDataSource.UploadedFiles))">
+                                                @OperationPictureDataSource.UploadedFiles.Name
+                                            </span>&nbsp;&nbsp;&nbsp;
+                                            <SfIcon onclick="@(()=>Remove(OperationPictureDataSource))" Name="IconName.Trash"></SfIcon>
                                         </div>
-                                    }
-                                    else
-                                    {
-                                        <label class="TSIModalLabel"><strong>@L["NoFile"]</strong></label>
-                                    }
+                                    </div>
                                 }
+                                else
+                                {
+                                    <label class="TSIModalLabel"><strong>@L["NoFile"]</strong></label>
+                                }
+                            }
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="3">
-                            <Template>
-                                <label class="TSIModalLabel"><strong>@L["UploadedFiles"]</strong></label><br />
-                                @{
-                                    if (uploadedfiles.Count != 0)
-                                    {
-                                        <div class="TSI_Paper">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["UploadedFiles"]</strong></label><br />
+                            @{
+                                if (uploadedfiles.Count != 0)
+                                {
+                                    <div class="TSI_Paper">
 
-                                            @foreach (var file in uploadedfiles)
-                                            {
-                                                <div class="TSI_Chip"><span onclick="@(()=>PreviewUploadedImage(file))">@file.Name</span>&nbsp;&nbsp;&nbsp; <SfIcon onclick="@(()=>RemoveUploaded(file))" Name="IconName.Trash"></SfIcon></div>
-                                            }
+                                        @foreach (var file in uploadedfiles)
+                                        {
+                                            <div class="TSI_Chip"><span onclick="@(()=>PreviewUploadedImage(file))">@file.Name</span></div>
+                                        }
 
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <label class="TSIModalLabel"><strong>@L["NoFile"]</strong></label>
-                                    }
+                                    </div>
                                 }
-                            </Template>
-                        </DxGridLayoutItem>
+                                else
+                                {
+                                    <label class="TSIModalLabel"><strong>@L["NoFile"]</strong></label>
+                                }
+                            }
+                        </Template>
+                    </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="2" Column="1">
                         <Template>
@@ -549,33 +552,34 @@ else
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <center>
-                            <label class="TSIModalLabel"><strong>@L["IsApprovedOperationPictureLabel"]</strong></label><br />
-                            <SfSwitch @bind-Checked="OperationPictureDataSource.IsApproved"></SfSwitch></center>
+                                <label class="TSIModalLabel"><strong>@L["IsApprovedOperationPictureLabel"]</strong></label><br />
+                                <SfSwitch @bind-Checked="OperationPictureDataSource.IsApproved"></SfSwitch>
+                            </center>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="3" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["DrawerOperationPictureLabel"] </strong></label><br />
-                            <SfTextBox  CssClass="TSITxtBox" @bind-Value="OperationPictureDataSource.Drawer"></SfTextBox>
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="OperationPictureDataSource.Drawer"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="3" Column="3">
                         <Template>
-                              <label class="TSIModalLabel"><strong>@L["ApproverOperationPictureLabel"] </strong></label><br />
-                            <SfTextBox  CssClass="TSITxtBox" @bind-Value="OperationPictureDataSource.Approver"></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["ApproverOperationPictureLabel"] </strong></label><br />
+                            <SfTextBox CssClass="TSITxtBox" @bind-Value="OperationPictureDataSource.Approver"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="4" Column="1" ColumnSpan="3">
                         <Template>
-                             <label class="TSIModalLabel"><strong>@L["Description_OperationPictureLabel"] </strong></label><br />
-                             <SfTextBox Multiline=true CssClass="TSIMemoBox60" @bind-Value="OperationPictureDataSource.Description_"></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["Description_OperationPictureLabel"] </strong></label><br />
+                            <SfTextBox Multiline=true CssClass="TSIMemoBox60" @bind-Value="OperationPictureDataSource.Description_"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                 
+
 
                 </Items>
             </DxGridLayout>
@@ -587,38 +591,38 @@ else
     </DxPopup>
 
     <DxPopup @bind-Visible="ImagePreviewPopup"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         ShowCloseButton=false
-         CloseOnOutsideClick="false"
-         HeaderText="@previewImagePopupTitle"
-         MinWidth="1214px"
-         MinHeight="860px"
-         HeaderCssClass="HeaderTitleCss">
-            <BodyTemplate>
+             ShowFooter="true"
+             CloseOnEscape="false"
+             ShowCloseButton=false
+             CloseOnOutsideClick="false"
+             HeaderText="@previewImagePopupTitle"
+             MinWidth="1214px"
+             MinHeight="860px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
 
-                <SfCard class="TSIGridCards">
-                    <CardContent>
-                        @if (image)
-                        {
-                            <img style="width:100%; height:800px; margin-left:0% !important" src="@imageDataUri" />
+            <SfCard class="TSIGridCards">
+                <CardContent>
+                    @if (image)
+                    {
+                        <img style="width:100%; height:800px; margin-left:0% !important" src="@imageDataUri" />
 
-                        }
-                        else
-                        {
-                            <SfPdfViewerServer DocumentPath="@PDFrootPath" Height="800px" Width="1210px"></SfPdfViewerServer>
-                        }
-                    </CardContent>
-                    <CardFooter>
-                    </CardFooter>
-                </SfCard>
+                    }
+                    else
+                    {
+                        <SfPdfViewerServer DocumentPath="@PDFrootPath" Height="800px" Width="1210px"></SfPdfViewerServer>
+                    }
+                </CardContent>
+                <CardFooter>
+                </CardFooter>
+            </SfCard>
 
-            </BodyTemplate>
-            <FooterContentTemplate>
-                <SfButton CssClass="TSICancelButton" OnClick="HidePreviewPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+        </BodyTemplate>
+        <FooterContentTemplate>
+            <SfButton CssClass="TSICancelButton" OnClick="HidePreviewPopup"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
 
-            </FooterContentTemplate>
-        </DxPopup>
+        </FooterContentTemplate>
+    </DxPopup>
 
 }
 

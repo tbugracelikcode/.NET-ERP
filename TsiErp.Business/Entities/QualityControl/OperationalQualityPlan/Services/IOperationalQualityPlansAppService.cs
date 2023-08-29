@@ -1,6 +1,7 @@
 ﻿using Tsi.Core.Utilities.Results;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationPicture.Dtos;
 
 namespace TsiErp.Business.Entities.QualityControl.OperationalQualityPlan.Services
 {

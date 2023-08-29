@@ -36,5 +36,19 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationPicture.Dtos
         ///Açıklama
         /// </summary
         public string Description_ { get; set; }
+
+        /// <summary>
+        /// Yüklenen Domain
+        /// </summary>
+        public string DrawingDomain { get; set; }
+
+        /// <summary>
+        /// Dosya Yolu
+        /// </summary>
+        public string DrawingFilePath { get; set; }
+        /// <summary>
+        /// Dosya adı
+        /// </summary>
+        public string UploadedFileName { get; set; }
     }
 }
