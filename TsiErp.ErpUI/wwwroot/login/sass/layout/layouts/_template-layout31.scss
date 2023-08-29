@@ -7,21 +7,27 @@
     display: grid;
     position: relative;
     z-index: 1;
+
     @media only screen and (max-width: 1199px) {
         padding: 90px;
     }
+
     @media only screen and (max-width: 991px) {
         padding: 70px;
     }
+
     @media only screen and (max-width: 767px) {
         padding: 50px;
     }
+
     @media only screen and (max-width: 575px) {
         padding: 30px;
     }
+
     @media only screen and (max-width: 479px) {
         padding: 15px;
     }
+
     .fxt-shape {
         height: 100%;
         width: calc((100vw + 220px)/4);
@@ -31,32 +37,40 @@
         top: 0;
         z-index: -1;
         position: absolute;
+
         @media only screen and (max-width: 1199px) {
             width: calc((100vw + 180px)/4);
         }
+
         @media only screen and (max-width: 991px) {
             width: calc((100vw + 140px)/4);
         }
+
         @media only screen and (max-width: 767px) {
             width: calc((100vw + 100px)/4);
         }
+
         @media only screen and (max-width: 575px) {
             width: calc((100vw + 60px)/4);
         }
+
         @media only screen and (max-width: 479px) {
             width: calc((100vw + 30px)/4);
         }
     }
+
     .fxt-content-wrap {
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
         min-height: 100%;
         width: 100%;
+
         @media only screen and (max-width: 991px) {
             display: block;
         }
     }
+
     .fxt-heading-content {
         width: 50%;
         display: -webkit-box;
@@ -76,27 +90,32 @@
         overflow: hidden;
         position: relative;
         z-index: 1;
+
         @media only screen and (max-width: 991px) {
             width: 100%;
         }
+
         @media only screen and (max-width: 575px) {
             padding: 40px 15px;
         }
+
         &:before {
             height: 100%;
             width: 100%;
-            background-color: rgba(#0940c2, 0.9);
+            background-image: linear-gradient(135deg, rgb(168 20 20) 20%, #f82121 90%) !important;
             content: "";
             left: 0;
             top: 0;
             z-index: -1;
             position: absolute;
         }
+
         .fxt-inner-wrap {
             text-align: center;
             max-width: 640px;
             width: 100%;
         }
+
         .fxt-logo {
             display: inline-block;
             margin-bottom: 35px;
@@ -104,39 +123,49 @@
             margin-right: auto;
             max-width: 40vw;
         }
+
         .fxt-main-title {
             color: #ffffff;
             font-size: 42px;
             font-weight: 500;
             margin-bottom: 60px;
+
             @media only screen and (max-width: 1199px) {
                 font-size: 36px;
             }
+
             @media only screen and (max-width: 991px) {
                 font-size: 32px;
                 margin-bottom: 50px;
             }
+
             @media only screen and (max-width: 767px) {
                 font-size: 30px;
                 margin-bottom: 40px;
             }
+
             @media only screen and (max-width: 575px) {
                 font-size: 28px;
                 margin-bottom: 30px;
             }
         }
+
         .fxt-login-option {
             max-width: 400px;
             width: 100%;
             margin-left: auto;
             margin-right: auto;
+
             ul {
                 text-align: center;
+
                 li {
                     margin-bottom: 15px;
+
                     &:last-child {
                         margin-bottom: 0;
                     }
+
                     a {
                         padding: 15px;
                         border: 1px solid;
@@ -148,22 +177,27 @@
                         -webkit-transition: all 0.3s ease-in-out;
                         -o-transition: all 0.3s ease-in-out;
                         transition: all 0.3s ease-in-out;
+
                         &:hover {
                             background-color: #ffffff;
                             color: #14133b;
                         }
+
                         @media only screen and (max-width: 1199px) {
                             font-size: 18px;
                             padding: 14px;
                         }
+
                         @media only screen and (max-width: 991px) {
                             font-size: 17px;
                             padding: 13px;
                         }
+
                         @media only screen and (max-width: 767px) {
                             font-size: 16px;
                             padding: 12px;
                         }
+
                         @media only screen and (max-width: 575px) {
                             font-size: 15px;
                             padding: 11px;
@@ -173,6 +207,7 @@
             }
         }
     }
+
     .fxt-form-content {
         -webkit-box-shadow: 0 3px 79px 0 rgba(#000000, 0.08);
         box-shadow: 0 3px 79px 0 rgba(#000000, 0.08);
@@ -185,9 +220,11 @@
         -webkit-box-direction: normal;
         -ms-flex-direction: column;
         flex-direction: column;
+
         @media only screen and (max-width: 991px) {
             width: 100%;
         }
+
         .fxt-page-switcher {
             padding: 50px 50px 0 50px;
             display: -webkit-box;
@@ -201,9 +238,11 @@
             -webkit-box-pack: justify;
             -ms-flex-pack: justify;
             justify-content: space-between;
+
             @media only screen and (max-width: 575px) {
                 padding: 40px 15px 0;
             }
+
             .fxt-switcher-wrap {
                 display: -webkit-box;
                 display: -ms-flexbox;
@@ -211,21 +250,25 @@
                 -ms-flex-wrap: wrap;
                 flex-wrap: wrap;
                 margin-bottom: 20px;
+
                 li {
                     &:first-child {
                         .fxt-switcher-btn {
                             border-left: 1px solid;
                             border-color: #111111;
+
                             &:hover,
                             &.active {
                                 border-color: #1b53d4;
                             }
                         }
                     }
+
                     &:last-child {
                         .fxt-switcher-btn {
                             border-right: 1px solid;
                             border-color: #111111;
+
                             &:hover,
                             &.active {
                                 border-color: #1b53d4;
@@ -234,6 +277,7 @@
                     }
                 }
             }
+
             .fxt-switcher-btn {
                 padding: 9px 27px;
                 border-top: 1px solid;
@@ -245,60 +289,74 @@
                 -webkit-transition: all 0.3s ease-in-out;
                 -o-transition: all 0.3s ease-in-out;
                 transition: all 0.3s ease-in-out;
+
                 &:hover {
                     color: #1b53d4;
                 }
+
                 &.active {
                     background-color: #1b53d4;
                     color: #ffffff;
                     border-color: #1b53d4;
                 }
+
                 @media only screen and (max-width: 1199px) {
                     font-size: 17px;
                     padding: 8px 25px;
                 }
+
                 @media only screen and (max-width: 991px) {
                     font-size: 16px;
                     padding: 7px 23px;
                 }
+
                 @media only screen and (max-width: 767px) {
                     font-size: 15px;
                     padding: 6px 21px;
                 }
             }
         }
+
         .fxt-page-title {
             margin-bottom: 15px;
             font-size: 36px;
             font-weight: 700;
             color: #14133b;
+
             @media only screen and (max-width: 1199px) {
                 font-size: 32px;
             }
+
             @media only screen and (max-width: 991px) {
                 font-size: 30px;
             }
+
             @media only screen and (max-width: 767px) {
                 font-size: 28px;
             }
+
             @media only screen and (max-width: 575px) {
                 font-size: 26px;
             }
+
             @media only screen and (max-width: 479px) {
                 font-size: 24px;
             }
         }
+
         .fxt-description {
             font-size: 17px;
             font-weight: 500;
             margin-bottom: 30px;
         }
+
         .fxt-label {
             color: #14133b;
             font-size: 18px;
             font-weight: 700;
             margin-bottom: 12px;
         }
+
         .fxt-main-form {
             padding: 30px 50px 20px 50px;
             display: -webkit-box;
@@ -308,23 +366,28 @@
             -webkit-box-align: center;
             -ms-flex-align: center;
             align-items: center;
+
             @media only screen and (max-width: 991px) {
                 -webkit-box-pack: center;
                 -ms-flex-pack: center;
                 justify-content: center;
             }
+
             @media only screen and (max-width: 575px) {
                 padding: 20px 15px 10px;
             }
         }
+
         .fxt-inner-wrap {
             max-width: 440px;
             width: 100%;
         }
+
         .form-group {
             position: relative;
             z-index: 1;
             margin-bottom: 20px;
+
             .field-icon {
                 position: absolute;
                 z-index: 1;
@@ -332,11 +395,13 @@
                 bottom: 18px;
                 font-size: 14px;
                 color: #a1a1a1;
+
                 &:before {
                     padding: 17px 10px;
                 }
             }
         }
+
         .form-control {
             min-height: 50px;
             -webkit-box-shadow: none;
@@ -345,26 +410,31 @@
             padding: 10px 15px;
             color: #111;
         }
+
         input::-webkit-input-placeholder {
             color: #acacac;
             font-size: 17px;
             font-weight: 400;
         }
+
         input::-moz-placeholder {
             color: #acacac;
             font-size: 17px;
             font-weight: 400;
         }
+
         input:-moz-placeholder {
             color: #acacac;
             font-size: 17px;
             font-weight: 400;
         }
+
         input:-ms-input-placeholder {
             color: #acacac;
             font-size: 17px;
             font-weight: 400;
         }
+
         .fxt-btn-fill {
             font-family: 'Roboto', sans-serif;
             cursor: pointer;
@@ -384,22 +454,27 @@
             -webkit-transition: all 0.3s ease-in-out;
             -o-transition: all 0.3s ease-in-out;
             transition: all 0.3s ease-in-out;
+
             &:hover {
                 background-color: #0d42be;
                 border-color: #0d42be;
             }
+
             &:focus {
                 outline: none;
             }
+
             @media only screen and (max-width: 991px) {
                 font-size: 16px;
                 padding: 9px 32px;
             }
+
             @media only screen and (max-width: 767px) {
                 font-size: 15px;
                 padding: 8px 28px;
             }
         }
+
         .fxt-switcher-description {
             text-align: center;
             font-size: 16px;
@@ -414,6 +489,7 @@
             color: #888888;
             margin-bottom: 10px;
         }
+
         .fxt-switcher-text {
             -webkit-box-shadow: none;
             box-shadow: none;
@@ -430,13 +506,16 @@
             -webkit-transition: all 0.3s ease-in-out;
             -o-transition: all 0.3s ease-in-out;
             transition: all 0.3s ease-in-out;
+
             &:hover {
                 color: #06339e;
             }
+
             &:focus {
                 outline: none;
             }
         }
+
         .fxt-checkbox-wrap {
             display: -webkit-box;
             display: -ms-flexbox;
@@ -451,13 +530,16 @@
             -ms-flex-wrap: wrap;
             flex-wrap: wrap;
         }
+
         .fxt-checkbox-box {
             margin-bottom: 5px;
+
             label {
                 color: #adadad;
                 margin-bottom: 0;
                 font-size: 16px;
                 position: relative;
+
                 &:before {
                     content: "";
                     position: absolute;
@@ -474,16 +556,19 @@
                     -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
                     transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
                 }
+
                 &:after {
                     position: absolute;
                     font-size: 10px;
                     color: #555555;
                 }
             }
+
             input[type="checkbox"] {
                 display: none;
             }
-            input[type="checkbox"]:checked+label::after {
+
+            input[type="checkbox"]:checked + label::after {
                 font-family: 'Font Awesome 5 Free';
                 content: "\f00c";
                 font-weight: 900;
@@ -494,11 +579,13 @@
                 width: 16px;
                 text-align: center;
             }
-            input[type="checkbox"]:checked+label::before {
+
+            input[type="checkbox"]:checked + label::before {
                 background-color: #1b53d4;
                 border-color: #1b53d4;
             }
         }
+
         .fxt-otp-row {
             display: -webkit-box;
             display: -ms-flexbox;
@@ -506,6 +593,7 @@
             -ms-flex-wrap: wrap;
             flex-wrap: wrap;
             margin-bottom: 30px;
+
             .fxt-otp-col {
                 padding: 10px 5px;
                 text-align: center;
@@ -515,11 +603,13 @@
                 -webkit-box-flex: 1;
                 -ms-flex-positive: 1;
                 flex-grow: 1;
+
                 &:last-child {
                     margin-right: 0;
                 }
             }
         }
+
         .fxt-otp-btn {
             margin-bottom: 30px;
         }

@@ -113,5 +113,8 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string ContractOperationPictures = "ContractOperationPictures";
         public static readonly string PurchaseQualityPlans = "PurchaseQualityPlans";
         public static readonly string PurchaseQualityPlanLines = "PurchaseQualityPlanLines";
+        public static readonly string ContractTrackingFiches = "ContractTrackingFiches";
+        public static readonly string ContractTrackingFicheLines = "ContractTrackingFicheLines";
+        public static readonly string ContractUnsuitabilityReports = "ContractUnsuitabilityReports";
     }
 }

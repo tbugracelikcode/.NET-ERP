@@ -333,6 +333,27 @@
   <data name="UIToBeUsedAs" xml:space="preserve">
     <value>Olduğu Gibi Kullanılacak</value>
   </data>
+  <data name="UIWarningWorkOrderMessageEmployeebase" xml:space="preserve">
+    <value>İş emri seçmeden çalışan seçilemez.</value>
+  </data>
+  <data name="UIWarningWorkOrderMessageStationbase" xml:space="preserve">
+    <value>İş emri seçmeden iş istasyonu seçilemez.</value>
+  </data>
+  <data name="UIWarningWorkOrderTitlebase" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="UnsuitabilityItemModalGridCode" xml:space="preserve">
+    <value>UYGUNSUZLUK BAŞLIĞI KODU</value>
+  </data>
+  <data name="UnsuitabilityItemModalGridName" xml:space="preserve">
+    <value>UYGUNSUZLUK BAŞLIĞI ADI</value>
+  </data>
+  <data name="UnsuitabilityItemModalTitle" xml:space="preserve">
+    <value>Uygunsuzluk Başlıkları</value>
+  </data>
+  <data name="UnsuitabilityItemsNameLabel" xml:space="preserve">
+    <value>Hata Başlığı:</value>
+  </data>
   <data name="UnsuitableAmountLabel" xml:space="preserve">
     <value>Hatalı Miktar:</value>
   </data>

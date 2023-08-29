@@ -66,7 +66,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CalibrationRecord
         {
             DataSource = new SelectCalibrationRecordsDto()
             {
-                Date = DateTime.Today,
+                Date_ = DateTime.Today,
                 NextControl = DateTime.Today
             };
 

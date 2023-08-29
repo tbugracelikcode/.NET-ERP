@@ -74,7 +74,7 @@ namespace TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport
 
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
-        /// Sipariş ID
+        /// Hata Başlığı ID
         /// </summary>
         public Guid UnsuitabilityItemsID { get; set; }
     }

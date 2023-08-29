@@ -34,7 +34,7 @@ namespace TsiErp.Entities.Entities.QualityControl.CalibrationRecord
         /// <summary>
         /// Tarih
         /// </summary>
-        public DateTime Date { get; set; }
+        public DateTime Date_ { get; set; }
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.DateTime)]
         /// <summary>
         /// Bir Sonraki Kontrol

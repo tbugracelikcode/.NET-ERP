@@ -26,7 +26,7 @@ namespace TsiErp.Entities.Entities.QualityControl.CalibrationVerification.Dtos
         /// <summary>
         /// Tarih
         /// </summary>
-        public DateTime Date { get; set; }
+        public DateTime Date_ { get; set; }
         /// <summary>
         /// Bir Sonraki Kontrol
         /// </summary>

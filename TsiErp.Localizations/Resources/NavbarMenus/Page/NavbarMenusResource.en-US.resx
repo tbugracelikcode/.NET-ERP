@@ -156,6 +156,9 @@
   <data name="ContractQualityPlansChildMenu" xml:space="preserve">
     <value>Contract Quality Plans</value>
   </data>
+  <data name="ContractTrackingFichesChildMenu" xml:space="preserve">
+    <value>Contract Tracking Fiches</value>
+  </data>
   <data name="ControlConditionsChildMenu" xml:space="preserve">
     <value>Control Condition Items</value>
   </data>

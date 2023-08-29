@@ -56,10 +56,20 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ContractQualityPlansResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\ContractTrackingFiches\Page\ContractTrackingFichesResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ContractTrackingFichesResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\ContractUnsuitabilityItems\Page\ContractUnsuitabilityItemsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ContractUnsuitabilityItemsResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\ContractUnsuitabilityReports\Page\ContractUnsuitabilityReportsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ContractUnsuitabilityReportsResource.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\ControlConditions\Page\ControlConditionResources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -424,12 +434,20 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ContractQualityPlansResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ContractTrackingFiches\Page\ContractTrackingFichesResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ContractTrackingFichesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\ContractUnsuitabilityItems\Page\ContractUnsuitabilityItemsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\ContractUnsuitabilityItems\Page\ContractUnsuitabilityItemsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ContractUnsuitabilityItemsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\ContractUnsuitabilityReports\Page\ContractUnsuitabilityReportsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ContractUnsuitabilityReportsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\ControlConditions\Page\ControlConditionResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

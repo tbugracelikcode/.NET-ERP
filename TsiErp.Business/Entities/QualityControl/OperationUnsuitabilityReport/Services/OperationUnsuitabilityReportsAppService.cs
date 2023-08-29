@@ -18,6 +18,7 @@ using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.OperationUnsuitabilityReports.Page;
@@ -62,6 +63,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                     FicheNo = input.FicheNo,
                     CreationTime = DateTime.Now,
                     CreatorId = LoginedUserService.UserId,
+                    UnsuitabilityItemsID = input.UnsuitabilityItemsID,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
                     DeleterId = Guid.Empty,
@@ -141,6 +143,10 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                     (
                        d => new { OperationCode = d.Code, OperationName = d.Name }, nameof(OperationUnsuitabilityReports.OperationID), nameof(ProductsOperations.Id), JoinType.Left
                     )
+                    .Join<UnsuitabilityItems>
+                    (
+                       d => new { UnsuitabilityItemsName = d.Name, UnsuitabilityItemsID = d.Id }, nameof(OperationUnsuitabilityReports.UnsuitabilityItemsID), nameof(UnsuitabilityItems.Id), JoinType.Left
+                    )
                     .Where(null, false, false, Tables.OperationUnsuitabilityReports);
 
                 var operationUnsuitabilityReport = queryFactory.Get<SelectOperationUnsuitabilityReportsDto>(query);
@@ -186,6 +192,10 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                     (
                        d => new { OperationCode = d.Code, OperationName = d.Name }, nameof(OperationUnsuitabilityReports.OperationID), nameof(ProductsOperations.Id), JoinType.Left
                     )
+                     .Join<UnsuitabilityItems>
+                    (
+                       d => new { UnsuitabilityItemsName = d.Name }, nameof(OperationUnsuitabilityReports.UnsuitabilityItemsID), nameof(UnsuitabilityItems.Id), JoinType.Left
+                    )
                     .Where(null, false, false, Tables.OperationUnsuitabilityReports);
 
                 var operationUnsuitabilityReports = queryFactory.GetList<ListOperationUnsuitabilityReportsDto>(query).ToList();
@@ -227,6 +237,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                     DataOpenStatusUserId = Guid.Empty,
                     DeleterId = entity.DeleterId.GetValueOrDefault(),
                     DeletionTime = entity.DeletionTime.GetValueOrDefault(),
+                    UnsuitabilityItemsID = input.UnsuitabilityItemsID,
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = DateTime.Now,
                     LastModifierId = LoginedUserService.UserId,
@@ -271,6 +282,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
                     IsDeleted = entity.IsDeleted,
                     LastModificationTime = entity.LastModificationTime.GetValueOrDefault(),
                     LastModifierId = entity.LastModifierId.GetValueOrDefault(),
+                    UnsuitabilityItemsID = entity.UnsuitabilityItemsID,
                     Id = id,
                     DataOpenStatus = lockRow,
                     DataOpenStatusUserId = userId,

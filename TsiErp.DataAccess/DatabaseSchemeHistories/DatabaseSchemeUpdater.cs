@@ -58,6 +58,8 @@ using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine;
 using TsiErp.Entities.Entities.ProductionManagement.Route;
 using TsiErp.Entities.Entities.ProductionManagement.RouteLine;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheLine;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationLine;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperationUnsuitabilityItem;
@@ -77,6 +79,7 @@ using TsiErp.Entities.Entities.QualityControl.FinalControlUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlan;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport;
+using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem;
 using TsiErp.Entities.Entities.QualityControl.OperationalQualityPlanLine;
@@ -3304,7 +3307,6 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
             }
             #endregion
 
-
             #region OperationalQualityPlanLines Table Created
             Table OperationalQualityPlanLinesTable = model.CreateTable(Tables.OperationalQualityPlanLines);
 
@@ -3582,6 +3584,111 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 }
 
                 PurchaseQualityPlanLinesTable.Create();
+            }
+            #endregion
+
+            #region ContractTrackingFiches Table Created
+            Table ContractTrackingFichesTable = model.CreateTable(Tables.ContractTrackingFiches);
+
+            if (ContractTrackingFichesTable != null)
+            {
+                var properties = (typeof(ContractTrackingFiches)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(ContractTrackingFichesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ContractTrackingFichesTable, "PK_" + ContractTrackingFichesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        ContractTrackingFichesTable.Indexes.Add(pkIndex);
+                    }
+
+                    ContractTrackingFichesTable.Columns.Add(column);
+                }
+
+                ContractTrackingFichesTable.Create();
+            }
+            #endregion
+
+            #region ContractTrackingFicheLines Table Created
+            Table ContractTrackingFicheLinesTable = model.CreateTable(Tables.ContractTrackingFicheLines);
+
+            if (ContractTrackingFicheLinesTable != null)
+            {
+                var properties = (typeof(ContractTrackingFicheLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(ContractTrackingFicheLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ContractTrackingFicheLinesTable, "PK_" + ContractTrackingFicheLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        ContractTrackingFicheLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    ContractTrackingFicheLinesTable.Columns.Add(column);
+                }
+
+                ContractTrackingFicheLinesTable.Create();
+            }
+            #endregion
+
+            #region ContractUnsuitabilityReports Table Created
+            Table ContractUnsuitabilityReportsTable = model.CreateTable(Tables.ContractUnsuitabilityReports);
+
+            if (ContractUnsuitabilityReportsTable != null)
+            {
+                var properties = (typeof(ContractUnsuitabilityReports)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(ContractUnsuitabilityReportsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(ContractUnsuitabilityReportsTable, "PK_" + ContractUnsuitabilityReportsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        ContractUnsuitabilityReportsTable.Indexes.Add(pkIndex);
+                    }
+
+                    ContractUnsuitabilityReportsTable.Columns.Add(column);
+                }
+
+                ContractUnsuitabilityReportsTable.Create();
             }
             #endregion
 

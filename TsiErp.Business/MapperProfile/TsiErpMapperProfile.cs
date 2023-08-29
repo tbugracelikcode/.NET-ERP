@@ -125,6 +125,8 @@ using TsiErp.Entities.Entities.QualityControl.FinalControlUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.FinalControlUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport;
+using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport;
 using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
@@ -165,8 +167,6 @@ using TsiErp.Entities.Entities.StockManagement.UnitSet;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
-using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
-using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ControlType;
 using TsiErp.Entities.Entities.QualityControl.ControlType.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ControlCondition;
@@ -189,6 +189,10 @@ using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan;
 using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlanLine;
 using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlanLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheLine;
+using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheLine.Dtos;
 
 namespace TsiErp.Business.MapperProfile
 {
@@ -566,6 +570,13 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectOperationUnsuitabilityReportsDto, CreateOperationUnsuitabilityReportsDto>();
             CreateMap<UpdateOperationUnsuitabilityReportsDto, OperationUnsuitabilityReports>();
             CreateMap<SelectOperationUnsuitabilityReportsDto, UpdateOperationUnsuitabilityReportsDto>();
+
+            CreateMap<ContractUnsuitabilityReports, SelectContractUnsuitabilityReportsDto>();
+            CreateMap<ContractUnsuitabilityReports, ListContractUnsuitabilityReportsDto>();
+            CreateMap<CreateContractUnsuitabilityReportsDto, ContractUnsuitabilityReports>();
+            CreateMap<SelectContractUnsuitabilityReportsDto, CreateContractUnsuitabilityReportsDto>();
+            CreateMap<UpdateContractUnsuitabilityReportsDto, ContractUnsuitabilityReports>();
+            CreateMap<SelectContractUnsuitabilityReportsDto, UpdateContractUnsuitabilityReportsDto>();
 
             CreateMap<HaltReasons, SelectHaltReasonsDto>();
             CreateMap<HaltReasons, ListHaltReasonsDto>();
@@ -948,6 +959,24 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdatePurchaseQualityPlanLinesDto, PurchaseQualityPlanLines>();
             CreateMap<SelectPurchaseQualityPlanLinesDto, UpdatePurchaseQualityPlanLinesDto>();
             CreateMap<SelectPurchaseQualityPlanLinesDto, PurchaseQualityPlanLines>();
+
+
+
+            CreateMap<ContractTrackingFiches, SelectContractTrackingFichesDto>();
+            CreateMap<ContractTrackingFiches, ListContractTrackingFichesDto>();
+            CreateMap<UpdateContractTrackingFichesDto, ContractTrackingFiches>();
+            CreateMap<CreateContractTrackingFichesDto, ContractTrackingFiches>();
+            CreateMap<SelectContractTrackingFichesDto, CreateContractTrackingFichesDto>();
+            CreateMap<SelectContractTrackingFichesDto, UpdateContractTrackingFichesDto>();
+            CreateMap<ContractTrackingFiches, UpdateContractTrackingFichesDto>();
+
+            CreateMap<ContractTrackingFicheLines, SelectContractTrackingFicheLinesDto>();
+            CreateMap<ContractTrackingFicheLines, ListContractTrackingFicheLinesDto>();
+            CreateMap<CreateContractTrackingFicheLinesDto, ContractTrackingFicheLines>();
+            CreateMap<SelectContractTrackingFicheLinesDto, CreateContractTrackingFicheLinesDto>();
+            CreateMap<UpdateContractTrackingFicheLinesDto, ContractTrackingFicheLines>();
+            CreateMap<SelectContractTrackingFicheLinesDto, UpdateContractTrackingFicheLinesDto>();
+            CreateMap<SelectContractTrackingFicheLinesDto, ContractTrackingFicheLines>();
         }
     }
 }
