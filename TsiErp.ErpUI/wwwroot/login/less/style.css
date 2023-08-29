@@ -14369,7 +14369,7 @@ ul {
 .fxt-template-layout31 .fxt-heading-content:before {
   height: 100%;
   width: 100%;
-  background-color: rgba(9, 64, 194, 0.9);
+  /*background-color: rgba(9, 64, 194, 0.9);*/
   content: "";
   left: 0;
   top: 0;

@@ -196,6 +196,7 @@
                         <DxTreeViewNode Text=@L["ProductionManagementTransactionsMenu"]>
                             <Nodes>
                                 <DxTreeViewNode Text=@L["ProductionOrdersChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/contract-tracking-fiches" Text=@L["ContractTrackingFichesChildMenu"] />
                                 <DxTreeViewNode NavigateUrl="/work-orders" Text=@L["WorkOrdersChildMenu"] />
                             </Nodes>
                         </DxTreeViewNode>
@@ -272,9 +273,9 @@
                                         <DxTreeViewNode NavigateUrl="/purchase-unsuitability-reports" Text=@L["PurchUnsRecordsChildMenu"] />
                                         @* <DxTreeViewNode Text=@L["ProdOrderRecordsChildMenu"] /> *@
                                         <DxTreeViewNode NavigateUrl="/operation-unsuitability-reports" Text=@L["OprUnsRecordsChildMenu"] />
-                                        @* <DxTreeViewNode Text=@L["FinalControlUnsRecordsChildMenu"] />
-                                        <DxTreeViewNode Text=@L["ContUnsRecordsChildMenu"] />
-                                        <DxTreeViewNode Text=@L["CustCompRecordsChildMenu"] /> *@
+                                        @* <DxTreeViewNode Text=@L["FinalControlUnsRecordsChildMenu"] />*@
+                                        <DxTreeViewNode NavigateUrl="/contract-unsuitability-reports" Text=@L["ContUnsRecordsChildMenu"] />
+                                       @*  <DxTreeViewNode Text=@L["CustCompRecordsChildMenu"] /> *@
 
                                     </Nodes>
                                 </DxTreeViewNode>

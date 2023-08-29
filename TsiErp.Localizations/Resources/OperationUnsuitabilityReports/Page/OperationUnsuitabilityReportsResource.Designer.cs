@@ -710,6 +710,69 @@ namespace TsiErp.Localizations.Resources.OperationUnsuitabilityReports.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İş emri seçmeden çalışan seçilemez..
+        /// </summary>
+        public static string UIWarningWorkOrderMessageEmployeebase {
+            get {
+                return ResourceManager.GetString("UIWarningWorkOrderMessageEmployeebase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş emri seçmeden iş istasyonu seçilemez..
+        /// </summary>
+        public static string UIWarningWorkOrderMessageStationbase {
+            get {
+                return ResourceManager.GetString("UIWarningWorkOrderMessageStationbase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningWorkOrderTitlebase {
+            get {
+                return ResourceManager.GetString("UIWarningWorkOrderTitlebase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UYGUNSUZLUK BAŞLIĞI KODU.
+        /// </summary>
+        public static string UnsuitabilityItemModalGridCode {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemModalGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UYGUNSUZLUK BAŞLIĞI ADI.
+        /// </summary>
+        public static string UnsuitabilityItemModalGridName {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemModalGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uygunsuzluk Başlıkları.
+        /// </summary>
+        public static string UnsuitabilityItemModalTitle {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hata Başlığı:.
+        /// </summary>
+        public static string UnsuitabilityItemsNameLabel {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemsNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hatalı Miktar:.
         /// </summary>
         public static string UnsuitableAmountLabel {

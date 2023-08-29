@@ -27,6 +27,14 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.D
         public bool? DataOpenStatus { get; set; }
 
         /// <summary>
+        /// Hata Başlığı ID
+        /// </summary>
+        public Guid? UnsuitabilityItemsID { get; set; }
+        /// <summary>
+        /// Uygunsuzluk Başlığı Adı
+        /// </summary>
+        public string UnsuitabilityItemsName { get; set; }
+        /// <summary>
         /// Data Concurrency UserID
         /// </summary>
         public Guid? DataOpenStatusUserId { get; set; }

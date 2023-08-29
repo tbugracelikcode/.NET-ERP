@@ -21,7 +21,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CalibrationVerification
         {
             DataSource = new SelectCalibrationVerificationsDto()
             {
-                Date = DateTime.Today,
+                Date_ = DateTime.Today,
                 NextControl = DateTime.Today
             };
 

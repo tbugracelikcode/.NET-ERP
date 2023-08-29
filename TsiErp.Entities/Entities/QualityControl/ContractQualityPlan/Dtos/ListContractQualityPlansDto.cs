@@ -12,6 +12,11 @@ namespace TsiErp.Entities.Entities.QualityControl.ContractQualityPlan.Dtos
         /// Ürün Açıklaması
         /// </summary>
         public string ProductName { get; set; }
+
+        ///<summary>
+        ///Cari Hesap ID
+        /// </summary
+        public Guid? CurrrentAccountCardID { get; set; }
         ///<summary>
         ///Cari Hesap Kodu
         /// </summary

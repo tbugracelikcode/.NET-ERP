@@ -55,7 +55,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
                 var query = queryFactory.Query().From(Tables.CalibrationVerifications).Insert(new CreateCalibrationVerificationsDto
                 {
                     Code = input.Code,
-                    Date = input.Date,
+                    Date_ = input.Date_,
                     EquipmentID = input.EquipmentID,
                     InfinitiveCertificateNo = input.InfinitiveCertificateNo,
                     ReceiptNo = input.ReceiptNo,
@@ -104,7 +104,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
                 var query = queryFactory
-                        .Query().From(Tables.CalibrationVerifications).Select<CalibrationVerifications>(c => new { c.Id, c.Code, c.Name, c.NextControl, c.ReceiptNo, c.Result, c.Date, c.EquipmentID, c.DataOpenStatus, c.DataOpenStatusUserId, c.InfinitiveCertificateNo })
+                        .Query().From(Tables.CalibrationVerifications).Select<CalibrationVerifications>(c => new { c.Id, c.Code, c.Name, c.NextControl, c.ReceiptNo, c.Result, c.Date_, c.EquipmentID, c.DataOpenStatus, c.DataOpenStatusUserId, c.InfinitiveCertificateNo })
                             .Join<EquipmentRecords>
                             (
                                 e => new { Equipment = e.Code, EquipmentID = e.Id },
@@ -132,7 +132,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
                 var query = queryFactory
                         .Query()
                         .From(Tables.CalibrationVerifications)
-                        .Select<CalibrationVerifications>(c => new { c.Id, c.Code, c.Name, c.NextControl, c.ReceiptNo, c.Result, c.Date, c.EquipmentID })
+                        .Select<CalibrationVerifications>(c => new { c.Id, c.Code, c.Name, c.NextControl, c.ReceiptNo, c.Result, c.Date_, c.EquipmentID })
                             .Join<EquipmentRecords>
                             (
                                 e => new { Equipment = e.Code },
@@ -176,7 +176,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
                     Code = input.Code,
                     Name = input.Name,
                     EquipmentID = input.EquipmentID,
-                    Date = input.Date,
+                    Date_ = input.Date_,
                     Result = input.Result,
                     ReceiptNo = input.ReceiptNo,
                     InfinitiveCertificateNo = input.InfinitiveCertificateNo,
@@ -219,7 +219,7 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
                     ReceiptNo = entity.ReceiptNo,
                     EquipmentID = entity.EquipmentID,
                     Result = entity.Result,
-                    Date = entity.Date,
+                    Date_ = entity.Date_,
                     CreationTime = entity.CreationTime.Value,
                     CreatorId = entity.CreatorId.Value,
                     DeleterId = entity.DeleterId.GetValueOrDefault(),

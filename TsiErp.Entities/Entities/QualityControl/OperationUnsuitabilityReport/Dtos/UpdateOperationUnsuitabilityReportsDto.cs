@@ -25,6 +25,11 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.D
         /// Uygunsuzluk İş Emri Oluşacak
         /// </summary>
         public bool IsUnsuitabilityWorkOrder { get; set; }
+
+        /// <summary>
+        /// Hata Başlığı ID
+        /// </summary>
+        public Guid? UnsuitabilityItemsID { get; set; }
         /// <summary>
         /// Uygun Olmayan Miktar
         /// </summary>

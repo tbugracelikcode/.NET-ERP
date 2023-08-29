@@ -59,7 +59,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
                     DeleterId = Guid.Empty,
-                    Date = input.Date,
+                    Date_ = input.Date_,
                     EquipmentID = input.EquipmentID,
                     InfinitiveCertificateNo = input.InfinitiveCertificateNo,
                     NextControl = input.NextControl,
@@ -103,7 +103,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
                 var query = queryFactory
-                        .Query().From(Tables.CalibrationRecords).Select<CalibrationRecords>(c => new { c.Id, c.Code, c.Name, c.NextControl, c.ReceiptNo, c.Result, c.Date, c.EquipmentID, c.DataOpenStatus, c.DataOpenStatusUserId, c.InfinitiveCertificateNo })
+                        .Query().From(Tables.CalibrationRecords).Select<CalibrationRecords>(c => new { c.Id, c.Code, c.Name, c.NextControl, c.ReceiptNo, c.Result, c.Date_, c.EquipmentID, c.DataOpenStatus, c.DataOpenStatusUserId, c.InfinitiveCertificateNo })
                             .Join<EquipmentRecords>
                             (
                                 e => new { Equipment = e.Code, EquipmentID = e.Id },
@@ -131,7 +131,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
                 var query = queryFactory
                         .Query()
                         .From(Tables.CalibrationRecords)
-                        .Select<CalibrationRecords>(c => new { c.Id, c.Code, c.Name, c.NextControl, c.ReceiptNo, c.Result, c.Date, c.EquipmentID })
+                        .Select<CalibrationRecords>(c => new { c.Id, c.Code, c.Name, c.NextControl, c.ReceiptNo, c.Result, c.Date_, c.EquipmentID })
                             .Join<EquipmentRecords>
                             (
                                 e => new { Equipment = e.Code },
@@ -180,7 +180,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
                     NextControl = input.NextControl,
                     InfinitiveCertificateNo = input.InfinitiveCertificateNo,
                     EquipmentID = input.EquipmentID,
-                    Date = input.Date,
+                    Date_ = input.Date_,
                     CreationTime = entity.CreationTime.Value,
                     CreatorId = entity.CreatorId.Value,
                     DataOpenStatus = false,
@@ -213,7 +213,7 @@ namespace TsiErp.Business.Entities.CalibrationRecord.Services
                 {
                     Code = entity.Code,
                     Name = entity.Name,
-                    Date = entity.Date,
+                    Date_ = entity.Date_,
                     EquipmentID = entity.EquipmentID,
                     InfinitiveCertificateNo = entity.InfinitiveCertificateNo,
                     ReceiptNo = entity.ReceiptNo,
