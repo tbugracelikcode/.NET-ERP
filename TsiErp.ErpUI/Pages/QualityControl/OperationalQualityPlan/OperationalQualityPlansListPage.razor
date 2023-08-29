@@ -101,8 +101,9 @@ else
             <DxGridLayout CssClass="TSIGridLayout">
 
                 <Rows>
-                    <DxGridLayoutRow Height="15%" />
-                    <DxGridLayoutRow Height="14%" />
+                    <DxGridLayoutRow Height="12%" />
+                    <DxGridLayoutRow Height="10%" />
+                    <DxGridLayoutRow Height="11%" />
                     <DxGridLayoutRow Height="63%" />
                 </Rows>
 
@@ -125,14 +126,6 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="0" Column="3">
-                        <Template>
-                            <br />
-                            <label class="TSIModalLabel"><strong>@L["OperationCodeLabel"] </strong></label><br />
-                            <SfTextBox @ref="@ProductsOperationsButtonEdit" Created="@ProductsOperationsOnCreateIcon" @bind-Value="DataSource.OperationCode" ShowClearButton=true ValueChange="ProductsOperationsOnValueChange"></SfTextBox>
-                        </Template>
-                    </DxGridLayoutItem>
-
                     <DxGridLayoutItem Row="0" Column="5" RowSpan="2">
                         <Template>
                             <br />
@@ -140,6 +133,7 @@ else
                             <SfTextBox Multiline=true CssClass="TSIMemoBox60" @bind-Value="DataSource.Description_"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
+
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["ProductCodeLabel"] </strong></label><br />
@@ -154,8 +148,15 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
+                    <DxGridLayoutItem Row="2" Column="1">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["OperationCodeLabel"] </strong></label><br />
+                            <SfTextBox @ref="@ProductsOperationsButtonEdit" Created="@ProductsOperationsOnCreateIcon" @bind-Value="DataSource.OperationCode" ShowClearButton=true ValueChange="ProductsOperationsOnValueChange"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="2" Column="1" ColumnSpan="5">
+
+                    <DxGridLayoutItem Row="3" Column="1" ColumnSpan="5">
                         <Template>
 
                             <SfTab>
@@ -255,18 +256,13 @@ else
                                                             </SfGrid>
                                                         </Template>
                                                     </DxGridLayoutItem>
-
-
                                                 </Items>
-
                                             </DxGridLayout>
                                         </ContentTemplate>
                                     </TabItem>
 
                                 </TabItems>
                             </SfTab>
-
-
                         </Template>
                     </DxGridLayoutItem>
 
@@ -465,7 +461,8 @@ else
              Height="60%"
              MinWidth="720px"
              MinHeight="600px"
-             HeaderCssClass="HeaderTitleCss">
+             HeaderCssClass="HeaderTitleCss"
+             ShowCloseButton=false>
 
         <BodyTemplate>
             <DxGridLayout CssClass="TSIGridLayout">
@@ -532,7 +529,7 @@ else
 
                                         @foreach (var file in uploadedfiles)
                                         {
-                                            <div class="TSI_Chip"><span onclick="@(()=>PreviewUploadedImage(file))">@file.Name</span>&nbsp;&nbsp;&nbsp; <SfIcon onclick="@(()=>RemoveUploaded(OperationPictureDataSource))" Name="IconName.Trash"></SfIcon></div>
+                                            <div class="TSI_Chip"><span onclick="@(()=>PreviewUploadedImage(file))">@file.Name</span></div>
                                         }
 
                                     </div>
