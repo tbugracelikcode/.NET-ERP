@@ -156,6 +156,9 @@
   <data name="ContractQualityPlansChildMenu" xml:space="preserve">
     <value>Fason Giriş Kalite Planları</value>
   </data>
+  <data name="ContractTrackingFichesChildMenu" xml:space="preserve">
+    <value>Fason Takip Fişleri</value>
+  </data>
   <data name="ControlConditionsChildMenu" xml:space="preserve">
     <value>Kontrol Şartı Başlıkları</value>
   </data>

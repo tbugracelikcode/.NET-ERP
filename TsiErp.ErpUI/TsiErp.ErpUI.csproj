@@ -101,6 +101,9 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Tsi.Core\Tsi.Core.csproj" />
+		<ProjectReference Include="..\TsiErp.Business\TsiErp.Business.csproj" />
+		<ProjectReference Include="..\TsiErp.Entities\TsiErp.Entities.csproj" />
+		<ProjectReference Include="..\TsiErp.Localizations\TsiErp.Localizations.csproj" />
 		<ProjectReference Include="..\TsiErp.WebAPI\TsiErp.WebAPI.csproj" />
 	</ItemGroup>
 	<ItemGroup>

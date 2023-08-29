@@ -178,6 +178,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fason Takip Fişleri.
+        /// </summary>
+        public static string ContractTrackingFichesChildMenu {
+            get {
+                return ResourceManager.GetString("ContractTrackingFichesChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kontrol Şartı Başlıkları.
         /// </summary>
         public static string ControlConditionsChildMenu {

@@ -113,6 +113,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos
         /// </summary>
         public string ProductName { get; set; }
         /// <summary>
+        /// Cari Hesap ID
+        /// </summary>
+        public Guid? CurrentAccountCardID { get; set; }
+        /// <summary>
         /// Cari Hesap Kodu
         /// </summary>
         public string CurrentAccountCardCode { get; set; }
