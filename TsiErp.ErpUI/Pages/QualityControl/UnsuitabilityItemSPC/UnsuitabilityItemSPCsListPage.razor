@@ -1,0 +1,11 @@
+﻿@page "/unsuitability-item-spc"
+@layout MainLayout
+
+
+@inherits BaseListPage<SelectUnsuitabilityItemSPCsDto, ListUnsuitabilityItemSPCsDto, CreateUnsuitabilityItemSPCsDto, UpdateUnsuitabilityItemSPCsDto, ListUnsuitabilityItemSPCsParameterDto>
+
+@inject IUnsuitabilityItemSPCsAppService UnsuitabilityItemSPCsService
+@inject IStationGroupsAppService StationGroupsAppService
+@inject IUnsuitabilityItemsAppService UnsuitabilityItemsAppService
+@inject IUnsuitabilityTypesItemsAppService UnsuitabilityTypesItemsAppService
+@inject IStringLocalizer<UnsuitabilityItemSPCsResource> L

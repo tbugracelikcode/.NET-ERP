@@ -664,6 +664,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operasyonel SPC Tablosu.
+        /// </summary>
+        public static string OperationalSPCChildMenu {
+            get {
+                return ResourceManager.GetString("OperationalSPCChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operasyonlar.
         /// </summary>
         public static string OperationsMenu {
@@ -1488,6 +1497,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string UnsTypesItemsChildMenu {
             get {
                 return ResourceManager.GetString("UnsTypesItemsChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uygunsuzluk Başlığına Göre SPC Tablosu.
+        /// </summary>
+        public static string UnsuitabilityItemSPSChildMenu {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemSPSChildMenu", resourceCulture);
             }
         }
         

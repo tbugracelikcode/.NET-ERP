@@ -1,0 +1,10 @@
+﻿@page "/operational-spc"
+@layout MainLayout
+
+
+@inherits BaseListPage<SelectOperationalSPCsDto, ListOperationalSPCsDto, CreateOperationalSPCsDto, UpdateOperationalSPCsDto, ListOperationalSPCsParameterDto>
+
+@inject IOperationalSPCsAppService OperationalSPCsService
+@inject IStationGroupsAppService StationGroupsAppService
+@inject IProductsOperationsAppService ProductsOperationsAppService
+@inject IStringLocalizer<OperationalSPCsResource> L
