@@ -888,5 +888,14 @@ namespace TsiErp.Localizations.Resources.ProductsOperations.Page {
                 return ResourceManager.GetString("WorkCenterCode", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İŞ MERKEZİ ADI.
+        /// </summary>
+        public static string WorkCenterName {
+            get {
+                return ResourceManager.GetString("WorkCenterName", resourceCulture);
+            }
+        }
     }
 }

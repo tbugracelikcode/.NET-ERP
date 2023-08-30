@@ -209,6 +209,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
                 DataSource.TemplateOperationID = Guid.Empty;
                 DataSource.TemplateOperationCode = string.Empty;
                 DataSource.TemplateOperationName = string.Empty;
+                DataSource.WorkCenterID = Guid.Empty;
+                DataSource.WorkCenterName = string.Empty;
             }
         }
 
@@ -220,7 +222,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
             {
                 DataSource.TemplateOperationID = selectedTemplateOperation.Id;
                 DataSource.TemplateOperationCode = selectedTemplateOperation.Code;
-                DataSource.TemplateOperationName = selectedTemplateOperation.Code;
+                DataSource.TemplateOperationName = selectedTemplateOperation.Name;
+                DataSource.WorkCenterID = selectedTemplateOperation.WorkCenterID;
+                DataSource.WorkCenterName = selectedTemplateOperation.WorkCenterName;
+                
                 foreach (var line in selectedTemplateOperation.SelectTemplateOperationLines)
                 {
                     SelectProductsOperationLinesDto lineModel = new SelectProductsOperationLinesDto

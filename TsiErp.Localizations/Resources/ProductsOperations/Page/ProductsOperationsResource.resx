@@ -393,4 +393,7 @@
   <data name="WorkCenterCode" xml:space="preserve">
     <value>İŞ MERKEZİ KODU</value>
   </data>
+  <data name="WorkCenterName" xml:space="preserve">
+    <value>İŞ MERKEZİ ADI</value>
+  </data>
 </root>

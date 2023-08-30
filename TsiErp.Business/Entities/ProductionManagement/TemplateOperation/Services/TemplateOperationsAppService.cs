@@ -283,7 +283,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
                 var query = queryFactory.Query().From(Tables.TemplateOperations)
-                    .Select<TemplateOperations>(p => new { p.Id, p.Name, p.Code, p.IsActive })
+                    .Select<TemplateOperations>(p => new { p.Id, p.Name, p.Code, p.IsActive,p.WorkCenterID })
                     .Join<StationGroups>
                     (
                         g => new { WorkCenterName = g.Name },

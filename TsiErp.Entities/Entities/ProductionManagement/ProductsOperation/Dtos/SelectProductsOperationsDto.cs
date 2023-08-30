@@ -35,9 +35,9 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos
         /// </summary>
         public Guid? WorkCenterID { get; set; }
         /// <summary>
-        /// İş Merkezi Kodu
+        /// İş Merkezi Adı
         /// </summary>
-        public string WorkCenterCode { get; set; }
+        public string WorkCenterName { get; set; }
         /// <summary>
         /// Şablon Operasyon ID
         /// </summary>

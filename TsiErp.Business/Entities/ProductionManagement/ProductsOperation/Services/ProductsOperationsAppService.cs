@@ -67,7 +67,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                     Name = input.Name,
                     ProductID = input.ProductID,
                     TemplateOperationID = input.TemplateOperationID,
-                    WorkCenterID = Guid.Empty,
+                    WorkCenterID = input.WorkCenterID,
                     Code = input.Code,
                     CreationTime = DateTime.Now,
                     CreatorId = LoginedUserService.UserId,
@@ -235,6 +235,13 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                             nameof(TemplateOperations.Id),
                             JoinType.Left
                         )
+
+                        .Join<StationGroups>
+                        (
+                            g => new { WorkCenterName = g.Name, WorkCenterCode = g.Code },
+                            nameof(ProductsOperations.WorkCenterID),
+                            nameof(StationGroups.Id), JoinType.Left
+                        )
                         .Where(new { Id = id }, true, true, Tables.ProductsOperations);
 
                 var productsOperations = queryFactory.Get<SelectProductsOperationsDto>(query);
@@ -331,6 +338,12 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                             nameof(ProductsOperations.ProductID),
                             nameof(Products.Id),
                             JoinType.Left
+                        )
+                        .Join<StationGroups>
+                        (
+                            g => new { WorkCenterName = g.Name, WorkCenterCode = g.Code },
+                            nameof(ProductsOperations.WorkCenterID),
+                            nameof(StationGroups.Id), JoinType.Left
                         )
                         .Where(null, true, true, Tables.ProductsOperations);
 
