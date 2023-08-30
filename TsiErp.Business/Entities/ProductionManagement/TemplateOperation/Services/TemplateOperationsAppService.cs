@@ -177,7 +177,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var query = queryFactory.Query().From(Tables.TemplateOperations).Select<TemplateOperations>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.DataOpenStatus, p.DataOpenStatusUserId,p.WorkCenterID })
+                var query = queryFactory.Query().From(Tables.TemplateOperations).Select<TemplateOperations>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.DataOpenStatus, p.DataOpenStatusUserId, p.WorkCenterID })
                     .Join<StationGroups>
                     (
                         g => new { WorkCenterName = g.Name },
@@ -237,7 +237,7 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
 
                 var unsuitabilityItemsList = queryFactory.GetList<SelectUnsuitabilityItemsDto>(unsuitabilityItemsQuery).ToList();
 
-                var lineNr = unsuitabilityItemsLine.Max(s => s.LineNr);
+                var lineNr = unsuitabilityItemsLine.Count > 1 ? unsuitabilityItemsLine.Max(s => s.LineNr) : 1;
 
                 foreach (var item in unsuitabilityItemsList)
                 {
