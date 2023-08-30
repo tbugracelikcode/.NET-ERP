@@ -171,6 +171,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>OperationalQualityPlansResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\OperationalSPCs\Page\OperationalSPCsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>OperationalSPCsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\OperationUnsuitabilityReports\Page\OperationUnsuitabilityReportsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -350,6 +355,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>UnplannedMaintenancesResource.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\UnsuitabilityItemSPCs\Page\UnsuitabilityItemSPCsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>UnsuitabilityItemSPCsResource.resx</DependentUpon>
     </Compile>
     <Compile Update="Resources\UnsuitabilityItems\Page\UnsuitabilityItemsResource.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -562,6 +572,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>OperationalQualityPlansResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Resources\OperationalSPCs\Page\OperationalSPCsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>OperationalSPCsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\OperationUnsuitabilityReports\Page\OperationUnsuitabilityReportsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>OperationUnsuitabilityReportsResource.Designer.cs</LastGenOutput>
@@ -765,6 +779,10 @@
     <EmbeddedResource Update="Resources\UnplannedMaintenances\Page\UnplannedMaintenancesResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>UnplannedMaintenancesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\UnsuitabilityItemSPCs\Page\UnsuitabilityItemSPCsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UnsuitabilityItemSPCsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\UnsuitabilityItems\Page\UnsuitabilityItemsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

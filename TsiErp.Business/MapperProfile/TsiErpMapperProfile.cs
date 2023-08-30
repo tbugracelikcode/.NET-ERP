@@ -133,6 +133,14 @@ using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem.Dtos;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItemSPC;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItemSPC.Dtos;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItemSPCLine;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItemSPCLine.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationalSPCLine;
+using TsiErp.Entities.Entities.QualityControl.OperationalSPCLine.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationalSPC;
+using TsiErp.Entities.Entities.QualityControl.OperationalSPC.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.Forecast;
 using TsiErp.Entities.Entities.SalesManagement.Forecast.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.ForecastLine;
@@ -977,6 +985,43 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateContractTrackingFicheLinesDto, ContractTrackingFicheLines>();
             CreateMap<SelectContractTrackingFicheLinesDto, UpdateContractTrackingFicheLinesDto>();
             CreateMap<SelectContractTrackingFicheLinesDto, ContractTrackingFicheLines>();
+
+
+
+            CreateMap<OperationalSPCs, SelectOperationalSPCsDto>();
+            CreateMap<OperationalSPCs, ListOperationalSPCsDto>();
+            CreateMap<UpdateOperationalSPCsDto, OperationalSPCs>();
+            CreateMap<CreateOperationalSPCsDto, OperationalSPCs>();
+            CreateMap<SelectOperationalSPCsDto, CreateOperationalSPCsDto>();
+            CreateMap<SelectOperationalSPCsDto, UpdateOperationalSPCsDto>();
+            CreateMap<OperationalSPCs, UpdateOperationalSPCsDto>();
+
+            CreateMap<OperationalSPCLines, SelectOperationalSPCLinesDto>();
+            CreateMap<OperationalSPCLines, ListOperationalSPCLinesDto>();
+            CreateMap<CreateOperationalSPCLinesDto, OperationalSPCLines>();
+            CreateMap<SelectOperationalSPCLinesDto, CreateOperationalSPCLinesDto>();
+            CreateMap<UpdateOperationalSPCLinesDto, OperationalSPCLines>();
+            CreateMap<SelectOperationalSPCLinesDto, UpdateOperationalSPCLinesDto>();
+            CreateMap<SelectOperationalSPCLinesDto, OperationalSPCLines>();
+
+
+
+
+            CreateMap<UnsuitabilityItemSPCs, SelectUnsuitabilityItemSPCsDto>();
+            CreateMap<UnsuitabilityItemSPCs, ListUnsuitabilityItemSPCsDto>();
+            CreateMap<UpdateUnsuitabilityItemSPCsDto, UnsuitabilityItemSPCs>();
+            CreateMap<CreateUnsuitabilityItemSPCsDto, UnsuitabilityItemSPCs>();
+            CreateMap<SelectUnsuitabilityItemSPCsDto, CreateUnsuitabilityItemSPCsDto>();
+            CreateMap<SelectUnsuitabilityItemSPCsDto, UpdateUnsuitabilityItemSPCsDto>();
+            CreateMap<UnsuitabilityItemSPCs, UpdateUnsuitabilityItemSPCsDto>();
+
+            CreateMap<UnsuitabilityItemSPCLines, SelectUnsuitabilityItemSPCLinesDto>();
+            CreateMap<UnsuitabilityItemSPCLines, ListUnsuitabilityItemSPCLinesDto>();
+            CreateMap<CreateUnsuitabilityItemSPCLinesDto, UnsuitabilityItemSPCLines>();
+            CreateMap<SelectUnsuitabilityItemSPCLinesDto, CreateUnsuitabilityItemSPCLinesDto>();
+            CreateMap<UpdateUnsuitabilityItemSPCLinesDto, UnsuitabilityItemSPCLines>();
+            CreateMap<SelectUnsuitabilityItemSPCLinesDto, UpdateUnsuitabilityItemSPCLinesDto>();
+            CreateMap<SelectUnsuitabilityItemSPCLinesDto, UnsuitabilityItemSPCLines>();
         }
     }
 }
