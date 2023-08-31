@@ -24,6 +24,12 @@ namespace TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dt
         /// </summary>
         public bool IsUnsuitabilityWorkOrder { get; set; }
 
+
+        /// <summary>
+        /// Hata Başlığı ID
+        /// </summary>
+        public Guid UnsuitabilityItemsID { get; set; }
+
         /// <summary>
         /// Hata Başlığı Adı
         /// </summary>
@@ -43,6 +49,10 @@ namespace TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dt
         /// İş Emri Fiş No
         /// </summary>
         public string WorkOrderFicheNr { get; set; }
+        /// <summary>
+        /// İş Emri ID
+        /// </summary>
+        public Guid WorkOrderID { get; set; }
 
         /// <summary>
         /// Fason Takip Fiş No
