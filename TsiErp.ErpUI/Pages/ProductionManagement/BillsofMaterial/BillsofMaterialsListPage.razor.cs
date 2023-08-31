@@ -7,6 +7,7 @@ using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
+using TsiErp.Entities.Enums;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
@@ -325,6 +326,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
             await GetProductsList();
             await InvokeAsync(StateHasChanged);
         }
+
         public async Task ProductsNameOnCreateIcon()
         {
             var ProductsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ProductsNameButtonClickEvent);
