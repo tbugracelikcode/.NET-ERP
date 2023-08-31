@@ -26,11 +26,18 @@ namespace TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos
         public string Description_ { get; set; }
 
         public bool IsActive { get; set; }
-
+        /// <summary>
+        /// Uygunsuzluk Türü Başlığı 
+        /// </summary>
+        public Guid UnsuitabilityTypesItemsId { get; set; }
         /// <summary>
         /// Uygunsuzluk Türü Başlığı 
         /// </summary>
         public string UnsuitabilityTypesItemsName { get; set; }
+        /// <summary>
+        /// İş Merkezi ID 
+        /// </summary>
+        public Guid StationGroupId { get; set; }
 
         public string StationGroupName { get; set; }
 

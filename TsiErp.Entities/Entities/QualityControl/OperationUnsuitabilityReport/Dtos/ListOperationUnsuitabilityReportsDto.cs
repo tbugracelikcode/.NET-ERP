@@ -21,6 +21,11 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.D
         /// Açıklama
         /// </summary>
         public string Description_ { get; set; }
+
+        /// <summary>
+        /// Hata Başlığı ID
+        /// </summary>
+        public Guid UnsuitabilityItemsID { get; set; }
         /// <summary>
         /// Uygunsuzluk Başlığı Adı
         /// </summary>
@@ -41,6 +46,10 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.D
         /// İş Emri No
         /// </summary>
         public string WorkOrderNo { get; set; }
+        /// <summary>
+        /// İş Emri ID
+        /// </summary>
+        public Guid WorkOrderID { get; set; }
         /// <summary>
         /// İstasyon Kodu
         /// </summary>

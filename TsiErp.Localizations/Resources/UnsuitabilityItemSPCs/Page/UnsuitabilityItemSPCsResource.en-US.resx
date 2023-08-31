@@ -117,11 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CalculateButton" xml:space="preserve">
+    <value>Calculate</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>SPC CODE</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>SPC Code:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -135,6 +144,12 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="Date_" xml:space="preserve">
+    <value>DATE</value>
+  </data>
+  <data name="Date_Label" xml:space="preserve">
+    <value>Date:</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -147,23 +162,68 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Description:</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
-    <value>SPC Table by Unsuitability Items</value>
+    <value>SPC Tables by Unsuitability Items</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
   </data>
   <data name="ExportFileName" xml:space="preserve">
-    <value>SPCTablebyUnsuitabilityItems</value>
+    <value>SPCTablesbyUnsuitabilityItems</value>
   </data>
   <data name="ExportTitle" xml:space="preserve">
-    <value>SPC Table by Unsuitability Items</value>
+    <value>SPC Tables by Unsuitability Items</value>
+  </data>
+  <data name="LineGridDetectability" xml:space="preserve">
+    <value>DETECTABILITY</value>
+  </data>
+  <data name="LineGridFrequency" xml:space="preserve">
+    <value>FREQUENCY</value>
+  </data>
+  <data name="LineGridRPN" xml:space="preserve">
+    <value>RPN</value>
+  </data>
+  <data name="LineGridTotalUnsuitableComponent" xml:space="preserve">
+    <value>TOTAL UNSUITABLE COMPONENT</value>
+  </data>
+  <data name="LineGridTotalUnsuitableReport" xml:space="preserve">
+    <value>TOTAL UNSUITABLE REPORT</value>
+  </data>
+  <data name="LineGridUnsuitabilityItemIntensityCoefficient" xml:space="preserve">
+    <value>INTENSITY COEFFICIENT</value>
+  </data>
+  <data name="LineGridUnsuitabilityItemName" xml:space="preserve">
+    <value>UNSUITABILITY ITEM</value>
+  </data>
+  <data name="LineGridUnsuitabilityTypeName" xml:space="preserve">
+    <value>UNSUITABILITY TYPE</value>
+  </data>
+  <data name="LineGridUnsuitableComponentPerReport" xml:space="preserve">
+    <value>UNSUITABLE COMPONENT PER REPORT</value>
+  </data>
+  <data name="LineGridWorkCenterName" xml:space="preserve">
+    <value>WORK CENTER</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
   </data>
   <data name="LoadingText" xml:space="preserve">
     <value>The records are loading..</value>
+  </data>
+  <data name="MeasurementEndDate" xml:space="preserve">
+    <value>MEASUREMENT END DATE</value>
+  </data>
+  <data name="MeasurementEndDateLabel" xml:space="preserve">
+    <value>Measurement End Date:</value>
+  </data>
+  <data name="MeasurementStartDate" xml:space="preserve">
+    <value>MEASUREMENT START DATE</value>
+  </data>
+  <data name="MeasurementStartDateLabel" xml:space="preserve">
+    <value>Measurement Start Date:</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>The record you selected is using by {0}.</value>
@@ -174,8 +234,26 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>The SPC table by unsuitability items you selected will be permanently deleted.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>The line you selected will be permanently deleted.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>SPC Tables by Unsuitability Items</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Quality Control &gt; Transactions</value>
+  </data>
+  <data name="UIWarningDateMessageBase" xml:space="preserve">
+    <value>The start date cannot be greater than or the equal to the end date.</value>
+  </data>
+  <data name="UIWarningDateTitleBase" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>

@@ -1,7 +1,13 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Syncfusion.Blazor.Grids;
+using TsiErp.Business.Entities.ContractUnsuitabilityReport.Services;
+using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItemSPC.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItemSPCLine.Dtos;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPC
@@ -19,6 +25,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPC
 
         List<SelectUnsuitabilityItemSPCLinesDto> GridLineList = new List<SelectUnsuitabilityItemSPCLinesDto>();
 
+        List<ListUnsuitabilityItemsDto> UnsuitabilityItemsList = new List<ListUnsuitabilityItemsDto>();
+
         private bool LineCrudPopup = false;
 
         protected override async Task OnInitializedAsync()
@@ -26,7 +34,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPC
             BaseCrudService = UnsuitabilityItemSPCsService;
             _L = L;
             CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
+            //CreateLineContextMenuItems();
 
         }
 
@@ -230,9 +238,54 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPC
         }
 
 
-        public void Calculate()
+        public async void Calculate()
         {
-            //Hesaplama kodları gelecek
+            if (DataSource.MeasurementStartDate != DataSource.MeasurementEndDate  && DataSource.MeasurementStartDate !> DataSource.MeasurementEndDate)
+            {
+
+                UnsuitabilityItemsList = (await UnsuitabilityItemsAppService.GetListAsync(new ListUnsuitabilityItemsParameterDto())).Data.ToList();
+
+                foreach (var unsuitabilityItem in UnsuitabilityItemsList)
+                {
+                    var unsuitabilityType = (await UnsuitabilityTypesItemsAppService.GetAsync(unsuitabilityItem.UnsuitabilityTypesItemsId)).Data;
+
+                    var workCenter = (await StationGroupsAppService.GetAsync(unsuitabilityItem.StationGroupId)).Data;
+
+                    #region Toplam Uygunsuz Komponent Hesaplama
+
+                    var totalUnsuitableComponent = (await ContractUnsuitabilityReportsAppService.GetListAsync(new ListContractUnsuitabilityReportsParameterDto())).Data.Where(t => t.UnsuitabilityItemsID == unsuitabilityItem.Id && t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate).Select(t => t.UnsuitableAmount).Sum() + (await OperationUnsuitabilityReportsAppService.GetListAsync(new ListOperationUnsuitabilityReportsParameterDto())).Data.Where(t => t.UnsuitabilityItemsID == unsuitabilityItem.Id && t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate).Select(t => t.UnsuitableAmount).Sum() + (await PurchaseUnsuitabilityReportsAppService.GetListAsync(new ListPurchaseUnsuitabilityReportsParameterDto())).Data.Where(t => t.UnsuitabilityItemsID == unsuitabilityItem.Id && t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate).Select(t => t.UnsuitableAmount).Sum();
+
+                    #endregion
+
+                    #region Toplam Uygunsuz Rapor Hesaplama
+
+                    var totalUnsuitableReport = (await ContractUnsuitabilityReportsAppService.GetListAsync(new ListContractUnsuitabilityReportsParameterDto())).Data.Where(t => t.UnsuitabilityItemsID == unsuitabilityItem.Id && t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate).Count() + (await OperationUnsuitabilityReportsAppService.GetListAsync(new ListOperationUnsuitabilityReportsParameterDto())).Data.Where(t => t.UnsuitabilityItemsID == unsuitabilityItem.Id && t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate).Count() + (await PurchaseUnsuitabilityReportsAppService.GetListAsync(new ListPurchaseUnsuitabilityReportsParameterDto())).Data.Where(t => t.UnsuitabilityItemsID == unsuitabilityItem.Id && t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate).Count();
+
+                    #endregion
+
+                    SelectUnsuitabilityItemSPCLinesDto selectSPCLineModel = new SelectUnsuitabilityItemSPCLinesDto
+                    {
+                        Detectability = 10,
+                        Frequency = 10,
+                        LineNr = GridLineList.Count + 1,
+                        WorkCenterID = workCenter.Id,
+                        UnsuitabilityTypeName = unsuitabilityType.Name,
+                        WorkCenterName = workCenter.Name,
+                        UnsuitabilityTypeID = unsuitabilityType.Id,
+                        UnsuitabilityItemIntensityCoefficient = unsuitabilityItem.IntensityCoefficient,
+                        TotalUnsuitableComponent = Convert.ToInt32(totalUnsuitableComponent),
+                        TotalUnsuitableReport = totalUnsuitableReport,
+                        UnsuitableComponentPerReport = (Convert.ToInt32(totalUnsuitableComponent) / totalUnsuitableReport),
+                        RPN = 10 * 10 * unsuitabilityItem.IntensityCoefficient
+                    };
+
+                    GridLineList.Add(selectSPCLineModel);
+                }
+            }
+            else
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningDateTitleBase"], L["UIWarningDateMessageBase"]);
+            }
         }
 
         #endregion

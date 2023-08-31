@@ -46,7 +46,7 @@ namespace TsiErp.Entities.Entities.QualityControl.UnsuitabilityItemSPCLine.Dtos
         /// <summary>
         /// Uygunsuzluk Başlığı Şiddet Katsayısı
         /// </summary>
-        public string UnsuitabilityItemIntensityCoefficient { get; set; }
+        public int UnsuitabilityItemIntensityCoefficient { get; set; }
         /// <summary>
         /// Toplam Uygunsuz Komponent Sayısı
         /// </summary>

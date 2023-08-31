@@ -171,6 +171,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>OperationalQualityPlansResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\OperationalSPCComparings\Page\OperationalSPCComparingsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>OperationalSPCComparingsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\OperationalSPCs\Page\OperationalSPCsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -571,6 +576,10 @@
     <EmbeddedResource Update="Resources\OperationalQualityPlans\Page\OperationalQualityPlansResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>OperationalQualityPlansResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\OperationalSPCComparings\Page\OperationalSPCComparingsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>OperationalSPCComparingsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\OperationalSPCs\Page\OperationalSPCsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

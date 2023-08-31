@@ -117,11 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CalculateButton" xml:space="preserve">
+    <value>Hesapla</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>SPC KODU</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>SPC Kodu:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -135,6 +144,12 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="Date_" xml:space="preserve">
+    <value>TARİH</value>
+  </data>
+  <data name="Date_Label" xml:space="preserve">
+    <value>Tarih:</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -147,23 +162,80 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
-    <value>Operasyonel SPC Tablosu</value>
+    <value>Operasyonel SPC Tabloları</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
   <data name="ExportFileName" xml:space="preserve">
-    <value>OperasyonelSPCTablosu</value>
+    <value>OperasyonelSPCTablolari</value>
   </data>
   <data name="ExportTitle" xml:space="preserve">
-    <value>Operasyonel SPC Tablosu</value>
+    <value>Operasyonel SPC Tabloları</value>
+  </data>
+  <data name="LineGridFrequency" xml:space="preserve">
+    <value>SIKLIK</value>
+  </data>
+  <data name="LineGridOperationBasedMidControlFrequency" xml:space="preserve">
+    <value>OPERASYON BAZLI ARA KONTROL SIKLIĞI</value>
+  </data>
+  <data name="LineGridOperationName" xml:space="preserve">
+    <value>OPERASYON AÇIKLAMASI</value>
+  </data>
+  <data name="LineGridRPN" xml:space="preserve">
+    <value>RPN</value>
+  </data>
+  <data name="LineGridSDetectability" xml:space="preserve">
+    <value>FARKEDİLEBİLİRLİK</value>
+  </data>
+  <data name="LineGridSeverity" xml:space="preserve">
+    <value>ŞİDDET</value>
+  </data>
+  <data name="LineGridTotalComponent" xml:space="preserve">
+    <value>TOPLAM ÜRETİLEN KOMPONENT</value>
+  </data>
+  <data name="LineGridTotalOccuredOperation" xml:space="preserve">
+    <value>TOPLAM GERÇEKLEŞEN OPERASYON</value>
+  </data>
+  <data name="LineGridTotalUnsuitableComponent" xml:space="preserve">
+    <value>TOPLAM UYGUNSUZ KOMPONENT</value>
+  </data>
+  <data name="LineGridTotalUnsuitableOperation" xml:space="preserve">
+    <value>TOPLAM UYGUNSUZ OPERASYON</value>
+  </data>
+  <data name="LineGridUnsuitableComponentPerOperation" xml:space="preserve">
+    <value>OPERASYON BAŞINA UYGUNSUZ KOMPONENT SAYISI</value>
+  </data>
+  <data name="LineGridUnsuitableComponentRate" xml:space="preserve">
+    <value>UYGUNSUZ KOMPONENT ORANI</value>
+  </data>
+  <data name="LineGridUnsuitableOperationRate" xml:space="preserve">
+    <value>UYGUNSUZ OPERASYON ORANI</value>
+  </data>
+  <data name="LineGridWorkCenterName" xml:space="preserve">
+    <value>İŞ MERKEZİ</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
   </data>
   <data name="LoadingText" xml:space="preserve">
     <value>Kayıtlar Yükleniyor..</value>
+  </data>
+  <data name="MeasurementEndDate" xml:space="preserve">
+    <value>HESAPLAMA BİTİŞ TARİHİ</value>
+  </data>
+  <data name="MeasurementEndDateLabel" xml:space="preserve">
+    <value>Hesaplama Bitiş Tarihi:</value>
+  </data>
+  <data name="MeasurementStartDate" xml:space="preserve">
+    <value>HESAPLAMA BAŞLANGIÇ TARİHİ</value>
+  </data>
+  <data name="MeasurementStartDateLabel" xml:space="preserve">
+    <value>Hesaplama Başlangıç Tarihi:</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
@@ -174,8 +246,26 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
+  <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
+    <value>Seçtiğiniz operasyonel SPC tablosu, kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupMessageLineBase" xml:space="preserve">
+    <value>Seçtiğiniz satır, kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIConfirmationPopupTitleBase" xml:space="preserve">
+    <value>Onay</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Operasyonel SPC Tabloları</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Kalite Kontrol &gt; Hareketler</value>
+  </data>
+  <data name="UIWarningDateMessageBase" xml:space="preserve">
+    <value>Başlangıç tarihi, bitiş tarihinden büyük veya aynı olamaz.</value>
+  </data>
+  <data name="UIWarningDateTitleBase" xml:space="preserve">
+    <value>Uyarı</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>

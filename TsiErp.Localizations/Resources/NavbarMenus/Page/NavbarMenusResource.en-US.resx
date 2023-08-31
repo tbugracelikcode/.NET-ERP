@@ -319,7 +319,7 @@
     <value>Operational Quality Plans</value>
   </data>
   <data name="OperationalSPCChildMenu" xml:space="preserve">
-    <value>Operational SPC Table</value>
+    <value>Operational SPC Tables</value>
   </data>
   <data name="OperationsMenu" xml:space="preserve">
     <value>Operations</value>
@@ -598,7 +598,7 @@
     <value>Unsuitability Type Items</value>
   </data>
   <data name="UnsuitabilityItemSPSChildMenu" xml:space="preserve">
-    <value>SPC Table by Unsuitability Items</value>
+    <value>SPC Tables by Unsuitability Items</value>
   </data>
   <data name="UserGrpChildMenu" xml:space="preserve">
     <value>User Groups</value>

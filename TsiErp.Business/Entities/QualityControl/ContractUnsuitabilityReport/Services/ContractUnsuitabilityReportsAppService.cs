@@ -133,7 +133,7 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityReport.Services
                     (
                        d => new { CurrentAccountCardCode = d.Code, CurrentAccountCardName = d.Name, CurrentAccountCardID = d.Id }, nameof(ContractUnsuitabilityReports.CurrentAccountCardID), nameof(CurrentAccountCards.Id), JoinType.Left
                     )
-                    .Where(null, false, false, Tables.ContractUnsuitabilityReports);
+                    .Where(new { Id = id }, false, false, Tables.ContractUnsuitabilityReports);
 
                 var ContractUnsuitabilityReport = queryFactory.Get<SelectContractUnsuitabilityReportsDto>(query);
 
@@ -143,6 +143,7 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityReport.Services
 
             }
         }
+
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListContractUnsuitabilityReportsDto>>> GetListAsync(ListContractUnsuitabilityReportsParameterDto input)

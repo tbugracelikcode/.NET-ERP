@@ -664,7 +664,7 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Operasyonel SPC Tablosu.
+        ///   Looks up a localized string similar to Operasyonel SPC Tabloları.
         /// </summary>
         public static string OperationalSPCChildMenu {
             get {
@@ -1501,7 +1501,7 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Uygunsuzluk Başlığına Göre SPC Tablosu.
+        ///   Looks up a localized string similar to Uygunsuzluk Başlığına Göre SPC Tabloları.
         /// </summary>
         public static string UnsuitabilityItemSPSChildMenu {
             get {

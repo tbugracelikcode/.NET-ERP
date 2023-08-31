@@ -7,6 +7,13 @@ using TsiErp.Business.Entities.SalesPrice.Services;
 using TsiErp.Entities.Entities.SalesManagement.SalesPrice.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesPriceLine.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationalSPC.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
+using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
+using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
 {
@@ -24,6 +31,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
 
         List<SelectOperationalSPCLinesDto> GridLineList = new List<SelectOperationalSPCLinesDto>();
 
+        List<ListWorkOrdersDto> WorkOrdersList = new List<ListWorkOrdersDto>();
+
+        List<ListProductsOperationsDto> OperationsList = new List<ListProductsOperationsDto>();
+
         private bool LineCrudPopup = false;
 
         protected override async Task OnInitializedAsync()
@@ -31,7 +42,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
             BaseCrudService = OperationalSPCsService;
             _L = L;
             CreateMainContextMenuItems();
-            CreateLineContextMenuItems();
+            //CreateLineContextMenuItems();
 
         }
 
@@ -137,11 +148,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
             switch (args.Item.Id)
             {
                 case "new":
-                  
-                        LineDataSource = new SelectOperationalSPCLinesDto();
-                        LineCrudPopup = true;
-                        LineDataSource.LineNr = GridLineList.Count + 1;
-                        await InvokeAsync(StateHasChanged);
+
+                    LineDataSource = new SelectOperationalSPCLinesDto();
+                    LineCrudPopup = true;
+                    LineDataSource.LineNr = GridLineList.Count + 1;
+                    await InvokeAsync(StateHasChanged);
 
                     break;
 
@@ -235,9 +246,77 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
         }
 
 
-        public void Calculate()
+        public async void Calculate()
         {
-            //Hesaplama kodları gelecek
+            if (DataSource.MeasurementStartDate != DataSource.MeasurementEndDate && DataSource.MeasurementStartDate! > DataSource.MeasurementEndDate)
+            {
+                WorkOrdersList = (await WorkOrdersAppService.GetListAsync(new ListWorkOrdersParameterDto())).Data.Where(t => t.OccuredStartDate > DataSource.MeasurementStartDate && t.OccuredFinishDate < DataSource.MeasurementEndDate).ToList();
+
+                OperationsList = (await ProductsOperationsAppService.GetListAsync(new ListProductsOperationsParameterDto())).Data.ToList();
+
+                foreach (var operation in OperationsList)
+                {
+                    var tempWorkOrderList = WorkOrdersList.Where(t => t.ProductsOperationID == operation.Id).ToList();
+
+                    var workCenter = (await StationGroupsAppService.GetAsync(operation.WorkCenterID)).Data;
+
+                    #region Toplam Üretilen Komponent
+
+                    var totalProducedComponent = tempWorkOrderList.Select(t => t.ProducedQuantity).Sum();
+
+                    #endregion
+
+                    #region Toplam Uygunsuz Komponent ve Rapor
+
+                    int totalUnsuitableComponent = 0;
+                    int totalUnsuitableReport = 0;
+
+                    foreach (var workorder in tempWorkOrderList)
+                    {
+                        var addedAmountComponent = (await ContractUnsuitabilityReportsAppService.GetListAsync(new ListContractUnsuitabilityReportsParameterDto())).Data.Where(t => t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate && t.WorkOrderID == workorder.Id).Select(t => t.UnsuitableAmount).Sum() +
+                            (await PurchaseUnsuitabilityReportsAppService.GetListAsync(new ListPurchaseUnsuitabilityReportsParameterDto())).Data.Where(t => t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate && t.IsUnsuitabilityWorkOrder == true).Select(t => t.UnsuitableAmount).Sum() +
+                            (await OperationUnsuitabilityReportsAppService.GetListAsync(new ListOperationUnsuitabilityReportsParameterDto())).Data.Where(t => t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate && t.WorkOrderID == workorder.Id).Select(t => t.UnsuitableAmount).Sum();
+
+                        var addedAmountReport = (await ContractUnsuitabilityReportsAppService.GetListAsync(new ListContractUnsuitabilityReportsParameterDto())).Data.Where(t => t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate && t.WorkOrderID == workorder.Id).Count() +
+                            (await PurchaseUnsuitabilityReportsAppService.GetListAsync(new ListPurchaseUnsuitabilityReportsParameterDto())).Data.Where(t => t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate && t.IsUnsuitabilityWorkOrder == true).Count() +
+                            (await OperationUnsuitabilityReportsAppService.GetListAsync(new ListOperationUnsuitabilityReportsParameterDto())).Data.Where(t => t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate && t.WorkOrderID == workorder.Id).Count();
+
+                        totalUnsuitableComponent = totalUnsuitableComponent + Convert.ToInt32(addedAmountComponent);
+                        totalUnsuitableReport = totalUnsuitableReport + addedAmountReport;
+                    }
+
+                    #endregion
+
+                    #region Toplam Gerçekleşen Operasyon
+
+                    int totalOccuredOperation = tempWorkOrderList.Count;
+
+                    #endregion
+
+                    SelectOperationalSPCLinesDto selectOperationSPCLineModel = new SelectOperationalSPCLinesDto
+                    {
+                        WorkCenterName = workCenter.Name,
+                        OperationName = operation.Name,
+                        TotalComponent = Convert.ToInt32(totalProducedComponent),
+                        TotalUnsuitableComponent = totalUnsuitableComponent,
+                        UnsuitableComponentRate = (totalUnsuitableComponent / Convert.ToInt32(totalProducedComponent)) * 100,
+                        TotalOccuredOperation = totalOccuredOperation,
+                        TotalUnsuitableOperation = totalUnsuitableReport,
+                        UnsuitableOperationRate = (totalUnsuitableReport / totalOccuredOperation) * 100,
+                        UnsuitableComponentPerOperation = totalUnsuitableComponent / totalUnsuitableReport,
+                        Frequency = 10,
+                        Severity = 10,
+                        Detectability = 10,
+                        RPN = 1000,
+                        OperationBasedMidControlFrequency = 110
+                    };
+                }
+
+            }
+            else
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningDateTitleBase"], L["UIWarningDateMessageBase"]);
+            }
         }
 
         #endregion

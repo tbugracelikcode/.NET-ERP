@@ -33,4 +33,11 @@
     <ProjectReference Include="..\TsiErp.Localizations\TsiErp.Localizations.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Entities\QualityControl\OperationalSPCComparing\Validations\" />
+    <Folder Include="Entities\QualityControl\OperationalSPCComparing\Services\" />
+    <Folder Include="Entities\QualityControl\UnsuitabilityItemSPCComparing\Validations\" />
+    <Folder Include="Entities\QualityControl\UnsuitabilityItemSPCComparing\Services\" />
+  </ItemGroup>
+
 </Project>
