@@ -119,14 +119,14 @@ else
                             <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
-                    <DxGridLayoutItem Row="1" Column="1">
+                    <DxGridLayoutItem Row="1" Column="1" ColumnSpan="2">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
                             <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="1" Column="2">
+                    <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                             <center>
                                 <label class="TSIModalLabel"><strong>@L["IsActiveLabel"] </strong></label><br />
@@ -323,47 +323,59 @@ else
 
                                                     <DxGridLayoutItem Row="0" Column="0">
                                                         <Template>
-                                                            <br />
-                                                            <label class="TSIModalLabel"><strong>@L["Address1Label"] </strong></label>
-                                                            <SfTextBox CssClass="TSITxtBox" Multiline=true @bind-Value="DataSource.Address1"></SfTextBox>
+                                                            <form autocomplete=false>
+                                                                <br />
+                                                                <label class="TSIModalLabel"><strong>@L["Address1Label"] </strong></label>
+                                                                <SfTextBox CssClass="TSITxtBox" Multiline=true @bind-Value="DataSource.Address1"></SfTextBox>
+                                                            </form>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="0" Column="2">
                                                         <Template>
-                                                            <br />
-                                                            <label class="TSIModalLabel"><strong>@L["Address2Label"] </strong></label>
-                                                            <SfTextBox CssClass="TSITxtBox" Multiline=true @bind-Value="DataSource.Address2"></SfTextBox>
+                                                            <form autocomplete=false>
+                                                                <br />
+                                                                <label class="TSIModalLabel"><strong>@L["Address2Label"] </strong></label>
+                                                                <SfTextBox CssClass="TSITxtBox" Multiline=true @bind-Value="DataSource.Address2"></SfTextBox>
+                                                            </form>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="0" Column="4">
                                                         <Template>
-                                                            <br />
-                                                            <label class="TSIModalLabel"><strong>@L["CountryLabel"] </strong></label>
-                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Country"></SfTextBox>
+                                                            <form autocomplete=false>
+                                                                <br />
+                                                                <label class="TSIModalLabel"><strong>@L["CountryLabel"] </strong></label>
+                                                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Country"></SfTextBox>
+                                                            </form>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="0" Column="6">
                                                         <Template>
-                                                            <br />
-                                                            <label class="TSIModalLabel"><strong>@L["CityLabel"] </strong></label>
-                                                            <SfTextBox @bind-Value="DataSource.City"></SfTextBox>
+                                                            <form autocomplete=false>
+                                                                <br />
+                                                                <label class="TSIModalLabel"><strong>@L["CityLabel"] </strong></label>
+                                                                <SfTextBox @bind-Value="DataSource.City"></SfTextBox>
+                                                            </form>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="1" Column="0">
                                                         <Template>
-                                                            <label class="TSIModalLabel"><strong>@L["DistrictLabel"] </strong></label>
-                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.District"></SfTextBox>
+                                                            <form autocomplete=false>
+                                                                <label class="TSIModalLabel"><strong>@L["DistrictLabel"] </strong></label>
+                                                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.District"></SfTextBox>
+                                                            </form>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
                                                     <DxGridLayoutItem Row="1" Column="2">
                                                         <Template>
-                                                            <label class="TSIModalLabel"><strong>@L["PostCodeLabel"] </strong></label>
-                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.PostCode"></SfTextBox>
+                                                            <form autocomplete=false>
+                                                                <label class="TSIModalLabel"><strong>@L["PostCodeLabel"] </strong></label>
+                                                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.PostCode"></SfTextBox>
+                                                            </form>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -384,7 +396,8 @@ else
                                                     <DxGridLayoutItem Row="2" Column="0">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>@L["FaxLabel"] </strong></label>
-                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Fax"></SfTextBox>
+                                                            @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Fax"></SfTextBox> *@
+                                                            <SfMaskedTextBox CssClass="TSITxtBox" Mask="0(000)-000-0000" @bind-Value="@DataSource.Fax"></SfMaskedTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 
@@ -482,7 +495,7 @@ else
                                                             <SfSwitch @bind-Checked="@DataSource.ContractSupplier"></SfSwitch>
                                                         </Template>
                                                     </DxGridLayoutItem>
-                                                     <DxGridLayoutItem Row="1" Column="0">
+                                                    <DxGridLayoutItem Row="1" Column="0">
                                                         <Template>
                                                             <label class="TSIModalLabel"><strong>@L["ContractDailyWorkingCapacityLabel"] </strong></label>
                                                             <br />
