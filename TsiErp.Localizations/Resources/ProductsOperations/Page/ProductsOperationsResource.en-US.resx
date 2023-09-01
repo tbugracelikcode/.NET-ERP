@@ -393,4 +393,7 @@
   <data name="WorkCenterCode" xml:space="preserve">
     <value>WORK CENTER CODE</value>
   </data>
+  <data name="WorkCenterName" xml:space="preserve">
+    <value>WORK CENTER NAME</value>
+  </data>
 </root>

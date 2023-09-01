@@ -498,7 +498,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         {
             if (ProductionOrderGridContextMenu.Count() == 0)
             {
-                ProductionOrderGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextTree"], Id = "productstree" });
+                //ProductionOrderGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextTree"], Id = "productstree" });
             }
         }
 
@@ -515,6 +515,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                     BoMDataSource = (await BillsofMaterialsAppService.GetAsync(BoMID)).Data;
 
                     GridBoMLineList = BoMDataSource.SelectBillsofMaterialLines;
+
+                    
 
                     foreach (var item in GridBoMLineList)
                     {
