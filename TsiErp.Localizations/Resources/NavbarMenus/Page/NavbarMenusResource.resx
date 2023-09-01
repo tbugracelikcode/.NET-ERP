@@ -318,6 +318,9 @@
   <data name="OperationalQualityPlansChildMenu" xml:space="preserve">
     <value>Operasyon Kalite Planları</value>
   </data>
+  <data name="OperationalSPCChildMenu" xml:space="preserve">
+    <value>Operasyonel SPC Tabloları</value>
+  </data>
   <data name="OperationsMenu" xml:space="preserve">
     <value>Operasyonlar</value>
   </data>
@@ -593,6 +596,9 @@
   </data>
   <data name="UnsTypesItemsChildMenu" xml:space="preserve">
     <value>Uygunsuzluk Türü Başlıkları</value>
+  </data>
+  <data name="UnsuitabilityItemSPSChildMenu" xml:space="preserve">
+    <value>Uygunsuzluk Başlığına Göre SPC Tabloları</value>
   </data>
   <data name="UserGrpChildMenu" xml:space="preserve">
     <value>Kullanıcı Grupları</value>

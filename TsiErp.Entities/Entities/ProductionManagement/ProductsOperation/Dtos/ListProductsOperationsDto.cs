@@ -21,6 +21,11 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos
         /// İş Merkezi Kodu
         /// </summary>
         public string WorkCenterCode { get; set; }
+
+        /// <summary>
+        /// İş Merkezi ID
+        /// </summary>
+        public Guid WorkCenterID { get; set; }
         /// <summary>
         /// İş Merkezi Adı
         /// </summary>

@@ -116,5 +116,11 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string ContractTrackingFiches = "ContractTrackingFiches";
         public static readonly string ContractTrackingFicheLines = "ContractTrackingFicheLines";
         public static readonly string ContractUnsuitabilityReports = "ContractUnsuitabilityReports";
+        public static readonly string UnsuitabilityItemSPCs = "UnsuitabilityItemSPCs";
+        public static readonly string UnsuitabilityItemSPCLines = "UnsuitabilityItemSPCLines";
+        public static readonly string OperationalSPCLines = "OperationalSPCLines";
+        public static readonly string OperationalSPCs = "OperationalSPCs";
+        public static readonly string UnsuitabilityItemSPCComparings = "UnsuitabilityItemSPCComparings";
+        public static readonly string OperationalSPCComparings = "OperationalSPCComparings";
     }
 }

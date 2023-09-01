@@ -88,6 +88,10 @@ using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanLine;
 using TsiErp.Entities.Entities.QualityControl.ContractQualityPlanOperation;
 using TsiErp.Entities.Entities.QualityControl.ContractQualityPlan;
 using TsiErp.Entities.Entities.QualityControl.ContractOperationPicture;
+using TsiErp.Entities.Entities.QualityControl.OperationalSPC;
+using TsiErp.Entities.Entities.QualityControl.OperationalSPCLine;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItemSPC;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItemSPCLine;
 using TsiErp.Entities.Entities.SalesManagement.Forecast;
 using TsiErp.Entities.Entities.SalesManagement.ForecastLine;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder;
@@ -108,6 +112,8 @@ using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan;
 using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlanLine;
+using TsiErp.Entities.Entities.QualityControl.OperationalSPCComparing;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItemSPCComparing;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -3691,6 +3697,218 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 ContractUnsuitabilityReportsTable.Create();
             }
             #endregion
+
+            #region UnsuitabilityItemSPCs Table Created
+            Table UnsuitabilityItemSPCsTable = model.CreateTable(Tables.UnsuitabilityItemSPCs);
+
+            if (UnsuitabilityItemSPCsTable != null)
+            {
+                var properties = (typeof(UnsuitabilityItemSPCs)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(UnsuitabilityItemSPCsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(UnsuitabilityItemSPCsTable, "PK_" + UnsuitabilityItemSPCsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        UnsuitabilityItemSPCsTable.Indexes.Add(pkIndex);
+                    }
+
+                    UnsuitabilityItemSPCsTable.Columns.Add(column);
+                }
+
+                UnsuitabilityItemSPCsTable.Create();
+            }
+            #endregion
+
+            #region UnsuitabilityItemSPCLines Table Created
+            Table UnsuitabilityItemSPCLinesTable = model.CreateTable(Tables.UnsuitabilityItemSPCLines);
+
+            if (UnsuitabilityItemSPCLinesTable != null)
+            {
+                var properties = (typeof(UnsuitabilityItemSPCLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(UnsuitabilityItemSPCLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(UnsuitabilityItemSPCLinesTable, "PK_" + UnsuitabilityItemSPCLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        UnsuitabilityItemSPCLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    UnsuitabilityItemSPCLinesTable.Columns.Add(column);
+                }
+
+                UnsuitabilityItemSPCLinesTable.Create();
+            }
+            #endregion
+
+            #region OperationalSPCs Table Created
+            Table OperationalSPCsTable = model.CreateTable(Tables.OperationalSPCs);
+
+            if (OperationalSPCsTable != null)
+            {
+                var properties = (typeof(OperationalSPCs)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(OperationalSPCsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(OperationalSPCsTable, "PK_" + OperationalSPCsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        OperationalSPCsTable.Indexes.Add(pkIndex);
+                    }
+
+                    OperationalSPCsTable.Columns.Add(column);
+                }
+
+                OperationalSPCsTable.Create();
+            }
+            #endregion
+
+            #region OperationalSPCLines Table Created
+            Table OperationalSPCLinesTable = model.CreateTable(Tables.OperationalSPCLines);
+
+            if (OperationalSPCLinesTable != null)
+            {
+                var properties = (typeof(OperationalSPCLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(OperationalSPCLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(OperationalSPCLinesTable, "PK_" + OperationalSPCLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        OperationalSPCLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    OperationalSPCLinesTable.Columns.Add(column);
+                }
+
+                OperationalSPCLinesTable.Create();
+            }
+            #endregion
+
+            #region OperationalSPCComparings Table Created
+            Table OperationalSPCComparingsTable = model.CreateTable(Tables.OperationalSPCComparings);
+
+            if (OperationalSPCComparingsTable != null)
+            {
+                var properties = (typeof(OperationalSPCComparings)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(OperationalSPCComparingsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(OperationalSPCComparingsTable, "PK_" + OperationalSPCComparingsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        OperationalSPCComparingsTable.Indexes.Add(pkIndex);
+                    }
+
+                    OperationalSPCComparingsTable.Columns.Add(column);
+                }
+
+                OperationalSPCComparingsTable.Create();
+            }
+            #endregion
+
+            #region UnsuitabilityItemSPCComparings Table Created
+            Table UnsuitabilityItemSPCComparingsTable = model.CreateTable(Tables.UnsuitabilityItemSPCComparings);
+
+            if (UnsuitabilityItemSPCComparingsTable != null)
+            {
+                var properties = (typeof(UnsuitabilityItemSPCComparings)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(UnsuitabilityItemSPCComparingsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(UnsuitabilityItemSPCComparingsTable, "PK_" + UnsuitabilityItemSPCComparingsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        UnsuitabilityItemSPCComparingsTable.Indexes.Add(pkIndex);
+                    }
+
+                    UnsuitabilityItemSPCComparingsTable.Columns.Add(column);
+                }
+
+                UnsuitabilityItemSPCComparingsTable.Create();
+            }
+            #endregion
+
+
 
             return true;
         }
