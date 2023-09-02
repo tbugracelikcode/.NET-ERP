@@ -4,6 +4,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Localization;
+using Microsoft.JSInterop;
 using Syncfusion.Blazor.Buttons;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
@@ -46,6 +47,10 @@ namespace TsiErp.ErpUI.Pages.Base
 
         [Inject]
         ModalManager ModalManager { get; set; }
+
+
+        [Inject]
+        IJSRuntime JsRuntime { get; set; }
         public TGetOutputDto DataSource { get; set; }
         public IList<TGetListOutputDto> ListDataSource { get; set; }
 
@@ -399,6 +404,7 @@ namespace TsiErp.ErpUI.Pages.Base
             }
         }
 
+        #region Grid Toolbar Methods
         public async void OnToolbarClicked(string toolbar, string header, string filename)
         {
 
@@ -419,20 +425,22 @@ namespace TsiErp.ErpUI.Pages.Base
 
         public async void OnToolbarSearchChange(KeyboardEventArgs e)
         {
-            if(e.Code=="Enter")
+            if (e.Code == "Enter" || e.Code == "NumpadEnter")
             {
                 if (!string.IsNullOrEmpty(GridSearchText))
                 {
                     await _grid.SearchAsync(GridSearchText.ToLower());
+
+                    await JsRuntime.InvokeVoidAsync("focusInput", "srcText");
                 }
                 else
                 {
                     await _grid.SearchAsync("");
+
+                    await JsRuntime.InvokeVoidAsync("focusInput", "srcText");
                 }
             }
         }
-
-
 
         public void CreateGridToolbar()
         {
@@ -441,11 +449,12 @@ namespace TsiErp.ErpUI.Pages.Base
             RenderFragment search = (builder) =>
             {
                 builder.OpenComponent(0, typeof(SfTextBox));
-                builder.AddAttribute(1, "CssClass", "TSITxtBox");
-                builder.AddAttribute(2, "Placeholder", "Aramak istediğiniz kelimeyi yazın.");
-                builder.AddAttribute(3, "Value", BindConverter.FormatValue(GridSearchText));
-                builder.AddAttribute(4, "onchange", EventCallback.Factory.CreateBinder<string?>(this, __value => GridSearchText = __value, GridSearchText));
-                builder.AddAttribute(5, "onkeydown", OnToolbarSearchChange);
+                builder.AddAttribute(1, "ID", "srcText");
+                builder.AddAttribute(2, "CssClass", "TSITxtBox");
+                builder.AddAttribute(3, "Placeholder", "Aramak istediğiniz kelimeyi yazın.");
+                builder.AddAttribute(4, "Value", BindConverter.FormatValue(GridSearchText));
+                builder.AddAttribute(5, "onchange", EventCallback.Factory.CreateBinder<string?>(this, __value => GridSearchText = __value, GridSearchText));
+                builder.AddAttribute(6, "onkeydown", OnToolbarSearchChange);
                 builder.CloseComponent();
             };
 
@@ -477,6 +486,7 @@ namespace TsiErp.ErpUI.Pages.Base
                 await this._grid.ExportToPdfAsync(PdfExportProperties);
             }
 
-        }
+        } 
+        #endregion
     }
 }
