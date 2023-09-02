@@ -27,12 +27,13 @@
     font-weight: bolder;
     margin-left: 70%;
 }
+
     .TSISelectAllStationsCalendar:hover {
         font-size: 17px;
         font-weight: bold;
         margin-left: 70%;
         color: #B30303;
-        cursor:pointer ;
+        cursor: pointer;
     }
 
 .TSIMemoBox100 {
@@ -115,6 +116,7 @@
 .TSIExcelIcon {
     width: 25px !important;
     height: 25px !important;
+    content: url('../images/excelicon.png') !important;
 }
 
 .TSIPdfButton {
@@ -146,6 +148,7 @@
 .TSIPdfIcon {
     width: 25px !important;
     height: 25px !important;
+    content: url('../images/pdficon.png') !important;
 }
 
 
@@ -360,7 +363,7 @@
 
 .TSITemplateOprGridLayout {
     width: 100%;
-    height: 350px;
+    height: 405px;
 }
 
 .TSIQualityPlansGridLayout {
@@ -963,11 +966,12 @@ html {
     user-select: none;
 }
 
+
 .e-grid .e-rowcell {
     border-style: solid;
     border-width: 1px 0 0;
     display: table-cell;
-    font-size: 15px;
+    font-size: 12px !important;
     text-align: center !important;
     line-height: 22px;
     overflow: hidden;
@@ -1082,5 +1086,3 @@ e-upload .e-upload-files .e-file-remove-btn.e-icons:hover, .e-upload .e-upload-f
     user-select: auto !important;
     margin-right: 45% !important;
 }
-
-

@@ -1,8 +1,14 @@
-﻿using DevExpress.Blazor;
+﻿using Autofac.Features.OwnedInstances;
+using DevExpress.Blazor;
 using FluentValidation;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.Extensions.Localization;
+using Syncfusion.Blazor.Buttons;
 using Syncfusion.Blazor.Grids;
+using Syncfusion.Blazor.Inputs;
+using Syncfusion.Blazor.Navigations;
+using Syncfusion.XlsIO.Implementation.XmlSerialization;
 using System.Text;
 using Tsi.Core.Entities;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -12,6 +18,7 @@ using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.ErpUI.Helpers;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
+using ChangeEventArgs = Microsoft.AspNetCore.Components.ChangeEventArgs;
 using IResult = Tsi.Core.Utilities.Results.IResult;
 
 namespace TsiErp.ErpUI.Pages.Base
@@ -31,6 +38,10 @@ namespace TsiErp.ErpUI.Pages.Base
         public bool SelectFirstDataRow { get; set; }
 
         public string[] MenuItems = new string[] { "Group", "Ungroup", "ColumnChooser", "Filter" };
+
+        public string toolbarSearchKey = string.Empty;
+
+
         public TGetListOutputDto SelectedItem { get; set; }
 
         [Inject]
@@ -46,6 +57,10 @@ namespace TsiErp.ErpUI.Pages.Base
 
         public List<ContextMenuItemModel> GridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
+        public List<ItemModel> GridToolbarItems { get; set; } = new List<ItemModel>();
+
+        public string GridSearchText { get; set; }
+
         protected ICrudAppService<TGetOutputDto, TGetListOutputDto, TCreateInput, TUpdateInput, TGetListInput> BaseCrudService { get; set; }
 
 
@@ -57,6 +72,7 @@ namespace TsiErp.ErpUI.Pages.Base
             LoadingText = loc["LoadingText"];
 
             CreateContextMenuItems(loc);
+            CreateGridToolbar();
             await GetListDataSourceAsync();
             await InvokeAsync(StateHasChanged);
         }
@@ -238,24 +254,6 @@ namespace TsiErp.ErpUI.Pages.Base
             IsLoaded = true;
         }
 
-        public async void OnToolbarClicked(string toolbar, string header, string filename)
-        {
-
-            if (toolbar == "ExcelExport")
-            {
-                ExcelExportProperties ExcelExportProperties = new ExcelExportProperties();
-                ExcelExportProperties.FileName = filename + ".xlsx";
-                await this._grid.ExportToExcelAsync(ExcelExportProperties);
-            }
-            else if (toolbar == "PDFExport")
-            {
-                PdfExportProperties PdfExportProperties = new PdfExportProperties();
-                PdfExportProperties.PageOrientation = PageOrientation.Landscape;
-                PdfExportProperties.FileName = filename + ".pdf";
-                await this._grid.ExportToPdfAsync(PdfExportProperties);
-            }
-        }
-
         protected virtual async Task OnSubmit()
         {
             TGetOutputDto result;
@@ -391,6 +389,7 @@ namespace TsiErp.ErpUI.Pages.Base
             }
         }
 
+
         public virtual async void CrudModalClosing(PopupClosingEventArgs args)
         {
             if (IsChanged)
@@ -398,6 +397,86 @@ namespace TsiErp.ErpUI.Pages.Base
                 await BaseCrudService.UpdateConcurrencyFieldsAsync(DataSource.Id, false, Guid.Empty);
                 IsChanged = false;
             }
+        }
+
+        public async void OnToolbarClicked(string toolbar, string header, string filename)
+        {
+
+            if (toolbar == "ExcelExport")
+            {
+                ExcelExportProperties ExcelExportProperties = new ExcelExportProperties();
+                ExcelExportProperties.FileName = filename + ".xlsx";
+                await this._grid.ExportToExcelAsync(ExcelExportProperties);
+            }
+            else if (toolbar == "PDFExport")
+            {
+                PdfExportProperties PdfExportProperties = new PdfExportProperties();
+                PdfExportProperties.PageOrientation = PageOrientation.Landscape;
+                PdfExportProperties.FileName = filename + ".pdf";
+                await this._grid.ExportToPdfAsync(PdfExportProperties);
+            }
+        }
+
+        public async void OnToolbarSearchChange(KeyboardEventArgs e)
+        {
+            if(e.Code=="Enter")
+            {
+                if (!string.IsNullOrEmpty(GridSearchText))
+                {
+                    await _grid.SearchAsync(GridSearchText.ToLower());
+                }
+                else
+                {
+                    await _grid.SearchAsync("");
+                }
+            }
+        }
+
+
+
+        public void CreateGridToolbar()
+        {
+            var loc = (IStringLocalizer)_L;
+
+            RenderFragment search = (builder) =>
+            {
+                builder.OpenComponent(0, typeof(SfTextBox));
+                builder.AddAttribute(1, "CssClass", "TSITxtBox");
+                builder.AddAttribute(2, "Placeholder", "Aramak istediğiniz kelimeyi yazın.");
+                builder.AddAttribute(3, "Value", BindConverter.FormatValue(GridSearchText));
+                builder.AddAttribute(4, "onchange", EventCallback.Factory.CreateBinder<string?>(this, __value => GridSearchText = __value, GridSearchText));
+                builder.AddAttribute(5, "onkeydown", OnToolbarSearchChange);
+                builder.CloseComponent();
+            };
+
+            GridToolbarItems.Add(new ItemModel() { Id = "ExcelExport", CssClass = "TSIExcelButton", Type = ItemType.Button, PrefixIcon = "TSIExcelIcon", TooltipText = @loc["UIExportFileName"] });
+
+
+            GridToolbarItems.Add(new ItemModel() { Id = "PDFExport", CssClass = "TSIExcelButton", Type = ItemType.Button, PrefixIcon = "TSIPdfIcon", TooltipText = @loc["UIExportFileName"] });
+
+
+            GridToolbarItems.Add(new ItemModel() { Id = "Search", CssClass = "TSITxtBox", Type = ItemType.Input, Template = search, Text = GridSearchText });
+
+
+        }
+
+        public async void ToolbarClickHandler(Syncfusion.Blazor.Navigations.ClickEventArgs args)
+        {
+            if (args.Item.Id == "ExcelExport")
+            {
+                ExcelExportProperties ExcelExportProperties = new ExcelExportProperties();
+                ExcelExportProperties.FileName = args.Item.TooltipText + ".xlsx";
+                await this._grid.ExportToExcelAsync(ExcelExportProperties);
+            }
+
+            if (args.Item.Id == "PDFExport")
+            {
+                PdfExportProperties PdfExportProperties = new PdfExportProperties();
+                PdfExportProperties.PageOrientation = PageOrientation.Landscape;
+                PdfExportProperties.FileName = args.Item.TooltipText + ".pdf";
+                await this._grid.ExportToPdfAsync(PdfExportProperties);
+            }
+
         }
     }
 }
