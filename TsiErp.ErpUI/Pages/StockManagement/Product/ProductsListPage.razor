@@ -50,32 +50,6 @@ else
                             <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true DataSource="@ListDataSource" ColumnMenuItems=@MenuItems ShowColumnMenu="true" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
                                     AllowSorting="true" Height="100%" Width="100%" class="GridZebra" ContextMenuItems="@MainGridContextMenu" Toolbar=@GridToolbarItems>
                                 <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
-@* 
-                               <SfToolbar>
-                                     <ToolbarItems>
-                                        <ToolbarItem Type="ItemType.Button">
-                                            <Template>
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton> 
-
-                                            </Template>
-                                        </ToolbarItem>
-
-                                         <ToolbarItem Type="ItemType.Button">
-                                            <Template>
-
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
-                                            </Template>
-                                        </ToolbarItem>
-
-                                        <ToolbarItem Type="ItemType.Input">
-                                            <Template>
-                                                <SfTextBox Placeholder="" CssClass="TSITxtBox" @bind-Value=@toolbarSearchKey OnChange="(()=>OnToolbarSearchChange(toolbarSearchKey))"></SfTextBox>
-                                            </Template>
-                                        </ToolbarItem> 
-                                    </ToolbarItems>
-                                </SfToolbar> *@
-
-                                     @* <SfTextBox Placeholder="" Value=@GridSearchText CssClass="TSITxtBox" @onchange="(()=>OnToolbarSearchChange(toolbarSearchKey))"></SfTextBox> *@
 
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
                                 <GridEvents ContextMenuItemClicked="@OnContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListProductsDto"></GridEvents>

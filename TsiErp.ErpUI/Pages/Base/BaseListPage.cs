@@ -405,23 +405,7 @@ namespace TsiErp.ErpUI.Pages.Base
         }
 
         #region Grid Toolbar Methods
-        public async void OnToolbarClicked(string toolbar, string header, string filename)
-        {
 
-            if (toolbar == "ExcelExport")
-            {
-                ExcelExportProperties ExcelExportProperties = new ExcelExportProperties();
-                ExcelExportProperties.FileName = filename + ".xlsx";
-                await this._grid.ExportToExcelAsync(ExcelExportProperties);
-            }
-            else if (toolbar == "PDFExport")
-            {
-                PdfExportProperties PdfExportProperties = new PdfExportProperties();
-                PdfExportProperties.PageOrientation = PageOrientation.Landscape;
-                PdfExportProperties.FileName = filename + ".pdf";
-                await this._grid.ExportToPdfAsync(PdfExportProperties);
-            }
-        }
 
         public async void OnToolbarSearchChange(KeyboardEventArgs e)
         {

@@ -36,27 +36,10 @@
                         
                             <CardContent>
                                 <SfGrid ID="Grid"  @ref="_grid"   AllowPdfExport=true ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true"  ShowColumnChooser="true"  GridLines="GridLine.Both"
-                                AllowSorting="true" ContextMenuItems="@GridContextMenu" Height="100%" Width="100%" class="GridZebra">
-                                <SfToolbar>
-                                    <ToolbarItems>
-                                        <ToolbarItem Type="ItemType.Button">
-                                            <Template>
-
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport",@L["ExportTitle"], @L["ExportFileName"]))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
-                                            </Template>
-                                        </ToolbarItem>
-
-                                        <ToolbarItem Type="ItemType.Button">
-                                            <Template>
-
-                                                <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", @L["ExportTitle"], @L["ExportFileName"]))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
-                                            </Template>
-                                        </ToolbarItem>
-
-                                    </ToolbarItems>
-                                </SfToolbar>
+                                AllowSorting="true" ContextMenuItems="@GridContextMenu" Height="100%" Width="100%" class="GridZebra" Toolbar=@GridToolbarItems>
+                                
                                     <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                    <GridEvents   ContextMenuItemClicked="@OnContextMenuClick" TValue="ListCalibrationVerificationsDto"></GridEvents>
+                                            <GridEvents   ContextMenuItemClicked="@OnContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListCalibrationVerificationsDto"></GridEvents>
                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
