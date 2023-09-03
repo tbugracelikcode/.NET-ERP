@@ -65,6 +65,7 @@ else
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(ListCurrentAccountCardsDto.CustomerCode) HeaderText="@L["CustomerCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Tel1) HeaderText="@L["Tel1"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Responsible) HeaderText="@L["Responsible"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                     <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Email) HeaderText="@L["Email"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
@@ -272,6 +273,13 @@ else
                                                                 <label class="TSIModalLabel"><strong>@L["SupplierLabel"] </strong></label><br />
                                                                 <SfSwitch @bind-Checked="@DataSource.Supplier"></SfSwitch>
                                                             </center>
+                                                        </Template>
+                                                    </DxGridLayoutItem>
+
+                                                     <DxGridLayoutItem Row="3" Column="4">
+                                                        <Template>
+                                                            <label class="TSIModalLabel"><strong>@L["CustomerCodeLabel"] </strong></label>
+                                                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.CustomerCode"></SfTextBox>
                                                         </Template>
                                                     </DxGridLayoutItem>
 

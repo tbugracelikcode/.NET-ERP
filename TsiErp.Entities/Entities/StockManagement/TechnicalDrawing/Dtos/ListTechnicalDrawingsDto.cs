@@ -14,6 +14,10 @@ namespace TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos
         /// </summary>
         public string RevisionNo { get; set; }
         /// <summary>
+        /// Müşteri Kodu
+        /// </summary>
+        public string CustomerCode { get; set; }
+        /// <summary>
         /// Revizyon Tarihi
         /// </summary>
         public DateTime? RevisionDate { get; set; }

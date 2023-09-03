@@ -50,7 +50,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
 
         protected override async Task BeforeInsertAsync()
         {
-            DataSource = new SelectOperationalSPCsDto() { Date_ = DateTime.Today, MeasurementEndDate = DateTime.Today, MeasurementStartDate = DateTime.Today };
+            DataSource = new SelectOperationalSPCsDto() { Date_ = DateTime.Today, MeasurementEndDate = new DateTime(DateTime.Now.Year,DateTime.Now.Month+1,1).AddDays(-1), MeasurementStartDate = DateTime.Today };
 
             DataSource.SelectOperationalSPCLines = new List<SelectOperationalSPCLinesDto>();
             GridLineList = DataSource.SelectOperationalSPCLines;
@@ -248,7 +248,16 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
 
         public async void Calculate()
         {
-            if (DataSource.MeasurementStartDate != DataSource.MeasurementEndDate && DataSource.MeasurementStartDate! > DataSource.MeasurementEndDate)
+            if(DataSource.MeasurementStartDate == DataSource.MeasurementEndDate  )
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningDateTitleBase"], L["UIWarningDateMessageBase"]);
+            }
+            else if(DataSource.MeasurementStartDate > DataSource.MeasurementEndDate)
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningDateTitleBase"], L["UIWarningDate2MessageBase"]);
+
+            }
+            else
             {
                 WorkOrdersList = (await WorkOrdersAppService.GetListAsync(new ListWorkOrdersParameterDto())).Data.Where(t => t.OccuredStartDate > DataSource.MeasurementStartDate && t.OccuredFinishDate < DataSource.MeasurementEndDate).ToList();
 
@@ -311,11 +320,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
                         OperationBasedMidControlFrequency = 110
                     };
                 }
-
-            }
-            else
-            {
-                await ModalManager.WarningPopupAsync(L["UIWarningDateTitleBase"], L["UIWarningDateMessageBase"]);
             }
         }
 

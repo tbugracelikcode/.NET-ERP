@@ -54,6 +54,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                 {
                     Code = input.Code,
                     Address1 = input.Address1,
+                    CustomerCode = input.CustomerCode,
                     Address2 = input.Address2,
                     City = input.City,
                     CoatingCustomer = input.CoatingCustomer,
@@ -149,6 +150,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                             ca.Fax,
                             ca.TaxNumber,
                             ca.Tel1,
+                            ca.CustomerCode,
                             ca.Tel2,
                             ca.Type_,
                             ca.Web,
@@ -203,6 +205,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                        ca.Id,
                        ca.IDnumber,
                        ca.Address2,
+                       ca.CustomerCode,
                        ca.Address1,
                        ca.City,
                        ca.CoatingCustomer,
@@ -288,6 +291,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                     City = input.City,
                     CoatingCustomer = input.CoatingCustomer,
                     ContractSupplier = input.ContractSupplier,
+                    CustomerCode = input.CustomerCode,
                     Country = input.Country,
                     CurrencyID = input.CurrencyID,
                     District = input.District,
@@ -345,6 +349,7 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                 var query = queryFactory.Query().From(Tables.CurrentAccountCards).Update(new UpdateCurrentAccountCardsDto
                 {
                     Code = entity.Code,
+                    CustomerCode = entity.CustomerCode,
                     Name = entity.Name,
                     IsActive = entity.IsActive,
                     PlusPercentage = entity.PlusPercentage,

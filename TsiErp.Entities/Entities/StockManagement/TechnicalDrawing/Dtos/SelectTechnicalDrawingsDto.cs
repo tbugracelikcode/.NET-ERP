@@ -21,6 +21,14 @@ namespace TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos
         /// Data Concurrency Stamp
         /// </summary>
         public bool? DataOpenStatus { get; set; }
+        /// <summary>
+        /// Cari Hesap ID
+        /// </summary>
+        public Guid? CustomerCurrentAccountCardID { get; set; }
+        /// <summary>
+        /// Müşteri Kodu
+        /// </summary>
+        public string CustomerCode { get; set; }
 
         /// <summary>
         /// Data Concurrency UserID

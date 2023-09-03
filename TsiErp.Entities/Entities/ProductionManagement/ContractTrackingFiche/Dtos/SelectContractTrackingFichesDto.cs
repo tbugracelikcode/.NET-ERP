@@ -41,6 +41,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche.Dt
         /// </summary>
         public string CurrentAccountCardName { get; set; }
         /// <summary>
+        /// Müşteri Kodu
+        /// </summary>
+        public string CustomerCode { get; set; }
+        /// <summary>
         /// İş Tanımı ID
         /// </summary>
         public Guid? ContractQualityPlanID { get; set; }

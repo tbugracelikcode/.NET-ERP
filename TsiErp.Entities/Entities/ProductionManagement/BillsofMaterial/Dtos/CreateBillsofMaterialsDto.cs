@@ -23,6 +23,11 @@ namespace TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos
         /// Mamül ID
         /// </summary>
         public Guid? FinishedProductID { get; set; }
+
+        /// <summary>
+        /// Cari Hesap ID
+        /// </summary>
+        public Guid? CurrentAccountCardID { get; set; }
         /// <summary>
         /// Genel Açıklama
         /// </summary>

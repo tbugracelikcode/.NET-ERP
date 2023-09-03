@@ -170,6 +170,15 @@ namespace TsiErp.Localizations.Resources.ContractTrackingFiches.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Müşteri Kodu:.
+        /// </summary>
+        public static string CurrentAccountCardCustomerCodeLabel {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardCustomerCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CARİ HESAP.
         /// </summary>
         public static string CurrentAccountCardName {
@@ -184,6 +193,42 @@ namespace TsiErp.Localizations.Resources.ContractTrackingFiches.Page {
         public static string CurrentAccountCardNameLabel {
             get {
                 return ResourceManager.GetString("CurrentAccountCardNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CARİ KOD.
+        /// </summary>
+        public static string CurrentAccountModalGridCode {
+            get {
+                return ResourceManager.GetString("CurrentAccountModalGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MÜŞTERİ KODU.
+        /// </summary>
+        public static string CurrentAccountModalGridCustomerCode {
+            get {
+                return ResourceManager.GetString("CurrentAccountModalGridCustomerCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CARİ ÜNVAN.
+        /// </summary>
+        public static string CurrentAccountModalGridName {
+            get {
+                return ResourceManager.GetString("CurrentAccountModalGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cari Hesap Kartları.
+        /// </summary>
+        public static string CurrentAccountModalTitle {
+            get {
+                return ResourceManager.GetString("CurrentAccountModalTitle", resourceCulture);
             }
         }
         

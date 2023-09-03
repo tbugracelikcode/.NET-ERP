@@ -269,6 +269,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
         #region Cari Hesap ButtonEdit
 
         SfTextBox CurrentAccountCardsCodeButtonEdit;
+        SfTextBox CurrentAccountCardsCustomerCodeButtonEdit;
         SfTextBox CurrentAccountCardsNameButtonEdit;
         bool SelectCurrentAccountCardsPopupVisible = false;
         List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
@@ -280,6 +281,19 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
         }
 
         public async void CurrentAccountCardsCodeButtonClickEvent()
+        {
+            SelectCurrentAccountCardsPopupVisible = true;
+            await GetCurrentAccountCardsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public async Task CurrentAccountCardsCustomerCodeOnCreateIcon()
+        {
+            var CurrentAccountCardsCustomerCodeButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CurrentAccountCardsCustomerCodeButtonClickEvent);
+            await CurrentAccountCardsCustomerCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CurrentAccountCardsCustomerCodeButtonClick } });
+        }
+
+        public async void CurrentAccountCardsCustomerCodeButtonClickEvent()
         {
             SelectCurrentAccountCardsPopupVisible = true;
             await GetCurrentAccountCardsList();
@@ -306,6 +320,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
                 DataSource.CurrentAccountCardID = Guid.Empty;
                 DataSource.CurrentAccountCardCode = string.Empty;
                 DataSource.CurrentAccountCardName = string.Empty;
+                DataSource.CustomerCode = string.Empty;
             }
         }
 
@@ -318,6 +333,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
                 DataSource.CurrentAccountCardID = selectedUnitSet.Id;
                 DataSource.CurrentAccountCardCode = selectedUnitSet.Code;
                 DataSource.CurrentAccountCardName = selectedUnitSet.Name;
+                DataSource.CustomerCode = selectedUnitSet.CustomerCode;
                 SelectCurrentAccountCardsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }

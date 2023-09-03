@@ -240,6 +240,9 @@
   <data name="CurrentAccountModalGridCode" xml:space="preserve">
     <value>CURRENT ACCOUNT CODE</value>
   </data>
+  <data name="CurrentAccountModalGridCustomerCode" xml:space="preserve">
+    <value>CUSTOMER CODE</value>
+  </data>
   <data name="CurrentAccountModalGridName" xml:space="preserve">
     <value>CURRENT ACCOUNT NAME</value>
   </data>
@@ -251,6 +254,9 @@
   </data>
   <data name="CustomerApprovalLabelTechDraw" xml:space="preserve">
     <value>Customer Technical Approval:</value>
+  </data>
+  <data name="CustomerCodeTechDraw" xml:space="preserve">
+    <value>Customer Code:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
@@ -278,6 +284,9 @@
   </data>
   <data name="EditCrudModalTechDrawTitle" xml:space="preserve">
     <value>Technical Drawing Operations</value>
+  </data>
+  <data name="EditModalTechDrawGridCustomerCode" xml:space="preserve">
+    <value>CUSTOMER CODE</value>
   </data>
   <data name="EditModalTechDrawGridDrawer" xml:space="preserve">
     <value>DRAWER</value>

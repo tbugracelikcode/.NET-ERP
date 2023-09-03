@@ -180,8 +180,8 @@ else
 
                      <DxGridLayoutItem Row="2" Column="5">
                         <Template>
-                            <label class="TSIModalLabel"><strong>@L["IsApprovedLabel"] </strong></label><br />
-                            <SfSwitch @bind-Checked="DataSource.IsApproved"></SfSwitch>
+                            <label class="TSIModalLabel"><strong>@L["CurrentAccountCardCustomerCodeLabel"] </strong></label><br />
+                            <SfTextBox @ref="@CurrentAccountCardsCustomerCodeButtonEdit" Created="@CurrentAccountCardsCustomerCodeOnCreateIcon" @bind-Value="DataSource.CustomerCode" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange"></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -196,6 +196,13 @@ else
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["WarehouseCodeLabel"]</strong></label><br />
                             <SfTextBox @ref="@WarehousesButtonEdit" Created="@WarehousesOnCreateIcon" @bind-Value="DataSource.WarehouseCode" ShowClearButton=true ValueChange="WarehousesOnValueChange"></SfTextBox>
+                        </Template>
+                    </DxGridLayoutItem>
+
+                    <DxGridLayoutItem Row="3" Column="5">
+                        <Template>
+                            <label class="TSIModalLabel"><strong>@L["IsApprovedLabel"] </strong></label><br />
+                            <SfSwitch @bind-Checked="DataSource.IsApproved"></SfSwitch>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -482,10 +489,7 @@ else
                                         <GridColumns>
                                             <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Code) HeaderText="@L["CurrentAccountModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Name) HeaderText="@L["CurrentAccountModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Tel1) HeaderText="@L["CurrentAccountModalGridTel"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Responsible) HeaderText="@L["CurrentAccountModalGridResponsible"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Email) HeaderText="@L["CurrentAccountModalGridEmail"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.TaxNumber) HeaderText="@L["CurrentAccountModalGridTaxNumber"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.CustomerCode) HeaderText="@L["CurrentAccountModalGridCustomerCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         </GridColumns>
 
                                     </SfGrid>

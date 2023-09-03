@@ -162,7 +162,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                         )
                         .Join<CurrentAccountCards>
                         (
-                            to => new { CurrentAccountCardID = to.Id, CurrentAccountCardCode = to.Code, CurrentAccountCardName = to.Name },
+                            to => new { CurrentAccountCardID = to.Id, CurrentAccountCardCode = to.Code, CurrentAccountCardName = to.Name, CustomerCode = to.CustomerCode },
                             nameof(ContractTrackingFiches.CurrentAccountCardID),
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
@@ -235,7 +235,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                         )
                         .Join<CurrentAccountCards>
                         (
-                            to => new { CurrentAccountCardCode = to.Code, CurrentAccountCardName = to.Name },
+                            to => new { CurrentAccountCardCode = to.Code, CurrentAccountCardName = to.Name, CustomerCode = to.CustomerCode },
                             nameof(ContractTrackingFiches.CurrentAccountCardID),
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
@@ -272,7 +272,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                         )
                         .Join<CurrentAccountCards>
                         (
-                            to => new { CurrentAccountCardID = to.Id, CurrentAccountCardCode = to.Code, CurrentAccountCardName = to.Name },
+                            to => new { CurrentAccountCardID = to.Id, CurrentAccountCardCode = to.Code, CurrentAccountCardName = to.Name, CustomerCode = to.CustomerCode },
                             nameof(ContractTrackingFiches.CurrentAccountCardID),
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
@@ -335,7 +335,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                         )
                         .Join<CurrentAccountCards>
                         (
-                            to => new { CurrentAccountCardCode = to.Code, CurrentAccountCardName = to.Name },
+                            to => new { CurrentAccountCardCode = to.Code, CurrentAccountCardName = to.Name, CustomerCode = to.CustomerCode },
                             nameof(ContractTrackingFiches.CurrentAccountCardID),
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left

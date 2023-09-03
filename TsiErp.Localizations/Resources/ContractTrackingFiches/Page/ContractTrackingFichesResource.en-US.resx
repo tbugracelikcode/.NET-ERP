@@ -153,11 +153,26 @@
   <data name="CurrentAccountCardCodeLabel" xml:space="preserve">
     <value>Current Account Card Code:</value>
   </data>
+  <data name="CurrentAccountCardCustomerCodeLabel" xml:space="preserve">
+    <value>Customer Code:</value>
+  </data>
   <data name="CurrentAccountCardName" xml:space="preserve">
     <value>CURRENT ACCOUNT CARD</value>
   </data>
   <data name="CurrentAccountCardNameLabel" xml:space="preserve">
     <value>Current Account Card Name:</value>
+  </data>
+  <data name="CurrentAccountModalGridCode" xml:space="preserve">
+    <value>CARİ KOD</value>
+  </data>
+  <data name="CurrentAccountModalGridCustomerCode" xml:space="preserve">
+    <value>CUSTOMER CODE</value>
+  </data>
+  <data name="CurrentAccountModalGridName" xml:space="preserve">
+    <value>CARİ ÜNVAN</value>
+  </data>
+  <data name="CurrentAccountModalTitle" xml:space="preserve">
+    <value>Cari Hesap Kartları</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>

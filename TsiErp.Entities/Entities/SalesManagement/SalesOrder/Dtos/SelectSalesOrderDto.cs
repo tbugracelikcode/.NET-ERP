@@ -99,6 +99,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos
         /// Cari Hesap Kartı Ünvanı
         /// </summary>
         public string CurrentAccountCardName { get; set; }
+        /// <summary>
+        /// Müşteri Kodu
+        /// </summary>
+        public string CustomerCode { get; set; }
 
         /// <summary>
         /// Brüt Tutar

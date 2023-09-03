@@ -57,6 +57,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesPrice.Dtos
         /// </summary>
         public string CurrentAccountCardName { get; set; }
         /// <summary>
+        /// Müşteir Kodu
+        /// </summary>
+        public string CustomerCode { get; set; }
+        /// <summary>
         /// Şube ID
         /// </summary>
         public Guid? BranchID { get; set; }

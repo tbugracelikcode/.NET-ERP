@@ -21,6 +21,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// </summary>
         public Guid WorkOrderID { get; set; }
         /// <summary>
+        /// Cari Hesap ID
+        /// </summary>
+        public Guid? CurrentAccountCardID { get; set; }
+        /// <summary>
         /// Üretilen Miktar
         /// </summary>
         public decimal ProducedQuantity { get; set; }

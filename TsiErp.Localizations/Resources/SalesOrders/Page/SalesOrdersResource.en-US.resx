@@ -195,6 +195,12 @@
   <data name="CurrentAccountCardCodeLabel" xml:space="preserve">
     <value>Current Account Code:</value>
   </data>
+  <data name="CurrentAccountCardCustomerCode" xml:space="preserve">
+    <value>CUSTOMER CODE</value>
+  </data>
+  <data name="CurrentAccountCardCustomerCodeLabel" xml:space="preserve">
+    <value>Customer Code:</value>
+  </data>
   <data name="CurrentAccountCardName" xml:space="preserve">
     <value>CURRENT ACCOUNT NAME</value>
   </data>
@@ -221,6 +227,9 @@
   </data>
   <data name="CurrentAccountModalTitle" xml:space="preserve">
     <value>Currenct Account Cards</value>
+  </data>
+  <data name="CustomerCode" xml:space="preserve">
+    <value>CUSTOMER CODE</value>
   </data>
   <data name="Date_" xml:space="preserve">
     <value>DATE</value>

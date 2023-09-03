@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Tsi.Core.Entities.Auditing;
 using TSI.QueryBuilder.MappingAttributes;
 using TsiErp.Entities.Entities.ProductionManagement.ContractOfProductsOperation.Dtos;
-using TsiErp.Entities.Entities.ProductionManagement.ProductOperationQualtityPlan.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine.Dtos;
 
 namespace TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos
@@ -39,9 +38,6 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos
         public bool IsActive { get; set; }
         [NoDatabaseAction]
         public List<SelectProductsOperationLinesDto> SelectProductsOperationLines { get; set; }
-
-        [NoDatabaseAction]
-        public List<SelectProductOperationQualityPlansDto> SelectProductOperationQualityPlans { get; set; }
 
         [NoDatabaseAction]
         public List<SelectContractOfProductsOperationsDto> SelectContractOfProductsOperationsLines { get; set; }

@@ -25,7 +25,7 @@
                     <Template>
                         <SfCard class="TSIListPageTitleCard">
                             <CardContent>
-                                <TsiBreadCrumb PreviousMenus="Planlama > Çalışma Takvimi" CurrentMenu="Çalışma Takvimi" />
+                                <TsiBreadCrumb PreviousMenus=@L["UIPreviousMenu"] CurrentMenu=@L["UICurrentMenu"] />
                             </CardContent>
                             <CardFooter>
                             </CardFooter>
@@ -44,14 +44,14 @@
                                             <ToolbarItem Type="ItemType.Button">
                                                 <Template>
 
-                                                    <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", "Çalışma Takvimi", "CalismaTakvimi"))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
+                                                    <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("ExcelExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIExcelIcon" src="/images/excelicon.png" /></SfButton>
                                                 </Template>
                                             </ToolbarItem>
 
                                             <ToolbarItem Type="ItemType.Button">
                                                 <Template>
 
-                                                    <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", "Çalışma Takvimi", "CalismaTakvimi"))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
+                                                    <SfButton CssClass="TSIExcelButton" OnClick="@(()=>OnToolbarClicked("PDFExport", @L["UIExportTitle"], @L["UIExportFileName"]))"><img class="TSIPdfIcon" src="/images/pdficon.png" /></SfButton>
                                                 </Template>
                                             </ToolbarItem>
 
@@ -63,15 +63,15 @@
                                     <GridPageSettings PageSizes="true"></GridPageSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(ListCalendarsDto.Code) HeaderText="TAKVİM KODU" TextAlign="TextAlign.Center" Width="120">
+                                        <GridColumn Field=@nameof(ListCalendarsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120">
                                         </GridColumn>
-                                        <GridColumn Field=@nameof(ListCalendarsDto.Name) HeaderText="TAKVİM ADI" TextAlign="TextAlign.Center" Width="120">
+                                        <GridColumn Field=@nameof(ListCalendarsDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="120">
 
                                         </GridColumn>
-                                        <GridColumn Field=@nameof(ListCalendarsDto.Year) HeaderText="YIL" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(ListCalendarsDto.IsPlanned) HeaderText="PLANLI" DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalendarsDto.Year) HeaderText="@L["Year"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalendarsDto.IsPlanned) HeaderText="@L["IsPlanned"]" DisplayAsCheckBox=true TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
-                                        <GridColumn Field=@nameof(ListCalendarsDto._Description) HeaderText="AÇIKLAMA" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListCalendarsDto._Description) HeaderText="@L["_Description"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                     </GridColumns>
                                 </SfGrid>
@@ -88,7 +88,7 @@
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Çalışma Takvimi Kayıtları"
+         HeaderText="@L["EditModalTitle"]"
          Width="720px"
          Height="880px"
          HeaderCssClass="HeaderTitleCss"
@@ -115,24 +115,23 @@
                         <DxGridLayoutItem Row="0" Column="1">
                             <Template>
                                 <br />
-                                <label class="TSIModalLabel"><strong>Takvim Kodu: </strong></label>
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" Placeholder="Takvim Kodu Yazınız."></SfTextBox>
+                                <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code" ></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="0" Column="3">
                             <Template>
                                 <br />
-                                <label class="TSIModalLabel"><strong>Takvim Adı: </strong></label>
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" Placeholder="Takvim Adı Yazınız."></SfTextBox>
+                                <label class="TSIModalLabel"><strong>@L["NameLabel"] </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Name" ></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="1" Column="1">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Takvim Yılı: </strong></label>
+                                <label class="TSIModalLabel"><strong>@L["DateLabel"] </strong></label>
                                 <SfComboBox @ref="Years"
                                     TValue="int"
                                     TItem="int"
-                                    Placeholder="Yıl Seçin"
                                     CssClass="e-multi-column"
                                     Value="DataSource.Year"
                                     DataSource="@YearList"
@@ -146,7 +145,7 @@
                                         <HeaderTemplate>
                                             <table>
                                                 <tr>
-                                                    <th class="e-text-center">Takvim Yılı</th>
+                                                    <th class="e-text-center">@L["DateYear"]</th>
                                                 </tr>
                                             </table>
                                         </HeaderTemplate>
@@ -169,26 +168,26 @@
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="1" Column="3">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Planlı: </strong></label><br />
+                                <label class="TSIModalLabel"><strong>@L["IsPlannedLabel"]</strong></label><br />
                                 <SfSwitch @bind-Checked="DataSource.IsPlanned"></SfSwitch>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="2" Column="1">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Açıklama: </strong></label><br />
-                                <SfTextBox CssClass="TSIMemoBox100" @bind-Value="DataSource._Description" Placeholder="Takvim Açıklaması Yazınız." Multiline="true"></SfTextBox>
+                                <label class="TSIModalLabel"><strong>@L["DescriptionLabel"] </strong></label><br />
+                                <SfTextBox CssClass="TSIMemoBox100" @bind-Value="DataSource._Description"  Multiline="true"></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="4" Column="1">
                             <Template>
-                                <label class="TSIModalLabel"><strong>Resmi Tatil Günü: </strong></label><br />
+                                <label class="TSIModalLabel"><strong>@L["OfficialHolidayLabel"] </strong></label><br />
                                 <SfDatePicker @bind-Value="officialHoliday"></SfDatePicker>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="4" Column="3">
                             <Template>
                                 <br />
-                                <SfButton CssClass="TSISaveButton" OnClick="AddOfficialHoliday"><SfIcon Size="IconSize.Medium" Name="IconName.CommentAdd"></SfIcon>&nbsp;Ekle</SfButton>
+                                <SfButton CssClass="TSISaveButton" OnClick="AddOfficialHoliday"><SfIcon Size="IconSize.Medium" Name="IconName.CommentAdd"></SfIcon>&nbsp;@L["ContextAdd"]</SfButton>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="5" Column="1" ColumnSpan="3">
@@ -201,8 +200,8 @@
                                     <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
                                     <GridColumns>
-                                        <GridColumn Field=@nameof(SelectCalendarDaysDto.Date_) Format="dd-MM-yyyy" HeaderText="TARİH" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                        <GridColumn Field=@nameof(SelectCalendarDaysDto.CalendarDayStateEnum) Type="ColumnType.String" Context="daycontext" HeaderText="DURUM" TextAlign="TextAlign.Center" Width="120">
+                                        <GridColumn Field=@nameof(SelectCalendarDaysDto.Date_) Format="dd-MM-yyyy" HeaderText="@L["CalendarDayDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(SelectCalendarDaysDto.CalendarDayStateEnum) Type="ColumnType.String" Context="daycontext" HeaderText="@L["CalendarDayStateEnum"]" TextAlign="TextAlign.Center" Width="120">
                                             <Template>
                                                 @{
                                                     string state = string.Empty;
@@ -210,13 +209,13 @@
 
                                                     switch (dayStateEnum)
                                                     {
-                                                        case 1: { state = "Çalışma Var"; break; }
-                                                        case 2: { state = "Çalışma Yok"; break; }
-                                                        case 3: { state = "Resmi Tatil"; break; }
-                                                        case 4: { state = "Tatil"; break; }
-                                                        case 5: { state = "Yarım Gün"; break; }
-                                                        case 6: { state = "Yükleme Günü"; break; }
-                                                        case 7: { state = "Bakım"; break; }
+                                                        case 1: { state = @L["WorkExist"]; break; }
+                                                        case 2: { state =@L["WorkNotExist"]; break; }
+                                                        case 3: { state = @L["OfficialHoliday"]; break; }
+                                                        case 4: { state = @L["Holiday"]; break; }
+                                                        case 5: { state = @L["HalfDay"]; break; }
+                                                        case 6: { state = @L["LoadingDay"]; break; }
+                                                        case 7: { state = @L["UIMaintenancePreviousMenu"]; break; }
                                                         default: break;
                                                     }
                                             }
@@ -231,8 +230,8 @@
             </DxGridLayout>
         </BodyTemplate>
         <FooterContentTemplate>
-            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+            <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+            <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
         </FooterContentTemplate>
     </DxPopup>
 
@@ -240,7 +239,7 @@
          ShowFooter="true"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="Çalışma Takvimi"
+         HeaderText="@L["SchedularModalTitle"]"
          Width="90%"
          Height="85%"
          Scrollable="true"
@@ -367,7 +366,7 @@
                 </table>
             </BodyTemplate>
             <FooterContentTemplate>
-                <SfButton CssClass="TSICancelButton" OnClick="HideScheduleEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideScheduleEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
             </FooterContentTemplate>
         </DxPopup>
 
@@ -376,7 +375,7 @@
          CloseButtonClick="HideStationsModal"
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
-         HeaderText="İş İstasyonları"
+         HeaderText="@L["StationsModalTitle"]"
          Width="1600px"
          Height="fit-content"
          CssClass="TSIWorkSchduleModal"
@@ -408,7 +407,7 @@
 
                         <td style="width:50%">
 
-                            <SfButton CssClass="TSISaveButton" OnClick="ShowLineModal"><SfIcon Size="IconSize.Medium" Name="IconName.Check"></SfIcon>&nbsp;Seçilen İstasyonları Planla</SfButton>
+                            <SfButton CssClass="TSISaveButton" OnClick="ShowLineModal"><SfIcon Size="IconSize.Medium" Name="IconName.Check"></SfIcon>&nbsp;@L["SelectedStationPlan"]</SfButton>
 
                         </td>
 
@@ -588,7 +587,7 @@
 
                                     </CardContent>
                                     <CardFooter>
-                                    <text class="TSISelectAllStationsCalendar" @onclick="@(()=>OnSelectAllStationsChange(stationgroupname))">Hepsini Seç</text>
+                                    <text class="TSISelectAllStationsCalendar" @onclick="@(()=>OnSelectAllStationsChange(stationgroupname))">@L["SelectAll"]</text>
 
                                     </CardFooter>
                                 </SfCard>
@@ -600,7 +599,7 @@
 
             </BodyTemplate>
             <FooterContentTemplate>
-                <SfButton CssClass="TSICancelButton" OnClick="HideStationsModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideStationsModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
             </FooterContentTemplate>
         </DxPopup>
 
@@ -609,7 +608,7 @@
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          ShowCloseButton="false"
-         HeaderText="İş İstasyonu Vardiya Bilgileri"
+         HeaderText="@L["LineModalTitle"]"
          Width="89%"
          Height="74%"
          MinWidth="1750px"
@@ -640,14 +639,14 @@
                     <br />
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
-                            <label class="TSIModalLabel"><strong>Başlangıç Tarihi: </strong></label>
+                            <label class="TSIModalLabel"><strong>@L["StartDateLineLabel"] </strong></label>
                             <SfTextBox  @bind-Value="@selectedDateStr" Enabled=false></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="0" Column="3">
                         <Template>
-                           <label class="TSIModalLabel"><strong>Planlanan Takvim: </strong></label>
+                           <label class="TSIModalLabel"><strong>@L["IsPlannedLineLabel"] </strong></label>
                     <br />
                             <SfSwitch @bind-Checked="DataSource.IsPlanned" Disabled=true  ></SfSwitch>
                         </Template>
@@ -655,15 +654,15 @@
 
                     <DxGridLayoutItem Row="1" Column="1">
                         <Template>
-                             <label class="TSIModalLabel"><strong>Bitiş Tarihi: </strong></label>
+                             <label class="TSIModalLabel"><strong>@L["EndDateLineLabel"] </strong></label>
                             <SfTextBox  @bind-Value="@selectedDateStr" Enabled=false></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
-                             <label class="TSIModalLabel"><strong>Çalışma Durumu: </strong></label>
-                            <SfComboBox  TValue="string" TItem="WorkStates" Placeholder="Çalışma durumu seçin." DataSource="@WorkStatesData">
+                             <label class="TSIModalLabel"><strong>@L["WorkStatusLineLabel"] </strong></label>
+                            <SfComboBox  TValue="string" TItem="WorkStates"  DataSource="@WorkStatesData">
                              <ComboBoxEvents TItem="WorkStates" TValue="string" ValueChange="@WorkStatesValueChangeHandler"></ComboBoxEvents>
     <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings>
 </SfComboBox>
@@ -685,15 +684,15 @@
                                     <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
                                     <GridColumns>
 
-                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.StationCode) HeaderText="İSTASYON KODU" TextAlign="TextAlign.Center" Width="140">
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.StationCode) HeaderText="@L["LineStationCode"]" TextAlign="TextAlign.Center" Width="140">
                                         </GridColumn>
 
-                                         <GridColumn Field=@nameof(SelectCalendarLinesDto.StationName) HeaderText="İSTASYON ADI" TextAlign="TextAlign.Center" Width="140">
+                                         <GridColumn Field=@nameof(SelectCalendarLinesDto.StationName) HeaderText="@L["LineStationName"]" TextAlign="TextAlign.Center" Width="140">
                                         </GridColumn>
 
-                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.ShiftName) Type="ColumnType.Number" HeaderText="VARDİYA ADI" TextAlign="TextAlign.Center" Width="100"></GridColumn>
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.ShiftName) HeaderText="@L["LineShiftName"]" TextAlign="TextAlign.Center" Width="100"></GridColumn>
                                         
-                                        <GridColumn Context="lineContext" Field=@nameof(SelectCalendarLinesDto.WorkStatus) Type="ColumnType.Number" HeaderText="ÇALIŞMA DURUMU" TextAlign="TextAlign.Center" Width="150">
+                                        <GridColumn Context="lineContext" Field=@nameof(SelectCalendarLinesDto.WorkStatus) Type="ColumnType.Number" HeaderText="@L["LineWorkStatus"]" TextAlign="TextAlign.Center" Width="150">
                                         <Template>
                                          
                                         @{
@@ -701,11 +700,11 @@
                                               int status = (lineContext as SelectCalendarLinesDto).WorkStatus;
                                              switch(status)
                                              {
-                                                 case 1: workStatus = "Çalışma Var";break;
-                                                 case 2: workStatus = "Çalışma Yok";break;
-                                                 case 3: workStatus = "Üretim Kısıtı";break;
-                                                 case 4: workStatus = "Operatör Kısıtı";break;
-                                                 case 5: workStatus = "Arızi Kısıt";break;
+                                                 case 1: workStatus = @L["WorkExist"];break;
+                                                 case 2: workStatus = @L["WorkNotExist"];break;
+                                                 case 3: workStatus = @L["PartialProduction"];break;
+                                                 case 4: workStatus = @L["PartialOperator"];break;
+                                                 case 5: workStatus = @L["PartialFailure"];break;
                                                  default:break;
                                              }
                                             }
@@ -715,20 +714,20 @@
 </Template>
                                         </GridColumn>
 
-                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.ShiftTime) Type="ColumnType.Number" HeaderText="VARDİYA SÜRESİ" TextAlign="TextAlign.Center" Width="140">
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.ShiftTime) Type="ColumnType.Number" HeaderText="@L["LineShiftTime"]" TextAlign="TextAlign.Center" Width="140">
 
                                         </GridColumn>
-                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.ShiftOverTime) Type="ColumnType.Number" HeaderText="FAZLA MESAİ SÜRESİ" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.ShiftOverTime) Type="ColumnType.Number" HeaderText="@L["LineShitOvertime"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
 
-                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.PlannedHaltTimes) Type="ColumnType.Number" HeaderText="PLANLI DURUŞ SÜRESİ" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.PlannedHaltTimes) Type="ColumnType.Number" HeaderText="@L["LinePlannedHaltTimes"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
                                         
-                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.Date_) Type="ColumnType.Number" HeaderText="TARİH" TextAlign="TextAlign.Center" Width="80"></GridColumn>
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.Date_) Type="ColumnType.Number" HeaderText="@L["LineDate"]" TextAlign="TextAlign.Center" Width="80"></GridColumn>
                                         
-                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.AvailableTime) Type="ColumnType.Number" HeaderText="ÇALIŞILABİLİR SÜRE"  TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.AvailableTime) Type="ColumnType.Number" HeaderText="@L["LineAvailableTime"]"  TextAlign="TextAlign.Center" Width="170"></GridColumn>
 
-                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.PlannedMaintenanceTime) Type="ColumnType.Number" HeaderText="PLANLI BAKIM SÜRESİ"  TextAlign="TextAlign.Center" Width="170"></GridColumn>
+                                        <GridColumn Field=@nameof(SelectCalendarLinesDto.PlannedMaintenanceTime) Type="ColumnType.Number" HeaderText="@L["LinePlannedMaintenanceTime"]"  TextAlign="TextAlign.Center" Width="170"></GridColumn>
 
-                                         <GridColumn Field=@nameof(SelectCalendarLinesDto.MaintenanceType) HeaderText="BAKIM TÜRÜ" TextAlign="TextAlign.Center" Width="140">
+                                         <GridColumn Field=@nameof(SelectCalendarLinesDto.MaintenanceType) HeaderText="@L["LineMaintenanceType"]" TextAlign="TextAlign.Center" Width="140">
                                         </GridColumn>
                                     </GridColumns>
                                 </SfGrid>
@@ -745,8 +744,8 @@
 
             </BodyTemplate>
             <FooterContentTemplate>
-                <SfButton CssClass="TSISaveButton" OnClick="LineModalSave"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-                <SfButton CssClass="TSICancelButton" OnClick="HideLineModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+                <SfButton CssClass="TSISaveButton" OnClick="LineModalSave"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideLineModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
             </FooterContentTemplate>
         </DxPopup>
 
@@ -755,7 +754,7 @@
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          ShowCloseButton="false"
-         HeaderText="İş İstasyonu Vardiya Bilgileri"
+         HeaderText="@L["StationShiftModalTitle"]"
          Width="22%"
          Height="23%"
          MinWidth="380px"
@@ -782,8 +781,8 @@
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                         <br/>
-                            <label class="TSIModalLabel"><strong>Çalışma Durumu: </strong></label>
-                             <SfComboBox  TValue="string" TItem="WorkStates" Placeholder="Çalışma durumu seçin." DataSource="@WorkStatesData">
+                            <label class="TSIModalLabel"><strong>@L["WorkStateShiftStaLabel"] </strong></label>
+                             <SfComboBox  TValue="string" TItem="WorkStates"  DataSource="@WorkStatesData">
                              <ComboBoxEvents TItem="WorkStates" TValue="string" ValueChange="@LineEditModalWorkStatesValueChangeHandler"></ComboBoxEvents>
     <ComboBoxFieldSettings Value="ID" Text="Text"></ComboBoxFieldSettings></SfComboBox>
                         </Template>
@@ -796,8 +795,8 @@
 
             </BodyTemplate>
             <FooterContentTemplate>
-                <SfButton CssClass="TSISaveButton" OnClick="LineEditModalSave"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;Kaydet</SfButton>
-                <SfButton CssClass="TSICancelButton" OnClick="HideLineEditModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;Kapat</SfButton>
+                <SfButton CssClass="TSISaveButton" OnClick="LineEditModalSave"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideLineEditModal"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
             </FooterContentTemplate>
         </DxPopup>
 

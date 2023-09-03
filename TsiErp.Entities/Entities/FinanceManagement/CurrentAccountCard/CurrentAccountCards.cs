@@ -19,6 +19,11 @@ namespace TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard
         /// Cari Ünvan
         /// </summary>
         public string Name { get; set; }
+        [SqlColumnType(MaxLength = 50, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
+        /// <summary>
+        /// Müşteri Kodu
+        /// </summary>
+        public string CustomerCode { get; set; }
         [SqlColumnType(MaxLength = 50, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
         /// Tedarikçi No

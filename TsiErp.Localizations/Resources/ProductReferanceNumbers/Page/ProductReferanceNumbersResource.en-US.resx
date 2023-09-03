@@ -136,7 +136,7 @@
     <value>Refresh</value>
   </data>
   <data name="CurrentAccountCardCodeLabel" xml:space="preserve">
-    <value>Current Account Code:</value>
+    <value>Customer Code:</value>
   </data>
   <data name="CurrentAccountCardName" xml:space="preserve">
     <value>CURRENT ACCOUNT NAME</value>
@@ -146,6 +146,9 @@
   </data>
   <data name="CurrentAccountModalGridCode" xml:space="preserve">
     <value>CURRENT ACCOUNT CODE</value>
+  </data>
+  <data name="CurrentAccountModalGridCustomerCode" xml:space="preserve">
+    <value>CUSTOMER CODE</value>
   </data>
   <data name="CurrentAccountModalGridEmail" xml:space="preserve">
     <value>E-MAIL</value>

@@ -27,6 +27,10 @@ namespace TsiErp.Entities.Entities.StockManagement.ProductReferanceNumber.Dtos
         /// </summary>
         public string CurrentAccountCardCode { get; set; }
         /// <summary>
+        /// Müşteir Kodu
+        /// </summary>
+        public string CustomerCode { get; set; }
+        /// <summary>
         /// Cari Ünvan
         /// </summary>
         public string CurrentAccountCardName { get; set; }
