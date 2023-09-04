@@ -124,7 +124,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             }
             else
             {
-                await ModalManager.WarningPopupAsync("Dikkat", "Seçtiğiniz tarih daha önce eklenmiştir.");
+                await ModalManager.WarningPopupAsync(L["UIWarningTitle"], L["UIWarningDateMessage"]);
             }
         }
 
@@ -132,11 +132,11 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Ekle", Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Takvimi Görüntüle", Id = "schedular" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Değiştir", Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = "Güncelle", Id = "refresh" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextShowCalendar"], Id = "schedular" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -150,7 +150,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
                 if (dataOpenStatus == true && dataOpenStatus != null)
                 {
                     EditPageVisible = false;
-                    await ModalManager.MessagePopupAsync("Bilgi", "Seçtiğiniz kayıt ..... tarafından kullanılmaktadır.");
+                    await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["MessagePopupInformationDescriptionBase"]);
                     await InvokeAsync(StateHasChanged);
                 }
                 else
@@ -189,7 +189,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync("Onay", "Silmek istediğinize emin misiniz ?");
+                    var res = await ModalManager.ConfirmationAsync(L["DeleteConfirmationTitleBase"], L["DeleteConfirmationDescriptionBase"]);
 
 
                     if (res == true)
@@ -216,7 +216,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         {
             if (DayGridContextMenu.Count() == 0)
             {
-                DayGridContextMenu.Add(new ContextMenuItemModel { Text = "Sil", Id = "delete" });
+                DayGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
             }
         }
 
@@ -226,7 +226,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
             {
                 case "delete":
 
-                    var res = await ModalManager.ConfirmationAsync("Dikkat", "Seçtiğiniz satır kalıcı olarak silinecektir.");
+                    var res = await ModalManager.ConfirmationAsync(L["UIWarningTitle"], L["UIWarningLineDelete"]);
 
                     if (res == true)
                     {
@@ -427,7 +427,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         {
             if (SelectedStations.Contains(station))
             {
-                await ModalManager.MessagePopupAsync("Bilgi", "Seçtiğiniz istasyon, listede mevcut.");
+                await ModalManager.MessagePopupAsync(L["MessagePopupInformationTitleBase"], L["UIInformationSelectedStation"]);
 
             }
             else
@@ -603,8 +603,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Bakım Bilgileri", Id = "maintenance" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = "Çalışma Durumunu Güncelle", Id = "workstatus" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextMaintenance"], Id = "maintenance" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextWorkStatus"], Id = "workstatus" });
             }
         }
 

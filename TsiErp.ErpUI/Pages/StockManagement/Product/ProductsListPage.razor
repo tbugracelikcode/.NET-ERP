@@ -414,6 +414,7 @@ else
                                             <GridColumn Field=@nameof(SelectTechnicalDrawingsDto.RevisionNo) HeaderText="@L["EditModalTechDrawGridRevisionNr"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(SelectTechnicalDrawingsDto.ProductCode) HeaderText="@L["EditModalTechDrawGridProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(SelectTechnicalDrawingsDto.ProductName) HeaderText="@L["EditModalTechDrawGridProductName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectTechnicalDrawingsDto.CustomerCode) HeaderText="@L["EditModalTechDrawGridCustomerCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(SelectTechnicalDrawingsDto.Drawer) HeaderText="@L["EditModalTechDrawGridDrawer"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(SelectTechnicalDrawingsDto.RevisionDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["EditModalTechDrawGridRevisionDate"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
@@ -483,7 +484,7 @@ else
                         </Template>
                     </DxGridLayoutItem>
 
-                    <DxGridLayoutItem Row="0" Column="5" RowSpan="3">
+                    <DxGridLayoutItem Row="0" Column="5" RowSpan="2">
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["Description_labelTechDraw"] </strong></label><br />
@@ -523,6 +524,16 @@ else
                             </center>
                         </Template>
                     </DxGridLayoutItem>
+
+                     <DxGridLayoutItem Row="2" Column="5">
+                            <Template>
+                                <center>
+                                    <label class="TSIModalLabel"><strong>@L["CustomerCodeTechDraw"] </strong></label><br />
+
+                                    <SfTextBox @ref="@TechDrawingCurrentAccountCardsCodeButtonEdit" Created="@TechDrawingCurrentAccountCardsCodeOnCreateIcon" @bind-Value="TechnicalDrawingsDataSource.CustomerCode" ShowClearButton=true ValueChange="TechDrawingCurrentAccountCardsOnValueChange"></SfTextBox>
+                                </center>
+                            </Template>
+                        </DxGridLayoutItem>
 
                     <DxGridLayoutItem Row="3" Column="1">
                         <Template>
@@ -1536,6 +1547,7 @@ else
                                         <GridColumns>
                                             <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Code) HeaderText="@L["CurrentAccountModalGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Name) HeaderText="@L["CurrentAccountModalGridName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListCurrentAccountCardsDto.CustomerCode) HeaderText="@L["CurrentAccountModalGridCustomerCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                             <GridColumn Field=@nameof(ListCurrentAccountCardsDto.Responsible) HeaderText="@L["CurrentAccountModalGridResponsible"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                         </GridColumns>
 

@@ -17,6 +17,10 @@ namespace TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos
         /// </summary>
         public string Name { get; set; }
         /// <summary>
+        /// Müşteri Kodu
+        /// </summary>
+        public string CustomerCode { get; set; }
+        /// <summary>
         /// Tedarikçi No
         /// </summary>
         public string SupplierNo { get; set; }

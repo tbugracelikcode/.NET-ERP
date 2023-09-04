@@ -21,6 +21,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos
         /// Mamül ID
         /// </summary>
         public Guid? FinishedProductID { get; set; }
+        /// <summary>
+        /// Müşteri Kodu
+        /// </summary>
+        public string CustomerCode { get; set; }
 
         /// <summary>
         /// Mamül Kodu

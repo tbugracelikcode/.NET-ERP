@@ -80,7 +80,7 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityItemSPCs.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SPC KODU.
+        ///   Looks up a localized string similar to ANALİZ KODU.
         /// </summary>
         public static string Code {
             get {
@@ -98,7 +98,7 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityItemSPCs.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SPC Kodu:.
+        ///   Looks up a localized string similar to Analiz Kodu:.
         /// </summary>
         public static string CodeLabel {
             get {
@@ -458,7 +458,16 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityItemSPCs.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Başlangıç tarihi, bitiş tarihinden büyük veya aynı olamaz..
+        ///   Looks up a localized string similar to Başlangıç tarihi, bitiş tarihinden büyük olamaz..
+        /// </summary>
+        public static string UIWarningDate2MessageBase {
+            get {
+                return ResourceManager.GetString("UIWarningDate2MessageBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Başlangıç tarihi, bitiş tarihiyle aynı olamaz..
         /// </summary>
         public static string UIWarningDateMessageBase {
             get {
@@ -485,7 +494,7 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityItemSPCs.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lütfen SPC kodunu yazın..
+        ///   Looks up a localized string similar to Lütfen analiz kodunu yazın..
         /// </summary>
         public static string ValidatorCodeEmpty {
             get {
@@ -494,7 +503,7 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityItemSPCs.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SPC kodu 17 karakterden fazla olamaz..
+        ///   Looks up a localized string similar to Analiz kodu 17 karakterden fazla olamaz..
         /// </summary>
         public static string ValidatorCodeMaxLenght {
             get {

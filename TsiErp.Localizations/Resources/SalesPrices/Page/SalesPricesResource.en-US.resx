@@ -174,11 +174,17 @@
   <data name="CurrentAccountCardCodeLabel" xml:space="preserve">
     <value>Current Account Code:</value>
   </data>
+  <data name="CurrentAccountCardCustomerCodeLabel" xml:space="preserve">
+    <value>Customer Code:</value>
+  </data>
   <data name="CurrentAccountCardNameLabel" xml:space="preserve">
     <value>Current Account Name:</value>
   </data>
   <data name="CurrentAccountModalGridCode" xml:space="preserve">
     <value>CURRENT ACCOUNT CODE</value>
+  </data>
+  <data name="CurrentAccountModalGridCustomerCode" xml:space="preserve">
+    <value>CUSTOMER CODE</value>
   </data>
   <data name="CurrentAccountModalGridEmail" xml:space="preserve">
     <value>E-MAIL</value>

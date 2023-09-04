@@ -42,7 +42,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPC
 
         protected override async Task BeforeInsertAsync()
         {
-            DataSource = new SelectUnsuitabilityItemSPCsDto() { Date_ = DateTime.Today, MeasurementEndDate = DateTime.Today, MeasurementStartDate = DateTime.Today };
+            DataSource = new SelectUnsuitabilityItemSPCsDto() { Date_ = DateTime.Today, MeasurementEndDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month + 1, 1).AddDays(-1), MeasurementStartDate = DateTime.Today };
 
             DataSource.SelectUnsuitabilityItemSPCLines = new List<SelectUnsuitabilityItemSPCLinesDto>();
             GridLineList = DataSource.SelectUnsuitabilityItemSPCLines;
@@ -240,7 +240,17 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPC
 
         public async void Calculate()
         {
-            if (DataSource.MeasurementStartDate != DataSource.MeasurementEndDate  && DataSource.MeasurementStartDate !> DataSource.MeasurementEndDate)
+
+            if (DataSource.MeasurementStartDate == DataSource.MeasurementEndDate)
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningDateTitleBase"], L["UIWarningDateMessageBase"]);
+            }
+            else if (DataSource.MeasurementStartDate > DataSource.MeasurementEndDate)
+            {
+                await ModalManager.WarningPopupAsync(L["UIWarningDateTitleBase"], L["UIWarningDate2MessageBase"]);
+
+            }
+            else
             {
 
                 UnsuitabilityItemsList = (await UnsuitabilityItemsAppService.GetListAsync(new ListUnsuitabilityItemsParameterDto())).Data.ToList();
@@ -281,10 +291,6 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPC
 
                     GridLineList.Add(selectSPCLineModel);
                 }
-            }
-            else
-            {
-                await ModalManager.WarningPopupAsync(L["UIWarningDateTitleBase"], L["UIWarningDateMessageBase"]);
             }
         }
 

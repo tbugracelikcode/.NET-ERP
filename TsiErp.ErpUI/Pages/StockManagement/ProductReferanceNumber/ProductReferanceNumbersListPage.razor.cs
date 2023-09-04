@@ -73,6 +73,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReferanceNumber
                 DataSource.CurrentAccountCardID = Guid.Empty;
                 DataSource.CurrentAccountCardCode = string.Empty;
                 DataSource.CurrentAccountCardName = string.Empty;
+                DataSource.CustomerCode = string.Empty;
             }
         }
 
@@ -85,6 +86,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReferanceNumber
                 DataSource.CurrentAccountCardID = selectedCurrentAccountCard.Id;
                 DataSource.CurrentAccountCardCode = selectedCurrentAccountCard.Code;
                 DataSource.CurrentAccountCardName = selectedCurrentAccountCard.Name;
+                DataSource.CustomerCode = selectedCurrentAccountCard.CustomerCode;
                 SelectCurrentAccountCardsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }

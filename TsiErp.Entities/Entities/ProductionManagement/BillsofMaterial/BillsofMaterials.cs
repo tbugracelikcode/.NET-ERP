@@ -36,5 +36,12 @@ namespace TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial
         public bool IsActive { get; set; }
 
 
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Cari Hesap ID
+        /// </summary>
+        public Guid CurrentAccountCardID { get; set; }
+
+
     }
 }

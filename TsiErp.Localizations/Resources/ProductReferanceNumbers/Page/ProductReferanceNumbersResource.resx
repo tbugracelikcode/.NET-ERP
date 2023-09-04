@@ -136,7 +136,7 @@
     <value>Güncelle</value>
   </data>
   <data name="CurrentAccountCardCodeLabel" xml:space="preserve">
-    <value>Cari Hesap Kodu:</value>
+    <value>Müşteri Kodu:</value>
   </data>
   <data name="CurrentAccountCardName" xml:space="preserve">
     <value>CARİ HESAP ÜNVANI</value>
@@ -146,6 +146,9 @@
   </data>
   <data name="CurrentAccountModalGridCode" xml:space="preserve">
     <value>CARİ KOD</value>
+  </data>
+  <data name="CurrentAccountModalGridCustomerCode" xml:space="preserve">
+    <value>MÜŞTERİ KODU</value>
   </data>
   <data name="CurrentAccountModalGridEmail" xml:space="preserve">
     <value>E-POSTA</value>

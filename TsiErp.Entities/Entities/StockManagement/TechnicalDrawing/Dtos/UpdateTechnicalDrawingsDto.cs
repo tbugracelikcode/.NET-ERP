@@ -18,6 +18,10 @@ namespace TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos
         /// </summary>
         public DateTime? RevisionDate { get; set; }
         /// <summary>
+        /// Cari Hesap ID
+        /// </summary>
+        public Guid? CustomerCurrentAccountCardID { get; set; }
+        /// <summary>
         /// Çizen
         /// </summary>
         public string Drawer { get; set; }

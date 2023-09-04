@@ -135,8 +135,23 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="CurrentAccountCardModalGridCode" xml:space="preserve">
+    <value>CURRENT ACCOUNT CODE</value>
+  </data>
+  <data name="CurrentAccountCardModalGridCustomerCode" xml:space="preserve">
+    <value>CUSTOMER CODE</value>
+  </data>
+  <data name="CurrentAccountCardModalGridName" xml:space="preserve">
+    <value>CURRENT ACCOUNT NAME</value>
+  </data>
+  <data name="CurrentAccountCardModalTitle" xml:space="preserve">
+    <value>Current Account Cards</value>
+  </data>
   <data name="CustomerApprovalLabel" xml:space="preserve">
     <value>Customer Technical Approval:</value>
+  </data>
+  <data name="CustomerCodeLabel" xml:space="preserve">
+    <value>Customer Code:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>

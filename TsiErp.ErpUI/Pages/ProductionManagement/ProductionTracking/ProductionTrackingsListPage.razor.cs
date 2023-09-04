@@ -4,6 +4,8 @@ using Syncfusion.Blazor.Calendars;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.Business.Entities.CurrentAccountCard.Services;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
@@ -259,6 +261,51 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
             }
         }
         #endregion
+        #region Cari Hesap ButtonEdit
+
+        SfTextBox CurrentAccountCardsCustomerCodeButtonEdit;
+        bool SelectCurrentAccountCardsPopupVisible = false;
+        List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
+
+       
+
+        public async Task CurrentAccountCardsCustomerCodeOnCreateIcon()
+        {
+            var CurrentAccountCardsCustomerCodeButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CurrentAccountCardsCustomerCodeButtonClickEvent);
+            await CurrentAccountCardsCustomerCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CurrentAccountCardsCustomerCodeButtonClick } });
+        }
+
+        public async void CurrentAccountCardsCustomerCodeButtonClickEvent()
+        {
+            SelectCurrentAccountCardsPopupVisible = true;
+            await GetCurrentAccountCardsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+      
+
+        public void CurrentAccountCardsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.CurrentAccountCardID = Guid.Empty;
+                DataSource.CustomerCode = string.Empty;
+            }
+        }
+
+        public async void CurrentAccountCardsDoubleClickHandler(RecordDoubleClickEventArgs<ListCurrentAccountCardsDto> args)
+        {
+            var selectedUnitSet = args.RowData;
+
+            if (selectedUnitSet != null)
+            {
+                DataSource.CurrentAccountCardID = selectedUnitSet.Id;
+                DataSource.CustomerCode = selectedUnitSet.CustomerCode;
+                SelectCurrentAccountCardsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        #endregion
 
         #region Fason Üretim Takip Satırları İşlemleri
 
@@ -483,6 +530,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
             ShiftsList = (await ShiftsAppService.GetListAsync(new ListShiftsParameterDto())).Data.ToList();
         }
 
+        private async Task GetCurrentAccountCardsList()
+        {
+            CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
+        }
         private async Task GetStationsList()
         {
             StationsList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();

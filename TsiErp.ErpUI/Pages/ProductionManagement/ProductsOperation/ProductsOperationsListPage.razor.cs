@@ -9,7 +9,6 @@ using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ContractOfProductsOperation.Dtos;
-using TsiErp.Entities.Entities.ProductionManagement.ProductOperationQualtityPlan.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.TemplateOperation.Dtos;
@@ -23,7 +22,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
     public partial class ProductsOperationsListPage
     {
         private SfGrid<SelectProductsOperationLinesDto> _LineGrid;
-        private SfGrid<SelectProductOperationQualityPlansDto> _QualityPlanGrid;
         private SfGrid<SelectContractOfProductsOperationsDto> _ContractOfProductsOperationsGrid;
 
         [Inject]
@@ -31,18 +29,13 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
 
         SelectProductsOperationLinesDto StationLineDataSource;
 
-        SelectProductOperationQualityPlansDto QualityPlansDataSource;
-
         SelectContractOfProductsOperationsDto ContractOfProductsOperationsGridDataSource;
 
         public List<ContextMenuItemModel> StationLineGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> MainGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
-        public List<ContextMenuItemModel> QualityPlanGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
         public List<ContextMenuItemModel> ContractOfProductsOperationsGridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
         List<SelectProductsOperationLinesDto> StationGridLineList = new List<SelectProductsOperationLinesDto>();
-
-        List<SelectProductOperationQualityPlansDto> QulityPlanGridLineList = new List<SelectProductOperationQualityPlansDto>();
 
         List<SelectContractOfProductsOperationsDto> ContractOfProductsOperationsGridLineList = new List<SelectContractOfProductsOperationsDto>();
 
@@ -60,7 +53,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
         {
             CreateMainContextMenuItems();
             CreateStationLineContextMenuItems();
-            CreateQualityPlanContextMenuItems();
             CreateContractOfProductsOperationsContextMenuItems();
 
             BaseCrudService = ProductsOperationsAppService;
@@ -253,159 +245,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
         }
         #endregion
 
-        #region Kontrol Türü Button Edit
-
-        SfTextBox ControlTypesCodeButtonEdit;
-        SfTextBox ControlTypesNameButtonEdit;
-        bool SelectControlTypesPopupVisible = false;
-        List<ListControlTypesDto> ControlTypesList = new List<ListControlTypesDto>();
-        public async Task ControlTypesCodeOnCreateIcon()
-        {
-            var ControlTypesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ControlTypesCodeButtonClickEvent);
-            await ControlTypesCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ControlTypesButtonClick } });
-        }
-
-        public async void ControlTypesCodeButtonClickEvent()
-        {
-            SelectControlTypesPopupVisible = true;
-            await GetControlTypesList();
-            await InvokeAsync(StateHasChanged);
-        }
-        public async Task ControlTypesNameOnCreateIcon()
-        {
-            var ControlTypesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ControlTypesNameButtonClickEvent);
-            await ControlTypesNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ControlTypesButtonClick } });
-        }
-
-        public async void ControlTypesNameButtonClickEvent()
-        {
-            SelectControlTypesPopupVisible = true;
-            await GetControlTypesList();
-            await InvokeAsync(StateHasChanged);
-        }
-
-        public void ControlTypesOnValueChange(ChangedEventArgs args)
-        {
-            if (args.Value == null)
-            {
-                QualityPlansDataSource.ControlTypesID = Guid.Empty;
-                QualityPlansDataSource.ControlTypesName = string.Empty;
-            }
-        }
-
-        public async void ControlTypesDoubleClickHandler(RecordDoubleClickEventArgs<ListControlTypesDto> args)
-        {
-            var selectedControlType = args.RowData;
-
-            if (selectedControlType != null)
-            {
-                QualityPlansDataSource.ControlTypesID = selectedControlType.Id;
-                QualityPlansDataSource.ControlTypesName = selectedControlType.Name;
-                SelectControlTypesPopupVisible = false;
-                await InvokeAsync(StateHasChanged);
-            }
-        }
-
-        #endregion
-
-        #region Kontrol Şartı Button Edit
-
-        SfTextBox ControlConditionsCodeButtonEdit;
-        SfTextBox ControlConditionsNameButtonEdit;
-        bool SelectControlConditionsPopupVisible = false;
-        List<ListControlConditionsDto> ControlConditionsList = new List<ListControlConditionsDto>();
-        public async Task ControlConditionsCodeOnCreateIcon()
-        {
-            var ControlConditionsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ControlConditionsCodeButtonClickEvent);
-            await ControlConditionsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ControlConditionsButtonClick } });
-        }
-
-        public async void ControlConditionsCodeButtonClickEvent()
-        {
-            SelectControlConditionsPopupVisible = true;
-            await GetControlConditionsList();
-            await InvokeAsync(StateHasChanged);
-        }
-        public async Task ControlConditionsNameOnCreateIcon()
-        {
-            var ControlConditionsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, ControlConditionsNameButtonClickEvent);
-            await ControlConditionsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", ControlConditionsButtonClick } });
-        }
-
-        public async void ControlConditionsNameButtonClickEvent()
-        {
-            SelectControlConditionsPopupVisible = true;
-            await GetControlConditionsList();
-            await InvokeAsync(StateHasChanged);
-        }
-
-        public void ControlConditionsOnValueChange(ChangedEventArgs args)
-        {
-            if (args.Value == null)
-            {
-                QualityPlansDataSource.ControlConditionsID = Guid.Empty;
-                QualityPlansDataSource.ControlConditionsName = string.Empty;
-            }
-        }
-
-        public async void ControlConditionsDoubleClickHandler(RecordDoubleClickEventArgs<ListControlConditionsDto> args)
-        {
-            var selectedControlCondition = args.RowData;
-
-            if (selectedControlCondition != null)
-            {
-                QualityPlansDataSource.ControlConditionsID = selectedControlCondition.Id;
-                QualityPlansDataSource.ControlConditionsName = selectedControlCondition.Name;
-                SelectControlConditionsPopupVisible = false;
-                await InvokeAsync(StateHasChanged);
-            }
-        }
-
-        #endregion
-
-        #region İstasyon Grubu ButtonEdit
-
-        SfTextBox StationGroupButtonEdit;
-        bool SelectStationGroupPopupVisible = false;
-        List<ListStationGroupsDto> StationGroupList = new List<ListStationGroupsDto>();
-
-        public async Task StationGroupOnCreateIcon()
-        {
-            var StationGroupButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, StationGroupButtonClickEvent);
-            await StationGroupButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", StationGroupButtonClick } });
-        }
-
-        public async void StationGroupButtonClickEvent()
-        {
-            SelectStationGroupPopupVisible = true;
-            StationGroupList = (await StationGroupsAppService.GetListAsync(new ListStationGroupsParameterDto())).Data.ToList();
-            await InvokeAsync(StateHasChanged);
-        }
-
-        public void StationGroupOnValueChange(ChangedEventArgs args)
-        {
-            if (args.Value == null)
-            {
-                QualityPlansDataSource.WorkCenterID = Guid.Empty;
-                QualityPlansDataSource.WorkCenterName = string.Empty;
-            }
-        }
-
-        public async void StationGroupDoubleClickHandler(RecordDoubleClickEventArgs<ListStationGroupsDto> args)
-        {
-            var selectedStationGroup = args.RowData;
-
-            if (selectedStationGroup != null)
-            {
-                QualityPlansDataSource.WorkCenterID = selectedStationGroup.Id;
-                QualityPlansDataSource.WorkCenterName = selectedStationGroup.Name;
-                SelectStationGroupPopupVisible = false;
-                await InvokeAsync(StateHasChanged);
-            }
-        }
-
-        #endregion
-
         #region Ürüne Özel Operasyon Satır Modalı İşlemleri
 
         protected override async Task BeforeInsertAsync()
@@ -417,9 +256,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
 
             DataSource.SelectProductsOperationLines = new List<SelectProductsOperationLinesDto>();
             StationGridLineList = DataSource.SelectProductsOperationLines;
-
-            DataSource.SelectProductOperationQualityPlans = new List<SelectProductOperationQualityPlansDto>();
-            QulityPlanGridLineList = DataSource.SelectProductOperationQualityPlans;
 
             DataSource.SelectContractOfProductsOperationsLines = new List<SelectContractOfProductsOperationsDto>();
             ContractOfProductsOperationsGridLineList = DataSource.SelectContractOfProductsOperationsLines;
@@ -497,7 +333,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
                     IsChanged = true;
                     DataSource = (await ProductsOperationsAppService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     StationGridLineList = DataSource.SelectProductsOperationLines.OrderBy(t => t.Priority).ToList();
-                    QulityPlanGridLineList = DataSource.SelectProductOperationQualityPlans.OrderBy(t => t.MeasureNumberInPicture).ToList();
                     ContractOfProductsOperationsGridLineList=DataSource.SelectContractOfProductsOperationsLines.OrderBy(t => t.LineNr).ToList();
 
                     ShowEditPage();
@@ -620,42 +455,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
             QualityPlanLineCrudPopup = false;
         }
 
-        protected async Task OnQualityPlanLineSubmit()
-        {
-            if (QualityPlansDataSource.Id == Guid.Empty)
-            {
-                if (DataSource.SelectProductOperationQualityPlans.Contains(QualityPlansDataSource))
-                {
-                    int selectedLineIndex = DataSource.SelectProductOperationQualityPlans.FindIndex(t => t.LineNr == QualityPlansDataSource.LineNr);
-
-                    if (selectedLineIndex > -1)
-                    {
-                        DataSource.SelectProductOperationQualityPlans[selectedLineIndex] = QualityPlansDataSource;
-                    }
-                }
-                else
-                {
-                    DataSource.SelectProductOperationQualityPlans.Add(QualityPlansDataSource);
-                }
-            }
-            else
-            {
-                int selectedLineIndex = DataSource.SelectProductOperationQualityPlans.FindIndex(t => t.Id == QualityPlansDataSource.Id);
-
-                if (selectedLineIndex > -1)
-                {
-                    DataSource.SelectProductOperationQualityPlans[selectedLineIndex] = QualityPlansDataSource;
-                }
-            }
-
-            QulityPlanGridLineList = DataSource.SelectProductOperationQualityPlans.OrderBy(t => t.MeasureNumberInPicture).ToList();
-
-            await _QualityPlanGrid.Refresh();
-
-            HideQualityPlanLinesPopup();
-
-            await InvokeAsync(StateHasChanged);
-        }
 
         protected async Task OnStationLineSubmit()
         {
@@ -736,111 +535,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
 
         #endregion
 
-        #region Kalite Planı Grid İşlemleri
-
-        protected void CreateQualityPlanContextMenuItems()
-        {
-            if (QualityPlanGridContextMenu.Count() == 0)
-            {
-                QualityPlanGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                QualityPlanGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                QualityPlanGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                QualityPlanGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
-            }
-        }
-
-        protected async Task QualityPlanBeforeInsertAsync()
-        {
-            QualityPlansDataSource = new SelectProductOperationQualityPlansDto()
-            {
-                LineNr = QulityPlanGridLineList.Count + 1
-            };
-
-            await Task.CompletedTask;
-        }
-
-        public async void QualityPlanContextMenuClick(ContextMenuClickEventArgs<SelectProductOperationQualityPlansDto> args)
-        {
-            switch (args.Item.Id)
-            {
-                case "new":
-                    QualityPlansDataSource = new SelectProductOperationQualityPlansDto();
-                    QualityPlanLineCrudPopup = true;
-                    await QualityPlanBeforeInsertAsync();
-                    await InvokeAsync(StateHasChanged);
-                    break;
-
-                case "changed":
-                    QualityPlansDataSource = args.RowInfo.RowData;
-                    QualityPlanLineCrudPopup = true;
-                    await InvokeAsync(StateHasChanged);
-                    break;
-
-                case "delete":
-
-                    var res = await ModalManager.ConfirmationAsync(L["UIConfirmationPopupTitleBase"], L["UIConfirmationPopupMessageLineBase"]);
-
-                    if (res == true)
-                    {
-
-                        var line = args.RowInfo.RowData;
-
-                        if (line.Id == Guid.Empty)
-                        {
-                            DataSource.SelectProductOperationQualityPlans.Remove(args.RowInfo.RowData);
-
-
-
-                            await _QualityPlanGrid.Refresh();
-                            await InvokeAsync(StateHasChanged);
-                        }
-                        else
-                        {
-                            if (line != null)
-                            {
-
-                                int selectedIndex = QulityPlanGridLineList.FindIndex(t => t.Id == line.Id);
-
-                                if (selectedIndex >= 0)
-                                {
-
-                                    QulityPlanGridLineList.Remove(line);
-
-                                    for (int i = 0; i < QulityPlanGridLineList.Count; i++)
-                                    {
-                                        QulityPlanGridLineList[i].LineNr = i + 1;
-                                    }
-
-                                    DataSource.SelectProductOperationQualityPlans = QulityPlanGridLineList;
-
-                                    await _QualityPlanGrid.Refresh();
-
-                                    await DeleteAsync(args.RowInfo.RowData.Id);
-                                    await GetListDataSourceAsync();
-                                    await InvokeAsync(StateHasChanged);
-                                }
-                            }
-                            else
-                            {
-                                DataSource.SelectProductOperationQualityPlans.Remove(line);
-                            }
-                        }
-                    }
-
-                    break;
-
-                case "refresh":
-                    await GetListDataSourceAsync();
-                    await _QualityPlanGrid.Refresh();
-                    await InvokeAsync(StateHasChanged);
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        #endregion
 
         #region GetList Metotları
 
@@ -857,16 +551,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
         private async Task GetTemplateOperationsList()
         {
             TemplateOperationsList = (await TemplateOperationsAppService.GetListAsync(new ListTemplateOperationsParameterDto())).Data.ToList();
-        }
-
-        private async Task GetControlTypesList()
-        {
-            ControlTypesList = (await ControlTypesAppService.GetListAsync(new ListControlTypesParameterDto())).Data.ToList();
-        }
-
-        private async Task GetControlConditionsList()
-        {
-            ControlConditionsList = (await ControlConditionsAppService.GetListAsync(new ListControlConditionsParameterDto())).Data.ToList();
         }
 
         #endregion
@@ -998,7 +682,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
         public async override void HideEditPage()
         {
             StationGridLineList.Clear();
-            QulityPlanGridLineList.Clear();
             ContractOfProductsOperationsGridLineList.Clear();
             EditPageVisible = false;
             await InvokeAsync(StateHasChanged);

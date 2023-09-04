@@ -11,6 +11,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.BillsofMaterial.Validations;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine;
@@ -57,11 +58,13 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 var query = queryFactory.Query().From(Tables.BillsofMaterials).Insert(new CreateBillsofMaterialsDto
                 {
                     Code = input.Code,
+
                     CreationTime = DateTime.Now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
                     DeleterId = Guid.Empty,
+                    CurrentAccountCardID = input.CurrentAccountCardID,
                     DeletionTime = null,
                     Id = addedEntityId,
                     IsActive = true,
@@ -90,7 +93,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                         LastModificationTime = null,
                         LastModifierId = Guid.Empty,
                         LineNr = item.LineNr,
-                        MaterialType =(int)item.MaterialType,
+                        MaterialType = (int)item.MaterialType,
                         ProductID = item.ProductID,
                         Quantity = item.Quantity,
                         Size = item.Size,
@@ -119,7 +122,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
 
                 var billsOfMaterials = queryFactory.Get<SelectBillsofMaterialsDto>(query);
 
-                if (billsOfMaterials.Id!=Guid.Empty && billsOfMaterials != null)
+                if (billsOfMaterials.Id != Guid.Empty && billsOfMaterials != null)
                 {
                     var deleteQuery = queryFactory.Query().From(Tables.BillsofMaterials).Delete(LoginedUserService.UserId).Where(new { Id = id }, true, true, "");
 
@@ -148,12 +151,19 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 var query = queryFactory
                        .Query()
                        .From(Tables.BillsofMaterials)
-                       .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive })
+                       .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive, b.CurrentAccountCardID })
                        .Join<Products>
                         (
                             pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
                             nameof(BillsofMaterials.FinishedProductID),
                             nameof(Products.Id),
+                            JoinType.Left
+                        )
+                        .Join<CurrentAccountCards>
+                        (
+                            pr => new { CustomerCode = pr.CustomerCode, CurrentAccountCardID = pr.Id },
+                            nameof(BillsofMaterials.CurrentAccountCardID),
+                            nameof(CurrentAccountCards.Id),
                             JoinType.Left
                         )
                         .Where(new { Id = id }, true, true, Tables.BillsofMaterials);
@@ -206,12 +216,19 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 var query = queryFactory
                        .Query()
                        .From(Tables.BillsofMaterials)
-                       .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive })
+                       .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive, b.CurrentAccountCardID })
                        .Join<Products>
                         (
                             pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
                             nameof(BillsofMaterials.FinishedProductID),
                             nameof(Products.Id),
+                            JoinType.Left
+                        )
+                        .Join<CurrentAccountCards>
+                        (
+                            pr => new { CustomerCode = pr.CustomerCode },
+                            nameof(BillsofMaterials.CurrentAccountCardID),
+                            nameof(CurrentAccountCards.Id),
                             JoinType.Left
                         )
                         .Where(null, true, true, Tables.BillsofMaterials);
@@ -236,6 +253,13 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                             pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
                             nameof(BillsofMaterials.FinishedProductID),
                             nameof(Products.Id),
+                            JoinType.Left
+                        )
+                        .Join<CurrentAccountCards>
+                        (
+                            pr => new { CustomerCode = pr.CustomerCode, CurrentAccountCardID = pr.Id },
+                            nameof(BillsofMaterials.CurrentAccountCardID),
+                            nameof(CurrentAccountCards.Id),
                             JoinType.Left
                         )
                         .Where(new { Id = input.Id }, true, true, Tables.BillsofMaterials);
@@ -278,7 +302,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 var listQuery = queryFactory
                                .Query()
                                .From(Tables.BillsofMaterials)
-                               .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive })
+                               .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive, b.CurrentAccountCardID })
                                .Join<Products>
                                 (
                                     pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
@@ -286,6 +310,13 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                                     nameof(Products.Id),
                                     JoinType.Left
                                 )
+                                .Join<CurrentAccountCards>
+                        (
+                            pr => new { CustomerCode = pr.CustomerCode },
+                            nameof(BillsofMaterials.CurrentAccountCardID),
+                            nameof(CurrentAccountCards.Id),
+                            JoinType.Left
+                        )
                                 .Where(new { Code = input.Code }, false, false, Tables.BillsofMaterials);
 
                 var list = queryFactory.GetList<ListBillsofMaterialsDto>(listQuery).ToList();

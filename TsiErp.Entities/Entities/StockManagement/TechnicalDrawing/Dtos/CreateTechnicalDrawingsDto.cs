@@ -22,6 +22,10 @@ namespace TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos
         /// </summary>
         public string Drawer { get; set; }
         /// <summary>
+        /// Cari Hesap ID
+        /// </summary>
+        public Guid? CustomerCurrentAccountCardID { get; set; }
+        /// <summary>
         /// Çizim No
         /// </summary>
         public string DrawingNo { get; set; }

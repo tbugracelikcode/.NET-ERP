@@ -35,6 +35,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos
         /// Para Birimi Kodu
         /// </summary>
         public string CurrencyCode { get; set; }
+        /// <summary>
+        /// Müşteri Kodu
+        /// </summary>
+        public string CustomerCode { get; set; }
 
         /// <summary>
         /// Ödeme Planı Adı

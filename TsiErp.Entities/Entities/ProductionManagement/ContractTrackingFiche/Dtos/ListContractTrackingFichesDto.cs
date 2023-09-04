@@ -34,6 +34,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche.Dt
         /// Cari Hesap Kodu
         /// </summary>
         public string CurrentAccountCardCode { get; set; }
+        /// <summary>
+        /// Müşteri Kodu
+        /// </summary>
+        public string CustomerCode { get; set; }
 
         /// <summary>
         /// Cari Hesap Ünvanı

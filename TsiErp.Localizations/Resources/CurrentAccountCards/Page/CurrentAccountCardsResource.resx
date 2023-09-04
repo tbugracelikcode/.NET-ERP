@@ -174,6 +174,12 @@
   <data name="CurrencyPopupTitle" xml:space="preserve">
     <value>Para Birimleri</value>
   </data>
+  <data name="CustomerCode" xml:space="preserve">
+    <value>MÜŞTERİ KODU</value>
+  </data>
+  <data name="CustomerCodeLabel" xml:space="preserve">
+    <value>Müşteri Kodu:</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>

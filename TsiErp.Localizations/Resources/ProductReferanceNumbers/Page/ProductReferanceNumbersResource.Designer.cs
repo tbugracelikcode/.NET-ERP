@@ -116,7 +116,7 @@ namespace TsiErp.Localizations.Resources.ProductReferanceNumbers.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cari Hesap Kodu:.
+        ///   Looks up a localized string similar to Müşteri Kodu:.
         /// </summary>
         public static string CurrentAccountCardCodeLabel {
             get {
@@ -148,6 +148,15 @@ namespace TsiErp.Localizations.Resources.ProductReferanceNumbers.Page {
         public static string CurrentAccountModalGridCode {
             get {
                 return ResourceManager.GetString("CurrentAccountModalGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MÜŞTERİ KODU.
+        /// </summary>
+        public static string CurrentAccountModalGridCustomerCode {
+            get {
+                return ResourceManager.GetString("CurrentAccountModalGridCustomerCode", resourceCulture);
             }
         }
         
