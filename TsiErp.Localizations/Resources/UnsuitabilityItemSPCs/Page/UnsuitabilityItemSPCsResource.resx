@@ -124,13 +124,13 @@
     <value>Kapat</value>
   </data>
   <data name="Code" xml:space="preserve">
-    <value>SPC KODU</value>
+    <value>ANALİZ KODU</value>
   </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
   <data name="CodeLabel" xml:space="preserve">
-    <value>SPC Kodu:</value>
+    <value>Analiz Kodu:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -249,8 +249,11 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Kalite Kontrol &gt; Hareketler</value>
   </data>
+  <data name="UIWarningDate2MessageBase" xml:space="preserve">
+    <value>Başlangıç tarihi, bitiş tarihinden büyük olamaz.</value>
+  </data>
   <data name="UIWarningDateMessageBase" xml:space="preserve">
-    <value>Başlangıç tarihi, bitiş tarihinden büyük veya aynı olamaz.</value>
+    <value>Başlangıç tarihi, bitiş tarihiyle aynı olamaz.</value>
   </data>
   <data name="UIWarningDateTitleBase" xml:space="preserve">
     <value>Uyarı</value>
@@ -259,9 +262,9 @@
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
-    <value>Lütfen SPC kodunu yazın.</value>
+    <value>Lütfen analiz kodunu yazın.</value>
   </data>
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
-    <value>SPC kodu 17 karakterden fazla olamaz.</value>
+    <value>Analiz kodu 17 karakterden fazla olamaz.</value>
   </data>
 </root>

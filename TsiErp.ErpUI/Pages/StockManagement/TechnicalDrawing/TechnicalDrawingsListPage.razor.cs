@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Extensions.ObjectMapping;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
 using TsiErp.ErpUI.Helpers;
@@ -201,11 +202,71 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
 
         #endregion
 
+        #region Cari Hesap Button Edit
+
+        SfTextBox CurrentAccountCardsCodeButtonEdit;
+        SfTextBox CurrentAccountCardsNameButtonEdit;
+        bool SelectCurrentAccountCardsPopupVisible = false;
+        List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
+        public async Task CurrentAccountCardsCodeOnCreateIcon()
+        {
+            var CurrentAccountCardsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CurrentAccountCardsCodeButtonClickEvent);
+            await CurrentAccountCardsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CurrentAccountCardsButtonClick } });
+        }
+
+        public async void CurrentAccountCardsCodeButtonClickEvent()
+        {
+            SelectCurrentAccountCardsPopupVisible = true;
+            await GetCurrentAccountCardsList();
+            await InvokeAsync(StateHasChanged);
+        }
+        public async Task CurrentAccountCardsNameOnCreateIcon()
+        {
+            var CurrentAccountCardsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CurrentAccountCardsNameButtonClickEvent);
+            await CurrentAccountCardsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CurrentAccountCardsButtonClick } });
+        }
+
+        public async void CurrentAccountCardsNameButtonClickEvent()
+        {
+            SelectCurrentAccountCardsPopupVisible = true;
+            await GetCurrentAccountCardsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void CurrentAccountCardsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                DataSource.CustomerCurrentAccountCardID = Guid.Empty;
+                DataSource.CustomerCode = string.Empty;
+            }
+        }
+
+        public async void CurrentAccountCardsDoubleClickHandler(RecordDoubleClickEventArgs<ListCurrentAccountCardsDto> args)
+        {
+            var selectedCurrentAccountCard = args.RowData;
+
+            if (selectedCurrentAccountCard != null)
+            {
+                DataSource.CustomerCurrentAccountCardID = selectedCurrentAccountCard.Id;
+                DataSource.CustomerCode = selectedCurrentAccountCard.CustomerCode;
+                SelectCurrentAccountCardsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        #endregion
+
         #region GetList Metotları
 
         private async Task GetProductsList()
         {
             ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
+        }
+
+        private async Task GetCurrentAccountCardsList()
+        {
+            CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
         }
 
         #endregion

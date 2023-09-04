@@ -117,11 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CalendarDayDate" xml:space="preserve">
+    <value>TARİH</value>
+  </data>
+  <data name="CalendarDayStateEnum" xml:space="preserve">
+    <value>DURUM</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
+  <data name="Code" xml:space="preserve">
+    <value>TAKVİM KODU</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="CodeLabel" xml:space="preserve">
+    <value>Takvim Kodu:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Ekle</value>
@@ -132,8 +144,23 @@
   <data name="ContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
+  <data name="ContextMaintenance" xml:space="preserve">
+    <value>Bakım Bilgileri</value>
+  </data>
   <data name="ContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
+  </data>
+  <data name="ContextShowCalendar" xml:space="preserve">
+    <value>Takvimi Görüntüle</value>
+  </data>
+  <data name="ContextWorkStatus" xml:space="preserve">
+    <value>Çalışma Durumunu Güncelle</value>
+  </data>
+  <data name="DateLabel" xml:space="preserve">
+    <value>Takvim Yılı:</value>
+  </data>
+  <data name="DateYear" xml:space="preserve">
+    <value>Takvim Yılı</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
@@ -147,26 +174,158 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="DescriptionLabel" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
   <data name="EditModalTitle" xml:space="preserve">
-    <value>Şubeler</value>
+    <value>Çalışma Takvimi</value>
+  </data>
+  <data name="EndDateLineLabel" xml:space="preserve">
+    <value>Bitiş Tarihi:</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
   </data>
+  <data name="HalfDay" xml:space="preserve">
+    <value>Yarım Gün</value>
+  </data>
+  <data name="Holiday" xml:space="preserve">
+    <value>Tatil</value>
+  </data>
   <data name="IsActiveLabel" xml:space="preserve">
     <value>Aktiflik:</value>
+  </data>
+  <data name="IsPlanned" xml:space="preserve">
+    <value>PLANLI</value>
+  </data>
+  <data name="IsPlannedLabel" xml:space="preserve">
+    <value>Planlı:</value>
+  </data>
+  <data name="IsPlannedLineLabel" xml:space="preserve">
+    <value>Planlanan Takvim:</value>
+  </data>
+  <data name="LineAvailableTime" xml:space="preserve">
+    <value>ÇALIŞILABİLİR SÜRE</value>
+  </data>
+  <data name="LineDate" xml:space="preserve">
+    <value>TARİH</value>
+  </data>
+  <data name="LineMaintenanceType" xml:space="preserve">
+    <value>BAKIM TÜRÜ</value>
+  </data>
+  <data name="LineModalTitle" xml:space="preserve">
+    <value>İş İstasyonu Vardiya Satırları</value>
+  </data>
+  <data name="LinePlannedHaltTimes" xml:space="preserve">
+    <value>PLANLI DURUŞ SÜRESİ</value>
+  </data>
+  <data name="LinePlannedMaintenanceTime" xml:space="preserve">
+    <value>PLANLI BAKIM SÜRESİ</value>
+  </data>
+  <data name="LineShiftName" xml:space="preserve">
+    <value>VARDİYA ADI</value>
+  </data>
+  <data name="LineShiftTime" xml:space="preserve">
+    <value>VARDİYA SÜRESİ</value>
+  </data>
+  <data name="LineShitOvertime" xml:space="preserve">
+    <value>FAZLA MESAİ SÜRESİ</value>
+  </data>
+  <data name="LineStationCode" xml:space="preserve">
+    <value>İSTASYON KODU</value>
+  </data>
+  <data name="LineStationName" xml:space="preserve">
+    <value>İSTASYON AÇIKLAMASI</value>
+  </data>
+  <data name="LineWorkStatus" xml:space="preserve">
+    <value>ÇALIŞMA DURUMU</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>
   </data>
+  <data name="LoadingDay" xml:space="preserve">
+    <value>Yükleme Günü</value>
+  </data>
   <data name="LoadingText" xml:space="preserve">
     <value>Kayıtlar Yükleniyor..</value>
+  </data>
+  <data name="Maintenance" xml:space="preserve">
+    <value>Bakım</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>TAKVİM ADI</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Takvim Adı:</value>
+  </data>
+  <data name="OfficialHoliday" xml:space="preserve">
+    <value>Resmi Tatil</value>
+  </data>
+  <data name="OfficialHolidayLabel" xml:space="preserve">
+    <value>Resmi Tatil Günü:</value>
+  </data>
+  <data name="PartialFailure" xml:space="preserve">
+    <value>Arızi Kısıt</value>
+  </data>
+  <data name="PartialOperator" xml:space="preserve">
+    <value>Operatör Kısıtı</value>
+  </data>
+  <data name="PartialProduction" xml:space="preserve">
+    <value>Üretim Kısıtı</value>
+  </data>
+  <data name="PlaceHolderWorkState" xml:space="preserve">
+    <value>Çalışma durumu seçin.</value>
+  </data>
+  <data name="SaveButton" xml:space="preserve">
+    <value>Kaydet</value>
+  </data>
+  <data name="SchedularModalTitle" xml:space="preserve">
+    <value>Çalışma Takvimi</value>
+  </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Hepsini Seç</value>
+  </data>
+  <data name="SelectedStationPlan" xml:space="preserve">
+    <value>Seçilen İstasyonları Planla</value>
+  </data>
+  <data name="StartDateLineLabel" xml:space="preserve">
+    <value>Başlangıç Tarihi:</value>
+  </data>
+  <data name="StationShiftModalTitle" xml:space="preserve">
+    <value>İş İstasyonu Vardiya Bilgileri</value>
+  </data>
+  <data name="StationsModalTitle" xml:space="preserve">
+    <value>İş İstasyonları</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Çalışma Takvimi</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>CalismaTakvimi</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Çalışma Takvimi</value>
+  </data>
+  <data name="UIInformationSelectedStation" xml:space="preserve">
+    <value>Seçtiğiniz istasyon, listede mevcut.</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Planlama &gt; Çalışma Takvimi</value>
+  </data>
+  <data name="UIWarningDateMessage" xml:space="preserve">
+    <value>Seçtiğiniz tarih daha önce eklenmiştir.</value>
+  </data>
+  <data name="UIWarningLineDelete" xml:space="preserve">
+    <value>Seçtiğiniz satır kalıcı olarak silinecektir.</value>
+  </data>
+  <data name="UIWarningTitle" xml:space="preserve">
+    <value>Dikkat</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
     <value>Lütfen çalışma takvimi kodunu giriniz.</value>
@@ -185,5 +344,23 @@
   </data>
   <data name="ValidatorYearEmpty" xml:space="preserve">
     <value>Lütfen takvim yılını seçiniz.</value>
+  </data>
+  <data name="WorkExist" xml:space="preserve">
+    <value>Çalışma Var</value>
+  </data>
+  <data name="WorkNotExist" xml:space="preserve">
+    <value>Çalışma Yok</value>
+  </data>
+  <data name="WorkStateShiftStaLabel" xml:space="preserve">
+    <value>Çalışma Durumu:</value>
+  </data>
+  <data name="WorkStatusLineLabel" xml:space="preserve">
+    <value>Çalışma Durumu:</value>
+  </data>
+  <data name="Year" xml:space="preserve">
+    <value>YIL</value>
+  </data>
+  <data name="_Description" xml:space="preserve">
+    <value>AÇIKLAMA</value>
   </data>
 </root>

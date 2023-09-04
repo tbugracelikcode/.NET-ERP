@@ -37,6 +37,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesPrice.Dtos
         /// Cari Kod
         /// </summary>
         public string CurrentAccountCardCode { get; set; }
+        /// <summary>
+        /// Müşteir Kodu
+        /// </summary>
+        public string CustomerCode { get; set; }
         // <summary>
         /// Cari Ünvan
         /// </summary>

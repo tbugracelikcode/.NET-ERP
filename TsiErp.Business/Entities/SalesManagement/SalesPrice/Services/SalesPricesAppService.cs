@@ -179,7 +179,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                         )
                         .Join<CurrentAccountCards>
                         (
-                            ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                            ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name , CustomerCode  = ca.CustomerCode},
                             nameof(SalesPrices.CurrentAccountCardID),
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
@@ -250,7 +250,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                         )
                         .Join<CurrentAccountCards>
                         (
-                            ca => new { CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                            ca => new { CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CustomerCode = ca.CustomerCode },
                             nameof(SalesPrices.CurrentAccountCardID),
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
@@ -295,7 +295,7 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                         )
                         .Join<CurrentAccountCards>
                         (
-                            ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name },
+                            ca => new { CurrentAccountCardID = ca.Id, CurrentAccountCardCode = ca.Code, CurrentAccountCardName = ca.Name, CustomerCode = ca.CustomerCode },
                             nameof(SalesPrices.CurrentAccountCardID),
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left

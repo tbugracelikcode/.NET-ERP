@@ -53,36 +53,6 @@
         Message = parameters.GetValueOrDefault<String>("Message", "Mesaj Yok");
 
 
-        if (!Message.Contains("<li>"))
-        {
-            int numberofCharacters = Message.Length;
-
-            if (numberofCharacters > 50 && 100 >= numberofCharacters)
-            {
-                Message = Message.Insert(45, "\n");
-            }
-
-            else if (numberofCharacters > 100 && 150 >= numberofCharacters)
-            {
-                Message = Message.Insert(45, "\n");
-                Message = Message.Insert(90, "\n");
-            }
-
-            else if (numberofCharacters > 150 && 200 >= numberofCharacters)
-            {
-                Message = Message.Insert(45, "\n");
-                Message = Message.Insert(90, "\n");
-                Message = Message.Insert(135, "\n");
-            }
-            else if (numberofCharacters > 200)
-            {
-                Message = Message.Insert(45, "\n");
-                Message = Message.Insert(90, "\n");
-                Message = Message.Insert(135, "\n");
-                Message = Message.Insert(180, "\n");
-            }
-        }
-
         OkText = parameters.GetValueOrDefault<String>("OkText", "Tamam");
 
         HtmlMessage = new MarkupString(Message);

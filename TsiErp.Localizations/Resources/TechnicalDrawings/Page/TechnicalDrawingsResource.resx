@@ -135,8 +135,23 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="CurrentAccountCardModalGridCode" xml:space="preserve">
+    <value>CARİ KOD</value>
+  </data>
+  <data name="CurrentAccountCardModalGridCustomerCode" xml:space="preserve">
+    <value>MÜŞTERİ KODU</value>
+  </data>
+  <data name="CurrentAccountCardModalGridName" xml:space="preserve">
+    <value>CARİ ÜNVAN</value>
+  </data>
+  <data name="CurrentAccountCardModalTitle" xml:space="preserve">
+    <value>Cari Hesap Kartları</value>
+  </data>
   <data name="CustomerApprovalLabel" xml:space="preserve">
     <value>Müşteri Teknik Onayı:</value>
+  </data>
+  <data name="CustomerCodeLabel" xml:space="preserve">
+    <value>Müşteri Kodu:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>

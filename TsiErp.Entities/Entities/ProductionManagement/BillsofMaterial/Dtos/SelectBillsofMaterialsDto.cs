@@ -19,6 +19,15 @@ namespace TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos
         /// Reçete Adı
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Cari Hesap ID
+        /// </summary>
+        public Guid? CurrentAccountCardID { get; set; }
+        /// <summary>
+        /// Müşteri Kodu
+        /// </summary>
+        public string CustomerCode { get; set; }
         /// <summary>
         /// Mamül ID
         /// </summary>

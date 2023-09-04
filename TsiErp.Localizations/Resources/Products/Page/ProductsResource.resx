@@ -240,6 +240,9 @@
   <data name="CurrentAccountModalGridCode" xml:space="preserve">
     <value>CARİ KOD</value>
   </data>
+  <data name="CurrentAccountModalGridCustomerCode" xml:space="preserve">
+    <value>MÜŞTERİ KODU</value>
+  </data>
   <data name="CurrentAccountModalGridName" xml:space="preserve">
     <value>CARİ ÜNVAN</value>
   </data>
@@ -251,6 +254,9 @@
   </data>
   <data name="CustomerApprovalLabelTechDraw" xml:space="preserve">
     <value>Müşteri Teknik Onayı:</value>
+  </data>
+  <data name="CustomerCodeTechDraw" xml:space="preserve">
+    <value>Müşteri Kodu:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
@@ -278,6 +284,9 @@
   </data>
   <data name="EditCrudModalTechDrawTitle" xml:space="preserve">
     <value>Teknik Resim İşlemleri</value>
+  </data>
+  <data name="EditModalTechDrawGridCustomerCode" xml:space="preserve">
+    <value>MÜŞTERİ KODU</value>
   </data>
   <data name="EditModalTechDrawGridDrawer" xml:space="preserve">
     <value>ÇİZEN</value>

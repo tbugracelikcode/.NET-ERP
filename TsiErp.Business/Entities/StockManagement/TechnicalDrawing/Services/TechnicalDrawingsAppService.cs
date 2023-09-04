@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.TechnicalDrawing.Validations;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing;
 using TsiErp.Entities.Entities.StockManagement.TechnicalDrawing.Dtos;
@@ -56,6 +57,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                     RevisionNo = input.RevisionNo,
                     RevisionDate = input.RevisionDate,
                     ProductID = input.ProductID,
+                    CustomerCurrentAccountCardID = input.CustomerCurrentAccountCardID,
                     Drawer = input.Drawer,
                     DrawingDomain = input.DrawingDomain,
                     DrawingFilePath = input.DrawingFilePath,
@@ -105,12 +107,19 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
                 var query = queryFactory
-                        .Query().From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(td => new {td.ProductID,td.RevisionDate,td.RevisionNo,td.SampleApproval,td.CustomerApproval,td.DataOpenStatus,td.DataOpenStatusUserId,td.DrawingFilePath,td.Description_,td.Drawer,td.DrawingDomain,td.DrawingNo,td.Id,td.IsApproved})
+                        .Query().From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(td => new { td.ProductID, td.RevisionDate, td.RevisionNo, td.SampleApproval, td.CustomerApproval, td.DataOpenStatus, td.DataOpenStatusUserId, td.DrawingFilePath, td.Description_, td.Drawer, td.DrawingDomain, td.DrawingNo, td.Id, td.IsApproved, td.CustomerCurrentAccountCardID })
                             .Join<Products>
                             (
-                                p => new { ProductID = p.Id, ProductCode = p.Code, ProductName  = p.Name},
+                                p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
                                 nameof(TechnicalDrawings.ProductID),
                                 nameof(Products.Id),
+                                JoinType.Left
+                            )
+                              .Join<CurrentAccountCards>
+                            (
+                                p => new { CustomerCurrentAccountCardID = p.Id, CustomerCode = p.CustomerCode },
+                                nameof(TechnicalDrawings.CustomerCurrentAccountCardID),
+                                nameof(CurrentAccountCards.Id),
                                 JoinType.Left
                             )
                             .Where(new { Id = id }, false, false, Tables.TechnicalDrawings);
@@ -133,12 +142,19 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
 
                 var query = queryFactory
                    .Query()
-                   .From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(td => new { td.ProductID, td.RevisionDate, td.RevisionNo, td.SampleApproval, td.CustomerApproval, td.DataOpenStatus, td.DataOpenStatusUserId, td.DrawingFilePath, td.Description_, td.Drawer, td.DrawingDomain, td.DrawingNo, td.Id, td.IsApproved })
+                   .From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(td => new { td.ProductID, td.RevisionDate, td.RevisionNo, td.SampleApproval, td.CustomerApproval, td.DataOpenStatus, td.DataOpenStatusUserId, td.DrawingFilePath, td.Description_, td.Drawer, td.DrawingDomain, td.DrawingNo, td.Id, td.IsApproved, td.CustomerCurrentAccountCardID })
                             .Join<Products>
                             (
                                 p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
                                 nameof(TechnicalDrawings.ProductID),
                                 nameof(Products.Id),
+                                JoinType.Left
+                            )
+                               .Join<CurrentAccountCards>
+                            (
+                                p => new { CustomerCode = p.CustomerCode },
+                                nameof(TechnicalDrawings.CustomerCurrentAccountCardID),
+                                nameof(CurrentAccountCards.Id),
                                 JoinType.Left
                             ).Where(null, false, false, Tables.TechnicalDrawings);
 
@@ -157,12 +173,19 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
 
                 var query = queryFactory
                    .Query()
-                   .From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(td => new { td.ProductID, td.RevisionDate, td.RevisionNo, td.SampleApproval, td.CustomerApproval, td.DataOpenStatus, td.DataOpenStatusUserId, td.DrawingFilePath, td.Description_, td.Drawer, td.DrawingDomain, td.DrawingNo, td.Id, td.IsApproved })
+                   .From(Tables.TechnicalDrawings).Select<TechnicalDrawings>(td => new { td.ProductID, td.RevisionDate, td.RevisionNo, td.SampleApproval, td.CustomerApproval, td.DataOpenStatus, td.DataOpenStatusUserId, td.DrawingFilePath, td.Description_, td.Drawer, td.DrawingDomain, td.DrawingNo, td.Id, td.IsApproved, td.CustomerCurrentAccountCardID })
                             .Join<Products>
                             (
                                 p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
                                 nameof(TechnicalDrawings.ProductID),
                                 nameof(Products.Id),
+                                JoinType.Left
+                            )
+                              .Join<CurrentAccountCards>
+                            (
+                                p => new { CustomerCurrentAccountCardID = p.Id, CustomerCode = p.CustomerCode },
+                                nameof(TechnicalDrawings.CustomerCurrentAccountCardID),
+                                nameof(CurrentAccountCards.Id),
                                 JoinType.Left
                             ).Where(new { ProductID = productId }, false, false, Tables.TechnicalDrawings);
 
@@ -201,6 +224,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                     CustomerApproval = input.CustomerApproval,
                     RevisionNo = input.RevisionNo,
                     RevisionDate = input.RevisionDate,
+                    CustomerCurrentAccountCardID = input.CustomerCurrentAccountCardID,
                     ProductID = input.ProductID,
                     Drawer = input.Drawer,
                     DrawingDomain = input.DrawingDomain,
@@ -241,6 +265,7 @@ namespace TsiErp.Business.Entities.TechnicalDrawing.Services
                     CustomerApproval = entity.CustomerApproval,
                     RevisionNo = entity.RevisionNo,
                     RevisionDate = entity.RevisionDate,
+                    CustomerCurrentAccountCardID = entity.CustomerCurrentAccountCardID,
                     ProductID = entity.ProductID,
                     Drawer = entity.Drawer,
                     DrawingDomain = entity.DrawingDomain,

@@ -1271,6 +1271,62 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
             return Task.CompletedTask;
         }
 
+
+
+        #region Teknik Resim Cari Hesap Button Edit
+
+        SfTextBox TechDrawingCurrentAccountCardsCodeButtonEdit;
+        SfTextBox TechDrawingCurrentAccountCardsNameButtonEdit;
+        List<ListCurrentAccountCardsDto> TechDrawingCurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
+        public async Task TechDrawingCurrentAccountCardsCodeOnCreateIcon()
+        {
+            var TechDrawingCurrentAccountCardsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, TechDrawingCurrentAccountCardsCodeButtonClickEvent);
+            await TechDrawingCurrentAccountCardsCodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", TechDrawingCurrentAccountCardsButtonClick } });
+        }
+
+        public async void TechDrawingCurrentAccountCardsCodeButtonClickEvent()
+        {
+            SelectCurrentAccountCardsPopupVisible = true;
+            await GetTechDrawingCurrentAccountCardsList();
+            await InvokeAsync(StateHasChanged);
+        }
+        public async Task TechDrawingCurrentAccountCardsNameOnCreateIcon()
+        {
+            var TechDrawingCurrentAccountCardsButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, TechDrawingCurrentAccountCardsNameButtonClickEvent);
+            await TechDrawingCurrentAccountCardsNameButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", TechDrawingCurrentAccountCardsButtonClick } });
+        }
+
+        public async void TechDrawingCurrentAccountCardsNameButtonClickEvent()
+        {
+            SelectCurrentAccountCardsPopupVisible = true;
+            await GetTechDrawingCurrentAccountCardsList();
+            await InvokeAsync(StateHasChanged);
+        }
+
+        public void TechDrawingCurrentAccountCardsOnValueChange(ChangedEventArgs args)
+        {
+            if (args.Value == null)
+            {
+                TechnicalDrawingsDataSource.CustomerCurrentAccountCardID = Guid.Empty;
+                TechnicalDrawingsDataSource.CustomerCode = string.Empty;
+            }
+        }
+
+        public async void TechDrawingCurrentAccountCardsDoubleClickHandler(RecordDoubleClickEventArgs<ListCurrentAccountCardsDto> args)
+        {
+            var selectedTechDrawingCurrentAccountCard = args.RowData;
+
+            if (selectedTechDrawingCurrentAccountCard != null)
+            {
+                TechnicalDrawingsDataSource.CustomerCurrentAccountCardID = selectedTechDrawingCurrentAccountCard.Id;
+                TechnicalDrawingsDataSource.CustomerCode = selectedTechDrawingCurrentAccountCard.CustomerCode;
+                SelectCurrentAccountCardsPopupVisible = false;
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+
+        #endregion
+
         #region GetList Metotları
 
         private async Task GetUnitSetsList()
@@ -1284,6 +1340,11 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         }
 
         private async Task GetCurrentAccountCardsList()
+        {
+            CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
+        }
+
+        private async Task GetTechDrawingCurrentAccountCardsList()
         {
             CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
         }

@@ -10,6 +10,7 @@ using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.ProductionTracking.Validations;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
@@ -64,6 +65,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     OperationEndDate = input.OperationEndDate,
                     OperationEndTime = input.OperationEndTime,
                     OperationStartDate = input.OperationStartDate,
+                    CurrentAccountCardID = input.CurrentAccountCardID,
                     OperationStartTime = input.OperationStartTime,
                     OperationTime = input.OperationTime,
                     PlannedQuantity = input.PlannedQuantity,
@@ -153,7 +155,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 var query = queryFactory
                        .Query()
                        .From(Tables.ProductionTrackings)
-                       .Select<ProductionTrackings>(pt => new { pt.WorkOrderID, pt.StationID, pt.StationCode, pt.ShiftID, pt.ShiftCode, pt.ProducedQuantity, pt.PlannedQuantity, pt.OperationTime, pt.OperationStartTime, pt.OperationStartDate, pt.OperationEndTime, pt.OperationEndDate, pt.IsFinished, pt.Id, pt.HaltTime, pt.EmployeeName, pt.EmployeeID, pt.DataOpenStatusUserId, pt.DataOpenStatus, pt.Code, pt.AdjustmentTime })
+                       .Select("*")
                        .Join<WorkOrders>
                         (
                             wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.Code },
@@ -180,6 +182,13 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                             e => new { EmployeeID = e.Id, EmployeeName = e.Name },
                             nameof(ProductionTrackings.EmployeeID),
                             nameof(Employees.Id),
+                            JoinType.Left
+                        )
+                        .Join<CurrentAccountCards>
+                        (
+                            e => new { CurrentAccountCardID = e.Id, CustomerCode = e.CustomerCode },
+                            nameof(ProductionTrackings.CurrentAccountCardID),
+                            nameof(CurrentAccountCards.Id),
                             JoinType.Left
                         )
                         .Where(new { Id = id }, false, false, Tables.ProductionTrackings);
@@ -218,7 +227,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 var query = queryFactory
                        .Query()
                        .From(Tables.ProductionTrackings)
-                       .Select<ProductionTrackings>(pt => new { pt.WorkOrderID, pt.StationID, pt.StationCode, pt.ShiftID, pt.ShiftCode, pt.ProducedQuantity, pt.PlannedQuantity, pt.OperationTime, pt.OperationStartTime, pt.OperationStartDate, pt.OperationEndTime, pt.OperationEndDate, pt.IsFinished, pt.Id, pt.HaltTime, pt.EmployeeName, pt.EmployeeID, pt.DataOpenStatusUserId, pt.DataOpenStatus, pt.Code, pt.AdjustmentTime })
+                       .Select("*")
                        .Join<WorkOrders>
                         (
                             wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.Code },
@@ -245,6 +254,13 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                             e => new { EmployeeID = e.Id, EmployeeName = e.Name },
                             nameof(ProductionTrackings.EmployeeID),
                             nameof(Employees.Id),
+                            JoinType.Left
+                        )
+                          .Join<CurrentAccountCards>
+                        (
+                            e => new { CustomerCode = e.CustomerCode },
+                            nameof(ProductionTrackings.CurrentAccountCardID),
+                            nameof(CurrentAccountCards.Id),
                             JoinType.Left
                         )
                         .Where(null, false, false, Tables.ProductionTrackings);
@@ -292,6 +308,13 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                             nameof(Employees.Id),
                             JoinType.Left
                         )
+                          .Join<CurrentAccountCards>
+                        (
+                            e => new { CurrentAccountCardID = e.Id, CustomerCode = e.CustomerCode },
+                            nameof(ProductionTrackings.CurrentAccountCardID),
+                            nameof(CurrentAccountCards.Id),
+                            JoinType.Left
+                        )
                         .Where(new { Id = input.Id }, false, false, Tables.ProductionTrackings);
 
                 var entity = queryFactory.Get<SelectProductionTrackingsDto>(entityQuery);
@@ -317,7 +340,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 var listQuery = queryFactory
                                .Query()
                                .From(Tables.ProductionTrackings)
-                               .Select<ProductionTrackings>(pt => new { pt.WorkOrderID, pt.StationID, pt.StationCode, pt.ShiftID, pt.ShiftCode, pt.ProducedQuantity, pt.PlannedQuantity, pt.OperationTime, pt.OperationStartTime, pt.OperationStartDate, pt.OperationEndTime, pt.OperationEndDate, pt.IsFinished, pt.Id, pt.HaltTime, pt.EmployeeName, pt.EmployeeID, pt.DataOpenStatusUserId, pt.DataOpenStatus, pt.Code, pt.AdjustmentTime })
+                               .Select("*")
                                .Join<WorkOrders>
                                 (
                                     wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.Code },
@@ -346,6 +369,13 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                     nameof(Employees.Id),
                                     JoinType.Left
                                 )
+                                  .Join<CurrentAccountCards>
+                        (
+                            e => new { CustomerCode = e.CustomerCode },
+                            nameof(ProductionTrackings.CurrentAccountCardID),
+                            nameof(CurrentAccountCards.Id),
+                            JoinType.Left
+                        )
                                 .Where(new { Code = input.Code }, false, false, Tables.ProductionTrackings);
 
                 var list = queryFactory.GetList<ListProductionTrackingsDto>(listQuery).ToList();
@@ -367,6 +397,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     OperationEndDate = input.OperationEndDate,
                     OperationEndTime = input.OperationEndTime,
                     OperationStartDate = input.OperationStartDate,
+                    CurrentAccountCardID = input.CurrentAccountCardID,
                     OperationStartTime = input.OperationStartTime,
                     OperationTime = input.OperationTime,
                     PlannedQuantity = input.PlannedQuantity,
@@ -464,6 +495,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     IsFinished = entity.IsFinished,
                     OperationEndDate = entity.OperationEndDate,
                     OperationEndTime = entity.OperationEndTime,
+                    CurrentAccountCardID = entity.CurrentAccountCardID,
                     OperationStartDate = entity.OperationStartDate,
                     OperationStartTime = entity.OperationStartTime,
                     OperationTime = entity.OperationTime,

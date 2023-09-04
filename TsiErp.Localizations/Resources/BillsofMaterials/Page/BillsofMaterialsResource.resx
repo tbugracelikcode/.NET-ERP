@@ -141,6 +141,24 @@
   <data name="ContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="CurrentAccountCardCode" xml:space="preserve">
+    <value>CARİ KOD</value>
+  </data>
+  <data name="CurrentAccountCardCustomerCode" xml:space="preserve">
+    <value>MÜŞTERİ KODU</value>
+  </data>
+  <data name="CurrentAccountCardName" xml:space="preserve">
+    <value>CARİ ÜNVAN</value>
+  </data>
+  <data name="CurrentAccountModalTitle" xml:space="preserve">
+    <value>Cari Hesap Kartları</value>
+  </data>
+  <data name="CustomerCode" xml:space="preserve">
+    <value>MÜŞTERİ KODU</value>
+  </data>
+  <data name="CustomerCodeLabel" xml:space="preserve">
+    <value>Müşteri Kodu:</value>
+  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Seçtiğiniz reçete, kalıcı olarak silinecektir.</value>
   </data>

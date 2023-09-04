@@ -115,11 +115,56 @@ namespace TsiErp.Localizations.Resources.TechnicalDrawings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CARİ KOD.
+        /// </summary>
+        public static string CurrentAccountCardModalGridCode {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardModalGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MÜŞTERİ KODU.
+        /// </summary>
+        public static string CurrentAccountCardModalGridCustomerCode {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardModalGridCustomerCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CARİ ÜNVAN.
+        /// </summary>
+        public static string CurrentAccountCardModalGridName {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardModalGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cari Hesap Kartları.
+        /// </summary>
+        public static string CurrentAccountCardModalTitle {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Müşteri Teknik Onayı:.
         /// </summary>
         public static string CustomerApprovalLabel {
             get {
                 return ResourceManager.GetString("CustomerApprovalLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Müşteri Kodu:.
+        /// </summary>
+        public static string CustomerCodeLabel {
+            get {
+                return ResourceManager.GetString("CustomerCodeLabel", resourceCulture);
             }
         }
         

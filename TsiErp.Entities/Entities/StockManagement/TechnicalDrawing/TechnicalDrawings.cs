@@ -75,5 +75,11 @@ namespace TsiErp.Entities.Entities.StockManagement.TechnicalDrawing
         /// </summary>
         public Guid ProductID { get; set; }
 
+        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Cari Hesap ID
+        /// </summary>
+        public Guid CustomerCurrentAccountCardID { get; set; }
+
     }
 }

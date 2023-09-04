@@ -63,6 +63,10 @@ namespace TsiErp.Entities.Entities.SalesManagement.SalesProposition.Dtos
         /// </summary>
         public string CurrentAccountCardName { get; set; }
         /// <summary>
+        /// Müşteri Kodu
+        /// </summary>
+        public string CustomerCode { get; set; }
+        /// <summary>
         /// Brüt Tutar
         /// </summary>
         public decimal GrossAmount { get; set; }

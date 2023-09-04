@@ -124,13 +124,13 @@
     <value>Close</value>
   </data>
   <data name="Code" xml:space="preserve">
-    <value>SPC CODE</value>
+    <value>ANALYSIS CODE</value>
   </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
   <data name="CodeLabel" xml:space="preserve">
-    <value>SPC Code:</value>
+    <value>Analysis Code:</value>
   </data>
   <data name="ContextAdd" xml:space="preserve">
     <value>Add</value>
@@ -261,8 +261,11 @@
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Quality Control &gt; Transactions</value>
   </data>
+  <data name="UIWarningDate2MessageBase" xml:space="preserve">
+    <value>Start date cannot be greater than end date.</value>
+  </data>
   <data name="UIWarningDateMessageBase" xml:space="preserve">
-    <value>The start date cannot be greater than or the equal to the end date.</value>
+    <value>The start date cannot be equal to the end date.</value>
   </data>
   <data name="UIWarningDateTitleBase" xml:space="preserve">
     <value>Warning</value>
@@ -271,9 +274,9 @@
     <value>There is a record with the same code.</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
-    <value>Please enter the SPC code.</value>
+    <value>Please enter the analysis code.</value>
   </data>
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
-    <value>SPC code cannot exceed 17 characters.</value>
+    <value>Analysis code cannot exceed 17 characters.</value>
   </data>
 </root>

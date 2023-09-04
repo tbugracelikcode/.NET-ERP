@@ -430,6 +430,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MÜŞTERİ KODU.
+        /// </summary>
+        public static string CurrentAccountModalGridCustomerCode {
+            get {
+                return ResourceManager.GetString("CurrentAccountModalGridCustomerCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CARİ ÜNVAN.
         /// </summary>
         public static string CurrentAccountModalGridName {
@@ -462,6 +471,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         public static string CustomerApprovalLabelTechDraw {
             get {
                 return ResourceManager.GetString("CustomerApprovalLabelTechDraw", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Müşteri Kodu:.
+        /// </summary>
+        public static string CustomerCodeTechDraw {
+            get {
+                return ResourceManager.GetString("CustomerCodeTechDraw", resourceCulture);
             }
         }
         
@@ -543,6 +561,15 @@ namespace TsiErp.Localizations.Resources.Products.Page {
         public static string EditCrudModalTechDrawTitle {
             get {
                 return ResourceManager.GetString("EditCrudModalTechDrawTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MÜŞTERİ KODU.
+        /// </summary>
+        public static string EditModalTechDrawGridCustomerCode {
+            get {
+                return ResourceManager.GetString("EditModalTechDrawGridCustomerCode", resourceCulture);
             }
         }
         

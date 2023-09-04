@@ -232,6 +232,15 @@ namespace TsiErp.Localizations.Resources.SalesPropositions.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Müşteri Kodu:.
+        /// </summary>
+        public static string CurrentAccountCardCustomerCodeLabel {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardCustomerCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CARİ HESAP ÜNVANI.
         /// </summary>
         public static string CurrentAccountCardName {
@@ -255,6 +264,15 @@ namespace TsiErp.Localizations.Resources.SalesPropositions.Page {
         public static string CurrentAccountModalGridCode {
             get {
                 return ResourceManager.GetString("CurrentAccountModalGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MÜŞTERİ KODU.
+        /// </summary>
+        public static string CurrentAccountModalGridCustomerCode {
+            get {
+                return ResourceManager.GetString("CurrentAccountModalGridCustomerCode", resourceCulture);
             }
         }
         
@@ -309,6 +327,15 @@ namespace TsiErp.Localizations.Resources.SalesPropositions.Page {
         public static string CurrentAccountModalTitle {
             get {
                 return ResourceManager.GetString("CurrentAccountModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MÜŞTERİ KODU.
+        /// </summary>
+        public static string CustomerCode {
+            get {
+                return ResourceManager.GetString("CustomerCode", resourceCulture);
             }
         }
         

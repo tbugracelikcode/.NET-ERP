@@ -18,6 +18,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// İş Emri Kodu
         /// </summary>
         public string WorkOrderCode { get; set; }
+        /// <summary>
+        /// Müşteri Kodu
+        /// </summary>
+        public string CustomerCode { get; set; }
 
         /// <summary>
         /// Üretilen Miktar

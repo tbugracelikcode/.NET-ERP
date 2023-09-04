@@ -16,6 +16,11 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking
         /// İş Emri ID
         /// </summary>
         public Guid WorkOrderID { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Cari Hesap ID
+        /// </summary>
+        public Guid CurrentAccountCardID { get; set; }
         [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>
         /// Üretilen Miktar
