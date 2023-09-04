@@ -2,6 +2,7 @@
 using DevExpress.Blazor;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Syncfusion.Blazor.Buttons;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
@@ -1244,6 +1245,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
             CreateProductReferanceNumberContextMenuItems();
             CreateBillsofMaterialsContextMenuItems();
             CreateRoutesContextMenuItems();
+
+
         }
 
         protected override Task BeforeInsertAsync()
