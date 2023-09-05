@@ -18,18 +18,19 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.FicheNumber;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.FicheNumber.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.FinanceManagementParameter.Dtos;
 using TsiErp.Entities.TableConstant;
+using TsiErp.Localizations.Resources.FicheNumber.Page;
 using TsiErp.Localizations.Resources.FinanceManagementParameter.Page;
 
 namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services
 {
 
     [ServiceRegistration(typeof(IFicheNumbersAppService), DependencyInjectionType.Scoped)]
-    public class FicheNumbersAppService : ApplicationService<FinanceManagementParametersResource>, IFicheNumbersAppService
+    public class FicheNumbersAppService : ApplicationService<FicheNumbersResource>, IFicheNumbersAppService
     {
 
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public FicheNumbersAppService(IStringLocalizer<FinanceManagementParametersResource> l) : base(l)
+        public FicheNumbersAppService(IStringLocalizer<FicheNumbersResource> l) : base(l)
         {
         }
 

@@ -111,6 +111,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ExchangeRatesResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\FicheNumber\Page\FicheNumbersResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FicheNumbersResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\FinalControlUnsuitabilityReports\Page\FinalControlUnsuitabilityReportsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -510,6 +515,10 @@
     <EmbeddedResource Update="Resources\ExchangeRates\Page\ExchangeRatesResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ExchangeRatesResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\FicheNumber\Page\FicheNumbersResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FicheNumbersResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\FinalControlUnsuitabilityReports\Page\FinalControlUnsuitabilityReportsResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
