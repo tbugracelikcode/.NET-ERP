@@ -39,7 +39,7 @@ namespace TsiErp.Entities.Entities.GeneralSystemIdentifications.FicheNumber
         /// Menü
         /// </summary>
 
-        [SqlColumnType(MaxLength = 17, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
+        [SqlColumnType(MaxLength = 50, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
         public string Menu_ { get; set; }
     }
 }
