@@ -27,6 +27,10 @@ namespace TsiErp.Business.Entities.ProductionTracking.Validations
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
                .WithMessage("ValidatorEmployeeID");
 
+            RuleFor(x => x.CurrentAccountCardID)
+                .Must(x => x.HasValue && x.Value != Guid.Empty)
+               .WithMessage("ValidatorCurrentCardID");
+
             RuleFor(x => x.ShiftID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
                .WithMessage("Lütfen vardiya seçin.");

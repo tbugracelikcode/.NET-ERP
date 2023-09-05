@@ -435,12 +435,13 @@ namespace TsiErp.ErpUI.Pages.Base
                 builder.OpenComponent(0, typeof(SfTextBox));
                 builder.AddAttribute(1, "ID", "srcText");
                 builder.AddAttribute(2, "CssClass", "TSITxtBox");
-                builder.AddAttribute(3, "Placeholder", "Aramak istediğiniz kelimeyi yazın.");
-                builder.AddAttribute(4, "Value", BindConverter.FormatValue(GridSearchText));
-                builder.AddAttribute(5, "onchange", EventCallback.Factory.CreateBinder<string?>(this, __value => GridSearchText = __value, GridSearchText));
-                builder.AddAttribute(6, "onkeydown", OnToolbarSearchChange);
+                builder.AddAttribute(3, "Value", BindConverter.FormatValue(GridSearchText));
+                builder.AddAttribute(4, "onchange", EventCallback.Factory.CreateBinder<string?>(this, __value => GridSearchText = __value, GridSearchText));
+                builder.AddAttribute(5, "onkeydown", OnToolbarSearchChange);
+                builder.AddAttribute(6, "ShowClearButton", true);
                 builder.CloseComponent();
             };
+
 
             GridToolbarItems.Add(new ItemModel() { Id = "ExcelExport", CssClass = "TSIExcelButton", Type = ItemType.Button, PrefixIcon = "TSIExcelIcon", TooltipText = @loc["UIExportFileName"] });
 
@@ -448,7 +449,7 @@ namespace TsiErp.ErpUI.Pages.Base
             GridToolbarItems.Add(new ItemModel() { Id = "PDFExport", CssClass = "TSIExcelButton", Type = ItemType.Button, PrefixIcon = "TSIPdfIcon", TooltipText = @loc["UIExportFileName"] });
 
 
-            GridToolbarItems.Add(new ItemModel() { Id = "Search", CssClass = "TSITxtBox", Type = ItemType.Input, Template = search, Text = GridSearchText });
+            GridToolbarItems.Add(new ItemModel() { Id = "Search", CssClass = "TSITxtBox", Type = ItemType.Input, Template = search, Text = GridSearchText});
 
 
         }
@@ -470,7 +471,7 @@ namespace TsiErp.ErpUI.Pages.Base
                 await this._grid.ExportToPdfAsync(PdfExportProperties);
             }
 
-        } 
+        }
         #endregion
     }
 }

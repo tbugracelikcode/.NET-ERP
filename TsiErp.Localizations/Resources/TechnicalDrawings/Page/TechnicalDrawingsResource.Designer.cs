@@ -520,6 +520,15 @@ namespace TsiErp.Localizations.Resources.TechnicalDrawings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lütfen müşteri kodu seçin..
+        /// </summary>
+        public static string ValidatorCurrentCardID {
+            get {
+                return ResourceManager.GetString("ValidatorCurrentCardID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen stok seçin..
         /// </summary>
         public static string ValidatorProductID {

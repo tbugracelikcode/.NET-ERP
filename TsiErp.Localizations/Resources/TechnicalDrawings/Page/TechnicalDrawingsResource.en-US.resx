@@ -270,6 +270,9 @@
   <data name="ValidatorCodeMaxLength" xml:space="preserve">
     <value>Revision number cannot exceed 50 characters.</value>
   </data>
+  <data name="ValidatorCurrentCardID" xml:space="preserve">
+    <value>Please select a current account card.</value>
+  </data>
   <data name="ValidatorProductID" xml:space="preserve">
     <value>Please select a product.</value>
   </data>

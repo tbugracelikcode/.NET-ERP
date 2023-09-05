@@ -29,6 +29,10 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Validations
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
                .WithMessage("ValidatorFinishedProductID");
 
+            RuleFor(x => x.CurrentAccountCardID)
+                .Must(x => x.HasValue && x.Value != Guid.Empty)
+               .WithMessage("ValidatorCurrentCardID");
+
 
 
         }

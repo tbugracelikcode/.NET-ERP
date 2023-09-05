@@ -266,7 +266,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
 
         private async Task GetCurrentAccountCardsList()
         {
-            CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
+            CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.Where(t => !string.IsNullOrEmpty(t.CustomerCode)).ToList();
         }
 
         #endregion
@@ -332,7 +332,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
         {
             string format = file.Type;
 
-            if(format == "image/jpg" || format == "image/jpeg" || format == "image/png")
+            if (format == "image/jpg" || format == "image/jpeg" || format == "image/png")
             {
 
                 IFileListEntry imageFile = await file.ToImageFileAsync(format, 1214, 800);
@@ -352,7 +352,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
                 ImagePreviewPopup = true;
             }
 
-            else if(format == "application/pdf")
+            else if (format == "application/pdf")
             {
                 string rootPath = "tempFiles/";
 
@@ -479,7 +479,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
 
             var savedEntityIndex = ListDataSource.FindIndex(x => x.Id == DataSource.Id);
 
-            
+
 
             if (DataSource.Id == Guid.Empty)
             {

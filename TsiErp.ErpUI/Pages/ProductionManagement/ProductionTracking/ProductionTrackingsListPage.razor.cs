@@ -532,7 +532,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
 
         private async Task GetCurrentAccountCardsList()
         {
-            CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
+            CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.Where(t => !string.IsNullOrEmpty(t.CustomerCode)).ToList();
         }
         private async Task GetStationsList()
         {

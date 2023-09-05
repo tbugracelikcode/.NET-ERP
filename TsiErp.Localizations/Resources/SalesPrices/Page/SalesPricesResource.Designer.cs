@@ -727,6 +727,15 @@ namespace TsiErp.Localizations.Resources.SalesPrices.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lütfen müşteri kodu seçin..
+        /// </summary>
+        public static string ValidatorCurrentCardID {
+            get {
+                return ResourceManager.GetString("ValidatorCurrentCardID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen fiyat listesi açıklaması yazın..
         /// </summary>
         public static string ValidatorNameEmpty {

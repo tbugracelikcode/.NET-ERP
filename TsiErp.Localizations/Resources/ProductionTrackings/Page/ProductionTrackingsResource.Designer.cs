@@ -773,6 +773,15 @@ namespace TsiErp.Localizations.Resources.ProductionTrackings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lütfen müşteri kodu seçin..
+        /// </summary>
+        public static string ValidatorCurrentCardID {
+            get {
+                return ResourceManager.GetString("ValidatorCurrentCardID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen çalışan seçin..
         /// </summary>
         public static string ValidatorEmployeeID {

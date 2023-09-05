@@ -336,6 +336,9 @@
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
     <value>Bills of material code cannot exceed 17 characters.</value>
   </data>
+  <data name="ValidatorCurrentCardID" xml:space="preserve">
+    <value>Please select a current account card.</value>
+  </data>
   <data name="ValidatorFinishedProductID" xml:space="preserve">
     <value>Please select a finished product.</value>
   </data>

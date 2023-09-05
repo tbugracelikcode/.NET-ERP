@@ -253,7 +253,7 @@
     <value>Product reference number cannot exceed 17 characters.</value>
   </data>
   <data name="ValidatorCurrentAccountID" xml:space="preserve">
-    <value>Please select a current accout card.</value>
+    <value>Please select a current account card.</value>
   </data>
   <data name="ValidatorProductID" xml:space="preserve">
     <value>Please select a product.</value>
