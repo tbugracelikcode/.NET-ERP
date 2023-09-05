@@ -321,6 +321,9 @@
   <data name="OperationalSPCChildMenu" xml:space="preserve">
     <value>Operasyonel SPC Tabloları</value>
   </data>
+  <data name="OperationalSPCComparingChildMenu" xml:space="preserve">
+    <value>Operasyonel SPC Karşılaştırma</value>
+  </data>
   <data name="OperationsMenu" xml:space="preserve">
     <value>Operasyonlar</value>
   </data>
@@ -450,6 +453,9 @@
   <data name="PurcUnsAnlChildMenu" xml:space="preserve">
     <value>Satınalma Uygunuzluk Kayıtları Analizi</value>
   </data>
+  <data name="QualityControlAnalysisMenu" xml:space="preserve">
+    <value>Analizler</value>
+  </data>
   <data name="QualityControlMainRecordsMenu" xml:space="preserve">
     <value>Ana Kayıtlar</value>
   </data>
@@ -461,6 +467,9 @@
   </data>
   <data name="QualityControlReportsMenu" xml:space="preserve">
     <value>Raporlar</value>
+  </data>
+  <data name="QualityControlSPCMenu" xml:space="preserve">
+    <value>SPC</value>
   </data>
   <data name="QualityControlTransactionsMenu" xml:space="preserve">
     <value>Hareketler</value>
@@ -599,6 +608,9 @@
   </data>
   <data name="UnsuitabilityItemSPSChildMenu" xml:space="preserve">
     <value>Uygunsuzluk Başlığına Göre SPC Tabloları</value>
+  </data>
+  <data name="UnsuitabilityItemSPSComparingChildMenu" xml:space="preserve">
+    <value>Uygunsuzluk Başlıklarına göre SPC Karşlaştırma</value>
   </data>
   <data name="UserGrpChildMenu" xml:space="preserve">
     <value>Kullanıcı Grupları</value>

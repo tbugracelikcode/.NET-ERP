@@ -710,6 +710,15 @@ namespace TsiErp.Localizations.Resources.CurrentAccountCards.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lütfen T.C. kimlik numarasını yazın..
+        /// </summary>
+        public static string ValidatorIDnumberEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorIDnumberEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen cari ünvanı yazın..
         /// </summary>
         public static string ValidatorNameEmpty {
