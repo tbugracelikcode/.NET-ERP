@@ -97,19 +97,6 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FinanceManagemen
             }
         }
 
-        #region Unused Implemented Methods
-
-        public Task<IResult> DeleteAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IDataResult<SelectFinanceManagementParametersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
-        {
-            throw new NotImplementedException();
-        }
-
-
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListFinanceManagementParametersDto>>> GetListAsync(ListFinanceManagementParametersParameterDto input)
         {
@@ -123,6 +110,19 @@ namespace TsiErp.Business.Entities.GeneralSystemIdentifications.FinanceManagemen
                 return new SuccessDataResult<IList<ListFinanceManagementParametersDto>>(FinanceManagementParameters);
             }
         }
+
+        #region Unused Implemented Methods
+
+        public Task<IResult> DeleteAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IDataResult<SelectFinanceManagementParametersDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            throw new NotImplementedException();
+        }
+
 
         #endregion
     }

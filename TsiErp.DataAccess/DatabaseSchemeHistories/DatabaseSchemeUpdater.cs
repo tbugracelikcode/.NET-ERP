@@ -114,6 +114,7 @@ using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan;
 using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlanLine;
 using TsiErp.Entities.Entities.QualityControl.OperationalSPCComparing;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItemSPCComparing;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.FicheNumber;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -337,6 +338,42 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                 MenusTable.Create();
             }
             #endregion
+
+            #region Fiche Numbers Table Created
+            Table FicheNumbersTable = model.CreateTable(Tables.FicheNumbers);
+
+            if (FicheNumbersTable != null)
+            {
+                var properties = (typeof(FicheNumbers)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(FicheNumbersTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(FicheNumbersTable, "PK_" + FicheNumbersTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        FicheNumbersTable.Indexes.Add(pkIndex);
+                    }
+
+                    FicheNumbersTable.Columns.Add(column);
+                }
+
+                FicheNumbersTable.Create();
+            }
+            #endregion
+
 
             #region Periods Table Created
             Table PeriodsTable = model.CreateTable(Tables.Periods);
