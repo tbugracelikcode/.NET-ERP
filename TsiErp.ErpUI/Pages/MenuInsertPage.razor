@@ -1,34 +1,48 @@
 ﻿@page "/insert-menu"
-@using TsiErp.Business.Entities.Menu.Services;
-@using TsiErp.Entities.Entities.GeneralSystemIdentifications.Menu.Dtos;
 @layout MainLayout
 
 
 @inherits BaseListPage<SelectMenusDto, ListMenusDto, CreateMenusDto, UpdateMenusDto, ListMenusParameterDto>
 
 @inject IMenusAppService Service
+@inject IFicheNumbersAppService FicheNumbersAppService
 
 
-    <div>
-        <SfComboBox TValue="Guid" TItem="ComboData" Placeholder="e.g. Australia" DataSource="@list" @bind-Value="DataSource.ParentMenuId">
+<div>
+    <SfComboBox TValue="Guid" TItem="ComboData" Placeholder="e.g. Australia" DataSource="@list" @bind-Value="DataSource.ParentMenuId">
 
-            <ComboBoxEvents TValue="Guid" TItem="ComboData" ValueChange="OnValueChange" />
-            <ComboBoxFieldSettings Text="MenuName" Value="Id"></ComboBoxFieldSettings>
-        </SfComboBox>
+        <ComboBoxEvents TValue="Guid" TItem="ComboData" ValueChange="OnValueChange" />
+        <ComboBoxFieldSettings Text="MenuName" Value="Id"></ComboBoxFieldSettings>
+    </SfComboBox>
 
-        <br />
+    <br />
+    <br />
+    <br />
+    <br />
 
-        <SfTextBox CssClass="TSIMemoBox100" @bind-Value="DataSource.MenuName"></SfTextBox>
+    <SfTextBox CssClass="TSIMemoBox100" @bind-Value="DataSource.MenuName"></SfTextBox>
 
 
-        <br />
+    <br />
+    <br />
+    <br />
+    <br />
 
-        <SfButton CssClass="TSISaveButton" OnClick="InsertMenu"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon></SfButton>
-    </div>
+    <SfSwitch @bind-Checked="IsFicheNumberInsert"></SfSwitch>
+
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <SfButton CssClass="TSISaveButton" OnClick="InsertMenu"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon></SfButton>
+</div>
 
 
 
 @code {
+
+    bool IsFicheNumberInsert;
 
     List<ComboData> list = new List<ComboData>();
 
@@ -52,7 +66,7 @@
         }
     }
 
-    private void InsertMenu()
+    private async void InsertMenu()
     {
         var insertedMenu = new CreateMenusDto()
             {
@@ -60,16 +74,34 @@
                 ParentMenuId = DataSource.ParentMenuId
             };
 
-        Service.CreateAsync(insertedMenu);
+        await Service.CreateAsync(insertedMenu);
+
+        if (IsFicheNumberInsert)
+        {
+            var ficheNumber = new CreateFicheNumbersDto()
+                {
+                    FicheNo = 1,
+                    FixedCharacter = "",
+                    Length_ = 6,
+                    Menu_ = DataSource.MenuName
+                };
+
+            await FicheNumbersAppService.CreateAsync(ficheNumber);
+        }
+
+        DataSource = new SelectMenusDto();
+        IsFicheNumberInsert = false;
+
+
 
         GetMenus();
 
-        StateHasChanged();
+        await InvokeAsync(StateHasChanged);
     }
 
     public void OnValueChange(Syncfusion.Blazor.DropDowns.ChangeEventArgs<Guid, ComboData> args)
     {
-        
+
     }
 
     public class ComboData

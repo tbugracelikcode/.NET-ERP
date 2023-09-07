@@ -2,15 +2,13 @@
 @layout MainLayout
 
 
-
-
-
 @inherits BaseListPage<SelectCurrentAccountCardsDto, ListCurrentAccountCardsDto, CreateCurrentAccountCardsDto, UpdateCurrentAccountCardsDto, ListCurrentAccountCardsParameterDto>
 
 @inject ICurrentAccountCardsAppService CurrentAccountCardsService
 @inject ICurrenciesAppService CurrenciesAppService
 @inject IShippingAdressesAppService ShippingAdressesAppService
 @inject IStringLocalizer<CurrentAccountCardsResource> L
+@inject IFicheNumbersAppService FicheNumbersAppService
 
 
 @if (!base.IsLoaded)
@@ -99,7 +97,9 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox>
+                            @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> *@
+
+                            <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="1" Column="1" ColumnSpan="2">

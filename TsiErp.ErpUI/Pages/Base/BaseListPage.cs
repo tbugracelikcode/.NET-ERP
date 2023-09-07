@@ -42,23 +42,20 @@ namespace TsiErp.ErpUI.Pages.Base
 
         public string toolbarSearchKey = string.Empty;
 
-
         public TGetListOutputDto SelectedItem { get; set; }
 
         [Inject]
         ModalManager ModalManager { get; set; }
 
-
         [Inject]
         IJSRuntime JsRuntime { get; set; }
+
         public TGetOutputDto DataSource { get; set; }
         public IList<TGetListOutputDto> ListDataSource { get; set; }
 
         public SfGrid<TGetListOutputDto> _grid;
 
-
         public object _L { get; set; }
-
 
         public List<ContextMenuItemModel> GridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
@@ -69,15 +66,21 @@ namespace TsiErp.ErpUI.Pages.Base
         protected ICrudAppService<TGetOutputDto, TGetListOutputDto, TCreateInput, TUpdateInput, TGetListInput> BaseCrudService { get; set; }
 
 
+
         protected async override Task OnParametersSetAsync()
         {
             var loc = (IStringLocalizer)_L;
 
-            LoadingCaption = loc["LoadingCaption"];
-            LoadingText = loc["LoadingText"];
+            if (loc != null)
+            {
+                LoadingCaption = loc["LoadingCaption"];
+                LoadingText = loc["LoadingText"];
 
-            CreateContextMenuItems(loc);
-            CreateGridToolbar();
+
+                CreateContextMenuItems(loc);
+                CreateGridToolbar();
+            }
+
             await GetListDataSourceAsync();
             await InvokeAsync(StateHasChanged);
         }
@@ -394,7 +397,6 @@ namespace TsiErp.ErpUI.Pages.Base
             }
         }
 
-
         public virtual async void CrudModalClosing(PopupClosingEventArgs args)
         {
             if (IsChanged)
@@ -449,7 +451,7 @@ namespace TsiErp.ErpUI.Pages.Base
             GridToolbarItems.Add(new ItemModel() { Id = "PDFExport", CssClass = "TSIExcelButton", Type = ItemType.Button, PrefixIcon = "TSIPdfIcon", TooltipText = @loc["UIExportFileName"] });
 
 
-            GridToolbarItems.Add(new ItemModel() { Id = "Search", CssClass = "TSITxtBox", Type = ItemType.Input, Template = search, Text = GridSearchText});
+            GridToolbarItems.Add(new ItemModel() { Id = "Search", CssClass = "TSITxtBox", Type = ItemType.Input, Template = search, Text = GridSearchText });
 
 
         }
