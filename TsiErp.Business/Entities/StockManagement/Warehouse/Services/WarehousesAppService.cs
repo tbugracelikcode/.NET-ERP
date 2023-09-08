@@ -6,6 +6,7 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Warehouse.Validations;
 using TsiErp.DataAccess.Services.Login;
@@ -21,8 +22,11 @@ namespace TsiErp.Business.Entities.Warehouse.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public WarehousesAppService(IStringLocalizer<WarehousesResource> l) : base(l)
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+        public WarehousesAppService(IStringLocalizer<WarehousesResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateWarehousesValidator), Priority = 1)]
@@ -67,6 +71,8 @@ namespace TsiErp.Business.Entities.Warehouse.Services
 
 
                 var warehouses = queryFactory.Insert<SelectWarehousesDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("WarehousesChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Warehouses, LogType.Insert, addedEntityId);
 

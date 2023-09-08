@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
@@ -24,8 +25,11 @@ namespace TsiErp.Business.Entities.Station.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public StationsAppService(IStringLocalizer<StationsResource> l) : base(l)
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+        public StationsAppService(IStringLocalizer<StationsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
 
@@ -108,6 +112,8 @@ namespace TsiErp.Business.Entities.Station.Services
                 }
 
                 var station = queryFactory.Insert<SelectStationsDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("StationsChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Stations, LogType.Insert, station.Id);
 

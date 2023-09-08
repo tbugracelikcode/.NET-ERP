@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
+using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress.Dtos;
 
 namespace TsiErp.ErpUI.Pages.ShippingManagement.ShippingAdress
 {
@@ -77,5 +78,35 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.ShippingAdress
         {
             CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
         }
+
+        protected override Task BeforeInsertAsync()
+        {
+            DataSource = new SelectShippingAdressesDto()
+            {
+                Code = FicheNumbersAppService.GetFicheNumberAsync("ShippingAdressesChildMenu")
+            };
+
+            EditPageVisible = true;
+
+            return Task.CompletedTask;
+        }
+
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("ShippingAdressesChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
     }
 }

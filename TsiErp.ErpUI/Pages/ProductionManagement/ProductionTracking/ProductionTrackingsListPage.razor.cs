@@ -311,7 +311,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
 
         protected override async Task BeforeInsertAsync()
         {
-            DataSource = new SelectProductionTrackingsDto() { };
+            DataSource = new SelectProductionTrackingsDto() 
+            {
+                Code = FicheNumbersAppService.GetFicheNumberAsync("ProdTrackingsChildMenu")
+            };
 
             DataSource.OperationStartDate = _date;
             DataSource.OperationEndDate = null;
@@ -554,6 +557,24 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
             HaltReasonsList = (await HaltsAppService.GetListAsync(new ListHaltReasonsParameterDto())).Data.ToList();
         }
 
+        #endregion
+
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("ProdTrackingsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
         #endregion
     }
 }

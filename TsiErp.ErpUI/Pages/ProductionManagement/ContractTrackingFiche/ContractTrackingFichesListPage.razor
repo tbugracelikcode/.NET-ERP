@@ -13,6 +13,7 @@
 @inject IContractQualityPlansAppService ContractQualityPlansAppService
 @inject IWorkOrdersAppService WorkOrdersAppService
 @inject IProductsOperationsAppService ProductsOperationsAppService
+@inject IFicheNumbersAppService FicheNumbersAppService
 
 @if (!base.IsLoaded)
 {
@@ -109,7 +110,9 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template><br>
                             <label class="TSIModalLabel"><strong>@L["FicheNrLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.FicheNr"></SfTextBox>
+                            @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> *@
+
+                            <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.FicheNr" ShowClearButton=true></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

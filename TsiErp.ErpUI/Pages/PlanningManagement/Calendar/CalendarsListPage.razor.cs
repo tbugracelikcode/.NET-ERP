@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
+using Syncfusion.Blazor.Inputs;
 using Syncfusion.Blazor.Navigations;
 using Syncfusion.Blazor.Schedule;
 using Tsi.Core.Utilities.Results;
@@ -301,7 +303,11 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
 
             #endregion
 
-            DataSource = new SelectCalendarsDto() { IsPlanned = true };
+            DataSource = new SelectCalendarsDto() 
+            { 
+                IsPlanned = true,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("CalendarMenu")
+            };
 
             DataSource.SelectCalendarDaysDto = GridDaysList;
 
@@ -770,6 +776,23 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         #endregion
 
 
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("CalendarMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
 
 
 

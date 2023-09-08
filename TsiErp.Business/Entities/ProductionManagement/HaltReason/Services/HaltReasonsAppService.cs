@@ -6,6 +6,7 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.HaltReason.Validations;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
@@ -20,9 +21,11 @@ namespace TsiErp.Business.Entities.HaltReason.Services
     public class HaltReasonsAppService : ApplicationService<HaltReasonsResource>, IHaltReasonsAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public HaltReasonsAppService(IStringLocalizer<HaltReasonsResource> l) : base(l)
+        public HaltReasonsAppService(IStringLocalizer<HaltReasonsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateHaltReasonsValidator), Priority = 1)]
@@ -70,6 +73,8 @@ namespace TsiErp.Business.Entities.HaltReason.Services
 
 
                 var haltReasons = queryFactory.Insert<SelectHaltReasonsDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("HaltReasonsChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.HaltReasons, LogType.Insert, addedEntityId);
 

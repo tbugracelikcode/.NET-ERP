@@ -152,7 +152,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
         {
             DataSource = new SelectTemplateOperationsDto()
             {
-                IsActive = true
+                IsActive = true,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("TempOperationsChildMenu")
             };
             DataSource.SelectTemplateOperationLines = new List<SelectTemplateOperationLinesDto>();
             GridLineList = DataSource.SelectTemplateOperationLines;
@@ -456,5 +457,24 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
             }
 
         }
+
+
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("TempOperationsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
     }
 }

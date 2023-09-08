@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.PurchasePrice.Validations;
 using TsiErp.DataAccess.Services.Login;
@@ -28,9 +29,11 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
     public class PurchasePricesAppService : ApplicationService<PurchasePricesResource>, IPurchasePricesAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public PurchasePricesAppService(IStringLocalizer<PurchasePricesResource> l) : base(l)
+        public PurchasePricesAppService(IStringLocalizer<PurchasePricesResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
 
@@ -108,6 +111,8 @@ namespace TsiErp.Business.Entities.PurchasePrice.Services
                 }
 
                 var purchasePrice = queryFactory.Insert<SelectPurchasePricesDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("PurchasePricesChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PurchasePrices, LogType.Insert, addedEntityId);
 

@@ -1253,7 +1253,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         {
             DataSource = new SelectProductsDto()
             {
-                IsActive = true
+                IsActive = true,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("ProductsChildMenu")
             };
 
             foreach(var item in supplyforms)
@@ -1352,6 +1353,23 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         #endregion
 
 
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("ProductsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
 
     }
 }

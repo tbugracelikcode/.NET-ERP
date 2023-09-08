@@ -69,7 +69,8 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.UnplannedMaintenance
             {
                 StartDate = DateTime.Today,
                 UnplannedDate = DateTime.Today,
-                CompletionDate = DateTime.Today
+                CompletionDate = DateTime.Today,
+                RegistrationNo = FicheNumbersAppService.GetFicheNumberAsync("UnplannedMainChildMenu")
             };
 
             DataSource.SelectUnplannedMaintenanceLines = new List<SelectUnplannedMaintenanceLinesDto>();
@@ -489,6 +490,24 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.UnplannedMaintenance
             }
         }
 
+        #endregion
+
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.RegistrationNo = FicheNumbersAppService.GetFicheNumberAsync("UnplannedMainChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
         #endregion
     }
 }

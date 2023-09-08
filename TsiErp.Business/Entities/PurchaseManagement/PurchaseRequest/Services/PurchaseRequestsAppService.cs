@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.PurchaseRequest.Validations;
 using TsiErp.Business.Entities.StockMovement;
@@ -34,10 +35,13 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
 
-        public PurchaseRequestsAppService(IStringLocalizer<PurchaseRequestsResource> l) : base(l)
+
+        public PurchaseRequestsAppService(IStringLocalizer<PurchaseRequestsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreatePurchaseRequestsValidator), Priority = 1)]
@@ -145,6 +149,8 @@ namespace TsiErp.Business.Entities.PurchaseRequest.Services
                 var purchaseRequest = queryFactory.Insert<SelectPurchaseRequestsDto>(query, "Id", true);
 
                 StockMovementsService.InsertPurchaseRequests(input);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("PurchaseRequestsChildMenu", input.FicheNo);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PurchaseRequests, LogType.Insert, addedEntityId);
 

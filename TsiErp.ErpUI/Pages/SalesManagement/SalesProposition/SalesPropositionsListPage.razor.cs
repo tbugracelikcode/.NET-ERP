@@ -714,7 +714,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
             DataSource = new SelectSalesPropositionsDto()
             {
                 Date_ = DateTime.Today,
-                ValidityDate_ = DateTime.Today.AddDays(15)
+                ValidityDate_ = DateTime.Today.AddDays(15),
+                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("SalesPropositionsChildMenu")
             };
 
             DataSource.SelectSalesPropositionLines = new List<SelectSalesPropositionLinesDto>();
@@ -1076,6 +1077,23 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesProposition
         #endregion
 
 
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.FicheNo = FicheNumbersAppService.GetFicheNumberAsync("SalesPropositionsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
 
     }
 }

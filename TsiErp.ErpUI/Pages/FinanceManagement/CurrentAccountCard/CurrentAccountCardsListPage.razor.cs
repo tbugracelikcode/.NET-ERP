@@ -59,7 +59,7 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CurrentAccountCard
         }
         #endregion
 
-        #region Para Birimleri ButtonEdit
+        #region Kod ButtonEdit
 
         SfTextBox CodeButtonEdit;
 

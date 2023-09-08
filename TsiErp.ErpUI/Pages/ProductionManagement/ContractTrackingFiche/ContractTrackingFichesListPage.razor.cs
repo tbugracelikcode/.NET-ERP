@@ -62,7 +62,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
             {
                 FicheDate_ = DateTime.Today,
                 EstimatedDate_ = DateTime.Today,
-
+                FicheNr = FicheNumbersAppService.GetFicheNumberAsync("ContractTrackingFichesChildMenu")
             };
 
             DataSource.SelectContractTrackingFicheLines = new List<SelectContractTrackingFicheLinesDto>();
@@ -478,6 +478,24 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
 
 
 
+        #endregion
+
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.FicheNr = FicheNumbersAppService.GetFicheNumberAsync("ContractTrackingFichesChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
         #endregion
     }
 }

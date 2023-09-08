@@ -13,6 +13,7 @@
 @inject ICurrentAccountCardsAppService CurrentAccountCardsAppService
 @inject IEmployeesAppService EmployeesAppService
 @inject IHaltReasonsAppService HaltsAppService
+@inject IFicheNumbersAppService FicheNumbersAppService
 
 @if (!base.IsLoaded)
 {
@@ -112,8 +113,10 @@ else
 
                          <DxGridLayoutItem Row="0" Column="1">
                             <Template>
-                                <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label><br />
-                                 <SfTextBox  @bind-Value="DataSource.Code"  CssClass="TSITxtBox"></SfTextBox>
+                            <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label><br />
+                            @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> *@
+
+                            <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         

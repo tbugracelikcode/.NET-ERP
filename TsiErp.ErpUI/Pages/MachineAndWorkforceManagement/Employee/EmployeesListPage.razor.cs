@@ -51,7 +51,8 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Employee
         {
             DataSource = new SelectEmployeesDto()
             {
-                IsActive = true
+                IsActive = true,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("EmployeesChildMenu")
             };
 
             foreach (var item in bloodtypes)
@@ -134,5 +135,22 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Employee
 
 
 
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("EmployeesChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
     }
 }

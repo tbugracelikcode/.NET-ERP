@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.PlannedMaintenance.Validations;
 using TsiErp.DataAccess.Services.Login;
@@ -27,9 +28,11 @@ namespace TsiErp.Business.Entities.PlannedMaintenance.Services
     public class PlannedMaintenancesAppService : ApplicationService<PlannedMaintenancesResource>, IPlannedMaintenancesAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public PlannedMaintenancesAppService(IStringLocalizer<PlannedMaintenancesResource> l) : base(l)
+        public PlannedMaintenancesAppService(IStringLocalizer<PlannedMaintenancesResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreatePlannedMaintenanceValidatorDto), Priority = 1)]
@@ -109,6 +112,8 @@ namespace TsiErp.Business.Entities.PlannedMaintenance.Services
                 }
 
                 var maintenance = queryFactory.Insert<SelectPlannedMaintenancesDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("PlannedMainChildMenu", input.RegistrationNo);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PlannedMaintenances, LogType.Insert, addedEntityId);
 

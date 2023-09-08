@@ -15,6 +15,7 @@
 @inject IControlTypesAppService ControlTypesAppService
 @inject IControlConditionsAppService ControlConditionsAppService
 @inject ICurrentAccountCardsAppService CurrentAccountCardsAppService
+@inject IFicheNumbersAppService FicheNumbersAppService
 
 @if (!base.IsLoaded)
 {
@@ -117,7 +118,9 @@ else
                     <DxGridLayoutItem Row="1" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox>
+                            @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> *@
+
+                            <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="2" Column="1">

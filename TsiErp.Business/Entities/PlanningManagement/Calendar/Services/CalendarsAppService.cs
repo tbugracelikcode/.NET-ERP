@@ -8,6 +8,7 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Calendar.Validations;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift;
@@ -28,8 +29,11 @@ namespace TsiErp.Business.Entities.Calendar.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public CalendarsAppService(IStringLocalizer<CalendarsResource> l) : base(l)
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+        public CalendarsAppService(IStringLocalizer<CalendarsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         public IEnumerable<DateTime> EachDay(DateTime from, DateTime thru)
@@ -185,6 +189,8 @@ namespace TsiErp.Business.Entities.Calendar.Services
                 }
 
                 var calendar = queryFactory.Insert<SelectCalendarsDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("CalendarMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Calendars, LogType.Insert, addedEntityId);
 

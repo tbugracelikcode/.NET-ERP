@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.MaintenanceInstruction.Validations;
 using TsiErp.DataAccess.Services.Login;
@@ -27,9 +28,11 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
     public class MaintenanceInstructionsAppService : ApplicationService<MaintenanceInstructionsResource>, IMaintenanceInstructionsAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public MaintenanceInstructionsAppService(IStringLocalizer<MaintenanceInstructionsResource> l) : base(l)
+        public MaintenanceInstructionsAppService(IStringLocalizer<MaintenanceInstructionsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateMaintenanceInstructionValidatorDto), Priority = 1)]
@@ -101,6 +104,8 @@ namespace TsiErp.Business.Entities.MaintenanceInstruction.Services
                 }
 
                 var maintenanceInstruction = queryFactory.Insert<SelectMaintenanceInstructionsDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("MainInstructionsChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.MaintenanceInstructions, LogType.Insert, addedEntityId);
 

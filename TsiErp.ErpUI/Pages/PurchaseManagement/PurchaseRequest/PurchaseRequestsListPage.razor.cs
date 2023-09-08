@@ -640,7 +640,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                         UnitSetID = item.UnitSetID,
                         VATamount = item.VATamount,
                         VATrate = item.VATrate,
-                         LinkedPurchaseRequestID= createPurchaseOrder.LinkedPurchaseRequestID
+                        LinkedPurchaseRequestID = createPurchaseOrder.LinkedPurchaseRequestID
                     };
                     orderLineList.Add(selectPurchaseOrderLine);
                     item.PurchaseRequestLineState = Entities.Enums.PurchaseRequestLineStateEnum.SatinAlma;
@@ -735,7 +735,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
             DataSource = new SelectPurchaseRequestsDto()
             {
                 Date_ = DateTime.Today,
-                ValidityDate_ = DateTime.Today.AddDays(15)
+                ValidityDate_ = DateTime.Today.AddDays(15),
+                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseRequestsChildMenu")
             };
 
             DataSource.SelectPurchaseRequestLines = new List<SelectPurchaseRequestLinesDto>();
@@ -968,7 +969,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                 HideLinesPopup();
                 await InvokeAsync(StateHasChanged);
             }
-          
+
         }
 
         public override async void LineCalculate()
@@ -1059,5 +1060,23 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
 
         #endregion
 
+
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseRequestsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
     }
 }

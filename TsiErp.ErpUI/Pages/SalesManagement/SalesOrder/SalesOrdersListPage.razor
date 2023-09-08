@@ -17,6 +17,7 @@
 @inject IBillsofMaterialsAppService BillsofMaterialsAppService
 @inject IShippingAdressesAppService ShippingAdressesAppService
 @inject IStockManagementParametersAppService StockManagementParametersAppService
+@inject IFicheNumbersAppService FicheNumbersAppService
 
 @if (!base.IsLoaded)
 {
@@ -119,7 +120,8 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["FicheNoLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.FicheNo"></SfTextBox>
+                            @* <SfTextBox CssClass="TSITxtBox"  @bind-Value="DataSource.FicheNo"></SfTextBox> *@
+                                <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.FicheNo" ShowClearButton=true></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="3">

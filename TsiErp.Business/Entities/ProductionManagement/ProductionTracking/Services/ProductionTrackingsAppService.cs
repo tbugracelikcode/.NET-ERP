@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.ProductionTracking.Validations;
 using TsiErp.DataAccess.Services.Login;
@@ -29,9 +30,11 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
     public class ProductionTrackingsAppService : ApplicationService<ProductionTrackingsResource>, IProductionTrackingsAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public ProductionTrackingsAppService(IStringLocalizer<ProductionTrackingsResource> l) : base(l)
+        public ProductionTrackingsAppService(IStringLocalizer<ProductionTrackingsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateProductionTrackingsValidator), Priority = 1)]
@@ -109,6 +112,8 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 }
 
                 var productionTracking = queryFactory.Insert<SelectProductionTrackingsDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("ProdTrackingsChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductionTrackings, LogType.Insert, addedEntityId);
 

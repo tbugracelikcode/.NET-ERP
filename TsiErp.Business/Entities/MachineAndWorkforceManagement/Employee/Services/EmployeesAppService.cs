@@ -8,6 +8,7 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Employee.Validations;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department;
@@ -23,8 +24,11 @@ namespace TsiErp.Business.Entities.Employee.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public EmployeesAppService(IStringLocalizer<EmployeesResource> l) : base(l)
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+        public EmployeesAppService(IStringLocalizer<EmployeesResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
 
@@ -81,6 +85,8 @@ namespace TsiErp.Business.Entities.Employee.Services
                 });
 
                 var employees = queryFactory.Insert<SelectEmployeesDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("EmployeesChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Employees, LogType.Insert, addedEntityId);
 

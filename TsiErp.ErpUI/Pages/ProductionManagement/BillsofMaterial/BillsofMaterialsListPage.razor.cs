@@ -86,7 +86,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
         {
             DataSource = new SelectBillsofMaterialsDto()
             {
-                IsActive = true
+                IsActive = true,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("BOMChildMenu")
             };
 
             DataSource.SelectBillsofMaterialLines = new List<SelectBillsofMaterialLinesDto>();
@@ -525,5 +526,22 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
         #endregion
 
 
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("BOMChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
     }
 }

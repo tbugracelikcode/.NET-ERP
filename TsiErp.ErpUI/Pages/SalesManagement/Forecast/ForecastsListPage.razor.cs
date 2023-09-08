@@ -247,7 +247,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
             {
                 CreationDate_ = DateTime.Today,
                 ValidityStartDate = DateTime.Today,
-                ValidityEndDate = DateTime.Today
+                ValidityEndDate = DateTime.Today,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("ForecastsChildMenu")
 
             };
 
@@ -264,9 +265,9 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"]    , Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"] , Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"] , Id = "delete" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
                 LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
             }
         }
@@ -275,9 +276,9 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"]    , Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"] , Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"] , Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
             }
         }
@@ -412,7 +413,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
 
         protected async Task OnLineSubmit()
         {
-            if(LineDataSource.Amount == 0)
+            if (LineDataSource.Amount == 0)
             {
                 await ModalManager.WarningPopupAsync(L["UIWarningPopupTitleBase"], L["UIWarningPopupMessageBase"]);
             }
@@ -451,7 +452,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
                 HideLinesPopup();
                 await InvokeAsync(StateHasChanged);
             }
-           
+
         }
 
         #endregion
@@ -478,6 +479,24 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.Forecast
             ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
         }
 
+        #endregion
+
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("ForecastsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
         #endregion
 
     }

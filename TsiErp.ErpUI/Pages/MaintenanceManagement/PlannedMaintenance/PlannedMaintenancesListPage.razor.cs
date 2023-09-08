@@ -71,7 +71,8 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.PlannedMaintenance
             {
                 StartDate = DateTime.Today,
                 PlannedDate = DateTime.Today,
-                CompletionDate = DateTime.Today
+                CompletionDate = DateTime.Today,
+                RegistrationNo = FicheNumbersAppService.GetFicheNumberAsync("PlannedMainChildMenu")
             };
 
             foreach(var item in status)
@@ -535,6 +536,25 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.PlannedMaintenance
 
         //#endregion
 
+        #endregion
+
+
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.RegistrationNo = FicheNumbersAppService.GetFicheNumberAsync("PlannedMainChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
         #endregion
     }
 }

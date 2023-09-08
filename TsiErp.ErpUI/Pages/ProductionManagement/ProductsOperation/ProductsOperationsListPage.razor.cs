@@ -251,7 +251,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
         {
             DataSource = new SelectProductsOperationsDto()
             {
-                IsActive = true
+                IsActive = true,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("ProdOperationsChildMenu")
             };
 
             DataSource.SelectProductsOperationLines = new List<SelectProductsOperationLinesDto>();
@@ -686,6 +687,23 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
             EditPageVisible = false;
             await InvokeAsync(StateHasChanged);
         }
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("ProdOperationsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
     }
 }
 

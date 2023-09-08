@@ -1,4 +1,7 @@
-﻿using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using Syncfusion.Blazor.Inputs;
+using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 
 namespace TsiErp.ErpUI.Pages.StockManagement.Warehouse
 {
@@ -15,7 +18,8 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Warehouse
         {
             DataSource = new SelectWarehousesDto()
             {
-                IsActive = true
+                IsActive = true,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("WarehousesChildMenu")
             };
 
             EditPageVisible = true;
@@ -23,6 +27,23 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Warehouse
             return Task.CompletedTask;
         }
 
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("WarehousesChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
 
     }
 }

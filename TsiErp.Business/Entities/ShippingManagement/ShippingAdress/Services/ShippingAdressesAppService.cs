@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.ShippingAdress.Validations;
 using TsiErp.DataAccess.Services.Login;
@@ -23,8 +24,11 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public ShippingAdressesAppService(IStringLocalizer<ShippingAdressesResource> l) : base(l)
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+        public ShippingAdressesAppService(IStringLocalizer<ShippingAdressesResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateShippingAdressesValidator), Priority = 1)]
@@ -78,6 +82,8 @@ namespace TsiErp.Business.Entities.ShippingAdress.Services
                 });
 
                 var shippingAdresses = queryFactory.Insert<SelectShippingAdressesDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("ShippingAdressesChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ShippingAdresses, LogType.Insert, addedEntityId);
 

@@ -9,6 +9,7 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.BillsofMaterial.Validations;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
@@ -28,9 +29,11 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
     public class BillsofMaterialsAppService : ApplicationService<BillsofMaterialsResource>, IBillsofMaterialsAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public BillsofMaterialsAppService(IStringLocalizer<BillsofMaterialsResource> l) : base(l)
+        public BillsofMaterialsAppService(IStringLocalizer<BillsofMaterialsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateBillsofMaterialsValidatorDto), Priority = 1)]
@@ -105,6 +108,8 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                 }
 
                 var billOfMaterial = queryFactory.Insert<SelectBillsofMaterialsDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("BOMChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Insert, addedEntityId);
 

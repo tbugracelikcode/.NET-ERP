@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.StockFiche.Validations;
 using TsiErp.Business.Entities.StockMovement;
@@ -30,8 +31,11 @@ namespace TsiErp.Business.Entities.StockFiche.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public StockFichesAppService(IStringLocalizer<StockFichesResource> l) : base(l)
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+        public StockFichesAppService(IStringLocalizer<StockFichesResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateStockFichesValidatorDto), Priority = 1)]
@@ -139,6 +143,10 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 }
 
                 #endregion
+
+
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("StockFichesChildMenu", input.FicheNo);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.StockFiches, LogType.Insert, addedEntityId);
 

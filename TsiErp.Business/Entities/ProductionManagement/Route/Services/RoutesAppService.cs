@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Route.Validations;
 using TsiErp.DataAccess.Services.Login;
@@ -26,9 +27,11 @@ namespace TsiErp.Business.Entities.Route.Services
     public class RoutesAppService : ApplicationService<RoutesResource>, IRoutesAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public RoutesAppService(IStringLocalizer<RoutesResource> l) : base(l)
+        public RoutesAppService(IStringLocalizer<RoutesResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateRoutesValidator), Priority = 1)]
@@ -103,6 +106,8 @@ namespace TsiErp.Business.Entities.Route.Services
                 }
 
                 var route = queryFactory.Insert<SelectRoutesDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("RoutesChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Routes, LogType.Insert, addedEntityId);
 

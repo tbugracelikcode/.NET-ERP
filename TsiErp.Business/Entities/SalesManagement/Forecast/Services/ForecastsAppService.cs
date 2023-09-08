@@ -8,6 +8,7 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Forecast.Validations;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
@@ -28,8 +29,11 @@ namespace TsiErp.Business.Entities.Forecast.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public ForecastsAppService(IStringLocalizer<ForecastsResource> l) : base(l)
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+        public ForecastsAppService(IStringLocalizer<ForecastsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateForecastsValidatorDto), Priority = 1)]
@@ -103,6 +107,8 @@ namespace TsiErp.Business.Entities.Forecast.Services
                 }
 
                 var forecast = queryFactory.Insert<SelectForecastsDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("ForecastsChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Forecasts, LogType.Insert, addedEntityId);
 

@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.SalesPrice.Validations;
 using TsiErp.DataAccess.Services.Login;
@@ -29,8 +30,11 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public SalesPricesAppService(IStringLocalizer<SalesPricesResource> l) : base(l)
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+        public SalesPricesAppService(IStringLocalizer<SalesPricesResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
 
@@ -108,6 +112,8 @@ namespace TsiErp.Business.Entities.SalesPrice.Services
                 }
 
                 var salesPrice = queryFactory.Insert<SelectSalesPricesDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("SalesPricesChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.SalesPrices, LogType.Insert, addedEntityId);
 

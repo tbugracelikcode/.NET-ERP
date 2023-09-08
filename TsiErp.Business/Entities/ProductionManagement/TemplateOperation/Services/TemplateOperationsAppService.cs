@@ -8,6 +8,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.TemplateOperation.Validations;
 using TsiErp.DataAccess.Services.Login;
@@ -32,9 +33,11 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
     public class TemplateOperationsAppService : ApplicationService<TemplateOperationsResource>, ITemplateOperationsAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public TemplateOperationsAppService(IStringLocalizer<TemplateOperationsResource> l) : base(l)
+        public TemplateOperationsAppService(IStringLocalizer<TemplateOperationsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateTemplateOperationsValidatorDto), Priority = 1)]
@@ -128,6 +131,8 @@ namespace TsiErp.Business.Entities.TemplateOperation.Services
                 }
 
                 var templateOperation = queryFactory.Insert<SelectTemplateOperationsDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("TempOperationsChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.TemplateOperations, LogType.Insert, addedEntityId);
 
