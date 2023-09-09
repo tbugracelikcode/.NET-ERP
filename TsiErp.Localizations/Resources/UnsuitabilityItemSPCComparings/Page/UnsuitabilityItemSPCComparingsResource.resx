@@ -159,7 +159,13 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Uygunsuzluk Başlıklarına Göre SPC Karşılaştırma</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Kalite Kontrol &gt; Analizler &gt; SPC</value>
+  </data>
+  <data name="UnsuitabilityItemName" xml:space="preserve">
+    <value>UYGUNSUZLUK BAŞLIĞI</value>
   </data>
 </root>

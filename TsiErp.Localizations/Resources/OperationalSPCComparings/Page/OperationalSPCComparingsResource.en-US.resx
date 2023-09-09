@@ -156,10 +156,19 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="OperationName" xml:space="preserve">
+    <value>OPERATION NAME</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Operational SPC Comparing</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Quality Control &gt; Analysis &gt; SPC</value>
+  </data>
+  <data name="WorkCenterName" xml:space="preserve">
+    <value>WORK CENTER</value>
   </data>
 </root>

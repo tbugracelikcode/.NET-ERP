@@ -188,11 +188,29 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityItemSPCComparings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Uygunsuzluk Başlıklarına Göre SPC Karşılaştırma.
+        /// </summary>
+        public static string UICurrentMenu {
+            get {
+                return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kalite Kontrol &gt; Analizler &gt; SPC.
         /// </summary>
         public static string UIPreviousMenu {
             get {
                 return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UYGUNSUZLUK BAŞLIĞI.
+        /// </summary>
+        public static string UnsuitabilityItemName {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemName", resourceCulture);
             }
         }
     }

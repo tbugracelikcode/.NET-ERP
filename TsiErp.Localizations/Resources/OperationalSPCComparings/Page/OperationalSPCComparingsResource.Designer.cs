@@ -179,6 +179,15 @@ namespace TsiErp.Localizations.Resources.OperationalSPCComparings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to OPERASYON ADI.
+        /// </summary>
+        public static string OperationName {
+            get {
+                return ResourceManager.GetString("OperationName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string SaveButton {
@@ -188,11 +197,29 @@ namespace TsiErp.Localizations.Resources.OperationalSPCComparings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operasyonel SPC Karşılaştırma.
+        /// </summary>
+        public static string UICurrentMenu {
+            get {
+                return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kalite Kontrol &gt; Analizler &gt; SPC.
         /// </summary>
         public static string UIPreviousMenu {
             get {
                 return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İŞ MERKEZİ.
+        /// </summary>
+        public static string WorkCenterName {
+            get {
+                return ResourceManager.GetString("WorkCenterName", resourceCulture);
             }
         }
     }

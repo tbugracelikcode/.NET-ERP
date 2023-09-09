@@ -156,10 +156,19 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
   </data>
+  <data name="OperationName" xml:space="preserve">
+    <value>OPERASYON ADI</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Operasyonel SPC Karşılaştırma</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Kalite Kontrol &gt; Analizler &gt; SPC</value>
+  </data>
+  <data name="WorkCenterName" xml:space="preserve">
+    <value>İŞ MERKEZİ</value>
   </data>
 </root>
