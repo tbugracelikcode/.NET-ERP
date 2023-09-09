@@ -46,7 +46,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractUnsuitabilityReport
         {
             DataSource = new SelectContractUnsuitabilityReportsDto()
             {
-                Date_ = DateTime.Today
+                Date_ = DateTime.Today,
+                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("ContUnsRecordsChildMenu")
             };
 
             foreach (var item in _unsComboBox)
@@ -277,5 +278,22 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractUnsuitabilityReport
 
         #endregion
 
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.FicheNo = FicheNumbersAppService.GetFicheNumberAsync("ContUnsRecordsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
     }
 }

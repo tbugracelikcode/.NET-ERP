@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.QualityControl.ContractQualityPlan.Services;
 using TsiErp.Business.Entities.QualityControl.ContractQualityPlan.Validations;
@@ -34,9 +35,11 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
     public class ContractQualityPlansAppService : ApplicationService<ContractQualityPlansResource>, IContractQualityPlansAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public ContractQualityPlansAppService(IStringLocalizer<ContractQualityPlansResource> l) : base(l)
+        public ContractQualityPlansAppService(IStringLocalizer<ContractQualityPlansResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateContractQualityPlansValidatorDto), Priority = 1)]
@@ -170,6 +173,8 @@ namespace TsiErp.Business.Entities.ContractQualityPlan.Services
                 }
 
                 var ContractQualityPlan = queryFactory.Insert<SelectContractQualityPlansDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("ContractQualityPlansChildMenu", input.DocumentNumber);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ContractQualityPlans, LogType.Insert, addedEntityId);
 

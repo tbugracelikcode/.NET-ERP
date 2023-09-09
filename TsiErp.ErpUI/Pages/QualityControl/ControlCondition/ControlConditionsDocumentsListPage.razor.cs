@@ -1,4 +1,8 @@
-﻿using TsiErp.Entities.Entities.QualityControl.ControlCondition.Dtos;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using Syncfusion.Blazor.Inputs;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Entities.Entities.QualityControl.ControlCondition.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ControlType.Dtos;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.ControlCondition
@@ -20,7 +24,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ControlCondition
         {
             DataSource = new SelectControlConditionsDto()
             {
-                IsActive = true
+                IsActive = true,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("ControlConditionsChildMenu")
             };
 
             _isContract = false;
@@ -93,5 +98,22 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ControlCondition
                 await (InvokeAsync(StateHasChanged));
             }
         }
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("ControlConditionsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
     }
 }

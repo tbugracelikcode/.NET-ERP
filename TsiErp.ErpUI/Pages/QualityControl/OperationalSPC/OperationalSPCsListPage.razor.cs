@@ -14,6 +14,7 @@ using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
+using Syncfusion.Blazor.Inputs;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
 {
@@ -50,7 +51,13 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
 
         protected override async Task BeforeInsertAsync()
         {
-            DataSource = new SelectOperationalSPCsDto() { Date_ = DateTime.Today, MeasurementEndDate = new DateTime(DateTime.Now.Year,DateTime.Now.Month+1,1).AddDays(-1), MeasurementStartDate = DateTime.Today };
+            DataSource = new SelectOperationalSPCsDto() 
+            { 
+                Date_ = DateTime.Today, 
+                MeasurementEndDate = new DateTime(DateTime.Now.Year,DateTime.Now.Month+1,1).AddDays(-1), 
+                MeasurementStartDate = DateTime.Today,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("OperationalSPCChildMenu")
+            };
 
             DataSource.SelectOperationalSPCLines = new List<SelectOperationalSPCLinesDto>();
             GridLineList = DataSource.SelectOperationalSPCLines;
@@ -323,6 +330,25 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
             }
         }
 
+        #endregion
+
+
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("OperationalSPCChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
         #endregion
     }
 }

@@ -260,6 +260,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
         {
             DataSource = new SelectOperationalQualityPlansDto()
             {
+                DocumentNumber = FicheNumbersAppService.GetFicheNumberAsync("OperationalQualityPlansChildMenu")
             };
 
             DataSource.SelectOperationalQualityPlanLines = new List<SelectOperationalQualityPlanLinesDto>();
@@ -1002,5 +1003,24 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
             else
                 SelectedItem = ListDataSource.GetEntityById(DataSource.Id);
         }
+
+
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.DocumentNumber = FicheNumbersAppService.GetFicheNumberAsync("OperationalQualityPlansChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
     }
 }

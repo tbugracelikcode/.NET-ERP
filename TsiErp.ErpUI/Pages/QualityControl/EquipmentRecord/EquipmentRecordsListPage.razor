@@ -11,6 +11,7 @@
 @inject IEquipmentRecordsAppService EquipmentRecordsService
 @inject IDepartmentsAppService DepartmentsAppService
 @inject IStringLocalizer<EquipmentRecordsResource> L 
+@inject IFicheNumbersAppService FicheNumbersAppService
 
 
 
@@ -100,7 +101,9 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox>
+                            @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> *@
+
+                            <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="3">

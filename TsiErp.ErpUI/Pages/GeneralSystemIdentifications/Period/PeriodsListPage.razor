@@ -9,7 +9,8 @@
 
 @inject IPeriodsAppService PeriodsService
 @inject IBranchesAppService BranchesAppService
-@inject IStringLocalizer<PeriodsResource> L 
+@inject IStringLocalizer<PeriodsResource> L
+@inject IFicheNumbersAppService FicheNumbersAppService
 
 
 @if (!base.IsLoaded)
@@ -94,8 +95,10 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template>
                             <br />
-                            <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox>
+                                <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
+                            @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> *@
+
+                                <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
                     <DxGridLayoutItem Row="0" Column="3">

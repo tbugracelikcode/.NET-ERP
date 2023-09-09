@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Period.Validations;
 using TsiErp.DataAccess.Services.Login;
@@ -23,8 +24,11 @@ namespace TsiErp.Business.Entities.Period.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public PeriodsAppService(IStringLocalizer<PeriodsResource> l) : base(l)
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+        public PeriodsAppService(IStringLocalizer<PeriodsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreatePeriodsValidator), Priority = 1)]
@@ -68,6 +72,8 @@ namespace TsiErp.Business.Entities.Period.Services
                 });
 
                 var periods = queryFactory.Insert<SelectPeriodsDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("PeriodsChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Periods, LogType.Insert, periods.Id);
 

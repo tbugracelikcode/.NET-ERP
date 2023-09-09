@@ -41,7 +41,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.EquipmentRecord
             {
                 IsActive = true,
                 CancellationDate = null,
-                RecordDate = DateTime.Today
+                RecordDate = DateTime.Today,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("EquipmentRecordsChildMenu")
             };
 
             EditPageVisible = true;
@@ -97,7 +98,24 @@ namespace TsiErp.ErpUI.Pages.QualityControl.EquipmentRecord
             DepartmentList = (await DepartmentsAppService.GetListAsync(new ListDepartmentsParameterDto())).Data.ToList();
         }
 
-     
+
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("EquipmentRecordsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
 
     }
 }

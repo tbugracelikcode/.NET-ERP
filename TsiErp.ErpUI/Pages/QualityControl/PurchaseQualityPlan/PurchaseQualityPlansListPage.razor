@@ -11,6 +11,7 @@
 @inject IControlTypesAppService IControlTypesAppService
 @inject IControlConditionsAppService ControlConditionsAppService
 @inject IStringLocalizer<PurchaseQualityPlansResource> L
+@inject IFicheNumbersAppService FicheNumbersAppService
 
 @if (!base.IsLoaded)
 {
@@ -106,7 +107,9 @@ else
                         <Template>
                             <br />
                             <label class="TSIModalLabel"><strong>@L["DocumentNumberLabel"] </strong></label><br />
-                            <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.DocumentNumber"></SfTextBox>
+                            @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> *@
+
+                            <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.DocumentNumber" ShowClearButton=true></SfTextBox>
                         </Template>
                     </DxGridLayoutItem>
 

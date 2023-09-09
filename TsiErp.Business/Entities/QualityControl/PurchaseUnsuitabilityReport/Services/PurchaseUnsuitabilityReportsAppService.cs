@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Validations;
 using TsiErp.DataAccess.Services.Login;
@@ -26,8 +27,11 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public PurchaseUnsuitabilityReportsAppService(IStringLocalizer<PurchaseUnsuitabilityReportsResource> l) : base(l)
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+        public PurchaseUnsuitabilityReportsAppService(IStringLocalizer<PurchaseUnsuitabilityReportsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreatePurchaseUnsuitabilityReportsValidator), Priority = 1)]
@@ -80,6 +84,8 @@ namespace TsiErp.Business.Entities.PurchaseUnsuitabilityReport.Services
 
 
                 var purchaseUnsuitabilityReport = queryFactory.Insert<SelectPurchaseUnsuitabilityReportsDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("PurchUnsRecordsChildMenu", input.FicheNo);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PurchaseUnsuitabilityReports, LogType.Insert, addedEntityId);
 

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
+using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Entities.ContractUnsuitabilityReport.Services;
 using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
@@ -42,7 +44,13 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPC
 
         protected override async Task BeforeInsertAsync()
         {
-            DataSource = new SelectUnsuitabilityItemSPCsDto() { Date_ = DateTime.Today, MeasurementEndDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month + 1, 1).AddDays(-1), MeasurementStartDate = DateTime.Today };
+            DataSource = new SelectUnsuitabilityItemSPCsDto()
+            {
+                Date_ = DateTime.Today,
+                MeasurementEndDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month + 1, 1).AddDays(-1),
+                MeasurementStartDate = DateTime.Today,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("UnsuitabilityItemSPSChildMenu")
+            };
 
             DataSource.SelectUnsuitabilityItemSPCLines = new List<SelectUnsuitabilityItemSPCLinesDto>();
             GridLineList = DataSource.SelectUnsuitabilityItemSPCLines;
@@ -294,6 +302,24 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPC
             }
         }
 
+        #endregion
+
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("UnsuitabilityItemSPSChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
         #endregion
     }
 }

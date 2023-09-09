@@ -29,7 +29,8 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
         {
             DataSource = new SelectUsersDto()
             {
-                IsActive = true
+                IsActive = true,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("UsersChildMenu")
             };
 
             EditPageVisible = true;
@@ -152,6 +153,25 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.User
             }
         }
 
+        #endregion
+
+
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("UsersChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
         #endregion
     }
 }

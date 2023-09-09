@@ -22,7 +22,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CalibrationVerification
             DataSource = new SelectCalibrationVerificationsDto()
             {
                 Date_ = DateTime.Today,
-                NextControl = DateTime.Today
+                NextControl = DateTime.Today,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("CalVerificationsChildMenu")
             };
 
             EditPageVisible = true;
@@ -73,6 +74,23 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CalibrationVerification
 
         #endregion
 
-    
+
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("CalVerificationsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
     }
 }

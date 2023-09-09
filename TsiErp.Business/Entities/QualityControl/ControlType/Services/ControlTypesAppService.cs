@@ -6,6 +6,7 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.QualityControl.ControlType.Validations;
 using TsiErp.DataAccess.Services.Login;
@@ -21,8 +22,11 @@ namespace TsiErp.Business.Entities.QualityControl.ControlType.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public ControlTypesAppService(IStringLocalizer<ControlTypeResources> l) : base(l)
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+        public ControlTypesAppService(IStringLocalizer<ControlTypeResources> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
 
@@ -69,6 +73,8 @@ namespace TsiErp.Business.Entities.QualityControl.ControlType.Services
 
 
                 var controlTypes = queryFactory.Insert<SelectControlTypesDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("ControlTypesChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ControlTypes, LogType.Insert, controlTypes.Id);
 

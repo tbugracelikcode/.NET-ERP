@@ -67,7 +67,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CalibrationRecord
             DataSource = new SelectCalibrationRecordsDto()
             {
                 Date_ = DateTime.Today,
-                NextControl = DateTime.Today
+                NextControl = DateTime.Today,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("CalRecordsChildMenu")
             };
 
             EditPageVisible = true;
@@ -75,5 +76,22 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CalibrationRecord
             return Task.CompletedTask;
         }
 
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("CalRecordsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
     }
 }

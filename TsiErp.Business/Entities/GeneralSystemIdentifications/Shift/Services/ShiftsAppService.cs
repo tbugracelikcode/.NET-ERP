@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Shift.Validations;
 using TsiErp.DataAccess.Services.Login;
@@ -23,8 +24,11 @@ namespace TsiErp.Business.Entities.Shift.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public ShiftsAppService(IStringLocalizer<ShiftsResource> l) : base(l)
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+        public ShiftsAppService(IStringLocalizer<ShiftsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateShiftsValidatorDto), Priority = 1)]
@@ -97,6 +101,8 @@ namespace TsiErp.Business.Entities.Shift.Services
                 }
 
                 var shift = queryFactory.Insert<SelectShiftsDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("ShiftsChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Shifts, LogType.Insert, shift.Id);
 

@@ -13,6 +13,7 @@ using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
 {
@@ -46,7 +47,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
         {
             DataSource = new SelectOperationUnsuitabilityReportsDto()
             {
-                Date_ = DateTime.Today
+                Date_ = DateTime.Today,
+                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("OprUnsRecordsChildMenu")
             };
 
             foreach (var item in _unsComboBox)
@@ -370,6 +372,23 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
 
 
 
+        #endregion
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.FicheNo = FicheNumbersAppService.GetFicheNumberAsync("OprUnsRecordsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
         #endregion
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using System.ComponentModel.DataAnnotations;
@@ -102,7 +103,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
                        .Cast<ShiftLinesTypeEnum>()
                        .Select(x => new SelectShiftLinesDto
                        {
-                           Type = x ,
+                           Type = x,
                            TypeName = type.GetMember(x.ToString())
                        .First()
                        .GetCustomAttribute<DisplayAttribute>()?.Name ?? x.ToString()
@@ -117,7 +118,8 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
         {
             DataSource = new SelectShiftsDto()
             {
-                IsActive = true
+                IsActive = true,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("ShiftsChildMenu")
             };
 
             DataSource.SelectShiftLinesDto = new List<SelectShiftLinesDto>();
@@ -144,9 +146,9 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel  { Text = L["ContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel  { Text = L["ContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel  { Text = L["ContextDelete"], Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
             }
         }
@@ -215,7 +217,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
             string control;
             decimal result;
 
-            foreach(var item in shifttypes)
+            foreach (var item in shifttypes)
             {
                 item.TypeName = L[item.TypeName];
             }
@@ -232,7 +234,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
 
                 case "changed":
                     LineDataSource = args.RowInfo.RowData;
-                    
+
                     LineCrudPopup = true;
                     await InvokeAsync(StateHasChanged);
                     break;
@@ -343,11 +345,11 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
 
             if (LineDataSource.Id == Guid.Empty)
             {
-                if(DataSource.SelectShiftLinesDto.Contains(LineDataSource))
+                if (DataSource.SelectShiftLinesDto.Contains(LineDataSource))
                 {
                     int selectedLineIndex = DataSource.SelectShiftLinesDto.FindIndex(t => t.LineNr == LineDataSource.LineNr);
 
-                    if(selectedLineIndex > -1)
+                    if (selectedLineIndex > -1)
                     {
                         DataSource.SelectShiftLinesDto[selectedLineIndex] = LineDataSource;
                     }
@@ -384,7 +386,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
 
                 else
                 {
-                    if(result> 0)
+                    if (result > 0)
                     {
                         GridLineList = DataSource.SelectShiftLinesDto;
 
@@ -400,7 +402,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
                     {
                         await ModalManager.WarningPopupAsync("Uyarı", "Bitiş saati, baslangıç saatinden erken seçilemez.");
                     }
-                   
+
 
 
                 }
@@ -408,7 +410,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
                 #endregion
             }
 
-            else if(commonEndHour != 0)
+            else if (commonEndHour != 0)
             {
                 ShiftLinesTypeEnum? shifttype = GridLineList.Where(t => t.EndHour == LineDataSource.StartHour).Select(t => t.Type).FirstOrDefault();
                 string typeException = "";
@@ -423,7 +425,7 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
                 string hourException = GridLineList.Where(t => t.EndHour == LineDataSource.StartHour).Select(t => t.EndHour).FirstOrDefault().ToString();
                 await ModalManager.WarningPopupAsync("Uyarı", "Bitiş saati " + hourException + " olan " + typeException + " ile aynı başlangıç saatine ait başka bir kayıt yapılamaz.");
             }
-            
+
         }
 
         public override void GetTotal()
@@ -441,53 +443,71 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Shift
                 string araKontrol = fark.TotalSeconds.ToString("#.00");
 
 
-                 #region Vardiya Süreleri Hesaplamaları
+                #region Vardiya Süreleri Hesaplamaları
 
-                    switch (item.Type)
-                    {
-                        #region Toplam Mola Süresi
-                        case ShiftLinesTypeEnum.Mola:
+                switch (item.Type)
+                {
+                    #region Toplam Mola Süresi
+                    case ShiftLinesTypeEnum.Mola:
 
-                            DataSource.TotalBreakTime += Convert.ToDecimal(araKontrol);
-                            break;
-
-                        #endregion
-
-                        #region Toplam Temizlik Süresi
-                        case ShiftLinesTypeEnum.Temizlik:
-
-                            //DataSource'a CleaningTime eklenmesi halinde buraya kod yazılacak.
-                            break;
-
-                        #endregion
-
-                        #region Toplam Net Çalışma Süresi
-                        case ShiftLinesTypeEnum.Calisma:
-
-                            DataSource.NetWorkTime += Convert.ToDecimal(araKontrol);
-                            break;
-
-                        #endregion
-
-                        #region Toplam Fazla Mesai Süresi
-                        case ShiftLinesTypeEnum.FazlaMesai:
-
-                            DataSource.Overtime += Convert.ToDecimal(araKontrol);
-                            break;
-
-                            #endregion
-
-                    }
+                        DataSource.TotalBreakTime += Convert.ToDecimal(araKontrol);
+                        break;
 
                     #endregion
-               
+
+                    #region Toplam Temizlik Süresi
+                    case ShiftLinesTypeEnum.Temizlik:
+
+                        //DataSource'a CleaningTime eklenmesi halinde buraya kod yazılacak.
+                        break;
+
+                    #endregion
+
+                    #region Toplam Net Çalışma Süresi
+                    case ShiftLinesTypeEnum.Calisma:
+
+                        DataSource.NetWorkTime += Convert.ToDecimal(araKontrol);
+                        break;
+
+                    #endregion
+
+                    #region Toplam Fazla Mesai Süresi
+                    case ShiftLinesTypeEnum.FazlaMesai:
+
+                        DataSource.Overtime += Convert.ToDecimal(araKontrol);
+                        break;
+
+                        #endregion
+
+                }
+
+                #endregion
+
             }
 
             DataSource.TotalWorkTime = DataSource.NetWorkTime + DataSource.Overtime + DataSource.TotalBreakTime;
         }
-        
+
 
         #endregion
 
+
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("ShiftsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
     }
 }
