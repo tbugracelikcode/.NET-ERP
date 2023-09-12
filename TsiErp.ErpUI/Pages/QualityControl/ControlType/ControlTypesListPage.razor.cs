@@ -1,4 +1,7 @@
-﻿using TsiErp.Entities.Entities.QualityControl.ControlType.Dtos;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using Syncfusion.Blazor.Inputs;
+using TsiErp.Entities.Entities.QualityControl.ControlType.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem.Dtos;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.ControlType
@@ -20,7 +23,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ControlType
         {
             DataSource = new SelectControlTypesDto()
             {
-                IsActive = true
+                IsActive = true,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("ControlTypesChildMenu")
             };
 
 
@@ -94,5 +98,22 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ControlType
                 await (InvokeAsync(StateHasChanged));
             }
         }
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("ControlTypesChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
     }
 }

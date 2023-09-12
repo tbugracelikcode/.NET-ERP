@@ -8,6 +8,7 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.CalibrationVerification.Validations;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.QualityControl.CalibrationVerification;
@@ -23,8 +24,11 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public CalibrationVerificationsAppService(IStringLocalizer<CalibrationVerificationsResource> l) : base(l)
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+        public CalibrationVerificationsAppService(IStringLocalizer<CalibrationVerificationsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
 
@@ -75,6 +79,8 @@ namespace TsiErp.Business.Entities.CalibrationVerification.Services
                 });
 
                 var calibrationVerifications = queryFactory.Insert<SelectCalibrationVerificationsDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("CalVerificationsChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.CalibrationVerifications, LogType.Insert, addedEntityId);
 

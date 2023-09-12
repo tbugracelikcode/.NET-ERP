@@ -224,7 +224,10 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceInstruction
         #region Bakım Talimatları Satır Modalı İşlemleri
         protected override async Task BeforeInsertAsync()
         {
-            DataSource = new SelectMaintenanceInstructionsDto(){};
+            DataSource = new SelectMaintenanceInstructionsDto()
+            {
+                Code = FicheNumbersAppService.GetFicheNumberAsync("MainInstructionsChildMenu")
+            };
 
             DataSource.SelectMaintenanceInstructionLines = new List<SelectMaintenanceInstructionLinesDto>();
             GridLineList = DataSource.SelectMaintenanceInstructionLines;
@@ -454,5 +457,22 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceInstruction
         #endregion
 
 
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("MainInstructionsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
     }
 }

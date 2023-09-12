@@ -1,4 +1,7 @@
-﻿using Syncfusion.Blazor.Buttons;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using Syncfusion.Blazor.Buttons;
+using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem.Dtos;
 
@@ -20,7 +23,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
         {
             DataSource = new SelectUnsuitabilityTypesItemsDto()
             {
-                IsActive = true
+                IsActive = true,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("UnsTypesItemsChildMenu")
             };
 
             _isContract = false;
@@ -93,5 +97,22 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityTypesItem
                 await (InvokeAsync(StateHasChanged));
             }
         }
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("UnsTypesItemsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
     }
 }

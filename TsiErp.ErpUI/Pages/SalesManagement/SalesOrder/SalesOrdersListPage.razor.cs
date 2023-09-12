@@ -629,7 +629,8 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         {
             DataSource = new SelectSalesOrderDto()
             {
-                Date_ = DateTime.Today
+                Date_ = DateTime.Today,
+                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("SalesOrdersChildMenu")
             };
 
             DataSource.SelectSalesOrderLines = new List<SelectSalesOrderLinesDto>();
@@ -940,6 +941,23 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
             PaymentPlansList = (await PaymentPlansAppService.GetListAsync(new ListPaymentPlansParameterDto())).Data.ToList();
         }
 
+        #endregion
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.FicheNo = FicheNumbersAppService.GetFicheNumberAsync("SalesOrdersChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
         #endregion
 
     }

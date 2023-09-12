@@ -354,6 +354,9 @@
   <data name="ValidatorCodeMaxLength" xml:space="preserve">
     <value>Production tracking code cannot exceed 17 characters.</value>
   </data>
+  <data name="ValidatorCurrentCardID" xml:space="preserve">
+    <value>Please select a current account card.</value>
+  </data>
   <data name="ValidatorEmployeeID" xml:space="preserve">
     <value>Please select an employee.</value>
   </data>

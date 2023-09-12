@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Branch.Validations;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
@@ -23,9 +24,11 @@ namespace TsiErp.Business.Entities.Branch.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public BranchesAppService(IStringLocalizer<BranchesResource> l) : base(l)
-        {
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
+        public BranchesAppService(IStringLocalizer<BranchesResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
+        {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateBranchesValidator), Priority = 1)]
@@ -70,6 +73,8 @@ namespace TsiErp.Business.Entities.Branch.Services
 
 
                 var branches = queryFactory.Insert<SelectBranchesDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("BranchesChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Branches, LogType.Insert, branches.Id);
 

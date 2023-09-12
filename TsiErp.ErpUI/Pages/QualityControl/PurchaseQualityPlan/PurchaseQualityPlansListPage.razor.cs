@@ -71,6 +71,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseQualityPlan
         {
             DataSource = new SelectPurchaseQualityPlansDto()
             {
+                DocumentNumber = FicheNumbersAppService.GetFicheNumberAsync("PurchaseQualityPlansChildMenu")
             };
 
             DataSource.SelectPurchaseQualityPlanLines = new List<SelectPurchaseQualityPlanLinesDto>();
@@ -564,6 +565,24 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseQualityPlan
             ControlConditionsList = (await ControlConditionsAppService.GetListAsync(new ListControlConditionsParameterDto())).Data.ToList();
         }
 
+        #endregion
+
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.DocumentNumber = FicheNumbersAppService.GetFicheNumberAsync("PurchaseQualityPlansChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
         #endregion
     }
 }

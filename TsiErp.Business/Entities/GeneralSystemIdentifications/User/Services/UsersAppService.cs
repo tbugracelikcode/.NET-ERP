@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.User;
@@ -23,8 +24,11 @@ namespace TsiErp.Business.Entities.User.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public UsersAppService(IStringLocalizer<UsersResource> l) : base(l)
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+        public UsersAppService(IStringLocalizer<UsersResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateUsersValidator), Priority = 1)]
@@ -72,6 +76,8 @@ namespace TsiErp.Business.Entities.User.Services
                 });
 
                 var users = queryFactory.Insert<SelectUsersDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("UsersChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Users, LogType.Insert, addedEntityId);
 

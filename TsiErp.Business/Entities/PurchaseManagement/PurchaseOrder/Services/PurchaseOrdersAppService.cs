@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.PurchaseOrder.Validations;
 using TsiErp.Business.Entities.PurchaseRequest.Services;
@@ -32,14 +33,19 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
     [ServiceRegistration(typeof(IPurchaseOrdersAppService), DependencyInjectionType.Scoped)]
     public class PurchaseOrdersAppService : ApplicationService<PurchaseOrdersResource>, IPurchaseOrdersAppService
     {
-        private readonly IPurchaseRequestsAppService _PurchaseRequestsAppService;
 
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
 
-        public PurchaseOrdersAppService(IStringLocalizer<PurchaseOrdersResource> l, IPurchaseRequestsAppService PurchaseRequestsAppService) : base(l)
+        private readonly IPurchaseRequestsAppService _PurchaseRequestsAppService;
+
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+
+        public PurchaseOrdersAppService(IStringLocalizer<PurchaseOrdersResource> l, IPurchaseRequestsAppService PurchaseRequestsAppService, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
             _PurchaseRequestsAppService = PurchaseRequestsAppService;
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreatePurchaseOrdersValidator), Priority = 1)]
@@ -147,6 +153,8 @@ namespace TsiErp.Business.Entities.PurchaseOrder.Services
                 var purchaseOrder = queryFactory.Insert<SelectPurchaseOrdersDto>(query, "Id", true);
 
                 StockMovementsService.InsertPurchaseOrders(input);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("PurchaseOrdersChildMenu", input.FicheNo);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PurchaseOrders, LogType.Insert, addedEntityId);
 

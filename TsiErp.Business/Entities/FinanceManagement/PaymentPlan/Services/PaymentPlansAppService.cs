@@ -6,6 +6,7 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.PaymentPlan.Validations;
 using TsiErp.DataAccess.Services.Login;
@@ -21,8 +22,11 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public PaymentPlansAppService(IStringLocalizer<PaymentPlansResource> l) : base(l)
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+        public PaymentPlansAppService(IStringLocalizer<PaymentPlansResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
 
@@ -70,6 +74,8 @@ namespace TsiErp.Business.Entities.PaymentPlan.Services
                 });
 
                 var paymentPlans = queryFactory.Insert<SelectPaymentPlansDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("PaymentPlansChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.PaymentPlans, LogType.Insert, addedEntityId);
 

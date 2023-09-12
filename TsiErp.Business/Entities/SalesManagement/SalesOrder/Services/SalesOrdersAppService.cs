@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.SalesOrder.Validations;
 using TsiErp.Business.Entities.SalesProposition.Services;
@@ -36,10 +37,13 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
         private readonly ISalesPropositionsAppService _salesPropositionsAppService;
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public SalesOrdersAppService(IStringLocalizer<SalesOrdersResource> l, ISalesPropositionsAppService salesPropositionsAppService) : base(l)
+
+        public SalesOrdersAppService(IStringLocalizer<SalesOrdersResource> l, ISalesPropositionsAppService salesPropositionsAppService, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
             _salesPropositionsAppService = salesPropositionsAppService;
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateSalesOrderValidatorDto), Priority = 1)]
@@ -144,6 +148,8 @@ namespace TsiErp.Business.Entities.SalesOrder.Services
                 var salesOrder = queryFactory.Insert<SelectSalesOrderDto>(query, "Id", true);
 
                 StockMovementsService.InsertSalesOrders(input);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("SalesOrdersChildMenu", input.FicheNo);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.SalesOrders, LogType.Insert, addedEntityId);
 

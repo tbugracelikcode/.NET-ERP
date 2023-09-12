@@ -354,6 +354,9 @@
   <data name="ValidatorCodeMaxLength" xml:space="preserve">
     <value>Üretim takip kodu 17 karakterden fazla olamaz.</value>
   </data>
+  <data name="ValidatorCurrentCardID" xml:space="preserve">
+    <value>Lütfen müşteri kodu seçin.</value>
+  </data>
   <data name="ValidatorEmployeeID" xml:space="preserve">
     <value>Lütfen çalışan seçin.</value>
   </data>

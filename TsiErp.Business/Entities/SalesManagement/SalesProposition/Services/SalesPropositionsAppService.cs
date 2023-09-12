@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.SalesProposition.Validations;
 using TsiErp.Business.Entities.StockMovement;
@@ -35,8 +36,11 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public SalesPropositionsAppService(IStringLocalizer<SalesPropositionsResource> l) : base(l)
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+        public SalesPropositionsAppService(IStringLocalizer<SalesPropositionsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
 
@@ -144,6 +148,8 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                 var salesProposition = queryFactory.Insert<SelectSalesPropositionsDto>(query, "Id", true);
 
                 StockMovementsService.InsertSalesPropositions(input);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("SalesPropositionsChildMenu", input.FicheNo);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.SalesPropositions, LogType.Insert, addedEntityId);
 

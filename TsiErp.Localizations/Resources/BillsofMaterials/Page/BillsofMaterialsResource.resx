@@ -333,6 +333,9 @@
   <data name="ValidatorCodeMaxLenght" xml:space="preserve">
     <value>Reçete kodu 17 karakterden fazla olamaz.</value>
   </data>
+  <data name="ValidatorCurrentCardID" xml:space="preserve">
+    <value>Lütfen müşteri kodu seçin.</value>
+  </data>
   <data name="ValidatorFinishedProductID" xml:space="preserve">
     <value>Lütfen mamül seçin.</value>
   </data>

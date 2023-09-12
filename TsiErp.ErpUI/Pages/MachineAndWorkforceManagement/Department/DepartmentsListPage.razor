@@ -10,6 +10,7 @@
 
 @inject IDepartmentsAppService DepartmentsService
 @inject IStringLocalizer<DepartmentsResource> L 
+@inject IFicheNumbersAppService FicheNumbersAppService
 
 
 @{
@@ -91,7 +92,7 @@
                             <Template>
                                 <br />
                                 <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox>
+                            <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
                         <DxGridLayoutItem Row="0" Column="3">

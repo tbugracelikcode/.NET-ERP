@@ -8,7 +8,8 @@
 
 
 @inject IMaintenancePeriodsAppService MaintenancePeriodsService
-@inject IStringLocalizer<MaintenancePeriodsResource> L 
+@inject IStringLocalizer<MaintenancePeriodsResource> L
+@inject IFicheNumbersAppService FicheNumbersAppService
 
 
 @{
@@ -95,7 +96,9 @@
                             <Template>
                                 <br />
                                 <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
-                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox>
+                                @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> *@
+
+                                <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
                             </Template>
                         </DxGridLayoutItem>
 

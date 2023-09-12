@@ -718,6 +718,15 @@ namespace TsiErp.Localizations.Resources.BillsofMaterials.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lütfen müşteri kodu seçin..
+        /// </summary>
+        public static string ValidatorCurrentCardID {
+            get {
+                return ResourceManager.GetString("ValidatorCurrentCardID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen mamül seçin..
         /// </summary>
         public static string ValidatorFinishedProductID {

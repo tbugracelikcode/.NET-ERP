@@ -468,7 +468,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
         {
             DataSource = new SelectPurchaseOrdersDto()
             {
-                Date_ = DateTime.Today
+                Date_ = DateTime.Today,
+                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseOrdersChildMenu")
             };
 
             DataSource.SelectPurchaseOrderLinesDto = new List<SelectPurchaseOrderLinesDto>();
@@ -769,6 +770,23 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseOrder
 
         #endregion
 
-       
+
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseOrdersChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
     }
 }

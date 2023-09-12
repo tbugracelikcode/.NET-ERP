@@ -6,6 +6,7 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.QualityControl.ControlCondition.Validations;
 using TsiErp.DataAccess.Services.Login;
@@ -24,8 +25,11 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
 
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public ControlConditionsAppService(IStringLocalizer<ControlConditionResources> l) : base(l)
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+        public ControlConditionsAppService(IStringLocalizer<ControlConditionResources> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateControlConditionsValidator), Priority = 1)]
@@ -71,6 +75,8 @@ namespace TsiErp.Business.Entities.QualityControl.ControlCondition.Services
 
 
                 var controlConditions = queryFactory.Insert<SelectControlConditionsDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("ControlConditionsChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ControlConditions, LogType.Insert, controlConditions.Id);
 

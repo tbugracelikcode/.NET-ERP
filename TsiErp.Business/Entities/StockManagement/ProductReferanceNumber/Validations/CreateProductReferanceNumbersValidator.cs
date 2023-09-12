@@ -24,7 +24,6 @@ namespace TsiErp.Business.Entities.ProductReferanceNumber.Validations
             RuleFor(x => x.CurrentAccountCardID)
                .Must(x => x.HasValue && x.Value != Guid.Empty)
               .WithMessage("ValidatorCurrentAccountID");
-
         }
     }
 }

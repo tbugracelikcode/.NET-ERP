@@ -42,23 +42,20 @@ namespace TsiErp.ErpUI.Pages.Base
 
         public string toolbarSearchKey = string.Empty;
 
-
         public TGetListOutputDto SelectedItem { get; set; }
 
         [Inject]
         ModalManager ModalManager { get; set; }
 
-
         [Inject]
         IJSRuntime JsRuntime { get; set; }
+
         public TGetOutputDto DataSource { get; set; }
         public IList<TGetListOutputDto> ListDataSource { get; set; }
 
         public SfGrid<TGetListOutputDto> _grid;
 
-
         public object _L { get; set; }
-
 
         public List<ContextMenuItemModel> GridContextMenu { get; set; } = new List<ContextMenuItemModel>();
 
@@ -69,15 +66,21 @@ namespace TsiErp.ErpUI.Pages.Base
         protected ICrudAppService<TGetOutputDto, TGetListOutputDto, TCreateInput, TUpdateInput, TGetListInput> BaseCrudService { get; set; }
 
 
+
         protected async override Task OnParametersSetAsync()
         {
             var loc = (IStringLocalizer)_L;
 
-            LoadingCaption = loc["LoadingCaption"];
-            LoadingText = loc["LoadingText"];
+            if (loc != null)
+            {
+                LoadingCaption = loc["LoadingCaption"];
+                LoadingText = loc["LoadingText"];
 
-            CreateContextMenuItems(loc);
-            CreateGridToolbar();
+
+                CreateContextMenuItems(loc);
+                CreateGridToolbar();
+            }
+
             await GetListDataSourceAsync();
             await InvokeAsync(StateHasChanged);
         }
@@ -394,7 +397,6 @@ namespace TsiErp.ErpUI.Pages.Base
             }
         }
 
-
         public virtual async void CrudModalClosing(PopupClosingEventArgs args)
         {
             if (IsChanged)
@@ -435,12 +437,13 @@ namespace TsiErp.ErpUI.Pages.Base
                 builder.OpenComponent(0, typeof(SfTextBox));
                 builder.AddAttribute(1, "ID", "srcText");
                 builder.AddAttribute(2, "CssClass", "TSITxtBox");
-                builder.AddAttribute(3, "Placeholder", "Aramak istediğiniz kelimeyi yazın.");
-                builder.AddAttribute(4, "Value", BindConverter.FormatValue(GridSearchText));
-                builder.AddAttribute(5, "onchange", EventCallback.Factory.CreateBinder<string?>(this, __value => GridSearchText = __value, GridSearchText));
-                builder.AddAttribute(6, "onkeydown", OnToolbarSearchChange);
+                builder.AddAttribute(3, "Value", BindConverter.FormatValue(GridSearchText));
+                builder.AddAttribute(4, "onchange", EventCallback.Factory.CreateBinder<string?>(this, __value => GridSearchText = __value, GridSearchText));
+                builder.AddAttribute(5, "onkeydown", OnToolbarSearchChange);
+                builder.AddAttribute(6, "ShowClearButton", true);
                 builder.CloseComponent();
             };
+
 
             GridToolbarItems.Add(new ItemModel() { Id = "ExcelExport", CssClass = "TSIExcelButton", Type = ItemType.Button, PrefixIcon = "TSIExcelIcon", TooltipText = @loc["UIExportFileName"] });
 
@@ -470,7 +473,7 @@ namespace TsiErp.ErpUI.Pages.Base
                 await this._grid.ExportToPdfAsync(PdfExportProperties);
             }
 
-        } 
+        }
         #endregion
     }
 }

@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Product.Validations;
 using TsiErp.DataAccess.Services.Login;
@@ -28,8 +29,11 @@ namespace TsiErp.Business.Entities.Product.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public ProductsAppService(IStringLocalizer<ProductsResource> l) : base(l)
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+        public ProductsAppService(IStringLocalizer<ProductsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateProductsValidator), Priority = 1)]
@@ -95,6 +99,8 @@ namespace TsiErp.Business.Entities.Product.Services
                 });
 
                 var products = queryFactory.Insert<SelectProductsDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("ProductsChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Products, LogType.Insert, addedEntityId);
 

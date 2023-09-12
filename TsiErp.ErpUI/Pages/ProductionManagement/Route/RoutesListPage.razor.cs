@@ -43,7 +43,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
         {
             DataSource = new SelectRoutesDto()
             {
-                IsActive = true
+                IsActive = true,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("RoutesChildMenu")
             };
 
             DataSource.SelectRouteLines = new List<SelectRouteLinesDto>();
@@ -355,6 +356,23 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.Route
             ProductsList = (await ProductsAppService.GetListAsync(new ListProductsParameterDto())).Data.ToList();
         }
 
+        #endregion
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("RoutesChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
         #endregion
 
     }

@@ -27,6 +27,10 @@ namespace TsiErp.Business.Entities.SalesPrice.Validations
             RuleFor(x => x.CurrencyID)
                 .Must(x => x.HasValue && x.Value != Guid.Empty)
                .WithMessage("ValidatorCurrencyID");
+
+            RuleFor(x => x.CurrentAccountCardID)
+                .Must(x => x.HasValue && x.Value != Guid.Empty)
+               .WithMessage("ValidatorCurrentCardID");
         }
     }
 }

@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.ProductionManagement.ContractTrackingFiche.Validations;
 using TsiErp.DataAccess.Services.Login;
@@ -30,9 +31,11 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
     public class ContractTrackingFichesAppService : ApplicationService<ContractTrackingFichesResource>, IContractTrackingFichesAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public ContractTrackingFichesAppService(IStringLocalizer<ContractTrackingFichesResource> l) : base(l)
+        public ContractTrackingFichesAppService(IStringLocalizer<ContractTrackingFichesResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateContractTrackingFichesValidator), Priority = 1)]
@@ -106,6 +109,8 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                 }
 
                 var ContractTrackingFiche = queryFactory.Insert<SelectContractTrackingFichesDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("ContractTrackingFichesChildMenu", input.FicheNr);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ContractTrackingFiches, LogType.Insert, addedEntityId);
 

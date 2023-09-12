@@ -286,7 +286,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchasePrice
         {
             DataSource = new SelectPurchasePricesDto()
             {
-                IsActive = true
+                IsActive = true,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("PurchasePricesChildMenu")
             };
 
             DataSource.SelectPurchasePriceLines = new List<SelectPurchasePriceLinesDto>();
@@ -529,6 +530,23 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchasePrice
         #endregion
 
 
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("PurchasePricesChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
 
     }
 }

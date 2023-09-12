@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Localization;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using Tsi.Core.Aspects.Autofac.Caching;
 using Tsi.Core.Aspects.Autofac.Validation;
 using Tsi.Core.Utilities.ExceptionHandling.Exceptions;
@@ -8,6 +9,7 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.CurrentAccountCard.Validations;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
@@ -23,8 +25,11 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public CurrentAccountCardsAppService(IStringLocalizer<CurrentAccountCardsResource> l) : base(l)
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+        public CurrentAccountCardsAppService(IStringLocalizer<CurrentAccountCardsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateCurrentAccountCardsValidator), Priority = 1)]
@@ -101,6 +106,8 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Services
                 });
 
                 var currentAccountCards = queryFactory.Insert<SelectCurrentAccountCardsDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("CurrentAccountsChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.CurrentAccountCards, LogType.Insert, addedEntityId);
 

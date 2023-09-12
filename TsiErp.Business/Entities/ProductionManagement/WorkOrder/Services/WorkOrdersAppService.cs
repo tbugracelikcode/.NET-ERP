@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.WorkOrder.Validations;
 using TsiErp.DataAccess.Services.Login;
@@ -29,9 +30,11 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
     public class WorkOrdersAppService : ApplicationService<WorkOrdersResource>, IWorkOrdersAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public WorkOrdersAppService(IStringLocalizer<WorkOrdersResource> l) : base(l)
+        public WorkOrdersAppService(IStringLocalizer<WorkOrdersResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateWorkOrdersValidator), Priority = 1)]
@@ -92,6 +95,8 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                 });
 
                 var workOrders = queryFactory.Insert<SelectWorkOrdersDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("WorkOrdersChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.WorkOrders, LogType.Insert, addedEntityId);
 

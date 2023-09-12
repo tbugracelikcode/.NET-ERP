@@ -339,6 +339,9 @@
   <data name="ValidatorCurrencyID" xml:space="preserve">
     <value>Please select a currency.</value>
   </data>
+  <data name="ValidatorCurrentCardID" xml:space="preserve">
+    <value>Please select a current account card.</value>
+  </data>
   <data name="ValidatorNameEmpty" xml:space="preserve">
     <value>Please enter the sales price list name.</value>
   </data>

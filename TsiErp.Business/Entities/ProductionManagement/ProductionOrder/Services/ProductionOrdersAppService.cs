@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.ProductionOrder.Validations;
 using TsiErp.DataAccess.Services.Login;
@@ -31,9 +32,11 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
     {
 
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public ProductionOrdersAppService(IStringLocalizer<ProductionOrdersResource> l) : base(l)
+        public ProductionOrdersAppService(IStringLocalizer<ProductionOrdersResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
 
@@ -99,6 +102,8 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
 
                 var productionOrders = queryFactory.Insert<SelectProductionOrdersDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("ProductionOrdersChildMenu", input.FicheNo);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductionOrders, LogType.Insert, addedEntityId);
 

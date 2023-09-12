@@ -160,7 +160,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.ProductReferanceNumber
 
         private async Task GetCurrentAccountCardsList()
         {
-            CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.ToList();
+            CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.Where(t => !string.IsNullOrEmpty(t.CustomerCode)).ToList();
         }
 
         #endregion

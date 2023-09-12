@@ -331,6 +331,24 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
 
         #endregion
 
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
+
         #region GetList Metotları
 
         private async Task GetBranchesList()
@@ -382,6 +400,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
             DataSource = new SelectStockFichesDto()
             {
                 Date_ = DateTime.Now,
+                FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu")
             };
 
             DataSource.SelectStockFicheLines = new List<SelectStockFicheLinesDto>();
@@ -448,42 +467,42 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
             switch (args.Item.Id)
             {
                 case "wastage":
-                    
+
                     await BeforeInsertAsync();
                     DataSource.FicheType = StockFicheTypeEnum.FireFisi;
                     EditPageVisible = true;
                     break;
 
                 case "consume":
-                    
+
                     await BeforeInsertAsync();
                     DataSource.FicheType = StockFicheTypeEnum.SarfFisi;
                     EditPageVisible = true;
                     break;
 
                 case "proincome":
-                    
+
                     await BeforeInsertAsync();
                     DataSource.FicheType = StockFicheTypeEnum.UretimdenGirisFisi;
                     EditPageVisible = true;
                     break;
 
                 case "warehouse":
-                   
+
                     await BeforeInsertAsync();
                     DataSource.FicheType = StockFicheTypeEnum.DepoSevkFisi;
                     EditPageVisible = true;
                     break;
 
                 case "income":
-                    
+
                     await BeforeInsertAsync();
                     DataSource.FicheType = StockFicheTypeEnum.StokGirisFisi;
                     EditPageVisible = true;
                     break;
 
                 case "output":
-                    
+
                     await BeforeInsertAsync();
                     DataSource.FicheType = StockFicheTypeEnum.StokCikisFisi;
                     EditPageVisible = true;
@@ -526,7 +545,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
             switch (args.Item.Id)
             {
                 case "new":
-                    if(DataSource.FicheType == 0)
+                    if (DataSource.FicheType == 0)
                     {
                         await ModalManager.WarningPopupAsync(L["UIWarningFicheTypeTitleBase"], L["UIWarningFicheTypeMessageBase"]);
                     }
@@ -538,7 +557,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
                         LineDataSource.LineNr = GridLineList.Count + 1;
                         await InvokeAsync(StateHasChanged);
                     }
-                    
+
                     break;
 
                 case "changed":

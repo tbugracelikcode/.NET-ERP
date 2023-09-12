@@ -270,6 +270,9 @@
   <data name="ValidatorCodeMaxLength" xml:space="preserve">
     <value>Revizyon numarası, 50 karakterden fazla olamaz.</value>
   </data>
+  <data name="ValidatorCurrentCardID" xml:space="preserve">
+    <value>Lütfen müşteri kodu seçin.</value>
+  </data>
   <data name="ValidatorProductID" xml:space="preserve">
     <value>Lütfen stok seçin.</value>
   </data>

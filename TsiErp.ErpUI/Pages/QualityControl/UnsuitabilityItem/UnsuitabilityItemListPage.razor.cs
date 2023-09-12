@@ -28,7 +28,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItem
         {
             DataSource = new SelectUnsuitabilityItemsDto()
             {
-                IsActive = true
+                IsActive = true,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("UnsItemsChildMenu")
             };
 
             EditPageVisible = true;
@@ -167,6 +168,24 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItem
                 DataSource.IntensityCoefficient = DataSource.IntensityRange / 10;
             }
         }
+
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("UnsItemsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
     }
 
 

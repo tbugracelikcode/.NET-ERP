@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.OperationalSPC.Validations;
 using TsiErp.Business.Entities.PurchaseRequest.Services;
@@ -38,10 +39,13 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
 
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public OperationalSPCsAppService(IStringLocalizer<OperationalSPCsResource> l, IPurchaseRequestsAppService PurchaseRequestsAppService) : base(l)
+
+        public OperationalSPCsAppService(IStringLocalizer<OperationalSPCsResource> l, IPurchaseRequestsAppService PurchaseRequestsAppService, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
             _PurchaseRequestsAppService = PurchaseRequestsAppService;
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateOperationalSPCsValidator), Priority = 1)]
@@ -127,6 +131,8 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                 }
 
                 var OperationalSPC = queryFactory.Insert<SelectOperationalSPCsDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("OperationalSPCChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.OperationalSPCs, LogType.Insert, addedEntityId);
 

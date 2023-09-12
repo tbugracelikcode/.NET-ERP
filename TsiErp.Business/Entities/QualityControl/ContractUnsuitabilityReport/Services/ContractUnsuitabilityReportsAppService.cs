@@ -23,6 +23,7 @@ using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.ContractUnsuitabilityReports.Page;
 using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 
 namespace TsiErp.Business.Entities.ContractUnsuitabilityReport.Services
 {
@@ -32,8 +33,11 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityReport.Services
 
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public ContractUnsuitabilityReportsAppService(IStringLocalizer<ContractUnsuitabilityReportsResource> l) : base(l)
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+        public ContractUnsuitabilityReportsAppService(IStringLocalizer<ContractUnsuitabilityReportsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateContractUnsuitabilityReportsValidator), Priority = 1)]
@@ -86,6 +90,8 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityReport.Services
 
 
                 var ContractUnsuitabilityReport = queryFactory.Insert<SelectContractUnsuitabilityReportsDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("ContUnsRecordsChildMenu", input.FicheNo);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ContractUnsuitabilityReports, LogType.Insert, addedEntityId);
 

@@ -6,6 +6,7 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.QualityControl.UnsuitabilityTypesItem.Validations;
 using TsiErp.DataAccess.Services.Login;
@@ -21,8 +22,11 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityTypesItem.Service
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public UnsuitabilityTypesItemsAppService(IStringLocalizer<UnsuitabilityTypesItemResources> l) : base(l)
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+        public UnsuitabilityTypesItemsAppService(IStringLocalizer<UnsuitabilityTypesItemResources> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateUnsuitabilityTypesItemsValidator), Priority = 1)]
@@ -68,6 +72,8 @@ namespace TsiErp.Business.Entities.QualityControl.UnsuitabilityTypesItem.Service
 
 
                 var unsuitabilityTypesItems = queryFactory.Insert<SelectUnsuitabilityTypesItemsDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("UnsTypesItemsChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.UnsuitabilityTypesItems, LogType.Insert, unsuitabilityTypesItems.Id);
 

@@ -1,4 +1,7 @@
-﻿using TsiErp.Entities.Entities.MaintenanceManagement.MaintenancePeriod.Dtos;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using Syncfusion.Blazor.Inputs;
+using TsiErp.Entities.Entities.MaintenanceManagement.MaintenancePeriod.Dtos;
 
 namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenancePeriod
 {
@@ -18,7 +21,8 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenancePeriod
         {
             DataSource = new SelectMaintenancePeriodsDto()
             {
-                IsActive = true
+                IsActive = true,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("MainPeriodsChildMenu")
             };
 
             EditPageVisible = true;
@@ -43,6 +47,24 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenancePeriod
 
             }
         }
+
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("MainPeriodsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
 
     }
 }

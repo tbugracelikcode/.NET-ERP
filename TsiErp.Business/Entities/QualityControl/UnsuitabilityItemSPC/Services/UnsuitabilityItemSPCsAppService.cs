@@ -31,6 +31,7 @@ using TsiErp.Localizations.Resources.UnsuitabilityItemSPCs.Page;
 using TsiErp.Localizations.Resources.UnsuitabilityTypesItem.Page;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityTypesItem;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 
 namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
 {
@@ -41,10 +42,13 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
 
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public UnsuitabilityItemSPCsAppService(IStringLocalizer<UnsuitabilityItemSPCsResource> l, IPurchaseRequestsAppService PurchaseRequestsAppService) : base(l)
+
+        public UnsuitabilityItemSPCsAppService(IStringLocalizer<UnsuitabilityItemSPCsResource> l, IPurchaseRequestsAppService PurchaseRequestsAppService, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
             _PurchaseRequestsAppService = PurchaseRequestsAppService;
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateUnsuitabilityItemSPCsValidator), Priority = 1)]
@@ -125,6 +129,8 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
                 }
 
                 var UnsuitabilityItemSPC = queryFactory.Insert<SelectUnsuitabilityItemSPCsDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("UnsuitabilityItemSPSChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.UnsuitabilityItemSPCs, LogType.Insert, addedEntityId);
 

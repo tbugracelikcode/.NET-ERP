@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.UnplannedMaintenance.Validations;
 using TsiErp.DataAccess.Services.Login;
@@ -27,9 +28,11 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
     public class UnplannedMaintenancesAppService : ApplicationService<UnplannedMaintenancesResource>, IUnplannedMaintenancesAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public UnplannedMaintenancesAppService(IStringLocalizer<UnplannedMaintenancesResource> l) : base(l)
+        public UnplannedMaintenancesAppService(IStringLocalizer<UnplannedMaintenancesResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateUnplannedMaintenanceValidatorDto), Priority = 1)]
@@ -109,6 +112,8 @@ namespace TsiErp.Business.Entities.UnplannedMaintenance.Services
                 }
 
                 var maintenance = queryFactory.Insert<SelectUnplannedMaintenancesDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("UnplannedMainChildMenu", input.RegistrationNo);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.UnplannedMaintenances, LogType.Insert, maintenance.Id);
 

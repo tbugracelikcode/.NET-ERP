@@ -7,6 +7,7 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.ContractProductionTracking.Validations;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
@@ -29,7 +30,6 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
 
         public ContractProductionTrackingsAppService(IStringLocalizer<ContractProductionTrackingsResource> l) : base(l)
         {
-
         }
 
         [ValidationAspect(typeof(CreateContractProductionTrackingsValidator), Priority = 1)]
@@ -70,6 +70,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                 });
 
                 var contractProductionTrackings = queryFactory.Insert<SelectContractProductionTrackingsDto>(query, "Id", true);
+
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ContractProductionTrackings, LogType.Insert, addedEntityId);
 

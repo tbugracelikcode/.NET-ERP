@@ -8,6 +8,7 @@ using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.EquipmentRecord.Validations;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department;
@@ -23,8 +24,11 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public EquipmentRecordsAppService(IStringLocalizer<EquipmentRecordsResource> l) : base(l)
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+        public EquipmentRecordsAppService(IStringLocalizer<EquipmentRecordsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
 
@@ -81,6 +85,8 @@ namespace TsiErp.Business.Entities.EquipmentRecord.Services
                 });
 
                 var equipmentRecords = queryFactory.Insert<SelectEquipmentRecordsDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("EquipmentRecordsChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.EquipmentRecords, LogType.Insert, addedEntityId);
 

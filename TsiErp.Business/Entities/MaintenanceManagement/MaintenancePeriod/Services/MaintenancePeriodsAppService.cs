@@ -6,6 +6,7 @@ using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.MaintenancePeriod.Validations;
 using TsiErp.DataAccess.Services.Login;
@@ -20,9 +21,11 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
     public class MaintenancePeriodsAppService : ApplicationService<MaintenancePeriodsResource>, IMaintenancePeriodsAppService
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public MaintenancePeriodsAppService(IStringLocalizer<MaintenancePeriodsResource> l) : base(l)
+        public MaintenancePeriodsAppService(IStringLocalizer<MaintenancePeriodsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateMaintenancePeriodsValidator), Priority = 1)]
@@ -69,6 +72,8 @@ namespace TsiErp.Business.Entities.MaintenancePeriod.Services
 
 
                 var maintenancePeriods = queryFactory.Insert<SelectMaintenancePeriodsDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("MainPeriodsChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.MaintenancePeriods, LogType.Insert, maintenancePeriods.Id);
 

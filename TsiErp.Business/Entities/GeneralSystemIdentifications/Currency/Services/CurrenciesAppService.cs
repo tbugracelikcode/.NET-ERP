@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Currency.Validations;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency;
@@ -21,9 +22,11 @@ namespace TsiErp.Business.Entities.Currency.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public CurrenciesAppService(IStringLocalizer<CurrenciesResource> l) : base(l)
+        public CurrenciesAppService(IStringLocalizer<CurrenciesResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
 
@@ -70,6 +73,8 @@ namespace TsiErp.Business.Entities.Currency.Services
 
 
                 var currencies = queryFactory.Insert<SelectCurrenciesDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("CurrenciesChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Currencies, LogType.Insert, addedEntityId);
 

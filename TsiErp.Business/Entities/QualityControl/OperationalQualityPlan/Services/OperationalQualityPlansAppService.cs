@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.QualityControl.OperationalQualityPlan.Services;
 using TsiErp.Business.Entities.QualityControl.OperationalQualityPlan.Validations;
@@ -32,9 +33,12 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
 
-        public OperationalQualityPlansAppService(IStringLocalizer<OperationalQualityPlansResource> l) : base(l)
+
+        public OperationalQualityPlansAppService(IStringLocalizer<OperationalQualityPlansResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateOperationalQualityPlansValidatorDto), Priority = 1)]
@@ -150,6 +154,10 @@ namespace TsiErp.Business.Entities.OperationalQualityPlan.Services
 
                 logInput.SelectOperationPictures.Clear();
                 logInput.SelectOperationPictures = new List<SelectOperationPicturesDto>();
+
+
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("OperationalQualityPlansChildMenu", input.DocumentNumber);
 
                 LogsAppService.InsertLogToDatabase(logInput, logInput, LoginedUserService.UserId, Tables.OperationalQualityPlans, LogType.Insert, addedEntityId);
 

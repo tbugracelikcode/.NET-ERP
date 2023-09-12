@@ -300,7 +300,11 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesPrice
 
         protected override async Task BeforeInsertAsync()
         {
-            DataSource = new SelectSalesPricesDto() { IsActive = true };
+            DataSource = new SelectSalesPricesDto() 
+            { 
+                IsActive = true,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("SalesPricesChildMenu")
+            };
 
             DataSource.SelectSalesPriceLines = new List<SelectSalesPriceLinesDto>();
             GridLineList = DataSource.SelectSalesPriceLines;
@@ -541,5 +545,21 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesPrice
         #endregion
 
 
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("SalesPricesChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
     }
 }

@@ -22,7 +22,8 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Period
         {
             DataSource = new SelectPeriodsDto()
             {
-                IsActive = true
+                IsActive = true,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("PeriodsChildMenu")
             };
 
             EditPageVisible = true;
@@ -80,5 +81,22 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.Period
         }
 
 
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("PeriodsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
     }
 }

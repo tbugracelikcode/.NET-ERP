@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.Department.Validations;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department;
@@ -21,8 +22,11 @@ namespace TsiErp.Business.Entities.Department.Services
     {
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public DepartmentsAppService(IStringLocalizer<DepartmentsResource> l) : base(l)
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+        public DepartmentsAppService(IStringLocalizer<DepartmentsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
 
@@ -68,6 +72,8 @@ namespace TsiErp.Business.Entities.Department.Services
 
 
                 var departments = queryFactory.Insert<SelectDepartmentsDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("DepartmentsChildMenu", input.Code);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.Departments, LogType.Insert, addedEntityId);
 

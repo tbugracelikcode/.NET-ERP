@@ -185,7 +185,8 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
         {
             DataSource = new SelectStationsDto()
             {
-                IsActive = true
+                IsActive = true,
+                Code = FicheNumbersAppService.GetFicheNumberAsync("StationsChildMenu")
             };
 
             DataSource.SelectStationInventoriesDto = new List<SelectStationInventoriesDto>();
@@ -329,5 +330,22 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
         #endregion
 
 
+
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("StationsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
     }
 }

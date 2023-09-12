@@ -7,6 +7,7 @@ using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
 using TSI.QueryBuilder.BaseClasses;
 using TSI.QueryBuilder.Constants.Join;
 using TsiErp.Business.BusinessCoreServices;
+using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.OperationUnsuitabilityReport.Validations;
 using TsiErp.DataAccess.Services.Login;
@@ -31,8 +32,11 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
 
         QueryFactory queryFactory { get; set; } = new QueryFactory();
 
-        public OperationUnsuitabilityReportsAppService(IStringLocalizer<OperationUnsuitabilityReportsResource> l) : base(l)
+        private IFicheNumbersAppService FicheNumbersAppService { get; set; }
+
+        public OperationUnsuitabilityReportsAppService(IStringLocalizer<OperationUnsuitabilityReportsResource> l, IFicheNumbersAppService ficheNumbersAppService) : base(l)
         {
+            FicheNumbersAppService = ficheNumbersAppService;
         }
 
         [ValidationAspect(typeof(CreateOperationUnsuitabilityReportsValidator), Priority = 1)]
@@ -88,6 +92,8 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
 
 
                 var operationUnsuitabilityReport = queryFactory.Insert<SelectOperationUnsuitabilityReportsDto>(query, "Id", true);
+
+                await FicheNumbersAppService.UpdateFicheNumberAsync("OprUnsRecordsChildMenu", input.FicheNo);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.OperationUnsuitabilityReports, LogType.Insert, addedEntityId);
 
