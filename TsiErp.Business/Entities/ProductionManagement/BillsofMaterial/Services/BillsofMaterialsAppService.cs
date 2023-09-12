@@ -265,13 +265,13 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                             nameof(UnitSets.Id),
                             JoinType.Left
                         )
-                        .Where(new { BoMID = id }, false, false, Tables.BillsofMaterialLines);
+                        .Where(new { BoMID = billsOfMaterials.Id }, false, false, Tables.BillsofMaterialLines);
 
                 var billsOfMaterialLine = queryFactory.GetList<SelectBillsofMaterialLinesDto>(queryLines).ToList();
 
                 billsOfMaterials.SelectBillsofMaterialLines = billsOfMaterialLine;
 
-                LogsAppService.InsertLogToDatabase(billsOfMaterials, billsOfMaterials, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Get, id);
+                LogsAppService.InsertLogToDatabase(billsOfMaterials, billsOfMaterials, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Get, billsOfMaterials.Id);
 
                 return new SuccessDataResult<SelectBillsofMaterialsDto>(billsOfMaterials);
             }
