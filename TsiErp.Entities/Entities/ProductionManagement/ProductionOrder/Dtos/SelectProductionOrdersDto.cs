@@ -170,6 +170,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
         /// </summary>
         public string CurrentAccountName { get; set; }
         /// <summary>
+        /// Müşteri Kodu
+        /// </summary>
+        public string CustomerCode { get; set; }
+        /// <summary>
         /// Bağlı Üretim Emri ID
         /// </summary>
         public Guid? LinkedProductionOrderID { get; set; }

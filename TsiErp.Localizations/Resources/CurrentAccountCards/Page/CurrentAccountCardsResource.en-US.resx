@@ -333,6 +333,9 @@
   <data name="ValidatorCurrencyID" xml:space="preserve">
     <value>Please select a currency.</value>
   </data>
+  <data name="ValidatorIDnumberEmpty" xml:space="preserve">
+    <value>Please enter the identity number.</value>
+  </data>
   <data name="ValidatorNameEmpty" xml:space="preserve">
     <value>Please enter the currenct account card name.</value>
   </data>
@@ -346,7 +349,7 @@
     <value>Tax administration cannot exceed 75 characters.</value>
   </data>
   <data name="ValidatorTaxNoEmpty" xml:space="preserve">
-    <value>Please enter thr tax number.</value>
+    <value>Please enter the tax number.</value>
   </data>
   <data name="ValidatorTaxNoMaxLenght" xml:space="preserve">
     <value>Tax number cannot exceed 10 characters.</value>

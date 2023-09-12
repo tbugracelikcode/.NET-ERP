@@ -404,6 +404,42 @@ namespace TsiErp.Localizations.Resources.TemplateOperations.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to İŞ MERKEZİ KODU.
+        /// </summary>
+        public static string StationGroupModalGridCode {
+            get {
+                return ResourceManager.GetString("StationGroupModalGridCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İŞ MERKEZİ ADI.
+        /// </summary>
+        public static string StationGroupModalGridName {
+            get {
+                return ResourceManager.GetString("StationGroupModalGridName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TOPLAM ÇALIŞAN.
+        /// </summary>
+        public static string StationGroupModalGridTotalEmployees {
+            get {
+                return ResourceManager.GetString("StationGroupModalGridTotalEmployees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş Merkezleri.
+        /// </summary>
+        public static string StationGroupModalTitle {
+            get {
+                return ResourceManager.GetString("StationGroupModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to İSTASYON KODU.
         /// </summary>
         public static string StationModalGridCode {

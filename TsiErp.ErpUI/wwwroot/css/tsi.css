@@ -22,6 +22,13 @@
     height: 30px;
 }
 
+.TSIToolbarTxtBox {
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 300px !important;
+    height: 30px;
+}
+
 .TSISelectAllStationsCalendar {
     font-size: 16px;
     font-weight: bolder;
@@ -1002,7 +1009,7 @@ e-upload .e-upload-files .e-file-remove-btn.e-icons:hover, .e-upload .e-upload-f
     background: #f8f9fa;
     box-shadow: none;
     color: #30c153 !important;
-    border: 1px #31c130 solid !important;
+    border: 1px transparent solid !important;
     font-weight: 500 !important;
 }
 

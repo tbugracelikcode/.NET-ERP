@@ -83,6 +83,10 @@ namespace TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.D
         /// </summary>
         public string ProductName { get; set; }
         /// <summary>
+        /// Operasyon ID
+        /// </summary>
+        public Guid? OperationID { get; set; }
+        /// <summary>
         /// Operasyon Açıklaması
         /// </summary>
         public string OperationName { get; set; }

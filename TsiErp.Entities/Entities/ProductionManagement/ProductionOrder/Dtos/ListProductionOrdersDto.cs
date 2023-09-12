@@ -122,6 +122,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
         /// Cari Hesap Ünvanı
         /// </summary>
         public string CurrentAccountName { get; set; }
+        /// <summary>
+        /// Müşteri Kodu
+        /// </summary>
+        public string CustomerCode { get; set; }
 
         /// <summary>
         /// Bağlı Üretim Emri Fiş No

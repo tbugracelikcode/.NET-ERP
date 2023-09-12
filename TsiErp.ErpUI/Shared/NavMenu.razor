@@ -17,11 +17,11 @@
                     <Nodes>
                         <DxTreeViewNode Visible="@(NavBarPermissionsModel.StockManagementMainRecordsMenu)" Text=@L["StockManagementMainRecordsMenu"] Name="StockManagementMainRecordsMenu">
                             <Nodes>
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductGroupsChildMenu)"  NavigateUrl="/product-groups" Text=@L["ProductGroupsChildMenu"] Name="ProductGroupsChildMenu" />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductGroupsChildMenu)" NavigateUrl="/product-groups" Text=@L["ProductGroupsChildMenu"] Name="ProductGroupsChildMenu" />
                                 <DxTreeViewNode Visible="@(NavBarPermissionsModel.UnitSetsChildMenu)" NavigateUrl="/unitsets" Text=@L["UnitSetsChildMenu"] Name="UnitSetsChildMenu" />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.WarehousesChildMenu)"  NavigateUrl="/warehouses" Text=@L["WarehousesChildMenu"] Name="WarehousesChildMenu" />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.WarehousesChildMenu)" NavigateUrl="/warehouses" Text=@L["WarehousesChildMenu"] Name="WarehousesChildMenu" />
                                 <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductsChildMenu)" NavigateUrl="/products" Text=@L["ProductsChildMenu"] Name="ProductsChildMenu" />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.TechnicalDrawingsChildMenu)"  NavigateUrl="/technical-drawings" Text=@L["TechnicalDrawingsChildMenu"] Name="TechnicalDrawingsChildMenu" />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.TechnicalDrawingsChildMenu)" NavigateUrl="/technical-drawings" Text=@L["TechnicalDrawingsChildMenu"] Name="TechnicalDrawingsChildMenu" />
                                 <DxTreeViewNode Visible="@(NavBarPermissionsModel.ProductRefNumbersChildMenu)" NavigateUrl="/product-referance-numbers" Text=@L["ProductRefNumbersChildMenu"] Name="ProductRefNumbersChildMenu" />
                             </Nodes>
                         </DxTreeViewNode>
@@ -33,7 +33,7 @@
                         <DxTreeViewNode Visible="@(NavBarPermissionsModel.StockManagementReportsMenu)" Text=@L["StockManagementReportsMenu"] Name="StockManagementReportsMenu">
                             <Nodes>
                                 <DxTreeViewNode Visible="@(NavBarPermissionsModel.ListofMaterialsChildMenu)" Text=@L["ListofMaterialsChildMenu"] Name="ListofMaterialsChildMenu" />
-                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MaterialWarehouseStatusChildMenu)"  Text=@L["MaterialWarehouseStatusChildMenu"] Name="MaterialWarehouseStatusChildMenu" />
+                                <DxTreeViewNode Visible="@(NavBarPermissionsModel.MaterialWarehouseStatusChildMenu)" Text=@L["MaterialWarehouseStatusChildMenu"] Name="MaterialWarehouseStatusChildMenu" />
                                 <DxTreeViewNode Visible="@(NavBarPermissionsModel.InventoryListChildMenu)" Text=@L["InventoryListChildMenu"] Name="InventoryListChildMenu" />
                                 <DxTreeViewNode Visible="@(NavBarPermissionsModel.ByProdGrpPerfAnalysisChildMenu)" Text=@L["ByProdGrpPerfAnalysisChildMenu"] Name="ByProdGrpPerfAnalysisChildMenu" />
                                 <DxTreeViewNode Visible="@(NavBarPermissionsModel.ByProdGrpScrapAnalysisChildMenu)" Text=@L["ByProdGrpScrapAnalysisChildMenu"] Name="ByProdGrpScrapAnalysisChildMenu" />
@@ -246,19 +246,19 @@
                                 <DxTreeViewNode Text=@L["ControlTypesChildMenu"] NavigateUrl="/control-types" />
                                 <DxTreeViewNode Text=@L["ControlConditionsChildMenu"] NavigateUrl="/control-conditions" />
                                 <DxTreeViewNode Text=@L["UnsItemsChildMenu"] NavigateUrl="/unsuitability-items" />
-                                 <DxTreeViewNode Text=@L["QualityPlansMenu"]>
+                                <DxTreeViewNode Text=@L["QualityPlansMenu"]>
                                     <Nodes>
                                         <DxTreeViewNode NavigateUrl="/operational-quality-plans" Text=@L["OperationalQualityPlansChildMenu"] />
                                         <DxTreeViewNode NavigateUrl="/contract-quality-plans" Text=@L["ContractQualityPlansChildMenu"] />
-                                        <DxTreeViewNode  NavigateUrl="/purchase-quality-plans" Text=@L["PurchaseQualityPlansChildMenu"] />
+                                        <DxTreeViewNode NavigateUrl="/purchase-quality-plans" Text=@L["PurchaseQualityPlansChildMenu"] />
                                     </Nodes>
                                 </DxTreeViewNode>
                                 <DxTreeViewNode Text=@L["MidControlChildMenu"] />
 
-                               @*  <DxTreeViewNode Text=@L["EquipmentManagementMenu"]>
-                                    <Nodes> *@
-                                        <DxTreeViewNode NavigateUrl="/equipment-records" Text=@L["EquipmentRecordsChildMenu"] />
-                                   @*  </Nodes>
+                                @*  <DxTreeViewNode Text=@L["EquipmentManagementMenu"]>
+                                <Nodes> *@
+                                <DxTreeViewNode NavigateUrl="/equipment-records" Text=@L["EquipmentRecordsChildMenu"] />
+                                @*  </Nodes>
                                 </DxTreeViewNode> *@
 
                             </Nodes>
@@ -275,7 +275,7 @@
                                         <DxTreeViewNode NavigateUrl="/operation-unsuitability-reports" Text=@L["OprUnsRecordsChildMenu"] />
                                         @* <DxTreeViewNode Text=@L["FinalControlUnsRecordsChildMenu"] />*@
                                         <DxTreeViewNode NavigateUrl="/contract-unsuitability-reports" Text=@L["ContUnsRecordsChildMenu"] />
-                                       @*  <DxTreeViewNode Text=@L["CustCompRecordsChildMenu"] /> *@
+                                        @*  <DxTreeViewNode Text=@L["CustCompRecordsChildMenu"] /> *@
 
                                     </Nodes>
                                 </DxTreeViewNode>
@@ -289,18 +289,32 @@
                                     </Nodes>
                                 </DxTreeViewNode>
 
-                                
-                                        <DxTreeViewNode  NavigateUrl="/operational-spc" Text=@L["OperationalSPCChildMenu"] />
-                                        <DxTreeViewNode  NavigateUrl="/unsuitability-item-spc" Text=@L["UnsuitabilityItemSPSChildMenu"] />
 
-                               @*  <DxTreeViewNode Text=@L["QualityControlReportsMenu"]>
+                                <DxTreeViewNode NavigateUrl="/operational-spc" Text=@L["OperationalSPCChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/unsuitability-item-spc" Text=@L["UnsuitabilityItemSPSChildMenu"] />
+
+                                @*  <DxTreeViewNode Text=@L["QualityControlReportsMenu"]>
                                 </DxTreeViewNode> *@
-                               @*  <DxTreeViewNode Text=@L["TechAnlChildMenu"]>
-                                    <DxTreeViewNode Text=@L["SPCFMEAChildMenu"] />
-                                    <DxTreeViewNode Text=@L["PurcUnsAnlChildMenu"] />
-                                    <DxTreeViewNode Text=@L["ContUnsAnlChildMenu"] />
-                                    <DxTreeViewNode Text=@L["ProdOrderUnsAnlChildMenu"] />
+                                @*  <DxTreeViewNode Text=@L["TechAnlChildMenu"]>
+                                <DxTreeViewNode Text=@L["SPCFMEAChildMenu"] />
+                                <DxTreeViewNode Text=@L["PurcUnsAnlChildMenu"] />
+                                <DxTreeViewNode Text=@L["ContUnsAnlChildMenu"] />
+                                <DxTreeViewNode Text=@L["ProdOrderUnsAnlChildMenu"] />
                                 </DxTreeViewNode> *@
+                            </Nodes>
+                        </DxTreeViewNode>
+
+                        <DxTreeViewNode Text=@L["QualityControlAnalysisMenu"]>
+                            <Nodes>
+                                <DxTreeViewNode Text=@L["QualityControlSPCMenu"]>
+                                    <Nodes>
+                                        
+                                <DxTreeViewNode NavigateUrl="/operational-spc-comparing" Text=@L["OperationalSPCComparingChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/unsuitability-item-spc-comparing" Text=@L["UnsuitabilityItemSPSComparingChildMenu"] />
+
+                                    </Nodes>
+                                </DxTreeViewNode>
+
                             </Nodes>
                         </DxTreeViewNode>
                     </Nodes>
@@ -395,7 +409,7 @@
 
             //foreach (var item in menus)
             //{
-                
+
             //}
 
             //var node = treeView.GetNodeInfo(t => t.Name == "StockManagementParentMenu");

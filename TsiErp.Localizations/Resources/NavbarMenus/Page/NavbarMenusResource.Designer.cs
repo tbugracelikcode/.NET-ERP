@@ -673,6 +673,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operasyonel SPC Karşılaştırma.
+        /// </summary>
+        public static string OperationalSPCComparingChildMenu {
+            get {
+                return ResourceManager.GetString("OperationalSPCComparingChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operasyonlar.
         /// </summary>
         public static string OperationsMenu {
@@ -1060,6 +1069,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Analizler.
+        /// </summary>
+        public static string QualityControlAnalysisMenu {
+            get {
+                return ResourceManager.GetString("QualityControlAnalysisMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ana Kayıtlar.
         /// </summary>
         public static string QualityControlMainRecordsMenu {
@@ -1092,6 +1110,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string QualityControlReportsMenu {
             get {
                 return ResourceManager.GetString("QualityControlReportsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SPC.
+        /// </summary>
+        public static string QualityControlSPCMenu {
+            get {
+                return ResourceManager.GetString("QualityControlSPCMenu", resourceCulture);
             }
         }
         
@@ -1506,6 +1533,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string UnsuitabilityItemSPSChildMenu {
             get {
                 return ResourceManager.GetString("UnsuitabilityItemSPSChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uygunsuzluk Başlıklarına göre SPC Karşlaştırma.
+        /// </summary>
+        public static string UnsuitabilityItemSPSComparingChildMenu {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemSPSComparingChildMenu", resourceCulture);
             }
         }
         

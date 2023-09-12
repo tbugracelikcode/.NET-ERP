@@ -333,6 +333,9 @@
   <data name="ValidatorCurrencyID" xml:space="preserve">
     <value>Lütfen para birimi seçin.</value>
   </data>
+  <data name="ValidatorIDnumberEmpty" xml:space="preserve">
+    <value>Lütfen T.C. kimlik numarasını yazın.</value>
+  </data>
   <data name="ValidatorNameEmpty" xml:space="preserve">
     <value>Lütfen cari ünvanı yazın.</value>
   </data>

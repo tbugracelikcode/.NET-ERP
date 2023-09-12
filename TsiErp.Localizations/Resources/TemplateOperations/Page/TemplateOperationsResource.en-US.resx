@@ -231,6 +231,18 @@
   <data name="StationCodeLineLabel" xml:space="preserve">
     <value>Station Code:</value>
   </data>
+  <data name="StationGroupModalGridCode" xml:space="preserve">
+    <value>WORK CENTER CODE</value>
+  </data>
+  <data name="StationGroupModalGridName" xml:space="preserve">
+    <value>WORK CENTER NAME</value>
+  </data>
+  <data name="StationGroupModalGridTotalEmployees" xml:space="preserve">
+    <value>TOTAL EMPLOYEES</value>
+  </data>
+  <data name="StationGroupModalTitle" xml:space="preserve">
+    <value>Work Centers</value>
+  </data>
   <data name="StationModalGridCode" xml:space="preserve">
     <value>STATION CODE</value>
   </data>

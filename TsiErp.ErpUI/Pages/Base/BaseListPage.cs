@@ -448,7 +448,7 @@ namespace TsiErp.ErpUI.Pages.Base
             GridToolbarItems.Add(new ItemModel() { Id = "PDFExport", CssClass = "TSIExcelButton", Type = ItemType.Button, PrefixIcon = "TSIPdfIcon", TooltipText = @loc["UIExportFileName"] });
 
 
-            GridToolbarItems.Add(new ItemModel() { Id = "Search", CssClass = "TSITxtBox", Type = ItemType.Input, Template = search, Text = GridSearchText });
+            GridToolbarItems.Add(new ItemModel() { Id = "Search", CssClass = "TSIToolbarTxtBox", Type = ItemType.Input, Template = search, Text = GridSearchText });
 
 
         }

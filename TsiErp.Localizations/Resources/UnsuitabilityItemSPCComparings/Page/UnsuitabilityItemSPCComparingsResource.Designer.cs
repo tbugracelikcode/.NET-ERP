@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TsiErp.Localizations.Resources.OperationalSPCComparings.Page {
+namespace TsiErp.Localizations.Resources.UnsuitabilityItemSPCComparings.Page {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace TsiErp.Localizations.Resources.OperationalSPCComparings.Page {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class OperationalSPCComparingsResource {
+    public class UnsuitabilityItemSPCComparingsResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal OperationalSPCComparingsResource() {
+        internal UnsuitabilityItemSPCComparingsResource() {
         }
         
         /// <summary>
@@ -39,8 +39,8 @@ namespace TsiErp.Localizations.Resources.OperationalSPCComparings.Page {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TsiErp.Localizations.Resources.OperationalSPCComparings.Page.OperationalSPCCompar" +
-                            "ingsResource", typeof(OperationalSPCComparingsResource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TsiErp.Localizations.Resources.UnsuitabilityItemSPCComparings.Page.UnsuitabilityI" +
+                            "temSPCComparingsResource", typeof(UnsuitabilityItemSPCComparingsResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -107,7 +107,7 @@ namespace TsiErp.Localizations.Resources.OperationalSPCComparings.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Operasyonel SPC Karşılaştırma.
+        ///   Looks up a localized string similar to Uygunsuzluk Başlıklarına Göre SPC Karşılaştırma.
         /// </summary>
         public static string EditModalTitle {
             get {
@@ -125,7 +125,7 @@ namespace TsiErp.Localizations.Resources.OperationalSPCComparings.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OperasyonelSPCKarsilastirma.
+        ///   Looks up a localized string similar to UygunsuzlukBasliklarinaGoreSPCKarsilastirma.
         /// </summary>
         public static string ExportFileName {
             get {
@@ -134,7 +134,7 @@ namespace TsiErp.Localizations.Resources.OperationalSPCComparings.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Operasyonel SPC Karşılaştırma.
+        ///   Looks up a localized string similar to Uygunsuzluk Başlıklarına Göre SPC Karşılaştırma.
         /// </summary>
         public static string ExportTitle {
             get {
@@ -179,15 +179,6 @@ namespace TsiErp.Localizations.Resources.OperationalSPCComparings.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OPERASYON ADI.
-        /// </summary>
-        public static string OperationName {
-            get {
-                return ResourceManager.GetString("OperationName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string SaveButton {
@@ -197,7 +188,7 @@ namespace TsiErp.Localizations.Resources.OperationalSPCComparings.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Operasyonel SPC Karşılaştırma.
+        ///   Looks up a localized string similar to Uygunsuzluk Başlıklarına Göre SPC Karşılaştırma.
         /// </summary>
         public static string UICurrentMenu {
             get {
@@ -215,11 +206,11 @@ namespace TsiErp.Localizations.Resources.OperationalSPCComparings.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to İŞ MERKEZİ.
+        ///   Looks up a localized string similar to UYGUNSUZLUK BAŞLIĞI.
         /// </summary>
-        public static string WorkCenterName {
+        public static string UnsuitabilityItemName {
             get {
-                return ResourceManager.GetString("WorkCenterName", resourceCulture);
+                return ResourceManager.GetString("UnsuitabilityItemName", resourceCulture);
             }
         }
     }

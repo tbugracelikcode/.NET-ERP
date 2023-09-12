@@ -9,6 +9,8 @@ using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress.Dtos;
@@ -360,7 +362,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         public async void ShippingAdressesButtonClickEvent()
         {
             SelectShippingAdressesPopupVisible = true;
-            ShippingAdressesList = (await ShippingAdressesAppService.GetListAsync(new ListShippingAdressesParameterDto())).Data.Where(t=>t.CustomerCardCode == DataSource.CurrentAccountCardCode && t.CustomerCardName == DataSource.CurrentAccountCardName).ToList();
+            ShippingAdressesList = (await ShippingAdressesAppService.GetListAsync(new ListShippingAdressesParameterDto())).Data.Where(t => t.CustomerCardCode == DataSource.CurrentAccountCardCode && t.CustomerCardName == DataSource.CurrentAccountCardName).ToList();
             await InvokeAsync(StateHasChanged);
         }
 
@@ -514,7 +516,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         {
             if (ProductionOrderGridContextMenu.Count() == 0)
             {
-                //ProductionOrderGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextTree"], Id = "productstree" });
+                ProductionOrderGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextTree"], Id = "productstree" });
             }
         }
 
@@ -532,19 +534,21 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 
                     GridBoMLineList = BoMDataSource.SelectBillsofMaterialLines;
 
-                    
+
 
                     foreach (var item in GridBoMLineList)
                     {
                         item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
                         item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
 
+                        decimal stockAmount = (await ProductsAppService.GetStockAmountAsync(item.ProductID.GetValueOrDefault())).Data.Amount;
+
                         ProductsTreeDto _model = new ProductsTreeDto
                         {
                             ProductName = item.ProductName,
                             ProductCode = item.ProductCode,
-                            AmountofStock = 30, //deneme
-                            AmountofRequierement = Math.Abs(30 - (GridBoMLineList.Count * item.Quantity)),
+                            AmountofStock = stockAmount,
+                            AmountofRequierement = Math.Abs(stockAmount -  item.Quantity),
                             SupplyForm = 1 //deneme
                         };
 
@@ -564,7 +568,53 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 
         protected async Task OnCreateProductionOrderBtnClicked()
         {
+            var bomDataSource = (await BillsofMaterialsAppService.GetbyCurrentAccountIDAsync(DataSource.CurrentAccountCardID)).Data;
 
+            var bomLineList = BoMDataSource.SelectBillsofMaterialLines;
+
+            foreach (var productionOrder in GridProductionOrderList)
+            {
+                decimal stockAmount = (await ProductsAppService.GetStockAmountAsync(productionOrder.ProductID.GetValueOrDefault())).Data.Amount;
+
+                if (productionOrder.Quantity > stockAmount)
+                {
+                    CreateProductionOrdersDto producionOrder = new CreateProductionOrdersDto
+                    {
+                        OrderID = DataSource.Id,
+                        FinishedProductID = productionOrder.ProductID.GetValueOrDefault(),
+                        LinkedProductID = Guid.Empty,
+                        PlannedQuantity = productionOrder.Quantity - stockAmount,
+                        ProducedQuantity = 0,
+                        CurrentAccountID = DataSource.CurrentAccountCardID
+                    };
+
+                    await ProductionOrdersAppService.ConverttoProductionOrder(producionOrder);
+                }
+
+                var tempBomLineList = bomLineList.Where(t=>t.ProductID == productionOrder.ProductID).ToList();
+
+                foreach(var line in tempBomLineList)
+                {
+                    decimal stockAmountofLine = (await ProductsAppService.GetStockAmountAsync(line.ProductID.GetValueOrDefault())).Data.Amount;
+
+                    var supplyForm = (await ProductsAppService.GetAsync(line.ProductID.GetValueOrDefault())).Data.SupplyForm;
+
+                    if(line.Quantity > stockAmountofLine && supplyForm == Entities.Enums.ProductSupplyFormEnum.Üretim)
+                    {
+                        CreateProductionOrdersDto procutionOrderBomLine = new CreateProductionOrdersDto
+                        {
+                            OrderID = DataSource.Id,
+                            FinishedProductID = line.ProductID.GetValueOrDefault(),
+                            LinkedProductID = productionOrder.ProductID.GetValueOrDefault(),
+                            PlannedQuantity = line.Quantity - stockAmountofLine,
+                            ProducedQuantity = 0,
+                            CurrentAccountID = DataSource.CurrentAccountCardID
+                        };
+
+                        await ProductionOrdersAppService.ConverttoProductionOrder(procutionOrderBomLine);
+                    }
+                }
+            }
         }
 
         public void HideCreateProductionOrderPopup()
@@ -609,7 +659,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextProdOrder"], Id = "createproductionorder" });
-                MainGridContextMenu.Add(new ContextMenuItemModel{ Text = L["ContextDelete"], Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
             }
         }
@@ -813,7 +863,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                 HideLinesPopup();
                 await InvokeAsync(StateHasChanged);
             }
-           
+
         }
 
         public override async void LineCalculate()
