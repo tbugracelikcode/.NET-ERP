@@ -15,6 +15,7 @@ using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem;
 using Syncfusion.Blazor.Inputs;
+using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
 {
@@ -274,7 +275,21 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
                 {
                     var tempWorkOrderList = WorkOrdersList.Where(t => t.ProductsOperationID == operation.Id).ToList();
 
+                    int workOrdersCount = tempWorkOrderList.Count;
+
                     var workCenter = (await StationGroupsAppService.GetAsync(operation.WorkCenterID)).Data;
+
+                    #region Uygunsuzluk Raporları Listeleri ve Uygunsuzluk Başlıkları Listesi
+
+                    var contractUnsReportList = (await ContractUnsuitabilityReportsAppService.GetListAsync(new ListContractUnsuitabilityReportsParameterDto())).Data.Where(t => t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate).ToList();
+
+                    var purchaseUnsRepostList = (await PurchaseUnsuitabilityReportsAppService.GetListAsync(new ListPurchaseUnsuitabilityReportsParameterDto())).Data.Where(t => t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate && t.IsUnsuitabilityWorkOrder == true).ToList();
+
+                    var operationUnsReportList = (await OperationUnsuitabilityReportsAppService.GetListAsync(new ListOperationUnsuitabilityReportsParameterDto())).Data.Where(t => t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate).ToList();
+
+                    var unsuitabilityItemsList = (await UnsuitabilityItemsAppService.GetListAsync(new ListUnsuitabilityItemsParameterDto())).Data.ToList();
+
+                    #endregion
 
                     #region Toplam Üretilen Komponent
 
@@ -289,13 +304,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
 
                     foreach (var workorder in tempWorkOrderList)
                     {
-                        var addedAmountComponent = (await ContractUnsuitabilityReportsAppService.GetListAsync(new ListContractUnsuitabilityReportsParameterDto())).Data.Where(t => t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate && t.WorkOrderID == workorder.Id).Select(t => t.UnsuitableAmount).Sum() +
-                            (await PurchaseUnsuitabilityReportsAppService.GetListAsync(new ListPurchaseUnsuitabilityReportsParameterDto())).Data.Where(t => t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate && t.IsUnsuitabilityWorkOrder == true).Select(t => t.UnsuitableAmount).Sum() +
-                            (await OperationUnsuitabilityReportsAppService.GetListAsync(new ListOperationUnsuitabilityReportsParameterDto())).Data.Where(t => t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate && t.WorkOrderID == workorder.Id).Select(t => t.UnsuitableAmount).Sum();
+                        var addedAmountComponent = contractUnsReportList.Where(t=>t.WorkOrderID == workorder.Id).Select(t => t.UnsuitableAmount).Sum() +
+                           operationUnsReportList.Where(t=>t.WorkOrderID == workorder.Id).Select(t => t.UnsuitableAmount).Sum();
 
-                        var addedAmountReport = (await ContractUnsuitabilityReportsAppService.GetListAsync(new ListContractUnsuitabilityReportsParameterDto())).Data.Where(t => t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate && t.WorkOrderID == workorder.Id).Count() +
-                            (await PurchaseUnsuitabilityReportsAppService.GetListAsync(new ListPurchaseUnsuitabilityReportsParameterDto())).Data.Where(t => t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate && t.IsUnsuitabilityWorkOrder == true).Count() +
-                            (await OperationUnsuitabilityReportsAppService.GetListAsync(new ListOperationUnsuitabilityReportsParameterDto())).Data.Where(t => t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate && t.WorkOrderID == workorder.Id).Count();
+                        var addedAmountReport = contractUnsReportList.Where(t => t.WorkOrderID == workorder.Id).Count() +
+                           operationUnsReportList.Where(t => t.WorkOrderID == workorder.Id).Count();
 
                         totalUnsuitableComponent = totalUnsuitableComponent + Convert.ToInt32(addedAmountComponent);
                         totalUnsuitableReport = totalUnsuitableReport + addedAmountReport;
@@ -306,6 +319,152 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
                     #region Toplam Gerçekleşen Operasyon
 
                     int totalOccuredOperation = tempWorkOrderList.Count;
+
+                    #endregion
+
+                    #region Sıklık Hesaplama
+
+                    int frequency = 0;
+
+                    if(workOrdersCount !=0)
+                    {
+
+                        var dataValue = totalUnsuitableReport / workOrdersCount;
+
+                        if (dataValue > 0 && dataValue <= 0.00001)
+                        {
+                            frequency = 1;
+                        }
+                        else if (dataValue > 0.00001 && dataValue <= 0.0001)
+                        {
+                            frequency = 1;
+                        }
+                        else if (dataValue > 0.0001 && dataValue <= 0.0005)
+                        {
+                            frequency = 2;
+                        }
+                        else if (dataValue > 0.0005 && dataValue <= 0.001)
+                        {
+                            frequency = 3;
+                        }
+                        else if (dataValue > 0.001 && dataValue <= 0.002)
+                        {
+                            frequency = 4;
+                        }
+                        else if (dataValue > 0.002 && dataValue <= 0.005)
+                        {
+                            frequency = 5;
+                        }
+                        else if (dataValue > 0.005 && dataValue <= 0.01)
+                        {
+                            frequency = 6;
+                        }
+                        else if (dataValue > 0.01 && dataValue <= 0.025)
+                        {
+                            frequency = 7;
+                        }
+                        else if (dataValue > 0.025 && dataValue <= 0.05)
+                        {
+                            frequency = 8;
+                        }
+                        else if (dataValue > 0.05 && dataValue <= 0.1)
+                        {
+                            frequency = 9;
+                        }
+                        else if (dataValue > 0.1)
+                        {
+                            frequency = 10;
+                        }
+                    }
+
+                    #endregion
+
+                    #region Farkedilebilrlik Hesaplama
+
+                    int detectability = 0;
+
+                    if(totalOccuredOperation != 0)
+                    {
+                        var dataValue = totalUnsuitableComponent / totalOccuredOperation;
+
+                        if (dataValue > 0 && dataValue <= 3)
+                        {
+                            detectability = 1;
+                        }
+                        else if (dataValue > 3 && dataValue <= 5)
+                        {
+                            detectability = 2;
+                        }
+                        else if (dataValue > 5 && dataValue <= 8)
+                        {
+                            detectability = 3;
+                        }
+                        else if (dataValue > 8 && dataValue <= 10)
+                        {
+                            detectability = 4;
+                        }
+                        else if (dataValue > 10 && dataValue <= 15)
+                        {
+                            detectability = 5;
+                        }
+                        else if (dataValue > 15 && dataValue <= 20)
+                        {
+                            detectability = 6;
+                        }
+                        else if (dataValue > 20 && dataValue <= 30)
+                        {
+                            detectability = 7;
+                        }
+                        else if (dataValue > 30 && dataValue <= 40)
+                        {
+                            detectability = 8;
+                        }
+                        else if (dataValue > 40 && dataValue <= 50)
+                        {
+                            detectability = 9;
+                        }
+                        else if (dataValue > 50)
+                        {
+                            detectability = 10;
+                        }
+                    }
+
+                    #endregion
+
+                    #region Şiddet Hesaplama
+
+                    var tempOprUnsList = operationUnsReportList.Where(t=>t.OperationID == operation.Id).ToList();
+
+                    int totalSeverity = 0;  
+
+                    foreach(var item in tempOprUnsList)
+                    {
+                        int tempSeverity = unsuitabilityItemsList.Where(t => t.Id == item.UnsuitabilityItemsID).Select(t => t.IntensityCoefficient).FirstOrDefault() * Convert.ToInt32(item.UnsuitableAmount);
+
+                        totalSeverity = totalSeverity + tempSeverity;
+                    }
+
+                    var totalUnsuitableAmount = tempOprUnsList.Sum(t=>t.UnsuitableAmount);
+
+                    int severity = totalUnsuitableAmount == 0 ? 0 : (totalSeverity / Convert.ToInt32(totalUnsuitableAmount));
+
+                    #endregion
+
+                    #region Operasyon Bazlı Ara Kontrol Sıklıkları
+
+                    int rpn = severity * detectability * frequency;
+
+                    int oprBasedFrequency = 0;
+
+                    if(rpn > 0 && rpn <= 50) { oprBasedFrequency = 500; }
+                    else if(rpn > 50 && rpn<= 100) { oprBasedFrequency = 400; }
+                    else if(rpn > 100 && rpn<= 250) { oprBasedFrequency = 330; }
+                    else if(rpn > 250 && rpn<= 500) { oprBasedFrequency = 220; }
+                    else if(rpn > 500 && rpn<= 600) { oprBasedFrequency = 110; }
+                    else if(rpn > 600 && rpn<= 700) { oprBasedFrequency = 60; }
+                    else if(rpn > 700 && rpn<= 800) { oprBasedFrequency = 50; }
+                    else if(rpn > 800 && rpn<= 900) { oprBasedFrequency = 40; }
+                    else if(rpn > 900) { oprBasedFrequency = 20; }
 
                     #endregion
 
@@ -320,11 +479,11 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
                         TotalUnsuitableOperation = totalUnsuitableReport,
                         UnsuitableOperationRate = (totalUnsuitableReport / totalOccuredOperation) * 100,
                         UnsuitableComponentPerOperation = totalUnsuitableComponent / totalUnsuitableReport,
-                        Frequency = 10,
-                        Severity = 10,
-                        Detectability = 10,
-                        RPN = 1000,
-                        OperationBasedMidControlFrequency = 110
+                        Frequency = frequency,
+                        Severity = severity,
+                        Detectability = detectability,
+                        RPN = rpn,
+                        OperationBasedMidControlFrequency = oprBasedFrequency
                     };
                 }
             }

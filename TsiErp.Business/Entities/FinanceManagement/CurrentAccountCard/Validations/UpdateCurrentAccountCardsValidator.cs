@@ -23,19 +23,41 @@ namespace TsiErp.Business.Entities.CurrentAccountCard.Validations
                 .MaximumLength(200)
                 .WithMessage("ValidatorNameMaxLenght");
 
-            RuleFor(x => x.TaxAdministration)
+           
+
+            RuleFor(x => x.CurrencyID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorCurrencyID");
+
+            When(x => x.SoleProprietorship, () =>
+            {
+                RuleFor(x => x.TaxAdministration)
                 .NotEmpty()
                 .WithMessage("ValidatorTaxAdminEmpty")
                 .MaximumLength(75)
                 .WithMessage("ValidatorTaxAdminMaxLenght");
 
-            RuleFor(x => x.TaxNumber)
-                .NotEmpty()
-                .WithMessage("ValidatorTaxNoEmpty")
-                .MaximumLength(10)
-                .WithMessage("ValidatorTaxNoMaxLenght");
+                RuleFor(x => x.IDnumber)
+               .NotEmpty()
+               .WithMessage("ValidatorIDnumberEmpty");
+            }
+            );
 
-            RuleFor(x => x.CurrencyID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorCurrencyID");
+
+            When(x => !x.SoleProprietorship, () =>
+            {
+                RuleFor(x => x.TaxAdministration)
+                .NotEmpty()
+                .WithMessage("ValidatorTaxAdminEmpty")
+                .MaximumLength(75)
+                .WithMessage("ValidatorTaxAdminMaxLenght");
+
+                RuleFor(x => x.TaxNumber)
+               .NotEmpty()
+               .WithMessage("ValidatorTaxNoEmpty")
+               .MaximumLength(10)
+               .WithMessage("ValidatorTaxNoMaxLenght");
+
+            }
+            );
 
 
         }

@@ -321,6 +321,9 @@
   <data name="OperationalSPCChildMenu" xml:space="preserve">
     <value>Operational SPC Tables</value>
   </data>
+  <data name="OperationalSPCComparingChildMenu" xml:space="preserve">
+    <value>Operational SPC Comparing</value>
+  </data>
   <data name="OperationsMenu" xml:space="preserve">
     <value>Operations</value>
   </data>
@@ -450,6 +453,9 @@
   <data name="PurcUnsAnlChildMenu" xml:space="preserve">
     <value>Purchase Unsuitability Records Analysis</value>
   </data>
+  <data name="QualityControlAnalysisMenu" xml:space="preserve">
+    <value>Analysis</value>
+  </data>
   <data name="QualityControlMainRecordsMenu" xml:space="preserve">
     <value>Main Records</value>
   </data>
@@ -461,6 +467,9 @@
   </data>
   <data name="QualityControlReportsMenu" xml:space="preserve">
     <value>Reports</value>
+  </data>
+  <data name="QualityControlSPCMenu" xml:space="preserve">
+    <value>SPC</value>
   </data>
   <data name="QualityControlTransactionsMenu" xml:space="preserve">
     <value>Transactions</value>
@@ -599,6 +608,9 @@
   </data>
   <data name="UnsuitabilityItemSPSChildMenu" xml:space="preserve">
     <value>SPC Tables by Unsuitability Items</value>
+  </data>
+  <data name="UnsuitabilityItemSPSComparingChildMenu" xml:space="preserve">
+    <value>SPC by Unsuitability Items Comparing</value>
   </data>
   <data name="UserGrpChildMenu" xml:space="preserve">
     <value>User Groups</value>

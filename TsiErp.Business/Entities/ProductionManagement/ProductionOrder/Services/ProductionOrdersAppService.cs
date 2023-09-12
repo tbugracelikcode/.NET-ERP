@@ -112,6 +112,74 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
             }
         }
 
+        public async Task<IDataResult<SelectProductionOrdersDto>> ConverttoProductionOrder(CreateProductionOrdersDto input)
+        {
+            using (var connection = queryFactory.ConnectToDatabase())
+            {
+                var listQuery = queryFactory.Query().From(Tables.ProductionOrders).Select("*").Where(new { FicheNo = input.FicheNo }, false, false, "");
+
+                var list = queryFactory.ControlList<ProductionOrders>(listQuery).ToList();
+
+                #region Code Control 
+
+                if (list.Count > 0)
+                {
+                    connection.Close();
+                    connection.Dispose();
+                    throw new DuplicateCodeException(L["CodeControlManager"]);
+                }
+
+                #endregion
+
+                Guid addedEntityId = GuidGenerator.CreateGuid();
+
+                var query = queryFactory.Query().From(Tables.ProductionOrders).Insert(new CreateProductionOrdersDto
+                {
+                    BOMID = input.BOMID,
+                    FicheNo = input.FicheNo,
+                    CurrentAccountID = input.CurrentAccountID,
+                    CustomerOrderNo = input.CustomerOrderNo,
+                    EndDate = input.EndDate,
+                    FinishedProductID = input.FinishedProductID,
+                    LinkedProductID = input.LinkedProductID,
+                    LinkedProductionOrderID = input.LinkedProductionOrderID,
+                    OrderID = input.OrderID,
+                    OrderLineID = input.OrderLineID,
+                    PlannedQuantity = input.PlannedQuantity,
+                    ProducedQuantity = input.ProducedQuantity,
+                    ProductionOrderState = input.ProductionOrderState,
+                    ProductTreeID = input.ProductTreeID,
+                    ProductTreeLineID = input.ProductTreeLineID,
+                    PropositionID = input.PropositionID,
+                    PropositionLineID = input.PropositionLineID,
+                    RouteID = input.RouteID,
+                    StartDate = input.StartDate,
+                    UnitSetID = input.UnitSetID,
+                    Cancel_ = input.Cancel_,
+                    Date_ = input.Date_,
+                    Description_ = input.Description_,
+                    Id = addedEntityId,
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                    IsDeleted = false
+                });
+
+
+                var productionOrders = queryFactory.Insert<SelectProductionOrdersDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductionOrders, LogType.Insert, addedEntityId);
+
+
+                return new SuccessDataResult<SelectProductionOrdersDto>(productionOrders);
+            }
+        }
+
         [CacheRemoveAspect("Get")]
         public async Task<IResult> DeleteAsync(Guid id)
         {
@@ -133,7 +201,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
                 var query = queryFactory
-                        .Query().From(Tables.ProductionOrders).Select<ProductionOrders>(po => new {po.PropositionID,po.BOMID,po.RouteID,po.PropositionLineID,po.OrderLineID,po.Cancel_,po.CurrentAccountID,po.CustomerOrderNo,po.DataOpenStatus,po.DataOpenStatusUserId,po.Date_,po.Description_,po.EndDate,po.FicheNo,po.FinishedProductID,po.Id,po.LinkedProductID,po.LinkedProductionOrderID,po.OrderID,po.PlannedQuantity,po.ProducedQuantity,po.ProductionOrderState,po.ProductTreeID,po.ProductTreeLineID,po.StartDate,po.UnitSetID})
+                        .Query().From(Tables.ProductionOrders).Select("*")
                             .Join<SalesOrders>
                             (
                                 so => new { OrderFicheNo = so.FicheNo, OrderID = so.Id },
@@ -199,7 +267,8 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                             )
                             .Join<CurrentAccountCards>
                             (
-                                ca => new { CurrentAccountID = ca.Id, CurrentAccountCode = ca.Code, CurrentAccountName = ca.Name },
+                                ca => new { CurrentAccountID = ca.Id, CurrentAccountCode = ca.Code, CurrentAccountName = ca.Name,
+                                 CustomerCode = ca.CustomerCode},
                                 nameof(ProductionOrders.CurrentAccountID),
                                 nameof(CurrentAccountCards.Id),
                                 JoinType.Left
@@ -224,7 +293,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
                 var query = queryFactory
                    .Query()
-                   .From(Tables.ProductionOrders).Select<ProductionOrders>(po => new { po.PropositionID, po.BOMID, po.RouteID, po.PropositionLineID, po.OrderLineID, po.Cancel_, po.CurrentAccountID, po.CustomerOrderNo, po.DataOpenStatus, po.DataOpenStatusUserId, po.Date_, po.Description_, po.EndDate, po.FicheNo, po.FinishedProductID, po.Id, po.LinkedProductID, po.LinkedProductionOrderID, po.OrderID, po.PlannedQuantity, po.ProducedQuantity, po.ProductionOrderState, po.ProductTreeID, po.ProductTreeLineID, po.StartDate, po.UnitSetID })
+                   .From(Tables.ProductionOrders).Select("*")
                             .Join<SalesOrders>
                             (
                                 so => new { OrderFicheNo = so.FicheNo},
@@ -279,7 +348,9 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                             
                             .Join<CurrentAccountCards>
                             (
-                                ca => new { CurrentAccountCode = ca.Code, CurrentAccountName = ca.Name },
+                                ca => new { CurrentAccountCode = ca.Code, CurrentAccountName = ca.Name,
+                                    CustomerCode = ca.CustomerCode
+                                },
                                 nameof(ProductionOrders.CurrentAccountID),
                                 nameof(CurrentAccountCards.Id),
                                 JoinType.Left

@@ -11,10 +11,14 @@ using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services
 using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.Product.Validations;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
+using TsiErp.Entities.Entities.Other.GrandTotalStockMovement;
+using TsiErp.Entities.Entities.Other.GrandTotalStockMovement.Dtos;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.ProductGroup;
 using TsiErp.Entities.Entities.StockManagement.UnitSet;
+using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.Products.Page;
 
@@ -148,6 +152,42 @@ namespace TsiErp.Business.Entities.Product.Services
                 LogsAppService.InsertLogToDatabase(product, product, LoginedUserService.UserId, Tables.Products, LogType.Get, id);
 
                 return new SuccessDataResult<SelectProductsDto>(product);
+
+            }
+        }
+
+        public async Task<IDataResult<SelectGrandTotalStockMovementsDto>> GetStockAmountAsync(Guid productid)
+        {
+            using (var connection = queryFactory.ConnectToDatabase())
+            {
+                var query = queryFactory
+                        .Query().From(Tables.GrandTotalStockMovements).Select("*")
+                            .Join<Products>
+                            (
+                                u => new { ProductCode = u.Code, ProductID = u.Id , ProductName = u.Name},
+                                nameof(GrandTotalStockMovements.ProductID),
+                                nameof(Products.Id),
+                                JoinType.Left
+                            )
+                            .Join<Branches>
+                            (
+                                pg => new { BranchCode = pg.Code, BranchID = pg.Id, BranchName = pg.Name },
+                                nameof(GrandTotalStockMovements.BranchID),
+                                nameof(Branches.Id),
+                                JoinType.Left
+                            )
+                             .Join<Warehouses>
+                            (
+                                pg => new { WarehouseCode = pg.Code, WarehouseID = pg.Id },
+                                nameof(GrandTotalStockMovements.WarehouseID),
+                                nameof(Warehouses.Id),
+                                JoinType.Left
+                            )
+                            .Where(new { ProductID = productid }, false, false, Tables.GrandTotalStockMovements);
+
+                var grandTotalStock = queryFactory.Get<SelectGrandTotalStockMovementsDto>(query);
+
+                return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(grandTotalStock);
 
             }
         }

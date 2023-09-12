@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Entities.ContractUnsuitabilityReport.Services;
+using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.QualityControl.ContractUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationUnsuitabilityReport.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseUnsuitabilityReport.Dtos;
@@ -28,6 +29,8 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPC
         List<SelectUnsuitabilityItemSPCLinesDto> GridLineList = new List<SelectUnsuitabilityItemSPCLinesDto>();
 
         List<ListUnsuitabilityItemsDto> UnsuitabilityItemsList = new List<ListUnsuitabilityItemsDto>();
+
+        List<ListWorkOrdersDto> WorkOrdersList = new List<ListWorkOrdersDto>();
 
         private bool LineCrudPopup = false;
 
@@ -263,28 +266,154 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItemSPC
 
                 UnsuitabilityItemsList = (await UnsuitabilityItemsAppService.GetListAsync(new ListUnsuitabilityItemsParameterDto())).Data.ToList();
 
+                WorkOrdersList = (await WorkOrdersAppService.GetListAsync(new ListWorkOrdersParameterDto())).Data.Where(t=>t.OccuredStartDate >= DataSource.MeasurementStartDate && t.OccuredFinishDate <= DataSource.MeasurementEndDate).ToList();
+
+
                 foreach (var unsuitabilityItem in UnsuitabilityItemsList)
                 {
                     var unsuitabilityType = (await UnsuitabilityTypesItemsAppService.GetAsync(unsuitabilityItem.UnsuitabilityTypesItemsId)).Data;
 
                     var workCenter = (await StationGroupsAppService.GetAsync(unsuitabilityItem.StationGroupId)).Data;
 
+                    var tempWorkOrdersList = WorkOrdersList.Where(t => t.StationGroupID == workCenter.Id).ToList();
+
+                    int workOrdersCount = tempWorkOrdersList.Count;
+
+                    #region Uygunsuzluk Raporları Listeleri
+
+                    var contractUnsReportList = (await ContractUnsuitabilityReportsAppService.GetListAsync(new ListContractUnsuitabilityReportsParameterDto())).Data.Where(t => t.UnsuitabilityItemsID == unsuitabilityItem.Id && t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate).ToList();
+
+                    var purchaseUnsReportList = (await PurchaseUnsuitabilityReportsAppService.GetListAsync(new ListPurchaseUnsuitabilityReportsParameterDto())).Data.Where(t => t.UnsuitabilityItemsID == unsuitabilityItem.Id && t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate).ToList();
+
+                    var operationUnsReportList = (await OperationUnsuitabilityReportsAppService.GetListAsync(new ListOperationUnsuitabilityReportsParameterDto())).Data.Where(t => t.UnsuitabilityItemsID == unsuitabilityItem.Id && t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate).ToList();
+
+                    #endregion
+
                     #region Toplam Uygunsuz Komponent Hesaplama
 
-                    var totalUnsuitableComponent = (await ContractUnsuitabilityReportsAppService.GetListAsync(new ListContractUnsuitabilityReportsParameterDto())).Data.Where(t => t.UnsuitabilityItemsID == unsuitabilityItem.Id && t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate).Select(t => t.UnsuitableAmount).Sum() + (await OperationUnsuitabilityReportsAppService.GetListAsync(new ListOperationUnsuitabilityReportsParameterDto())).Data.Where(t => t.UnsuitabilityItemsID == unsuitabilityItem.Id && t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate).Select(t => t.UnsuitableAmount).Sum() + (await PurchaseUnsuitabilityReportsAppService.GetListAsync(new ListPurchaseUnsuitabilityReportsParameterDto())).Data.Where(t => t.UnsuitabilityItemsID == unsuitabilityItem.Id && t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate).Select(t => t.UnsuitableAmount).Sum();
+                    var totalUnsuitableComponent = contractUnsReportList.Select(t => t.UnsuitableAmount).Sum() +operationUnsReportList.Select(t => t.UnsuitableAmount).Sum() + purchaseUnsReportList.Select(t => t.UnsuitableAmount).Sum();
 
                     #endregion
 
                     #region Toplam Uygunsuz Rapor Hesaplama
 
-                    var totalUnsuitableReport = (await ContractUnsuitabilityReportsAppService.GetListAsync(new ListContractUnsuitabilityReportsParameterDto())).Data.Where(t => t.UnsuitabilityItemsID == unsuitabilityItem.Id && t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate).Count() + (await OperationUnsuitabilityReportsAppService.GetListAsync(new ListOperationUnsuitabilityReportsParameterDto())).Data.Where(t => t.UnsuitabilityItemsID == unsuitabilityItem.Id && t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate).Count() + (await PurchaseUnsuitabilityReportsAppService.GetListAsync(new ListPurchaseUnsuitabilityReportsParameterDto())).Data.Where(t => t.UnsuitabilityItemsID == unsuitabilityItem.Id && t.Date_ >= DataSource.MeasurementStartDate && t.Date_ <= DataSource.MeasurementEndDate).Count();
+                    int totalUnsuitableReport = operationUnsReportList.Count() + contractUnsReportList.Count() + purchaseUnsReportList.Count();
 
+                    #endregion
+
+                    #region Sıklık Hesaplama
+
+                    int frequency = 0;
+
+
+                    if (workOrdersCount != 0)
+                    {
+                        var dataValue = (totalUnsuitableReport / workOrdersCount);
+
+                        if(dataValue > 0 && dataValue <= 0.00001)
+                        {
+                            frequency = 1;
+                        }
+                        else if (dataValue > 0.00001 && dataValue <= 0.0001)
+                        {
+                            frequency = 1;
+                        }
+                        else if(dataValue > 0.0001 && dataValue <= 0.0005)
+                        {
+                            frequency = 2;
+                        }
+                        else if(dataValue > 0.0005 && dataValue <= 0.001)
+                        {
+                            frequency = 3;
+                        }
+                        else if (dataValue > 0.001 && dataValue <= 0.002)
+                        {
+                            frequency = 4;
+                        }
+                        else if ( dataValue > 0.002 && dataValue <= 0.005)
+                        {
+                            frequency = 5;
+                        }
+                        else if (dataValue > 0.005 && dataValue <= 0.01)
+                        {
+                            frequency = 6;
+                        }
+                        else if (dataValue > 0.01 && dataValue <= 0.025)
+                        {
+                            frequency = 7;
+                        }
+                        else if (dataValue > 0.025 && dataValue <= 0.05)
+                        {
+                            frequency = 8;
+                        }
+                        else if (dataValue > 0.05 && dataValue <= 0.1)
+                        {
+                            frequency = 9;
+                        }
+                        else if (dataValue > 0.1)
+                        {
+                            frequency = 10;
+                        }
+                    }
+                  
+
+                    #endregion
+
+                    #region Keşfedilebilirlik Hesaplama
+
+                    decimal detectability = 0;
+
+                    if(totalUnsuitableReport != 0)
+                    {
+                        int dataValue = Convert.ToInt32(totalUnsuitableComponent / totalUnsuitableReport);
+                        if(dataValue > 0 && dataValue <= 3)
+                        {
+                            detectability = 1;
+                        }
+                        else if(dataValue > 3 && dataValue <= 5)
+                        {
+                            detectability= 2;
+                        }
+                        else if (dataValue > 5 && dataValue <= 8)
+                        {
+                            detectability= 3;
+                        }
+                        else if (dataValue > 8 && dataValue <= 10)
+                        {
+                            detectability = 4;
+                        }
+                        else if (dataValue > 10 && dataValue <= 15)
+                        {
+                            detectability = 5;
+                        }
+                        else if (dataValue > 15 && dataValue <= 20)
+                        {
+                            detectability = 6;
+                        }
+                        else if (dataValue > 20 && dataValue <= 30)
+                        {
+                            detectability = 7;
+                        }
+                        else if (dataValue > 30 && dataValue <= 40)
+                        {
+                            detectability = 8;
+                        }
+                        else if (dataValue > 40 && dataValue <= 50)
+                        {
+                            detectability = 9;
+                        }
+                        else if (dataValue > 50)
+                        {
+                            detectability = 10;
+                        }
+                    }
+                   
                     #endregion
 
                     SelectUnsuitabilityItemSPCLinesDto selectSPCLineModel = new SelectUnsuitabilityItemSPCLinesDto
                     {
-                        Detectability = 10,
-                        Frequency = 10,
+                        Detectability = Convert.ToInt32(detectability),
+                        Frequency = frequency,
                         LineNr = GridLineList.Count + 1,
                         WorkCenterID = workCenter.Id,
                         UnsuitabilityTypeName = unsuitabilityType.Name,
