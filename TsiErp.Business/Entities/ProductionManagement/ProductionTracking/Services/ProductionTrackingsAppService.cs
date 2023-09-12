@@ -163,7 +163,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                        .Select("*")
                        .Join<WorkOrders>
                         (
-                            wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.Code },
+                            wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.WorkOrderNo },
                             nameof(ProductionTrackings.WorkOrderID),
                             nameof(WorkOrders.Id),
                             JoinType.Left
@@ -235,7 +235,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                        .Select("*")
                        .Join<WorkOrders>
                         (
-                            wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.Code },
+                            wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.WorkOrderNo },
                             nameof(ProductionTrackings.WorkOrderID),
                             nameof(WorkOrders.Id),
                             JoinType.Left
@@ -287,7 +287,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                        .Select("*")
                        .Join<WorkOrders>
                         (
-                            wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.Code },
+                            wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.WorkOrderNo },
                             nameof(ProductionTrackings.WorkOrderID),
                             nameof(WorkOrders.Id),
                             JoinType.Left
@@ -348,7 +348,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                                .Select("*")
                                .Join<WorkOrders>
                                 (
-                                    wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.Code },
+                                    wo => new { WorkOrderID = wo.Id, WorkOrderCode = wo.WorkOrderNo },
                                     nameof(ProductionTrackings.WorkOrderID),
                                     nameof(WorkOrders.Id),
                                     JoinType.Left

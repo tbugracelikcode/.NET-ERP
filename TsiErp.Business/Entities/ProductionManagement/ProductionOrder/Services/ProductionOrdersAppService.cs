@@ -173,6 +173,8 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
 
                 var productionOrders = queryFactory.Insert<SelectProductionOrdersDto>(query, "Id", true);
 
+                await FicheNumbersAppService.UpdateFicheNumberAsync("ProductionOrdersChildMenu", input.FicheNo);
+
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.ProductionOrders, LogType.Insert, addedEntityId);
 
 
@@ -454,7 +456,7 @@ namespace TsiErp.Business.Entities.ProductionOrder.Services
                     OrderLineID = entity.OrderLineID,
                     PlannedQuantity = entity.PlannedQuantity,
                     ProducedQuantity = entity.ProducedQuantity,
-                    ProductionOrderState = entity.ProductionOrderState,
+                    ProductionOrderState = (int)entity.ProductionOrderState,
                     ProductTreeID = entity.ProductTreeID,
                     ProductTreeLineID = entity.ProductTreeLineID,
                     PropositionID = entity.PropositionID,

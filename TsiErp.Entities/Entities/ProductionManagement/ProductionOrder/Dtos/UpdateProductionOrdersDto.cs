@@ -25,7 +25,7 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
         /// <summary>
         /// Üretim Emri Durumu
         /// </summary>
-        public ProductionOrderStateEnum ProductionOrderState { get; set; }
+        public int ProductionOrderState { get; set; }
         /// <summary>
         /// Başlangıç Tarihi
         /// </summary>

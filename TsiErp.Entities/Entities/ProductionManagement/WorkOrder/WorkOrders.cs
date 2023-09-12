@@ -10,11 +10,7 @@ namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder
     /// </summary>
     public class WorkOrders : FullAuditedEntity
     {
-        [SqlColumnType(MaxLength = 17, Nullable = false, SqlDbType = SqlDataType.NVarChar)]
-        /// <summary>
-        /// İş Emri Kodu
-        /// </summary>
-        public string Code { get; set; }
+
         [SqlColumnType(MaxLength = 200, Nullable = true, SqlDbType = SqlDataType.NVarChar)]
         /// <summary>
         /// İş Emri No

@@ -213,7 +213,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
             }
         }
 
-        public async Task<IDataResult<SelectBillsofMaterialsDto>> GetbyCurrentAccountIDAsync(Guid currentAccountID)
+        public async Task<IDataResult<SelectBillsofMaterialsDto>> GetbyCurrentAccountIDAsync(Guid currentAccountID, Guid finishedProductId)
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
@@ -235,7 +235,7 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                             nameof(CurrentAccountCards.Id),
                             JoinType.Left
                         )
-                        .Where(new { CurrentAccountCardID = currentAccountID }, true, true, Tables.BillsofMaterials);
+                        .Where(new { CurrentAccountCardID = currentAccountID, FinishedProductID= finishedProductId }, true, true, Tables.BillsofMaterials);
 
                 var billsOfMaterials = queryFactory.Get<SelectBillsofMaterialsDto>(query);
 
@@ -414,7 +414,8 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     LastModifierId = LoginedUserService.UserId,
                     Name = input.Name,
                     FinishedProductID = input.FinishedProductID,
-                    _Description = input._Description
+                    _Description = input._Description,
+                    CurrentAccountCardID = input.CurrentAccountCardID
                 }).Where(new { Id = input.Id }, true, true, "");
 
                 foreach (var item in input.SelectBillsofMaterialLines)
@@ -514,7 +515,8 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
                     LastModifierId = entity.LastModifierId.GetValueOrDefault(),
                     Name = entity.Name,
                     FinishedProductID = entity.FinishedProductID,
-                    _Description = entity._Description
+                    _Description = entity._Description,
+                    CurrentAccountCardID = entity.CurrentAccountCardID
                 }).Where(new { Id = id }, true, true, "");
 
                 var billsofMaterialsDto = queryFactory.Update<SelectBillsofMaterialsDto>(query, "Id", true);
