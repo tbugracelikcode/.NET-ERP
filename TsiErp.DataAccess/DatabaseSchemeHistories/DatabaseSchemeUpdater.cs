@@ -112,6 +112,7 @@ using TsiErp.Entities.Entities.StockManagement.WareHouse;
 using TsiErp.Entities.TableConstant;
 using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan;
 using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlanLine;
+using TsiErp.Entities.Entities.GeneralSystemIdentifications.FicheNumber;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
