@@ -197,6 +197,8 @@ using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan;
 using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlanLine;
 using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlanLine.Dtos;
+using TsiErp.Entities.Entities.QualityControl.PFMEA;
+using TsiErp.Entities.Entities.QualityControl.PFMEA.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche;
 using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFiche.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ContractTrackingFicheLine;
@@ -1022,6 +1024,15 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<UpdateUnsuitabilityItemSPCLinesDto, UnsuitabilityItemSPCLines>();
             CreateMap<SelectUnsuitabilityItemSPCLinesDto, UpdateUnsuitabilityItemSPCLinesDto>();
             CreateMap<SelectUnsuitabilityItemSPCLinesDto, UnsuitabilityItemSPCLines>();
+
+
+
+            CreateMap<PFMEAs, SelectPFMEAsDto>();
+            CreateMap<PFMEAs, ListPFMEAsDto>();
+            CreateMap<CreatePFMEAsDto, PFMEAs>();
+            CreateMap<SelectPFMEAsDto, CreatePFMEAsDto>();
+            CreateMap<UpdatePFMEAsDto, PFMEAs>();
+            CreateMap<SelectPFMEAsDto, UpdatePFMEAsDto>();
         }
     }
 }

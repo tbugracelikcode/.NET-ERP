@@ -354,6 +354,9 @@
   <data name="PeriodsChildMenu" xml:space="preserve">
     <value>Dönem Kayıtları</value>
   </data>
+  <data name="PFMEAChildMenu" xml:space="preserve">
+    <value>P-FMEA</value>
+  </data>
   <data name="PlannedMainChildMenu" xml:space="preserve">
     <value>Önleyici/Planlı Bakım Kayıtları</value>
   </data>
@@ -456,6 +459,9 @@
   <data name="QualityControlAnalysisMenu" xml:space="preserve">
     <value>Analizler</value>
   </data>
+  <data name="QualityControlFMEAMenu" xml:space="preserve">
+    <value>FMEA</value>
+  </data>
   <data name="QualityControlMainRecordsMenu" xml:space="preserve">
     <value>Ana Kayıtlar</value>
   </data>
@@ -467,6 +473,9 @@
   </data>
   <data name="QualityControlReportsMenu" xml:space="preserve">
     <value>Raporlar</value>
+  </data>
+  <data name="QualityControlSPCAnalysisMenu" xml:space="preserve">
+    <value>SPC Karşılaştırmaları</value>
   </data>
   <data name="QualityControlSPCMenu" xml:space="preserve">
     <value>SPC</value>

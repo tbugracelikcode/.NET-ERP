@@ -289,9 +289,6 @@
                                 </DxTreeViewNode>
 
 
-                                <DxTreeViewNode NavigateUrl="/operational-spc" Text=@L["OperationalSPCChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/unsuitability-item-spc" Text=@L["UnsuitabilityItemSPSChildMenu"] />
-
                                 @*  <DxTreeViewNode Text=@L["QualityControlReportsMenu"]>
                                 </DxTreeViewNode> *@
                                 @*  <DxTreeViewNode Text=@L["TechAnlChildMenu"]>
@@ -303,13 +300,27 @@
                             </Nodes>
                         </DxTreeViewNode>
 
+
+                        <DxTreeViewNode Text=@L["QualityControlSPCMenu"]>
+                            <Nodes>
+                                <DxTreeViewNode NavigateUrl="/operational-spc" Text=@L["OperationalSPCChildMenu"] />
+                                <DxTreeViewNode NavigateUrl="/unsuitability-item-spc" Text=@L["UnsuitabilityItemSPSChildMenu"] />
+                            </Nodes>
+                        </DxTreeViewNode>
+
+                        <DxTreeViewNode Text=@L["QualityControlFMEAMenu"]>
+                            <Nodes>
+                                <DxTreeViewNode NavigateUrl="/p-fmea" Text=@L["PFMEAChildMenu"] />
+                            </Nodes>
+                        </DxTreeViewNode>
+
                         <DxTreeViewNode Text=@L["QualityControlAnalysisMenu"]>
                             <Nodes>
-                                <DxTreeViewNode Text=@L["QualityControlSPCMenu"]>
+                                <DxTreeViewNode Text=@L["QualityControlSPCAnalysisMenu"]>
                                     <Nodes>
-                                        
-                                <DxTreeViewNode NavigateUrl="/operational-spc-comparing" Text=@L["OperationalSPCComparingChildMenu"] />
-                                <DxTreeViewNode NavigateUrl="/unsuitability-item-spc-comparing" Text=@L["UnsuitabilityItemSPSComparingChildMenu"] />
+
+                                        <DxTreeViewNode NavigateUrl="/operational-spc-comparing" Text=@L["OperationalSPCComparingChildMenu"] />
+                                        <DxTreeViewNode NavigateUrl="/unsuitability-item-spc-comparing" Text=@L["UnsuitabilityItemSPSComparingChildMenu"] />
 
                                     </Nodes>
                                 </DxTreeViewNode>

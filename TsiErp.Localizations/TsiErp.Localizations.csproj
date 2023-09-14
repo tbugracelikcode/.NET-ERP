@@ -201,6 +201,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>PeriodsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\PFMEAs\Page\PFMEAsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PFMEAsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\PlannedMaintenances\Page\PlannedMaintenancesResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -616,6 +621,10 @@
     <EmbeddedResource Update="Resources\Periods\Page\PeriodsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PeriodsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\PFMEAs\Page\PFMEAsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PFMEAsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\PlannedMaintenances\Page\PlannedMaintenancesResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
