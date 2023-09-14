@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using Syncfusion.Blazor.SplitButtons;
 using System.Runtime.CompilerServices;
 using Tsi.Core.Utilities.Guids;
 using TsiErp.DataAccess.Services.Login;
@@ -62,6 +63,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         private bool CreateProductionOrderCrudPopup = false;
 
         private bool BoMLineCrudPopup = false;
+
 
         #region Birim Setleri ButtonEdit
 
@@ -574,6 +576,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 
         protected async Task OnCreateProductionOrderBtnClicked()
         {
+
             foreach (var productionOrder in GridProductionOrderList)
             {
                 var productProductionRoute = (await RoutesAppService.GetListAsync(new Entities.Entities.ProductionManagement.Route.Dtos.ListRoutesParameterDto())).Data.Where(t => t.ProductID == productionOrder.ProductID && t.TechnicalApproval == true && t.Approval == true).FirstOrDefault();
@@ -624,110 +627,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
                 var insertedProductionOrder = (await ProductionOrdersAppService.ConverttoProductionOrder(producionOrder)).Data;
 
 
-                if (insertedProductionOrder != null)
-                {
-                    #region Work Orders
-                    var productProductionRouteLines = (await RoutesAppService.GetAsync(productProductionRoute.Id)).Data;
 
-
-                    foreach (var item in productProductionRouteLines.SelectRouteLines.OrderBy(t => t.LineNr).ToList())
-                    {
-                        var productOperation = (await ProductsOperationsAppService.GetAsync(item.ProductsOperationID)).Data;
-
-                        Guid stationId = productOperation.SelectProductsOperationLines.Where(t => t.Priority == 1).Select(t => t.StationID).FirstOrDefault().GetValueOrDefault();
-
-                        Guid stationGroupId = (await StationsAppService.GetAsync(stationId)).Data.GroupID;
-
-                        CreateWorkOrdersDto workOrder = new CreateWorkOrdersDto
-                        {
-                            CurrentAccountCardID = DataSource.CurrentAccountCardID,
-                            IsCancel = false,
-                            CreationTime = DateTime.Now,
-                            CreatorId = LoginedUserService.UserId,
-                            DataOpenStatus = false,
-                            DataOpenStatusUserId = Guid.Empty,
-                            DeleterId = Guid.Empty,
-                            DeletionTime = null,
-                            LastModificationTime = null,
-                            LastModifierId = Guid.Empty,
-                            IsDeleted = false,
-                            AdjustmentAndControlTime = item.AdjustmentAndControlTime,
-                            LineNr = item.LineNr,
-                            LinkedWorkOrderID = Guid.Empty,
-                            OccuredFinishDate = null,
-                            PropositionID = insertedProductionOrder.PropositionID.GetValueOrDefault(),
-                            WorkOrderState = (int)Entities.Enums.WorkOrderStateEnum.Baslamadi,
-                            StationID =stationId ,
-                            ProductionOrderID = insertedProductionOrder.Id,
-                            RouteID = insertedProductionOrder.RouteID.GetValueOrDefault(),
-                            PlannedQuantity = insertedProductionOrder.PlannedQuantity,
-                            OccuredStartDate = null,
-                            ProducedQuantity = 0,
-                            OperationTime = item.OperationTime,
-                            ProductID = insertedProductionOrder.FinishedProductID.GetValueOrDefault(),
-                            ProductsOperationID = item.ProductsOperationID,
-                            StationGroupID = stationGroupId,
-                            WorkOrderNo = FicheNumbersAppService.GetFicheNumberAsync("WorkOrdersChildMenu")
-                        };
-
-                        await WorkOrdersAppService.CreateAsync(workOrder);
-
-                    }
-                    #endregion
-                }
-
-
-
-
-                //var tempBomLineList = bomLineList.Where(t => t.FinishedProductID == productionOrder.ProductID).ToList();
-
-                //foreach (var line in tempBomLineList)
-                //{
-                //    var supplyForm = (await ProductsAppService.GetAsync(line.ProductID.GetValueOrDefault())).Data.SupplyForm;
-
-                //    if (supplyForm == Entities.Enums.ProductSupplyFormEnum.Üretim)
-                //    {
-                //        var lineProductProductionRoute = (await RoutesAppService.GetListAsync(new Entities.Entities.ProductionManagement.Route.Dtos.ListRoutesParameterDto())).Data.Where(t => t.ProductID == line.ProductID && t.TechnicalApproval == true && t.Approval == true).FirstOrDefault();
-
-                //        CreateProductionOrdersDto procutionOrderBomLine = new CreateProductionOrdersDto
-                //        {
-                //            OrderID = DataSource.Id,
-                //            FinishedProductID = line.ProductID.GetValueOrDefault(),
-                //            LinkedProductID = insertedProductionOrder.FinishedProductID.GetValueOrDefault(),
-                //            PlannedQuantity = line.Quantity * productionOrder.Quantity,
-                //            ProducedQuantity = 0,
-                //            CurrentAccountID = DataSource.CurrentAccountCardID,
-                //            Cancel_ = false,
-                //            StartDate = null,
-                //            CustomerOrderNo = "",
-                //            EndDate = null,
-                //            Date_ = DateTime.Today,
-                //            Description_ = "",
-                //            CreationTime = DateTime.Now,
-                //            CreatorId = LoginedUserService.UserId,
-                //            DataOpenStatus = false,
-                //            DataOpenStatusUserId = Guid.Empty,
-                //            DeleterId = Guid.Empty,
-                //            DeletionTime = null,
-                //            LastModificationTime = null,
-                //            LastModifierId = Guid.Empty,
-                //            IsDeleted = false,
-                //            ProductionOrderState = (int)Entities.Enums.ProductionOrderStateEnum.Baslamadi,
-                //            ProductTreeID = Guid.Empty,
-                //            ProductTreeLineID = Guid.Empty,
-                //            FicheNo = FicheNumbersAppService.GetFicheNumberAsync("ProductionOrdersChildMenu"),
-                //            OrderLineID = productionOrder.Id,
-                //            UnitSetID = line.UnitSetID.GetValueOrDefault(),
-                //            LinkedProductionOrderID = insertedProductionOrder.Id,
-                //            PropositionID = productionOrder.LinkedSalesPropositionID.GetValueOrDefault(),
-                //            PropositionLineID = productionOrder.LikedPropositionLineID.GetValueOrDefault(),
-                //            BOMID = line.Id,
-                //            RouteID = lineProductProductionRoute.Id
-                //        };
-
-                //        await ProductionOrdersAppService.ConverttoProductionOrder(procutionOrderBomLine);
-                //    }
-                //}
             }
         }
 
