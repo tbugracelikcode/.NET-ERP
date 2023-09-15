@@ -529,48 +529,48 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 
         public async void OnCreateProductionOrderContextMenuClick(ContextMenuClickEventArgs<SelectSalesOrderLinesDto> args)
         {
-            switch (args.Item.Id)
-            {
-                case "productstree":
+            //switch (args.Item.Id)
+            //{
+            //    case "productstree":
 
-                    BoMList = (await BillsofMaterialsAppService.GetListAsync(new ListBillsofMaterialsParameterDto())).Data.Where(t => t.FinishedProductCode == args.RowInfo.RowData.ProductCode).ToList();
+            //        BoMList = (await BillsofMaterialsAppService.GetListAsync(new ListBillsofMaterialsParameterDto())).Data.Where(t => t.FinishedProductCode == args.RowInfo.RowData.ProductCode).ToList();
 
-                    Guid BoMID = BoMList.Select(t => t.Id).FirstOrDefault();
+            //        Guid BoMID = BoMList.Select(t => t.Id).FirstOrDefault();
 
-                    BoMDataSource = (await BillsofMaterialsAppService.GetAsync(BoMID)).Data;
+            //        BoMDataSource = (await BillsofMaterialsAppService.GetAsync(BoMID)).Data;
 
-                    GridBoMLineList = BoMDataSource.SelectBillsofMaterialLines;
+            //        GridBoMLineList = BoMDataSource.SelectBillsofMaterialLines;
 
 
 
-                    foreach (var item in GridBoMLineList)
-                    {
-                        item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
-                        item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
+            //        foreach (var item in GridBoMLineList)
+            //        {
+            //            item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
+            //            item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
 
-                        decimal stockAmount = (await ProductsAppService.GetStockAmountAsync(item.ProductID.GetValueOrDefault())).Data.Amount;
+            //            decimal stockAmount = (await ProductsAppService.GetStockAmountAsync(item.ProductID.GetValueOrDefault())).Data.Amount;
 
-                        ProductsTreeDto _model = new ProductsTreeDto
-                        {
-                            ProductName = item.ProductName,
-                            ProductCode = item.ProductCode,
-                            AmountofStock = stockAmount,
-                            AmountofRequierement = Math.Abs(stockAmount - item.Quantity),
-                            SupplyForm = 1 //deneme
-                        };
+            //            ProductsTreeDto _model = new ProductsTreeDto
+            //            {
+            //                ProductName = item.ProductName,
+            //                ProductCode = item.ProductCode,
+            //                AmountofStock = stockAmount,
+            //                AmountofRequierement = Math.Abs(stockAmount - item.Quantity),
+            //                SupplyForm = 1 //deneme
+            //            };
 
-                        ProductTreeDataSource.Add(_model);
-                    }
+            //            ProductTreeDataSource.Add(_model);
+            //        }
 
-                    BoMLineCrudPopup = true;
+            //        BoMLineCrudPopup = true;
 
-                    await InvokeAsync(StateHasChanged);
+            //        await InvokeAsync(StateHasChanged);
 
-                    break;
+            //        break;
 
-                default:
-                    break;
-            }
+            //    default:
+            //        break;
+            //}
         }
 
 

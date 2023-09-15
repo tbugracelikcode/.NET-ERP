@@ -110,5 +110,9 @@ namespace TsiErp.Entities.Entities.StockManagement.Product.Dtos
         /// Kaplama Ağırlığı
         /// </summary>
         public decimal CoatingWeight { get; set; }
+        /// <summary>
+        /// Stok Miktarı
+        /// </summary>
+        public decimal AmountOfStock { get; set; }
     }
 }

@@ -156,7 +156,7 @@ namespace TsiErp.Business.Entities.Product.Services
             }
         }
 
-        public async Task<IDataResult<SelectGrandTotalStockMovementsDto>> GetStockAmountAsync(Guid productid)
+        public async Task<IDataResult<IList<SelectGrandTotalStockMovementsDto>>> GetStockAmountAsync(Guid productid)
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
@@ -185,9 +185,9 @@ namespace TsiErp.Business.Entities.Product.Services
                             )
                             .Where(new { ProductID = productid }, false, false, Tables.GrandTotalStockMovements);
 
-                var grandTotalStock = queryFactory.Get<SelectGrandTotalStockMovementsDto>(query);
+                var grandTotalStock = queryFactory.GetList<SelectGrandTotalStockMovementsDto>(query).ToList();
 
-                return new SuccessDataResult<SelectGrandTotalStockMovementsDto>(grandTotalStock);
+                return new SuccessDataResult<IList<SelectGrandTotalStockMovementsDto>>(grandTotalStock);
 
             }
         }
@@ -219,6 +219,12 @@ namespace TsiErp.Business.Entities.Product.Services
                         ).Where(null, true, true, Tables.Products);
 
                 var products = queryFactory.GetList<ListProductsDto>(query).ToList();
+
+                foreach ( var product in products )
+                {
+                    var grandTotal = (await GetStockAmountAsync(product.Id)).Data.ToList();
+                    product.AmountOfStock = grandTotal.Sum(t => t.Amount);
+                }
 
                 return new SuccessDataResult<IList<ListProductsDto>>(products);
             }
