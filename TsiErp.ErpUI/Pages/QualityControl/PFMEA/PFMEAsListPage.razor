@@ -196,7 +196,7 @@
 
                         <DxGridLayoutItem Row="3" Column="5">
                             <Template>
-                                <label class="TSIModalLabel"><strong>@L["SecondOperationalSPCCodeLabel"] </strong></label>
+                                <label class="TSIModalLabel"><strong>@L["StateLabel"] </strong></label>
                                 <SfComboBox TValue="string" Placeholder=@L["StatePlaceholder"] TItem="Status" @bind-Index="@ddlIndex" DataSource="@StatusList">
                                     <ComboBoxEvents TItem="Status" TValue="string" ValueChange="@ValueChangeHandler"></ComboBoxEvents>
                                     <ComboBoxFieldSettings Value="Code" Text="Name"></ComboBoxFieldSettings>

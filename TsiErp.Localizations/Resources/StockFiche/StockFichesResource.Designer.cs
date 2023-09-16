@@ -844,6 +844,24 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lütfen kur tutarını yazınız..
+        /// </summary>
+        public static string ValidatorExchangeRateEmpty {
+            get {
+                return ResourceManager.GetString("ValidatorExchangeRateEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kur tutarı, en az 1 olmalıdır..
+        /// </summary>
+        public static string ValidatorExchangeRateMin {
+            get {
+                return ResourceManager.GetString("ValidatorExchangeRateMin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DEPO KODU.
         /// </summary>
         public static string WarehouseCode {

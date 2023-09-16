@@ -378,6 +378,12 @@
   <data name="UnitSetModalTitle" xml:space="preserve">
     <value>Birim Setleri</value>
   </data>
+  <data name="ValidatorExchangeRateEmpty" xml:space="preserve">
+    <value>Lütfen kur tutarını yazınız.</value>
+  </data>
+  <data name="ValidatorExchangeRateMin" xml:space="preserve">
+    <value>Kur tutarı, en az 1 olmalıdır.</value>
+  </data>
   <data name="WarehouseCode" xml:space="preserve">
     <value>DEPO KODU</value>
   </data>

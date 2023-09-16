@@ -76,6 +76,7 @@ namespace TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos
         /// Vardiya Çalışma Süresi
         /// </summary>
         public decimal ShiftWorkingTime { get; set; }
+
         /// <summary>
         /// Güç Faktörü
         /// </summary>

@@ -134,8 +134,8 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
                 switch (input.FicheType)
                 {
-                    case 12: StockMovementsService.InsertTotalWastages(input); ; break;
-                    case 11: StockMovementsService.InsertTotalConsumptions(input); ; break;
+                    case 11: StockMovementsService.InsertTotalWastages(input); ; break;
+                    case 12: StockMovementsService.InsertTotalConsumptions(input); ; break;
                     case 13: StockMovementsService.InsertTotalProductions(input); ; break;
                     case 50: StockMovementsService.InsertTotalGoods(input); ; break;
                     case 51: StockMovementsService.InsertTotalGoodIssues(input); ; break;
@@ -491,8 +491,8 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
                 switch (input.FicheType)
                 {
-                    case 12: StockMovementsService.UpdateTotalWastages(entity,input);  break;
-                    case 11: StockMovementsService.UpdateTotalConsumptions(entity, input);  break;
+                    case 11: StockMovementsService.UpdateTotalWastages(entity,input);  break;
+                    case 12: StockMovementsService.UpdateTotalConsumptions(entity, input);  break;
                     case 13: StockMovementsService.UpdateTotalProductions(entity, input);  break;
                     case 50: StockMovementsService.UpdateTotalGoods(entity, input);  break;
                     case 51: StockMovementsService.UpdateTotalGoodIssues(entity, input);  break;

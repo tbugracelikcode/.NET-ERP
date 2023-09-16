@@ -165,6 +165,9 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
   </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Açıklama:</value>
+  </data>
   <data name="EditLineModalTitle" xml:space="preserve">
     <value>Üretim Takip Duruş Satırları</value>
   </data>
@@ -344,6 +347,12 @@
   </data>
   <data name="UIWarningPopupMessageBase" xml:space="preserve">
     <value>Lütfen önce başlangıç tarihini seçiniz.</value>
+  </data>
+  <data name="UIWarningWorkOrderMessage" xml:space="preserve">
+    <value>İş emri seçilmeden iş istasyonu seçimi yapılamaz.</value>
+  </data>
+  <data name="UIWarningWorkOrderTitle" xml:space="preserve">
+    <value>Uyarı</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>

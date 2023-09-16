@@ -378,6 +378,12 @@
   <data name="UnitSetModalTitle" xml:space="preserve">
     <value>Unit Sets</value>
   </data>
+  <data name="ValidatorExchangeRateEmpty" xml:space="preserve">
+    <value>Please enter the exchange rate.</value>
+  </data>
+  <data name="ValidatorExchangeRateMin" xml:space="preserve">
+    <value>The exchange rate must be at least 1.</value>
+  </data>
   <data name="WarehouseCode" xml:space="preserve">
     <value>WAREHOUSE CODE</value>
   </data>

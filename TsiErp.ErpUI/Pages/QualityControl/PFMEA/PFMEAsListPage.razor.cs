@@ -11,6 +11,7 @@ using TsiErp.Entities.Entities.QualityControl.OperationalSPC.Dtos;
 using TsiErp.Entities.Entities.QualityControl.OperationalSPCLine.Dtos;
 using TsiErp.Entities.Entities.QualityControl.PFMEA.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
+using TsiErp.ErpUI.Utilities.ModalUtilities;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.PFMEA
 {
@@ -19,6 +20,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PFMEA
 
         public List<SelectOperationalSPCLinesDto> OperationalSPCLineList = new List<SelectOperationalSPCLinesDto>();
         public List<SelectOperationalSPCLinesDto> SecondOperationalSPCLineList = new List<SelectOperationalSPCLinesDto>();
+
+        [Inject]
+        ModalManager ModalManager { get; set; }
 
         public bool firstSPCButtonDisabled = true;
         public bool secondSPCButtonDisabled = true;
@@ -160,7 +164,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PFMEA
         {
             if (DataSource.WorkCenterID == null || DataSource.WorkCenterID == Guid.Empty)
             {
-
+                await ModalManager.WarningPopupAsync(L["UIWarningWorkCenterTitle"], L["UIWarningWorkCenterMessage"]);
             }
             else
             {
@@ -211,7 +215,7 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PFMEA
         {
             if (DataSource.FirstOperationalSPCID == null || DataSource.FirstOperationalSPCID == Guid.Empty)
             {
-
+                await ModalManager.WarningPopupAsync(L["UIWarningFirstOperationalSPCTitle"], L["UIWarningFirstOperationalSPCMessage"]);
             }
             else
             {

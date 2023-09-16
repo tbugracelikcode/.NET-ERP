@@ -165,6 +165,9 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="Description_Label" xml:space="preserve">
+    <value>Description:</value>
+  </data>
   <data name="EditLineModalTitle" xml:space="preserve">
     <value>Production Tracking Management Lines</value>
   </data>
@@ -344,6 +347,12 @@
   </data>
   <data name="UIWarningPopupMessageBase" xml:space="preserve">
     <value>Please select the start date first.</value>
+  </data>
+  <data name="UIWarningWorkOrderMessage" xml:space="preserve">
+    <value>Station selection cannot be made without selecting a work order.</value>
+  </data>
+  <data name="UIWarningWorkOrderTitle" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>

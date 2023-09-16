@@ -61,6 +61,15 @@ namespace TsiErp.Localizations.Resources.PFMEAs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aksiyon Sonuçlanma Tarihi:.
+        /// </summary>
+        public static string ActionCompletionDateLabel {
+            get {
+                return ResourceManager.GetString("ActionCompletionDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kapat.
         /// </summary>
         public static string CloseButton {
@@ -102,6 +111,114 @@ namespace TsiErp.Localizations.Resources.PFMEAs.Page {
         public static string ContextRefresh {
             get {
                 return ResourceManager.GetString("ContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kontrol Mekanizması:.
+        /// </summary>
+        public static string ControlMechanismLabel {
+            get {
+                return ResourceManager.GetString("ControlMechanismLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kontrol Yöntemi:.
+        /// </summary>
+        public static string ControlMethodLabel {
+            get {
+                return ResourceManager.GetString("ControlMethodLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MEVCUT FARKEDİLEBİLİRLİK.
+        /// </summary>
+        public static string CurrentDetectability {
+            get {
+                return ResourceManager.GetString("CurrentDetectability", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mevcut Farkedilebilrlik:.
+        /// </summary>
+        public static string CurrentDetectabilityLabel {
+            get {
+                return ResourceManager.GetString("CurrentDetectabilityLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MEVCUT SIKLIK.
+        /// </summary>
+        public static string CurrentFrequency {
+            get {
+                return ResourceManager.GetString("CurrentFrequency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mevcut Sıklık:.
+        /// </summary>
+        public static string CurrentFrequencyLabel {
+            get {
+                return ResourceManager.GetString("CurrentFrequencyLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MEVCUT RPN.
+        /// </summary>
+        public static string CurrentRPN {
+            get {
+                return ResourceManager.GetString("CurrentRPN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mevcut RPN:.
+        /// </summary>
+        public static string CurrentRPNLabel {
+            get {
+                return ResourceManager.GetString("CurrentRPNLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MEVCUT ŞİDDET.
+        /// </summary>
+        public static string CurrentSeverity {
+            get {
+                return ResourceManager.GetString("CurrentSeverity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mevcut Şiddet:.
+        /// </summary>
+        public static string CurrentSeverityLabel {
+            get {
+                return ResourceManager.GetString("CurrentSeverityLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TARİH.
+        /// </summary>
+        public static string Date_ {
+            get {
+                return ResourceManager.GetString("Date_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tarih:.
+        /// </summary>
+        public static string Date_Label {
+            get {
+                return ResourceManager.GetString("Date_Label", resourceCulture);
             }
         }
         
@@ -178,6 +295,60 @@ namespace TsiErp.Localizations.Resources.PFMEAs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 1. SPC KODU.
+        /// </summary>
+        public static string FirstOperationalSPCCode {
+            get {
+                return ResourceManager.GetString("FirstOperationalSPCCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1. SPC Kodu:.
+        /// </summary>
+        public static string FirstOperationalSPCCodeLabel {
+            get {
+                return ResourceManager.GetString("FirstOperationalSPCCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1. SPC Satırları.
+        /// </summary>
+        public static string FirstSPCLineButton {
+            get {
+                return ResourceManager.GetString("FirstSPCLineButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hatanın Oluşturacağı Etki:.
+        /// </summary>
+        public static string ImpactofErrorLabel {
+            get {
+                return ResourceManager.GetString("ImpactofErrorLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Önleyici Aksiyon:.
+        /// </summary>
+        public static string InhibitorActionLabel {
+            get {
+                return ResourceManager.GetString("InhibitorActionLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SATIR NO.
+        /// </summary>
+        public static string LineNr {
+            get {
+                return ResourceManager.GetString("LineNr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Lütfen Bekleyin...
         /// </summary>
         public static string LoadingCaption {
@@ -214,6 +385,132 @@ namespace TsiErp.Localizations.Resources.PFMEAs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to YENİ FARKEDİLEBİLİRLİK.
+        /// </summary>
+        public static string NewDetectability {
+            get {
+                return ResourceManager.GetString("NewDetectability", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yeni Farkedilebilirlik:.
+        /// </summary>
+        public static string NewDetectabilityLabel {
+            get {
+                return ResourceManager.GetString("NewDetectabilityLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to YENİ SIKLIK.
+        /// </summary>
+        public static string NewFrequency {
+            get {
+                return ResourceManager.GetString("NewFrequency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yeni Sıklık.
+        /// </summary>
+        public static string NewFrequencyLabel {
+            get {
+                return ResourceManager.GetString("NewFrequencyLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to YENİ RPN.
+        /// </summary>
+        public static string NewRPN {
+            get {
+                return ResourceManager.GetString("NewRPN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yeni RPN:.
+        /// </summary>
+        public static string NewRPNLabel {
+            get {
+                return ResourceManager.GetString("NewRPNLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to YENİ ŞİDDET.
+        /// </summary>
+        public static string NewSeverity {
+            get {
+                return ResourceManager.GetString("NewSeverity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yeni Şiddet:.
+        /// </summary>
+        public static string NewSeverityLabel {
+            get {
+                return ResourceManager.GetString("NewSeverityLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OPERASYON ADI.
+        /// </summary>
+        public static string OperationName {
+            get {
+                return ResourceManager.GetString("OperationName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operasyon:.
+        /// </summary>
+        public static string OperationNameLabel {
+            get {
+                return ResourceManager.GetString("OperationNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OPERASYON GEREKLİLİKLERİ.
+        /// </summary>
+        public static string OperationRequirement {
+            get {
+                return ResourceManager.GetString("OperationRequirement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operasyon Gereklilikleri:.
+        /// </summary>
+        public static string OperationRequirementLabel {
+            get {
+                return ResourceManager.GetString("OperationRequirementLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Potansiyel Hata Sebebi:.
+        /// </summary>
+        public static string PotentialErrorReasonLabel {
+            get {
+                return ResourceManager.GetString("PotentialErrorReasonLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Emniyet Sınıfı:.
+        /// </summary>
+        public static string SafetyClassLabel {
+            get {
+                return ResourceManager.GetString("SafetyClassLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string SaveButton {
@@ -223,11 +520,128 @@ namespace TsiErp.Localizations.Resources.PFMEAs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 2. SPC KODU.
+        /// </summary>
+        public static string SecondOperationalSPCCode {
+            get {
+                return ResourceManager.GetString("SecondOperationalSPCCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2. SPC Kodu:.
+        /// </summary>
+        public static string SecondOperationalSPCCodeLabel {
+            get {
+                return ResourceManager.GetString("SecondOperationalSPCCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2. SPC Satırları.
+        /// </summary>
+        public static string SecondSPCLineButton {
+            get {
+                return ResourceManager.GetString("SecondSPCLineButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Durum:.
+        /// </summary>
+        public static string StateLabel {
+            get {
+                return ResourceManager.GetString("StateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Durum seçiniz..
+        /// </summary>
+        public static string StatePlaceholder {
+            get {
+                return ResourceManager.GetString("StatePlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hedef Bitiş Tarihi:.
+        /// </summary>
+        public static string TargetEndDateLabel {
+            get {
+                return ResourceManager.GetString("TargetEndDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to P-FMEA.
+        /// </summary>
+        public static string UICurrentMenu {
+            get {
+                return ResourceManager.GetString("UICurrentMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kalite Kontrol &gt; Analizler.
         /// </summary>
         public static string UIPreviousMenu {
             get {
                 return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Birinci SPC seçilmeden ikinci SPC seçimi yapılamaz..
+        /// </summary>
+        public static string UIWarningFirstOperationalSPCMessage {
+            get {
+                return ResourceManager.GetString("UIWarningFirstOperationalSPCMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningFirstOperationalSPCTitle {
+            get {
+                return ResourceManager.GetString("UIWarningFirstOperationalSPCTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş merkezi seçilmeden uygunsuzluk başlığı seçimi yapılamaz..
+        /// </summary>
+        public static string UIWarningWorkCenterMessage {
+            get {
+                return ResourceManager.GetString("UIWarningWorkCenterMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningWorkCenterTitle {
+            get {
+                return ResourceManager.GetString("UIWarningWorkCenterTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to UYGUNSUZLUK BAŞLIĞI.
+        /// </summary>
+        public static string UnsuitabilityItemName {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uygunsuzluk Başlığı:.
+        /// </summary>
+        public static string UnsuitabilityItemNameLabel {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemNameLabel", resourceCulture);
             }
         }
         
@@ -264,6 +678,24 @@ namespace TsiErp.Localizations.Resources.PFMEAs.Page {
         public static string ValidatorWorkCenterID {
             get {
                 return ResourceManager.GetString("ValidatorWorkCenterID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İŞ MERKEZİ.
+        /// </summary>
+        public static string WorkCenterName {
+            get {
+                return ResourceManager.GetString("WorkCenterName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş Merkezi:.
+        /// </summary>
+        public static string WorkCenterNameLabel {
+            get {
+                return ResourceManager.GetString("WorkCenterNameLabel", resourceCulture);
             }
         }
     }

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ActionCompletionDateLabel" xml:space="preserve">
+    <value>Action Completion Date:</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
@@ -131,6 +134,42 @@
   </data>
   <data name="ContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="ControlMechanismLabel" xml:space="preserve">
+    <value>Control Mechanism:</value>
+  </data>
+  <data name="ControlMethodLabel" xml:space="preserve">
+    <value>Control Method:</value>
+  </data>
+  <data name="CurrentDetectability" xml:space="preserve">
+    <value>CURRENT DETECTABILITY</value>
+  </data>
+  <data name="CurrentDetectabilityLabel" xml:space="preserve">
+    <value>Current Detectability:</value>
+  </data>
+  <data name="CurrentFrequency" xml:space="preserve">
+    <value>CURRENT OCCURANCE</value>
+  </data>
+  <data name="CurrentFrequencyLabel" xml:space="preserve">
+    <value>Current Occurance:</value>
+  </data>
+  <data name="CurrentRPN" xml:space="preserve">
+    <value>CURRENT RPN</value>
+  </data>
+  <data name="CurrentRPNLabel" xml:space="preserve">
+    <value>Current RPN:</value>
+  </data>
+  <data name="CurrentSeverity" xml:space="preserve">
+    <value>CURRENT SEVERITY</value>
+  </data>
+  <data name="CurrentSeverityLabel" xml:space="preserve">
+    <value>Current Severity:</value>
+  </data>
+  <data name="Date_" xml:space="preserve">
+    <value>DATE</value>
+  </data>
+  <data name="Date_Label" xml:space="preserve">
+    <value>Date:</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
@@ -156,6 +195,24 @@
   <data name="ExportTitle" xml:space="preserve">
     <value>P-FMEA</value>
   </data>
+  <data name="FirstOperationalSPCCode" xml:space="preserve">
+    <value>1. SPC CODE</value>
+  </data>
+  <data name="FirstOperationalSPCCodeLabel" xml:space="preserve">
+    <value>1. SPC Code:</value>
+  </data>
+  <data name="FirstSPCLineButton" xml:space="preserve">
+    <value>1. SPC Lines</value>
+  </data>
+  <data name="ImpactofErrorLabel" xml:space="preserve">
+    <value>Impact of Error:</value>
+  </data>
+  <data name="InhibitorActionLabel" xml:space="preserve">
+    <value>Inhibitor Action:</value>
+  </data>
+  <data name="LineNr" xml:space="preserve">
+    <value>LINE NR</value>
+  </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
   </data>
@@ -168,11 +225,92 @@
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="NewDetectability" xml:space="preserve">
+    <value>NEW DETECTABILITY</value>
+  </data>
+  <data name="NewDetectabilityLabel" xml:space="preserve">
+    <value>New Detectability:</value>
+  </data>
+  <data name="NewFrequency" xml:space="preserve">
+    <value>NEW OCCURANCE</value>
+  </data>
+  <data name="NewFrequencyLabel" xml:space="preserve">
+    <value>New Occurance:</value>
+  </data>
+  <data name="NewRPN" xml:space="preserve">
+    <value>NEW RPN</value>
+  </data>
+  <data name="NewRPNLabel" xml:space="preserve">
+    <value>New PRN:</value>
+  </data>
+  <data name="NewSeverity" xml:space="preserve">
+    <value>NEW SEVERITY</value>
+  </data>
+  <data name="NewSeverityLabel" xml:space="preserve">
+    <value>New Severity:</value>
+  </data>
+  <data name="OperationName" xml:space="preserve">
+    <value>OPERATION NAME</value>
+  </data>
+  <data name="OperationNameLabel" xml:space="preserve">
+    <value>Operation:</value>
+  </data>
+  <data name="OperationRequirement" xml:space="preserve">
+    <value>OPERATION REQUIREMENTS</value>
+  </data>
+  <data name="OperationRequirementLabel" xml:space="preserve">
+    <value>Operation Requirements:</value>
+  </data>
+  <data name="PotentialErrorReasonLabel" xml:space="preserve">
+    <value>Potential Error Reason:</value>
+  </data>
+  <data name="SafetyClassLabel" xml:space="preserve">
+    <value>Safety Class:</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="SecondOperationalSPCCode" xml:space="preserve">
+    <value>2. SPC CODE</value>
+  </data>
+  <data name="SecondOperationalSPCCodeLabel" xml:space="preserve">
+    <value>2. SPC Code:</value>
+  </data>
+  <data name="SecondSPCLineButton" xml:space="preserve">
+    <value>2. SPC Lines</value>
+  </data>
+  <data name="StateLabel" xml:space="preserve">
+    <value>State:</value>
+  </data>
+  <data name="StatePlaceholder" xml:space="preserve">
+    <value>Select a state.</value>
+  </data>
+  <data name="TargetEndDateLabel" xml:space="preserve">
+    <value>Target End Date:</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>P-FMEA</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Quality Control &gt; Analysis</value>
+  </data>
+  <data name="UIWarningFirstOperationalSPCMessage" xml:space="preserve">
+    <value>The second SPC selection cannot be made without selecting the first SPC.</value>
+  </data>
+  <data name="UIWarningFirstOperationalSPCTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UIWarningWorkCenterMessage" xml:space="preserve">
+    <value>Unsuitability item cannot be selected without selecting the work center.</value>
+  </data>
+  <data name="UIWarningWorkCenterTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="UnsuitabilityItemName" xml:space="preserve">
+    <value>UNSUITABILITY ITEM</value>
+  </data>
+  <data name="UnsuitabilityItemNameLabel" xml:space="preserve">
+    <value>Unsuitability Item:</value>
   </data>
   <data name="ValidatorFirstOperationalSPCID" xml:space="preserve">
     <value>Please select a first operational SPC.</value>
@@ -185,5 +323,11 @@
   </data>
   <data name="ValidatorWorkCenterID" xml:space="preserve">
     <value>Please select a work center.</value>
+  </data>
+  <data name="WorkCenterName" xml:space="preserve">
+    <value>WORK CENTER</value>
+  </data>
+  <data name="WorkCenterNameLabel" xml:space="preserve">
+    <value>Work Center:</value>
   </data>
 </root>
