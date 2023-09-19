@@ -65,15 +65,15 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
                 if(input.OperationStartTime > input.OperationEndTime)
                 {
-                    operationTime = (input.OperationEndDate - input.OperationStartDate).TotalSeconds - Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds) ;
+                    operationTime = (input.OperationEndDate - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime) - Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds)  ;
                 }
                 else if(input.OperationStartTime < input.OperationEndTime)
                 {
-                    operationTime = (input.OperationEndDate - input.OperationStartDate).TotalSeconds + Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
+                    operationTime = (input.OperationEndDate - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime) + Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
                 }
                 else if(input.OperationStartTime == input.OperationEndTime)
                 {
-                    operationTime = (input.OperationEndDate - input.OperationStartDate).TotalSeconds;
+                    operationTime = (input.OperationEndDate - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime);
                 }
 
                 #endregion
@@ -419,15 +419,15 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
                 if (input.OperationStartTime > input.OperationEndTime)
                 {
-                    operationTime = (input.OperationEndDate - input.OperationStartDate).TotalSeconds - Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
+                    operationTime = (input.OperationEndDate - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime) - Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
                 }
                 else if (input.OperationStartTime < input.OperationEndTime)
                 {
-                    operationTime = (input.OperationEndDate - input.OperationStartDate).TotalSeconds + Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
+                    operationTime = (input.OperationEndDate - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime) + Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
                 }
                 else if (input.OperationStartTime == input.OperationEndTime)
                 {
-                    operationTime = (input.OperationEndDate - input.OperationStartDate).TotalSeconds;
+                    operationTime = (input.OperationEndDate - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime);
                 }
 
                 #endregion

@@ -9,9 +9,11 @@ using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTrackingHaltLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
@@ -36,7 +38,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
 
         private SfDatePicker<DateTime?> _endDatePicker;
 
-        Guid? operationId = Guid.Empty;
+        List<SelectProductsOperationLinesDto> OperationLineList = new List<SelectProductsOperationLinesDto>();
 
         protected override async Task OnInitializedAsync()
         {
@@ -73,6 +75,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
             {
                 DataSource.ShiftID = Guid.Empty;
                 DataSource.ShiftCode = string.Empty;
+                DataSource.HaltTime = 0;
+                DataSource.OperationTime = 0;
             }
         }
 
@@ -84,6 +88,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
             {
                 DataSource.ShiftID = selectedShift.Id;
                 DataSource.ShiftCode = selectedShift.Code;
+                DataSource.HaltTime = selectedShift.TotalBreakTime;
+                DataSource.OperationTime = selectedShift.TotalWorkTime;
                 SelectShiftsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
@@ -225,7 +231,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
                 DataSource.WorkOrderID = selectedWorkOrder.Id;
                 DataSource.WorkOrderCode = selectedWorkOrder.Code;
                 DataSource.CurrentAccountCardID = selectedWorkOrder.CurrentAccountCardID;
-                operationId = selectedWorkOrder.ProductsOperationID;
+                OperationLineList = (await ProductsOperationsAppService.GetAsync(selectedWorkOrder.ProductsOperationID.GetValueOrDefault())).Data.SelectProductsOperationLines.ToList();
                 DataSource.CustomerCode = (await CurrentAccountCardsAppService.GetAsync(DataSource.CurrentAccountCardID.GetValueOrDefault())).Data.CustomerCode;
                 SelectWorkOrdersPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
@@ -557,8 +563,13 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
         }
         private async Task GetStationsList()
         {
-            var stationGroupID = (await ProductsOperationsAppService.GetAsync(operationId.GetValueOrDefault())).Data.WorkCenterID;
-            StationsList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.Where(t=>t.GroupID == stationGroupID).ToList();
+            var _stationlist = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
+
+            foreach (var line in OperationLineList)
+            {
+                var station = _stationlist.Where(t=>t.Id == line.StationID).FirstOrDefault();
+                StationsList.Add(station);
+            }
         }
 
         private async Task GetWorkOrdersList()

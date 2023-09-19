@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BOMCode" xml:space="preserve">
+    <value>BOM CODE</value>
+  </data>
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same number.</value>
   </data>
@@ -126,11 +129,23 @@
   <data name="ContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="ContextConsumptionReceipt" xml:space="preserve">
+    <value>Create Consumption Fiche</value>
+  </data>
   <data name="ContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="ContextOccuredAmountEntry" xml:space="preserve">
+    <value>Occured Amount Entry</value>
+  </data>
   <data name="ContextRefresh" xml:space="preserve">
     <value>Refresh</value>
+  </data>
+  <data name="ContextWorkOrders" xml:space="preserve">
+    <value>Work Orders</value>
+  </data>
+  <data name="CustomerCode" xml:space="preserve">
+    <value>CUSTOMER CODE</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
@@ -141,8 +156,20 @@
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
   </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>END DATE</value>
+  </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="FicheNo" xml:space="preserve">
+    <value>FICHE NR</value>
+  </data>
+  <data name="FinishedProductCode" xml:space="preserve">
+    <value>FINISHED PRODUCT CODE</value>
+  </data>
+  <data name="LinkedProductCode" xml:space="preserve">
+    <value>LINKED PRODUCT CODE</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>
@@ -155,6 +182,33 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="OrderFicheNo" xml:space="preserve">
+    <value>ORDER FICHE NR</value>
+  </data>
+  <data name="PlannedQuantity" xml:space="preserve">
+    <value>PLANNED QUANTITY</value>
+  </data>
+  <data name="ProducedQuantity" xml:space="preserve">
+    <value>PRODUCED QUANTITY</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>START DATE</value>
+  </data>
+  <data name="UICurrentMenu" xml:space="preserve">
+    <value>Production Orders</value>
+  </data>
+  <data name="UIExportFileName" xml:space="preserve">
+    <value>ProductionOrders</value>
+  </data>
+  <data name="UIExportTitle" xml:space="preserve">
+    <value>Production Orders</value>
+  </data>
+  <data name="UIPreviousMenu" xml:space="preserve">
+    <value>Production Management &gt; Transactions</value>
+  </data>
+  <data name="UnitSetCode" xml:space="preserve">
+    <value>UNIT SET</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same number.</value>
