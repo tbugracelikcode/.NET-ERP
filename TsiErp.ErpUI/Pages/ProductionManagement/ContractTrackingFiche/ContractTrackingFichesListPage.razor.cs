@@ -365,6 +365,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
             {
                 DataSource.ProductionOrderID = Guid.Empty;
                 DataSource.ProductionOrderNr = string.Empty;
+                DataSource.CurrentAccountCardID = Guid.Empty;   
+                DataSource.CustomerCode = string.Empty;
+                DataSource.CurrentAccountCardCode = string.Empty;
+                DataSource.CurrentAccountCardName = string.Empty;
             }
         }
 
@@ -376,6 +380,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractTrackingFiche
             {
                 DataSource.ProductionOrderID = selectedProductionOrder.Id;
                 DataSource.ProductionOrderNr = selectedProductionOrder.FicheNo;
+                DataSource.CurrentAccountCardID = selectedProductionOrder.CurrentAccountID;
+                DataSource.CustomerCode = selectedProductionOrder.CustomerCode;
+                DataSource.CurrentAccountCardCode = selectedProductionOrder.CurrentAccountCode;
+                DataSource.CurrentAccountCardName = selectedProductionOrder.CurrentAccountName;
                 SelectProductionOrdersPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }

@@ -772,6 +772,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to P-FMEA.
+        /// </summary>
+        public static string PFMEAChildMenu {
+            get {
+                return ResourceManager.GetString("PFMEAChildMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Önleyici/Planlı Bakım Kayıtları.
         /// </summary>
         public static string PlannedMainChildMenu {
@@ -1078,6 +1087,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FMEA.
+        /// </summary>
+        public static string QualityControlFMEAMenu {
+            get {
+                return ResourceManager.GetString("QualityControlFMEAMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ana Kayıtlar.
         /// </summary>
         public static string QualityControlMainRecordsMenu {
@@ -1110,6 +1128,15 @@ namespace TsiErp.Localizations.Resources.NavbarMenus.Page {
         public static string QualityControlReportsMenu {
             get {
                 return ResourceManager.GetString("QualityControlReportsMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SPC Karşılaştırmaları.
+        /// </summary>
+        public static string QualityControlSPCAnalysisMenu {
+            get {
+                return ResourceManager.GetString("QualityControlSPCAnalysisMenu", resourceCulture);
             }
         }
         

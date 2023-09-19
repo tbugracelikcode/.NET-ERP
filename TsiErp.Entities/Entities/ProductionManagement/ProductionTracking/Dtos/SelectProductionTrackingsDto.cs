@@ -25,6 +25,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// </summary>
         public Guid? CurrentAccountCardID { get; set; }
         /// <summary>
+        /// Açıklama
+        /// </summary>
+        public string Description_ { get; set; }
+        /// <summary>
         /// Müşteri Kodu
         /// </summary>
         public string CustomerCode { get; set; }

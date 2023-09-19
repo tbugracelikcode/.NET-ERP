@@ -22,6 +22,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// Müşteri Kodu
         /// </summary>
         public string CustomerCode { get; set; }
+        /// <summary>
+        /// Açıklama
+        /// </summary>
+        public string Description_ { get; set; }
 
         /// <summary>
         /// Üretilen Miktar

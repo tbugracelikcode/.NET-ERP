@@ -206,6 +206,15 @@ namespace TsiErp.Localizations.Resources.ProductionTrackings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Açıklama:.
+        /// </summary>
+        public static string Description_Label {
+            get {
+                return ResourceManager.GetString("Description_Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Üretim Takip Duruş Satırları.
         /// </summary>
         public static string EditLineModalTitle {
@@ -742,6 +751,24 @@ namespace TsiErp.Localizations.Resources.ProductionTrackings.Page {
         public static string UIWarningPopupMessageBase {
             get {
                 return ResourceManager.GetString("UIWarningPopupMessageBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to İş emri seçilmeden iş istasyonu seçimi yapılamaz..
+        /// </summary>
+        public static string UIWarningWorkOrderMessage {
+            get {
+                return ResourceManager.GetString("UIWarningWorkOrderMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningWorkOrderTitle {
+            get {
+                return ResourceManager.GetString("UIWarningWorkOrderTitle", resourceCulture);
             }
         }
         

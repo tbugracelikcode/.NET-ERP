@@ -23,6 +23,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos
         /// </summary>
         public decimal ProducedQuantity { get; set; }
         /// <summary>
+        /// Açıklama
+        /// </summary>
+        public string Description_ { get; set; }
+        /// <summary>
         /// Operasyon Süresi
         /// </summary>
         public decimal OperationTime { get; set; }

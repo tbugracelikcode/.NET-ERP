@@ -113,6 +113,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos
         /// Teklif Fiş No
         /// </summary>
         public string PropositionFicheNo { get; set; }
+        /// <summary>
+        /// Cari Hesap ID
+        /// </summary>
+        public Guid? CurrentAccountID { get; set; }
 
         /// <summary>
         /// Cari Hesap Kodu

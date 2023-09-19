@@ -354,6 +354,9 @@
   <data name="PeriodsChildMenu" xml:space="preserve">
     <value>Periods</value>
   </data>
+  <data name="PFMEAChildMenu" xml:space="preserve">
+    <value>P-FMEA</value>
+  </data>
   <data name="PlannedMainChildMenu" xml:space="preserve">
     <value>Preventive/Planned Maintenance Records</value>
   </data>
@@ -456,6 +459,9 @@
   <data name="QualityControlAnalysisMenu" xml:space="preserve">
     <value>Analysis</value>
   </data>
+  <data name="QualityControlFMEAMenu" xml:space="preserve">
+    <value>FMEA</value>
+  </data>
   <data name="QualityControlMainRecordsMenu" xml:space="preserve">
     <value>Main Records</value>
   </data>
@@ -467,6 +473,9 @@
   </data>
   <data name="QualityControlReportsMenu" xml:space="preserve">
     <value>Reports</value>
+  </data>
+  <data name="QualityControlSPCAnalysisMenu" xml:space="preserve">
+    <value>SPC Comparing</value>
   </data>
   <data name="QualityControlSPCMenu" xml:space="preserve">
     <value>SPC</value>

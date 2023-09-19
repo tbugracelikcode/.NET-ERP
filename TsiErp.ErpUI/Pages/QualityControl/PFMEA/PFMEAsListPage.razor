@@ -1,0 +1,590 @@
+﻿@page "/p-fmea"
+@layout MainLayout
+
+
+
+@inherits BaseListPage<SelectPFMEAsDto, ListPFMEAsDto, CreatePFMEAsDto, UpdatePFMEAsDto, ListPFMEAsParameterDto>
+
+@inject IStringLocalizer<PFMEAsResource> L
+
+@inject IPFMEAsAppService PFMEAsService
+@inject IOperationalSPCsAppService OperationalSPCsAppService
+@inject IStationGroupsAppService StationGroupsAppService
+@inject IUnsuitabilityItemsAppService UnsuitabilityItemsAppService
+@inject IProductsOperationsAppService ProductsOperationsAppService
+@inject IWorkOrdersAppService WorkOrdersAppService
+
+@{
+    if (!base.IsLoaded)
+    {
+        <CircleLoading Caption="@base.LoadingCaption" Text="@base.LoadingText" />
+    }
+    else
+    {
+        <DevGridLayout ColumnCount="1" RowCount="3">
+            <GridLayoutItems>
+                <DxGridLayoutItem Row="0" Column="0" ColumnSpan="1">
+                    <Template>
+                        <SfCard class="TSIListPageTitleCard">
+                            <CardContent>
+                                <TsiBreadCrumb PreviousMenus="@L["UIPreviousMenu"]" CurrentMenu="@L["UICurrentMenu"]" />
+                            </CardContent>
+                            <CardFooter>
+                            </CardFooter>
+                        </SfCard>
+                    </Template>
+                </DxGridLayoutItem>
+                <DxGridLayoutItem Row="2" Column="0" ColumnSpan="1">
+                    <Template>
+                        <SfCard class="TSIGridCards">
+
+                            <CardContent>
+                                <SfGrid ID="Grid" @ref="_grid" AllowPdfExport=true ShowColumnMenu="true" ColumnMenuItems=@MenuItems DataSource="@ListDataSource" AllowPaging="false" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                        AllowSorting="true" Height="100%" ContextMenuItems="@GridContextMenu" Width="100%" class="GridZebra" Toolbar=@GridToolbarItems>
+                                    <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                    <GridEvents ContextMenuItemClicked="@OnContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListPFMEAsDto"></GridEvents>
+                                    <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                    <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                    <GridPageSettings PageSizes="true"></GridPageSettings>
+                                    <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
+                                    <GridColumns>
+                                        <GridColumn Field=@nameof(ListPFMEAsDto.LineNr) HeaderText="@L["LineNr"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListPFMEAsDto.Date_) HeaderText="@L["Date_"]" Format="dd.MM.yyyy" Type="ColumnType.Date" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListPFMEAsDto.FirstOperationalSPCCode) HeaderText="@L["FirstOperationalSPCCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListPFMEAsDto.State) HeaderText="@L["State"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListPFMEAsDto.SecondOperationalSPCCode) HeaderText="@L["SecondOperationalSPCCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListPFMEAsDto.WorkCenterName) HeaderText="@L["WorkCenterName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListPFMEAsDto.OperationName) HeaderText="@L["OperationName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListPFMEAsDto.OperationRequirement) HeaderText="@L["OperationRequirement"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListPFMEAsDto.UnsuitabilityItemName) HeaderText="@L["UnsuitabilityItemName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListPFMEAsDto.CurrentSeverity) HeaderText="@L["CurrentSeverity"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListPFMEAsDto.CurrentFrequency) HeaderText="@L["CurrentFrequency"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListPFMEAsDto.CurrentDetectability) HeaderText="@L["CurrentDetectability"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListPFMEAsDto.CurrentRPN) HeaderText="@L["CurrentRPN"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListPFMEAsDto.NewSeverity) HeaderText="@L["NewSeverity"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListPFMEAsDto.NewFrequency) HeaderText="@L["NewFrequency"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListPFMEAsDto.NewDetectability) HeaderText="@L["NewDetectability"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        <GridColumn Field=@nameof(ListPFMEAsDto.NewRPN) HeaderText="@L["NewRPN"]" Type="ColumnType.Number" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    </GridColumns>
+                                </SfGrid>
+                            </CardContent>
+                            <CardFooter>
+                            </CardFooter>
+                        </SfCard>
+
+                    </Template>
+                </DxGridLayoutItem>
+            </GridLayoutItems>
+        </DevGridLayout>
+
+        <DxPopup @bind-Visible="base.EditPageVisible"
+                 ShowFooter="true"
+                 CloseOnEscape="false"
+                 CloseOnOutsideClick="false"
+                 HeaderText="@L["EditModalTitle"]"
+                 Width="81%"
+                 Height="83%"
+                 MinWidth="1400px"
+                 MinHeight="900px"
+                 HeaderCssClass="HeaderTitleCss"
+                 Showing="CrudModalShowing"
+                 Closing="CrudModalClosing">
+            <BodyTemplate>
+
+                <DxGridLayout CssClass="TSIGridLayout">
+
+                    <Rows>
+                        <DxGridLayoutRow Height="14%" />
+                        <DxGridLayoutRow Height="11%" />
+                        <DxGridLayoutRow Height="11%" />
+                        <DxGridLayoutRow Height="11%" />
+                        <DxGridLayoutRow Height="11%" />
+                        <DxGridLayoutRow Height="14%" />
+                        <DxGridLayoutRow Height="14%" />
+                        <DxGridLayoutRow Height="11%" />
+                    </Rows>
+
+                    <Columns>
+                        <DxGridLayoutColumn Width="3%" />
+                        <DxGridLayoutColumn Width="21%" />
+                        <DxGridLayoutColumn Width="3%" />
+                        <DxGridLayoutColumn Width="21%" />
+                        <DxGridLayoutColumn Width="3%" />
+                        <DxGridLayoutColumn Width="21%" />
+                        <DxGridLayoutColumn Width="3%" />
+                        <DxGridLayoutColumn Width="21%" />
+                        <DxGridLayoutColumn Width="3%" />
+                    </Columns>
+
+                    <Items>
+                        <DxGridLayoutItem Row="0" Column="1">
+                            <Template>
+                                <br />
+                                <label class="TSIModalLabel"><strong>@L["Date_Label"] </strong></label>
+                                <SfDatePicker @bind-Value="DataSource.Date_"></SfDatePicker>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="1" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["FirstOperationalSPCCodeLabel"] </strong></label>
+                                <SfTextBox @ref="@FirstSPCButtonEdit" Created="@FirstSPCOnCreateIcon" @bind-Value="DataSource.FirstOperationalSPCCode" ShowClearButton=true ValueChange="FirstSPCOnValueChange"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="1" Column="3">
+                            <Template>
+                                <SfButton CssClass="TSISaveButton" Disabled=@firstSPCButtonDisabled OnClick="FirstSPCLineButtonClick"><SfIcon Size="IconSize.Medium" Name="IconName.Selection"></SfIcon>&nbsp;@L["FirstSPCLineButton"]</SfButton>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="1" Column="5">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["WorkCenterNameLabel"] </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" Enabled=false @bind-Value="DataSource.WorkCenterName"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="1" Column="7">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["OperationNameLabel"] </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" Enabled=false @bind-Value="DataSource.OperationName"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="2" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["CurrentSeverityLabel"] </strong></label>
+                                <SfNumericTextBox Enabled=false @bind-Value="DataSource.CurrentSeverity"></SfNumericTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="2" Column="3">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["CurrentDetectabilityLabel"] </strong></label>
+                                <SfNumericTextBox Enabled=false @bind-Value="DataSource.CurrentDetectability"></SfNumericTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="2" Column="5">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["CurrentFrequencyLabel"] </strong></label>
+                                <SfNumericTextBox Enabled=false @bind-Value="DataSource.CurrentFrequency"></SfNumericTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="2" Column="7">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["CurrentRPNLabel"] </strong></label>
+                                <SfNumericTextBox Enabled=false @bind-Value="DataSource.CurrentRPN"></SfNumericTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="3" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["SecondOperationalSPCCodeLabel"] </strong></label>
+                                <SfTextBox @ref="@SecondSPCButtonEdit" Created="@SecondSPCOnCreateIcon" @bind-Value="DataSource.SecondOperationalSPCCode" ShowClearButton=true ValueChange="SecondSPCOnValueChange"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="3" Column="3">
+                            <Template>
+                                <SfButton CssClass="TSISaveButton" Disabled=@secondSPCButtonDisabled OnClick="SecondSCPLineButtonClick"><SfIcon Size="IconSize.Medium" Name="IconName.Selection"></SfIcon>&nbsp;@L["SecondSPCLineButton"]</SfButton>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="3" Column="5">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["StateLabel"] </strong></label>
+                                <SfComboBox TValue="string" Placeholder=@L["StatePlaceholder"] TItem="Status" @bind-Index="@ddlIndex" DataSource="@StatusList">
+                                    <ComboBoxEvents TItem="Status" TValue="string" ValueChange="@ValueChangeHandler"></ComboBoxEvents>
+                                    <ComboBoxFieldSettings Value="Code" Text="Name"></ComboBoxFieldSettings>
+                                </SfComboBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="4" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["NewSeverityLabel"] </strong></label>
+                                <SfNumericTextBox Enabled=false @bind-Value="DataSource.NewSeverity"></SfNumericTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="4" Column="3">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["NewDetectabilityLabel"] </strong></label>
+                                <SfNumericTextBox Enabled=false @bind-Value="DataSource.NewDetectability"></SfNumericTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="4" Column="5">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["NewFrequencyLabel"] </strong></label>
+                                <SfNumericTextBox Enabled=false @bind-Value="DataSource.NewFrequency"></SfNumericTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="4" Column="7">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["NewRPNLabel"] </strong></label>
+                                <SfNumericTextBox Enabled=false @bind-Value="DataSource.NewRPN"></SfNumericTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="5" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["OperationRequirementLabel"] </strong></label>
+                                <SfTextBox Multiline=true CssClass="TSIMemoBox60" @bind-Value="DataSource.OperationRequirement"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="5" Column="3">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["UnsuitabilityItemNameLabel"] </strong></label>
+                                <SfTextBox @ref="@UnsuitabilityItemButtonEdit" Created="@UnsuitabilityItemOnCreateIcon" @bind-Value="DataSource.UnsuitabilityItemName" ShowClearButton=true ValueChange="UnsuitabilityItemOnValueChange"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="5" Column="5">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["ImpactofErrorLabel"] </strong></label>
+                                <SfTextBox Multiline=true CssClass="TSIMemoBox60" @bind-Value="DataSource.ImpactofError"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="5" Column="7">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["SafetyClassLabel"] </strong></label>
+                                <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.SafetyClass"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="6" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["PotentialErrorReasonLabel"] </strong></label>
+                                <SfTextBox Multiline=true CssClass="TSIMemoBox60" @bind-Value="DataSource.PotentialErrorReason"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="6" Column="3">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["ControlMechanismLabel"] </strong></label>
+                                <SfTextBox Multiline=true CssClass="TSIMemoBox60" @bind-Value="DataSource.ControlMechanism"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="6" Column="5">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["ControlMethodLabel"] </strong></label>
+                                <SfTextBox Multiline=true CssClass="TSIMemoBox60" @bind-Value="DataSource.ControlMethod"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="6" Column="7">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["InhibitorActionLabel"] </strong></label>
+                                <SfTextBox Multiline=true CssClass="TSIMemoBox60" @bind-Value="DataSource.InhibitorAction"></SfTextBox>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="7" Column="1">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["TargetEndDateLabel"] </strong></label>
+                                <SfDatePicker @bind-Value="DataSource.TargetEndDate"></SfDatePicker>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                        <DxGridLayoutItem Row="7" Column="3">
+                            <Template>
+                                <label class="TSIModalLabel"><strong>@L["ActionCompletionDateLabel"] </strong></label>
+                                <SfDatePicker @bind-Value="DataSource.ActionCompletionDate"></SfDatePicker>
+                            </Template>
+                        </DxGridLayoutItem>
+
+                    </Items>
+
+                </DxGridLayout>
+            </BodyTemplate>
+            <FooterContentTemplate>
+                <SfButton CssClass="TSISaveButton" OnClick="OnSubmit"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["SaveButton"]</SfButton>
+                <SfButton CssClass="TSICancelButton" OnClick="HideEditPage"><SfIcon Size="IconSize.Medium" Name="IconName.Undo"></SfIcon>&nbsp;@L["CloseButton"]</SfButton>
+            </FooterContentTemplate>
+        </DxPopup>
+
+    }
+}
+
+@if (SelectFirstSPCPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectFirstSPCPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["OperationalSPCModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIWorkStationGroupPopUpCard">
+
+                                <CardContent>
+                                    <SfGrid ID="FirstSPCGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@FirstSPCList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                            AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@FirstSPCDoubleClickHandler" TValue="ListOperationalSPCsDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListOperationalSPCsDto.Code) HeaderText="@L["OperationalSPCGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListOperationalSPCsDto.Date_) HeaderText="@L["OperationalSPCGridDate_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListOperationalSPCsDto.MeasurementStartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["OperationalSPCGridMeasurementStartDate"]" TextAlign="TextAlign.Center" Width="160"></GridColumn>
+                                            <GridColumn Field=@nameof(ListOperationalSPCsDto.MeasurementEndDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["OperationalSPCGridMeasurementEndDate"]" TextAlign="TextAlign.Center" Width="160"></GridColumn>
+
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectSecondSPCPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectSecondSPCPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["OperationalSPCModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIWorkStationGroupPopUpCard">
+
+                                <CardContent>
+                                    <SfGrid ID="SecondSPCGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@SecondSPCList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                            AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@SecondSPCDoubleClickHandler" TValue="ListOperationalSPCsDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListOperationalSPCsDto.Code) HeaderText="@L["OperationalSPCGridCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListOperationalSPCsDto.Date_) HeaderText="@L["OperationalSPCGridDate_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListOperationalSPCsDto.MeasurementStartDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["OperationalSPCGridMeasurementStartDate"]" TextAlign="TextAlign.Center" Width="160"></GridColumn>
+                                            <GridColumn Field=@nameof(ListOperationalSPCsDto.MeasurementEndDate) Format="dd.MM.yyyy" Type="ColumnType.DateTime" HeaderText="@L["OperationalSPCGridMeasurementEndDate"]" TextAlign="TextAlign.Center" Width="160"></GridColumn>
+
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectFirstSPCLinePopupVisible)
+{
+    <DxPopup @bind-Visible="SelectFirstSPCLinePopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["OperationalSPCLineModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIWorkStationGroupPopUpCard">
+
+                                <CardContent>
+                                    <SfGrid ID="FirstSPCLineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@OperationalSPCLineList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                            AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@FirstSPCLineDoubleClickHandler" TValue="SelectOperationalSPCLinesDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(SelectOperationalSPCLinesDto.WorkCenterName) HeaderText="@L["OperationalSPCLineGridWorkCenterName"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectOperationalSPCLinesDto.OperationName) HeaderText="@L["OperationalSPCLineGridOperationName"]" TextAlign="TextAlign.Center" Width="260"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectOperationalSPCLinesDto.Severity) Type="ColumnType.Number" HeaderText="@L["OperationalSPCLineGridSeverity"]" TextAlign="TextAlign.Center" Width="140"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectOperationalSPCLinesDto.Frequency) Type="ColumnType.Number" HeaderText="@L["OperationalSPCLineGridFrequency"]" TextAlign="TextAlign.Center" Width="140"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectOperationalSPCLinesDto.Detectability) Type="ColumnType.Number" HeaderText="@L["OperationalSPCLineGridSDetectability"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectOperationalSPCLinesDto.RPN) Type="ColumnType.Number" HeaderText="@L["OperationalSPCLineGridRPN"]" TextAlign="TextAlign.Center" Width="140"></GridColumn>
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectSecondSPCLinePopupVisible)
+{
+    <DxPopup @bind-Visible="SelectSecondSPCLinePopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["OperationalSPCLineModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIWorkStationGroupPopUpCard">
+
+                                <CardContent>
+                                    <SfGrid ID="SecondSPCLineGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@SecondOperationalSPCLineList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                            AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@SecondSPCLineDoubleClickHandler" TValue="SelectOperationalSPCLinesDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(SelectOperationalSPCLinesDto.WorkCenterName) HeaderText="@L["OperationalSPCLineGridWorkCenterName"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectOperationalSPCLinesDto.OperationName) HeaderText="@L["OperationalSPCLineGridOperationName"]" TextAlign="TextAlign.Center" Width="260"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectOperationalSPCLinesDto.Severity) Type="ColumnType.Number" HeaderText="@L["OperationalSPCLineGridSeverity"]" TextAlign="TextAlign.Center" Width="140"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectOperationalSPCLinesDto.Frequency) Type="ColumnType.Number" HeaderText="@L["OperationalSPCLineGridFrequency"]" TextAlign="TextAlign.Center" Width="140"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectOperationalSPCLinesDto.Detectability) Type="ColumnType.Number" HeaderText="@L["OperationalSPCLineGridSDetectability"]" TextAlign="TextAlign.Center" Width="180"></GridColumn>
+                                            <GridColumn Field=@nameof(SelectOperationalSPCLinesDto.RPN) Type="ColumnType.Number" HeaderText="@L["OperationalSPCLineGridRPN"]" TextAlign="TextAlign.Center" Width="140"></GridColumn>
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}
+
+@if (SelectUnsuitabilityItemPopupVisible)
+{
+    <DxPopup @bind-Visible="SelectUnsuitabilityItemPopupVisible"
+             ShowFooter="true"
+             CloseOnEscape="false"
+             CloseOnOutsideClick="false"
+             HeaderText="@L["UnsuitabilityItemModalTitle"]"
+             Width="64%"
+             Height="44%"
+             MinWidth="1220px"
+             MinHeight="470px"
+             HeaderCssClass="HeaderTitleCss">
+        <BodyTemplate>
+
+            <DevGridLayout ColumnCount="1" RowCount="1">
+                <GridLayoutItems>
+
+                    <DxGridLayoutItem Row="1" Column="1">
+                        <Template>
+                            <SfCard class="TSIWorkStationGroupPopUpCard">
+
+                                <CardContent>
+                                    <SfGrid ID="UnsuitabilityItemGrid" ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@UnsuitabilityItemList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
+                                            AllowSorting="true" Height="100%" Width="100%" class="GridZebra">
+                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
+
+                                        <GridEvents OnRecordDoubleClick="@UnsuitabilityItemDoubleClickHandler" TValue="ListUnsuitabilityItemsDto"></GridEvents>
+                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
+                                        <GridPageSettings PageSizes="true"></GridPageSettings>
+                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+                                        <GridColumns>
+                                            <GridColumn Field=@nameof(ListUnsuitabilityItemsDto.Code) HeaderText=@L["UnsuitabilityItemGridCode"] TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListUnsuitabilityItemsDto.Name) HeaderText=@L["UnsuitabilityItemGridName"] TextAlign="TextAlign.Center" Width="120">
+
+                                            </GridColumn>
+                                            <GridColumn Field=@nameof(ListUnsuitabilityItemsDto.Description_) HeaderText="@L["UnsuitabilityItemGridDescription_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListUnsuitabilityItemsDto.IntensityRange) HeaderText="@L["UnsuitabilityItemGridIntensityRange"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                            <GridColumn Field=@nameof(ListUnsuitabilityItemsDto.IntensityCoefficient) HeaderText="@L["UnsuitabilityItemGridIntensityCoefficient"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                        </GridColumns>
+                                    </SfGrid>
+                                </CardContent>
+                                <CardFooter>
+                                </CardFooter>
+                            </SfCard>
+                        </Template>
+                    </DxGridLayoutItem>
+                </GridLayoutItems>
+            </DevGridLayout>
+
+        </BodyTemplate>
+        <FooterContentTemplate>
+        </FooterContentTemplate>
+    </DxPopup>
+}

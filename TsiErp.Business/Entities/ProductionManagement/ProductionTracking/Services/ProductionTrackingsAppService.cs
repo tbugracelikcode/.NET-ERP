@@ -59,6 +59,25 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
 
                 Guid addedEntityId = GuidGenerator.CreateGuid();
 
+                #region Operation Time
+
+                double operationTime = 0;
+
+                if(input.OperationStartTime > input.OperationEndTime)
+                {
+                    operationTime = (input.OperationEndDate - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime) - Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds)  ;
+                }
+                else if(input.OperationStartTime < input.OperationEndTime)
+                {
+                    operationTime = (input.OperationEndDate - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime) + Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
+                }
+                else if(input.OperationStartTime == input.OperationEndTime)
+                {
+                    operationTime = (input.OperationEndDate - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime);
+                }
+
+                #endregion
+
                 var query = queryFactory.Query().From(Tables.ProductionTrackings).Insert(new CreateProductionTrackingsDto
                 {
                     AdjustmentTime = input.AdjustmentTime,
@@ -69,8 +88,9 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     OperationEndTime = input.OperationEndTime,
                     OperationStartDate = input.OperationStartDate,
                     CurrentAccountCardID = input.CurrentAccountCardID,
+                    Description_ = input.Description_,
                     OperationStartTime = input.OperationStartTime,
-                    OperationTime = input.OperationTime,
+                    OperationTime = Convert.ToDecimal(operationTime),
                     PlannedQuantity = input.PlannedQuantity,
                     ProducedQuantity = input.ProducedQuantity,
                     ShiftID = input.ShiftID,
@@ -203,7 +223,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 var queryLines = queryFactory
                        .Query()
                        .From(Tables.ProductionTrackingHaltLines)
-                       .Select<ProductionTrackingHaltLines>(hl => new { hl.ProductionTrackingID, hl.Id, hl.HaltTime, hl.HaltName, hl.HaltID, hl.HaltCode, hl.DataOpenStatusUserId, hl.DataOpenStatus })
+                       .Select("*")
                        .Join<HaltReasons>
                         (
                             hr => new { HaltID = hr.Id, HaltName = hr.Name, HaltCode = hr.Code },
@@ -327,7 +347,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 var queryLines = queryFactory
                        .Query()
                        .From(Tables.ProductionTrackingHaltLines)
-                       .Select<ProductionTrackingHaltLines>(hl => new { hl.ProductionTrackingID, hl.Id, hl.HaltTime, hl.HaltName, hl.HaltID, hl.HaltCode, hl.DataOpenStatusUserId, hl.DataOpenStatus })
+                       .Select("*")
                        .Join<HaltReasons>
                         (
                             hr => new { HaltID = hr.Id, HaltName = hr.Name, HaltCode = hr.Code },
@@ -393,6 +413,25 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                 }
                 #endregion
 
+                #region Operation Time
+
+                double operationTime = 0;
+
+                if (input.OperationStartTime > input.OperationEndTime)
+                {
+                    operationTime = (input.OperationEndDate - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime) - Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
+                }
+                else if (input.OperationStartTime < input.OperationEndTime)
+                {
+                    operationTime = (input.OperationEndDate - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime) + Math.Abs(input.OperationEndTime.Value.TotalSeconds - input.OperationStartTime.Value.TotalSeconds);
+                }
+                else if (input.OperationStartTime == input.OperationEndTime)
+                {
+                    operationTime = (input.OperationEndDate - input.OperationStartDate).TotalDays * Convert.ToDouble(input.OperationTime - input.HaltTime);
+                }
+
+                #endregion
+
                 var query = queryFactory.Query().From(Tables.ProductionTrackings).Update(new UpdateProductionTrackingsDto
                 {
                     AdjustmentTime = input.AdjustmentTime,
@@ -403,8 +442,9 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     OperationEndTime = input.OperationEndTime,
                     OperationStartDate = input.OperationStartDate,
                     CurrentAccountCardID = input.CurrentAccountCardID,
+                    Description_ = input.Description_,
                     OperationStartTime = input.OperationStartTime,
-                    OperationTime = input.OperationTime,
+                    OperationTime = Convert.ToDecimal(operationTime),
                     PlannedQuantity = input.PlannedQuantity,
                     ProducedQuantity = input.ProducedQuantity,
                     ShiftID = input.ShiftID,
@@ -501,6 +541,7 @@ namespace TsiErp.Business.Entities.ProductionTracking.Services
                     OperationEndDate = entity.OperationEndDate,
                     OperationEndTime = entity.OperationEndTime,
                     CurrentAccountCardID = entity.CurrentAccountCardID,
+                    Description_ = entity.Description_,
                     OperationStartDate = entity.OperationStartDate,
                     OperationStartTime = entity.OperationStartTime,
                     OperationTime = entity.OperationTime,

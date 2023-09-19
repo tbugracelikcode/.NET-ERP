@@ -123,5 +123,6 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string UnsuitabilityItemSPCComparings = "UnsuitabilityItemSPCComparings";
         public static readonly string OperationalSPCComparings = "OperationalSPCComparings";
         public static readonly string FicheNumbers = "FicheNumbers";
+        public static readonly string PFMEAs = "PFMEAs";
     }
 }

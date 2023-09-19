@@ -62,6 +62,9 @@
 .TSIMemoBox45 {
     height: 45% !important;
 }
+.TSIMemoBox20 {
+    height: 20% !important;
+}
 
 .TSIComboBox {
     font-size: 14px;

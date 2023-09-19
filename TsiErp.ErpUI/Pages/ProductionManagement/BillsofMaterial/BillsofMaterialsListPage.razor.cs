@@ -133,7 +133,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
 
         protected void CreateMainContextMenuItems()
         {
-            if (LineGridContextMenu.Count() == 0)
+            if (MainGridContextMenu.Count() == 0)
             {
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text =L["ContextAdd"]     , Id = "new" });
                 MainGridContextMenu.Add(new ContextMenuItemModel { Text =L["ContextChange"]  , Id = "changed" });
