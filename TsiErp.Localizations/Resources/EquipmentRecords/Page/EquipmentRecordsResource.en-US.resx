@@ -135,18 +135,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Equipment Code:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -176,6 +164,18 @@
   </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Equipment Records</value>
+  </data>
+  <data name="EquipmentRecordContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="EquipmentRecordContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="EquipmentRecordContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="EquipmentRecordContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="EquipmentSerialNoLabel" xml:space="preserve">
     <value>Equipment Serial Nr:</value>

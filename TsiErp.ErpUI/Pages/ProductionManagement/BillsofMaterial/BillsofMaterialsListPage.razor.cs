@@ -124,10 +124,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"]    , Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"] , Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"] , Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["BoMContextAdd"]    , Id = "new" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["BoMContextChange"] , Id = "changed" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["BoMContextDelete"] , Id = "delete" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["BoMContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -135,10 +135,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.BillsofMaterial
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text =L["ContextAdd"]     , Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text =L["ContextChange"]  , Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text =L["ContextDelete"]  , Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text =L["BoMLineContextAdd"]     , Id = "new" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text =L["BoMLineContextChange"]  , Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text =L["BoMLineContextDelete"]  , Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["BoMLineContextRefresh"], Id = "refresh" });
             }
         }
 

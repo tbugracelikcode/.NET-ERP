@@ -138,18 +138,6 @@
   <data name="ComboboxToBeUsedAs" xml:space="preserve">
     <value>Olduğu Gibi Kullanılacak</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="ContractTrackingFicheModalGridCurrentAccountCardName" xml:space="preserve">
     <value>CARİ HESAP</value>
   </data>
@@ -164,6 +152,18 @@
   </data>
   <data name="ContractTrackingFicheNrLabel" xml:space="preserve">
     <value>Fason Takip Fişi:</value>
+  </data>
+  <data name="ContractUnsuitabilityReportContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ContractUnsuitabilityReportContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ContractUnsuitabilityReportContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ContractUnsuitabilityReportContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="CurrentAccountCardCodeLabel" xml:space="preserve">
     <value>Cari Hesap Kodu:</value>

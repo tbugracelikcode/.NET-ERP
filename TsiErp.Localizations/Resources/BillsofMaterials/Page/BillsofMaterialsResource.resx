@@ -117,6 +117,30 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BoMContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="BoMContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="BoMContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="BoMContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="BoMLineContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="BoMLineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="BoMLineContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="BoMLineContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
@@ -128,18 +152,6 @@
   </data>
   <data name="CodeLabel" xml:space="preserve">
     <value>Reçete Kodu:</value>
-  </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
   </data>
   <data name="CurrentAccountCardCode" xml:space="preserve">
     <value>CARİ KOD</value>

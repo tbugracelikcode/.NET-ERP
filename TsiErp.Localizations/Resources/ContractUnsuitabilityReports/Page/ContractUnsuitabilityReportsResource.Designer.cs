@@ -125,42 +125,6 @@ namespace TsiErp.Localizations.Resources.ContractUnsuitabilityReports.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to CARİ HESAP.
         /// </summary>
         public static string ContractTrackingFicheModalGridCurrentAccountCardName {
@@ -202,6 +166,42 @@ namespace TsiErp.Localizations.Resources.ContractUnsuitabilityReports.Page {
         public static string ContractTrackingFicheNrLabel {
             get {
                 return ResourceManager.GetString("ContractTrackingFicheNrLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ContractUnsuitabilityReportContextAdd {
+            get {
+                return ResourceManager.GetString("ContractUnsuitabilityReportContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ContractUnsuitabilityReportContextChange {
+            get {
+                return ResourceManager.GetString("ContractUnsuitabilityReportContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ContractUnsuitabilityReportContextDelete {
+            get {
+                return ResourceManager.GetString("ContractUnsuitabilityReportContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ContractUnsuitabilityReportContextRefresh {
+            get {
+                return ResourceManager.GetString("ContractUnsuitabilityReportContextRefresh", resourceCulture);
             }
         }
         

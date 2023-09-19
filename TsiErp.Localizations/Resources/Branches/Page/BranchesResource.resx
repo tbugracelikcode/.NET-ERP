@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BranchesContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="BranchesContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="BranchesContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="BranchesContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
   <data name="BranchesTitle" xml:space="preserve">
     <value>Şubeler</value>
   </data>
@@ -131,18 +143,6 @@
   </data>
   <data name="CodeLabel" xml:space="preserve">
     <value>Şube Kodu:</value>
-  </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>

@@ -98,42 +98,6 @@ namespace TsiErp.Localizations.Resources.ContractTrackingFiches.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to İş Tanımı Açıklaması:.
         /// </summary>
         public static string ContractQualityPlanDescriptionLabel {
@@ -157,6 +121,78 @@ namespace TsiErp.Localizations.Resources.ContractTrackingFiches.Page {
         public static string ContractQualityPlanDocumentNumberLabel {
             get {
                 return ResourceManager.GetString("ContractQualityPlanDocumentNumberLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        public static string ContractTrackingFicheContextAdd {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change.
+        /// </summary>
+        public static string ContractTrackingFicheContextChange {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string ContractTrackingFicheContextDelete {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh.
+        /// </summary>
+        public static string ContractTrackingFicheContextRefresh {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ContractTrackingFicheLineContextAdd {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ContractTrackingFicheLineContextChange {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ContractTrackingFicheLineContextDelete {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ContractTrackingFicheLineContextRefresh {
+            get {
+                return ResourceManager.GetString("ContractTrackingFicheLineContextRefresh", resourceCulture);
             }
         }
         

@@ -134,42 +134,6 @@ namespace TsiErp.Localizations.Resources.CurrentAccountCards.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Günlük Çalışma Kapasitesi:.
         /// </summary>
         public static string ContractDailyWorkingCapacityLabel {
@@ -229,6 +193,42 @@ namespace TsiErp.Localizations.Resources.CurrentAccountCards.Page {
         public static string CurrencyPopupTitle {
             get {
                 return ResourceManager.GetString("CurrencyPopupTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string CurrentAccountCardContextAdd {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string CurrentAccountCardContextChange {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string CurrentAccountCardContextDelete {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string CurrentAccountCardContextRefresh {
+            get {
+                return ResourceManager.GetString("CurrentAccountCardContextRefresh", resourceCulture);
             }
         }
         

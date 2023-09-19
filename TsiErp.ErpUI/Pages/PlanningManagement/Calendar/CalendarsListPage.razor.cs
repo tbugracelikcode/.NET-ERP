@@ -134,11 +134,11 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextShowCalendar"], Id = "schedular" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarContextAdd"], Id = "new" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarContextShowCalendar"], Id = "schedular" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarContextChange"], Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarContextDelete"], Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -218,7 +218,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         {
             if (DayGridContextMenu.Count() == 0)
             {
-                DayGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
+                DayGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarDayContextDelete"], Id = "delete" });
             }
         }
 
@@ -609,8 +609,8 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.Calendar
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextMaintenance"], Id = "maintenance" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextWorkStatus"], Id = "workstatus" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarLineContextMaintenance"], Id = "maintenance" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["CalendarLineContextWorkStatus"], Id = "workstatus" });
             }
         }
 

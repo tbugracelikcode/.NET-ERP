@@ -129,16 +129,16 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Control Condition Code:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
+  <data name="ControlConditionContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
-  <data name="ContextChange" xml:space="preserve">
+  <data name="ControlConditionContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
-  <data name="ContextDelete" xml:space="preserve">
+  <data name="ControlConditionContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="ContextRefresh" xml:space="preserve">
+  <data name="ControlConditionContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="ControlConditionsPlaceholder" xml:space="preserve">

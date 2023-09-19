@@ -120,18 +120,6 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same number.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -143,6 +131,18 @@
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="FinalControlUnsuitabilityReportContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="FinalControlUnsuitabilityReportContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="FinalControlUnsuitabilityReportContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="FinalControlUnsuitabilityReportContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>

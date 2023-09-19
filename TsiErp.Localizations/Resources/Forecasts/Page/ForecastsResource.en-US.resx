@@ -147,18 +147,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Forecast Code:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="CurrentAccountCardCodeLabel" xml:space="preserve">
     <value>Current Account Code:</value>
   </data>
@@ -212,6 +200,30 @@
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="ForecastContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ForecastContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ForecastContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ForecastContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ForecastLineContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ForecastLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ForecastLineContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ForecastLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="LineGridAmount" xml:space="preserve">
     <value>AMOUNT</value>

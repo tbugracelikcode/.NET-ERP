@@ -132,16 +132,37 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı döküman numaralı bir kayıt bulunmaktadır.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
+  <data name="ContractOprContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
+  <data name="ContractOprContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
-  <data name="ContextRefresh" xml:space="preserve">
+  <data name="ContractOprContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="ContractQualityPlanContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ContractQualityPlanContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ContractQualityPlanContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ContractQualityPlanContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="ContractQualityPlanLineContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ContractQualityPlanLineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ContractQualityPlanLineContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ContractQualityPlanLineContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
   <data name="ControlConditionsCode" xml:space="preserve">
@@ -335,6 +356,18 @@
   </data>
   <data name="OperationPictureModalTitle" xml:space="preserve">
     <value>Operasyon Resimleri</value>
+  </data>
+  <data name="OprPictureContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="OprPictureContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="OprPictureContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="OprPictureContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="PeriodicControlMeasureLineLabel" xml:space="preserve">
     <value>Periyodik Kontrol Ölçüsü:</value>

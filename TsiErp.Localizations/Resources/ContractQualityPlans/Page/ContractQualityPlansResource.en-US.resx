@@ -132,16 +132,37 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same document number.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
+  <data name="ContractOprContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
+  <data name="ContractOprContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="ContextRefresh" xml:space="preserve">
+  <data name="ContractOprContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ContractQualityPlanContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ContractQualityPlanContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ContractQualityPlanContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ContractQualityPlanContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ContractQualityPlanLineContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ContractQualityPlanLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ContractQualityPlanLineContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ContractQualityPlanLineContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="ControlConditionsCode" xml:space="preserve">
@@ -338,6 +359,18 @@
   </data>
   <data name="OperationPictureModalTitle" xml:space="preserve">
     <value>Operation Pictures</value>
+  </data>
+  <data name="OprPictureContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="OprPictureContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="OprPictureContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="OprPictureContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="PeriodicControlMeasureLineLabel" xml:space="preserve">
     <value>Periodic Control Measurement:</value>

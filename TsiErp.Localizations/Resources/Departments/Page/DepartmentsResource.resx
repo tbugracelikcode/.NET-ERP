@@ -129,18 +129,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Departman Kodu:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -152,6 +140,18 @@
   </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>Kayıt başarıyla silindi.</value>
+  </data>
+  <data name="DepartmentContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="DepartmentContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="DepartmentContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="DepartmentContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Departmanlar</value>
