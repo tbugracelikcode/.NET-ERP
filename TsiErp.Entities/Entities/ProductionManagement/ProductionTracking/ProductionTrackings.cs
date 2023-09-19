@@ -102,5 +102,11 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking
         /// </summary>
         public Guid ShiftID { get; set; }
 
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
+        /// <summary>
+        /// Açıklama
+        /// </summary>
+        public string Description_ { get; set; }
+
     }
 }

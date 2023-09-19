@@ -141,7 +141,8 @@ else
                     <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["CurrentAccountCardNameLabel"] </strong></label><br />
-                            <SfTextBox @ref="@CurrentAccountCardsNameButtonEdit" Created="@CurrentAccountCardsNameOnCreateIcon" @bind-Value="DataSource.CurrentAccountCardName" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange"></SfTextBox>
+                     @*        <SfTextBox @ref="@CurrentAccountCardsNameButtonEdit" Created="@CurrentAccountCardsNameOnCreateIcon" @bind-Value="DataSource.CurrentAccountCardName" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange"></SfTextBox> *@
+                                <SfTextBox CssClass="TSITxtBox" Enabled=false @bind-Value="DataSource.CurrentAccountCardName" ></SfTextBox>
 
                         </Template>
                     </DxGridLayoutItem>
@@ -149,7 +150,8 @@ else
                     <DxGridLayoutItem Row="2" Column="5">
                         <Template>
                             <label class="TSIModalLabel"><strong>@L["CurrentAccountCardCustomerCodeLabel"] </strong></label><br />
-                            <SfTextBox @ref="@CurrentAccountCardsCustomerCodeButtonEdit" Created="@CurrentAccountCardsCustomerCodeOnCreateIcon" @bind-Value="DataSource.CustomerCode" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange"></SfTextBox>
+                            @* <SfTextBox @ref="@CurrentAccountCardsCustomerCodeButtonEdit" Created="@CurrentAccountCardsCustomerCodeOnCreateIcon" @bind-Value="DataSource.CustomerCode" ShowClearButton=true ValueChange="CurrentAccountCardsOnValueChange"></SfTextBox> *@
+                                <SfTextBox CssClass="TSITxtBox" Enabled=false @bind-Value="DataSource.CustomerCode" ></SfTextBox>
 
                         </Template>
                     </DxGridLayoutItem>

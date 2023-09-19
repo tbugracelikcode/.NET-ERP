@@ -400,6 +400,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
             DataSource = new SelectStockFichesDto()
             {
                 Date_ = DateTime.Now,
+                Time_ = DateTime.Now.TimeOfDay,
                 FicheNo = FicheNumbersAppService.GetFicheNumberAsync("StockFichesChildMenu")
             };
 

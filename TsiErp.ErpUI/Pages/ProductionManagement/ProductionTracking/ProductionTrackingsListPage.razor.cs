@@ -9,9 +9,11 @@ using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Shift.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Employee.Dtos;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station.Dtos;
+using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTracking.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionTrackingHaltLine.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 
@@ -35,6 +37,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
         private DateTime? _date = DateTime.Today;
 
         private SfDatePicker<DateTime?> _endDatePicker;
+
+        List<SelectProductsOperationLinesDto> OperationLineList = new List<SelectProductsOperationLinesDto>();
 
         protected override async Task OnInitializedAsync()
         {
@@ -71,6 +75,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
             {
                 DataSource.ShiftID = Guid.Empty;
                 DataSource.ShiftCode = string.Empty;
+                DataSource.HaltTime = 0;
+                DataSource.OperationTime = 0;
             }
         }
 
@@ -82,6 +88,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
             {
                 DataSource.ShiftID = selectedShift.Id;
                 DataSource.ShiftCode = selectedShift.Code;
+                DataSource.HaltTime = selectedShift.TotalBreakTime;
+                DataSource.OperationTime = selectedShift.TotalWorkTime;
                 SelectShiftsPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }
@@ -102,8 +110,17 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
 
         public async void StationsButtonClickEvent()
         {
-            SelectStationsPopupVisible = true;
-            await GetStationsList();
+            if(DataSource.WorkOrderID == null || DataSource.WorkOrderID== Guid.Empty)
+            {
+
+                await ModalManager.WarningPopupAsync(L["UIWarningWorkOrderTitle"], L["UIWarningWorkOrderMessage"]);
+            }
+            else
+            {
+
+                SelectStationsPopupVisible = true;
+                await GetStationsList();
+            }
             await InvokeAsync(StateHasChanged);
         }
 
@@ -200,6 +217,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
             {
                 DataSource.WorkOrderID = Guid.Empty;
                 DataSource.WorkOrderCode = string.Empty;
+                DataSource.CurrentAccountCardID = Guid.Empty;
+                DataSource.CustomerCode = string.Empty;
             }
         }
 
@@ -210,6 +229,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
             if (selectedWorkOrder != null)
             {
                 DataSource.WorkOrderID = selectedWorkOrder.Id;
+                DataSource.CurrentAccountCardID = selectedWorkOrder.CurrentAccountCardID;
+                OperationLineList = (await ProductsOperationsAppService.GetAsync(selectedWorkOrder.ProductsOperationID.GetValueOrDefault())).Data.SelectProductsOperationLines.ToList();
+                DataSource.CustomerCode = (await CurrentAccountCardsAppService.GetAsync(DataSource.CurrentAccountCardID.GetValueOrDefault())).Data.CustomerCode;
                 DataSource.WorkOrderCode = selectedWorkOrder.WorkOrderNo;
                 SelectWorkOrdersPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
@@ -261,6 +283,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
             }
         }
         #endregion
+
         #region Cari Hesap ButtonEdit
 
         SfTextBox CurrentAccountCardsCustomerCodeButtonEdit;
@@ -475,6 +498,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
             LineCrudPopup = false;
         }
 
+
         public void OnDateFocus()
         {
             if (DataSource.OperationStartDate == DateTime.MinValue || DataSource.OperationStartDate == null)
@@ -539,7 +563,13 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
         }
         private async Task GetStationsList()
         {
-            StationsList = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
+            var _stationlist = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
+
+            foreach (var line in OperationLineList)
+            {
+                var station = _stationlist.Where(t=>t.Id == line.StationID).FirstOrDefault();
+                StationsList.Add(station);
+            }
         }
 
         private async Task GetWorkOrdersList()
