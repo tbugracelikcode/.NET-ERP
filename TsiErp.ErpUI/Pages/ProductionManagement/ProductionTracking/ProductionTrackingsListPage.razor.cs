@@ -229,10 +229,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
             if (selectedWorkOrder != null)
             {
                 DataSource.WorkOrderID = selectedWorkOrder.Id;
-                DataSource.WorkOrderCode = selectedWorkOrder.Code;
                 DataSource.CurrentAccountCardID = selectedWorkOrder.CurrentAccountCardID;
                 OperationLineList = (await ProductsOperationsAppService.GetAsync(selectedWorkOrder.ProductsOperationID.GetValueOrDefault())).Data.SelectProductsOperationLines.ToList();
                 DataSource.CustomerCode = (await CurrentAccountCardsAppService.GetAsync(DataSource.CurrentAccountCardID.GetValueOrDefault())).Data.CustomerCode;
+                DataSource.WorkOrderCode = selectedWorkOrder.WorkOrderNo;
                 SelectWorkOrdersPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }

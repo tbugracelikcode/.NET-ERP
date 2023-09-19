@@ -12,10 +12,6 @@ namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos
     public class UpdateWorkOrdersDto : FullAuditedEntityDto
     {
         /// <summary>
-        /// İş Emri Kodu
-        /// </summary>
-        public string Code { get; set; }
-        /// <summary>
         /// İş Emri No
         /// </summary>
         public string WorkOrderNo { get; set; }
@@ -26,7 +22,7 @@ namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos
         /// <summary>
         /// Durum
         /// </summary>
-        public WorkOrderStateEnum WorkOrderState { get; set; }
+        public int WorkOrderState { get; set; }
         /// <summary>
         /// Ayar ve Kontrol Süresi
         /// </summary>

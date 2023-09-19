@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
+using Syncfusion.Blazor.SplitButtons;
+using System.Runtime.CompilerServices;
+using Tsi.Core.Utilities.Guids;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch.Dtos;
@@ -11,6 +15,7 @@ using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
 using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrder.Dtos;
 using TsiErp.Entities.Entities.SalesManagement.SalesOrderLine.Dtos;
 using TsiErp.Entities.Entities.ShippingManagement.ShippingAdress.Dtos;
@@ -18,6 +23,7 @@ using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 using TsiErp.Entities.Entities.StockManagement.WareHouse.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
+
 
 namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 {
@@ -57,6 +63,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         private bool CreateProductionOrderCrudPopup = false;
 
         private bool BoMLineCrudPopup = false;
+
 
         #region Birim Setleri ButtonEdit
 
@@ -522,98 +529,105 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
 
         public async void OnCreateProductionOrderContextMenuClick(ContextMenuClickEventArgs<SelectSalesOrderLinesDto> args)
         {
-            switch (args.Item.Id)
-            {
-                case "productstree":
+            //switch (args.Item.Id)
+            //{
+            //    case "productstree":
 
-                    BoMList = (await BillsofMaterialsAppService.GetListAsync(new ListBillsofMaterialsParameterDto())).Data.Where(t => t.FinishedProductCode == args.RowInfo.RowData.ProductCode).ToList();
+            //        BoMList = (await BillsofMaterialsAppService.GetListAsync(new ListBillsofMaterialsParameterDto())).Data.Where(t => t.FinishedProductCode == args.RowInfo.RowData.ProductCode).ToList();
 
-                    Guid BoMID = BoMList.Select(t => t.Id).FirstOrDefault();
+            //        Guid BoMID = BoMList.Select(t => t.Id).FirstOrDefault();
 
-                    BoMDataSource = (await BillsofMaterialsAppService.GetAsync(BoMID)).Data;
+            //        BoMDataSource = (await BillsofMaterialsAppService.GetAsync(BoMID)).Data;
 
-                    GridBoMLineList = BoMDataSource.SelectBillsofMaterialLines;
+            //        GridBoMLineList = BoMDataSource.SelectBillsofMaterialLines;
 
 
 
-                    foreach (var item in GridBoMLineList)
-                    {
-                        item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
-                        item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
+            //        foreach (var item in GridBoMLineList)
+            //        {
+            //            item.ProductCode = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Code;
+            //            item.ProductName = (await ProductsAppService.GetAsync(item.ProductID.GetValueOrDefault())).Data.Name;
 
-                        decimal stockAmount = (await ProductsAppService.GetStockAmountAsync(item.ProductID.GetValueOrDefault())).Data.Amount;
+            //            decimal stockAmount = (await ProductsAppService.GetStockAmountAsync(item.ProductID.GetValueOrDefault())).Data.Amount;
 
-                        ProductsTreeDto _model = new ProductsTreeDto
-                        {
-                            ProductName = item.ProductName,
-                            ProductCode = item.ProductCode,
-                            AmountofStock = stockAmount,
-                            AmountofRequierement = Math.Abs(stockAmount -  item.Quantity),
-                            SupplyForm = 1 //deneme
-                        };
+            //            ProductsTreeDto _model = new ProductsTreeDto
+            //            {
+            //                ProductName = item.ProductName,
+            //                ProductCode = item.ProductCode,
+            //                AmountofStock = stockAmount,
+            //                AmountofRequierement = Math.Abs(stockAmount - item.Quantity),
+            //                SupplyForm = 1 //deneme
+            //            };
 
-                        ProductTreeDataSource.Add(_model);
-                    }
+            //            ProductTreeDataSource.Add(_model);
+            //        }
 
-                    BoMLineCrudPopup = true;
+            //        BoMLineCrudPopup = true;
 
-                    await InvokeAsync(StateHasChanged);
+            //        await InvokeAsync(StateHasChanged);
 
-                    break;
+            //        break;
 
-                default:
-                    break;
-            }
+            //    default:
+            //        break;
+            //}
         }
+
 
         protected async Task OnCreateProductionOrderBtnClicked()
         {
-            var bomDataSource = (await BillsofMaterialsAppService.GetbyCurrentAccountIDAsync(DataSource.CurrentAccountCardID)).Data;
-
-            var bomLineList = BoMDataSource.SelectBillsofMaterialLines;
 
             foreach (var productionOrder in GridProductionOrderList)
             {
-                decimal stockAmount = (await ProductsAppService.GetStockAmountAsync(productionOrder.ProductID.GetValueOrDefault())).Data.Amount;
+                var productProductionRoute = (await RoutesAppService.GetListAsync(new Entities.Entities.ProductionManagement.Route.Dtos.ListRoutesParameterDto())).Data.Where(t => t.ProductID == productionOrder.ProductID && t.TechnicalApproval == true && t.Approval == true).FirstOrDefault();
 
-                if (productionOrder.Quantity > stockAmount)
+
+                var bomDataSource = (await BillsofMaterialsAppService.GetbyCurrentAccountIDAsync(DataSource.CurrentAccountCardID, productionOrder.ProductID.GetValueOrDefault())).Data;
+
+                var finishedProduct = (await ProductsAppService.GetAsync(productionOrder.ProductID.GetValueOrDefault())).Data;
+
+                var bomLineList = bomDataSource.SelectBillsofMaterialLines;
+
+                CreateProductionOrdersDto producionOrder = new CreateProductionOrdersDto
                 {
-                    CreateProductionOrdersDto producionOrder = new CreateProductionOrdersDto
-                    {
-                        OrderID = DataSource.Id,
-                        FinishedProductID = productionOrder.ProductID.GetValueOrDefault(),
-                        LinkedProductID = Guid.Empty,
-                        PlannedQuantity = productionOrder.Quantity - stockAmount,
-                        ProducedQuantity = 0,
-                        CurrentAccountID = DataSource.CurrentAccountCardID
-                    };
+                    OrderID = DataSource.Id,
+                    FinishedProductID = productionOrder.ProductID.GetValueOrDefault(),
+                    LinkedProductID = Guid.Empty,
+                    PlannedQuantity = productionOrder.Quantity,
+                    ProducedQuantity = 0,
+                    CurrentAccountID = DataSource.CurrentAccountCardID,
+                    BOMID = bomDataSource.Id,
+                    Cancel_ = false,
+                    UnitSetID = finishedProduct.UnitSetID,
+                    FicheNo = FicheNumbersAppService.GetFicheNumberAsync("ProductionOrdersChildMenu"),
+                    CustomerOrderNo = "",
+                    EndDate = null,
+                    LinkedProductionOrderID = Guid.Empty,
+                    OrderLineID = productionOrder.Id,
+                    ProductionOrderState = (int)Entities.Enums.ProductionOrderStateEnum.Baslamadi,
+                    ProductTreeID = Guid.Empty,
+                    ProductTreeLineID = Guid.Empty,
+                    PropositionID = productionOrder.LinkedSalesPropositionID.GetValueOrDefault(),
+                    PropositionLineID = productionOrder.LikedPropositionLineID.GetValueOrDefault(),
+                    StartDate = null,
+                    Date_ = DateTime.Today,
+                    Description_ = "",
+                    CreationTime = DateTime.Now,
+                    CreatorId = LoginedUserService.UserId,
+                    DataOpenStatus = false,
+                    DataOpenStatusUserId = Guid.Empty,
+                    DeleterId = Guid.Empty,
+                    DeletionTime = null,
+                    LastModificationTime = null,
+                    LastModifierId = Guid.Empty,
+                    IsDeleted = false,
+                    RouteID = productProductionRoute.Id
+                };
 
-                    await ProductionOrdersAppService.ConverttoProductionOrder(producionOrder);
-                }
+                var insertedProductionOrder = (await ProductionOrdersAppService.ConverttoProductionOrder(producionOrder)).Data;
 
-                var tempBomLineList = bomLineList.Where(t=>t.ProductID == productionOrder.ProductID).ToList();
 
-                foreach(var line in tempBomLineList)
-                {
-                    decimal stockAmountofLine = (await ProductsAppService.GetStockAmountAsync(line.ProductID.GetValueOrDefault())).Data.Amount;
 
-                    var supplyForm = (await ProductsAppService.GetAsync(line.ProductID.GetValueOrDefault())).Data.SupplyForm;
-
-                    if(line.Quantity > stockAmountofLine && supplyForm == Entities.Enums.ProductSupplyFormEnum.Üretim)
-                    {
-                        CreateProductionOrdersDto procutionOrderBomLine = new CreateProductionOrdersDto
-                        {
-                            OrderID = DataSource.Id,
-                            FinishedProductID = line.ProductID.GetValueOrDefault(),
-                            LinkedProductID = productionOrder.ProductID.GetValueOrDefault(),
-                            PlannedQuantity = line.Quantity - stockAmountofLine,
-                            ProducedQuantity = 0,
-                            CurrentAccountID = DataSource.CurrentAccountCardID
-                        };
-
-                        await ProductionOrdersAppService.ConverttoProductionOrder(procutionOrderBomLine);
-                    }
-                }
             }
         }
 

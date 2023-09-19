@@ -215,6 +215,7 @@ namespace TsiErp.Business.Entities.Route.Services
                         .Where(null, true, true, Tables.Routes);
 
                 var routes = queryFactory.GetList<ListRoutesDto>(query).ToList();
+
                 return new SuccessDataResult<IList<ListRoutesDto>>(routes);
             }
         }
@@ -406,55 +407,6 @@ namespace TsiErp.Business.Entities.Route.Services
 
             }
 
-        }
-
-        public async Task<IDataResult<SelectRoutesDto>> GetSelectListAsync(Guid productId)
-        {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory
-                       .Query()
-                       .From(Tables.Routes)
-                       .Select<Routes>(r => new { r.TechnicalApproval, r.ProductionStart, r.ProductID, r.Name, r.IsActive, r.Id, r.DataOpenStatusUserId, r.DataOpenStatus, r.Code, r.Approval })
-                       .Join<Products>
-                        (
-                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
-                            nameof(Routes.ProductID),
-                            nameof(Products.Id),
-                            JoinType.Left
-                        )
-                        .Where(new { ProductID = productId }, true, true, Tables.Routes);
-
-                var routes = queryFactory.Get<SelectRoutesDto>(query);
-
-                var queryLines = queryFactory
-                       .Query()
-                       .From(Tables.RouteLines)
-                       .Select<RouteLines>(rl => new { rl.RouteID, rl.ProductsOperationID, rl.ProductionPoolID, rl.ProductionPoolDescription, rl.ProductID, rl.Priority, rl.OperationTime, rl.LineNr, rl.Id, rl.DataOpenStatusUserId, rl.DataOpenStatus, rl.AdjustmentAndControlTime })
-                       .Join<Products>
-                        (
-                            pr => new { ProductID = pr.Id, ProductCode = pr.Code, ProductName = pr.Name },
-                            nameof(RouteLines.ProductID),
-                            nameof(Products.Id),
-                            JoinType.Left
-                        )
-                       .Join<ProductsOperations>
-                        (
-                            po => new { ProductsOperationID = po.Id, OperationName = po.Name, OperationCode = po.Code },
-                            nameof(RouteLines.ProductsOperationID),
-                            nameof(ProductsOperations.Id),
-                            JoinType.Left
-                        )
-                        .Where(new { RouteID = routes.Id }, false, false, Tables.RouteLines);
-
-                var routeLine = queryFactory.GetList<SelectRouteLinesDto>(queryLines).ToList();
-
-                routes.SelectRouteLines = routeLine;
-
-                LogsAppService.InsertLogToDatabase(routes, routes, LoginedUserService.UserId, Tables.Routes, LogType.Get, routes.Id);
-
-                return new SuccessDataResult<SelectRoutesDto>(routes);
-            }
         }
 
         public async Task<IDataResult<SelectRoutesDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)

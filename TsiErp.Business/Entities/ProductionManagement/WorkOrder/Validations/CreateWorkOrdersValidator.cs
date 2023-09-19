@@ -13,20 +13,14 @@ namespace TsiErp.Business.Entities.WorkOrder.Validations
     {
         public CreateWorkOrdersValidator()
         {
-            RuleFor(x => x.Code)
+            RuleFor(x => x.WorkOrderNo)
                 .NotEmpty()
                 .WithMessage("ValidatorCodeEmpty")
                 .MaximumLength(17)
                 .WithMessage("ValidatorCodeMaxLenght");
 
-            RuleFor(x => x.WorkOrderNo)
-                .NotEmpty()
-                .WithMessage("ValidatorNameEmpty")
-                .MaximumLength(200)
-                .WithMessage("ValidatorNameMaxLenght");
 
             RuleFor(x => x.ProductionOrderID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorProductionOrderID");
-            RuleFor(x => x.PropositionID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorPropositionID");
             RuleFor(x => x.ProductsOperationID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorProductsOperationID");
             RuleFor(x => x.ProductID).Must(x => x.HasValue && x.Value != Guid.Empty).WithMessage("ValidatorProductID");
 

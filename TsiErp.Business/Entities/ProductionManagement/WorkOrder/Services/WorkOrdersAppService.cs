@@ -43,7 +43,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var listQuery = queryFactory.Query().From(Tables.WorkOrders).Select("*").Where(new { Code = input.Code }, false, false, "");
+                var listQuery = queryFactory.Query().From(Tables.WorkOrders).Select("*").Where(new { WorkOrderNo = input.WorkOrderNo }, false, false, "");
 
                 var list = queryFactory.ControlList<WorkOrders>(listQuery).ToList();
 
@@ -81,7 +81,6 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                     StationID = input.StationID,
                     WorkOrderNo = input.WorkOrderNo,
                     WorkOrderState = input.WorkOrderState,
-                    Code = input.Code,
                     CreationTime = DateTime.Now,
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
@@ -96,7 +95,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
 
                 var workOrders = queryFactory.Insert<SelectWorkOrdersDto>(query, "Id", true);
 
-                await FicheNumbersAppService.UpdateFicheNumberAsync("WorkOrdersChildMenu", input.Code);
+                await FicheNumbersAppService.UpdateFicheNumberAsync("WorkOrdersChildMenu", input.WorkOrderNo);
 
                 LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.WorkOrders, LogType.Insert, addedEntityId);
 
@@ -127,7 +126,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
                 var query = queryFactory
-                        .Query().From(Tables.WorkOrders).Select<WorkOrders>(wo => new {wo.WorkOrderState,wo.WorkOrderNo,wo.StationID,wo.StationGroupID,wo.RouteID,wo.PropositionID,wo.ProductsOperationID,wo.ProductionOrderID,wo.ProductID,wo.ProducedQuantity,wo.PlannedQuantity,wo.OperationTime,wo.OccuredStartDate,wo.OccuredFinishDate,wo.LinkedWorkOrderID,wo.LineNr,wo.IsCancel,wo.Id,wo.DataOpenStatusUserId,wo.DataOpenStatus,wo.CurrentAccountCardID,wo.Code,wo.AdjustmentAndControlTime})
+                        .Query().From(Tables.WorkOrders).Select<WorkOrders>(wo => new {wo.WorkOrderState,wo.WorkOrderNo,wo.StationID,wo.StationGroupID,wo.RouteID,wo.PropositionID,wo.ProductsOperationID,wo.ProductionOrderID,wo.ProductID,wo.ProducedQuantity,wo.PlannedQuantity,wo.OperationTime,wo.OccuredStartDate,wo.OccuredFinishDate,wo.LinkedWorkOrderID,wo.LineNr,wo.IsCancel,wo.Id,wo.DataOpenStatusUserId,wo.DataOpenStatus,wo.CurrentAccountCardID,wo.AdjustmentAndControlTime})
                             .Join<ProductionOrders>
                             (
                                 po => new { ProductionOrderID = po.Id, ProductionOrderFicheNo  = po.FicheNo},
@@ -279,7 +278,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
 
                 var query = queryFactory
                    .Query()
-                   .From(Tables.WorkOrders).Select<WorkOrders>(wo => new { wo.WorkOrderState, wo.WorkOrderNo, wo.StationID, wo.StationGroupID, wo.RouteID, wo.PropositionID, wo.ProductsOperationID, wo.ProductionOrderID, wo.ProductID, wo.ProducedQuantity, wo.PlannedQuantity, wo.OperationTime, wo.OccuredStartDate, wo.OccuredFinishDate, wo.LinkedWorkOrderID, wo.LineNr, wo.IsCancel, wo.Id, wo.DataOpenStatusUserId, wo.DataOpenStatus, wo.CurrentAccountCardID, wo.Code, wo.AdjustmentAndControlTime })
+                   .From(Tables.WorkOrders).Select<WorkOrders>(wo => new { wo.WorkOrderState, wo.WorkOrderNo, wo.StationID, wo.StationGroupID, wo.RouteID, wo.PropositionID, wo.ProductsOperationID, wo.ProductionOrderID, wo.ProductID, wo.ProducedQuantity, wo.PlannedQuantity, wo.OperationTime, wo.OccuredStartDate, wo.OccuredFinishDate, wo.LinkedWorkOrderID, wo.LineNr, wo.IsCancel, wo.Id, wo.DataOpenStatusUserId, wo.DataOpenStatus, wo.CurrentAccountCardID,  wo.AdjustmentAndControlTime })
                             .Join<ProductionOrders>
                             (
                                 po => new { ProductionOrderFicheNo = po.FicheNo },
@@ -356,10 +355,10 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
 
                 #region Update Control
 
-                var listQuery = queryFactory.Query().From(Tables.WorkOrders).Select("*").Where(new { Code = input.Code }, false, false, "");
+                var listQuery = queryFactory.Query().From(Tables.WorkOrders).Select("*").Where(new { WorkOrderNo = input.WorkOrderNo }, false, false, "");
                 var list = queryFactory.GetList<WorkOrders>(listQuery).ToList();
 
-                if (list.Count > 0 && entity.Code != input.Code)
+                if (list.Count > 0 && entity.WorkOrderNo != input.WorkOrderNo)
                 {
                     connection.Close();
                     connection.Dispose();
@@ -389,7 +388,6 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                     StationID = input.StationID,
                     WorkOrderNo = input.WorkOrderNo,
                     WorkOrderState = input.WorkOrderState,
-                    Code = input.Code,
                     Id = input.Id,
                     CreationTime = entity.CreationTime.Value,
                     CreatorId = entity.CreatorId.Value,
@@ -438,8 +436,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
                     StationGroupID = entity.StationGroupID,
                     StationID = entity.StationID,
                     WorkOrderNo = entity.WorkOrderNo,
-                    WorkOrderState = entity.WorkOrderState,
-                    Code = entity.Code,
+                    WorkOrderState = (int)entity.WorkOrderState,
                     CreationTime = entity.CreationTime.Value,
                     CreatorId = entity.CreatorId.Value,
                     DeleterId = entity.DeleterId.GetValueOrDefault(),

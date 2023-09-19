@@ -7,6 +7,6 @@ namespace TsiErp.Business.Entities.Product.Services
 {
     public interface IProductsAppService : ICrudAppService<SelectProductsDto, ListProductsDto, CreateProductsDto, UpdateProductsDto, ListProductsParameterDto>
     {
-        Task<IDataResult<SelectGrandTotalStockMovementsDto>> GetStockAmountAsync(Guid productid);
+        Task<IDataResult<IList<SelectGrandTotalStockMovementsDto>>> GetStockAmountAsync(Guid productid);
     }
 }

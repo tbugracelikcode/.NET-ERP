@@ -472,7 +472,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTrackingIoT
             if (selectedWorkOrder != null)
             {
                 DataSource.WorkOrderID = selectedWorkOrder.Id;
-                DataSource.WorkOrderCode = selectedWorkOrder.Code;
+                DataSource.WorkOrderCode = selectedWorkOrder.WorkOrderNo;
                 SelectWorkOrdersPopupVisible = false;
                 await InvokeAsync(StateHasChanged);
             }

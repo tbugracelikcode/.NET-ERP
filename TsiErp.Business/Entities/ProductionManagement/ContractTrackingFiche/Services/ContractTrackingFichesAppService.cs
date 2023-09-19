@@ -204,7 +204,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                                 )
                                  .Join<WorkOrders>
                                 (
-                                    s => new { WorkOrderID = s.Id, WorkOrderNr = s.Code },
+                                    s => new { WorkOrderID = s.Id, WorkOrderNr = s.WorkOrderNo },
                                     nameof(ContractTrackingFicheLines.WorkOrderID),
                                     nameof(WorkOrders.Id),
                                     JoinType.Left
@@ -314,7 +314,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                                 )
                                  .Join<WorkOrders>
                                 (
-                                    s => new { WorkOrderID = s.Id, WorkOrderNr = s.Code },
+                                    s => new { WorkOrderID = s.Id, WorkOrderNr = s.WorkOrderNo },
                                     nameof(ContractTrackingFicheLines.WorkOrderID),
                                     nameof(WorkOrders.Id),
                                     JoinType.Left

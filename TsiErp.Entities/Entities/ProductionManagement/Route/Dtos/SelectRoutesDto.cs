@@ -56,6 +56,7 @@ namespace TsiErp.Entities.Entities.ProductionManagement.Route.Dtos
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
+
         [NoDatabaseAction]
         public List<SelectRouteLinesDto> SelectRouteLines { get; set; }
     }

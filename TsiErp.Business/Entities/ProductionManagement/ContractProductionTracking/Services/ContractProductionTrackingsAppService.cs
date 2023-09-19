@@ -101,7 +101,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                         .Query().From(Tables.ContractProductionTrackings).Select<ContractProductionTrackings>(c => new { c.Id, c.StationID, c.StationCode, c.CurrentAccountCardID, c.EmployeeID,c.EmployeeName,c.OperationEndDate,c.OperationEndTime,c.OperationStartDate,c.OperationStartTime,c.OperationTime,c.PlannedQuantity,c.ProducedQuantity,c.ProductID,c.ShiftCode,c.ShiftID,c.WorkOrderID, c.DataOpenStatus, c.DataOpenStatusUserId })
                             .Join<WorkOrders>
                             (
-                                w => new { WorkOrderCode = w.Code, WorkOrderID = w.Id },
+                                w => new { WorkOrderCode = w.WorkOrderNo, WorkOrderID = w.Id },
                                 nameof(ContractProductionTrackings.WorkOrderID),
                                 nameof(WorkOrders.Id),
                                 JoinType.Left
@@ -161,7 +161,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                        .Query().From(Tables.ContractProductionTrackings).Select<ContractProductionTrackings>(c => new { c.Id, c.StationID, c.StationCode, c.CurrentAccountCardID, c.EmployeeID, c.EmployeeName, c.OperationEndDate, c.OperationEndTime, c.OperationStartDate, c.OperationStartTime, c.OperationTime, c.PlannedQuantity, c.ProducedQuantity, c.ProductID, c.ShiftCode, c.ShiftID, c.WorkOrderID })
                            .Join<WorkOrders>
                            (
-                               w => new { WorkOrderCode = w.Code, WorkOrderID = w.Id },
+                               w => new { WorkOrderCode = w.WorkOrderNo, WorkOrderID = w.Id },
                                nameof(ContractProductionTrackings.WorkOrderID),
                                nameof(WorkOrders.Id),
                                JoinType.Left
@@ -264,7 +264,7 @@ namespace TsiErp.Business.Entities.ContractProductionTracking.Services
                        .Query().From(Tables.ContractProductionTrackings).Select<ContractProductionTrackings>(c => new { c.Id, c.StationID, c.StationCode, c.CurrentAccountCardID, c.EmployeeID, c.EmployeeName, c.OperationEndDate, c.OperationEndTime, c.OperationStartDate, c.OperationStartTime, c.OperationTime, c.PlannedQuantity, c.ProducedQuantity, c.ProductID, c.ShiftCode, c.ShiftID, c.WorkOrderID })
                            .Join<WorkOrders>
                            (
-                               w => new { WorkOrderCode = w.Code, WorkOrderID = w.Id },
+                               w => new { WorkOrderCode = w.WorkOrderNo, WorkOrderID = w.Id },
                                nameof(ContractProductionTrackings.WorkOrderID),
                                nameof(WorkOrders.Id),
                                JoinType.Left

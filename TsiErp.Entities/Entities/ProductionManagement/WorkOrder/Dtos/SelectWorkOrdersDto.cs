@@ -11,10 +11,6 @@ namespace TsiErp.Entities.Entities.ProductionManagement.WorkOrder.Dtos
     public class SelectWorkOrdersDto : FullAuditedEntityDto
     {
         /// <summary>
-        /// İş Emri Kodu
-        /// </summary>
-        public string Code { get; set; }
-        /// <summary>
         /// İş Emri No
         /// </summary>
         public string WorkOrderNo { get; set; }
