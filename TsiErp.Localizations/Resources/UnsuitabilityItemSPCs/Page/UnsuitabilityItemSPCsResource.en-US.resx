@@ -132,18 +132,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Analysis Code:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="Date_" xml:space="preserve">
     <value>DATE</value>
   </data>
@@ -257,6 +245,30 @@
   </data>
   <data name="UIWarningDateTitleBase" xml:space="preserve">
     <value>Warning</value>
+  </data>
+  <data name="UnsuitabilityItemSPCContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="UnsuitabilityItemSPCContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="UnsuitabilityItemSPCContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="UnsuitabilityItemSPCContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="UnsuitabilityItemSPCLineContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="UnsuitabilityItemSPCLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="UnsuitabilityItemSPCLineContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="UnsuitabilityItemSPCLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>

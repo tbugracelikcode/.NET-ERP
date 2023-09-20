@@ -132,18 +132,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Analiz Kodu:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="Date_" xml:space="preserve">
     <value>TARİH</value>
   </data>
@@ -257,6 +245,30 @@
   </data>
   <data name="UIWarningDateTitleBase" xml:space="preserve">
     <value>Uyarı</value>
+  </data>
+  <data name="UnsuitabilityItemSPCContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="UnsuitabilityItemSPCContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="UnsuitabilityItemSPCContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="UnsuitabilityItemSPCContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="UnsuitabilityItemSPCLineContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="UnsuitabilityItemSPCLineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="UnsuitabilityItemSPCLineContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="UnsuitabilityItemSPCLineContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>

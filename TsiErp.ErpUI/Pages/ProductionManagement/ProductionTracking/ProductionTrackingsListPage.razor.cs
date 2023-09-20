@@ -49,6 +49,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
 
         }
 
+        #region ButtonEdit Metotları
+
         #region Vardiya ButtonEdit
 
         SfTextBox ShiftsButtonEdit;
@@ -330,6 +332,25 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
         }
         #endregion
 
+        #region Kod ButtonEdit
+
+        SfTextBox CodeButtonEdit;
+
+        public async Task CodeOnCreateIcon()
+        {
+            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
+            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
+        }
+
+        public async void CodeButtonClickEvent()
+        {
+            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("ProdTrackingsChildMenu");
+            await InvokeAsync(StateHasChanged);
+        }
+        #endregion
+
+        #endregion
+
         #region Fason Üretim Takip Satırları İşlemleri
 
         protected override async Task BeforeInsertAsync()
@@ -354,10 +375,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionTrackingLineContextAdd"], Id = "new" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionTrackingLineContextChange"], Id = "changed" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionTrackingLineContextDelete"], Id = "delete" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionTrackingLineContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -365,10 +386,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionTrackingContextAdd"], Id = "new" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionTrackingContextChange"], Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionTrackingContextDelete"], Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionTrackingContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -590,21 +611,5 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
         #endregion
 
 
-        #region Kod ButtonEdit
-
-        SfTextBox CodeButtonEdit;
-
-        public async Task CodeOnCreateIcon()
-        {
-            var CodesButtonClick = EventCallback.Factory.Create<MouseEventArgs>(this, CodeButtonClickEvent);
-            await CodeButtonEdit.AddIconAsync("append", "e-search-icon", new Dictionary<string, object>() { { "onclick", CodesButtonClick } });
-        }
-
-        public async void CodeButtonClickEvent()
-        {
-            DataSource.Code = FicheNumbersAppService.GetFicheNumberAsync("ProdTrackingsChildMenu");
-            await InvokeAsync(StateHasChanged);
-        }
-        #endregion
     }
 }

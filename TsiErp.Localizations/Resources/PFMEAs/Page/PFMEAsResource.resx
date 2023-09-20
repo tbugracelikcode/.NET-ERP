@@ -123,18 +123,6 @@
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="ControlMechanismLabel" xml:space="preserve">
     <value>Kontrol Mekanizması:</value>
   </data>
@@ -260,6 +248,18 @@
   </data>
   <data name="OperationRequirementLabel" xml:space="preserve">
     <value>Operasyon Gereklilikleri:</value>
+  </data>
+  <data name="PFMEAContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="PFMEAContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="PFMEAContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="PFMEAContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="PotentialErrorReasonLabel" xml:space="preserve">
     <value>Potansiyel Hata Sebebi:</value>

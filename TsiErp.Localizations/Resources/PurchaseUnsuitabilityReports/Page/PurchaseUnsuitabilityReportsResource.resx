@@ -141,18 +141,6 @@
   <data name="ComboboxToBeUsedAs" xml:space="preserve">
     <value>Olduğu Gibi Kullanılacak</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="CurrentAccountCardCodeLabel" xml:space="preserve">
     <value>Cari Hesap Kodu:</value>
   </data>
@@ -299,6 +287,18 @@
   </data>
   <data name="PurchaseOrderModalTitle" xml:space="preserve">
     <value>Satın Alma Sipariş Fişleri</value>
+  </data>
+  <data name="PurchaseUnsuitabilityReportContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="PurchaseUnsuitabilityReportContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="PurchaseUnsuitabilityReportContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="PurchaseUnsuitabilityReportContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>

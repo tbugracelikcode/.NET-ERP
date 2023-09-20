@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
@@ -38,6 +39,14 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PurchaseUnsuitabilityReport
             BaseCrudService = PurchaseUnsuitabilityReportsService;
             _L = L;
 
+        }
+
+        protected override void CreateContextMenuItems(IStringLocalizer L)
+        {
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseUnsuitabilityReportContextAdd"], Id = "new" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseUnsuitabilityReportContextChange"], Id = "changed" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseUnsuitabilityReportContextDelete"], Id = "delete" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseUnsuitabilityReportContextRefresh"], Id = "refresh" });
         }
 
         private void UnsComboBoxValueChangeHandler(ChangeEventArgs<string, UnsComboBox> args)

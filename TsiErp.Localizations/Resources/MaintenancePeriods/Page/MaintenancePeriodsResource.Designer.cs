@@ -98,42 +98,6 @@ namespace TsiErp.Localizations.Resources.MaintenancePeriods.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Günlük Bakım:.
         /// </summary>
         public static string DailyMainLabel {
@@ -229,6 +193,42 @@ namespace TsiErp.Localizations.Resources.MaintenancePeriods.Page {
         public static string LoadingText {
             get {
                 return ResourceManager.GetString("LoadingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string MaintenancePeriodContextAdd {
+            get {
+                return ResourceManager.GetString("MaintenancePeriodContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string MaintenancePeriodContextChange {
+            get {
+                return ResourceManager.GetString("MaintenancePeriodContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string MaintenancePeriodContextDelete {
+            get {
+                return ResourceManager.GetString("MaintenancePeriodContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string MaintenancePeriodContextRefresh {
+            get {
+                return ResourceManager.GetString("MaintenancePeriodContextRefresh", resourceCulture);
             }
         }
         

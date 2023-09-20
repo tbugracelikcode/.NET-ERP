@@ -107,42 +107,6 @@ namespace TsiErp.Localizations.Resources.PurchaseQualityPlans.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to KONTROL ŞARTI KODU.
         /// </summary>
         public static string ControlConditionsCode {
@@ -1309,6 +1273,78 @@ namespace TsiErp.Localizations.Resources.PurchaseQualityPlans.Page {
         public static string ProductsOprModalTitle1 {
             get {
                 return ResourceManager.GetString("ProductsOprModalTitle1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string PurchaseQualityPlanContextAdd {
+            get {
+                return ResourceManager.GetString("PurchaseQualityPlanContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PurchaseQualityPlanContextChange {
+            get {
+                return ResourceManager.GetString("PurchaseQualityPlanContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string PurchaseQualityPlanContextDelete {
+            get {
+                return ResourceManager.GetString("PurchaseQualityPlanContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PurchaseQualityPlanContextRefresh {
+            get {
+                return ResourceManager.GetString("PurchaseQualityPlanContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string PurchaseQualityPlanLineContextAdd {
+            get {
+                return ResourceManager.GetString("PurchaseQualityPlanLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PurchaseQualityPlanLineContextChange {
+            get {
+                return ResourceManager.GetString("PurchaseQualityPlanLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string PurchaseQualityPlanLineContextDelete {
+            get {
+                return ResourceManager.GetString("PurchaseQualityPlanLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PurchaseQualityPlanLineContextRefresh {
+            get {
+                return ResourceManager.GetString("PurchaseQualityPlanLineContextRefresh", resourceCulture);
             }
         }
         

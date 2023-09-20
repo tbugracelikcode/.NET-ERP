@@ -133,96 +133,6 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sarf Fişi Ekle.
-        /// </summary>
-        public static string ContextAddConsume {
-            get {
-                return ResourceManager.GetString("ContextAddConsume", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Üretimden Giriş Fişi Ekle.
-        /// </summary>
-        public static string ContextAddProductionIncome {
-            get {
-                return ResourceManager.GetString("ContextAddProductionIncome", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Stok Giriş Fişi Ekle.
-        /// </summary>
-        public static string ContextAddStockIncome {
-            get {
-                return ResourceManager.GetString("ContextAddStockIncome", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Stok Çıkış Fişi Ekle.
-        /// </summary>
-        public static string ContextAddStockOutput {
-            get {
-                return ResourceManager.GetString("ContextAddStockOutput", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Depo Sevk Fişi Ekle.
-        /// </summary>
-        public static string ContextAddWarehouse {
-            get {
-                return ResourceManager.GetString("ContextAddWarehouse", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Fire Fişi Ekle.
-        /// </summary>
-        public static string ContextAddWastege {
-            get {
-                return ResourceManager.GetString("ContextAddWastege", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Para Birimi:.
         /// </summary>
         public static string CurrencyCodeLabel {
@@ -678,6 +588,132 @@ namespace TsiErp.Localizations.Resources.StockFiche {
         public static string SpecialCodeLabel {
             get {
                 return ResourceManager.GetString("SpecialCodeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string StockFicheContextAdd {
+            get {
+                return ResourceManager.GetString("StockFicheContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sarf Fişi Ekle.
+        /// </summary>
+        public static string StockFicheContextAddConsume {
+            get {
+                return ResourceManager.GetString("StockFicheContextAddConsume", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Üretimden Giriş Fişi Ekle.
+        /// </summary>
+        public static string StockFicheContextAddProductionIncome {
+            get {
+                return ResourceManager.GetString("StockFicheContextAddProductionIncome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Giriş Fişi Ekle.
+        /// </summary>
+        public static string StockFicheContextAddStockIncome {
+            get {
+                return ResourceManager.GetString("StockFicheContextAddStockIncome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stok Çıkış Fişi Ekle.
+        /// </summary>
+        public static string StockFicheContextAddStockOutput {
+            get {
+                return ResourceManager.GetString("StockFicheContextAddStockOutput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Depo Sevk Fişi Ekle.
+        /// </summary>
+        public static string StockFicheContextAddWarehouse {
+            get {
+                return ResourceManager.GetString("StockFicheContextAddWarehouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fire Fişi Ekle.
+        /// </summary>
+        public static string StockFicheContextAddWastege {
+            get {
+                return ResourceManager.GetString("StockFicheContextAddWastege", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string StockFicheContextChange {
+            get {
+                return ResourceManager.GetString("StockFicheContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string StockFicheContextDelete {
+            get {
+                return ResourceManager.GetString("StockFicheContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string StockFicheContextRefresh {
+            get {
+                return ResourceManager.GetString("StockFicheContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string StockFicheLineContextAdd {
+            get {
+                return ResourceManager.GetString("StockFicheLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string StockFicheLineContextChange {
+            get {
+                return ResourceManager.GetString("StockFicheLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string StockFicheLineContextDelete {
+            get {
+                return ResourceManager.GetString("StockFicheLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string StockFicheLineContextRefresh {
+            get {
+                return ResourceManager.GetString("StockFicheLineContextRefresh", resourceCulture);
             }
         }
         

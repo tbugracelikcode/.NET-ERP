@@ -132,18 +132,6 @@
   <data name="CoefficientLineLabel" xml:space="preserve">
     <value>Katsayı:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -227,6 +215,30 @@
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
+  </data>
+  <data name="ShiftContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ShiftContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ShiftContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ShiftContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="ShiftLineContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ShiftLineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ShiftLineContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ShiftLineContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="ShiftOrder" xml:space="preserve">
     <value>VARDİYA SIRASI</value>

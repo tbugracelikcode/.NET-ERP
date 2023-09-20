@@ -116,42 +116,6 @@ namespace TsiErp.Localizations.Resources.PlannedMaintenances.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
         /// </summary>
         public static string DeleteConfirmationDescriptionBase {
@@ -436,6 +400,69 @@ namespace TsiErp.Localizations.Resources.PlannedMaintenances.Page {
         public static string PlannedDateLabel {
             get {
                 return ResourceManager.GetString("PlannedDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string PlannedMaintenanceContextAdd {
+            get {
+                return ResourceManager.GetString("PlannedMaintenanceContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PlannedMaintenanceContextChange {
+            get {
+                return ResourceManager.GetString("PlannedMaintenanceContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string PlannedMaintenanceContextDelete {
+            get {
+                return ResourceManager.GetString("PlannedMaintenanceContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PlannedMaintenanceContextRefresh {
+            get {
+                return ResourceManager.GetString("PlannedMaintenanceContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PlannedMaintenanceLineContextChange {
+            get {
+                return ResourceManager.GetString("PlannedMaintenanceLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string PlannedMaintenanceLineContextDelete {
+            get {
+                return ResourceManager.GetString("PlannedMaintenanceLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PlannedMaintenanceLineContextRefresh {
+            get {
+                return ResourceManager.GetString("PlannedMaintenanceLineContextRefresh", resourceCulture);
             }
         }
         

@@ -132,18 +132,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Analiz Kodu:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="Date_" xml:space="preserve">
     <value>TARİH</value>
   </data>
@@ -242,6 +230,30 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Bilgi</value>
+  </data>
+  <data name="OperationalSPCContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="OperationalSPCContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="OperationalSPCContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="OperationalSPCContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="OperationalSPCLineContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="OperationalSPCLineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="OperationalSPCLineContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="OperationalSPCLineContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>

@@ -129,18 +129,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Warehouse Code:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -209,5 +197,17 @@
   </data>
   <data name="ValidatorNameMaxLenght" xml:space="preserve">
     <value>Warehouse name cannot exceed 200 characters.</value>
+  </data>
+  <data name="WarehouseContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="WarehouseContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="WarehouseContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="WarehouseContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
 </root>

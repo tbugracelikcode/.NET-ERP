@@ -523,7 +523,7 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         {
             if (ProductionOrderGridContextMenu.Count() == 0)
             {
-                ProductionOrderGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextTree"], Id = "productstree" });
+                ProductionOrderGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductOrderContextTree"], Id = "productstree" });
             }
         }
 
@@ -660,10 +660,10 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderLineContextAdd"], Id = "new" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderLineContextChange"], Id = "changed" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderLineContextDelete"], Id = "delete" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderLineContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -671,11 +671,11 @@ namespace TsiErp.ErpUI.Pages.SalesManagement.SalesOrder
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextProdOrder"], Id = "createproductionorder" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderContextAdd"], Id = "new" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderContextChange"], Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderContextProdOrder"], Id = "createproductionorder" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderContextDelete"], Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesOrderContextRefresh"], Id = "refresh" });
             }
         }
 

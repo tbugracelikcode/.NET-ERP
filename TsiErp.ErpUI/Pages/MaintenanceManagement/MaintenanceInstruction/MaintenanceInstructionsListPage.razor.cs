@@ -241,10 +241,10 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceInstruction
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"]    , Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"] , Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"] , Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceInstructionLineContextAdd"]    , Id = "new" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceInstructionLineContextChange"] , Id = "changed" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceInstructionLineContextDelete"] , Id = "delete" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceInstructionLineContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -252,10 +252,10 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenanceInstruction
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text =  L["ContextAdd"]    , Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text =  L["ContextChange"] , Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text =  L["ContextDelete"] , Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text =  L["MaintenanceInstructionContextAdd"]    , Id = "new" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text =  L["MaintenanceInstructionContextChange"] , Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text =  L["MaintenanceInstructionContextDelete"] , Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenanceInstructionContextRefresh"], Id = "refresh" });
             }
         }
 

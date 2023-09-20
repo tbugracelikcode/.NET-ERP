@@ -79,42 +79,6 @@ namespace TsiErp.Localizations.Resources.TechnicalDrawings.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to CARİ KOD.
         /// </summary>
         public static string CurrentAccountCardModalGridCode {
@@ -430,6 +394,42 @@ namespace TsiErp.Localizations.Resources.TechnicalDrawings.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string TechnicalDrawingContextAdd {
+            get {
+                return ResourceManager.GetString("TechnicalDrawingContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string TechnicalDrawingContextChange {
+            get {
+                return ResourceManager.GetString("TechnicalDrawingContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string TechnicalDrawingContextDelete {
+            get {
+                return ResourceManager.GetString("TechnicalDrawingContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string TechnicalDrawingContextRefresh {
+            get {
+                return ResourceManager.GetString("TechnicalDrawingContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Teknik Resimler.
         /// </summary>
         public static string UICurrentMenu {
@@ -480,6 +480,24 @@ namespace TsiErp.Localizations.Resources.TechnicalDrawings.Page {
         public static string UIPreviousMenu {
             get {
                 return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bu kayıtta yüklenmiş bir teknik resim dosyası mevcut..
+        /// </summary>
+        public static string UIWaringUploadMessage {
+            get {
+                return ResourceManager.GetString("UIWaringUploadMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWaringUploadTitle {
+            get {
+                return ResourceManager.GetString("UIWaringUploadTitle", resourceCulture);
             }
         }
         

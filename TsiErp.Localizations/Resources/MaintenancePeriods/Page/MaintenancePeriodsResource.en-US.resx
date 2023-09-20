@@ -129,18 +129,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Maintenance Period Code:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="DailyMainLabel" xml:space="preserve">
     <value>Daily Maintenance:</value>
   </data>
@@ -173,6 +161,18 @@
   </data>
   <data name="LoadingText" xml:space="preserve">
     <value>The records are loading..</value>
+  </data>
+  <data name="MaintenancePeriodContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="MaintenancePeriodContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="MaintenancePeriodContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MaintenancePeriodContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>The record you selected is using by {0}.</value>

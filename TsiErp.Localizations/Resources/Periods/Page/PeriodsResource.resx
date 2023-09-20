@@ -144,18 +144,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Dönem Kodu:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -197,6 +185,18 @@
   </data>
   <data name="NameLabel" xml:space="preserve">
     <value>Dönem Adı:</value>
+  </data>
+  <data name="PeriodContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="PeriodContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="PeriodContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="PeriodContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>

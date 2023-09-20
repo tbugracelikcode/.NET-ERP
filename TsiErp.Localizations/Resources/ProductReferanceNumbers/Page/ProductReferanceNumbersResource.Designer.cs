@@ -80,42 +80,6 @@ namespace TsiErp.Localizations.Resources.ProductReferanceNumbers.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Müşteri Kodu:.
         /// </summary>
         public static string CurrentAccountCardCodeLabel {
@@ -373,6 +337,42 @@ namespace TsiErp.Localizations.Resources.ProductReferanceNumbers.Page {
         public static string ProductNameLabel {
             get {
                 return ResourceManager.GetString("ProductNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProductReferanceNumberContextAdd {
+            get {
+                return ResourceManager.GetString("ProductReferanceNumberContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProductReferanceNumberContextChange {
+            get {
+                return ResourceManager.GetString("ProductReferanceNumberContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProductReferanceNumberContextDelete {
+            get {
+                return ResourceManager.GetString("ProductReferanceNumberContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ProductReferanceNumberContextRefresh {
+            get {
+                return ResourceManager.GetString("ProductReferanceNumberContextRefresh", resourceCulture);
             }
         }
         

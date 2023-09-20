@@ -141,18 +141,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Fiyat Listesi Kodu:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="CurrencyCode" xml:space="preserve">
     <value>PARA BİRİMİ</value>
   </data>
@@ -284,6 +272,30 @@
   </data>
   <data name="ProductNameLineLabel" xml:space="preserve">
     <value>Stok Açıklaması:</value>
+  </data>
+  <data name="PurchasePriceContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="PurchasePriceContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="PurchasePriceContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="PurchasePriceContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="PurchasePriceLineContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="PurchasePriceLineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="PurchasePriceLineContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="PurchasePriceLineContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>

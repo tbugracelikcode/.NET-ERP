@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Syncfusion.Blazor.Inputs;
+using Syncfusion.Blazor.Grids;
+using Microsoft.Extensions.Localization;
 using TsiErp.Entities.Entities.ProductionManagement.HaltReason.Dtos;
 
 namespace TsiErp.ErpUI.Pages.ProductionManagement.HaltReason
@@ -23,6 +25,14 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.HaltReason
             EditPageVisible = true;
 
             return Task.CompletedTask;
+        }
+
+        protected override void CreateContextMenuItems(IStringLocalizer L)
+        {
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["HaltReasonContextAdd"], Id = "new" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["HaltReasonContextChange"], Id = "changed" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["HaltReasonContextDelete"], Id = "delete" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["HaltReasonContextRefresh"], Id = "refresh" });
         }
 
         #region Kod ButtonEdit

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Localization;
+using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.StockManagement.UnitSet.Dtos;
 
@@ -27,7 +29,13 @@ namespace TsiErp.ErpUI.Pages.StockManagement.UnitSet
             return Task.CompletedTask;
         }
 
-
+        protected override void CreateContextMenuItems(IStringLocalizer L)
+        {
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnitSetContextAdd"], Id = "new" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnitSetContextChange"], Id = "changed" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnitSetContextDelete"], Id = "delete" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnitSetContextRefresh"], Id = "refresh" });
+        }
 
         #region Kod ButtonEdit
 

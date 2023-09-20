@@ -1,6 +1,7 @@
 ﻿using DevExpress.Xpo.DB;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
@@ -48,7 +49,13 @@ namespace TsiErp.ErpUI.Pages.QualityControl.PFMEA
             return Task.CompletedTask;
         }
 
-
+        protected override void CreateContextMenuItems(IStringLocalizer L)
+        {
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PFMEAContextAdd"], Id = "new" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PFMEAContextChange"], Id = "changed" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PFMEAContextDelete"], Id = "delete" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PFMEAContextRefresh"], Id = "refresh" });
+        }
 
         #region 1. SPC ButtonEdit
 

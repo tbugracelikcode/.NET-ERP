@@ -147,18 +147,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Station Code:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -182,6 +170,12 @@
   </data>
   <data name="ErrorBoundryButtonText" xml:space="preserve">
     <value>Clear</value>
+  </data>
+  <data name="InventoryContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="InventoryContextDelete" xml:space="preserve">
+    <value>Delete</value>
   </data>
   <data name="InventoryGridAmount" xml:space="preserve">
     <value>QUANTITY</value>
@@ -242,6 +236,18 @@
   </data>
   <data name="ShiftWorkingTimeLabel" xml:space="preserve">
     <value>Shift Working Time:</value>
+  </data>
+  <data name="StationContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="StationContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="StationContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="StationContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="StationGroup" xml:space="preserve">
     <value>STATION GROUP</value>

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Localization;
+using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.MaintenanceManagement.MaintenancePeriod.Dtos;
 
@@ -28,6 +30,14 @@ namespace TsiErp.ErpUI.Pages.MaintenanceManagement.MaintenancePeriod
             EditPageVisible = true;
 
             return Task.CompletedTask;
+        }
+
+        protected override void CreateContextMenuItems(IStringLocalizer L)
+        {
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenancePeriodContextAdd"], Id = "new" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenancePeriodContextChange"], Id = "changed" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenancePeriodContextDelete"], Id = "delete" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["MaintenancePeriodContextRefresh"], Id = "refresh" });
         }
 
         private void Change(Syncfusion.Blazor.Buttons.ChangeEventArgs<bool?> args)

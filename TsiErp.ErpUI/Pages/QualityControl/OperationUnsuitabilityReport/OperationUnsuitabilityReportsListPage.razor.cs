@@ -14,6 +14,7 @@ using TsiErp.Entities.Entities.StockManagement.Product.Dtos;
 using TsiErp.Entities.Entities.QualityControl.UnsuitabilityItem.Dtos;
 using TsiErp.ErpUI.Utilities.ModalUtilities;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using Microsoft.Extensions.Localization;
 
 namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
 {
@@ -41,6 +42,14 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationUnsuitabilityReport
         {
             BaseCrudService = OperationUnsuitabilityReportsService;
             _L = L;
+        }
+
+        protected override void CreateContextMenuItems(IStringLocalizer L)
+        {
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationUnsuitabilityReportContextAdd"], Id = "new" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationUnsuitabilityReportContextChange"], Id = "changed" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationUnsuitabilityReportContextDelete"], Id = "delete" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationUnsuitabilityReportContextRefresh"], Id = "refresh" });
         }
 
         protected override async Task BeforeInsertAsync()

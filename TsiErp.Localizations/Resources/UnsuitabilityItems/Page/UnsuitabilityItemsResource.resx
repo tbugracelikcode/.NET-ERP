@@ -129,18 +129,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Başlık Kodu:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -248,6 +236,18 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Kalite Kontrol &gt; Ana Kayıtlar</value>
+  </data>
+  <data name="UnsuitabilityItemContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="UnsuitabilityItemContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="UnsuitabilityItemContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="UnsuitabilityItemContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="UnsuitabilityItemTitle" xml:space="preserve">
     <value>Uygunsuzluk Başlıkları</value>

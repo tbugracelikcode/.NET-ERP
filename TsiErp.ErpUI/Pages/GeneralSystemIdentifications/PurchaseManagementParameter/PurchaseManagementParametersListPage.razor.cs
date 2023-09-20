@@ -1,4 +1,6 @@
-﻿using Syncfusion.Blazor.Buttons;
+﻿using Microsoft.Extensions.Localization;
+using Syncfusion.Blazor.Buttons;
+using Syncfusion.Blazor.Grids;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.PurchaseManagementParameter.Dtos;
 
@@ -23,6 +25,14 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.PurchaseManagementPara
         private async void PurchaseRequestFichesChange(ChangeEventArgs<bool> args)
         {
             DataSource.RequestFutureDateParameter = args.Checked;
+        }
+
+        protected override void CreateContextMenuItems(IStringLocalizer L)
+        {
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseManagementParameterContextAdd"], Id = "new" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseManagementParameterContextChange"], Id = "changed" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseManagementParameterContextDelete"], Id = "delete" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseManagementParameterContextRefresh"], Id = "refresh" });
         }
 
         private async void OnClick()

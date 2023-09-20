@@ -141,18 +141,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Shipping Address Code:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="Country" xml:space="preserve">
     <value>COUNTRY</value>
   </data>
@@ -245,6 +233,18 @@
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="ShippingAdressContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ShippingAdressContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ShippingAdressContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ShippingAdressContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="Tab1Name" xml:space="preserve">
     <value>General Informations</value>

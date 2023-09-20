@@ -123,18 +123,6 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same revision number.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="CurrentAccountCardModalGridCode" xml:space="preserve">
     <value>CURRENT ACCOUNT CODE</value>
   </data>
@@ -240,6 +228,18 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="TechnicalDrawingContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="TechnicalDrawingContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="TechnicalDrawingContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="TechnicalDrawingContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Technical Drawings</value>
   </data>
@@ -257,6 +257,12 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Inventory Management &gt; Main Records</value>
+  </data>
+  <data name="UIWaringUploadMessage" xml:space="preserve">
+    <value>There is a technical drawing file loaded in this record.</value>
+  </data>
+  <data name="UIWaringUploadTitle" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same revision number.</value>

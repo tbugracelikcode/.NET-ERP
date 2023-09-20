@@ -123,18 +123,6 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı revizyon numaralı bir kayıt bulunmaktadır.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="CurrentAccountCardModalGridCode" xml:space="preserve">
     <value>CARİ KOD</value>
   </data>
@@ -240,6 +228,18 @@
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
   </data>
+  <data name="TechnicalDrawingContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="TechnicalDrawingContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="TechnicalDrawingContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="TechnicalDrawingContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
   <data name="UICurrentMenu" xml:space="preserve">
     <value>Teknik Resimler</value>
   </data>
@@ -257,6 +257,12 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Stok Yönetimi &gt; Ana Kayıtlar</value>
+  </data>
+  <data name="UIWaringUploadMessage" xml:space="preserve">
+    <value>Bu kayıtta yüklenmiş bir teknik resim dosyası mevcut.</value>
+  </data>
+  <data name="UIWaringUploadTitle" xml:space="preserve">
+    <value>Uyarı</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı revizyon numaralı bir kayıt bulunmaktadır.</value>

@@ -123,6 +123,9 @@
   <data name="ApprovalLabelRoute" xml:space="preserve">
     <value>Approval:</value>
   </data>
+  <data name="BoMContextExamine" xml:space="preserve">
+    <value>Examine</value>
+  </data>
   <data name="BoMLineGridFinishedProduct" xml:space="preserve">
     <value>FINISHED PRODUCT CODE</value>
   </data>
@@ -176,42 +179,6 @@
   </data>
   <data name="ConfirmationLabel" xml:space="preserve">
     <value>Approval:</value>
-  </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextBOMs" xml:space="preserve">
-    <value>Bills of Materials</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextContProdTrackings" xml:space="preserve">
-    <value>Contract Production Trackings</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextExamine" xml:space="preserve">
-    <value>Examine</value>
-  </data>
-  <data name="ContextProductRefNr" xml:space="preserve">
-    <value>Product Reference Numbers</value>
-  </data>
-  <data name="ContextPurchasePrices" xml:space="preserve">
-    <value>Purchase Prices</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="ContextRoutes" xml:space="preserve">
-    <value>Routes</value>
-  </data>
-  <data name="ContextSalesPrices" xml:space="preserve">
-    <value>Sales Prices</value>
-  </data>
-  <data name="ContextTechnicalDrawings" xml:space="preserve">
-    <value>Technical Drawings</value>
   </data>
   <data name="ContractProdTracModalGridCurrentAccount" xml:space="preserve">
     <value>CURRENT ACCOUNT</value>
@@ -453,6 +420,39 @@
   <data name="ProductCodeLabelTechDraw" xml:space="preserve">
     <value>Product Code:</value>
   </data>
+  <data name="ProductContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProductContextBOMs" xml:space="preserve">
+    <value>Bills of Materials</value>
+  </data>
+  <data name="ProductContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ProductContextContProdTrackings" xml:space="preserve">
+    <value>Contract Production Trackings</value>
+  </data>
+  <data name="ProductContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProductContextProductRefNr" xml:space="preserve">
+    <value>Product Reference Numbers</value>
+  </data>
+  <data name="ProductContextPurchasePrices" xml:space="preserve">
+    <value>Purchase Prices</value>
+  </data>
+  <data name="ProductContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ProductContextRoutes" xml:space="preserve">
+    <value>Routes</value>
+  </data>
+  <data name="ProductContextSalesPrices" xml:space="preserve">
+    <value>Sales Prices</value>
+  </data>
+  <data name="ProductContextTechnicalDrawings" xml:space="preserve">
+    <value>Technical Drawings</value>
+  </data>
   <data name="ProductDescriptionLabel" xml:space="preserve">
     <value>Description:</value>
   </data>
@@ -482,6 +482,18 @@
   </data>
   <data name="ProductNameLabelTechDraw" xml:space="preserve">
     <value>Product Name:</value>
+  </data>
+  <data name="ProductReferanceNumberContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProductReferanceNumberContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ProductReferanceNumberContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProductReferanceNumberContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="ProductSizeLabel" xml:space="preserve">
     <value>Product Size:</value>
@@ -527,6 +539,9 @@
   </data>
   <data name="RevisionNoLabelTechDraw" xml:space="preserve">
     <value>Revision Number:</value>
+  </data>
+  <data name="RouteContextExamine" xml:space="preserve">
+    <value>Examine</value>
   </data>
   <data name="RouteLineGridAdjustment" xml:space="preserve">
     <value>ADJUSTMENT AND CONTROL TIME</value>
@@ -623,6 +638,18 @@
   </data>
   <data name="TechnicalConfirmationLabel" xml:space="preserve">
     <value>Technical Approval:</value>
+  </data>
+  <data name="TechnicalDrawingContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="TechnicalDrawingContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="TechnicalDrawingContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="TechnicalDrawingContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>The technical drawing you selected will be permanently deleted.</value>

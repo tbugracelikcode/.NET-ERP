@@ -125,42 +125,6 @@ namespace TsiErp.Localizations.Resources.OperationUnsuitabilityReports.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to TARİH.
         /// </summary>
         public static string Date_ {
@@ -400,6 +364,42 @@ namespace TsiErp.Localizations.Resources.OperationUnsuitabilityReports.Page {
         public static string OperationNameLabel {
             get {
                 return ResourceManager.GetString("OperationNameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string OperationUnsuitabilityReportContextAdd {
+            get {
+                return ResourceManager.GetString("OperationUnsuitabilityReportContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string OperationUnsuitabilityReportContextChange {
+            get {
+                return ResourceManager.GetString("OperationUnsuitabilityReportContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string OperationUnsuitabilityReportContextDelete {
+            get {
+                return ResourceManager.GetString("OperationUnsuitabilityReportContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string OperationUnsuitabilityReportContextRefresh {
+            get {
+                return ResourceManager.GetString("OperationUnsuitabilityReportContextRefresh", resourceCulture);
             }
         }
         

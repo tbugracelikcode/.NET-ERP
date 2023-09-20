@@ -126,18 +126,6 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="CurrentAccountCardName" xml:space="preserve">
     <value>CURRENT ACCOUNT NAME</value>
   </data>
@@ -239,6 +227,18 @@
   </data>
   <data name="ValidatorPropositionID" xml:space="preserve">
     <value>Please select a proposition.</value>
+  </data>
+  <data name="WorkOrderContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="WorkOrderContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="WorkOrderContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="WorkOrderContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="WorkOrderNo" xml:space="preserve">
     <value>WORK ORDER NR</value>

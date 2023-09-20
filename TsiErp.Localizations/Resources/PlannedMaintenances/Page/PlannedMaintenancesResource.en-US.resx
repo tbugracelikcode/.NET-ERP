@@ -135,18 +135,6 @@
   <data name="CompletionDateLabel" xml:space="preserve">
     <value>Completion Date:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -242,6 +230,27 @@
   </data>
   <data name="PlannedDateLabel" xml:space="preserve">
     <value>Planned Date:</value>
+  </data>
+  <data name="PlannedMaintenanceContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="PlannedMaintenanceContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="PlannedMaintenanceContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PlannedMaintenanceContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="PlannedMaintenanceLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="PlannedMaintenanceLineContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PlannedMaintenanceLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="PlannedTimeLabel" xml:space="preserve">
     <value>Planned Time:</value>

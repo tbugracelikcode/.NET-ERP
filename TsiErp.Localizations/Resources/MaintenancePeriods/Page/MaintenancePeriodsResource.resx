@@ -129,18 +129,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Bakım Periyodu Kodu:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="DailyMainLabel" xml:space="preserve">
     <value>Günlük Bakım:</value>
   </data>
@@ -173,6 +161,18 @@
   </data>
   <data name="LoadingText" xml:space="preserve">
     <value>Kayıtlar Yükleniyor..</value>
+  </data>
+  <data name="MaintenancePeriodContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="MaintenancePeriodContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="MaintenancePeriodContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="MaintenancePeriodContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>

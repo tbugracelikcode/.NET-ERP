@@ -141,36 +141,6 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same number.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextAddConsume" xml:space="preserve">
-    <value>Add Consumption Fiche</value>
-  </data>
-  <data name="ContextAddProductionIncome" xml:space="preserve">
-    <value>Add Production Input Fiche</value>
-  </data>
-  <data name="ContextAddStockIncome" xml:space="preserve">
-    <value>Add Stock Input Fiche</value>
-  </data>
-  <data name="ContextAddStockOutput" xml:space="preserve">
-    <value>Add Stock Output Fiche</value>
-  </data>
-  <data name="ContextAddWarehouse" xml:space="preserve">
-    <value>Add Shipping to Warehouse Fiche</value>
-  </data>
-  <data name="ContextAddWastege" xml:space="preserve">
-    <value>Add Wastage Fiche</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="CurrencyCodeLabel" xml:space="preserve">
     <value>Currency Code:</value>
   </data>
@@ -323,6 +293,48 @@
   </data>
   <data name="SpecialCodeLabel" xml:space="preserve">
     <value>Special Code:</value>
+  </data>
+  <data name="StockFicheContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="StockFicheContextAddConsume" xml:space="preserve">
+    <value>Add Consumption Fiche</value>
+  </data>
+  <data name="StockFicheContextAddProductionIncome" xml:space="preserve">
+    <value>Add Production Input Fiche</value>
+  </data>
+  <data name="StockFicheContextAddStockIncome" xml:space="preserve">
+    <value>Add Stock Input Fiche</value>
+  </data>
+  <data name="StockFicheContextAddStockOutput" xml:space="preserve">
+    <value>Add Stock Output Fiche</value>
+  </data>
+  <data name="StockFicheContextAddWarehouse" xml:space="preserve">
+    <value>Add Shipping to Warehouse Fiche</value>
+  </data>
+  <data name="StockFicheContextAddWastege" xml:space="preserve">
+    <value>Add Wastage Fiche</value>
+  </data>
+  <data name="StockFicheContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="StockFicheContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="StockFicheContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="StockFicheLineContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="StockFicheLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="StockFicheLineContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="StockFicheLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="Time_Label" xml:space="preserve">
     <value>Hour:</value>

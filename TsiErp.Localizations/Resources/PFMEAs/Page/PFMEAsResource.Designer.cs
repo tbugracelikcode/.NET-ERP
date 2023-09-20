@@ -79,42 +79,6 @@ namespace TsiErp.Localizations.Resources.PFMEAs.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Kontrol Mekanizması:.
         /// </summary>
         public static string ControlMechanismLabel {
@@ -489,6 +453,42 @@ namespace TsiErp.Localizations.Resources.PFMEAs.Page {
         public static string OperationRequirementLabel {
             get {
                 return ResourceManager.GetString("OperationRequirementLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string PFMEAContextAdd {
+            get {
+                return ResourceManager.GetString("PFMEAContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PFMEAContextChange {
+            get {
+                return ResourceManager.GetString("PFMEAContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string PFMEAContextDelete {
+            get {
+                return ResourceManager.GetString("PFMEAContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PFMEAContextRefresh {
+            get {
+                return ResourceManager.GetString("PFMEAContextRefresh", resourceCulture);
             }
         }
         

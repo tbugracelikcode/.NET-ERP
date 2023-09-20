@@ -129,18 +129,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Unit Set Code:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -194,6 +182,18 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Inventory Management &gt; Main Records</value>
+  </data>
+  <data name="UnitSetContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="UnitSetContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="UnitSetContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="UnitSetContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>

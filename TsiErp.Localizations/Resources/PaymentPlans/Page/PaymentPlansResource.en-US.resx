@@ -129,18 +129,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Payment Plan Code:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="Days_" xml:space="preserve">
     <value>TERM DAY</value>
   </data>
@@ -191,6 +179,18 @@
   </data>
   <data name="NameLabel" xml:space="preserve">
     <value>Payment Plan Name:</value>
+  </data>
+  <data name="PaymentPlanContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="PaymentPlanContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="PaymentPlanContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PaymentPlanContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>

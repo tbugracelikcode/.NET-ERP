@@ -116,42 +116,6 @@ namespace TsiErp.Localizations.Resources.UnplannedMaintenances.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
         /// </summary>
         public static string DeleteConfirmationDescriptionBase {
@@ -706,6 +670,78 @@ namespace TsiErp.Localizations.Resources.UnplannedMaintenances.Page {
         public static string UnplannedDateLabel {
             get {
                 return ResourceManager.GetString("UnplannedDateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string UnplannedMaintenanceContextAdd {
+            get {
+                return ResourceManager.GetString("UnplannedMaintenanceContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string UnplannedMaintenanceContextChange {
+            get {
+                return ResourceManager.GetString("UnplannedMaintenanceContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string UnplannedMaintenanceContextDelete {
+            get {
+                return ResourceManager.GetString("UnplannedMaintenanceContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string UnplannedMaintenanceContextRefresh {
+            get {
+                return ResourceManager.GetString("UnplannedMaintenanceContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string UnplannedMaintenanceLineContextAdd {
+            get {
+                return ResourceManager.GetString("UnplannedMaintenanceLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string UnplannedMaintenanceLineContextChange {
+            get {
+                return ResourceManager.GetString("UnplannedMaintenanceLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string UnplannedMaintenanceLineContextDelete {
+            get {
+                return ResourceManager.GetString("UnplannedMaintenanceLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string UnplannedMaintenanceLineContextRefresh {
+            get {
+                return ResourceManager.GetString("UnplannedMaintenanceLineContextRefresh", resourceCulture);
             }
         }
         

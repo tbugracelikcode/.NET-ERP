@@ -106,42 +106,6 @@ namespace TsiErp.Localizations.Resources.OperationalSPCs.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to TARİH.
         /// </summary>
         public static string Date_ {
@@ -435,6 +399,78 @@ namespace TsiErp.Localizations.Resources.OperationalSPCs.Page {
         public static string MessagePopupInformationTitleBase {
             get {
                 return ResourceManager.GetString("MessagePopupInformationTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string OperationalSPCContextAdd {
+            get {
+                return ResourceManager.GetString("OperationalSPCContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string OperationalSPCContextChange {
+            get {
+                return ResourceManager.GetString("OperationalSPCContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string OperationalSPCContextDelete {
+            get {
+                return ResourceManager.GetString("OperationalSPCContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string OperationalSPCContextRefresh {
+            get {
+                return ResourceManager.GetString("OperationalSPCContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string OperationalSPCLineContextAdd {
+            get {
+                return ResourceManager.GetString("OperationalSPCLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string OperationalSPCLineContextChange {
+            get {
+                return ResourceManager.GetString("OperationalSPCLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string OperationalSPCLineContextDelete {
+            get {
+                return ResourceManager.GetString("OperationalSPCLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string OperationalSPCLineContextRefresh {
+            get {
+                return ResourceManager.GetString("OperationalSPCLineContextRefresh", resourceCulture);
             }
         }
         

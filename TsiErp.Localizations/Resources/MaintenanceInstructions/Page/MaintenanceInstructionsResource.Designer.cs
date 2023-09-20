@@ -107,42 +107,6 @@ namespace TsiErp.Localizations.Resources.MaintenanceInstructions.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
         /// </summary>
         public static string DeleteConfirmationDescriptionBase {
@@ -283,6 +247,78 @@ namespace TsiErp.Localizations.Resources.MaintenanceInstructions.Page {
         public static string LoadingText {
             get {
                 return ResourceManager.GetString("LoadingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string MaintenanceInstructionContextAdd {
+            get {
+                return ResourceManager.GetString("MaintenanceInstructionContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string MaintenanceInstructionContextChange {
+            get {
+                return ResourceManager.GetString("MaintenanceInstructionContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string MaintenanceInstructionContextDelete {
+            get {
+                return ResourceManager.GetString("MaintenanceInstructionContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string MaintenanceInstructionContextRefresh {
+            get {
+                return ResourceManager.GetString("MaintenanceInstructionContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string MaintenanceInstructionLineContextAdd {
+            get {
+                return ResourceManager.GetString("MaintenanceInstructionLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string MaintenanceInstructionLineContextChange {
+            get {
+                return ResourceManager.GetString("MaintenanceInstructionLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string MaintenanceInstructionLineContextDelete {
+            get {
+                return ResourceManager.GetString("MaintenanceInstructionLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string MaintenanceInstructionLineContextRefresh {
+            get {
+                return ResourceManager.GetString("MaintenanceInstructionLineContextRefresh", resourceCulture);
             }
         }
         

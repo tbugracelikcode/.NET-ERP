@@ -135,18 +135,6 @@
   <data name="CompletionDateLabel" xml:space="preserve">
     <value>Completion Date:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -332,6 +320,30 @@
   </data>
   <data name="UnplannedDateLabel" xml:space="preserve">
     <value>Planned Date:</value>
+  </data>
+  <data name="UnplannedMaintenanceContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="UnplannedMaintenanceContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="UnplannedMaintenanceContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="UnplannedMaintenanceContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="UnplannedMaintenanceLineContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="UnplannedMaintenanceLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="UnplannedMaintenanceLineContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="UnplannedMaintenanceLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="UnplannedTimeLabel" xml:space="preserve">
     <value>Planned Time:</value>

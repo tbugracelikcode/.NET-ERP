@@ -283,10 +283,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
         {
             if (StationLineGridContextMenu.Count() == 0)
             {
-                StationLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                StationLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                StationLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                StationLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                StationLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationLineContextAdd"], Id = "new" });
+                StationLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationLineContextChange"], Id = "changed" });
+                StationLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationLineContextDelete"], Id = "delete" });
+                StationLineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationLineContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -294,10 +294,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextAdd"], Id = "new" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextChange"], Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextDelete"], Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductsOperationContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -562,8 +562,8 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductsOperation
         {
             if (ContractOfProductsOperationsGridContextMenu.Count() == 0)
             {
-                ContractOfProductsOperationsGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextSelectSupplier"], Id = "new" });
-                ContractOfProductsOperationsGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
+                ContractOfProductsOperationsGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractOfProductsOperationContextSelectSupplier"], Id = "new" });
+                ContractOfProductsOperationsGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractOfProductsOperationContextDelete"], Id = "delete" });
             }
         }
 

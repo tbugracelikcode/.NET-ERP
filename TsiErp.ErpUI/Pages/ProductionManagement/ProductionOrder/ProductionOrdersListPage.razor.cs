@@ -22,9 +22,9 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionOrder
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextWorkOrders"], Id = "workorders" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextOccuredAmountEntry"], Id = "occuredamountentry" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextConsumptionReceipt"], Id = "consumptionreceipt" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextWorkOrders"], Id = "workorders" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextOccuredAmountEntry"], Id = "occuredamountentry" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductionOrderContextConsumptionReceipt"], Id = "consumptionreceipt" });
             }
         }
 

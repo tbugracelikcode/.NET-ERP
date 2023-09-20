@@ -132,18 +132,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Bakım Talimatı Kodu:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -191,6 +179,30 @@
   </data>
   <data name="LoadingText" xml:space="preserve">
     <value>Kayıtlar Yükleniyor..</value>
+  </data>
+  <data name="MaintenanceInstructionContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="MaintenanceInstructionContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="MaintenanceInstructionContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="MaintenanceInstructionContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="MaintenanceInstructionLineContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="MaintenanceInstructionLineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="MaintenanceInstructionLineContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="MaintenanceInstructionLineContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="MaintenancePeriodModalGridCode" xml:space="preserve">
     <value>BAKIM PERİYODU KODU</value>

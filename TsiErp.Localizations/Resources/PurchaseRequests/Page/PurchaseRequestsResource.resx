@@ -141,20 +141,11 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
+  <data name="ConvertContextApprove" xml:space="preserve">
+    <value>Onayladı</value>
   </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextConverttoOrder" xml:space="preserve">
-    <value>Siparişe Dönüştür</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
+  <data name="ConvertContextPending" xml:space="preserve">
+    <value>Beklemede</value>
   </data>
   <data name="ConvertOrderGridLineAmount" xml:space="preserve">
     <value>SATIR TUTARI</value>
@@ -402,6 +393,33 @@
   <data name="ProductNameLineLabel" xml:space="preserve">
     <value>Stok Açıklaması:</value>
   </data>
+  <data name="PurchaseRequestContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="PurchaseRequestContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="PurchaseRequestContextConverttoOrder" xml:space="preserve">
+    <value>Siparişe Dönüştür</value>
+  </data>
+  <data name="PurchaseRequestContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="PurchaseRequestContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="PurchaseRequestLineContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="PurchaseRequestLineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="PurchaseRequestLineContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="PurchaseRequestLineContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
   <data name="QuantityLineLabel" xml:space="preserve">
     <value>Miktar:</value>
   </data>
@@ -438,8 +456,20 @@
   <data name="UIExportTitle" xml:space="preserve">
     <value>Satın Alma Talep Fişleri</value>
   </data>
+  <data name="UIInformationConvertMessage" xml:space="preserve">
+    <value>Seçilen onaylanmış satırlar, siparişe dönüştürüldü.</value>
+  </data>
+  <data name="UIInformationConvertTitle" xml:space="preserve">
+    <value>Bilgilendirme</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Satın Alma Yönetimi &gt; Hareketler</value>
+  </data>
+  <data name="UIWarningConvertMessage" xml:space="preserve">
+    <value>Seçilen tüm satırların durumu beklemededir. Beklemede olan satırlar, siparişe dönüştürülemez.</value>
+  </data>
+  <data name="UIWarningConvertTitle" xml:space="preserve">
+    <value>Uyarı</value>
   </data>
   <data name="UIWarningPopupMessageBase1" xml:space="preserve">
     <value>Birim seti seçilmeden satır kaydetme işlemi yapılamaz.</value>

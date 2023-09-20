@@ -129,18 +129,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Üretim Takip Kodu:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="CurrentAccountCardCode" xml:space="preserve">
     <value>CARİ KOD</value>
   </data>
@@ -281,6 +269,30 @@
   </data>
   <data name="ProducedQuantityLabel" xml:space="preserve">
     <value>Üretilen Miktar:</value>
+  </data>
+  <data name="ProductionTrackingContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProductionTrackingContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ProductionTrackingContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProductionTrackingContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="ProductionTrackingLineContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProductionTrackingLineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ProductionTrackingLineContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProductionTrackingLineContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>

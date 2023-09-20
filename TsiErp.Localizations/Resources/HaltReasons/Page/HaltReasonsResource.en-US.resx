@@ -129,18 +129,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Halt Code:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -155,6 +143,18 @@
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="HaltReasonContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="HaltReasonContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="HaltReasonContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="HaltReasonContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="IsMachine" xml:space="preserve">
     <value>CAUSED BY MACHINE</value>
