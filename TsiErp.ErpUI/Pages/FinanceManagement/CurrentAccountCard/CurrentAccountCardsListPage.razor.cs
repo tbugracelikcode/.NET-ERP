@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
@@ -93,6 +94,14 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.CurrentAccountCard
             EditPageVisible = true;
 
             return Task.CompletedTask;
+        }
+
+        protected override void CreateContextMenuItems(IStringLocalizer L)
+        {
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CurrentAccountCardContextAdd"], Id = "new" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CurrentAccountCardContextChange"], Id = "changed" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CurrentAccountCardContextDelete"], Id = "delete" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CurrentAccountCardContextRefresh"], Id = "refresh" });
         }
 
         private async Task GetCurrenciesList()

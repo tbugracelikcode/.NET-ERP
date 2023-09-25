@@ -97,42 +97,6 @@ namespace TsiErp.Localizations.Resources.ExchangeRates.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to PARA BİRİMİ KODU.
         /// </summary>
         public static string CurrencyCode {
@@ -273,6 +237,42 @@ namespace TsiErp.Localizations.Resources.ExchangeRates.Page {
         public static string Error {
             get {
                 return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ExchangeRateContextAdd {
+            get {
+                return ResourceManager.GetString("ExchangeRateContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ExchangeRateContextChange {
+            get {
+                return ResourceManager.GetString("ExchangeRateContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ExchangeRateContextDelete {
+            get {
+                return ResourceManager.GetString("ExchangeRateContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ExchangeRateContextRefresh {
+            get {
+                return ResourceManager.GetString("ExchangeRateContextRefresh", resourceCulture);
             }
         }
         

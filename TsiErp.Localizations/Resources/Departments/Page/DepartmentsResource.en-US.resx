@@ -129,18 +129,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Department Code:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -152,6 +140,18 @@
   </data>
   <data name="DeleteSuccessMessage" xml:space="preserve">
     <value>The record deleted successfully.</value>
+  </data>
+  <data name="DepartmentContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="DepartmentContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="DepartmentContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DepartmentContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="EditModalTitle" xml:space="preserve">
     <value>Departments</value>

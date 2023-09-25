@@ -115,42 +115,6 @@ namespace TsiErp.Localizations.Resources.EquipmentRecords.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
         /// </summary>
         public static string DeleteConfirmationDescriptionBase {
@@ -237,6 +201,42 @@ namespace TsiErp.Localizations.Resources.EquipmentRecords.Page {
         public static string EditModalTitle {
             get {
                 return ResourceManager.GetString("EditModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string EquipmentRecordContextAdd {
+            get {
+                return ResourceManager.GetString("EquipmentRecordContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string EquipmentRecordContextChange {
+            get {
+                return ResourceManager.GetString("EquipmentRecordContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string EquipmentRecordContextDelete {
+            get {
+                return ResourceManager.GetString("EquipmentRecordContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string EquipmentRecordContextRefresh {
+            get {
+                return ResourceManager.GetString("EquipmentRecordContextRefresh", resourceCulture);
             }
         }
         

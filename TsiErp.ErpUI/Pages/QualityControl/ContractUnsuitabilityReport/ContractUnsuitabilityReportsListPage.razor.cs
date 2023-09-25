@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
@@ -107,6 +108,14 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractUnsuitabilityReport
 
                 default: break;
             }
+        }
+
+        protected override void CreateContextMenuItems(IStringLocalizer L)
+        {
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractUnsuitabilityReportContextAdd"], Id = "new" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractUnsuitabilityReportContextChange"], Id = "changed" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractUnsuitabilityReportContextDelete"], Id = "delete" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractUnsuitabilityReportContextRefresh"], Id = "refresh" });
         }
 
         #region İş Emri ButtonEdit

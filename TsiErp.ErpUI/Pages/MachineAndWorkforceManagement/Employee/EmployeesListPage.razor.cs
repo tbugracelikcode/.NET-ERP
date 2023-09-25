@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.Data;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
@@ -63,6 +64,14 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Employee
             EditPageVisible = true;
 
             return Task.CompletedTask;
+        }
+
+        protected override void CreateContextMenuItems(IStringLocalizer L)
+        {
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeContextAdd"], Id = "new" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeContextChange"], Id = "changed" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeContextDelete"], Id = "delete" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EmployeeContextRefresh"], Id = "refresh" });
         }
 
         public override async void ShowEditPage()

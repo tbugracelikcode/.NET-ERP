@@ -129,18 +129,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Kullanıcı Grubu Kodu:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -197,6 +185,18 @@
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
+  </data>
+  <data name="UserGroupContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="UserGroupContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="UserGroupContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="UserGroupContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
     <value>Lütfen kullanıcı grubu kodunu yazın.</value>

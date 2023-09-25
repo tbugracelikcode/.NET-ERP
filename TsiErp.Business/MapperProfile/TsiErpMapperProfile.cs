@@ -75,6 +75,10 @@ using TsiErp.Entities.Entities.PlanningManagement.CalendarDay;
 using TsiErp.Entities.Entities.PlanningManagement.CalendarDay.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.CalendarLine;
 using TsiErp.Entities.Entities.PlanningManagement.CalendarLine.Dtos;
+using TsiErp.Entities.Entities.PlanningManagement.MRPLine;
+using TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos;
+using TsiErp.Entities.Entities.PlanningManagement.MRP;
+using TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine;
@@ -1033,6 +1037,24 @@ namespace TsiErp.Business.MapperProfile
             CreateMap<SelectPFMEAsDto, CreatePFMEAsDto>();
             CreateMap<UpdatePFMEAsDto, PFMEAs>();
             CreateMap<SelectPFMEAsDto, UpdatePFMEAsDto>();
+
+
+
+            CreateMap<MRPs, SelectMRPsDto>();
+            CreateMap<MRPs, ListMRPsDto>();
+            CreateMap<UpdateMRPsDto, MRPs>();
+            CreateMap<CreateMRPsDto, MRPs>();
+            CreateMap<SelectMRPsDto, CreateMRPsDto>();
+            CreateMap<SelectMRPsDto, UpdateMRPsDto>();
+            CreateMap<MRPs, UpdateMRPsDto>();
+
+            CreateMap<MRPLines, SelectMRPLinesDto>();
+            CreateMap<MRPLines, ListMRPLinesDto>();
+            CreateMap<CreateMRPLinesDto, MRPLines>();
+            CreateMap<SelectMRPLinesDto, CreateMRPLinesDto>();
+            CreateMap<UpdateMRPLinesDto, MRPLines>();
+            CreateMap<SelectMRPLinesDto, UpdateMRPLinesDto>();
+            CreateMap<SelectMRPLinesDto, MRPLines>();
         }
     }
 }

@@ -123,18 +123,6 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same number.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="CurrentAccountCardCodeLabel" xml:space="preserve">
     <value>Customer Code:</value>
   </data>
@@ -221,6 +209,18 @@
   </data>
   <data name="ProductNameLabel" xml:space="preserve">
     <value>Product Name:</value>
+  </data>
+  <data name="ProductReferanceNumberContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProductReferanceNumberContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ProductReferanceNumberContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProductReferanceNumberContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="ReferanceNo" xml:space="preserve">
     <value>SUPPLIER REFERENCE NUMBER</value>

@@ -135,18 +135,6 @@
   <data name="CompletionDateLabel" xml:space="preserve">
     <value>Tamamlanma Tarihi:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -332,6 +320,30 @@
   </data>
   <data name="UnplannedDateLabel" xml:space="preserve">
     <value>Planlanan Tarihi:</value>
+  </data>
+  <data name="UnplannedMaintenanceContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="UnplannedMaintenanceContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="UnplannedMaintenanceContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="UnplannedMaintenanceContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="UnplannedMaintenanceLineContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="UnplannedMaintenanceLineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="UnplannedMaintenanceLineContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="UnplannedMaintenanceLineContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="UnplannedTimeLabel" xml:space="preserve">
     <value>Planlanan Süre:</value>

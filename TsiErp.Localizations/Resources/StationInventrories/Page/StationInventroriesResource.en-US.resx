@@ -120,18 +120,6 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same product code.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -155,6 +143,18 @@
   </data>
   <data name="MessagePopupInformationTitleBase" xml:space="preserve">
     <value>Information</value>
+  </data>
+  <data name="StationInventoryContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="StationInventoryContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="StationInventoryContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="StationInventoryContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>

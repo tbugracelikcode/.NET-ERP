@@ -99,36 +99,36 @@ namespace TsiErp.Localizations.Resources.ControlConditions.Page {
         /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
-        public static string ContextAdd {
+        public static string ControlConditionContextAdd {
             get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
+                return ResourceManager.GetString("ControlConditionContextAdd", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
-        public static string ContextChange {
+        public static string ControlConditionContextChange {
             get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
+                return ResourceManager.GetString("ControlConditionContextChange", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
-        public static string ContextDelete {
+        public static string ControlConditionContextDelete {
             get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
+                return ResourceManager.GetString("ControlConditionContextDelete", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
-        public static string ContextRefresh {
+        public static string ControlConditionContextRefresh {
             get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
+                return ResourceManager.GetString("ControlConditionContextRefresh", resourceCulture);
             }
         }
         

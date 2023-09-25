@@ -123,18 +123,6 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -149,6 +137,18 @@
   </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="FinanceManagementParameterContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="FinanceManagementParameterContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="FinanceManagementParameterContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="FinanceManagementParameterContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Lütfen Bekleyin..</value>

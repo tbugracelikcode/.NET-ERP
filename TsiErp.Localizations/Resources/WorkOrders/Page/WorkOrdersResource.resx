@@ -126,18 +126,6 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="CurrentAccountCardName" xml:space="preserve">
     <value>CARİ HESAP ÜNVANI</value>
   </data>
@@ -239,6 +227,18 @@
   </data>
   <data name="ValidatorPropositionID" xml:space="preserve">
     <value>Lütfen teklif seçin.</value>
+  </data>
+  <data name="WorkOrderContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="WorkOrderContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="WorkOrderContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="WorkOrderContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="WorkOrderNo" xml:space="preserve">
     <value>İŞ EMRİ NO</value>

@@ -156,24 +156,6 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same number.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextProdOrder" xml:space="preserve">
-    <value>Create Production Order</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="ContextTree" xml:space="preserve">
-    <value>Product Tree</value>
-  </data>
   <data name="CurrencyCode" xml:space="preserve">
     <value>CURRENCY</value>
   </data>
@@ -429,8 +411,38 @@
   <data name="ProductNameLineLabel" xml:space="preserve">
     <value>Product Name:</value>
   </data>
+  <data name="ProductOrderContextTree" xml:space="preserve">
+    <value>Product Tree</value>
+  </data>
   <data name="QuantityLineLabel" xml:space="preserve">
     <value>Quantity:</value>
+  </data>
+  <data name="SalesOrderContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="SalesOrderContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="SalesOrderContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="SalesOrderContextProdOrder" xml:space="preserve">
+    <value>Create Production Order</value>
+  </data>
+  <data name="SalesOrderContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="SalesOrderLineContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="SalesOrderLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="SalesOrderLineContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="SalesOrderLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>

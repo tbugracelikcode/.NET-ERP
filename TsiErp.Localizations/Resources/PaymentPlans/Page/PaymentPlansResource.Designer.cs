@@ -97,42 +97,6 @@ namespace TsiErp.Localizations.Resources.PaymentPlans.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to VADE GÜNÜ.
         /// </summary>
         public static string Days_ {
@@ -282,6 +246,42 @@ namespace TsiErp.Localizations.Resources.PaymentPlans.Page {
         public static string NameLabel {
             get {
                 return ResourceManager.GetString("NameLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string PaymentPlanContextAdd {
+            get {
+                return ResourceManager.GetString("PaymentPlanContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PaymentPlanContextChange {
+            get {
+                return ResourceManager.GetString("PaymentPlanContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string PaymentPlanContextDelete {
+            get {
+                return ResourceManager.GetString("PaymentPlanContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PaymentPlanContextRefresh {
+            get {
+                return ResourceManager.GetString("PaymentPlanContextRefresh", resourceCulture);
             }
         }
         

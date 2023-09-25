@@ -1,4 +1,6 @@
-﻿using Syncfusion.Blazor.Buttons;
+﻿using Microsoft.Extensions.Localization;
+using Syncfusion.Blazor.Buttons;
+using Syncfusion.Blazor.Grids;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.SalesManagementParameter.Dtos;
 
@@ -23,6 +25,14 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.SalesManagementParamet
         private async void SalesPropositionFichesChange(ChangeEventArgs<bool> args)
         {
             DataSource.PropositionFutureDateParameter = args.Checked;
+        }
+
+        protected override void CreateContextMenuItems(IStringLocalizer L)
+        {
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesManagementParameterContextAdd"], Id = "new" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesManagementParameterContextChange"], Id = "changed" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesManagementParameterContextDelete"], Id = "delete" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["SalesManagementParameterContextRefresh"], Id = "refresh" });
         }
 
         private async void OnClick()

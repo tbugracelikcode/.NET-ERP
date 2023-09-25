@@ -123,18 +123,6 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -155,6 +143,18 @@
   </data>
   <data name="LoadingText" xml:space="preserve">
     <value>The records are loading..</value>
+  </data>
+  <data name="MachineAndWorkforceManagementParameterContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="MachineAndWorkforceManagementParameterContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="MachineAndWorkforceManagementParameterContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="MachineAndWorkforceManagementParameterContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>The record you selected is using by {0}.</value>

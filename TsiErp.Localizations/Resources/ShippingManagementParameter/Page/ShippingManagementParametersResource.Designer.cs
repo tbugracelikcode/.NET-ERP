@@ -80,42 +80,6 @@ namespace TsiErp.Localizations.Resources.ShippingManagementParameter.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
         /// </summary>
         public static string DeleteConfirmationDescriptionBase {
@@ -202,6 +166,42 @@ namespace TsiErp.Localizations.Resources.ShippingManagementParameter.Page {
         public static string SaveButton {
             get {
                 return ResourceManager.GetString("SaveButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ShippingManagementParameterContextAdd {
+            get {
+                return ResourceManager.GetString("ShippingManagementParameterContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ShippingManagementParameterContextChange {
+            get {
+                return ResourceManager.GetString("ShippingManagementParameterContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ShippingManagementParameterContextDelete {
+            get {
+                return ResourceManager.GetString("ShippingManagementParameterContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ShippingManagementParameterContextRefresh {
+            get {
+                return ResourceManager.GetString("ShippingManagementParameterContextRefresh", resourceCulture);
             }
         }
         

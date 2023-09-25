@@ -129,18 +129,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Product Group Code:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -179,6 +167,18 @@
   </data>
   <data name="NameLabel" xml:space="preserve">
     <value>Product Group Name:</value>
+  </data>
+  <data name="ProductGroupContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProductGroupContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ProductGroupContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProductGroupContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>

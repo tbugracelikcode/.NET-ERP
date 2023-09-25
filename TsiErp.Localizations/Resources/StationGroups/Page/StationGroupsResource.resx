@@ -129,18 +129,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>İş İstasyonu Grubu Kodu:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -182,6 +170,18 @@
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
+  </data>
+  <data name="StationGroupContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="StationGroupContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="StationGroupContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="StationGroupContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="TotalEmployees" xml:space="preserve">
     <value>TOPLAM ÇALIŞAN</value>

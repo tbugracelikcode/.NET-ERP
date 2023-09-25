@@ -123,27 +123,6 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextConsumptionReceipt" xml:space="preserve">
-    <value>Sarf Fişi Oluştur</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextOccuredAmountEntry" xml:space="preserve">
-    <value>Gerçekleşen Miktar Girişi</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
-  <data name="ContextWorkOrders" xml:space="preserve">
-    <value>İş Emirleri</value>
-  </data>
   <data name="CustomerCode" xml:space="preserve">
     <value>MÜŞTERİ KODU</value>
   </data>
@@ -191,6 +170,27 @@
   </data>
   <data name="ProducedQuantity" xml:space="preserve">
     <value>ÜRETİLEN MİKTAR</value>
+  </data>
+  <data name="ProductionOrderContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProductionOrderContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ProductionOrderContextConsumptionReceipt" xml:space="preserve">
+    <value>Sarf Fişi Oluştur</value>
+  </data>
+  <data name="ProductionOrderContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProductionOrderContextOccuredAmountEntry" xml:space="preserve">
+    <value>Gerçekleşen Miktar Girişi</value>
+  </data>
+  <data name="ProductionOrderContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="ProductionOrderContextWorkOrders" xml:space="preserve">
+    <value>İş Emirleri</value>
   </data>
   <data name="StartDate" xml:space="preserve">
     <value>BAŞLANGIÇ TARİHİ</value>

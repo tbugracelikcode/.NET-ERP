@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Localization;
+using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.FinanceManagement.PaymentPlan.Dtos;
 
@@ -27,6 +29,13 @@ namespace TsiErp.ErpUI.Pages.FinanceManagement.PaymentPlan
             return Task.CompletedTask;
         }
 
+        protected override void CreateContextMenuItems(IStringLocalizer L)
+        {
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PaymentPlanContextAdd"], Id = "new" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PaymentPlanContextChange"], Id = "changed" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PaymentPlanContextDelete"], Id = "delete" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["PaymentPlanContextRefresh"], Id = "refresh" });
+        }
 
 
         #region Kod ButtonEdit

@@ -117,11 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CalendarContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="CalendarContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="CalendarContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="CalendarContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="CalendarContextShowCalendar" xml:space="preserve">
+    <value>View Calendar</value>
+  </data>
+  <data name="CalendarDayContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="CalendarDayDate" xml:space="preserve">
     <value>DATE</value>
   </data>
   <data name="CalendarDayStateEnum" xml:space="preserve">
     <value>STATUS</value>
+  </data>
+  <data name="CalendarLineContextMaintenance" xml:space="preserve">
+    <value>Maintenance Information</value>
+  </data>
+  <data name="CalendarLineContextWorkStatus" xml:space="preserve">
+    <value>Update Working Status</value>
   </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
@@ -134,27 +158,6 @@
   </data>
   <data name="CodeLabel" xml:space="preserve">
     <value>Calendar Code:</value>
-  </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextMaintenance" xml:space="preserve">
-    <value>Maintenance Information</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="ContextShowCalendar" xml:space="preserve">
-    <value>View Calendar</value>
-  </data>
-  <data name="ContextWorkStatus" xml:space="preserve">
-    <value>Update Working Status</value>
   </data>
   <data name="DateLabel" xml:space="preserve">
     <value>Calendar Year:</value>

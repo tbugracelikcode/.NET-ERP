@@ -73,10 +73,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalSPCLineContextAdd"], Id = "new" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalSPCLineContextChange"], Id = "changed" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalSPCLineContextDelete"], Id = "delete" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalSPCLineContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -84,10 +84,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalSPC
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalSPCContextAdd"], Id = "new" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalSPCContextChange"], Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalSPCContextDelete"], Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalSPCContextRefresh"], Id = "refresh" });
             }
         }
 

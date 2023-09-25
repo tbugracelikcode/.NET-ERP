@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Currency.Dtos;
@@ -27,6 +28,14 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.ExchangeRate
             EditPageVisible = true;
 
             return Task.CompletedTask;
+        }
+
+        protected override void CreateContextMenuItems(IStringLocalizer L)
+        {
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ExchangeRateContextAdd"], Id = "new" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ExchangeRateContextChange"], Id = "changed" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ExchangeRateContextDelete"], Id = "delete" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ExchangeRateContextRefresh"], Id = "refresh" });
         }
 
         #region Para Birimi ButtonEdit

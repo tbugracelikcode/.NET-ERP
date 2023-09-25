@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Department.Dtos;
@@ -48,6 +49,14 @@ namespace TsiErp.ErpUI.Pages.QualityControl.EquipmentRecord
             EditPageVisible = true;
 
             return Task.CompletedTask;
+        }
+
+        protected override void CreateContextMenuItems(IStringLocalizer L)
+        {
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EquipmentRecordContextAdd"], Id = "new" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EquipmentRecordContextChange"], Id = "changed" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EquipmentRecordContextDelete"], Id = "delete" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["EquipmentRecordContextRefresh"], Id = "refresh" });
         }
 
         #region Departman ButtonEdit

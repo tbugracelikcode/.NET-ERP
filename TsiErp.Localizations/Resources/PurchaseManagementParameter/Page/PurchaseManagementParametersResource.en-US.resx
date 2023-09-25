@@ -123,18 +123,6 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -164,6 +152,18 @@
   </data>
   <data name="OrderFutureDateParameterLabel" xml:space="preserve">
     <value>Post-dated recording can be made in the purchase order fiches.</value>
+  </data>
+  <data name="PurchaseManagementParameterContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="PurchaseManagementParameterContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="PurchaseManagementParameterContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PurchaseManagementParameterContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="RequestFutureDateParameterLabel" xml:space="preserve">
     <value>Post-dated recording can be made in the purchase request fiches.</value>

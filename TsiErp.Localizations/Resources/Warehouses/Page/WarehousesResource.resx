@@ -129,18 +129,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Depo Kodu:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -209,5 +197,17 @@
   </data>
   <data name="ValidatorNameMaxLenght" xml:space="preserve">
     <value>Depo adı, 200 karakterden fazla olamaz.</value>
+  </data>
+  <data name="WarehouseContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="WarehouseContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="WarehouseContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="WarehouseContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
 </root>

@@ -133,42 +133,6 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to PARA BİRİMİ.
         /// </summary>
         public static string CurrencyCode {
@@ -795,6 +759,78 @@ namespace TsiErp.Localizations.Resources.PurchaseOrders.Page {
         public static string ProductNameLineLabel {
             get {
                 return ResourceManager.GetString("ProductNameLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string PurchaseOrderContextAdd {
+            get {
+                return ResourceManager.GetString("PurchaseOrderContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PurchaseOrderContextChange {
+            get {
+                return ResourceManager.GetString("PurchaseOrderContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string PurchaseOrderContextDelete {
+            get {
+                return ResourceManager.GetString("PurchaseOrderContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PurchaseOrderContextRefresh {
+            get {
+                return ResourceManager.GetString("PurchaseOrderContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string PurchaseOrderLineContextAdd {
+            get {
+                return ResourceManager.GetString("PurchaseOrderLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PurchaseOrderLineContextChange {
+            get {
+                return ResourceManager.GetString("PurchaseOrderLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string PurchaseOrderLineContextDelete {
+            get {
+                return ResourceManager.GetString("PurchaseOrderLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PurchaseOrderLineContextRefresh {
+            get {
+                return ResourceManager.GetString("PurchaseOrderLineContextRefresh", resourceCulture);
             }
         }
         

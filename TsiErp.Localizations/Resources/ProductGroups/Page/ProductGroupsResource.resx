@@ -129,18 +129,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Ürün Grubu Kodu:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -179,6 +167,18 @@
   </data>
   <data name="NameLabel" xml:space="preserve">
     <value>Ürün Grubu Açıklaması:</value>
+  </data>
+  <data name="ProductGroupContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProductGroupContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ProductGroupContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProductGroupContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>

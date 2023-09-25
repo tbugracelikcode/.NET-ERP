@@ -141,18 +141,6 @@
   <data name="ComboboxToBeUsedAs" xml:space="preserve">
     <value>To Be Used As</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="CurrentAccountCardCodeLabel" xml:space="preserve">
     <value>Current Account Code:</value>
   </data>
@@ -299,6 +287,18 @@
   </data>
   <data name="PurchaseOrderModalTitle" xml:space="preserve">
     <value>Purchase Orders</value>
+  </data>
+  <data name="PurchaseUnsuitabilityReportContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="PurchaseUnsuitabilityReportContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="PurchaseUnsuitabilityReportContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PurchaseUnsuitabilityReportContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>

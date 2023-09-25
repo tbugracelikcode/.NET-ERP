@@ -180,10 +180,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["TemplateOperationLineContextAdd"], Id = "new" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["TemplateOperationLineContextChange"], Id = "changed" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["TemplateOperationLineContextDelete"], Id = "delete" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["TemplateOperationLineContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -191,10 +191,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.TemplateOperation
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["TemplateOperationContextAdd"], Id = "new" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["TemplateOperationContextChange"], Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["TemplateOperationContextDelete"], Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["TemplateOperationContextRefresh"], Id = "refresh" });
             }
         }
 

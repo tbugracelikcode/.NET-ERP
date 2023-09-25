@@ -80,42 +80,6 @@ namespace TsiErp.Localizations.Resources.QualityControlParameter.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
         /// </summary>
         public static string DeleteConfirmationDescriptionBase {
@@ -193,6 +157,42 @@ namespace TsiErp.Localizations.Resources.QualityControlParameter.Page {
         public static string MessagePopupInformationTitleBase {
             get {
                 return ResourceManager.GetString("MessagePopupInformationTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string QualityControlParameterContextAdd {
+            get {
+                return ResourceManager.GetString("QualityControlParameterContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string QualityControlParameterContextChange {
+            get {
+                return ResourceManager.GetString("QualityControlParameterContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string QualityControlParameterContextDelete {
+            get {
+                return ResourceManager.GetString("QualityControlParameterContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string QualityControlParameterContextRefresh {
+            get {
+                return ResourceManager.GetString("QualityControlParameterContextRefresh", resourceCulture);
             }
         }
         

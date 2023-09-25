@@ -138,26 +138,17 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Operation Code:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="ContextSelectSupplier" xml:space="preserve">
-    <value>Select Supplier</value>
-  </data>
   <data name="ContractGridCurrentAccountCardName" xml:space="preserve">
     <value>SUPPLIER TITLE</value>
   </data>
   <data name="ContractGridLineNr" xml:space="preserve">
     <value>LINE NR.</value>
+  </data>
+  <data name="ContractOfProductsOperationContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ContractOfProductsOperationContextSelectSupplier" xml:space="preserve">
+    <value>Select Supplier</value>
   </data>
   <data name="ControlConditionsNamePlanLabel" xml:space="preserve">
     <value>Control Condition:</value>
@@ -269,6 +260,30 @@
   </data>
   <data name="ProductNameLabel" xml:space="preserve">
     <value>Product Name:</value>
+  </data>
+  <data name="ProductsOperationContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProductsOperationContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ProductsOperationContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProductsOperationContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ProductsOperationLineContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProductsOperationLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ProductsOperationLineContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProductsOperationLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="QualityLineGridBottomTolerance" xml:space="preserve">
     <value>BOTTOM TOLERANCE</value>

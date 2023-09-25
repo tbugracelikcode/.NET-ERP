@@ -138,18 +138,6 @@
   <data name="ComboboxToBeUsedAs" xml:space="preserve">
     <value>To Be Used As</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="ContractTrackingFicheModalGridCurrentAccountCardName" xml:space="preserve">
     <value>CURRENT ACCOUNT CARD</value>
   </data>
@@ -164,6 +152,18 @@
   </data>
   <data name="ContractTrackingFicheNrLabel" xml:space="preserve">
     <value>Contract Tracking Fiche:</value>
+  </data>
+  <data name="ContractUnsuitabilityReportContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ContractUnsuitabilityReportContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ContractUnsuitabilityReportContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ContractUnsuitabilityReportContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="CurrentAccountCardCodeLabel" xml:space="preserve">
     <value>Current Account Code:</value>

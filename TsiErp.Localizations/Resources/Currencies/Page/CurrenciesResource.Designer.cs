@@ -99,36 +99,36 @@ namespace TsiErp.Localizations.Resources.Currencies.Page {
         /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
-        public static string ContextAdd {
+        public static string CurrencyContextAdd {
             get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
+                return ResourceManager.GetString("CurrencyContextAdd", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
-        public static string ContextChange {
+        public static string CurrencyContextChange {
             get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
+                return ResourceManager.GetString("CurrencyContextChange", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
-        public static string ContextDelete {
+        public static string CurrencyContextDelete {
             get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
+                return ResourceManager.GetString("CurrencyContextDelete", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
-        public static string ContextRefresh {
+        public static string CurrencyContextRefresh {
             get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
+                return ResourceManager.GetString("CurrencyContextRefresh", resourceCulture);
             }
         }
         

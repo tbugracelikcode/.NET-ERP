@@ -141,18 +141,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Cari Kod:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="ContractDailyWorkingCapacityLabel" xml:space="preserve">
     <value>Günlük Çalışma Kapasitesi:</value>
   </data>
@@ -173,6 +161,18 @@
   </data>
   <data name="CurrencyPopupTitle" xml:space="preserve">
     <value>Para Birimleri</value>
+  </data>
+  <data name="CurrentAccountCardContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="CurrentAccountCardContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="CurrentAccountCardContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="CurrentAccountCardContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="CustomerCode" xml:space="preserve">
     <value>MÜŞTERİ KODU</value>

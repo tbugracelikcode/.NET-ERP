@@ -123,18 +123,6 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı kodlu bir kayıt bulunmaktadır.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -155,6 +143,18 @@
   </data>
   <data name="LoadingText" xml:space="preserve">
     <value>Kayıtlar Yükleniyor..</value>
+  </data>
+  <data name="MachineAndWorkforceManagementParameterContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="MachineAndWorkforceManagementParameterContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="MachineAndWorkforceManagementParameterContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="MachineAndWorkforceManagementParameterContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="MessagePopupInformationDescriptionBase" xml:space="preserve">
     <value>Seçtiğiniz kayıt {0} tarafından kullanılmaktadır.</value>

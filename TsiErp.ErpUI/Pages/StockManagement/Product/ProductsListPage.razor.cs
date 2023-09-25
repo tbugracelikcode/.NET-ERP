@@ -224,17 +224,17 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextTechnicalDrawings"], Id = "technicaldrawings" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextProductRefNr"], Id = "productreferancenumbers" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextPurchasePrices"], Id = "purchaseprices" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextSalesPrices"], Id = "salesprices" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextBOMs"], Id = "billsofmaterials" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRoutes"], Id = "routes" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextContProdTrackings"], Id = "contractproductiontrackings" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextAdd"], Id = "new" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextChange"], Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextTechnicalDrawings"], Id = "technicaldrawings" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextProductRefNr"], Id = "productreferancenumbers" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextPurchasePrices"], Id = "purchaseprices" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextSalesPrices"], Id = "salesprices" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextBOMs"], Id = "billsofmaterials" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextRoutes"], Id = "routes" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextContProdTrackings"], Id = "contractproductiontrackings" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextDelete"], Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -282,10 +282,10 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         {
             if (TechnicalDrawingGridContextMenu.Count() == 0)
             {
-                TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = L["TechnicalDrawingContextAdd"], Id = "new" });
+                TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = L["TechnicalDrawingContextChange"], Id = "changed" });
+                TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = L["TechnicalDrawingContextDelete"], Id = "delete" });
+                TechnicalDrawingGridContextMenu.Add(new ContextMenuItemModel { Text = L["TechnicalDrawingContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -506,10 +506,10 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         {
             if (ProductReferanceNumberGridContextMenu.Count() == 0)
             {
-                ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductReferanceNumberContextAdd"], Id = "new" });
+                ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductReferanceNumberContextChange"], Id = "changed" });
+                ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductReferanceNumberContextDelete"], Id = "delete" });
+                ProductReferanceNumberGridContextMenu.Add(new ContextMenuItemModel { Text = L["ProductReferanceNumberContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -707,7 +707,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         {
             if (BillsofMaterialGridContextMenu.Count() == 0)
             {
-                BillsofMaterialGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextExamine"], Id = "examine" });
+                BillsofMaterialGridContextMenu.Add(new ContextMenuItemModel { Text = L["BoMContextExamine"], Id = "examine" });
             }
         }
 
@@ -757,7 +757,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.Product
         {
             if (RouteGridContextMenu.Count() == 0)
             {
-                RouteGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextExamine"], Id = "examine" });
+                RouteGridContextMenu.Add(new ContextMenuItemModel { Text = L["RouteContextExamine"], Id = "examine" });
             }
         }
 

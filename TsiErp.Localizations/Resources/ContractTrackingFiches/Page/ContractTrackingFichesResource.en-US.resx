@@ -129,18 +129,6 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="ContractQualityPlanDescriptionLabel" xml:space="preserve">
     <value>Job Definition Description:</value>
   </data>
@@ -149,6 +137,30 @@
   </data>
   <data name="ContractQualityPlanDocumentNumberLabel" xml:space="preserve">
     <value>Job Definition:</value>
+  </data>
+  <data name="ContractTrackingFicheContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ContractTrackingFicheContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ContractTrackingFicheContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ContractTrackingFicheContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="ContractTrackingFicheLineContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ContractTrackingFicheLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ContractTrackingFicheLineContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ContractTrackingFicheLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="CurrentAccountCardCodeLabel" xml:space="preserve">
     <value>Current Account Card Code:</value>

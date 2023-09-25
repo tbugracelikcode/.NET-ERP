@@ -1,6 +1,7 @@
 ﻿using BlazorInputFile;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Extensions.ObjectMapping;
@@ -83,6 +84,14 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
                     await InvokeAsync(StateHasChanged);
                 }
             }
+        }
+
+        protected override void CreateContextMenuItems(IStringLocalizer L)
+        {
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["TechnicalDrawingContextAdd"], Id = "new" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["TechnicalDrawingContextChange"], Id = "changed" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["TechnicalDrawingContextDelete"], Id = "delete" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["TechnicalDrawingContextRefresh"], Id = "refresh" });
         }
 
         public async override void OnContextMenuClick(ContextMenuClickEventArgs<ListTechnicalDrawingsDto> args)
@@ -284,7 +293,7 @@ namespace TsiErp.ErpUI.Pages.StockManagement.TechnicalDrawing
             }
             else
             {
-                await ModalManager.WarningPopupAsync("Uyarı", "Bu kayıtta yüklenmiş bir teknik resim dosyası mevcut");
+                await ModalManager.WarningPopupAsync(L["UIWaringUploadTitle"], L["UIWaringUploadMessage"]);
             }
         }
 

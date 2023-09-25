@@ -129,16 +129,16 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Kontrol Şartı Kodu:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
+  <data name="ControlConditionContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
-  <data name="ContextChange" xml:space="preserve">
+  <data name="ControlConditionContextChange" xml:space="preserve">
     <value>Değiştir</value>
   </data>
-  <data name="ContextDelete" xml:space="preserve">
+  <data name="ControlConditionContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
-  <data name="ContextRefresh" xml:space="preserve">
+  <data name="ControlConditionContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
   <data name="ControlConditionsPlaceholder" xml:space="preserve">

@@ -56,10 +56,10 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ContractProductionTracking
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractProductionTrackingContextAdd"], Id = "new" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractProductionTrackingContextChange"], Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractProductionTrackingContextDelete"], Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractProductionTrackingContextRefresh"], Id = "refresh" });
             }
         }
 

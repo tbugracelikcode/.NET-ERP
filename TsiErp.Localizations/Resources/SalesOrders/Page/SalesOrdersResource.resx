@@ -156,24 +156,6 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı numaralı bir kayıt bulunmaktadır.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextProdOrder" xml:space="preserve">
-    <value>Üretim Emri Oluştur</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
-  <data name="ContextTree" xml:space="preserve">
-    <value>Ürün Ağacı</value>
-  </data>
   <data name="CurrencyCode" xml:space="preserve">
     <value>PARA BİRİMİ</value>
   </data>
@@ -429,8 +411,38 @@
   <data name="ProductNameLineLabel" xml:space="preserve">
     <value>Stok Açıklaması:</value>
   </data>
+  <data name="ProductOrderContextTree" xml:space="preserve">
+    <value>Ürün Ağacı</value>
+  </data>
   <data name="QuantityLineLabel" xml:space="preserve">
     <value>Miktar:</value>
+  </data>
+  <data name="SalesOrderContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="SalesOrderContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="SalesOrderContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="SalesOrderContextProdOrder" xml:space="preserve">
+    <value>Üretim Emri Oluştur</value>
+  </data>
+  <data name="SalesOrderContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="SalesOrderLineContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="SalesOrderLineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="SalesOrderLineContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="SalesOrderLineContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>

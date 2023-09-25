@@ -129,18 +129,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Duruş Kodu:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -155,6 +143,18 @@
   </data>
   <data name="Error" xml:space="preserve">
     <value>Hata</value>
+  </data>
+  <data name="HaltReasonContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="HaltReasonContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="HaltReasonContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="HaltReasonContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="IsMachine" xml:space="preserve">
     <value>MAKİNE KAYNAKLI</value>

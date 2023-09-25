@@ -123,6 +123,9 @@
   <data name="ApprovalLabelRoute" xml:space="preserve">
     <value>Onay:</value>
   </data>
+  <data name="BoMContextExamine" xml:space="preserve">
+    <value>İncele</value>
+  </data>
   <data name="BoMLineGridFinishedProduct" xml:space="preserve">
     <value>MAMÜL KODU</value>
   </data>
@@ -176,42 +179,6 @@
   </data>
   <data name="ConfirmationLabel" xml:space="preserve">
     <value>Onay:</value>
-  </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextBOMs" xml:space="preserve">
-    <value>Stok Reçeteleri</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextContProdTrackings" xml:space="preserve">
-    <value>Fason Takip Fişleri</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextExamine" xml:space="preserve">
-    <value>İncele</value>
-  </data>
-  <data name="ContextProductRefNr" xml:space="preserve">
-    <value>Ürün Referans Numaraları</value>
-  </data>
-  <data name="ContextPurchasePrices" xml:space="preserve">
-    <value>Satın Alma Fiyatları</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
-  <data name="ContextRoutes" xml:space="preserve">
-    <value>Ürün Rotaları</value>
-  </data>
-  <data name="ContextSalesPrices" xml:space="preserve">
-    <value>Satış Fiyatları</value>
-  </data>
-  <data name="ContextTechnicalDrawings" xml:space="preserve">
-    <value>Teknik Resimler</value>
   </data>
   <data name="ContractProdTracModalGridCurrentAccount" xml:space="preserve">
     <value>CARİ HESAP</value>
@@ -453,6 +420,39 @@
   <data name="ProductCodeLabelTechDraw" xml:space="preserve">
     <value>Stok Kodu:</value>
   </data>
+  <data name="ProductContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProductContextBOMs" xml:space="preserve">
+    <value>Stok Reçeteleri</value>
+  </data>
+  <data name="ProductContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ProductContextContProdTrackings" xml:space="preserve">
+    <value>Fason Takip Fişleri</value>
+  </data>
+  <data name="ProductContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProductContextProductRefNr" xml:space="preserve">
+    <value>Ürün Referans Numaraları</value>
+  </data>
+  <data name="ProductContextPurchasePrices" xml:space="preserve">
+    <value>Satın Alma Fiyatları</value>
+  </data>
+  <data name="ProductContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="ProductContextRoutes" xml:space="preserve">
+    <value>Ürün Rotaları</value>
+  </data>
+  <data name="ProductContextSalesPrices" xml:space="preserve">
+    <value>Satış Fiyatları</value>
+  </data>
+  <data name="ProductContextTechnicalDrawings" xml:space="preserve">
+    <value>Teknik Resimler</value>
+  </data>
   <data name="ProductDescriptionLabel" xml:space="preserve">
     <value>Açıklama:</value>
   </data>
@@ -482,6 +482,18 @@
   </data>
   <data name="ProductNameLabelTechDraw" xml:space="preserve">
     <value>Stok Açıklaması:</value>
+  </data>
+  <data name="ProductReferanceNumberContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ProductReferanceNumberContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ProductReferanceNumberContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ProductReferanceNumberContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="ProductSizeLabel" xml:space="preserve">
     <value>Stok Boyu :</value>
@@ -527,6 +539,9 @@
   </data>
   <data name="RevisionNoLabelTechDraw" xml:space="preserve">
     <value>Revizyon Numarası:</value>
+  </data>
+  <data name="RouteContextExamine" xml:space="preserve">
+    <value>İncele</value>
   </data>
   <data name="RouteLineGridAdjustment" xml:space="preserve">
     <value>AYAR VE KONTROL SÜRESİ</value>
@@ -623,6 +638,18 @@
   </data>
   <data name="TechnicalConfirmationLabel" xml:space="preserve">
     <value>Teknik Onay:</value>
+  </data>
+  <data name="TechnicalDrawingContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="TechnicalDrawingContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="TechnicalDrawingContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="TechnicalDrawingContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>Seçtiğiniz teknik resim, kalıcı olarak silinecektir.</value>

@@ -124,47 +124,20 @@ namespace TsiErp.Localizations.Resources.SalesPropositions.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
+        ///   Looks up a localized string similar to Onaylandı.
         /// </summary>
-        public static string ContextAdd {
+        public static string ConvertContextApprove {
             get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
+                return ResourceManager.GetString("ConvertContextApprove", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
+        ///   Looks up a localized string similar to Beklemede.
         /// </summary>
-        public static string ContextChange {
+        public static string ConvertContextPending {
             get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Siparişe Dönüştür.
-        /// </summary>
-        public static string ContextConverttoOrder {
-            get {
-                return ResourceManager.GetString("ContextConverttoOrder", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
+                return ResourceManager.GetString("ConvertContextPending", resourceCulture);
             }
         }
         
@@ -862,6 +835,87 @@ namespace TsiErp.Localizations.Resources.SalesPropositions.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string SalesPropositionContextAdd {
+            get {
+                return ResourceManager.GetString("SalesPropositionContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string SalesPropositionContextChange {
+            get {
+                return ResourceManager.GetString("SalesPropositionContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Siparişe Dönüştür.
+        /// </summary>
+        public static string SalesPropositionContextConverttoOrder {
+            get {
+                return ResourceManager.GetString("SalesPropositionContextConverttoOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string SalesPropositionContextDelete {
+            get {
+                return ResourceManager.GetString("SalesPropositionContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string SalesPropositionContextRefresh {
+            get {
+                return ResourceManager.GetString("SalesPropositionContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string SalesPropositionLineContextAdd {
+            get {
+                return ResourceManager.GetString("SalesPropositionLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string SalesPropositionLineContextChange {
+            get {
+                return ResourceManager.GetString("SalesPropositionLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string SalesPropositionLineContextDelete {
+            get {
+                return ResourceManager.GetString("SalesPropositionLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string SalesPropositionLineContextRefresh {
+            get {
+                return ResourceManager.GetString("SalesPropositionLineContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kaydet.
         /// </summary>
         public static string SaveButton {
@@ -1006,11 +1060,47 @@ namespace TsiErp.Localizations.Resources.SalesPropositions.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Seçilen onaylanmış satırlar, siparişe dönüştürüldü..
+        /// </summary>
+        public static string UIInformationConvertMessage {
+            get {
+                return ResourceManager.GetString("UIInformationConvertMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bilgilendirme.
+        /// </summary>
+        public static string UIInformationConvertTitle {
+            get {
+                return ResourceManager.GetString("UIInformationConvertTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satış Yönetimi &gt; Hareketler.
         /// </summary>
         public static string UIPreviousMenu {
             get {
                 return ResourceManager.GetString("UIPreviousMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seçilen tüm satırların durumu beklemededir. Beklemede olan satırlar, siparişe dönüştürülemez..
+        /// </summary>
+        public static string UIWarningConvertMessage {
+            get {
+                return ResourceManager.GetString("UIWarningConvertMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uyarı.
+        /// </summary>
+        public static string UIWarningConvertTitle {
+            get {
+                return ResourceManager.GetString("UIWarningConvertTitle", resourceCulture);
             }
         }
         

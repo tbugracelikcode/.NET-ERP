@@ -135,18 +135,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Operation Code:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -260,6 +248,30 @@
   </data>
   <data name="Tab2Name" xml:space="preserve">
     <value>Operation Unsuitability Items</value>
+  </data>
+  <data name="TemplateOperationContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="TemplateOperationContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="TemplateOperationContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="TemplateOperationContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="TemplateOperationLineContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="TemplateOperationLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="TemplateOperationLineContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="TemplateOperationLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>The template operation you selected will be permanently deleted.</value>

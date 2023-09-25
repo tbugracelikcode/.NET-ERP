@@ -141,18 +141,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Sevkiyat Adresi Kodu:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="Country" xml:space="preserve">
     <value>ÜLKE</value>
   </data>
@@ -245,6 +233,18 @@
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>
+  </data>
+  <data name="ShippingAdressContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="ShippingAdressContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="ShippingAdressContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="ShippingAdressContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="Tab1Name" xml:space="preserve">
     <value>Genel Bilgiler</value>

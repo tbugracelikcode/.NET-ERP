@@ -80,42 +80,6 @@ namespace TsiErp.Localizations.Resources.PlanningManagementParameter.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
         /// </summary>
         public static string DeleteConfirmationDescriptionBase {
@@ -193,6 +157,42 @@ namespace TsiErp.Localizations.Resources.PlanningManagementParameter.Page {
         public static string MessagePopupInformationTitleBase {
             get {
                 return ResourceManager.GetString("MessagePopupInformationTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string PlanningManagementParameterContextAdd {
+            get {
+                return ResourceManager.GetString("PlanningManagementParameterContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PlanningManagementParameterContextChange {
+            get {
+                return ResourceManager.GetString("PlanningManagementParameterContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string PlanningManagementParameterContextDelete {
+            get {
+                return ResourceManager.GetString("PlanningManagementParameterContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PlanningManagementParameterContextRefresh {
+            get {
+                return ResourceManager.GetString("PlanningManagementParameterContextRefresh", resourceCulture);
             }
         }
         

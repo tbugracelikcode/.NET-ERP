@@ -98,42 +98,6 @@ namespace TsiErp.Localizations.Resources.ProductionTrackings.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to CARİ KOD.
         /// </summary>
         public static string CurrentAccountCardCode {
@@ -553,6 +517,78 @@ namespace TsiErp.Localizations.Resources.ProductionTrackings.Page {
         public static string ProducedQuantityLabel {
             get {
                 return ResourceManager.GetString("ProducedQuantityLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProductionTrackingContextAdd {
+            get {
+                return ResourceManager.GetString("ProductionTrackingContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProductionTrackingContextChange {
+            get {
+                return ResourceManager.GetString("ProductionTrackingContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProductionTrackingContextDelete {
+            get {
+                return ResourceManager.GetString("ProductionTrackingContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ProductionTrackingContextRefresh {
+            get {
+                return ResourceManager.GetString("ProductionTrackingContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProductionTrackingLineContextAdd {
+            get {
+                return ResourceManager.GetString("ProductionTrackingLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProductionTrackingLineContextChange {
+            get {
+                return ResourceManager.GetString("ProductionTrackingLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProductionTrackingLineContextDelete {
+            get {
+                return ResourceManager.GetString("ProductionTrackingLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ProductionTrackingLineContextRefresh {
+            get {
+                return ResourceManager.GetString("ProductionTrackingLineContextRefresh", resourceCulture);
             }
         }
         

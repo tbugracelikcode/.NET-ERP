@@ -141,18 +141,6 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same number.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="CurrencyCode" xml:space="preserve">
     <value>CURRENCY</value>
   </data>
@@ -362,6 +350,30 @@
   </data>
   <data name="ProductNameLineLabel" xml:space="preserve">
     <value>Product Name:</value>
+  </data>
+  <data name="PurchaseOrderContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="PurchaseOrderContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="PurchaseOrderContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PurchaseOrderContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="PurchaseOrderLineContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="PurchaseOrderLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="PurchaseOrderLineContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PurchaseOrderLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="QuantityLineLabel" xml:space="preserve">
     <value>Quantity:</value>

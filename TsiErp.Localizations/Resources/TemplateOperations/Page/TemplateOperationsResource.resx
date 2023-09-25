@@ -135,18 +135,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Operasyon Kodu:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Silmek istediğinize emin misiniz ?</value>
   </data>
@@ -260,6 +248,30 @@
   </data>
   <data name="Tab2Name" xml:space="preserve">
     <value>Operasyon Uygunsuzluk Başlıkları</value>
+  </data>
+  <data name="TemplateOperationContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="TemplateOperationContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="TemplateOperationContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="TemplateOperationContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="TemplateOperationLineContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="TemplateOperationLineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="TemplateOperationLineContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="TemplateOperationLineContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>Seçtiğiniz şablon operasyon, kalıcı olarak silinecektir.</value>

@@ -151,42 +151,6 @@ namespace TsiErp.Localizations.Resources.Stations.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
         /// </summary>
         public static string DeleteConfirmationDescriptionBase {
@@ -255,6 +219,24 @@ namespace TsiErp.Localizations.Resources.Stations.Page {
         public static string ErrorBoundryButtonText {
             get {
                 return ResourceManager.GetString("ErrorBoundryButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string InventoryContextChange {
+            get {
+                return ResourceManager.GetString("InventoryContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string InventoryContextDelete {
+            get {
+                return ResourceManager.GetString("InventoryContextDelete", resourceCulture);
             }
         }
         
@@ -435,6 +417,42 @@ namespace TsiErp.Localizations.Resources.Stations.Page {
         public static string ShiftWorkingTimeLabel {
             get {
                 return ResourceManager.GetString("ShiftWorkingTimeLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string StationContextAdd {
+            get {
+                return ResourceManager.GetString("StationContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string StationContextChange {
+            get {
+                return ResourceManager.GetString("StationContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string StationContextDelete {
+            get {
+                return ResourceManager.GetString("StationContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string StationContextRefresh {
+            get {
+                return ResourceManager.GetString("StationContextRefresh", resourceCulture);
             }
         }
         

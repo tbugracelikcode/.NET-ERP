@@ -129,18 +129,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>User Group Code:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -197,6 +185,18 @@
   </data>
   <data name="UpdateControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
+  </data>
+  <data name="UserGroupContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="UserGroupContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="UserGroupContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="UserGroupContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="ValidatorCodeEmpty" xml:space="preserve">
     <value>Please enter the user group code.</value>

@@ -134,42 +134,6 @@ namespace TsiErp.Localizations.Resources.PurchaseUnsuitabilityReports.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Cari Hesap Kodu:.
         /// </summary>
         public static string CurrentAccountCardCodeLabel {
@@ -607,6 +571,42 @@ namespace TsiErp.Localizations.Resources.PurchaseUnsuitabilityReports.Page {
         public static string PurchaseOrderModalTitle {
             get {
                 return ResourceManager.GetString("PurchaseOrderModalTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string PurchaseUnsuitabilityReportContextAdd {
+            get {
+                return ResourceManager.GetString("PurchaseUnsuitabilityReportContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string PurchaseUnsuitabilityReportContextChange {
+            get {
+                return ResourceManager.GetString("PurchaseUnsuitabilityReportContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string PurchaseUnsuitabilityReportContextDelete {
+            get {
+                return ResourceManager.GetString("PurchaseUnsuitabilityReportContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string PurchaseUnsuitabilityReportContextRefresh {
+            get {
+                return ResourceManager.GetString("PurchaseUnsuitabilityReportContextRefresh", resourceCulture);
             }
         }
         

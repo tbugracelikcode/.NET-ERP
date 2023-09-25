@@ -132,18 +132,6 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>Aynı döküman numaralı bir kayıt bulunmaktadır.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="ControlConditionsCode" xml:space="preserve">
     <value>KONTROL ŞARTI KODU</value>
   </data>
@@ -533,6 +521,30 @@
   </data>
   <data name="ProductsOprModalTitle1" xml:space="preserve">
     <value>Ürüne Özel Operasyonlar</value>
+  </data>
+  <data name="PurchaseQualityPlanContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="PurchaseQualityPlanContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="PurchaseQualityPlanContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="PurchaseQualityPlanContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
+  <data name="PurchaseQualityPlanLineContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="PurchaseQualityPlanLineContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="PurchaseQualityPlanLineContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="PurchaseQualityPlanLineContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>

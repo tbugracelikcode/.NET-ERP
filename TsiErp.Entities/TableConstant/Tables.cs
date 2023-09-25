@@ -124,6 +124,8 @@ namespace TsiErp.Entities.TableConstant
         public static readonly string OperationalSPCComparings = "OperationalSPCComparings";
         public static readonly string FicheNumbers = "FicheNumbers";
         public static readonly string PFMEAs = "PFMEAs";
+        public static readonly string MRPs = "MRPs";
+        public static readonly string MRPLines = "MRPLines";
         public static readonly string OperationStockMovements = "OperationStockMovements";
     }
 }

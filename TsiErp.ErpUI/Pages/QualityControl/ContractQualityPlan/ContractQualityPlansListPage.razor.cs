@@ -269,10 +269,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractQualityPlanContextAdd"], Id = "new" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractQualityPlanContextChange"], Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractQualityPlanContextDelete"], Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractQualityPlanContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -280,10 +280,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractQualityPlanLineContextAdd"], Id = "new" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractQualityPlanLineContextChange"], Id = "changed" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractQualityPlanLineContextDelete"], Id = "delete" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractQualityPlanLineContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -504,10 +504,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
         {
             if (OperationPictureGridContextMenu.Count() == 0)
             {
-                OperationPictureGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                OperationPictureGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                OperationPictureGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                OperationPictureGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                OperationPictureGridContextMenu.Add(new ContextMenuItemModel { Text = L["OprPictureContextAdd"], Id = "new" });
+                OperationPictureGridContextMenu.Add(new ContextMenuItemModel { Text = L["OprPictureContextChange"], Id = "changed" });
+                OperationPictureGridContextMenu.Add(new ContextMenuItemModel { Text = L["OprPictureContextDelete"], Id = "delete" });
+                OperationPictureGridContextMenu.Add(new ContextMenuItemModel { Text = L["OprPictureContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -684,9 +684,9 @@ namespace TsiErp.ErpUI.Pages.QualityControl.ContractQualityPlan
         {
             if (ContractOperationGridContextMenu.Count() == 0)
             {
-                ContractOperationGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                ContractOperationGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                ContractOperationGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                ContractOperationGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractOprContextAdd"], Id = "new" });
+                ContractOperationGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractOprContextDelete"], Id = "delete" });
+                ContractOperationGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContractOprContextRefresh"], Id = "refresh" });
             }
         }
 

@@ -138,20 +138,11 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
+  <data name="ConvertContextApprove" xml:space="preserve">
+    <value>Approve</value>
   </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextConverttoOrder" xml:space="preserve">
-    <value>Convert to Order</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
+  <data name="ConvertContextPending" xml:space="preserve">
+    <value>Pending</value>
   </data>
   <data name="CurrencyCode" xml:space="preserve">
     <value>CURRENCY</value>
@@ -384,6 +375,33 @@
   <data name="QuantityLineLabel" xml:space="preserve">
     <value>Quantity:</value>
   </data>
+  <data name="SalesPropositionContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="SalesPropositionContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="SalesPropositionContextConverttoOrder" xml:space="preserve">
+    <value>Convert to Order</value>
+  </data>
+  <data name="SalesPropositionContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="SalesPropositionContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="SalesPropositionLineContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="SalesPropositionLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="SalesPropositionLineContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="SalesPropositionLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -432,8 +450,20 @@
   <data name="UIExportTitle" xml:space="preserve">
     <value>Sales Propositions</value>
   </data>
+  <data name="UIInformationConvertMessage" xml:space="preserve">
+    <value>The selected confirmed lines were converted to orders.</value>
+  </data>
+  <data name="UIInformationConvertTitle" xml:space="preserve">
+    <value>Information</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Sales Management &gt; Transactions</value>
+  </data>
+  <data name="UIWarningConvertMessage" xml:space="preserve">
+    <value>The status of all selected lines are pending. Pending lines cannot be converted to orders.</value>
+  </data>
+  <data name="UIWarningConvertTitle" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="UIWarningPopupMessageBase1" xml:space="preserve">
     <value>It is not possible to save lines without selecting the unit set.</value>

@@ -70,6 +70,60 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string CalendarContextAdd {
+            get {
+                return ResourceManager.GetString("CalendarContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string CalendarContextChange {
+            get {
+                return ResourceManager.GetString("CalendarContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string CalendarContextDelete {
+            get {
+                return ResourceManager.GetString("CalendarContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string CalendarContextRefresh {
+            get {
+                return ResourceManager.GetString("CalendarContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Takvimi Görüntüle.
+        /// </summary>
+        public static string CalendarContextShowCalendar {
+            get {
+                return ResourceManager.GetString("CalendarContextShowCalendar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string CalendarDayContextDelete {
+            get {
+                return ResourceManager.GetString("CalendarDayContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TARİH.
         /// </summary>
         public static string CalendarDayDate {
@@ -84,6 +138,24 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         public static string CalendarDayStateEnum {
             get {
                 return ResourceManager.GetString("CalendarDayStateEnum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bakım Bilgileri.
+        /// </summary>
+        public static string CalendarLineContextMaintenance {
+            get {
+                return ResourceManager.GetString("CalendarLineContextMaintenance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Çalışma Durumunu Güncelle.
+        /// </summary>
+        public static string CalendarLineContextWorkStatus {
+            get {
+                return ResourceManager.GetString("CalendarLineContextWorkStatus", resourceCulture);
             }
         }
         
@@ -120,69 +192,6 @@ namespace TsiErp.Localizations.Resources.Calendars.Page {
         public static string CodeLabel {
             get {
                 return ResourceManager.GetString("CodeLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Bakım Bilgileri.
-        /// </summary>
-        public static string ContextMaintenance {
-            get {
-                return ResourceManager.GetString("ContextMaintenance", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Takvimi Görüntüle.
-        /// </summary>
-        public static string ContextShowCalendar {
-            get {
-                return ResourceManager.GetString("ContextShowCalendar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Çalışma Durumunu Güncelle.
-        /// </summary>
-        public static string ContextWorkStatus {
-            get {
-                return ResourceManager.GetString("ContextWorkStatus", resourceCulture);
             }
         }
         

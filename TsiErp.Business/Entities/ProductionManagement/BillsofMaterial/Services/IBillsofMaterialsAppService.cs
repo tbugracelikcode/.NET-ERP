@@ -8,5 +8,6 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
     public interface IBillsofMaterialsAppService : ICrudAppService<SelectBillsofMaterialsDto, ListBillsofMaterialsDto, CreateBillsofMaterialsDto, UpdateBillsofMaterialsDto, ListBillsofMaterialsParameterDto>
     {
         Task<IDataResult<SelectBillsofMaterialsDto>> GetbyCurrentAccountIDAsync(Guid currentAccountID, Guid finishedProductId);
+        Task<IDataResult<SelectBillsofMaterialsDto>> GetbyProductIDAsync( Guid finishedProductId);
     }
 }

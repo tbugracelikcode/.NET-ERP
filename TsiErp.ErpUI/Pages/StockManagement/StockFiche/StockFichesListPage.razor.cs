@@ -414,10 +414,10 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheLineContextAdd"], Id = "new" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheLineContextChange"], Id = "changed" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheLineContextDelete"], Id = "delete" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheLineContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -425,15 +425,15 @@ namespace TsiErp.ErpUI.Pages.StockManagement.StockFiche
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAddStockIncome"], Id = "income" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAddStockOutput"], Id = "output" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAddConsume"], Id = "consume" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAddWastege"], Id = "wastage" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAddProductionIncome"], Id = "proincome" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAddWarehouse"], Id = "warehouse" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddStockIncome"], Id = "income" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddStockOutput"], Id = "output" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddConsume"], Id = "consume" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddWastege"], Id = "wastage" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddProductionIncome"], Id = "proincome" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextAddWarehouse"], Id = "warehouse" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextChange"], Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextDelete"], Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StockFicheContextRefresh"], Id = "refresh" });
             }
         }
 

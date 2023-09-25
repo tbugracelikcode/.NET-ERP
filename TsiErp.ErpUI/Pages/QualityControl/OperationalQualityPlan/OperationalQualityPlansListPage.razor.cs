@@ -238,10 +238,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalQualityPlanContextAdd"], Id = "new" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalQualityPlanContextChange"], Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalQualityPlanContextDelete"], Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalQualityPlanContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -249,10 +249,10 @@ namespace TsiErp.ErpUI.Pages.QualityControl.OperationalQualityPlan
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalQualityPlanLineContextAdd"], Id = "new" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalQualityPlanLineContextChange"], Id = "changed" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalQualityPlanLineContextDelete"], Id = "delete" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["OperationalQualityPlanLineContextRefresh"], Id = "refresh" });
             }
         }
 

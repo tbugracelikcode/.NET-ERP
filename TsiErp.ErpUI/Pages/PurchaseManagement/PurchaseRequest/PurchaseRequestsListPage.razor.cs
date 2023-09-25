@@ -482,8 +482,8 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
         {
             if (ConvertToOrderGridContextMenu.Count() == 0)
             {
-                ConvertToOrderGridContextMenu.Add(new ContextMenuItemModel { Text = "Onaylandı", Id = "approve" });
-                ConvertToOrderGridContextMenu.Add(new ContextMenuItemModel { Text = "Beklemede", Id = "onhold" });
+                ConvertToOrderGridContextMenu.Add(new ContextMenuItemModel { Text =L["ConvertContextApprove"], Id = "approve" });
+                ConvertToOrderGridContextMenu.Add(new ContextMenuItemModel { Text =L["ConvertContextPending"], Id = "onhold" });
             }
         }
 
@@ -604,7 +604,7 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
                     ExchangeRate = DataSource.ExchangeRate,
                     GrossAmount = DataSource.GrossAmount,
                     LinkedPurchaseRequestID = DataSource.Id,
-                    FicheNo = "DENEME 1",
+                    FicheNo = FicheNumbersAppService.GetFicheNumberAsync("PurchaseRequestsChildMenu"),
                     NetAmount = DataSource.NetAmount,
                     PaymentPlanID = DataSource.PaymentPlanID,
                     PurchaseOrderState = (int)Entities.Enums.PurchaseOrderStateEnum.Beklemede,
@@ -652,11 +652,11 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
 
                 #endregion
 
-                await ModalManager.MessagePopupAsync("Bilgilendirme", "Seçilen onaylanmış satırlar, siparişe dönüştürüldü.");
+                await ModalManager.MessagePopupAsync(L["UIInformationConvertTitle"], L["UIInformationConvertMessage"]);
             }
             else
             {
-                await ModalManager.WarningPopupAsync("Uyarı", "Seçilen tüm satırların durumu beklemededir. Beklemede olan satırlar, siparişe dönüştürülemez.");
+                await ModalManager.WarningPopupAsync(L["UIWarningConvertTitle"], L["UIWarningConvertMessage"]);
             }
 
             #region Ana Satırın Sipariş Durumunu Belirleme
@@ -752,10 +752,10 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestLineContextAdd"], Id = "new" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestLineContextChange"], Id = "changed" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestLineContextDelete"], Id = "delete" });
+                LineGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestLineContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -763,11 +763,11 @@ namespace TsiErp.ErpUI.Pages.PurchaseManagement.PurchaseRequest
         {
             if (LineGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextConverttoOrder"], Id = "converttoorder" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestContextAdd"], Id = "new" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestContextChange"], Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestContextDelete"], Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestContextConverttoOrder"], Id = "converttoorder" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["PurchaseRequestContextRefresh"], Id = "refresh" });
             }
         }
 

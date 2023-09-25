@@ -107,42 +107,6 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityItemSPCs.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to TARİH.
         /// </summary>
         public static string Date_ {
@@ -481,6 +445,78 @@ namespace TsiErp.Localizations.Resources.UnsuitabilityItemSPCs.Page {
         public static string UIWarningDateTitleBase {
             get {
                 return ResourceManager.GetString("UIWarningDateTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string UnsuitabilityItemSPCContextAdd {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemSPCContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string UnsuitabilityItemSPCContextChange {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemSPCContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string UnsuitabilityItemSPCContextDelete {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemSPCContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string UnsuitabilityItemSPCContextRefresh {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemSPCContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string UnsuitabilityItemSPCLineContextAdd {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemSPCLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string UnsuitabilityItemSPCLineContextChange {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemSPCLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string UnsuitabilityItemSPCLineContextDelete {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemSPCLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string UnsuitabilityItemSPCLineContextRefresh {
+            get {
+                return ResourceManager.GetString("UnsuitabilityItemSPCLineContextRefresh", resourceCulture);
             }
         }
         

@@ -80,42 +80,6 @@ namespace TsiErp.Localizations.Resources.ProductionManagementParameter.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Silmek istediğinize emin misiniz ?.
         /// </summary>
         public static string DeleteConfirmationDescriptionBase {
@@ -193,6 +157,42 @@ namespace TsiErp.Localizations.Resources.ProductionManagementParameter.Page {
         public static string MessagePopupInformationTitleBase {
             get {
                 return ResourceManager.GetString("MessagePopupInformationTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string ProductionManagementParameterContextAdd {
+            get {
+                return ResourceManager.GetString("ProductionManagementParameterContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string ProductionManagementParameterContextChange {
+            get {
+                return ResourceManager.GetString("ProductionManagementParameterContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string ProductionManagementParameterContextDelete {
+            get {
+                return ResourceManager.GetString("ProductionManagementParameterContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string ProductionManagementParameterContextRefresh {
+            get {
+                return ResourceManager.GetString("ProductionManagementParameterContextRefresh", resourceCulture);
             }
         }
         

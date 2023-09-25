@@ -133,42 +133,6 @@ namespace TsiErp.Localizations.Resources.SalesPrices.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ekle.
-        /// </summary>
-        public static string ContextAdd {
-            get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Değiştir.
-        /// </summary>
-        public static string ContextChange {
-            get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sil.
-        /// </summary>
-        public static string ContextDelete {
-            get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Güncelle.
-        /// </summary>
-        public static string ContextRefresh {
-            get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to PARA BİRİMİ.
         /// </summary>
         public static string CurrencyCode {
@@ -579,6 +543,78 @@ namespace TsiErp.Localizations.Resources.SalesPrices.Page {
         public static string ProductNameLineLabel {
             get {
                 return ResourceManager.GetString("ProductNameLineLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string SalesPriceContextAdd {
+            get {
+                return ResourceManager.GetString("SalesPriceContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string SalesPriceContextChange {
+            get {
+                return ResourceManager.GetString("SalesPriceContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string SalesPriceContextDelete {
+            get {
+                return ResourceManager.GetString("SalesPriceContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string SalesPriceContextRefresh {
+            get {
+                return ResourceManager.GetString("SalesPriceContextRefresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ekle.
+        /// </summary>
+        public static string SalesPriceLineContextAdd {
+            get {
+                return ResourceManager.GetString("SalesPriceLineContextAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Değiştir.
+        /// </summary>
+        public static string SalesPriceLineContextChange {
+            get {
+                return ResourceManager.GetString("SalesPriceLineContextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sil.
+        /// </summary>
+        public static string SalesPriceLineContextDelete {
+            get {
+                return ResourceManager.GetString("SalesPriceLineContextDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Güncelle.
+        /// </summary>
+        public static string SalesPriceLineContextRefresh {
+            get {
+                return ResourceManager.GetString("SalesPriceLineContextRefresh", resourceCulture);
             }
         }
         

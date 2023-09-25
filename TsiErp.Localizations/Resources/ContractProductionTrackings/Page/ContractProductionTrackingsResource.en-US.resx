@@ -123,16 +123,16 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
+  <data name="ContractProductionTrackingContextAdd" xml:space="preserve">
     <value>Add</value>
   </data>
-  <data name="ContextChange" xml:space="preserve">
+  <data name="ContractProductionTrackingContextChange" xml:space="preserve">
     <value>Change</value>
   </data>
-  <data name="ContextDelete" xml:space="preserve">
+  <data name="ContractProductionTrackingContextDelete" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="ContextRefresh" xml:space="preserve">
+  <data name="ContractProductionTrackingContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
   <data name="CurrentAccountCardCode" xml:space="preserve">

@@ -129,18 +129,6 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same document number.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="ControlConditionsCode" xml:space="preserve">
     <value>CONTROL CONDITION CODE</value>
   </data>
@@ -293,6 +281,30 @@
   </data>
   <data name="NoFile" xml:space="preserve">
     <value>No File.</value>
+  </data>
+  <data name="OperationalQualityPlanContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="OperationalQualityPlanContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="OperationalQualityPlanContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="OperationalQualityPlanContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="OperationalQualityPlanLineContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="OperationalQualityPlanLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="OperationalQualityPlanLineContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="OperationalQualityPlanLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="OperationCodeLabel" xml:space="preserve">
     <value>Operation Code:</value>

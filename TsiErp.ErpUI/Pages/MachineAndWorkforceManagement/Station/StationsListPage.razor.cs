@@ -135,10 +135,10 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
         {
             if (MainGridContextMenu.Count() == 0)
             {
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextAdd"], Id = "new" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
-                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextRefresh"], Id = "refresh" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StationContextAdd"], Id = "new" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StationContextChange"], Id = "changed" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StationContextDelete"], Id = "delete" });
+                MainGridContextMenu.Add(new ContextMenuItemModel { Text = L["StationContextRefresh"], Id = "refresh" });
             }
         }
 
@@ -201,8 +201,8 @@ namespace TsiErp.ErpUI.Pages.MachineAndWorkforceManagement.Station
         {
             if (InventoryGridContextMenu.Count() == 0)
             {
-                InventoryGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextChange"], Id = "changed" });
-                InventoryGridContextMenu.Add(new ContextMenuItemModel { Text = L["ContextDelete"], Id = "delete" });
+                InventoryGridContextMenu.Add(new ContextMenuItemModel { Text = L["InventoryContextChange"], Id = "changed" });
+                InventoryGridContextMenu.Add(new ContextMenuItemModel { Text = L["InventoryContextDelete"], Id = "delete" });
             }
         }
 

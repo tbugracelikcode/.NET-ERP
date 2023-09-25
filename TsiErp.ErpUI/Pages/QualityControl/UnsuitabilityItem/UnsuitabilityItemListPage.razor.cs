@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Localization;
 using Microsoft.SqlServer.Management.Smo;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
@@ -78,6 +79,14 @@ namespace TsiErp.ErpUI.Pages.QualityControl.UnsuitabilityItem
         }
 
         #endregion
+
+        protected override void CreateContextMenuItems(IStringLocalizer L)
+        {
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnsuitabilityItemContextAdd"], Id = "new" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnsuitabilityItemContextChange"], Id = "changed" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnsuitabilityItemContextDelete"], Id = "delete" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["UnsuitabilityItemContextRefresh"], Id = "refresh" });
+        }
 
         private void IntensityRangeCalculate()
         {

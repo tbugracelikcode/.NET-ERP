@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard.Dtos;
@@ -89,6 +90,14 @@ namespace TsiErp.ErpUI.Pages.ShippingManagement.ShippingAdress
             EditPageVisible = true;
 
             return Task.CompletedTask;
+        }
+
+        protected override void CreateContextMenuItems(IStringLocalizer L)
+        {
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ShippingAdressContextAdd"], Id = "new" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ShippingAdressContextChange"], Id = "changed" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ShippingAdressContextDelete"], Id = "delete" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["ShippingAdressContextRefresh"], Id = "refresh" });
         }
 
 

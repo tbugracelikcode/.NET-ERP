@@ -123,18 +123,6 @@
   <data name="CloseButton" xml:space="preserve">
     <value>Close</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="ControlMechanismLabel" xml:space="preserve">
     <value>Control Mechanism:</value>
   </data>
@@ -260,6 +248,18 @@
   </data>
   <data name="OperationRequirementLabel" xml:space="preserve">
     <value>Operation Requirements:</value>
+  </data>
+  <data name="PFMEAContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="PFMEAContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="PFMEAContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PFMEAContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="PotentialErrorReasonLabel" xml:space="preserve">
     <value>Potential Error Reason:</value>

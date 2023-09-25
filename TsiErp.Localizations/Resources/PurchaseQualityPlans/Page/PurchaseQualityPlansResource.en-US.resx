@@ -147,26 +147,14 @@
   <data name="CodeControlManager1" xml:space="preserve">
     <value>There is a record with the same document number.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
   <data name="ContextAdd1" xml:space="preserve">
     <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
   </data>
   <data name="ContextChange1" xml:space="preserve">
     <value>Change</value>
   </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
   <data name="ContextDelete1" xml:space="preserve">
     <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
   </data>
   <data name="ContextRefresh1" xml:space="preserve">
     <value>Refresh</value>
@@ -638,6 +626,30 @@
   </data>
   <data name="ProductsOprModalTitle1" xml:space="preserve">
     <value>Products Operations</value>
+  </data>
+  <data name="PurchaseQualityPlanContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="PurchaseQualityPlanContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="PurchaseQualityPlanContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PurchaseQualityPlanContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="PurchaseQualityPlanLineContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="PurchaseQualityPlanLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="PurchaseQualityPlanLineContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PurchaseQualityPlanLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>

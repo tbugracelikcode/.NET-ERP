@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.Extensions.Localization;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Entities.Entities.QualityControl.CalibrationVerification.Dtos;
@@ -74,7 +75,13 @@ namespace TsiErp.ErpUI.Pages.QualityControl.CalibrationVerification
 
         #endregion
 
-
+        protected override void CreateContextMenuItems(IStringLocalizer L)
+        {
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationVerificationContextAdd"], Id = "new" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationVerificationContextChange"], Id = "changed" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationVerificationContextDelete"], Id = "delete" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["CalibrationVerificationContextRefresh"], Id = "refresh" });
+        }
 
         #region Kod ButtonEdit
 

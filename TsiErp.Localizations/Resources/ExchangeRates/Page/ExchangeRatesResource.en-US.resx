@@ -129,18 +129,6 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="CurrencyCode" xml:space="preserve">
     <value>CURRENCY CODE</value>
   </data>
@@ -188,6 +176,18 @@
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>
+  </data>
+  <data name="ExchangeRateContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ExchangeRateContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ExchangeRateContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ExchangeRateContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="LoadingCaption" xml:space="preserve">
     <value>Please wait..</value>

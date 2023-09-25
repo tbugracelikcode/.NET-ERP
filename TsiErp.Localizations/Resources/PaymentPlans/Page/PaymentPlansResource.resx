@@ -129,18 +129,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Ödeme Planı Kodu:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
-  </data>
   <data name="Days_" xml:space="preserve">
     <value>VADE GÜNÜ</value>
   </data>
@@ -191,6 +179,18 @@
   </data>
   <data name="NameLabel" xml:space="preserve">
     <value>Ödeme Planı Açıklaması:</value>
+  </data>
+  <data name="PaymentPlanContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="PaymentPlanContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="PaymentPlanContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="PaymentPlanContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Kaydet</value>

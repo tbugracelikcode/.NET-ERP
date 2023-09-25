@@ -123,27 +123,6 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same number.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextConsumptionReceipt" xml:space="preserve">
-    <value>Create Consumption Fiche</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextOccuredAmountEntry" xml:space="preserve">
-    <value>Occured Amount Entry</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
-  <data name="ContextWorkOrders" xml:space="preserve">
-    <value>Work Orders</value>
-  </data>
   <data name="CustomerCode" xml:space="preserve">
     <value>CUSTOMER CODE</value>
   </data>
@@ -191,6 +170,27 @@
   </data>
   <data name="ProducedQuantity" xml:space="preserve">
     <value>PRODUCED QUANTITY</value>
+  </data>
+  <data name="ProductionOrderContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="ProductionOrderContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="ProductionOrderContextConsumptionReceipt" xml:space="preserve">
+    <value>Create Consumption Fiche</value>
+  </data>
+  <data name="ProductionOrderContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="ProductionOrderContextOccuredAmountEntry" xml:space="preserve">
+    <value>Occured Amount Entry</value>
+  </data>
+  <data name="ProductionOrderContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="ProductionOrderContextWorkOrders" xml:space="preserve">
+    <value>Work Orders</value>
   </data>
   <data name="StartDate" xml:space="preserve">
     <value>START DATE</value>

@@ -168,18 +168,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Employee Code:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -212,6 +200,18 @@
   </data>
   <data name="EmailLabel" xml:space="preserve">
     <value>E-Mail:</value>
+  </data>
+  <data name="EmployeeContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="EmployeeContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="EmployeeContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="EmployeeContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="Error" xml:space="preserve">
     <value>Error</value>

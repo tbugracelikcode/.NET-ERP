@@ -141,18 +141,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Price List Code:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="CurrencyCode" xml:space="preserve">
     <value>CURRENCY</value>
   </data>
@@ -284,6 +272,30 @@
   </data>
   <data name="ProductNameLineLabel" xml:space="preserve">
     <value>Product Name:</value>
+  </data>
+  <data name="PurchasePriceContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="PurchasePriceContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="PurchasePriceContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PurchasePriceContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="PurchasePriceLineContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="PurchasePriceLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="PurchasePriceLineContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PurchasePriceLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="SaveButton" xml:space="preserve">
     <value>Save</value>

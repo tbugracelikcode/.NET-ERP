@@ -129,18 +129,6 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Item Code:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
-  </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">
     <value>Are you sure you want to delete?</value>
   </data>
@@ -245,6 +233,18 @@
   </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Quality Control &gt; Main Records</value>
+  </data>
+  <data name="UnsuitabilityItemContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="UnsuitabilityItemContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="UnsuitabilityItemContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="UnsuitabilityItemContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
   </data>
   <data name="UnsuitabilityItemTitle" xml:space="preserve">
     <value>Unsuitability Items</value>

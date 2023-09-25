@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CalibrationRecordContextAdd" xml:space="preserve">
+    <value>Ekle</value>
+  </data>
+  <data name="CalibrationRecordContextChange" xml:space="preserve">
+    <value>Değiştir</value>
+  </data>
+  <data name="CalibrationRecordContextDelete" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="CalibrationRecordContextRefresh" xml:space="preserve">
+    <value>Güncelle</value>
+  </data>
   <data name="CloseButton" xml:space="preserve">
     <value>Kapat</value>
   </data>
@@ -128,18 +140,6 @@
   </data>
   <data name="CodeLabel" xml:space="preserve">
     <value>Kalibrasyon Takip Kodu:</value>
-  </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Ekle</value>
-  </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Değiştir</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Sil</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Güncelle</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>TARİH</value>

@@ -141,20 +141,11 @@
   <data name="CodeControlManager" xml:space="preserve">
     <value>There is a record with the same code.</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
-    <value>Add</value>
+  <data name="ConvertContextApprove" xml:space="preserve">
+    <value>Approve</value>
   </data>
-  <data name="ContextChange" xml:space="preserve">
-    <value>Change</value>
-  </data>
-  <data name="ContextConverttoOrder" xml:space="preserve">
-    <value>Convert to Order</value>
-  </data>
-  <data name="ContextDelete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="ContextRefresh" xml:space="preserve">
-    <value>Refresh</value>
+  <data name="ConvertContextPending" xml:space="preserve">
+    <value>Pending</value>
   </data>
   <data name="ConvertOrderGridLineAmount" xml:space="preserve">
     <value>LINE AMOUNT</value>
@@ -402,6 +393,33 @@
   <data name="ProductNameLineLabel" xml:space="preserve">
     <value>Product Name:</value>
   </data>
+  <data name="PurchaseRequestContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="PurchaseRequestContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="PurchaseRequestContextConverttoOrder" xml:space="preserve">
+    <value>Convert to Order</value>
+  </data>
+  <data name="PurchaseRequestContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PurchaseRequestContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="PurchaseRequestLineContextAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="PurchaseRequestLineContextChange" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="PurchaseRequestLineContextDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="PurchaseRequestLineContextRefresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
   <data name="QuantityLineLabel" xml:space="preserve">
     <value>Quantity:</value>
   </data>
@@ -438,8 +456,20 @@
   <data name="UIExportTitle" xml:space="preserve">
     <value>Purchase Requests</value>
   </data>
+  <data name="UIInformationConvertMessage" xml:space="preserve">
+    <value>The selected confirmed lines were converted to orders.</value>
+  </data>
+  <data name="UIInformationConvertTitle" xml:space="preserve">
+    <value>Information</value>
+  </data>
   <data name="UIPreviousMenu" xml:space="preserve">
     <value>Purchasing Management &gt; Transactions</value>
+  </data>
+  <data name="UIWarningConvertMessage" xml:space="preserve">
+    <value>The status of all selected lines are pending. Pending lines cannot be converted to orders.</value>
+  </data>
+  <data name="UIWarningConvertTitle" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="UIWarningPopupMessageBase1" xml:space="preserve">
     <value>It is not possible to save rows without selecting the unit set.</value>

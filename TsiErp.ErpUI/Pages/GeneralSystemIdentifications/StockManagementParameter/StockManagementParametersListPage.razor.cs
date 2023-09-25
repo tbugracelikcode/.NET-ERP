@@ -1,4 +1,6 @@
-﻿using Syncfusion.Blazor.Buttons;
+﻿using Microsoft.Extensions.Localization;
+using Syncfusion.Blazor.Buttons;
+using Syncfusion.Blazor.Grids;
 using TsiErp.Business.Extensions.ObjectMapping;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.StockManagementParameter.Dtos;
 
@@ -18,6 +20,14 @@ namespace TsiErp.ErpUI.Pages.GeneralSystemIdentifications.StockManagementParamet
         private async void StockFichesChange(ChangeEventArgs<bool> args)
         {
             DataSource.FutureDateParameter = args.Checked;
+        }
+
+        protected override void CreateContextMenuItems(IStringLocalizer L)
+        {
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["StockManagementParameterContextAdd"], Id = "new" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["StockManagementParameterContextChange"], Id = "changed" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["StockManagementParameterContextDelete"], Id = "delete" });
+            GridContextMenu.Add(new ContextMenuItemModel { Text = L["StockManagementParameterContextRefresh"], Id = "refresh" });
         }
 
         private async void OnClick()

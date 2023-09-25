@@ -129,16 +129,16 @@
   <data name="CodeLabel" xml:space="preserve">
     <value>Para Birimi Kodu:</value>
   </data>
-  <data name="ContextAdd" xml:space="preserve">
+  <data name="CurrencyContextAdd" xml:space="preserve">
     <value>Ekle</value>
   </data>
-  <data name="ContextChange" xml:space="preserve">
+  <data name="CurrencyContextChange" xml:space="preserve">
     <value>Değiştir</value>
   </data>
-  <data name="ContextDelete" xml:space="preserve">
+  <data name="CurrencyContextDelete" xml:space="preserve">
     <value>Sil</value>
   </data>
-  <data name="ContextRefresh" xml:space="preserve">
+  <data name="CurrencyContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
   <data name="DeleteConfirmationDescriptionBase" xml:space="preserve">

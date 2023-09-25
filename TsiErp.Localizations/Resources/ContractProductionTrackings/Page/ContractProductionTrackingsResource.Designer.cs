@@ -82,36 +82,36 @@ namespace TsiErp.Localizations.Resources.ContractProductionTrackings.Page {
         /// <summary>
         ///   Looks up a localized string similar to Ekle.
         /// </summary>
-        public static string ContextAdd {
+        public static string ContractProductionTrackingContextAdd {
             get {
-                return ResourceManager.GetString("ContextAdd", resourceCulture);
+                return ResourceManager.GetString("ContractProductionTrackingContextAdd", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Değiştir.
         /// </summary>
-        public static string ContextChange {
+        public static string ContractProductionTrackingContextChange {
             get {
-                return ResourceManager.GetString("ContextChange", resourceCulture);
+                return ResourceManager.GetString("ContractProductionTrackingContextChange", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Sil.
         /// </summary>
-        public static string ContextDelete {
+        public static string ContractProductionTrackingContextDelete {
             get {
-                return ResourceManager.GetString("ContextDelete", resourceCulture);
+                return ResourceManager.GetString("ContractProductionTrackingContextDelete", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Güncelle.
         /// </summary>
-        public static string ContextRefresh {
+        public static string ContractProductionTrackingContextRefresh {
             get {
-                return ResourceManager.GetString("ContextRefresh", resourceCulture);
+                return ResourceManager.GetString("ContractProductionTrackingContextRefresh", resourceCulture);
             }
         }
         

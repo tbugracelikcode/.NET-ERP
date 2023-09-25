@@ -47,6 +47,8 @@ using TsiErp.Entities.Entities.Other.Logging;
 using TsiErp.Entities.Entities.PlanningManagement.Calendar;
 using TsiErp.Entities.Entities.PlanningManagement.CalendarDay;
 using TsiErp.Entities.Entities.PlanningManagement.CalendarLine;
+using TsiErp.Entities.Entities.PlanningManagement.MRP;
+using TsiErp.Entities.Entities.PlanningManagement.MRPLine;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterialLine;
 using TsiErp.Entities.Entities.ProductionManagement.ContractProductionTracking;
@@ -3910,12 +3912,12 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
             }
             #endregion
 
-            #region OperationStockMovements Table Created
-            Table OperationStockMovementsTable = model.CreateTable(Tables.OperationStockMovements);
+            #region MRPs Table Created
+            Table MRPsTable = model.CreateTable(Tables.MRPs);
 
-            if (OperationStockMovementsTable != null)
+            if (MRPsTable != null)
             {
-                var properties = (typeof(OperationStockMovements)).GetProperties();
+                var properties = (typeof(MRPs)).GetProperties();
 
                 foreach (var property in properties)
                 {
@@ -3926,8 +3928,59 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
                     var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
                     var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
 
-                    Column column = new Column(OperationStockMovementsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    Column column = new Column(MRPsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
                     column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(MRPsTable, "PK_" + MRPsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        MRPsTable.Indexes.Add(pkIndex);
+                    }
+
+                    MRPsTable.Columns.Add(column);
+                }
+
+                MRPsTable.Create();
+            }
+            #endregion
+
+            #region MRPLines Table Created
+            Table MRPLinesTable = model.CreateTable(Tables.MRPLines);
+
+            if (MRPLinesTable != null)
+            {
+                var properties = (typeof(MRPLines)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(MRPLinesTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(MRPLinesTable, "PK_" + MRPLinesTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        MRPLinesTable.Indexes.Add(pkIndex);
+                    }
+
+                    MRPLinesTable.Columns.Add(column);
+                }
+
+                MRPLinesTable.Create();
+            }
+            #endregion
 
                     if (isPrimaryKey)
                     {
