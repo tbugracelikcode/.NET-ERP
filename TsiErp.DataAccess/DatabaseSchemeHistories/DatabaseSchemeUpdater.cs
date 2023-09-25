@@ -116,6 +116,7 @@ using TsiErp.Entities.TableConstant;
 using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan;
 using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlanLine;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.FicheNumber;
+using TsiErp.Entities.Entities.ProductionManagement.OperationStockMovement;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -3981,6 +3982,21 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
             }
             #endregion
 
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(OperationStockMovementsTable, "PK_" + OperationStockMovementsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        OperationStockMovementsTable.Indexes.Add(pkIndex);
+                    }
+
+                    OperationStockMovementsTable.Columns.Add(column);
+                }
+
+                OperationStockMovementsTable.Create();
+            }
+            #endregion
 
             return true;
         }

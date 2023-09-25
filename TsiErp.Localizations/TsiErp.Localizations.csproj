@@ -191,6 +191,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>OperationalSPCsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\OperationStockMovement\Page\OperationStockMovementsResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>OperationStockMovementsResources.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\OperationUnsuitabilityReports\Page\OperationUnsuitabilityReportsResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -612,6 +617,10 @@
     <EmbeddedResource Update="Resources\OperationalSPCs\Page\OperationalSPCsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>OperationalSPCsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\OperationStockMovement\Page\OperationStockMovementsResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>OperationStockMovementsResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\OperationUnsuitabilityReports\Page\OperationUnsuitabilityReportsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

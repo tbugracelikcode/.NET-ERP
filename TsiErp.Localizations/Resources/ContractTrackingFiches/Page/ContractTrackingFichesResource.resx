@@ -228,6 +228,9 @@
   <data name="FicheNrLabel" xml:space="preserve">
     <value>Fiş No:</value>
   </data>
+  <data name="FinishedProductCode" xml:space="preserve">
+    <value>STOK KODU</value>
+  </data>
   <data name="LineGridIsSent" xml:space="preserve">
     <value>GÖNDERİLECEK</value>
   </data>
