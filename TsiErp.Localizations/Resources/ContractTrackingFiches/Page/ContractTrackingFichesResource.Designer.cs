@@ -359,6 +359,15 @@ namespace TsiErp.Localizations.Resources.ContractTrackingFiches.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to STOK KODU.
+        /// </summary>
+        public static string FinishedProductCode {
+            get {
+                return ResourceManager.GetString("FinishedProductCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GÖNDERİLECEK.
         /// </summary>
         public static string LineGridIsSent {

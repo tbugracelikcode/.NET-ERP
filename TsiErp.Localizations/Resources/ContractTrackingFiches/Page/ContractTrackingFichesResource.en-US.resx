@@ -216,6 +216,9 @@
   <data name="FicheNrLabel" xml:space="preserve">
     <value>Fiche Nr:</value>
   </data>
+  <data name="FinishedProductCode" xml:space="preserve">
+    <value>PRODUCT CODE</value>
+  </data>
   <data name="LineGridIsSent" xml:space="preserve">
     <value>TO BE SENT</value>
   </data>

@@ -130,7 +130,7 @@ namespace TsiErp.Business.Entities.Product.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
                 var query = queryFactory
-                        .Query().From(Tables.Products).Select<Products>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.DataOpenStatus, p.DataOpenStatusUserId, p.UnitSetID,p.CoatingWeight,p.Confirmation,p.EnglishDefinition,p.ExportCatNo,p.FeatureSetID,p.GTIP,p.ManufacturerCode,p.OemRefNo,p.OemRefNo2,p.OemRefNo3,p.TechnicalConfirmation,p.SupplyForm,p.SawWastage,p.SaleVAT,p.PurchaseVAT,p.ProductType,p.ProductSize,p.ProductGrpID,p.ProductDescription,p.PlannedWastage })
+                        .Query().From(Tables.Products).Select<Products>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.DataOpenStatus, p.DataOpenStatusUserId, p.UnitSetID, p.CoatingWeight, p.Confirmation, p.EnglishDefinition, p.ExportCatNo, p.FeatureSetID, p.GTIP, p.ManufacturerCode, p.OemRefNo, p.OemRefNo2, p.OemRefNo3, p.TechnicalConfirmation, p.SupplyForm, p.SawWastage, p.SaleVAT, p.PurchaseVAT, p.ProductType, p.ProductSize, p.ProductGrpID, p.ProductDescription, p.PlannedWastage })
                             .Join<UnitSets>
                             (
                                 u => new { UnitSet = u.Code, UnitSetID = u.Id },
@@ -164,7 +164,7 @@ namespace TsiErp.Business.Entities.Product.Services
                         .Query().From(Tables.GrandTotalStockMovements).Select("*")
                             .Join<Products>
                             (
-                                u => new { ProductCode = u.Code, ProductID = u.Id , ProductName = u.Name},
+                                u => new { ProductCode = u.Code, ProductID = u.Id, ProductName = u.Name },
                                 nameof(GrandTotalStockMovements.ProductID),
                                 nameof(Products.Id),
                                 JoinType.Left
@@ -198,11 +198,17 @@ namespace TsiErp.Business.Entities.Product.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-
                 var query = queryFactory
                    .Query()
                    .From(Tables.Products)
-                  .Select<Products>(p => new { p.Id, p.Code, p.Name, p.IsActive, p.DataOpenStatus, p.DataOpenStatusUserId, p.UnitSetID, p.CoatingWeight, p.Confirmation, p.EnglishDefinition, p.ExportCatNo, p.FeatureSetID, p.GTIP, p.ManufacturerCode, p.OemRefNo, p.OemRefNo2, p.OemRefNo3, p.TechnicalConfirmation, p.SupplyForm, p.SawWastage, p.SaleVAT, p.PurchaseVAT, p.ProductType, p.ProductSize, p.ProductGrpID, p.ProductDescription, p.PlannedWastage })
+                  .Select<Products, GrandTotalStockMovements>
+                  (
+                      null
+                    , t => t.Amount
+                    , Tables.GrandTotalStockMovements
+                    , nameof(ListProductsDto.AmountOfStock)
+                    , true
+                    , nameof(GrandTotalStockMovements.ProductID) + "=" + Tables.Products + "." + nameof(Products.Id))
                        .Join<UnitSets>
                        (
                             u => new { UnitSetCode = u.Code },
@@ -220,15 +226,40 @@ namespace TsiErp.Business.Entities.Product.Services
 
                 var products = queryFactory.GetList<ListProductsDto>(query).ToList();
 
-                foreach ( var product in products )
-                {
-                    var grandTotal = (await GetStockAmountAsync(product.Id)).Data.ToList();
-                    product.AmountOfStock = grandTotal.Sum(t => t.Amount);
-                }
-
                 return new SuccessDataResult<IList<ListProductsDto>>(products);
-            }
 
+
+
+                //var query = queryFactory
+                //   .Query()
+                //   .From(Tables.Products)
+                //  .Select<Products, GrandTotalStockMovements>
+                //  (
+                //    p => new { p.Id, p.Code, p.Name, p.IsActive, p.DataOpenStatus, p.DataOpenStatusUserId, p.UnitSetID, p.CoatingWeight, p.Confirmation, p.EnglishDefinition, p.ExportCatNo, p.FeatureSetID, p.GTIP, p.ManufacturerCode, p.OemRefNo, p.OemRefNo2, p.OemRefNo3, p.TechnicalConfirmation, p.SupplyForm, p.SawWastage, p.SaleVAT, p.PurchaseVAT, p.ProductType, p.ProductSize, p.ProductGrpID, p.ProductDescription, p.PlannedWastage }
+                //    , t => t.Amount
+                //    , Tables.GrandTotalStockMovements
+                //    , nameof(ListProductsDto.AmountOfStock)
+                //    , true
+                //    , nameof(GrandTotalStockMovements.ProductID) + "=" + Tables.Products + "." + nameof(Products.Id))
+                //       .Join<UnitSets>
+                //       (
+                //            u => new { UnitSetCode = u.Code },
+                //                nameof(Products.UnitSetID),
+                //                nameof(UnitSets.Id),
+                //           JoinType.Left
+                //       )
+                //       .Join<ProductGroups>
+                //       (
+                //            pg => new { ProductGrp = pg.Name },
+                //                nameof(Products.ProductGrpID),
+                //                nameof(ProductGroups.Id),
+                //           JoinType.Left
+                //        ).Where(null, true, true, Tables.Products);
+
+                //var products = queryFactory.GetList<ListProductsDto>(query).ToList();
+
+                //return new SuccessDataResult<IList<ListProductsDto>>(products);
+            }
         }
 
 
