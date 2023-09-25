@@ -3982,6 +3982,25 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
             }
             #endregion
 
+            #region OperationStockMovement Table Created
+            Table OperationStockMovementsTable = model.CreateTable(Tables.OperationStockMovements);
+
+            if (OperationStockMovementsTable != null)
+            {
+                var properties = (typeof(OperationStockMovements)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(OperationStockMovementsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
                     if (isPrimaryKey)
                     {
                         Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(OperationStockMovementsTable, "PK_" + OperationStockMovementsTable.Name);
