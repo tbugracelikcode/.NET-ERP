@@ -114,6 +114,7 @@ using TsiErp.Entities.TableConstant;
 using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlan;
 using TsiErp.Entities.Entities.QualityControl.PurchaseQualityPlanLine;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.FicheNumber;
+using TsiErp.Entities.Entities.ProductionManagement.OperationStockMovement;
 
 namespace TsiErp.DataAccess.DatabaseSchemeHistories
 {
@@ -3909,7 +3910,40 @@ namespace TsiErp.DataAccess.DatabaseSchemeHistories
             }
             #endregion
 
+            #region OperationStockMovements Table Created
+            Table OperationStockMovementsTable = model.CreateTable(Tables.OperationStockMovements);
 
+            if (OperationStockMovementsTable != null)
+            {
+                var properties = (typeof(OperationStockMovements)).GetProperties();
+
+                foreach (var property in properties)
+                {
+                    var dbType = property.GetCustomAttribute<SqlColumnTypeAttribute>().SqlDbType;
+                    var required = property.GetCustomAttribute<SqlColumnTypeAttribute>().Nullable;
+                    var maxLength = property.GetCustomAttribute<SqlColumnTypeAttribute>().MaxLength;
+                    var scale = property.GetCustomAttribute<SqlColumnTypeAttribute>().Scale;
+                    var precision = property.GetCustomAttribute<SqlColumnTypeAttribute>().Precision;
+                    var isPrimaryKey = property.GetCustomAttribute<SqlColumnTypeAttribute>().IsPrimaryKey;
+
+                    Column column = new Column(OperationStockMovementsTable, property.Name, SqlColumnDataTypeFactory.ConvertToDataType(dbType, maxLength, scale, precision));
+                    column.Nullable = required;
+
+                    if (isPrimaryKey)
+                    {
+                        Microsoft.SqlServer.Management.Smo.Index pkIndex = new Microsoft.SqlServer.Management.Smo.Index(OperationStockMovementsTable, "PK_" + OperationStockMovementsTable.Name);
+                        pkIndex.IsClustered = true;
+                        pkIndex.IndexKeyType = IndexKeyType.DriPrimaryKey;
+                        pkIndex.IndexedColumns.Add(new IndexedColumn(pkIndex, property.Name));
+                        OperationStockMovementsTable.Indexes.Add(pkIndex);
+                    }
+
+                    OperationStockMovementsTable.Columns.Add(column);
+                }
+
+                OperationStockMovementsTable.Create();
+            }
+            #endregion
 
             return true;
         }
