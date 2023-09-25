@@ -19,7 +19,6 @@ using TsiErp.Entities.Entities.PlanningManagement.CalendarDay.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.CalendarLine;
 using TsiErp.Entities.Entities.PlanningManagement.CalendarLine.Dtos;
 using TsiErp.Entities.TableConstant;
-using TsiErp.Localizations.Resources.Branches.Page;
 using TsiErp.Localizations.Resources.Calendars.Page;
 
 namespace TsiErp.Business.Entities.Calendar.Services

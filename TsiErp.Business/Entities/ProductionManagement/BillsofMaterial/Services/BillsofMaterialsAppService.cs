@@ -277,6 +277,70 @@ namespace TsiErp.Business.Entities.BillsofMaterial.Services
             }
         }
 
+        public async Task<IDataResult<SelectBillsofMaterialsDto>> GetbyProductIDAsync(Guid finishedProductId)
+        {
+            using (var connection = queryFactory.ConnectToDatabase())
+            {
+                var query = queryFactory
+                       .Query()
+                       .From(Tables.BillsofMaterials)
+                       .Select<BillsofMaterials>(b => new { b.Id, b.Code, b.Name, b._Description, b.IsActive, b.CurrentAccountCardID })
+                       .Join<Products>
+                        (
+                            pr => new { FinishedProductCode = pr.Code, FinishedProducName = pr.Name, FinishedProductID = pr.Id },
+                            nameof(BillsofMaterials.FinishedProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                        .Join<CurrentAccountCards>
+                        (
+                            pr => new { CustomerCode = pr.CustomerCode, CurrentAccountCardID = pr.Id },
+                            nameof(BillsofMaterials.CurrentAccountCardID),
+                            nameof(CurrentAccountCards.Id),
+                            JoinType.Left
+                        )
+                        .Where(new {  FinishedProductID = finishedProductId }, true, true, Tables.BillsofMaterials);
+
+                var billsOfMaterials = queryFactory.Get<SelectBillsofMaterialsDto>(query);
+
+                var queryLines = queryFactory
+                       .Query()
+                       .From(Tables.BillsofMaterialLines)
+                       .Select<BillsofMaterialLines>(b => new { b.Id, b.BoMID, b.FinishedProductID, b.MaterialType, b.ProductID, b.UnitSetID, b.Quantity, b._Description, b.LineNr, b.Size, b.CreatorId, b.CreationTime, b.LastModifierId, b.LastModificationTime, b.DeleterId, b.DeletionTime, b.IsDeleted, b.DataOpenStatus, b.DataOpenStatusUserId })
+                       .Join<Products>
+                        (
+                            p => new { FinishedProductCode = p.Code },
+                            nameof(BillsofMaterialLines.FinishedProductID),
+                            nameof(Products.Id),
+                            JoinType.Left
+                        )
+                       .Join<Products>
+                        (
+                            p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
+                            nameof(BillsofMaterialLines.ProductID),
+                            nameof(Products.Id),
+                            "ProductLine",
+                            JoinType.Left
+                        )
+                       .Join<UnitSets>
+                        (
+                            u => new { UnitSetID = u.Id, UnitSetCode = u.Code },
+                            nameof(BillsofMaterialLines.UnitSetID),
+                            nameof(UnitSets.Id),
+                            JoinType.Left
+                        )
+                        .Where(new { BoMID = billsOfMaterials.Id }, false, false, Tables.BillsofMaterialLines);
+
+                var billsOfMaterialLine = queryFactory.GetList<SelectBillsofMaterialLinesDto>(queryLines).ToList();
+
+                billsOfMaterials.SelectBillsofMaterialLines = billsOfMaterialLine;
+
+                LogsAppService.InsertLogToDatabase(billsOfMaterials, billsOfMaterials, LoginedUserService.UserId, Tables.BillsofMaterials, LogType.Get, billsOfMaterials.Id);
+
+                return new SuccessDataResult<SelectBillsofMaterialsDto>(billsOfMaterials);
+            }
+        }
+
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListBillsofMaterialsDto>>> GetListAsync(ListBillsofMaterialsParameterDto input)
         {

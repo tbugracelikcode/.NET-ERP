@@ -1,0 +1,25 @@
+﻿using Tsi.Core.Entities.Auditing;
+
+namespace TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos
+{
+    public class ListMRPsDto : FullAuditedEntityDto
+    {
+        /// <summary>
+        /// Kod
+        /// </summary>
+        public string Code { get; set; }
+        /// <summary>
+        /// Açıklama
+        /// </summary>
+        public string Description_ { get; set; }
+        /// <summary>
+        /// Tarih
+        /// </summary>
+        public DateTime Date_ { get; set; }
+        /// <summary>
+        /// Durum
+        /// </summary>
+        public string State_ { get; set; }
+
+    }
+}

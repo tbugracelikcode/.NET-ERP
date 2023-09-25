@@ -166,6 +166,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>MaintenancePeriodsResource.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\MRPs\Page\MRPsResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MRPsResource.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\NavbarMenus\Page\NavbarMenusResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -584,6 +589,10 @@
     <EmbeddedResource Update="Resources\MaintenancePeriods\Page\MaintenancePeriodsResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MaintenancePeriodsResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\MRPs\Page\MRPsResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MRPsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\NavbarMenus\Page\NavbarMenusResource.en-US.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
