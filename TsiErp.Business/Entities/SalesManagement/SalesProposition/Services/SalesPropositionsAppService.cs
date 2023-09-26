@@ -360,7 +360,7 @@ namespace TsiErp.Business.Entities.SalesProposition.Services
                 var entityQuery = queryFactory
                        .Query()
                      .From(Tables.SalesPropositions)
-                       .Select("*")
+                       .Select<SalesPropositions>(null)
                        .Join<PaymentPlans>
                         (
                             pp => new { PaymentPlanID = pp.Id, PaymentPlanName = pp.Name },

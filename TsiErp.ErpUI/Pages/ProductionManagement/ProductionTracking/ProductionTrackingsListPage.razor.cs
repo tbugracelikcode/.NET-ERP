@@ -112,7 +112,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
 
         public async void StationsButtonClickEvent()
         {
-            if(DataSource.WorkOrderID == null || DataSource.WorkOrderID== Guid.Empty)
+            if(DataSource.WorkOrderID== Guid.Empty)
             {
 
                 await ModalManager.WarningPopupAsync(L["UIWarningWorkOrderTitle"], L["UIWarningWorkOrderMessage"]);
@@ -232,8 +232,11 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
             {
                 DataSource.WorkOrderID = selectedWorkOrder.Id;
                 DataSource.CurrentAccountCardID = selectedWorkOrder.CurrentAccountCardID;
+
                 OperationLineList = (await ProductsOperationsAppService.GetAsync(selectedWorkOrder.ProductsOperationID.GetValueOrDefault())).Data.SelectProductsOperationLines.ToList();
+
                 DataSource.CustomerCode = (await CurrentAccountCardsAppService.GetAsync(DataSource.CurrentAccountCardID.GetValueOrDefault())).Data.CustomerCode;
+
                 DataSource.WorkOrderCode = selectedWorkOrder.WorkOrderNo;
                 SelectWorkOrdersPopupVisible = false;
                 await InvokeAsync(StateHasChanged);

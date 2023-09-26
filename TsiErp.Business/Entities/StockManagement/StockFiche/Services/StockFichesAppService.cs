@@ -323,7 +323,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 var entityQuery = queryFactory
                        .Query()
                        .From(Tables.StockFiches)
-                       .Select("*")
+                       .Select<StockFiches>(null)
                        .Join<Branches>
                         (
                             b => new { BranchCode = b.Code, BranchID = b.Id },

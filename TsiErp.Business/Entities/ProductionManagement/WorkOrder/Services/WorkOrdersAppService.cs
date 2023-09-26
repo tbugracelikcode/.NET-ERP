@@ -200,7 +200,7 @@ namespace TsiErp.Business.Entities.WorkOrder.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
                 var query = queryFactory
-                        .Query().From(Tables.WorkOrders).Select("*")
+                        .Query().From(Tables.WorkOrders).Select<WorkOrders>(null)
                             .Join<ProductionOrders>
                             (
                                 po => new { ProductionOrderID = po.Id, ProductionOrderFicheNo = po.FicheNo },

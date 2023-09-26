@@ -363,6 +363,9 @@
   <data name="TemplateOprModalTitle" xml:space="preserve">
     <value>Template Operations</value>
   </data>
+  <data name="TotalAmount" xml:space="preserve">
+    <value>MİKTAR</value>
+  </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>The product operation record you selected will be permanently deleted.</value>
   </data>

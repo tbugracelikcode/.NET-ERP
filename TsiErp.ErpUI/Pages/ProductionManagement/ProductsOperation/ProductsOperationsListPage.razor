@@ -45,12 +45,19 @@ else
                                 <GridEvents ContextMenuItemClicked="@MainContextMenuClick" OnToolbarClick="@ToolbarClickHandler" TValue="ListProductsOperationsDto"></GridEvents>
 
                                 <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
+
                                 <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
                                 <GridPageSettings PageSizes="true"></GridPageSettings>
+
                                 <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Single"></GridSelectionSettings>
+
                                 <GridColumns>
                                     <GridColumn Field=@nameof(ListProductsOperationsDto.Code) HeaderText="@L["Code"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
                                     <GridColumn Field=@nameof(ListProductsOperationsDto.Name) HeaderText="@L["Name"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+
+                                    <GridColumn Field=@nameof(ListProductsOperationsDto.TotalAmount) HeaderText="@L["TotalAmount"]" TextAlign="TextAlign.Center" Width="120" Format="N2"></GridColumn>
+
                                     <GridColumn Field=@nameof(ListProductsOperationsDto.ProductCode) HeaderText="@L["ProductCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
 
                                     <GridColumn Field=@nameof(ListProductsOperationsDto.WorkCenterName) HeaderText="@L["WorkCenterName"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>

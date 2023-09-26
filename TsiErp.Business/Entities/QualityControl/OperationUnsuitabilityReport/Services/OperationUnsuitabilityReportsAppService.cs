@@ -120,7 +120,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var query = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select("*")
+                var query = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select<OperationUnsuitabilityReports>(null)
                     .Join<WorkOrders>
                     (
                        d => new { WorkOrderNo = d.WorkOrderNo }, nameof(OperationUnsuitabilityReports.WorkOrderID), nameof(WorkOrders.Id), JoinType.Left
@@ -169,7 +169,7 @@ namespace TsiErp.Business.Entities.OperationUnsuitabilityReport.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var query = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select("*")
+                var query = queryFactory.Query().From(Tables.OperationUnsuitabilityReports).Select<OperationUnsuitabilityReports>(null)
                     .Join<WorkOrders>
                     (
                        d => new { WorkOrderNo = d.WorkOrderNo }, nameof(OperationUnsuitabilityReports.WorkOrderID), nameof(WorkOrders.Id), JoinType.Left

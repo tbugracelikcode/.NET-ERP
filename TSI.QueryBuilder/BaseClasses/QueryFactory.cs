@@ -171,7 +171,7 @@ namespace TSI.QueryBuilder.BaseClasses
 
                         if (!string.IsNullOrEmpty(query.TablesJoinKeywords))
                         {
-                            query.Sql = "select " + query.Columns + " from " + query.TableName + " as " + query.TableName + " " + query.TablesJoinKeywords;
+                            query.Sql = "select " + query.Columns + " from " + query.TableName + " as " + query.TableName + " " + query.TablesJoinKeywords;                            
                         }
 
                         if (string.IsNullOrEmpty(query.WhereSentence))
