@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Localization;
+﻿using Azure;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,9 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Tsi.Core.Utilities.Results;
 using Tsi.Core.Utilities.Services.Business.ServiceRegistrations;
+using TSI.QueryBuilder.BaseClasses;
 using TsiErp.Business.BusinessCoreServices;
 using TsiErp.Business.Entities.CurrentAccountCard.Services;
+using TsiErp.Business.Entities.Logging.Services;
+using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.ProductionManagement.OperationStockMovement.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.ProductionOrder;
+using TsiErp.Entities.TableConstant;
 using TsiErp.Localizations.Resources.CurrentAccountCards.Page;
 using TsiErp.Localizations.Resources.OperationStockMovement.Page;
 
@@ -17,11 +23,57 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationStockMovement.S
     [ServiceRegistration(typeof(IOperationStockMovementsAppService), DependencyInjectionType.Scoped)]
     public class OperationStockMovementsAppService : ApplicationService<OperationStockMovementsResources>, IOperationStockMovementsAppService
     {
+
+        QueryFactory queryFactory { get; set; } = new QueryFactory();
+
         public OperationStockMovementsAppService(IStringLocalizer<OperationStockMovementsResources> l) : base(l)
         {
         }
 
-        public Task<IDataResult<SelectOperationStockMovementsDto>> CreateAsync(CreateOperationStockMovementsDto input)
+        public async Task<IDataResult<SelectOperationStockMovementsDto>> CreateAsync(CreateOperationStockMovementsDto input)
+        {
+            using (var connection = queryFactory.ConnectToDatabase())
+            {
+                var query = queryFactory.Query().From(Tables.OperationStockMovements).Insert(input).UseIsDelete(false);
+
+                var insertedEntity = queryFactory.Insert<SelectOperationStockMovementsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.OperationStockMovements, LogType.Insert, input.Id);
+
+                return new SuccessDataResult<SelectOperationStockMovementsDto>(insertedEntity);
+            }
+        }
+
+        public async Task<IDataResult<SelectOperationStockMovementsDto>> UpdateAsync(UpdateOperationStockMovementsDto input)
+        {
+            using (var connection = queryFactory.ConnectToDatabase())
+            {
+                var query = queryFactory.Query().From(Tables.OperationStockMovements).Insert(input).UseIsDelete(false);
+
+                var updatedEntity = queryFactory.Insert<SelectOperationStockMovementsDto>(query, "Id", true);
+
+                LogsAppService.InsertLogToDatabase(input, input, LoginedUserService.UserId, Tables.OperationStockMovements, LogType.Update, input.Id);
+
+                return new SuccessDataResult<SelectOperationStockMovementsDto>(updatedEntity);
+            }
+        }
+
+        public async Task<IDataResult<SelectOperationStockMovementsDto>> GetByProductionOrderIdAsync(Guid productionOrderId, Guid productOperationId)
+        {
+            using (var connection = queryFactory.ConnectToDatabase())
+            {
+                var query = queryFactory.Query().From(Tables.OperationStockMovements).Select("*").Where(new { ProductionorderID = productionOrderId, OperationID= productOperationId }, false, false, "").UseIsDelete(false);
+
+                var entity = queryFactory.Get<SelectOperationStockMovementsDto>(query);
+
+                return new SuccessDataResult<SelectOperationStockMovementsDto>(entity);
+            }
+        }
+
+
+
+
+        public Task<IDataResult<IList<ListOperationStockMovementsDto>>> GetListAsync(ListOperationStockMovementsParameterDto input)
         {
             throw new NotImplementedException();
         }
@@ -31,22 +83,12 @@ namespace TsiErp.Business.Entities.ProductionManagement.OperationStockMovement.S
             throw new NotImplementedException();
         }
 
-        public Task<IDataResult<SelectOperationStockMovementsDto>> GetAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IDataResult<IList<ListOperationStockMovementsDto>>> GetListAsync(ListOperationStockMovementsParameterDto input)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IDataResult<SelectOperationStockMovementsDto>> UpdateAsync(UpdateOperationStockMovementsDto input)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task<IDataResult<SelectOperationStockMovementsDto>> UpdateConcurrencyFieldsAsync(Guid id, bool lockRow, Guid userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IDataResult<SelectOperationStockMovementsDto>> GetAsync(Guid id)
         {
             throw new NotImplementedException();
         }

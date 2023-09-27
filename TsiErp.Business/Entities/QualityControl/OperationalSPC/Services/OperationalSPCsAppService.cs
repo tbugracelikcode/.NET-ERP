@@ -198,7 +198,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                 var queryLines = queryFactory
                        .Query()
                        .From(Tables.OperationalSPCLines)
-                       .Select("*")
+                       .Select<OperationalSPCLines>(null)
                        .Join<StationGroups>
                         (
                             p => new { WorkCenterID = p.Id, WorkCenterName = p.Name },
@@ -258,7 +258,7 @@ namespace TsiErp.Business.Entities.OperationalSPC.Services
                 var queryLines = queryFactory
                        .Query()
                         .From(Tables.OperationalSPCLines)
-                       .Select("*")
+                       .Select<OperationalSPCLines>(null)
                       .Join<StationGroups>
                         (
                             p => new { WorkCenterID = p.Id, WorkCenterName = p.Name },

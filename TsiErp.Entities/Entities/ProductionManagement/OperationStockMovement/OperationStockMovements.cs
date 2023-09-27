@@ -25,21 +25,9 @@ namespace TsiErp.Entities.Entities.ProductionManagement.OperationStockMovement
 
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
-        ///  İş Emri ID
-        /// </summary>
-        public Guid WorkorderID { get; set; }
-
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
-        /// <summary>
         ///  Üretim Emri ID
         /// </summary>
         public Guid ProductionorderID { get; set; }
-
-        [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
-        /// <summary>
-        ///  Sipariş ID
-        /// </summary>
-        public Guid OrderID { get; set; }
 
         [SqlColumnType(SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>

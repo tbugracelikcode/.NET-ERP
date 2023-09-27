@@ -112,7 +112,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
             using (var connection = queryFactory.ConnectToDatabase())
             {
                 var query = queryFactory
-                        .Query().From(Tables.PFMEAs).Select("*")
+                        .Query().From(Tables.PFMEAs).Select<PFMEAs>(null)
                             .Join<OperationalSPCs>
                             (
                                 e => new { FirstOperationalSPCCode = e.Code, FirstOperationalSPCID = e.Id },
@@ -169,7 +169,7 @@ namespace TsiErp.Business.Entities.PFMEA.Services
                 var query = queryFactory
                         .Query()
                         .From(Tables.PFMEAs)
-                        .Select("*")
+                        .Select<PFMEAs>(null)
                             .Join<OperationalSPCs>
                             (
                                 e => new { FirstOperationalSPCCode = e.Code, FirstOperationalSPCID = e.Id },

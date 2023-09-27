@@ -229,7 +229,7 @@ namespace TsiErp.Business.Entities.Route.Services
                 var entityQuery = queryFactory
                        .Query()
                        .From(Tables.Routes)
-                       .Select("*")
+                       .Select<Routes>(null)
                        .Join<Products>
                         (
                             p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
