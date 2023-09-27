@@ -54,5 +54,10 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos
         /// Aktiflik
         /// </summary>
         public bool IsActive { get; set; }
+
+        /// <summary>
+        /// Toplam Miktar
+        /// </summary>
+        public decimal TotalAmount { get; set; }
     }
 }

@@ -14,8 +14,10 @@ using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.FinanceManagement.CurrentAccountCard;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.Station;
 using TsiErp.Entities.Entities.MachineAndWorkforceManagement.StationGroup;
+using TsiErp.Entities.Entities.Other.GrandTotalStockMovement;
 using TsiErp.Entities.Entities.ProductionManagement.ContractOfProductsOperation;
 using TsiErp.Entities.Entities.ProductionManagement.ContractOfProductsOperation.Dtos;
+using TsiErp.Entities.Entities.ProductionManagement.OperationStockMovement;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperation.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.ProductsOperationLine;
@@ -266,7 +268,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 var query = queryFactory
                        .Query()
                        .From(Tables.ProductsOperations)
-                       .Select<ProductsOperations>(po => new { po.WorkCenterID, po.ProductID, po.TemplateOperationID, po.Name, po.IsActive, po.Id, po.DataOpenStatusUserId, po.DataOpenStatus, po.Code })
+                       .Select<ProductsOperations,OperationStockMovements>(null,t=>t.TotalAmount,Tables.OperationStockMovements,nameof(ListProductsOperationsDto.TotalAmount),true, nameof(OperationStockMovements.OperationID) + "=" + Tables.ProductsOperations + "." + nameof(ProductsOperations.Id))
                        .Join<Products>
                         (
                             p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },
@@ -296,7 +298,7 @@ namespace TsiErp.Business.Entities.ProductsOperation.Services
                 var entityQuery = queryFactory
                        .Query()
                         .From(Tables.ProductsOperations)
-                       .Select("*")
+                       .Select<ProductsOperations>(null)
                        .Join<Products>
                         (
                             p => new { ProductID = p.Id, ProductCode = p.Code, ProductName = p.Name },

@@ -57,27 +57,43 @@ namespace TSI.QueryBuilder
             List<string> columnList = new List<string>();
 
             #region T1 Expression
-            var t1Visitor = new PropertyVisitor();
-            t1Visitor.Visit(t1Expression.Body);
-            var t1Members = t1Visitor.Path;
-
-            var t1newExpression = (NewExpression)t1Expression.Body;
-
-            var t1AliasList = t1newExpression.Type.GetProperties().Zip(t1newExpression.Arguments.OfType<MemberExpression>(), (p, m) => new { AliasName = p.Name, RealName = m.Member.Name }).ToList();
-
-            foreach (var item in t1Members)
+            if(t1Expression != null)
             {
-                bool aliasControl = t1AliasList.Any(t => t.RealName == item.Name);
+                var t1Visitor = new PropertyVisitor();
+                t1Visitor.Visit(t1Expression.Body);
+                var t1Members = t1Visitor.Path;
 
-                if (aliasControl)
+                var t1newExpression = (NewExpression)t1Expression.Body;
+
+                var t1AliasList = t1newExpression.Type.GetProperties().Zip(t1newExpression.Arguments.OfType<MemberExpression>(), (p, m) => new { AliasName = p.Name, RealName = m.Member.Name }).ToList();
+
+                foreach (var item in t1Members)
                 {
-                    columnList.Add(t1 + "." + item.Name + " as " + t1AliasList.Where(t => t.RealName == item.Name).Select(t => t.AliasName).FirstOrDefault());
-                }
-                else
-                {
-                    columnList.Add(t1 + "." + item.Name);
+                    bool aliasControl = t1AliasList.Any(t => t.RealName == item.Name);
+
+                    if (aliasControl)
+                    {
+                        columnList.Add(t1 + "." + item.Name + " as " + t1AliasList.Where(t => t.RealName == item.Name).Select(t => t.AliasName).FirstOrDefault());
+                    }
+                    else
+                    {
+                        columnList.Add(t1 + "." + item.Name);
+                    }
                 }
             }
+            else
+            {
+                var properties = typeof(T1).GetProperties();
+
+                foreach (var item in properties)
+                {
+                    if (!columnList.Contains(item.Name))
+                    {
+                        columnList.Add(t1 + "." + item.Name);
+                    }
+                }
+            }
+            
             #endregion
 
             #region Create Columns String
@@ -129,7 +145,7 @@ namespace TSI.QueryBuilder
             return this;
         }
 
-       
+
         public Query Select<T1, T2>(Expression<Func<T1, object>> t1Expression, Expression<Func<T2, object>> sumColumnExpression, string sumTable, string sumColumnAlias, bool IsNullChechk, string sumQueryWhere)
         {
             string query = "";
@@ -138,7 +154,7 @@ namespace TSI.QueryBuilder
 
             List<string> columnList = new List<string>();
 
-            if(t1Expression != null)
+            if (t1Expression != null)
             {
                 #region T1 Expression
                 var t1Visitor = new PropertyVisitor();
@@ -170,7 +186,7 @@ namespace TSI.QueryBuilder
 
                 foreach (var item in properties)
                 {
-                    if(!columnList.Contains(item.Name))
+                    if (!columnList.Contains(item.Name))
                     {
                         columnList.Add(t1 + "." + item.Name);
                     }
@@ -225,7 +241,7 @@ namespace TSI.QueryBuilder
 
                 if (IsNullChechk)
                 {
-                    sumQuery = "ISNULL((SELECT SUM(" + sumColumnName + ") FROM " + sumTable + " where "+ sumQueryWhere + "),0)" + " as " + sumColumnAlias;
+                    sumQuery = "ISNULL((SELECT SUM(" + sumColumnName + ") FROM " + sumTable + " where " + sumQueryWhere + "),0)" + " as " + sumColumnAlias;
                 }
                 else
                 {

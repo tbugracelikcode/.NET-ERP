@@ -251,7 +251,7 @@ namespace TsiErp.Business.Entities.Forecast.Services
                 var entityQuery = queryFactory
                        .Query()
                        .From(Tables.Forecasts)
-                       .Select("*")
+                       .Select<Forecasts>(null)
                        .Join<Periods>
                         (
                             p => new { PeriodID = p.Id, PeriodCode = p.Code, PeriodName = p.Name },

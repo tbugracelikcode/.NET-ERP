@@ -71,31 +71,20 @@ namespace TsiErp.Entities.Entities.ProductionManagement.ProductionTracking
         /// Tamamlandı mı ?
         /// </summary>
         public bool IsFinished { get; set; }
-        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
-        /// <summary>
-        /// İş İstasyonu Kody
-        /// </summary>
-        public string StationCode { get; set; }
-        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
-        /// <summary>
-        /// Çalışan Adı
-        /// </summary>
-        public string EmployeeName { get; set; }
-        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.NVarCharMax)]
-        /// <summary>
-        /// Vardiya Kodu
-        /// </summary>
-        public string ShiftCode { get; set; }
+
+
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// İş İstasyonu ID
         /// </summary>
         public Guid StationID { get; set; }
+
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Çalışan ID
         /// </summary>
         public Guid EmployeeID { get; set; }
+
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>
         /// Vardiya ID

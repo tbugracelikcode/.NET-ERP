@@ -29,16 +29,6 @@ namespace TsiErp.Entities.Entities.ProductionManagement.OperationStockMovement.D
         public string OperationName { get; set; }
 
         /// <summary>
-        ///  İş Emri ID
-        /// </summary>
-        public Guid WorkorderID { get; set; }
-
-        /// <summary>
-        /// İş Emri No
-        /// </summary>
-        public string WorkorderFicheNo { get; set; }
-
-        /// <summary>
         ///  Üretim Emri ID
         /// </summary>
         public Guid ProductionorderID { get; set; }
@@ -47,16 +37,6 @@ namespace TsiErp.Entities.Entities.ProductionManagement.OperationStockMovement.D
         /// Üretim Emri No
         /// </summary>
         public string ProductionorderCode { get; set; }
-
-        /// <summary>
-        ///  Sipariş ID
-        /// </summary>
-        public Guid OrderID { get; set; }
-
-        /// <summary>
-        /// Satış Sipariş No
-        /// </summary>
-        public string OrderFicheNo { get; set; }
 
         /// <summary>
         ///  Toplam Miktar

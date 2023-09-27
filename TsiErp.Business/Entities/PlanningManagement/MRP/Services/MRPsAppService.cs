@@ -248,7 +248,7 @@ namespace TsiErp.Business.Entities.MRP.Services
                 var queryLines = queryFactory
                      .Query()
                      .From(Tables.MRPLines)
-                     .Select("*")
+                     .Select<MRPLines>(null)
                      .Join<Products>
                       (
                           s => new { ProductName = s.Name, ProductID = s.Id, ProductCode = s.Code },

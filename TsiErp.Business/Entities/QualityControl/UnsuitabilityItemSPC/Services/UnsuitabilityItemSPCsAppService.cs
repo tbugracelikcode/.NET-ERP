@@ -196,7 +196,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
                 var queryLines = queryFactory
                        .Query()
                        .From(Tables.UnsuitabilityItemSPCLines)
-                       .Select("*")
+                       .Select<UnsuitabilityItemSPCLines>(null)
                        .Join<StationGroups>
                         (
                             p => new { WorkCenterID = p.Id, WorkCenterName = p.Name },
@@ -263,7 +263,7 @@ namespace TsiErp.Business.Entities.UnsuitabilityItemSPC.Services
                 var queryLines = queryFactory
                        .Query()
                         .From(Tables.UnsuitabilityItemSPCLines)
-                       .Select("*")
+                       .Select<UnsuitabilityItemSPCLines>(null)
                       .Join<StationGroups>
                         (
                             p => new { WorkCenterID = p.Id, WorkCenterName = p.Name },

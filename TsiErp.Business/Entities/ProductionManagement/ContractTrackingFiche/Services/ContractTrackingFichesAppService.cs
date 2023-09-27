@@ -157,7 +157,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                 var query = queryFactory
                        .Query()
                        .From(Tables.ContractTrackingFiches)
-                       .Select("*")
+                       .Select<ContractTrackingFiches>(null)
                        .Join<ProductionOrders>
                         (
                             p => new { ProductionOrderID = p.Id, ProductionOrderNr = p.FicheNo },
@@ -187,7 +187,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                 var queryLines = queryFactory
                                .Query()
                                .From(Tables.ContractTrackingFicheLines)
-                               .Select("*")
+                               .Select<ContractTrackingFicheLines>(null)
                                .Join<ProductsOperations>
                                 (
                                     s => new { OperationID = s.Id, OperationCode = s.Code, OperationName = s.Name },
@@ -230,7 +230,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                 var query = queryFactory
                        .Query()
                        .From(Tables.ContractTrackingFiches)
-                       .Select("*")
+                       .Select<ContractTrackingFiches>(null)
                       .Join<ProductionOrders>
                         (
                             p => new { ProductionOrderNr = p.FicheNo },
@@ -267,7 +267,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                 var entityQuery = queryFactory
                        .Query()
                         .From(Tables.ContractTrackingFiches)
-                       .Select("*")
+                       .Select<ContractTrackingFiches>(null)
                            .Join<ProductionOrders>
                         (
                             p => new { ProductionOrderID = p.Id, ProductionOrderNr = p.FicheNo },
@@ -297,7 +297,7 @@ namespace TsiErp.Business.Entities.ContractTrackingFiche.Services
                 var queryLines = queryFactory
                                .Query()
                                .From(Tables.ContractTrackingFicheLines)
-                                .Select("*")
+                                .Select<ContractTrackingFicheLines>(null)
                                .Join<ProductsOperations>
                                 (
                                     s => new { OperationID = s.Id, OperationCode = s.Code, OperationName = s.Name },

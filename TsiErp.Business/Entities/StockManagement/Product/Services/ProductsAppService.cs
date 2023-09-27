@@ -156,42 +156,6 @@ namespace TsiErp.Business.Entities.Product.Services
             }
         }
 
-        public async Task<IDataResult<IList<SelectGrandTotalStockMovementsDto>>> GetStockAmountAsync(Guid productid)
-        {
-            using (var connection = queryFactory.ConnectToDatabase())
-            {
-                var query = queryFactory
-                        .Query().From(Tables.GrandTotalStockMovements).Select("*")
-                            .Join<Products>
-                            (
-                                u => new { ProductCode = u.Code, ProductID = u.Id, ProductName = u.Name },
-                                nameof(GrandTotalStockMovements.ProductID),
-                                nameof(Products.Id),
-                                JoinType.Left
-                            )
-                            .Join<Branches>
-                            (
-                                pg => new { BranchCode = pg.Code, BranchID = pg.Id, BranchName = pg.Name },
-                                nameof(GrandTotalStockMovements.BranchID),
-                                nameof(Branches.Id),
-                                JoinType.Left
-                            )
-                             .Join<Warehouses>
-                            (
-                                pg => new { WarehouseCode = pg.Code, WarehouseID = pg.Id },
-                                nameof(GrandTotalStockMovements.WarehouseID),
-                                nameof(Warehouses.Id),
-                                JoinType.Left
-                            )
-                            .Where(new { ProductID = productid }, false, false, Tables.GrandTotalStockMovements);
-
-                var grandTotalStock = queryFactory.GetList<SelectGrandTotalStockMovementsDto>(query).ToList();
-
-                return new SuccessDataResult<IList<SelectGrandTotalStockMovementsDto>>(grandTotalStock);
-
-            }
-        }
-
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListProductsDto>>> GetListAsync(ListProductsParameterDto input)
@@ -227,38 +191,6 @@ namespace TsiErp.Business.Entities.Product.Services
                 var products = queryFactory.GetList<ListProductsDto>(query).ToList();
 
                 return new SuccessDataResult<IList<ListProductsDto>>(products);
-
-
-
-                //var query = queryFactory
-                //   .Query()
-                //   .From(Tables.Products)
-                //  .Select<Products, GrandTotalStockMovements>
-                //  (
-                //    p => new { p.Id, p.Code, p.Name, p.IsActive, p.DataOpenStatus, p.DataOpenStatusUserId, p.UnitSetID, p.CoatingWeight, p.Confirmation, p.EnglishDefinition, p.ExportCatNo, p.FeatureSetID, p.GTIP, p.ManufacturerCode, p.OemRefNo, p.OemRefNo2, p.OemRefNo3, p.TechnicalConfirmation, p.SupplyForm, p.SawWastage, p.SaleVAT, p.PurchaseVAT, p.ProductType, p.ProductSize, p.ProductGrpID, p.ProductDescription, p.PlannedWastage }
-                //    , t => t.Amount
-                //    , Tables.GrandTotalStockMovements
-                //    , nameof(ListProductsDto.AmountOfStock)
-                //    , true
-                //    , nameof(GrandTotalStockMovements.ProductID) + "=" + Tables.Products + "." + nameof(Products.Id))
-                //       .Join<UnitSets>
-                //       (
-                //            u => new { UnitSetCode = u.Code },
-                //                nameof(Products.UnitSetID),
-                //                nameof(UnitSets.Id),
-                //           JoinType.Left
-                //       )
-                //       .Join<ProductGroups>
-                //       (
-                //            pg => new { ProductGrp = pg.Name },
-                //                nameof(Products.ProductGrpID),
-                //                nameof(ProductGroups.Id),
-                //           JoinType.Left
-                //        ).Where(null, true, true, Tables.Products);
-
-                //var products = queryFactory.GetList<ListProductsDto>(query).ToList();
-
-                //return new SuccessDataResult<IList<ListProductsDto>>(products);
             }
         }
 

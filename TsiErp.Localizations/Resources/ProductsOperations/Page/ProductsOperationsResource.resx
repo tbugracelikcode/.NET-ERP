@@ -363,6 +363,9 @@
   <data name="TemplateOprModalTitle" xml:space="preserve">
     <value>Şablon Operasyonlar</value>
   </data>
+  <data name="TotalAmount" xml:space="preserve">
+    <value>MİKTAR</value>
+  </data>
   <data name="UIConfirmationPopupMessageBase" xml:space="preserve">
     <value>Seçtiğiniz ürüne özel operasyon kalıcı olarak silinecektir.</value>
   </data>

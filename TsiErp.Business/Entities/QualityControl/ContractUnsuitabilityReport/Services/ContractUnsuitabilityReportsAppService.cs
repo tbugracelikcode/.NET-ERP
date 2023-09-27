@@ -118,7 +118,7 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityReport.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var query = queryFactory.Query().From(Tables.ContractUnsuitabilityReports).Select("*")
+                var query = queryFactory.Query().From(Tables.ContractUnsuitabilityReports).Select<ContractUnsuitabilityReports>(null)
                     .Join<WorkOrders>
                     (
                        d => new { WorkOrderFicheNr = d.WorkOrderNo, WorkOrderID = d.Id }, nameof(ContractUnsuitabilityReports.WorkOrderID), nameof(WorkOrders.Id), JoinType.Left
@@ -156,7 +156,7 @@ namespace TsiErp.Business.Entities.ContractUnsuitabilityReport.Services
         {
             using (var connection = queryFactory.ConnectToDatabase())
             {
-                var query = queryFactory.Query().From(Tables.ContractUnsuitabilityReports).Select("*")
+                var query = queryFactory.Query().From(Tables.ContractUnsuitabilityReports).Select<ContractUnsuitabilityReports>(null)
                    .Join<WorkOrders>
                     (
                        d => new { WorkOrderFicheNr = d.WorkOrderNo }, nameof(ContractUnsuitabilityReports.WorkOrderID), nameof(WorkOrders.Id), JoinType.Left
