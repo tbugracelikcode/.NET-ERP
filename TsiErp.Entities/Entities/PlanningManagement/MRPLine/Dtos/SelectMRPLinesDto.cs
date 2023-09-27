@@ -56,5 +56,9 @@ namespace TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos
         /// İhtiyaç Miktar
         /// </summary>
         public int RequirementAmount { get; set; }
+        /// <summary>
+        /// Stok Miktarı
+        /// </summary>
+        public decimal AmountOfStock { get; set; }
     }
 }

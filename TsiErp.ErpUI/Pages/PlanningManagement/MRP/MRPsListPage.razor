@@ -13,15 +13,8 @@
 @inject ISalesOrdersAppService SalesOrdersAppService
 @inject IBillsofMaterialsAppService BillsofMaterialsAppService
 @inject IFicheNumbersAppService FicheNumbersAppService
+@inject IGrandTotalStockMovementsAppService GrandTotalStockMovementsAppService
 
-<style> 
-    .selectedOrder{ 
-        background-color: #B70101 !important; 
-    } 
-    .notselectedOrder {
-        background-color: white !important;
-    }
-</style> 
 
 @if (!base.IsLoaded)
 {
@@ -80,10 +73,10 @@ else
          CloseOnEscape="false"
          CloseOnOutsideClick="false"
          HeaderText="@L["EditModalTitle"]"
-         Width="52%"
-         Height="65%"
-         MinWidth="900px"
-         MinHeight="700px"
+         Width="68%"
+         Height="83%"
+         MinWidth="120px"
+         MinHeight="900px"
          HeaderCssClass="HeaderTitleCss"
          Showing="CrudModalShowing"
          Closing="CrudModalClosing">
@@ -110,7 +103,6 @@ else
                     <DxGridLayoutItem Row="0" Column="1">
                         <Template><br />
                             <label class="TSIModalLabel"><strong>@L["CodeLabel"] </strong></label>
-                            @* <SfTextBox CssClass="TSITxtBox" @bind-Value="DataSource.Code"></SfTextBox> *@
 
                             <SfTextBox @ref="@CodeButtonEdit" Created="@CodeOnCreateIcon" @bind-Value="DataSource.Code" ShowClearButton=true></SfTextBox>
                         </Template>
@@ -139,7 +131,10 @@ else
                      <DxGridLayoutItem Row="2" Column="3">
                         <Template>
                             <br />
-        <SfButton CssClass="TSISaveButton" OnClick="SalesOrdersButtonClickEvent"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["OrdersButton"]</SfButton>
+                            <SfMultiSelect @ref="_OrderMultiSelect" TItem="ListSalesOrderDto" TValue="Guid[]" ShowClearButton="false" Placeholder=@L["PlaceholderSalesOrders"] Mode="VisualMode.CheckBox" DataSource="@SalesOrdersList">
+                                <MultiSelectEvents TItem="ListSalesOrderDto" TValue="Guid[]" ValueRemoved="@SalesOrderValueRemovedhandler" OnValueSelect="@SalesOrderOnValueSelecthandler"></MultiSelectEvents>
+                                <MultiSelectFieldSettings Value="Id" Text="FicheNo"></MultiSelectFieldSettings>
+                           </SfMultiSelect>
                         </Template>
                     </DxGridLayoutItem>
 
@@ -159,6 +154,7 @@ else
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.UnitSetCode) HeaderText="@L["LineGridUnitSetCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                                    
                                 <GridColumn Field=@nameof(SelectMRPLinesDto.Amount)  Type="ColumnType.Number" HeaderText="@L["LineGridAmount"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
+                                    <GridColumn Field=@nameof(SelectMRPLinesDto.AmountOfStock) HeaderText="@L["LineGridAmountOfStock"]" TextAlign="TextAlign.Center" Width="120" Format="N2"></GridColumn>
                                     <GridColumn Field=@nameof(SelectMRPLinesDto.RequirementAmount) Type="ColumnType.Number" HeaderText="@L["LineGridRequirementAmount"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
                             </GridColumns>
                         </SfGrid>
@@ -179,63 +175,3 @@ else
 
 }
 
- @if (SelectSalesOrdersPopupVisible)
-{
-    <DxPopup @bind-Visible="SelectSalesOrdersPopupVisible"
-         ShowFooter="true"
-         CloseOnEscape="false"
-         CloseOnOutsideClick="false"
-         HeaderText="@L["SalesOrderModalTitle"]"
-         Width="64%"
-         Height="44%"
-         MinWidth="1220px"
-         MinHeight="470px"
-         HeaderCssClass="HeaderTitleCss">
-        <BodyTemplate>
-             <DxGridLayout CssClass="TSIGridLayout">
-
-                <Rows>
-                    <DxGridLayoutRow Height="90%" />
-                </Rows>
-
-                <Columns>
-                    <DxGridLayoutColumn Width="3%" />
-                    <DxGridLayoutColumn Width="94%" />
-                    <DxGridLayoutColumn Width="3%" />
-                </Columns>
-
-                <Items>
-
-                     <DxGridLayoutItem Row="0" Column="1">
-                        <Template><br />
-
-                            <SfGrid ID="SalesOrderGrid" @ref=_OrdersGrid ColumnMenuItems=@MenuItems ShowColumnMenu="true" DataSource="@SalesOrdersList" AllowPaging="true" AllowFiltering="true" AllowReordering="true" AllowResizing="true" AllowGrouping="true" AllowExcelExport="true" AllowSelection="true" ShowColumnChooser="true" GridLines="GridLine.Both"
-                                        AllowSorting="true" Height="100%" Width="100%" class="GridZebra" >
-                                        <GridGroupSettings ShowGroupedColumn="true"></GridGroupSettings>
-
-                                <GridEvents OnRecordDoubleClick="@SalesOrdersDoubleClickHandler" TValue="ListSalesOrderDto" RowDataBound="RowBound"></GridEvents>
-                                        <GridEditSettings AllowAdding="false" AllowEditing="false" AllowDeleting="false" Mode="Syncfusion.Blazor.Grids.EditMode.Normal"></GridEditSettings>
-                                        <GridFilterSettings Type="Syncfusion.Blazor.Grids.FilterType.Menu"></GridFilterSettings>
-                                        <GridPageSettings PageSizes="true"></GridPageSettings>
-                                        <GridSelectionSettings Type="Syncfusion.Blazor.Grids.SelectionType.Multiple"></GridSelectionSettings>
-                                        <GridColumns>
-                                            <GridColumn Field=@nameof(ListSalesOrderDto.FicheNo)  HeaderText="@L["SalesOrderPopupGridFicheNo"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListSalesOrderDto.Date_) Format="dd.MM.yyyy" HeaderText="@L["SalesOrderPopupGridDate_"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListSalesOrderDto.CurrencyCode) HeaderText="@L["SalesOrderPopupGridCurrencyCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-                                            <GridColumn Field=@nameof(ListSalesOrderDto.CustomerCode) HeaderText="@L["SalesOrderPopupGridCustomerCode"]" TextAlign="TextAlign.Center" Width="120"></GridColumn>
-
-                                        </GridColumns>
-                                    </SfGrid>
-
-                        </Template>
-                    </DxGridLayoutItem>
-
-                      </Items>
-        </DxGridLayout>
-
-        </BodyTemplate>
-        <FooterContentTemplate>
-            <SfButton CssClass="TSISaveButton" OnClick="OnSelectedOrdersAddButtonClicked"><SfIcon Size="IconSize.Medium" Name="IconName.Save"></SfIcon>&nbsp;@L["AddSelectedOrdersButton"]</SfButton>
-        </FooterContentTemplate>
-    </DxPopup>
-}

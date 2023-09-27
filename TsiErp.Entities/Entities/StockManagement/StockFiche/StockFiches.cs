@@ -70,6 +70,12 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche
         /// </summary>
         public Guid ProductionOrderID { get; set; }
 
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Satın Alma Sipariş ID
+        /// </summary>
+        public Guid PurchaseOrderID { get; set; }
+
 
         [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
         /// <summary>

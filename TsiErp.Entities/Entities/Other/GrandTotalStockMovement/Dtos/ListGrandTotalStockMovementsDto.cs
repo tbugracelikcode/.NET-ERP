@@ -58,6 +58,10 @@ namespace TsiErp.Entities.Entities.Other.GrandTotalStockMovement.Dtos
         /// </summary>
         public decimal TotalGoodsIssue { get; set; }
         /// <summary>
+        ///  Stok ID
+        /// </summary>
+        public Guid? ProductID { get; set; }
+        /// <summary>
         ///  Stok Kodu
         /// </summary>
         public string ProductCode { get; set; }

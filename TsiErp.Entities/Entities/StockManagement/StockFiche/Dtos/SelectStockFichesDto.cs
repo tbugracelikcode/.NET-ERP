@@ -25,6 +25,16 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
         /// Data Concurrency UserID
         /// </summary>
         public Guid? DataOpenStatusUserId { get; set; }
+
+        /// <summary>
+        /// Satın Alma Sipariş ID
+        /// </summary>
+        public Guid? PurchaseOrderID { get; set; }
+
+        /// <summary>
+        /// Satın Alma Sipariş Fiş No
+        /// </summary>
+        public string PurchaseOrderFicheNo { get; set; }
         /// <summary>
         /// Tarih
         /// </summary>
