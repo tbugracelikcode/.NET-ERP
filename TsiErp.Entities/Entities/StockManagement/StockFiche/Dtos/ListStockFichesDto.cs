@@ -22,6 +22,17 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
         /// Açıklama
         /// </summary>
         public string Description_ { get; set; }
+
+
+        /// <summary>
+        /// Satın Alma Sipariş ID
+        /// </summary>
+        public Guid? PurchaseOrderID { get; set; }
+
+        /// <summary>
+        /// Satın Alma Sipariş Fiş No
+        /// </summary>
+        public string PurchaseOrderFicheNo { get; set; }
         /// <summary>
         /// Fiş Türü
         /// </summary>

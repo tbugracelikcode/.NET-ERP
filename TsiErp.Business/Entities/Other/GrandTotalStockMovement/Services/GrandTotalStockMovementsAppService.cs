@@ -127,6 +127,8 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
             }
         }
 
+     
+
 
         [CacheAspect(duration: 60)]
         public async Task<IDataResult<IList<ListGrandTotalStockMovementsDto>>> GetListAsync(ListGrandTotalStockMovementsParameterDto input)
@@ -136,7 +138,7 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
 
                 var query = queryFactory
                    .Query()
-                   .From(Tables.GrandTotalStockMovements).Select<GrandTotalStockMovements>(gt => new { gt.WarehouseID, gt.TotalWastage, gt.TotalSalesProposition, gt.TotalSalesOrder, gt.TotalReserved, gt.TotalPurchaseRequest, gt.TotalPurchaseOrder, gt.TotalProduction, gt.TotalGoodsReceipt, gt.TotalGoodsIssue, gt.TotalConsumption, gt.ProductID, gt.Id, gt.DataOpenStatusUserId, gt.DataOpenStatus, gt.BranchID, gt.Amount })
+                   .From(Tables.GrandTotalStockMovements).Select("*")
                             .Join<Branches>
                             (
                                 b => new { BranchCode = b.Code},
@@ -157,7 +159,7 @@ namespace TsiErp.Business.Entities.GrandTotalStockMovement.Services
                                 nameof(GrandTotalStockMovements.WarehouseID),
                                 nameof(Warehouses.Id),
                                 JoinType.Left
-                            ).Where(null, true, true, Tables.Periods);
+                            ).Where(null, false, false, Tables.GrandTotalStockMovements);
 
                 var grandTotalStockMovements = queryFactory.GetList<ListGrandTotalStockMovementsDto>(query).ToList();
 

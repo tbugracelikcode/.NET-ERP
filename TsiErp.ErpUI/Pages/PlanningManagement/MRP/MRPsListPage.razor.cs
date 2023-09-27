@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Syncfusion.Blazor.DropDowns;
 using Syncfusion.Blazor.Grids;
 using Syncfusion.Blazor.Inputs;
 using TsiErp.Business.Entities.BillsofMaterial.Services;
 using TsiErp.Business.Entities.GeneralSystemIdentifications.FicheNumber.Services;
+using TsiErp.Entities.Entities.Other.GrandTotalStockMovement.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRPLine.Dtos;
 using TsiErp.Entities.Entities.ProductionManagement.BillsofMaterial.Dtos;
@@ -19,6 +21,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
     {
         private SfGrid<SelectMRPLinesDto> _LineGrid;
         private SfGrid<ListSalesOrderDto> _OrdersGrid;
+        private SfMultiSelect<Guid[], ListSalesOrderDto> _OrderMultiSelect;
 
         [Inject]
         ModalManager ModalManager { get; set; }
@@ -29,7 +32,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
         List<SelectMRPLinesDto> GridLineList = new List<SelectMRPLinesDto>();
 
-        List<SelectMRPLinesDto> SelectedOrdersList = new List<SelectMRPLinesDto>();
+        List<ListSalesOrderDto> SalesOrdersList = new List<ListSalesOrderDto>();
 
         private bool LineCrudPopup = false;
 
@@ -51,10 +54,9 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
                 Date_ = DateTime.Today,
                 Code = FicheNumbersAppService.GetFicheNumberAsync("MRPChildMenu")
             };
-
+            await GetSalesOrdersList();
             DataSource.SelectMRPLines = new List<SelectMRPLinesDto>();
             GridLineList = DataSource.SelectMRPLines;
-
             EditPageVisible = true;
 
 
@@ -112,6 +114,7 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                 case "changed":
                     IsChanged = true;
+                    await GetSalesOrdersList();
                     DataSource = (await MRPsService.GetAsync(args.RowInfo.RowData.Id)).Data;
                     GridLineList = DataSource.SelectMRPLines;
 
@@ -196,61 +199,14 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
             LineCrudPopup = false;
         }
 
-        public async void OnSelectedOrdersAddButtonClicked()
+        private async void SalesOrderOnValueSelecthandler(SelectEventArgs<ListSalesOrderDto> args)
         {
-            foreach (var item in SelectedOrdersList)
+            if (GridLineList.Where(t => t.SalesOrderID == args.ItemData.Id).Count() == 0)
             {
-                SelectMRPLinesDto lineModel = new SelectMRPLinesDto
-                {
-                    SalesOrderID = item.SalesOrderID,
-                    Amount = item.Amount,
-                    LineNr = GridLineList.Count + 1,
-                    UnitSetID = item.UnitSetID,
-                    UnitSetCode = item.UnitSetCode,
-                    SalesOrderLineID = item.SalesOrderLineID,
-                    SalesOrderFicheNo = item.SalesOrderFicheNo,
-                    ProductName = item.ProductName,
-                    ProductID = item.ProductID,
-                    ProductCode = item.ProductCode,
-                    MRPID = item.MRPID,
 
-                };
+                var salesOrderDataSource = (await SalesOrdersAppService.GetAsync(args.ItemData.Id)).Data;
 
-                GridLineList.Add(lineModel);
-            }
-
-            await  _LineGrid.Refresh();
-
-            SelectSalesOrdersPopupVisible = false;
-
-            SelectedOrdersList.Clear();
-
-            await InvokeAsync(StateHasChanged);
-        }
-
-
-        #endregion
-
-        #region Satış Siparişleri Button
-
-        bool SelectSalesOrdersPopupVisible = false;
-        List<ListSalesOrderDto> SalesOrdersList = new List<ListSalesOrderDto>();
-
-        public async void SalesOrdersButtonClickEvent()
-        {
-            SelectedOrdersList.Clear();
-            SelectSalesOrdersPopupVisible = true;
-            await GetSalesOrdersList();
-            await InvokeAsync(StateHasChanged);
-        }
-
-        public async void SalesOrdersDoubleClickHandler(RecordDoubleClickEventArgs<ListSalesOrderDto> args)
-        {
-            var selectedSalesOrder = args.RowData;
-
-            if (SelectedOrdersList.Where(t => t.SalesOrderID == selectedSalesOrder.Id).Count() == 0)
-            {
-                var salesOrderLineList = (await SalesOrdersAppService.GetAsync(selectedSalesOrder.Id)).Data.SelectSalesOrderLines.ToList();
+                var salesOrderLineList = salesOrderDataSource.SelectSalesOrderLines.ToList();
 
                 foreach (var orderline in salesOrderLineList)
                 {
@@ -258,57 +214,71 @@ namespace TsiErp.ErpUI.Pages.PlanningManagement.MRP
 
                     //if (product.SupplyForm == Entities.Enums.ProductSupplyFormEnum.Satınalma)
                     //{
-                        var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(orderline.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.ToList();
+                    var bomLineList = (await BillsofMaterialsAppService.GetbyProductIDAsync(orderline.ProductID.GetValueOrDefault())).Data.SelectBillsofMaterialLines.ToList();
 
-                        foreach (var bomline in bomLineList)
+
+
+                    foreach (var bomline in bomLineList)
+                    {
+                        int calculatedAmount = Convert.ToInt32(orderline.Quantity * bomline.Quantity);
+
+                        decimal amountofProduct = (await GrandTotalStockMovementsAppService.GetListAsync(new ListGrandTotalStockMovementsParameterDto())).Data.Where(t => t.ProductID == bomline.ProductID).Select(t => t.Amount).Sum();
+
+                        SelectMRPLinesDto mrpLineModel = new SelectMRPLinesDto
                         {
-                            SelectMRPLinesDto mrpLineModel = new SelectMRPLinesDto
-                            {
-                                Amount = Convert.ToInt32(orderline.Quantity * bomline.Quantity),
-                                ProductID = bomline.ProductID.GetValueOrDefault(),
-                                MRPID = DataSource.Id,
-                                ProductCode = bomline.ProductCode,
-                                ProductName = bomline.ProductName,
-                                SalesOrderID = selectedSalesOrder.Id,
-                                UnitSetID = bomline.UnitSetID,
-                                UnitSetCode = bomline.UnitSetCode,
-                                SalesOrderLineID = orderline.Id,
-                                SalesOrderFicheNo = selectedSalesOrder.FicheNo,
-                            };
+                            Amount = calculatedAmount,
+                            ProductID = bomline.ProductID.GetValueOrDefault(),
+                            MRPID = DataSource.Id,
+                            ProductCode = bomline.ProductCode,
+                            ProductName = bomline.ProductName,
+                            SalesOrderID = args.ItemData.Id,
+                            UnitSetID = bomline.UnitSetID,
+                            LineNr = GridLineList.Count + 1,
+                            UnitSetCode = bomline.UnitSetCode,
+                            AmountOfStock = amountofProduct,
+                            RequirementAmount = Math.Abs(Convert.ToInt32(amountofProduct) - calculatedAmount),
+                            SalesOrderLineID = orderline.Id,
+                            SalesOrderFicheNo = salesOrderDataSource.FicheNo,
+                        };
 
-                            SelectedOrdersList.Add(mrpLineModel);
-                        }
+                        GridLineList.Add(mrpLineModel);
+                    }
                     //}
                 }
-
             }
 
-            else
-            {
-                var deletedOrdersList = SelectedOrdersList.Where(t => t.SalesOrderID != selectedSalesOrder.Id).ToList();
-
-                SelectedOrdersList = deletedOrdersList;
-            }
-
-            await _OrdersGrid.Refresh();
+            await _LineGrid.Refresh();
         }
 
-        public void RowBound(RowDataBoundEventArgs<ListSalesOrderDto> args)
+
+        private async void SalesOrderValueRemovedhandler(RemoveEventArgs<ListSalesOrderDto> args)
         {
-            if (SelectedOrdersList.Where(t=>t.SalesOrderID == args.Data.Id).Count() == 0)
+            var res = await ModalManager.ConfirmationAsync(L["MultiDeleteConfirmationTitleBase"], L["MultiDeleteConfirmationDescriptionBase"]);
+
+            if (res == true)
             {
-                args.Row.AddClass(new string[] { "notselectedOrder" });
+                var removedSalesOrderId = args.ItemData.Id;
+
+                var deletedOrdersList = GridLineList.Where(t => t.SalesOrderID != removedSalesOrderId).ToList();
+
+                GridLineList = deletedOrdersList;
+
+                await _LineGrid.Refresh();
+
+                StateHasChanged();
             }
+
             else
             {
-                args.Row.AddClass(new string[] { "selectedOrder" });
             }
         }
+
 
         private async Task GetSalesOrdersList()
         {
             SalesOrdersList = (await SalesOrdersAppService.GetListAsync(new ListSalesOrderParameterDto())).Data.ToList();
         }
+
         #endregion
 
         #region Kod ButtonEdit

@@ -169,7 +169,10 @@
     <value>Material Requirement Planning (MRP)</value>
   </data>
   <data name="LineGridAmount" xml:space="preserve">
-    <value>AMOUNT</value>
+    <value>CALCULATED AMOUNT</value>
+  </data>
+  <data name="LineGridAmountOfStock" xml:space="preserve">
+    <value>AMOUNT OF STOCK</value>
   </data>
   <data name="LineGridProductCode" xml:space="preserve">
     <value>PRODUCT CODE</value>
@@ -213,8 +216,17 @@
   <data name="MRPLineContextRefresh" xml:space="preserve">
     <value>Refresh</value>
   </data>
+  <data name="MultiDeleteConfirmationDescriptionBase" xml:space="preserve">
+    <value>Order lines going to be deleted, do you confirm?</value>
+  </data>
+  <data name="MultiDeleteConfirmationTitleBase" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
   <data name="OrdersButton" xml:space="preserve">
     <value>Show Sales Orders</value>
+  </data>
+  <data name="PlaceholderSalesOrders" xml:space="preserve">
+    <value>Select orders.</value>
   </data>
   <data name="SalesOrderModalTitle" xml:space="preserve">
     <value>Sales Orders</value>

@@ -169,7 +169,10 @@
     <value>Malzeme İhtiyaç Planlaması (MRP)</value>
   </data>
   <data name="LineGridAmount" xml:space="preserve">
-    <value>MİKTAR</value>
+    <value>HESAPLANAN MİKTAR</value>
+  </data>
+  <data name="LineGridAmountOfStock" xml:space="preserve">
+    <value>STOK TOPLAMI</value>
   </data>
   <data name="LineGridProductCode" xml:space="preserve">
     <value>STOK KODU</value>
@@ -213,8 +216,17 @@
   <data name="MRPLineContextRefresh" xml:space="preserve">
     <value>Güncelle</value>
   </data>
+  <data name="MultiDeleteConfirmationDescriptionBase" xml:space="preserve">
+    <value>Sipariş satırları silinecektir, onaylıyor musunuz?</value>
+  </data>
+  <data name="MultiDeleteConfirmationTitleBase" xml:space="preserve">
+    <value>Onay</value>
+  </data>
   <data name="OrdersButton" xml:space="preserve">
     <value>Satış Siparişlerini Göster</value>
+  </data>
+  <data name="PlaceholderSalesOrders" xml:space="preserve">
+    <value>Sipariş seçiniz.</value>
   </data>
   <data name="SalesOrderModalTitle" xml:space="preserve">
     <value>Satış Siparişleri</value>

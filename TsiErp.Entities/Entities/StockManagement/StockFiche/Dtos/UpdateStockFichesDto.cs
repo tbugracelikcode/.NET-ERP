@@ -25,6 +25,11 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos
         /// Saat
         /// </summary>
         public TimeSpan? Time_ { get; set; }
+
+        /// <summary>
+        /// Satın Alma Sipariş ID
+        /// </summary>
+        public Guid? PurchaseOrderID { get; set; }
         /// <summary>
         /// Açıklama
         /// </summary>

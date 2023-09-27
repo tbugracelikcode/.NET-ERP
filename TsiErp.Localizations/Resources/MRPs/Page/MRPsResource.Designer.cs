@@ -214,11 +214,20 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MİKTAR.
+        ///   Looks up a localized string similar to HESAPLANAN MİKTAR.
         /// </summary>
         public static string LineGridAmount {
             get {
                 return ResourceManager.GetString("LineGridAmount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to STOK TOPLAMI.
+        /// </summary>
+        public static string LineGridAmountOfStock {
+            get {
+                return ResourceManager.GetString("LineGridAmountOfStock", resourceCulture);
             }
         }
         
@@ -349,11 +358,38 @@ namespace TsiErp.Localizations.Resources.MRPs.Page {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sipariş satırları silinecektir, onaylıyor musunuz?.
+        /// </summary>
+        public static string MultiDeleteConfirmationDescriptionBase {
+            get {
+                return ResourceManager.GetString("MultiDeleteConfirmationDescriptionBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Onay.
+        /// </summary>
+        public static string MultiDeleteConfirmationTitleBase {
+            get {
+                return ResourceManager.GetString("MultiDeleteConfirmationTitleBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Satış Siparişlerini Göster.
         /// </summary>
         public static string OrdersButton {
             get {
                 return ResourceManager.GetString("OrdersButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sipariş seçiniz..
+        /// </summary>
+        public static string PlaceholderSalesOrders {
+            get {
+                return ResourceManager.GetString("PlaceholderSalesOrders", resourceCulture);
             }
         }
         

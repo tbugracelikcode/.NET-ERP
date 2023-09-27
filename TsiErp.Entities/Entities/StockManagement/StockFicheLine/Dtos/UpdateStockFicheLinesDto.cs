@@ -25,6 +25,14 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos
         /// Stok ID
         /// </summary>
         public Guid ProductID { get; set; }
+        /// <summary>
+        /// Satın Alma Sipariş ID
+        /// </summary>
+        public Guid? PurchaseOrderID { get; set; }
+        /// <summary>
+        /// Satın Alma Sipariş Satır ID
+        /// </summary>
+        public Guid? PurchaseOrderLineID { get; set; }
 
         /// <summary>
         /// Birim Set ID

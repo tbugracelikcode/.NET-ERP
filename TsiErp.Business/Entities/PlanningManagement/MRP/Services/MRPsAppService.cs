@@ -12,6 +12,7 @@ using TsiErp.Business.Entities.Logging.Services;
 using TsiErp.Business.Entities.PlanningManagement.MRP.Services;
 using TsiErp.Business.Entities.PlanningManagement.MRP.Validations;
 using TsiErp.DataAccess.Services.Login;
+using TsiErp.Entities.Entities.Other.GrandTotalStockMovement;
 using TsiErp.Entities.Entities.PlanningManagement.MRP;
 using TsiErp.Entities.Entities.PlanningManagement.MRP.Dtos;
 using TsiErp.Entities.Entities.PlanningManagement.MRPLine;
@@ -168,7 +169,14 @@ namespace TsiErp.Business.Entities.MRP.Services
                 var queryLines = queryFactory
                        .Query()
                        .From(Tables.MRPLines)
-                       .Select<MRPLines>(null)
+                       .Select<MRPLines, GrandTotalStockMovements>
+                  (
+                      null
+                    , t => t.Amount
+                    , Tables.GrandTotalStockMovements
+                    , nameof(SelectMRPLinesDto.AmountOfStock)
+                    , true
+                    , nameof(GrandTotalStockMovements.ProductID) + "=" + Tables.MRPLines + "." + nameof(MRPLines.ProductID))
                        .Join<Products>
                         (
                             s => new { ProductName = s.Name, ProductID = s.Id, ProductCode = s.Code },

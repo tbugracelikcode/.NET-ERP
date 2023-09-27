@@ -30,6 +30,14 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine.Dtos
         /// Birim Set ID
         /// </summary>
         public Guid UnitSetID { get; set; }
+        /// <summary>
+        /// Satın Alma Sipariş ID
+        /// </summary>
+        public Guid? PurchaseOrderID { get; set; }
+        /// <summary>
+        /// Satın Alma Sipariş Satır ID
+        /// </summary>
+        public Guid? PurchaseOrderLineID { get; set; }
 
         /// <summary>
         /// Miktar

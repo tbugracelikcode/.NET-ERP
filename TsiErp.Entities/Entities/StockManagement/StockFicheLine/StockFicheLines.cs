@@ -30,6 +30,16 @@ namespace TsiErp.Entities.Entities.StockManagement.StockFicheLine
         /// Birim Set ID
         /// </summary>
         public Guid UnitSetID { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Satın Alma Sipariş ID
+        /// </summary>
+        public Guid PurchaseOrderID { get; set; }
+        [SqlColumnType(Nullable = true, SqlDbType = SqlDataType.UniqueIdentifier)]
+        /// <summary>
+        /// Satın Alma Sipariş Satır ID
+        /// </summary>
+        public Guid PurchaseOrderLineID { get; set; }
 
         [SqlColumnType(Nullable = false, SqlDbType = SqlDataType.Decimal, Precision = 6, Scale = 18)]
         /// <summary>

@@ -13,6 +13,8 @@ using TsiErp.Business.Entities.StockFiche.Validations;
 using TsiErp.Business.Entities.StockMovement;
 using TsiErp.DataAccess.Services.Login;
 using TsiErp.Entities.Entities.GeneralSystemIdentifications.Branch;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrder;
+using TsiErp.Entities.Entities.PurchaseManagement.PurchaseOrderLine;
 using TsiErp.Entities.Entities.StockManagement.Product;
 using TsiErp.Entities.Entities.StockManagement.StockFiche;
 using TsiErp.Entities.Entities.StockManagement.StockFiche.Dtos;
@@ -60,7 +62,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
                 Guid addedEntityId = GuidGenerator.CreateGuid();
 
-                if(input.FicheType != 25)
+                if (input.FicheType != 25)
                 {
                     switch (input.FicheType)
                     {
@@ -71,7 +73,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         case 51: input.InputOutputCode = 1; break;
                     }
                 }
-               
+
 
                 var query = queryFactory.Query().From(Tables.StockFiches).Insert(new CreateStockFichesDto
                 {
@@ -81,6 +83,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     CreatorId = LoginedUserService.UserId,
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
+                    PurchaseOrderID = Guid.Empty,
                     DeleterId = Guid.Empty,
                     DeletionTime = null,
                     Id = addedEntityId,
@@ -107,6 +110,8 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                         StockFicheID = addedEntityId,
                         CreationTime = DateTime.Now,
                         CreatorId = LoginedUserService.UserId,
+                        PurchaseOrderID = Guid.Empty,
+                        PurchaseOrderLineID = Guid.Empty,
                         DataOpenStatus = false,
                         DataOpenStatusUserId = Guid.Empty,
                         DeleterId = Guid.Empty,
@@ -234,12 +239,19 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 var query = queryFactory
                        .Query()
                        .From(Tables.StockFiches)
-                       .Select<StockFiches>(sf => new { sf.Id, sf.InputOutputCode, sf.FicheNo, sf.Date_, sf.Description_, sf.FicheType, sf.NetAmount, sf.WarehouseID, sf.Time_, sf.SpecialCode, sf.ProductionOrderID, sf.ExchangeRate, sf.DataOpenStatusUserId, sf.DataOpenStatus, sf.CurrencyID, sf.BranchID })
+                       .Select<StockFiches>(null)
                        .Join<Branches>
                         (
-                            b => new { BranchCode = b.Code , BranchID = b.Id},
+                            b => new { BranchCode = b.Code, BranchID = b.Id },
                             nameof(StockFiches.BranchID),
                             nameof(Branches.Id),
+                            JoinType.Left
+                        )
+                        .Join<PurchaseOrders>
+                        (
+                            b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
+                            nameof(StockFiches.PurchaseOrderID),
+                            nameof(PurchaseOrders.Id),
                             JoinType.Left
                         )
                        .Join<Warehouses>
@@ -256,13 +268,27 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 var queryLines = queryFactory
                        .Query()
                        .From(Tables.StockFicheLines)
-                       .Select<StockFicheLines>(sfl => new
-                       { sfl.UnitSetID, sfl.UnitPrice, sfl.StockFicheID, sfl.Quantity, sfl.ProductID, sfl.LineNr, sfl.LineDescription, sfl.LineAmount, sfl.Id, sfl.FicheType, sfl.DataOpenStatusUserId, sfl.DataOpenStatus})
+                       .Select<StockFicheLines>(null)
                        .Join<Products>
                         (
                             p => new { ProductCode = p.Code, ProductName = p.Name },
                             nameof(StockFicheLines.ProductID),
                             nameof(Products.Id),
+                            JoinType.Left
+                        )
+                         .Join<PurchaseOrders>
+                        (
+                            b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
+                            nameof(StockFicheLines.PurchaseOrderID),
+                            nameof(PurchaseOrders.Id),
+                            "PurchaseOrderLine",
+                            JoinType.Left
+                        )
+                         .Join<PurchaseOrderLines>
+                        (
+                            b => new { PurchaseOrderLineID = b.Id },
+                            nameof(StockFicheLines.PurchaseOrderLineID),
+                            nameof(PurchaseOrderLines.Id),
                             JoinType.Left
                         )
                        .Join<UnitSets>
@@ -292,7 +318,14 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 var query = queryFactory
                        .Query()
                        .From(Tables.StockFiches)
-                       .Select<StockFiches>(sf => new { sf.FicheNo, sf.InputOutputCode, sf.Date_, sf.Description_, sf.FicheType, sf.NetAmount , sf.Id, sf.WarehouseID, sf.Time_, sf.SpecialCode, sf.ProductionOrderID, sf.ExchangeRate, sf.DataOpenStatusUserId, sf.DataOpenStatus, sf.CurrencyID, sf.BranchID })
+                       .Select<StockFiches>(null)
+                        .Join<PurchaseOrders>
+                        (
+                            b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
+                            nameof(StockFiches.PurchaseOrderID),
+                            nameof(PurchaseOrders.Id),
+                            JoinType.Left
+                        )
                        .Join<Branches>
                         (
                             b => new { BranchCode = b.Code },
@@ -324,6 +357,13 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                        .Query()
                        .From(Tables.StockFiches)
                        .Select<StockFiches>(null)
+                        .Join<PurchaseOrders>
+                        (
+                            b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
+                            nameof(StockFiches.PurchaseOrderID),
+                            nameof(PurchaseOrders.Id),
+                            JoinType.Left
+                        )
                        .Join<Branches>
                         (
                             b => new { BranchCode = b.Code, BranchID = b.Id },
@@ -345,8 +385,22 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 var queryLines = queryFactory
                        .Query()
                        .From(Tables.StockFicheLines)
-                       .Select<StockFicheLines>(sfl => new
-                       { sfl.UnitSetID, sfl.UnitPrice, sfl.StockFicheID, sfl.Quantity, sfl.ProductID, sfl.LineNr, sfl.LineDescription, sfl.LineAmount, sfl.Id, sfl.FicheType, sfl.DataOpenStatusUserId, sfl.DataOpenStatus })
+                       .Select<StockFicheLines>(null)
+                         .Join<PurchaseOrders>
+                        (
+                            b => new { PurchaseOrderFicheNo = b.FicheNo, PurchaseOrderID = b.Id },
+                            nameof(StockFicheLines.PurchaseOrderID),
+                            nameof(PurchaseOrders.Id),
+                            "PurchaseOrderLine",
+                            JoinType.Left
+                        )
+                         .Join<PurchaseOrderLines>
+                        (
+                            b => new { PurchaseOrderLineID = b.Id },
+                            nameof(StockFicheLines.PurchaseOrderLineID),
+                            nameof(PurchaseOrderLines.Id),
+                            JoinType.Left
+                        )
                        .Join<Products>
                         (
                             p => new { ProductCode = p.Code, ProductName = p.Name },
@@ -380,7 +434,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                 }
                 #endregion
 
-                if(input.FicheType != 25)
+                if (input.FicheType != 25)
                 {
                     switch (input.FicheType)
                     {
@@ -398,6 +452,7 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                     CreationTime = entity.CreationTime,
                     CreatorId = entity.CreatorId,
                     InputOutputCode = input.InputOutputCode,
+                    PurchaseOrderID = input.PurchaseOrderID.GetValueOrDefault(),
                     DataOpenStatus = false,
                     DataOpenStatusUserId = Guid.Empty,
                     DeleterId = entity.DeleterId.GetValueOrDefault(),
@@ -430,6 +485,8 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                             CreatorId = LoginedUserService.UserId,
                             DataOpenStatus = false,
                             DataOpenStatusUserId = Guid.Empty,
+                            PurchaseOrderID = item.PurchaseOrderID.GetValueOrDefault(),
+                            PurchaseOrderLineID = item.PurchaseOrderLineID.GetValueOrDefault(),
                             DeleterId = Guid.Empty,
                             DeletionTime = null,
                             Id = GuidGenerator.CreateGuid(),
@@ -461,6 +518,8 @@ namespace TsiErp.Business.Entities.StockFiche.Services
                             {
                                 StockFicheID = input.Id,
                                 CreationTime = line.CreationTime,
+                                PurchaseOrderID = item.PurchaseOrderID.GetValueOrDefault(),
+                                PurchaseOrderLineID = item.PurchaseOrderLineID.GetValueOrDefault(),
                                 CreatorId = line.CreatorId,
                                 DataOpenStatus = false,
                                 DataOpenStatusUserId = Guid.Empty,
@@ -491,11 +550,11 @@ namespace TsiErp.Business.Entities.StockFiche.Services
 
                 switch (input.FicheType)
                 {
-                    case 11: StockMovementsService.UpdateTotalWastages(entity,input);  break;
-                    case 12: StockMovementsService.UpdateTotalConsumptions(entity, input);  break;
-                    case 13: StockMovementsService.UpdateTotalProductions(entity, input);  break;
-                    case 50: StockMovementsService.UpdateTotalGoods(entity, input);  break;
-                    case 51: StockMovementsService.UpdateTotalGoodIssues(entity, input);  break;
+                    case 11: StockMovementsService.UpdateTotalWastages(entity, input); break;
+                    case 12: StockMovementsService.UpdateTotalConsumptions(entity, input); break;
+                    case 13: StockMovementsService.UpdateTotalProductions(entity, input); break;
+                    case 50: StockMovementsService.UpdateTotalGoods(entity, input); break;
+                    case 51: StockMovementsService.UpdateTotalGoodIssues(entity, input); break;
                     case 25: StockMovementsService.UpdateTotalWarehouseShippings(entity, input); break;
                 }
 
