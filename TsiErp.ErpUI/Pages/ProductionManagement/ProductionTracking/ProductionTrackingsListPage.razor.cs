@@ -112,20 +112,18 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
 
         public async void StationsButtonClickEvent()
         {
-            if(DataSource.WorkOrderID== Guid.Empty)
+            if (DataSource.WorkOrderID == Guid.Empty)
             {
 
                 await ModalManager.WarningPopupAsync(L["UIWarningWorkOrderTitle"], L["UIWarningWorkOrderMessage"]);
             }
             else
             {
-
                 SelectStationsPopupVisible = true;
                 await GetStationsList();
             }
             await InvokeAsync(StateHasChanged);
         }
-
 
         public void StationsOnValueChange(ChangedEventArgs args)
         {
@@ -212,7 +210,6 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
             await InvokeAsync(StateHasChanged);
         }
 
-
         public void WorkOrdersOnValueChange(ChangedEventArgs args)
         {
             if (args.Value == null)
@@ -230,16 +227,50 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
 
             if (selectedWorkOrder != null)
             {
-                DataSource.WorkOrderID = selectedWorkOrder.Id;
-                DataSource.CurrentAccountCardID = selectedWorkOrder.CurrentAccountCardID;
 
-                OperationLineList = (await ProductsOperationsAppService.GetAsync(selectedWorkOrder.ProductsOperationID.GetValueOrDefault())).Data.SelectProductsOperationLines.ToList();
+                if (selectedWorkOrder.LineNr > 1)
+                {
 
-                DataSource.CustomerCode = (await CurrentAccountCardsAppService.GetAsync(DataSource.CurrentAccountCardID.GetValueOrDefault())).Data.CustomerCode;
+                    var previousWorkOrder = WorkOrdersList.FirstOrDefault(t => t.ProductionOrderID == selectedWorkOrder.ProductionOrderID && t.LineNr == selectedWorkOrder.LineNr - 1);
 
-                DataSource.WorkOrderCode = selectedWorkOrder.WorkOrderNo;
-                SelectWorkOrdersPopupVisible = false;
-                await InvokeAsync(StateHasChanged);
+                    if (previousWorkOrder != null && previousWorkOrder.ProducedQuantity > 0)
+                    {
+                        DataSource.WorkOrderID = selectedWorkOrder.Id;
+                        DataSource.CurrentAccountCardID = selectedWorkOrder.CurrentAccountCardID;
+                        DataSource.PlannedQuantity = selectedWorkOrder.PlannedQuantity;
+
+                        OperationLineList = (await ProductsOperationsAppService.GetAsync(selectedWorkOrder.ProductsOperationID.GetValueOrDefault())).Data.SelectProductsOperationLines.ToList();
+
+                        DataSource.CustomerCode = (await CurrentAccountCardsAppService.GetAsync(DataSource.CurrentAccountCardID.GetValueOrDefault())).Data.CustomerCode;
+
+                        DataSource.WorkOrderCode = selectedWorkOrder.WorkOrderNo;
+                        SelectWorkOrdersPopupVisible = false;
+                    }
+                    else
+                    {
+                        await ModalManager.WarningPopupAsync(L["UIWarningWorkOrderTitle"], L["UIWarningPreviousWorkOrderMessage"]);
+                    }
+
+                    await InvokeAsync(StateHasChanged);
+                }
+
+                if (selectedWorkOrder.LineNr == 1)
+                {
+                    DataSource.WorkOrderID = selectedWorkOrder.Id;
+                    DataSource.CurrentAccountCardID = selectedWorkOrder.CurrentAccountCardID;
+                    DataSource.PlannedQuantity = selectedWorkOrder.PlannedQuantity;
+
+                    OperationLineList = (await ProductsOperationsAppService.GetAsync(selectedWorkOrder.ProductsOperationID.GetValueOrDefault())).Data.SelectProductsOperationLines.ToList();
+
+                    DataSource.CustomerCode = (await CurrentAccountCardsAppService.GetAsync(DataSource.CurrentAccountCardID.GetValueOrDefault())).Data.CustomerCode;
+
+                    DataSource.WorkOrderCode = selectedWorkOrder.WorkOrderNo;
+                    SelectWorkOrdersPopupVisible = false;
+
+
+                    await InvokeAsync(StateHasChanged);
+                }
+
             }
         }
         #endregion
@@ -268,7 +299,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
         {
             if (args.Value == null)
             {
-                LineDataSource.HaltID   = Guid.Empty;
+                LineDataSource.HaltID = Guid.Empty;
                 LineDataSource.HaltName = string.Empty;
                 LineDataSource.HaltCode = string.Empty;
             }
@@ -280,7 +311,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
 
             if (selectedHaltReason != null)
             {
-                LineDataSource.HaltID   = selectedHaltReason.Id;
+                LineDataSource.HaltID = selectedHaltReason.Id;
                 LineDataSource.HaltName = selectedHaltReason.Name;
                 LineDataSource.HaltCode = selectedHaltReason.Code;
                 SelectHaltReasonsPopupVisible = false;
@@ -295,7 +326,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
         bool SelectCurrentAccountCardsPopupVisible = false;
         List<ListCurrentAccountCardsDto> CurrentAccountCardsList = new List<ListCurrentAccountCardsDto>();
 
-       
+
 
         public async Task CurrentAccountCardsCustomerCodeOnCreateIcon()
         {
@@ -310,7 +341,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
             await InvokeAsync(StateHasChanged);
         }
 
-      
+
 
         public void CurrentAccountCardsOnValueChange(ChangedEventArgs args)
         {
@@ -358,7 +389,7 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
 
         protected override async Task BeforeInsertAsync()
         {
-            DataSource = new SelectProductionTrackingsDto() 
+            DataSource = new SelectProductionTrackingsDto()
             {
                 Code = FicheNumbersAppService.GetFicheNumberAsync("ProdTrackingsChildMenu")
             };
@@ -585,14 +616,19 @@ namespace TsiErp.ErpUI.Pages.ProductionManagement.ProductionTracking
         {
             CurrentAccountCardsList = (await CurrentAccountCardsAppService.GetListAsync(new ListCurrentAccountCardsParameterDto())).Data.Where(t => !string.IsNullOrEmpty(t.CustomerCode)).ToList();
         }
+
         private async Task GetStationsList()
         {
             var _stationlist = (await StationsAppService.GetListAsync(new ListStationsParameterDto())).Data.ToList();
 
             foreach (var line in OperationLineList)
             {
-                var station = _stationlist.Where(t=>t.Id == line.StationID).FirstOrDefault();
-                StationsList.Add(station);
+                var station = _stationlist.Where(t => t.Id == line.StationID).FirstOrDefault();
+
+                if (!StationsList.Any(t => t.Id == station.Id))
+                {
+                    StationsList.Add(station);
+                }
             }
         }
 
